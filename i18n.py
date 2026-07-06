@@ -25,9 +25,14 @@ Verwendung::
 import json
 import os
 
+import store
+
 _DIR = os.path.dirname(os.path.abspath(__file__))
 _LANG_DIR = os.path.join(_DIR, "lang")
-_MEM_PATH = os.path.join(_DIR, "mem.json")
+
+# Name des Abschnitts in mem.json, in dem Oberflaechen-Einstellungen (Sprache)
+# liegen. Die Highscores stehen im Abschnitt "highscores" derselben Datei.
+_MEM_SECTION = "mem"
 
 # Standardsprache = Fallback, wenn ein Schlüssel fehlt oder nichts gewählt ist.
 DEFAULT_LANG = "de"
@@ -58,22 +63,13 @@ def _load_lang_file(code):
 
 
 def load_memory():
-    """Liest mem.json (immer ein dict)."""
-    try:
-        with open(_MEM_PATH, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            return data if isinstance(data, dict) else {}
-    except (OSError, json.JSONDecodeError, ValueError):
-        return {}
+    """Liest den 'mem'-Abschnitt aus mem.json (immer ein dict)."""
+    return store.load_section(_MEM_SECTION)
 
 
 def save_memory(data):
-    """Schreibt mem.json (Fehler werden bewusst ignoriert)."""
-    try:
-        with open(_MEM_PATH, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-    except OSError:
-        pass
+    """Schreibt den 'mem'-Abschnitt zurück (Rest der Datei bleibt erhalten)."""
+    store.save_section(_MEM_SECTION, data)
 
 
 # ----- Öffentliche API ---------------------------------------------------

@@ -2,40 +2,29 @@
 """
 highscore.py
 ============
-Lädt und speichert Highscores in einer lokalen JSON-Datei.
-Die Datei liegt neben diesem Modul ("highscores.json").
+Lädt und speichert Highscores. Sie liegen im Abschnitt ``highscores`` der
+gemeinsamen Datei ``mem.json`` (siehe store.py) - zusammen mit den übrigen
+gespeicherten Daten (z.B. der Sprache).
 """
 
-import json
-import os
+import store
 
-# Pfad zur JSON-Datei (immer relativ zu dieser Datei, egal von wo gestartet wird)
-_HS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "highscores.json")
+# Name des Abschnitts in mem.json.
+_SECTION = "highscores"
 
 
 def load_highscores():
     """Liest die Highscores. Gibt ein dict {spiel_key: score} zurück."""
-    if not os.path.exists(_HS_PATH):
-        return {}
     try:
-        with open(_HS_PATH, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            # Nur saubere int-Werte übernehmen
-            return {str(k): int(v) for k, v in data.items()}
-    except (json.JSONDecodeError, ValueError, OSError):
-        # Beschädigte Datei -> mit leeren Highscores weiterarbeiten
+        return {str(k): int(v) for k, v in store.load_section(_SECTION).items()}
+    except (ValueError, TypeError):
+        # Beschädigte Werte -> mit leeren Highscores weiterarbeiten
         return {}
 
 
 def save_highscores(scores):
-    """Schreibt das dict {spiel_key: score} in die JSON-Datei."""
-    try:
-        with open(_HS_PATH, "w", encoding="utf-8") as f:
-            json.dump(scores, f, indent=2, ensure_ascii=False)
-    except OSError:
-        # Wenn das Speichern fehlschlägt (z.B. keine Schreibrechte),
-        # soll das Spiel trotzdem weiterlaufen.
-        pass
+    """Schreibt das dict {spiel_key: score} in den highscores-Abschnitt."""
+    store.save_section(_SECTION, scores)
 
 
 def update_highscore(key, score):

@@ -88,7 +88,8 @@ obere Reihen geben mehr Punkte; Wellen leeren, Leben schützen.
 
 **2048** – Pfeile/WASD schieben alle Kacheln; gleiche Zahlen verschmelzen.
 
-Highscores werden in `highscores.json` (neben dem Code) gespeichert.
+Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
+gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
 ## Bedienung
 
@@ -129,7 +130,8 @@ game_base.py         Game-Basisklasse (update/draw/handle_event) + InputEvent + 
 settings.py          Einstellungen (Sound/Haptik/Tastenbelegung) laden/speichern (JSON)
 audio.py             Prozedurale Soundeffekte + Gamepad-Rumble
 menu.py              Sprach-, Vorspiel- (Modus) und Options-Screen (Sound/Steuerung)
-highscore.py         Laden/Speichern der Highscores (JSON)
+highscore.py         Laden/Speichern der Highscores (Abschnitt in mem.json)
+store.py             Zentrale Speicherdatei mem.json (Abschnitte: mem, highscores)
 prestige.py          Prestige-System für Snake
 i18n.py              Übersetzungs-Engine (lädt lang/*.json, t("schlüssel"))
 lang/
@@ -138,8 +140,9 @@ games/
   snake.py  pong.py  tictactoe.py  breakout.py  tetris.py  invaders.py  game2048.py
 ```
 
-Die gewählte Sprache wird in `mem.json` gespeichert (wie `settings.json`/
-`highscores.json` neben dem Code) und beim nächsten Start automatisch geladen.
+Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
+dem Abschnitt `highscores` in derselben Datei) und beim nächsten Start
+automatisch geladen.
 
 ## Plattformhinweise
 
