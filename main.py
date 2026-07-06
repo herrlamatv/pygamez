@@ -2,27 +2,27 @@
 """
 main.py
 =======
-Desktop-Spielesammlung: Tkinter (Oberfläche/Menü) + Pygame (eingebettetes Display).
+Desktop-Spielesammlung: Tkinter (Oberfläche/Menü) + Pygame (Spiel-Rendering).
 
-So funktioniert die Einbettung
-------------------------------
-Pygame/SDL kann sein Fenster in ein vorhandenes Fenster eines anderen Toolkits
-zeichnen, wenn man ihm dessen native Fenster-ID gibt:
+So funktioniert die Anzeige (Off-Screen-Rendering)
+--------------------------------------------------
+Pygame zeichnet NICHT in ein eigenes/eingebettetes Fenster. Der frühere Weg über
+``SDL_WINDOWID`` (pygame direkt in ein Tkinter-Fenster zeichnen lassen) ist auf
+Windows/SDL2 unzuverlässig: das SDL-Fenster "kämpft" mit Tkinters Layout, das
+Fenster rastet/rüttelt beim Resize, und auf macOS/Wayland klappt es gar nicht.
 
-    os.environ['SDL_WINDOWID'] = str(frame.winfo_id())
-
-Das MUSS gesetzt werden, BEVOR pygame.display.set_mode() aufgerufen wird.
-'frame.winfo_id()' liefert das native Handle des Tkinter-Frames (HWND unter
-Windows, XID unter Linux/X11). pygame zeichnet dann direkt in diesen Frame.
-
-Zusätzlich kann der Video-Treiber gesetzt werden (siehe Plattformhinweise unten).
+Stattdessen läuft SDL mit dem Dummy-Video-Treiber (``SDL_VIDEODRIVER=dummy``) -
+es gibt also KEIN echtes SDL-Fenster. Jedes Spiel zeichnet auf eine Surface
+(``self.canvas``). Diese wird pro Frame seitenverhältnistreu skaliert, in ein
+Bild (PPM) umgewandelt und in ein ``tk.Label`` (``self.embed``) gesetzt. Das
+Label ist ein ganz normales Tkinter-Widget -> es skaliert/verhält sich sauber,
+ohne Kampf mit einem nativen Fenster.
 
 Damit sich Tkinter und Pygame nicht gegenseitig blockieren, gibt es KEINE eigene
 while-Schleife für pygame. Stattdessen treibt Tkinters Ereignisschleife alles an:
 root.after(...) ruft regelmäßig _loop() auf, das ein einzelnes Frame des Spiels
-aktualisiert und zeichnet. Tastatur/Maus fangen wir über Tkinter-Bindings ab und
-reichen sie als InputEvent an das aktive Spiel weiter (zuverlässiger als
-pygame.event beim Einbetten).
+aktualisiert, zeichnet und ins Label bringt. Tastatur/Maus fangen wir über
+Tkinter-Bindings ab und reichen sie als InputEvent an das aktive Spiel weiter.
 """
 
 import os
@@ -45,20 +45,28 @@ GAME_H = 480
 FPS = 60
 
 
-def _configure_sdl_for_embedding(window_id):
-    """Setzt die nötigen Umgebungsvariablen für die Pygame-Einbettung."""
-    os.environ["SDL_WINDOWID"] = str(window_id)
+def _enable_dpi_awareness():
+    """Macht den Prozess unter Windows DPI-aware (vor dem ersten Tk-Fenster!).
 
-    if sys.platform.startswith("win"):
-        # SDL2 (pygame 2.x): den Standard-Treiber ('windows') verwenden -> KEIN
-        # SDL_VIDEODRIVER setzen. Hinweis: das alte 'windib' galt nur für SDL1
-        # (pygame 1.9.x) und führt unter pygame 2 zu einem Fehler.
+    Grund: Beim Einbetten zeichnet SDL/Pygame direkt in das native Fenster des
+    Tkinter-Frames. Ist der Prozess NICHT DPI-aware, rechnet Windows Tkinter in
+    logischen Pixeln, während SDL physische Pixel meint. Auf Displays mit
+    Skalierung (125/150/200 %) passen die Größen dann nicht zusammen -> beim
+    Resize verstellt set_mode() den Frame, Tkinter zieht zurück -> Rüttel-
+    Schleife. Mit gleicher Pixel-Basis ist set_mode(Frame-Größe) ein No-Op.
+    """
+    if not sys.platform.startswith("win"):
+        return
+    try:
+        import ctypes
+        try:
+            # Per-Monitor-DPI-aware (Windows 8.1+); 2 = PER_MONITOR_AWARE.
+            ctypes.windll.shcore.SetProcessDpiAwareness(2)
+        except Exception:
+            # Fallback für ältere Windows-Versionen.
+            ctypes.windll.user32.SetProcessDPIAware()
+    except Exception:
         pass
-    else:
-        # Linux/X11: x11-Treiber erzwingen, damit SDL_WINDOWID greift.
-        # (Unter reinem Wayland funktioniert die Einbettung i.d.R. nicht;
-        #  dann hilft oft 'SDL_VIDEODRIVER=x11' zusammen mit XWayland.)
-        os.environ["SDL_VIDEODRIVER"] = "x11"
 
 
 class App:
@@ -67,6 +75,9 @@ class App:
     def __init__(self):
         # Sprache laden (aus mem.json), bevor irgendein Text aufgebaut wird.
         i18n.init()
+
+        # MUSS vor dem ersten Tk-Fenster passieren (sonst wirkungslos).
+        _enable_dpi_awareness()
 
         self.root = tk.Tk()
         self.root.title(t("app.title"))
@@ -82,6 +93,8 @@ class App:
         # Skalierung/Versatz für die Darstellung der logischen Fläche
         self._scale = 1.0
         self._off = (0, 0)
+        # Referenz auf das aktuell angezeigte Bild (sonst raeumt Tk es weg).
+        self._photo = None
 
         # Einstellungen VOR pygame laden: die Auflösung bestimmt die Canvas-Größe,
         # die FPS die Loop-Frequenz.
@@ -164,14 +177,15 @@ class App:
             btn.pack(side="bottom", fill="x", padx=12, pady=4)
             self._ctrl_buttons[key] = btn
 
-        # Rechte Seite: eingebettetes Pygame-Display.
-        # fill/expand sorgt dafür, dass der Frame (und damit das Pygame-Display)
-        # im Vollbild bzw. beim Vergrößern den verfügbaren Platz ausfüllt.
-        self.embed = tk.Frame(self.root, width=self.game_w, height=self.game_h,
-                              bg="black", highlightthickness=0)
+        # Rechte Seite: Anzeige des Spielbildes. Ein normales tk.Label zeigt das
+        # pro Frame erzeugte Bild (siehe _present). fill/expand -> es füllt den
+        # verfügbaren Platz; wir bauen das Bild jeweils in dieser Größe.
+        self.embed = tk.Label(self.root, bg="black", bd=0, highlightthickness=0)
         self.embed.pack(side="right", fill="both", expand=True)
-        self.embed.pack_propagate(False)
-        # Fokus, damit Tastatur-Events ankommen
+        # width/height beim Label sind Zeichen/Pixel je nach Inhalt -> sobald ein
+        # Bild gesetzt ist, zählt dessen Größe. fill/expand bestimmt die Fläche.
+        # Fokus, damit Tastatur-Events (auf root gebunden) sicher ankommen.
+        self.embed.configure(takefocus=True)
         self.embed.focus_set()
 
     def _build_game_buttons(self):
@@ -182,23 +196,27 @@ class App:
                       activebackground="#4a566f",
                       font=("Segoe UI", 11)).pack(fill="x", pady=4)
 
-    # ----- Pygame-Einbettung --------------------------------------------
+    # ----- Pygame (Off-Screen-Rendering) --------------------------------
 
     def _init_pygame(self):
-        _configure_sdl_for_embedding(self.embed.winfo_id())
+        # KEIN echtes Fenster: Dummy-Video-Treiber. So gibt es kein natives
+        # SDL-Fenster, das mit Tkinter um Größe/Position kämpft. Muss VOR
+        # pygame.init()/set_mode() gesetzt sein.
+        os.environ["SDL_VIDEODRIVER"] = "dummy"
 
         import pygame
         self.pygame = pygame
         pygame.init()
 
-        # Tatsächliche Größe des eingebetteten Bereichs (kann durch Vollbild/
-        # Fenstergröße wachsen). Das Display zeichnet in den Tkinter-Frame.
+        # Aktuelle Größe der Anzeigefläche (des Labels). Kann durch Vollbild/
+        # Fenstergröße wachsen; wird im Loop pro Frame frisch gelesen.
         self.disp_w = max(self.game_w, self.embed.winfo_width())
         self.disp_h = max(self.game_h, self.embed.winfo_height())
-        self.screen = pygame.display.set_mode((self.disp_w, self.disp_h))
+        # Ein (unsichtbarer) Video-Modus, damit Surface.convert() funktioniert.
+        pygame.display.set_mode((1, 1))
 
         # Alle Spiele zeichnen auf diese LOGISCHE Fläche (game_w x game_h aus den
-        # Einstellungen). Im Loop wird sie passend auf das echte Display skaliert.
+        # Einstellungen). Im Loop wird sie passend auf die Anzeige skaliert.
         self.canvas = pygame.Surface((self.game_w, self.game_h))
 
         self.clock = pygame.time.Clock()
@@ -218,20 +236,21 @@ class App:
         self.embed.bind("<Motion>", self._on_motion)
         # Klick auf die Fläche holt den Fokus (für Tastatur)
         self.embed.bind("<Button-1>", lambda e: self.embed.focus_set(), add="+")
-        # Größe des eingebetteten Bereichs änderte sich (Vollbild/Resize)
-        self.embed.bind("<Configure>", self._on_resize)
+        # Kein <Configure>-Handler mehr nötig: die aktuelle Anzeigegröße wird
+        # pro Frame in _sync_display_size() gelesen. Da es KEIN natives
+        # SDL-Fenster gibt, kann nichts mit Tkinter um die Größe "kämpfen".
 
-    def _on_resize(self, event):
-        """Passt das Pygame-Display an die neue Frame-Größe an."""
-        w, h = max(1, event.width), max(1, event.height)
+    def _sync_display_size(self):
+        """Liest die aktuelle Label-Größe; passt bei Auto-Auflösung die Fläche an.
+
+        Wird pro Frame aufgerufen. Ohne echtes SDL-Fenster ist das gefahrlos:
+        wir zeichnen ja nur ein Bild in der jeweils aktuellen Größe.
+        """
+        w = max(1, self.embed.winfo_width())
+        h = max(1, self.embed.winfo_height())
         if (w, h) == (self.disp_w, self.disp_h):
             return
         self.disp_w, self.disp_h = w, h
-        try:
-            # Display innerhalb desselben eingebetteten Fensters neu dimensionieren
-            self.screen = self.pygame.display.set_mode((w, h))
-        except Exception:
-            pass
         # Auto-Modus: logische Auflösung an die neue Fenstergröße anpassen.
         if self.settings.get("auto_resolution"):
             self._match_resolution_to_window()
@@ -414,10 +433,19 @@ class App:
             return
 
         pygame = self.pygame
-        dt = self.clock.tick(self.fps) / 1000.0   # vergangene Zeit in Sekunden
+        # Nur die vergangene Zeit MESSEN (kein Blockieren): das Timing/Pacing
+        # macht bereits root.after(...) am Ende der Schleife. Ein blockierendes
+        # clock.tick(fps) würde die Tkinter-Schleife jeden Frame anhalten und die
+        # Oberfläche zäh/ruckelig machen. dt wird gedeckelt, damit die Spiele nach
+        # einem kurzen Hänger nicht "springen".
+        dt = min(self.clock.tick() / 1000.0, 0.1)   # vergangene Zeit in Sekunden
 
         # pygame-interne Ereignisse leeren (hält SDL "lebendig")
         pygame.event.pump()
+
+        # Aktuelle Anzeigegröße übernehmen (VOR dem Zeichnen -> Auto-Auflösung
+        # baut die Canvas ggf. neu, bevor das Spiel darauf zeichnet).
+        self._sync_display_size()
 
         if self.current is None:
             self._draw_menu_screen()
@@ -450,7 +478,7 @@ class App:
         self.root.after(max(1, int(1000 / self.fps)), self._loop)
 
     def _present(self):
-        """Skaliert self.canvas seitenverhältnistreu auf das echte Display."""
+        """Baut das Anzeigebild (Letterbox) und zeigt es im Label."""
         pygame = self.pygame
         sw, sh = self.disp_w, self.disp_h
         scale = min(sw / self.game_w, sh / self.game_h)
@@ -458,12 +486,18 @@ class App:
         self._scale = scale
         self._off = ((sw - tw) // 2, (sh - th) // 2)
 
-        self.screen.fill((0, 0, 0))                 # schwarze Letterbox-Ränder
-        if scale == 1.0 and (tw, th) == (self.game_w, self.game_h):
-            self.screen.blit(self.canvas, self._off)
+        # Anzeigefläche mit schwarzen Letterbox-Rändern zusammensetzen.
+        frame = pygame.Surface((sw, sh))
+        frame.fill((0, 0, 0))
+        if (tw, th) == (self.game_w, self.game_h):
+            frame.blit(self.canvas, self._off)
         else:
-            self.screen.blit(pygame.transform.scale(self.canvas, (tw, th)), self._off)
-        pygame.display.flip()
+            frame.blit(pygame.transform.scale(self.canvas, (tw, th)), self._off)
+
+        # Surface -> PPM (P6) -> tk.PhotoImage. Referenz halten, sonst GC.
+        data = b"P6 %d %d 255 " % (sw, sh) + pygame.image.tostring(frame, "RGB")
+        self._photo = tk.PhotoImage(data=data, format="ppm")
+        self.embed.configure(image=self._photo)
 
     def _draw_menu_screen(self):
         self.canvas.fill((18, 20, 28))

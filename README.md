@@ -146,14 +146,17 @@ automatisch geladen.
 
 ## Plattformhinweise
 
-- **Windows**: funktioniert mit pygame 2 (SDL2) direkt. `SDL_VIDEODRIVER` wird
-  bewusst NICHT gesetzt (Standardtreiber).
-- **Linux/X11**: setzt `SDL_VIDEODRIVER=x11`. Unter **Wayland** klappt die
-  Einbettung über `SDL_WINDOWID` oft nicht zuverlässig; dann hilft meist
-  XWayland zusammen mit `SDL_VIDEODRIVER=x11`.
-- **macOS**: Die Einbettung über `SDL_WINDOWID` wird von SDL2 dort nicht
-  unterstützt; das Programm läuft, das Pygame-Fenster wird aber nicht in
-  Tkinter eingebettet.
+Die Anzeige läuft **off-screen**: pygame nutzt den Dummy-Video-Treiber
+(`SDL_VIDEODRIVER=dummy`), rendert also in eine Surface, und jedes Frame wird als
+Bild in ein Tkinter-Widget gezeichnet. Es gibt **kein natives SDL-Fenster**, das
+mit Tkinter um Größe/Position kämpfen könnte. Dadurch verhält sich das Fenster
+überall gleich und stabil:
+
+- **Windows**: Der Prozess wird zusätzlich DPI-aware gemacht, damit die Anzeige
+  auf skalierten Displays (125/150/200 %) scharf ist und nicht „rüttelt".
+- **Linux/X11 & Wayland**: funktioniert ohne Sonderfälle (kein `SDL_WINDOWID`).
+- **macOS**: funktioniert ebenfalls (früher wurde das eingebettete Fenster hier
+  gar nicht angezeigt).
 
 ---
 
