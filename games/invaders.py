@@ -18,6 +18,7 @@ import random
 import pygame
 
 from game_base import Game, InputEvent
+from i18n import t
 
 COL_BG = (8, 10, 18)
 COL_PLAYER = (110, 220, 140)
@@ -279,12 +280,14 @@ class InvadersGame(Game):
             pygame.draw.rect(s, COL_EBULLET, (b[0] - 2, b[1], 4, 10))
 
         # HUD
-        s.blit(self.font.render(f"Punkte: {self.score}", True, COL_TEXT), (10, 8))
-        welle = self.font.render(f"Welle: {self.wave}", True, COL_TEXT)
+        s.blit(self.font.render(t("common.points", score=self.score), True, COL_TEXT),
+               (10, 8))
+        welle = self.font.render(t("inv.wave", wave=self.wave), True, COL_TEXT)
         s.blit(welle, (self.width // 2 - welle.get_width() // 2, 8))
-        leben = self.font.render(f"Leben: {self.lives}", True, COL_TEXT)
+        leben = self.font.render(t("inv.lives", lives=self.lives), True, COL_TEXT)
         s.blit(leben, (self.width - leben.get_width() - 10, 8))
 
         if self.game_over:
-            self.draw_center_text("GAME OVER", self.big_font, (235, 110, 110), -20)
-            self.draw_center_text("Enter = Neustart", self.font, COL_TEXT, 30)
+            self.draw_center_text(t("common.game_over"), self.big_font,
+                                  (235, 110, 110), -20)
+            self.draw_center_text(t("common.enter_restart"), self.font, COL_TEXT, 30)

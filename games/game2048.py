@@ -16,6 +16,7 @@ import random
 import pygame
 
 from game_base import Game, InputEvent
+from i18n import t
 
 SIZE = 4                         # 4x4-Raster
 
@@ -159,9 +160,10 @@ class Game2048(Game):
         s.fill(COL_BG)
 
         # Punkte oben
-        s.blit(self.font.render(f"Punkte: {self.score}", True, COL_TEXT), (10, 8))
+        s.blit(self.font.render(t("common.points", score=self.score), True, COL_TEXT),
+               (10, 8))
         if self.won and not self.game_over:
-            hinweis = self.font.render("2048 erreicht!", True, (240, 200, 90))
+            hinweis = self.font.render(t("g2048.reached"), True, (240, 200, 90))
             s.blit(hinweis, (self.width - hinweis.get_width() - 10, 8))
 
         # Brett-Hintergrund
@@ -190,5 +192,6 @@ class Game2048(Game):
             overlay = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
             overlay.fill((0, 0, 0, 150))
             s.blit(overlay, (0, 0))
-            self.draw_center_text("GAME OVER", self.big_font, (235, 110, 110), -20)
-            self.draw_center_text("Enter = Neustart", self.font, COL_TEXT, 30)
+            self.draw_center_text(t("common.game_over"), self.big_font,
+                                  (235, 110, 110), -20)
+            self.draw_center_text(t("common.enter_restart"), self.font, COL_TEXT, 30)

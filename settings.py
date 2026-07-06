@@ -34,18 +34,19 @@ DEFAULT_CONTROLS = {
            "action": "Return"},
 }
 
-# Auswählbare Vorlagen im Options-Menü.
+# Auswählbare Vorlagen im Options-Menü. Das erste Feld ist ein i18n-Schlüssel
+# (wird im Menü über i18n.t(...) übersetzt), das zweite die Tastenbelegung.
 PRESETS = [
-    ("WASD + Pfeile", {
+    ("preset.wasd_arrows", {
         "p1": {"up": "w", "down": "s", "left": "a", "right": "d", "action": "space"},
         "p2": {"up": "Up", "down": "Down", "left": "Left", "right": "Right",
                "action": "Return"},
     }),
-    ("WASD + IJKL", {
+    ("preset.wasd_ijkl", {
         "p1": {"up": "w", "down": "s", "left": "a", "right": "d", "action": "space"},
         "p2": {"up": "i", "down": "k", "left": "j", "right": "l", "action": "o"},
     }),
-    ("Pfeile + WASD", {
+    ("preset.arrows_wasd", {
         "p1": {"up": "Up", "down": "Down", "left": "Left", "right": "Right",
                "action": "Return"},
         "p2": {"up": "w", "down": "s", "left": "a", "right": "d", "action": "space"},
@@ -53,13 +54,13 @@ PRESETS = [
 ]
 
 # Auswählbare Auflösungen (logische Spielfläche). Kleiner spart Rechenzeit,
-# größer wird schärfer beim Hochskalieren.
+# größer wird schärfer beim Hochskalieren. Erstes Feld = i18n-Schlüssel.
 RESOLUTIONS = [
-    ("480 x 360  (sparsam)", (480, 360)),
-    ("640 x 480  (Standard)", (640, 480)),
-    ("800 x 600", (800, 600)),
-    ("960 x 720", (960, 720)),
-    ("1280 x 960", (1280, 960)),
+    ("res.480", (480, 360)),
+    ("res.640", (640, 480)),
+    ("res.800", (800, 600)),
+    ("res.960", (960, 720)),
+    ("res.1280", (1280, 960)),
 ]
 
 # Auswählbare Ziel-Bildraten. Weniger FPS = weniger Last = Strom sparen.

@@ -24,6 +24,7 @@ import pygame
 
 import settings as settings_mod
 from game_base import Game, InputEvent
+from i18n import t
 
 COL_BG = (10, 10, 20)
 COL_FG = (235, 235, 235)
@@ -246,8 +247,8 @@ class PongGame(Game):
         ais = self.big_font.render(str(self.ai_score), True, COL_FG)
         s.blit(ps, (self.width // 2 - 70, 20))
         s.blit(ais, (self.width // 2 + 50, 20))
-        links = "P1" if self.multiplayer else "Du"
-        rechts = "P2" if self.multiplayer else "KI"
+        links = "P1" if self.multiplayer else t("pong.you")
+        rechts = "P2" if self.multiplayer else t("pong.ai")
         s.blit(self.font.render(links, True, COL_P1), (30, 10))
         r = self.font.render(rechts, True, rechts_farbe)
         s.blit(r, (self.width - 60, 10))
@@ -258,29 +259,29 @@ class PongGame(Game):
         if self.game_over:
             if self.multiplayer:
                 sieger = 1 if self.player_score > self.ai_score else 2
-                text = f"SPIELER {sieger} GEWINNT"
+                text = t("common.player_wins", n=sieger)
                 farbe = COL_P1 if sieger == 1 else COL_P2
             else:
                 gewonnen = self.player_score > self.ai_score
-                text = "GEWONNEN!" if gewonnen else "VERLOREN"
+                text = t("pong.won") if gewonnen else t("pong.lost")
                 farbe = (120, 230, 140) if gewonnen else (230, 120, 120)
             self.draw_center_text(text, self.big_font, farbe, -20)
-            self.draw_center_text("Enter = Neustart", self.font, COL_FG, 30)
+            self.draw_center_text(t("common.enter_restart"), self.font, COL_FG, 30)
 
     def _draw_mode_hud(self):
         """Zeigt unten den Bewegungsmodus je Steuerung + die Umschalttasten."""
         s = self.surface
 
         def zeile(scheme):
-            modus = "Halten" if self.hold[scheme] else "Dauer"
+            modus = t("pong.hold") if self.hold[scheme] else t("pong.continuous")
             col = COL_HOLD if self.hold[scheme] else COL_DIM
             return modus, col
 
         # Einzelspieler: beide Steuerungen gehören dir. Mehrspieler: 1=links, 2=rechts.
         m1, c1 = zeile("p1")
-        t1 = self._small.render(f"[X] Steuerung 1: {m1}", True, c1)
+        t1 = self._small.render(t("pong.scheme1", mode=m1), True, c1)
         s.blit(t1, (10, self.height - 22))
 
         m2, c2 = zeile("p2")
-        t2 = self._small.render(f"[N] Steuerung 2: {m2}", True, c2)
+        t2 = self._small.render(t("pong.scheme2", mode=m2), True, c2)
         s.blit(t2, (self.width - t2.get_width() - 10, self.height - 22))

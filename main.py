@@ -30,6 +30,14 @@ import sys
 import tkinter as tk
 from tkinter import ttk
 
+# Das Verzeichnis dieser Datei sicher auf sys.path legen, damit die lokalen
+# Module (i18n, settings, audio, games, ...) unabhängig vom Startverzeichnis
+# gefunden werden - egal ob per Doppelklick, IDE oder "python main.py".
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import i18n
+from i18n import t
+
 # Standard-Spielfläche und -Bildrate. Die tatsächlichen Werte kommen aus den
 # Einstellungen (settings.py) und liegen zur Laufzeit in self.game_w/-_h/-fps.
 GAME_W = 640
@@ -57,8 +65,11 @@ class App:
     """Die Tkinter-Anwendung mit eingebettetem Pygame-Display."""
 
     def __init__(self):
+        # Sprache laden (aus mem.json), bevor irgendein Text aufgebaut wird.
+        i18n.init()
+
         self.root = tk.Tk()
-        self.root.title("Spielesammlung  -  Tkinter + Pygame")
+        self.root.title(t("app.title"))
         # Fenster darf vergrößert/verkleinert werden -> nötig für Vollbild,
         # bei dem das Pygame-Display weiter eingebettet "im Fenster" bleibt.
         self.root.resizable(True, True)
@@ -106,6 +117,10 @@ class App:
             self.disp_h = max(1, self.embed.winfo_height())
             self._match_resolution_to_window()
 
+        # Beim ersten Start (noch keine Sprache in mem.json): Sprache wählen lassen.
+        if not i18n.has_language():
+            self.open_language()
+
         # Game-Loop über die Tkinter-Schleife starten
         self.root.after(0, self._loop)
 
@@ -117,38 +132,37 @@ class App:
         menu.pack(side="left", fill="y")
         menu.pack_propagate(False)
 
-        tk.Label(menu, text="SPIELE", fg="#ffffff", bg="#1c1f29",
-                 font=("Segoe UI", 16, "bold")).pack(pady=(16, 8))
+        self.games_label = tk.Label(menu, text=t("app.games"), fg="#ffffff",
+                                    bg="#1c1f29", font=("Segoe UI", 16, "bold"))
+        self.games_label.pack(pady=(16, 8))
 
         self.button_frame = tk.Frame(menu, bg="#1c1f29")
         self.button_frame.pack(fill="x", padx=12)
 
         # Punktestand-Anzeige
-        self.status_var = tk.StringVar(value="Kein Spiel aktiv")
+        self.status_var = tk.StringVar(value=t("app.no_game"))
         tk.Label(menu, textvariable=self.status_var, fg="#c8d0e0", bg="#1c1f29",
                  font=("Consolas", 10), justify="left", wraplength=176).pack(
             side="bottom", fill="x", padx=12, pady=8)
 
         ttk.Separator(menu, orient="horizontal").pack(side="bottom", fill="x", pady=4)
 
-        # Steuer-Buttons unten
-        tk.Button(menu, text="Beenden", command=self.beenden,
-                  bg="#a23b3b", fg="white", relief="flat",
-                  font=("Segoe UI", 11, "bold")).pack(side="bottom", fill="x",
-                                                      padx=12, pady=(4, 12))
-        tk.Button(menu, text="Zurück zum Menü (ESC = Pause)",
-                  command=self.zum_menü, bg="#2f3645", fg="white", relief="flat",
-                  font=("Segoe UI", 9)).pack(side="bottom", fill="x", padx=12, pady=4)
+        # Steuer-Buttons unten (Referenzen gemerkt -> refresh_language kann neu beschriften)
+        self._ctrl_buttons = {}
+        self._ctrl_buttons["quit"] = tk.Button(
+            menu, text=t("app.quit"), command=self.beenden,
+            bg="#a23b3b", fg="white", relief="flat", font=("Segoe UI", 11, "bold"))
+        self._ctrl_buttons["quit"].pack(side="bottom", fill="x", padx=12, pady=(4, 12))
 
-        tk.Button(menu, text="Vollbild an/aus (F11)",
-                  command=self.toggle_fullscreen, bg="#2f3645", fg="white",
-                  relief="flat", font=("Segoe UI", 9)).pack(
-            side="bottom", fill="x", padx=12, pady=4)
-
-        tk.Button(menu, text="Optionen / Steuerung",
-                  command=self.open_options, bg="#2f3645", fg="white",
-                  relief="flat", font=("Segoe UI", 9)).pack(
-            side="bottom", fill="x", padx=12, pady=4)
+        for key, cmd in (("back_to_menu", self.zum_menü),
+                         ("fullscreen", self.toggle_fullscreen),
+                         ("language", self.open_language),
+                         ("options", self.open_options)):
+            btn = tk.Button(menu, text=t("app." + key), command=cmd,
+                            bg="#2f3645", fg="white", relief="flat",
+                            font=("Segoe UI", 9))
+            btn.pack(side="bottom", fill="x", padx=12, pady=4)
+            self._ctrl_buttons[key] = btn
 
         # Rechte Seite: eingebettetes Pygame-Display.
         # fill/expand sorgt dafür, dass der Frame (und damit das Pygame-Display)
@@ -296,13 +310,28 @@ class App:
     def back_to_menu(self):
         """Zurück zum leeren Startbildschirm (ohne Highscore-Effekte)."""
         self.current = None
-        self.status_var.set("Kein Spiel aktiv")
+        self.status_var.set(t("app.no_game"))
 
     def open_options(self):
         """Öffnet die Optionen/Steuerung im Spielbereich (aus dem Tk-Menü)."""
         from menu import OptionsScreen
         self.show_screen(OptionsScreen(self.canvas, self.game_w, self.game_h, self,
                                        on_close=self.back_to_menu))
+
+    def open_language(self):
+        """Zeigt den Sprachauswahl-Screen im Spielbereich."""
+        from menu import LanguageScreen
+        self.show_screen(LanguageScreen(self.canvas, self.game_w, self.game_h, self,
+                                        on_done=self.back_to_menu))
+
+    def refresh_language(self):
+        """Beschriftet das Tkinter-Menü nach einem Sprachwechsel neu."""
+        self.root.title(t("app.title"))
+        self.games_label.config(text=t("app.games"))
+        for key, btn in self._ctrl_buttons.items():
+            btn.config(text=t("app." + key))
+        if self.current is None:
+            self.status_var.set(t("app.no_game"))
 
     def apply_resolution(self, w, h, persist=True):
         """Setzt die logische Auflösung neu (Canvas wird passend neu erzeugt).
@@ -351,7 +380,7 @@ class App:
         if self.current:
             self._highscore_speichern(self.current)
         self.current = None
-        self.status_var.set("Kein Spiel aktiv")
+        self.status_var.set(t("app.no_game"))
 
     # ----- Highscores ---------------------------------------------------
 
@@ -369,9 +398,9 @@ class App:
         """Blendet bei Game Over für JEDES Spiel den Highscore unten ein."""
         hs = getattr(game, "_hs_value", 0)
         if getattr(game, "_hs_record", False):
-            text, farbe = f"NEUER HIGHSCORE: {game.score}", (255, 215, 90)
+            text, farbe = t("app.new_highscore", score=game.score), (255, 215, 90)
         else:
-            text, farbe = f"Highscore: {hs}", (200, 205, 220)
+            text, farbe = t("app.highscore", hs=hs), (200, 205, 220)
         if not getattr(self, "_hs_font", None):
             self._hs_font = self.pygame.font.SysFont("consolas", 20, bold=True)
         img = self._hs_font.render(text, True, farbe)
@@ -438,8 +467,8 @@ class App:
 
     def _draw_menu_screen(self):
         self.canvas.fill((18, 20, 28))
-        title = self._menu_font.render("Spielesammlung", True, (235, 235, 245))
-        sub = self._menu_sub.render("Wähle links ein Spiel aus.", True, (150, 160, 180))
+        title = self._menu_font.render(t("app.menu_title"), True, (235, 235, 245))
+        sub = self._menu_sub.render(t("app.menu_sub"), True, (150, 160, 180))
         self.canvas.blit(title, title.get_rect(
             center=(self.game_w // 2, self.game_h // 2 - 20)))
         self.canvas.blit(sub, sub.get_rect(
@@ -450,22 +479,24 @@ class App:
         overlay.fill((0, 0, 0, 150))
         self.canvas.blit(overlay, (0, 0))
         f = self.pygame.font.SysFont("consolas", 48, bold=True)
-        img = f.render("PAUSE", True, (240, 240, 240))
+        img = f.render(t("app.pause"), True, (240, 240, 240))
         self.canvas.blit(img, img.get_rect(center=(self.game_w // 2, self.game_h // 2)))
         f2 = self.pygame.font.SysFont("consolas", 16)
-        img2 = f2.render("ESC = weiter", True, (200, 200, 200))
+        img2 = f2.render(t("app.pause_resume"), True, (200, 200, 200))
         self.canvas.blit(img2, img2.get_rect(
             center=(self.game_w // 2, self.game_h // 2 + 40)))
 
     def _update_status(self, game):
         if getattr(game, "is_menu", False):
-            self.status_var.set(f"{game.name}\n(Menü)")
+            self.status_var.set(t("app.status_menu", name=game.name))
             return
         import highscore
         hs = highscore.load_highscores().get(game.highscore_key, 0)
-        zustand = "PAUSE" if game.paused else ("GAME OVER" if game.game_over else "läuft")
+        zustand = (t("app.state_pause") if game.paused
+                   else (t("app.state_over") if game.game_over
+                         else t("app.state_running")))
         self.status_var.set(
-            f"{game.name}\nStatus: {zustand}\nPunkte: {game.score}\nHighscore: {hs}")
+            t("app.status", name=game.name, state=zustand, score=game.score, hs=hs))
 
     # ----- Sauberes Beenden ---------------------------------------------
 

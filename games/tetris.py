@@ -16,6 +16,7 @@ import random
 import pygame
 
 from game_base import Game, InputEvent
+from i18n import t
 
 COLS = 10
 ROWS = 20
@@ -314,23 +315,25 @@ class TetrisGame(Game):
         if self.game_over:
             if self.multiplayer:
                 if self.winner is None:
-                    text, farbe = "UNENTSCHIEDEN", COL_TEXT
+                    text, farbe = t("common.draw"), COL_TEXT
                 else:
-                    text = f"SPIELER {self.winner + 1} GEWINNT"
+                    text = t("common.player_wins", n=self.winner + 1)
                     farbe = COLORS["S"] if self.winner == 0 else COLORS["I"]
                 self.draw_center_text(text, self.big_font, farbe, -20)
             else:
-                self.draw_center_text("GAME OVER", self.big_font, (235, 110, 110), -20)
-            self.draw_center_text("Enter = Neustart", self.font, COL_TEXT, 30)
+                self.draw_center_text(t("common.game_over"), self.big_font,
+                                      (235, 110, 110), -20)
+            self.draw_center_text(t("common.enter_restart"), self.font, COL_TEXT, 30)
 
     def _draw_info(self, b, info_x, oy):
         s = self.surface
-        s.blit(self.font.render("Punkte", True, COL_TEXT), (info_x, oy))
+        s.blit(self.font.render(t("tetris.points"), True, COL_TEXT), (info_x, oy))
         s.blit(self.big_font.render(str(b.score), True, COL_TEXT), (info_x, oy + 26))
-        s.blit(self.font.render(f"Level: {b.level}", True, COL_TEXT), (info_x, oy + 90))
-        s.blit(self.font.render(f"Reihen: {b.lines}", True, COL_TEXT),
+        s.blit(self.font.render(t("tetris.level", level=b.level), True, COL_TEXT),
+               (info_x, oy + 90))
+        s.blit(self.font.render(t("tetris.rows", lines=b.lines), True, COL_TEXT),
                (info_x, oy + 120))
-        s.blit(self.font.render("Nächster", True, COL_TEXT), (info_x, oy + 170))
+        s.blit(self.font.render(t("tetris.next"), True, COL_TEXT), (info_x, oy + 170))
         for cx, cy in SHAPES[b.next_kind][0]:
             r = pygame.Rect(info_x + cx * self.cell, oy + 200 + cy * self.cell,
                             self.cell, self.cell)

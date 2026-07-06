@@ -17,8 +17,10 @@ eine Referenz auf die App und rufen deren Methoden (launch_game/show_screen/...)
 import pygame
 
 import audio
+import i18n
 import settings as settings_mod
 from game_base import Game, InputEvent
+from i18n import t
 
 COL_BG = (18, 20, 28)
 COL_PANEL = (30, 34, 46)
@@ -29,22 +31,26 @@ COL_MUTE = (150, 158, 176)
 COL_ACCENT = (120, 200, 140)
 COL_KEY = (240, 210, 120)
 
+# Tkinter-keysym -> Übersetzungsschlüssel für gut lesbare Tastennamen.
 _PRETTY = {
-    "space": "Leertaste", "Return": "Enter", "Up": "Pfeil hoch",
-    "Down": "Pfeil runter", "Left": "Pfeil links", "Right": "Pfeil rechts",
-    "Escape": "Esc", "Tab": "Tab",
+    "space": "key.space", "Return": "key.return", "Up": "key.up",
+    "Down": "key.down", "Left": "key.left", "Right": "key.right",
+    "Escape": "key.escape", "Tab": "key.tab",
 }
 
-# Anzeige-Labels der Aktionen.
-_ACTION_LABEL = {"up": "Hoch", "down": "Runter", "left": "Links",
-                 "right": "Rechts", "action": "Aktion"}
+
+def action_label(action):
+    """Übersetztes Anzeige-Label einer Aktion (up/down/left/right/action)."""
+    return t("action." + action)
 
 
 def pretty_key(k):
     """Macht einen Tkinter-keysym gut lesbar (z.B. 'space' -> 'Leertaste')."""
     if not k:
-        return "-"
-    return _PRETTY.get(k, k.upper() if len(k) == 1 else k)
+        return t("key.none")
+    if k in _PRETTY:
+        return t(_PRETTY[k])
+    return k.upper() if len(k) == 1 else k
 
 
 class _Screen(Game):
@@ -77,19 +83,20 @@ class PreGameScreen(_Screen):
     def __init__(self, surface, width, height, app, game_cls):
         self.game_cls = game_cls
         super().__init__(surface, width, height, app)
+        self.name = t("pregame.name")
         self._build_buttons()
         self.sel = 0
 
     def _build_buttons(self):
         self.buttons = []   # (label, callback)
         mp = getattr(self.game_cls, "supports_multiplayer", False)
-        self.buttons.append(("Einzelspieler",
+        self.buttons.append((t("pregame.single"),
                              lambda: self.app.launch_game(self.game_cls, "single")))
         if mp:
-            self.buttons.append(("Mehrspieler (2 Spieler)",
+            self.buttons.append((t("pregame.multi"),
                                  lambda: self.app.launch_game(self.game_cls, "multi")))
-        self.buttons.append(("Optionen / Steuerung", self._open_options))
-        self.buttons.append(("Zurück zum Menü", self.app.back_to_menu))
+        self.buttons.append((t("pregame.options"), self._open_options))
+        self.buttons.append((t("pregame.back"), self.app.back_to_menu))
 
         # Rechtecke für Maus/Anzeige berechnen (zentriert, gestapelt).
         self.rects = []
@@ -141,7 +148,7 @@ class PreGameScreen(_Screen):
 
         title = self.big_font.render(self.game_cls.name, True, COL_TEXT)
         s.blit(title, title.get_rect(center=(self.width // 2, 70)))
-        sub = self.font.render("Modus wählen", True, COL_MUTE)
+        sub = self.font.render(t("pregame.mode"), True, COL_MUTE)
         s.blit(sub, sub.get_rect(center=(self.width // 2, 112)))
 
         for i, (label, _) in enumerate(self.buttons):
@@ -151,8 +158,7 @@ class PreGameScreen(_Screen):
             img = self.font.render(label, True, COL_TEXT)
             s.blit(img, img.get_rect(center=r.center))
 
-        hint = self.font.render("Pfeile/Maus wählen  -  Enter startet  -  Esc zurück",
-                                True, COL_MUTE)
+        hint = self.font.render(t("pregame.hint"), True, COL_MUTE)
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 24)))
 
 
@@ -166,6 +172,7 @@ class OptionsScreen(_Screen):
     def __init__(self, surface, width, height, app, on_close):
         self.on_close = on_close
         super().__init__(surface, width, height, app)
+        self.name = t("options.name")
         self.capture = None       # (player, action), während eine Taste neu belegt wird
         self.preset_idx = 0
         # Aktuelle Auswahl für Auflösung/FPS aus den Einstellungen ableiten.
@@ -198,33 +205,37 @@ class OptionsScreen(_Screen):
 
         # Linke Spalte oben: Ton/Steuerungs-Vorlage
         y = 70
-        for kind, kw in (("toggle", dict(key="sound", label="Sound")),
-                         ("volume", dict(label="Lautstärke")),
-                         ("toggle", dict(key="haptik", label="Haptik")),
-                         ("preset", dict(label="Vorlage"))):
+        for kind, kw in (("toggle", dict(key="sound", label=t("options.sound"))),
+                         ("volume", dict(label=t("options.volume"))),
+                         ("toggle", dict(key="haptik", label=t("options.haptik"))),
+                         ("preset", dict(label=t("options.preset")))):
             add(kind, pygame.Rect(self._left_x, y, col_w, 30), **kw)
             y += 38
 
-        # Rechte Spalte oben: Grafik & Leistung (Auto / Auflösung / FPS)
+        # Rechte Spalte oben: Grafik & Leistung (Auto / Auflösung / FPS / Sprache)
         ry = 70
         add("toggle", pygame.Rect(self._right_x, ry, col_w, 30),
-            key="auto_resolution", label="Auto-Auflösung")
+            key="auto_resolution", label=t("options.auto_res"))
         ry += 38
-        add("resolution", pygame.Rect(self._right_x, ry, col_w, 30), label="Auflösung")
+        add("resolution", pygame.Rect(self._right_x, ry, col_w, 30),
+            label=t("options.resolution"))
         ry += 38
-        add("fps", pygame.Rect(self._right_x, ry, col_w, 30), label="FPS")
+        add("fps", pygame.Rect(self._right_x, ry, col_w, 30), label=t("options.fps"))
+        ry += 38
+        add("language", pygame.Rect(self._right_x, ry, col_w, 30),
+            label=t("options.language"))
 
         # Steuerungs-Spalten für Spieler 1 (links) und Spieler 2 (rechts)
         for player, px in (("p1", self._left_x), ("p2", self._right_x)):
             y = 262
             for act in settings_mod.ACTIONS:
                 add("bind", pygame.Rect(px, y, col_w, 26), player=player, action=act,
-                    label=_ACTION_LABEL[act])
+                    label=action_label(act))
                 y += 30
 
         # Schliessen-Button unten
         add("button", pygame.Rect(W // 2 - 190, H - 44, 380, 34),
-            label="Speichern & Zurück (Esc)", on_activate=self._close)
+            label=t("options.save_back"), on_activate=self._close)
 
     def _close(self):
         settings_mod.save_settings(self.settings)
@@ -329,6 +340,14 @@ class OptionsScreen(_Screen):
             self.fps_idx = (self.fps_idx + direction) % len(settings_mod.FPS_OPTIONS)
             self.app.apply_fps(settings_mod.FPS_OPTIONS[self.fps_idx])
             self._save_and_beep()
+        elif it["kind"] == "language":
+            codes = [c for c, _ in i18n.AVAILABLE]
+            cur = codes.index(i18n.get_language()) if i18n.get_language() in codes else 0
+            i18n.set_language(codes[(cur + direction) % len(codes)])
+            self.app.refresh_language()   # Tkinter-Menü neu beschriften
+            self.name = t("options.name")
+            self._build_items()           # Labels dieses Screens neu übersetzen
+            self.play_sound("select")
 
     def _activate(self, it):
         """Enter/Klick: Belegen starten, Button auslösen oder Toggle schalten."""
@@ -351,16 +370,18 @@ class OptionsScreen(_Screen):
         s = self.surface
         s.fill(COL_BG)
 
-        title = self.font.render("OPTIONEN", True, COL_TEXT)
+        title = self.font.render(t("options.title"), True, COL_TEXT)
         s.blit(title, (self._left_x, 24))
 
         # Überschrift für den Grafik-/Leistungs-Block (rechte Spalte oben)
-        s.blit(self.font.render("Grafik / Leistung", True, COL_ACCENT),
+        s.blit(self.font.render(t("options.graphics"), True, COL_ACCENT),
                (self._right_x, 40))
 
         # Spaltenüberschriften der Steuerung
-        s.blit(self.font.render("Spieler 1", True, COL_ACCENT), (self._left_x, 232))
-        s.blit(self.font.render("Spieler 2", True, COL_ACCENT), (self._right_x, 232))
+        s.blit(self.font.render(t("common.player1"), True, COL_ACCENT),
+               (self._left_x, 232))
+        s.blit(self.font.render(t("common.player2"), True, COL_ACCENT),
+               (self._right_x, 232))
 
         for i, it in enumerate(self.items):
             r = it["rect"]
@@ -402,8 +423,12 @@ class OptionsScreen(_Screen):
 
         if kind == "toggle":
             an = self.settings.get(it["key"], False)
-            wert = "AN" if an else "AUS"
+            wert = t("common.on") if an else t("common.off")
             self._draw_arrow_value(it, farbe, wert, COL_ACCENT if an else COL_MUTE)
+
+        elif kind == "language":
+            self._draw_arrow_value(it, farbe, dict(i18n.AVAILABLE)[i18n.get_language()],
+                                   COL_KEY)
 
         elif kind == "volume":
             s.blit(self.font.render(it["label"], True, farbe), (r.x, r.y))
@@ -417,20 +442,21 @@ class OptionsScreen(_Screen):
                    (bar.right + 8, r.y))
 
         elif kind == "preset":
-            self._draw_arrow_value(it, farbe, settings_mod.PRESETS[self.preset_idx][0],
-                                   COL_KEY)
+            self._draw_arrow_value(it, farbe,
+                                   t(settings_mod.PRESETS[self.preset_idx][0]), COL_KEY)
 
         elif kind == "resolution":
             if self.settings.get("auto_resolution"):
                 # Auto: keine Pfeile, aktuelle Fenster-Auflösung anzeigen.
                 it["dec_rect"] = it["inc_rect"] = None
                 s.blit(self.font.render(it["label"], True, farbe), (r.x, r.y))
-                txt = f"Auto  {self.width} x {self.height}"
+                txt = t("options.res_auto", w=self.width, h=self.height)
                 img = self.font.render(txt, True, COL_MUTE)
                 s.blit(img, (r.right - img.get_width(), r.y))
             else:
                 self._draw_arrow_value(it, farbe,
-                                       settings_mod.RESOLUTIONS[self.res_idx][0], COL_KEY)
+                                       t(settings_mod.RESOLUTIONS[self.res_idx][0]),
+                                       COL_KEY)
 
         elif kind == "fps":
             self._draw_arrow_value(it, farbe,
@@ -453,8 +479,74 @@ class OptionsScreen(_Screen):
         overlay.fill((0, 0, 0, 170))
         s.blit(overlay, (0, 0))
         player, action = self.capture
-        who = "Spieler 1" if player == "p1" else "Spieler 2"
-        self.draw_center_text(f"{who}  -  {_ACTION_LABEL[action]}",
+        who = t("common.player1") if player == "p1" else t("common.player2")
+        self.draw_center_text(f"{who}  -  {action_label(action)}",
                               self.font, COL_ACCENT, -40)
-        self.draw_center_text("Drücke eine Taste...", self.big_font, COL_TEXT, 0)
-        self.draw_center_text("(Esc = abbrechen)", self.font, COL_MUTE, 44)
+        self.draw_center_text(t("options.press_key"), self.big_font, COL_TEXT, 0)
+        self.draw_center_text(t("options.cancel"), self.font, COL_MUTE, 44)
+
+
+# ---------------------------------------------------------------------------
+#  Sprachauswahl-Screen (beim ersten Start; zweisprachige Beschriftung)
+# ---------------------------------------------------------------------------
+
+class LanguageScreen(_Screen):
+    name = "Sprache"
+
+    def __init__(self, surface, width, height, app, on_done):
+        self.on_done = on_done
+        super().__init__(surface, width, height, app)
+        self.name = t("lang.name")
+        self._build()
+        codes = [c for c, _ in i18n.AVAILABLE]
+        self.sel = codes.index(i18n.get_language()) if i18n.get_language() in codes else 0
+
+    def _build(self):
+        self.rects = []
+        bw, bh, gap = 300, 56, 16
+        total = len(i18n.AVAILABLE) * (bh + gap) - gap
+        y0 = self.height // 2 - total // 2
+        for i in range(len(i18n.AVAILABLE)):
+            x = self.width // 2 - bw // 2
+            self.rects.append(pygame.Rect(x, y0 + i * (bh + gap), bw, bh))
+
+    def on_surface_changed(self):
+        self._build()
+
+    def _choose(self, i):
+        i18n.set_language(i18n.AVAILABLE[i][0])
+        self.app.refresh_language()
+        self.play_sound("click")
+        self.on_done()
+
+    def handle_event(self, event):
+        if event.kind == InputEvent.KEYDOWN:
+            if event.key in ("Up", "w", "Left", "a"):
+                self.sel = (self.sel - 1) % len(self.rects)
+                self.play_sound("move")
+            elif event.key in ("Down", "s", "Right", "d"):
+                self.sel = (self.sel + 1) % len(self.rects)
+                self.play_sound("move")
+            elif event.key in ("Return", "space"):
+                self._choose(self.sel)
+        elif event.kind == InputEvent.MOUSEMOVE:
+            for i, r in enumerate(self.rects):
+                if r.collidepoint(event.pos):
+                    self.sel = i
+        elif event.kind == InputEvent.MOUSEDOWN:
+            for i, r in enumerate(self.rects):
+                if r.collidepoint(event.pos):
+                    self._choose(i)
+
+    def draw(self):
+        s = self.surface
+        s.fill(COL_BG)
+        title = self.big_font.render(t("lang.title"), True, COL_TEXT)
+        s.blit(title, title.get_rect(center=(self.width // 2, 90)))
+        for i, (code, label) in enumerate(i18n.AVAILABLE):
+            r = self.rects[i]
+            pygame.draw.rect(s, COL_SEL if i == self.sel else COL_BTN, r, border_radius=10)
+            img = self.big_font.render(label, True, COL_TEXT)
+            s.blit(img, img.get_rect(center=r.center))
+        hint = self.font.render(t("lang.hint"), True, COL_MUTE)
+        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 30)))

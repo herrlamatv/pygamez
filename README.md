@@ -3,7 +3,9 @@
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
 **Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Sieben
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
-prozeduralen Soundeffekten und teilweise Mehrspieler-Modus.
+prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
+**mehrsprachig** (Deutsch / English); die Sprache wird beim ersten Start gewählt
+und lässt sich jederzeit in den Optionen umstellen.
 
 ## Schnellstart
 
@@ -126,12 +128,18 @@ main.py              Tkinter-Oberfläche, Pygame-Einbettung, zentrale Game-Loop
 game_base.py         Game-Basisklasse (update/draw/handle_event) + InputEvent + Helfer
 settings.py          Einstellungen (Sound/Haptik/Tastenbelegung) laden/speichern (JSON)
 audio.py             Prozedurale Soundeffekte + Gamepad-Rumble
-menu.py              Vorspiel-Screen (Modus) + Options-Screen (Sound/Steuerung)
+menu.py              Sprach-, Vorspiel- (Modus) und Options-Screen (Sound/Steuerung)
 highscore.py         Laden/Speichern der Highscores (JSON)
 prestige.py          Prestige-System für Snake
+i18n.py              Übersetzungs-Engine (lädt lang/*.json, t("schlüssel"))
+lang/
+  de.json  en.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
 games/
   snake.py  pong.py  tictactoe.py  breakout.py  tetris.py  invaders.py  game2048.py
 ```
+
+Die gewählte Sprache wird in `mem.json` gespeichert (wie `settings.json`/
+`highscores.json` neben dem Code) und beim nächsten Start automatisch geladen.
 
 ## Plattformhinweise
 

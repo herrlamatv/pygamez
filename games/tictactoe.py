@@ -20,6 +20,7 @@ Tic-Tac-Toe mit Setup-Menü, mehreren Brettgrößen und KI-Schwierigkeiten.
 import random
 import pygame
 
+import i18n
 from game_base import Game, InputEvent
 
 COL_BG = (20, 22, 30)
@@ -89,13 +90,15 @@ class TicTacToeGame(Game):
     def _draw_setup(self):
         s = self.surface
         s.fill(COL_BG)
-        titel = "TIC-TAC-TOE  (2 Spieler)" if self.multiplayer else "TIC-TAC-TOE"
+        titel = i18n.t("ttt.setup_title_mp") if self.multiplayer \
+            else i18n.t("ttt.setup_title")
         title = self.big_font.render(titel, True, COL_TEXT)
         s.blit(title, title.get_rect(center=(self.width // 2, 56)))
 
         # Schwierigkeit (nur im 1-Spieler-Modus relevant)
         diff_dim = (80, 84, 96) if self.multiplayer else COL_DIM
-        s.blit(self._mid.render("Schwierigkeit:", True, diff_dim), (self.width // 2 - 165, 92))
+        s.blit(self._mid.render(i18n.t("ttt.difficulty"), True, diff_dim),
+               (self.width // 2 - 165, 92))
         for name, r in self.diff_rects.items():
             aktiv = (name == self.diff_name and not self.multiplayer)
             pygame.draw.rect(s, (70, 110, 170) if aktiv else (45, 50, 64), r, border_radius=8)
@@ -104,7 +107,8 @@ class TicTacToeGame(Game):
             t = self._mid.render(name, True, COL_TEXT if not self.multiplayer else diff_dim)
             s.blit(t, t.get_rect(center=r.center))
 
-        s.blit(self._mid.render("Spielfeld:", True, COL_DIM), (self.width // 2 - 165, 212))
+        s.blit(self._mid.render(i18n.t("ttt.field"), True, COL_DIM),
+               (self.width // 2 - 165, 212))
         for n, r in self.size_rects.items():
             aktiv = (n == self.size)
             pygame.draw.rect(s, (70, 110, 170) if aktiv else (45, 50, 64), r, border_radius=8)
@@ -113,14 +117,14 @@ class TicTacToeGame(Game):
             s.blit(t, t.get_rect(center=r.center))
 
         info = self._small.render(
-            f"Ziel: {win_length(self.size)} in einer Reihe", True, COL_DIM)
+            i18n.t("ttt.goal", k=win_length(self.size)), True, COL_DIM)
         s.blit(info, info.get_rect(center=(self.width // 2, 300)))
 
         pygame.draw.rect(s, (70, 150, 90), self.start_rect, border_radius=10)
-        st = self._mid.render("START", True, COL_TEXT)
+        st = self._mid.render(i18n.t("common.start"), True, COL_TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
 
-        hint = self._small.render("Klick zum Auswählen   -   Enter = Start", True, COL_DIM)
+        hint = self._small.render(i18n.t("ttt.setup_hint"), True, COL_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, 420)))
 
     def _handle_setup_event(self, event):
@@ -498,20 +502,22 @@ class TicTacToeGame(Game):
 
         # Kopfzeile
         if self.multiplayer:
-            kopf = f"2 Spieler  {n}x{n}  (Ziel {self.k})"
+            kopf = i18n.t("ttt.header_mp", n=n, k=self.k)
             stand = self._small.render(
-                f"X: {self.wins_x}   O: {self.wins_o}", True, COL_TEXT)
+                i18n.t("ttt.score_mp", x=self.wins_x, o=self.wins_o), True, COL_TEXT)
         else:
-            kopf = f"{self.diff_name}  {n}x{n}  (Ziel {self.k})"
-            stand = self._small.render(f"Siege: {self.wins_x}", True, COL_TEXT)
+            kopf = i18n.t("ttt.header_sp", diff=self.diff_name, n=n, k=self.k)
+            stand = self._small.render(
+                i18n.t("ttt.score_sp", wins=self.wins_x), True, COL_TEXT)
         s.blit(self._small.render(kopf, True, COL_DIM), (10, 8))
         s.blit(stand, (self.width - stand.get_width() - 10, 8))
         if self.state == PLAY:
             if self.multiplayer:
-                zug = "Am Zug: Spieler 1 (X)" if self.current == HUMAN \
-                    else "Am Zug: Spieler 2 (O)"
+                zug = i18n.t("ttt.turn_p1") if self.current == HUMAN \
+                    else i18n.t("ttt.turn_p2")
             else:
-                zug = "Du bist am Zug (X)" if self.current == HUMAN else "KI denkt..."
+                zug = i18n.t("ttt.turn_you") if self.current == HUMAN \
+                    else i18n.t("ttt.turn_ai")
             s.blit(self._small.render(zug, True, COL_TEXT), (10, self.height - 24))
 
         if self.state == OVER:
@@ -523,16 +529,16 @@ class TicTacToeGame(Game):
         ov.fill((0, 0, 0, 150))
         s.blit(ov, (0, 0))
         if self.winner == "Unentschieden":
-            msg, farbe = "UNENTSCHIEDEN", COL_WIN
+            msg, farbe = i18n.t("common.draw"), COL_WIN
         elif self.multiplayer:
             if self.winner == HUMAN:
-                msg, farbe = "SPIELER 1 (X) GEWINNT!", (120, 210, 255)
+                msg, farbe = i18n.t("ttt.win_p1"), (120, 210, 255)
             else:
-                msg, farbe = "SPIELER 2 (O) GEWINNT!", (255, 170, 120)
+                msg, farbe = i18n.t("ttt.win_p2"), (255, 170, 120)
         elif self.winner == HUMAN:
-            msg, farbe = "DU GEWINNST!", (120, 230, 140)
+            msg, farbe = i18n.t("ttt.win_you"), (120, 230, 140)
         else:
-            msg, farbe = "KI GEWINNT", (230, 120, 120)
+            msg, farbe = i18n.t("ttt.win_ai"), (230, 120, 120)
         self.draw_center_text(msg, self.big_font, farbe, -20)
-        self.draw_center_text("Enter/Klick = neue Runde", self.font, COL_TEXT, 25)
-        self.draw_center_text("S = Einstellungen", self._small, COL_DIM, 55)
+        self.draw_center_text(i18n.t("ttt.new_round"), self.font, COL_TEXT, 25)
+        self.draw_center_text(i18n.t("ttt.settings"), self._small, COL_DIM, 55)

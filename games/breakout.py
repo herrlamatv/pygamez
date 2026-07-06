@@ -36,6 +36,7 @@ import math
 import random
 import pygame
 
+import i18n
 from game_base import Game, InputEvent
 
 # ---------------------------------------------------------------- Farben
@@ -294,22 +295,25 @@ class BreakoutGame(Game):
         glow = self.big_font.render("BREAKOUT", True, COL_ACCENT)
         s.blit(glow, glow.get_rect(center=(self.width // 2 + 2, 58)))
         s.blit(title, title.get_rect(center=(self.width // 2, 56)))
-        sub = self._small.render("DELUXE", True, COL_ACCENT)
+        sub = self._small.render(i18n.t("bo.deluxe"), True, COL_ACCENT)
         s.blit(sub, sub.get_rect(center=(self.width // 2, 86)))
 
         # Level-Wahl (oben rechts)
         ld = self._level_def(self.start_level_index)
-        s.blit(self._small.render("Startlevel", True, COL_DIM), (self.width - 170, 12))
+        s.blit(self._small.render(i18n.t("bo.startlevel"), True, COL_DIM),
+               (self.width - 170, 12))
         lvl_txt = self._mid.render(f"{self.start_level_index + 1:>2}/{NUM_LEVELS}", True, COL_TEXT)
         s.blit(lvl_txt, (self.width - 170, 36))
-        tag_txt = self._small.render(ld["tag"], True, TAG_COLORS[ld["tag"]])
+        tag_txt = self._small.render(i18n.t("bo.tag." + ld["tag"]), True,
+                                     TAG_COLORS[ld["tag"]])
         s.blit(tag_txt, (self.width - 170, 62))
         for r, sym in ((self.level_up_rect, "+"), (self.level_down_rect, "-")):
             self._panel(s, r, (45, 50, 68))
             t = self._mid.render(sym, True, COL_TEXT)
             s.blit(t, t.get_rect(center=r.center))
 
-        s.blit(self._mid.render("Schwierigkeit", True, COL_DIM), (self.width // 2 - 165, 104))
+        s.blit(self._mid.render(i18n.t("bo.difficulty"), True, COL_DIM),
+               (self.width // 2 - 165, 104))
         for name, r in self.diff_rects.items():
             aktiv = (name == self.diff_name)
             self._panel(s, r, (70, 110, 175) if aktiv else (40, 45, 60),
@@ -321,11 +325,12 @@ class BreakoutGame(Game):
         voll = (self.level_mode == "Voll")
         self._panel(s, self.mode_rect, (60, 95, 120) if voll else (40, 45, 60))
         mt = self._small.render(
-            "Aufbau:  Voll (dichte Kästchen)" if voll else "Aufbau:  Standard (gemischt)",
+            i18n.t("bo.build_full") if voll else i18n.t("bo.build_std"),
             True, COL_TEXT)
         s.blit(mt, mt.get_rect(center=self.mode_rect.center))
 
-        s.blit(self._mid.render("Ballfarbe", True, COL_DIM), (self.width // 2 - 165, 234))
+        s.blit(self._mid.render(i18n.t("bo.ballcolor"), True, COL_DIM),
+               (self.width // 2 - 165, 234))
         for i, r in enumerate(self.color_rects):
             pygame.draw.rect(s, BALL_COLORS[i][1], r, border_radius=8)
             if i == self.color_index:
@@ -335,16 +340,12 @@ class BreakoutGame(Game):
         pulse = int(20 * (0.5 + 0.5 * math.sin(self.anim_t * 4)))
         pygame.draw.rect(s, (60 + pulse, 150 + pulse, 90), self.start_rect, border_radius=12)
         pygame.draw.rect(s, COL_TEXT, self.start_rect, 2, border_radius=12)
-        st = self._mid.render("START", True, COL_TEXT)
+        st = self._mid.render(i18n.t("common.start"), True, COL_TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
 
-        hint = self._tiny.render(
-            "1/2/3 Schwierigkeit   Pfeile Farbe   Hoch/Runter Level   M Aufbau   Enter Start",
-            True, COL_DIM)
+        hint = self._tiny.render(i18n.t("bo.setup_hint"), True, COL_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, 428)))
-        leg = self._tiny.render(
-            "Power-ups: x2/x3 Bälle  L Laser  F Feuerball  G Klebrig  U Schild  $ Bonus  W/S Schläger",
-            True, (110, 120, 145))
+        leg = self._tiny.render(i18n.t("bo.legend"), True, (110, 120, 145))
         s.blit(leg, leg.get_rect(center=(self.width // 2, 448)))
 
     def _panel(self, s, rect, fill, border=None):
@@ -986,7 +987,7 @@ class BreakoutGame(Game):
         self._draw_hud(s)
 
         if self.ball_hängt and self.intro_timer <= 0:
-            img = self.font.render("Leertaste/Klick zum Start", True, COL_TEXT)
+            img = self.font.render(i18n.t("bo.start_ball"), True, COL_TEXT)
             s.blit(img, img.get_rect(center=(self.width // 2, self.height // 2 + 60)))
 
         # Level-Intro-Banner
@@ -1067,10 +1068,12 @@ class BreakoutGame(Game):
         bar.fill((0, 0, 0, 90))
         s.blit(bar, (0, 0))
 
-        s.blit(self.font.render(f"Punkte: {self.score}", True, COL_TEXT), (10, 6))
+        s.blit(self.font.render(i18n.t("common.points", score=self.score), True,
+                                COL_TEXT), (10, 6))
         tag = self.level_def["tag"]
         mid = self._small.render(
-            f"{self.diff_name}  Level {self.level_index + 1}/{NUM_LEVELS}  [{tag}]",
+            i18n.t("bo.hud", diff=self.diff_name, level=self.level_index + 1,
+                   total=NUM_LEVELS, tag=i18n.t("bo.tag." + tag)),
             True, TAG_COLORS[tag])
         s.blit(mid, mid.get_rect(midtop=(self.width // 2, 8)))
 
@@ -1114,7 +1117,7 @@ class BreakoutGame(Game):
         big = self.big_font.render(f"LEVEL {self.level_index + 1}", True, COL_TEXT)
         big.set_alpha(alpha)
         s.blit(big, big.get_rect(center=(self.width // 2, self.height // 2 - 10)))
-        sub = self._mid.render(f"[{tag}]", True, TAG_COLORS[tag])
+        sub = self._mid.render(f"[{i18n.t('bo.tag.' + tag)}]", True, TAG_COLORS[tag])
         sub.set_alpha(alpha)
         s.blit(sub, sub.get_rect(center=(self.width // 2, self.height // 2 + 26)))
 
@@ -1122,16 +1125,19 @@ class BreakoutGame(Game):
         ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         ov.fill((0, 0, 0, 170))
         s.blit(ov, (0, 0))
-        self.draw_center_text("PAUSE", self.big_font, COL_TEXT, -10)
-        self.draw_center_text("P / Esc zum Fortsetzen", self.font, COL_DIM, 40)
+        self.draw_center_text(i18n.t("app.pause"), self.big_font, COL_TEXT, -10)
+        self.draw_center_text(i18n.t("bo.pause_resume"), self.font, COL_DIM, 40)
 
     def _draw_over(self, s):
         ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         ov.fill((0, 0, 0, 170))
         s.blit(ov, (0, 0))
         if self.won:
-            self.draw_center_text("GESCHAFFT!", self.big_font, (120, 230, 140), -30)
+            self.draw_center_text(i18n.t("bo.cleared"), self.big_font,
+                                  (120, 230, 140), -30)
         else:
-            self.draw_center_text("GAME OVER", self.big_font, (230, 120, 120), -30)
-        self.draw_center_text(f"Punkte: {self.score}", self.font, COL_TEXT, 18)
-        self.draw_center_text("Enter = zurück zur Auswahl", self.font, COL_DIM, 52)
+            self.draw_center_text(i18n.t("common.game_over"), self.big_font,
+                                  (230, 120, 120), -30)
+        self.draw_center_text(i18n.t("common.points", score=self.score),
+                              self.font, COL_TEXT, 18)
+        self.draw_center_text(i18n.t("bo.back_to_select"), self.font, COL_DIM, 52)
