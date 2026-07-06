@@ -1,0 +1,286 @@
+# -*- coding: utf-8 -*-
+"""
+pong.py
+=======
+Pong - Einzelspieler (gegen KI) oder Mehrspieler (2 Spieler).
+
+- Steuerung ueber die belegten Tasten (Standard: Spieler 1 = W/S, Spieler 2 =
+  Pfeil hoch/runter). Die Aktions-Taste haelt den eigenen Schlaeger an.
+- Einzelspieler: rechter Schlaeger wird von einer einfachen KI gesteuert.
+- Mehrspieler: rechter Schlaeger = Spieler 2.
+- Bewegungsmodus pro Steuerung umschaltbar (im Spiel):
+    * Dauer  : einmal druecken -> der Schlaeger faehrt dauerhaft weiter
+               (bis Richtungswechsel oder Aktions-Taste). Das ist der Standard.
+    * Halten : der Schlaeger bewegt sich nur, solange man die Taste gedrueckt
+               HAELT (nutzt die Tastenwiederholung), und stoppt beim Loslassen.
+  Umschalttasten:  X = Steuerung 1 (z.B. WASD),  N = Steuerung 2 (z.B. IJKL/Pfeile).
+  Die Einstellung wird dauerhaft in settings.json ("pong") gespeichert.
+- Ball-Physik mit Beschleunigung und Winkel je nach Treffpunkt.
+- Es wird bis 5 Punkte gespielt. Als Highscore zaehlen die Punkte links (P1).
+"""
+
+import random
+import pygame
+
+import settings as settings_mod
+from game_base import Game, InputEvent
+
+COL_BG = (10, 10, 20)
+COL_FG = (235, 235, 235)
+COL_BALL = (255, 220, 90)
+COL_NET = (60, 60, 80)
+COL_P1 = (140, 230, 160)
+COL_P2 = (150, 200, 255)
+COL_DIM = (120, 128, 148)
+COL_HOLD = (120, 220, 140)   # "Halten"-Modus (gruen)
+
+PADDLE_W = 12
+PADDLE_H = 80
+PADDLE_SPEED = 380          # Pixel/Sekunde (Spieler)
+AI_SPEED = 300              # Pixel/Sekunde (KI, absichtlich langsamer -> schlagbar)
+BALL_SIZE = 14
+BALL_START_SPEED = 320
+BALL_MAX_SPEED = 650
+WIN_SCORE = 5
+
+# So lange (Sekunden) faehrt der Schlaeger im "Halten"-Modus nach dem letzten
+# Tastendruck noch weiter. Die Tastenwiederholung feuert schneller als das,
+# daher bewegt er sich fluessig solange man haelt - und stoppt kurz nach dem
+# Loslassen (wenn keine Wiederholung mehr kommt).
+HOLD_KEEPALIVE = 0.12
+
+# Feste Umschalttasten fuer den Bewegungsmodus.
+TOGGLE_KEYS = {"x": "p1", "X": "p1", "n": "p2", "N": "p2"}
+
+
+class PongGame(Game):
+    name = "Pong"
+    highscore_key = "pong"
+    supports_multiplayer = True
+
+    def reset(self):
+        self.score = 0            # = Punkte des linken Spielers (P1)
+        self.game_over = False
+
+        self.player_y = self.height / 2 - PADDLE_H / 2
+        self.ai_y = self.height / 2 - PADDLE_H / 2
+        self.player_score = 0
+        self.ai_score = 0
+
+        # Bewegungszustand pro Steuerung ("p1"/"p2"):
+        #   dir  : aktuelle Richtung (-1/0/1)
+        #   keep : Rest-Zeit im "Halten"-Modus, bis der Schlaeger stoppt
+        self.dir = {"p1": 0, "p2": 0}
+        self.keep = {"p1": 0.0, "p2": 0.0}
+        pg = self.settings.get("pong", {}) if isinstance(self.settings, dict) else {}
+        self.hold = {"p1": bool(pg.get("hold_p1", False)),
+                     "p2": bool(pg.get("hold_p2", False))}
+
+        self._small = pygame.font.SysFont("consolas", 15)
+
+        self._serve(toward_player=random.choice([True, False]))
+
+    def _serve(self, toward_player):
+        """Setzt den Ball in die Mitte und gibt ihm eine Startrichtung."""
+        self.ball_x = self.width / 2 - BALL_SIZE / 2
+        self.ball_y = self.height / 2 - BALL_SIZE / 2
+        winkel = random.uniform(-0.35, 0.35)
+        richtung = -1 if toward_player else 1
+        self.ball_vx = richtung * BALL_START_SPEED
+        self.ball_vy = BALL_START_SPEED * winkel
+
+    def handle_event(self, event):
+        if event.kind != InputEvent.KEYDOWN:
+            return
+
+        if self.game_over:
+            if event.key in ("Return", "space"):
+                self.reset()
+            return
+
+        # Bewegungsmodus umschalten: X = Steuerung 1, N = Steuerung 2.
+        if event.key in TOGGLE_KEYS:
+            self._toggle_hold(TOGGLE_KEYS[event.key])
+            return
+
+        # Bewegung je Steuerung auswerten. Im Einzelspieler steuern BEIDE
+        # Belegungen den linken Schlaeger, im Mehrspieler p1=links, p2=rechts.
+        self._move_scheme("p1", event.key)
+        self._move_scheme("p2", event.key)
+
+    def _move_scheme(self, scheme, key):
+        """Setzt Richtung/Keepalive fuer eine Steuerung anhand einer Taste."""
+        if self.is_action(key, "up", scheme):
+            self._press(scheme, -1)
+        elif self.is_action(key, "down", scheme):
+            self._press(scheme, 1)
+        elif self.is_action(key, "action", scheme):
+            # Aktions-Taste haelt im Dauer-Modus an (im Halten-Modus unnoetig).
+            self.dir[scheme] = 0
+            self.keep[scheme] = 0.0
+
+    def _press(self, scheme, richtung):
+        self.dir[scheme] = richtung
+        if self.hold[scheme]:
+            # Im Halten-Modus faehrt der Schlaeger nur kurz weiter; die
+            # Tastenwiederholung frischt das laufend auf, solange man haelt.
+            self.keep[scheme] = HOLD_KEEPALIVE
+
+    def _toggle_hold(self, scheme):
+        """Schaltet fuer eine Steuerung zwischen Dauer- und Halten-Modus um."""
+        self.hold[scheme] = not self.hold[scheme]
+        # Laufende Bewegung beim Umschalten stoppen.
+        self.dir[scheme] = 0
+        self.keep[scheme] = 0.0
+        if isinstance(self.settings, dict):
+            self.settings.setdefault("pong", {})[f"hold_{scheme}"] = self.hold[scheme]
+            settings_mod.save_settings(self.settings)
+        self.play_sound("select")
+
+    def update(self, dt):
+        if self.game_over:
+            return
+
+        # Halten-Modus: Bewegung ausklingen lassen, wenn keine Tastenwiederholung
+        # mehr kommt (Taste losgelassen).
+        for scheme in ("p1", "p2"):
+            if self.hold[scheme] and self.dir[scheme] != 0:
+                self.keep[scheme] -= dt
+                if self.keep[scheme] <= 0:
+                    self.dir[scheme] = 0
+
+        # --- Linker Schlaeger ---
+        if self.multiplayer:
+            left_dir = self.dir["p1"]
+        else:
+            # Einzelspieler: beide Steuerungen bewegen den linken Schlaeger.
+            left_dir = max(-1, min(1, self.dir["p1"] + self.dir["p2"]))
+        self.player_y += left_dir * PADDLE_SPEED * dt
+        self.player_y = max(0, min(self.height - PADDLE_H, self.player_y))
+
+        # --- Rechter Schlaeger: KI (Einzel) oder Spieler 2 (Mehrspieler) ---
+        if self.multiplayer:
+            self.ai_y += self.dir["p2"] * PADDLE_SPEED * dt
+        else:
+            ziel = self.ball_y + BALL_SIZE / 2 - PADDLE_H / 2
+            if self.ai_y < ziel - 8:
+                self.ai_y += AI_SPEED * dt
+            elif self.ai_y > ziel + 8:
+                self.ai_y -= AI_SPEED * dt
+        self.ai_y = max(0, min(self.height - PADDLE_H, self.ai_y))
+
+        # --- Ball bewegen ---
+        self.ball_x += self.ball_vx * dt
+        self.ball_y += self.ball_vy * dt
+
+        if self.ball_y <= 0:
+            self.ball_y = 0
+            self.ball_vy = abs(self.ball_vy)
+            self.play_sound("bounce")
+        elif self.ball_y + BALL_SIZE >= self.height:
+            self.ball_y = self.height - BALL_SIZE
+            self.ball_vy = -abs(self.ball_vy)
+            self.play_sound("bounce")
+
+        ball_rect = pygame.Rect(self.ball_x, self.ball_y, BALL_SIZE, BALL_SIZE)
+        player_rect = pygame.Rect(20, self.player_y, PADDLE_W, PADDLE_H)
+        ai_rect = pygame.Rect(self.width - 20 - PADDLE_W, self.ai_y, PADDLE_W, PADDLE_H)
+
+        if ball_rect.colliderect(player_rect) and self.ball_vx < 0:
+            self._bounce(player_rect, nach_rechts=True)
+        elif ball_rect.colliderect(ai_rect) and self.ball_vx > 0:
+            self._bounce(ai_rect, nach_rechts=False)
+
+        # --- Punkte ---
+        if self.ball_x + BALL_SIZE < 0:          # rechts punktet
+            self.ai_score += 1
+            self.play_sound("point")
+            self._nach_punkt(toward_player=True)
+        elif self.ball_x > self.width:           # links punktet
+            self.player_score += 1
+            self.score = self.player_score
+            self.play_sound("point")
+            self._nach_punkt(toward_player=False)
+
+    def _bounce(self, paddle, nach_rechts):
+        """Ball am Schlaeger reflektieren; Winkel haengt vom Treffpunkt ab."""
+        treff = (self.ball_y + BALL_SIZE / 2) - (paddle.y + PADDLE_H / 2)
+        treff /= (PADDLE_H / 2)
+
+        speed = min(BALL_MAX_SPEED, abs(self.ball_vx) * 1.06 + 20)
+        self.ball_vx = speed * (1 if nach_rechts else -1)
+        self.ball_vy = speed * treff
+        if nach_rechts:
+            self.ball_x = paddle.right
+        else:
+            self.ball_x = paddle.left - BALL_SIZE
+        self.play_sound("bounce")
+        self.rumble(60)
+
+    def _nach_punkt(self, toward_player):
+        if self.player_score >= WIN_SCORE or self.ai_score >= WIN_SCORE:
+            self.game_over = True
+            self.play_sound("win" if self.player_score > self.ai_score else "gameover")
+            self.rumble(200)
+        else:
+            self._serve(toward_player=toward_player)
+
+    def draw(self):
+        s = self.surface
+        s.fill(COL_BG)
+
+        for y in range(0, self.height, 28):
+            pygame.draw.rect(s, COL_NET, (self.width // 2 - 2, y, 4, 16))
+
+        pygame.draw.rect(s, COL_P1, (20, self.player_y, PADDLE_W, PADDLE_H),
+                         border_radius=4)
+        rechts_farbe = COL_P2 if self.multiplayer else COL_FG
+        pygame.draw.rect(s, rechts_farbe,
+                         (self.width - 20 - PADDLE_W, self.ai_y, PADDLE_W, PADDLE_H),
+                         border_radius=4)
+
+        pygame.draw.rect(s, COL_BALL, (self.ball_x, self.ball_y, BALL_SIZE, BALL_SIZE),
+                         border_radius=3)
+
+        ps = self.big_font.render(str(self.player_score), True, COL_FG)
+        ais = self.big_font.render(str(self.ai_score), True, COL_FG)
+        s.blit(ps, (self.width // 2 - 70, 20))
+        s.blit(ais, (self.width // 2 + 50, 20))
+        links = "P1" if self.multiplayer else "Du"
+        rechts = "P2" if self.multiplayer else "KI"
+        s.blit(self.font.render(links, True, COL_P1), (30, 10))
+        r = self.font.render(rechts, True, rechts_farbe)
+        s.blit(r, (self.width - 60, 10))
+
+        if not self.game_over:
+            self._draw_mode_hud()
+
+        if self.game_over:
+            if self.multiplayer:
+                sieger = 1 if self.player_score > self.ai_score else 2
+                text = f"SPIELER {sieger} GEWINNT"
+                farbe = COL_P1 if sieger == 1 else COL_P2
+            else:
+                gewonnen = self.player_score > self.ai_score
+                text = "GEWONNEN!" if gewonnen else "VERLOREN"
+                farbe = (120, 230, 140) if gewonnen else (230, 120, 120)
+            self.draw_center_text(text, self.big_font, farbe, -20)
+            self.draw_center_text("Enter = Neustart", self.font, COL_FG, 30)
+
+    def _draw_mode_hud(self):
+        """Zeigt unten den Bewegungsmodus je Steuerung + die Umschalttasten."""
+        s = self.surface
+
+        def zeile(scheme):
+            modus = "Halten" if self.hold[scheme] else "Dauer"
+            col = COL_HOLD if self.hold[scheme] else COL_DIM
+            return modus, col
+
+        # Einzelspieler: beide Steuerungen gehoeren dir. Mehrspieler: 1=links, 2=rechts.
+        m1, c1 = zeile("p1")
+        t1 = self._small.render(f"[X] Steuerung 1: {m1}", True, c1)
+        s.blit(t1, (10, self.height - 22))
+
+        m2, c2 = zeile("p2")
+        t2 = self._small.render(f"[N] Steuerung 2: {m2}", True, c2)
+        s.blit(t2, (self.width - t2.get_width() - 10, self.height - 22))
