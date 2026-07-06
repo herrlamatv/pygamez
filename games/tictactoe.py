@@ -12,8 +12,9 @@ Tic-Tac-Toe mit Setup-Menue, mehreren Brettgroessen und KI-Schwierigkeiten.
     Medium - gewinnt/blockt sofort, sonst heuristisch bester Zug.
     Hard   - 3x3: volle Minimax-Suche (unschlagbar);
              groessere Bretter: tiefenbegrenzte Alpha-Beta-Suche mit Heuristik.
-- Spieler = X, KI = O, Klick-Steuerung.
-- "Score"/Highscore = Anzahl gewonnener Runden (Siege).
+- Modus: 1 Spieler (gegen die KI) oder 2 Spieler (lokal X gegen O).
+- Spieler = X, KI/Spieler 2 = O, Klick-Steuerung.
+- "Score"/Highscore = Anzahl gewonnener Runden (Siege) im 1-Spieler-Modus.
 """
 
 import random
@@ -52,10 +53,12 @@ def win_length(n):
 class TicTacToeGame(Game):
     name = "Tic-Tac-Toe"
     highscore_key = "tictactoe"
+    supports_multiplayer = True      # Menue bietet "Mehrspieler (2 Spieler)"
 
     def reset(self):
         self.score = 0
-        self.wins = 0
+        self.wins_x = 0
+        self.wins_o = 0
         self.game_over = False
         self.state = SETUP
 
@@ -86,15 +89,19 @@ class TicTacToeGame(Game):
     def _draw_setup(self):
         s = self.surface
         s.fill(COL_BG)
-        title = self.big_font.render("TIC-TAC-TOE", True, COL_TEXT)
+        titel = "TIC-TAC-TOE  (2 Spieler)" if self.multiplayer else "TIC-TAC-TOE"
+        title = self.big_font.render(titel, True, COL_TEXT)
         s.blit(title, title.get_rect(center=(self.width // 2, 56)))
 
-        s.blit(self._mid.render("Schwierigkeit:", True, COL_DIM), (self.width // 2 - 165, 92))
+        # Schwierigkeit (nur im 1-Spieler-Modus relevant)
+        diff_dim = (80, 84, 96) if self.multiplayer else COL_DIM
+        s.blit(self._mid.render("Schwierigkeit:", True, diff_dim), (self.width // 2 - 165, 92))
         for name, r in self.diff_rects.items():
-            aktiv = (name == self.diff_name)
+            aktiv = (name == self.diff_name and not self.multiplayer)
             pygame.draw.rect(s, (70, 110, 170) if aktiv else (45, 50, 64), r, border_radius=8)
-            pygame.draw.rect(s, COL_TEXT if aktiv else COL_DIM, r, 2, border_radius=8)
-            t = self._mid.render(name, True, COL_TEXT)
+            rand = COL_TEXT if aktiv else diff_dim
+            pygame.draw.rect(s, rand, r, 2, border_radius=8)
+            t = self._mid.render(name, True, COL_TEXT if not self.multiplayer else diff_dim)
             s.blit(t, t.get_rect(center=r.center))
 
         s.blit(self._mid.render("Spielfeld:", True, COL_DIM), (self.width // 2 - 165, 212))
@@ -194,8 +201,19 @@ class TicTacToeGame(Game):
                 self.state = PLAY
             return
 
-        # PLAY: Klick setzt einen Stein (nur wenn der Spieler am Zug ist)
-        if event.kind == InputEvent.MOUSEDOWN and self.current == HUMAN:
+        # PLAY: Klick setzt einen Stein
+        if event.kind != InputEvent.MOUSEDOWN:
+            return
+
+        if self.multiplayer:
+            # Beide Spieler sind menschlich: der aktuelle Spieler zieht.
+            idx = self._feld_aus_pos(event.pos)
+            if idx is not None and self.board[idx] == "":
+                sym = self.current
+                self._apply_move(idx, sym)
+                if self.state == PLAY:
+                    self.current = AI if sym == HUMAN else HUMAN
+        elif self.current == HUMAN:
             idx = self._feld_aus_pos(event.pos)
             if idx is not None and self.board[idx] == "":
                 self._apply_move(idx, HUMAN)
@@ -215,6 +233,8 @@ class TicTacToeGame(Game):
     # ===== Spiellogik ===================================================
 
     def update(self, dt):
+        if self.multiplayer:
+            return                       # kein KI-Zug im 2-Spieler-Modus
         if self.state != PLAY or self.current != AI:
             return
         # kleine Denkpause, damit der KI-Zug sichtbar ist
@@ -235,8 +255,11 @@ class TicTacToeGame(Game):
             self.winner = sym
             self.win_cells = cells
             if sym == HUMAN:
-                self.wins += 1
-                self.score = self.wins
+                self.wins_x += 1
+            else:
+                self.wins_o += 1
+            if not self.multiplayer and sym == HUMAN:
+                self.score = self.wins_x
             self._ende()
         elif "" not in self.board:
             self.winner = "Unentschieden"
@@ -245,12 +268,12 @@ class TicTacToeGame(Game):
     def _ende(self):
         self.state = OVER
         self.game_over = True     # damit main.py den Highscore speichert
-        if self.winner == HUMAN:
-            self.play_sound("win")
-        elif self.winner == "Unentschieden":
+        if self.winner == "Unentschieden":
             self.play_sound("point")
-        else:
+        elif not self.multiplayer and self.winner == AI:
             self.play_sound("gameover")
+        else:
+            self.play_sound("win")
 
     def _winning_cells(self, idx, sym):
         """Liefert die Gewinnzellen, falls 'sym' durch Zug auf idx gewinnt."""
@@ -474,12 +497,21 @@ class TicTacToeGame(Game):
             pygame.draw.line(s, COL_WIN, p1, p2, max(4, cell // 10))
 
         # Kopfzeile
-        kopf = f"{self.diff_name}  {n}x{n}  (Ziel {self.k})"
+        if self.multiplayer:
+            kopf = f"2 Spieler  {n}x{n}  (Ziel {self.k})"
+            stand = self._small.render(
+                f"X: {self.wins_x}   O: {self.wins_o}", True, COL_TEXT)
+        else:
+            kopf = f"{self.diff_name}  {n}x{n}  (Ziel {self.k})"
+            stand = self._small.render(f"Siege: {self.wins_x}", True, COL_TEXT)
         s.blit(self._small.render(kopf, True, COL_DIM), (10, 8))
-        s.blit(self._small.render(f"Siege: {self.wins}", True, COL_TEXT),
-               (self.width - 110, 8))
+        s.blit(stand, (self.width - stand.get_width() - 10, 8))
         if self.state == PLAY:
-            zug = "Du bist am Zug (X)" if self.current == HUMAN else "KI denkt..."
+            if self.multiplayer:
+                zug = "Am Zug: Spieler 1 (X)" if self.current == HUMAN \
+                    else "Am Zug: Spieler 2 (O)"
+            else:
+                zug = "Du bist am Zug (X)" if self.current == HUMAN else "KI denkt..."
             s.blit(self._small.render(zug, True, COL_TEXT), (10, self.height - 24))
 
         if self.state == OVER:
@@ -492,6 +524,11 @@ class TicTacToeGame(Game):
         s.blit(ov, (0, 0))
         if self.winner == "Unentschieden":
             msg, farbe = "UNENTSCHIEDEN", COL_WIN
+        elif self.multiplayer:
+            if self.winner == HUMAN:
+                msg, farbe = "SPIELER 1 (X) GEWINNT!", (120, 210, 255)
+            else:
+                msg, farbe = "SPIELER 2 (O) GEWINNT!", (255, 170, 120)
         elif self.winner == HUMAN:
             msg, farbe = "DU GEWINNST!", (120, 230, 140)
         else:
