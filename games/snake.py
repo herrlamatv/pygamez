@@ -6,11 +6,11 @@ Snake - komplett ueberarbeitete Deluxe-Version mit Spielmodi und Boost.
 
 Neu
 ---
-- BOOST: Mit der Boost-Taste (Einzelspieler: Leertaste/Shift) schaltet man einen
-  Turbo an. Die Schlange bewegt sich doppelt so schnell und verbraucht dabei
-  Ausdauer (Anzeige als Balken). Ist die Ausdauer leer, schaltet der Boost
-  automatisch ab; sie laedt sich mit der Zeit wieder auf. Goldaepfel fuellen sie
-  sofort ganz auf. (Umschalter, weil das Eingabesystem nur Tastendruecke liefert.)
+- BOOST: Solange die Boost-Taste (Einzelspieler: Leertaste/Shift) gedrueckt
+  gehalten wird, laeuft der Turbo. Die Schlange bewegt sich doppelt so schnell
+  und verbraucht dabei Ausdauer (Anzeige als Balken). Ist die Ausdauer leer,
+  schaltet der Boost automatisch ab; sie laedt sich mit der Zeit wieder auf.
+  Goldaepfel fuellen sie sofort ganz auf.
 - SPIELMODI (im Setup waehlbar):
     * Klassisch    - der Klassiker.
     * Speed-Rush   - wird mit jedem Apfel schneller.
@@ -346,6 +346,18 @@ class SnakeGame(Game):
             self._handle_setup_event(event)
             return
 
+        # Boost beenden, sobald die Taste losgelassen wird (gedrueckt-halten-Logik)
+        if event.kind == InputEvent.KEYUP:
+            if self.multiplayer:
+                if event.key in BOOST_KEYS_P1:
+                    self._set_boost(self.snakes[0], False)
+                elif event.key in BOOST_KEYS_P2:
+                    self._set_boost(self.snakes[1], False)
+            else:
+                if event.key in BOOST_KEYS_P1 or event.key in BOOST_KEYS_P2:
+                    self._set_boost(self.snakes[0], False)
+            return
+
         if event.kind != InputEvent.KEYDOWN:
             return
 
@@ -354,15 +366,15 @@ class SnakeGame(Game):
                 self._start_play()
             return
 
-        # Boost umschalten
+        # Boost aktivieren, solange die Taste gehalten wird
         if self.multiplayer:
             if event.key in BOOST_KEYS_P1:
-                self._toggle_boost(self.snakes[0]); return
+                self._set_boost(self.snakes[0], True); return
             if event.key in BOOST_KEYS_P2:
-                self._toggle_boost(self.snakes[1]); return
+                self._set_boost(self.snakes[1], True); return
         else:
             if event.key in BOOST_KEYS_P1 or event.key in BOOST_KEYS_P2:
-                self._toggle_boost(self.snakes[0]); return
+                self._set_boost(self.snakes[0], True); return
 
         # Prestige (nur Einzelspieler)
         if event.key in ("p", "P"):
@@ -375,14 +387,16 @@ class SnakeGame(Game):
         else:
             self._turn(self.snakes[0], event.key, None)
 
-    def _toggle_boost(self, sn):
+    def _set_boost(self, sn, on):
         if not sn.alive:
             return
-        if sn.boost_on:
+        if on:
+            # Nur neu starten, wenn genug Ausdauer da ist
+            if not sn.boost_on and sn.stamina >= BOOST_MIN_START:
+                sn.boost_on = True
+                self.play_sound("rotate")
+        else:
             sn.boost_on = False
-        elif sn.stamina >= BOOST_MIN_START:
-            sn.boost_on = True
-            self.play_sound("rotate")
 
     def _turn(self, sn, key, player):
         dx, dy = sn.direction

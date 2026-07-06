@@ -24,6 +24,7 @@ class InputEvent:
     """Ein vereinheitlichtes Eingabe-Ereignis (von Tkinter erzeugt)."""
 
     KEYDOWN = "keydown"      # Taste gedrueckt
+    KEYUP = "keyup"          # Taste losgelassen
     MOUSEDOWN = "mousedown"  # Maustaste gedrueckt
     MOUSEMOVE = "mousemove"  # Maus bewegt
 

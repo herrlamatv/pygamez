@@ -10,7 +10,8 @@
   "fps": 60,
   "snake": {
     "wrap": true,
-    "bonus_apple": true
+    "bonus_apple": true,
+    "mode": "classic"
   },
   "pong": {
     "hold_p1": false,

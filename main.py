@@ -198,6 +198,7 @@ class App:
     def _bind_events(self):
         # Tastatur global am Hauptfenster abfangen
         self.root.bind("<KeyPress>", self._on_key)
+        self.root.bind("<KeyRelease>", self._on_key_up)
         # Maus auf der Spielflaeche
         self.embed.bind("<Button-1>", self._on_click)
         self.embed.bind("<Motion>", self._on_motion)
@@ -248,6 +249,11 @@ class App:
 
         if self.current and not self.current.paused:
             self.current.handle_event(InputEvent(InputEvent.KEYDOWN, key=event.keysym))
+
+    def _on_key_up(self, event):
+        from game_base import InputEvent
+        if self.current and not self.current.paused:
+            self.current.handle_event(InputEvent(InputEvent.KEYUP, key=event.keysym))
 
     def _on_click(self, event):
         from game_base import InputEvent
