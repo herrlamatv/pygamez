@@ -20,7 +20,7 @@ ohne Kampf mit einem nativen Fenster.
 
 Damit sich Tkinter und Pygame nicht gegenseitig blockieren, gibt es KEINE eigene
 while-Schleife für pygame. Stattdessen treibt Tkinters Ereignisschleife alles an:
-root.after(...) ruft regelmäßig _loop() auf, das ein einzelnes Frame des Spiels
+root.after(....) ruft regelmäßig _loop() auf, das ein einzelnes Frame des Spiels
 aktualisiert, zeichnet und ins Label bringt. Tastatur/Maus fangen wir über
 Tkinter-Bindings ab und reichen sie als InputEvent an das aktive Spiel weiter.
 """
