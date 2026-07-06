@@ -84,7 +84,7 @@ class App:
         # Fenster darf vergrößert/verkleinert werden -> nötig für Vollbild,
         # bei dem das Pygame-Display weiter eingebettet "im Fenster" bleibt.
         self.root.resizable(True, True)
-        self.root.minsize(840, 480)
+        self.root.minsize(840, 480)   # wird nach dem UI-Aufbau nachjustiert
         self.root.protocol("WM_DELETE_WINDOW", self.beenden)
 
         self._closing = False
@@ -122,6 +122,9 @@ class App:
         self._game_classes = ALL_GAMES
         self._build_game_buttons()
 
+        # Sidebar-Breite/Fenster-Mindesthöhe an den tatsächlichen Bedarf koppeln.
+        self._fit_sidebar()
+
         # Auto-Modus: die logische Auflösung schon beim Start an die tatsächliche
         # Fenster-/Frame-Größe anpassen.
         if self.settings.get("auto_resolution"):
@@ -139,43 +142,100 @@ class App:
 
     # ----- Oberfläche --------------------------------------------------
 
+    # Farbschema der Tkinter-Seite (abgestimmt auf ui.py der Pygame-Seite)
+    C_SIDEBAR = "#141824"      # Sidebar-Hintergrund
+    C_HEADER = "#0f1320"       # Kopfbereich (etwas dunkler)
+    C_CARD = "#1d2333"         # Karten/Panels
+    C_BTN = "#232a3d"          # Buttons normal
+    C_BTN_HOVER = "#2e3852"    # Buttons unter der Maus
+    C_ACCENT = "#589cff"       # Primär-Akzent
+    C_DANGER = "#8e3540"       # Beenden
+    C_DANGER_HOVER = "#ab414e"
+    C_TEXT = "#e9edf5"
+    C_TEXT_DIM = "#98a2b8"
+
+    def _hover(self, widget, normal, hover):
+        """Bindet einen dezenten Hover-Effekt (Hintergrundwechsel) an ein Widget."""
+        widget.bind("<Enter>", lambda e: widget.config(bg=hover))
+        widget.bind("<Leave>", lambda e: widget.config(bg=normal))
+
+    def _make_button(self, parent, text, command, kind="normal", anchor="center"):
+        """Einheitlicher Sidebar-Button mit Hover-Effekt und Hand-Cursor."""
+        if kind == "danger":
+            bg, hov = self.C_DANGER, self.C_DANGER_HOVER
+            fnt, pady = ("Segoe UI", 10, "bold"), 5
+        elif kind == "game":
+            bg, hov = self.C_BTN, self.C_BTN_HOVER
+            fnt, pady = ("Segoe UI", 11), 4
+        else:
+            bg, hov = self.C_BTN, self.C_BTN_HOVER
+            fnt, pady = ("Segoe UI", 9), 3
+        btn = tk.Button(parent, text=text, command=command, bg=bg, fg=self.C_TEXT,
+                        relief="flat", bd=0, font=fnt, cursor="hand2",
+                        activebackground=hov, activeforeground=self.C_TEXT,
+                        anchor=anchor, padx=10, pady=pady,
+                        highlightthickness=0)
+        self._hover(btn, bg, hov)
+        return btn
+
     def _build_ui(self):
-        # Linke Seite: Menü
-        menu = tk.Frame(self.root, width=200, bg="#1c1f29")
+        # Linke Seite: Sidebar mit Kopf, Spieleliste, Aktionen und Status.
+        menu = tk.Frame(self.root, width=216, bg=self.C_SIDEBAR)
         menu.pack(side="left", fill="y")
         menu.pack_propagate(False)
+        self._menu_frame = menu
 
-        self.games_label = tk.Label(menu, text=t("app.games"), fg="#ffffff",
-                                    bg="#1c1f29", font=("Segoe UI", 16, "bold"))
-        self.games_label.pack(pady=(16, 8))
+        # --- Kopfbereich: App-Name + Untertitel + Akzentlinie -------------
+        header = tk.Frame(menu, bg=self.C_HEADER)
+        header.pack(fill="x")
+        tk.Label(header, text="PyGameZ", fg=self.C_TEXT, bg=self.C_HEADER,
+                 font=("Segoe UI", 17, "bold")).pack(pady=(12, 0))
+        self._header_sub = tk.Label(header, text=t("app.menu_title"),
+                                    fg=self.C_TEXT_DIM, bg=self.C_HEADER,
+                                    font=("Segoe UI", 9))
+        self._header_sub.pack(pady=(0, 10))
+        tk.Frame(menu, bg=self.C_ACCENT, height=2).pack(fill="x")
 
-        self.button_frame = tk.Frame(menu, bg="#1c1f29")
-        self.button_frame.pack(fill="x", padx=12)
-
-        # Punktestand-Anzeige
+        # --- Status-Karte unten ----------------------------------------------
+        # (Der untere Block wird VOR der Spieleliste gepackt: bottom-Widgets
+        #  bekommen so ihren Platz zuerst und bleiben auch bei kleiner
+        #  Fensterhöhe sichtbar - die Spieleliste gibt dann nach.)
         self.status_var = tk.StringVar(value=t("app.no_game"))
-        tk.Label(menu, textvariable=self.status_var, fg="#c8d0e0", bg="#1c1f29",
-                 font=("Consolas", 10), justify="left", wraplength=176).pack(
-            side="bottom", fill="x", padx=12, pady=8)
+        status_card = tk.Frame(menu, bg=self.C_CARD,
+                               highlightbackground="#2a3147",
+                               highlightthickness=1)
+        status_card.pack(side="bottom", fill="x", padx=12, pady=(4, 12))
+        tk.Frame(status_card, bg=self.C_ACCENT, width=3).pack(
+            side="left", fill="y")
+        tk.Label(status_card, textvariable=self.status_var, fg=self.C_TEXT_DIM,
+                 bg=self.C_CARD, font=("Consolas", 9), justify="left",
+                 anchor="w", wraplength=168, padx=8, pady=6).pack(fill="x")
 
-        ttk.Separator(menu, orient="horizontal").pack(side="bottom", fill="x", pady=4)
-
-        # Steuer-Buttons unten (Referenzen gemerkt -> refresh_language kann neu beschriften)
+        # --- Steuer-Buttons unten (Referenzen für refresh_language) ---------
         self._ctrl_buttons = {}
-        self._ctrl_buttons["quit"] = tk.Button(
-            menu, text=t("app.quit"), command=self.beenden,
-            bg="#a23b3b", fg="white", relief="flat", font=("Segoe UI", 11, "bold"))
-        self._ctrl_buttons["quit"].pack(side="bottom", fill="x", padx=12, pady=(4, 12))
+        self._ctrl_buttons["quit"] = self._make_button(
+            menu, t("app.quit"), self.beenden, kind="danger")
+        self._ctrl_buttons["quit"].pack(side="bottom", fill="x", padx=12, pady=(4, 8))
 
         for key, cmd in (("back_to_menu", self.zum_menü),
                          ("fullscreen", self.toggle_fullscreen),
                          ("language", self.open_language),
                          ("options", self.open_options)):
-            btn = tk.Button(menu, text=t("app." + key), command=cmd,
-                            bg="#2f3645", fg="white", relief="flat",
-                            font=("Segoe UI", 9))
-            btn.pack(side="bottom", fill="x", padx=12, pady=4)
+            btn = self._make_button(menu, t("app." + key), cmd, anchor="w")
+            btn.pack(side="bottom", fill="x", padx=12, pady=2)
             self._ctrl_buttons[key] = btn
+
+        ttk.Separator(menu, orient="horizontal").pack(side="bottom", fill="x",
+                                                      padx=12, pady=6)
+
+        # --- Abschnitt: Spiele (füllt den verbleibenden Platz) --------------
+        self.games_label = tk.Label(menu, text=t("app.games"), fg=self.C_ACCENT,
+                                    bg=self.C_SIDEBAR, anchor="w",
+                                    font=("Segoe UI", 9, "bold"))
+        self.games_label.pack(fill="x", padx=16, pady=(10, 4))
+
+        self.button_frame = tk.Frame(menu, bg=self.C_SIDEBAR)
+        self.button_frame.pack(fill="x", padx=12)
 
         # Rechte Seite: Anzeige des Spielbildes. Ein normales tk.Label zeigt das
         # pro Frame erzeugte Bild (siehe _present). fill/expand -> es füllt den
@@ -188,13 +248,69 @@ class App:
         self.embed.configure(takefocus=True)
         self.embed.focus_set()
 
+    # Eigene Akzentfarbe je Spiel (linker Farbstreifen im Menü).
+    _GAME_COLORS = {
+        "SnakeGame": "#6ecd8c", "PongGame": "#589cff", "TicTacToeGame": "#f0a05a",
+        "BreakoutGame": "#e15f5f", "TetrisGame": "#b07fe8", "InvadersGame": "#5ad4d4",
+        "Game2048": "#f5cd64",
+    }
+
+    def _fit_sidebar(self):
+        """Passt Sidebar-Breite und Fenster-Mindesthöhe an den Inhalt an.
+
+        Nötig, weil Beschriftungen je nach Sprache/DPI unterschiedlich breit
+        bzw. hoch ausfallen; die Sidebar hat pack_propagate(False) und würde
+        lange Texte sonst abschneiden.
+        """
+        import tkinter.font as tkfont
+        self.root.update_idletasks()
+
+        # Breite: längste Beschriftung (Steuer-Buttons / Spielnamen) + Ränder.
+        f_ctrl = tkfont.Font(family="Segoe UI", size=9)
+        f_game = tkfont.Font(family="Segoe UI", size=11)
+        w_ctrl = max((f_ctrl.measure(b.cget("text"))
+                      for b in self._ctrl_buttons.values()), default=0)
+        w_game = max((f_game.measure(c.name) for c in self._game_classes),
+                     default=0)
+        need_w = max(216, w_ctrl + 48, w_game + 44)
+        self._menu_frame.config(width=need_w)
+
+        # Höhe: Bedarf aller gepackten Kinder inkl. äußerer pady summieren.
+        need_h = 0
+        for ch in self._menu_frame.winfo_children():
+            if not ch.winfo_manager():
+                continue
+            pady = ch.pack_info().get("pady", 0)
+            if isinstance(pady, (tuple, list)):
+                pad = sum(int(p) for p in pady)
+            else:
+                pad = int(pady) * 2
+            need_h += ch.winfo_reqheight() + pad
+        self.root.minsize(840, max(480, need_h + 8))
+
     def _build_game_buttons(self):
+        """Spieleliste: kompakte Zeilen mit farbigem Akzentstreifen + Hover."""
         for cls in self._game_classes:
-            tk.Button(self.button_frame, text=cls.name,
-                      command=lambda c=cls: self.spiel_starten(c),
-                      bg="#3a4357", fg="white", relief="flat",
-                      activebackground="#4a566f",
-                      font=("Segoe UI", 11)).pack(fill="x", pady=4)
+            accent = self._GAME_COLORS.get(cls.__name__, self.C_ACCENT)
+            row = tk.Frame(self.button_frame, bg=self.C_BTN, cursor="hand2")
+            row.pack(fill="x", pady=2)
+            tk.Frame(row, bg=accent, width=4).pack(side="left", fill="y")
+            lbl = tk.Label(row, text=cls.name, bg=self.C_BTN, fg=self.C_TEXT,
+                           font=("Segoe UI", 11), anchor="w", padx=10, pady=5)
+            lbl.pack(side="left", fill="x", expand=True)
+
+            def enter(_e, r=row, l=lbl):
+                r.config(bg=self.C_BTN_HOVER)
+                l.config(bg=self.C_BTN_HOVER)
+
+            def leave(_e, r=row, l=lbl):
+                r.config(bg=self.C_BTN)
+                l.config(bg=self.C_BTN)
+
+            for w in (row, lbl):
+                w.bind("<Button-1>", lambda _e, c=cls: self.spiel_starten(c))
+                w.bind("<Enter>", enter)
+                w.bind("<Leave>", leave)
 
     # ----- Pygame (Off-Screen-Rendering) --------------------------------
 
@@ -221,9 +337,9 @@ class App:
 
         self.clock = pygame.time.Clock()
 
-        # Startbildschirm zeichnen
-        self._menu_font = pygame.font.SysFont("consolas", 26, bold=True)
-        self._menu_sub = pygame.font.SysFont("consolas", 16)
+        # Gemeinsames UI-Toolkit (Palette/Verläufe/Panels) für alle Screens.
+        import ui
+        self.ui = ui
 
     # ----- Eingaben von Tkinter zu Spielen weiterreichen ----------------
 
@@ -347,10 +463,13 @@ class App:
         """Beschriftet das Tkinter-Menü nach einem Sprachwechsel neu."""
         self.root.title(t("app.title"))
         self.games_label.config(text=t("app.games"))
+        self._header_sub.config(text=t("app.menu_title"))
         for key, btn in self._ctrl_buttons.items():
             btn.config(text=t("app." + key))
         if self.current is None:
             self.status_var.set(t("app.no_game"))
+        # Neue Beschriftungen können breiter/schmaler sein -> Sidebar anpassen.
+        self._fit_sidebar()
 
     def apply_resolution(self, w, h, persist=True):
         """Setzt die logische Auflösung neu (Canvas wird passend neu erzeugt).
@@ -414,17 +533,30 @@ class App:
         game._hs_record = rekord
 
     def _draw_highscore_overlay(self, game):
-        """Blendet bei Game Over für JEDES Spiel den Highscore unten ein."""
+        """Blendet bei Game Over für JEDES Spiel den Highscore als Banner ein."""
+        ui = self.ui
         hs = getattr(game, "_hs_value", 0)
-        if getattr(game, "_hs_record", False):
-            text, farbe = t("app.new_highscore", score=game.score), (255, 215, 90)
+        record = getattr(game, "_hs_record", False)
+        if record:
+            text, farbe = t("app.new_highscore", score=game.score), ui.GOLD
         else:
-            text, farbe = t("app.highscore", hs=hs), (200, 205, 220)
-        if not getattr(self, "_hs_font", None):
-            self._hs_font = self.pygame.font.SysFont("consolas", 20, bold=True)
-        img = self._hs_font.render(text, True, farbe)
-        self.canvas.blit(img, img.get_rect(
-            center=(self.game_w // 2, self.game_h - 16)))
+            text, farbe = t("app.highscore", hs=hs), ui.TEXT_DIM
+
+        img = ui.font(18, bold=True).render(text, True, farbe)
+        bw, bh = img.get_width() + 36, img.get_height() + 14
+        banner = self.pygame.Rect(self.game_w // 2 - bw // 2,
+                                  self.game_h - bh - 10, bw, bh)
+        ui.draw_panel(self.canvas, banner, radius=bh // 2, shadow=False)
+        if record:
+            # Rekord: goldener, pulsierender Rahmen
+            glow = self.pygame.Surface((bw + 8, bh + 8), self.pygame.SRCALPHA)
+            self.pygame.draw.rect(glow, (*ui.GOLD, int(90 * ui.pulse(3.0))),
+                                  (0, 0, bw + 8, bh + 8),
+                                  border_radius=bh // 2 + 4)
+            self.canvas.blit(glow, (banner.x - 4, banner.y - 4))
+            self.pygame.draw.rect(self.canvas, ui.GOLD, banner, width=1,
+                                  border_radius=bh // 2)
+        self.canvas.blit(img, img.get_rect(center=banner.center))
 
     # ----- Zentrale Game-Loop -------------------------------------------
 
@@ -500,25 +632,59 @@ class App:
         self.embed.configure(image=self._photo)
 
     def _draw_menu_screen(self):
-        self.canvas.fill((18, 20, 28))
-        title = self._menu_font.render(t("app.menu_title"), True, (235, 235, 245))
-        sub = self._menu_sub.render(t("app.menu_sub"), True, (150, 160, 180))
-        self.canvas.blit(title, title.get_rect(
-            center=(self.game_w // 2, self.game_h // 2 - 20)))
-        self.canvas.blit(sub, sub.get_rect(
-            center=(self.game_w // 2, self.game_h // 2 + 20)))
+        """Start-/Leerlaufbildschirm: animierter Hintergrund + Logo + Hinweis."""
+        ui = self.ui
+        w, h, s = self.game_w, self.game_h, self.canvas
+        ui.draw_background(s, w, h)
+
+        cx, cy = w // 2, h // 2
+
+        # Logo "PyGameZ" mit weichem Akzent-Glow dahinter.
+        logo_font = ui.font(min(64, max(40, w // 11)), bold=True)
+        glow = logo_font.render("PyGameZ", True, ui.ACCENT)
+        glow.set_alpha(int(40 + 30 * ui.pulse(1.4)))
+        img = logo_font.render("PyGameZ", True, ui.TEXT)
+        for dx, dy in ((-2, 0), (2, 0), (0, -2), (0, 2)):
+            s.blit(glow, glow.get_rect(center=(cx + dx, cy - 46 + dy)))
+        s.blit(img, img.get_rect(center=(cx, cy - 46)))
+
+        # Akzentlinie + Untertitel (übersetzt).
+        lw = img.get_width() + 30
+        self.pygame.draw.rect(s, ui.ACCENT, (cx - lw // 2, cy - 8, lw, 3),
+                              border_radius=2)
+        sub = ui.font(18).render(t("app.menu_title"), True, ui.TEXT_DIM)
+        s.blit(sub, sub.get_rect(center=(cx, cy + 18)))
+
+        # Pulsierender Hinweis ("Wähle links ein Spiel aus.")
+        hint = ui.font(15).render(t("app.menu_sub"), True, ui.ACCENT)
+        hint.set_alpha(int(255 * ui.pulse(2.2, lo=0.45)))
+        s.blit(hint, hint.get_rect(center=(cx, cy + 56)))
+
+        # Fußzeile mit dezenten Eckdaten.
+        ui.draw_footer(s, w, h, f"{len(self._game_classes)} Games   ·   "
+                                f"{self.game_w}x{self.game_h} @ {self.fps} FPS")
 
     def _draw_pause_overlay(self):
-        overlay = self.pygame.Surface((self.game_w, self.game_h), self.pygame.SRCALPHA)
-        overlay.fill((0, 0, 0, 150))
-        self.canvas.blit(overlay, (0, 0))
-        f = self.pygame.font.SysFont("consolas", 48, bold=True)
-        img = f.render(t("app.pause"), True, (240, 240, 240))
-        self.canvas.blit(img, img.get_rect(center=(self.game_w // 2, self.game_h // 2)))
-        f2 = self.pygame.font.SysFont("consolas", 16)
-        img2 = f2.render(t("app.pause_resume"), True, (200, 200, 200))
-        self.canvas.blit(img2, img2.get_rect(
-            center=(self.game_w // 2, self.game_h // 2 + 40)))
+        """Abdunkeln + zentrierte Pause-Karte mit Akzentrahmen."""
+        ui = self.ui
+        w, h, s = self.game_w, self.game_h, self.canvas
+        overlay = self.pygame.Surface((w, h), self.pygame.SRCALPHA)
+        overlay.fill((8, 10, 18, 170))
+        s.blit(overlay, (0, 0))
+
+        # Karte in der Mitte
+        cw, ch = min(360, w - 40), 150
+        card = self.pygame.Rect(w // 2 - cw // 2, h // 2 - ch // 2, cw, ch)
+        ui.draw_panel(s, card, radius=14)
+        self.pygame.draw.rect(s, ui.ACCENT, (card.x, card.y, card.w, 4),
+                              border_top_left_radius=14,
+                              border_top_right_radius=14)
+
+        img = ui.font(42, bold=True).render(t("app.pause"), True, ui.TEXT)
+        s.blit(img, img.get_rect(center=(card.centerx, card.centery - 18)))
+        img2 = ui.font(16).render(t("app.pause_resume"), True, ui.TEXT_DIM)
+        img2.set_alpha(int(255 * ui.pulse(2.0, lo=0.5)))
+        s.blit(img2, img2.get_rect(center=(card.centerx, card.centery + 34)))
 
     def _update_status(self, game):
         if getattr(game, "is_menu", False):

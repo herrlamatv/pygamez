@@ -19,17 +19,19 @@ import pygame
 import audio
 import i18n
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
-COL_BG = (18, 20, 28)
-COL_PANEL = (30, 34, 46)
-COL_SEL = (70, 96, 150)
-COL_BTN = (44, 50, 66)
-COL_TEXT = (232, 234, 240)
-COL_MUTE = (150, 158, 176)
-COL_ACCENT = (120, 200, 140)
-COL_KEY = (240, 210, 120)
+# Farben kommen zentral aus dem UI-Toolkit (einheitlicher Look überall).
+COL_BG = ui.BG_TOP
+COL_PANEL = ui.PANEL
+COL_SEL = ui.BTN_SEL
+COL_BTN = ui.BTN
+COL_TEXT = ui.TEXT
+COL_MUTE = ui.TEXT_DIM
+COL_ACCENT = ui.GREEN
+COL_KEY = ui.GOLD
 
 # Tkinter-keysym -> Übersetzungsschlüssel für gut lesbare Tastennamen.
 _PRETTY = {
@@ -155,22 +157,17 @@ class PreGameScreen(_Screen):
 
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
 
-        title = self.big_font.render(self.game_cls.name, True, COL_TEXT)
-        s.blit(title, title.get_rect(center=(self.width // 2, 70)))
-        sub = self.font.render(t("pregame.mode"), True, COL_MUTE)
-        s.blit(sub, sub.get_rect(center=(self.width // 2, 112)))
+        ui.draw_title(s, self.width, self.game_cls.name,
+                      subtitle=t("pregame.mode"), y=64)
 
+        btn_font = ui.font(19)
         for i, (label, _) in enumerate(self.buttons):
-            r = self.rects[i]
-            farbe = COL_SEL if i == self.sel else COL_BTN
-            pygame.draw.rect(s, farbe, r, border_radius=8)
-            img = self.font.render(label, True, COL_TEXT)
-            s.blit(img, img.get_rect(center=r.center))
+            ui.draw_button(s, self.rects[i], label, btn_font,
+                           selected=(i == self.sel))
 
-        hint = self.font.render(t("pregame.hint"), True, COL_MUTE)
-        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 24)))
+        ui.draw_footer(s, self.width, self.height, t("pregame.hint"))
 
 
 # ---------------------------------------------------------------------------
@@ -184,6 +181,9 @@ class OptionsScreen(_Screen):
         self.on_close = on_close
         super().__init__(surface, width, height, app)
         self.name = t("options.name")
+        # Etwas kompaktere Schrift: bei 640px Breite brauchen zwei Spalten
+        # inkl. langer Werte ("640 x 480 (Standard)") sonst zu viel Platz.
+        self.font = ui.font(18, mono=True)
         self.capture = None       # (player, action), während eine Taste neu belegt wird
         self.preset_idx = 0
         # Aktuelle Auswahl für Auflösung/FPS aus den Einstellungen ableiten.
@@ -247,6 +247,20 @@ class OptionsScreen(_Screen):
         # Schliessen-Button unten
         add("button", pygame.Rect(W // 2 - 190, H - 44, 380, 34),
             label=t("options.save_back"), on_activate=self._close)
+
+        # Karten-Panels hinter den vier Gruppen berechnen (Audio, Grafik,
+        # Steuerung P1/P2) - rein optisch, aus den Item-Rechtecken abgeleitet.
+        n_act = len(settings_mod.ACTIONS)
+        groups = (self.items[0:4], self.items[4:8],
+                  self.items[8:8 + n_act], self.items[8 + n_act:8 + 2 * n_act])
+        self._panels = []
+        for grp in groups:
+            if not grp:
+                continue
+            u = grp[0]["rect"].copy()
+            for it in grp[1:]:
+                u.union_ip(it["rect"])
+            self._panels.append(u.inflate(28, 24))
 
     def _close(self):
         settings_mod.save_settings(self.settings)
@@ -379,29 +393,49 @@ class OptionsScreen(_Screen):
 
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height, stars=False)
 
-        title = self.font.render(t("options.title"), True, COL_TEXT)
-        s.blit(title, (self._left_x, 24))
+        # Karten-Panels hinter den Gruppen (rein optisch).
+        for p in getattr(self, "_panels", ()):
+            ui.draw_panel(s, p, radius=10, shadow=False)
 
-        # Überschrift für den Grafik-/Leistungs-Block (rechte Spalte oben)
-        s.blit(self.font.render(t("options.graphics"), True, COL_ACCENT),
-               (self._right_x, 40))
+        # Titel oben links mit Akzent-Unterstrich.
+        title_font = ui.font(22, bold=True)
+        title = title_font.render(t("options.title"), True, COL_TEXT)
+        s.blit(title, (self._left_x, 16))
+        pygame.draw.rect(s, ui.ACCENT,
+                         (self._left_x, 18 + title.get_height(),
+                          title.get_width(), 3), border_radius=2)
 
-        # Spaltenüberschriften der Steuerung
-        s.blit(self.font.render(t("common.player1"), True, COL_ACCENT),
+        # Abschnitts-Überschriften (klein, Akzentfarbe).
+        head_font = ui.font(15, bold=True)
+        s.blit(head_font.render(t("options.graphics"), True, ui.ACCENT),
+               (self._right_x, 38))
+        s.blit(head_font.render(t("common.player1"), True, ui.ACCENT),
                (self._left_x, 232))
-        s.blit(self.font.render(t("common.player2"), True, COL_ACCENT),
+        s.blit(head_font.render(t("common.player2"), True, ui.ACCENT),
                (self._right_x, 232))
 
         for i, it in enumerate(self.items):
             r = it["rect"]
-            if i == self.sel:
-                pygame.draw.rect(s, COL_PANEL, r.inflate(12, 6), border_radius=6)
+            if i == self.sel and it["kind"] != "button":
+                hl = r.inflate(16, 8)
+                pygame.draw.rect(s, ui.PANEL_LIGHT, hl, border_radius=6)
+                pygame.draw.rect(s, ui.ACCENT, (hl.x, hl.y + 3, 3, hl.h - 6),
+                                 border_radius=2)
             self._draw_item(it, selected=(i == self.sel))
 
         if self.capture is not None:
             self._draw_capture_overlay()
+
+    def _fit_render(self, text, color, max_w):
+        """Rendert Text; wird er breiter als max_w, in kleineren Stufen erneut."""
+        img = self.font.render(text, True, color)
+        for size in (16, 14, 12):
+            if img.get_width() <= max_w:
+                break
+            img = ui.font(size, mono=True).render(text, True, color)
+        return img
 
     def _draw_arrow_value(self, it, farbe, value_text, value_col):
         """Zeichnet 'Label            < Wert >' mit einzeln anklickbaren Pfeilen.
@@ -410,11 +444,14 @@ class OptionsScreen(_Screen):
         """
         s = self.surface
         r = it["rect"]
-        s.blit(self.font.render(it["label"], True, farbe), (r.x, r.y))
+        label = self.font.render(it["label"], True, farbe)
+        s.blit(label, (r.x, r.y))
 
         lt = self.font.render("<", True, farbe)
-        val = self.font.render(str(value_text), True, value_col)
         gt = self.font.render(">", True, farbe)
+        # Wert notfalls kleiner rendern, damit er nicht ins Label läuft.
+        max_w = r.w - label.get_width() - lt.get_width() - gt.get_width() - 34
+        val = self._fit_render(str(value_text), value_col, max_w)
         pad = 10
         gx = r.right - gt.get_width()
         vx = gx - pad - val.get_width()
@@ -444,13 +481,20 @@ class OptionsScreen(_Screen):
         elif kind == "volume":
             s.blit(self.font.render(it["label"], True, farbe), (r.x, r.y))
             v = self.settings.get("volume", 0.6)
-            bar = pygame.Rect(r.x + 150, r.y + 8, 110, 12)
+            # Prozentwert rechtsbündig, Balken links davon -> bleibt im Panel.
+            pct = self.font.render(f"{int(v * 100)}%", True, farbe)
+            bar = pygame.Rect(r.right - pct.get_width() - 8 - 110, r.y + 8, 110, 12)
             it["bar_rect"] = bar
             pygame.draw.rect(s, COL_BTN, bar, border_radius=6)
-            pygame.draw.rect(s, COL_ACCENT,
-                             (bar.x, bar.y, int(bar.w * v), bar.h), border_radius=6)
-            s.blit(self.font.render(f"{int(v * 100)}%", True, farbe),
-                   (bar.right + 8, r.y))
+            fill_w = int(bar.w * v)
+            if fill_w > 0:
+                pygame.draw.rect(s, ui.ACCENT,
+                                 (bar.x, bar.y, fill_w, bar.h), border_radius=6)
+            pygame.draw.rect(s, ui.BORDER_LIGHT, bar, width=1, border_radius=6)
+            # Griff-Knopf am Ende des Füllstands
+            knob_x = bar.x + max(4, min(bar.w - 4, fill_w))
+            pygame.draw.circle(s, COL_TEXT, (knob_x, bar.centery), 5)
+            s.blit(pct, (r.right - pct.get_width(), r.y))
 
         elif kind == "preset":
             self._draw_arrow_value(it, farbe,
@@ -460,9 +504,11 @@ class OptionsScreen(_Screen):
             if self.settings.get("auto_resolution"):
                 # Auto: keine Pfeile, aktuelle Fenster-Auflösung anzeigen.
                 it["dec_rect"] = it["inc_rect"] = None
-                s.blit(self.font.render(it["label"], True, farbe), (r.x, r.y))
+                label = self.font.render(it["label"], True, farbe)
+                s.blit(label, (r.x, r.y))
                 txt = t("options.res_auto", w=self.width, h=self.height)
-                img = self.font.render(txt, True, COL_MUTE)
+                img = self._fit_render(txt, COL_MUTE,
+                                       r.w - label.get_width() - 12)
                 s.blit(img, (r.right - img.get_width(), r.y))
             else:
                 self._draw_arrow_value(it, farbe,
@@ -477,24 +523,41 @@ class OptionsScreen(_Screen):
             s.blit(self.font.render(it["label"], True, farbe), (r.x, r.y))
             key = self.key_for(it["player"], it["action"])
             img = self.font.render(pretty_key(key), True, COL_KEY)
-            s.blit(img, (r.right - img.get_width(), r.y))
+            # Tastenkappen-Chip hinter dem Tastennamen
+            chip = pygame.Rect(0, 0, img.get_width() + 14, img.get_height() + 4)
+            chip.midright = (r.right, r.centery)
+            pygame.draw.rect(s, ui.PANEL_LIGHT if selected else COL_BTN, chip,
+                             border_radius=5)
+            pygame.draw.rect(s, ui.BORDER_LIGHT, chip, width=1, border_radius=5)
+            s.blit(img, img.get_rect(center=chip.center))
 
         elif kind == "button":
-            pygame.draw.rect(s, COL_SEL if selected else COL_BTN, r, border_radius=8)
-            img = self.font.render(it["label"], True, COL_TEXT)
-            s.blit(img, img.get_rect(center=r.center))
+            ui.draw_button(s, r, it["label"], self.font, selected=selected)
 
     def _draw_capture_overlay(self):
         s = self.surface
         overlay = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        overlay.fill((0, 0, 0, 170))
+        overlay.fill((8, 10, 18, 185))
         s.blit(overlay, (0, 0))
+
+        # Zentrierte Karte mit pulsierendem Akzentrahmen ("wartet auf Taste").
+        cw, ch = min(420, self.width - 40), 170
+        card = pygame.Rect(self.width // 2 - cw // 2,
+                           self.height // 2 - ch // 2, cw, ch)
+        ui.draw_panel(s, card, radius=14)
+        glow = int(120 + 100 * ui.pulse(2.6))
+        pygame.draw.rect(s, (ui.ACCENT[0], ui.ACCENT[1], ui.ACCENT[2]),
+                         card, width=2, border_radius=14)
+        pygame.draw.rect(s, (glow // 3, glow // 2, glow),
+                         card.inflate(8, 8), width=1, border_radius=16)
+
         player, action = self.capture
         who = t("common.player1") if player == "p1" else t("common.player2")
         self.draw_center_text(f"{who}  -  {action_label(action)}",
-                              self.font, COL_ACCENT, -40)
-        self.draw_center_text(t("options.press_key"), self.big_font, COL_TEXT, 0)
-        self.draw_center_text(t("options.cancel"), self.font, COL_MUTE, 44)
+                              self.font, ui.ACCENT, -44)
+        self.draw_center_text(t("options.press_key"),
+                              ui.font(30, bold=True), COL_TEXT, 0)
+        self.draw_center_text(t("options.cancel"), self.font, COL_MUTE, 46)
 
 
 # ---------------------------------------------------------------------------
@@ -551,13 +614,13 @@ class LanguageScreen(_Screen):
 
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
-        title = self.big_font.render(t("lang.title"), True, COL_TEXT)
-        s.blit(title, title.get_rect(center=(self.width // 2, 90)))
+        ui.draw_background(s, self.width, self.height)
+        ui.draw_title(s, self.width, t("lang.title"), y=80,
+                      big=ui.font(34, bold=True))
+        btn_font = ui.font(24, bold=True)
+        code_font = ui.font(13)
         for i, (code, label) in enumerate(i18n.AVAILABLE):
-            r = self.rects[i]
-            pygame.draw.rect(s, COL_SEL if i == self.sel else COL_BTN, r, border_radius=10)
-            img = self.big_font.render(label, True, COL_TEXT)
-            s.blit(img, img.get_rect(center=r.center))
-        hint = self.font.render(t("lang.hint"), True, COL_MUTE)
-        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 30)))
+            ui.draw_button(s, self.rects[i], label, btn_font,
+                           selected=(i == self.sel),
+                           sub=code.upper(), sub_font=code_font)
+        ui.draw_footer(s, self.width, self.height, t("lang.hint"))
