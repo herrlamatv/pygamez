@@ -108,10 +108,12 @@ class PreGameScreen(_Screen):
         self.buttons.append((t("pregame.back"), self.app.back_to_menu))
 
         # Rechtecke für Maus/Anzeige berechnen (zentriert, gestapelt).
+        # Kleinere Buttons + Start unterhalb des Untertitels ("Modus wählen"),
+        # damit dieser immer sichtbar bleibt (auch bei mehreren Modi).
         self.rects = []
-        bw, bh, gap = 380, 50, 14
+        bw, bh, gap = 300, 40, 10
         total = len(self.buttons) * (bh + gap) - gap
-        y0 = self.height // 2 - total // 2 + 20
+        y0 = max(132, self.height // 2 - total // 2 + 6)
         for i in range(len(self.buttons)):
             x = self.width // 2 - bw // 2
             y = y0 + i * (bh + gap)

@@ -2,22 +2,21 @@
 """
 invaders.py
 ===========
-Space Invaders - komplett überarbeitet, mit drei Spielmodi:
+Space Invaders - komplett überarbeitet, mit zwei Spielmodi:
 
-- KLASSIK       : Der klassische Ablauf. Der Spieler bewegt sich unten
-                  links/rechts (A/D oder Pfeile) und schießt nach oben
-                  (Leertaste). Ein Alien-Block wandert seitlich, rückt nach unten
-                  und schießt zurück. Zerstörte Aliens lassen manchmal Power-ups
-                  fallen (u.a. bessere Waffen).
+- KLASSIK : Klassischer Alien-Block. Nach der Auswahl erscheint ein Setup-Screen,
+            in dem man einstellt:
+              * Bewegung: nur links/rechts (unten)  ODER  frei mit WASD/Pfeilen.
+              * Zielen:   immer nach oben  ODER  zur Maus (schießt dorthin, wo
+                          der Mauszeiger ist).
+            Bei fester Bewegung/festem Zielen ist es das klassische Space
+            Invaders; mit freier Bewegung schaut das Schiff dennoch immer nach
+            vorne (oben), sofern nicht Maus-Zielen aktiv ist. Zerstörte Aliens
+            lassen manchmal Power-ups fallen (u.a. bessere Waffen).
 
-- KLASSIK (WASD): Wie Klassik, aber freie Bewegung in ALLE Richtungen
-                  (WASD/Pfeile). Das Schiff schaut/schießt dabei IMMER nach vorne
-                  (oben) - auch wenn man rückwärts oder zur Seite fliegt.
-
-- ARENA         : Freie Bewegung in alle Richtungen. Gegner strömen von allen
-                  Rändern herein und jagen dich. Geschossen wird in
-                  Blickrichtung; die Waffe lässt sich jederzeit mit den Tasten
-                  1-4 wechseln (verschiedene Schusstechniken).
+- ARENA   : Freie Bewegung in alle Richtungen. Gegner strömen von allen Rändern
+            herein und jagen dich. Geschossen wird in Blickrichtung; die Waffe
+            lässt sich jederzeit mit den Tasten 1-4 wechseln.
 
 Gemeinsame Features (beide Modi):
 - Levelsystem mit steigender Schwierigkeit und einem BOSS in jedem 4. Level.
@@ -80,24 +79,37 @@ class InvadersGame(Game):
     name = "Invaders"
     highscore_key = "invaders"
 
-    # Vom PreGameScreen ausgewertete Modusauswahl.
-    MODES = [("classic", "inv.mode_classic"),
-             ("classic_free", "inv.mode_classic_free"),
-             ("free", "inv.mode_free")]
+    # Vom PreGameScreen ausgewertete Modusauswahl: nur zwei Grundmodi. Für
+    # "classic" wählt man danach im Setup-Screen Bewegung/Zielen.
+    MODES = [("classic", "inv.mode_classic"), ("free", "inv.mode_free")]
 
     # ----- Aufbau -------------------------------------------------------
 
     def reset(self):
-        # arena     : Arena-Wellen, Zielen in Bewegungsrichtung, Waffenwechsel
-        #             per 1-4 (Modus "free").
-        # free_move : Bewegung in ALLE Richtungen (Arena UND Klassik-WASD).
-        # Klassik-WASD (mode "classic_free"): frei bewegen, aber IMMER nach
-        # vorne (oben) schauen/schießen, klassisches Alien-Block-Szenario.
+        # arena : Arena-Wellen, Zielen in Bewegungsrichtung, Waffenwechsel 1-4.
         self.arena = (self.mode == "free")
-        self.free_move = self.mode in ("free", "classic_free")
+
+        # Klassik-Unteroptionen (werden im Setup-Screen gewählt):
+        #   opt_move: "lr" (nur links/rechts unten) oder "free" (WASD, frei)
+        #   opt_aim : "fixed" (immer nach oben) oder "mouse" (zur Maus zielen)
+        self.opt_move = "lr"
+        self.opt_aim = "fixed"
+        self.mouse_pos = (self.width / 2, self.height / 4)
+
+        self._init_run()
+
+        # Arena startet sofort; Klassik zeigt zuerst den Setup-Screen.
+        if self.arena:
+            self._enter_play()
+        else:
+            self.state = "setup"
+            self._build_setup()
+
+    def _init_run(self):
+        """Setzt alle Werte für eine Runde zurück (auch beim Neustart)."""
+        self.state = "play"
         self.score = 0
         self.game_over = False
-
         self.lives = 3
         self.level = 1
 
@@ -114,22 +126,87 @@ class InvadersGame(Game):
         self.invuln_timer = 0.0     # kurze Unverwundbarkeit nach Treffer
         self._cooldown = 0.0
 
-        self.held = set()           # aktuell gedrückte Aktionen (up/down/left/right/action)
-        self.face = (0.0, -1.0)     # Blickrichtung (für Arena-Schüsse)
+        self.held = set()           # aktuell gedrückte Aktionen
+        self.face = (0.0, -1.0)     # Blickrichtung
 
-        # Spielerposition (Mittelpunkt)
         self.px = self.width / 2
         self.py = self.height - PLAYER_Y_OFF
 
         self._banner = ""
         self._banner_t = 0.0
+        self._start_count = 0
 
-        # Sternenhimmel als Hintergrund (einmalig gewürfelt)
+        # Sternenhimmel (einmalig gewürfelt)
         self._stars = [(random.randint(0, self.width), random.randint(0, self.height),
                         random.choice((1, 1, 2))) for _ in range(70)]
 
-        self._start_count = 0
+    def _enter_play(self):
+        """Leitet aus den (Klassik-)Optionen die Flags ab und startet Level 1."""
+        if self.arena:
+            self.free_move = True     # in alle Richtungen
+            self.mouse_aim = False    # Arena zielt in Bewegungsrichtung
+        else:
+            self.free_move = (self.opt_move == "free")
+            self.mouse_aim = (self.opt_aim == "mouse")
+        self.state = "play"
+        self.level = 1
         self._start_level()
+
+    def _restart(self):
+        """Neustart nach Game Over - behält die gewählten Klassik-Optionen."""
+        self._init_run()
+        self._enter_play()
+
+    # ----- Setup-Screen (nur Klassik) -----------------------------------
+
+    def _build_setup(self):
+        self._setup_sel = 0
+        self._setup_rects = []
+        bw, bh, gap = 340, 42, 14
+        total = 3 * (bh + gap) - gap
+        y0 = max(150, self.height // 2 - total // 2 + 20)
+        for i in range(3):
+            x = self.width // 2 - bw // 2
+            self._setup_rects.append(pygame.Rect(x, y0 + i * (bh + gap), bw, bh))
+
+    def _setup_event(self, event):
+        activate = (lambda k: k in ("Return", "space") or self.is_action(k, "action"))
+        if event.kind == InputEvent.KEYDOWN:
+            if self.is_action(event.key, "up"):
+                self._setup_sel = (self._setup_sel - 1) % 3
+                self.play_sound("move")
+            elif self.is_action(event.key, "down"):
+                self._setup_sel = (self._setup_sel + 1) % 3
+                self.play_sound("move")
+            elif self.is_action(event.key, "left") or self.is_action(event.key, "right"):
+                self._setup_toggle()
+            elif activate(event.key):
+                self._setup_activate()
+        elif event.kind == InputEvent.MOUSEMOVE and event.pos:
+            for i, r in enumerate(self._setup_rects):
+                if r.collidepoint(event.pos):
+                    self._setup_sel = i
+        elif event.kind == InputEvent.MOUSEDOWN and event.pos:
+            for i, r in enumerate(self._setup_rects):
+                if r.collidepoint(event.pos):
+                    self._setup_sel = i
+                    self._setup_activate()
+                    break
+
+    def _setup_toggle(self):
+        if self._setup_sel == 0:
+            self.opt_move = "free" if self.opt_move == "lr" else "lr"
+            self.play_sound("select")
+        elif self._setup_sel == 1:
+            self.opt_aim = "mouse" if self.opt_aim == "fixed" else "fixed"
+            self.play_sound("select")
+
+    def _setup_activate(self):
+        if self._setup_sel == 2:
+            self.play_sound("click")
+            self._enter_play()
+        else:
+            self._setup_toggle()
 
     def _level_boss(self):
         return self.level % 4 == 0
@@ -247,10 +324,29 @@ class InvadersGame(Game):
                         random.choice((1, 1, 2))) for _ in range(70)]
         self.px = max(16, min(self.width - 16, self.px))
         self.py = max(40, min(self.height - 16, self.py))
+        if self.state == "setup":
+            self._build_setup()
 
     # ----- Eingabe ------------------------------------------------------
 
     def handle_event(self, event):
+        # Setup-Screen (nur Klassik, vor dem ersten Level).
+        if self.state == "setup":
+            self._setup_event(event)
+            return
+
+        # Maus: Position merken (zum Zielen), Klick schießt.
+        if event.kind == InputEvent.MOUSEMOVE:
+            if event.pos:
+                self.mouse_pos = event.pos
+            return
+        if event.kind == InputEvent.MOUSEDOWN:
+            if event.pos:
+                self.mouse_pos = event.pos
+            if not self.game_over:
+                self._fire()
+            return
+
         if event.kind == InputEvent.KEYUP:
             for act in ("up", "down", "left", "right", "action"):
                 if self.is_action(event.key, act):
@@ -262,11 +358,11 @@ class InvadersGame(Game):
 
         if self.game_over:
             if event.key in ("Return", "space"):
-                self.reset()
+                self._restart()
             return
 
-        # Waffenwechsel per Zifferntaste nur in der Arena. In den Klassik-Modi
-        # kommen bessere Waffen (befristet) über Power-ups.
+        # Waffenwechsel per Zifferntaste nur in der Arena. In Klassik kommen
+        # bessere Waffen (befristet) über Power-ups.
         if event.key in ("1", "2", "3", "4"):
             if self.arena:
                 self._select_weapon(WEAPON_ORDER[int(event.key) - 1])
@@ -286,7 +382,7 @@ class InvadersGame(Game):
     # ----- Update -------------------------------------------------------
 
     def update(self, dt):
-        if self.game_over:
+        if self.game_over or self.state != "play":
             return
 
         self._cooldown = max(0.0, self._cooldown - dt)
@@ -332,16 +428,29 @@ class InvadersGame(Game):
         vx = (("right" in self.held) - ("left" in self.held))
         vy = (("down" in self.held) - ("up" in self.held)) if self.free_move else 0
 
+        nx = ny = 0.0
         if vx or vy:
             length = math.hypot(vx, vy) or 1.0
             nx, ny = vx / length, vy / length
             self.px += nx * PLAYER_SPEED * dt
             if self.free_move:
                 self.py += ny * PLAYER_SPEED * dt
-            # Blickrichtung: NUR in der Arena der Bewegung folgen. Sonst (auch
-            # in Klassik-WASD) immer nach vorne/oben schauen - selbst wenn man
-            # rückwärts oder zur Seite geht.
-            self.face = (nx, ny) if self.arena else (0.0, -1.0)
+
+        # Blickrichtung bestimmen:
+        #  - Maus-Zielen: immer zur Mausposition.
+        #  - Arena: der Bewegung folgen.
+        #  - sonst (Klassik): IMMER nach vorne/oben - auch beim Rückwärtsgehen.
+        if self.mouse_aim:
+            dx = self.mouse_pos[0] - self.px
+            dy = self.mouse_pos[1] - self.py
+            d = math.hypot(dx, dy)
+            if d > 1:
+                self.face = (dx / d, dy / d)
+        elif self.arena:
+            if vx or vy:
+                self.face = (nx, ny)
+        else:
+            self.face = (0.0, -1.0)
 
         # In den Spielbereich zwingen.
         self.px = max(PLAYER_W / 2, min(self.width - PLAYER_W / 2, self.px))
@@ -665,6 +774,11 @@ class InvadersGame(Game):
         for (sx, sy, r) in self._stars:
             pygame.draw.circle(s, COL_STAR, (sx, sy), r)
 
+        # Setup-Screen (Klassik) statt Spielfeld.
+        if self.state == "setup":
+            self._draw_setup(s)
+            return
+
         # Klassik-Schutzschilde
         for sh in self.shields:
             if sh["hp"] <= 0:
@@ -696,6 +810,14 @@ class InvadersGame(Game):
             pygame.draw.circle(s, p["col"], (int(p["x"]), int(p["y"])), r)
 
         self._draw_player(s)
+
+        # Maus-Fadenkreuz beim Maus-Zielen
+        if self.mouse_aim:
+            mx, my = int(self.mouse_pos[0]), int(self.mouse_pos[1])
+            pygame.draw.circle(s, (240, 240, 240), (mx, my), 8, 1)
+            pygame.draw.line(s, (240, 240, 240), (mx - 11, my), (mx - 4, my))
+            pygame.draw.line(s, (240, 240, 240), (mx + 4, my), (mx + 11, my))
+
         self._draw_hud(s)
         self._draw_banner(s)
 
@@ -703,6 +825,39 @@ class InvadersGame(Game):
             self.draw_center_text(t("common.game_over"), self.big_font,
                                   (235, 110, 110), -20)
             self.draw_center_text(t("common.enter_restart"), self.font, COL_TEXT, 30)
+
+    def _draw_setup(self, s):
+        """Zeichnet den Klassik-Setup-Screen (Bewegung/Zielen wählen)."""
+        title = self.big_font.render(self.name, True, COL_TEXT)
+        s.blit(title, title.get_rect(center=(self.width // 2, 70)))
+        sub = self.font.render(t("inv.setup_title"), True, COL_MUTE)
+        s.blit(sub, sub.get_rect(center=(self.width // 2, 112)))
+
+        rows = [
+            (t("inv.opt_move"),
+             t("inv.opt_move_free") if self.opt_move == "free" else t("inv.opt_move_lr")),
+            (t("inv.opt_aim"),
+             t("inv.opt_aim_mouse") if self.opt_aim == "mouse" else t("inv.opt_aim_fixed")),
+            (t("common.start"), None),
+        ]
+        for i, r in enumerate(self._setup_rects):
+            selected = (i == self._setup_sel)
+            pygame.draw.rect(s, (70, 96, 150) if selected else (44, 50, 66),
+                             r, border_radius=8)
+            label, value = rows[i]
+            if value is None:   # Start-Button: zentriert
+                img = self.font.render(label, True, COL_TEXT)
+                s.blit(img, img.get_rect(center=r.center))
+            else:
+                limg = self.font.render(label, True, COL_TEXT)
+                s.blit(limg, (r.x + 14, r.centery - limg.get_height() // 2))
+                vimg = self.font.render("< %s >" % value, True,
+                                        (240, 210, 120) if selected else COL_MUTE)
+                s.blit(vimg, (r.right - vimg.get_width() - 14,
+                              r.centery - vimg.get_height() // 2))
+
+        hint = self.font.render(t("inv.setup_hint"), True, COL_MUTE)
+        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 24)))
 
     def _draw_alien(self, s, a):
         col = KIND_COL.get(a["kind"], (235, 110, 110))
@@ -775,7 +930,9 @@ class InvadersGame(Game):
             return
         img = self.big_font.render(self._banner, True, COL_TEXT)
         s.blit(img, img.get_rect(center=(self.width // 2, self.height // 2 - 30)))
-        if self.arena:
+        if self.mouse_aim:
+            hint = t("inv.hint_mouse")
+        elif self.arena:
             hint = t("inv.hint_free")
         elif self.free_move:
             hint = t("inv.hint_classic_free")

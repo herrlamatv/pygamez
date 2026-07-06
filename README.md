@@ -83,14 +83,13 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 - Volle Reihen geben Punkte, alle 10 Reihen steigt das Level.
 - **Versus**: Wessen Stapel zuerst oben anstößt, verliert.
 
-**Invaders** – drei Modi (im Vorspiel wählbar):
-- **Klassik**: klassischer Alien-Block, unten links/rechts bewegen und nach oben
-  schießen; zerstörte Aliens lassen manchmal Power-ups fallen.
-- **Klassik (WASD)**: wie Klassik, aber freie Bewegung in alle Richtungen – das
-  Schiff schaut/schießt dabei **immer nach oben**, egal wohin man fliegt.
-- **Arena (frei)**: freie Bewegung in alle Richtungen (WASD/Pfeile), Gegner
-  strömen von allen Rändern; man zielt in Bewegungsrichtung, Waffe mit **1–4**
-  wechseln.
+**Invaders** – zwei Modi (im Vorspiel wählbar):
+- **Klassik**: klassischer Alien-Block; danach im Setup-Screen wählbar:
+  **Bewegung** (nur links/rechts *oder* frei mit WASD) und **Zielen** (immer nach
+  oben *oder* zur **Maus** – dann schießt man dorthin, wo der Mauszeiger ist).
+  Zerstörte Aliens lassen manchmal Power-ups fallen.
+- **Arena (frei)**: freie Bewegung in alle Richtungen, Gegner strömen von allen
+  Rändern; man zielt in Bewegungsrichtung, Waffe mit **1–4** wechseln.
 Gemeinsam: Levelsystem mit **Boss** in jedem 4. Level, vier Waffen (Blaster,
 Streuschuss, Schnellfeuer, Laser), Power-ups (Extraleben, Schild, Waffen-Upgrade),
 Explosions-Effekte, Highscore.
