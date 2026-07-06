@@ -45,6 +45,8 @@ _SPECS = {
     "move":     dict(f0=330, dur=0.03, wave="square", vol=0.18),
     "gameover": dict(f0=440, f1=120,  dur=0.50, wave="saw",    vol=0.40),
     "win":      dict(f0=520, f1=1300, dur=0.45, wave="square", vol=0.40),
+    "powerup":  dict(f0=600, f1=1200, dur=0.18, wave="square", vol=0.32),
+    "level":    dict(f0=440, f1=1100, dur=0.32, wave="square", vol=0.38),
 }
 
 

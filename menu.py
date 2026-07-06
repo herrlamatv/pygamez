@@ -89,12 +89,21 @@ class PreGameScreen(_Screen):
 
     def _build_buttons(self):
         self.buttons = []   # (label, callback)
-        mp = getattr(self.game_cls, "supports_multiplayer", False)
-        self.buttons.append((t("pregame.single"),
-                             lambda: self.app.launch_game(self.game_cls, "single")))
-        if mp:
-            self.buttons.append((t("pregame.multi"),
-                                 lambda: self.app.launch_game(self.game_cls, "multi")))
+        # Spiel-eigene Modi (z.B. Invaders: Klassik/Arena). Definiert ein Spiel
+        # eine Liste MODES = [(mode_key, i18n_label), ...], werden diese statt
+        # Einzel-/Mehrspieler angeboten.
+        modes = getattr(self.game_cls, "MODES", None)
+        if modes:
+            for mode_key, label_key in modes:
+                self.buttons.append(
+                    (t(label_key),
+                     lambda m=mode_key: self.app.launch_game(self.game_cls, m)))
+        else:
+            self.buttons.append((t("pregame.single"),
+                                 lambda: self.app.launch_game(self.game_cls, "single")))
+            if getattr(self.game_cls, "supports_multiplayer", False):
+                self.buttons.append((t("pregame.multi"),
+                                     lambda: self.app.launch_game(self.game_cls, "multi")))
         self.buttons.append((t("pregame.options"), self._open_options))
         self.buttons.append((t("pregame.back"), self.app.back_to_menu))
 
