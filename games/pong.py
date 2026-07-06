@@ -4,19 +4,19 @@ pong.py
 =======
 Pong - Einzelspieler (gegen KI) oder Mehrspieler (2 Spieler).
 
-- Steuerung ueber die belegten Tasten (Standard: Spieler 1 = W/S, Spieler 2 =
-  Pfeil hoch/runter). Die Aktions-Taste haelt den eigenen Schlaeger an.
-- Einzelspieler: rechter Schlaeger wird von einer einfachen KI gesteuert.
-- Mehrspieler: rechter Schlaeger = Spieler 2.
+- Steuerung über die belegten Tasten (Standard: Spieler 1 = W/S, Spieler 2 =
+  Pfeil hoch/runter). Die Aktions-Taste hält den eigenen Schläger an.
+- Einzelspieler: rechter Schläger wird von einer einfachen KI gesteuert.
+- Mehrspieler: rechter Schläger = Spieler 2.
 - Bewegungsmodus pro Steuerung umschaltbar (im Spiel):
-    * Dauer  : einmal druecken -> der Schlaeger faehrt dauerhaft weiter
+    * Dauer  : einmal drücken -> der Schläger fährt dauerhaft weiter
                (bis Richtungswechsel oder Aktions-Taste). Das ist der Standard.
-    * Halten : der Schlaeger bewegt sich nur, solange man die Taste gedrueckt
-               HAELT (nutzt die Tastenwiederholung), und stoppt beim Loslassen.
+    * Halten : der Schläger bewegt sich nur, solange man die Taste gedrückt
+               HÄLT (nutzt die Tastenwiederholung), und stoppt beim Loslassen.
   Umschalttasten:  X = Steuerung 1 (z.B. WASD),  N = Steuerung 2 (z.B. IJKL/Pfeile).
   Die Einstellung wird dauerhaft in settings.json ("pong") gespeichert.
 - Ball-Physik mit Beschleunigung und Winkel je nach Treffpunkt.
-- Es wird bis 5 Punkte gespielt. Als Highscore zaehlen die Punkte links (P1).
+- Es wird bis 5 Punkte gespielt. Als Highscore zählen die Punkte links (P1).
 """
 
 import random
@@ -32,7 +32,7 @@ COL_NET = (60, 60, 80)
 COL_P1 = (140, 230, 160)
 COL_P2 = (150, 200, 255)
 COL_DIM = (120, 128, 148)
-COL_HOLD = (120, 220, 140)   # "Halten"-Modus (gruen)
+COL_HOLD = (120, 220, 140)   # "Halten"-Modus (grün)
 
 PADDLE_W = 12
 PADDLE_H = 80
@@ -43,13 +43,13 @@ BALL_START_SPEED = 320
 BALL_MAX_SPEED = 650
 WIN_SCORE = 5
 
-# So lange (Sekunden) faehrt der Schlaeger im "Halten"-Modus nach dem letzten
+# So lange (Sekunden) fährt der Schläger im "Halten"-Modus nach dem letzten
 # Tastendruck noch weiter. Die Tastenwiederholung feuert schneller als das,
-# daher bewegt er sich fluessig solange man haelt - und stoppt kurz nach dem
+# daher bewegt er sich flüssig solange man hält - und stoppt kurz nach dem
 # Loslassen (wenn keine Wiederholung mehr kommt).
 HOLD_KEEPALIVE = 0.12
 
-# Feste Umschalttasten fuer den Bewegungsmodus.
+# Feste Umschalttasten für den Bewegungsmodus.
 TOGGLE_KEYS = {"x": "p1", "X": "p1", "n": "p2", "N": "p2"}
 
 
@@ -69,7 +69,7 @@ class PongGame(Game):
 
         # Bewegungszustand pro Steuerung ("p1"/"p2"):
         #   dir  : aktuelle Richtung (-1/0/1)
-        #   keep : Rest-Zeit im "Halten"-Modus, bis der Schlaeger stoppt
+        #   keep : Rest-Zeit im "Halten"-Modus, bis der Schläger stoppt
         self.dir = {"p1": 0, "p2": 0}
         self.keep = {"p1": 0.0, "p2": 0.0}
         pg = self.settings.get("pong", {}) if isinstance(self.settings, dict) else {}
@@ -104,30 +104,30 @@ class PongGame(Game):
             return
 
         # Bewegung je Steuerung auswerten. Im Einzelspieler steuern BEIDE
-        # Belegungen den linken Schlaeger, im Mehrspieler p1=links, p2=rechts.
+        # Belegungen den linken Schläger, im Mehrspieler p1=links, p2=rechts.
         self._move_scheme("p1", event.key)
         self._move_scheme("p2", event.key)
 
     def _move_scheme(self, scheme, key):
-        """Setzt Richtung/Keepalive fuer eine Steuerung anhand einer Taste."""
+        """Setzt Richtung/Keepalive für eine Steuerung anhand einer Taste."""
         if self.is_action(key, "up", scheme):
             self._press(scheme, -1)
         elif self.is_action(key, "down", scheme):
             self._press(scheme, 1)
         elif self.is_action(key, "action", scheme):
-            # Aktions-Taste haelt im Dauer-Modus an (im Halten-Modus unnoetig).
+            # Aktions-Taste hält im Dauer-Modus an (im Halten-Modus unnötig).
             self.dir[scheme] = 0
             self.keep[scheme] = 0.0
 
     def _press(self, scheme, richtung):
         self.dir[scheme] = richtung
         if self.hold[scheme]:
-            # Im Halten-Modus faehrt der Schlaeger nur kurz weiter; die
-            # Tastenwiederholung frischt das laufend auf, solange man haelt.
+            # Im Halten-Modus fährt der Schläger nur kurz weiter; die
+            # Tastenwiederholung frischt das laufend auf, solange man hält.
             self.keep[scheme] = HOLD_KEEPALIVE
 
     def _toggle_hold(self, scheme):
-        """Schaltet fuer eine Steuerung zwischen Dauer- und Halten-Modus um."""
+        """Schaltet für eine Steuerung zwischen Dauer- und Halten-Modus um."""
         self.hold[scheme] = not self.hold[scheme]
         # Laufende Bewegung beim Umschalten stoppen.
         self.dir[scheme] = 0
@@ -149,16 +149,16 @@ class PongGame(Game):
                 if self.keep[scheme] <= 0:
                     self.dir[scheme] = 0
 
-        # --- Linker Schlaeger ---
+        # --- Linker Schläger ---
         if self.multiplayer:
             left_dir = self.dir["p1"]
         else:
-            # Einzelspieler: beide Steuerungen bewegen den linken Schlaeger.
+            # Einzelspieler: beide Steuerungen bewegen den linken Schläger.
             left_dir = max(-1, min(1, self.dir["p1"] + self.dir["p2"]))
         self.player_y += left_dir * PADDLE_SPEED * dt
         self.player_y = max(0, min(self.height - PADDLE_H, self.player_y))
 
-        # --- Rechter Schlaeger: KI (Einzel) oder Spieler 2 (Mehrspieler) ---
+        # --- Rechter Schläger: KI (Einzel) oder Spieler 2 (Mehrspieler) ---
         if self.multiplayer:
             self.ai_y += self.dir["p2"] * PADDLE_SPEED * dt
         else:
@@ -203,7 +203,7 @@ class PongGame(Game):
             self._nach_punkt(toward_player=False)
 
     def _bounce(self, paddle, nach_rechts):
-        """Ball am Schlaeger reflektieren; Winkel haengt vom Treffpunkt ab."""
+        """Ball am Schläger reflektieren; Winkel hängt vom Treffpunkt ab."""
         treff = (self.ball_y + BALL_SIZE / 2) - (paddle.y + PADDLE_H / 2)
         treff /= (PADDLE_H / 2)
 
@@ -276,7 +276,7 @@ class PongGame(Game):
             col = COL_HOLD if self.hold[scheme] else COL_DIM
             return modus, col
 
-        # Einzelspieler: beide Steuerungen gehoeren dir. Mehrspieler: 1=links, 2=rechts.
+        # Einzelspieler: beide Steuerungen gehören dir. Mehrspieler: 1=links, 2=rechts.
         m1, c1 = zeile("p1")
         t1 = self._small.render(f"[X] Steuerung 1: {m1}", True, c1)
         s.blit(t1, (10, self.height - 22))

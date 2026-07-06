@@ -2,16 +2,16 @@
 """
 tictactoe.py
 ============
-Tic-Tac-Toe mit Setup-Menue, mehreren Brettgroessen und KI-Schwierigkeiten.
+Tic-Tac-Toe mit Setup-Menü, mehreren Brettgrößen und KI-Schwierigkeiten.
 
-- Setup-Screen: Schwierigkeit (Easy/Medium/Hard) und Brettgroesse 3x3 .. 9x9.
+- Setup-Screen: Schwierigkeit (Easy/Medium/Hard) und Brettgröße 3x3 .. 9x9.
 - Allgemeines m,n,k-Spiel: gewonnen hat, wer K Steine in einer Reihe hat.
-  Gewinnlaenge K: 3x3 -> 3, 4x4 -> 4, ab 5x5 -> 5 (in einer Reihe).
+  Gewinnlänge K: 3x3 -> 3, 4x4 -> 4, ab 5x5 -> 5 (in einer Reihe).
 - KI:
-    Easy   - zufaellige Zuege.
+    Easy   - zufällige Züge.
     Medium - gewinnt/blockt sofort, sonst heuristisch bester Zug.
     Hard   - 3x3: volle Minimax-Suche (unschlagbar);
-             groessere Bretter: tiefenbegrenzte Alpha-Beta-Suche mit Heuristik.
+             größere Bretter: tiefenbegrenzte Alpha-Beta-Suche mit Heuristik.
 - Modus: 1 Spieler (gegen die KI) oder 2 Spieler (lokal X gegen O).
 - Spieler = X, KI/Spieler 2 = O, Klick-Steuerung.
 - "Score"/Highscore = Anzahl gewonnener Runden (Siege) im 1-Spieler-Modus.
@@ -44,7 +44,7 @@ LINE_WEIGHTS = [0, 1, 12, 120, 1200, 12000]
 
 
 def win_length(n):
-    """Benoetigte Anzahl Steine in einer Reihe je Brettgroesse."""
+    """Benötigte Anzahl Steine in einer Reihe je Brettgröße."""
     if n <= 4:
         return n
     return 5
@@ -53,7 +53,7 @@ def win_length(n):
 class TicTacToeGame(Game):
     name = "Tic-Tac-Toe"
     highscore_key = "tictactoe"
-    supports_multiplayer = True      # Menue bietet "Mehrspieler (2 Spieler)"
+    supports_multiplayer = True      # Menü bietet "Mehrspieler (2 Spieler)"
 
     def reset(self):
         self.score = 0
@@ -120,7 +120,7 @@ class TicTacToeGame(Game):
         st = self._mid.render("START", True, COL_TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
 
-        hint = self._small.render("Klick zum Auswaehlen   -   Enter = Start", True, COL_DIM)
+        hint = self._small.render("Klick zum Auswählen   -   Enter = Start", True, COL_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, 420)))
 
     def _handle_setup_event(self, event):
@@ -145,7 +145,7 @@ class TicTacToeGame(Game):
     def _start_run(self):
         self.n = self.size
         self.k = win_length(self.n)
-        self._max_depth = {3: 9, 4: 4, 5: 3}.get(self.n, 2)  # Suchtiefe fuer Hard
+        self._max_depth = {3: 9, 4: 4, 5: 3}.get(self.n, 2)  # Suchtiefe für Hard
         self._precompute_windows()
         self._neue_runde()
         self.state = PLAY
@@ -167,7 +167,7 @@ class TicTacToeGame(Game):
         self.oy = (self.height - self.board_size) // 2 + 10
 
     def _precompute_windows(self):
-        """Alle K-Fenster (Reihen/Spalten/Diagonalen) fuer die Heuristik."""
+        """Alle K-Fenster (Reihen/Spalten/Diagonalen) für die Heuristik."""
         n, k = self.n, self.k
         self.windows = []
         for r in range(n):
@@ -327,7 +327,7 @@ class TicTacToeGame(Game):
         return list(nah) if nah else empties
 
     def _find_winning(self, sym):
-        """Feld, auf dem 'sym' sofort gewinnen wuerde (oder None)."""
+        """Feld, auf dem 'sym' sofort gewinnen würde (oder None)."""
         for i in self._empties():
             self.board[i] = sym
             gewinnt = self._won_at(i, sym)
@@ -344,7 +344,7 @@ class TicTacToeGame(Game):
         if len(empties) == self.n * self.n:
             return self.n * self.n // 2
 
-        # Immer sofort gewinnen, wenn moeglich
+        # Immer sofort gewinnen, wenn möglich
         gewinn = self._find_winning(AI)
         if gewinn is not None:
             return gewinn
@@ -454,7 +454,7 @@ class TicTacToeGame(Game):
         s = self.surface
         s.fill(COL_BG)
         n, cell = self.n, self.cell
-        lw = max(2, cell // 20)             # Linienbreite passend zur Zellgroesse
+        lw = max(2, cell // 20)             # Linienbreite passend zur Zellgröße
 
         # Gitter
         for i in range(1, n):

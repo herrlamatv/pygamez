@@ -7,19 +7,19 @@ Breakout / Brick-Breaker  -  stark erweiterte Deluxe-Version.
 Neu in dieser Version
 ---------------------
 - Neue Steinsorten:
-    * Normal   (1-3 Treffer, Farbe = Resthaerte)
-    * Stahl    (unzerstoerbar, prallt nur ab - zaehlt NICHT zum Levelziel)
+    * Normal   (1-3 Treffer, Farbe = Resthärte)
+    * Stahl    (unzerstörbar, prallt nur ab - zählt NICHT zum Levelziel)
     * Bombe    (explodiert und reisst Nachbarn mit)
     * Gold     (viele Extrapunkte)
-- Viele neue Power-ups zusaetzlich zu den alten:
-    Laser (Kanonen am Schlaeger), Feuerball (durchschlaegt Steine),
-    Klebrig (Ball haftet), Schild (Auffangnetz unten), Muenze (Bonuspunkte).
+- Viele neue Power-ups zusätzlich zu den alten:
+    Laser (Kanonen am Schläger), Feuerball (durchschlägt Steine),
+    Klebrig (Ball haftet), Schild (Auffangnetz unten), Münze (Bonuspunkte).
 - Combo-System mit steigendem Punkte-Multiplikator.
 - Partikel-Effekte, Ball-Spuren, Bildschirm-Wackeln (Screen-Shake),
   aufsteigende Punkte-Popups.
 - Neue Level-Muster: Herz, Wellen, Ringe, Kreuz, Rahmen, Zufall u.a.,
   insgesamt deutlich mehr Level.
-- Komplett ueberarbeitete Oberflaeche: Sternen-Hintergrund mit Verlauf,
+- Komplett überarbeitete Oberfläche: Sternen-Hintergrund mit Verlauf,
   neuer Setup-Screen, Level-Intro-Banner, Effekt-Anzeigen, Pause-Screen.
 
 Steuerung
@@ -27,8 +27,8 @@ Steuerung
 - Setup: 1/2/3 = Schwierigkeit, Pfeil links/rechts = Ballfarbe,
          Hoch/Runter = Startlevel, M = Aufbau, Enter/Leertaste = Start
          (alles auch per Mausklick).
-- Spiel: Maus oder Pfeil links/rechts bewegt den Schlaeger,
-         Leertaste/Klick startet bzw. loest den haftenden Ball (und feuert Laser),
+- Spiel: Maus oder Pfeil links/rechts bewegt den Schläger,
+         Leertaste/Klick startet bzw. löst den haftenden Ball (und feuert Laser),
          P/Esc = Pause.
 """
 
@@ -47,16 +47,16 @@ COL_TEXT = (238, 240, 248)
 COL_DIM = (150, 160, 185)
 COL_ACCENT = (90, 150, 240)
 
-# Steinfarbe nach Resthaerte (Treffer bis zur Zerstoerung)
+# Steinfarbe nach Resthärte (Treffer bis zur Zerstörung)
 STR_COLORS = {1: (120, 205, 120), 2: (235, 185, 80), 3: (230, 95, 95)}
 
-# Auswaehlbare Ballfarben (Name, RGB)
+# Auswählbare Ballfarben (Name, RGB)
 BALL_COLORS = [
     ("Gelb",   (255, 230, 120)),
     ("Weiss",  (240, 240, 240)),
     ("Cyan",   (110, 230, 230)),
     ("Pink",   (255, 120, 200)),
-    ("Gruen",  (120, 240, 140)),
+    ("Grün",  (120, 240, 140)),
     ("Orange", (255, 160, 70)),
     ("Lila",   (185, 130, 255)),
 ]
@@ -74,9 +74,9 @@ DIFF_ORDER = ["Easy", "Medium", "Hard"]
 #   pat  : Muster (siehe _brick_da)
 #   rows : Anzahl Steinreihen
 #   cols : Anzahl Steinspalten
-#   base : Grund-Resthaerte der Steine (1-3)
-#   drop : Multiplikator fuer die Power-up-Haeufigkeit
-#   spec : Anteil "besonderer" Steine (Bombe/Gold/Stahl-Wuerze), 0..1
+#   base : Grund-Resthärte der Steine (1-3)
+#   drop : Multiplikator für die Power-up-Häufigkeit
+#   spec : Anteil "besonderer" Steine (Bombe/Gold/Stahl-Würze), 0..1
 LEVEL_DEFS = [
     dict(tag="Normal", pat="full",    rows=3, cols=11, base=1, drop=1.0, spec=0.05),
     dict(tag="Normal", pat="checker", rows=4, cols=11, base=1, drop=1.0, spec=0.06),
@@ -106,7 +106,7 @@ LEVEL_DEFS = [
 ]
 NUM_LEVELS = len(LEVEL_DEFS)
 
-# Farbe der Level-Typen (fuer Anzeige)
+# Farbe der Level-Typen (für Anzeige)
 TAG_COLORS = {"Normal": (150, 160, 185), "Schwer": (235, 110, 110),
               "Spass": (130, 220, 130), "Voll": (130, 200, 235)}
 
@@ -124,7 +124,7 @@ LASER_INTERVAL = 0.28       # Sekunden zwischen zwei Laser-Salven
 # Dauer der zeitlich begrenzten Effekte (Sekunden)
 FX_DUR = dict(laser=9.0, fire=7.0, sticky=11.0, shield=10.0)
 
-# Spielzustaende
+# Spielzustände
 SETUP, PLAY, PAUSE, OVER = "setup", "play", "pause", "over"
 
 
@@ -134,9 +134,9 @@ class Ball:
 
     def __init__(self, x, y, vx, vy):
         self.x, self.y, self.vx, self.vy = x, y, vx, vy
-        self.trail = []                 # letzte Positionen fuer die Ball-Spur
-        self.stuck = False              # haftet gerade am Schlaeger (Klebrig)?
-        self.stuck_off = 0.0            # Abstand zur Schlaegermitte beim Haften
+        self.trail = []                 # letzte Positionen für die Ball-Spur
+        self.stuck = False              # haftet gerade am Schläger (Klebrig)?
+        self.stuck_off = 0.0            # Abstand zur Schlägermitte beim Haften
 
     def speed(self):
         return math.hypot(self.vx, self.vy)
@@ -176,7 +176,7 @@ class PowerUp:
 
 # ================================================================== Brick
 class Brick:
-    """Ein einzelner Stein mit Sorte und Resthaerte."""
+    """Ein einzelner Stein mit Sorte und Resthärte."""
 
     NORMAL, STEEL, BOMB, GOLD = "normal", "steel", "bomb", "gold"
 
@@ -225,7 +225,7 @@ class BreakoutGame(Game):
         self._build_setup_layout()
 
     def on_surface_changed(self):
-        """Wird vom Rahmen bei Groessenaenderung aufgerufen."""
+        """Wird vom Rahmen bei Größenänderung aufgerufen."""
         self._scene = None
         self._build_bg()
         self._build_setup_layout()
@@ -321,7 +321,7 @@ class BreakoutGame(Game):
         voll = (self.level_mode == "Voll")
         self._panel(s, self.mode_rect, (60, 95, 120) if voll else (40, 45, 60))
         mt = self._small.render(
-            "Aufbau:  Voll (dichte Kaestchen)" if voll else "Aufbau:  Standard (gemischt)",
+            "Aufbau:  Voll (dichte Kästchen)" if voll else "Aufbau:  Standard (gemischt)",
             True, COL_TEXT)
         s.blit(mt, mt.get_rect(center=self.mode_rect.center))
 
@@ -343,7 +343,7 @@ class BreakoutGame(Game):
             True, COL_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, 428)))
         leg = self._tiny.render(
-            "Power-ups: x2/x3 Baelle  L Laser  F Feuerball  G Klebrig  U Schild  $ Bonus  W/S Schlaeger",
+            "Power-ups: x2/x3 Bälle  L Laser  F Feuerball  G Klebrig  U Schild  $ Bonus  W/S Schläger",
             True, (110, 120, 145))
         s.blit(leg, leg.get_rect(center=(self.width // 2, 448)))
 
@@ -436,12 +436,12 @@ class BreakoutGame(Game):
         spd = self.cfg["ball_speed"]
         b = Ball(self.width / 2, self.paddle_y - BALL_R - 1, spd * 0.5, -spd)
         self.balls = [b]
-        self.ball_haengt = True
+        self.ball_hängt = True
         self.combo = 0
         self.mult = 1
 
     def _make_level(self, d):
-        """Erzeugt die Steine fuer ein Level anhand seiner Definition 'd'."""
+        """Erzeugt die Steine für ein Level anhand seiner Definition 'd'."""
         rows, cols, pat = d["rows"], d["cols"], d["pat"]
         base = max(1, min(3, d["base"] + self.cfg["hard_bonus"]))
         spec = d.get("spec", 0.0)
@@ -498,7 +498,7 @@ class BreakoutGame(Game):
         if pat == "columns3":
             return c % 3 != 1
         if pat == "waves":
-            # zwei sinusfoermige Baender
+            # zwei sinusförmige Bänder
             band = (rows - 1) / 2.0 + (rows / 3.0) * math.sin(c * 0.9)
             return abs(r - band) < 1.2
         if pat == "rings":
@@ -551,10 +551,10 @@ class BreakoutGame(Game):
             self._launch_or_fire()
 
     def _launch_or_fire(self):
-        """Leertaste/Klick: haftenden Ball loesen und ggf. Laser feuern."""
+        """Leertaste/Klick: haftenden Ball lösen und ggf. Laser feuern."""
         released = False
-        if self.ball_haengt:
-            self.ball_haengt = False
+        if self.ball_hängt:
+            self.ball_hängt = False
             released = True
         for b in self.balls:
             if b.stuck:
@@ -574,24 +574,24 @@ class BreakoutGame(Game):
         if self.intro_timer > 0:
             self.intro_timer = max(0.0, self.intro_timer - dt)
 
-        # Effekt-Timer herunterzaehlen
+        # Effekt-Timer herunterzählen
         for k in self.fx:
             if self.fx[k] > 0:
                 self.fx[k] = max(0.0, self.fx[k] - dt)
 
-        # Schlaeger bewegen (Tastatur)
+        # Schläger bewegen (Tastatur)
         if self.move_dir:
             self.paddle_x += self.move_dir * 560 * dt
         self.paddle_x = max(0, min(self.width - self.paddle_w, self.paddle_x))
         paddle_rect = pygame.Rect(self.paddle_x, self.paddle_y, self.paddle_w, PADDLE_H)
 
-        # Haftende / haengende Baelle folgen dem Schlaeger
+        # Haftende / hängende Bälle folgen dem Schläger
         for b in self.balls:
-            if self.ball_haengt or b.stuck:
-                off = 0 if self.ball_haengt else b.stuck_off
+            if self.ball_hängt or b.stuck:
+                off = 0 if self.ball_hängt else b.stuck_off
                 b.x = self.paddle_x + self.paddle_w / 2 + off
                 b.y = self.paddle_y - BALL_R - 1
-        if not self.ball_haengt:
+        if not self.ball_hängt:
             self._update_balls(dt, paddle_rect)
 
         # Laser automatisch nachladen/feuern
@@ -607,7 +607,7 @@ class BreakoutGame(Game):
         if self.shake > 0:
             self.shake = max(0.0, self.shake - 55 * dt)
 
-        # Alle Baelle verloren?
+        # Alle Bälle verloren?
         if not self.balls:
             self.lives -= 1
             self.play_sound("hit")
@@ -618,7 +618,7 @@ class BreakoutGame(Game):
                 self._reset_paddle_ball()
             return
 
-        # Level geschafft? (Stahl zaehlt nicht)
+        # Level geschafft? (Stahl zählt nicht)
         if not any(b.breakable for b in self.bricks):
             if self.level_index + 1 < NUM_LEVELS:
                 self.level_index += 1
@@ -628,12 +628,12 @@ class BreakoutGame(Game):
                 self._ende(gewonnen=True)
 
     def _update_balls(self, dt, paddle_rect):
-        ueberlebende = []
+        überlebende = []
         fire = self.fx["fire"] > 0
         shield = self.fx["shield"] > 0
         for b in self.balls:
             if b.stuck:
-                ueberlebende.append(b)
+                überlebende.append(b)
                 continue
 
             # Spur mitschreiben
@@ -644,7 +644,7 @@ class BreakoutGame(Game):
             b.x += b.vx * dt
             b.y += b.vy * dt
 
-            # Waende
+            # Wände
             if b.x - BALL_R <= 0:
                 b.x = BALL_R
                 b.vx = abs(b.vx)
@@ -668,7 +668,7 @@ class BreakoutGame(Game):
 
             ball_rect = pygame.Rect(b.x - BALL_R, b.y - BALL_R, BALL_R * 2, BALL_R * 2)
 
-            # Schlaeger
+            # Schläger
             if ball_rect.colliderect(paddle_rect) and b.vy > 0:
                 treff = (b.x - (self.paddle_x + self.paddle_w / 2)) / (self.paddle_w / 2)
                 treff = max(-1, min(1, treff))
@@ -678,7 +678,7 @@ class BreakoutGame(Game):
                 b.vy = -abs(speed * math.cos(winkel))
                 b.y = self.paddle_y - BALL_R - 1
                 self.play_sound("bounce")
-                self.combo = 0            # Combo endet beim Schlaeger
+                self.combo = 0            # Combo endet beim Schläger
                 self.mult = 1
                 if self.fx["sticky"] > 0:
                     b.stuck = True
@@ -686,9 +686,9 @@ class BreakoutGame(Game):
 
             # Steine
             self._ball_bricks(b, ball_rect, fire)
-            ueberlebende.append(b)
+            überlebende.append(b)
 
-        self.balls = ueberlebende
+        self.balls = überlebende
 
     def _ball_bricks(self, b, ball_rect, fire):
         for i, brick in enumerate(self.bricks):
@@ -696,7 +696,7 @@ class BreakoutGame(Game):
                 continue
             rect = brick.rect
 
-            # Stahl: immer abprallen, nie zerstoeren
+            # Stahl: immer abprallen, nie zerstören
             if brick.kind == Brick.STEEL and not fire:
                 self._bounce(b, ball_rect, rect)
                 self.play_sound("bounce")
@@ -707,7 +707,7 @@ class BreakoutGame(Game):
                 return
 
             if fire:
-                # Feuerball durchschlaegt Steine ohne abzuprallen
+                # Feuerball durchschlägt Steine ohne abzuprallen
                 self._hit_brick(i, full=True)
                 continue
 
@@ -725,7 +725,7 @@ class BreakoutGame(Game):
             b.vy = -b.vy
 
     def _hit_brick(self, index, full):
-        """Fuegt einem Stein Schaden zu; zerstoert ihn ggf. inkl. Effekten."""
+        """Fügt einem Stein Schaden zu; zerstört ihn ggf. inkl. Effekten."""
         if index >= len(self.bricks):
             return
         brick = self.bricks[index]
@@ -742,7 +742,7 @@ class BreakoutGame(Game):
             pass
 
     def _pop_brick(self, brick, chain):
-        """Stein zerstoeren: Punkte, Combo, Partikel, evtl. Kettenexplosion."""
+        """Stein zerstören: Punkte, Combo, Partikel, evtl. Kettenexplosion."""
         self.combo += 1
         self.mult = min(8, 1 + self.combo // 4)
 
@@ -781,7 +781,7 @@ class BreakoutGame(Game):
                 self._pop_brick(b, chain=(b.kind == Brick.BOMB))
 
     def _fire_laser(self):
-        """Feuert zwei Laserschuesse von den Schlaegerenden nach oben."""
+        """Feuert zwei Laserschüsse von den Schlägerenden nach oben."""
         y = self.paddle_y - 4
         self.lasers.append([self.paddle_x + 8, y])
         self.lasers.append([self.paddle_x + self.paddle_w - 8, y])
@@ -958,10 +958,10 @@ class BreakoutGame(Game):
             pygame.draw.rect(s, (255, 90, 90),
                              (int(shot[0]) - 2, int(shot[1]) - 10, 4, 12), border_radius=2)
 
-        # Schlaeger
+        # Schläger
         self._draw_paddle(s)
 
-        # Baelle (Feuerball andersfarbig)
+        # Bälle (Feuerball andersfarbig)
         fire = self.fx["fire"] > 0
         for b in self.balls:
             col = (255, 150, 40) if fire else self.ball_color
@@ -985,7 +985,7 @@ class BreakoutGame(Game):
 
         self._draw_hud(s)
 
-        if self.ball_haengt and self.intro_timer <= 0:
+        if self.ball_hängt and self.intro_timer <= 0:
             img = self.font.render("Leertaste/Klick zum Start", True, COL_TEXT)
             s.blit(img, img.get_rect(center=(self.width // 2, self.height // 2 + 60)))
 
@@ -993,7 +993,7 @@ class BreakoutGame(Game):
         if self.intro_timer > 0:
             self._draw_intro(s)
 
-        # Szene mit Screen-Shake auf die echte Flaeche uebertragen
+        # Szene mit Screen-Shake auf die echte Fläche übertragen
         if self.shake > 0.5:
             dx = random.uniform(-self.shake, self.shake)
             dy = random.uniform(-self.shake, self.shake)
@@ -1134,4 +1134,4 @@ class BreakoutGame(Game):
         else:
             self.draw_center_text("GAME OVER", self.big_font, (230, 120, 120), -30)
         self.draw_center_text(f"Punkte: {self.score}", self.font, COL_TEXT, 18)
-        self.draw_center_text("Enter = zurueck zur Auswahl", self.font, COL_DIM, 52)
+        self.draw_center_text("Enter = zurück zur Auswahl", self.font, COL_DIM, 52)

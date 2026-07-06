@@ -2,24 +2,24 @@
 """
 prestige.py
 ===========
-Prestige-Stufen fuer Snake. Hier stehen ALLE erreichbaren Prestige-Level -
+Prestige-Stufen für Snake. Hier stehen ALLE erreichbaren Prestige-Level -
 diese Datei kann man frei erweitern und die Werte anpassen.
 
 Jeder Eintrag in PRESTIGE_LEVELS beschreibt, was es kostet, DIESE Stufe zu
 ERREICHEN (ausgehend von der vorherigen):
 
-    roman   : Anzeige-Name (roemische Zahl), z.B. "I", "II", "III", ...
-    apples  : so viele Aepfel braucht man dafuer - und verliert sie dabei
-    length  : so viele Koerper-Segmente verliert die Schlange dabei
+    roman   : Anzeige-Name (römische Zahl), z.B. "I", "II", "III", ...
+    apples  : so viele Äpfel braucht man dafür - und verliert sie dabei
+    length  : so viele Körper-Segmente verliert die Schlange dabei
 
 PRESTIGE_LEVELS[0] = Weg zu "Prestige I" (Level 1),
 PRESTIGE_LEVELS[1] = Weg zu "Prestige II" (Level 2), usw.
 
-Der NUTZEN einer Stufe haengt am erreichten Level:
-    Wachstum pro Apfel    = 1 + Level  Bloecke   (Level 0 = 1, Level 9 = 10)
+Der NUTZEN einer Stufe hängt am erreichten Level:
+    Wachstum pro Apfel    = 1 + Level  Blöcke   (Level 0 = 1, Level 9 = 10)
     Punkte-Multiplikator  = 2 ** Level            (jede Stufe verdoppelt die Punkte)
 
-Neue Stufen einfach unten anhaengen (Level XI, XII, ...).
+Neue Stufen einfach unten anhängen (Level XI, XII, ...).
 """
 
 # (roman, apples, length) je Stufe. Werte nach Wunsch anpassen.
@@ -40,7 +40,7 @@ MAX_PRESTIGE = len(PRESTIGE_LEVELS)
 
 
 def blocks_per_apple(level):
-    """Wie viele Koerper-Bloecke ein Apfel bei diesem Prestige-Level bringt."""
+    """Wie viele Körper-Blöcke ein Apfel bei diesem Prestige-Level bringt."""
     return 1 + max(0, int(level))
 
 
@@ -50,7 +50,7 @@ def score_multiplier(level):
 
 
 def roman(level):
-    """Roemische Anzeige fuer ein bereits erreichtes Level (Level 0 -> '')."""
+    """Römische Anzeige für ein bereits erreichtes Level (Level 0 -> '')."""
     if level <= 0:
         return ""
     return PRESTIGE_LEVELS[min(level, MAX_PRESTIGE) - 1]["roman"]
@@ -58,9 +58,9 @@ def roman(level):
 
 def next_requirement(level):
     """
-    Anforderung, um von 'level' auf die naechste Stufe zu kommen.
-    Gibt ein dict {roman, apples, length} zurueck - oder None, wenn 'level'
-    bereits die hoechste Stufe ist.
+    Anforderung, um von 'level' auf die nächste Stufe zu kommen.
+    Gibt ein dict {roman, apples, length} zurück - oder None, wenn 'level'
+    bereits die höchste Stufe ist.
     """
     if level >= MAX_PRESTIGE:
         return None

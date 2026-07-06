@@ -2,7 +2,7 @@
 """
 main.py
 =======
-Desktop-Spielesammlung: Tkinter (Oberflaeche/Menue) + Pygame (eingebettetes Display).
+Desktop-Spielesammlung: Tkinter (Oberfläche/Menü) + Pygame (eingebettetes Display).
 
 So funktioniert die Einbettung
 ------------------------------
@@ -15,13 +15,13 @@ Das MUSS gesetzt werden, BEVOR pygame.display.set_mode() aufgerufen wird.
 'frame.winfo_id()' liefert das native Handle des Tkinter-Frames (HWND unter
 Windows, XID unter Linux/X11). pygame zeichnet dann direkt in diesen Frame.
 
-Zusaetzlich kann der Video-Treiber gesetzt werden (siehe Plattformhinweise unten).
+Zusätzlich kann der Video-Treiber gesetzt werden (siehe Plattformhinweise unten).
 
 Damit sich Tkinter und Pygame nicht gegenseitig blockieren, gibt es KEINE eigene
-while-Schleife fuer pygame. Stattdessen treibt Tkinters Ereignisschleife alles an:
-root.after(...) ruft regelmaessig _loop() auf, das ein einzelnes Frame des Spiels
-aktualisiert und zeichnet. Tastatur/Maus fangen wir ueber Tkinter-Bindings ab und
-reichen sie als InputEvent an das aktive Spiel weiter (zuverlaessiger als
+while-Schleife für pygame. Stattdessen treibt Tkinters Ereignisschleife alles an:
+root.after(...) ruft regelmäßig _loop() auf, das ein einzelnes Frame des Spiels
+aktualisiert und zeichnet. Tastatur/Maus fangen wir über Tkinter-Bindings ab und
+reichen sie als InputEvent an das aktive Spiel weiter (zuverlässiger als
 pygame.event beim Einbetten).
 """
 
@@ -30,7 +30,7 @@ import sys
 import tkinter as tk
 from tkinter import ttk
 
-# Standard-Spielflaeche und -Bildrate. Die tatsaechlichen Werte kommen aus den
+# Standard-Spielfläche und -Bildrate. Die tatsächlichen Werte kommen aus den
 # Einstellungen (settings.py) und liegen zur Laufzeit in self.game_w/-_h/-fps.
 GAME_W = 640
 GAME_H = 480
@@ -38,13 +38,13 @@ FPS = 60
 
 
 def _configure_sdl_for_embedding(window_id):
-    """Setzt die noetigen Umgebungsvariablen fuer die Pygame-Einbettung."""
+    """Setzt die nötigen Umgebungsvariablen für die Pygame-Einbettung."""
     os.environ["SDL_WINDOWID"] = str(window_id)
 
     if sys.platform.startswith("win"):
         # SDL2 (pygame 2.x): den Standard-Treiber ('windows') verwenden -> KEIN
-        # SDL_VIDEODRIVER setzen. Hinweis: das alte 'windib' galt nur fuer SDL1
-        # (pygame 1.9.x) und fuehrt unter pygame 2 zu einem Fehler.
+        # SDL_VIDEODRIVER setzen. Hinweis: das alte 'windib' galt nur für SDL1
+        # (pygame 1.9.x) und führt unter pygame 2 zu einem Fehler.
         pass
     else:
         # Linux/X11: x11-Treiber erzwingen, damit SDL_WINDOWID greift.
@@ -59,7 +59,7 @@ class App:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Spielesammlung  -  Tkinter + Pygame")
-        # Fenster darf vergroessert/verkleinert werden -> noetig fuer Vollbild,
+        # Fenster darf vergrößert/verkleinert werden -> nötig für Vollbild,
         # bei dem das Pygame-Display weiter eingebettet "im Fenster" bleibt.
         self.root.resizable(True, True)
         self.root.minsize(840, 480)
@@ -68,11 +68,11 @@ class App:
         self._closing = False
         self._fullscreen = False
         self.current = None          # aktuell laufendes Spiel (Game-Objekt)
-        # Skalierung/Versatz fuer die Darstellung der logischen Flaeche
+        # Skalierung/Versatz für die Darstellung der logischen Fläche
         self._scale = 1.0
         self._off = (0, 0)
 
-        # Einstellungen VOR pygame laden: die Aufloesung bestimmt die Canvas-Groesse,
+        # Einstellungen VOR pygame laden: die Auflösung bestimmt die Canvas-Größe,
         # die FPS die Loop-Frequenz.
         import settings
         self.settings = settings.load_settings()
@@ -82,7 +82,7 @@ class App:
 
         self._build_ui()
 
-        # WICHTIG: erst das Fenster real erzeugen lassen, damit winfo_id() gueltig ist.
+        # WICHTIG: erst das Fenster real erzeugen lassen, damit winfo_id() gültig ist.
         self.root.update_idletasks()
         self.root.update()
 
@@ -98,21 +98,21 @@ class App:
         self._game_classes = ALL_GAMES
         self._build_game_buttons()
 
-        # Auto-Modus: die logische Aufloesung schon beim Start an die tatsaechliche
-        # Fenster-/Frame-Groesse anpassen.
+        # Auto-Modus: die logische Auflösung schon beim Start an die tatsächliche
+        # Fenster-/Frame-Größe anpassen.
         if self.settings.get("auto_resolution"):
             self.root.update_idletasks()
             self.disp_w = max(1, self.embed.winfo_width())
             self.disp_h = max(1, self.embed.winfo_height())
             self._match_resolution_to_window()
 
-        # Game-Loop ueber die Tkinter-Schleife starten
+        # Game-Loop über die Tkinter-Schleife starten
         self.root.after(0, self._loop)
 
-    # ----- Oberflaeche --------------------------------------------------
+    # ----- Oberfläche --------------------------------------------------
 
     def _build_ui(self):
-        # Linke Seite: Menue
+        # Linke Seite: Menü
         menu = tk.Frame(self.root, width=200, bg="#1c1f29")
         menu.pack(side="left", fill="y")
         menu.pack_propagate(False)
@@ -136,8 +136,8 @@ class App:
                   bg="#a23b3b", fg="white", relief="flat",
                   font=("Segoe UI", 11, "bold")).pack(side="bottom", fill="x",
                                                       padx=12, pady=(4, 12))
-        tk.Button(menu, text="Zurueck zum Menue (ESC = Pause)",
-                  command=self.zum_menue, bg="#2f3645", fg="white", relief="flat",
+        tk.Button(menu, text="Zurück zum Menü (ESC = Pause)",
+                  command=self.zum_menü, bg="#2f3645", fg="white", relief="flat",
                   font=("Segoe UI", 9)).pack(side="bottom", fill="x", padx=12, pady=4)
 
         tk.Button(menu, text="Vollbild an/aus (F11)",
@@ -151,8 +151,8 @@ class App:
             side="bottom", fill="x", padx=12, pady=4)
 
         # Rechte Seite: eingebettetes Pygame-Display.
-        # fill/expand sorgt dafuer, dass der Frame (und damit das Pygame-Display)
-        # im Vollbild bzw. beim Vergroessern den verfuegbaren Platz ausfuellt.
+        # fill/expand sorgt dafür, dass der Frame (und damit das Pygame-Display)
+        # im Vollbild bzw. beim Vergrößern den verfügbaren Platz ausfüllt.
         self.embed = tk.Frame(self.root, width=self.game_w, height=self.game_h,
                               bg="black", highlightthickness=0)
         self.embed.pack(side="right", fill="both", expand=True)
@@ -177,13 +177,13 @@ class App:
         self.pygame = pygame
         pygame.init()
 
-        # Tatsaechliche Groesse des eingebetteten Bereichs (kann durch Vollbild/
-        # Fenstergroesse wachsen). Das Display zeichnet in den Tkinter-Frame.
+        # Tatsächliche Größe des eingebetteten Bereichs (kann durch Vollbild/
+        # Fenstergröße wachsen). Das Display zeichnet in den Tkinter-Frame.
         self.disp_w = max(self.game_w, self.embed.winfo_width())
         self.disp_h = max(self.game_h, self.embed.winfo_height())
         self.screen = pygame.display.set_mode((self.disp_w, self.disp_h))
 
-        # Alle Spiele zeichnen auf diese LOGISCHE Flaeche (game_w x game_h aus den
+        # Alle Spiele zeichnen auf diese LOGISCHE Fläche (game_w x game_h aus den
         # Einstellungen). Im Loop wird sie passend auf das echte Display skaliert.
         self.canvas = pygame.Surface((self.game_w, self.game_h))
 
@@ -199,16 +199,16 @@ class App:
         # Tastatur global am Hauptfenster abfangen
         self.root.bind("<KeyPress>", self._on_key)
         self.root.bind("<KeyRelease>", self._on_key_up)
-        # Maus auf der Spielflaeche
+        # Maus auf der Spielfläche
         self.embed.bind("<Button-1>", self._on_click)
         self.embed.bind("<Motion>", self._on_motion)
-        # Klick auf die Flaeche holt den Fokus (fuer Tastatur)
+        # Klick auf die Fläche holt den Fokus (für Tastatur)
         self.embed.bind("<Button-1>", lambda e: self.embed.focus_set(), add="+")
-        # Groesse des eingebetteten Bereichs aenderte sich (Vollbild/Resize)
+        # Größe des eingebetteten Bereichs änderte sich (Vollbild/Resize)
         self.embed.bind("<Configure>", self._on_resize)
 
     def _on_resize(self, event):
-        """Passt das Pygame-Display an die neue Frame-Groesse an."""
+        """Passt das Pygame-Display an die neue Frame-Größe an."""
         w, h = max(1, event.width), max(1, event.height)
         if (w, h) == (self.disp_w, self.disp_h):
             return
@@ -218,7 +218,7 @@ class App:
             self.screen = self.pygame.display.set_mode((w, h))
         except Exception:
             pass
-        # Auto-Modus: logische Aufloesung an die neue Fenstergroesse anpassen.
+        # Auto-Modus: logische Auflösung an die neue Fenstergröße anpassen.
         if self.settings.get("auto_resolution"):
             self._match_resolution_to_window()
 
@@ -238,7 +238,7 @@ class App:
             self.toggle_fullscreen()
             return
 
-        # ESC: bei Menue-Screens als "Zurueck" durchreichen, sonst Pause umschalten.
+        # ESC: bei Menü-Screens als "Zurück" durchreichen, sonst Pause umschalten.
         if event.keysym == "Escape":
             if self.current and getattr(self.current, "is_menu", False):
                 from game_base import InputEvent
@@ -276,42 +276,42 @@ class App:
     # ----- Spielsteuerung -----------------------------------------------
 
     def spiel_starten(self, game_cls):
-        """Zeigt zuerst den Vorspiel-Screen (Modus/Optionen) fuer dieses Spiel."""
+        """Zeigt zuerst den Vorspiel-Screen (Modus/Optionen) für dieses Spiel."""
         from menu import PreGameScreen
         self.show_screen(PreGameScreen(self.canvas, self.game_w, self.game_h,
                                        self, game_cls))
 
     def launch_game(self, game_cls, mode):
-        """Startet das eigentliche Spiel im gewaehlten Modus mit den Einstellungen."""
+        """Startet das eigentliche Spiel im gewählten Modus mit den Einstellungen."""
         self.current = game_cls(self.canvas, self.game_w, self.game_h,
                                 mode=mode, game_settings=self.settings)
         self.current.paused = False
         self.embed.focus_set()
 
     def show_screen(self, screen):
-        """Macht einen Menue-Screen (Vorspiel/Optionen) zum aktiven 'current'."""
+        """Macht einen Menü-Screen (Vorspiel/Optionen) zum aktiven 'current'."""
         self.current = screen
         self.embed.focus_set()
 
     def back_to_menu(self):
-        """Zurueck zum leeren Startbildschirm (ohne Highscore-Effekte)."""
+        """Zurück zum leeren Startbildschirm (ohne Highscore-Effekte)."""
         self.current = None
         self.status_var.set("Kein Spiel aktiv")
 
     def open_options(self):
-        """Oeffnet die Optionen/Steuerung im Spielbereich (aus dem Tk-Menue)."""
+        """Öffnet die Optionen/Steuerung im Spielbereich (aus dem Tk-Menü)."""
         from menu import OptionsScreen
         self.show_screen(OptionsScreen(self.canvas, self.game_w, self.game_h, self,
                                        on_close=self.back_to_menu))
 
     def apply_resolution(self, w, h, persist=True):
-        """Setzt die logische Aufloesung neu (Canvas wird passend neu erzeugt).
+        """Setzt die logische Auflösung neu (Canvas wird passend neu erzeugt).
 
-        Der aktuell aktive Screen wird auf die neue Flaeche umgehaengt, damit die
-        Aenderung sofort sichtbar ist (praktisch im Options-Screen).
+        Der aktuell aktive Screen wird auf die neue Fläche umgehängt, damit die
+        Änderung sofort sichtbar ist (praktisch im Options-Screen).
 
-        persist=False bei der automatischen Anpassung an die Fenstergroesse -> die
-        vom Nutzer gewaehlte feste Aufloesung bleibt gespeichert.
+        persist=False bei der automatischen Anpassung an die Fenstergröße -> die
+        vom Nutzer gewählte feste Auflösung bleibt gespeichert.
         """
         self.game_w, self.game_h = max(1, int(w)), max(1, int(h))
         if persist:
@@ -321,33 +321,33 @@ class App:
             self.current.surface = self.canvas
             self.current.width = self.game_w
             self.current.height = self.game_h
-            # Menue-Screens berechnen ihr Layout aus width/height -> neu aufbauen.
+            # Menü-Screens berechnen ihr Layout aus width/height -> neu aufbauen.
             if hasattr(self.current, "on_surface_changed"):
                 self.current.on_surface_changed()
 
     def _match_resolution_to_window(self):
-        """Setzt die logische Aufloesung gleich der aktuellen Fenster-/Frame-Groesse."""
+        """Setzt die logische Auflösung gleich der aktuellen Fenster-/Frame-Größe."""
         if (self.game_w, self.game_h) != (self.disp_w, self.disp_h):
             self.apply_resolution(self.disp_w, self.disp_h, persist=False)
 
     def set_auto_resolution(self, on):
-        """Schaltet die automatische Anpassung an die Fenstergroesse um."""
+        """Schaltet die automatische Anpassung an die Fenstergröße um."""
         self.settings["auto_resolution"] = bool(on)
         if on:
-            # Sofort an die aktuelle Fenstergroesse anpassen.
+            # Sofort an die aktuelle Fenstergröße anpassen.
             self._match_resolution_to_window()
         else:
-            # Zurueck auf die gespeicherte feste Aufloesung.
+            # Zurück auf die gespeicherte feste Auflösung.
             res = self.settings.get("resolution", [GAME_W, GAME_H])
             self.apply_resolution(int(res[0]), int(res[1]))
 
     def apply_fps(self, fps):
-        """Setzt die Ziel-Bildrate neu (wirkt ab dem naechsten Frame)."""
+        """Setzt die Ziel-Bildrate neu (wirkt ab dem nächsten Frame)."""
         self.fps = max(5, min(240, int(fps)))
         self.settings["fps"] = self.fps
 
-    def zum_menue(self):
-        """Beendet das aktuelle Spiel und kehrt zum Startbildschirm zurueck."""
+    def zum_menü(self):
+        """Beendet das aktuelle Spiel und kehrt zum Startbildschirm zurück."""
         if self.current:
             self._highscore_speichern(self.current)
         self.current = None
@@ -356,17 +356,17 @@ class App:
     # ----- Highscores ---------------------------------------------------
 
     def _highscore_speichern(self, game):
-        # Menue-Screens sind keine Spiele -> kein Highscore.
+        # Menü-Screens sind keine Spiele -> kein Highscore.
         if game is None or getattr(game, "is_menu", False):
             return
         import highscore
         hs, rekord = highscore.update_highscore(game.highscore_key, game.score)
-        # Fuer die Game-Over-Einblendung merken.
+        # Für die Game-Over-Einblendung merken.
         game._hs_value = hs
         game._hs_record = rekord
 
     def _draw_highscore_overlay(self, game):
-        """Blendet bei Game Over fuer JEDES Spiel den Highscore unten ein."""
+        """Blendet bei Game Over für JEDES Spiel den Highscore unten ein."""
         hs = getattr(game, "_hs_value", 0)
         if getattr(game, "_hs_record", False):
             text, farbe = f"NEUER HIGHSCORE: {game.score}", (255, 215, 90)
@@ -387,7 +387,7 @@ class App:
         pygame = self.pygame
         dt = self.clock.tick(self.fps) / 1000.0   # vergangene Zeit in Sekunden
 
-        # pygame-interne Ereignisse leeren (haelt SDL "lebendig")
+        # pygame-interne Ereignisse leeren (hält SDL "lebendig")
         pygame.event.pump()
 
         if self.current is None:
@@ -403,25 +403,25 @@ class App:
 
             self._update_status(game)
 
-            # Highscore beim Uebergang zu Game Over genau einmal sichern
+            # Highscore beim Übergang zu Game Over genau einmal sichern
             if game.game_over and not getattr(game, "_hs_saved", False):
                 self._highscore_speichern(game)
                 game._hs_saved = True
             if not game.game_over:
                 game._hs_saved = False
 
-            # Highscore bei Game Over fuer jedes Spiel einblenden.
+            # Highscore bei Game Over für jedes Spiel einblenden.
             if game.game_over and not getattr(game, "is_menu", False):
                 self._draw_highscore_overlay(game)
 
-        # Logische Flaeche skaliert (mit Letterbox) auf das echte Display bringen
+        # Logische Fläche skaliert (mit Letterbox) auf das echte Display bringen
         self._present()
 
-        # naechstes Frame ueber Tkinter planen -> Tkinter bleibt reaktiv
+        # nächstes Frame über Tkinter planen -> Tkinter bleibt reaktiv
         self.root.after(max(1, int(1000 / self.fps)), self._loop)
 
     def _present(self):
-        """Skaliert self.canvas seitenverhaeltnistreu auf das echte Display."""
+        """Skaliert self.canvas seitenverhältnistreu auf das echte Display."""
         pygame = self.pygame
         sw, sh = self.disp_w, self.disp_h
         scale = min(sw / self.game_w, sh / self.game_h)
@@ -429,7 +429,7 @@ class App:
         self._scale = scale
         self._off = ((sw - tw) // 2, (sh - th) // 2)
 
-        self.screen.fill((0, 0, 0))                 # schwarze Letterbox-Raender
+        self.screen.fill((0, 0, 0))                 # schwarze Letterbox-Ränder
         if scale == 1.0 and (tw, th) == (self.game_w, self.game_h):
             self.screen.blit(self.canvas, self._off)
         else:
@@ -439,7 +439,7 @@ class App:
     def _draw_menu_screen(self):
         self.canvas.fill((18, 20, 28))
         title = self._menu_font.render("Spielesammlung", True, (235, 235, 245))
-        sub = self._menu_sub.render("Waehle links ein Spiel aus.", True, (150, 160, 180))
+        sub = self._menu_sub.render("Wähle links ein Spiel aus.", True, (150, 160, 180))
         self.canvas.blit(title, title.get_rect(
             center=(self.game_w // 2, self.game_h // 2 - 20)))
         self.canvas.blit(sub, sub.get_rect(
@@ -459,11 +459,11 @@ class App:
 
     def _update_status(self, game):
         if getattr(game, "is_menu", False):
-            self.status_var.set(f"{game.name}\n(Menue)")
+            self.status_var.set(f"{game.name}\n(Menü)")
             return
         import highscore
         hs = highscore.load_highscores().get(game.highscore_key, 0)
-        zustand = "PAUSE" if game.paused else ("GAME OVER" if game.game_over else "laeuft")
+        zustand = "PAUSE" if game.paused else ("GAME OVER" if game.game_over else "läuft")
         self.status_var.set(
             f"{game.name}\nStatus: {zustand}\nPunkte: {game.score}\nHighscore: {hs}")
 

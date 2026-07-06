@@ -5,11 +5,11 @@ invaders.py
 Space Invaders (vereinfacht).
 
 - Steuerung: Pfeil links/rechts (oder A/D) = bewegen, Leertaste = schiessen.
-- Ein Block aus Aliens wandert seitlich, rueckt bei Randberuehrung nach unten
-  und wird schneller, je weniger uebrig sind. Aliens schiessen gelegentlich
-  zurueck.
+- Ein Block aus Aliens wandert seitlich, rückt bei Randberührung nach unten
+  und wird schneller, je weniger übrig sind. Aliens schiessen gelegentlich
+  zurück.
 - Treffer geben Punkte (obere Reihen mehr). Ist eine Welle geleert, kommt die
-  naechste (schneller, tiefer). Erreichen Aliens den Spieler oder trifft ein
+  nächste (schneller, tiefer). Erreichen Aliens den Spieler oder trifft ein
   Alien-Schuss -> ein Leben weniger; bei 0 Leben Game Over.
 - Highscore wird gespeichert.
 """
@@ -35,7 +35,7 @@ PLAYER_Y_OFF = 40          # Abstand des Spielers vom unteren Rand
 
 BULLET_SPEED = 480
 EBULLET_SPEED = 220
-SHOOT_COOLDOWN = 0.35      # Sekunden zwischen eigenen Schuessen
+SHOOT_COOLDOWN = 0.35      # Sekunden zwischen eigenen Schüssen
 
 ALIEN_COLS = 8
 ALIEN_ROWS = 4
@@ -58,8 +58,8 @@ class InvadersGame(Game):
         self.player_x = self.width / 2 - PLAYER_W / 2
         self.move_dir = 0
         self._cooldown = 0.0
-        self.bullets = []          # eigene Schuesse: [x, y]
-        self.ebullets = []         # Alien-Schuesse: [x, y]
+        self.bullets = []          # eigene Schüsse: [x, y]
+        self.ebullets = []         # Alien-Schüsse: [x, y]
 
         self._spawn_wave()
 
@@ -132,7 +132,7 @@ class InvadersGame(Game):
         self._update_bullets(dt)
         self._update_ebullets(dt)
 
-        # Welle geleert -> naechste Welle.
+        # Welle geleert -> nächste Welle.
         if not self.aliens:
             self.wave += 1
             self.bullets.clear()
@@ -140,7 +140,7 @@ class InvadersGame(Game):
             self._spawn_wave()
 
     def _update_aliens(self, dt):
-        # Geschwindigkeit steigt, je weniger Aliens uebrig sind.
+        # Geschwindigkeit steigt, je weniger Aliens übrig sind.
         faktor = 1.0 + (ALIEN_COLS * ALIEN_ROWS - len(self.aliens)) * 0.03
         dx = self.alien_dir * self.alien_speed * faktor * dt
 
@@ -157,7 +157,7 @@ class InvadersGame(Game):
             for a in self.aliens:
                 a["x"] += dx
 
-        # Aliens schiessen zufaellig aus der jeweils untersten Reihe.
+        # Aliens schiessen zufällig aus der jeweils untersten Reihe.
         self._alien_shoot_timer -= dt
         if self._alien_shoot_timer <= 0:
             self._alien_shoot_timer = random.uniform(0.4, 1.1)
@@ -167,11 +167,11 @@ class InvadersGame(Game):
                 if col not in unterste or a["y"] > unterste[col]["y"]:
                     unterste[col] = a
             if unterste:
-                schuetze = random.choice(list(unterste.values()))
-                self.ebullets.append([schuetze["x"] + ALIEN_W / 2,
-                                      schuetze["y"] + ALIEN_H])
+                schütze = random.choice(list(unterste.values()))
+                self.ebullets.append([schütze["x"] + ALIEN_W / 2,
+                                      schütze["y"] + ALIEN_H])
 
-        # Aliens erreichen die Spielerhoehe -> Leben verlieren / Game Over.
+        # Aliens erreichen die Spielerhöhe -> Leben verlieren / Game Over.
         grenze = self.height - PLAYER_Y_OFF - PLAYER_H
         if any(a["y"] + ALIEN_H >= grenze for a in self.aliens):
             self._hit_player()
@@ -220,7 +220,7 @@ class InvadersGame(Game):
         self.ebullets = neu
 
     def _bullet_hits_shield(self, b):
-        """Prueft Schild-Treffer; verringert dessen HP. True bei Treffer."""
+        """Prüft Schild-Treffer; verringert dessen HP. True bei Treffer."""
         for sh in self.shields:
             if sh["hp"] > 0 and sh["x"] <= b[0] <= sh["x"] + sh["w"] and \
                sh["y"] <= b[1] <= sh["y"] + sh["h"]:
@@ -272,7 +272,7 @@ class InvadersGame(Game):
         pygame.draw.rect(s, COL_PLAYER,
                          (pr.centerx - 3, pr.y - 8, 6, 8))   # Kanone
 
-        # Schuesse
+        # Schüsse
         for b in self.bullets:
             pygame.draw.rect(s, COL_BULLET, (b[0] - 2, b[1] - 8, 4, 10))
         for b in self.ebullets:

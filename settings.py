@@ -6,9 +6,9 @@ Globale, dauerhaft gespeicherte Einstellungen (analog zu highscore.py).
 
 Gespeichert wird in "settings.json" neben diesem Modul:
 - sound     : Soundeffekte an/aus
-- volume    : Lautstaerke 0.0 .. 1.0
+- volume    : Lautstärke 0.0 .. 1.0
 - haptik    : Vibrations-/Rumble-Feedback an/aus (nur mit Gamepad wirksam)
-- resolution: [breite, hoehe] der logischen Spielflaeche, auf die alle Spiele
+- resolution: [breite, höhe] der logischen Spielfläche, auf die alle Spiele
               zeichnen (wird danach auf das Fenster skaliert). Kleiner = weniger
               Rechenaufwand.
 - fps       : Ziel-Bildrate. Weniger FPS = weniger CPU/GPU-Last -> Strom sparen.
@@ -34,7 +34,7 @@ DEFAULT_CONTROLS = {
            "action": "Return"},
 }
 
-# Auswaehlbare Vorlagen im Options-Menue.
+# Auswählbare Vorlagen im Options-Menü.
 PRESETS = [
     ("WASD + Pfeile", {
         "p1": {"up": "w", "down": "s", "left": "a", "right": "d", "action": "space"},
@@ -52,8 +52,8 @@ PRESETS = [
     }),
 ]
 
-# Auswaehlbare Aufloesungen (logische Spielflaeche). Kleiner spart Rechenzeit,
-# groesser wird schaerfer beim Hochskalieren.
+# Auswählbare Auflösungen (logische Spielfläche). Kleiner spart Rechenzeit,
+# größer wird schärfer beim Hochskalieren.
 RESOLUTIONS = [
     ("480 x 360  (sparsam)", (480, 360)),
     ("640 x 480  (Standard)", (640, 480)),
@@ -62,7 +62,7 @@ RESOLUTIONS = [
     ("1280 x 960", (1280, 960)),
 ]
 
-# Auswaehlbare Ziel-Bildraten. Weniger FPS = weniger Last = Strom sparen.
+# Auswählbare Ziel-Bildraten. Weniger FPS = weniger Last = Strom sparen.
 FPS_OPTIONS = [15, 30, 45, 60, 120]
 
 DEFAULTS = {
@@ -70,24 +70,24 @@ DEFAULTS = {
     "volume": 0.6,
     "haptik": False,
     "resolution": [640, 480],
-    # auto_resolution: True -> die logische Aufloesung folgt der Fenstergroesse
-    # (beim Oeffnen und beim Vergroessern/Verkleinern). False -> feste Aufloesung.
+    # auto_resolution: True -> die logische Auflösung folgt der Fenstergröße
+    # (beim Öffnen und beim Vergrößern/Verkleinern). False -> feste Auflösung.
     "auto_resolution": False,
     "fps": 60,
     # Snake-spezifische Optionen:
-    #   wrap        : durch die Waende gehen und auf der Gegenseite herauskommen
-    #   bonus_apple : jeder Apfel zaehlt zufaellig 1 oder 2 (im Schnitt ~1,5)
+    #   wrap        : durch die Wände gehen und auf der Gegenseite herauskommen
+    #   bonus_apple : jeder Apfel zählt zufällig 1 oder 2 (im Schnitt ~1,5)
     "snake": {"wrap": False, "bonus_apple": False},
     # Pong-spezifische Optionen (pro Steuerung):
-    #   hold_p1 / hold_p2 : True  -> Schlaeger bewegt sich nur, solange man die
-    #                       Taste drueckt (Halten). False -> faehrt dauerhaft weiter.
+    #   hold_p1 / hold_p2 : True  -> Schläger bewegt sich nur, solange man die
+    #                       Taste drückt (Halten). False -> fährt dauerhaft weiter.
     "pong": {"hold_p1": False, "hold_p2": False},
     "controls": DEFAULT_CONTROLS,
 }
 
 
 def resolution_index(res):
-    """Index der Aufloesung in RESOLUTIONS, die (breite, hoehe) entspricht (sonst 1)."""
+    """Index der Auflösung in RESOLUTIONS, die (breite, höhe) entspricht (sonst 1)."""
     if isinstance(res, (list, tuple)) and len(res) == 2:
         target = (int(res[0]), int(res[1]))
         for i, (_, wh) in enumerate(RESOLUTIONS):
@@ -97,19 +97,19 @@ def resolution_index(res):
 
 
 def fps_index(fps):
-    """Index der FPS in FPS_OPTIONS (sonst der naechstliegende Wert)."""
+    """Index der FPS in FPS_OPTIONS (sonst der nächstliegende Wert)."""
     if fps in FPS_OPTIONS:
         return FPS_OPTIONS.index(fps)
     return min(range(len(FPS_OPTIONS)), key=lambda i: abs(FPS_OPTIONS[i] - fps))
 
 
 def _clone(obj):
-    """Tiefe Kopie ueber JSON (nur einfache Typen -> ausreichend hier)."""
+    """Tiefe Kopie über JSON (nur einfache Typen -> ausreichend hier)."""
     return json.loads(json.dumps(obj))
 
 
 def _merge_defaults(data):
-    """Ergaenzt fehlende Schluessel mit den Standardwerten (robust gegen Alt-Dateien)."""
+    """Ergänzt fehlende Schlüssel mit den Standardwerten (robust gegen Alt-Dateien)."""
     out = _clone(DEFAULTS)
     if isinstance(data, dict):
         for k in ("sound", "haptik", "auto_resolution"):
@@ -145,7 +145,7 @@ def _merge_defaults(data):
 
 
 def load_settings():
-    """Liest die Einstellungen (immer ein vollstaendiges, gueltiges dict)."""
+    """Liest die Einstellungen (immer ein vollständiges, gültiges dict)."""
     if not os.path.exists(_PATH):
         return _clone(DEFAULTS)
     try:
@@ -165,6 +165,6 @@ def save_settings(data):
 
 
 def apply_preset(settings, index):
-    """Setzt die controls aus PRESETS[index] in das uebergebene settings-dict."""
+    """Setzt die controls aus PRESETS[index] in das übergebene settings-dict."""
     if 0 <= index < len(PRESETS):
         settings["controls"] = _clone(PRESETS[index][1])

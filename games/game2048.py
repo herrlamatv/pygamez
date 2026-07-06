@@ -6,9 +6,9 @@ game2048.py
 
 - Steuerung: Pfeiltasten (oder WASD) schieben alle Kacheln in eine Richtung.
   Gleiche Zahlen, die zusammenstossen, verschmelzen zur Summe (gibt Punkte).
-- Nach jedem gueltigen Zug erscheint eine neue Kachel (2 oder 4).
+- Nach jedem gültigen Zug erscheint eine neue Kachel (2 oder 4).
 - Ziel: die 2048er-Kachel erreichen. Man kann danach weiterspielen.
-- Kein Zug mehr moeglich -> Game Over.
+- Kein Zug mehr möglich -> Game Over.
 - Highscore wird gespeichert.
 """
 
@@ -43,7 +43,7 @@ class Game2048(Game):
         self.game_over = False
         self.won = False
 
-        # Quadratisches Feld, zentriert in der Spielflaeche.
+        # Quadratisches Feld, zentriert in der Spielfläche.
         self.board_px = min(self.width, self.height) - 60
         self.pad = 10
         self.cell = (self.board_px - self.pad * (SIZE + 1)) // SIZE
@@ -87,7 +87,7 @@ class Game2048(Game):
         if richtung:
             vorher = self.score
             if self._move(richtung):
-                # Verschmelzung erhoeht die Punktzahl -> anderer Klang.
+                # Verschmelzung erhöht die Punktzahl -> anderer Klang.
                 self.play_sound("merge" if self.score > vorher else "move")
                 self._add_tile()
                 if not self._moves_available():
@@ -95,7 +95,7 @@ class Game2048(Game):
                     self.play_sound("gameover")
 
     def update(self, dt):
-        # 2048 ist rundenbasiert; es gibt keine zeitabhaengige Logik.
+        # 2048 ist rundenbasiert; es gibt keine zeitabhängige Logik.
         pass
 
     # ----- Schiebe-/Verschmelz-Logik ------------------------------------
@@ -120,10 +120,10 @@ class Game2048(Game):
         return ergebnis
 
     def _move(self, richtung):
-        """Fuehrt einen Zug aus. Gibt True zurueck, wenn sich etwas geaendert hat."""
+        """Führt einen Zug aus. Gibt True zurück, wenn sich etwas geändert hat."""
         alt = [row[:] for row in self.grid]
 
-        # Jede Richtung auf "nach links schieben" zurueckfuehren.
+        # Jede Richtung auf "nach links schieben" zurückführen.
         if richtung == "L":
             neu = [self._compress(row) for row in self.grid]
         elif richtung == "R":
@@ -141,7 +141,7 @@ class Game2048(Game):
         return neu != alt
 
     def _moves_available(self):
-        """True, solange ein Zug moeglich ist (freies Feld oder Nachbarn gleich)."""
+        """True, solange ein Zug möglich ist (freies Feld oder Nachbarn gleich)."""
         for r in range(SIZE):
             for c in range(SIZE):
                 if self.grid[r][c] == 0:
@@ -178,10 +178,10 @@ class Game2048(Game):
                 pygame.draw.rect(s, farbe, (x, y, self.cell, self.cell),
                                  border_radius=6)
                 if wert:
-                    # dunkler Text fuer kleine Zahlen, heller fuer grosse.
+                    # dunkler Text für kleine Zahlen, heller für grosse.
                     tcol = COL_TEXT_DARK if wert <= 4 else COL_TEXT
-                    groesse = 40 if wert < 100 else (32 if wert < 1000 else 26)
-                    f = pygame.font.SysFont("consolas", groesse, bold=True)
+                    größe = 40 if wert < 100 else (32 if wert < 1000 else 26)
+                    f = pygame.font.SysFont("consolas", größe, bold=True)
                     img = f.render(str(wert), True, tcol)
                     s.blit(img, img.get_rect(center=(x + self.cell // 2,
                                                      y + self.cell // 2)))

@@ -2,18 +2,18 @@
 """
 audio.py
 ========
-Kleine Sound-Engine fuer die Spielesammlung.
+Kleine Sound-Engine für die Spielesammlung.
 
-- Die Effekte werden zur Laufzeit synthetisiert (kurze Toene/Rauschen), damit
-  KEINE externen WAV-Dateien noetig sind und auch KEIN numpy gebraucht wird:
-  wir bauen rohe 16-Bit-PCM-Samples mit dem 'array'-Modul und uebergeben sie
+- Die Effekte werden zur Laufzeit synthetisiert (kurze Töne/Rauschen), damit
+  KEINE externen WAV-Dateien nötig sind und auch KEIN numpy gebraucht wird:
+  wir bauen rohe 16-Bit-PCM-Samples mit dem 'array'-Modul und übergeben sie
   direkt an pygame.mixer.Sound(buffer=...).
 - play(name, settings) spielt einen Effekt nur, wenn settings["sound"] aktiv ist,
-  und nutzt settings["volume"] als Lautstaerke.
-- rumble(settings, ms) loest Gamepad-Vibration aus, sofern ein Controller
+  und nutzt settings["volume"] als Lautstärke.
+- rumble(settings, ms) löst Gamepad-Vibration aus, sofern ein Controller
   vorhanden und settings["haptik"] aktiv ist (sonst wirkungslos).
 
-Alles ist mit try/except abgesichert: fehlt Audio-Hardware oder Mixer, laeuft
+Alles ist mit try/except abgesichert: fehlt Audio-Hardware oder Mixer, läuft
 das Spiel trotzdem (nur eben ohne Ton).
 """
 
@@ -25,7 +25,7 @@ import pygame
 
 _available = False          # ist der Mixer nutzbar?
 _cache = {}                 # name -> pygame.mixer.Sound
-_joysticks = []             # initialisierte Gamepads (fuer Rumble)
+_joysticks = []             # initialisierte Gamepads (für Rumble)
 
 # Spezifikation der Effekte. f0 = Startfrequenz, f1 = Zielfrequenz (Sweep),
 # dur = Dauer in Sekunden, wave = Wellenform, vol = relative Amplitude.
@@ -49,7 +49,7 @@ _SPECS = {
 
 
 def init():
-    """Initialisiert Mixer (falls noetig) und erzeugt alle Effekte vorab."""
+    """Initialisiert Mixer (falls nötig) und erzeugt alle Effekte vorab."""
     global _available
     try:
         if pygame.mixer.get_init() is None:
@@ -60,7 +60,7 @@ def init():
         _available = False
         return
 
-    # Gamepads fuer Rumble vorbereiten (optional).
+    # Gamepads für Rumble vorbereiten (optional).
     try:
         pygame.joystick.init()
         for i in range(pygame.joystick.get_count()):
@@ -78,7 +78,7 @@ def init():
 
 
 def _build(spec):
-    """Synthetisiert einen Effekt und gibt ein pygame.mixer.Sound zurueck."""
+    """Synthetisiert einen Effekt und gibt ein pygame.mixer.Sound zurück."""
     freq_hz, fmt, channels = pygame.mixer.get_init()
     n = max(1, int(freq_hz * spec["dur"]))
     f0 = spec["f0"]
@@ -94,7 +94,7 @@ def _build(spec):
     for i in range(n):
         frac = i / n
         f = f0 + (f1 - f0) * frac
-        phase += f / freq_hz             # Phasenakkumulation (fuer Sweeps korrekt)
+        phase += f / freq_hz             # Phasenakkumulation (für Sweeps korrekt)
         p = phase % 1.0
 
         if wave == "sine":
@@ -106,7 +106,7 @@ def _build(spec):
         else:  # noise
             val = random.uniform(-1.0, 1.0)
 
-        # Huellkurve: einblenden, ausklingen.
+        # Hüllkurve: einblenden, ausklingen.
         env = min(1.0, i / att, (n - i) / rel)
         s = int(max(-1.0, min(1.0, val)) * amp * env)
 
@@ -135,11 +135,11 @@ def play(name, settings=None):
 
 
 def rumble(settings=None, ms=120, strong=0.6, weak=0.4):
-    """Loest Gamepad-Vibration aus, falls Haptik aktiv und Controller vorhanden."""
+    """Löst Gamepad-Vibration aus, falls Haptik aktiv und Controller vorhanden."""
     if settings is not None and not settings.get("haptik", False):
         return
     for js in _joysticks:
         try:
-            js.rumble(strong, weak, ms)     # verfuegbar ab pygame 2 / SDL2
+            js.rumble(strong, weak, ms)     # verfügbar ab pygame 2 / SDL2
         except Exception:
             pass

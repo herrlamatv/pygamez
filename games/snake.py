@@ -2,26 +2,26 @@
 """
 snake.py
 ========
-Snake - komplett ueberarbeitete Deluxe-Version mit Spielmodi und Boost.
+Snake - komplett überarbeitete Deluxe-Version mit Spielmodi und Boost.
 
 Neu
 ---
-- BOOST: Solange die Boost-Taste (Einzelspieler: Leertaste/Shift) gedrueckt
-  gehalten wird, laeuft der Turbo. Die Schlange bewegt sich doppelt so schnell
+- BOOST: Solange die Boost-Taste (Einzelspieler: Leertaste/Shift) gedrückt
+  gehalten wird, läuft der Turbo. Die Schlange bewegt sich doppelt so schnell
   und verbraucht dabei Ausdauer (Anzeige als Balken). Ist die Ausdauer leer,
-  schaltet der Boost automatisch ab; sie laedt sich mit der Zeit wieder auf.
-  Goldaepfel fuellen sie sofort ganz auf.
-- SPIELMODI (im Setup waehlbar):
+  schaltet der Boost automatisch ab; sie lädt sich mit der Zeit wieder auf.
+  Goldäpfel füllen sie sofort ganz auf.
+- SPIELMODI (im Setup wählbar):
     * Klassisch    - der Klassiker.
     * Speed-Rush   - wird mit jedem Apfel schneller.
-    * Hindernisse  - feste Bloecke im Spielfeld, die toedlich sind.
+    * Hindernisse  - feste Blöcke im Spielfeld, die tödlich sind.
     * Portale      - Teleporter-Paare: rein ins eine, raus aus dem anderen.
-    * Zeitangriff  - 60 Sekunden, so viele Aepfel wie moeglich.
-- Goldaepfel: erscheinen zeitweise, bringen viele Punkte und fuellen den Boost.
-- Weiterhin: Waende-durchgehen, Bonus-Aepfel, Mehrspieler (2 Schlangen),
+    * Zeitangriff  - 60 Sekunden, so viele Äpfel wie möglich.
+- Goldäpfel: erscheinen zeitweise, bringen viele Punkte und füllen den Boost.
+- Weiterhin: Wände-durchgehen, Bonus-Äpfel, Mehrspieler (2 Schlangen),
   Prestige (Einzelspieler) - siehe prestige.py.
 - Neue Optik: abgerundete Schlange mit Augen, Boost-Glow, Partikel,
-  ueberarbeiteter Setup-Screen und HUD.
+  überarbeiteter Setup-Screen und HUD.
 
 Steuerung
 ---------
@@ -39,7 +39,7 @@ import prestige
 import settings as settings_mod
 from game_base import Game, InputEvent
 
-CELL = 20                       # Kantenlaenge einer Rasterzelle in Pixeln
+CELL = 20                       # Kantenlänge einer Rasterzelle in Pixeln
 BASE_INTERVAL = 0.12            # Sekunden pro Schritt (Normaltempo)
 MIN_INTERVAL = 0.055           # schnellstes Tempo (Speed-Rush)
 MIN_LENGTH = 3                  # so kurz darf eine Schlange durch Prestige max. werden
@@ -47,7 +47,7 @@ MIN_LENGTH = 3                  # so kurz darf eine Schlange durch Prestige max.
 # Boost / Ausdauer
 STAMINA_MAX = 1.0
 STAMINA_REGEN = 0.22            # Aufladung pro Sekunde (wenn nicht geboostet)
-BOOST_DRAIN = 0.045            # Verbrauch pro zusaetzlichem Boost-Schritt
+BOOST_DRAIN = 0.045            # Verbrauch pro zusätzlichem Boost-Schritt
 BOOST_MIN_START = 0.15         # so viel Ausdauer braucht man mindestens zum Starten
 
 # Boost-Tasten (keine Richtungstasten, damit es nicht kollidiert)
@@ -58,7 +58,7 @@ GOLDEN_LIFETIME = 6.0          # Sekunden, die ein Goldapfel liegen bleibt
 GOLDEN_CHANCE = 0.20           # Chance, nach einem normalen Apfel einen Goldapfel zu setzen
 TIMED_SECONDS = 60.0
 
-# Spielzustaende
+# Spielzustände
 SETUP, PLAY = "setup", "play"
 
 COL_BG = (15, 15, 25)
@@ -69,15 +69,15 @@ COL_TEXT = (230, 230, 230)
 COL_DIM = (150, 158, 176)
 COL_BTN = (44, 50, 66)
 COL_BTN_ON = (60, 120, 80)
-COL_WLS_ON = (90, 230, 130)     # WLS gruen = durch die Waende gehen ist AN
-COL_WLS_OFF = (105, 105, 120)   # WLS grau  = feste Waende
+COL_WLS_ON = (90, 230, 130)     # WLS grün = durch die Wände gehen ist AN
+COL_WLS_OFF = (105, 105, 120)   # WLS grau  = feste Wände
 COL_MULT = (255, 210, 90)       # Multiplikator / Prestige (gold)
-COL_WALL = (70, 78, 98)         # Hindernis-Bloecke
+COL_WALL = (70, 78, 98)         # Hindernis-Blöcke
 COL_ACCENT = (90, 160, 240)
 
-# Farben je Schlange: (Koerper, Kopf)
+# Farben je Schlange: (Körper, Kopf)
 SNAKE_COLORS = [
-    ((80, 220, 120), (150, 255, 180)),   # Spieler 1 (gruen)
+    ((80, 220, 120), (150, 255, 180)),   # Spieler 1 (grün)
     ((90, 160, 240), (160, 205, 255)),   # Spieler 2 (blau)
 ]
 # Boost-Glow-Farbe je Schlange
@@ -90,15 +90,15 @@ PORTAL_COLORS = [(255, 140, 60), (180, 120, 255), (90, 220, 220)]
 MODES = [
     dict(key="classic", name="Klassisch",   desc="Der Snake-Klassiker."),
     dict(key="speed",   name="Speed-Rush",  desc="Wird mit jedem Apfel schneller."),
-    dict(key="walls",   name="Hindernisse", desc="Feste Bloecke im Feld - toedlich!"),
+    dict(key="walls",   name="Hindernisse", desc="Feste Blöcke im Feld - tödlich!"),
     dict(key="portal",  name="Portale",     desc="Teleporter: rein und woanders raus."),
-    dict(key="timed",   name="Zeitangriff", desc="60s - so viele Aepfel wie moeglich."),
+    dict(key="timed",   name="Zeitangriff", desc="60s - so viele Äpfel wie möglich."),
 ]
 MODE_KEYS = [m["key"] for m in MODES]
 
 
 class _Snake:
-    """Zustand einer einzelnen Schlange (Koerper: Kopf am Listenende)."""
+    """Zustand einer einzelnen Schlange (Körper: Kopf am Listenende)."""
 
     def __init__(self, body, direction, player):
         self.body = list(body)
@@ -107,8 +107,8 @@ class _Snake:
         self.player = player            # "p1" / "p2"
         self.alive = True
         self.score = 0
-        self.apples = 0                 # eigene Aepfel (Mehrspieler / Zeitangriff)
-        self.grow = 0                   # ausstehende Wachstums-Bloecke
+        self.apples = 0                 # eigene Äpfel (Mehrspieler / Zeitangriff)
+        self.grow = 0                   # ausstehende Wachstums-Blöcke
         self.stamina = STAMINA_MAX      # Boost-Ausdauer (0..1)
         self.boost_on = False           # Boost gerade aktiv?
 
@@ -194,7 +194,7 @@ class SnakeGame(Game):
         self.golden_timer = 0.0
         self.time_left = TIMED_SECONDS
 
-        # Zellen, die frei bleiben muessen (Schlangen + Startbahn nach rechts)
+        # Zellen, die frei bleiben müssen (Schlangen + Startbahn nach rechts)
         tabu = set()
         for sn in self.snakes:
             for (x, y) in sn.body:
@@ -213,7 +213,7 @@ class SnakeGame(Game):
         versuche = 0
         while len(self.obstacles) < anzahl and versuche < anzahl * 30:
             versuche += 1
-            # kleine Cluster (1-3 Bloecke) fuer interessantere Formen
+            # kleine Cluster (1-3 Blöcke) für interessantere Formen
             bx = random.randint(1, self.cols - 2)
             by = random.randint(2, self.rows - 2)
             cluster = [(bx, by)]
@@ -346,7 +346,7 @@ class SnakeGame(Game):
             self._handle_setup_event(event)
             return
 
-        # Boost beenden, sobald die Taste losgelassen wird (gedrueckt-halten-Logik)
+        # Boost beenden, sobald die Taste losgelassen wird (gedrückt-halten-Logik)
         if event.kind == InputEvent.KEYUP:
             if self.multiplayer:
                 if event.key in BOOST_KEYS_P1:
@@ -417,9 +417,9 @@ class SnakeGame(Game):
         if req is None:
             return None, False
         sn = self.snakes[0]
-        genug_aepfel = self.apples_bank >= req["apples"]
-        genug_laenge = len(sn.body) - req["length"] >= MIN_LENGTH
-        return req, (genug_aepfel and genug_laenge)
+        genug_äpfel = self.apples_bank >= req["apples"]
+        genug_länge = len(sn.body) - req["length"] >= MIN_LENGTH
+        return req, (genug_äpfel and genug_länge)
 
     def _try_prestige(self):
         if self.game_over:
@@ -456,7 +456,7 @@ class SnakeGame(Game):
                 self._finish_timed()
                 return
 
-        # Ausdauer regenerieren (fuer nicht aktiv boostende Schlangen)
+        # Ausdauer regenerieren (für nicht aktiv boostende Schlangen)
         for sn in self.snakes:
             if sn.alive and not sn.boost_on:
                 sn.stamina = min(STAMINA_MAX, sn.stamina + STAMINA_REGEN * dt)
@@ -513,12 +513,12 @@ class SnakeGame(Game):
 
         tot = set()
 
-        # Wandkollision (nur bei festen Waenden)
+        # Wandkollision (nur bei festen Wänden)
         if not self.wrap:
             for i, (nx, ny) in new_heads.items():
                 if nx < 0 or nx >= self.cols or ny < 0 or ny >= self.rows:
                     tot.add(i)
-        # Hindernisse (immer toedlich)
+        # Hindernisse (immer tödlich)
         for i, kopf in new_heads.items():
             if kopf in self.obstacles:
                 tot.add(i)
@@ -528,19 +528,19 @@ class SnakeGame(Game):
                 if i < j and new_heads[i] == new_heads[j]:
                     tot.add(i)
                     tot.add(j)
-        # Koerperkollision
+        # Körperkollision
         belegt = set()
         for i, sn in enumerate(self.snakes):
             if not sn.alive:
                 continue
             if i in movers:
-                waechst = (new_heads.get(i) == self.food) \
+                wächst = (new_heads.get(i) == self.food) \
                     or (self.golden is not None and new_heads.get(i) == self.golden) \
                     or (sn.grow > 0)
-                koerper = sn.body if waechst else sn.body[1:]
+                körper = sn.body if wächst else sn.body[1:]
             else:
-                koerper = sn.body
-            belegt |= set(koerper)
+                körper = sn.body
+            belegt |= set(körper)
         for i, kopf in new_heads.items():
             if kopf in belegt:
                 tot.add(i)
@@ -730,10 +730,10 @@ class SnakeGame(Game):
             self._draw_game_over()
 
     def _draw_snake(self, s, sn, idx):
-        koerper, kopf = SNAKE_COLORS[idx % len(SNAKE_COLORS)]
+        körper, kopf = SNAKE_COLORS[idx % len(SNAKE_COLORS)]
         if not sn.alive:
-            koerper = tuple(c // 2 for c in koerper)
-            kopf = koerper
+            körper = tuple(c // 2 for c in körper)
+            kopf = körper
 
         n = len(sn.body)
         # Boost-Glow um den Kopf
@@ -754,7 +754,7 @@ class SnakeGame(Game):
                 # sanfter Verlauf vom Kopf (hell) zum Schwanz (dunkler)
                 t = i / max(1, n - 1)
                 farbe = tuple(int(k + (c - k) * (1 - t * 0.5))
-                              for k, c in zip(kopf, koerper))
+                              for k, c in zip(kopf, körper))
             pygame.draw.rect(s, farbe,
                              (x * CELL + 1, y * CELL + 1, CELL - 2, CELL - 2),
                              border_radius=5)
@@ -779,7 +779,7 @@ class SnakeGame(Game):
     def _draw_hud(self):
         s = self.surface
 
-        # WLS-Anzeige (durch die Waende?)
+        # WLS-Anzeige (durch die Wände?)
         wls_col = COL_WLS_ON if self.wrap else COL_WLS_OFF
         wls = self.font.render("WLS", True, wls_col)
         s.blit(wls, wls.get_rect(midtop=(self.width // 2, 6)))
@@ -806,12 +806,12 @@ class SnakeGame(Game):
         # Einzelspieler
         s.blit(self.font.render(f"Punkte: {self.score}", True, COL_TEXT), (10, 8))
         s.blit(self._small.render(
-            f"Aepfel: {self.apples_total}   Bank: {self.apples_bank}",
+            f"Äpfel: {self.apples_total}   Bank: {self.apples_bank}",
             True, COL_FOOD), (10, 34))
         if self.prestige > 0:
             blocks = prestige.blocks_per_apple(self.prestige)
             info = self._small.render(
-                f"Prestige {prestige.roman(self.prestige)}   {blocks} Bloecke/Apfel",
+                f"Prestige {prestige.roman(self.prestige)}   {blocks} Blöcke/Apfel",
                 True, COL_MULT)
             s.blit(info, (10, 54))
 
@@ -844,10 +844,10 @@ class SnakeGame(Game):
             txt = f"MAX PRESTIGE {prestige.roman(self.prestige)} erreicht"
             col = COL_MULT
         else:
-            txt = (f"Prestige {req['roman']}:  {req['apples']} Aepfel   "
-                   f"-{req['length']} Laenge")
+            txt = (f"Prestige {req['roman']}:  {req['apples']} Äpfel   "
+                   f"-{req['length']} Länge")
             if ok:
-                txt += "   ->  P druecken!"
+                txt += "   ->  P drücken!"
                 col = COL_MULT
             else:
                 col = COL_DIM
@@ -867,14 +867,14 @@ class SnakeGame(Game):
                 farbe = SNAKE_COLORS[self.winner][1]
             self.draw_center_text(text, self.big_font, farbe, -30)
             a0, a1 = self.snakes[0].apples, self.snakes[1].apples
-            self.draw_center_text(f"Aepfel  P1: {a0}   P2: {a1}", self.font, COL_DIM, 14)
+            self.draw_center_text(f"Äpfel  P1: {a0}   P2: {a1}", self.font, COL_DIM, 14)
             self.draw_center_text("Enter = Neustart", self.font, COL_TEXT, 48)
             return
 
         titel = "ZEIT ABGELAUFEN" if (self.mode_key == "timed" and self.snakes[0].alive) \
             else "GAME OVER"
         self.draw_center_text(titel, self.big_font, COL_FOOD, -60)
-        self.draw_center_text(f"Aepfel eingesammelt: {self.apples_total}",
+        self.draw_center_text(f"Äpfel eingesammelt: {self.apples_total}",
                               self.font, COL_FOOD, -14)
         if self.prestige > 0:
             self.draw_center_text(f"Prestige {prestige.roman(self.prestige)}",
@@ -910,15 +910,15 @@ class SnakeGame(Game):
         d = self._tiny.render(dots, True, COL_DIM)
         s.blit(d, d.get_rect(center=(self.width // 2, self.mode_panel.bottom + 10)))
 
-        self._draw_setup_toggle(self.wrap_rect, "Waende: durchgehen", self.wrap)
-        self._draw_setup_toggle(self.bonus_rect, "Bonus-Aepfel (1-2)", self.bonus)
+        self._draw_setup_toggle(self.wrap_rect, "Wände: durchgehen", self.wrap)
+        self._draw_setup_toggle(self.bonus_rect, "Bonus-Äpfel (1-2)", self.bonus)
 
         pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
         st = self.font.render("START", True, COL_TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
 
         hint = self._small.render(
-            "Pfeile/1-5 = Modus   W = Waende   B = Bonus   Enter = Start",
+            "Pfeile/1-5 = Modus   W = Wände   B = Bonus   Enter = Start",
             True, COL_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 34)))
         boost = self._tiny.render(

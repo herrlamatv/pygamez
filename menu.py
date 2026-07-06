@@ -2,14 +2,14 @@
 """
 menu.py
 =======
-Menue-Screens, die VOR bzw. rund um ein Spiel im pygame-Bereich erscheinen
+Menü-Screens, die VOR bzw. rund um ein Spiel im pygame-Bereich erscheinen
 (vergleichbar mit den Setup-Screens von Breakout/Tic-Tac-Toe):
 
 - PreGameScreen : Auswahl Einzel-/Mehrspieler, Zugang zu den Optionen, Start.
-- OptionsScreen : Sound/Lautstaerke/Haptik + Tastenbelegung fuer beide Spieler
+- OptionsScreen : Sound/Lautstärke/Haptik + Tastenbelegung für beide Spieler
                   (jede Taste einzeln neu belegbar), plus Vorlagen.
 
-Beide verhalten sich wie ein 'Game' (update/draw/handle_event), sind aber ueber
+Beide verhalten sich wie ein 'Game' (update/draw/handle_event), sind aber über
 is_menu=True markiert, damit main.py sie von Pause/Highscore ausnimmt. Sie halten
 eine Referenz auf die App und rufen deren Methoden (launch_game/show_screen/...).
 """
@@ -48,14 +48,14 @@ def pretty_key(k):
 
 
 class _Screen(Game):
-    """Gemeinsame Basis fuer Menue-Screens (keine Spiel-Logik/Highscore)."""
+    """Gemeinsame Basis für Menü-Screens (keine Spiel-Logik/Highscore)."""
 
     is_menu = True
     highscore_key = "_menu"
 
     def __init__(self, surface, width, height, app):
         self.app = app
-        # Menues nutzen die globalen App-Einstellungen direkt (Aenderungen wirken).
+        # Menüs nutzen die globalen App-Einstellungen direkt (Änderungen wirken).
         super().__init__(surface, width, height, mode="single",
                          game_settings=app.settings)
 
@@ -68,7 +68,7 @@ class _Screen(Game):
 
 
 # ---------------------------------------------------------------------------
-#  Vorspiel-Screen: Modus waehlen / Optionen / Start
+#  Vorspiel-Screen: Modus wählen / Optionen / Start
 # ---------------------------------------------------------------------------
 
 class PreGameScreen(_Screen):
@@ -89,9 +89,9 @@ class PreGameScreen(_Screen):
             self.buttons.append(("Mehrspieler (2 Spieler)",
                                  lambda: self.app.launch_game(self.game_cls, "multi")))
         self.buttons.append(("Optionen / Steuerung", self._open_options))
-        self.buttons.append(("Zurueck zum Menue", self.app.back_to_menu))
+        self.buttons.append(("Zurück zum Menü", self.app.back_to_menu))
 
-        # Rechtecke fuer Maus/Anzeige berechnen (zentriert, gestapelt).
+        # Rechtecke für Maus/Anzeige berechnen (zentriert, gestapelt).
         self.rects = []
         bw, bh, gap = 380, 50, 14
         total = len(self.buttons) * (bh + gap) - gap
@@ -141,7 +141,7 @@ class PreGameScreen(_Screen):
 
         title = self.big_font.render(self.game_cls.name, True, COL_TEXT)
         s.blit(title, title.get_rect(center=(self.width // 2, 70)))
-        sub = self.font.render("Modus waehlen", True, COL_MUTE)
+        sub = self.font.render("Modus wählen", True, COL_MUTE)
         s.blit(sub, sub.get_rect(center=(self.width // 2, 112)))
 
         for i, (label, _) in enumerate(self.buttons):
@@ -151,7 +151,7 @@ class PreGameScreen(_Screen):
             img = self.font.render(label, True, COL_TEXT)
             s.blit(img, img.get_rect(center=r.center))
 
-        hint = self.font.render("Pfeile/Maus waehlen  -  Enter startet  -  Esc zurueck",
+        hint = self.font.render("Pfeile/Maus wählen  -  Enter startet  -  Esc zurück",
                                 True, COL_MUTE)
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 24)))
 
@@ -166,26 +166,26 @@ class OptionsScreen(_Screen):
     def __init__(self, surface, width, height, app, on_close):
         self.on_close = on_close
         super().__init__(surface, width, height, app)
-        self.capture = None       # (player, action), waehrend eine Taste neu belegt wird
+        self.capture = None       # (player, action), während eine Taste neu belegt wird
         self.preset_idx = 0
-        # Aktuelle Auswahl fuer Aufloesung/FPS aus den Einstellungen ableiten.
+        # Aktuelle Auswahl für Auflösung/FPS aus den Einstellungen ableiten.
         self.res_idx = settings_mod.resolution_index(self.settings.get("resolution"))
         self.fps_idx = settings_mod.fps_index(self.settings.get("fps", 60))
         self._build_items()
         self.sel = 0
 
     def on_surface_changed(self):
-        """Wird von der App nach einer Aufloesungsaenderung gerufen (Layout neu)."""
+        """Wird von der App nach einer Auflösungsänderung gerufen (Layout neu)."""
         self._build_items()
         if self.sel >= len(self.items):
             self.sel = len(self.items) - 1
 
     def _build_items(self):
-        """Baut die interaktive Liste inkl. Zeichenpositionen auf (an Groesse angepasst)."""
+        """Baut die interaktive Liste inkl. Zeichenpositionen auf (an Größe angepasst)."""
         self.items = []
         W, H = self.width, self.height
         # Zwei Spalten, deren Position sich an der Breite orientiert -> passt auch
-        # bei kleinen Aufloesungen.
+        # bei kleinen Auflösungen.
         self._left_x = 40
         self._right_x = W // 2 + 10
         col_w = min(300, W // 2 - 50)
@@ -199,22 +199,22 @@ class OptionsScreen(_Screen):
         # Linke Spalte oben: Ton/Steuerungs-Vorlage
         y = 70
         for kind, kw in (("toggle", dict(key="sound", label="Sound")),
-                         ("volume", dict(label="Lautstaerke")),
+                         ("volume", dict(label="Lautstärke")),
                          ("toggle", dict(key="haptik", label="Haptik")),
                          ("preset", dict(label="Vorlage"))):
             add(kind, pygame.Rect(self._left_x, y, col_w, 30), **kw)
             y += 38
 
-        # Rechte Spalte oben: Grafik & Leistung (Auto / Aufloesung / FPS)
+        # Rechte Spalte oben: Grafik & Leistung (Auto / Auflösung / FPS)
         ry = 70
         add("toggle", pygame.Rect(self._right_x, ry, col_w, 30),
-            key="auto_resolution", label="Auto-Aufloesung")
+            key="auto_resolution", label="Auto-Auflösung")
         ry += 38
-        add("resolution", pygame.Rect(self._right_x, ry, col_w, 30), label="Aufloesung")
+        add("resolution", pygame.Rect(self._right_x, ry, col_w, 30), label="Auflösung")
         ry += 38
         add("fps", pygame.Rect(self._right_x, ry, col_w, 30), label="FPS")
 
-        # Steuerungs-Spalten fuer Spieler 1 (links) und Spieler 2 (rechts)
+        # Steuerungs-Spalten für Spieler 1 (links) und Spieler 2 (rechts)
         for player, px in (("p1", self._left_x), ("p2", self._right_x)):
             y = 262
             for act in settings_mod.ACTIONS:
@@ -224,7 +224,7 @@ class OptionsScreen(_Screen):
 
         # Schliessen-Button unten
         add("button", pygame.Rect(W // 2 - 190, H - 44, 380, 34),
-            label="Speichern & Zurueck (Esc)", on_activate=self._close)
+            label="Speichern & Zurück (Esc)", on_activate=self._close)
 
     def _close(self):
         settings_mod.save_settings(self.settings)
@@ -234,7 +234,7 @@ class OptionsScreen(_Screen):
 
     def handle_event(self, event):
         if event.kind == InputEvent.KEYDOWN:
-            # Im Belege-Modus faengt die naechste Taste die neue Belegung ab.
+            # Im Belege-Modus fängt die nächste Taste die neue Belegung ab.
             if self.capture is not None:
                 self._capture_key(event.key)
                 return
@@ -251,7 +251,7 @@ class OptionsScreen(_Screen):
                     break
 
     def _click_item(self, it, pos):
-        """Maus-Klick: Pfeile < > getrennt auswerten, Lautstaerke-Balken direkt setzen."""
+        """Maus-Klick: Pfeile < > getrennt auswerten, Lautstärke-Balken direkt setzen."""
         kind = it["kind"]
         if kind in ("bind", "button"):
             self._activate(it)
@@ -264,7 +264,7 @@ class OptionsScreen(_Screen):
             else:
                 self._adjust(it, +1)
         else:
-            # < value >  -> Klick auf den linken Pfeil verkleinert, rechter vergroessert.
+            # < value >  -> Klick auf den linken Pfeil verkleinert, rechter vergrößert.
             dec, inc = it.get("dec_rect"), it.get("inc_rect")
             if dec and dec.collidepoint(pos):
                 self._adjust(it, -1)
@@ -272,7 +272,7 @@ class OptionsScreen(_Screen):
                 self._adjust(it, +1)
             elif kind == "toggle":
                 self._adjust(it, +1)   # Umschalter: Klick irgendwo schaltet um
-            # sonst: Klick nur auf das Label -> keine Aenderung
+            # sonst: Klick nur auf das Label -> keine Änderung
 
     def _capture_key(self, key):
         player, action = self.capture
@@ -299,11 +299,11 @@ class OptionsScreen(_Screen):
             self._activate(self.items[self.sel])
 
     def _adjust(self, it, direction):
-        """Links/Rechts: Toggles umschalten, Lautstaerke/Vorlage aendern."""
+        """Links/Rechts: Toggles umschalten, Lautstärke/Vorlage ändern."""
         if it["kind"] == "toggle":
             self.settings[it["key"]] = not self.settings.get(it["key"], False)
             if it["key"] == "auto_resolution":
-                # Sofort anwenden (an Fenster anpassen bzw. feste Aufloesung zurueck).
+                # Sofort anwenden (an Fenster anpassen bzw. feste Auflösung zurück).
                 self.app.set_auto_resolution(self.settings["auto_resolution"])
             self._save_and_beep()
         elif it["kind"] == "volume":
@@ -316,12 +316,12 @@ class OptionsScreen(_Screen):
             self.controls = self.settings["controls"]
             self._save_and_beep()
         elif it["kind"] == "resolution":
-            # Im Auto-Modus wird die Aufloesung vom Fenster bestimmt -> nicht manuell.
+            # Im Auto-Modus wird die Auflösung vom Fenster bestimmt -> nicht manuell.
             if self.settings.get("auto_resolution"):
                 return
             self.res_idx = (self.res_idx + direction) % len(settings_mod.RESOLUTIONS)
             w, h = settings_mod.RESOLUTIONS[self.res_idx][1]
-            # Wendet die Aufloesung sofort an und baut dieses Menue neu auf.
+            # Wendet die Auflösung sofort an und baut dieses Menü neu auf.
             self.app.apply_resolution(w, h)
             settings_mod.save_settings(self.settings)
             self.play_sound("select")
@@ -331,7 +331,7 @@ class OptionsScreen(_Screen):
             self._save_and_beep()
 
     def _activate(self, it):
-        """Enter/Klick: Belegen starten, Button ausloesen oder Toggle schalten."""
+        """Enter/Klick: Belegen starten, Button auslösen oder Toggle schalten."""
         if it["kind"] == "bind":
             self.capture = (it["player"], it["action"])
             self.play_sound("click")
@@ -354,11 +354,11 @@ class OptionsScreen(_Screen):
         title = self.font.render("OPTIONEN", True, COL_TEXT)
         s.blit(title, (self._left_x, 24))
 
-        # Ueberschrift fuer den Grafik-/Leistungs-Block (rechte Spalte oben)
+        # Überschrift für den Grafik-/Leistungs-Block (rechte Spalte oben)
         s.blit(self.font.render("Grafik / Leistung", True, COL_ACCENT),
                (self._right_x, 40))
 
-        # Spaltenueberschriften der Steuerung
+        # Spaltenüberschriften der Steuerung
         s.blit(self.font.render("Spieler 1", True, COL_ACCENT), (self._left_x, 232))
         s.blit(self.font.render("Spieler 2", True, COL_ACCENT), (self._right_x, 232))
 
@@ -374,7 +374,7 @@ class OptionsScreen(_Screen):
     def _draw_arrow_value(self, it, farbe, value_text, value_col):
         """Zeichnet 'Label            < Wert >' mit einzeln anklickbaren Pfeilen.
 
-        Speichert die Trefferflaechen der Pfeile in it['dec_rect']/it['inc_rect'].
+        Speichert die Trefferflächen der Pfeile in it['dec_rect']/it['inc_rect'].
         """
         s = self.surface
         r = it["rect"]
@@ -390,7 +390,7 @@ class OptionsScreen(_Screen):
         s.blit(lt, (lx, r.y))
         s.blit(val, (vx, r.y))
         s.blit(gt, (gx, r.y))
-        # Etwas groessere Trefferflaechen fuer bequemes Klicken.
+        # Etwas größere Trefferflächen für bequemes Klicken.
         it["dec_rect"] = pygame.Rect(lx - 6, r.y - 4, lt.get_width() + 12, r.height + 8)
         it["inc_rect"] = pygame.Rect(gx - 6, r.y - 4, gt.get_width() + 12, r.height + 8)
 
@@ -422,7 +422,7 @@ class OptionsScreen(_Screen):
 
         elif kind == "resolution":
             if self.settings.get("auto_resolution"):
-                # Auto: keine Pfeile, aktuelle Fenster-Aufloesung anzeigen.
+                # Auto: keine Pfeile, aktuelle Fenster-Auflösung anzeigen.
                 it["dec_rect"] = it["inc_rect"] = None
                 s.blit(self.font.render(it["label"], True, farbe), (r.x, r.y))
                 txt = f"Auto  {self.width} x {self.height}"
@@ -456,5 +456,5 @@ class OptionsScreen(_Screen):
         who = "Spieler 1" if player == "p1" else "Spieler 2"
         self.draw_center_text(f"{who}  -  {_ACTION_LABEL[action]}",
                               self.font, COL_ACCENT, -40)
-        self.draw_center_text("Druecke eine Taste...", self.big_font, COL_TEXT, 0)
+        self.draw_center_text("Drücke eine Taste...", self.big_font, COL_TEXT, 0)
         self.draw_center_text("(Esc = abbrechen)", self.font, COL_MUTE, 44)

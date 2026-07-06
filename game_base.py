@@ -2,11 +2,11 @@
 """
 game_base.py
 ============
-Gemeinsame Grundlagen fuer alle Spiele.
+Gemeinsame Grundlagen für alle Spiele.
 
 - InputEvent: Eine kleine, plattform-/toolkit-neutrale Ereignis-Klasse.
   Wir benutzen NICHT die pygame-Ereigniswarteschlange, weil diese beim
-  Einbetten ueber SDL_WINDOWID unzuverlaessig ist (Tastatur-/Maus-Events
+  Einbetten über SDL_WINDOWID unzuverlässig ist (Tastatur-/Maus-Events
   landen beim Tkinter-Fenster). Stattdessen fangen wir Events in Tkinter
   ab und reichen sie als InputEvent an das aktive Spiel weiter.
 
@@ -23,31 +23,31 @@ import settings as settings_mod
 class InputEvent:
     """Ein vereinheitlichtes Eingabe-Ereignis (von Tkinter erzeugt)."""
 
-    KEYDOWN = "keydown"      # Taste gedrueckt
+    KEYDOWN = "keydown"      # Taste gedrückt
     KEYUP = "keyup"          # Taste losgelassen
-    MOUSEDOWN = "mousedown"  # Maustaste gedrueckt
+    MOUSEDOWN = "mousedown"  # Maustaste gedrückt
     MOUSEMOVE = "mousemove"  # Maus bewegt
 
     def __init__(self, kind, key=None, pos=None):
         self.kind = kind      # einer der obigen Strings
         self.key = key        # z.B. "Up", "Left", "space", "w" (Tkinter-keysym)
-        self.pos = pos        # (x, y) relativ zur Spielflaeche, bei Maus-Events
+        self.pos = pos        # (x, y) relativ zur Spielfläche, bei Maus-Events
 
 
 class Game:
     """
-    Basisklasse fuer alle Spiele.
+    Basisklasse für alle Spiele.
 
     Jedes Spiel zeichnet auf 'surface' (das eingebettete pygame-Display).
-    Die Spielflaeche ist 'width' x 'height' Pixel gross.
+    Die Spielfläche ist 'width' x 'height' Pixel gross.
     """
 
-    name = "Spiel"            # Anzeigename (wird im Menue verwendet)
-    highscore_key = "base"    # Schluessel fuer die Highscore-JSON
+    name = "Spiel"            # Anzeigename (wird im Menü verwendet)
+    highscore_key = "base"    # Schlüssel für die Highscore-JSON
 
-    # Bietet das Spiel einen echten 2-Spieler-Modus? (Menue zeigt "Mehrspieler")
+    # Bietet das Spiel einen echten 2-Spieler-Modus? (Menü zeigt "Mehrspieler")
     supports_multiplayer = False
-    # Menue-/Options-Screens setzen dies auf True (kein Highscore/Pause).
+    # Menü-/Options-Screens setzen dies auf True (kein Highscore/Pause).
     is_menu = False
 
     def __init__(self, surface, width, height, mode="single", game_settings=None):
@@ -71,10 +71,10 @@ class Game:
 
         self.reset()
 
-    # ----- Von Unterklassen zu ueberschreiben ---------------------------
+    # ----- Von Unterklassen zu überschreiben ---------------------------
 
     def reset(self):
-        """Setzt das Spiel in den Startzustand zurueck."""
+        """Setzt das Spiel in den Startzustand zurück."""
         self.score = 0
         self.game_over = False
 
@@ -90,10 +90,10 @@ class Game:
         """Verarbeitet ein InputEvent."""
         raise NotImplementedError
 
-    # ----- Hilfsfunktionen fuer alle Spiele -----------------------------
+    # ----- Hilfsfunktionen für alle Spiele -----------------------------
 
     def draw_center_text(self, text, font, color, y_offset=0):
-        """Zeichnet zentrierten Text auf die Spielflaeche."""
+        """Zeichnet zentrierten Text auf die Spielfläche."""
         img = font.render(text, True, color)
         rect = img.get_rect(center=(self.width // 2, self.height // 2 + y_offset))
         self.surface.blit(img, rect)
@@ -101,14 +101,14 @@ class Game:
     # ----- Steuerung & Feedback -----------------------------------------
 
     def key_for(self, player, action):
-        """Liefert den belegten keysym fuer (player, action) oder None."""
+        """Liefert den belegten keysym für (player, action) oder None."""
         return self.controls.get(player, {}).get(action)
 
     def is_action(self, key, action, player=None):
         """
-        True, wenn 'key' der Taste fuer 'action' entspricht.
+        True, wenn 'key' der Taste für 'action' entspricht.
 
-        Ohne 'player' wird gegen BEIDE Spieler geprueft (praktisch fuer den
+        Ohne 'player' wird gegen BEIDE Spieler geprüft (praktisch für den
         Einzelspieler-Modus: sowohl P1- als auch P2-Tasten steuern die Figur).
         Mit 'player' ("p1"/"p2") nur gegen dessen Belegung (Mehrspieler).
         """
@@ -120,5 +120,5 @@ class Game:
         audio.play(name, self.settings)
 
     def rumble(self, ms=120):
-        """Loest Gamepad-Vibration aus (respektiert die Haptik-Einstellung)."""
+        """Löst Gamepad-Vibration aus (respektiert die Haptik-Einstellung)."""
         audio.rumble(self.settings, ms)

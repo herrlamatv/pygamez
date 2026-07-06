@@ -4,11 +4,11 @@ tetris.py
 =========
 Tetris - Einzelspieler oder Versus (2 Spieler nebeneinander).
 
-- Steuerung ueber die belegten Tasten (Standard: P1 = WASD + Leertaste,
+- Steuerung über die belegten Tasten (Standard: P1 = WASD + Leertaste,
   P2 = Pfeile + Enter): links/rechts verschieben, hoch = drehen,
   runter = Soft-Drop, Aktion = Hard-Drop.
-- Volle Reihen loesen sich auf und geben Punkte; alle 10 Reihen steigt das Level.
-- Versus: Wessen Stapel zuerst oben anstoesst, verliert - der andere gewinnt.
+- Volle Reihen lösen sich auf und geben Punkte; alle 10 Reihen steigt das Level.
+- Versus: Wessen Stapel zuerst oben anstößt, verliert - der andere gewinnt.
 - Highscore wird gespeichert.
 """
 
@@ -59,7 +59,7 @@ class _Board:
     """Ein einzelnes Tetris-Spielfeld mit eigenem Stein, Punkten und Level."""
 
     def __init__(self, game):
-        self.game = game            # fuer Sound/Haptik-Rueckrufe
+        self.game = game            # für Sound/Haptik-Rückrufe
         self.grid = [[None] * COLS for _ in range(ROWS)]
         self.level = 1
         self.lines = 0
@@ -193,7 +193,7 @@ class TetrisGame(Game):
 
         if self.multiplayer:
             self.boards = [_Board(self), _Board(self)]
-            # Zwei Felder nebeneinander (kleinere Zellen), Punkte darueber.
+            # Zwei Felder nebeneinander (kleinere Zellen), Punkte darüber.
             self.cell = min((self.height - 70) // ROWS,
                             (self.width - 80 - 40) // (2 * COLS))
             bw = self.cell * COLS
@@ -330,7 +330,7 @@ class TetrisGame(Game):
         s.blit(self.font.render(f"Level: {b.level}", True, COL_TEXT), (info_x, oy + 90))
         s.blit(self.font.render(f"Reihen: {b.lines}", True, COL_TEXT),
                (info_x, oy + 120))
-        s.blit(self.font.render("Naechster", True, COL_TEXT), (info_x, oy + 170))
+        s.blit(self.font.render("Nächster", True, COL_TEXT), (info_x, oy + 170))
         for cx, cy in SHAPES[b.next_kind][0]:
             r = pygame.Rect(info_x + cx * self.cell, oy + 200 + cy * self.cell,
                             self.cell, self.cell)
