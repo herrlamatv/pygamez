@@ -520,5 +520,41 @@ class App:
         self.root.mainloop()
 
 
+def _check_dependencies():
+    """Prueft vor dem Start, ob pygame verfuegbar ist.
+
+    Ohne diese Pruefung wuerde das Tkinter-Fenster kurz erscheinen und beim
+    spaeteren 'import pygame' sofort wieder verschwinden - genau das passiert
+    auf einem PC ohne installiertes pygame (z. B. ohne .venv). Stattdessen
+    zeigen wir eine verstaendliche Meldung.
+    """
+    try:
+        import pygame  # noqa: F401
+        return True
+    except ImportError:
+        msg = (
+            "Das Modul 'pygame' ist nicht installiert.\n\n"
+            "So behebst du das:\n"
+            "  - Unter Windows einfach start.bat ausfuehren\n"
+            "    (installiert pygame automatisch), ODER\n"
+            "  - im Terminal:  python -m pip install pygame\n\n"
+            "In PyCharm: pygame im Interpreter des Projekts installieren."
+        )
+        try:
+            import tkinter as _tk
+            from tkinter import messagebox as _mb
+            _r = _tk.Tk()
+            _r.withdraw()
+            _mb.showerror("pygame fehlt", msg)
+            _r.destroy()
+        except Exception:
+            pass
+        print(msg, file=sys.stderr)
+        return False
+
+
 if __name__ == "__main__":
-    App().run()
+    if _check_dependencies():
+        App().run()
+    else:
+        sys.exit(1)
