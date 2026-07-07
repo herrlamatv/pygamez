@@ -111,6 +111,7 @@ class App:
         self.root.update()
 
         self._init_pygame()
+        self._set_window_icon()
         self._bind_events()
 
         # Sound-Engine starten (nach pygame.init()).
@@ -340,6 +341,35 @@ class App:
         # Gemeinsames UI-Toolkit (Palette/Verläufe/Panels) für alle Screens.
         import ui
         self.ui = ui
+
+    def _set_window_icon(self):
+        """Setzt das Fenster-/Taskleisten-Icon aus logo/pygamez-*.jpg.
+
+        Tk kann JPG nicht direkt laden, deshalb derselbe Weg wie beim
+        Spielbild: pygame lädt das JPG, wir wandeln es in PPM-Daten um und
+        machen daraus ein tk.PhotoImage. Es werden alle Größen übergeben -
+        Tk/Windows wählt die passende für Titelleiste, Taskleiste und
+        Alt+Tab selbst aus. Fehlt eine Datei, wird sie übersprungen; ganz
+        ohne Logo startet das Programm einfach mit dem Standard-Icon.
+        """
+        basis = os.path.dirname(os.path.abspath(__file__))
+        self._icons = []          # Referenzen halten, sonst räumt Tk die Bilder weg
+        for size in (512, 256, 128):
+            pfad = os.path.join(basis, "logo", f"pygamez-{size}.jpg")
+            try:
+                img = self.pygame.image.load(pfad)
+                w, h = img.get_size()
+                data = b"P6 %d %d 255 " % (w, h) \
+                    + self.pygame.image.tobytes(img, "RGB")
+                self._icons.append(tk.PhotoImage(data=data, format="ppm"))
+            except Exception:
+                pass
+        if self._icons:
+            try:
+                # True = gilt auch für alle künftigen Fenster (z.B. Dialoge).
+                self.root.iconphoto(True, *self._icons)
+            except tk.TclError:
+                pass
 
     # ----- Eingaben von Tkinter zu Spielen weiterreichen ----------------
 
