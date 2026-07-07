@@ -1,6 +1,6 @@
 # PyGameZ
 
-**🌐 Sprache / Language:** **🇩🇪 [Deutsch](#-deutsch)** · **🇬🇧 [English](#-english)**
+**🌐 Sprache / Language:** **🇩🇪 [Deutsch](#-deutsch)** · **🇬🇧 [English](#-english)** <br> Game Available in : German, English, French
 
 ---
 
