@@ -254,6 +254,7 @@ class App:
         "SnakeGame": "#6ecd8c", "PongGame": "#589cff", "TicTacToeGame": "#f0a05a",
         "BreakoutGame": "#e15f5f", "TetrisGame": "#b07fe8", "InvadersGame": "#5ad4d4",
         "Game2048": "#f5cd64", "AirHockeyGame": "#6fe0d0", "MinesweeperGame": "#f08fb0",
+        "AsteroidsGame": "#b9c2d9",
     }
 
     def _fit_sidebar(self):
