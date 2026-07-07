@@ -41,6 +41,7 @@ DEFAULT_LANG = "de"
 AVAILABLE = [
     ("de", "Deutsch"),
     ("en", "English"),
+    ("fr", "Français"),
 ]
 _CODES = {code for code, _ in AVAILABLE}
 
