@@ -10,7 +10,8 @@
   "fps": 60,
   "snake": {
     "wrap": true,
-    "bonus_apple": true
+    "bonus_apple": true,
+    "view3d": true
   },
   "pong": {
     "hold_p1": false,

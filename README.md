@@ -38,7 +38,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 
 | Spiel        | Modi            | Kurzbeschreibung |
 |--------------|-----------------|------------------|
-| **Snake**    | 1 / 2 Spieler   | Deluxe-Snake mit Boost, 5 Spielmodi, Goldäpfeln und Prestige |
+| **Snake**    | 1 / 2 Spieler   | Deluxe-Snake mit 2D- & 3D-Ansicht, Boost, 5 Spielmodi, Goldäpfeln und Prestige |
 | **Pong**     | 1 / 2 Spieler   | Klassiker gegen KI oder Spieler 2, umschaltbarer Bewegungsmodus |
 | **Tic-Tac-Toe** | 1 / 2 Spieler | m,n,k-Spiel auf 3x3 bis 9x9, drei KI-Stärken **oder** lokal X gegen O |
 | **Breakout** | 1 Spieler       | Brick-Breaker mit Steinsorten, Power-ups, Combos und vielen Levels |
@@ -53,6 +53,15 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 #### Feature-Details je Spiel
 
 **Snake**
+- **NEU - 3D-Ansicht** (Taste **V** im Setup oder Klick auf *Ansicht*): Das
+  Spielfeld wird als Echtzeit-3D-Szene gerendert - eine **Verfolgerkamera**
+  schwebt hinter der Schlange, gelenkt wird **relativ zur Blickrichtung**
+  (links/rechts = drehen, zwei schnelle Drücke = Kehrtwende). Mit Distanz-Nebel,
+  Sternenhimmel, Schachbrett-Boden, Banden, rotierenden Futter-Kristallen,
+  3D-Partikeln und Kamera-Shake beim Crash; nach dem Game Over umkreist die
+  Kamera die Schlange. Beim Boost weitet sich das Sichtfeld. In 3D wählbar:
+  *Klassisch* und *Hindernisse* (die Wände sind dort immer fest, 3D gibt es
+  nur im Einzelspieler). Die Ansicht wird in `settings.json` gemerkt.
 - **Boost**: Boost-Taste **gedrückt halten** = Turbo (doppeltes Tempo), verbraucht
   Ausdauer (Balken); ist sie leer, schaltet der Boost ab und lädt sich wieder auf.
   Standard P1 = Leertaste/Shift-links, P2 = Enter/Shift-rechts.
@@ -281,7 +290,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 
 | Game         | Modes           | Short description |
 |--------------|-----------------|-------------------|
-| **Snake**    | 1 / 2 players   | Deluxe Snake with boost, 5 game modes, golden apples and prestige |
+| **Snake**    | 1 / 2 players   | Deluxe Snake with 2D & 3D view, boost, 5 game modes, golden apples and prestige |
 | **Pong**     | 1 / 2 players   | Classic vs. AI or player 2, switchable movement mode |
 | **Tic-Tac-Toe** | 1 / 2 players | m,n,k game on 3x3 to 9x9, three AI strengths **or** local X vs. O |
 | **Breakout** | 1 player        | Brick breaker with brick types, power-ups, combos and many levels |
@@ -296,6 +305,14 @@ screen (*Single-player / Multiplayer*).
 #### Feature details per game
 
 **Snake**
+- **NEW - 3D view** (key **V** in setup or click *View*): the board is rendered
+  as a real-time 3D scene - a **chase camera** floats behind the snake and
+  steering is **relative to the view** (left/right = turn, two quick presses =
+  U-turn). With distance fog, a starry sky, checkerboard floor, border walls,
+  rotating food crystals, 3D particles and camera shake on crash; after game
+  over the camera slowly orbits the snake. Boosting widens the field of view.
+  Available in 3D: *Classic* and *Obstacles* (walls are always solid there,
+  3D is single-player only). The view is remembered in `settings.json`.
 - **Boost**: **hold** the boost key = turbo (double speed), consumes stamina
   (bar); once empty, the boost switches off and recharges. Default P1 =
   Space/Left-Shift, P2 = Enter/Right-Shift.

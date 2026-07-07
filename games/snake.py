@@ -6,11 +6,19 @@ Snake - komplett überarbeitete Deluxe-Version mit Spielmodi und Boost.
 
 Neu
 ---
+- 3D-ANSICHT (Taste V im Setup): Das Spielfeld wird als Echtzeit-3D-Szene
+  gerendert (Software-Renderer: Perspektivprojektion + Painter-Algorithmus,
+  kein OpenGL nötig). Eine Verfolgerkamera schwebt hinter dem Kopf der
+  Schlange, gelenkt wird relativ zur Blickrichtung (links/rechts drehen).
+  Mit Distanz-Nebel, Sternenhimmel, Schachbrett-Boden, Banden, rotierenden
+  Futter-Kristallen, 3D-Partikeln und Kamera-Shake. In 3D wählbar:
+  Klassisch und Hindernisse; die Wände sind dort immer fest.
+  Nach dem Game Over umkreist die Kamera langsam die Schlange.
 - BOOST: Solange die Boost-Taste (Einzelspieler: Leertaste/Shift) gedrückt
   gehalten wird, läuft der Turbo. Die Schlange bewegt sich doppelt so schnell
   und verbraucht dabei Ausdauer (Anzeige als Balken). Ist die Ausdauer leer,
   schaltet der Boost automatisch ab; sie lädt sich mit der Zeit wieder auf.
-  Goldäpfel füllen sie sofort ganz auf.
+  Goldäpfel füllen sie sofort ganz auf. In 3D weitet der Boost das Sichtfeld.
 - SPIELMODI (im Setup wählbar):
     * Klassisch    - der Klassiker.
     * Speed-Rush   - wird mit jedem Apfel schneller.
@@ -26,6 +34,7 @@ Neu
 Steuerung
 ---------
 - Bewegung: die in den Optionen belegten Tasten (Standard P1 = WASD, P2 = Pfeile).
+- 3D-Ansicht: links/rechts (bzw. A/D) drehen die Schlange relativ zur Kamera.
 - Boost:  P1 = Leertaste / Shift-links,  P2 = Enter / Shift-rechts.
 - Prestige (Einzelspieler): P.   Pause-los; Enter/Leertaste startet nach Game Over neu.
 """
@@ -97,6 +106,36 @@ MODES = [
 ]
 MODE_KEYS = [m["key"] for m in MODES]
 
+# ----- 3D-Ansicht -----------------------------------------------------------
+# Die 3D-Ansicht nutzt exakt dieselbe Gitter-Spiellogik und rendert sie als
+# Software-3D-Szene. Weltkoordinaten: x = Spalten, z = Zeilen, y = Höhe
+# (Boden bei y = 0, eine Rasterzelle = 1.0 Einheiten).
+MODES_3D = ("classic", "walls")   # in der 3D-Ansicht wählbare Spielmodi
+
+NEAR = 0.12                       # Nahebene der Kamera (Clipping)
+FOG_START, FOG_END = 7.0, 24.0    # Distanz-Nebel: Beginn / volle Stärke
+FOV_NORMAL = 1.12                 # Brennweite normal (x Fensterhöhe)
+FOV_BOOST = 0.94                  # Brennweite bei Boost (weitwinkliger = Speed-Gefühl)
+
+CAM_BACK = 3.6                    # Kamera: Abstand hinter dem Kopf
+CAM_H = 2.6                       # Kamera: Höhe über dem Boden
+CAM_AHEAD = 2.6                   # Blickpunkt: so weit vor dem Kopf
+CAM_LOOK_H = 0.35                 # Blickpunkt: Höhe
+CAM_SMOOTH = 6.0                  # Glättungsfaktor der Kamerabewegung (1/s)
+
+COL_SKY_TOP = (8, 10, 22)         # Himmel oben
+COL_SKY_HOR = (46, 52, 86)        # Himmel am Horizont
+COL_FOG = (34, 39, 66)            # Nebel-/Horizontfarbe (Boden blendet dahin aus)
+COL_TILE_A = (26, 29, 48)         # Boden-Schachbrett hell
+COL_TILE_B = (32, 36, 58)         # Boden-Schachbrett dunkel
+COL_BORDER = (84, 96, 138)        # Bande am Spielfeldrand
+
+
+def _rotate(direction, turn):
+    """Dreht einen Gitter-Richtungsvektor um 90 Grad ("L" oder "R")."""
+    dx, dy = direction
+    return (dy, -dx) if turn == "L" else (-dy, dx)
+
 
 class _Snake:
     """Zustand einer einzelnen Schlange (Körper: Kopf am Listenende)."""
@@ -112,6 +151,8 @@ class _Snake:
         self.grow = 0                   # ausstehende Wachstums-Blöcke
         self.stamina = STAMINA_MAX      # Boost-Ausdauer (0..1)
         self.boost_on = False           # Boost gerade aktiv?
+        self.prev_body = list(body)     # Positionen vor dem letzten Schritt (3D-Interpolation)
+        self.turn_queue = []            # gepufferte Drehungen in der 3D-Ansicht ("L"/"R")
 
 
 class SnakeGame(Game):
@@ -134,6 +175,9 @@ class SnakeGame(Game):
         self.bonus = bool(snk.get("bonus_apple", False))
         mode_key = snk.get("mode", "classic")
         self.mode_index = MODE_KEYS.index(mode_key) if mode_key in MODE_KEYS else 0
+        self.view3d = bool(snk.get("view3d", False))
+        if self.view3d_active and self.mode_key not in MODES_3D:
+            self.mode_index = MODE_KEYS.index("classic")
 
         self._small = pygame.font.SysFont("consolas", 16)
         self._tiny = pygame.font.SysFont("consolas", 13)
@@ -141,6 +185,14 @@ class SnakeGame(Game):
 
         self.particles = []
         self.anim_t = 0.0
+
+        # Zustand der 3D-Ansicht
+        self.particles3d = []          # [x, y, z, vx, vy, vz, life, farbe]
+        self._shake = 0.0              # Kamera-Shake (Restdauer)
+        self._sky_cache = None         # ((w, h), Surface) - Himmels-Gradient
+        self._stars = [(random.uniform(0, math.tau), random.random(),
+                        random.choice((1, 1, 2)), random.uniform(0, math.tau))
+                       for _ in range(70)]
 
         self._build_setup_layout()
         self._reset_run_stats()
@@ -150,6 +202,22 @@ class SnakeGame(Game):
     @property
     def mode_key(self):
         return MODES[self.mode_index]["key"]
+
+    @property
+    def view3d_active(self):
+        """3D-Ansicht läuft nur im Einzelspieler (eine Kamera pro Schlange)."""
+        return self.view3d and not self.multiplayer
+
+    @property
+    def wrap_active(self):
+        """Wände-durchgehen; in der 3D-Ansicht sind die Wände immer fest."""
+        return self.wrap and not self.view3d_active
+
+    def _allowed_modes(self):
+        """Indizes der aktuell wählbaren Spielmodi (3D: nur Klassisch/Hindernisse)."""
+        if self.view3d_active:
+            return [i for i, m in enumerate(MODES) if m["key"] in MODES_3D]
+        return list(range(len(MODES)))
 
     def _reset_run_stats(self):
         self.apples_total = 0
@@ -175,6 +243,20 @@ class SnakeGame(Game):
         self.interval = BASE_INTERVAL
         self._build_mode_layout()
         self._place_food()
+        self._reset_camera()
+
+    def _reset_camera(self):
+        """Setzt die 3D-Verfolgerkamera hinter den Kopf von Spieler 1."""
+        self._run_t = 0.0              # Laufzeit der Runde (für Einblend-Hinweise)
+        self._orbit_a = 0.0            # Orbit-Winkel nach dem Game Over
+        self._fov_mul = FOV_NORMAL
+        sn = self.snakes[0]
+        hx, hy = sn.body[-1]
+        fx, fz = float(sn.direction[0]), float(sn.direction[1])
+        self._cam_dir = (fx, fz)
+        head = (hx + 0.5, 0.0, hy + 0.5)
+        self._cam_pos = (head[0] - fx * CAM_BACK, CAM_H, head[2] - fz * CAM_BACK)
+        self._cam_look = (head[0] + fx * CAM_AHEAD, CAM_LOOK_H, head[2] + fz * CAM_AHEAD)
 
     def _start_play(self):
         self.score = 0
@@ -182,6 +264,8 @@ class SnakeGame(Game):
         self.winner = None
         self._effects_done = False
         self.particles = []
+        self.particles3d = []
+        self._shake = 0.0
         self._reset_run_stats()
         self._new_board()
         self.state = PLAY
@@ -276,15 +360,16 @@ class SnakeGame(Game):
         bw = min(420, self.width - 60)
 
         # Modus-Auswahl: Pfeile + Panel
-        self.mode_panel = pygame.Rect(cx - bw // 2, 118, bw, 62)
-        self.mode_left = pygame.Rect(self.mode_panel.left, 118, 40, 62)
-        self.mode_right = pygame.Rect(self.mode_panel.right - 40, 118, 40, 62)
+        self.mode_panel = pygame.Rect(cx - bw // 2, 106, bw, 58)
+        self.mode_left = pygame.Rect(self.mode_panel.left, 106, 40, 58)
+        self.mode_right = pygame.Rect(self.mode_panel.right - 40, 106, 40, 58)
 
-        bh, gap = 44, 14
-        y0 = 196
-        self.wrap_rect = pygame.Rect(cx - bw // 2, y0, bw, bh)
-        self.bonus_rect = pygame.Rect(cx - bw // 2, y0 + (bh + gap), bw, bh)
-        self.start_rect = pygame.Rect(cx - 95, y0 + 2 * (bh + gap) + 8, 190, 50)
+        bh, gap = 42, 8
+        y0 = 186
+        self.view_rect = pygame.Rect(cx - bw // 2, y0, bw, bh)
+        self.wrap_rect = pygame.Rect(cx - bw // 2, y0 + (bh + gap), bw, bh)
+        self.bonus_rect = pygame.Rect(cx - bw // 2, y0 + 2 * (bh + gap), bw, bh)
+        self.start_rect = pygame.Rect(cx - 95, y0 + 3 * (bh + gap) + 6, 190, 50)
 
     def _save_snake_setting(self, key, value):
         if isinstance(self.settings, dict):
@@ -293,6 +378,8 @@ class SnakeGame(Game):
             settings_mod.save_settings(self.settings)
 
     def _toggle_setting(self, key):
+        if key == "wrap" and self.view3d_active:
+            return                       # in 3D sind die Wände immer fest
         neu = not getattr(self, "wrap" if key == "wrap" else "bonus")
         if key == "wrap":
             self.wrap = neu
@@ -302,9 +389,25 @@ class SnakeGame(Game):
         self.play_sound("select")
 
     def _cycle_mode(self, step):
-        self.mode_index = (self.mode_index + step) % len(MODES)
+        allowed = self._allowed_modes()
+        if self.mode_index in allowed:
+            i = allowed.index(self.mode_index)
+            self.mode_index = allowed[(i + step) % len(allowed)]
+        else:
+            self.mode_index = allowed[0]
         self._save_snake_setting("mode", self.mode_key)
         self.play_sound("click")
+
+    def _toggle_view(self):
+        """Schaltet zwischen 2D- und 3D-Ansicht um (nur Einzelspieler)."""
+        if self.multiplayer:
+            return
+        self.view3d = not self.view3d
+        if self.view3d and self.mode_key not in MODES_3D:
+            self.mode_index = MODE_KEYS.index("classic")
+            self._save_snake_setting("mode", self.mode_key)
+        self._save_snake_setting("view3d", self.view3d)
+        self.play_sound("select")
 
     def _handle_setup_event(self, event):
         if event.kind == InputEvent.KEYDOWN:
@@ -313,11 +416,14 @@ class SnakeGame(Game):
             elif event.key in ("Right", "d", "D"):
                 self._cycle_mode(+1)
             elif event.key in ("1", "2", "3", "4", "5"):
+                allowed = self._allowed_modes()
                 idx = int(event.key) - 1
-                if idx < len(MODES):
-                    self.mode_index = idx
+                if idx < len(allowed):
+                    self.mode_index = allowed[idx]
                     self._save_snake_setting("mode", self.mode_key)
                     self.play_sound("click")
+            elif event.key in ("v", "V"):
+                self._toggle_view()
             elif event.key in ("w", "W"):
                 self._toggle_setting("wrap")
             elif event.key in ("b", "B"):
@@ -333,6 +439,8 @@ class SnakeGame(Game):
                 self._cycle_mode(+1)
             elif self.mode_panel.collidepoint(p):
                 self._cycle_mode(+1)
+            elif self.view_rect.collidepoint(p):
+                self._toggle_view()
             elif self.wrap_rect.collidepoint(p):
                 self._toggle_setting("wrap")
             elif self.bonus_rect.collidepoint(p):
@@ -385,6 +493,8 @@ class SnakeGame(Game):
         if self.multiplayer:
             self._turn(self.snakes[0], event.key, "p1")
             self._turn(self.snakes[1], event.key, "p2")
+        elif self.view3d_active:
+            self._steer_3d(self.snakes[0], event.key)
         else:
             self._turn(self.snakes[0], event.key, None)
 
@@ -398,6 +508,20 @@ class SnakeGame(Game):
                 self.play_sound("rotate")
         else:
             sn.boost_on = False
+
+    def _steer_3d(self, sn, key):
+        """Relatives Lenken in der 3D-Ansicht: links/rechts drehen.
+
+        Bis zu zwei Drehungen werden gepuffert und pro Spielschritt eine
+        angewendet - so klappt auch eine schnelle Kehrtwende (2x drücken).
+        """
+        turn = None
+        if self.is_action(key, "left") or key == "Left":
+            turn = "L"
+        elif self.is_action(key, "right") or key == "Right":
+            turn = "R"
+        if turn and len(sn.turn_queue) < 2:
+            sn.turn_queue.append(turn)
 
     def _turn(self, sn, key, player):
         dx, dy = sn.direction
@@ -440,14 +564,27 @@ class SnakeGame(Game):
     def update(self, dt):
         self.anim_t += dt
         self._update_particles(dt)
+        self._update_particles3d(dt)
+        if self._shake > 0.0:
+            self._shake = max(0.0, self._shake - dt * 1.6)
+        if self.state == PLAY and self.view3d_active:
+            self._update_camera(dt)              # läuft auch nach Game Over (Orbit)
         if self.state != PLAY or self.game_over:
             return
+        self._run_t += dt
 
-        # Goldapfel-Lebensdauer
+        # Goldapfel-Lebensdauer (+ Funkeln in 3D)
         if self.golden is not None:
             self.golden_timer -= dt
             if self.golden_timer <= 0:
                 self.golden = None
+            elif self.view3d_active and random.random() < dt * 6:
+                gx, gy = self.golden
+                self.particles3d.append(
+                    [gx + 0.5 + random.uniform(-0.2, 0.2), 0.55,
+                     gy + 0.5 + random.uniform(-0.2, 0.2),
+                     random.uniform(-0.4, 0.4), random.uniform(0.8, 1.8),
+                     random.uniform(-0.4, 0.4), 0.55, COL_GOLD])
 
         # Zeitangriff-Countdown
         if self.mode_key == "timed":
@@ -500,14 +637,19 @@ class SnakeGame(Game):
             sn = self.snakes[i]
             if not sn.alive:
                 continue
-            sn.direction = sn.next_direction
+            sn.prev_body = list(sn.body)         # für die 3D-Interpolation
+            if self.view3d_active and sn.turn_queue:
+                sn.direction = _rotate(sn.direction, sn.turn_queue.pop(0))
+                sn.next_direction = sn.direction
+            else:
+                sn.direction = sn.next_direction
             hx, hy = sn.body[-1]
             nx, ny = hx + sn.direction[0], hy + sn.direction[1]
             if (nx, ny) in self.portals:                 # Teleporter
                 nx, ny = self.portals[(nx, ny)]
                 nx += sn.direction[0]
                 ny += sn.direction[1]
-            if self.wrap:
+            if self.wrap_active:
                 nx %= self.cols
                 ny %= self.rows
             new_heads[i] = (nx, ny)
@@ -515,7 +657,7 @@ class SnakeGame(Game):
         tot = set()
 
         # Wandkollision (nur bei festen Wänden)
-        if not self.wrap:
+        if not self.wrap_active:
             for i, (nx, ny) in new_heads.items():
                 if nx < 0 or nx >= self.cols or ny < 0 or ny >= self.rows:
                     tot.add(i)
@@ -555,6 +697,8 @@ class SnakeGame(Game):
             if i in tot:
                 sn.alive = False
                 self._spawn_particles(sn.body[-1], SNAKE_COLORS[i % 2][1], 12)
+                if self.view3d_active:
+                    self._shake = 0.6            # Kamera-Wackler beim Crash
                 continue
             kopf = new_heads[i]
             sn.body.append(kopf)
@@ -651,6 +795,17 @@ class SnakeGame(Game):
 
     # ----- Partikel -----------------------------------------------------
     def _spawn_particles(self, cell, color, n):
+        if self.view3d_active:
+            # 3D-Funken: fliegen aus der Zelle hoch und prallen am Boden ab
+            wx, wz = cell[0] + 0.5, cell[1] + 0.5
+            for _ in range(n):
+                ang = random.uniform(0, math.tau)
+                spd = random.uniform(1.0, 4.0)
+                self.particles3d.append(
+                    [wx, random.uniform(0.2, 0.6), wz,
+                     math.cos(ang) * spd, random.uniform(1.0, 4.5),
+                     math.sin(ang) * spd, random.uniform(0.35, 0.7), color])
+            return
         cx = cell[0] * CELL + CELL / 2
         cy = cell[1] * CELL + CELL / 2
         for _ in range(n):
@@ -658,6 +813,85 @@ class SnakeGame(Game):
             spd = random.uniform(30, 130)
             self.particles.append([cx, cy, math.cos(ang) * spd, math.sin(ang) * spd,
                                    random.uniform(0.25, 0.55), color])
+
+    def _update_particles3d(self, dt):
+        rest = []
+        for p in self.particles3d:
+            p[0] += p[3] * dt
+            p[1] += p[4] * dt
+            p[2] += p[5] * dt
+            p[4] -= 9.0 * dt                     # Schwerkraft
+            if p[1] < 0.04:                      # am Boden abprallen
+                p[1] = 0.04
+                p[4] *= -0.4
+            p[6] -= dt
+            if p[6] > 0:
+                rest.append(p)
+        self.particles3d = rest
+
+    # ----- 3D-Kamera ------------------------------------------------------
+    def _update_camera(self, dt):
+        """Verfolgerkamera: schwebt geglättet hinter dem Kopf.
+
+        Nach dem Game Over kreist sie stattdessen langsam um die Schlange.
+        """
+        sn = self.snakes[0]
+        cells = self._interp_cells(sn)
+        hx, hz = cells[-1]
+        head = (hx + 0.5, 0.0, hz + 0.5)
+
+        if self.game_over:
+            self._orbit_a += dt * 0.55
+            tx, tz = math.sin(self._orbit_a), math.cos(self._orbit_a)
+            back = CAM_BACK + 1.6
+            look = (head[0], 0.25, head[2])
+        else:
+            tx, tz = float(sn.direction[0]), float(sn.direction[1])
+            back, look = CAM_BACK, None
+
+        # Blickrichtung weich nachziehen
+        k = min(1.0, dt * 4.5)
+        fx = self._cam_dir[0] + (tx - self._cam_dir[0]) * k
+        fz = self._cam_dir[1] + (tz - self._cam_dir[1]) * k
+        ln = math.hypot(fx, fz)
+        if ln > 1e-6:
+            self._cam_dir = (fx / ln, fz / ln)
+        fx, fz = self._cam_dir
+
+        tgt_pos = (head[0] - fx * back, CAM_H, head[2] - fz * back)
+        tgt_look = look or (head[0] + fx * CAM_AHEAD, CAM_LOOK_H,
+                            head[2] + fz * CAM_AHEAD)
+        kp = min(1.0, dt * CAM_SMOOTH)
+        self._cam_pos = tuple(a + (b - a) * kp
+                              for a, b in zip(self._cam_pos, tgt_pos))
+        self._cam_look = tuple(a + (b - a) * kp
+                               for a, b in zip(self._cam_look, tgt_look))
+
+        # Sichtfeld: beim Boost weitwinkliger (Geschwindigkeitsgefühl)
+        boost = sn.alive and sn.boost_on and sn.stamina > 0
+        want = FOV_BOOST if boost else FOV_NORMAL
+        self._fov_mul += (want - self._fov_mul) * min(1.0, dt * 6.0)
+
+    def _interp_cells(self, sn):
+        """Körperzellen, zwischen letztem und aktuellem Schritt interpoliert.
+
+        Liefert Fließkomma-Zellkoordinaten in Körperreihenfolge (Kopf am Ende);
+        damit gleitet die Schlange in 3D, statt von Zelle zu Zelle zu springen.
+        """
+        if self.game_over or not sn.alive:
+            frac = 1.0
+        else:
+            frac = max(0.0, min(1.0, self._timer / max(1e-6, self.interval)))
+        out = []
+        n, m = len(sn.body), len(sn.prev_body)
+        for k, cur in enumerate(sn.body):
+            pi = m - (n - k)                 # gleiches Segment, vom Kopf her ausgerichtet
+            prev = sn.prev_body[pi] if 0 <= pi < m else cur
+            if abs(cur[0] - prev[0]) + abs(cur[1] - prev[1]) > 1.5:
+                prev = cur                   # Teleport/Spawn: nicht interpolieren
+            out.append((prev[0] + (cur[0] - prev[0]) * frac,
+                        prev[1] + (cur[1] - prev[1]) * frac))
+        return out
 
     def _update_particles(self, dt):
         rest = []
@@ -675,6 +909,17 @@ class SnakeGame(Game):
             self._draw_setup()
             return
 
+        if self.view3d_active:
+            self._draw_world_3d()
+        else:
+            self._draw_world_2d()
+
+        self._draw_hud()
+
+        if self.game_over:
+            self._draw_game_over()
+
+    def _draw_world_2d(self):
         s = self.surface
         s.fill(COL_BG)
 
@@ -725,11 +970,6 @@ class SnakeGame(Game):
         for idx, sn in enumerate(self.snakes):
             self._draw_snake(s, sn, idx)
 
-        self._draw_hud()
-
-        if self.game_over:
-            self._draw_game_over()
-
     def _draw_snake(self, s, sn, idx):
         körper, kopf = SNAKE_COLORS[idx % len(SNAKE_COLORS)]
         if not sn.alive:
@@ -776,17 +1016,373 @@ class SnakeGame(Game):
             pygame.draw.circle(s, (20, 20, 30),
                                (int(ex + dx * 1.5), int(ey + dy * 1.5)), 1)
 
+    # ===================================================== 3D-Renderer
+    # Software-3D ohne OpenGL: Punkte werden in den Kameraraum transformiert
+    # (Basisvektoren rechts/oben/vorwärts), an der Nahebene geclippt und
+    # perspektivisch projiziert. Flächen sammeln wir in einer Liste und
+    # zeichnen sie nach Tiefe sortiert (Painter-Algorithmus, ferne zuerst).
+
+    def _draw_world_3d(self):
+        s = self.surface
+
+        # Projektionsparameter (inkl. Kamera-Shake nach einem Crash)
+        self._scx = self.width / 2
+        self._scy = self.height * 0.5
+        if self._shake > 0:
+            amp = 16 * self._shake
+            self._scx += random.uniform(-amp, amp)
+            self._scy += random.uniform(-amp, amp)
+        self._f = self.height * self._fov_mul
+        self._basis = self._view_basis()
+
+        self._draw_sky(s)
+        self._draw_stars3d(s)
+        self._draw_floor3d(s)
+
+        items = []                       # (tiefe, punkte, farbe, kontur)
+        self._add_border_walls(items)
+        for (ox, oz) in self.obstacles:
+            self._add_box(items, ox, oz, 0.94, 1.05, COL_WALL, (95, 104, 128))
+        if self.food:
+            r = 0.30 + 0.05 * math.sin(self.anim_t * 5)
+            self._add_octa(items, self.food, r, COL_FOOD)
+        if self.golden is not None and (self.golden_timer > 1.5
+                                        or int(self.anim_t * 8) % 2 == 0):
+            r = 0.38 + 0.06 * math.sin(self.anim_t * 8)
+            self._add_octa(items, self.golden, r, COL_GOLD)
+        for idx, sn in enumerate(self.snakes):
+            self._add_snake3d(items, sn, idx)
+
+        items.sort(key=lambda it: -it[0])
+        for _, pts, col, outline in items:
+            pygame.draw.polygon(s, col, pts)
+            if outline:
+                pygame.draw.polygon(s, outline, pts, 1)
+
+        self._draw_eyes3d(s)
+        self._draw_boost_glow3d(s)
+        self._draw_particles3d_pass(s)
+
+    # ----- Kamera / Projektion -------------------------------------------
+    def _view_basis(self):
+        """Basisvektoren der Kamera: (rechts, oben, vorwärts)."""
+        cx, cy, cz = self._cam_pos
+        fx = self._cam_look[0] - cx
+        fy = self._cam_look[1] - cy
+        fz = self._cam_look[2] - cz
+        fl = math.sqrt(fx * fx + fy * fy + fz * fz) or 1.0
+        f = (fx / fl, fy / fl, fz / fl)
+        rl = math.hypot(f[2], f[0]) or 1.0
+        r = (-f[2] / rl, 0.0, f[0] / rl)         # f x (0,1,0), normiert
+        u = (r[1] * f[2] - r[2] * f[1],          # r x f
+             r[2] * f[0] - r[0] * f[2],
+             r[0] * f[1] - r[1] * f[0])
+        return r, u, f
+
+    def _to_cam(self, p):
+        """Weltpunkt -> Kameraraum (x rechts, y oben, z Tiefe)."""
+        r, u, f = self._basis
+        dx = p[0] - self._cam_pos[0]
+        dy = p[1] - self._cam_pos[1]
+        dz = p[2] - self._cam_pos[2]
+        return (dx * r[0] + dz * r[2],           # r[1] ist immer 0
+                dx * u[0] + dy * u[1] + dz * u[2],
+                dx * f[0] + dy * f[1] + dz * f[2])
+
+    def _proj(self, c):
+        """Kameraraum -> Bildschirmpixel (perspektivisch)."""
+        k = self._f / c[2]
+        return (self._scx + c[0] * k, self._scy - c[1] * k)
+
+    @staticmethod
+    def _clip_near(pts):
+        """Schneidet ein Polygon (Kameraraum) an der Nahebene z = NEAR."""
+        out = []
+        n = len(pts)
+        for i in range(n):
+            a, b = pts[i], pts[(i + 1) % n]
+            a_in, b_in = a[2] >= NEAR, b[2] >= NEAR
+            if a_in:
+                out.append(a)
+            if a_in != b_in:
+                t = (NEAR - a[2]) / (b[2] - a[2])
+                out.append((a[0] + (b[0] - a[0]) * t,
+                            a[1] + (b[1] - a[1]) * t, NEAR))
+        return out
+
+    @staticmethod
+    def _shade_col(col, k):
+        return (min(255, int(col[0] * k)), min(255, int(col[1] * k)),
+                min(255, int(col[2] * k)))
+
+    @staticmethod
+    def _fog_color(col, depth):
+        """Blendet eine Farbe mit der Entfernung in den Nebel aus."""
+        t = (depth - FOG_START) / (FOG_END - FOG_START)
+        if t <= 0:
+            return col
+        t = min(1.0, t)
+        return (int(col[0] + (COL_FOG[0] - col[0]) * t),
+                int(col[1] + (COL_FOG[1] - col[1]) * t),
+                int(col[2] + (COL_FOG[2] - col[2]) * t))
+
+    def _add_poly(self, items, world_pts, color, shade=1.0, outline=None):
+        """Transformiert, clippt und projiziert eine Fläche in die Zeichenliste."""
+        cs = [self._to_cam(p) for p in world_pts]
+        if all(c[2] < NEAR for c in cs):
+            return
+        cs = self._clip_near(cs)
+        if len(cs) < 3:
+            return
+        depth = sum(c[2] for c in cs) / len(cs)
+        if depth > FOG_END + 6:
+            return
+        pts = [self._proj(c) for c in cs]
+        if all(p[0] < -40 for p in pts) or all(p[0] > self.width + 40 for p in pts) \
+                or all(p[1] < -40 for p in pts) or all(p[1] > self.height + 40 for p in pts):
+            return
+        col = self._fog_color(self._shade_col(color, shade), depth)
+        # Konturen nur in der Nähe (im Nebel wirken sie unruhig)
+        items.append((depth, pts, col, outline if depth < FOG_START + 4 else None))
+
+    # ----- Szenen-Bausteine ------------------------------------------------
+    def _add_box(self, items, gx, gz, w, h, color, outline=None):
+        """Quader auf dem Boden der Zelle (gx, gz); nur sichtbare Seiten."""
+        cx, cz = gx + 0.5, gz + 0.5
+        x0, x1 = cx - w / 2, cx + w / 2
+        z0, z1 = cz - w / 2, cz + w / 2
+        px, py, pz = self._cam_pos
+        if py > h:                                   # Deckel
+            self._add_poly(items, ((x0, h, z0), (x1, h, z0), (x1, h, z1), (x0, h, z1)),
+                           color, 1.0, outline)
+        if px < x0:
+            self._add_poly(items, ((x0, 0, z0), (x0, 0, z1), (x0, h, z1), (x0, h, z0)),
+                           color, 0.62, outline)
+        elif px > x1:
+            self._add_poly(items, ((x1, 0, z0), (x1, 0, z1), (x1, h, z1), (x1, h, z0)),
+                           color, 0.62, outline)
+        if pz < z0:
+            self._add_poly(items, ((x0, 0, z0), (x1, 0, z0), (x1, h, z0), (x0, h, z0)),
+                           color, 0.76, outline)
+        elif pz > z1:
+            self._add_poly(items, ((x0, 0, z1), (x1, 0, z1), (x1, h, z1), (x0, h, z1)),
+                           color, 0.76, outline)
+
+    def _add_octa(self, items, cell, r, color, y=0.45):
+        """Rotierender Oktaeder-Kristall (Futter / Goldapfel)."""
+        cx, cz = cell[0] + 0.5, cell[1] + 0.5
+        top = (cx, y + r, cz)
+        bot = (cx, max(0.04, y - r), cz)
+        a0 = self.anim_t * 2.4
+        eq = [(cx + math.cos(a0 + i * math.pi / 2) * r, y,
+               cz + math.sin(a0 + i * math.pi / 2) * r) for i in range(4)]
+        px, py, pz = self._cam_pos
+        lx, ly, lz = 0.42, -0.82, 0.39               # Lichtrichtung (von oben)
+        for i in range(4):
+            for tri in ((top, eq[i], eq[(i + 1) % 4]),
+                        (bot, eq[(i + 1) % 4], eq[i])):
+                a, b, c = tri
+                ux, uy, uz = b[0] - a[0], b[1] - a[1], b[2] - a[2]
+                vx, vy, vz = c[0] - a[0], c[1] - a[1], c[2] - a[2]
+                nx = uy * vz - uz * vy
+                ny = uz * vx - ux * vz
+                nz = ux * vy - uy * vx
+                fcx = (a[0] + b[0] + c[0]) / 3
+                fcy = (a[1] + b[1] + c[1]) / 3
+                fcz = (a[2] + b[2] + c[2]) / 3
+                if nx * (fcx - cx) + ny * (fcy - y) + nz * (fcz - cz) < 0:
+                    nx, ny, nz = -nx, -ny, -nz       # Normale nach aussen
+                if nx * (fcx - px) + ny * (fcy - py) + nz * (fcz - pz) >= 0:
+                    continue                         # Rückseite
+                nl = math.sqrt(nx * nx + ny * ny + nz * nz) or 1.0
+                lit = max(0.0, -(nx * lx + ny * ly + nz * lz) / nl)
+                self._add_poly(items, tri, color, 0.55 + 0.5 * lit)
+
+    def _add_border_walls(self, items):
+        """Niedrige Bande rund um das Spielfeld (leicht gestreift)."""
+        h = 0.55
+        for gx in range(self.cols):
+            sh = 0.9 if gx % 2 == 0 else 0.78
+            self._add_poly(items, ((gx, 0, 0), (gx + 1, 0, 0),
+                                   (gx + 1, h, 0), (gx, h, 0)), COL_BORDER, sh)
+            self._add_poly(items, ((gx, 0, self.rows), (gx + 1, 0, self.rows),
+                                   (gx + 1, h, self.rows), (gx, h, self.rows)),
+                           COL_BORDER, sh)
+        for gz in range(self.rows):
+            sh = 0.84 if gz % 2 == 0 else 0.7
+            self._add_poly(items, ((0, 0, gz), (0, 0, gz + 1),
+                                   (0, h, gz + 1), (0, h, gz)), COL_BORDER, sh)
+            self._add_poly(items, ((self.cols, 0, gz), (self.cols, 0, gz + 1),
+                                   (self.cols, h, gz + 1), (self.cols, h, gz)),
+                           COL_BORDER, sh)
+
+    def _add_snake3d(self, items, sn, idx):
+        """Die Schlange als Kette aus Quadern (Kopf grösser und heller)."""
+        col_body, col_head = SNAKE_COLORS[idx % len(SNAKE_COLORS)]
+        if not sn.alive:
+            col_body = tuple(c // 2 for c in col_body)
+            col_head = col_body
+        cells = self._interp_cells(sn)
+        n = len(cells)
+        for k, (gx, gz) in enumerate(cells):
+            if k == n - 1:                           # Kopf
+                farbe, w, h = col_head, 0.92, 0.78
+            else:
+                t = k / max(1, n - 1)
+                farbe = tuple(int(kc + (bc - kc) * (1 - t * 0.5))
+                              for kc, bc in zip(col_head, col_body))
+                w, h = 0.8, 0.58
+            self._add_box(items, gx, gz, w, h, farbe,
+                          tuple(c // 3 for c in farbe))
+
+    # ----- Hintergrund / Boden ---------------------------------------------
+    def _draw_sky(self, s):
+        """Vertikaler Himmels-Gradient (gecacht, unten = Nebelfarbe)."""
+        if self._sky_cache is None or self._sky_cache[0] != (self.width, self.height):
+            surf = pygame.Surface((self.width, self.height))
+            hor = int(self.height * 0.40)
+            haze = int(self.height * 0.55)
+            for y in range(self.height):
+                if y < hor:
+                    t = y / max(1, hor)
+                    c = [int(a + (b - a) * t)
+                         for a, b in zip(COL_SKY_TOP, COL_SKY_HOR)]
+                elif y < haze:
+                    t = (y - hor) / max(1, haze - hor)
+                    c = [int(a + (b - a) * t)
+                         for a, b in zip(COL_SKY_HOR, COL_FOG)]
+                else:
+                    c = COL_FOG
+                pygame.draw.line(surf, c, (0, y), (self.width, y))
+            self._sky_cache = ((self.width, self.height), surf)
+        s.blit(self._sky_cache[1], (0, 0))
+
+    def _draw_stars3d(self, s):
+        """Funkelnde Sterne, die beim Drehen der Kamera mitwandern (Parallaxe)."""
+        _, _, f = self._basis
+        yaw = math.atan2(f[0], f[2])
+        hor = self.height * 0.40
+        for az, hf, size, ph in self._stars:
+            d = (az - yaw + math.pi) % math.tau - math.pi
+            if abs(d) > 0.7:
+                continue
+            sx = self._scx + math.tan(d) * self._f
+            if sx < -4 or sx > self.width + 4:
+                continue
+            sy = hor * (0.08 + 0.84 * hf)
+            tw = 0.55 + 0.45 * math.sin(self.anim_t * 1.7 + ph)
+            c = int(120 + 110 * tw)
+            pygame.draw.circle(s, (c, c, min(255, c + 25)), (int(sx), int(sy)), size)
+
+    def _draw_floor3d(self, s):
+        """Schachbrett-Boden; Zellecken werden pro Frame nur einmal transformiert."""
+        corners = {}
+
+        def corner(gx, gz):
+            v = corners.get((gx, gz))
+            if v is None:
+                v = self._to_cam((float(gx), 0.0, float(gz)))
+                corners[(gx, gz)] = v
+            return v
+
+        lim = FOG_END + 1.0
+        for gz in range(self.rows):
+            for gx in range(self.cols):
+                c00 = corner(gx, gz)
+                # grobes Cull: zu weit weg, hinter der Kamera oder seitlich draussen
+                if c00[2] > lim or c00[2] < -1.8:
+                    continue
+                if abs(c00[0]) > c00[2] * 1.7 + 2.5:
+                    continue
+                quad = [c00, corner(gx + 1, gz),
+                        corner(gx + 1, gz + 1), corner(gx, gz + 1)]
+                if all(c[2] < NEAR for c in quad):
+                    continue
+                poly = self._clip_near(quad)
+                if len(poly) < 3:
+                    continue
+                depth = sum(c[2] for c in poly) / len(poly)
+                col = COL_TILE_A if (gx + gz) & 1 == 0 else COL_TILE_B
+                pygame.draw.polygon(s, self._fog_color(col, depth),
+                                    [self._proj(c) for c in poly])
+
+    # ----- Details / Effekte -------------------------------------------------
+    def _draw_eyes3d(self, s):
+        """Augen auf der Stirnseite des Kopfes (nur wenn sie zur Kamera zeigen)."""
+        sn = self.snakes[0]
+        if not sn.alive:
+            return
+        cells = self._interp_cells(sn)
+        hx, hz = cells[-1]
+        dx, dz = sn.direction
+        fx, fz = hx + 0.5 + dx * 0.47, hz + 0.5 + dz * 0.47
+        if (fx - self._cam_pos[0]) * dx + (fz - self._cam_pos[2]) * dz > 0:
+            return                                   # Gesicht von der Kamera abgewandt
+        px, pz = -dz, dx
+        for sign in (-1, 1):
+            e = (fx + px * sign * 0.17, 0.52, fz + pz * sign * 0.17)
+            c = self._to_cam(e)
+            if c[2] < NEAR:
+                continue
+            sx, sy = self._proj(c)
+            rr = max(1, int(self._f * 0.05 / c[2]))
+            pygame.draw.circle(s, (250, 250, 250), (int(sx), int(sy)), rr)
+            pupil = self._to_cam((e[0] + dx * 0.06, 0.5, e[2] + dz * 0.06))
+            if pupil[2] >= NEAR:
+                pxy = self._proj(pupil)
+                pygame.draw.circle(s, (20, 20, 30),
+                                   (int(pxy[0]), int(pxy[1])), max(1, rr // 2))
+
+    def _draw_boost_glow3d(self, s):
+        """Pulsierender Glow über dem Kopf, solange der Boost läuft."""
+        sn = self.snakes[0]
+        if not (sn.alive and sn.boost_on and sn.stamina > 0):
+            return
+        cells = self._interp_cells(sn)
+        hx, hz = cells[-1]
+        c = self._to_cam((hx + 0.5, 0.42, hz + 0.5))
+        if c[2] < NEAR:
+            return
+        sx, sy = self._proj(c)
+        r = max(8, int(self._f * 0.62 / c[2]))
+        pulse = 90 + int(50 * math.sin(self.anim_t * 14))
+        glow = pygame.Surface((r * 2, r * 2), pygame.SRCALPHA)
+        pygame.draw.circle(glow, (*BOOST_GLOW[0], pulse), (r, r), r)
+        s.blit(glow, (sx - r, sy - r))
+
+    def _draw_particles3d_pass(self, s):
+        for p in self.particles3d:
+            c = self._to_cam((p[0], p[1], p[2]))
+            if c[2] < NEAR:
+                continue
+            sx, sy = self._proj(c)
+            if sx < -8 or sx > self.width + 8 or sy < -8 or sy > self.height + 8:
+                continue
+            r = max(1, int(self._f * 0.045 / c[2]))
+            t = max(0.0, min(1.0, p[6] / 0.7))
+            col = tuple(int(fc + (pc - fc) * t)
+                        for pc, fc in zip(p[7], COL_FOG))
+            pygame.draw.circle(s, self._fog_color(col, c[2]),
+                               (int(sx), int(sy)), r)
+
     # ----- HUD ----------------------------------------------------------
     def _draw_hud(self):
         s = self.surface
 
-        # WLS-Anzeige (durch die Wände?)
-        wls_col = COL_WLS_ON if self.wrap else COL_WLS_OFF
-        wls = self.font.render(i18n.t("snake.wls"), True, wls_col)
-        s.blit(wls, wls.get_rect(midtop=(self.width // 2, 6)))
+        # WLS-Anzeige (durch die Wände?) bzw. 3D-Badge
+        if self.view3d_active:
+            badge = self.font.render(i18n.t("snake.view_3d"), True, COL_ACCENT)
+            s.blit(badge, badge.get_rect(midtop=(self.width // 2, 6)))
+        else:
+            wls_col = COL_WLS_ON if self.wrap_active else COL_WLS_OFF
+            wls = self.font.render(i18n.t("snake.wls"), True, wls_col)
+            s.blit(wls, wls.get_rect(midtop=(self.width // 2, 6)))
         mode_name = i18n.t("snake.mode." + self.mode_key)
         mimg = self._small.render(mode_name, True, COL_ACCENT)
         s.blit(mimg, mimg.get_rect(midtop=(self.width // 2, 30)))
+        if self.view3d_active and not self.game_over and self._run_t < 6.0:
+            hint = self._tiny.render(i18n.t("snake.steer_hint"), True, COL_DIM)
+            s.blit(hint, hint.get_rect(midtop=(self.width // 2, 50)))
 
         # Zeitangriff-Uhr
         if self.mode_key == "timed":
@@ -906,29 +1502,68 @@ class SnakeGame(Game):
         pygame.draw.rect(s, COL_ACCENT, self.mode_panel, 2, border_radius=10)
         name = self.font.render(i18n.t("snake.mode." + m["key"]), True, COL_TEXT)
         s.blit(name, name.get_rect(center=(self.mode_panel.centerx,
-                                           self.mode_panel.top + 20)))
+                                           self.mode_panel.top + 18)))
         desc = self._small.render(i18n.t("snake.mode." + m["key"] + ".desc"),
                                   True, COL_DIM)
         s.blit(desc, desc.get_rect(center=(self.mode_panel.centerx,
-                                           self.mode_panel.top + 44)))
+                                           self.mode_panel.top + 41)))
         for r, sym in ((self.mode_left, "<"), (self.mode_right, ">")):
             arr = self.big_font.render(sym, True, COL_ACCENT)
             s.blit(arr, arr.get_rect(center=r.center))
-        dots = " ".join("*" if i == self.mode_index else "." for i in range(len(MODES)))
+        allowed = self._allowed_modes()
+        pos = allowed.index(self.mode_index) if self.mode_index in allowed else 0
+        dots = " ".join("*" if i == pos else "." for i in range(len(allowed)))
         d = self._tiny.render(dots, True, COL_DIM)
-        s.blit(d, d.get_rect(center=(self.width // 2, self.mode_panel.bottom + 10)))
+        s.blit(d, d.get_rect(center=(self.width // 2, self.mode_panel.bottom + 9)))
 
-        self._draw_setup_toggle(self.wrap_rect, i18n.t("snake.wrap_toggle"), self.wrap)
+        # Ansicht 2D/3D
+        if self.multiplayer:
+            self._draw_disabled_row(self.view_rect, i18n.t("snake.view_toggle"),
+                                    i18n.t("snake.view_mp_hint"))
+        else:
+            pygame.draw.rect(s, COL_BTN_ON if self.view3d else COL_BTN,
+                             self.view_rect, border_radius=8)
+            pygame.draw.rect(s, COL_ACCENT if self.view3d else COL_DIM,
+                             self.view_rect, 1, border_radius=8)
+            lab = self.font.render(i18n.t("snake.view_toggle"), True, COL_TEXT)
+            s.blit(lab, (self.view_rect.x + 16,
+                         self.view_rect.centery - lab.get_height() // 2))
+            wert = i18n.t("snake.view_3d") if self.view3d else i18n.t("snake.view_2d")
+            col = COL_ACCENT if self.view3d else COL_DIM
+            img = self.font.render(f"< {wert} >", True, col)
+            s.blit(img, (self.view_rect.right - img.get_width() - 16,
+                         self.view_rect.centery - img.get_height() // 2))
+
+        if self.view3d_active:
+            self._draw_disabled_row(self.wrap_rect, i18n.t("snake.wrap_toggle"),
+                                    i18n.t("snake.wrap_3d"))
+        else:
+            self._draw_setup_toggle(self.wrap_rect, i18n.t("snake.wrap_toggle"),
+                                    self.wrap)
         self._draw_setup_toggle(self.bonus_rect, i18n.t("snake.bonus_toggle"), self.bonus)
 
         pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
         st = self.font.render(i18n.t("common.start"), True, COL_TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
 
+        if self.view3d_active:
+            extra = self._tiny.render(i18n.t("snake.hint_3d"), True, COL_ACCENT)
+            s.blit(extra, extra.get_rect(center=(self.width // 2, self.height - 54)))
         hint = self._small.render(i18n.t("snake.setup_hint"), True, COL_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 34)))
         boost = self._tiny.render(i18n.t("snake.boost_hint"), True, (120, 200, 150))
         s.blit(boost, boost.get_rect(center=(self.width // 2, self.height - 14)))
+
+    def _draw_disabled_row(self, rect, label, note):
+        """Abgeblendete Setup-Zeile mit Hinweistext (nicht anklickbar)."""
+        s = self.surface
+        pygame.draw.rect(s, (36, 40, 52), rect, border_radius=8)
+        pygame.draw.rect(s, COL_DIM, rect, 1, border_radius=8)
+        lab = self.font.render(label, True, COL_DIM)
+        s.blit(lab, (rect.x + 16, rect.centery - lab.get_height() // 2))
+        info = self._small.render(note, True, COL_DIM)
+        s.blit(info, (rect.right - info.get_width() - 16,
+                      rect.centery - info.get_height() // 2))
 
     def _draw_setup_toggle(self, rect, label, an):
         s = self.surface
