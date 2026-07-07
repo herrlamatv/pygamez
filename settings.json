@@ -31,10 +31,5 @@
       "right": "l",
       "action": "Return"
     }
-  },
-  "asteroids": {
-    "ufos": true,
-    "powerups": true,
-    "difficulty": 0
   }
 }
