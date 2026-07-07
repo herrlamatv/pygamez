@@ -41,6 +41,7 @@ Steuerung
 
 import math
 import random
+import time
 import pygame
 
 import highscore
@@ -249,6 +250,7 @@ class SnakeGame(Game):
         """Setzt die 3D-Verfolgerkamera hinter den Kopf von Spieler 1."""
         self._run_t = 0.0              # Laufzeit der Runde (für Einblend-Hinweise)
         self._orbit_a = 0.0            # Orbit-Winkel nach dem Game Over
+        self._go_last = None           # Zeitmessung der Game-Over-Animation
         self._fov_mul = FOV_NORMAL
         sn = self.snakes[0]
         hx, hy = sn.body[-1]
@@ -1025,6 +1027,11 @@ class SnakeGame(Game):
     def _draw_world_3d(self):
         s = self.surface
 
+        # Nach dem Game Over ruft der Haupt-Loop update() nicht mehr auf -
+        # Orbit-Kamera und Partikel animieren wir deshalb hier weiter.
+        if self.game_over:
+            self._tick_gameover_anim()
+
         # Projektionsparameter (inkl. Kamera-Shake nach einem Crash)
         self._scx = self.width / 2
         self._scy = self.height * 0.5
@@ -1062,6 +1069,24 @@ class SnakeGame(Game):
         self._draw_eyes3d(s)
         self._draw_boost_glow3d(s)
         self._draw_particles3d_pass(s)
+
+    def _tick_gameover_anim(self):
+        """Animiert Orbit-Kamera/Partikel nach dem Game Over weiter.
+
+        update() wird vom Haupt-Loop nur bis zum Game Over aufgerufen, draw()
+        aber weiterhin jeden Frame - also messen wir hier die echte Zeit.
+        """
+        now = time.monotonic()
+        last = self._go_last if self._go_last is not None else now
+        self._go_last = now
+        dt = min(0.05, max(0.0, now - last))
+        if dt <= 0:
+            return
+        self.anim_t += dt
+        self._update_particles3d(dt)
+        if self._shake > 0.0:
+            self._shake = max(0.0, self._shake - dt * 1.6)
+        self._update_camera(dt)
 
     # ----- Kamera / Projektion -------------------------------------------
     def _view_basis(self):

@@ -7,11 +7,10 @@
     480
   ],
   "auto_resolution": false,
-  "fps": 60,
+  "fps": 45,
   "snake": {
     "wrap": true,
-    "bonus_apple": true,
-    "view3d": true
+    "bonus_apple": true
   },
   "pong": {
     "hold_p1": false,
@@ -32,5 +31,11 @@
       "right": "l",
       "action": "Return"
     }
+  },
+  "airhockey": {
+    "difficulty": 1
+  },
+  "minesweeper": {
+    "preset": "beginner"
   }
 }

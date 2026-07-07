@@ -253,7 +253,7 @@ class App:
     _GAME_COLORS = {
         "SnakeGame": "#6ecd8c", "PongGame": "#589cff", "TicTacToeGame": "#f0a05a",
         "BreakoutGame": "#e15f5f", "TetrisGame": "#b07fe8", "InvadersGame": "#5ad4d4",
-        "Game2048": "#f5cd64",
+        "Game2048": "#f5cd64", "AirHockeyGame": "#6fe0d0", "MinesweeperGame": "#f08fb0",
     }
 
     def _fit_sidebar(self):
@@ -379,6 +379,7 @@ class App:
         self.root.bind("<KeyRelease>", self._on_key_up)
         # Maus auf der Spielfläche
         self.embed.bind("<Button-1>", self._on_click)
+        self.embed.bind("<Button-3>", self._on_right_click)
         self.embed.bind("<Motion>", self._on_motion)
         # Klick auf die Fläche holt den Fokus (für Tastatur)
         self.embed.bind("<Button-1>", lambda e: self.embed.focus_set(), add="+")
@@ -439,6 +440,16 @@ class App:
         if self.current and not self.current.paused:
             self.current.handle_event(
                 InputEvent(InputEvent.MOUSEDOWN, pos=self._to_logical(event.x, event.y)))
+
+    def _on_right_click(self, event):
+        # Rechtsklicks bekommen nur Spiele, die sie ausdrücklich wollen
+        # (z.B. Minesweeper zum Flaggen) - alle anderen bleiben unberührt.
+        from game_base import InputEvent
+        if self.current and not self.current.paused \
+                and getattr(self.current, "wants_right_click", False):
+            self.current.handle_event(
+                InputEvent(InputEvent.MOUSEDOWN,
+                           pos=self._to_logical(event.x, event.y), button=3))
 
     def _on_motion(self, event):
         from game_base import InputEvent

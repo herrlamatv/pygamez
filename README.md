@@ -9,7 +9,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Sieben
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Neun
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English); die Sprache wird beim ersten Start gewählt
@@ -40,13 +40,15 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 |--------------|-----------------|------------------|
 | **Snake**    | 1 / 2 Spieler   | Deluxe-Snake mit 2D- & 3D-Ansicht, Boost, 5 Spielmodi, Goldäpfeln und Prestige |
 | **Pong**     | 1 / 2 Spieler   | Klassiker gegen KI oder Spieler 2, umschaltbarer Bewegungsmodus |
+| **Air Hockey** | 1 / 2 Spieler | 2D-Physik mit Impulsübertragung, Maussteuerung, KI und Power-Ups |
 | **Tic-Tac-Toe** | 1 / 2 Spieler | m,n,k-Spiel auf 3x3 bis 9x9, drei KI-Stärken **oder** lokal X gegen O |
 | **Breakout** | 1 Spieler       | Brick-Breaker mit Steinsorten, Power-ups, Combos und vielen Levels |
 | **Tetris**   | 1 / 2 Spieler   | Klassik oder Versus (zwei Felder nebeneinander) |
 | **Invaders** | 1 Spieler       | Space Invaders: Wellen leeren, Leben schützen |
 | **2048**     | 1 Spieler       | Zahlen-Schiebespiel, Ziel: die 2048er-Kachel |
+| **Minesweeper** | 1 Spieler    | Der Klassiker mit sicherem Erstklick, Chording, Smiley und Bestzeiten |
 
-**Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**,
+**Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe** und **Tetris (Versus)**. Der Modus wird direkt im Vorspiel-Screen
 (*Einzelspieler / Mehrspieler*) gewählt.
 
@@ -78,6 +80,22 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
   weiter, Standard) oder *Halten* (bewegt nur solange gedrückt).
   Umschalten: **X** = Steuerung 1, **N** = Steuerung 2 (wird in `settings.json` gemerkt).
 - Ball-Physik mit Beschleunigung und Winkel je nach Treffpunkt.
+
+**Air Hockey**
+- **Echte 2D-Physik**: runde Schläger und Puck mit Impulsübertragung - der Puck
+  übernimmt die Schlägergeschwindigkeit beim Treffer; Banden mit Restitution,
+  leichte Eisreibung, Tore als Öffnungen in den Seitenwänden.
+- **Maussteuerung** im Einzelspieler: der Schläger folgt der Maus (jede Taste
+  schaltet zurück auf Tastensteuerung). Tastatur: Richtungstasten in 8 Richtungen,
+  Mehrspieler = P1 links (WASD), P2 rechts (IJKL).
+- **KI mit drei Stärken** (Leicht/Mittel/Schwer): verteidigt das eigene Tor,
+  greift in der eigenen Hälfte an und umkurvt den Puck gegen Eigentore.
+- **Power-Ups** (abschaltbar): *XL* (größerer Schläger), *TOR* (Gegnertor
+  schrumpft), *>>* (schnellerer Schläger) - sie gehören dem Spieler, der den
+  Puck zuletzt berührt hat.
+- Setup: Schwierigkeit, **Tore bis zum Sieg** (3/5/7/10), Power-Ups an/aus
+  (gespeichert in `settings.json`). Nach jedem Tor Anspiel beim Gegentor-Nehmer.
+- Optik: Puck-Leuchtspur, Partikel, pulsierende Tor-Mäuler, Effekt-Anzeigen.
 
 **Tic-Tac-Toe**
 - Setup: Schwierigkeit (Easy/Medium/Hard) und Brettgröße 3x3..9x9; Gewinnlänge
@@ -112,6 +130,19 @@ Streuschuss, Schnellfeuer, Laser), Power-ups (Extraleben, Schild, Waffen-Upgrade
 Explosions-Effekte, Highscore.
 
 **2048** – Pfeile/WASD schieben alle Kacheln; gleiche Zahlen verschmelzen.
+
+**Minesweeper**
+- Drei Stufen: **Einsteiger** (9x9, 10 Minen), **Fortgeschritten** (16x16, 40),
+  **Experte** (30x16, 99) - die **Bestzeit je Stufe** wird gespeichert und im
+  Setup angezeigt.
+- Der **erste Klick ist immer sicher** (Minen werden erst danach verteilt,
+  das 3x3-Feld um den Klick bleibt frei).
+- **Linksklick** = aufdecken, **Rechtsklick** = Flagge (optional mit
+  Fragezeichen-Zyklus), **F** = Flagge unter dem Mauszeiger, **R** = neu.
+- **Chording**: Klick auf eine fertige Zahl deckt die restlichen Nachbarn auf.
+- Klassisches HUD: Minenzähler, **klickbarer Smiley** (staunt/Sonnenbrille/tot),
+  Timer; falsche Flaggen werden am Ende durchgestrichen, Konfetti beim Sieg.
+- Punkte = Grundwert der Stufe minus Sekunden.
 
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
@@ -162,7 +193,8 @@ i18n.py              Übersetzungs-Engine (lädt lang/*.json, t("schlüssel"))
 lang/
   de.json  en.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
 games/
-  snake.py  pong.py  tictactoe.py  breakout.py  tetris.py  invaders.py  game2048.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  invaders.py  game2048.py  minesweeper.py
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -261,7 +293,7 @@ gewünschte Version und die winget-ID entsprechend (`Python.Python.3.12`).
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Seven
+**Pygame** is embedded as the game display inside the Tkinter window. Nine
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English); the language is chosen on first launch and
@@ -292,15 +324,17 @@ bottom under **[Installation Guide](#installation-guide)**.
 |--------------|-----------------|-------------------|
 | **Snake**    | 1 / 2 players   | Deluxe Snake with 2D & 3D view, boost, 5 game modes, golden apples and prestige |
 | **Pong**     | 1 / 2 players   | Classic vs. AI or player 2, switchable movement mode |
+| **Air Hockey** | 1 / 2 players | 2D physics with momentum transfer, mouse control, AI and power-ups |
 | **Tic-Tac-Toe** | 1 / 2 players | m,n,k game on 3x3 to 9x9, three AI strengths **or** local X vs. O |
 | **Breakout** | 1 player        | Brick breaker with brick types, power-ups, combos and many levels |
 | **Tetris**   | 1 / 2 players   | Classic or Versus (two fields side by side) |
 | **Invaders** | 1 player        | Space Invaders: clear the waves, protect your lives |
 | **2048**     | 1 player        | Number-sliding puzzle, goal: the 2048 tile |
+| **Minesweeper** | 1 player     | The classic with safe first click, chording, smiley and best times |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
-**Tic-Tac-Toe** and **Tetris (Versus)**. The mode is chosen right in the pre-game
-screen (*Single-player / Multiplayer*).
+**Air Hockey**, **Tic-Tac-Toe** and **Tetris (Versus)**. The mode is chosen right
+in the pre-game screen (*Single-player / Multiplayer*).
 
 #### Feature details per game
 
@@ -329,6 +363,22 @@ screen (*Single-player / Multiplayer*).
   moving, default) or *Hold* (moves only while held).
   Toggle: **X** = control set 1, **N** = control set 2 (remembered in `settings.json`).
 - Ball physics with acceleration and angle depending on the hit point.
+
+**Air Hockey**
+- **Real 2D physics**: round mallets and puck with momentum transfer - the puck
+  picks up the mallet's velocity on impact; walls with restitution, light ice
+  friction, goals as openings in the side walls.
+- **Mouse control** in single-player: the mallet follows the mouse (any key
+  switches back to keyboard). Keyboard: direction keys in 8 directions,
+  multiplayer = P1 left (WASD), P2 right (IJKL).
+- **AI with three strengths** (Easy/Medium/Hard): defends its goal, attacks in
+  its own half and curves around the puck to avoid own goals.
+- **Power-ups** (can be disabled): *XL* (bigger mallet), *TOR* (opponent's goal
+  shrinks), *>>* (faster mallet) - they belong to the player who touched the
+  puck last.
+- Setup: difficulty, **goals to win** (3/5/7/10), power-ups on/off (saved in
+  `settings.json`). After each goal the conceding player serves.
+- Look: puck light trail, particles, pulsing goal mouths, effect badges.
 
 **Tic-Tac-Toe**
 - Setup: difficulty (Easy/Medium/Hard) and board size 3x3..9x9; win length
@@ -363,6 +413,19 @@ spread shot, rapid fire, laser), power-ups (extra life, shield, weapon upgrade),
 explosion effects, high score.
 
 **2048** – arrows/WASD slide all tiles; equal numbers merge.
+
+**Minesweeper**
+- Three levels: **Beginner** (9x9, 10 mines), **Intermediate** (16x16, 40),
+  **Expert** (30x16, 99) - the **best time per level** is saved and shown in
+  the setup.
+- The **first click is always safe** (mines are placed afterwards, the 3x3
+  area around the click stays clear).
+- **Left click** = reveal, **right click** = flag (optionally with a question
+  mark cycle), **F** = flag under the cursor, **R** = new game.
+- **Chording**: clicking a satisfied number reveals the remaining neighbors.
+- Classic HUD: mine counter, **clickable smiley** (surprised/sunglasses/dead),
+  timer; wrong flags are crossed out at the end, confetti on victory.
+- Points = level base value minus seconds.
 
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
@@ -413,7 +476,8 @@ i18n.py              Translation engine (loads lang/*.json, t("key"))
 lang/
   de.json  en.json   Language strings (one placeholder key per text)
 games/
-  snake.py  pong.py  tictactoe.py  breakout.py  tetris.py  invaders.py  game2048.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  invaders.py  game2048.py  minesweeper.py
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the

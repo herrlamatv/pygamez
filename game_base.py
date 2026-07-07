@@ -28,10 +28,11 @@ class InputEvent:
     MOUSEDOWN = "mousedown"  # Maustaste gedrückt
     MOUSEMOVE = "mousemove"  # Maus bewegt
 
-    def __init__(self, kind, key=None, pos=None):
+    def __init__(self, kind, key=None, pos=None, button=1):
         self.kind = kind      # einer der obigen Strings
         self.key = key        # z.B. "Up", "Left", "space", "w" (Tkinter-keysym)
         self.pos = pos        # (x, y) relativ zur Spielfläche, bei Maus-Events
+        self.button = button  # Maustaste: 1 = links, 3 = rechts (bei MOUSEDOWN)
 
 
 class Game:
@@ -49,6 +50,9 @@ class Game:
     supports_multiplayer = False
     # Menü-/Options-Screens setzen dies auf True (kein Highscore/Pause).
     is_menu = False
+    # Möchte das Spiel Rechtsklicks erhalten? (MOUSEDOWN mit button=3).
+    # Standard False, damit sich das Verhalten bestehender Spiele nicht ändert.
+    wants_right_click = False
 
     def __init__(self, surface, width, height, mode="single", game_settings=None):
         self.surface = surface
