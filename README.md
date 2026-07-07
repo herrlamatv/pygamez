@@ -9,7 +9,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Neun
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Zehn
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English); die Sprache wird beim ersten Start gewählt
@@ -45,12 +45,13 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Breakout** | 1 Spieler       | Brick-Breaker mit Steinsorten, Power-ups, Combos und vielen Levels |
 | **Tetris**   | 1 / 2 Spieler   | Klassik oder Versus (zwei Felder nebeneinander) |
 | **Invaders** | 1 Spieler       | Space Invaders: Wellen leeren, Leben schützen |
+| **Asteroids** | 1 / 2 Spieler  | Trägheitsphysik, Wellen, UFOs, Power-Ups, Hyperraum - solo oder Koop-Duell |
 | **2048**     | 1 Spieler       | Zahlen-Schiebespiel, Ziel: die 2048er-Kachel |
 | **Minesweeper** | 1 Spieler    | Der Klassiker mit sicherem Erstklick, Chording, Smiley und Bestzeiten |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
-**Tic-Tac-Toe** und **Tetris (Versus)**. Der Modus wird direkt im Vorspiel-Screen
-(*Einzelspieler / Mehrspieler*) gewählt.
+**Tic-Tac-Toe**, **Tetris (Versus)** und **Asteroids (Koop-Duell)**. Der Modus wird
+direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
 
 #### Feature-Details je Spiel
 
@@ -129,6 +130,25 @@ Gemeinsam: Levelsystem mit **Boss** in jedem 4. Level, vier Waffen (Blaster,
 Streuschuss, Schnellfeuer, Laser), Power-ups (Extraleben, Schild, Waffen-Upgrade),
 Explosions-Effekte, Highscore.
 
+**Asteroids**
+- **Trägheitsphysik**: Hoch = Schub in Blickrichtung, Links/Rechts = drehen,
+  das Schiff driftet weiter (leichte Dämpfung); alles wickelt über die
+  Bildschirmränder. Klassische **Vektor-Optik** mit Schubflamme und
+  Sternenhimmel; jeder Brocken hat eine eigene zufällige Polygon-Form.
+- Brocken zerspringen in zwei kleinere (3 Größen, **20/50/100 Punkte**),
+  **Wellen** mit steigender Anzahl und Banner-Einblendung.
+- **UFO** (abschaltbar): kreuzt regelmäßig den Bildschirm und zielt auf die
+  Schiffe (Zielfehler je Schwierigkeit) - 200 Punkte für den Abschuss.
+- **Power-Ups** (abschaltbar), fallen aus zerstörten Brocken: **S**child (6 s
+  unverwundbar), **T** = Dreifachschuss, **R** = Schnellfeuer.
+- **Hyperraum** (Runter-Taste): Nottransport an eine Zufallsposition mit 4 s
+  Abklingzeit - und 12 % Risiko, dabei zu zerschellen.
+- 3 Leben, sicheres Respawnen mit Unverwundbarkeits-Blinken, **Extraleben
+  alle 5000 Punkte**; Explosions-Partikel und Kamera-Shake.
+- **Koop-Duell** (Mehrspieler): beide Schiffe fliegen gleichzeitig, getrennte
+  Leben und Punkte - wer mehr Punkte hat, gewinnt.
+- Setup: Schwierigkeit, UFOs an/aus, Power-Ups an/aus (in `settings.json`).
+
 **2048** – Pfeile/WASD schieben alle Kacheln; gleiche Zahlen verschmelzen.
 
 **Minesweeper**
@@ -194,7 +214,7 @@ lang/
   de.json  en.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
-  invaders.py  game2048.py  minesweeper.py
+  invaders.py  asteroids.py  game2048.py  minesweeper.py
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -293,7 +313,7 @@ gewünschte Version und die winget-ID entsprechend (`Python.Python.3.12`).
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Nine
+**Pygame** is embedded as the game display inside the Tkinter window. Ten
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English); the language is chosen on first launch and
@@ -329,12 +349,14 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Breakout** | 1 player        | Brick breaker with brick types, power-ups, combos and many levels |
 | **Tetris**   | 1 / 2 players   | Classic or Versus (two fields side by side) |
 | **Invaders** | 1 player        | Space Invaders: clear the waves, protect your lives |
+| **Asteroids** | 1 / 2 players  | Inertia physics, waves, UFOs, power-ups, hyperspace - solo or co-op duel |
 | **2048**     | 1 player        | Number-sliding puzzle, goal: the 2048 tile |
 | **Minesweeper** | 1 player     | The classic with safe first click, chording, smiley and best times |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
-**Air Hockey**, **Tic-Tac-Toe** and **Tetris (Versus)**. The mode is chosen right
-in the pre-game screen (*Single-player / Multiplayer*).
+**Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)** and **Asteroids (co-op
+duel)**. The mode is chosen right in the pre-game screen
+(*Single-player / Multiplayer*).
 
 #### Feature details per game
 
@@ -412,6 +434,25 @@ Shared: level system with a **boss** every 4th level, four weapons (blaster,
 spread shot, rapid fire, laser), power-ups (extra life, shield, weapon upgrade),
 explosion effects, high score.
 
+**Asteroids**
+- **Inertia physics**: up = thrust in the facing direction, left/right = rotate,
+  the ship keeps drifting (slight damping); everything wraps around the screen
+  edges. Classic **vector look** with thruster flame and a starry sky; every
+  rock has its own random polygon shape.
+- Rocks shatter into two smaller ones (3 sizes, **20/50/100 points**),
+  **waves** with growing counts and a banner announcement.
+- **UFO** (can be disabled): crosses the screen periodically and aims at the
+  ships (aim error depends on difficulty) - 200 points for shooting it down.
+- **Power-ups** (can be disabled), dropped by destroyed rocks: **S**hield (6 s
+  invulnerable), **T** = triple shot, **R** = rapid fire.
+- **Hyperspace** (down key): emergency jump to a random position with a 4 s
+  cooldown - and a 12 % risk of blowing up on arrival.
+- 3 lives, safe respawning with invulnerability blinking, **extra life every
+  5000 points**; explosion particles and camera shake.
+- **Co-op duel** (multiplayer): both ships fly at the same time with separate
+  lives and scores - whoever scores more wins.
+- Setup: difficulty, UFOs on/off, power-ups on/off (saved in `settings.json`).
+
 **2048** – arrows/WASD slide all tiles; equal numbers merge.
 
 **Minesweeper**
@@ -477,7 +518,7 @@ lang/
   de.json  en.json   Language strings (one placeholder key per text)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
-  invaders.py  game2048.py  minesweeper.py
+  invaders.py  asteroids.py  game2048.py  minesweeper.py
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the
