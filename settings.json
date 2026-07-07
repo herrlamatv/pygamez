@@ -32,10 +32,9 @@
       "action": "Return"
     }
   },
-  "airhockey": {
-    "difficulty": 1
-  },
-  "minesweeper": {
-    "preset": "beginner"
+  "asteroids": {
+    "ufos": true,
+    "powerups": true,
+    "difficulty": 0
   }
 }
