@@ -29,7 +29,9 @@ Neu
 - ÄPFEL AUF DER MAP (Setup, Taste F): 1/2/3/5 gleichzeitig liegende Äpfel.
   Mit mehr Äpfeln muss man weniger suchen und kann flotter Punkte machen;
   wird ein Apfel gegessen, wird sofort ein neuer nachgelegt (auf die
-  gewählte Anzahl aufgefüllt).
+  gewählte Anzahl aufgefüllt). In der 2D-Ansicht blenden Äpfel weich mit
+  leichtem Überschwingen ein und werden beim Essen sichtbar "weggeknabbert"
+  (schrumpfen + Ring + Krümel) statt einfach zu verschwinden.
 - Weiterhin: Wände-durchgehen, Bonus-Äpfel, Mehrspieler (2 Schlangen),
   Prestige (Einzelspieler) - siehe prestige.py.
 - Neue Optik: abgerundete Schlange mit Augen, Boost-Glow, Partikel,
@@ -75,6 +77,19 @@ TIMED_SECONDS = 60.0
 
 # Wählbare Anzahl gleichzeitig auf dem Feld liegender Äpfel (Setup-Einstellung).
 APPLE_COUNTS = (1, 2, 3, 5)
+
+# Apfel-Animationen (nur 2D-Ansicht)
+FOOD_SPAWN_ANIM = 0.28         # Sekunden: Apfel "morpht" beim Erscheinen herein
+FOOD_EAT_ANIM = 0.30           # Sekunden: Apfel wird beim Essen weggeknabbert
+
+
+def _ease_out_back(p):
+    """Weiche Einblendung mit leichtem Überschwingen (0 -> ~1.1 -> 1)."""
+    if p >= 1.0:
+        return 1.0
+    c1 = 1.70158
+    c3 = c1 + 1.0
+    return 1.0 + c3 * (p - 1) ** 3 + c1 * (p - 1) ** 2
 
 # Spielzustände
 SETUP, PLAY = "setup", "play"
@@ -287,6 +302,8 @@ class SnakeGame(Game):
         self.portals = {}
         self.portal_pairs = []
         self.foods = set()             # alle aktuell liegenden Äpfel (Zellen)
+        self._food_anim = {}           # Zelle -> Einblend-Alter (Sek.), 2D-Morph
+        self._eat_fx = []              # 2D-Iss-Effekte: dicts(cell, t)
         self.golden = None
         self.golden_timer = 0.0
         self.time_left = TIMED_SECONDS
@@ -358,7 +375,9 @@ class SnakeGame(Game):
                 if (x, y) not in belegt]
         random.shuffle(frei)
         while len(self.foods) < self.apple_count and frei:
-            self.foods.add(frei.pop())
+            cell = frei.pop()
+            self.foods.add(cell)
+            self._food_anim[cell] = 0.0        # startet die Einblend-Animation
 
     def _place_golden(self):
         belegt = self._blocked_cells()
@@ -591,6 +610,7 @@ class SnakeGame(Game):
         self.anim_t += dt
         self._update_particles(dt)
         self._update_particles3d(dt)
+        self._update_food_anim(dt)
         if self._shake > 0.0:
             self._shake = max(0.0, self._shake - dt * 1.6)
         if self.state == PLAY and self.view3d_active:
@@ -730,6 +750,9 @@ class SnakeGame(Game):
             sn.body.append(kopf)
             if kopf in self.foods:
                 self.foods.discard(kopf)
+                self._food_anim.pop(kopf, None)
+                if not self.view3d_active:
+                    self._spawn_eat_fx(kopf)
                 self._eat_food(sn)
                 ate = True
             elif self.golden is not None and kopf == self.golden:
@@ -930,6 +953,25 @@ class SnakeGame(Game):
                 rest.append(p)
         self.particles = rest
 
+    def _update_food_anim(self, dt):
+        """Führt die 2D-Apfel-Animationen weiter: Einblenden + Iss-Effekte."""
+        for c in list(self._food_anim):
+            if c in self.foods:
+                self._food_anim[c] = min(FOOD_SPAWN_ANIM, self._food_anim[c] + dt)
+            else:
+                del self._food_anim[c]         # Apfel weg -> Einblendung verwerfen
+        rest = []
+        for e in self._eat_fx:
+            e["t"] -= dt
+            if e["t"] > 0:
+                rest.append(e)
+        self._eat_fx = rest
+
+    def _spawn_eat_fx(self, cell):
+        """Startet den 'weggeknabbert'-Effekt für einen gegessenen Apfel (2D)."""
+        self._eat_fx.append(dict(cell=cell, t=FOOD_EAT_ANIM))
+        self._spawn_particles(cell, COL_FOOD, 8)   # rote Krümel fliegen weg
+
     # ===================================================== Zeichnen
     def draw(self):
         if self.state == SETUP:
@@ -970,13 +1012,13 @@ class SnakeGame(Game):
                 pygame.draw.circle(s, col, (cx, cy), r, 3)
                 pygame.draw.circle(s, tuple(c // 2 for c in col), (cx, cy), max(2, r - 4))
 
-        # Futter (alle liegenden Äpfel)
-        for (fx, fy) in self.foods:
-            pygame.draw.rect(s, COL_FOOD,
-                             (fx * CELL + 2, fy * CELL + 2, CELL - 4, CELL - 4),
-                             border_radius=6)
-            pygame.draw.circle(s, (255, 170, 170),
-                               (fx * CELL + CELL // 2 - 2, fy * CELL + CELL // 2 - 2), 2)
+        # Futter (alle liegenden Äpfel) - blenden mit leichtem Überschwingen ein
+        for cell in self.foods:
+            p = min(1.0, self._food_anim.get(cell, FOOD_SPAWN_ANIM) / FOOD_SPAWN_ANIM)
+            self._draw_apple(s, cell, _ease_out_back(p))
+            if p < 1.0:                        # kurzer, aufblitzender Ring beim Morphen
+                self._draw_fx_ring(s, cell, int(CELL * 0.28 + CELL * 0.5 * p),
+                                   (255, 150, 150), int(150 * (1 - p)))
         # Goldapfel (pulsiert + blinkt wenn er gleich verschwindet)
         if self.golden is not None:
             gx, gy = self.golden
@@ -997,6 +1039,55 @@ class SnakeGame(Game):
         # Schlangen
         for idx, sn in enumerate(self.snakes):
             self._draw_snake(s, sn, idx)
+
+        # Iss-Effekte ZULETZT (über dem Schlangenkopf, der auf dem Apfel liegt)
+        self._draw_eat_fx(s)
+
+    def _draw_apple(self, s, cell, scale, alpha=255):
+        """Zeichnet einen Apfel skaliert um sein Zentrum (0..~1.1 = eingeblendet).
+
+        Kleiner Apfel wirkt runder, voller Apfel wird zum abgerundeten Quadrat -
+        so 'morpht' er beim Einblenden sanft in Form.
+        """
+        if scale <= 0.03:
+            return
+        size = (CELL - 4) * scale
+        cx = cell[0] * CELL + CELL / 2
+        cy = cell[1] * CELL + CELL / 2
+        rad = int(min(size / 2, 6 + (size / 2) * (1 - scale)))
+        if alpha >= 255:
+            rect = pygame.Rect(0, 0, int(size), int(size))
+            rect.center = (int(cx), int(cy))
+            pygame.draw.rect(s, COL_FOOD, rect, border_radius=rad)
+            hl = max(1, int(2.2 * scale))
+            pygame.draw.circle(s, (255, 170, 170),
+                               (int(cx - size * 0.14), int(cy - size * 0.14)), hl)
+        else:
+            d = int(size) + 2
+            surf = pygame.Surface((d, d), pygame.SRCALPHA)
+            pygame.draw.rect(surf, (*COL_FOOD, alpha),
+                             pygame.Rect(1, 1, int(size), int(size)), border_radius=rad)
+            s.blit(surf, (int(cx - d / 2), int(cy - d / 2)))
+
+    def _draw_fx_ring(self, s, cell, r, color, a):
+        """Ausdehnender, verblassender Ring um eine Zelle (Spawn-/Iss-Effekt)."""
+        if a <= 4 or r <= 0:
+            return
+        d = r * 2 + 4
+        rs = pygame.Surface((d, d), pygame.SRCALPHA)
+        pygame.draw.circle(rs, (*color, a), (d // 2, d // 2), r, 2)
+        cx = cell[0] * CELL + CELL // 2
+        cy = cell[1] * CELL + CELL // 2
+        s.blit(rs, (int(cx - d / 2), int(cy - d / 2)))
+
+    def _draw_eat_fx(self, s):
+        """Zeichnet die 'weggeknabbert'-Effekte: schrumpfender Apfel + Ring."""
+        for e in self._eat_fx:
+            p = 1.0 - max(0.0, e["t"] / FOOD_EAT_ANIM)     # 0 -> 1
+            self._draw_apple(s, e["cell"], max(0.0, (1.0 - p) * 0.9),
+                             alpha=int(210 * (1.0 - p)))
+            self._draw_fx_ring(s, e["cell"], int(CELL * 0.32 + CELL * 0.5 * p),
+                               COL_FOOD, int(150 * (1.0 - p)))
 
     def _draw_snake(self, s, sn, idx):
         körper, kopf = SNAKE_COLORS[idx % len(SNAKE_COLORS)]
