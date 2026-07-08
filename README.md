@@ -9,7 +9,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Zehn
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Elf
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English); die Sprache wird beim ersten Start gewählt
@@ -46,6 +46,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Tetris**   | 1 / 2 Spieler   | Klassik oder Versus (zwei Felder nebeneinander) |
 | **Invaders** | 1 Spieler       | Space Invaders: Wellen leeren, Leben schützen |
 | **Asteroids** | 1 / 2 Spieler  | Trägheitsphysik, Wellen, UFOs, Power-Ups, Hyperraum - solo oder Koop-Duell |
+| **Pac-Man**  | 1 Spieler       | Originalgetreuer Klon: 4 Geister-KIs, Power-Pillen, Tunnel, Früchte, Levels |
 | **2048**     | 1 Spieler       | Zahlen-Schiebespiel, Ziel: die 2048er-Kachel |
 | **Minesweeper** | 1 Spieler    | Der Klassiker mit sicherem Erstklick, Chording, Smiley und Bestzeiten |
 
@@ -149,6 +150,21 @@ Explosions-Effekte, Highscore.
   Leben und Punkte - wer mehr Punkte hat, gewinnt.
 - Setup: Schwierigkeit, UFOs an/aus, Power-Ups an/aus (in `settings.json`).
 
+**Pac-Man**
+- **Klassisches 28x31-Labyrinth** im Neon-Look mit Pillen, 4 Power-Pillen,
+  Tunnel-Warp an den Seiten und Geisterhaus in der Mitte.
+- **Vier Geister mit den Original-Verhaltensweisen** (Ziel-Kachel-KI):
+  *Blinky* jagt direkt, *Pinky* legt sich in den Hinterhalt (4 Kacheln voraus),
+  *Inky* nutzt einen Vektor über Blinky, *Clyde* weicht aus der Nähe aus.
+- **Scatter/Chase-Phasen** im Wechsel (Geister drehen bei jedem Wechsel um);
+  **Power-Pille** macht Geister blau und essbar (Kette 200/400/800/1600),
+  danach kehren die Augen ins Haus zurück.
+- Geisterhaus mit **gestaffelter Freigabe**, **Früchte** als Bonus (je Level),
+  **3 Leben**, **Extraleben bei 10.000**, Level-System (wird schneller),
+  Death-Animation, READY-/GAME-OVER-Screens.
+- Setup: **Schwierigkeit** (Normal/Schwer/Extrem) – Geistertempo & Frightened-Zeit.
+- Steuerung: **Pfeile oder WASD**.  Enter = neu, S = Setup.
+
 **2048** – Pfeile/WASD schieben alle Kacheln; gleiche Zahlen verschmelzen.
 
 **Minesweeper**
@@ -214,7 +230,7 @@ lang/
   de.json  en.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
-  invaders.py  asteroids.py  game2048.py  minesweeper.py
+  invaders.py  asteroids.py  pacman.py  game2048.py  minesweeper.py
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -313,7 +329,7 @@ gewünschte Version und die winget-ID entsprechend (`Python.Python.3.12`).
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Ten
+**Pygame** is embedded as the game display inside the Tkinter window. Eleven
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English); the language is chosen on first launch and
@@ -350,6 +366,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Tetris**   | 1 / 2 players   | Classic or Versus (two fields side by side) |
 | **Invaders** | 1 player        | Space Invaders: clear the waves, protect your lives |
 | **Asteroids** | 1 / 2 players  | Inertia physics, waves, UFOs, power-ups, hyperspace - solo or co-op duel |
+| **Pac-Man**  | 1 player        | Faithful clone: 4 ghost AIs, power pills, tunnel, fruit, levels |
 | **2048**     | 1 player        | Number-sliding puzzle, goal: the 2048 tile |
 | **Minesweeper** | 1 player     | The classic with safe first click, chording, smiley and best times |
 
@@ -453,6 +470,21 @@ explosion effects, high score.
   lives and scores - whoever scores more wins.
 - Setup: difficulty, UFOs on/off, power-ups on/off (saved in `settings.json`).
 
+**Pac-Man**
+- **Classic 28x31 maze** in a neon look with pellets, 4 power pills, side
+  tunnel warps and a ghost house in the middle.
+- **Four ghosts with the original behaviours** (target-tile AI): *Blinky*
+  chases directly, *Pinky* ambushes (4 tiles ahead), *Inky* uses a vector
+  through Blinky, *Clyde* backs off when close.
+- **Scatter/chase phases** alternate (ghosts reverse on each switch); a
+  **power pill** turns ghosts blue and edible (chain 200/400/800/1600), then
+  their eyes return to the house.
+- Ghost house with **staggered release**, **fruit** bonuses (per level),
+  **3 lives**, **extra life at 10,000**, level system (gets faster), death
+  animation, READY/GAME OVER screens.
+- Setup: **difficulty** (Normal/Hard/Extreme) – ghost speed & frightened time.
+- Controls: **arrows or WASD**.  Enter = new, S = setup.
+
 **2048** – arrows/WASD slide all tiles; equal numbers merge.
 
 **Minesweeper**
@@ -518,7 +550,7 @@ lang/
   de.json  en.json   Language strings (one placeholder key per text)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
-  invaders.py  asteroids.py  game2048.py  minesweeper.py
+  invaders.py  asteroids.py  pacman.py  game2048.py  minesweeper.py
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the

@@ -687,20 +687,49 @@ class PacmanGame(Game):
         self._draw_overlays(s)
 
     # ----- Labyrinth -----------------------------------------------------
+    def _is_wall(self, col, row):
+        if row < 0 or row >= ROWS or col < 0 or col >= COLS:
+            return True
+        return self.grid[row][col] == "#"
+
     def _draw_maze(self, s, flash):
+        """Neon-Umriss-Stil: Linien entlang der Korridorränder (wie im Original)."""
         c = self.CELL
-        wall = COL_WALL_HI if flash else COL_WALL
-        rad = max(2, int(c * 0.42))
+        col_line = COL_WALL_HI if flash else COL_WALL
+        w = max(2, int(c * 0.16))
+        m = c * 0.28                       # Abstand der Linie zur Kachelkante
         for r in range(ROWS):
-            row = self.grid[r]
-            for col in range(COLS):
-                ch = row[col]
-                if ch == "#":
-                    rx, ry = self.ox + col * c, self.oy + r * c
-                    pygame.draw.rect(s, wall, (rx, ry, c, c), border_radius=rad)
-                elif ch == "=":
-                    rx, ry = self.ox + col * c, self.oy + r * c
-                    pygame.draw.rect(s, COL_DOOR, (rx, ry + c // 2 - 2, c, 4))
+            for cc in range(COLS):
+                if self.grid[r][cc] != "#":
+                    if self.grid[r][cc] == "=":
+                        rx, ry = self.ox + cc * c, self.oy + r * c
+                        pygame.draw.rect(s, COL_DOOR, (rx, ry + c // 2 - 2, c, 4))
+                    continue
+                rx, ry = self.ox + cc * c, self.oy + r * c
+                top = not self._is_wall(cc, r - 1)
+                bot = not self._is_wall(cc, r + 1)
+                lft = not self._is_wall(cc - 1, r)
+                rgt = not self._is_wall(cc + 1, r)
+                if top:
+                    pygame.draw.line(s, col_line, (rx, ry + m), (rx + c, ry + m), w)
+                if bot:
+                    pygame.draw.line(s, col_line, (rx, ry + c - m),
+                                     (rx + c, ry + c - m), w)
+                if lft:
+                    pygame.draw.line(s, col_line, (rx + m, ry), (rx + m, ry + c), w)
+                if rgt:
+                    pygame.draw.line(s, col_line, (rx + c - m, ry),
+                                     (rx + c - m, ry + c), w)
+                # Innenecken abrunden: kleine Verbindungspunkte an konvexen Ecken
+                if top and lft:
+                    pygame.draw.circle(s, col_line, (int(rx + m), int(ry + m)), w // 2)
+                if top and rgt:
+                    pygame.draw.circle(s, col_line, (int(rx + c - m), int(ry + m)), w // 2)
+                if bot and lft:
+                    pygame.draw.circle(s, col_line, (int(rx + m), int(ry + c - m)), w // 2)
+                if bot and rgt:
+                    pygame.draw.circle(s, col_line,
+                                       (int(rx + c - m), int(ry + c - m)), w // 2)
 
     def _draw_pellets(self, s):
         c = self.CELL
