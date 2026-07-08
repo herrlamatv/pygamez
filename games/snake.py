@@ -26,6 +26,10 @@ Neu
     * Portale      - Teleporter-Paare: rein ins eine, raus aus dem anderen.
     * Zeitangriff  - 60 Sekunden, so viele Äpfel wie möglich.
 - Goldäpfel: erscheinen zeitweise, bringen viele Punkte und füllen den Boost.
+- ÄPFEL AUF DER MAP (Setup, Taste F): 1/2/3/5 gleichzeitig liegende Äpfel.
+  Mit mehr Äpfeln muss man weniger suchen und kann flotter Punkte machen;
+  wird ein Apfel gegessen, wird sofort ein neuer nachgelegt (auf die
+  gewählte Anzahl aufgefüllt).
 - Weiterhin: Wände-durchgehen, Bonus-Äpfel, Mehrspieler (2 Schlangen),
   Prestige (Einzelspieler) - siehe prestige.py.
 - Neue Optik: abgerundete Schlange mit Augen, Boost-Glow, Partikel,
@@ -68,6 +72,9 @@ BOOST_KEYS_P2 = ("Return", "Shift_R", "KP_Enter")
 GOLDEN_LIFETIME = 6.0          # Sekunden, die ein Goldapfel liegen bleibt
 GOLDEN_CHANCE = 0.20           # Chance, nach einem normalen Apfel einen Goldapfel zu setzen
 TIMED_SECONDS = 60.0
+
+# Wählbare Anzahl gleichzeitig auf dem Feld liegender Äpfel (Setup-Einstellung).
+APPLE_COUNTS = (1, 2, 3, 5)
 
 # Spielzustände
 SETUP, PLAY = "setup", "play"
@@ -174,6 +181,8 @@ class SnakeGame(Game):
         snk = self.settings.get("snake", {}) if isinstance(self.settings, dict) else {}
         self.wrap = bool(snk.get("wrap", False))
         self.bonus = bool(snk.get("bonus_apple", False))
+        ac = int(snk.get("apples", 1))
+        self.apple_count = ac if ac in APPLE_COUNTS else 1
         mode_key = snk.get("mode", "classic")
         self.mode_index = MODE_KEYS.index(mode_key) if mode_key in MODE_KEYS else 0
         self.view3d = bool(snk.get("view3d", False))
@@ -277,6 +286,7 @@ class SnakeGame(Game):
         self.obstacles = set()
         self.portals = {}
         self.portal_pairs = []
+        self.foods = set()             # alle aktuell liegenden Äpfel (Zellen)
         self.golden = None
         self.golden_timer = 0.0
         self.time_left = TIMED_SECONDS
@@ -336,20 +346,22 @@ class SnakeGame(Game):
         belegt = set(self.obstacles) | set(self.portals.keys())
         for sn in self.snakes:
             belegt |= set(sn.body)
+        belegt |= self.foods
         if self.golden:
             belegt.add(self.golden)
         return belegt
 
     def _place_food(self):
+        """Füllt das Feld auf die gewünschte Anzahl gleichzeitiger Äpfel auf."""
         belegt = self._blocked_cells()
         frei = [(x, y) for x in range(self.cols) for y in range(self.rows)
                 if (x, y) not in belegt]
-        self.food = random.choice(frei) if frei else None
+        random.shuffle(frei)
+        while len(self.foods) < self.apple_count and frei:
+            self.foods.add(frei.pop())
 
     def _place_golden(self):
         belegt = self._blocked_cells()
-        if self.food:
-            belegt.add(self.food)
         frei = [(x, y) for x in range(self.cols) for y in range(self.rows)
                 if (x, y) not in belegt]
         if frei:
@@ -366,12 +378,13 @@ class SnakeGame(Game):
         self.mode_left = pygame.Rect(self.mode_panel.left, 106, 40, 58)
         self.mode_right = pygame.Rect(self.mode_panel.right - 40, 106, 40, 58)
 
-        bh, gap = 42, 8
-        y0 = 186
+        bh, gap = 40, 6
+        y0 = 180
         self.view_rect = pygame.Rect(cx - bw // 2, y0, bw, bh)
         self.wrap_rect = pygame.Rect(cx - bw // 2, y0 + (bh + gap), bw, bh)
         self.bonus_rect = pygame.Rect(cx - bw // 2, y0 + 2 * (bh + gap), bw, bh)
-        self.start_rect = pygame.Rect(cx - 95, y0 + 3 * (bh + gap) + 6, 190, 50)
+        self.apples_rect = pygame.Rect(cx - bw // 2, y0 + 3 * (bh + gap), bw, bh)
+        self.start_rect = pygame.Rect(cx - 95, y0 + 4 * (bh + gap) + 4, 190, 48)
 
     def _save_snake_setting(self, key, value):
         if isinstance(self.settings, dict):
@@ -388,6 +401,13 @@ class SnakeGame(Game):
         else:
             self.bonus = neu
         self._save_snake_setting("wrap" if key == "wrap" else "bonus_apple", neu)
+        self.play_sound("select")
+
+    def _cycle_apples(self):
+        """Schaltet die Anzahl gleichzeitig liegender Äpfel weiter (1/2/3/5)."""
+        i = APPLE_COUNTS.index(self.apple_count) if self.apple_count in APPLE_COUNTS else 0
+        self.apple_count = APPLE_COUNTS[(i + 1) % len(APPLE_COUNTS)]
+        self._save_snake_setting("apples", self.apple_count)
         self.play_sound("select")
 
     def _cycle_mode(self, step):
@@ -430,6 +450,8 @@ class SnakeGame(Game):
                 self._toggle_setting("wrap")
             elif event.key in ("b", "B"):
                 self._toggle_setting("bonus")
+            elif event.key in ("f", "F"):
+                self._cycle_apples()
             elif event.key in ("Return", "space"):
                 self.play_sound("click")
                 self._start_play()
@@ -447,6 +469,8 @@ class SnakeGame(Game):
                 self._toggle_setting("wrap")
             elif self.bonus_rect.collidepoint(p):
                 self._toggle_setting("bonus")
+            elif self.apples_rect.collidepoint(p):
+                self._cycle_apples()
             elif self.start_rect.collidepoint(p):
                 self.play_sound("click")
                 self._start_play()
@@ -679,7 +703,7 @@ class SnakeGame(Game):
             if not sn.alive:
                 continue
             if i in movers:
-                wächst = (new_heads.get(i) == self.food) \
+                wächst = (new_heads.get(i) in self.foods) \
                     or (self.golden is not None and new_heads.get(i) == self.golden) \
                     or (sn.grow > 0)
                 körper = sn.body if wächst else sn.body[1:]
@@ -704,7 +728,8 @@ class SnakeGame(Game):
                 continue
             kopf = new_heads[i]
             sn.body.append(kopf)
-            if kopf == self.food:
+            if kopf in self.foods:
+                self.foods.discard(kopf)
                 self._eat_food(sn)
                 ate = True
             elif self.golden is not None and kopf == self.golden:
@@ -945,12 +970,13 @@ class SnakeGame(Game):
                 pygame.draw.circle(s, col, (cx, cy), r, 3)
                 pygame.draw.circle(s, tuple(c // 2 for c in col), (cx, cy), max(2, r - 4))
 
-        # Futter
-        if self.food:
-            fx, fy = self.food
+        # Futter (alle liegenden Äpfel)
+        for (fx, fy) in self.foods:
             pygame.draw.rect(s, COL_FOOD,
                              (fx * CELL + 2, fy * CELL + 2, CELL - 4, CELL - 4),
                              border_radius=6)
+            pygame.draw.circle(s, (255, 170, 170),
+                               (fx * CELL + CELL // 2 - 2, fy * CELL + CELL // 2 - 2), 2)
         # Goldapfel (pulsiert + blinkt wenn er gleich verschwindet)
         if self.golden is not None:
             gx, gy = self.golden
@@ -1050,9 +1076,9 @@ class SnakeGame(Game):
         self._add_border_walls(items)
         for (ox, oz) in self.obstacles:
             self._add_box(items, ox, oz, 0.94, 1.05, COL_WALL, (95, 104, 128))
-        if self.food:
-            r = 0.30 + 0.05 * math.sin(self.anim_t * 5)
-            self._add_octa(items, self.food, r, COL_FOOD)
+        for f in self.foods:
+            r = 0.30 + 0.05 * math.sin(self.anim_t * 5 + f[0] + f[1])
+            self._add_octa(items, f, r, COL_FOOD)
         if self.golden is not None and (self.golden_timer > 1.5
                                         or int(self.anim_t * 8) % 2 == 0):
             r = 0.38 + 0.06 * math.sin(self.anim_t * 8)
@@ -1566,6 +1592,8 @@ class SnakeGame(Game):
             self._draw_setup_toggle(self.wrap_rect, i18n.t("snake.wrap_toggle"),
                                     self.wrap)
         self._draw_setup_toggle(self.bonus_rect, i18n.t("snake.bonus_toggle"), self.bonus)
+        self._draw_setup_value(self.apples_rect, i18n.t("snake.apples_toggle"),
+                               str(self.apple_count), self.apple_count > 1)
 
         pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
         st = self.font.render(i18n.t("common.start"), True, COL_TEXT)
@@ -1591,13 +1619,17 @@ class SnakeGame(Game):
                       rect.centery - info.get_height() // 2))
 
     def _draw_setup_toggle(self, rect, label, an):
+        wert = i18n.t("common.on") if an else i18n.t("common.off")
+        self._draw_setup_value(rect, label, wert, an)
+
+    def _draw_setup_value(self, rect, label, wert, hervor):
+        """Setup-Zeile mit einem Wert in < .. >-Klammern (Toggle oder Zahl)."""
         s = self.surface
-        pygame.draw.rect(s, COL_BTN_ON if an else COL_BTN, rect, border_radius=8)
+        pygame.draw.rect(s, COL_BTN_ON if hervor else COL_BTN, rect, border_radius=8)
         pygame.draw.rect(s, COL_DIM, rect, 1, border_radius=8)
         lab = self.font.render(label, True, COL_TEXT)
         s.blit(lab, (rect.x + 16, rect.centery - lab.get_height() // 2))
-        wert = i18n.t("common.on") if an else i18n.t("common.off")
-        col = COL_WLS_ON if an else COL_DIM
+        col = COL_WLS_ON if hervor else COL_DIM
         img = self.font.render(f"< {wert} >", True, col)
         s.blit(img, (rect.right - img.get_width() - 16,
                      rect.centery - img.get_height() // 2))
