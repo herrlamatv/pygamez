@@ -10,10 +10,12 @@ from .tetris import TetrisGame
 from .invaders import InvadersGame
 from .asteroids import AsteroidsGame
 from .pacman import PacmanGame
+from .flappy import FlappyGame
+from .doodle import DoodleGame
 from .game2048 import Game2048
 from .minesweeper import MinesweeperGame
 
 # Reihenfolge der Spiele im Menü
 ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
-             TetrisGame, InvadersGame, AsteroidsGame, PacmanGame, Game2048,
-             MinesweeperGame]
+             TetrisGame, InvadersGame, AsteroidsGame, PacmanGame, FlappyGame,
+             DoodleGame, Game2048, MinesweeperGame]

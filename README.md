@@ -9,7 +9,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Elf
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Dreizehn
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English); die Sprache wird beim ersten Start gewählt
@@ -47,6 +47,8 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Invaders** | 1 Spieler       | Space Invaders: Wellen leeren, Leben schützen |
 | **Asteroids** | 1 / 2 Spieler  | Trägheitsphysik, Wellen, UFOs, Power-Ups, Hyperraum - solo oder Koop-Duell |
 | **Pac-Man**  | 1 Spieler       | Originalgetreuer Klon: 4 Geister-KIs, Power-Pillen, Tunnel, Früchte, Levels |
+| **Flappy Bird** | 1 Spieler    | Schwerkraft-Flug durch Röhren, Münzen, Schild, Tag/Nacht, Medaillen |
+| **Doodle Jump** | 1 Spieler    | Auto-Sprung nach oben, Plattform-Typen, Federn, Propeller, Monster |
 | **2048**     | 1 Spieler       | Zahlen-Schiebespiel, Ziel: die 2048er-Kachel |
 | **Minesweeper** | 1 Spieler    | Der Klassiker mit sicherem Erstklick, Chording, Smiley und Bestzeiten |
 
@@ -165,6 +167,30 @@ Explosions-Effekte, Highscore.
 - Setup: **Schwierigkeit** (Normal/Schwer/Extrem) – Geistertempo & Frightened-Zeit.
 - Steuerung: **Pfeile oder WASD**.  Enter = neu, S = Setup.
 
+**Flappy Bird**
+- **Schwerkraft-Physik**: Leertaste / Pfeil hoch / W / **Mausklick** lässt den
+  Vogel flattern; er neigt sich je nach Steig-/Sinktempo.
+- Endlose **Röhrenpaare** mit Lücke (+1 pro Röhre); **Münzen** (Bonus) und
+  **Schild**-Power-up (überlebt eine Kollision) erscheinen in den Lücken.
+- **Tag/Nacht-Themen** wechseln mit der Punktzahl; driftende Wolken (Parallax),
+  scrollender Boden.
+- Schwierigkeit (Leicht/Normal/Schwer): Lückengröße, Tempo, Röhrenabstand –
+  die Lücke wird mit steigender Punktzahl etwas enger.
+- **Medaillen** (Bronze/Silber/Gold/Platin) nach dem Game Over, Crash-Animation
+  mit Kamera-Shake, Highscore.
+
+**Doodle Jump**
+- Der Doodler **springt automatisch** beim Landen; gesteuert wird nur
+  links/rechts (mit Trägheit), die Ränder sind offen (**Wrap-around**); die
+  Kamera scrollt mit dem Aufstieg.
+- **Plattform-Typen**: grün (normal), blau (beweglich), braun (zerbricht),
+  weiß (verschwindet). **Sprungfedern** geben einen Superhüpfer, der
+  **Propeller-Hut** trägt kurz automatisch nach oben (und macht unverwundbar).
+- **Monster**: Berührung ist tödlich – man kann sie aber mit Pfeil hoch /
+  Leertaste **abschießen** (Extrapunkte).
+- Punkte = erreichte Höhe; Schwierigkeit steigt mit der Höhe. Highscore.
+- Steuerung: links/rechts = bewegen, Pfeil hoch / Leertaste = schießen.
+
 **2048** – Pfeile/WASD schieben alle Kacheln; gleiche Zahlen verschmelzen.
 
 **Minesweeper**
@@ -230,7 +256,8 @@ lang/
   de.json  en.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
-  invaders.py  asteroids.py  pacman.py  game2048.py  minesweeper.py
+  invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
+  game2048.py  minesweeper.py
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -329,7 +356,7 @@ gewünschte Version und die winget-ID entsprechend (`Python.Python.3.12`).
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Eleven
+**Pygame** is embedded as the game display inside the Tkinter window. Thirteen
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English); the language is chosen on first launch and
@@ -367,6 +394,8 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Invaders** | 1 player        | Space Invaders: clear the waves, protect your lives |
 | **Asteroids** | 1 / 2 players  | Inertia physics, waves, UFOs, power-ups, hyperspace - solo or co-op duel |
 | **Pac-Man**  | 1 player        | Faithful clone: 4 ghost AIs, power pills, tunnel, fruit, levels |
+| **Flappy Bird** | 1 player     | Gravity flight through pipes, coins, shield, day/night, medals |
+| **Doodle Jump** | 1 player     | Auto-jump upward, platform types, springs, propeller, monsters |
 | **2048**     | 1 player        | Number-sliding puzzle, goal: the 2048 tile |
 | **Minesweeper** | 1 player     | The classic with safe first click, chording, smiley and best times |
 
@@ -485,6 +514,29 @@ explosion effects, high score.
 - Setup: **difficulty** (Normal/Hard/Extreme) – ghost speed & frightened time.
 - Controls: **arrows or WASD**.  Enter = new, S = setup.
 
+**Flappy Bird**
+- **Gravity physics**: Space / Up / W / **mouse click** makes the bird flap;
+  it tilts based on climb/fall speed.
+- Endless **pipe pairs** with a gap (+1 per pipe); **coins** (bonus) and a
+  **shield** power-up (survive one hit) appear in the gaps.
+- **Day/night themes** change with the score; drifting clouds (parallax),
+  scrolling ground.
+- Difficulty (Easy/Normal/Hard): gap size, speed, pipe spacing – the gap
+  narrows slightly as the score climbs.
+- **Medals** (bronze/silver/gold/platinum) on game over, crash animation with
+  camera shake, high score.
+
+**Doodle Jump**
+- The doodler **auto-jumps** on landing; you only steer left/right (with
+  inertia), the edges wrap around, and the camera scrolls up as you climb.
+- **Platform types**: green (normal), blue (moving), brown (breaks), white
+  (vanishes). **Springs** give a super bounce, the **propeller hat** carries
+  you up briefly (and makes you invincible).
+- **Monsters**: contact is deadly – but you can **shoot** them with Up / Space
+  (bonus points).
+- Score = height reached; difficulty rises with height. High score.
+- Controls: left/right = move, Up / Space = shoot.
+
 **2048** – arrows/WASD slide all tiles; equal numbers merge.
 
 **Minesweeper**
@@ -550,7 +602,8 @@ lang/
   de.json  en.json   Language strings (one placeholder key per text)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
-  invaders.py  asteroids.py  pacman.py  game2048.py  minesweeper.py
+  invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
+  game2048.py  minesweeper.py
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the
