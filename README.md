@@ -38,7 +38,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 
 | Spiel        | Modi            | Kurzbeschreibung |
 |--------------|-----------------|------------------|
-| **Snake**    | 1 / 2 Spieler   | Deluxe-Snake mit 2D- & 3D-Ansicht, Boost, 5 Spielmodi, Goldäpfeln und Prestige |
+| **Snake**    | 1 / 2 Spieler   | Deluxe-Snake mit 2D- & 3D-Ansicht, Boost, 6 Spielmodi (inkl. Competitive), Goldäpfeln und Prestige |
 | **Pong**     | 1 / 2 Spieler   | Klassiker gegen KI oder Spieler 2, umschaltbarer Bewegungsmodus |
 | **Air Hockey** | 1 / 2 Spieler | 2D-Physik mit Impulsübertragung, Maussteuerung, KI und Power-Ups |
 | **Tic-Tac-Toe** | 1 / 2 Spieler | m,n,k-Spiel auf 3x3 bis 9x9, drei KI-Stärken **oder** lokal X gegen O |
@@ -71,9 +71,19 @@ direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
 - **Boost**: Boost-Taste **gedrückt halten** = Turbo (doppeltes Tempo), verbraucht
   Ausdauer (Balken); ist sie leer, schaltet der Boost ab und lädt sich wieder auf.
   Standard P1 = Leertaste/Shift-links, P2 = Enter/Shift-rechts.
-- **5 Spielmodi** (im Setup wählbar): *Klassisch*, *Speed-Rush* (wird mit jedem
+- **6 Spielmodi** (im Setup wählbar): *Klassisch*, *Speed-Rush* (wird mit jedem
   Apfel schneller), *Hindernisse* (tödliche Blöcke), *Portale* (Teleporter-Paare),
-  *Zeitangriff* (60 Sekunden, so viele Äpfel wie möglich).
+  *Zeitangriff* (60 Sekunden, so viele Äpfel wie möglich) und *Competitive* (siehe unten).
+- **NEU - Competitive** (Einzelspieler): Endlos-Modus mit **Level-Aufstieg** - man
+  startet mit genau **einem** Apfel und kann anfangs nicht mehr bekommen; je mehr
+  Äpfel man insgesamt sammelt, desto höher das **Level**, das laufend einen weiteren
+  Apfel gleichzeitig aufs Feld legt und den Punkte-Multiplikator erhöht.
+  **Blaue Äpfel** öffnen eine **Slot-Machine**: eingesetzt wird die Länge, das
+  Walzen-Ergebnis vervielfacht bzw. verkleinert den Einsatz und lässt für kurze Zeit
+  **zusätzliche Äpfel** spawnen (Jackpot bei drei gleichen Symbolen).
+  **Lila Äpfel** setzen **50 % der Länge** aufs Spiel und multiplizieren diesen Teil
+  zufällig mit **x0.5 .. x2.0** - man schrumpft so auf bis zu 75 % oder wächst auf
+  bis zu 150 %. Feineinstellung in `competitive.py`.
 - **Goldäpfel** (zeitweise) geben viele Punkte und füllen den Boost sofort auf.
 - Optionale **Wände-durchgehen**, Bonus-Äpfel, **Prestige** (Einzelspieler, Taste **P**).
 - Optik: abgerundete Schlange mit Augen, Boost-Glow, Partikel.
@@ -251,6 +261,7 @@ menu.py              Sprach-, Vorspiel- (Modus) und Options-Screen (Sound/Steuer
 highscore.py         Laden/Speichern der Highscores (Abschnitt in mem.json)
 store.py             Zentrale Speicherdatei mem.json (Abschnitte: mem, highscores)
 prestige.py          Prestige-System für Snake
+competitive.py       Kennzahlen für den Competitive-Modus von Snake (Level, Slot, Wett-Äpfel)
 i18n.py              Übersetzungs-Engine (lädt lang/*.json, t("schlüssel"))
 lang/
   de.json  en.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
@@ -385,7 +396,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 
 | Game         | Modes           | Short description |
 |--------------|-----------------|-------------------|
-| **Snake**    | 1 / 2 players   | Deluxe Snake with 2D & 3D view, boost, 5 game modes, golden apples and prestige |
+| **Snake**    | 1 / 2 players   | Deluxe Snake with 2D & 3D view, boost, 6 game modes (incl. Competitive), golden apples and prestige |
 | **Pong**     | 1 / 2 players   | Classic vs. AI or player 2, switchable movement mode |
 | **Air Hockey** | 1 / 2 players | 2D physics with momentum transfer, mouse control, AI and power-ups |
 | **Tic-Tac-Toe** | 1 / 2 players | m,n,k game on 3x3 to 9x9, three AI strengths **or** local X vs. O |
@@ -418,9 +429,18 @@ duel)**. The mode is chosen right in the pre-game screen
 - **Boost**: **hold** the boost key = turbo (double speed), consumes stamina
   (bar); once empty, the boost switches off and recharges. Default P1 =
   Space/Left-Shift, P2 = Enter/Right-Shift.
-- **5 game modes** (selectable in setup): *Classic*, *Speed Rush* (gets faster
+- **6 game modes** (selectable in setup): *Classic*, *Speed Rush* (gets faster
   with every apple), *Obstacles* (deadly blocks), *Portals* (teleporter pairs),
-  *Time Attack* (60 seconds, as many apples as possible).
+  *Time Attack* (60 seconds, as many apples as possible) and *Competitive* (see below).
+- **NEW - Competitive** (single-player): endless mode with a **level climb** - you
+  start with exactly **one** apple and can't get more at first; the more apples you
+  collect overall, the higher your **level**, which keeps adding another simultaneous
+  apple to the field and raises the score multiplier.
+  **Blue apples** open a **slot machine**: your length is the stake, the reel result
+  multiplies or shrinks it and briefly makes **extra apples** spawn (jackpot on three
+  matching symbols). **Purple apples** put **50 % of your length** on the line and
+  multiply that part by a random **x0.5 .. x2.0** - so you shrink to as little as 75 %
+  or grow up to 150 %. Tuning lives in `competitive.py`.
 - **Golden apples** (temporary) give lots of points and instantly refill the boost.
 - Optional **wrap-around walls**, bonus apples, **prestige** (single-player, key **P**).
 - Look: rounded snake with eyes, boost glow, particles.
@@ -597,6 +617,7 @@ menu.py              Language, pre-game (mode) and options screen (sound/control
 highscore.py         Load/save high scores (section in mem.json)
 store.py             Central save file mem.json (sections: mem, highscores)
 prestige.py          Prestige system for Snake
+competitive.py       Tuning for Snake's Competitive mode (levels, slot machine, gamble apples)
 i18n.py              Translation engine (loads lang/*.json, t("key"))
 lang/
   de.json  en.json   Language strings (one placeholder key per text)

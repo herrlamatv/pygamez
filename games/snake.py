@@ -50,6 +50,7 @@ import random
 import time
 import pygame
 
+import competitive
 import highscore
 import i18n
 import prestige
@@ -74,6 +75,17 @@ BOOST_KEYS_P2 = ("Return", "Shift_R", "KP_Enter")
 GOLDEN_LIFETIME = 6.0          # Sekunden, die ein Goldapfel liegen bleibt
 GOLDEN_CHANCE = 0.20           # Chance, nach einem normalen Apfel einen Goldapfel zu setzen
 TIMED_SECONDS = 60.0
+
+# ----- Competitive-Modus ----------------------------------------------------
+# Spezialäpfel: blau (Slot-Machine) und lila (Längen-Wette).
+SPECIAL_LIFETIME = 8.0         # Sekunden, die ein blauer/lila Apfel liegen bleibt
+BLUE_CHANCE = 0.12             # Chance je Apfel, einen blauen Apfel nachzulegen
+PURPLE_CHANCE = 0.16           # Chance je Apfel, einen lila Apfel nachzulegen
+SPAWN_BONUS_TIME = 10.0        # so lange legt der Slot-Bonus zusätzliche Äpfel nach
+# Slot-Machine-Timing: Stoppzeitpunkte der drei Walzen + Anzeigedauer danach.
+SLOT_REEL_STOPS = (0.9, 1.35, 1.8)
+SLOT_SHOW = 1.7
+SLOT_SPIN_SPEED = 16.0         # Symbole pro Sekunde beim Drehen
 
 # Wählbare Anzahl gleichzeitig auf dem Feld liegender Äpfel (Setup-Einstellung).
 APPLE_COUNTS = (1, 2, 3, 5)
@@ -107,6 +119,8 @@ COL_WLS_OFF = (105, 105, 120)   # WLS grau  = feste Wände
 COL_MULT = (255, 210, 90)       # Multiplikator / Prestige (gold)
 COL_WALL = (70, 78, 98)         # Hindernis-Blöcke
 COL_ACCENT = (90, 160, 240)
+COL_BLUE = (90, 150, 245)       # blauer Apfel (Slot-Machine)
+COL_PURPLE = (185, 110, 240)    # lila Apfel (Längen-Wette)
 
 # Farben je Schlange: (Körper, Kopf)
 SNAKE_COLORS = [
@@ -126,6 +140,8 @@ MODES = [
     dict(key="walls",   name="Hindernisse", desc="Feste Blöcke im Feld - tödlich!"),
     dict(key="portal",  name="Portale",     desc="Teleporter: rein und woanders raus."),
     dict(key="timed",   name="Zeitangriff", desc="60s - so viele Äpfel wie möglich."),
+    dict(key="competitive", name="Competitive",
+         desc="Level-Aufstieg, Slot-Machine & Wett-Äpfel."),
 ]
 MODE_KEYS = [m["key"] for m in MODES]
 
@@ -203,6 +219,8 @@ class SnakeGame(Game):
         self.view3d = bool(snk.get("view3d", False))
         if self.view3d_active and self.mode_key not in MODES_3D:
             self.mode_index = MODE_KEYS.index("classic")
+        if self.multiplayer and self.mode_key == "competitive":
+            self.mode_index = MODE_KEYS.index("classic")   # Competitive = Einzelspieler
 
         self._small = pygame.font.SysFont("consolas", 16)
         self._tiny = pygame.font.SysFont("consolas", 13)
@@ -234,14 +252,24 @@ class SnakeGame(Game):
         return self.view3d and not self.multiplayer
 
     @property
+    def competitive(self):
+        """Competitive-Modus (mit Level-Aufstieg, Slot-Machine & Wett-Äpfeln)."""
+        return self.mode_key == "competitive" and not self.multiplayer
+
+    @property
     def wrap_active(self):
         """Wände-durchgehen; in der 3D-Ansicht sind die Wände immer fest."""
         return self.wrap and not self.view3d_active
 
     def _allowed_modes(self):
-        """Indizes der aktuell wählbaren Spielmodi (3D: nur Klassisch/Hindernisse)."""
+        """Indizes der aktuell wählbaren Spielmodi.
+
+        3D: nur Klassisch/Hindernisse. Competitive gibt es nur im Einzelspieler.
+        """
         if self.view3d_active:
             return [i for i, m in enumerate(MODES) if m["key"] in MODES_3D]
+        if self.multiplayer:
+            return [i for i, m in enumerate(MODES) if m["key"] != "competitive"]
         return list(range(len(MODES)))
 
     def _reset_run_stats(self):
@@ -249,6 +277,10 @@ class SnakeGame(Game):
         self.apples_bank = 0
         self.prestige = 0
         self.speed_apples = 0
+        # Competitive: Level-Aufstieg + Slot-Bonus (zusätzliche Äpfel auf Zeit)
+        self.comp_level = 0
+        self.spawn_bonus = 0
+        self.spawn_bonus_t = 0.0
 
     def _new_board(self):
         """Baut die Schlange(n), das Modus-Layout und das erste Futter."""
@@ -308,6 +340,13 @@ class SnakeGame(Game):
         self.golden_timer = 0.0
         self.time_left = TIMED_SECONDS
 
+        # Competitive-Spezialäpfel + Slot-Machine + aufsteigende Hinweistexte
+        self.specials = {}             # Zelle -> dict(type, timer)  (blau/lila)
+        self.slot = None               # aktive Slot-Machine (dict) oder None
+        self.float_texts = []          # aufsteigende, verblassende Hinweistexte
+        self._purple_pending = None    # nach dem Schritt anzuwendender lila Effekt
+        self._slot_pending = None      # nach dem Schritt zu öffnende Slot-Machine
+
         # Zellen, die frei bleiben müssen (Schlangen + Startbahn nach rechts)
         tabu = set()
         for sn in self.snakes:
@@ -364,9 +403,22 @@ class SnakeGame(Game):
         for sn in self.snakes:
             belegt |= set(sn.body)
         belegt |= self.foods
+        belegt |= set(self.specials.keys())
         if self.golden:
             belegt.add(self.golden)
         return belegt
+
+    def _apple_target(self):
+        """Gewünschte Anzahl gleichzeitig liegender (normaler) Äpfel.
+
+        Im Competitive-Modus bestimmt das Level die Anzahl (Start: 1 Apfel);
+        der Slot-Bonus legt für kurze Zeit weitere Äpfel oben drauf.
+        """
+        if self.competitive:
+            base = competitive.apples_on_field(self.comp_level)
+            bonus = self.spawn_bonus if self.spawn_bonus_t > 0 else 0
+            return min(competitive.MAX_APPLES + 5, base + bonus)
+        return self.apple_count
 
     def _place_food(self):
         """Füllt das Feld auf die gewünschte Anzahl gleichzeitiger Äpfel auf."""
@@ -374,10 +426,28 @@ class SnakeGame(Game):
         frei = [(x, y) for x in range(self.cols) for y in range(self.rows)
                 if (x, y) not in belegt]
         random.shuffle(frei)
-        while len(self.foods) < self.apple_count and frei:
+        while len(self.foods) < self._apple_target() and frei:
             cell = frei.pop()
             self.foods.add(cell)
             self._food_anim[cell] = 0.0        # startet die Einblend-Animation
+
+    # ----- Competitive: Spezialäpfel (blau/lila) ------------------------
+    def _maybe_spawn_special(self):
+        """Legt nach einem Apfel evtl. einen blauen oder lila Apfel nach."""
+        if self.specials:
+            return                     # immer nur ein Spezialapfel gleichzeitig
+        r = random.random()
+        if r < BLUE_CHANCE:
+            self._place_special("blue")
+        elif r < BLUE_CHANCE + PURPLE_CHANCE:
+            self._place_special("purple")
+
+    def _place_special(self, typ):
+        belegt = self._blocked_cells()
+        frei = [(x, y) for x in range(self.cols) for y in range(self.rows)
+                if (x, y) not in belegt]
+        if frei:
+            self.specials[random.choice(frei)] = dict(type=typ, timer=SPECIAL_LIFETIME)
 
     def _place_golden(self):
         belegt = self._blocked_cells()
@@ -424,6 +494,8 @@ class SnakeGame(Game):
 
     def _cycle_apples(self):
         """Schaltet die Anzahl gleichzeitig liegender Äpfel weiter (1/2/3/5)."""
+        if self.competitive:
+            return                     # im Competitive bestimmt das Level die Anzahl
         i = APPLE_COUNTS.index(self.apple_count) if self.apple_count in APPLE_COUNTS else 0
         self.apple_count = APPLE_COUNTS[(i + 1) % len(APPLE_COUNTS)]
         self._save_snake_setting("apples", self.apple_count)
@@ -456,7 +528,7 @@ class SnakeGame(Game):
                 self._cycle_mode(-1)
             elif event.key in ("Right", "d", "D"):
                 self._cycle_mode(+1)
-            elif event.key in ("1", "2", "3", "4", "5"):
+            elif event.key in ("1", "2", "3", "4", "5", "6"):
                 allowed = self._allowed_modes()
                 idx = int(event.key) - 1
                 if idx < len(allowed):
@@ -498,6 +570,10 @@ class SnakeGame(Game):
     def handle_event(self, event):
         if self.state == SETUP:
             self._handle_setup_event(event)
+            return
+
+        # Während die Slot-Machine läuft, ist die Steuerung ausgesetzt.
+        if self.slot is not None:
             return
 
         # Boost beenden, sobald die Taste losgelassen wird (gedrückt-halten-Logik)
@@ -592,8 +668,8 @@ class SnakeGame(Game):
         return req, (genug_äpfel and genug_länge)
 
     def _try_prestige(self):
-        if self.game_over:
-            return
+        if self.game_over or self.competitive:
+            return                     # Competitive nutzt automatischen Level-Aufstieg
         req, ok = self._can_prestige()
         if not ok:
             return
@@ -611,13 +687,22 @@ class SnakeGame(Game):
         self._update_particles(dt)
         self._update_particles3d(dt)
         self._update_food_anim(dt)
+        self._update_float_texts(dt)
         if self._shake > 0.0:
             self._shake = max(0.0, self._shake - dt * 1.6)
         if self.state == PLAY and self.view3d_active:
             self._update_camera(dt)              # läuft auch nach Game Over (Orbit)
         if self.state != PLAY or self.game_over:
             return
+
+        # Die Slot-Machine friert die Spielwelt ein, solange sie läuft.
+        if self.slot is not None:
+            self._update_slot(dt)
+            return
+
         self._run_t += dt
+        if self.competitive:
+            self._update_competitive(dt)
 
         # Goldapfel-Lebensdauer (+ Funkeln in 3D)
         if self.golden is not None:
@@ -648,7 +733,7 @@ class SnakeGame(Game):
         # Schritte abarbeiten
         self._timer += dt
         guard = 0
-        while self._timer >= self.interval and not self.game_over:
+        while self._timer >= self.interval and not self.game_over and self.slot is None:
             self._timer -= self.interval
             self._tick()
             guard += 1
@@ -660,8 +745,8 @@ class SnakeGame(Game):
         alive = [i for i, sn in enumerate(self.snakes) if sn.alive]
         # Unterschritt 0: alle bewegen sich einmal
         self._advance(alive)
-        if self.game_over:
-            return
+        if self.game_over or self.slot is not None:
+            return                     # ein blauer Apfel hat die Slot-Machine geöffnet
         # Unterschritt 1: Booster bewegen sich ein zweites Mal (= doppeltes Tempo)
         booster = [i for i in alive
                    if self.snakes[i].alive and self.snakes[i].boost_on
@@ -758,16 +843,28 @@ class SnakeGame(Game):
             elif self.golden is not None and kopf == self.golden:
                 self._eat_golden(sn)
                 ate_gold = True
+            elif kopf in self.specials:
+                self._eat_special(sn, kopf)
             if sn.grow > 0:
                 sn.grow -= 1
             else:
                 sn.body.pop(0)
+
+        # Spezialäpfel wirken erst nach dem Schritt (verändern u.U. die Länge)
+        if self._purple_pending is not None:
+            self._apply_purple(self._purple_pending)
+            self._purple_pending = None
+        if self._slot_pending is not None:
+            self._open_slot(self._slot_pending)
+            self._slot_pending = None
 
         if ate:
             self.play_sound("eat")
             self._place_food()
             if self.golden is None and random.random() < GOLDEN_CHANCE:
                 self._place_golden()
+            if self.competitive:
+                self._maybe_spawn_special()
         if ate_gold:
             self.golden = None
 
@@ -783,7 +880,7 @@ class SnakeGame(Game):
         else:
             self.apples_total += gain
             self.apples_bank += gain
-            sn.score += gain * 10 * prestige.score_multiplier(self.prestige)
+            sn.score += gain * 10 * self._score_multiplier()
         self.speed_apples += gain
         if self.mode_key == "speed":
             self.interval = max(MIN_INTERVAL, BASE_INTERVAL - self.speed_apples * 0.0025)
@@ -798,10 +895,127 @@ class SnakeGame(Game):
         else:
             self.apples_total += bonus
             self.apples_bank += bonus
-            sn.score += 50 * prestige.score_multiplier(self.prestige)
+            sn.score += 50 * self._score_multiplier()
         self._spawn_particles(sn.body[-1], COL_GOLD, 16)
         self.play_sound("point")
         self.rumble(80)
+
+    def _score_multiplier(self):
+        """Punkte-Multiplikator: Competitive nutzt das Level, sonst Prestige."""
+        if self.competitive:
+            return competitive.score_multiplier(self.comp_level)
+        return prestige.score_multiplier(self.prestige)
+
+    # ----- Competitive: Spezialäpfel-Wirkung ----------------------------
+    def _eat_special(self, sn, cell):
+        """Blauer Apfel -> Slot-Machine, lila Apfel -> Längen-Wette."""
+        typ = self.specials.pop(cell, {}).get("type")
+        if typ == "blue":
+            self._slot_pending = sn
+        elif typ == "purple":
+            self._purple_pending = sn
+
+    def _apply_purple(self, sn):
+        """Lila Apfel: 50 % der Länge werden mit x0.5..x2.0 (zufällig) skaliert."""
+        factor = competitive.purple_factor()
+        laenge = len(sn.body)
+        behalten = (laenge + 1) // 2           # 50 % bleiben unangetastet
+        einsatz = laenge - behalten
+        neu = behalten + int(round(einsatz * factor))
+        ziel = max(MIN_LENGTH, neu)
+        delta = ziel - laenge
+        if delta > 0:
+            sn.grow += delta                   # wächst über die nächsten Schritte
+        elif delta < 0:
+            schnitt = min(-delta, len(sn.body) - MIN_LENGTH)
+            if schnitt > 0:
+                del sn.body[:schnitt]          # Schwanz sofort kürzen
+                sn.prev_body = list(sn.body)
+        col = COL_WLS_ON if factor >= 1.0 else COL_FOOD
+        self.play_sound("powerup" if factor >= 1.0 else "hit")
+        self.rumble(80)
+        self._spawn_particles(sn.body[-1], COL_PURPLE, 14)
+        self._add_float_text(sn.body[-1], f"x{factor:g}", col)
+
+    # ----- Competitive: Slot-Machine ------------------------------------
+    def _open_slot(self, sn):
+        """Öffnet den Spielautomaten (friert die Welt ein, bis er ausläuft)."""
+        reels = competitive.spin_reels()
+        mult, result = competitive.slot_outcome(reels)
+        self.slot = dict(snake=sn, reels=reels, mult=mult, result=result,
+                         stake=max(2, len(sn.body) // 4), stop=list(SLOT_REEL_STOPS),
+                         t=0.0, applied=False)
+        self.play_sound("point")
+
+    def _update_slot(self, dt):
+        """Animiert die Walzen; wendet am Ende den Gewinn/Verlust an."""
+        sl = self.slot
+        sl["t"] += dt
+        for k, ts in enumerate(sl["stop"]):
+            if sl["t"] >= ts and not sl.get(f"snd{k}"):
+                sl[f"snd{k}"] = True
+                self.play_sound("lock")
+        if sl["t"] >= sl["stop"][-1] and not sl["applied"]:
+            sl["applied"] = True
+            self._apply_slot(sl)
+        if sl["t"] >= sl["stop"][-1] + SLOT_SHOW:
+            self.slot = None
+
+    def _apply_slot(self, sl):
+        """Verrechnet das Slot-Ergebnis: Längeneinsatz + zeitweise mehr Äpfel."""
+        sn = sl["snake"]
+        netto = int(round(sl["stake"] * (sl["mult"] - 1.0)))
+        if netto > 0:
+            sn.grow += netto
+        elif netto < 0:
+            schnitt = min(-netto, len(sn.body) - MIN_LENGTH)
+            if schnitt > 0:
+                del sn.body[:schnitt]
+                sn.prev_body = list(sn.body)
+        # Der Multiplikator lässt für kurze Zeit zusätzliche Äpfel spawnen.
+        self.spawn_bonus = max(self.spawn_bonus, int(round(sl["mult"])))
+        self.spawn_bonus_t = SPAWN_BONUS_TIME
+        self._place_food()
+        if sl["result"] == "jackpot":
+            self.play_sound("win"); self.rumble(160)
+        elif sl["result"] == "pair":
+            self.play_sound("powerup"); self.rumble(80)
+        else:
+            self.play_sound("hit")
+        self._add_float_text(sn.body[-1], f"x{sl['mult']:g}", COL_BLUE)
+
+    # ----- Aufsteigende Hinweistexte ------------------------------------
+    def _add_float_text(self, cell, text, color):
+        self.float_texts.append(dict(x=cell[0] * CELL + CELL / 2, y=cell[1] * CELL,
+                                     text=text, color=color, t=1.1))
+
+    def _update_float_texts(self, dt):
+        rest = []
+        for ft in self.float_texts:
+            ft["y"] -= dt * 26
+            ft["t"] -= dt
+            if ft["t"] > 0:
+                rest.append(ft)
+        self.float_texts = rest
+
+    def _update_competitive(self, dt):
+        """Level aus gesammelten Äpfeln, Slot-Bonus und Spezialapfel-Lebensdauer."""
+        lvl = competitive.level_for_apples(self.apples_total)
+        if lvl > self.comp_level:
+            self.comp_level = lvl
+            self.play_sound("level")
+            self.rumble(90)
+            self._add_float_text(self.snakes[0].body[-1],
+                                 i18n.t("snake.comp.levelup", n=lvl), COL_MULT)
+            self._place_food()                 # das neue Level legt einen Apfel nach
+        if self.spawn_bonus_t > 0:
+            self.spawn_bonus_t = max(0.0, self.spawn_bonus_t - dt)
+            if self.spawn_bonus_t == 0:
+                self.spawn_bonus = 0
+        for cell in list(self.specials):
+            self.specials[cell]["timer"] -= dt
+            if self.specials[cell]["timer"] <= 0:
+                del self.specials[cell]
 
     def _check_end(self, tot):
         if self.multiplayer:
@@ -985,6 +1199,9 @@ class SnakeGame(Game):
 
         self._draw_hud()
 
+        if self.slot is not None:
+            self._draw_slot()
+
         if self.game_over:
             self._draw_game_over()
 
@@ -1029,6 +1246,9 @@ class SnakeGame(Game):
                 pygame.draw.circle(s, COL_GOLD, (cx, cy), r)
                 pygame.draw.circle(s, (255, 245, 200), (cx - 2, cy - 2), 2)
 
+        # Competitive-Spezialäpfel (blau = Slot-Machine, lila = Längen-Wette)
+        self._draw_specials(s)
+
         # Partikel
         for p in self.particles:
             a = max(0, min(255, int(255 * (p[4] / 0.55))))
@@ -1042,6 +1262,33 @@ class SnakeGame(Game):
 
         # Iss-Effekte ZULETZT (über dem Schlangenkopf, der auf dem Apfel liegt)
         self._draw_eat_fx(s)
+
+        # Aufsteigende Hinweistexte (Level-Up, Slot- und Wett-Ergebnisse)
+        self._draw_float_texts(s)
+
+    def _draw_specials(self, s):
+        """Zeichnet die Competitive-Spezialäpfel als pulsierende Edelsteine."""
+        for cell, info in self.specials.items():
+            if info["timer"] < 1.5 and int(self.anim_t * 8) % 2 == 0:
+                continue                       # blinkt kurz vor dem Verschwinden
+            blue = info["type"] == "blue"
+            col = COL_BLUE if blue else COL_PURPLE
+            inner = tuple(min(255, c + 70) for c in col)
+            cx = cell[0] * CELL + CELL // 2
+            cy = cell[1] * CELL + CELL // 2
+            r = CELL // 2 - 2 + int(1.5 * math.sin(self.anim_t * 6 + cell[0]))
+            pts = [(cx, cy - r), (cx + r, cy), (cx, cy + r), (cx - r, cy)]   # Raute
+            pygame.draw.polygon(s, col, pts)
+            pygame.draw.polygon(s, inner, pts, 1)
+            glyph = "$" if blue else "±"       # Slot-Machine bzw. mal/geteilt
+            g = self._tiny.render(glyph, True, (20, 20, 30))
+            s.blit(g, g.get_rect(center=(cx, cy)))
+
+    def _draw_float_texts(self, s):
+        for ft in self.float_texts:
+            img = self._small.render(ft["text"], True, ft["color"])
+            img.set_alpha(max(0, min(255, int(255 * (ft["t"] / 1.1)))))
+            s.blit(img, img.get_rect(center=(int(ft["x"]), int(ft["y"]))))
 
     def _draw_apple(self, s, cell, scale, alpha=255):
         """Zeichnet einen Apfel skaliert um sein Zentrum (0..~1.1 = eingeblendet).
@@ -1545,24 +1792,143 @@ class SnakeGame(Game):
         # Einzelspieler
         s.blit(self.font.render(i18n.t("common.points", score=self.score),
                                 True, COL_TEXT), (10, 8))
-        s.blit(self._small.render(
-            i18n.t("snake.apples_bank", total=self.apples_total, bank=self.apples_bank),
-            True, COL_FOOD), (10, 34))
-        if self.prestige > 0:
-            blocks = prestige.blocks_per_apple(self.prestige)
-            info = self._small.render(
-                i18n.t("snake.prestige_info", roman=prestige.roman(self.prestige),
-                       blocks=blocks),
-                True, COL_MULT)
-            s.blit(info, (10, 54))
+        if self.competitive:
+            self._draw_comp_hud()
+        else:
+            s.blit(self._small.render(
+                i18n.t("snake.apples_bank", total=self.apples_total, bank=self.apples_bank),
+                True, COL_FOOD), (10, 34))
+            if self.prestige > 0:
+                blocks = prestige.blocks_per_apple(self.prestige)
+                info = self._small.render(
+                    i18n.t("snake.prestige_info", roman=prestige.roman(self.prestige),
+                           blocks=blocks),
+                    True, COL_MULT)
+                s.blit(info, (10, 54))
 
         best = self._small.render(i18n.t("snake.best", hs=self.highscore), True, COL_DIM)
         s.blit(best, (self.width - best.get_width() - 10, 10))
 
         self._draw_boost_bar(10, self.height - 22, 180, self.snakes[0], 0)
 
-        if not self.game_over and self.mode_key != "timed":
+        if not self.game_over and self.competitive:
+            self._draw_comp_footer()
+        elif not self.game_over and self.mode_key != "timed":
             self._draw_next_prestige()
+
+    def _draw_comp_hud(self):
+        """Competitive-Kopfzeile: gesammelte Äpfel, Level, Slot-Bonus."""
+        s = self.surface
+        lvl = self.comp_level
+        line = self._small.render(
+            i18n.t("snake.comp.stats", apples=self.apples_total, level=lvl,
+                   mult=competitive.score_multiplier(lvl)), True, COL_FOOD)
+        s.blit(line, (10, 34))
+        if self.spawn_bonus_t > 0 and self.spawn_bonus > 0:
+            b = self._small.render(
+                i18n.t("snake.comp.bonus", n=self.spawn_bonus, t=self.spawn_bonus_t),
+                True, COL_BLUE)
+            s.blit(b, (10, 54))
+
+    def _draw_comp_footer(self):
+        """Fortschrittsbalken bis zum nächsten Competitive-Level (unten mittig)."""
+        s = self.surface
+        step = competitive.next_step(self.apples_total)
+        if step is None:
+            img = self._small.render(i18n.t("snake.comp.max", level=self.comp_level),
+                                     True, COL_MULT)
+            s.blit(img, img.get_rect(midbottom=(self.width // 2, self.height - 8)))
+            return
+        have, need = step
+        w, y = 220, self.height - 20
+        x = self.width // 2 - w // 2
+        pygame.draw.rect(s, (30, 34, 46), (x, y, w, 12), border_radius=5)
+        fw = int((w - 2) * max(0.0, min(1.0, have / max(1, need))))
+        pygame.draw.rect(s, COL_MULT, (x + 1, y + 1, fw, 10), border_radius=5)
+        lab = self._tiny.render(
+            i18n.t("snake.comp.next", level=self.comp_level + 1, have=have, need=need),
+            True, COL_DIM)
+        s.blit(lab, lab.get_rect(midbottom=(self.width // 2, y - 2)))
+
+    # ----- Slot-Machine zeichnen ----------------------------------------
+    def _draw_slot(self):
+        s = self.surface
+        sl = self.slot
+        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        ov.fill((0, 0, 0, 170))
+        s.blit(ov, (0, 0))
+
+        pw, ph = min(360, self.width - 40), 260
+        panel = pygame.Rect((self.width - pw) // 2, (self.height - ph) // 2, pw, ph)
+        pygame.draw.rect(s, (30, 34, 52), panel, border_radius=14)
+        pygame.draw.rect(s, COL_BLUE, panel, 3, border_radius=14)
+
+        title = self.font.render(i18n.t("snake.slot.title"), True, COL_BLUE)
+        s.blit(title, title.get_rect(midtop=(panel.centerx, panel.top + 12)))
+        stake = self._small.render(i18n.t("snake.slot.stake", n=sl["stake"]),
+                                   True, COL_DIM)
+        s.blit(stake, stake.get_rect(midtop=(panel.centerx, panel.top + 40)))
+
+        rw, rh, gap = 78, 96, 12
+        total = rw * 3 + gap * 2
+        x0 = panel.centerx - total // 2
+        ry = panel.top + 74
+        cell_h = rh // 3
+        reel = competitive.REEL
+        for k in range(3):
+            win = pygame.Rect(x0 + k * (rw + gap), ry, rw, rh)
+            pygame.draw.rect(s, (16, 18, 30), win, border_radius=8)
+            old_clip = s.get_clip()
+            s.set_clip(win)
+            if sl["t"] >= sl["stop"][k]:               # Walze steht
+                anchor = reel.index(sl["reels"][k])
+                for row in (-1, 0, 1):
+                    sym = reel[(anchor + row) % len(reel)]
+                    self._draw_slot_symbol(s, sym, win.centerx,
+                                           win.centery + row * cell_h, cell_h // 2 - 4)
+            else:                                      # Walze dreht
+                base = int(sl["t"] * SLOT_SPIN_SPEED) + k * 5
+                scroll = (sl["t"] * SLOT_SPIN_SPEED % 1.0) * cell_h
+                for row in (-1, 0, 1, 2):
+                    sym = reel[(base + row) % len(reel)]
+                    self._draw_slot_symbol(s, sym, win.centerx,
+                                           int(win.centery + row * cell_h - scroll),
+                                           cell_h // 2 - 4)
+            s.set_clip(old_clip)
+            pygame.draw.rect(s, (70, 80, 110), win, 2, border_radius=8)
+        pygame.draw.line(s, COL_BLUE, (x0 - 4, ry + rh // 2),
+                         (x0 + total + 4, ry + rh // 2), 1)
+
+        if sl["applied"]:
+            res = i18n.t("snake.slot." + sl["result"])
+            col = COL_GOLD if sl["result"] == "jackpot" \
+                else (COL_WLS_ON if sl["result"] == "pair" else COL_DIM)
+            rimg = self.font.render(f"{res}  x{sl['mult']:g}", True, col)
+            s.blit(rimg, rimg.get_rect(midbottom=(panel.centerx, panel.bottom - 14)))
+
+    def _draw_slot_symbol(self, s, key, cx, cy, r):
+        """Zeichnet ein Slot-Symbol als kleines Icon."""
+        col = competitive.SLOT_SYMBOLS[key]
+        if key == "seven":
+            img = self.font.render("7", True, col)
+            s.blit(img, img.get_rect(center=(cx, cy)))
+        elif key == "gem":
+            pts = [(cx, cy - r), (cx + r, cy), (cx, cy + r), (cx - r, cy)]
+            pygame.draw.polygon(s, col, pts)
+            pygame.draw.polygon(s, (255, 255, 255), pts, 1)
+        elif key == "bell":
+            pygame.draw.circle(s, col, (cx, cy - r // 6), int(r * 0.8))
+            pygame.draw.rect(s, col, (cx - r, cy + r // 3, r * 2, max(2, r // 3)),
+                             border_radius=2)
+            pygame.draw.circle(s, (40, 40, 30), (cx, cy + r // 2), max(1, r // 5))
+        elif key == "apple":
+            pygame.draw.circle(s, col, (cx, cy), int(r * 0.85))
+            pygame.draw.circle(s, (255, 180, 180), (cx - r // 4, cy - r // 4),
+                               max(1, r // 6))
+        else:  # cherry
+            for off in (-r // 2, r // 2):
+                pygame.draw.circle(s, col, (cx + off, cy + r // 3), int(r * 0.45))
+            pygame.draw.line(s, (120, 200, 120), (cx, cy - r), (cx, cy + r // 3), 1)
 
     def _draw_boost_bar(self, x, y, w, sn, idx):
         s = self.surface
@@ -1619,7 +1985,10 @@ class SnakeGame(Game):
         self.draw_center_text(titel, self.big_font, COL_FOOD, -60)
         self.draw_center_text(i18n.t("snake.apples_collected", n=self.apples_total),
                               self.font, COL_FOOD, -14)
-        if self.prestige > 0:
+        if self.competitive:
+            self.draw_center_text(i18n.t("snake.comp.result", level=self.comp_level),
+                                  self.font, COL_MULT, 16)
+        elif self.prestige > 0:
             self.draw_center_text(
                 i18n.t("snake.prestige", roman=prestige.roman(self.prestige)),
                 self.font, COL_MULT, 16)
@@ -1683,8 +2052,12 @@ class SnakeGame(Game):
             self._draw_setup_toggle(self.wrap_rect, i18n.t("snake.wrap_toggle"),
                                     self.wrap)
         self._draw_setup_toggle(self.bonus_rect, i18n.t("snake.bonus_toggle"), self.bonus)
-        self._draw_setup_value(self.apples_rect, i18n.t("snake.apples_toggle"),
-                               str(self.apple_count), self.apple_count > 1)
+        if self.competitive:
+            self._draw_disabled_row(self.apples_rect, i18n.t("snake.apples_toggle"),
+                                    i18n.t("snake.comp.apples_note"))
+        else:
+            self._draw_setup_value(self.apples_rect, i18n.t("snake.apples_toggle"),
+                                   str(self.apple_count), self.apple_count > 1)
 
         pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
         st = self.font.render(i18n.t("common.start"), True, COL_TEXT)
