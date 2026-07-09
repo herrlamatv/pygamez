@@ -345,7 +345,7 @@ class App:
         self.ui = ui
 
     def _set_window_icon(self):
-        """Setzt das Fenster-/Taskleisten-Icon aus logo/pygamez-*.jpg.
+        """Setzt das Fenster-/Taskleisten-Icon aus logo/pygamez2-*.jpg.
 
         Tk kann JPG nicht direkt laden, deshalb derselbe Weg wie beim
         Spielbild: pygame lädt das JPG, wir wandeln es in PPM-Daten um und
@@ -357,7 +357,7 @@ class App:
         basis = os.path.dirname(os.path.abspath(__file__))
         self._icons = []          # Referenzen halten, sonst räumt Tk die Bilder weg
         for size in (512, 256, 128):
-            pfad = os.path.join(basis, "logo", f"pygamez-{size}.jpg")
+            pfad = os.path.join(basis, "logo", f"pygamez2-{size}.jpg")
             try:
                 img = self.pygame.image.load(pfad)
                 w, h = img.get_size()
@@ -674,6 +674,38 @@ class App:
         self._photo = tk.PhotoImage(data=data, format="ppm")
         self.embed.configure(image=self._photo)
 
+    def _menu_logo(self, size):
+        """Lädt das Logo (logo/pygamez2-*.jpg), skaliert es und rundet die Ecken.
+
+        Das Ergebnis wird je Größe gecacht. Fehlt das Bild, gibt die Methode
+        None zurück - der Startbildschirm zeigt dann den Schriftzug als Fallback.
+        """
+        cache = getattr(self, "_logo_cache", None)
+        if cache and cache[0] == size:
+            return cache[1]
+        basis = os.path.dirname(os.path.abspath(__file__))
+        raw = None
+        for name in ("pygamez2-256.jpg", "pygamez2-512.jpg", "pygamez2-128.jpg"):
+            pfad = os.path.join(basis, "logo", name)
+            if os.path.exists(pfad):
+                try:
+                    raw = self.pygame.image.load(pfad)
+                    break
+                except Exception:
+                    raw = None
+        out = None
+        if raw is not None:
+            scaled = self.pygame.transform.smoothscale(raw, (size, size))
+            out = self.pygame.Surface((size, size), self.pygame.SRCALPHA)
+            out.blit(scaled, (0, 0))
+            mask = self.pygame.Surface((size, size), self.pygame.SRCALPHA)
+            r = max(12, size // 8)
+            self.pygame.draw.rect(mask, (255, 255, 255, 255),
+                                  (0, 0, size, size), border_radius=r)
+            out.blit(mask, (0, 0), special_flags=self.pygame.BLEND_RGBA_MULT)
+        self._logo_cache = (size, out)
+        return out
+
     def _draw_menu_screen(self):
         """Start-/Leerlaufbildschirm: animierter Hintergrund + Logo + Hinweis."""
         ui = self.ui
@@ -682,26 +714,41 @@ class App:
 
         cx, cy = w // 2, h // 2
 
-        # Logo "PyGameZ" mit weichem Akzent-Glow dahinter.
-        logo_font = ui.font(min(64, max(40, w // 11)), bold=True)
-        glow = logo_font.render("PyGameZ", True, ui.ACCENT)
-        glow.set_alpha(int(40 + 30 * ui.pulse(1.4)))
-        img = logo_font.render("PyGameZ", True, ui.TEXT)
-        for dx, dy in ((-2, 0), (2, 0), (0, -2), (0, 2)):
-            s.blit(glow, glow.get_rect(center=(cx + dx, cy - 46 + dy)))
-        s.blit(img, img.get_rect(center=(cx, cy - 46)))
+        # Logo-Grafik mit weichem Akzent-Glow (Fallback: Schriftzug "PyGameZ").
+        size = min(176, max(112, h // 3))
+        logo = self._menu_logo(size)
+        if logo is not None:
+            lrect = logo.get_rect(center=(cx, cy - 46))
+            rad = max(12, size // 8)
+            glow = self.pygame.Surface((lrect.w + 26, lrect.h + 26),
+                                       self.pygame.SRCALPHA)
+            self.pygame.draw.rect(glow, (*ui.ACCENT, int(55 + 35 * ui.pulse(1.4))),
+                                  glow.get_rect(), border_radius=rad + 8)
+            s.blit(glow, glow.get_rect(center=lrect.center))
+            s.blit(logo, lrect)
+            self.pygame.draw.rect(s, ui.ACCENT, lrect.inflate(4, 4), 2,
+                                  border_radius=rad + 2)
+            base_y, line_w = lrect.bottom, lrect.w
+        else:
+            logo_font = ui.font(min(64, max(40, w // 11)), bold=True)
+            glow = logo_font.render("PyGameZ", True, ui.ACCENT)
+            glow.set_alpha(int(40 + 30 * ui.pulse(1.4)))
+            img = logo_font.render("PyGameZ", True, ui.TEXT)
+            for dx, dy in ((-2, 0), (2, 0), (0, -2), (0, 2)):
+                s.blit(glow, glow.get_rect(center=(cx + dx, cy - 46 + dy)))
+            s.blit(img, img.get_rect(center=(cx, cy - 46)))
+            base_y, line_w = cy - 46 + img.get_height() // 2, img.get_width() + 30
 
         # Akzentlinie + Untertitel (übersetzt).
-        lw = img.get_width() + 30
-        self.pygame.draw.rect(s, ui.ACCENT, (cx - lw // 2, cy - 8, lw, 3),
+        self.pygame.draw.rect(s, ui.ACCENT, (cx - line_w // 2, base_y + 14, line_w, 3),
                               border_radius=2)
         sub = ui.font(18).render(t("app.menu_title"), True, ui.TEXT_DIM)
-        s.blit(sub, sub.get_rect(center=(cx, cy + 18)))
+        s.blit(sub, sub.get_rect(center=(cx, base_y + 40)))
 
         # Pulsierender Hinweis ("Wähle links ein Spiel aus.")
         hint = ui.font(15).render(t("app.menu_sub"), True, ui.ACCENT)
         hint.set_alpha(int(255 * ui.pulse(2.2, lo=0.45)))
-        s.blit(hint, hint.get_rect(center=(cx, cy + 56)))
+        s.blit(hint, hint.get_rect(center=(cx, base_y + 72)))
 
         # Fußzeile mit dezenten Eckdaten.
         ui.draw_footer(s, w, h, f"{len(self._game_classes)} Games   ·   "
