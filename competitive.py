@@ -31,7 +31,12 @@ import random
 
 # ===================================================== Level / Aufstieg
 # Kumulierte Äpfel, ab denen die jeweilige Stufe (Level 1..N) erreicht ist.
-LEVEL_STEPS = [4, 10, 18, 30, 46, 68, 96]
+# 15 Stufen: pro Level ein weiterer Apfel gleichzeitig auf dem Feld
+# (Level 15 -> 16 Äpfel) und ein Punkt mehr beim Multiplikator (bis x16).
+# Die Abstände wachsen gleichmäßig weiter, damit sich der Aufstieg bis ganz
+# oben verdient anfühlt, ohne unmöglich zu werden.
+LEVEL_STEPS = [4, 10, 18, 30, 46, 68, 96,
+               132, 176, 230, 296, 376, 472, 586, 720]
 MAX_LEVEL = len(LEVEL_STEPS)
 BASE_APPLES = 1                     # so viele Äpfel liegen zu Beginn (Level 0)
 MAX_APPLES = BASE_APPLES + MAX_LEVEL   # Obergrenze durch das Level-System
@@ -54,7 +59,7 @@ def apples_on_field(level):
 
 
 def score_multiplier(level):
-    """Punkte-Multiplikator im Competitive-Modus (steigt je Stufe: x1..x8)."""
+    """Punkte-Multiplikator im Competitive-Modus (steigt je Stufe: x1..x16)."""
     return 1 + max(0, level)
 
 
