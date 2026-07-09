@@ -91,10 +91,10 @@ direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
   bis zu 150 %. Es gibt **15 Level** (Multiplikator bis x16, bis zu 16 Äpfel
   gleichzeitig); die Stufen stehen in `games/levels/snake-comp.json` und lassen sich
   dort ohne Code-Änderung erweitern, die übrige Feineinstellung in `competitive.py`.
-- **NEU - HARDCORE** (Schalter im Competitive-Setup, Taste **H**): das Spielfeld
-  **leuchtet rot** und jeder **Boost frisst die Länge** deiner Schlange (der Rand
-  leuchtet beim Boosten kräftiger). Nur im Competitive verfügbar; die Länge fällt
-  nie unter das Minimum. Wird in `settings.json` gemerkt.
+- **NEU - HARDCORE** (Schalter im Competitive-Setup, Taste **H**): jeder **Boost
+  frisst die Länge** deiner Schlange; ein rot leuchtender **HARDCORE-Schriftzug**
+  markiert den Modus. Nur im Competitive verfügbar; die Länge fällt nie unter das
+  Minimum. Wird in `settings.json` gemerkt.
 - **Goldäpfel** (zeitweise) geben viele Punkte und füllen den Boost sofort auf.
 - Optionale **Wände-durchgehen**, Bonus-Äpfel, **Prestige** (Einzelspieler, Taste **P**).
 - **NEU - Personalisieren** (Pinsel-Knopf ganz oben rechts im Setup, oder Taste **C**):
@@ -474,10 +474,9 @@ duel)**. The mode is chosen right in the pre-game screen
   or grow up to 150 %. There are **15 levels** (multiplier up to x16, up to 16 apples
   at once); the levels live in `games/levels/snake-comp.json` and can be extended there
   without touching code, the rest of the tuning lives in `competitive.py`.
-- **NEW - HARDCORE** (toggle in the Competitive setup, key **H**): the playfield
-  **glows red** and every **boost eats your snake's length** (the border glows brighter
-  while boosting). Competitive only; length never drops below the minimum. Remembered
-  in `settings.json`.
+- **NEW - HARDCORE** (toggle in the Competitive setup, key **H**): every **boost eats
+  your snake's length**; a red glowing **HARDCORE label** marks the mode. Competitive
+  only; length never drops below the minimum. Remembered in `settings.json`.
 - **Golden apples** (temporary) give lots of points and instantly refill the boost.
 - Optional **wrap-around walls**, bonus apples, **prestige** (single-player, key **P**).
 - **NEW - Personalize** (brush button in the very top-right of setup, or key **C**):

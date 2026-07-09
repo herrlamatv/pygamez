@@ -1391,9 +1391,6 @@ class SnakeGame(Game):
         else:
             self._draw_world_2d()
 
-        if self.hardcore_active:
-            self._draw_hardcore_overlay()
-
         self._draw_hud()
         self._draw_banner()
 
@@ -2139,33 +2136,6 @@ class SnakeGame(Game):
             self._draw_comp_footer()
         elif not self.game_over and self.mode_key != "timed":
             self._draw_next_prestige()
-
-    def _draw_hardcore_overlay(self):
-        """Rotes Pulsieren am Spielfeldrand - der Kern des HARDCORE-Looks.
-
-        Beim Boosten (= genau dann, wenn Länge verbrannt wird) leuchtet der Rand
-        deutlich kräftiger, damit der Preis des Boosts sofort spürbar ist.
-        """
-        s = self.surface
-        w, h = self.width, self.height
-        puls = 0.5 + 0.5 * math.sin(pygame.time.get_ticks() * 0.005)
-        boosting = any(sn.alive and sn.boost_on and sn.stamina > 0
-                       for sn in self.snakes)
-        peak = 215 if boosting else 130
-        layers = 12
-        step = max(3, min(w, h) // 48)
-        ov = pygame.Surface((w, h), pygame.SRCALPHA)
-        for i in range(layers):
-            inset = i * step
-            if inset * 2 >= min(w, h):
-                break
-            a = int(peak * (0.35 + 0.65 * puls) * (1 - i / layers) ** 2)
-            if a <= 0:
-                continue
-            rect = pygame.Rect(inset, inset, w - 2 * inset, h - 2 * inset)
-            pygame.draw.rect(ov, (*COL_HARDCORE, a), rect,
-                             width=step + 1, border_radius=14)
-        s.blit(ov, (0, 0))
 
     def _draw_comp_hud(self):
         """Competitive-Kopfzeile: gesammelte Äpfel, Level, Slot-Bonus."""
