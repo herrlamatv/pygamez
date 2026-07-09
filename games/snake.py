@@ -230,6 +230,9 @@ class SnakeGame(Game):
         self.particles = []
         self.anim_t = 0.0
         self._ngb_menu = None          # aktives Personalisierungs-Menü (oder None)
+        self._grid_surf = None         # gecachtes Raster-Overlay (NGB)
+        self._grid_key = None
+        self._grid_font = pygame.font.SysFont("consolas", max(9, CELL - 8))
 
         # Zustand der 3D-Ansicht
         self.particles3d = []          # [x, y, z, vx, vy, vz, life, farbe]
@@ -1236,15 +1239,95 @@ class SnakeGame(Game):
         if self.game_over:
             self._draw_game_over()
 
+    def _draw_grid(self, s):
+        """Zeichnet das Spielfeld-Gitter - normal oder als NGB-Raster-Overlay.
+
+        Das Raster-Overlay (Schachbrett aus einer Farbreihenfolge) markiert die
+        horizontalen und vertikalen Linien, damit man Reihen/Spalten auch auf
+        grossen Feldern von Weitem erkennt. Es ist statisch und wird gecacht.
+        """
+        s.fill(COL_BG)
+        seq = ngb.grid_sequence()
+        if not seq:
+            for x in range(0, self.cols * CELL, CELL):
+                pygame.draw.line(s, COL_GRID, (x, 0), (x, self.rows * CELL))
+            for y in range(0, self.rows * CELL, CELL):
+                pygame.draw.line(s, COL_GRID, (0, y), (self.cols * CELL, y))
+            return
+        key = (self.cols, self.rows, tuple(tuple(c) for c in seq))
+        if self._grid_key != key:
+            self._grid_key = key
+            self._grid_surf = self._build_grid_overlay(seq)
+        s.blit(self._grid_surf, (0, 0))
+
+    @staticmethod
+    def _brighten(col, amt):
+        return tuple(min(255, c + amt) for c in col)
+
+    @staticmethod
+    def _col_label(i):
+        """Spaltenname im Tabellen-Stil: a, b, ..., z, aa, ab, ... (beliebig breit)."""
+        name = ""
+        i += 1
+        while i > 0:
+            i, r = divmod(i - 1, 26)
+            name = chr(ord("a") + r) + name
+        return name
+
+    def _faded_text(self, text, color, alpha):
+        """Antialiastes Text-Bild mit skalierter Deckkraft (für Watermark-Labels)."""
+        img = self._grid_font.render(str(text), True, color)
+        img.fill((255, 255, 255, alpha), special_flags=pygame.BLEND_RGBA_MULT)
+        return img
+
+    def _build_grid_overlay(self, seq):
+        """Rendert den Koordinaten-Wegweiser einmalig auf eine Surface (Cache).
+
+        Reihen (horizontal) tragen **Nummern** (1..N) am linken und rechten Rand;
+        Spalten (vertikal) tragen **Buchstaben** (a, b, ...) oben und unten.
+        Zusätzlich färbt die gewählte Farbreihenfolge
+        die Reihen als dezente Bänder, damit man eine Reihe leicht quer verfolgt.
+        So sieht man z.B. bei Position 8z, dass der Apfel bei 8a in derselben
+        Reihe (8) liegt.
+        """
+        n = len(seq)
+        w, h = self.cols * CELL, self.rows * CELL
+        surf = pygame.Surface((w, h))
+        surf.fill(COL_BG)
+
+        # 1) Reihen-Bänder (horizontal, sehr dezent zum Hintergrund gemischt)
+        for gy in range(self.rows):
+            band = seq[gy % n]
+            tint = tuple((c + COL_BG[i] * 3) // 4 for i, c in enumerate(band))
+            surf.fill(tint, (0, gy * CELL, w, CELL))
+
+        # 2) dezente Gitterlinien
+        line = tuple((c + COL_BG[i]) // 2 for i, c in enumerate(seq[0]))
+        for gx in range(self.cols + 1):
+            pygame.draw.line(surf, line, (gx * CELL, 0), (gx * CELL, h))
+        for gy in range(self.rows + 1):
+            pygame.draw.line(surf, line, (0, gy * CELL), (w, gy * CELL))
+
+        # 3) Reihen-Nummern nur an den Rändern (links + rechts)
+        for gy in range(self.rows):
+            num = str(gy + 1)
+            col = self._brighten(seq[gy % n], 110)
+            edge = self._faded_text(num, col, 170)
+            cy = gy * CELL + CELL // 2
+            surf.blit(edge, edge.get_rect(midleft=(3, cy)))
+            surf.blit(edge, edge.get_rect(midright=(w - 3, cy)))
+
+        # 4) Spalten-Buchstaben (oben + unten)
+        for gx in range(self.cols):
+            lab = self._faded_text(self._col_label(gx), (205, 212, 226), 155)
+            cx = gx * CELL + CELL // 2
+            surf.blit(lab, lab.get_rect(midtop=(cx, 1)))
+            surf.blit(lab, lab.get_rect(midbottom=(cx, h - 1)))
+        return surf
+
     def _draw_world_2d(self):
         s = self.surface
-        s.fill(COL_BG)
-
-        # Gitter
-        for x in range(0, self.cols * CELL, CELL):
-            pygame.draw.line(s, COL_GRID, (x, 0), (x, self.rows * CELL))
-        for y in range(0, self.rows * CELL, CELL):
-            pygame.draw.line(s, COL_GRID, (0, y), (self.cols * CELL, y))
+        self._draw_grid(s)
 
         # Hindernisse
         for (x, y) in self.obstacles:

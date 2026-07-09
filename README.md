@@ -87,10 +87,16 @@ direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
 - **Goldäpfel** (zeitweise) geben viele Punkte und füllen den Boost sofort auf.
 - Optionale **Wände-durchgehen**, Bonus-Äpfel, **Prestige** (Einzelspieler, Taste **P**).
 - **NEU - Personalisieren** (Pinsel-Knopf ganz oben rechts im Setup, oder Taste **C**):
-  ein reines Optik-Menü ("Mods", die *nie* das Spiel verändern) für die **Kopffarbe**
-  der Schlange - 4 Blau-Türkis-Vorlagen (von mehr Blau bis mehr Türkis), Rot, Orange
-  und eine **eigene Farbe** über RGB-Regler. Die Auswahl wird in `mem-ngb.json`
-  gespeichert; die ganze visuelle Personalisierung läuft über das Modul `ngb.py`.
+  ein reines Optik-Menü ("Mods", die *nie* das Spiel verändern) mit zwei Reitern:
+  - **Kopf**: die **Kopffarbe** der Schlange - 4 Blau-Türkis-Vorlagen (von mehr Blau
+    bis mehr Türkis), Rot, Orange und eine **eigene Farbe** über RGB-Regler.
+  - **Raster (Wegweiser)**: blendet ein **Koordinaten-Raster** über das Feld -
+    **Reihen-Nummern** (am linken und rechten Rand) und **Spalten-Buchstaben**
+    (oben/unten). So sieht man auf grossen Feldern sofort, dass z.B. der
+    Apfel bei *8a* in derselben Reihe *8* liegt wie die eigene Position *8z*. Die
+    Farbreihenfolge (5 Vorlagen + zwei eigene Farben A/B) bestimmt das Farbthema.
+  Alles wird in `mem-ngb.json` gespeichert; die visuelle Personalisierung läuft über
+  das Modul `ngb.py`.
 - Optik: abgerundete Schlange mit Augen (Kopf standardmäßig türkis), Boost-Glow, Partikel.
 
 **Pong**
@@ -267,7 +273,7 @@ highscore.py         Laden/Speichern der Highscores (Abschnitt in mem.json)
 store.py             Zentrale Speicherdatei mem.json (Abschnitte: mem, highscores)
 prestige.py          Prestige-System für Snake
 competitive.py       Kennzahlen für den Competitive-Modus von Snake (Level, Slot, Wett-Äpfel)
-ngb.py               Visuelle Personalisierung ("Mods"): Kopffarbe + Menü (mem-ngb.json)
+ngb.py               Visuelle Personalisierung ("Mods"): Kopffarbe + Koordinaten-Raster + Menü (mem-ngb.json)
 i18n.py              Übersetzungs-Engine (lädt lang/*.json, t("schlüssel"))
 lang/
   de.json  en.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
@@ -450,10 +456,16 @@ duel)**. The mode is chosen right in the pre-game screen
 - **Golden apples** (temporary) give lots of points and instantly refill the boost.
 - Optional **wrap-around walls**, bonus apples, **prestige** (single-player, key **P**).
 - **NEW - Personalize** (brush button in the very top-right of setup, or key **C**):
-  a visual-only menu ("mods" that *never* change gameplay) for the snake's **head
-  color** - 4 blue-teal presets (from more blue to more teal), red, orange and a
-  **custom color** via RGB sliders. The choice is stored in `mem-ngb.json`; all
-  visual personalization runs through the `ngb.py` module.
+  a visual-only menu ("mods" that *never* change gameplay) with two tabs:
+  - **Head**: the snake's **head color** - 4 blue-teal presets (from more blue to more
+    teal), red, orange and a **custom color** via RGB sliders.
+  - **Grid (signpost)**: overlays a **coordinate grid** on the field - **row numbers**
+    (on the left and right edges) and **column letters** (top/bottom). So on large
+    boards you instantly see that e.g. the apple at *8a* is in the
+    same row *8* as your own position *8z*. The color sequence (5 presets + two custom
+    colors A/B) sets the color theme.
+  Everything is stored in `mem-ngb.json`; all visual personalization runs through the
+  `ngb.py` module.
 - Look: rounded snake with eyes (head is teal by default), boost glow, particles.
 
 **Pong**
@@ -629,7 +641,7 @@ highscore.py         Load/save high scores (section in mem.json)
 store.py             Central save file mem.json (sections: mem, highscores)
 prestige.py          Prestige system for Snake
 competitive.py       Tuning for Snake's Competitive mode (levels, slot machine, gamble apples)
-ngb.py               Visual personalization ("mods"): head color + menu (mem-ngb.json)
+ngb.py               Visual personalization ("mods"): head color + coordinate grid + menu (mem-ngb.json)
 i18n.py              Translation engine (loads lang/*.json, t("key"))
 lang/
   de.json  en.json   Language strings (one placeholder key per text)
