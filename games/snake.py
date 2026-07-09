@@ -108,7 +108,7 @@ def _ease_out_back(p):
     return 1.0 + c3 * (p - 1) ** 3 + c1 * (p - 1) ** 2
 
 # Spielzustände
-SETUP, PLAY, PERSONALIZE = "setup", "play", "personalize"
+SETUP, PLAY, PERSONALIZE, CAM3D = "setup", "play", "personalize", "cam3d"
 
 COL_BG = (15, 15, 25)
 COL_GRID = (25, 25, 40)
@@ -161,10 +161,15 @@ FOV_NORMAL = 1.12                 # Brennweite normal (x Fensterhöhe)
 FOV_BOOST = 0.94                  # Brennweite bei Boost (weitwinkliger = Speed-Gefühl)
 
 CAM_BACK = 3.6                    # Kamera: Abstand hinter dem Kopf
-CAM_H = 2.6                       # Kamera: Höhe über dem Boden
+CAM_H = 2.6                       # Kamera: Höhe über dem Boden (Standard)
 CAM_AHEAD = 2.6                   # Blickpunkt: so weit vor dem Kopf
 CAM_LOOK_H = 0.35                 # Blickpunkt: Höhe
 CAM_SMOOTH = 6.0                  # Glättungsfaktor der Kamerabewegung (1/s)
+
+# 3D-Kamera-Optionen (im Setup unter "3D-Kamera" einstellbar, in settings.json)
+FOV_BOOST_DELTA = FOV_NORMAL - FOV_BOOST   # so viel weitwinkliger beim Boost
+CAM_FOV_MIN, CAM_FOV_MAX, CAM_FOV_STEP = 0.80, 1.50, 0.02
+CAM_H_MIN, CAM_H_MAX, CAM_H_STEP = 1.6, 4.2, 0.1
 
 COL_SKY_TOP = (8, 10, 22)         # Himmel oben
 COL_SKY_HOR = (46, 52, 86)        # Himmel am Horizont
@@ -221,6 +226,13 @@ class SnakeGame(Game):
         mode_key = snk.get("mode", "classic")
         self.mode_index = MODE_KEYS.index(mode_key) if mode_key in MODE_KEYS else 0
         self.view3d = bool(snk.get("view3d", False))
+        # 3D-Kamera-Optionen (Smooth-Shake, FOV, Höhe, Seitwärts-Shake)
+        self.cam_smooth = bool(snk.get("cam_smooth", True))
+        self.cam_fov = min(CAM_FOV_MAX, max(CAM_FOV_MIN,
+                                            float(snk.get("cam_fov", FOV_NORMAL))))
+        self.cam_height = min(CAM_H_MAX, max(CAM_H_MIN,
+                                             float(snk.get("cam_height", CAM_H))))
+        self.cam_turn_shake = bool(snk.get("cam_turn_shake", False))
         if self.view3d_active and self.mode_key not in MODES_3D:
             self.mode_index = MODE_KEYS.index("classic")
         if self.multiplayer and self.mode_key == "competitive":
@@ -315,13 +327,13 @@ class SnakeGame(Game):
         self._run_t = 0.0              # Laufzeit der Runde (für Einblend-Hinweise)
         self._orbit_a = 0.0            # Orbit-Winkel nach dem Game Over
         self._go_last = None           # Zeitmessung der Game-Over-Animation
-        self._fov_mul = FOV_NORMAL
+        self._fov_mul = self.cam_fov
         sn = self.snakes[0]
         hx, hy = sn.body[-1]
         fx, fz = float(sn.direction[0]), float(sn.direction[1])
         self._cam_dir = (fx, fz)
         head = (hx + 0.5, 0.0, hy + 0.5)
-        self._cam_pos = (head[0] - fx * CAM_BACK, CAM_H, head[2] - fz * CAM_BACK)
+        self._cam_pos = (head[0] - fx * CAM_BACK, self.cam_height, head[2] - fz * CAM_BACK)
         self._cam_look = (head[0] + fx * CAM_AHEAD, CAM_LOOK_H, head[2] + fz * CAM_AHEAD)
 
     def _start_play(self):
@@ -487,6 +499,21 @@ class SnakeGame(Game):
         self.apples_rect = pygame.Rect(cx - bw // 2, y0 + 3 * (bh + gap), bw, bh)
         self.start_rect = pygame.Rect(cx - 95, y0 + 4 * (bh + gap) + 4, 190, 48)
 
+        # 3D-Kamera-Menü (eigener Screen; nur im 3D-Modus erreichbar)
+        cbw, cbh, cgap, cy0 = min(440, self.width - 50), 46, 10, 150
+        self.cam_smooth_rect = pygame.Rect(cx - cbw // 2, cy0, cbw, cbh)
+        self.cam_fov_rect = pygame.Rect(cx - cbw // 2, cy0 + (cbh + cgap), cbw, cbh)
+        self.cam_height_rect = pygame.Rect(cx - cbw // 2, cy0 + 2 * (cbh + cgap), cbw, cbh)
+        self.cam_turn_rect = pygame.Rect(cx - cbw // 2, cy0 + 3 * (cbh + cgap), cbw, cbh)
+        self.cam_back_rect = pygame.Rect(cx - 95, cy0 + 4 * (cbh + cgap) + 8, 190, 46)
+
+        def _pm(rect):                     # -/+ Knöpfe rechts in einer Wertzeile
+            plus = pygame.Rect(rect.right - 46, rect.centery - 16, 32, 32)
+            minus = pygame.Rect(rect.right - 148, rect.centery - 16, 32, 32)
+            return minus, plus
+        self.cam_fov_minus, self.cam_fov_plus = _pm(self.cam_fov_rect)
+        self.cam_height_minus, self.cam_height_plus = _pm(self.cam_height_rect)
+
     def _save_snake_setting(self, key, value):
         if isinstance(self.settings, dict):
             snk = self.settings.setdefault("snake", {})
@@ -541,6 +568,58 @@ class SnakeGame(Game):
         self.state = PERSONALIZE
         self.play_sound("click")
 
+    def _open_cam3d(self):
+        """Öffnet das 3D-Kamera-Menü (Smooth-Shake, FOV, Höhe, Abbiege-Ruckeln)."""
+        self.state = CAM3D
+        self.play_sound("click")
+
+    def _adjust_fov(self, d):
+        self.cam_fov = round(min(CAM_FOV_MAX, max(CAM_FOV_MIN, self.cam_fov + d)), 2)
+        self._save_snake_setting("cam_fov", self.cam_fov)
+        self.play_sound("click")
+
+    def _adjust_height(self, d):
+        self.cam_height = round(min(CAM_H_MAX, max(CAM_H_MIN, self.cam_height + d)), 2)
+        self._save_snake_setting("cam_height", self.cam_height)
+        self.play_sound("click")
+
+    def _handle_cam3d_event(self, event):
+        if event.kind == InputEvent.KEYDOWN:
+            if event.key in ("Escape", "Return", "space", "k", "K"):
+                self.state = SETUP
+                self.play_sound("click")
+            elif event.key in ("Left", "a", "A"):
+                self._adjust_fov(-CAM_FOV_STEP)
+            elif event.key in ("Right", "d", "D"):
+                self._adjust_fov(+CAM_FOV_STEP)
+            elif event.key in ("Up", "w", "W"):
+                self._adjust_height(+CAM_H_STEP)
+            elif event.key in ("Down", "s", "S"):
+                self._adjust_height(-CAM_H_STEP)
+            return
+        if event.kind != InputEvent.MOUSEDOWN:
+            return
+        p = event.pos
+        if self.cam_smooth_rect.collidepoint(p):
+            self.cam_smooth = not self.cam_smooth
+            self._save_snake_setting("cam_smooth", self.cam_smooth)
+            self.play_sound("select")
+        elif self.cam_turn_rect.collidepoint(p):
+            self.cam_turn_shake = not self.cam_turn_shake
+            self._save_snake_setting("cam_turn_shake", self.cam_turn_shake)
+            self.play_sound("select")
+        elif self.cam_fov_minus.collidepoint(p):
+            self._adjust_fov(-CAM_FOV_STEP)
+        elif self.cam_fov_plus.collidepoint(p):
+            self._adjust_fov(+CAM_FOV_STEP)
+        elif self.cam_height_minus.collidepoint(p):
+            self._adjust_height(-CAM_H_STEP)
+        elif self.cam_height_plus.collidepoint(p):
+            self._adjust_height(+CAM_H_STEP)
+        elif self.cam_back_rect.collidepoint(p):
+            self.state = SETUP
+            self.play_sound("click")
+
     def _handle_setup_event(self, event):
         if event.kind == InputEvent.KEYDOWN:
             if event.key in ("Left", "a", "A"):
@@ -564,6 +643,9 @@ class SnakeGame(Game):
                 self._cycle_apples()
             elif event.key in ("c", "C"):
                 self._open_personalize()
+            elif event.key in ("k", "K"):
+                if self.view3d_active:
+                    self._open_cam3d()
             elif event.key in ("Return", "space"):
                 self.play_sound("click")
                 self._start_play()
@@ -580,7 +662,10 @@ class SnakeGame(Game):
             elif self.view_rect.collidepoint(p):
                 self._toggle_view()
             elif self.wrap_rect.collidepoint(p):
-                self._toggle_setting("wrap")
+                if self.view3d_active:
+                    self._open_cam3d()     # in 3D ist die Zeile der Kamera-Knopf
+                else:
+                    self._toggle_setting("wrap")
             elif self.bonus_rect.collidepoint(p):
                 self._toggle_setting("bonus")
             elif self.apples_rect.collidepoint(p):
@@ -597,6 +682,9 @@ class SnakeGame(Game):
                 if self._ngb_menu.done:
                     self._ngb_menu = None
                     self.state = SETUP     # zurück ins Setup; Kopffarbe ist übernommen
+            return
+        if self.state == CAM3D:
+            self._handle_cam3d_event(event)
             return
         if self.state == SETUP:
             self._handle_setup_event(event)
@@ -801,8 +889,11 @@ class SnakeGame(Game):
                 continue
             sn.prev_body = list(sn.body)         # für die 3D-Interpolation
             if self.view3d_active and sn.turn_queue:
+                alt = sn.direction
                 sn.direction = _rotate(sn.direction, sn.turn_queue.pop(0))
                 sn.next_direction = sn.direction
+                if self.cam_turn_shake and sn.direction != alt:
+                    self._shake = max(self._shake, 0.22)   # Ruckeln beim Abbiegen
             else:
                 sn.direction = sn.next_direction
             hx, hy = sn.body[-1]
@@ -1160,8 +1251,11 @@ class SnakeGame(Game):
             tx, tz = float(sn.direction[0]), float(sn.direction[1])
             back, look = CAM_BACK, None
 
-        # Blickrichtung weich nachziehen
-        k = min(1.0, dt * 4.5)
+        # Blickrichtung weich nachziehen. Smooth-Shake = sanftere Glättung, damit
+        # die Kamera beim Bewegen/Drehen deutlich weniger ruckelt.
+        dir_rate = 2.6 if self.cam_smooth else 4.5
+        pos_rate = CAM_SMOOTH * (0.55 if self.cam_smooth else 1.0)
+        k = min(1.0, dt * dir_rate)
         fx = self._cam_dir[0] + (tx - self._cam_dir[0]) * k
         fz = self._cam_dir[1] + (tz - self._cam_dir[1]) * k
         ln = math.hypot(fx, fz)
@@ -1169,18 +1263,18 @@ class SnakeGame(Game):
             self._cam_dir = (fx / ln, fz / ln)
         fx, fz = self._cam_dir
 
-        tgt_pos = (head[0] - fx * back, CAM_H, head[2] - fz * back)
+        tgt_pos = (head[0] - fx * back, self.cam_height, head[2] - fz * back)
         tgt_look = look or (head[0] + fx * CAM_AHEAD, CAM_LOOK_H,
                             head[2] + fz * CAM_AHEAD)
-        kp = min(1.0, dt * CAM_SMOOTH)
+        kp = min(1.0, dt * pos_rate)
         self._cam_pos = tuple(a + (b - a) * kp
                               for a, b in zip(self._cam_pos, tgt_pos))
         self._cam_look = tuple(a + (b - a) * kp
                                for a, b in zip(self._cam_look, tgt_look))
 
-        # Sichtfeld: beim Boost weitwinkliger (Geschwindigkeitsgefühl)
+        # Sichtfeld: Grundwert aus den Optionen, beim Boost weitwinkliger.
         boost = sn.alive and sn.boost_on and sn.stamina > 0
-        want = FOV_BOOST if boost else FOV_NORMAL
+        want = self.cam_fov - (FOV_BOOST_DELTA if boost else 0.0)
         self._fov_mul += (want - self._fov_mul) * min(1.0, dt * 6.0)
 
     def _interp_cells(self, sn):
@@ -1238,6 +1332,9 @@ class SnakeGame(Game):
         if self.state == PERSONALIZE:
             if self._ngb_menu is not None:
                 self._ngb_menu.draw(self.surface)
+            return
+        if self.state == CAM3D:
+            self._draw_cam3d()
             return
         if self.state == SETUP:
             self._draw_setup()
@@ -1577,7 +1674,7 @@ class SnakeGame(Game):
         self._scx = self.width / 2
         self._scy = self.height * 0.5
         if self._shake > 0:
-            amp = 16 * self._shake
+            amp = 16 * self._shake * (0.5 if self.cam_smooth else 1.0)
             self._scx += random.uniform(-amp, amp)
             self._scy += random.uniform(-amp, amp)
         self._f = self.height * self._fov_mul
@@ -2224,8 +2321,7 @@ class SnakeGame(Game):
                          self.view_rect.centery - img.get_height() // 2))
 
         if self.view3d_active:
-            self._draw_disabled_row(self.wrap_rect, i18n.t("snake.wrap_toggle"),
-                                    i18n.t("snake.wrap_3d"))
+            self._draw_cam_button(self.wrap_rect)
         else:
             self._draw_setup_toggle(self.wrap_rect, i18n.t("snake.wrap_toggle"),
                                     self.wrap)
@@ -2266,6 +2362,57 @@ class SnakeGame(Game):
         pygame.draw.polygon(s, tip, [(hx0 - 4, hy0 + 2), (hx0 + 5, hy0 - 5),
                                      (hx0 + 2, hy0 + 6)])
         pygame.draw.circle(s, tip, (hx0 - 1, hy0 + 2), 3)
+
+    def _draw_cam_button(self, rect):
+        """Setup-Zeile im 3D-Modus: öffnet das 3D-Kamera-Menü."""
+        s = self.surface
+        pygame.draw.rect(s, COL_BTN, rect, border_radius=8)
+        pygame.draw.rect(s, COL_ACCENT, rect, 1, border_radius=8)
+        lab = self.font.render(i18n.t("snake.cam.open"), True, COL_TEXT)
+        s.blit(lab, (rect.x + 16, rect.centery - lab.get_height() // 2))
+        stat = i18n.t("common.on") if self.cam_smooth else i18n.t("common.off")
+        img = self.font.render(f"{stat}  ›", True, COL_ACCENT)
+        s.blit(img, (rect.right - img.get_width() - 14,
+                     rect.centery - img.get_height() // 2))
+
+    # ----- 3D-Kamera-Menü ----------------------------------------------
+    def _draw_cam3d(self):
+        s = self.surface
+        s.fill(COL_BG)
+        title = self.big_font.render(i18n.t("snake.cam.title"), True, COL_TEXT)
+        s.blit(title, title.get_rect(center=(self.width // 2, 60)))
+        sub = self._small.render(i18n.t("snake.cam.subtitle"), True, COL_DIM)
+        s.blit(sub, sub.get_rect(center=(self.width // 2, 100)))
+
+        self._draw_setup_toggle(self.cam_smooth_rect, i18n.t("snake.cam.smooth"),
+                                self.cam_smooth)
+        self._draw_cam_value(self.cam_fov_rect, i18n.t("snake.cam.fov"),
+                             f"{self.cam_fov:.2f}", self.cam_fov_minus, self.cam_fov_plus)
+        self._draw_cam_value(self.cam_height_rect, i18n.t("snake.cam.height"),
+                             f"{self.cam_height:.1f}", self.cam_height_minus,
+                             self.cam_height_plus)
+        self._draw_setup_toggle(self.cam_turn_rect, i18n.t("snake.cam.turn_shake"),
+                                self.cam_turn_shake)
+
+        pygame.draw.rect(s, COL_BTN_ON, self.cam_back_rect, border_radius=10)
+        bt = self.font.render(i18n.t("snake.cam.back"), True, COL_TEXT)
+        s.blit(bt, bt.get_rect(center=self.cam_back_rect.center))
+        hint = self._tiny.render(i18n.t("snake.cam.hint"), True, COL_DIM)
+        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 16)))
+
+    def _draw_cam_value(self, rect, label, value, minus, plus):
+        """Wertzeile mit -/+ Knöpfen (FOV / Kamerahöhe)."""
+        s = self.surface
+        pygame.draw.rect(s, COL_BTN, rect, border_radius=8)
+        pygame.draw.rect(s, COL_DIM, rect, 1, border_radius=8)
+        lab = self.font.render(label, True, COL_TEXT)
+        s.blit(lab, (rect.x + 16, rect.centery - lab.get_height() // 2))
+        for r, sym in ((minus, "-"), (plus, "+")):
+            pygame.draw.rect(s, COL_BTN_ON, r, border_radius=6)
+            g = self.font.render(sym, True, COL_TEXT)
+            s.blit(g, g.get_rect(center=r.center))
+        val = self.font.render(value, True, COL_WLS_ON)
+        s.blit(val, val.get_rect(center=((minus.right + plus.left) // 2, rect.centery)))
 
     def _draw_disabled_row(self, rect, label, note):
         """Abgeblendete Setup-Zeile mit Hinweistext (nicht anklickbar)."""

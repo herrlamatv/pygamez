@@ -68,6 +68,11 @@ direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
   Kamera die Schlange. Beim Boost weitet sich das Sichtfeld. In 3D wählbar:
   *Klassisch* und *Hindernisse* (die Wände sind dort immer fest, 3D gibt es
   nur im Einzelspieler). Die Ansicht wird in `settings.json` gemerkt.
+- **NEU - 3D-Kamera-Optionen** (im 3D-Setup die Zeile *3D-Kamera / Smooth-Shake*
+  anklicken oder Taste **K**): ein eigenes Menü mit **Smooth-Shake** (sanftere Kamera,
+  deutlich weniger Ruckeln beim Bewegen/Drehen), einstellbarem **Sichtfeld (FOV)** und
+  **Kamerahöhe** sowie einem Schalter **Ruckeln beim Abbiegen** (Screen-Shake beim
+  Links/Rechts-Drehen an/aus). Alles wird in `settings.json` gemerkt.
 - **Boost**: Boost-Taste **gedrückt halten** = Turbo (doppeltes Tempo), verbraucht
   Ausdauer (Balken); ist sie leer, schaltet der Boost ab und lädt sich wieder auf.
   Standard P1 = Leertaste/Shift-links, P2 = Enter/Shift-rechts.
@@ -441,6 +446,11 @@ duel)**. The mode is chosen right in the pre-game screen
   over the camera slowly orbits the snake. Boosting widens the field of view.
   Available in 3D: *Classic* and *Obstacles* (walls are always solid there,
   3D is single-player only). The view is remembered in `settings.json`.
+- **NEW - 3D camera options** (in the 3D setup click the *3D camera / smooth shake*
+  row, or key **K**): a dedicated menu with **smooth shake** (a gentler camera, far
+  less jitter when moving/turning), adjustable **field of view (FOV)** and **camera
+  height**, plus a **shake when turning** toggle (screen shake on left/right turns
+  on/off). All remembered in `settings.json`.
 - **Boost**: **hold** the boost key = turbo (double speed), consumes stamina
   (bar); once empty, the boost switches off and recharges. Default P1 =
   Space/Left-Shift, P2 = Enter/Right-Shift.
