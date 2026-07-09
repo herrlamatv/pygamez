@@ -250,6 +250,7 @@
   "snake.multiplayer": "Multijoueur",
   "snake.next_prestige": "Prestige {roman} :  {apples} pommes   -{length} longueur",
   "snake.press_p": "   ->  appuie sur P !",
+  "snake.purple_banner": "Pomme violette · longueur",
   "snake.prestige": "Prestige {roman}",
   "snake.prestige_info": "Prestige {roman}   {blocks} blocs/pomme",
   "snake.setup_hint": "Flèches/1-6=mode V=vue W=murs B=bonus F=pommes C=skin Entrée=démarrer",

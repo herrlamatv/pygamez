@@ -88,6 +88,9 @@ SLOT_REEL_STOPS = (0.9, 1.35, 1.8)
 SLOT_SHOW = 1.7
 SLOT_SPIN_SPEED = 16.0         # Symbole pro Sekunde beim Drehen
 
+# Banner: gut sichtbare Einblendung oben mittig (z.B. lila Multiplikator)
+BANNER_TIME = 2.0
+
 # Wählbare Anzahl gleichzeitig auf dem Feld liegender Äpfel (Setup-Einstellung).
 APPLE_COUNTS = (1, 2, 3, 5)
 
@@ -349,6 +352,7 @@ class SnakeGame(Game):
         self.specials = {}             # Zelle -> dict(type, timer)  (blau/lila)
         self.slot = None               # aktive Slot-Machine (dict) oder None
         self.float_texts = []          # aufsteigende, verblassende Hinweistexte
+        self._banner = None            # große Einblendung oben mittig (Multiplikator)
         self._purple_pending = None    # nach dem Schritt anzuwendender lila Effekt
         self._slot_pending = None      # nach dem Schritt zu öffnende Slot-Machine
 
@@ -714,6 +718,7 @@ class SnakeGame(Game):
         self._update_particles3d(dt)
         self._update_food_anim(dt)
         self._update_float_texts(dt)
+        self._update_banner(dt)
         if self._shake > 0.0:
             self._shake = max(0.0, self._shake - dt * 1.6)
         if self.state == PLAY and self.view3d_active:
@@ -966,6 +971,18 @@ class SnakeGame(Game):
         self.rumble(80)
         self._spawn_particles(sn.body[-1], COL_PURPLE, 14)
         self._add_float_text(sn.body[-1], f"x{factor:g}", col)
+        # Multiplikator gut sichtbar oben mittig einblenden
+        self._show_banner(f"×{factor:g}", col, i18n.t("snake.purple_banner"))
+
+    def _show_banner(self, text, color, sub=None):
+        """Blendet eine große Einblendung oben mittig ein (Auto-Ausblendung)."""
+        self._banner = dict(text=text, color=color, sub=sub, t=BANNER_TIME)
+
+    def _update_banner(self, dt):
+        if self._banner is not None:
+            self._banner["t"] -= dt
+            if self._banner["t"] <= 0:
+                self._banner = None
 
     # ----- Competitive: Slot-Machine ------------------------------------
     def _open_slot(self, sn):
@@ -1232,6 +1249,7 @@ class SnakeGame(Game):
             self._draw_world_2d()
 
         self._draw_hud()
+        self._draw_banner()
 
         if self.slot is not None:
             self._draw_slot()
@@ -1403,6 +1421,38 @@ class SnakeGame(Game):
             img = self._small.render(ft["text"], True, ft["color"])
             img.set_alpha(max(0, min(255, int(255 * (ft["t"] / 1.1)))))
             s.blit(img, img.get_rect(center=(int(ft["x"]), int(ft["y"]))))
+
+    def _draw_banner(self):
+        """Große Einblendung oben mittig (z.B. Multiplikator des lila Apfels)."""
+        b = self._banner
+        if not b:
+            return
+        appear = min(1.0, (BANNER_TIME - b["t"]) / 0.18)     # Einblenden (Pop)
+        fade = min(1.0, max(0.0, b["t"] / 0.5))              # Ausblenden am Ende
+        a = int(255 * min(appear, fade))
+        if a <= 0:
+            return
+        big = self.big_font.render(b["text"], True, b["color"])
+        sub = self._small.render(b["sub"], True, COL_DIM) if b.get("sub") else None
+        pad = 18
+        tw = max(big.get_width(), sub.get_width() if sub else 0)
+        th = big.get_height() + (sub.get_height() + 4 if sub else 0)
+        pw, ph = tw + pad * 2, th + pad
+        panel = pygame.Surface((pw, ph), pygame.SRCALPHA)
+        pygame.draw.rect(panel, (18, 20, 32, 215), panel.get_rect(), border_radius=12)
+        pygame.draw.rect(panel, (*b["color"], 255), panel.get_rect(), 2, border_radius=12)
+        y = pad // 2
+        if sub:
+            panel.blit(sub, sub.get_rect(midtop=(pw // 2, 5)))
+            y = 5 + sub.get_height() + 2
+        panel.blit(big, big.get_rect(midtop=(pw // 2, y)))
+        # Pop beim Erscheinen + kleiner Slide von oben
+        scale = 0.82 + 0.18 * appear
+        if scale < 0.999:
+            panel = pygame.transform.rotozoom(panel, 0, scale)
+        panel.fill((255, 255, 255, a), special_flags=pygame.BLEND_RGBA_MULT)
+        top = 44 + int(-14 * (1 - appear))
+        self.surface.blit(panel, panel.get_rect(midtop=(self.width // 2, top)))
 
     def _draw_apple(self, s, cell, scale, alpha=255):
         """Zeichnet einen Apfel skaliert um sein Zentrum (0..~1.1 = eingeblendet).

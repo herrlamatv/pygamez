@@ -250,6 +250,7 @@
   "snake.multiplayer": "Multiplayer",
   "snake.next_prestige": "Prestige {roman}:  {apples} apples   -{length} length",
   "snake.press_p": "   ->  press P!",
+  "snake.purple_banner": "Purple apple · length",
   "snake.prestige": "Prestige {roman}",
   "snake.prestige_info": "Prestige {roman}   {blocks} blocks/apple",
   "snake.setup_hint": "Arrows/1-6=mode V=view W=walls B=bonus F=apples C=skin Enter=start",

@@ -250,6 +250,7 @@
   "snake.multiplayer": "Mehrspieler",
   "snake.next_prestige": "Prestige {roman}:  {apples} Äpfel   -{length} Länge",
   "snake.press_p": "   ->  P drücken!",
+  "snake.purple_banner": "Lila-Apfel · Länge",
   "snake.prestige": "Prestige {roman}",
   "snake.prestige_info": "Prestige {roman}   {blocks} Blöcke/Apfel",
   "snake.setup_hint": "Pfeile/1-6=Modus V=Ansicht W=Wände B=Bonus F=Äpfel C=Skin Enter=Start",
