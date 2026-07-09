@@ -37,6 +37,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import i18n
 from i18n import t
+import logo as logo_mod
 
 # Standard-Spielfläche und -Bildrate. Die tatsächlichen Werte kommen aus den
 # Einstellungen (settings.py) und liegen zur Laufzeit in self.game_w/-_h/-fps.
@@ -345,27 +346,15 @@ class App:
         self.ui = ui
 
     def _set_window_icon(self):
-        """Setzt das Fenster-/Taskleisten-Icon aus logo/pygamez2-*.jpg.
+        """Setzt das Fenster-/Taskleisten-Icon aus dem Logo (siehe logo.py).
 
-        Tk kann JPG nicht direkt laden, deshalb derselbe Weg wie beim
-        Spielbild: pygame lädt das JPG, wir wandeln es in PPM-Daten um und
-        machen daraus ein tk.PhotoImage. Es werden alle Größen übergeben -
-        Tk/Windows wählt die passende für Titelleiste, Taskleiste und
-        Alt+Tab selbst aus. Fehlt eine Datei, wird sie übersprungen; ganz
-        ohne Logo startet das Programm einfach mit dem Standard-Icon.
+        Welche Datei genau (Nummer/Format) genommen wird, entscheidet das
+        Modul ``logo``: PNG wird direkt von Tk geladen, JPG ueber den alten
+        PPM-Umweg umgewandelt. Fehlt jedes Logo, startet das Programm einfach
+        mit dem Standard-Icon.
         """
-        basis = os.path.dirname(os.path.abspath(__file__))
-        self._icons = []          # Referenzen halten, sonst räumt Tk die Bilder weg
-        for size in (512, 256, 128):
-            pfad = os.path.join(basis, "logo", f"pygamez2-{size}.jpg")
-            try:
-                img = self.pygame.image.load(pfad)
-                w, h = img.get_size()
-                data = b"P6 %d %d 255 " % (w, h) \
-                    + self.pygame.image.tobytes(img, "RGB")
-                self._icons.append(tk.PhotoImage(data=data, format="ppm"))
-            except Exception:
-                pass
+        # Referenzen halten, sonst räumt Tk die Bilder weg.
+        self._icons = logo_mod.icon_photos(self.pygame, tk)
         if self._icons:
             try:
                 # True = gilt auch für alle künftigen Fenster (z.B. Dialoge).
@@ -675,24 +664,17 @@ class App:
         self.embed.configure(image=self._photo)
 
     def _menu_logo(self, size):
-        """Lädt das Logo (logo/pygamez2-*.jpg), skaliert es und rundet die Ecken.
+        """Lädt das Logo (siehe logo.py), skaliert es und rundet die Ecken.
 
         Das Ergebnis wird je Größe gecacht. Fehlt das Bild, gibt die Methode
         None zurück - der Startbildschirm zeigt dann den Schriftzug als Fallback.
+        Für die Menü-Anzeige wird eine mittlere Größe bevorzugt (schöner beim
+        Herunterskalieren).
         """
         cache = getattr(self, "_logo_cache", None)
         if cache and cache[0] == size:
             return cache[1]
-        basis = os.path.dirname(os.path.abspath(__file__))
-        raw = None
-        for name in ("pygamez2-256.jpg", "pygamez2-512.jpg", "pygamez2-128.jpg"):
-            pfad = os.path.join(basis, "logo", name)
-            if os.path.exists(pfad):
-                try:
-                    raw = self.pygame.image.load(pfad)
-                    break
-                except Exception:
-                    raw = None
+        raw = logo_mod.load_surface(self.pygame, prefer_sizes=(256, 512, 128))
         out = None
         if raw is not None:
             scaled = self.pygame.transform.smoothscale(raw, (size, size))
