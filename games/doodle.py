@@ -121,6 +121,7 @@ class DoodleGame(Game):
         self.cam_y = 0.0
         self.x = self.width / 2
         self.y = self.height * 0.7
+        self.py_prev = self.y
         self.vx = 0.0
         self.vy = JUMP_V
         self.face = 1
@@ -255,6 +256,7 @@ class DoodleGame(Game):
             self.x -= self.width
 
         # Propeller trägt nach oben
+        self.py_prev = self.y             # für die "swept"-Kollision merken
         if self.prop_t > 0:
             self.prop_t -= dt
             self.vy = PROP_V
@@ -277,32 +279,41 @@ class DoodleGame(Game):
             self._die()
 
     def _platform_collisions(self):
+        """Swept-Kollision: prüft, ob die Füße die Plattform-Oberkante seit dem
+        letzten Frame ÜBERQUERT haben - so tunnelt der Doodler auch bei hohem
+        Tempo (Feder!) oder niedriger/schwankender Framerate nicht hindurch."""
+        prev_feet = self.py_prev + self.dr
         feet = self.y + self.dr
         for p in self.platforms:
             if p.dead:
                 continue
-            if p.x <= self.x <= p.x + p.w and p.y <= feet <= p.y + 16:
-                if p.kind == "brittle":
-                    p.dead = True
-                    self._sparkle(self.x, p.y, PLAT_COLORS["brittle"])
-                    self.play_sound("hit")
-                    continue
-                if p.prop:
-                    self.prop_t = PROP_TIME
-                    p.prop = False
-                    self.play_sound("powerup")
-                    self._sparkle(self.x, p.y, (120, 200, 255))
-                elif p.spring:
-                    self.vy = SPRING_V
-                    self.play_sound("powerup")
-                    self._sparkle(self.x, p.y, (255, 220, 120))
-                else:
-                    self.vy = JUMP_V
-                    self.play_sound("bounce")
-                if p.kind == "vanish" and not p.used:
-                    p.used = True
-                    p.dead = True
-                break
+            if not (p.x <= self.x <= p.x + p.w):
+                continue
+            # Oberkante der Plattform lag zwischen altem und neuem Fußpunkt?
+            if not (prev_feet <= p.y + 6 and feet >= p.y - 2):
+                continue
+            if p.kind == "brittle":       # zerbricht -> kein Absprung, weiterfallen
+                p.dead = True
+                self._sparkle(self.x, p.y, PLAT_COLORS["brittle"])
+                self.play_sound("hit")
+                continue
+            self.y = p.y - self.dr        # auf die Plattform setzen (kein Re-Trigger)
+            if p.prop:
+                self.prop_t = PROP_TIME
+                p.prop = False
+                self.play_sound("powerup")
+                self._sparkle(self.x, p.y, (120, 200, 255))
+            elif p.spring:
+                self.vy = SPRING_V
+                self.play_sound("powerup")
+                self._sparkle(self.x, p.y, (255, 220, 120))
+            else:
+                self.vy = JUMP_V
+                self.play_sound("bounce")
+            if p.kind == "vanish" and not p.used:
+                p.used = True
+                p.dead = True
+            break
 
     def _update_platforms(self, dt):
         for p in self.platforms:
