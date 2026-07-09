@@ -1,0 +1,30 @@
+{
+  "_readme": [
+    "Competitive-Level für Snake (wird von competitive.py geladen).",
+    "Neue Stufe hinzufügen = einfach einen weiteren Eintrag in 'levels' anhängen.",
+    "  threshold  = insgesamt gesammelte Äpfel, ab denen dieses Level gilt (muss aufsteigend sein).",
+    "  apples     = wie viele Äpfel bei diesem Level gleichzeitig auf dem Feld liegen.",
+    "  multiplier = Punkte-Multiplikator bei diesem Level.",
+    "Level 0 (Spielstart) wird durch 'base_apples' / 'base_multiplier' bestimmt.",
+    "'level' ist nur zur Lesbarkeit da; die Reihenfolge/Schwelle zählt."
+  ],
+  "base_apples": 1,
+  "base_multiplier": 1,
+  "levels": [
+    { "level": 1,  "threshold": 4,   "apples": 2,  "multiplier": 2  },
+    { "level": 2,  "threshold": 10,  "apples": 3,  "multiplier": 3  },
+    { "level": 3,  "threshold": 18,  "apples": 4,  "multiplier": 4  },
+    { "level": 4,  "threshold": 30,  "apples": 5,  "multiplier": 5  },
+    { "level": 5,  "threshold": 46,  "apples": 6,  "multiplier": 6  },
+    { "level": 6,  "threshold": 68,  "apples": 7,  "multiplier": 7  },
+    { "level": 7,  "threshold": 96,  "apples": 8,  "multiplier": 8  },
+    { "level": 8,  "threshold": 132, "apples": 9,  "multiplier": 9  },
+    { "level": 9,  "threshold": 176, "apples": 10, "multiplier": 10 },
+    { "level": 10, "threshold": 230, "apples": 11, "multiplier": 11 },
+    { "level": 11, "threshold": 296, "apples": 12, "multiplier": 12 },
+    { "level": 12, "threshold": 376, "apples": 13, "multiplier": 13 },
+    { "level": 13, "threshold": 472, "apples": 14, "multiplier": 14 },
+    { "level": 14, "threshold": 586, "apples": 15, "multiplier": 15 },
+    { "level": 15, "threshold": 720, "apples": 16, "multiplier": 16 }
+  ]
+}
