@@ -202,6 +202,7 @@ class _Snake:
         self.grow = 0                   # ausstehende Wachstums-Blöcke
         self.stamina = STAMINA_MAX      # Boost-Ausdauer (0..1)
         self.boost_on = False           # Boost gerade aktiv?
+        self.size_frac = 0.0            # Nachkomma-Rest der Größe (aus dem Gambling)
         self.prev_body = list(body)     # Positionen vor dem letzten Schritt (3D-Interpolation)
         self.turn_queue = []            # gepufferte Drehungen in der 3D-Ansicht ("L"/"R")
 
@@ -1083,33 +1084,65 @@ class SnakeGame(Game):
         elif typ == "purple":
             self._purple_pending = sn
 
-    def _apply_purple(self, sn):
-        """Lila Apfel: die Hälfte der Länge wird mit x0.5..x2.0 (zufällig) skaliert.
+    def _snake_size(self, sn):
+        """Wahre 'Größe' einer Schlange als Kommazahl.
 
-        Die eine Hälfte bleibt unangetastet, die andere Hälfte wird multipliziert:
-            neue Länge = Länge/2 + (Länge/2) * Faktor = Länge/2 * (1 + Faktor)
-        Beispiel: Länge 20, Faktor 0.75  ->  10 + 10*0.75 = 10 + 7.5 = 17.5  ->  18.
-        (Länge kann nur ganzzahlig sein, daran wird kaufmännisch gerundet.)
+        = sichtbare Länge + ausstehendes Wachstum + Nachkomma-Rest aus dem
+        Gambling. (len(body) + grow bleibt bei jeder Bewegung erhalten und
+        ändert sich nur durch Essen/Wetten - daher eine stabile Kennzahl.)
         """
-        factor = competitive.purple_factor()
-        laenge = len(sn.body)
-        haelfte = laenge / 2.0                 # exakt 50 % der aktuellen Länge
-        ziel = max(MIN_LENGTH, int(haelfte + haelfte * factor + 0.5))
-        delta = ziel - laenge
+        return len(sn.body) + sn.grow + sn.size_frac
+
+    def _set_snake_size(self, sn, size):
+        """Setzt die Größe (Kommazahl) und passt Körper/Wachstum entsprechend an.
+
+        Der ganzzahlige Teil steuert die physische Länge (über Wachstum bzw.
+        Schwanz-Kürzen), der Nachkomma-Rest wird in ``size_frac`` gemerkt, damit
+        weitere Wetten exakt darauf aufbauen. Nie unter die Mindestlänge.
+        """
+        size = max(MIN_LENGTH, size)
+        target_len = int(math.floor(size + 1e-9))
+        sn.size_frac = size - target_len
+        delta = target_len - (len(sn.body) + sn.grow)
         if delta > 0:
             sn.grow += delta                   # wächst über die nächsten Schritte
         elif delta < 0:
-            schnitt = min(-delta, len(sn.body) - MIN_LENGTH)
-            if schnitt > 0:
-                del sn.body[:schnitt]          # Schwanz sofort kürzen
-                sn.prev_body = list(sn.body)
-        col = COL_WLS_ON if factor >= 1.0 else COL_FOOD
-        self.play_sound("powerup" if factor >= 1.0 else "hit")
+            need = -delta
+            used = min(sn.grow, need)           # erst ausstehendes Wachstum abbauen
+            sn.grow -= used
+            need -= used
+            if need > 0:                        # ... dann den Schwanz kürzen
+                schnitt = min(need, len(sn.body) - MIN_LENGTH)
+                if schnitt > 0:
+                    del sn.body[:schnitt]
+                    sn.prev_body = list(sn.body)
+
+    def _apply_purple(self, sn):
+        """Lila Apfel (Gambling): ein Anteil der Größe wird eingesetzt und mit einem
+        zufälligen Faktor multipliziert; der Rest bleibt sicher.
+
+        Normal: 50 % Einsatz, Faktor x0.5..x1.5.
+        HARDCORE: 75-90 % Einsatz, Faktor x0.25..x2.25 (riskanter).
+            neue Größe = Größe*(1-p) + Größe*p*Faktor
+        HARDCORE-Beispiel: Größe 20, p=0.8, Faktor 0.25 -> 20*0.2 + 20*0.8*0.25 = 8.
+        Die Größe wird als Kommazahl weitergeführt (Anzeige oben links), damit
+        weitere Wetten exakt darauf aufbauen.
+        """
+        hc = self.hardcore_active
+        stake = competitive.purple_stake(hc)     # 50 % bzw. 75-90 % (HARDCORE)
+        factor = competitive.purple_factor(hc)   # x0.5..x1.5 bzw. x0.25..x2.25 (HARDCORE)
+        size = self._snake_size(sn)
+        new_size = max(MIN_LENGTH, size * (1.0 - stake) + size * stake * factor)
+        self._set_snake_size(sn, new_size)
+        gewonnen = new_size >= size
+        col = COL_WLS_ON if gewonnen else COL_FOOD
+        self.play_sound("powerup" if gewonnen else "hit")
         self.rumble(80)
         self._spawn_particles(sn.body[-1], COL_PURPLE, 14)
         self._add_float_text(sn.body[-1], f"x{factor:g}", col)
-        # Multiplikator gut sichtbar oben mittig einblenden
-        self._show_banner(f"×{factor:g}", col, i18n.t("snake.purple_banner"))
+        # Einsatz + Multiplikator gut sichtbar oben mittig einblenden
+        self._show_banner(f"{stake*100:.0f}% ×{factor:g}", col,
+                          i18n.t("snake.purple_banner"))
 
     def _show_banner(self, text, color, sub=None):
         """Blendet eine große Einblendung oben mittig ein (Auto-Ausblendung)."""
@@ -2138,18 +2171,23 @@ class SnakeGame(Game):
             self._draw_next_prestige()
 
     def _draw_comp_hud(self):
-        """Competitive-Kopfzeile: gesammelte Äpfel, Level, Slot-Bonus."""
+        """Competitive-Kopfzeile: gesammelte Äpfel, Level, Größe, Slot-Bonus."""
         s = self.surface
         lvl = self.comp_level
         line = self._small.render(
             i18n.t("snake.comp.stats", apples=self.apples_total, level=lvl,
                    mult=competitive.score_multiplier(lvl)), True, COL_FOOD)
         s.blit(line, (10, 34))
+        # Größe als Kommazahl (fürs Gambling weiter nutzbar), oben links.
+        groesse = self._snake_size(self.snakes[0])
+        gtxt = f"{groesse:.2f}".rstrip("0").rstrip(".")
+        gimg = self._small.render(i18n.t("snake.comp.size", size=gtxt), True, COL_MULT)
+        s.blit(gimg, (10, 54))
         if self.spawn_bonus_t > 0 and self.spawn_bonus > 0:
             b = self._small.render(
                 i18n.t("snake.comp.bonus", n=self.spawn_bonus, t=self.spawn_bonus_t),
                 True, COL_BLUE)
-            s.blit(b, (10, 54))
+            s.blit(b, (10, 74))
         if self.hardcore:
             puls = 0.5 + 0.5 * math.sin(pygame.time.get_ticks() * 0.006)
             col = (255, int(70 + 80 * puls), int(70 + 80 * puls))

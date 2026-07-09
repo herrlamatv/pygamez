@@ -23,10 +23,12 @@ greifenden Aufstiegs-/Zufalls-Mechaniken:
    der (a) den eingesetzten Teil der Länge vervielfacht oder verkleinert und
    (b) für kurze Zeit zusätzliche Äpfel spawnen lässt.
 
-3. LILA APFEL
-   Setzt 50 % der Länge aufs Spiel: dieser Teil wird mit einem zufälligen Faktor
-   x0.5 .. x2.0 multipliziert (bzw. geteilt). Insgesamt schrumpft man so auf bis
-   zu 75 % oder wächst auf bis zu 150 % der Länge.
+3. LILA APFEL (Gambling)
+   Normaler Modus: setzt fix 50 % der Größe aufs Spiel, Faktor x0.5 .. x1.5.
+   HARDCORE: riskanter - zufälliger Anteil (75 % .. 90 %) der Größe, Faktor
+   x0.25 .. x2.25. Der Rest bleibt jeweils sicher:
+   neue Größe = Größe*(1-p) + Größe*p*Faktor. Die Größe wird als Kommazahl
+   weitergeführt, damit weitere Wetten exakt darauf aufbauen.
 """
 
 import json
@@ -151,10 +153,30 @@ def slot_outcome(reels):
     return MISS_MULT, "miss"
 
 
-# ===================================================== Lila Apfel
-PURPLE_MIN, PURPLE_MAX = 0.5, 2.0
+# ===================================================== Lila Apfel (Gambling)
+# Normaler Competitive-Modus: mild - fixe 50 % Einsatz, Multiplikator x0.5..x1.5.
+PURPLE_MULT_MIN, PURPLE_MULT_MAX = 0.5, 1.5
+PURPLE_STAKE = 0.5
+# HARDCORE: riskanter - 75..90 % Einsatz, Multiplikator x0.25..x2.25.
+PURPLE_HC_MULT_MIN, PURPLE_HC_MULT_MAX = 0.25, 2.25
+PURPLE_HC_STAKE_MIN, PURPLE_HC_STAKE_MAX = 0.75, 0.90
 
 
-def purple_factor():
-    """Zufälliger Faktor x0.5 .. x2.0 für den lila Apfel."""
-    return round(random.uniform(PURPLE_MIN, PURPLE_MAX), 2)
+def purple_factor(hardcore=False):
+    """Zufälliger Multiplikator für den Einsatz beim lila Apfel.
+
+    Normal: x0.5 .. x1.5.  HARDCORE: x0.25 .. x2.25 (riskanter).
+    """
+    if hardcore:
+        return round(random.uniform(PURPLE_HC_MULT_MIN, PURPLE_HC_MULT_MAX), 2)
+    return round(random.uniform(PURPLE_MULT_MIN, PURPLE_MULT_MAX), 2)
+
+
+def purple_stake(hardcore=False):
+    """Anteil der Größe, der eingesetzt wird.
+
+    Normal: fixe 50 %.  HARDCORE: zufällig 75 % .. 90 %.
+    """
+    if hardcore:
+        return round(random.uniform(PURPLE_HC_STAKE_MIN, PURPLE_HC_STAKE_MAX), 2)
+    return PURPLE_STAKE

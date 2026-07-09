@@ -86,11 +86,14 @@ direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
   **Blaue Äpfel** öffnen eine **Slot-Machine**: eingesetzt wird die Länge, das
   Walzen-Ergebnis vervielfacht bzw. verkleinert den Einsatz und lässt für kurze Zeit
   **zusätzliche Äpfel** spawnen (Jackpot bei drei gleichen Symbolen).
-  **Lila Äpfel** setzen **50 % der Länge** aufs Spiel und multiplizieren diesen Teil
-  zufällig mit **x0.5 .. x2.0** - man schrumpft so auf bis zu 75 % oder wächst auf
-  bis zu 150 %. Es gibt **15 Level** (Multiplikator bis x16, bis zu 16 Äpfel
-  gleichzeitig); die Stufen stehen in `games/levels/snake-comp.json` und lassen sich
-  dort ohne Code-Änderung erweitern, die übrige Feineinstellung in `competitive.py`.
+  **Lila Äpfel** (Gambling) setzen einen Anteil der **Größe** aufs Spiel und
+  multiplizieren diesen Teil zufällig, der Rest bleibt sicher (neue Größe =
+  Größe·(1-p) + Größe·p·Faktor): **normal** fix 50 % Einsatz mit **x0.5 .. x1.5**,
+  im **HARDCORE** riskanter mit **75-90 %** Einsatz und **x0.25 .. x2.25**. Die
+  **Größe** steht als **Kommazahl oben links** und wird exakt weitergeführt, sodass
+  weitere Wetten darauf aufbauen. Es gibt **15 Level** (Multiplikator bis x16, bis zu 16 Äpfel gleichzeitig);
+  die Stufen stehen in `games/levels/snake-comp.json` und lassen sich dort ohne
+  Code-Änderung erweitern, die übrige Feineinstellung in `competitive.py`.
 - **NEU - HARDCORE** (Schalter im Competitive-Setup, Taste **H**): jeder **Boost
   frisst die Länge** deiner Schlange; ein rot leuchtender **HARDCORE-Schriftzug**
   markiert den Modus. Nur im Competitive verfügbar; die Länge fällt nie unter das
@@ -469,11 +472,14 @@ duel)**. The mode is chosen right in the pre-game screen
   apple to the field and raises the score multiplier.
   **Blue apples** open a **slot machine**: your length is the stake, the reel result
   multiplies or shrinks it and briefly makes **extra apples** spawn (jackpot on three
-  matching symbols). **Purple apples** put **50 % of your length** on the line and
-  multiply that part by a random **x0.5 .. x2.0** - so you shrink to as little as 75 %
-  or grow up to 150 %. There are **15 levels** (multiplier up to x16, up to 16 apples
-  at once); the levels live in `games/levels/snake-comp.json` and can be extended there
-  without touching code, the rest of the tuning lives in `competitive.py`.
+  matching symbols). **Purple apples** (gambling) put a share of your **size** on the
+  line and multiply that part randomly, the rest stays safe (new size = size·(1-p) +
+  size·p·factor): **normal** stakes a fixed 50 % with **x0.5 .. x1.5**, **HARDCORE** is
+  riskier with a **75-90 %** stake and **x0.25 .. x2.25**. Your **size** is shown as a
+  **decimal in the top-left** and carried over exactly, so further bets build on it.
+  There are **15 levels** (multiplier up to x16, up to 16 apples at once); the levels live in
+  `games/levels/snake-comp.json` and can be extended there without touching code, the rest
+  of the tuning lives in `competitive.py`.
 - **NEW - HARDCORE** (toggle in the Competitive setup, key **H**): every **boost eats
   your snake's length**; a red glowing **HARDCORE label** marks the mode. Competitive
   only; length never drops below the minimum. Remembered in `settings.json`.

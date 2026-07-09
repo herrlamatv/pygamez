@@ -247,6 +247,7 @@
   "snake.comp.max": "MAX LEVEL {level} reached",
   "snake.comp.next": "Level {level}:  {have}/{need} apples",
   "snake.comp.result": "Reached level {level}",
+  "snake.comp.size": "Size: {size}",
   "snake.comp.stats": "Apples: {apples}   Level {level}   x{mult}",
   "snake.hardcore_hint": "HARDCORE: boosting eats your snake's length!",
   "snake.hardcore_tag": "HARDCORE",
