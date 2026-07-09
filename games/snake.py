@@ -916,13 +916,17 @@ class SnakeGame(Game):
             self._purple_pending = sn
 
     def _apply_purple(self, sn):
-        """Lila Apfel: 50 % der Länge werden mit x0.5..x2.0 (zufällig) skaliert."""
+        """Lila Apfel: die Hälfte der Länge wird mit x0.5..x2.0 (zufällig) skaliert.
+
+        Die eine Hälfte bleibt unangetastet, die andere Hälfte wird multipliziert:
+            neue Länge = Länge/2 + (Länge/2) * Faktor = Länge/2 * (1 + Faktor)
+        Beispiel: Länge 20, Faktor 0.75  ->  10 + 10*0.75 = 10 + 7.5 = 17.5  ->  18.
+        (Länge kann nur ganzzahlig sein, daran wird kaufmännisch gerundet.)
+        """
         factor = competitive.purple_factor()
         laenge = len(sn.body)
-        behalten = (laenge + 1) // 2           # 50 % bleiben unangetastet
-        einsatz = laenge - behalten
-        neu = behalten + int(round(einsatz * factor))
-        ziel = max(MIN_LENGTH, neu)
+        haelfte = laenge / 2.0                 # exakt 50 % der aktuellen Länge
+        ziel = max(MIN_LENGTH, int(haelfte + haelfte * factor + 0.5))
         delta = ziel - laenge
         if delta > 0:
             sn.grow += delta                   # wächst über die nächsten Schritte
