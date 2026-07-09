@@ -22,7 +22,7 @@
   "app.state_running": "läuft",
   "app.status": "{name}\nStatus: {state}\nPunkte: {score}\nHighscore: {hs}",
   "app.status_menu": "{name}\n(Menü)",
-  "app.title": "Spielesammlung  -  Tkinter + Pygame",
+  "app.title": "PyGameZ (beta)",
   "ah.ai": "KI",
   "ah.diff.easy": "Leicht",
   "ah.diff.hard": "Schwer",

@@ -22,7 +22,7 @@
   "app.state_running": "en cours",
   "app.status": "{name}\nStatut : {state}\nScore : {score}\nMeilleur score : {hs}",
   "app.status_menu": "{name}\n(Menu)",
-  "app.title": "Collection de jeux  -  Tkinter + Pygame",
+  "app.title": "PyGameZ (beta)",
   "ah.ai": "IA",
   "ah.diff.easy": "Facile",
   "ah.diff.hard": "Difficile",
