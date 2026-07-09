@@ -68,6 +68,8 @@ STAMINA_MAX = 1.0
 STAMINA_REGEN = 0.22            # Aufladung pro Sekunde (wenn nicht geboostet)
 BOOST_DRAIN = 0.045            # Verbrauch pro zusätzlichem Boost-Schritt
 BOOST_MIN_START = 0.15         # so viel Ausdauer braucht man mindestens zum Starten
+# HARDCORE (nur Competitive): jeder Boost-Schritt frisst so viele Längen-Blöcke.
+HARDCORE_BOOST_LEN_COST = 1
 
 # Boost-Tasten (keine Richtungstasten, damit es nicht kollidiert)
 BOOST_KEYS_P1 = ("space", "Shift_L")
@@ -125,6 +127,7 @@ COL_WALL = (70, 78, 98)         # Hindernis-Blöcke
 COL_ACCENT = (90, 160, 240)
 COL_BLUE = (90, 150, 245)       # blauer Apfel (Slot-Machine)
 COL_PURPLE = (185, 110, 240)    # lila Apfel (Längen-Wette)
+COL_HARDCORE = (235, 45, 55)    # HARDCORE-Modus (rotes Leuchten)
 
 # Farben je Schlange: (Körper, Kopf)
 SNAKE_COLORS = [
@@ -221,6 +224,7 @@ class SnakeGame(Game):
         snk = self.settings.get("snake", {}) if isinstance(self.settings, dict) else {}
         self.wrap = bool(snk.get("wrap", False))
         self.bonus = bool(snk.get("bonus_apple", False))
+        self.hardcore = bool(snk.get("hardcore", False))   # nur im Competitive aktiv
         ac = int(snk.get("apples", 1))
         self.apple_count = ac if ac in APPLE_COUNTS else 1
         mode_key = snk.get("mode", "classic")
@@ -275,6 +279,11 @@ class SnakeGame(Game):
     def competitive(self):
         """Competitive-Modus (mit Level-Aufstieg, Slot-Machine & Wett-Äpfeln)."""
         return self.mode_key == "competitive" and not self.multiplayer
+
+    @property
+    def hardcore_active(self):
+        """HARDCORE gibt es nur im Competitive: Boost frisst Länge, alles leuchtet rot."""
+        return self.competitive and self.hardcore
 
     @property
     def wrap_active(self):
@@ -531,6 +540,14 @@ class SnakeGame(Game):
         self._save_snake_setting("wrap" if key == "wrap" else "bonus_apple", neu)
         self.play_sound("select")
 
+    def _toggle_hardcore(self):
+        """HARDCORE ein/aus (nur im Competitive wählbar)."""
+        if not self.competitive:
+            return
+        self.hardcore = not self.hardcore
+        self._save_snake_setting("hardcore", self.hardcore)
+        self.play_sound("select")
+
     def _cycle_apples(self):
         """Schaltet die Anzahl gleichzeitig liegender Äpfel weiter (1/2/3/5)."""
         if self.competitive:
@@ -641,6 +658,8 @@ class SnakeGame(Game):
                 self._toggle_setting("bonus")
             elif event.key in ("f", "F"):
                 self._cycle_apples()
+            elif event.key in ("h", "H"):
+                self._toggle_hardcore()
             elif event.key in ("c", "C"):
                 self._open_personalize()
             elif event.key in ("k", "K"):
@@ -669,7 +688,10 @@ class SnakeGame(Game):
             elif self.bonus_rect.collidepoint(p):
                 self._toggle_setting("bonus")
             elif self.apples_rect.collidepoint(p):
-                self._cycle_apples()
+                if self.competitive:
+                    self._toggle_hardcore()   # im Competitive ist die Zeile der HARDCORE-Schalter
+                else:
+                    self._cycle_apples()
             elif self.start_rect.collidepoint(p):
                 self.play_sound("click")
                 self._start_play()
@@ -877,8 +899,32 @@ class SnakeGame(Game):
                 sn.stamina = max(0.0, sn.stamina - BOOST_DRAIN)
                 if sn.boost_on:
                     self._spawn_particles(sn.body[-1], BOOST_GLOW[i % 2], 2)
+                    if self.hardcore_active:
+                        self._hardcore_boost_cost(sn)   # Boost frisst Länge
                 if sn.stamina <= 0:
                     sn.boost_on = False
+
+    def _hardcore_boost_cost(self, sn):
+        """HARDCORE: jeder Boost-Schritt kostet Länge.
+
+        Zuerst wird ausstehendes Wachstum aufgezehrt, danach fällt der Schwanz
+        Block für Block weg - aber nie unter die Mindestlänge. Ist die Schlange
+        schon am Minimum, endet der Boost automatisch (es gibt nichts mehr zu
+        verbrennen).
+        """
+        cost = HARDCORE_BOOST_LEN_COST
+        if sn.grow > 0:                         # erst geplantes Wachstum "verbrennen"
+            used = min(sn.grow, cost)
+            sn.grow -= used
+            cost -= used
+        if cost > 0:
+            schnitt = min(cost, len(sn.body) - MIN_LENGTH)
+            if schnitt > 0:
+                self._spawn_particles(sn.body[0], COL_HARDCORE, 3)
+                del sn.body[:schnitt]           # Schwanz sofort kürzen
+                sn.prev_body = list(sn.body)
+            else:
+                sn.boost_on = False             # Mindestlänge erreicht -> Boost aus
 
     def _advance(self, movers):
         """Bewegt die Schlangen in 'movers' um eine Zelle (mit voller Kollision)."""
@@ -1344,6 +1390,9 @@ class SnakeGame(Game):
             self._draw_world_3d()
         else:
             self._draw_world_2d()
+
+        if self.hardcore_active:
+            self._draw_hardcore_overlay()
 
         self._draw_hud()
         self._draw_banner()
@@ -2091,6 +2140,33 @@ class SnakeGame(Game):
         elif not self.game_over and self.mode_key != "timed":
             self._draw_next_prestige()
 
+    def _draw_hardcore_overlay(self):
+        """Rotes Pulsieren am Spielfeldrand - der Kern des HARDCORE-Looks.
+
+        Beim Boosten (= genau dann, wenn Länge verbrannt wird) leuchtet der Rand
+        deutlich kräftiger, damit der Preis des Boosts sofort spürbar ist.
+        """
+        s = self.surface
+        w, h = self.width, self.height
+        puls = 0.5 + 0.5 * math.sin(pygame.time.get_ticks() * 0.005)
+        boosting = any(sn.alive and sn.boost_on and sn.stamina > 0
+                       for sn in self.snakes)
+        peak = 215 if boosting else 130
+        layers = 12
+        step = max(3, min(w, h) // 48)
+        ov = pygame.Surface((w, h), pygame.SRCALPHA)
+        for i in range(layers):
+            inset = i * step
+            if inset * 2 >= min(w, h):
+                break
+            a = int(peak * (0.35 + 0.65 * puls) * (1 - i / layers) ** 2)
+            if a <= 0:
+                continue
+            rect = pygame.Rect(inset, inset, w - 2 * inset, h - 2 * inset)
+            pygame.draw.rect(ov, (*COL_HARDCORE, a), rect,
+                             width=step + 1, border_radius=14)
+        s.blit(ov, (0, 0))
+
     def _draw_comp_hud(self):
         """Competitive-Kopfzeile: gesammelte Äpfel, Level, Slot-Bonus."""
         s = self.surface
@@ -2104,6 +2180,18 @@ class SnakeGame(Game):
                 i18n.t("snake.comp.bonus", n=self.spawn_bonus, t=self.spawn_bonus_t),
                 True, COL_BLUE)
             s.blit(b, (10, 54))
+        if self.hardcore:
+            puls = 0.5 + 0.5 * math.sin(pygame.time.get_ticks() * 0.006)
+            col = (255, int(70 + 80 * puls), int(70 + 80 * puls))
+            tag = self._small.render(i18n.t("snake.hardcore_tag"), True, col)
+            tr = tag.get_rect(midtop=(self.width // 2, 48))
+            box = tr.inflate(16, 8)
+            glow = pygame.Surface(box.size, pygame.SRCALPHA)
+            pygame.draw.rect(glow, (*COL_HARDCORE, int(40 + 60 * puls)),
+                             glow.get_rect(), border_radius=8)
+            s.blit(glow, box)
+            pygame.draw.rect(s, COL_HARDCORE, box, 1, border_radius=8)
+            s.blit(tag, tr)
 
     def _draw_comp_footer(self):
         """Fortschrittsbalken bis zum nächsten Competitive-Level (unten mittig)."""
@@ -2327,8 +2415,8 @@ class SnakeGame(Game):
                                     self.wrap)
         self._draw_setup_toggle(self.bonus_rect, i18n.t("snake.bonus_toggle"), self.bonus)
         if self.competitive:
-            self._draw_disabled_row(self.apples_rect, i18n.t("snake.apples_toggle"),
-                                    i18n.t("snake.comp.apples_note"))
+            # Äpfel sind vom Level bestimmt -> die Zeile wird zum HARDCORE-Schalter.
+            self._draw_hardcore_toggle(self.apples_rect, self.hardcore)
         else:
             self._draw_setup_value(self.apples_rect, i18n.t("snake.apples_toggle"),
                                    str(self.apple_count), self.apple_count > 1)
@@ -2342,8 +2430,14 @@ class SnakeGame(Game):
             s.blit(extra, extra.get_rect(center=(self.width // 2, self.height - 54)))
         hint = self._small.render(i18n.t("snake.setup_hint"), True, COL_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 34)))
-        boost = self._tiny.render(i18n.t("snake.boost_hint"), True, (120, 200, 150))
-        s.blit(boost, boost.get_rect(center=(self.width // 2, self.height - 14)))
+        if self.competitive and self.hardcore:
+            puls = 0.5 + 0.5 * math.sin(pygame.time.get_ticks() * 0.006)
+            hc = self._tiny.render(i18n.t("snake.hardcore_hint"), True,
+                                   (255, int(80 + 60 * puls), int(80 + 60 * puls)))
+            s.blit(hc, hc.get_rect(center=(self.width // 2, self.height - 14)))
+        else:
+            boost = self._tiny.render(i18n.t("snake.boost_hint"), True, (120, 200, 150))
+            s.blit(boost, boost.get_rect(center=(self.width // 2, self.height - 14)))
 
         self._draw_brush_button(s)
 
@@ -2424,6 +2518,29 @@ class SnakeGame(Game):
         info = self._small.render(note, True, COL_DIM)
         s.blit(info, (rect.right - info.get_width() - 16,
                       rect.centery - info.get_height() // 2))
+
+    def _draw_hardcore_toggle(self, rect, an):
+        """HARDCORE-Setup-Zeile: leuchtet kräftig rot, wenn aktiv."""
+        s = self.surface
+        if an:
+            puls = 0.5 + 0.5 * math.sin(pygame.time.get_ticks() * 0.006)
+            glow = pygame.Surface((rect.w + 22, rect.h + 22), pygame.SRCALPHA)
+            pygame.draw.rect(glow, (*COL_HARDCORE, int(55 + 90 * puls)),
+                             glow.get_rect(), border_radius=14)
+            s.blit(glow, glow.get_rect(center=rect.center))
+            pygame.draw.rect(s, (95, 18, 22), rect, border_radius=8)
+            pygame.draw.rect(s, COL_HARDCORE, rect, 2, border_radius=8)
+            lab_col, val_col = (255, 210, 210), (255, 120, 120)
+        else:
+            pygame.draw.rect(s, COL_BTN, rect, border_radius=8)
+            pygame.draw.rect(s, COL_DIM, rect, 1, border_radius=8)
+            lab_col, val_col = COL_TEXT, COL_DIM
+        lab = self.font.render(i18n.t("snake.hardcore_toggle"), True, lab_col)
+        s.blit(lab, (rect.x + 16, rect.centery - lab.get_height() // 2))
+        wert = i18n.t("common.on") if an else i18n.t("common.off")
+        img = self.font.render(f"< {wert} >", True, val_col)
+        s.blit(img, (rect.right - img.get_width() - 16,
+                     rect.centery - img.get_height() // 2))
 
     def _draw_setup_toggle(self, rect, label, an):
         wert = i18n.t("common.on") if an else i18n.t("common.off")
