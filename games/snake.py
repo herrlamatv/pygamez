@@ -1423,13 +1423,19 @@ class SnakeGame(Game):
             s.blit(img, img.get_rect(center=(int(ft["x"]), int(ft["y"]))))
 
     def _draw_banner(self):
-        """Große Einblendung oben mittig (z.B. Multiplikator des lila Apfels)."""
+        """Große Einblendung oben mittig (z.B. Multiplikator des lila Apfels).
+
+        Sichtbarkeit, Größe und Deckkraft kommen aus der NGB-Personalisierung.
+        """
         b = self._banner
         if not b:
             return
+        cfg = ngb.get_banner()
+        if not cfg["on"]:
+            return
         appear = min(1.0, (BANNER_TIME - b["t"]) / 0.18)     # Einblenden (Pop)
         fade = min(1.0, max(0.0, b["t"] / 0.5))              # Ausblenden am Ende
-        a = int(255 * min(appear, fade))
+        a = int(255 * min(appear, fade) * cfg["opacity"])
         if a <= 0:
             return
         big = self.big_font.render(b["text"], True, b["color"])
@@ -1446,9 +1452,9 @@ class SnakeGame(Game):
             panel.blit(sub, sub.get_rect(midtop=(pw // 2, 5)))
             y = 5 + sub.get_height() + 2
         panel.blit(big, big.get_rect(midtop=(pw // 2, y)))
-        # Pop beim Erscheinen + kleiner Slide von oben
-        scale = 0.82 + 0.18 * appear
-        if scale < 0.999:
+        # Pop beim Erscheinen + eingestellte Größe (kleiner/größer)
+        scale = (0.82 + 0.18 * appear) * cfg["size"]
+        if abs(scale - 1.0) > 0.01:
             panel = pygame.transform.rotozoom(panel, 0, scale)
         panel.fill((255, 255, 255, a), special_flags=pygame.BLEND_RGBA_MULT)
         top = 44 + int(-14 * (1 - appear))

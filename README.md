@@ -95,6 +95,9 @@ direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
     (oben/unten). So sieht man auf grossen Feldern sofort, dass z.B. der
     Apfel bei *8a* in derselben Reihe *8* liegt wie die eigene Position *8z*. Die
     Farbreihenfolge (5 Vorlagen + zwei eigene Farben A/B) bestimmt das Farbthema.
+  - **Banner**: das Multiplikator-Banner (z.B. beim lila Apfel) **an-/ausschalten**
+    sowie **Größe** (kleiner/größer) und **Deckkraft** (transparenter) einstellen -
+    mit Live-Vorschau.
   Alles wird in `mem-ngb.json` gespeichert; die visuelle Personalisierung läuft über
   das Modul `ngb.py`.
 - Optik: abgerundete Schlange mit Augen (Kopf standardmäßig türkis), Boost-Glow, Partikel.
@@ -464,6 +467,9 @@ duel)**. The mode is chosen right in the pre-game screen
     boards you instantly see that e.g. the apple at *8a* is in the
     same row *8* as your own position *8z*. The color sequence (5 presets + two custom
     colors A/B) sets the color theme.
+  - **Banner**: turn the multiplier banner (e.g. from the purple apple) **on/off** and
+    adjust its **size** (smaller/larger) and **opacity** (more transparent) - with a
+    live preview.
   Everything is stored in `mem-ngb.json`; all visual personalization runs through the
   `ngb.py` module.
 - Look: rounded snake with eyes (head is teal by default), boost glow, particles.

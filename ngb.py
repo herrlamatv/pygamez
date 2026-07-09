@@ -62,6 +62,11 @@ _GRID_IDS = [p["id"] for p in GRID_PRESETS]
 DEFAULT_GRID_ID = "off"
 DEFAULT_GRID_CUSTOM = [[46, 64, 96], [28, 40, 66]]   # A, B (eigenes Schachbrett)
 
+# ----- Banner (Multiplikator-Einblendung oben mittig) -------------------
+DEFAULT_BANNER = {"on": True, "size": 1.0, "opacity": 1.0}
+BANNER_SIZE_MIN, BANNER_SIZE_MAX = 0.6, 1.6      # kleiner .. größer
+BANNER_OP_MIN, BANNER_OP_MAX = 0.2, 1.0          # transparenter .. deckend
+
 # ----- Menü-Farben (lokal, um keine Spielmodule zu importieren) ---------
 COL_BG = (14, 15, 24)
 COL_TEXT = (232, 232, 238)
@@ -111,11 +116,22 @@ def _load():
     grid_custom = [list(_clamp_color(gc[0], DEFAULT_GRID_CUSTOM[0])),
                    list(_clamp_color(gc[1], DEFAULT_GRID_CUSTOM[1]))]
 
+    def _num(v, lo, hi, fallback):
+        try:
+            return max(lo, min(hi, float(v)))
+        except (TypeError, ValueError):
+            return fallback
+
     _state = {
         "head_id": hid,
         "head_custom": _clamp_color(data.get("head_custom", DEFAULT_CUSTOM), DEFAULT_CUSTOM),
         "grid_id": gid,
         "grid_custom": grid_custom,
+        "banner_on": bool(data.get("banner_on", DEFAULT_BANNER["on"])),
+        "banner_size": _num(data.get("banner_size", DEFAULT_BANNER["size"]),
+                            BANNER_SIZE_MIN, BANNER_SIZE_MAX, DEFAULT_BANNER["size"]),
+        "banner_opacity": _num(data.get("banner_opacity", DEFAULT_BANNER["opacity"]),
+                               BANNER_OP_MIN, BANNER_OP_MAX, DEFAULT_BANNER["opacity"]),
     }
     return _state
 
@@ -128,7 +144,10 @@ def _save():
                        "head_custom": list(st["head_custom"]),
                        "grid_id": st["grid_id"],
                        "grid_custom": [list(st["grid_custom"][0]),
-                                       list(st["grid_custom"][1])]},
+                                       list(st["grid_custom"][1])],
+                       "banner_on": st["banner_on"],
+                       "banner_size": round(st["banner_size"], 3),
+                       "banner_opacity": round(st["banner_opacity"], 3)},
                       f, ensure_ascii=False, indent=2)
     except OSError:
         pass
@@ -213,6 +232,29 @@ def grid_sequence():
     return grid_preset(gid)["seq"]
 
 
+# ===================================================== Öffentliche API (Banner)
+def get_banner():
+    """Banner-Einstellungen: dict(on, size, opacity) - rein visuell."""
+    st = _load()
+    return {"on": st["banner_on"], "size": st["banner_size"],
+            "opacity": st["banner_opacity"]}
+
+
+def set_banner_on(value):
+    _load()["banner_on"] = bool(value)
+    _save()
+
+
+def set_banner_size(value):
+    _load()["banner_size"] = max(BANNER_SIZE_MIN, min(BANNER_SIZE_MAX, float(value)))
+    _save()
+
+
+def set_banner_opacity(value):
+    _load()["banner_opacity"] = max(BANNER_OP_MIN, min(BANNER_OP_MAX, float(value)))
+    _save()
+
+
 def open_head_color_menu(width, height, play_sound=None):
     """Erzeugt das Personalisierungs-Menü (wird vom Snake-Setup aufgerufen)."""
     return PersonalizeMenu(width, height, play_sound)
@@ -254,11 +296,14 @@ class PersonalizeMenu:
     # ----- Layout -------------------------------------------------------
     def _build_layout(self):
         cx = self.width // 2
-        tabw = 130
-        self.tab_rects = {
-            "head": pygame.Rect(cx - tabw - 6, 46, tabw, 30),
-            "grid": pygame.Rect(cx + 6, 46, tabw, 30),
-        }
+        tabw, tgap = 120, 8
+        names = ("head", "grid", "banner")
+        total = len(names) * tabw + (len(names) - 1) * tgap
+        x = cx - total // 2
+        self.tab_rects = {}
+        for nm in names:
+            self.tab_rects[nm] = pygame.Rect(x, 46, tabw, 30)
+            x += tabw + tgap
 
         # --- Kopf-Seite: 7 Kacheln in 2 Reihen ---
         tw, th, gap = 92, 46, 12
@@ -287,7 +332,21 @@ class PersonalizeMenu:
                         "B": pygame.Rect(cx + 12, aby, 92, 26)}
         self._sliders_grid = self._make_sliders(aby + 42)
 
+        # --- Banner-Seite: An/Aus + Größe + Deckkraft ---
+        self.banner_toggle = pygame.Rect(cx - 150, 118, 300, 36)
+        self.banner_slider = {
+            "size": self._one_slider(200),
+            "opacity": self._one_slider(258),
+        }
+
         self.done_rect = pygame.Rect(cx - 80, self.height - 78, 160, 32)
+
+    def _one_slider(self, top):
+        cx = self.width // 2
+        track = pygame.Rect(cx - 84, top, 168, 14)
+        return dict(track=track,
+                    minus=pygame.Rect(track.left - 30, top - 4, 22, 22),
+                    plus=pygame.Rect(track.right + 8, top - 4, 22, 22))
 
     def _make_sliders(self, top):
         cx = self.width // 2
@@ -355,6 +414,42 @@ class PersonalizeMenu:
         self.done = True
         self._play("click")
 
+    # ----- Banner-Steuerung ---------------------------------------------
+    @staticmethod
+    def _range_from_x(track, x, lo, hi):
+        frac = max(0.0, min(1.0, (x - track.left) / max(1, track.width)))
+        return lo + frac * (hi - lo)
+
+    @staticmethod
+    def _banner_range(kind):
+        return (BANNER_SIZE_MIN, BANNER_SIZE_MAX) if kind == "size" \
+            else (BANNER_OP_MIN, BANNER_OP_MAX)
+
+    def _set_banner(self, kind, value):
+        (set_banner_size if kind == "size" else set_banner_opacity)(value)
+
+    def _on_click_banner(self, p):
+        if self.banner_toggle.collidepoint(p):
+            set_banner_on(not get_banner()["on"])
+            self._play("select")
+            return True
+        cfg = get_banner()
+        for kind, sl in self.banner_slider.items():
+            lo, hi = self._banner_range(kind)
+            if sl["track"].collidepoint(p):
+                self._set_banner(kind, self._range_from_x(sl["track"], p[0], lo, hi))
+                self._play("click")
+                return True
+            if sl["minus"].collidepoint(p):
+                self._set_banner(kind, cfg[kind] - 0.1)
+                self._play("click")
+                return True
+            if sl["plus"].collidepoint(p):
+                self._set_banner(kind, cfg[kind] + 0.1)
+                self._play("click")
+                return True
+        return False
+
     # ----- Eingabe ------------------------------------------------------
     def handle_event(self, event):
         if event.kind == InputEvent.KEYDOWN:
@@ -384,7 +479,7 @@ class PersonalizeMenu:
                 if rect.collidepoint(p):
                     self._select_head(pr["id"])
                     return
-        else:
+        elif self.tab == "grid":
             for rect, pr in self.grid_tiles:
                 if rect.collidepoint(p):
                     self._select_grid(pr["id"])
@@ -395,6 +490,9 @@ class PersonalizeMenu:
                         self._grid_edit = 0 if k == "A" else 1
                         self._play("click")
                         return
+        elif self.tab == "banner":
+            if self._on_click_banner(p):
+                return
         ed = self._editable()
         if ed is not None:
             for ch, sl in self._active_sliders().items():
@@ -425,8 +523,10 @@ class PersonalizeMenu:
 
         if self.tab == "head":
             self._draw_head_page(s)
-        else:
+        elif self.tab == "grid":
             self._draw_grid_page(s)
+        else:
+            self._draw_banner_page(s)
 
         pygame.draw.rect(s, COL_BTN_ON, self.done_rect, border_radius=10)
         dt = self._font.render(i18n.t("ngb.done"), True, COL_TEXT)
@@ -437,7 +537,8 @@ class PersonalizeMenu:
         s.blit(foot, foot.get_rect(midbottom=(cx, self.height - 16)))
 
     def _draw_tabs(self, s):
-        labels = {"head": i18n.t("ngb.tab_head"), "grid": i18n.t("ngb.tab_grid")}
+        labels = {"head": i18n.t("ngb.tab_head"), "grid": i18n.t("ngb.tab_grid"),
+                  "banner": i18n.t("ngb.tab_banner")}
         for name, r in self.tab_rects.items():
             active = name == self.tab
             pygame.draw.rect(s, COL_ACCENT if active else COL_TAB_OFF, r,
@@ -492,6 +593,81 @@ class PersonalizeMenu:
             hint = self._small.render(i18n.t("ngb.grid_pick"), True, COL_DIM)
             s.blit(hint, hint.get_rect(midtop=(self.width // 2,
                                                self.grid_tiles[0][0].bottom + 34)))
+
+    # ----- Banner-Seite -------------------------------------------------
+    def _draw_banner_page(self, s):
+        cx = self.width // 2
+        cfg = get_banner()
+        on = cfg["on"]
+
+        label = self._small.render(i18n.t("ngb.banner_label"), True, COL_ACCENT)
+        s.blit(label, (self.banner_toggle.left, self.banner_toggle.top - 22))
+
+        # An/Aus-Schalter
+        pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, self.banner_toggle,
+                         border_radius=8)
+        pygame.draw.rect(s, COL_SEL if on else COL_DIM, self.banner_toggle, 1,
+                         border_radius=8)
+        tl = self._font.render(i18n.t("ngb.banner_toggle"), True, COL_TEXT)
+        s.blit(tl, (self.banner_toggle.x + 16,
+                    self.banner_toggle.centery - tl.get_height() // 2))
+        stat = i18n.t("common.on" if on else "common.off")
+        col = (150, 235, 150) if on else COL_DIM
+        stimg = self._font.render(f"< {stat} >", True, col)
+        s.blit(stimg, (self.banner_toggle.right - stimg.get_width() - 16,
+                       self.banner_toggle.centery - stimg.get_height() // 2))
+
+        self._draw_banner_slider(s, "size", cfg["size"], on)
+        self._draw_banner_slider(s, "opacity", cfg["opacity"], on)
+
+        if on:
+            self._draw_banner_preview(s, cx, 344, cfg)
+        else:
+            hint = self._small.render(i18n.t("ngb.banner_off_hint"), True, COL_DIM)
+            s.blit(hint, hint.get_rect(center=(cx, 330)))
+
+    def _draw_banner_slider(self, s, kind, val, enabled):
+        sl = self.banner_slider[kind]
+        track = sl["track"]
+        lo, hi = self._banner_range(kind)
+        frac = (val - lo) / (hi - lo)
+        base = COL_ACCENT if kind == "size" else (150, 200, 120)
+        col = base if enabled else COL_DIM
+        lab = self._small.render(i18n.t("ngb.banner_" + kind), True, col)
+        s.blit(lab, lab.get_rect(midright=(sl["minus"].left - 8, track.centery)))
+        pygame.draw.rect(s, COL_TRACK, track, border_radius=7)
+        pygame.draw.rect(s, col, (track.left, track.top, int(track.width * frac),
+                                  track.height), border_radius=7)
+        knob = track.left + int(track.width * frac)
+        pygame.draw.circle(s, COL_SEL if enabled else COL_DIM, (knob, track.centery), 7)
+        pygame.draw.circle(s, col, (knob, track.centery), 5)
+        for r, sym in ((sl["minus"], "-"), (sl["plus"], "+")):
+            pygame.draw.rect(s, COL_BTN, r, border_radius=5)
+            g = self._font.render(sym, True, COL_TEXT if enabled else COL_DIM)
+            s.blit(g, g.get_rect(center=r.center))
+        pct = self._small.render(f"{int(round(val * 100))}%", True,
+                                 COL_TEXT if enabled else COL_DIM)
+        s.blit(pct, pct.get_rect(midleft=(sl["plus"].right + 8, track.centery)))
+
+    def _draw_banner_preview(self, s, cx, cy, cfg):
+        """Live-Vorschau des Banners mit aktueller Größe/Deckkraft."""
+        big = self._big.render("×1.4", True, (150, 235, 150))
+        sub = self._tiny.render(i18n.t("snake.purple_banner"), True, COL_DIM)
+        pad = 14
+        tw = max(big.get_width(), sub.get_width())
+        th = big.get_height() + sub.get_height() + 4
+        pw, ph = tw + pad * 2, th + pad
+        panel = pygame.Surface((pw, ph), pygame.SRCALPHA)
+        pygame.draw.rect(panel, (18, 20, 32, 215), panel.get_rect(), border_radius=12)
+        pygame.draw.rect(panel, (150, 235, 150, 255), panel.get_rect(), 2,
+                         border_radius=12)
+        panel.blit(sub, sub.get_rect(midtop=(pw // 2, 5)))
+        panel.blit(big, big.get_rect(midtop=(pw // 2, 5 + sub.get_height() + 2)))
+        if abs(cfg["size"] - 1.0) > 0.01:
+            panel = pygame.transform.rotozoom(panel, 0, cfg["size"])
+        panel.fill((255, 255, 255, int(255 * cfg["opacity"])),
+                   special_flags=pygame.BLEND_RGBA_MULT)
+        s.blit(panel, panel.get_rect(center=(cx, cy)))
 
     # ----- gemeinsame Bausteine -----------------------------------------
     def _draw_tile(self, s, rect, col, selected, name):
