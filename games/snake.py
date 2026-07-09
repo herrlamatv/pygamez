@@ -53,6 +53,7 @@ import pygame
 import competitive
 import highscore
 import i18n
+import ngb
 import prestige
 import settings as settings_mod
 from game_base import Game, InputEvent
@@ -104,7 +105,7 @@ def _ease_out_back(p):
     return 1.0 + c3 * (p - 1) ** 3 + c1 * (p - 1) ** 2
 
 # Spielzustände
-SETUP, PLAY = "setup", "play"
+SETUP, PLAY, PERSONALIZE = "setup", "play", "personalize"
 
 COL_BG = (15, 15, 25)
 COL_GRID = (25, 25, 40)
@@ -228,6 +229,7 @@ class SnakeGame(Game):
 
         self.particles = []
         self.anim_t = 0.0
+        self._ngb_menu = None          # aktives Personalisierungs-Menü (oder None)
 
         # Zustand der 3D-Ansicht
         self.particles3d = []          # [x, y, z, vx, vy, vz, life, farbe]
@@ -462,6 +464,9 @@ class SnakeGame(Game):
         cx = self.width // 2
         bw = min(420, self.width - 60)
 
+        # Personalisieren-Knopf (Pinsel) - ganz oben rechts, ohne Beschriftung
+        self.brush_rect = pygame.Rect(self.width - 42, 8, 34, 34)
+
         # Modus-Auswahl: Pfeile + Panel
         self.mode_panel = pygame.Rect(cx - bw // 2, 106, bw, 58)
         self.mode_left = pygame.Rect(self.mode_panel.left, 106, 40, 58)
@@ -522,6 +527,13 @@ class SnakeGame(Game):
         self._save_snake_setting("view3d", self.view3d)
         self.play_sound("select")
 
+    def _open_personalize(self):
+        """Öffnet das Personalisierungs-Menü (nur Optik) über ngb.py."""
+        self._ngb_menu = ngb.open_head_color_menu(self.width, self.height,
+                                                  self.play_sound)
+        self.state = PERSONALIZE
+        self.play_sound("click")
+
     def _handle_setup_event(self, event):
         if event.kind == InputEvent.KEYDOWN:
             if event.key in ("Left", "a", "A"):
@@ -543,12 +555,16 @@ class SnakeGame(Game):
                 self._toggle_setting("bonus")
             elif event.key in ("f", "F"):
                 self._cycle_apples()
+            elif event.key in ("c", "C"):
+                self._open_personalize()
             elif event.key in ("Return", "space"):
                 self.play_sound("click")
                 self._start_play()
         elif event.kind == InputEvent.MOUSEDOWN:
             p = event.pos
-            if self.mode_left.collidepoint(p):
+            if self.brush_rect.collidepoint(p):
+                self._open_personalize()
+            elif self.mode_left.collidepoint(p):
                 self._cycle_mode(-1)
             elif self.mode_right.collidepoint(p):
                 self._cycle_mode(+1)
@@ -568,6 +584,13 @@ class SnakeGame(Game):
 
     # ===================================================== Eingabe (Spiel)
     def handle_event(self, event):
+        if self.state == PERSONALIZE:
+            if self._ngb_menu is not None:
+                self._ngb_menu.handle_event(event)
+                if self._ngb_menu.done:
+                    self._ngb_menu = None
+                    self.state = SETUP     # zurück ins Setup; Kopffarbe ist übernommen
+            return
         if self.state == SETUP:
             self._handle_setup_event(event)
             return
@@ -1192,6 +1215,10 @@ class SnakeGame(Game):
 
     # ===================================================== Zeichnen
     def draw(self):
+        if self.state == PERSONALIZE:
+            if self._ngb_menu is not None:
+                self._ngb_menu.draw(self.surface)
+            return
         if self.state == SETUP:
             self._draw_setup()
             return
@@ -1340,8 +1367,15 @@ class SnakeGame(Game):
             self._draw_fx_ring(s, e["cell"], int(CELL * 0.32 + CELL * 0.5 * p),
                                COL_FOOD, int(150 * (1.0 - p)))
 
+    def _head_color(self, idx):
+        """Kopffarbe einer Schlange. Spieler 1 nutzt die NGB-Personalisierung."""
+        if idx == 0:
+            return ngb.head_color()
+        return SNAKE_COLORS[idx % len(SNAKE_COLORS)][1]
+
     def _draw_snake(self, s, sn, idx):
         körper, kopf = SNAKE_COLORS[idx % len(SNAKE_COLORS)]
+        kopf = self._head_color(idx)
         if not sn.alive:
             körper = tuple(c // 2 for c in körper)
             kopf = körper
@@ -1612,6 +1646,7 @@ class SnakeGame(Game):
     def _add_snake3d(self, items, sn, idx):
         """Die Schlange als Kette aus Quadern (Kopf grösser und heller)."""
         col_body, col_head = SNAKE_COLORS[idx % len(SNAKE_COLORS)]
+        col_head = self._head_color(idx)
         if not sn.alive:
             col_body = tuple(c // 2 for c in col_body)
             col_head = col_body
@@ -2074,6 +2109,24 @@ class SnakeGame(Game):
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 34)))
         boost = self._tiny.render(i18n.t("snake.boost_hint"), True, (120, 200, 150))
         s.blit(boost, boost.get_rect(center=(self.width // 2, self.height - 14)))
+
+        self._draw_brush_button(s)
+
+    def _draw_brush_button(self, s):
+        """Pinsel-Knopf oben rechts (Personalisieren) - ohne Text, mit Farb-Spitze."""
+        r = self.brush_rect
+        pygame.draw.rect(s, COL_BTN, r, border_radius=8)
+        pygame.draw.rect(s, COL_ACCENT, r, 1, border_radius=8)
+        tip = ngb.head_color()                       # Spitze zeigt die aktive Kopffarbe
+        hx0, hy0 = r.left + 10, r.bottom - 10        # Borsten-Spitze (unten links)
+        hx1, hy1 = r.right - 8, r.top + 8            # Griffende (oben rechts)
+        pygame.draw.line(s, (170, 140, 95), (hx0 + 4, hy0 - 4), (hx1, hy1), 4)
+        fx = hx0 + (hx1 - hx0) * 0.30                # Metallzwinge
+        fy = hy0 + (hy1 - hy0) * 0.30
+        pygame.draw.circle(s, (205, 208, 216), (int(fx), int(fy)), 3)
+        pygame.draw.polygon(s, tip, [(hx0 - 4, hy0 + 2), (hx0 + 5, hy0 - 5),
+                                     (hx0 + 2, hy0 + 6)])
+        pygame.draw.circle(s, tip, (hx0 - 1, hy0 + 2), 3)
 
     def _draw_disabled_row(self, rect, label, note):
         """Abgeblendete Setup-Zeile mit Hinweistext (nicht anklickbar)."""
