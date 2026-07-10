@@ -23,6 +23,7 @@
   "app.status": "{name}\nStatus: {state}\nPunkte: {score}\nHighscore: {hs}",
   "app.status_menu": "{name}\n(Menü)",
   "app.title": "PyGameZ (beta)",
+  "app.top_scores": "Bestenliste",
   "ah.ai": "KI",
   "ah.diff.easy": "Leicht",
   "ah.diff.hard": "Schwer",

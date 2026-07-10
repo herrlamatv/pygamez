@@ -84,6 +84,11 @@ class PreGameScreen(_Screen):
 
     def __init__(self, surface, width, height, app, game_cls):
         self.game_cls = game_cls
+        # Akzentfarbe des Spiels (gleiche Farbe wie in der Sidebar-Liste).
+        self.accent = ui.game_color(game_cls.__name__)
+        # Bisheriger Highscore für die Anzeige unter dem Titel.
+        import highscore
+        self.best = highscore.load_highscores().get(game_cls.highscore_key, 0)
         super().__init__(surface, width, height, app)
         self.name = t("pregame.name")
         self._build_buttons()
@@ -153,6 +158,9 @@ class PreGameScreen(_Screen):
 
     def _activate(self, i):
         self.play_sound("click")
+        # Kleiner Funken-Effekt am Button (wird zentral in main.py gezeichnet).
+        r = self.rects[i]
+        ui.spawn_burst(r.centerx, r.centery, self.accent)
         self.buttons[i][1]()
 
     def draw(self):
@@ -160,12 +168,24 @@ class PreGameScreen(_Screen):
         ui.draw_background(s, self.width, self.height)
 
         ui.draw_title(s, self.width, self.game_cls.name,
-                      subtitle=t("pregame.mode"), y=64)
+                      subtitle=t("pregame.mode"), y=64, accent=self.accent)
 
         btn_font = ui.font(19)
         for i, (label, _) in enumerate(self.buttons):
             ui.draw_button(s, self.rects[i], label, btn_font,
-                           selected=(i == self.sel))
+                           selected=(i == self.sel), accent=self.accent)
+
+        # Bisheriger Highscore als kleiner Chip über der Fußzeile
+        # (nur wenn er nicht mit den Buttons kollidiert, z.B. bei 480p + vielen Modi).
+        if self.best > 0:
+            img = ui.font(14, bold=True).render(
+                "★ " + t("app.highscore", hs=self.best), True, ui.GOLD)
+            bw, bh = img.get_width() + 26, img.get_height() + 10
+            chip = pygame.Rect(self.width // 2 - bw // 2,
+                               self.height - 66 - bh // 2, bw, bh)
+            if not self.rects or self.rects[-1].bottom + 8 < chip.top:
+                ui.draw_panel(s, chip, radius=bh // 2, shadow=False)
+                s.blit(img, img.get_rect(center=chip.center))
 
         ui.draw_footer(s, self.width, self.height, t("pregame.hint"))
 
@@ -395,9 +415,10 @@ class OptionsScreen(_Screen):
         s = self.surface
         ui.draw_background(s, self.width, self.height, stars=False)
 
-        # Karten-Panels hinter den Gruppen (rein optisch).
+        # Karten-Panels hinter den Gruppen (rein optisch, mit Akzent-Lichtkante).
         for p in getattr(self, "_panels", ()):
-            ui.draw_panel(s, p, radius=10, shadow=False)
+            ui.draw_panel(s, p, radius=10, shadow=False,
+                          accent_top=ui.mix(ui.PANEL, ui.ACCENT, 0.45))
 
         # Titel oben links mit Akzent-Unterstrich.
         title_font = ui.font(22, bold=True)
@@ -591,6 +612,8 @@ class LanguageScreen(_Screen):
         i18n.set_language(i18n.AVAILABLE[i][0])
         self.app.refresh_language()
         self.play_sound("click")
+        r = self.rects[i]
+        ui.spawn_burst(r.centerx, r.centery, ui.ACCENT)
         self.on_done()
 
     def handle_event(self, event):
