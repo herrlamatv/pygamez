@@ -363,14 +363,28 @@ class DoodleGame(Game):
         self.score = max(self.score, int(self.max_rise / 4))
 
     def _fill_platforms(self):
-        """Erzeugt Plattformen nach oben, bis genug über der Kamera liegen."""
+        """Erzeugt Plattformen nach oben, bis genug über der Kamera liegen.
+
+        WICHTIG (Erreichbarkeit): Das "Gerüst" besteht nur aus bespringbaren
+        Plattformen (normal/beweglich/verschwindend) mit Abständen unterhalb
+        der maximalen Sprunghöhe. Zerbrechliche Plattformen ERSETZEN keinen
+        Gerüst-Schritt, sondern werden zusätzlich dazwischen gestreut - sonst
+        entstehen zwei Schritte ohne Absprung-Möglichkeit und es gibt
+        stellenweise "keine Blöcke mehr" (unvermeidbarer Tod).
+        """
         d = self._diff()
         scale = self._difficulty_scale()
         gap = d["gap"] + scale * 40
         while self.gen_y > self.cam_y - self.height * 0.3:
+            prev_y = self.gen_y
             self.gen_y -= random.uniform(gap * 0.7, gap * 1.15)
             x = random.uniform(0, self.width - self.plat_w)
             kind = self._pick_kind(d, scale)
+            # Nie zwei verschwindende Plattformen direkt hintereinander -
+            # sonst fehlt nach deren Benutzung ein ganzes Stück Gerüst.
+            if kind == "vanish" and getattr(self, "_prev_kind", "") == "vanish":
+                kind = "normal"
+            self._prev_kind = kind
             p = _Plat(x, self.gen_y, self.plat_w, kind)
             if kind == "move":
                 p.vx = random.choice((-1, 1)) * random.uniform(60, 110)
@@ -382,6 +396,14 @@ class DoodleGame(Game):
                 elif rr < 0.16:
                     p.spring = True
             self.platforms.append(p)
+            # Zerbrechliche Plattform als zusätzliche Falle ZWISCHEN den
+            # Gerüst-Plattformen (nie als Ersatz eines Schritts).
+            pbrit = d["brittle"] + scale * 0.10
+            if prev_y - self.gen_y > 40 and random.random() < pbrit:
+                self.platforms.append(_Plat(
+                    random.uniform(0, self.width - self.plat_w),
+                    random.uniform(self.gen_y + 14, prev_y - 14),
+                    self.plat_w, "brittle"))
             # Monster gelegentlich zwischen die Plattformen
             if random.random() < d["monster"] * (0.5 + scale):
                 self.monsters.append(dict(
@@ -392,15 +414,14 @@ class DoodleGame(Game):
                     bob=random.uniform(0, math.tau)))
 
     def _pick_kind(self, d, scale):
+        """Wählt die Art einer GERÜST-Plattform - alle sind bespringbar
+        (brüchige Plattformen werden separat als Extras eingestreut)."""
         r = random.random()
         pmove = d["move"] + scale * 0.12
-        pbrit = d["brittle"] + scale * 0.10
         pvan = 0.06 + scale * 0.06
-        if r < pbrit:
-            return "brittle"
-        if r < pbrit + pvan:
+        if r < pvan:
             return "vanish"
-        if r < pbrit + pvan + pmove:
+        if r < pvan + pmove:
             return "move"
         return "normal"
 
