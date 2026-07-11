@@ -67,6 +67,9 @@ GAME_COLORS = {
     "SudokuGame": "#c77dba", "FroggerGame": "#4caf6d",
     "MemoryGame": "#8f7ef2", "SolitaireGame": "#2fa77c",
     "AimTrainerGame": "#e05ad4",
+    "ConnectFourGame": "#ff8f2e", "TankDuelGame": "#a8b545",
+    "BlackjackGame": "#c8384f", "TunnelRacerGame": "#35e2ff",
+    "LabyrinthGame": "#b07a4a",
 }
 
 # Schriftname mit Fallback-Kette (SysFont probiert der Reihe nach durch).

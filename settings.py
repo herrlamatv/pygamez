@@ -97,6 +97,14 @@ DEFAULTS = {
     # Aim Trainer: Arena-Thema (space/neon/range), Maus-Empfindlichkeit,
     # Motion-Blur-Stärke (0.0 = aus .. 0.8 = maximal)
     "aim": {"theme": "space", "sens": 1.0, "blur": 0.0},
+    # Vier gewinnt: KI-Stärke (0=Leicht, 1=Mittel, 2=Schwer)
+    "connect4": {"difficulty": 1},
+    # Panzer-Duell: KI-Stärke (0-2), Arena (-1 = zufällig, 0-3 = Preset)
+    "tanks": {"difficulty": 1, "arena": -1},
+    # Tunnel Racer: Steuerung (keys/mouse), Motion-Blur, letztes Level
+    "tunnel": {"control": "keys", "blur": 0.35, "last_level": 1},
+    # Labyrinth: Ansicht (ego/top), Maus-Empfindlichkeit, letztes Level
+    "maze": {"view": "ego", "sens": 1.0, "last_level": 1},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -187,6 +195,32 @@ def _merge_defaults(data):
                 out["aim"]["sens"] = max(0.5, min(2.0, float(aim["sens"])))
             if isinstance(aim.get("blur"), (int, float)):
                 out["aim"]["blur"] = max(0.0, min(0.8, float(aim["blur"])))
+        c4 = data.get("connect4")
+        if isinstance(c4, dict) and isinstance(c4.get("difficulty"), int):
+            out["connect4"]["difficulty"] = max(0, min(2, c4["difficulty"]))
+        tk_ = data.get("tanks")
+        if isinstance(tk_, dict):
+            if isinstance(tk_.get("difficulty"), int):
+                out["tanks"]["difficulty"] = max(0, min(2, tk_["difficulty"]))
+            if isinstance(tk_.get("arena"), int):
+                out["tanks"]["arena"] = max(-1, min(3, tk_["arena"]))
+        tun = data.get("tunnel")
+        if isinstance(tun, dict):
+            if tun.get("control") in ("keys", "mouse"):
+                out["tunnel"]["control"] = tun["control"]
+            if isinstance(tun.get("blur"), (int, float)):
+                out["tunnel"]["blur"] = max(0.0, min(0.8, float(tun["blur"])))
+            if isinstance(tun.get("last_level"), int):
+                out["tunnel"]["last_level"] = max(1, min(30,
+                                                         tun["last_level"]))
+        mz = data.get("maze")
+        if isinstance(mz, dict):
+            if mz.get("view") in ("ego", "top"):
+                out["maze"]["view"] = mz["view"]
+            if isinstance(mz.get("sens"), (int, float)):
+                out["maze"]["sens"] = max(0.5, min(2.0, float(mz["sens"])))
+            if isinstance(mz.get("last_level"), int):
+                out["maze"]["last_level"] = max(1, min(50, mz["last_level"]))
         ctrl = data.get("controls")
         if isinstance(ctrl, dict):
             for player in ("p1", "p2"):

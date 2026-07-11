@@ -311,6 +311,46 @@ def _draw_icon(cv, cx, cy, name, color, bg):
         cv.create_line(cx - 11, cy, cx - 5, cy, fill=color, width=2)
         cv.create_line(cx + 5, cy, cx + 11, cy, fill=color, width=2)
         cv.create_oval(cx - 2, cy - 2, cx + 2, cy + 2, fill=color, outline="")
+    elif name == "ConnectFourGame":
+        _round_rect(cv, cx - 10, cy - 8, cx + 10, cy + 9, 3, fill="",
+                    outline=color)
+        for gy, row in ((3, (0, 1, 1)), (-3, (1, 0, 1))):
+            for i, filled in enumerate(row):
+                x = cx - 6 + i * 6
+                if filled:
+                    cv.create_oval(x - 2, cy + gy - 2, x + 2, cy + gy + 2,
+                                   fill=color, outline="")
+                else:
+                    cv.create_oval(x - 2, cy + gy - 2, x + 2, cy + gy + 2,
+                                   outline=color)
+    elif name == "TankDuelGame":
+        _round_rect(cv, cx - 9, cy, cx + 5, cy + 7, 2, fill=color, outline="")
+        cv.create_oval(cx - 5, cy - 5, cx + 1, cy + 1, fill=color, outline="")
+        cv.create_line(cx - 1, cy - 3, cx + 8, cy - 6, fill=color, width=2)
+        cv.create_oval(cx + 9, cy - 8, cx + 12, cy - 5, fill=color, outline="")
+    elif name == "BlackjackGame":
+        _round_rect(cv, cx - 10, cy - 7, cx + 1, cy + 9, 3, fill="",
+                    outline=color)
+        _round_rect(cv, cx - 1, cy - 9, cx + 10, cy + 7, 3, fill="",
+                    outline=color)
+        cv.create_text(cx + 4, cy - 4, text="A", fill=color,
+                       font=("Segoe UI", 7, "bold"))
+        cv.create_polygon(cx - 5, cy - 3, cx - 2, cy + 2, cx - 8, cy + 2,
+                          fill=color, outline="")
+        cv.create_line(cx - 5, cy + 2, cx - 5, cy + 5, fill=color, width=2)
+    elif name == "TunnelRacerGame":
+        cv.create_rectangle(cx - 10, cy - 10, cx + 10, cy + 10, outline=color)
+        cv.create_rectangle(cx - 6, cy - 6, cx + 6, cy + 6, outline=color)
+        cv.create_rectangle(cx - 3, cy - 3, cx + 3, cy + 3, outline=color)
+        cv.create_polygon(cx, cy + 1, cx - 3, cy + 8, cx, cy + 6,
+                          cx + 3, cy + 8, fill=color, outline="")
+    elif name == "LabyrinthGame":
+        _round_rect(cv, cx - 9, cy - 9, cx + 9, cy + 9, 3, fill="",
+                    outline=color)
+        cv.create_line(cx - 5, cy - 9, cx - 5, cy + 3, fill=color, width=2)
+        cv.create_line(cx - 5, cy + 3, cx + 3, cy + 3, fill=color, width=2)
+        cv.create_line(cx + 3, cy - 4, cx + 3, cy + 3, fill=color, width=2)
+        cv.create_oval(cx + 4, cy + 4, cx + 8, cy + 8, fill=color, outline="")
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))

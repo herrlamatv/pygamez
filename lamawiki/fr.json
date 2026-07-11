@@ -937,6 +937,273 @@
           ]
         }
       ]
+    },
+    {
+      "id": "connect4",
+      "category": "games",
+      "game": "ConnectFourGame",
+      "title": "Puissance 4",
+      "keywords": [
+        "quatre",
+        "alignement",
+        "pions",
+        "colonnes",
+        "ia",
+        "stratégie"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Deux couleurs lâchent tour à tour des pions dans l'une des 7 colonnes ; chaque pion tombe sur la case libre la plus basse. Le premier à en aligner quatre - à l'horizontale, à la verticale ou en diagonale - remporte la manche.",
+            "En solo tu affrontes l'IA (trois forces dans les réglages) ; à deux joueurs vous alternez sur une même souris ou un même clavier.",
+            "Le joueur qui commence change à chaque manche. [Entrée] lance la manche suivante, [S] revient aux réglages."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Souris : survole une colonne (le pion fantôme montre la position) et clique.",
+            "- Clavier : [Gauche] [Droite] choisissent la colonne, on lâche avec [Bas], [Espace] ou [Entrée].",
+            "- Accès direct : les chiffres [1] à [7] jouent aussitôt dans la colonne correspondante."
+          ]
+        },
+        {
+          "h": "Forces de l'IA",
+          "body": [
+            "Facile rate volontairement certaines menaces et joue parfois le deuxième meilleur coup - parfait pour apprendre. Moyen anticipe quelques coups et bloque avec fiabilité.",
+            "Difficile calcule bien plus profond et punit chaque erreur immédiatement - seules les doubles menaces l'emportent ici."
+          ]
+        },
+        {
+          "h": "Points + astuces",
+          "body": [
+            "Chaque victoire contre l'IA vaut un point ; le record est le plus grand nombre de victoires en une session. Pas de score en mode 2 joueurs.",
+            "- La colonne centrale est la plus forte : la plupart des alignements passent par elle.",
+            "- Construis des doubles menaces (deux trois ouverts en même temps) - l'adversaire ne peut en bloquer qu'une."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tanks",
+      "category": "games",
+      "game": "TankDuelGame",
+      "title": "Duel de tanks",
+      "keywords": [
+        "tank",
+        "duel",
+        "ricochet",
+        "arène",
+        "bonus",
+        "2 joueurs"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Du 1 contre 1 dans une arène de murs : touche l'adversaire pour prendre la manche - le premier à 5 manches gagne le match.",
+            "Les tirs rebondissent une fois sur les murs (ricochet) et disparaissent au deuxième contact. Attention : un tir rebondi peut aussi te toucher.",
+            "Joue contre l'IA (trois forces) ou à deux sur un même clavier. Après le match : [Entrée] = revanche, [S] = réglages."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Joueur 1 : [W] [S] avancent et reculent, [A] [D] tournent, [Espace] tire.",
+            "- Joueur 2 : les flèches conduisent et tournent, [Entrée] tire. Les touches suivent les options.",
+            "- Au plus 4 de tes tirs en vol à la fois, avec une courte recharge entre deux."
+          ]
+        },
+        {
+          "h": "Bonus",
+          "body": [
+            "- Tir rapide : 8 secondes presque sans recharge.",
+            "- Bouclier : absorbe exactement un tir (anneau autour du char).",
+            "- Tir triple : les 5 prochains tirs partent en éventail dans trois directions. Les bonus apparaissent régulièrement dans l'arène et expirent après 12 secondes."
+          ]
+        },
+        {
+          "h": "Arènes + IA",
+          "body": [
+            "Quatre arènes au choix : Ouverte (aucun abri), Croix, Piliers et Labyrinthe - ou Aléatoire, qui change d'arène à chaque manche.",
+            "L'IA facile roule un peu au hasard et vise mal ; la moyenne te poursuit et esquive sur le côté.",
+            "L'IA difficile garde ses distances, vise devant ton déplacement et tire même volontairement avec rebond."
+          ]
+        },
+        {
+          "h": "Points + astuces",
+          "body": [
+            "Contre l'IA tu marques à chaque match gagné : davantage pour les forces élevées et les victoires nettes ; les points s'additionnent au fil des revanches. Pas de score en mode 2 joueurs.",
+            "- Utilise les murs : un tir en ricochet touche dans les angles sans t'exposer."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blackjack",
+      "category": "games",
+      "game": "BlackjackGame",
+      "title": "Blackjack",
+      "keywords": [
+        "cartes",
+        "casino",
+        "21",
+        "jetons",
+        "croupier",
+        "mise"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "But : approcher 21 plus que le croupier sans le dépasser. Les cartes numérotées valent leur chiffre, les figures 10, l'as 11 ou 1.",
+            "On joue avec un sabot de 4 jeux ; le croupier tire jusqu'à 16 et reste sur tout 17.",
+            "Pose d'abord ta mise (boutons de jetons ou touches [1] à [4], [Retour] efface), puis distribue avec [Entrée]."
+          ]
+        },
+        {
+          "h": "Actions",
+          "body": [
+            "- Carte [H] : tirer une carte de plus.",
+            "- Rester [S] : garder le total actuel.",
+            "- Doubler [D] : doubler la mise, recevoir exactement une carte, puis rester automatiquement - seulement avec les deux premières cartes.",
+            "- Séparer [X] : scinder deux cartes de même valeur en deux mains (une fois par manche ; les as séparés ne reçoivent qu'une carte chacun)."
+          ]
+        },
+        {
+          "h": "Paiements",
+          "body": [
+            "- Le blackjack (as + carte de valeur dix) paie 3 contre 2.",
+            "- Une victoire normale paie 1 contre 1, l'égalité rend la mise.",
+            "- Sauté ou perdu : la mise est perdue. Si le croupier montre un as ou un 10, il vérifie aussitôt le blackjack."
+          ]
+        },
+        {
+          "h": "Jetons",
+          "body": [
+            "Tu démarres avec 500 jetons ; le solde et le record sont sauvegardés durablement et survivent à chaque redémarrage.",
+            "Le record est le plus haut solde de jetons jamais atteint.",
+            "Sous 10 jetons tu es fauché : [Entrée] repart avec 500 jetons neufs - le record est conservé."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Stratégie de base : contre un 7 ou plus visible, tire jusqu'à 17 ; contre 4 à 6, reste tôt - le croupier y saute souvent.",
+            "- Sépare toujours les as et les huit, jamais les paires de dix."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tunnelracer",
+      "category": "games",
+      "game": "TunnelRacerGame",
+      "title": "Tunnel Racer",
+      "keywords": [
+        "tunnel",
+        "racer",
+        "3d",
+        "néon",
+        "esquive",
+        "infini"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Tu voles dans un tube néon qui serpente et tu esquives barres, blocs et anneaux - un seul impact et la course s'arrête.",
+            "Des pièces dorées flottent dans les passages ; elles rapportent des points et marquent souvent la trajectoire sûre.",
+            "Les anneaux n'ont qu'un seul trou : faufile-toi dedans au lieu de contourner."
+          ]
+        },
+        {
+          "h": "Modes",
+          "body": [
+            "- Infini : la vitesse grimpe sans cesse et les passages se resserrent - jusqu'où iras-tu ? Un crash termine la course et sauvegarde le record.",
+            "- Niveaux : 30 parcours fixes avec une arrivée, du tranquille au brutal. Les niveaux réussis sont cochés ; les points de la session s'additionnent."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Touches (par défaut) : [W] [A] [S] [D] ou les flèches déplacent le vaisseau dans le tube.",
+            "- Souris : à activer dans les réglages avec [C] - pilotage direct 1:1, le curseur est capturé et [Échap] le libère.",
+            "- [B] fait défiler le flou de mouvement par pas de 10 pour cent (0 à 80, sauvegardé).",
+            "- En mode niveaux : [R] réessaie après un crash, [S] ouvre la sélection."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "- Infini : 10 points par mètre plus 50 par pièce.",
+            "- Niveaux : 1000 pour l'arrivée, 50 par pièce et un bonus de temps si tu bats le temps de référence.",
+            "Le record du mode niveaux est le meilleur total d'une session - enchaîner plusieurs niveaux est payant."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Regarde les anneaux au loin : le tube annonce ses virages assez tôt pour contre-braquer.",
+            "- Reste près du centre autant que possible - tous les passages y sont accessibles."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "labyrinth",
+      "category": "games",
+      "game": "LabyrinthGame",
+      "title": "Labyrinthe 3D",
+      "keywords": [
+        "labyrinthe",
+        "maze",
+        "raycaster",
+        "orbes",
+        "sortie",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "50 labyrinthes générés par seed, de plus en plus grands à chaque niveau. Trouve la sortie verte qui pulse - elle est toujours au point le plus éloigné du départ.",
+            "Des orbes bleus flottent dans les couloirs ; chaque orbe ramassé rapporte des points bonus.",
+            "Les niveaux réussis sont cochés dans la sélection ; [Entrée] à l'arrivée lance directement le suivant."
+          ]
+        },
+        {
+          "h": "Vues",
+          "body": [
+            "- Vue subjective (3D) : vue à la Wolfenstein avec visée à la souris - au coeur du labyrinthe plutôt que vu d'en haut.",
+            "- Vue de dessus (2D) : la carte classique vue d'en haut, sans capture de souris. Bascule dans les réglages avec [V] ; le choix est sauvegardé."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Vue subjective : [W] [S] avancent et reculent, [A] [D] font des pas de côté, la souris tourne le regard - sinon [Q] et [E] tournent au clavier.",
+            "- [M] affiche la mini-carte, [Échap] met en pause et libère la souris.",
+            "- Vue de dessus : [W] [A] [S] [D] ou les flèches marchent dans les directions du monde."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "- Atteindre la sortie : 500 points.",
+            "- Par orbe : 100 points de plus.",
+            "- Plus un bonus de temps si tu bats le temps de référence du niveau ; les points de la session s'additionnent pour le record."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Règle de la main droite : longer toujours le même mur mène à coup sûr à la sortie.",
+            "- Les orbes jalonnent grossièrement le chemin vers la sortie - les ramasser signifie souvent que tu es sur la bonne voie."
+          ]
+        }
+      ]
     }
   ]
 }

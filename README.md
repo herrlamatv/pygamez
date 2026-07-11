@@ -9,7 +9,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Achtzehn
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Dreiundzwanzig
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English); die Sprache wird beim ersten Start gewählt
@@ -56,9 +56,15 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Memory**      | 1 / 2 Spieler | Paare finden auf 4x4 bis 8x6, Flip-Animation, Solo-Wertung oder Duell |
 | **Solitär**     | 1 Spieler    | 5 Varianten (Klondike, Spider, FreeCell, Pyramide, TriPeaks) mit Drag & Drop und Undo |
 | **Aim Trainer** | 1 Spieler    | Chilliges 3D-Zielschießen: Maus lenkt die Kamera, 4 Modi (Präzision/Reflex/Bewegt/Chill), 3 Themen inkl. schwarzem Loch |
+| **Vier gewinnt** | 1 / 2 Spieler | Der Klassiker mit Fall-Animation: 3 KI-Stärken (Minimax) oder lokales Duell |
+| **Panzer-Duell** | 1 / 2 Spieler | 2D-Arena-Duell mit Ricochet-Schüssen, Power-Ups, 4 Arenen, KI mit 3 Stärken |
+| **Blackjack**    | 1 Spieler    | Casino-Blackjack mit 4-Deck-Schuh, Double/Split, 3:2-Blackjack und dauerhaftem Chip-Konto |
+| **Tunnel Racer** | 1 Spieler    | 3D-Neon-Röhrenflug: Endlos-Modus + 30 Level, Tasten- oder Maus-Steuerung, Motion Blur |
+| **3D-Labyrinth** | 1 Spieler    | Ego-Raycaster (Wolfenstein-Stil) mit 50 Seed-Leveln, Orbs, Minimap - oder 2D-Draufsicht |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
-**Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)** und **Memory (Duell)**. Der Modus wird
+**Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)**, **Memory (Duell)**,
+**Vier gewinnt** und **Panzer-Duell**. Der Modus wird
 direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
 
 #### Feature-Details je Spiel
@@ -309,6 +315,53 @@ Explosions-Effekte, Highscore.
   **einstellbarer Motion Blur** (0-80 %) für extra Chill-Optik - beides
   wird gespeichert.
 
+**Vier gewinnt**
+- 7x6-Brett mit **Fall-Animation**, Hover-Vorschau und pulsierender Sieg-Linie;
+  Maus, Pfeiltasten oder Direktwahl **1-7**.
+- **3 KI-Stärken** (Minimax mit Alpha-Beta-Suche): Leicht übersieht bewusst
+  Drohungen, Mittel blockt zuverlässig, Schwer plant tief voraus - oder
+  **2 Spieler** lokal am selben Gerät.
+- Nach jeder Runde wechselt der Startspieler; der Highscore zählt die
+  **Siege gegen die KI** einer Sitzung.
+
+**Panzer-Duell**
+- 2D-Arena-Duell: **Schüsse prallen einmal von Wänden ab** (Ricochet) - auch
+  um die Ecke treffen (oder sich selbst!). First-to-5-Runden mit Countdown.
+- **4 Arenen** (Offen, Kreuz, Säulen, Labyrinth) oder zufällige Rotation;
+  **Power-Ups**: Schnellfeuer, Schild, Dreifach-Schuss.
+- **KI mit 3 Stärken** - die schwere zielt mit Vorhalt und schießt absichtlich
+  über die Bande - oder **2 Spieler** an einer Tastatur (P1 WASD+Leertaste,
+  P2 Pfeile+Enter).
+
+**Blackjack**
+- Echte Casino-Regeln: **4-Deck-Schuh**, Dealer steht auf 17, **Blackjack
+  zahlt 3:2**, Dealer-Peek bei Ass/10; **Verdoppeln** und **einmal Teilen**
+  (geteilte Asse bekommen je eine Karte).
+- **Dauerhaftes Chip-Konto**: Start mit 500, Stand und **Rekord** überleben
+  jeden Neustart (`mem.json`); unter 10 Chips gibt es 500 frische - der
+  Rekord bleibt.
+- Bedienung per Chip-Buttons und Tasten (**H**it/**S**tand/**D**ouble/Split
+  **X**, **1-4** = Einsatz, Enter = Geben) mit Karten-Animationen und
+  Hole-Card-Flip.
+
+**Tunnel Racer**
+- **3D-Neon-Röhrenflug** (Software-Renderer wie beim Aim Trainer): Balken,
+  Blöcke und **Ring-Blenden zum Durchfädeln**, Münzen auf der Ideallinie.
+- **Zwei Modi**: Endlos (Tempo steigt bis Cap, Highscore) und **30 Seed-Level**
+  mit Ziel, Zeitbonus und abgehaktem Fortschritt.
+- **Tasten-Steuerung** (Standard) oder **direkte Maus-Steuerung**
+  (Pointer-Capture, Taste **C**); dazu einstellbarer **Motion Blur** (Taste
+  **B**, 0-80 %) - alles wird gespeichert.
+
+**3D-Labyrinth**
+- **Ego-Raycaster im Wolfenstein-Stil** (DDA, Distanz-Nebel, Sprites) mit
+  Mouselook + WASD, **Minimap** (Taste **M**) und grün pulsierendem Ausgang -
+  alternativ eine klassische **2D-Draufsicht** (Taste **V** im Setup).
+- **50 Seed-Level**, die stetig wachsen; der Ausgang liegt immer am
+  entferntesten Punkt, **Orbs** auf dem Weg geben Bonuspunkte.
+- Punkte: 500 je Level + 100 je Orb + Zeitbonus; gelöste Level werden
+  abgehakt, die Sitzung summiert sich zum Highscore.
+
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
@@ -393,6 +446,8 @@ games/
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
   game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
+  connect4.py  tanks.py  blackjack.py  tunnelracer.py
+  labyrinth.py  maze_gen.py
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -492,7 +547,7 @@ gewünschte Version und die winget-ID entsprechend (`Python.Python.3.12`).
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Eighteen
+**Pygame** is embedded as the game display inside the Tkinter window. Twenty-three
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English); the language is chosen on first launch and
@@ -539,11 +594,16 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Memory**      | 1 / 2 players | Find pairs on 4x4 up to 8x6, flip animation, solo scoring or duel |
 | **Solitaire**   | 1 player     | 5 variants (Klondike, Spider, FreeCell, Pyramid, TriPeaks) with drag & drop and undo |
 | **Aim Trainer** | 1 player     | Chill 3D target shooting: mouse steers the camera, 4 modes (precision/reflex/moving/chill), 3 themes incl. a black hole |
+| **Connect Four** | 1 / 2 players | The classic with falling-disc animation: 3 AI strengths (minimax) or a local duel |
+| **Tank Duel**    | 1 / 2 players | 2D arena duel with ricochet shots, power-ups, 4 arenas, AI with 3 strengths |
+| **Blackjack**    | 1 player     | Casino blackjack with a 4-deck shoe, double/split, 3:2 blackjack and a persistent chip balance |
+| **Tunnel Racer** | 1 player     | 3D neon tube flight: endless mode + 30 levels, key or mouse steering, motion blur |
+| **3D Maze**      | 1 player     | First-person raycaster (Wolfenstein style) with 50 seeded levels, orbs, minimap - or a 2D top-down view |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
-duel)** and **Memory (duel)**. The mode is chosen right in the pre-game screen
-(*Single-player / Multiplayer*).
+duel)**, **Memory (duel)**, **Connect Four** and **Tank Duel**. The mode is
+chosen right in the pre-game screen (*Single-player / Multiplayer*).
 
 #### Feature details per game
 
@@ -788,6 +848,53 @@ explosion effects, high score.
 - Sensitivity can be changed mid-game with **+/-**; plus an **adjustable
   motion blur** (0-80%) for extra chill visuals - both are saved.
 
+**Connect Four**
+- 7x6 board with a **falling-disc animation**, hover preview and a pulsing
+  winning line; mouse, arrow keys or direct pick **1-7**.
+- **3 AI strengths** (minimax with alpha-beta search): Easy deliberately
+  misses threats, Medium blocks reliably, Hard plans deep ahead - or
+  **2 players** locally on the same device.
+- The starting player alternates every round; the high score counts your
+  **wins against the AI** in one session.
+
+**Tank Duel**
+- 2D arena duel: **shots bounce off walls once** (ricochet) - hit around
+  corners (or yourself!). First to 5 rounds with a countdown.
+- **4 arenas** (Open, Cross, Pillars, Maze) or random rotation;
+  **power-ups**: rapid fire, shield, triple shot.
+- **AI with 3 strengths** - the hard one leads its shots and banks them off
+  walls on purpose - or **2 players** on one keyboard (P1 WASD+Space,
+  P2 arrows+Enter).
+
+**Blackjack**
+- Real casino rules: **4-deck shoe**, dealer stands on 17, **blackjack pays
+  3:2**, dealer peek on ace/10; **double down** and **one split** (split aces
+  get one card each).
+- **Persistent chip balance**: start with 500, balance and **record** survive
+  every restart (`mem.json`); below 10 chips you get 500 fresh ones - the
+  record stays.
+- Played via chip buttons and keys (**H**it/**S**tand/**D**ouble/split
+  **X**, **1-4** = bet, Enter = deal) with card animations and a hole-card
+  flip.
+
+**Tunnel Racer**
+- **3D neon tube flight** (software renderer like the Aim Trainer): bars,
+  blocks and **ring gates to thread through**, coins on the racing line.
+- **Two modes**: endless (speed rises to a cap, high score) and **30 seeded
+  levels** with a finish line, time bonus and ticked-off progress.
+- **Key steering** (default) or **direct mouse steering** (pointer capture,
+  key **C**); plus adjustable **motion blur** (key **B**, 0-80%) - everything
+  is saved.
+
+**3D Maze**
+- **First-person raycaster in Wolfenstein style** (DDA, distance fog,
+  sprites) with mouselook + WASD, a **minimap** (key **M**) and a green
+  pulsing exit - or a classic **2D top-down view** (key **V** in the setup).
+- **50 seeded levels** that keep growing; the exit always sits at the point
+  farthest from the start, **orbs** along the way give bonus points.
+- Scoring: 500 per level + 100 per orb + time bonus; solved levels are
+  ticked off and the session total becomes the high score.
+
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
 
@@ -872,6 +979,8 @@ games/
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
   game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
+  connect4.py  tanks.py  blackjack.py  tunnelracer.py
+  labyrinth.py  maze_gen.py
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the

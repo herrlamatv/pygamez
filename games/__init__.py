@@ -19,9 +19,15 @@ from .frogger import FroggerGame
 from .memory import MemoryGame
 from .solitaire import SolitaireGame
 from .aimtrainer import AimTrainerGame
+from .connect4 import ConnectFourGame
+from .tanks import TankDuelGame
+from .blackjack import BlackjackGame
+from .tunnelracer import TunnelRacerGame
+from .labyrinth import LabyrinthGame
 
 # Reihenfolge der Spiele im Menü
 ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
              TetrisGame, InvadersGame, AsteroidsGame, PacmanGame, FlappyGame,
              DoodleGame, Game2048, MinesweeperGame, SudokuGame, FroggerGame,
-             MemoryGame, SolitaireGame, AimTrainerGame]
+             MemoryGame, SolitaireGame, AimTrainerGame, ConnectFourGame,
+             TankDuelGame, BlackjackGame, TunnelRacerGame, LabyrinthGame]

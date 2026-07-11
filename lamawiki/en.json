@@ -938,6 +938,273 @@
           ]
         }
       ]
+    },
+    {
+      "id": "connect4",
+      "category": "games",
+      "game": "ConnectFourGame",
+      "title": "Connect Four",
+      "keywords": [
+        "four",
+        "row",
+        "discs",
+        "columns",
+        "ai",
+        "strategy"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Two colours take turns dropping discs into one of 7 columns; each disc falls to the lowest free cell. The first to line up four - horizontally, vertically or diagonally - wins the round.",
+            "In single player you face the AI (three strengths in the setup); in 2-player mode you take turns at one mouse or keyboard.",
+            "The starting player alternates every round. [Enter] starts the next round, [S] returns to the setup."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Mouse: hover over a column (the preview disc shows the spot) and click.",
+            "- Keyboard: [Left] [Right] pick the column, drop with [Down], [Space] or [Enter].",
+            "- Direct pick: the numbers [1] to [7] drop straight into that column."
+          ]
+        },
+        {
+          "h": "AI strengths",
+          "body": [
+            "Easy deliberately misses some threats and sometimes plays only the second-best move - great for learning. Medium plans a few moves ahead and blocks reliably.",
+            "Hard searches much deeper and punishes every mistake instantly - only double threats win here."
+          ]
+        },
+        {
+          "h": "Scoring + tips",
+          "body": [
+            "Every win against the AI scores one point; the highscore is the most wins in one session. There is no scoring in 2-player mode.",
+            "- The centre column is the strongest: most four-in-a-rows run through it.",
+            "- Build double threats (two open threes at once) - your opponent can only block one of them."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tanks",
+      "category": "games",
+      "game": "TankDuelGame",
+      "title": "Tank Duel",
+      "keywords": [
+        "tank",
+        "duel",
+        "ricochet",
+        "arena",
+        "powerup",
+        "2 players"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "1-versus-1 in an arena of walls: hit your opponent to take the round - first to 5 rounds wins the match.",
+            "Shots bounce off walls once (ricochet) and vanish on the second contact. Careful: a bounced shot can hit you too.",
+            "Play against the AI (three strengths) or with two players on one keyboard. After the match: [Enter] = rematch, [S] = setup."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Player 1: [W] [S] drive forward and back, [A] [D] turn, [Space] fires.",
+            "- Player 2: arrow keys drive and turn, [Enter] fires. The bindings follow the options.",
+            "- At most 4 of your shots live at once, with a short reload in between."
+          ]
+        },
+        {
+          "h": "Power-ups",
+          "body": [
+            "- Rapid fire: 8 seconds with almost no reload.",
+            "- Shield: absorbs exactly one hit (ring around the tank).",
+            "- Triple shot: the next 5 shots fan out in three directions. Power-ups appear every few seconds in the arena and expire after 12 seconds."
+          ]
+        },
+        {
+          "h": "Arenas + AI",
+          "body": [
+            "Four arenas to choose from: Open (no cover), Cross, Pillars and Maze - or Random, which rotates the arena every round.",
+            "The easy AI drives around aimlessly and aims poorly; the medium one chases you and sidesteps.",
+            "The hard AI keeps its distance, leads its shots ahead of your movement and even banks shots off walls on purpose."
+          ]
+        },
+        {
+          "h": "Scoring + tips",
+          "body": [
+            "Against the AI you score per match win: more for higher strengths and clean victories; points add up across rematches. There is no scoring in 2-player mode.",
+            "- Use the walls: banking shots around corners hits without exposing yourself."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blackjack",
+      "category": "games",
+      "game": "BlackjackGame",
+      "title": "Blackjack",
+      "keywords": [
+        "cards",
+        "casino",
+        "21",
+        "chips",
+        "dealer",
+        "bet"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Goal: get closer to 21 than the dealer without going over. Number cards count face value, pictures 10, the ace 11 or 1.",
+            "The game uses a 4-deck shoe; the dealer draws to 16 and stands on every 17.",
+            "Place your bet first (chip buttons or keys [1] to [4], [Backspace] clears it), then deal with [Enter]."
+          ]
+        },
+        {
+          "h": "Actions",
+          "body": [
+            "- Hit [H]: draw another card.",
+            "- Stand [S]: keep your current total.",
+            "- Double [D]: double the bet, take exactly one card, then stand automatically - only on your first two cards.",
+            "- Split [X]: separate two equal-value cards into two hands (once per round; split aces get just one card each)."
+          ]
+        },
+        {
+          "h": "Payouts",
+          "body": [
+            "- Blackjack (ace + ten-value card) pays 3:2.",
+            "- A normal win pays 1:1, a push (tie) returns your bet.",
+            "- Bust or lose: the bet is gone. If the dealer shows an ace or a 10, they immediately check for blackjack."
+          ]
+        },
+        {
+          "h": "Chips",
+          "body": [
+            "You start with 500 chips; your balance and record are saved permanently and survive every restart.",
+            "The highscore is the highest chip balance you have ever reached.",
+            "Below 10 chips you are broke: [Enter] restarts with 500 fresh chips - the record stays."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Basic strategy: against an upcard of 7 or higher draw to 17; against 4 to 6 stand early - the dealer often busts there.",
+            "- Always split aces and eights, never split tens."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tunnelracer",
+      "category": "games",
+      "game": "TunnelRacerGame",
+      "title": "Tunnel Racer",
+      "keywords": [
+        "tunnel",
+        "racer",
+        "3d",
+        "neon",
+        "dodge",
+        "endless"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "You fly through a curving neon tube, dodging bars, blocks and ring gates - one hit and the run is over.",
+            "Golden coins float in the gaps; they score extra points and usually mark the safe line.",
+            "Ring gates have exactly one hole: thread through it instead of dodging."
+          ]
+        },
+        {
+          "h": "Modes",
+          "body": [
+            "- Endless: the speed keeps rising and the gaps get tighter - how far can you get? A crash ends the run and saves the highscore.",
+            "- Levels: 30 fixed tracks with a finish line, from relaxed to brutal. Completed levels get ticked off; session points add up."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Keys (default): [W] [A] [S] [D] or the arrows push the ship around the tube.",
+            "- Mouse: toggle in the setup with [C] - direct 1:1 steering, the cursor is captured and [Esc] releases it.",
+            "- [B] cycles motion blur in 10-percent steps (0 to 80, saved).",
+            "- In level mode: [R] retries after a crash, [S] opens the selection."
+          ]
+        },
+        {
+          "h": "Scoring",
+          "body": [
+            "- Endless: 10 points per metre plus 50 per coin.",
+            "- Levels: 1000 for the finish, 50 per coin and a time bonus when you beat the par time.",
+            "The level-mode highscore is your best session total - playing several levels in a row pays off."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Watch the rings far ahead: the tube telegraphs its curve early enough to countersteer.",
+            "- Stay near the centre when possible - every gap is reachable from there."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "labyrinth",
+      "category": "games",
+      "game": "LabyrinthGame",
+      "title": "3D Maze",
+      "keywords": [
+        "maze",
+        "labyrinth",
+        "raycaster",
+        "orbs",
+        "exit",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "50 seed-generated mazes that grow with every level. Find the green pulsing exit - it always sits at the point farthest from the start.",
+            "Blue orbs float around the maze; every collected orb earns bonus points.",
+            "Completed levels get ticked off in the selection; [Enter] at the finish starts the next one right away."
+          ]
+        },
+        {
+          "h": "Views",
+          "body": [
+            "- First person (3D): Wolfenstein-style view with mouselook - right in the middle instead of above.",
+            "- Top-down (2D): the classic map from above, with no mouse capture at all. Toggle in the setup with [V]; the choice is saved."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- First person: [W] [S] forward and back, [A] [D] strafe, the mouse turns your view - or turn with [Q] and [E] on the keyboard.",
+            "- [M] toggles the minimap, [Esc] pauses and releases the mouse.",
+            "- Top-down: [W] [A] [S] [D] or the arrows walk in world directions."
+          ]
+        },
+        {
+          "h": "Scoring",
+          "body": [
+            "- Reaching the exit: 500 points.",
+            "- Per orb: 100 extra points.",
+            "- Plus a time bonus when you beat the level's par time; session points add up to the highscore."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Right-hand rule: always following the same wall is guaranteed to reach the exit.",
+            "- The orbs roughly line the way to the exit - collecting them usually means you are on track."
+          ]
+        }
+      ]
     }
   ]
 }

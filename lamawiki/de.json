@@ -938,6 +938,273 @@
           ]
         }
       ]
+    },
+    {
+      "id": "connect4",
+      "category": "games",
+      "game": "ConnectFourGame",
+      "title": "Vier gewinnt",
+      "keywords": [
+        "vier",
+        "reihe",
+        "steine",
+        "spalten",
+        "ki",
+        "strategie"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Zwei Farben werfen abwechselnd Steine in eine der 7 Spalten; der Stein fällt auf das unterste freie Feld. Wer zuerst vier in einer Reihe hat - waagerecht, senkrecht oder diagonal - gewinnt die Runde.",
+            "Im Einzelspieler trittst du gegen die KI an (drei Stärken im Setup), im 2-Spieler-Modus wechselt ihr euch an einer Maus bzw. Tastatur ab.",
+            "Nach jeder Runde wechselt der Startspieler. [Enter] startet die neue Runde, [S] führt zurück zur Auswahl."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Maus: Spalte anfahren (der Vorschau-Stein zeigt die Position) und klicken.",
+            "- Tastatur: [Links] [Rechts] wählen die Spalte, geworfen wird mit [Runter], [Leertaste] oder [Enter].",
+            "- Direktwahl: die Zahlen [1] bis [7] werfen sofort in die jeweilige Spalte."
+          ]
+        },
+        {
+          "h": "KI-Stärken",
+          "body": [
+            "Leicht übersieht bewusst manche Drohung und spielt ab und zu nur den zweitbesten Zug - gut zum Lernen. Mittel plant einige Züge voraus und blockt zuverlässig.",
+            "Schwer sucht deutlich tiefer und bestraft jeden Fehler sofort - hier gewinnen nur Doppeldrohungen."
+          ]
+        },
+        {
+          "h": "Punkte + Tipps",
+          "body": [
+            "Jeder Sieg gegen die KI zählt einen Punkt; der Highscore ist die höchste Siegzahl einer Sitzung. Im 2-Spieler-Modus gibt es keine Wertung.",
+            "- Die mittlere Spalte ist die stärkste: Über sie laufen die meisten Viererreihen.",
+            "- Baue Doppeldrohungen auf (zwei offene Dreier gleichzeitig) - eine davon kann der Gegner nicht blocken."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tanks",
+      "category": "games",
+      "game": "TankDuelGame",
+      "title": "Panzer-Duell",
+      "keywords": [
+        "panzer",
+        "duell",
+        "ricochet",
+        "arena",
+        "powerup",
+        "2 spieler"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "1-gegen-1 in einer Arena aus Wänden: Wer den Gegner trifft, holt die Runde - wer zuerst 5 Runden hat, gewinnt das Match.",
+            "Schüsse prallen einmal von Wänden ab (Ricochet) und verschwinden beim zweiten Kontakt. Vorsicht: Ein abgeprallter Schuss kann auch dich selbst treffen.",
+            "Gespielt wird gegen die KI (drei Stärken) oder zu zweit an einer Tastatur. Nach dem Match: [Enter] = Revanche, [S] = Auswahl."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Spieler 1: [W] [S] fahren vor und zurück, [A] [D] drehen, [Leertaste] schießt.",
+            "- Spieler 2: Pfeiltasten fahren und drehen, [Enter] schießt. Die Belegung folgt den Optionen.",
+            "- Maximal 4 eigene Schüsse gleichzeitig, dazwischen eine kurze Nachladepause."
+          ]
+        },
+        {
+          "h": "Power-Ups",
+          "body": [
+            "- Schnellfeuer: 8 Sekunden fast ohne Nachladepause.",
+            "- Schild: absorbiert genau einen Treffer (Ring um den Panzer).",
+            "- Dreifach-Schuss: die nächsten 5 Schüsse fächern in drei Richtungen auf. Power-Ups erscheinen alle paar Sekunden in der Arena und verfallen nach 12 Sekunden."
+          ]
+        },
+        {
+          "h": "Arenen + KI",
+          "body": [
+            "Vier Arenen stehen zur Wahl: Offen (keine Deckung), Kreuz, Säulen und Labyrinth - oder Zufällig, dann wechselt die Arena jede Runde.",
+            "Die leichte KI fährt eher planlos und zielt ungenau; die mittlere verfolgt dich und weicht seitlich aus.",
+            "Die schwere KI hält Distanz, zielt mit Vorhalt auf deine Bewegung und schießt sogar absichtlich über die Bande."
+          ]
+        },
+        {
+          "h": "Punkte + Tipps",
+          "body": [
+            "Gegen die KI gibt es Punkte je Matchsieg: mehr für höhere Stufen und deutliche Siege; die Punkte addieren sich über Revanchen. Im 2-Spieler-Modus gibt es keine Wertung.",
+            "- Nutze die Bande: Um die Ecke schießen trifft, ohne dass du dich zeigen musst."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blackjack",
+      "category": "games",
+      "game": "BlackjackGame",
+      "title": "Blackjack",
+      "keywords": [
+        "karten",
+        "casino",
+        "21",
+        "chips",
+        "dealer",
+        "einsatz"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Ziel: näher an 21 als der Dealer, ohne zu überkaufen. Zahlenkarten zählen ihren Wert, Bilder 10, das Ass 11 oder 1.",
+            "Gespielt wird mit einem 4-Deck-Schuh; der Dealer zieht bis 16 und steht auf jeder 17.",
+            "Erst den Einsatz setzen (Chip-Buttons oder Tasten [1] bis [4], [Backspace] setzt zurück), dann geben lassen mit [Enter]."
+          ]
+        },
+        {
+          "h": "Aktionen",
+          "body": [
+            "- Karte [H]: eine weitere Karte ziehen.",
+            "- Halten [S]: bei der aktuellen Summe bleiben.",
+            "- Verdoppeln [D]: Einsatz verdoppeln, genau eine Karte, dann automatisch halten - nur mit den ersten beiden Karten.",
+            "- Teilen [X]: zwei gleichwertige Karten in zwei Hände trennen (einmal pro Runde; geteilte Asse bekommen nur je eine Karte)."
+          ]
+        },
+        {
+          "h": "Auszahlung",
+          "body": [
+            "- Blackjack (Ass + Zehnerkarte) zahlt 3:2.",
+            "- Normaler Sieg zahlt 1:1, Push (Gleichstand) gibt den Einsatz zurück.",
+            "- Überkauft oder verloren: Der Einsatz ist weg. Hat der Dealer ein Ass oder eine 10 offen, prüft er sofort auf Blackjack."
+          ]
+        },
+        {
+          "h": "Chips",
+          "body": [
+            "Du startest mit 500 Chips; Stand und Rekord werden dauerhaft gespeichert und überstehen jeden Neustart.",
+            "Der Highscore ist der höchste Chip-Stand, den du je erreicht hast.",
+            "Unter 10 Chips bist du pleite: [Enter] startet mit 500 frischen Chips neu - der Rekord bleibt."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Grundstrategie: Gegen eine offene 7 oder höher ziehen bis 17; gegen 4 bis 6 früh stehen bleiben - der Dealer überkauft dort oft.",
+            "- Asse und Achten immer teilen, Zehnerpaare nie."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tunnelracer",
+      "category": "games",
+      "game": "TunnelRacerGame",
+      "title": "Tunnel Racer",
+      "keywords": [
+        "tunnel",
+        "racer",
+        "3d",
+        "neon",
+        "ausweichen",
+        "endlos"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Du fliegst durch eine kurvige Neon-Röhre und weichst Balken, Blöcken und Ring-Blenden aus - ein Treffer und der Lauf ist vorbei.",
+            "Goldene Münzen schweben in den Lücken; sie geben Extrapunkte und markieren meist die sichere Linie.",
+            "Ring-Blenden haben genau ein Loch: durchfädeln statt ausweichen."
+          ]
+        },
+        {
+          "h": "Modi",
+          "body": [
+            "- Endlos: Das Tempo steigt stetig und die Lücken werden enger - wie weit kommst du? Ein Crash beendet den Lauf und speichert den Highscore.",
+            "- Level: 30 feste Strecken mit Ziel, von entspannt bis brutal. Geschaffte Level werden abgehakt; die Punkte der Sitzung addieren sich."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Tasten (Standard): [W] [A] [S] [D] oder die Pfeile schieben das Schiff durch die Röhre.",
+            "- Maus: im Setup mit [C] umschaltbar - direkte 1:1-Steuerung, der Cursor wird dafür gefangen und [Esc] gibt ihn wieder frei.",
+            "- [B] schaltet den Motion Blur in 10-Prozent-Schritten durch (0 bis 80, wird gespeichert).",
+            "- Im Level-Modus: [R] wiederholt nach einem Crash, [S] öffnet die Auswahl."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "- Endlos: 10 Punkte je Meter plus 50 je Münze.",
+            "- Level: 1000 fürs Ziel, 50 je Münze und ein Zeitbonus, wenn du schneller als die Richtzeit bist.",
+            "Der Highscore im Level-Modus ist die beste Sitzungs-Summe - mehrere Level am Stück lohnen sich."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Schau auf die Ringe weit vorn: Die Röhre verrät ihre Kurve früh genug zum Gegenlenken.",
+            "- Bleib nach Möglichkeit nahe der Mitte - von dort sind alle Lücken erreichbar."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "labyrinth",
+      "category": "games",
+      "game": "LabyrinthGame",
+      "title": "3D-Labyrinth",
+      "keywords": [
+        "labyrinth",
+        "maze",
+        "raycaster",
+        "orbs",
+        "ausgang",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "50 seed-generierte Irrgärten, die mit jedem Level größer werden. Finde den grün pulsierenden Ausgang - er liegt immer am entferntesten Punkt vom Start.",
+            "Unterwegs schweben blaue Orbs im Labyrinth; jeder eingesammelte Orb bringt Bonuspunkte.",
+            "Geschaffte Level werden in der Auswahl abgehakt; [Enter] im Ziel startet direkt das nächste."
+          ]
+        },
+        {
+          "h": "Ansichten",
+          "body": [
+            "- Ego (3D): Wolfenstein-Blick mit Mouselook - mittendrin statt von oben.",
+            "- Draufsicht (2D): die klassische Karte von oben, ganz ohne Maus-Capture. Umschalten im Setup mit [V], die Wahl wird gespeichert."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Ego: [W] [S] vor und zurück, [A] [D] seitwärts, die Maus dreht den Blick - notfalls drehen [Q] und [E] per Taste.",
+            "- [M] blendet die Minimap ein, [Esc] pausiert und gibt die Maus frei.",
+            "- Draufsicht: [W] [A] [S] [D] oder die Pfeile laufen in Weltrichtung."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "- Ausgang erreicht: 500 Punkte.",
+            "- Je Orb: 100 Punkte extra.",
+            "- Dazu ein Zeitbonus, wenn du schneller als die Richtzeit des Levels bist; die Punkte der Sitzung addieren sich zum Highscore."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Rechte-Hand-Regel: Immer an derselben Wand entlang führt garantiert zum Ausgang.",
+            "- Die Orbs liegen grob auf dem Weg zum Ausgang - wer sie einsammelt, ist meist schon richtig unterwegs."
+          ]
+        }
+      ]
     }
   ]
 }
