@@ -1231,11 +1231,16 @@ class App:
         bob = int(6 * math.sin(ticks * 1.3))   # sanftes Auf und Ab
 
         # Logo-Grafik mit weichem Akzent-Glow (Fallback: Schriftzug "PyGameZ").
-        # Etwas höher als die Mitte, damit unter dem Untertitel Platz für das
-        # klickbare Spiele-Raster bleibt.
+        # Der Block Logo + Name bleibt zentriert; nur wenn das Spiele-Raster
+        # darunter sonst nicht mehr passt, rückt alles gerade so weit hoch.
         size = min(176, max(96, h // 4))
         logo = self._menu_logo(size)
-        center_y = max(size // 2 + 16, int(h * 0.22)) + bob
+        center_y0 = h // 2 - 46
+        avail0 = (h - 72) - (center_y0 + size // 2 + 80)
+        rows, fnt, pad_x, row_h, gap, tiles_h = \
+            self._flow_menu_tiles(w, max(30, avail0))
+        shift = max(0, tiles_h - avail0)
+        center_y = max(size // 2 + 14, center_y0 - shift) + bob
         if logo is not None:
             lrect = logo.get_rect(center=(cx, center_y))
             rad = max(12, size // 8)
@@ -1282,26 +1287,22 @@ class App:
         s.blit(hint, hint.get_rect(center=(cx, base_y + 62)))
 
         # Klickbares Spiele-Raster zwischen Hinweis und Laufband.
-        self._draw_menu_tiles(s, base_y + 80, h - 72)
+        self._draw_menu_tiles(s, base_y + 80, h - 72,
+                              rows, fnt, pad_x, row_h, gap, tiles_h)
 
         # Highscore-Laufband + Fußzeile mit dezenten Eckdaten.
         self._draw_score_ticker(s, w, h)
         ui.draw_footer(s, w, h, f"{len(self._game_classes)} Games   ·   "
                                 f"{self.game_w}x{self.game_h} @ {self.fps} FPS")
 
-    def _draw_menu_tiles(self, s, top, bottom):
-        """Zeichnet alle Spiele als anklickbare Pillen (zentriert, mehrzeilig).
+    def _flow_menu_tiles(self, w, avail):
+        """Layout fürs Spiele-Raster: Pillen in zentrierte Zeilen fließen lassen.
 
-        Die Trefferflächen landen in self._menu_tiles; _menu_motion/_menu_click
-        werten sie aus. Die Schrift schrumpft, bis alle Zeilen in den
-        verfügbaren Platz passen.
+        Probiert absteigende Schriftgrößen, bis alle Zeilen in 'avail' Pixel
+        Höhe passen. Gibt (rows, font, pad_x, row_h, gap, total_h) zurück.
         """
         ui = self.ui
-        w = self.game_w
         max_w = w - 60
-        avail = max(30, bottom - top)
-
-        # Passende Schriftgröße finden: Pillen in Zeilen fließen lassen.
         for fsize in (15, 13, 11):
             fnt = ui.font(fsize)
             pad_x = fsize - 4
@@ -1321,6 +1322,15 @@ class App:
             total_h = len(rows) * row_h + (len(rows) - 1) * gap
             if total_h <= avail:
                 break
+        return rows, fnt, pad_x, row_h, gap, total_h
+
+    def _draw_menu_tiles(self, s, top, bottom, rows, fnt, pad_x, row_h, gap,
+                         total_h):
+        """Zeichnet die anklickbaren Spiel-Pillen; Trefferflächen landen in
+        self._menu_tiles (ausgewertet von _menu_motion/_menu_click)."""
+        ui = self.ui
+        w = self.game_w
+        avail = max(30, bottom - top)
 
         # Oben andocken (max. 36px Luft), nicht in der Fläche schweben.
         y = top + min(36, max(0, (avail - total_h) // 2))
