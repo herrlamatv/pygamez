@@ -3,33 +3,9 @@
   "volume": 0.0,
   "haptik": false,
   "resolution": [
-    640,
-    480
+    1280,
+    960
   ],
   "auto_resolution": false,
-  "fps": 45,
-  "snake": {
-    "wrap": true,
-    "bonus_apple": true
-  },
-  "pong": {
-    "hold_p1": false,
-    "hold_p2": true
-  },
-  "controls": {
-    "p1": {
-      "up": "w",
-      "down": "s",
-      "left": "a",
-      "right": "d",
-      "action": "space"
-    },
-    "p2": {
-      "up": "i",
-      "down": "k",
-      "left": "j",
-      "right": "l",
-      "action": "Return"
-    }
-  }
+  "fps": 60
 }
