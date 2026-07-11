@@ -94,6 +94,8 @@ DEFAULTS = {
     "memory": {"size": "6x6"},
     # Solitär: Klondike zieht 3 Karten (sonst 1); Spider-Farbenzahl (1/2/4)
     "solitaire": {"draw3": False, "spider_suits": 1},
+    # Aim Trainer: Arena-Thema (space/neon/range) + Maus-Empfindlichkeit
+    "aim": {"theme": "space", "sens": 1.0},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -176,6 +178,12 @@ def _merge_defaults(data):
                 out["solitaire"]["draw3"] = sol["draw3"]
             if sol.get("spider_suits") in (1, 2, 4):
                 out["solitaire"]["spider_suits"] = sol["spider_suits"]
+        aim = data.get("aim")
+        if isinstance(aim, dict):
+            if aim.get("theme") in ("space", "neon", "range"):
+                out["aim"]["theme"] = aim["theme"]
+            if isinstance(aim.get("sens"), (int, float)):
+                out["aim"]["sens"] = max(0.5, min(2.0, float(aim["sens"])))
         ctrl = data.get("controls")
         if isinstance(ctrl, dict):
             for player in ("p1", "p2"):

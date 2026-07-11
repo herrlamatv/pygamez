@@ -9,7 +9,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Siebzehn
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Achtzehn
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English); die Sprache wird beim ersten Start gewählt
@@ -55,6 +55,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Frogger**     | 1 Spieler    | Straße + Fluss + 5 Buchten, Bonus-Fliege, Krokodile, Zeitlimit, 3 Schwierigkeitsgrade |
 | **Memory**      | 1 / 2 Spieler | Paare finden auf 4x4 bis 8x6, Flip-Animation, Solo-Wertung oder Duell |
 | **Solitär**     | 1 Spieler    | 5 Varianten (Klondike, Spider, FreeCell, Pyramide, TriPeaks) mit Drag & Drop und Undo |
+| **Aim Trainer** | 1 Spieler    | Chilliges 3D-Zielschießen: Maus lenkt die Kamera, 4 Modi (Präzision/Reflex/Bewegt/Chill), 3 Themen inkl. schwarzem Loch |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)** und **Memory (Duell)**. Der Modus wird
@@ -292,6 +293,20 @@ Explosions-Effekte, Highscore.
 - Karten werden ohne Bild-Dateien gerendert (`games/cards.py`); alle Varianten
   teilen sich eine Highscore-Liste mit variantenspezifischen Formeln.
 
+**Aim Trainer**
+- **Echtes Software-3D** (wie Snakes 3D-Modus): festes Fadenkreuz in der
+  Bildmitte, **direkte 1:1-Maussteuerung wie im Shooter** (Pointer-Capture:
+  der Cursor wird im Fenster eingefangen, Esc gibt ihn frei; einstellbare
+  Empfindlichkeit, Yaw unbegrenzt, Pitch ±60°). Linksklick schießt exakt
+  durch die Mitte, mit Mündungsblitz, Tracer und Treffer-Partikeln.
+- **4 Modi**: Präzision (60 s, 3 Kugeln, Genauigkeits-Bonus), Reflex
+  (30 Ziele einzeln, Reaktionszeit-Statistik), Bewegte Ziele (Bahnen +
+  Combo-Multiplikator bis x4) und Chill (endlos, ohne Strafe, **E** beendet).
+- **3 Themen** (im Setup, gespeichert): **Weltraum** mit Sternenkugel,
+  **schwarzem Loch mit leuchtendem Ring** und Planet (Standard), Neon-Arena
+  mit Boden-Grid und Synthwave-Sonne, sowie Schießstand-Halle.
+- Empfindlichkeit auch mitten im Spiel per **+/-** änderbar (gespeichert).
+
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
@@ -375,7 +390,7 @@ games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
   game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
-  frogger.py  memory.py  solitaire.py  cards.py
+  frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -474,7 +489,7 @@ gewünschte Version und die winget-ID entsprechend (`Python.Python.3.12`).
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Seventeen
+**Pygame** is embedded as the game display inside the Tkinter window. Eighteen
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English); the language is chosen on first launch and
@@ -520,6 +535,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Frogger**     | 1 player     | Road + river + 5 bays, bonus fly, crocodiles, time limit, 3 difficulties |
 | **Memory**      | 1 / 2 players | Find pairs on 4x4 up to 8x6, flip animation, solo scoring or duel |
 | **Solitaire**   | 1 player     | 5 variants (Klondike, Spider, FreeCell, Pyramid, TriPeaks) with drag & drop and undo |
+| **Aim Trainer** | 1 player     | Chill 3D target shooting: mouse steers the camera, 4 modes (precision/reflex/moving/chill), 3 themes incl. a black hole |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
@@ -754,6 +770,20 @@ explosion effects, high score.
 - Cards are rendered without image files (`games/cards.py`); all variants
   share one high-score list with variant-specific formulas.
 
+**Aim Trainer**
+- **Real software 3D** (like Snake's 3D mode): fixed crosshair at the screen
+  center, **direct 1:1 mouse look like a shooter** (pointer capture: the
+  cursor is grabbed inside the window, Esc releases it; adjustable
+  sensitivity, unlimited yaw, pitch ±60°). Left click shoots exactly through
+  the center, with muzzle flash, tracer and hit particles.
+- **4 modes**: precision (60 s, 3 orbs, accuracy bonus), reflex (30 single
+  targets, reaction-time stats), moving targets (paths + combo multiplier up
+  to x4) and chill (endless, no penalty, **E** ends the session).
+- **3 themes** (in the setup, saved): **space** with a star sphere, a
+  **black hole with a glowing ring** and a planet (default), a neon arena
+  with floor grid and synthwave sun, and an indoor shooting range.
+- Sensitivity can be changed mid-game with **+/-** (saved).
+
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
 
@@ -837,7 +867,7 @@ games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
   game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
-  frogger.py  memory.py  solitaire.py  cards.py
+  frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the

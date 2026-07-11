@@ -879,6 +879,64 @@
           ]
         }
       ]
+    },
+    {
+      "id": "aimtrainer",
+      "category": "games",
+      "game": "AimTrainerGame",
+      "title": "Aim Trainer",
+      "keywords": [
+        "visee",
+        "reticule",
+        "reflexe",
+        "3d",
+        "espace",
+        "tir"
+      ],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "La souris dirige la camera directement comme dans un shooter : chaque mouvement tourne la vue instantanement d autant (le curseur est capture de maniere invisible dans la fenetre). [Echap] met en pause et libere la souris. Le yaw est illimite, haut/bas se bloque a 60 degres.",
+            "Le clic gauche tire exactement au centre de l'écran (court délai entre les tirs).",
+            "- [+] et [-] changent la sensibilité (même en pleine partie), [E] termine une session chill."
+          ]
+        },
+        {
+          "h": "Modes",
+          "body": [
+            "- Précision (60 s) : toujours 3 sphères à la fois - en abattre une en fait apparaître une nouvelle ; un bonus de précision s'ajoute à la fin.",
+            "- Réflexe (30 cibles) : les cibles apparaissent une à une et rétrécissent après un instant - le temps de réaction compte, stats à la fin.",
+            "- Cibles mobiles (60 s) : les sphères dérivent sur des trajectoires (balancement, orbite, oscillation) - les touches consécutives augmentent le multiplicateur de combo.",
+            "- Chill (sans fin) : pas de chrono, pas de pénalité - tire tranquillement ; le score est enregistré au retour au menu."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Précision : 100 points par touche plus un bonus de distance ; à la fin, précision au carré fois 1500 en plus.",
+            "Réflexe : plus la réaction est rapide, plus il y a de points (1000 moins les millisecondes, minimum 50).",
+            "Cibles mobiles : 80 points fois le multiplicateur de combo (jusqu'à x4 à 12 touches consécutives) - un raté remet le combo à zéro.",
+            "Chill : 50 points fois le multiplicateur ; le combo ne s'efface qu'après 5 secondes sans touche."
+          ]
+        },
+        {
+          "h": "Thèmes",
+          "body": [
+            "- Espace (par défaut) : une sphère d'étoiles complète, un trou noir avec un anneau lumineux éclatant et une planète lointaine.",
+            "- Néon : une arène synthwave avec une grille de sol lumineuse et un soleil rayé.",
+            "- Stand de tir : un hall intérieur avec couloirs, lampes et cibles classiques. Le thème se choisit dans le setup et est mémorisé."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- De petits mouvements calmes touchent mieux que de grands gestes brusques - la vue suit en 1:1.",
+            "- Sensibilité basse pour la précision, plus haute pour le réflexe et les cibles mobiles.",
+            "- Les cibles lointaines ont une petite marge de tolérance - reste stable au lieu de surcorriger."
+          ]
+        }
+      ]
     }
   ]
 }

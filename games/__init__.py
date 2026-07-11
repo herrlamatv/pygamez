@@ -18,9 +18,10 @@ from .sudoku import SudokuGame
 from .frogger import FroggerGame
 from .memory import MemoryGame
 from .solitaire import SolitaireGame
+from .aimtrainer import AimTrainerGame
 
 # Reihenfolge der Spiele im Menü
 ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
              TetrisGame, InvadersGame, AsteroidsGame, PacmanGame, FlappyGame,
              DoodleGame, Game2048, MinesweeperGame, SudokuGame, FroggerGame,
-             MemoryGame, SolitaireGame]
+             MemoryGame, SolitaireGame, AimTrainerGame]

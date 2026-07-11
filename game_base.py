@@ -28,14 +28,16 @@ class InputEvent:
     MOUSEDOWN = "mousedown"  # Maustaste gedrückt
     MOUSEUP = "mouseup"      # linke Maustaste losgelassen (für Drag & Drop)
     MOUSEMOVE = "mousemove"  # Maus bewegt
+    MOUSEREL = "mouserel"    # RELATIVE Mausbewegung (Pointer-Capture, FPS-Look)
     WHEEL = "wheel"          # Mausrad gedreht (delta in Rasten, + = hoch)
 
-    def __init__(self, kind, key=None, pos=None, button=1, delta=0):
+    def __init__(self, kind, key=None, pos=None, button=1, delta=0, rel=None):
         self.kind = kind      # einer der obigen Strings
         self.key = key        # z.B. "Up", "Left", "space", "w" (Tkinter-keysym)
         self.pos = pos        # (x, y) relativ zur Spielfläche, bei Maus-Events
         self.button = button  # Maustaste: 1 = links, 3 = rechts (bei MOUSEDOWN)
         self.delta = delta    # Mausrad-Rasten (bei WHEEL), positiv = nach oben
+        self.rel = rel        # (dx, dy) in Fenster-Pixeln (bei MOUSEREL)
 
 
 class Game:

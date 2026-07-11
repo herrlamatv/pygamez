@@ -880,6 +880,64 @@
           ]
         }
       ]
+    },
+    {
+      "id": "aimtrainer",
+      "category": "games",
+      "game": "AimTrainerGame",
+      "title": "Aim Trainer",
+      "keywords": [
+        "aiming",
+        "crosshair",
+        "reflex",
+        "3d",
+        "space",
+        "shooting"
+      ],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "The mouse steers the camera directly like in a shooter: every movement turns the view instantly by that amount (the cursor is captured invisibly inside the window). [Esc] pauses and releases the mouse. Yaw is unlimited, up/down clamps at 60 degrees.",
+            "Left click shoots exactly through the screen center (short cooldown between shots).",
+            "- [+] and [-] change the sensitivity (even mid-game), [E] ends a chill session."
+          ]
+        },
+        {
+          "h": "Modes",
+          "body": [
+            "- Precision (60 s): always 3 orbs at once - shooting one spawns a new one instantly; an accuracy bonus is added at the end.",
+            "- Reflex (30 targets): targets appear one at a time and shrink away after a moment - reaction time counts, stats at the end.",
+            "- Moving targets (60 s): orbs drift on paths (swinging, orbiting, bobbing) - consecutive hits raise the combo multiplier.",
+            "- Chill (endless): no timer, no miss penalty - just relax and shoot; the score is saved when you return to the menu."
+          ]
+        },
+        {
+          "h": "Scoring",
+          "body": [
+            "Precision: 100 points per hit plus a distance bonus; at the end accuracy squared times 1500 on top.",
+            "Reflex: the faster the reaction, the more points (1000 minus milliseconds, at least 50).",
+            "Moving targets: 80 points times the combo multiplier (up to x4 at 12 consecutive hits) - a miss resets the combo.",
+            "Chill: 50 points times the multiplier; the combo only fades after 5 seconds without a hit."
+          ]
+        },
+        {
+          "h": "Themes",
+          "body": [
+            "- Space (default): a full star sphere, a black hole with a brightly glowing ring and a distant planet.",
+            "- Neon: a synthwave arena with a glowing floor grid and a striped sun.",
+            "- Range: an indoor hall with lanes, lamps and classic bullseye targets. The theme is chosen in the setup and saved."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Small, calm mouse movements hit better than frantic swipes - the view follows 1:1.",
+            "- Low sensitivity for precision, higher for reflex and moving targets.",
+            "- Distant targets have a small forgiveness margin - hold steady instead of overcorrecting."
+          ]
+        }
+      ]
     }
   ]
 }

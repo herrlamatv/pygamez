@@ -304,6 +304,13 @@ def _draw_icon(cv, cx, cy, name, color, bg):
                     outline=color)
         cv.create_polygon(cx + 3, cy - 2, cx + 6, cy + 2, cx + 3, cy + 6,
                           cx, cy + 2, fill=color, outline="")
+    elif name == "AimTrainerGame":
+        cv.create_oval(cx - 8, cy - 8, cx + 8, cy + 8, outline=color, width=2)
+        cv.create_line(cx, cy - 11, cx, cy - 5, fill=color, width=2)
+        cv.create_line(cx, cy + 5, cx, cy + 11, fill=color, width=2)
+        cv.create_line(cx - 11, cy, cx - 5, cy, fill=color, width=2)
+        cv.create_line(cx + 5, cy, cx + 11, cy, fill=color, width=2)
+        cv.create_oval(cx - 2, cy - 2, cx + 2, cy + 2, fill=color, outline="")
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))
@@ -536,6 +543,7 @@ class App:
 
         self._closing = False
         self._fullscreen = False
+        self._mouse_captured = False  # Pointer-Capture (FPS-Spiele) aktiv?
         self.current = None          # aktuell laufendes Spiel (Game-Objekt)
         # Skalierung/Versatz für die Darstellung der logischen Fläche
         self._scale = 1.0
@@ -945,9 +953,27 @@ class App:
             # Startbildschirm: Hover-Effekt fürs Spiele-Raster.
             self._menu_motion(self._to_logical(event.x, event.y))
             return
-        if not self.current.paused:
-            self.current.handle_event(
-                InputEvent(InputEvent.MOUSEMOVE, pos=self._to_logical(event.x, event.y)))
+        if self.current.paused:
+            return
+        if getattr(self.current, "capture_mouse", False):
+            # Pointer-Capture (FPS-Look): relative Bewegung weitergeben und
+            # den Cursor sofort in die Mitte zurücksetzen. Der Warp erzeugt
+            # selbst ein Motion-Event mit Delta 0 -> keine Endlosschleife.
+            cx = self.embed.winfo_width() // 2
+            cy = self.embed.winfo_height() // 2
+            dx, dy = event.x - cx, event.y - cy
+            if dx or dy:
+                dx = max(-150, min(150, dx))     # Spikes (z.B. Alt-Tab) kappen
+                dy = max(-150, min(150, dy))
+                self.current.handle_event(
+                    InputEvent(InputEvent.MOUSEREL, rel=(dx, dy)))
+                try:
+                    self.embed.event_generate("<Motion>", warp=True, x=cx, y=cy)
+                except tk.TclError:
+                    pass
+            return
+        self.current.handle_event(
+            InputEvent(InputEvent.MOUSEMOVE, pos=self._to_logical(event.x, event.y)))
 
     def _on_wheel(self, event):
         """Mausrad an den aktiven Screen weiterreichen (delta in Rasten)."""
@@ -1157,6 +1183,22 @@ class App:
         # Aktuelle Anzeigegröße übernehmen (VOR dem Zeichnen -> Auto-Auflösung
         # baut die Canvas ggf. neu, bevor das Spiel darauf zeichnet).
         self._sync_display_size()
+
+        # Pointer-Capture verwalten: Spiele mit capture_mouse=True verstecken
+        # den Cursor und bekommen relative Mausbewegung (Pause/Ende gibt frei).
+        want = (self.current is not None and not self.current.paused
+                and getattr(self.current, "capture_mouse", False))
+        if want != self._mouse_captured:
+            self._mouse_captured = want
+            try:
+                self.embed.configure(cursor="none" if want else "")
+                if want:
+                    self.embed.event_generate(
+                        "<Motion>", warp=True,
+                        x=self.embed.winfo_width() // 2,
+                        y=self.embed.winfo_height() // 2)
+            except tk.TclError:
+                pass
 
         if self.current is None:
             self._draw_menu_screen()

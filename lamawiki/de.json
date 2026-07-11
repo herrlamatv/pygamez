@@ -880,6 +880,64 @@
           ]
         }
       ]
+    },
+    {
+      "id": "aimtrainer",
+      "category": "games",
+      "game": "AimTrainerGame",
+      "title": "Aim Trainer",
+      "keywords": [
+        "zielen",
+        "fadenkreuz",
+        "reflex",
+        "3d",
+        "weltraum",
+        "schiessen"
+      ],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Die Maus steuert die Kamera direkt wie in einem Shooter: Jede Bewegung dreht den Blick sofort um den Bewegungsbetrag (der Cursor wird dafuer unsichtbar im Fenster festgehalten). [Esc] pausiert und gibt die Maus frei. Yaw ist unbegrenzt, hoch/runter klemmt bei 60 Grad.",
+            "Linksklick schießt exakt durch die Bildmitte (kurzer Cooldown zwischen den Schüssen).",
+            "- [+] und [-] ändern die Empfindlichkeit (auch mitten im Spiel), [E] beendet eine Chill-Sitzung."
+          ]
+        },
+        {
+          "h": "Modi",
+          "body": [
+            "- Präzision (60 s): immer 3 Kugeln gleichzeitig - Abschuss spawnt sofort eine neue; am Ende gibt es einen Genauigkeits-Bonus.",
+            "- Reflex (30 Ziele): Ziele erscheinen einzeln und schrumpfen nach kurzer Zeit wieder weg - Reaktionszeit zählt, Statistik am Ende.",
+            "- Bewegte Ziele (60 s): Kugeln schweben auf Bahnen (pendeln, kreisen, wippen) - Treffer in Serie erhöhen den Combo-Multiplikator.",
+            "- Chill (endlos): kein Timer, keine Fehlschlag-Strafe - einfach entspannt ballern; der Score wird beim Menü-Rückweg gespeichert."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Präzision: 100 Punkte je Treffer plus Entfernungs-Bonus; am Ende Genauigkeit zum Quadrat mal 1500 obendrauf.",
+            "Reflex: je schneller die Reaktion, desto mehr Punkte (1000 minus Millisekunden, mindestens 50).",
+            "Bewegte Ziele: 80 Punkte mal Combo-Multiplikator (bis x4 bei 12 Treffern in Serie) - ein Fehlschuss resettet die Combo.",
+            "Chill: 50 Punkte mal Multiplikator; die Combo verfällt nur, wenn du 5 Sekunden nichts triffst."
+          ]
+        },
+        {
+          "h": "Themen",
+          "body": [
+            "- Weltraum (Standard): Sternenkugel rundum, ein schwarzes Loch mit hell leuchtendem Ring und ein ferner Planet.",
+            "- Neon: Synthwave-Arena mit leuchtendem Boden-Grid und gestreifter Sonne.",
+            "- Schießstand: Indoor-Halle mit Bahnen, Lampen und klassischen Zielscheiben. Das Thema wird im Setup gewählt und gespeichert."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Kleine, ruhige Mausbewegungen treffen besser als hektische Schwuenge - der Blick folgt 1:1.",
+            "- Niedrige Empfindlichkeit für Präzision, höhere für Reflex und bewegte Ziele.",
+            "- Ferne Ziele haben eine kleine Vergebungs-Marge - ruhig draufhalten statt überkorrigieren."
+          ]
+        }
+      ]
     }
   ]
 }
