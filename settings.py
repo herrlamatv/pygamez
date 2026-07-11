@@ -83,6 +83,11 @@ DEFAULTS = {
     #   hold_p1 / hold_p2 : True  -> Schläger bewegt sich nur, solange man die
     #                       Taste drückt (Halten). False -> fährt dauerhaft weiter.
     "pong": {"hold_p1": False, "hold_p2": False},
+    # Sudoku-spezifische Optionen:
+    #   difficulty : gewählter Schwierigkeitsgrad (0=Leicht .. 3=Experte)
+    #   fail_limit : True -> beim 3. Fehler ist die Partie verloren
+    #   last_level : zuletzt gewähltes Level je Stufe, z.B. {"0": 12}
+    "sudoku": {"difficulty": 0, "fail_limit": True, "last_level": {}},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -129,11 +134,29 @@ def _merge_defaults(data):
             for k in ("wrap", "bonus_apple"):
                 if isinstance(snk.get(k), bool):
                     out["snake"][k] = snk[k]
+            # Weitere Snake-Optionen (mode, hardcore, apples, 3D-Kamera, ...)
+            # unverändert übernehmen - das Spiel validiert sie beim Lesen
+            # selbst. Ohne diese Übernahme gingen sie beim nächsten Speichern
+            # der Einstellungen (egal aus welchem Spiel) verloren.
+            for k, v in snk.items():
+                if k not in ("wrap", "bonus_apple"):
+                    out["snake"][k] = v
         pg = data.get("pong")
         if isinstance(pg, dict):
             for k in ("hold_p1", "hold_p2"):
                 if isinstance(pg.get(k), bool):
                     out["pong"][k] = pg[k]
+        sud = data.get("sudoku")
+        if isinstance(sud, dict):
+            if isinstance(sud.get("difficulty"), int):
+                out["sudoku"]["difficulty"] = max(0, min(3, sud["difficulty"]))
+            if isinstance(sud.get("fail_limit"), bool):
+                out["sudoku"]["fail_limit"] = sud["fail_limit"]
+            ll = sud.get("last_level")
+            if isinstance(ll, dict):
+                for k, v in ll.items():
+                    if k in ("0", "1", "2", "3") and isinstance(v, int):
+                        out["sudoku"]["last_level"][k] = max(1, min(100, v))
         ctrl = data.get("controls")
         if isinstance(ctrl, dict):
             for player in ("p1", "p2"):

@@ -14,8 +14,9 @@ from .flappy import FlappyGame
 from .doodle import DoodleGame
 from .game2048 import Game2048
 from .minesweeper import MinesweeperGame
+from .sudoku import SudokuGame
 
 # Reihenfolge der Spiele im Menü
 ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
              TetrisGame, InvadersGame, AsteroidsGame, PacmanGame, FlappyGame,
-             DoodleGame, Game2048, MinesweeperGame]
+             DoodleGame, Game2048, MinesweeperGame, SudokuGame]

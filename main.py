@@ -264,6 +264,17 @@ def _draw_icon(cv, cx, cy, name, color, bg):
         cv.create_polygon(cx + 3, cy - 8, cx - 6, cy - 4, cx + 3, cy,
                           fill=color, outline="")
         cv.create_line(cx - 2, cy + 7, cx + 8, cy + 7, fill=color, width=2)
+    elif name == "SudokuGame":
+        _round_rect(cv, cx - 9, cy - 9, cx + 9, cy + 9, 3, fill="",
+                    outline=color)
+        cv.create_line(cx - 3, cy - 9, cx - 3, cy + 9, fill=color)
+        cv.create_line(cx + 3, cy - 9, cx + 3, cy + 9, fill=color)
+        cv.create_line(cx - 9, cy - 3, cx + 9, cy - 3, fill=color)
+        cv.create_line(cx - 9, cy + 3, cx + 9, cy + 3, fill=color)
+        cv.create_text(cx - 6, cy - 6, text="5", fill=color,
+                       font=("Segoe UI", 6, "bold"))
+        cv.create_text(cx + 6, cy + 6, text="3", fill=color,
+                       font=("Segoe UI", 6, "bold"))
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))

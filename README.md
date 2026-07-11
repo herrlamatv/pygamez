@@ -9,7 +9,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Dreizehn
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Vierzehn
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English); die Sprache wird beim ersten Start gewählt
@@ -51,6 +51,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Doodle Jump** | 1 Spieler    | Auto-Sprung nach oben, Plattform-Typen, Federn, Propeller, Monster |
 | **2048**     | 1 Spieler       | Zahlen-Schiebespiel, Ziel: die 2048er-Kachel |
 | **Minesweeper** | 1 Spieler    | Der Klassiker mit sicherem Erstklick, Chording, Smiley und Bestzeiten |
+| **Sudoku**      | 1 Spieler    | 400 Seed-Level (4 Stufen x 100), 4 Assistenz-Modi mit Punkte-Multiplikator, Notizen, Tipps, 3-Fehler-Limit |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe**, **Tetris (Versus)** und **Asteroids (Koop-Duell)**. Der Modus wird
@@ -244,6 +245,24 @@ Explosions-Effekte, Highscore.
   Timer; falsche Flaggen werden am Ende durchgestrichen, Konfetti beim Sieg.
 - Punkte = Grundwert der Stufe minus Sekunden.
 
+**Sudoku**
+- **400 Level**: 4 Schwierigkeitsgrade (Leicht/Normal/Schwer/Experte) x 100
+  Level. Die Puzzles sind **Seed-generiert und eindeutig lösbar** - Level 12
+  von "Schwer" ist auf jedem PC dasselbe Puzzle. Gelöste Level werden
+  gespeichert und in der Levelauswahl abgehakt.
+- **4 Spielmodi** (Auswahl vor dem Start) mit Punkte-Multiplikator:
+  **Klassisch** (x2,0 - keine Hilfen), **Notizen** (x1,5 - + Bleistift-
+  Notizen), **Komfort** (x1,0 - + Fehler rot, Konflikt- und Gleiche-Ziffer-
+  Hervorhebung, korrekte Eingaben rasten ein), **Assistent** (x0,7 - + Tipp-
+  Funktion, max. 3).
+- Jede Eingabe wird sofort gegen die Lösung geprüft; mit aktivem
+  **3-Fehler-Limit** (Option im Setup) ist beim dritten Fehler Schluss.
+- Steuerung: Pfeile/WASD = Zelle, **1-9** = Ziffer (auch Ziffernblock),
+  **0/Backspace/Rechtsklick** = radieren, **N** = Notizen, **H** = Tipp,
+  **R** = Level neu, **Q** = Levelwahl; komplett mit der Maus spielbar
+  (Ziffernfeld rechts).
+- Punkte = (Basis der Stufe - Zeit - Fehler - Tipps) x Modus-Multiplikator.
+
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
@@ -316,7 +335,7 @@ lang/
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -415,7 +434,7 @@ gewünschte Version und die winget-ID entsprechend (`Python.Python.3.12`).
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Thirteen
+**Pygame** is embedded as the game display inside the Tkinter window. Fourteen
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English); the language is chosen on first launch and
@@ -457,6 +476,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Doodle Jump** | 1 player     | Auto-jump upward, platform types, springs, propeller, monsters |
 | **2048**     | 1 player        | Number-sliding puzzle, goal: the 2048 tile |
 | **Minesweeper** | 1 player     | The classic with safe first click, chording, smiley and best times |
+| **Sudoku**      | 1 player     | 400 seeded levels (4 difficulties x 100), 4 assist modes with score multiplier, notes, hints, 3-error limit |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)** and **Asteroids (co-op
@@ -647,6 +667,24 @@ explosion effects, high score.
   timer; wrong flags are crossed out at the end, confetti on victory.
 - Points = level base value minus seconds.
 
+**Sudoku**
+- **400 levels**: 4 difficulties (Easy/Normal/Hard/Expert) x 100 levels. The
+  puzzles are **seed-generated with a unique solution** - level 12 of "Hard"
+  is the same puzzle on every PC. Solved levels are saved and ticked off in
+  the level select.
+- **4 game modes** (chosen before starting) with a score multiplier:
+  **Classic** (x2.0 - no assists), **Notes** (x1.5 - + pencil notes),
+  **Comfort** (x1.0 - + wrong digits red, conflict and same-digit
+  highlighting, correct entries lock in), **Assist** (x0.7 - + hint key,
+  max. 3).
+- Every entry is checked against the solution immediately; with the
+  **3-error limit** enabled (setup option) the third mistake ends the game.
+- Controls: arrows/WASD = cell, **1-9** = digit (numpad too),
+  **0/Backspace/right click** = erase, **N** = notes, **H** = hint,
+  **R** = restart level, **Q** = level select; fully playable with the mouse
+  (number pad on the right).
+- Points = (difficulty base - time - errors - hints) x mode multiplier.
+
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
 
@@ -719,7 +757,7 @@ lang/
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the
