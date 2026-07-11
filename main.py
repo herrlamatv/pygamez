@@ -62,6 +62,8 @@ C_ACCENT = "#589cff"       # Primär-Akzent (Blau)
 C_ACCENT2 = "#9b6eff"      # Zweit-Akzent (Violett)
 C_DANGER = "#8e3540"       # Beenden
 C_DANGER_HOVER = "#ab414e"
+C_BACK = "#4b6b5a"         # Zurück zum Menü (helles Grün-Grau)
+C_BACK_HOVER = "#5f8a73"
 C_TEXT = "#e9edf5"
 C_TEXT_DIM = "#98a2b8"
 C_TEXT_FAINT = "#5f6680"
@@ -673,8 +675,17 @@ class App:
         qbtn.pack(side="bottom", fill="x", padx=12, pady=(4, 8))
         self._ctrl_buttons["quit"] = qbtn
 
-        for key, cmd, icon in (("back_to_menu", self.zum_menü, "⌂"),
-                               ("fullscreen", self.toggle_fullscreen, "⛶"),
+        # "Zurück zum Menü" bewusst groß und grün-grau abgesetzt, mit extra
+        # Abstand zum roten Beenden-Button darunter - so beendet man das
+        # Spiel nicht mehr aus Versehen.
+        back = NeoButton(menu, t("app.back_to_menu"),
+                         self._with_click(self.zum_menü), icon="⌂",
+                         fill=C_BACK, hover=C_BACK_HOVER, fg=C_TEXT,
+                         bg=C_SIDEBAR, height=40, bold=True, center=True)
+        back.pack(side="bottom", fill="x", padx=12, pady=(4, 12))
+        self._ctrl_buttons["back_to_menu"] = back
+
+        for key, cmd, icon in (("fullscreen", self.toggle_fullscreen, "⛶"),
                                ("language", self.open_language, "🌐"),
                                ("options", self.open_options, "⚙")):
             btn = NeoButton(menu, t("app." + key), self._with_click(cmd),
