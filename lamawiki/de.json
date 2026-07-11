@@ -926,7 +926,7 @@
           "body": [
             "- Weltraum (Standard): Sternenkugel rundum, ein schwarzes Loch mit hell leuchtendem Ring und ein ferner Planet.",
             "- Neon: Synthwave-Arena mit leuchtendem Boden-Grid und gestreifter Sonne.",
-            "- Schießstand: Indoor-Halle mit Bahnen, Lampen und klassischen Zielscheiben. Das Thema wird im Setup gewählt und gespeichert."
+            "- Schießstand: Indoor-Halle mit Bahnen, Lampen und klassischen Zielscheiben. Thema und einstellbarer Motion Blur (0 bis 80 Prozent, Taste [B] oder Setup-Buttons) werden gespeichert."
           ]
         },
         {

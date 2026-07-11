@@ -37,6 +37,7 @@
   "aim.result_title": "RÉSULTATS",
   "aim.sens_toast": "Sensibilité {v}",
   "aim.session_time": "Session : {t}",
+  "aim.setup_blur": "Flou de mouvement",
   "aim.setup_hint": "Visee directe a la souris comme dans un shooter - le curseur est capture, Echap/pause le libere ; clic = tir, +/- = sensibilite",
   "aim.setup_sens": "Sensibilité",
   "aim.setup_theme": "Thème",

@@ -305,7 +305,9 @@ Explosions-Effekte, Highscore.
 - **3 Themen** (im Setup, gespeichert): **Weltraum** mit Sternenkugel,
   **schwarzem Loch mit leuchtendem Ring** und Planet (Standard), Neon-Arena
   mit Boden-Grid und Synthwave-Sonne, sowie Schießstand-Halle.
-- Empfindlichkeit auch mitten im Spiel per **+/-** änderbar (gespeichert).
+- Empfindlichkeit auch mitten im Spiel per **+/-** änderbar; dazu ein
+  **einstellbarer Motion Blur** (0-80 %) für extra Chill-Optik - beides
+  wird gespeichert.
 
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
@@ -782,7 +784,8 @@ explosion effects, high score.
 - **3 themes** (in the setup, saved): **space** with a star sphere, a
   **black hole with a glowing ring** and a planet (default), a neon arena
   with floor grid and synthwave sun, and an indoor shooting range.
-- Sensitivity can be changed mid-game with **+/-** (saved).
+- Sensitivity can be changed mid-game with **+/-**; plus an **adjustable
+  motion blur** (0-80%) for extra chill visuals - both are saved.
 
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).

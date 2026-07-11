@@ -37,6 +37,7 @@
   "aim.result_title": "ERGEBNIS",
   "aim.sens_toast": "Empfindlichkeit {v}",
   "aim.session_time": "Sitzung: {t}",
+  "aim.setup_blur": "Motion Blur",
   "aim.setup_hint": "Direkte Maussteuerung wie im Shooter - Cursor wird eingefangen, Esc/Pause gibt ihn frei; Klick = Schuss, +/- = Empfindlichkeit",
   "aim.setup_sens": "Empfindlichkeit",
   "aim.setup_theme": "Thema",

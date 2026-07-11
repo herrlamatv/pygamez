@@ -925,7 +925,7 @@
           "body": [
             "- Espace (par défaut) : une sphère d'étoiles complète, un trou noir avec un anneau lumineux éclatant et une planète lointaine.",
             "- Néon : une arène synthwave avec une grille de sol lumineuse et un soleil rayé.",
-            "- Stand de tir : un hall intérieur avec couloirs, lampes et cibles classiques. Le thème se choisit dans le setup et est mémorisé."
+            "- Stand de tir : un hall interieur avec couloirs, lampes et cibles classiques. Le theme et le flou de mouvement reglable (0 a 80 pour cent, touche [B] ou boutons du setup) sont memorises."
           ]
         },
         {

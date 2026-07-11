@@ -37,6 +37,7 @@
   "aim.result_title": "RESULTS",
   "aim.sens_toast": "Sensitivity {v}",
   "aim.session_time": "Session: {t}",
+  "aim.setup_blur": "Motion blur",
   "aim.setup_hint": "Direct mouse look like a shooter - the cursor gets captured, Esc/pause releases it; click = shoot, +/- = sensitivity",
   "aim.setup_sens": "Sensitivity",
   "aim.setup_theme": "Theme",

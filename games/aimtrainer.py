@@ -121,9 +121,11 @@ class AimTrainerGame(Game):
         self.game_over = False
 
         self.cfg = MODE_CFG.get(self.mode, MODE_CFG["precision"])
-        theme, sens = self._aim_settings()
+        theme, sens, blur = self._aim_settings()
         self.theme_key = theme
         self.sens = sens
+        self.blur = blur             # Motion-Blur-Stärke (0.0 = aus .. 0.8)
+        self._prev_frame = None      # letztes Bild für die Blur-Mischung
 
         self._small = pygame.font.SysFont("consolas", 16)
         self._tiny = pygame.font.SysFont("consolas", 13)
@@ -153,6 +155,7 @@ class AimTrainerGame(Game):
         self._sky_cache = None
         self._bh_cache = None
         self._sun_cache = None
+        self._prev_frame = None
         self._build_setup_layout()
 
     def _aim_settings(self):
@@ -164,7 +167,11 @@ class AimTrainerGame(Game):
             sens = max(0.5, min(2.0, float(aim.get("sens", 1.0))))
         except (TypeError, ValueError):
             sens = 1.0
-        return theme, sens
+        try:
+            blur = max(0.0, min(0.8, float(aim.get("blur", 0.0))))
+        except (TypeError, ValueError):
+            blur = 0.0
+        return theme, sens, blur
 
     def _save_aim(self, key, value):
         if isinstance(self.settings, dict):
@@ -191,14 +198,20 @@ class AimTrainerGame(Game):
         cx = self.width // 2
         bw = min(120, (self.width - 80) // 3 - 10)
         total = 3 * bw + 2 * 12
-        y0 = int(self.height * 0.34)
+        y0 = int(self.height * 0.28)
         self.theme_rects = [pygame.Rect(cx - total // 2 + i * (bw + 12), y0,
                                         bw, 44) for i in range(3)]
-        sy = y0 + 66
-        self.sens_minus = pygame.Rect(cx - 110, sy, 44, 40)
-        self.sens_plus = pygame.Rect(cx + 66, sy, 44, 40)
-        self.sens_box = pygame.Rect(cx - 58, sy, 116, 40)
-        self.start_rect = pygame.Rect(cx - 95, sy + 62, 190, 46)
+        # Regler-Reihen: Beschriftung steht LINKS daneben (spart Höhe).
+        rx = cx + 24
+        sy = y0 + 58
+        self.sens_minus = pygame.Rect(rx - 60, sy, 44, 40)
+        self.sens_plus = pygame.Rect(rx + 116, sy, 44, 40)
+        self.sens_box = pygame.Rect(rx - 8, sy, 116, 40)
+        by = sy + 52
+        self.blur_minus = pygame.Rect(rx - 60, by, 44, 40)
+        self.blur_plus = pygame.Rect(rx + 116, by, 44, 40)
+        self.blur_box = pygame.Rect(rx - 8, by, 116, 40)
+        self.start_rect = pygame.Rect(cx - 95, by + 54, 190, 46)
 
     def _handle_setup(self, event):
         if event.kind == InputEvent.KEYDOWN:
@@ -213,6 +226,8 @@ class AimTrainerGame(Game):
                 self._change_sens(+0.1)
             elif k in ("minus", "KP_Subtract"):
                 self._change_sens(-0.1)
+            elif k in ("b", "B"):
+                self._cycle_blur()
             elif k in ("Return", "space"):
                 self._start_run()
         elif event.kind == InputEvent.MOUSEDOWN:
@@ -224,6 +239,10 @@ class AimTrainerGame(Game):
                 self._change_sens(-0.1)
             elif self.sens_plus.collidepoint(event.pos):
                 self._change_sens(+0.1)
+            elif self.blur_minus.collidepoint(event.pos):
+                self._change_blur(-0.1)
+            elif self.blur_plus.collidepoint(event.pos):
+                self._change_blur(+0.1)
             elif self.start_rect.collidepoint(event.pos):
                 self._start_run()
 
@@ -239,6 +258,39 @@ class AimTrainerGame(Game):
         self._toast = t("aim.sens_toast", v=f"{self.sens:.1f}")
         self._toast_t = 1.0
         self.play_sound("select")
+
+    def _change_blur(self, delta):
+        self.blur = round(max(0.0, min(0.8, self.blur + delta)), 1)
+        self._save_aim("blur", self.blur)
+        if self.blur <= 0:
+            self._prev_frame = None
+        self.play_sound("select")
+
+    def _cycle_blur(self):
+        """[B] im Setup: Blur in 0.1er-Schritten durchschalten (0.8 -> aus)."""
+        self.blur = 0.0 if self.blur >= 0.79 else round(self.blur + 0.1, 1)
+        self._save_aim("blur", self.blur)
+        if self.blur <= 0:
+            self._prev_frame = None
+        self.play_sound("select")
+
+    def _blur_label(self):
+        return t("common.off") if self.blur <= 0 else f"{int(self.blur * 100)}%"
+
+    def _apply_blur(self, s):
+        """Motion Blur: das vorige Bild mit Blur-abhängiger Deckkraft über das
+        neue mischen (exponentieller Trail). Läuft VOR Fadenkreuz/HUD, damit
+        die scharf bleiben."""
+        if self.blur <= 0.01:
+            self._prev_frame = None
+            return
+        if self._prev_frame is None \
+                or self._prev_frame.get_size() != s.get_size():
+            self._prev_frame = s.copy()
+            return
+        self._prev_frame.set_alpha(int(self.blur * 230))
+        s.blit(self._prev_frame, (0, 0))
+        self._prev_frame = s.copy()
 
     # ===================================================== Lauf starten/beenden
     def _start_run(self):
@@ -648,6 +700,7 @@ class AimTrainerGame(Game):
         self._draw_particles(s)
         self._draw_popups(s)
         self._draw_tracer_flash(s)
+        self._apply_blur(s)          # Motion Blur nur auf die Szene
         self._draw_crosshair(s)
         self._draw_hud(s)
         if self.game_over:
@@ -1077,6 +1130,7 @@ class AimTrainerGame(Game):
         self.pitch = math.radians(4)
         self._basis = self._view_basis()
         self._draw_background(s)
+        self._apply_blur(s)          # Live-Vorschau der Blur-Einstellung
         self.yaw, self.pitch = old_yaw, old_pitch
 
         ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
@@ -1104,16 +1158,20 @@ class AimTrainerGame(Game):
                                      (235, 238, 245) if on else (150, 158, 178))
             s.blit(img, img.get_rect(center=r.center))
 
-        lbl = self._small.render(t("aim.setup_sens"), True, (150, 158, 178))
-        s.blit(lbl, lbl.get_rect(midbottom=(cx, self.sens_minus.y - 8)))
-        for r, sym in ((self.sens_minus, "-"), (self.sens_plus, "+")):
-            pygame.draw.rect(s, (32, 38, 54), r, border_radius=8)
-            pygame.draw.rect(s, (74, 84, 116), r, 1, border_radius=8)
-            img = self._big.render(sym, True, (235, 238, 245))
-            s.blit(img, img.get_rect(center=r.center))
-        img = self._big.render(f"{self.sens:.1f}", True,
-                               self._theme()["accent"])
-        s.blit(img, img.get_rect(center=self.sens_box.center))
+        for label_key, minus, plus, box, value in (
+                ("aim.setup_sens", self.sens_minus, self.sens_plus,
+                 self.sens_box, f"{self.sens:.1f}"),
+                ("aim.setup_blur", self.blur_minus, self.blur_plus,
+                 self.blur_box, self._blur_label())):
+            lbl = self._small.render(t(label_key), True, (200, 205, 220))
+            s.blit(lbl, lbl.get_rect(midright=(minus.x - 16, minus.centery)))
+            for r, sym in ((minus, "-"), (plus, "+")):
+                pygame.draw.rect(s, (32, 38, 54), r, border_radius=8)
+                pygame.draw.rect(s, (74, 84, 116), r, 1, border_radius=8)
+                img = self._big.render(sym, True, (235, 238, 245))
+                s.blit(img, img.get_rect(center=r.center))
+            img = self._big.render(value, True, self._theme()["accent"])
+            s.blit(img, img.get_rect(center=box.center))
 
         pygame.draw.rect(s, (48, 60, 84), self.start_rect, border_radius=10)
         pygame.draw.rect(s, self._theme()["accent"], self.start_rect, 2,

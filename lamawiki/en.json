@@ -926,7 +926,7 @@
           "body": [
             "- Space (default): a full star sphere, a black hole with a brightly glowing ring and a distant planet.",
             "- Neon: a synthwave arena with a glowing floor grid and a striped sun.",
-            "- Range: an indoor hall with lanes, lamps and classic bullseye targets. The theme is chosen in the setup and saved."
+            "- Range: an indoor hall with lanes, lamps and classic bullseye targets. Theme and adjustable motion blur (0 to 80 percent, key [B] or setup buttons) are saved."
           ]
         },
         {
