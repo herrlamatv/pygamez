@@ -449,7 +449,8 @@ python -m venv .venv
 
 # 3. Abhängigkeiten installieren
 pip install -r requirements.txt
-#   oder:  pip install "pygame>=2.6"
+#   oder:  pip install "pygame>=2.6" (or pygame-ce)
+#                                     pip install pygame-ce
 
 # 4. Starten
 python main.py
@@ -924,8 +925,8 @@ python -m venv .venv
 
 # 3. Install dependencies
 pip install -r requirements.txt
-#   or:  pip install "pygame>=2.6"
-
+#   or:  pip install "pygame>=2.6" (or pygame-ce)
+#                                   pip install pygame-ce
 # 4. Launch
 python main.py
 ```
