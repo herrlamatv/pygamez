@@ -9,7 +9,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Vierzehn
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Siebzehn
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English); die Sprache wird beim ersten Start gewählt
@@ -52,9 +52,12 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **2048**     | 1 Spieler       | Zahlen-Schiebespiel, Ziel: die 2048er-Kachel |
 | **Minesweeper** | 1 Spieler    | Der Klassiker mit sicherem Erstklick, Chording, Smiley und Bestzeiten |
 | **Sudoku**      | 1 Spieler    | 400 Seed-Level (4 Stufen x 100), 4 Assistenz-Modi mit Punkte-Multiplikator, Notizen, Tipps, 3-Fehler-Limit |
+| **Frogger**     | 1 Spieler    | Straße + Fluss + 5 Buchten, Bonus-Fliege, Krokodile, Zeitlimit, 3 Schwierigkeitsgrade |
+| **Memory**      | 1 / 2 Spieler | Paare finden auf 4x4 bis 8x6, Flip-Animation, Solo-Wertung oder Duell |
+| **Solitär**     | 1 Spieler    | 5 Varianten (Klondike, Spider, FreeCell, Pyramide, TriPeaks) mit Drag & Drop und Undo |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
-**Tic-Tac-Toe**, **Tetris (Versus)** und **Asteroids (Koop-Duell)**. Der Modus wird
+**Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)** und **Memory (Duell)**. Der Modus wird
 direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
 
 #### Feature-Details je Spiel
@@ -264,6 +267,31 @@ Explosions-Effekte, Highscore.
   zeigt die komplette **Lösung** auf dem Brett (nochmal A = zurück).
 - Punkte = (Basis der Stufe - Zeit - Fehler - Tipps) x Modus-Multiplikator.
 
+**Frogger**
+- 5 Fahrspuren (Autos/Laster) und 5 Flussbahnen (Stämme, Schildkröten, die ab
+  höheren Leveln **abtauchen**); oben 5 Ziel-Buchten - alle füllen = nächstes
+  Level, alles wird schneller.
+- Extras: **Bonus-Fliege** (+200) in leeren Buchten, **Krokodile** besetzen ab
+  höheren Leveln Buchten, **Zeitlimit-Balken** je Frosch, Extraleben bei 10 000.
+- 3 Schwierigkeitsgrade (Tempo, Verkehrsdichte, Zeit); Punkte je neuer Reihe,
+  Bucht = 50 + Zeitbonus, Level komplett = +1000.
+
+**Memory**
+- Brettgrößen **4x4, 6x6, 8x6**; Motive aus Form-Farb-Kombinationen, komplett
+  mit Primitiven gezeichnet; **Flip-Animation**, Fehlpaare klappen automatisch
+  zurück.
+- **Solo**: Basis - 15 je Zug - 2 je Sekunde (mind. 100). **Duell** (lokal):
+  abwechselnd, Treffer = nochmal dran, Sieger = meiste Paare.
+
+**Solitär**
+- **5 Varianten** im Vorspiel-Screen: Klondike (Ziehen 1/3 als Option), Spider
+  (1/2/4 Farben), FreeCell (Supermove-Limit), Pyramide (13er-Paare, 2 Redeals)
+  und TriPeaks (±1-Kette mit Combo-Multiplikator).
+- **Drag & Drop** oder Klick-Klick, **Rechtsklick** = aufs Fundament,
+  **U** = unbegrenztes Undo, **R** = neues Blatt, Leertaste = Stock.
+- Karten werden ohne Bild-Dateien gerendert (`games/cards.py`); alle Varianten
+  teilen sich eine Highscore-Liste mit variantenspezifischen Formeln.
+
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
@@ -347,6 +375,7 @@ games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
   game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  frogger.py  memory.py  solitaire.py  cards.py
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -445,7 +474,7 @@ gewünschte Version und die winget-ID entsprechend (`Python.Python.3.12`).
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Fourteen
+**Pygame** is embedded as the game display inside the Tkinter window. Seventeen
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English); the language is chosen on first launch and
@@ -488,10 +517,13 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **2048**     | 1 player        | Number-sliding puzzle, goal: the 2048 tile |
 | **Minesweeper** | 1 player     | The classic with safe first click, chording, smiley and best times |
 | **Sudoku**      | 1 player     | 400 seeded levels (4 difficulties x 100), 4 assist modes with score multiplier, notes, hints, 3-error limit |
+| **Frogger**     | 1 player     | Road + river + 5 bays, bonus fly, crocodiles, time limit, 3 difficulties |
+| **Memory**      | 1 / 2 players | Find pairs on 4x4 up to 8x6, flip animation, solo scoring or duel |
+| **Solitaire**   | 1 player     | 5 variants (Klondike, Spider, FreeCell, Pyramid, TriPeaks) with drag & drop and undo |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
-**Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)** and **Asteroids (co-op
-duel)**. The mode is chosen right in the pre-game screen
+**Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
+duel)** and **Memory (duel)**. The mode is chosen right in the pre-game screen
 (*Single-player / Multiplayer*).
 
 #### Feature details per game
@@ -697,6 +729,31 @@ explosion effects, high score.
   and reveals the full **solution** on the board (A again = back).
 - Points = (difficulty base - time - errors - hints) x mode multiplier.
 
+**Frogger**
+- 5 traffic lanes (cars/trucks) and 5 river lanes (logs, turtles that **dive**
+  on higher levels); 5 home bays at the top - fill all = next level, everything
+  speeds up.
+- Extras: **bonus fly** (+200) in empty bays, **crocodiles** occupy bays on
+  higher levels, **time-limit bar** per frog, extra life at 10,000.
+- 3 difficulties (speed, traffic density, time); points per new row,
+  bay = 50 + time bonus, level complete = +1000.
+
+**Memory**
+- Board sizes **4x4, 6x6, 8x6**; motifs are shape-color combinations drawn
+  entirely with primitives; **flip animation**, mismatched pairs flip back
+  automatically.
+- **Solo**: base - 15 per move - 2 per second (min. 100). **Duel** (local):
+  alternating turns, a match grants another turn, most pairs wins.
+
+**Solitaire**
+- **5 variants** on the pre-game screen: Klondike (draw 1/3 option), Spider
+  (1/2/4 suits), FreeCell (supermove limit), Pyramid (13-pairs, 2 redeals)
+  and TriPeaks (±1 chain with combo multiplier).
+- **Drag & drop** or click-click, **right click** = to foundation,
+  **U** = unlimited undo, **R** = new deal, Space = stock.
+- Cards are rendered without image files (`games/cards.py`); all variants
+  share one high-score list with variant-specific formulas.
+
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
 
@@ -780,6 +837,7 @@ games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
   game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  frogger.py  memory.py  solitaire.py  cards.py
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the

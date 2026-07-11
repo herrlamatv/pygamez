@@ -277,6 +277,33 @@ def _draw_icon(cv, cx, cy, name, color, bg):
                        font=("Segoe UI", 6, "bold"))
         cv.create_text(cx + 6, cy + 6, text="3", fill=color,
                        font=("Segoe UI", 6, "bold"))
+    elif name == "FroggerGame":
+        cv.create_oval(cx - 7, cy - 5, cx + 7, cy + 8, fill=color, outline="")
+        for sx in (-4, 4):                       # Augen
+            cv.create_oval(cx + sx - 3, cy - 9, cx + sx + 3, cy - 3,
+                           fill=color, outline="")
+            cv.create_oval(cx + sx - 1, cy - 7, cx + sx + 1, cy - 5,
+                           fill=bg, outline="")
+        cv.create_line(cx - 7, cy + 3, cx - 10, cy + 9, fill=color, width=2)
+        cv.create_line(cx + 7, cy + 3, cx + 10, cy + 9, fill=color, width=2)
+    elif name == "MemoryGame":
+        _round_rect(cv, cx - 10, cy - 8, cx - 1, cy + 8, 3, fill="",
+                    outline=color)
+        cv.create_text(cx - 5, cy, text="?", fill=color,
+                       font=("Segoe UI", 8, "bold"))
+        _round_rect(cv, cx + 1, cy - 8, cx + 10, cy + 8, 3, fill="",
+                    outline=color)
+        cv.create_polygon(cx + 5, cy - 4, cx + 7, cy - 1, cx + 9, cy - 1,
+                          cx + 7, cy + 2, cx + 8, cy + 5, cx + 5, cy + 3,
+                          cx + 2, cy + 5, cx + 3, cy + 2, cx + 1, cy - 1,
+                          cx + 4, cy - 1, fill=color, outline="")
+    elif name == "SolitaireGame":
+        _round_rect(cv, cx - 9, cy - 8, cx + 2, cy + 8, 3, fill="",
+                    outline=color)
+        _round_rect(cv, cx - 2, cy - 6, cx + 9, cy + 10, 3, fill="",
+                    outline=color)
+        cv.create_polygon(cx + 3, cy - 2, cx + 6, cy + 2, cx + 3, cy + 6,
+                          cx, cy + 2, fill=color, outline="")
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))
@@ -826,6 +853,7 @@ class App:
         self.root.bind("<KeyRelease>", self._on_key_up)
         # Maus auf der Spielfläche
         self.embed.bind("<Button-1>", self._on_click)
+        self.embed.bind("<ButtonRelease-1>", self._on_release)
         self.embed.bind("<Button-3>", self._on_right_click)
         self.embed.bind("<Motion>", self._on_motion)
         self.embed.bind("<MouseWheel>", self._on_wheel)
@@ -891,6 +919,15 @@ class App:
         if not self.current.paused:
             self.current.handle_event(
                 InputEvent(InputEvent.MOUSEDOWN, pos=self._to_logical(event.x, event.y)))
+
+    def _on_release(self, event):
+        """Loslassen der linken Maustaste (für Drag & Drop, z.B. Solitär)."""
+        from game_base import InputEvent
+        if self.current is None:
+            return
+        if not self.current.paused:
+            self.current.handle_event(
+                InputEvent(InputEvent.MOUSEUP, pos=self._to_logical(event.x, event.y)))
 
     def _on_right_click(self, event):
         # Rechtsklicks bekommen nur Spiele, die sie ausdrücklich wollen

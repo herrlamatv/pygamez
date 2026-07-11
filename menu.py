@@ -122,6 +122,12 @@ class PreGameScreen(_Screen):
         bw, bh, gap = 300, 40, 10
         total = len(self.buttons) * (bh + gap) - gap
         y0 = max(132, self.height // 2 - total // 2 + 6)
+        # Viele Buttons (z.B. Solitär mit 5 Varianten) + kleine Auflösung:
+        # kompakter stapeln, damit nichts unten herausläuft.
+        if y0 + total > self.height - 40:
+            bh, gap = 32, 6
+            total = len(self.buttons) * (bh + gap) - gap
+            y0 = max(120, self.height // 2 - total // 2 + 6)
         for i in range(len(self.buttons)):
             x = self.width // 2 - bw // 2
             y = y0 + i * (bh + gap)

@@ -64,7 +64,8 @@ GAME_COLORS = {
     "Game2048": "#f5cd64", "AirHockeyGame": "#6fe0d0", "MinesweeperGame": "#f08fb0",
     "AsteroidsGame": "#b9c2d9", "PacmanGame": "#ffd83b",
     "FlappyGame": "#f5c518", "DoodleGame": "#78d25a",
-    "SudokuGame": "#c77dba",
+    "SudokuGame": "#c77dba", "FroggerGame": "#4caf6d",
+    "MemoryGame": "#8f7ef2", "SolitaireGame": "#2fa77c",
 }
 
 # Schriftname mit Fallback-Kette (SysFont probiert der Reihe nach durch).

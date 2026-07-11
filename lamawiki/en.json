@@ -4,7 +4,15 @@
       "id": "start",
       "category": "general",
       "title": "Getting started",
-      "keywords": ["start", "help", "intro", "menu", "pause", "fullscreen", "sidebar"],
+      "keywords": [
+        "start",
+        "help",
+        "intro",
+        "menu",
+        "pause",
+        "fullscreen",
+        "sidebar"
+      ],
       "sections": [
         {
           "h": "Starting a game",
@@ -41,7 +49,16 @@
       "id": "options",
       "category": "general",
       "title": "Options & controls",
-      "keywords": ["options", "settings", "controls", "keys", "resolution", "fps", "sound", "language"],
+      "keywords": [
+        "options",
+        "settings",
+        "controls",
+        "keys",
+        "resolution",
+        "fps",
+        "sound",
+        "language"
+      ],
       "sections": [
         {
           "h": "Sound & haptics",
@@ -78,7 +95,14 @@
       "id": "saving",
       "category": "general",
       "title": "Saving & high scores",
-      "keywords": ["saving", "highscore", "record", "points", "progress", "files"],
+      "keywords": [
+        "saving",
+        "highscore",
+        "record",
+        "points",
+        "progress",
+        "files"
+      ],
       "sections": [
         {
           "h": "High scores",
@@ -108,7 +132,16 @@
       "id": "snake-special",
       "category": "general",
       "title": "Snake special",
-      "keywords": ["competitive", "prestige", "hardcore", "mods", "personalize", "slot", "gambling", "3d"],
+      "keywords": [
+        "competitive",
+        "prestige",
+        "hardcore",
+        "mods",
+        "personalize",
+        "slot",
+        "gambling",
+        "3d"
+      ],
       "sections": [
         {
           "h": "Competitive mode",
@@ -155,7 +188,14 @@
       "category": "games",
       "game": "SnakeGame",
       "title": "Snake",
-      "keywords": ["snake", "apple", "boost", "competitive", "3d", "portals"],
+      "keywords": [
+        "snake",
+        "apple",
+        "boost",
+        "competitive",
+        "3d",
+        "portals"
+      ],
       "sections": [
         {
           "h": "Controls",
@@ -198,7 +238,12 @@
       "category": "games",
       "game": "PongGame",
       "title": "Pong",
-      "keywords": ["paddle", "ball", "ai", "classic"],
+      "keywords": [
+        "paddle",
+        "ball",
+        "ai",
+        "classic"
+      ],
       "sections": [
         {
           "h": "Controls",
@@ -228,7 +273,14 @@
       "category": "games",
       "game": "AirHockeyGame",
       "title": "Air Hockey",
-      "keywords": ["puck", "mallet", "physics", "goals", "powerups", "mouse"],
+      "keywords": [
+        "puck",
+        "mallet",
+        "physics",
+        "goals",
+        "powerups",
+        "mouse"
+      ],
       "sections": [
         {
           "h": "Controls",
@@ -259,7 +311,13 @@
       "category": "games",
       "game": "TicTacToeGame",
       "title": "Tic-Tac-Toe",
-      "keywords": ["cross", "circle", "board", "ai", "mnk"],
+      "keywords": [
+        "cross",
+        "circle",
+        "board",
+        "ai",
+        "mnk"
+      ],
       "sections": [
         {
           "h": "Controls",
@@ -288,7 +346,14 @@
       "category": "games",
       "game": "BreakoutGame",
       "title": "Breakout",
-      "keywords": ["bricks", "ball", "paddle", "powerups", "combo", "levels"],
+      "keywords": [
+        "bricks",
+        "ball",
+        "paddle",
+        "powerups",
+        "combo",
+        "levels"
+      ],
       "sections": [
         {
           "h": "Controls",
@@ -324,7 +389,13 @@
       "category": "games",
       "game": "TetrisGame",
       "title": "Tetris",
-      "keywords": ["pieces", "rows", "rotate", "versus", "stack"],
+      "keywords": [
+        "pieces",
+        "rows",
+        "rotate",
+        "versus",
+        "stack"
+      ],
       "sections": [
         {
           "h": "Controls",
@@ -353,7 +424,14 @@
       "category": "games",
       "game": "InvadersGame",
       "title": "Invaders",
-      "keywords": ["aliens", "waves", "boss", "weapons", "arena", "shoot"],
+      "keywords": [
+        "aliens",
+        "waves",
+        "boss",
+        "weapons",
+        "arena",
+        "shoot"
+      ],
       "sections": [
         {
           "h": "Modes",
@@ -383,7 +461,14 @@
       "category": "games",
       "game": "AsteroidsGame",
       "title": "Asteroids",
-      "keywords": ["ship", "rocks", "ufo", "hyperspace", "waves", "vector"],
+      "keywords": [
+        "ship",
+        "rocks",
+        "ufo",
+        "hyperspace",
+        "waves",
+        "vector"
+      ],
       "sections": [
         {
           "h": "Controls",
@@ -414,7 +499,13 @@
       "category": "games",
       "game": "PacmanGame",
       "title": "Pac-Man",
-      "keywords": ["ghosts", "pellets", "maze", "fruit", "power"],
+      "keywords": [
+        "ghosts",
+        "pellets",
+        "maze",
+        "fruit",
+        "power"
+      ],
       "sections": [
         {
           "h": "Controls",
@@ -445,7 +536,14 @@
       "category": "games",
       "game": "FlappyGame",
       "title": "Flappy Bird",
-      "keywords": ["bird", "pipes", "coins", "shield", "medals", "flap"],
+      "keywords": [
+        "bird",
+        "pipes",
+        "coins",
+        "shield",
+        "medals",
+        "flap"
+      ],
       "sections": [
         {
           "h": "Controls",
@@ -474,7 +572,14 @@
       "category": "games",
       "game": "DoodleGame",
       "title": "Doodle Jump",
-      "keywords": ["jump", "platforms", "monsters", "spring", "propeller", "height"],
+      "keywords": [
+        "jump",
+        "platforms",
+        "monsters",
+        "spring",
+        "propeller",
+        "height"
+      ],
       "sections": [
         {
           "h": "Controls",
@@ -506,7 +611,12 @@
       "category": "games",
       "game": "Game2048",
       "title": "2048",
-      "keywords": ["tiles", "slide", "merge", "numbers"],
+      "keywords": [
+        "tiles",
+        "slide",
+        "merge",
+        "numbers"
+      ],
       "sections": [
         {
           "h": "Controls & rules",
@@ -535,7 +645,13 @@
       "category": "games",
       "game": "MinesweeperGame",
       "title": "Minesweeper",
-      "keywords": ["mines", "flags", "reveal", "chording", "best time"],
+      "keywords": [
+        "mines",
+        "flags",
+        "reveal",
+        "chording",
+        "best time"
+      ],
       "sections": [
         {
           "h": "Controls",
@@ -565,7 +681,14 @@
       "category": "games",
       "game": "SudokuGame",
       "title": "Sudoku",
-      "keywords": ["puzzle", "numbers", "notes", "levels", "hints", "logic"],
+      "keywords": [
+        "puzzle",
+        "numbers",
+        "notes",
+        "levels",
+        "hints",
+        "logic"
+      ],
       "sections": [
         {
           "h": "Controls",
@@ -601,6 +724,159 @@
             "- Start with rows, columns and boxes that already hold many digits.",
             "- Note candidates in pairs: if two cells share the same two candidates, they drop out everywhere else.",
             "- In classic mode take your time: every mistake counts immediately, even without a red mark."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frogger",
+      "category": "games",
+      "game": "FroggerGame",
+      "title": "Frogger",
+      "keywords": [
+        "frog",
+        "road",
+        "river",
+        "bays",
+        "fly",
+        "crocodile"
+      ],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Hop cell by cell with the arrow keys or [W] [A] [S] [D] .",
+            "- [R] restarts, [S] opens the setup.",
+            "After the game over: [Enter] = retry."
+          ]
+        },
+        {
+          "h": "Road, river & bays",
+          "body": [
+            "At the bottom 5 traffic lanes with cars and trucks in alternating directions - contact is deadly.",
+            "Above, 5 river lanes: logs and turtles carry you; falling into the water means drowning. Turtles dive periodically on higher levels (blinking = warning).",
+            "At the top wait 5 bays - filling all of them completes the level, then everything speeds up.",
+            "- Extras: a bonus fly (+200) appears briefly in empty bays, crocodiles occupy bays on higher levels (landing = death), and the time bar at the bottom drains per frog."
+          ]
+        },
+        {
+          "h": "Scoring",
+          "body": [
+            "Every newly reached row gives 10 points, a bay 50 plus 10 per remaining second.",
+            "All 5 bays award 1000 points and the next level.",
+            "At 10,000 points you get a one-time extra life (start: 3 lives)."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Plan traffic gaps one lane ahead instead of waiting at the edge.",
+            "- Use logs drifting towards your target bay as a taxi.",
+            "- Land early: the time bonus beats a detour to the fly."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "category": "games",
+      "game": "MemoryGame",
+      "title": "Memory",
+      "keywords": [
+        "pairs",
+        "cards",
+        "remember",
+        "duel",
+        "flip"
+      ],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Flip cards with a mouse click - or move the frame with arrows/WASD and flip with [Space] or [Enter] .",
+            "- [R] shuffles a new round, [S] opens the setup.",
+            "A mismatched pair stays visible briefly and then flips back by itself."
+          ]
+        },
+        {
+          "h": "Boards & duel",
+          "body": [
+            "Three board sizes: 4x4 (8 pairs), 6x6 (18) and 8x6 (24) - the motifs are shape-color combinations.",
+            "Solo, every revealed two-card combination counts as a move; the clock is running.",
+            "- Duel (multiplayer on the pre-game screen): take turns flipping, a match means you go again - whoever has more pairs at the end wins."
+          ]
+        },
+        {
+          "h": "Scoring",
+          "body": [
+            "Solo: board-size base minus 15 per move and 2 per second (minimum 100).",
+            "Duel: the winner's pairs times 100 go to the high-score list."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Flip unknown cards first - each one shows you a motif for free.",
+            "- Anchor motifs by their color group, it halves the search space.",
+            "- In a duel never reveal a fresh pair for your opponent."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solitaire",
+      "category": "games",
+      "game": "SolitaireGame",
+      "title": "Solitaire",
+      "keywords": [
+        "cards",
+        "klondike",
+        "spider",
+        "freecell",
+        "pyramid",
+        "tripeaks"
+      ],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Drag cards with the mouse (drag & drop) or move them click-by-click; right click sends the top card to the foundation (Klondike/FreeCell).",
+            "- [U] undoes any number of moves, [R] deals a new hand, [S] opens the setup.",
+            "[Space] or [Enter] operates the stock (draw/deal)."
+          ]
+        },
+        {
+          "h": "The five variants",
+          "body": [
+            "- Klondike: the classic solitaire - four foundations from ace to king, tableau descending in alternating colors; option: draw 1 or 3.",
+            "- Spider: 10 columns, 104 cards - complete king-to-ace runs of one suit vanish; option: 1, 2 or 4 suits.",
+            "- FreeCell: everything face up, 4 free cells; supermoves are limited by free cells and empty columns.",
+            "- Pyramid: remove pairs summing to 13, the king counts alone; 2 redeals.",
+            "- TriPeaks: always one rank above or below the waste pile (ace and king wrap) - long chains give combo points."
+          ]
+        },
+        {
+          "h": "Scoring",
+          "body": [
+            "Klondike: +10 per foundation card, +5 per revealed card, time bonus on winning. FreeCell: +10 per foundation card plus time bonus.",
+            "Spider: 500 minus moves plus 100 per completed run. Pyramid: +5 per card, +500 for clearing.",
+            "TriPeaks: 10 times combo per card - the stock resets the combo; +500 for clearing."
+          ]
+        },
+        {
+          "h": "Options",
+          "body": [
+            "Draw-3 (Klondike) and the Spider suit count are saved permanently.",
+            "Undo is unlimited and free - feel free to experiment.",
+            "All variants share one high-score list."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Free aces and twos as early as possible (Klondike/FreeCell).",
+            "- Keep one column empty - it is your most important tool (Spider/FreeCell).",
+            "- In Pyramid, count the reachable 13-pairs before touching the stock."
           ]
         }
       ]

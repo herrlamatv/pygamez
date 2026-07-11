@@ -4,7 +4,15 @@
       "id": "start",
       "category": "general",
       "title": "Erste Schritte",
-      "keywords": ["start", "hilfe", "einstieg", "menue", "pause", "vollbild", "sidebar"],
+      "keywords": [
+        "start",
+        "hilfe",
+        "einstieg",
+        "menue",
+        "pause",
+        "vollbild",
+        "sidebar"
+      ],
       "sections": [
         {
           "h": "Spiel starten",
@@ -41,7 +49,16 @@
       "id": "options",
       "category": "general",
       "title": "Optionen & Steuerung",
-      "keywords": ["optionen", "einstellungen", "steuerung", "tasten", "aufloesung", "fps", "sound", "sprache"],
+      "keywords": [
+        "optionen",
+        "einstellungen",
+        "steuerung",
+        "tasten",
+        "aufloesung",
+        "fps",
+        "sound",
+        "sprache"
+      ],
       "sections": [
         {
           "h": "Ton & Haptik",
@@ -78,7 +95,14 @@
       "id": "saving",
       "category": "general",
       "title": "Speichern & Highscores",
-      "keywords": ["speichern", "highscore", "rekord", "punkte", "fortschritt", "dateien"],
+      "keywords": [
+        "speichern",
+        "highscore",
+        "rekord",
+        "punkte",
+        "fortschritt",
+        "dateien"
+      ],
       "sections": [
         {
           "h": "Highscores",
@@ -108,7 +132,16 @@
       "id": "snake-special",
       "category": "general",
       "title": "Snake Spezial",
-      "keywords": ["competitive", "prestige", "hardcore", "mods", "personalisieren", "slot", "gambling", "3d"],
+      "keywords": [
+        "competitive",
+        "prestige",
+        "hardcore",
+        "mods",
+        "personalisieren",
+        "slot",
+        "gambling",
+        "3d"
+      ],
       "sections": [
         {
           "h": "Competitive-Modus",
@@ -155,7 +188,14 @@
       "category": "games",
       "game": "SnakeGame",
       "title": "Snake",
-      "keywords": ["schlange", "apfel", "boost", "competitive", "3d", "portale"],
+      "keywords": [
+        "schlange",
+        "apfel",
+        "boost",
+        "competitive",
+        "3d",
+        "portale"
+      ],
       "sections": [
         {
           "h": "Steuerung",
@@ -198,7 +238,12 @@
       "category": "games",
       "game": "PongGame",
       "title": "Pong",
-      "keywords": ["schlaeger", "ball", "ki", "klassiker"],
+      "keywords": [
+        "schlaeger",
+        "ball",
+        "ki",
+        "klassiker"
+      ],
       "sections": [
         {
           "h": "Steuerung",
@@ -228,7 +273,14 @@
       "category": "games",
       "game": "AirHockeyGame",
       "title": "Air Hockey",
-      "keywords": ["puck", "schlaeger", "physik", "tore", "powerups", "maus"],
+      "keywords": [
+        "puck",
+        "schlaeger",
+        "physik",
+        "tore",
+        "powerups",
+        "maus"
+      ],
       "sections": [
         {
           "h": "Steuerung",
@@ -259,7 +311,13 @@
       "category": "games",
       "game": "TicTacToeGame",
       "title": "Tic-Tac-Toe",
-      "keywords": ["kreuz", "kreis", "brett", "ki", "mnk"],
+      "keywords": [
+        "kreuz",
+        "kreis",
+        "brett",
+        "ki",
+        "mnk"
+      ],
       "sections": [
         {
           "h": "Steuerung",
@@ -288,7 +346,14 @@
       "category": "games",
       "game": "BreakoutGame",
       "title": "Breakout",
-      "keywords": ["steine", "ball", "paddle", "powerups", "combo", "level"],
+      "keywords": [
+        "steine",
+        "ball",
+        "paddle",
+        "powerups",
+        "combo",
+        "level"
+      ],
       "sections": [
         {
           "h": "Steuerung",
@@ -324,7 +389,13 @@
       "category": "games",
       "game": "TetrisGame",
       "title": "Tetris",
-      "keywords": ["steine", "reihen", "drehen", "versus", "stapel"],
+      "keywords": [
+        "steine",
+        "reihen",
+        "drehen",
+        "versus",
+        "stapel"
+      ],
       "sections": [
         {
           "h": "Steuerung",
@@ -353,7 +424,14 @@
       "category": "games",
       "game": "InvadersGame",
       "title": "Invaders",
-      "keywords": ["aliens", "wellen", "boss", "waffen", "arena", "schiessen"],
+      "keywords": [
+        "aliens",
+        "wellen",
+        "boss",
+        "waffen",
+        "arena",
+        "schiessen"
+      ],
       "sections": [
         {
           "h": "Modi",
@@ -383,7 +461,14 @@
       "category": "games",
       "game": "AsteroidsGame",
       "title": "Asteroids",
-      "keywords": ["schiff", "brocken", "ufo", "hyperraum", "wellen", "vektor"],
+      "keywords": [
+        "schiff",
+        "brocken",
+        "ufo",
+        "hyperraum",
+        "wellen",
+        "vektor"
+      ],
       "sections": [
         {
           "h": "Steuerung",
@@ -414,7 +499,13 @@
       "category": "games",
       "game": "PacmanGame",
       "title": "Pac-Man",
-      "keywords": ["geister", "pillen", "labyrinth", "fruechte", "power"],
+      "keywords": [
+        "geister",
+        "pillen",
+        "labyrinth",
+        "fruechte",
+        "power"
+      ],
       "sections": [
         {
           "h": "Steuerung",
@@ -445,7 +536,14 @@
       "category": "games",
       "game": "FlappyGame",
       "title": "Flappy Bird",
-      "keywords": ["vogel", "roehren", "muenzen", "schild", "medaillen", "flattern"],
+      "keywords": [
+        "vogel",
+        "roehren",
+        "muenzen",
+        "schild",
+        "medaillen",
+        "flattern"
+      ],
       "sections": [
         {
           "h": "Steuerung",
@@ -474,7 +572,14 @@
       "category": "games",
       "game": "DoodleGame",
       "title": "Doodle Jump",
-      "keywords": ["springen", "plattformen", "monster", "feder", "propeller", "hoehe"],
+      "keywords": [
+        "springen",
+        "plattformen",
+        "monster",
+        "feder",
+        "propeller",
+        "hoehe"
+      ],
       "sections": [
         {
           "h": "Steuerung",
@@ -506,7 +611,12 @@
       "category": "games",
       "game": "Game2048",
       "title": "2048",
-      "keywords": ["kacheln", "schieben", "verschmelzen", "zahlen"],
+      "keywords": [
+        "kacheln",
+        "schieben",
+        "verschmelzen",
+        "zahlen"
+      ],
       "sections": [
         {
           "h": "Steuerung & Regeln",
@@ -535,7 +645,13 @@
       "category": "games",
       "game": "MinesweeperGame",
       "title": "Minesweeper",
-      "keywords": ["minen", "flaggen", "aufdecken", "chording", "bestzeit"],
+      "keywords": [
+        "minen",
+        "flaggen",
+        "aufdecken",
+        "chording",
+        "bestzeit"
+      ],
       "sections": [
         {
           "h": "Steuerung",
@@ -565,7 +681,14 @@
       "category": "games",
       "game": "SudokuGame",
       "title": "Sudoku",
-      "keywords": ["raetsel", "zahlen", "notizen", "level", "tipps", "logik"],
+      "keywords": [
+        "raetsel",
+        "zahlen",
+        "notizen",
+        "level",
+        "tipps",
+        "logik"
+      ],
       "sections": [
         {
           "h": "Steuerung",
@@ -601,6 +724,159 @@
             "- Starte mit Reihen, Spalten und Boxen, in denen schon viele Zahlen stehen.",
             "- Notiere Kandidaten in Ecken-Paaren: Wenn zwei Zellen dieselben zwei Kandidaten haben, fallen sie überall sonst weg.",
             "- Im Klassisch-Modus lohnt Ruhe: Jeder Fehler zählt sofort, auch ohne rote Anzeige."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frogger",
+      "category": "games",
+      "game": "FroggerGame",
+      "title": "Frogger",
+      "keywords": [
+        "frosch",
+        "strasse",
+        "fluss",
+        "buchten",
+        "fliege",
+        "krokodil"
+      ],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Hüpfe Feld für Feld mit den Pfeiltasten oder [W] [A] [S] [D] .",
+            "- [R] startet neu, [S] öffnet das Setup.",
+            "Nach dem Game Over: [Enter] = nochmal."
+          ]
+        },
+        {
+          "h": "Straße, Fluss & Buchten",
+          "body": [
+            "Unten 5 Fahrspuren mit Autos und Lastern in wechselnden Richtungen - Berührung ist tödlich.",
+            "Oben 5 Flussbahnen: Auf Stämmen und Schildkröten fährst du mit; ins Wasser fallen heißt ertrinken. Schildkröten tauchen ab höheren Leveln periodisch ab (Blinken = Warnung).",
+            "Ganz oben warten 5 Buchten - alle füllen schließt das Level ab, danach wird alles schneller.",
+            "- Extras: Bonus-Fliege (+200) erscheint kurz in leeren Buchten, Krokodile besetzen ab höheren Leveln Buchten (Landung = Tod), und der Zeitbalken unten läuft je Frosch ab."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Jede neu erreichte Reihe gibt 10 Punkte, eine Bucht 50 plus 10 je Rest-Sekunde.",
+            "Alle 5 Buchten bringen 1000 Punkte und das nächste Level.",
+            "Bei 10 000 Punkten gibt es einmalig ein Extraleben (Start: 3 Leben)."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Plane Lücken im Verkehr eine Spur voraus, statt am Rand zu warten.",
+            "- Nutze Stämme, die Richtung Ziel-Bucht treiben, als Taxi.",
+            "- Lande früh: Der Zeitbonus bringt mehr als ein Umweg zur Fliege."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "category": "games",
+      "game": "MemoryGame",
+      "title": "Memory",
+      "keywords": [
+        "paare",
+        "karten",
+        "merken",
+        "duell",
+        "aufdecken"
+      ],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Karten per Mausklick aufdecken - oder mit Pfeilen/WASD den Rahmen bewegen und mit [Leertaste] oder [Enter] umdrehen.",
+            "- [R] mischt eine neue Runde, [S] öffnet das Setup.",
+            "Ein Fehlpaar bleibt kurz sichtbar und klappt dann von selbst zurück."
+          ]
+        },
+        {
+          "h": "Bretter & Duell",
+          "body": [
+            "Drei Brettgrößen: 4x4 (8 Paare), 6x6 (18) und 8x6 (24) - die Motive sind Form-Farb-Kombinationen.",
+            "Solo zählt jede aufgedeckte Zweierkombination als Zug; die Zeit läuft mit.",
+            "- Duell (Mehrspieler im Vorspiel-Screen): abwechselnd aufdecken, ein Treffer heißt nochmal dran - wer am Ende mehr Paare hat, gewinnt."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Solo: Basis der Brettgröße minus 15 je Zug und 2 je Sekunde (mindestens 100).",
+            "Duell: Paare des Siegers mal 100 wandern in die Highscore-Liste."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Decke zuerst unbekannte Karten auf - jede zeigt dir gratis ein Motiv.",
+            "- Merke dir Motive über ihre Farbgruppe, das halbiert den Suchraum.",
+            "- Im Duell nie ein frisches Paar für den Gegner aufdecken."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solitaire",
+      "category": "games",
+      "game": "SolitaireGame",
+      "title": "Solitär",
+      "keywords": [
+        "karten",
+        "klondike",
+        "spider",
+        "freecell",
+        "pyramide",
+        "tripeaks"
+      ],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Karten mit der Maus ziehen (Drag & Drop) oder per Klick-Klick verschieben; Rechtsklick schickt die oberste Karte aufs Fundament (Klondike/FreeCell).",
+            "- [U] nimmt beliebig viele Züge zurück, [R] gibt ein neues Blatt, [S] öffnet das Setup.",
+            "[Leertaste] oder [Enter] bedient den Stock (nachziehen/austeilen)."
+          ]
+        },
+        {
+          "h": "Die fünf Varianten",
+          "body": [
+            "- Klondike: das klassische Solitär - vier Fundamente von Ass bis König, Tableau absteigend in Wechselfarbe; Option: 1 oder 3 Karten ziehen.",
+            "- Spider: 10 Spalten, 104 Karten - komplette König-bis-Ass-Ketten einer Farbe verschwinden; Option: 1, 2 oder 4 Farben.",
+            "- FreeCell: alles offen, 4 freie Zellen; Supermoves sind durch freie Zellen und leere Spalten begrenzt.",
+            "- Pyramide: Paare mit Summe 13 abtragen, der König zählt allein; 2 Redeals.",
+            "- TriPeaks: immer eine Karte höher oder tiefer als der Ablagestapel (Ass und König hängen zusammen) - lange Ketten geben Combo-Punkte."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Klondike: +10 je Fundament-Karte, +5 je aufgedeckter Karte, Zeitbonus beim Sieg. FreeCell: +10 je Fundament-Karte plus Zeitbonus.",
+            "Spider: 500 minus Züge plus 100 je fertiger Kette. Pyramide: +5 je Karte, +500 fürs Leerräumen.",
+            "TriPeaks: 10 mal Combo je Karte - der Stock setzt die Combo zurück; +500 fürs Leerräumen."
+          ]
+        },
+        {
+          "h": "Optionen",
+          "body": [
+            "Ziehen-3 (Klondike) und die Spider-Farbenzahl werden dauerhaft gespeichert.",
+            "Das Undo ist unbegrenzt und kostet nichts - experimentiere ruhig.",
+            "Alle Varianten teilen sich eine Highscore-Liste."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Befreie Asse und Zweien so früh wie möglich (Klondike/FreeCell).",
+            "- Halte eine Spalte leer - sie ist dein wichtigstes Werkzeug (Spider/FreeCell).",
+            "- Zähle in der Pyramide erst die erreichbaren 13er-Paare, bevor du den Stock anfasst."
           ]
         }
       ]

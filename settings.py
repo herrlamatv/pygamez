@@ -88,6 +88,12 @@ DEFAULTS = {
     #   fail_limit : True -> beim 3. Fehler ist die Partie verloren
     #   last_level : zuletzt gewähltes Level je Stufe, z.B. {"0": 12}
     "sudoku": {"difficulty": 0, "fail_limit": True, "last_level": {}},
+    # Frogger: Schwierigkeitsgrad (easy/normal/hard)
+    "frogger": {"difficulty": "normal"},
+    # Memory: Brettgröße (4x4/6x6/8x6)
+    "memory": {"size": "6x6"},
+    # Solitär: Klondike zieht 3 Karten (sonst 1); Spider-Farbenzahl (1/2/4)
+    "solitaire": {"draw3": False, "spider_suits": 1},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -157,6 +163,19 @@ def _merge_defaults(data):
                 for k, v in ll.items():
                     if k in ("0", "1", "2", "3") and isinstance(v, int):
                         out["sudoku"]["last_level"][k] = max(1, min(100, v))
+        fr = data.get("frogger")
+        if isinstance(fr, dict) and fr.get("difficulty") in ("easy", "normal",
+                                                             "hard"):
+            out["frogger"]["difficulty"] = fr["difficulty"]
+        mem = data.get("memory")
+        if isinstance(mem, dict) and mem.get("size") in ("4x4", "6x6", "8x6"):
+            out["memory"]["size"] = mem["size"]
+        sol = data.get("solitaire")
+        if isinstance(sol, dict):
+            if isinstance(sol.get("draw3"), bool):
+                out["solitaire"]["draw3"] = sol["draw3"]
+            if sol.get("spider_suits") in (1, 2, 4):
+                out["solitaire"]["spider_suits"] = sol["spider_suits"]
         ctrl = data.get("controls")
         if isinstance(ctrl, dict):
             for player in ("p1", "p2"):

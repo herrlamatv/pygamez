@@ -26,6 +26,7 @@ class InputEvent:
     KEYDOWN = "keydown"      # Taste gedrückt
     KEYUP = "keyup"          # Taste losgelassen
     MOUSEDOWN = "mousedown"  # Maustaste gedrückt
+    MOUSEUP = "mouseup"      # linke Maustaste losgelassen (für Drag & Drop)
     MOUSEMOVE = "mousemove"  # Maus bewegt
     WHEEL = "wheel"          # Mausrad gedreht (delta in Rasten, + = hoch)
 
