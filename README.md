@@ -279,7 +279,9 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
 - **Status-Karte** unten links mit **Zustands-LED** (grau = Menü, grün = läuft,
   gold = Pause, rot = Game Over) und **Live-FPS-Anzeige**.
 - **Startbildschirm** mit Aurora-Lichtern, Parallax-Sternenfeld samt
-  Sternschnuppen, schwebendem Logo mit Orbit-Funken und einem **Highscore-Laufband**.
+  Sternschnuppen, schwebendem Logo mit Orbit-Funken, einem **klickbaren
+  Spiele-Raster** direkt unter dem Logo (alle Spiele mit Hover-Effekt in
+  ihrer Akzentfarbe) und einem **Highscore-Laufband**.
 - **Effekte überall**: weiche Screen-Übergänge beim Wechseln, Funken beim
   Bestätigen im Menü, **Konfetti-Regen bei neuem Highscore** und ein echter
   **Weichzeichner** hinter dem Pause-Overlay.
@@ -702,7 +704,9 @@ packages) and styled like a modern game launcher:
 - **Status card** at the bottom left with a **state LED** (grey = menu,
   green = running, gold = paused, red = game over) and a **live FPS readout**.
 - **Idle screen** with aurora lights, a parallax star field including shooting
-  stars, a floating logo with orbiting sparks and a **high-score ticker**.
+  stars, a floating logo with orbiting sparks, a **clickable game grid** right
+  below the logo (all games with a hover effect in their accent colour) and a
+  **high-score ticker**.
 - **Effects everywhere**: soft screen transitions, sparks when confirming a menu
   entry, **confetti rain on a new high score** and a real **blur** behind the
   pause overlay.

@@ -871,7 +871,11 @@ class App:
 
     def _on_click(self, event):
         from game_base import InputEvent
-        if self.current and not self.current.paused:
+        if self.current is None:
+            # Startbildschirm: Klick auf das Spiele-Raster startet das Spiel.
+            self._menu_click(self._to_logical(event.x, event.y))
+            return
+        if not self.current.paused:
             self.current.handle_event(
                 InputEvent(InputEvent.MOUSEDOWN, pos=self._to_logical(event.x, event.y)))
 
@@ -887,7 +891,11 @@ class App:
 
     def _on_motion(self, event):
         from game_base import InputEvent
-        if self.current and not self.current.paused:
+        if self.current is None:
+            # Startbildschirm: Hover-Effekt fürs Spiele-Raster.
+            self._menu_motion(self._to_logical(event.x, event.y))
+            return
+        if not self.current.paused:
             self.current.handle_event(
                 InputEvent(InputEvent.MOUSEMOVE, pos=self._to_logical(event.x, event.y)))
 
@@ -918,6 +926,9 @@ class App:
     def show_screen(self, screen):
         """Macht einen Menü-Screen (Vorspiel/Optionen) zum aktiven 'current'."""
         self.current = screen
+        # Hover-Zustand des Startbildschirm-Rasters zurücksetzen.
+        self._menu_hover = None
+        self.embed.configure(cursor="")
         self.ui.begin_transition()
         self.embed.focus_set()
 
@@ -1210,19 +1221,21 @@ class App:
 
     def _draw_menu_screen(self):
         """Start-/Leerlaufbildschirm: Aurora-Hintergrund, schwebendes Logo mit
-        Orbit-Funken, Highscore-Laufband und pulsierender Hinweis."""
+        Orbit-Funken, klickbares Spiele-Raster und Highscore-Laufband."""
         ui = self.ui
         w, h, s = self.game_w, self.game_h, self.canvas
         ui.draw_background(s, w, h)
 
         ticks = self.pygame.time.get_ticks() / 1000.0
-        cx, cy = w // 2, h // 2
+        cx = w // 2
         bob = int(6 * math.sin(ticks * 1.3))   # sanftes Auf und Ab
 
         # Logo-Grafik mit weichem Akzent-Glow (Fallback: Schriftzug "PyGameZ").
-        size = min(176, max(112, h // 3))
+        # Etwas höher als die Mitte, damit unter dem Untertitel Platz für das
+        # klickbare Spiele-Raster bleibt.
+        size = min(176, max(96, h // 4))
         logo = self._menu_logo(size)
-        center_y = cy - 46 + bob
+        center_y = max(size // 2 + 16, int(h * 0.22)) + bob
         if logo is not None:
             lrect = logo.get_rect(center=(cx, center_y))
             rad = max(12, size // 8)
@@ -1243,7 +1256,7 @@ class App:
             for dx, dy in ((-2, 0), (2, 0), (0, -2), (0, 2)):
                 s.blit(glow, glow.get_rect(center=(cx + dx, center_y + dy)))
             s.blit(img, img.get_rect(center=(cx, center_y)))
-            base_y = cy - 46 + img.get_height() // 2
+            base_y = center_y - bob + img.get_height() // 2
             line_w = img.get_width() + 30
 
         # Drei kleine Funken kreisen ums Logo (je eigene Bahn/Tempo/Farbe).
@@ -1258,20 +1271,114 @@ class App:
                 self.pygame.draw.circle(s, col, (ox, oy), 2)
 
         # Akzentlinie + Untertitel (übersetzt).
-        self.pygame.draw.rect(s, ui.ACCENT, (cx - line_w // 2, base_y + 14, line_w, 3),
+        self.pygame.draw.rect(s, ui.ACCENT, (cx - line_w // 2, base_y + 12, line_w, 3),
                               border_radius=2)
         sub = ui.font(18).render(t("app.menu_title"), True, ui.TEXT_DIM)
-        s.blit(sub, sub.get_rect(center=(cx, base_y + 40)))
+        s.blit(sub, sub.get_rect(center=(cx, base_y + 36)))
 
-        # Pulsierender Hinweis ("Wähle links ein Spiel aus.")
+        # Pulsierender Hinweis ("Wähle ein Spiel aus:")
         hint = ui.font(15).render(t("app.menu_sub"), True, ui.ACCENT)
         hint.set_alpha(int(255 * ui.pulse(2.2, lo=0.45)))
-        s.blit(hint, hint.get_rect(center=(cx, base_y + 72)))
+        s.blit(hint, hint.get_rect(center=(cx, base_y + 62)))
+
+        # Klickbares Spiele-Raster zwischen Hinweis und Laufband.
+        self._draw_menu_tiles(s, base_y + 80, h - 72)
 
         # Highscore-Laufband + Fußzeile mit dezenten Eckdaten.
         self._draw_score_ticker(s, w, h)
         ui.draw_footer(s, w, h, f"{len(self._game_classes)} Games   ·   "
                                 f"{self.game_w}x{self.game_h} @ {self.fps} FPS")
+
+    def _draw_menu_tiles(self, s, top, bottom):
+        """Zeichnet alle Spiele als anklickbare Pillen (zentriert, mehrzeilig).
+
+        Die Trefferflächen landen in self._menu_tiles; _menu_motion/_menu_click
+        werten sie aus. Die Schrift schrumpft, bis alle Zeilen in den
+        verfügbaren Platz passen.
+        """
+        ui = self.ui
+        w = self.game_w
+        max_w = w - 60
+        avail = max(30, bottom - top)
+
+        # Passende Schriftgröße finden: Pillen in Zeilen fließen lassen.
+        for fsize in (15, 13, 11):
+            fnt = ui.font(fsize)
+            pad_x = fsize - 4
+            row_h = fnt.get_height() + 12
+            gap = 8
+            rows = [[]]
+            rw = 0
+            for cls in self._game_classes:
+                tw = fnt.size(cls.name)[0] + pad_x * 2 + 16   # + Farbpunkt
+                add = tw + (gap if rows[-1] else 0)
+                if rw + add > max_w and rows[-1]:
+                    rows.append([])
+                    rw = 0
+                    add = tw
+                rows[-1].append((cls, tw))
+                rw += add
+            total_h = len(rows) * row_h + (len(rows) - 1) * gap
+            if total_h <= avail:
+                break
+
+        # Oben andocken (max. 36px Luft), nicht in der Fläche schweben.
+        y = top + min(36, max(0, (avail - total_h) // 2))
+        hover = getattr(self, "_menu_hover", None)
+        self._menu_tiles = []
+        for row in rows:
+            row_w = sum(tw for _, tw in row) + gap * (len(row) - 1)
+            x = w // 2 - row_w // 2
+            for cls, tw in row:
+                rect = self.pygame.Rect(x, y, tw, row_h)
+                idx = len(self._menu_tiles)
+                accent = ui.game_color(cls.__name__)
+                if idx == hover:
+                    glow = self.pygame.Surface((tw + 14, row_h + 14),
+                                               self.pygame.SRCALPHA)
+                    self.pygame.draw.rect(glow, (*accent, 55), glow.get_rect(),
+                                          border_radius=row_h // 2 + 7)
+                    s.blit(glow, (x - 7, y - 7))
+                    self.pygame.draw.rect(s, ui.PANEL_LIGHT, rect,
+                                          border_radius=row_h // 2)
+                    self.pygame.draw.rect(s, accent, rect, 1,
+                                          border_radius=row_h // 2)
+                else:
+                    self.pygame.draw.rect(s, ui.PANEL, rect,
+                                          border_radius=row_h // 2)
+                    self.pygame.draw.rect(s, ui.BORDER, rect, 1,
+                                          border_radius=row_h // 2)
+                # Farbpunkt in der Akzentfarbe des Spiels + Name
+                self.pygame.draw.circle(s, accent,
+                                        (x + pad_x + 4, rect.centery), 4)
+                img = fnt.render(cls.name, True,
+                                 ui.TEXT if idx == hover else ui.TEXT_DIM)
+                s.blit(img, img.get_rect(midleft=(x + pad_x + 14,
+                                                  rect.centery)))
+                self._menu_tiles.append((rect, cls))
+                x += tw + gap
+            y += row_h + gap
+
+    def _menu_motion(self, pos):
+        """Hover-Erkennung für das Spiele-Raster des Startbildschirms."""
+        hover = None
+        for i, (rect, _cls) in enumerate(getattr(self, "_menu_tiles", ())):
+            if rect.collidepoint(pos):
+                hover = i
+                break
+        if hover != getattr(self, "_menu_hover", None):
+            self._menu_hover = hover
+            self.embed.configure(cursor="hand2" if hover is not None else "")
+
+    def _menu_click(self, pos):
+        """Klick auf eine Pille startet den Vorspiel-Screen des Spiels."""
+        for rect, cls in getattr(self, "_menu_tiles", ()):
+            if rect.collidepoint(pos):
+                self.ui.spawn_burst(rect.centerx, rect.centery,
+                                    self.ui.game_color(cls.__name__))
+                self._sound_click()
+                self.spiel_starten(cls)
+                return
 
     def _draw_pause_overlay(self):
         """Echter Weichzeichner über dem Spielbild + zentrierte Pause-Karte."""

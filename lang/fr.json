@@ -26,7 +26,7 @@
   "app.games": "JEUX",
   "app.highscore": "Meilleur score : {hs}",
   "app.language": "Langue / Language",
-  "app.menu_sub": "Choisissez un jeu à gauche.",
+  "app.menu_sub": "Choisissez un jeu :",
   "app.menu_title": "Collection de jeux",
   "app.new_highscore": "NOUVEAU RECORD : {score}",
   "app.no_game": "Aucun jeu actif",

@@ -26,7 +26,7 @@
   "app.games": "SPIELE",
   "app.highscore": "Highscore: {hs}",
   "app.language": "Sprache / Language",
-  "app.menu_sub": "Wähle links ein Spiel aus.",
+  "app.menu_sub": "Wähle ein Spiel aus:",
   "app.menu_title": "Spielesammlung",
   "app.new_highscore": "NEUER HIGHSCORE: {score}",
   "app.no_game": "Kein Spiel aktiv",
