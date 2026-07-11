@@ -1,0 +1,609 @@
+{
+  "pages": [
+    {
+      "id": "start",
+      "category": "general",
+      "title": "Premiers pas",
+      "keywords": ["demarrage", "aide", "intro", "menu", "pause", "plein ecran", "barre"],
+      "sections": [
+        {
+          "h": "Lancer un jeu",
+          "body": [
+            "Tu peux lancer un jeu de trois façons : depuis la liste des jeux dans la barre latérale gauche, depuis la grille de jeux de l'écran d'accueil, ou directement depuis ce wiki via l'écran de préparation.",
+            "Avant chaque jeu apparaît l'écran de préparation : choisis-y le mode (par ex. solo ou multijoueur) et accède aux options et à ce wiki."
+          ]
+        },
+        {
+          "h": "Touches importantes",
+          "body": [
+            "- [Échap] met le jeu en pause et le reprend - dans les menus, elle revient en arrière.",
+            "- [F11] active et désactive le plein écran.",
+            "- Le bouton vert Retour au menu termine la partie et enregistre le record."
+          ]
+        },
+        {
+          "h": "La barre latérale",
+          "body": [
+            "À gauche tu vois tous les jeux avec leur icône et ton record (étoile). Le jeu en cours reste surligné ; sur les petites fenêtres la liste défile à la molette.",
+            "La carte d'état en bas à gauche montre le nom du jeu, l'état (vert = en cours, or = pause, rouge = game over), le score et la cadence d'images actuelle."
+          ]
+        },
+        {
+          "h": "Multijoueur",
+          "body": [
+            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) et Asteroids (duel coop) ont un mode 2 joueurs local - sélectionnable sur l'écran de préparation.",
+            "En solo, les deux jeux de touches contrôlent le même personnage ; en multijoueur, un chacun (par défaut : J1 = WASD, J2 = flèches ou IJKL - voir options)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "category": "general",
+      "title": "Options & commandes",
+      "keywords": ["options", "reglages", "commandes", "touches", "resolution", "fps", "son", "langue"],
+      "sections": [
+        {
+          "h": "Son & vibrations",
+          "body": [
+            "Active/désactive le son et règle le volume dans l'écran d'options. Tous les effets sont générés en direct - il n'y a aucun fichier audio.",
+            "Les vibrations font vibrer une manette connectée (sans effet sans manette)."
+          ]
+        },
+        {
+          "h": "Affectation des touches",
+          "body": [
+            "Trois préréglages sont disponibles : WASD + flèches, WASD + IJKL et flèches + WASD.",
+            "Chaque touche est librement réaffectable : clique une ligne ou confirme avec Entrée, puis presse la touche voulue. [Échap] annule.",
+            "L'affectation est séparée pour les joueurs 1 et 2 et sauvegardée durablement."
+          ]
+        },
+        {
+          "h": "Graphismes & performances",
+          "body": [
+            "La résolution définit la surface de jeu interne (480x360 à 1280x960). Plus petit = moins de charge, plus grand = image plus nette.",
+            "La résolution auto adapte automatiquement la surface de jeu à la taille de la fenêtre.",
+            "Les options FPS (15 à 120) fixent la cadence cible - moins de FPS économise l'énergie."
+          ]
+        },
+        {
+          "h": "Langue",
+          "body": [
+            "L'interface existe en allemand, anglais et français. Change dans l'écran d'options ou via Langue dans la barre latérale - ce wiki change aussi de langue."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saving",
+      "category": "general",
+      "title": "Sauvegarde & records",
+      "keywords": ["sauvegarde", "record", "points", "progression", "fichiers"],
+      "sections": [
+        {
+          "h": "Records",
+          "body": [
+            "Chaque jeu enregistre automatiquement son meilleur score dès qu'une partie se termine. Un nouveau record affiche une bannière dorée - plus une pluie de confettis.",
+            "Tu vois les records partout : en étoile dans la liste latérale, dans le bandeau défilant de l'écran d'accueil et dans la carte d'état."
+          ]
+        },
+        {
+          "h": "Qu'est-ce qui est stocké où ?",
+          "body": [
+            "- settings.json : son, volume, touches, résolution, FPS et options de jeu (par ex. mode Snake, réglages Sudoku).",
+            "- mem.json : records, langue choisie et progression des niveaux Sudoku.",
+            "- mem-ngb.json : les mods visuels de Snake (couleur de tête, grille, bannière).",
+            "Les deux fichiers sont directement dans le dossier du jeu et peuvent simplement être supprimés pour tout réinitialiser."
+          ]
+        },
+        {
+          "h": "Astuce",
+          "body": [
+            "Les points ne sont enregistrés que si tu quittes via Retour au menu ou si la partie se termine normalement - pas en fermant brutalement la fenêtre en pleine partie."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake-special",
+      "category": "general",
+      "title": "Snake spécial",
+      "keywords": ["competitive", "prestige", "hardcore", "mods", "personnaliser", "slot", "pari", "3d"],
+      "sections": [
+        {
+          "h": "Mode compétitif",
+          "body": [
+            "Mode sans fin avec montée de niveaux : tu commences avec exactement une pomme. Plus tu collectes de pommes au total, plus ton niveau monte - plus de pommes apparaissent en même temps et le multiplicateur de score augmente (15 niveaux, jusqu'à x16).",
+            "- Les pommes bleues ouvrent une machine à sous : la mise est ta longueur, trois symboles identiques = jackpot avec pommes bonus.",
+            "- Les pommes violettes (pari) misent une partie de ta taille : normalement 50 pour cent de mise avec un facteur de x0.5 à x1.5.",
+            "Ta taille exacte s'affiche en décimal en haut à gauche - chaque pari s'appuie dessus. Les paliers de niveau sont dans games/levels/snake-comp.json et librement modifiables."
+          ]
+        },
+        {
+          "h": "Hardcore",
+          "body": [
+            "Activable avec [H] dans le setup compétitif : chaque boost mange de la longueur, et les pommes violettes deviennent plus risquées (75 à 90 pour cent de mise, facteur x0.25 à x2.25). Un cadre rouge marque le mode."
+          ]
+        },
+        {
+          "h": "Prestige",
+          "body": [
+            "Accessible avec [P] en solo : les pommes collectées peuvent être converties en niveaux de prestige qui donnent des avantages durables. La progression persiste entre les parties."
+          ]
+        },
+        {
+          "h": "Mods / personnaliser",
+          "body": [
+            "Dans le setup via le bouton pinceau ou [C] : un menu purement visuel qui ne change jamais le gameplay.",
+            "- Tête : la couleur de tête du serpent (préréglages ou couleur RGB personnalisée).",
+            "- Grille : un quadrillage de coordonnées avec numéros de lignes et lettres de colonnes comme repère sur les grands plateaux.",
+            "- Bannière : activer/désactiver la bannière de multiplicateur, plus taille et opacité - avec aperçu en direct.",
+            "Tout est stocké dans mem-ngb.json."
+          ]
+        },
+        {
+          "h": "Vue 3D",
+          "body": [
+            "Avec [V] dans le setup : le plateau est rendu en scène 3D, une caméra de poursuite flotte derrière le serpent et on dirige relativement à la direction du regard (deux pressions rapides = demi-tour).",
+            "Avec [K] tu ouvres les options de caméra 3D : lissage, champ de vision (FOV), hauteur de caméra et la secousse en virage. Jouable en 3D : Classique et Obstacles (solo uniquement)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake",
+      "category": "games",
+      "game": "SnakeGame",
+      "title": "Snake",
+      "keywords": ["serpent", "pomme", "boost", "competitive", "3d", "portails"],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "Dirige avec [W] [A] [S] [D] ou les flèches. En 3D on dirige relativement à la direction du regard : gauche/droite tourne, deux pressions rapides = demi-tour.",
+            "- Boost : maintenir [Espace] ou Maj = vitesse doublée. La barre d'endurance se vide puis se recharge.",
+            "- Le joueur 2 booste avec Entrée ou la touche Maj droite."
+          ]
+        },
+        {
+          "h": "Modes",
+          "body": [
+            "- Classique : le pur snake.",
+            "- Speed-rush : chaque nourriture t'accélère.",
+            "- Obstacles : des blocs mortels sur le plateau.",
+            "- Portails : des paires de téléporteurs te déplacent à travers le plateau.",
+            "- Contre-la-montre : 60 secondes, autant de pommes que possible.",
+            "- Compétitif : mode sans fin avec niveaux, machine à sous et pommes de pari - détails sur la page Snake spécial.",
+            "Aussi sélectionnable : traversée des murs (wrap), pommes bonus, hardcore, vue 2D/3D avec [V] et multijoueur."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Les pommes donnent des points (pommes bonus aléatoirement doublées). Les pommes d'or apparaissent temporairement, donnent beaucoup de points et rechargent le boost instantanément. En compétitif ton niveau multiplie tous les points."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Utilise le boost dans les longues lignes droites, pas dans les virages serrés.",
+            "- Avec le wrap activé tu peux fuir par le bord quand tu t'enfermes.",
+            "- En compétitif, les pommes violettes rapportent surtout quand tu as de la longueur à miser."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pong",
+      "category": "games",
+      "game": "PongGame",
+      "title": "Pong",
+      "keywords": ["raquette", "balle", "ia", "classique"],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "Le joueur 1 bouge la raquette gauche avec [W] et [S] - en multijoueur, le joueur 2 contrôle la droite avec les flèches.",
+            "Le mode de mouvement se change par commande : continu (une pression, la raquette continue) ou maintien (bouge seulement tant que pressé). Bascule avec [X] pour la commande 1 et [N] pour la commande 2."
+          ]
+        },
+        {
+          "h": "Règles & points",
+          "body": [
+            "On joue jusqu'à 5 points, contre l'IA ou à deux.",
+            "La physique de la balle accélère à chaque frappe ; l'angle de rebond dépend du point d'impact sur la raquette."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Frappe la balle avec le bord de la raquette pour créer des angles fermés.",
+            "- Le mode maintien donne un contrôle plus fin, le mode continu des réactions plus rapides."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "airhockey",
+      "category": "games",
+      "game": "AirHockeyGame",
+      "title": "Air Hockey",
+      "keywords": ["palet", "raquette", "physique", "buts", "powerups", "souris"],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "En solo, ta raquette suit la souris - n'importe quelle touche rebascule au clavier (8 directions).",
+            "En multijoueur, J1 joue à gauche avec [W] [A] [S] [D] et J2 à droite avec [I] [J] [K] [L] ."
+          ]
+        },
+        {
+          "h": "Setup",
+          "body": [
+            "- Difficulté de l'IA : facile, moyen ou difficile.",
+            "- [T] choisit les buts pour gagner (3/5/7/10).",
+            "- [P] active/désactive les power-ups : XL (raquette plus grande), BUT (le but adverse rétrécit), vitesse (raquette plus rapide). Les power-ups appartiennent au joueur qui a touché le palet en dernier."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Le palet hérite de la vitesse de ta raquette - prends de l'élan au lieu de seulement bloquer.",
+            "- Reste derrière le palet : le pousser vers ton propre but risque des buts contre ton camp."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tictactoe",
+      "category": "games",
+      "game": "TicTacToeGame",
+      "title": "Tic-Tac-Toe",
+      "keywords": ["croix", "cercle", "plateau", "ia", "mnk"],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "Les cases se posent au clic de souris. Après la fin : Entrée ou clic = nouvelle manche, [S] = retour aux réglages."
+          ]
+        },
+        {
+          "h": "Modes & setup",
+          "body": [
+            "Tailles de plateau de 3x3 à 9x9. La longueur gagnante s'adapte : 3 alignés sur 3x3, 4 sur 4x4, sinon 5.",
+            "Solo contre l'IA (facile/moyen/difficile) ou deux joueurs en local, X contre O à tour de rôle."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- L'IA difficile sur 3x3 est imbattable - le nul est le meilleur résultat possible.",
+            "- Sur les grands plateaux, le centre compte : la plupart des lignes de 5 y passent."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "breakout",
+      "category": "games",
+      "game": "BreakoutGame",
+      "title": "Breakout",
+      "keywords": ["briques", "balle", "raquette", "powerups", "combo", "niveaux"],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "Bouge la raquette à la souris ou aux flèches. [Espace] lance la balle et tire le laser. [P] ou [Échap] met en pause."
+          ]
+        },
+        {
+          "h": "Setup",
+          "body": [
+            "- [1] [2] [3] choisit la difficulté.",
+            "- Gauche/droite change la couleur de balle, haut/bas le niveau de départ, [M] la disposition (standard ou pleine)."
+          ]
+        },
+        {
+          "h": "Briques & power-ups",
+          "body": [
+            "Types de briques : normale, acier (indestructible), bombe (explose) et or (points bonus).",
+            "Power-ups : balles x2/x3, [L] laser, [F] boule de feu, [G] collant, [U] bouclier, pièces pour points bonus - plus un multiplicateur de combo pour les frappes rapides."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Joue la balle le long des murs derrière le bloc de briques - là-haut elle nettoie toute seule.",
+            "- Le bouclier rattrape exactement une percée : garde-le pour les phases multiball risquées."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tetris",
+      "category": "games",
+      "game": "TetrisGame",
+      "title": "Tetris",
+      "keywords": ["pieces", "lignes", "tourner", "versus", "pile"],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "Gauche/droite déplace la pièce, haut la tourne, bas est la chute douce et la touche d'action (par défaut : [Espace] ) la chute dure."
+          ]
+        },
+        {
+          "h": "Modes & points",
+          "body": [
+            "Les lignes complètes donnent des points - plusieurs à la fois beaucoup plus. Tous les 10 lignes, le niveau et la vitesse montent.",
+            "Versus (multijoueur) : deux plateaux côte à côte, celui dont la pile touche le haut en premier perd."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Garde une colonne libre pour la longue pièce I et nettoie avec des quadruples.",
+            "- Construis à plat : les hautes tours basculent vite quand la vitesse monte."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "invaders",
+      "category": "games",
+      "game": "InvadersGame",
+      "title": "Invaders",
+      "keywords": ["aliens", "vagues", "boss", "armes", "arene", "tirer"],
+      "sections": [
+        {
+          "h": "Modes",
+          "body": [
+            "- Classique : le bloc d'aliens classique descend. Dans le setup tu choisis le mouvement (gauche/droite seulement ou libre avec WASD) et la visée (toujours vers le haut ou vers la souris).",
+            "- Arène : mouvement libre dans toutes les directions, les ennemis affluent de tous les bords, on vise dans la direction du mouvement."
+          ]
+        },
+        {
+          "h": "Armes & power-ups",
+          "body": [
+            "Quatre armes, changement avec [1] à [4] : blaster, tir dispersé, tir rapide et laser.",
+            "Les aliens détruits lâchent des power-ups : vie supplémentaire, bouclier et améliorations d'armes. Tous les 4 niveaux, un boss attend."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Le tir dispersé nettoie les blocs denses, le laser transperce des colonnes entières - change selon la vague.",
+            "- Dans l'arène, ne reste jamais immobile : tourne le long du bord et aligne les ennemis."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asteroids",
+      "category": "games",
+      "game": "AsteroidsGame",
+      "title": "Asteroids",
+      "keywords": ["vaisseau", "rochers", "ovni", "hyperespace", "vagues", "vecteur"],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "Haut pousse dans la direction du regard, gauche/droite tourne le vaisseau, la touche d'action tire. Le vaisseau dérive (inertie) et traverse les bords de l'écran.",
+            "Bas déclenche l'hyperespace : un saut d'urgence vers une position aléatoire avec 4 secondes de recharge - et 12 pour cent de risque de se briser."
+          ]
+        },
+        {
+          "h": "Points & extras",
+          "body": [
+            "Les rochers se brisent en deux plus petits ; les trois tailles donnent 20/50/100 points. L'OVNI (désactivable) donne 200 points, une vie supplémentaire arrive tous les 5000 points.",
+            "Power-ups des rochers détruits : bouclier (6 secondes invulnérable), triple tir et tir rapide.",
+            "Duel coop (multijoueur) : les deux vaisseaux volent en même temps avec des vies séparées - celui qui a le plus de points gagne."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Nettoie d'abord les petits éclats rapides avant d'attaquer le prochain gros rocher.",
+            "- L'hyperespace est un dernier recours, pas un moyen de transport - le risque est réel."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pacman",
+      "category": "games",
+      "game": "PacmanGame",
+      "title": "Pac-Man",
+      "keywords": ["fantomes", "pastilles", "labyrinthe", "fruits", "power"],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "Bouge avec les flèches ou [W] [A] [S] [D] . Après la fin : Entrée = nouveau, [S] = setup.",
+            "Les tunnels à gauche et à droite te téléportent de l'autre côté."
+          ]
+        },
+        {
+          "h": "Fantômes & pastilles de pouvoir",
+          "body": [
+            "Les quatre fantômes chassent avec leurs comportements d'origine : Blinky fonce droit, Pinky tend des embuscades, Inky utilise un vecteur via Blinky, Clyde s'écarte de près.",
+            "Les pastilles de pouvoir rendent les fantômes bleus et comestibles un moment - la chaîne donne 200/400/800/1600 points. Les fruits apparaissent en bonus, une vie supplémentaire arrive à 10 000 points."
+          ]
+        },
+        {
+          "h": "Setup & astuces",
+          "body": [
+            "La difficulté normal/difficile/extrême règle la vitesse des fantômes et la durée de peur ; chaque niveau accélère.",
+            "- Ne mange une pastille de pouvoir que quand plusieurs fantômes sont proches - c'est la chaîne qui compte.",
+            "- Retiens les phases scatter : à chaque bascule, tous les fantômes font demi-tour."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flappy",
+      "category": "games",
+      "game": "FlappyGame",
+      "title": "Flappy Bird",
+      "keywords": ["oiseau", "tuyaux", "pieces", "bouclier", "medailles", "battre"],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "[Espace], flèche haut, [W] ou un clic de souris fait battre les ailes - l'oiseau s'incline selon sa vitesse de montée et de descente."
+          ]
+        },
+        {
+          "h": "Points & extras",
+          "body": [
+            "Chaque tuyau franchi donne un point. Des pièces (bonus) et un bouclier qui pardonne exactement une collision apparaissent dans les trouées.",
+            "Les thèmes jour et nuit alternent avec le score ; après le game over, des médailles de bronze à platine."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Des petits taps réguliers gardent la trajectoire plus calme que de rares longs.",
+            "- La difficulté règle la taille des trouées et la vitesse - la trouée se resserre avec le score."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doodle",
+      "category": "games",
+      "game": "DoodleGame",
+      "title": "Doodle Jump",
+      "keywords": ["sauter", "plateformes", "monstres", "ressort", "helice", "hauteur"],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "Le doodler saute automatiquement à l'atterrissage - tu ne diriges que gauche/droite (avec inertie). Les bords sont ouverts : sortir à gauche te ramène à droite.",
+            "Tire vers le haut avec flèche haut ou [Espace] ."
+          ]
+        },
+        {
+          "h": "Plateformes & extras",
+          "body": [
+            "- Verte : normale. Bleue : se déplace. Marron : se brise quand on marche dessus. Blanche : disparaît après un saut.",
+            "- Les ressorts donnent un super saut, le chapeau à hélice te porte automatiquement vers le haut un moment (invulnérable).",
+            "- Les monstres sont mortels au contact - les abattre donne des points bonus."
+          ]
+        },
+        {
+          "h": "Points & astuces",
+          "body": [
+            "Points = hauteur atteinte ; la difficulté monte avec la hauteur.",
+            "- Prévois où atterrir avant de sauter - les plateformes marron ne te portent pas.",
+            "- Utilise le bord ouvert comme raccourci vers les plateformes lointaines."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2048",
+      "category": "games",
+      "game": "Game2048",
+      "title": "2048",
+      "keywords": ["tuiles", "glisser", "fusionner", "nombres"],
+      "sections": [
+        {
+          "h": "Commandes & règles",
+          "body": [
+            "Les flèches ou [W] [A] [S] [D] glissent toutes les tuiles d'un coup dans une direction. Les nombres égaux fusionnent en leur somme ; après chaque coup, une nouvelle tuile apparaît.",
+            "Le but est la tuile 2048 - ensuite ça continue sans fin. Perdu quand plus aucun coup n'est possible."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Chaque fusion ajoute la valeur de la nouvelle tuile à ton score."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Gare ta plus grosse tuile dans un coin et ne touche jamais ce coin.",
+            "- Glisse principalement dans deux directions - le plateau reste trié."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minesweeper",
+      "category": "games",
+      "game": "MinesweeperGame",
+      "title": "Minesweeper",
+      "keywords": ["mines", "drapeaux", "reveler", "chording", "meilleur temps"],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "Le clic gauche révèle une case, le clic droit pose un drapeau (avec cycle point d'interrogation en option, [Q] dans le setup). [F] marque la case sous le curseur, [R] recommence.",
+            "Chording : cliquer un chiffre satisfait (tous les drapeaux posés) révèle d'un coup les voisins restants."
+          ]
+        },
+        {
+          "h": "Niveaux & points",
+          "body": [
+            "Débutant (9x9, 10 mines), intermédiaire (16x16, 40) et expert (30x16, 99). Le meilleur temps par niveau est enregistré.",
+            "Le premier clic est toujours sûr - les mines ne sont placées qu'après. Points = valeur de base du niveau moins les secondes."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Commence par les chiffres au bord des zones ouvertes - les motifs y sont sans ambiguïté.",
+            "- Un 1 dans un coin avec un seul voisin couvert est toujours un drapeau sûr."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sudoku",
+      "category": "games",
+      "game": "SudokuGame",
+      "title": "Sudoku",
+      "keywords": ["grille", "chiffres", "notes", "niveaux", "indices", "logique"],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "Choisis une case avec les flèches, [W] [A] [S] [D] ou un clic de souris - le pavé de chiffres à droite fonctionne entièrement à la souris.",
+            "- [1] à [9] saisit un chiffre (pavé numérique inclus).",
+            "- [0], retour arrière ou clic droit efface.",
+            "- [N] bascule le mode notes, [H] donne un indice, [R] recommence le niveau, [Q] ouvre le choix de niveau.",
+            "- Après la fin de partie, [A] masque la bannière et révèle la solution complète."
+          ]
+        },
+        {
+          "h": "Niveaux & modes",
+          "body": [
+            "400 niveaux fixes : 4 difficultés (facile/normal/difficile/expert) fois 100 niveaux. Chaque niveau est le même puzzle partout et à solution unique ; les niveaux résolus sont cochés.",
+            "Le mode de jeu fixe les aides et le multiplicateur de score :",
+            "- Classique x2.0 : aucune aide, pur comme sur papier.",
+            "- Notes x1.5 : plus les notes au crayon.",
+            "- Confort x1.0 : erreurs en rouge immédiat, surlignage des conflits, les saisies correctes se verrouillent.",
+            "- Assisté x0.7 : en plus jusqu'à 3 indices."
+          ]
+        },
+        {
+          "h": "Erreurs & points",
+          "body": [
+            "Chaque saisie est vérifiée immédiatement contre la solution. Avec la limite de 3 erreurs active (setup, touche [F] ), la troisième erreur termine la partie.",
+            "Points = (base de la difficulté moins temps, erreurs et indices) fois le multiplicateur de mode."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Commence par les lignes, colonnes et boîtes qui contiennent déjà beaucoup de chiffres.",
+            "- Note les candidats par paires : si deux cases partagent les deux mêmes candidats, ils s'éliminent partout ailleurs.",
+            "- En mode classique, prends ton temps : chaque erreur compte immédiatement, même sans marque rouge."
+          ]
+        }
+      ]
+    }
+  ]
+}

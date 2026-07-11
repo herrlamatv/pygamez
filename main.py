@@ -687,7 +687,8 @@ class App:
 
         for key, cmd, icon in (("fullscreen", self.toggle_fullscreen, "⛶"),
                                ("language", self.open_language, "🌐"),
-                               ("options", self.open_options, "⚙")):
+                               ("options", self.open_options, "⚙"),
+                               ("lamawiki", self.open_lamawiki, "📖")):
             btn = NeoButton(menu, t("app." + key), self._with_click(cmd),
                             icon=icon, fill=C_BTN, hover=C_BTN_HOVER,
                             fg=C_TEXT, bg=C_SIDEBAR, height=28)
@@ -827,6 +828,7 @@ class App:
         self.embed.bind("<Button-1>", self._on_click)
         self.embed.bind("<Button-3>", self._on_right_click)
         self.embed.bind("<Motion>", self._on_motion)
+        self.embed.bind("<MouseWheel>", self._on_wheel)
         # Klick auf die Fläche holt den Fokus (für Tastatur)
         self.embed.bind("<Button-1>", lambda e: self.embed.focus_set(), add="+")
         # Kein <Configure>-Handler mehr nötig: die aktuelle Anzeigegröße wird
@@ -910,6 +912,16 @@ class App:
             self.current.handle_event(
                 InputEvent(InputEvent.MOUSEMOVE, pos=self._to_logical(event.x, event.y)))
 
+    def _on_wheel(self, event):
+        """Mausrad an den aktiven Screen weiterreichen (delta in Rasten)."""
+        from game_base import InputEvent
+        if self.current is None or self.current.paused:
+            return
+        delta = int(event.delta / 120) or (1 if event.delta > 0 else -1)
+        self.current.handle_event(
+            InputEvent(InputEvent.WHEEL, pos=self._to_logical(event.x, event.y),
+                       delta=delta))
+
     def toggle_fullscreen(self):
         """Schaltet den Vollbildmodus des Tkinter-Fensters um."""
         self._fullscreen = not self._fullscreen
@@ -963,6 +975,13 @@ class App:
         from menu import LanguageScreen
         self.show_screen(LanguageScreen(self.canvas, self.game_w, self.game_h, self,
                                         on_done=self.back_to_menu))
+
+    def open_lamawiki(self, page_id=None):
+        """Öffnet das LamaWiki (optional direkt auf einer Seite)."""
+        from lamawiki import LamaWikiScreen
+        self.show_screen(LamaWikiScreen(self.canvas, self.game_w, self.game_h,
+                                        self, on_close=self.back_to_menu,
+                                        page_id=page_id))
 
     def refresh_language(self):
         """Beschriftet das Tkinter-Menü nach einem Sprachwechsel neu."""

@@ -112,6 +112,7 @@ class PreGameScreen(_Screen):
                 self.buttons.append((t("pregame.multi"),
                                      lambda: self.app.launch_game(self.game_cls, "multi")))
         self.buttons.append((t("pregame.options"), self._open_options))
+        self.buttons.append((t("pregame.lamawiki"), self._open_lamawiki))
         self.buttons.append((t("pregame.back"), self.app.back_to_menu))
 
         # Rechtecke für Maus/Anzeige berechnen (zentriert, gestapelt).
@@ -130,6 +131,14 @@ class PreGameScreen(_Screen):
         opts = OptionsScreen(self.surface, self.width, self.height, self.app,
                              on_close=self._reopen)
         self.app.show_screen(opts)
+
+    def _open_lamawiki(self):
+        """Öffnet das LamaWiki direkt auf der Seite dieses Spiels."""
+        from lamawiki import LamaWikiScreen, page_id_for_game
+        self.app.show_screen(LamaWikiScreen(
+            self.surface, self.width, self.height, self.app,
+            on_close=self._reopen,
+            page_id=page_id_for_game(self.game_cls.__name__)))
 
     def _reopen(self):
         self.app.show_screen(PreGameScreen(self.surface, self.width, self.height,

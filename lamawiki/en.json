@@ -1,0 +1,609 @@
+{
+  "pages": [
+    {
+      "id": "start",
+      "category": "general",
+      "title": "Getting started",
+      "keywords": ["start", "help", "intro", "menu", "pause", "fullscreen", "sidebar"],
+      "sections": [
+        {
+          "h": "Starting a game",
+          "body": [
+            "You can start a game three ways: from the game list in the left sidebar, from the game grid on the start screen, or straight from this wiki via the pre-game screen.",
+            "Before every game the pre-game screen appears: pick the mode there (e.g. single or multiplayer) and reach the options and this wiki."
+          ]
+        },
+        {
+          "h": "Important keys",
+          "body": [
+            "- [Esc] pauses and resumes the running game - in menus it goes back.",
+            "- [F11] toggles fullscreen on and off.",
+            "- The green Back to menu button ends the game and saves the high score."
+          ]
+        },
+        {
+          "h": "The sidebar",
+          "body": [
+            "On the left you see all games with their icon and your high score (star). The running game stays highlighted; on small windows the list scrolls with the mouse wheel.",
+            "The status card at the bottom left shows the game name, state (green = running, gold = paused, red = game over), score and the current frame rate."
+          ]
+        },
+        {
+          "h": "Multiplayer",
+          "body": [
+            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) and Asteroids (co-op duel) have a local 2-player mode - selectable on the pre-game screen.",
+            "In single player both key bindings control the same character; in multiplayer one each (default: P1 = WASD, P2 = arrows or IJKL - see options)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "category": "general",
+      "title": "Options & controls",
+      "keywords": ["options", "settings", "controls", "keys", "resolution", "fps", "sound", "language"],
+      "sections": [
+        {
+          "h": "Sound & haptics",
+          "body": [
+            "Toggle sound and set the volume in the options screen. All effects are generated live - there are no audio files.",
+            "Haptics vibrates a connected gamepad (does nothing without one)."
+          ]
+        },
+        {
+          "h": "Key bindings",
+          "body": [
+            "Three presets are available: WASD + arrows, WASD + IJKL and arrows + WASD.",
+            "Every single key can be rebound: click a row or confirm with Enter, then press the desired key. [Esc] cancels.",
+            "Bindings are separate for player 1 and player 2 and are saved permanently."
+          ]
+        },
+        {
+          "h": "Graphics & performance",
+          "body": [
+            "The resolution sets the internal play area (480x360 up to 1280x960). Smaller = less load, bigger = sharper image.",
+            "Auto-resolution adapts the play area to the window size automatically.",
+            "The FPS options (15 to 120) set the target frame rate - fewer FPS saves power."
+          ]
+        },
+        {
+          "h": "Language",
+          "body": [
+            "The interface is available in German, English and French. Switch in the options screen or via Language in the sidebar - this wiki switches language too."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saving",
+      "category": "general",
+      "title": "Saving & high scores",
+      "keywords": ["saving", "highscore", "record", "points", "progress", "files"],
+      "sections": [
+        {
+          "h": "High scores",
+          "body": [
+            "Every game saves its best value automatically when a round ends. A new record shows a golden banner - plus confetti rain.",
+            "You can see the best values everywhere: as a star in the sidebar list, in the ticker on the start screen and in the status card."
+          ]
+        },
+        {
+          "h": "What is stored where?",
+          "body": [
+            "- settings.json: sound, volume, key bindings, resolution, FPS and game options (e.g. Snake mode, Sudoku settings).",
+            "- mem.json: high scores, the chosen language and the Sudoku level progress.",
+            "- mem-ngb.json: Snake's visual mods (head color, grid, banner).",
+            "Both files live right in the game folder and can simply be deleted to reset."
+          ]
+        },
+        {
+          "h": "Tip",
+          "body": [
+            "Points are only saved when you leave via Back to menu or the round ends normally - not when the window is closed hard mid-game."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake-special",
+      "category": "general",
+      "title": "Snake special",
+      "keywords": ["competitive", "prestige", "hardcore", "mods", "personalize", "slot", "gambling", "3d"],
+      "sections": [
+        {
+          "h": "Competitive mode",
+          "body": [
+            "Endless mode with level climbing: you start with exactly one apple. The more apples you collect in total, the higher your level - more apples appear at once and the score multiplier rises (15 levels, up to x16).",
+            "- Blue apples open a slot machine: the stake is your length, three equal symbols = jackpot with bonus apples.",
+            "- Purple apples (gambling) bet part of your size: normally a 50 percent stake with a factor of x0.5 to x1.5.",
+            "Your exact size is shown as a decimal in the top left - every bet builds on it. The level tiers live in games/levels/snake-comp.json and are freely editable."
+          ]
+        },
+        {
+          "h": "Hardcore",
+          "body": [
+            "Toggle with [H] in the competitive setup: every boost eats length, and purple apples get riskier (75 to 90 percent stake, factor x0.25 to x2.25). A red border marks the mode."
+          ]
+        },
+        {
+          "h": "Prestige",
+          "body": [
+            "Reachable with [P] in single player: collected apples can be converted into prestige levels that grant lasting perks. Progress persists across runs."
+          ]
+        },
+        {
+          "h": "Mods / personalize",
+          "body": [
+            "In the setup via the brush button or [C] : a pure looks menu that never changes gameplay.",
+            "- Head: the snake's head color (presets or a custom RGB color).",
+            "- Grid: a coordinate grid with row numbers and column letters as a guide on big boards.",
+            "- Banner: toggle the multiplier banner, plus size and opacity - with live preview.",
+            "Everything is stored in mem-ngb.json."
+          ]
+        },
+        {
+          "h": "3D view",
+          "body": [
+            "With [V] in the setup: the board is rendered as a 3D scene, a chase camera floats behind the snake and steering is relative to the view direction (two quick presses = U-turn).",
+            "With [K] you open the 3D camera options: smooth shake, field of view (FOV), camera height and the turn-shake toggle. Playable in 3D: Classic and Obstacles (single player only)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake",
+      "category": "games",
+      "game": "SnakeGame",
+      "title": "Snake",
+      "keywords": ["snake", "apple", "boost", "competitive", "3d", "portals"],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Steer with [W] [A] [S] [D] or the arrow keys. In 3D you steer relative to the view direction: left/right turn, two quick presses = U-turn.",
+            "- Boost: hold [Space] or Shift = double speed. The stamina bar drains and recharges afterwards.",
+            "- Player 2 boosts with Enter or the right Shift key."
+          ]
+        },
+        {
+          "h": "Modes",
+          "body": [
+            "- Classic: pure snake.",
+            "- Speed rush: every food makes you faster.",
+            "- Obstacles: deadly blocks on the board.",
+            "- Portals: teleporter pairs move you across the board.",
+            "- Time attack: 60 seconds, as many apples as possible.",
+            "- Competitive: endless mode with levels, slot machine and gamble apples - details on the Snake special page.",
+            "Also selectable: wall wrap, bonus apples, hardcore, 2D/3D view with [V] and multiplayer."
+          ]
+        },
+        {
+          "h": "Scoring",
+          "body": [
+            "Apples give points (bonus apples randomly double). Gold apples appear temporarily, give lots of points and refill the boost instantly. In competitive your level multiplies all points."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Use the boost on long straights, not in tight corners.",
+            "- With wrap enabled you can escape over the edge when you box yourself in.",
+            "- In competitive, purple apples pay off best when you have spare length to stake."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pong",
+      "category": "games",
+      "game": "PongGame",
+      "title": "Pong",
+      "keywords": ["paddle", "ball", "ai", "classic"],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Player 1 moves the left paddle with [W] and [S] - in multiplayer, player 2 controls the right one with the arrow keys.",
+            "The movement mode is switchable per control: continuous (press once, paddle keeps going) or hold (moves only while pressed). Toggle with [X] for control 1 and [N] for control 2."
+          ]
+        },
+        {
+          "h": "Rules & scoring",
+          "body": [
+            "Play to 5 points, against the AI or with two players.",
+            "The ball physics accelerate with every hit; the bounce angle depends on where the ball meets the paddle."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Hit the ball with the paddle edge to create steep angles.",
+            "- Hold mode gives finer control, continuous mode faster reactions."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "airhockey",
+      "category": "games",
+      "game": "AirHockeyGame",
+      "title": "Air Hockey",
+      "keywords": ["puck", "mallet", "physics", "goals", "powerups", "mouse"],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "In single player your mallet follows the mouse - any key switches back to keyboard control (8 directions).",
+            "In multiplayer P1 plays left with [W] [A] [S] [D] and P2 right with [I] [J] [K] [L] ."
+          ]
+        },
+        {
+          "h": "Setup",
+          "body": [
+            "- AI difficulty: easy, medium or hard.",
+            "- [T] picks the goals to win (3/5/7/10).",
+            "- [P] toggles power-ups: XL (bigger mallet), GOAL (opponent's goal shrinks), speed (faster mallet). Power-ups belong to the player who touched the puck last."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- The puck inherits your mallet speed - build momentum instead of just blocking.",
+            "- Stay behind the puck: pushing it towards your own goal risks own goals."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tictactoe",
+      "category": "games",
+      "game": "TicTacToeGame",
+      "title": "Tic-Tac-Toe",
+      "keywords": ["cross", "circle", "board", "ai", "mnk"],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Place marks with a mouse click. After the game ends: Enter or click = new round, [S] = back to the settings."
+          ]
+        },
+        {
+          "h": "Modes & setup",
+          "body": [
+            "Board sizes from 3x3 up to 9x9. The winning length adapts: 3 in a row on 3x3, 4 on 4x4, otherwise 5.",
+            "Single player against the AI (easy/medium/hard) or two players locally, X versus O in turns."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- The hard AI on 3x3 is unbeatable - a draw is the best you can get there.",
+            "- On big boards the center matters most: most 5-lines pass through it."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "breakout",
+      "category": "games",
+      "game": "BreakoutGame",
+      "title": "Breakout",
+      "keywords": ["bricks", "ball", "paddle", "powerups", "combo", "levels"],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Move the paddle with the mouse or arrow keys. [Space] launches the ball and fires the laser. [P] or [Esc] pauses."
+          ]
+        },
+        {
+          "h": "Setup",
+          "body": [
+            "- [1] [2] [3] picks the difficulty.",
+            "- Left/right changes the ball color, up/down the start level, [M] the layout (standard or full)."
+          ]
+        },
+        {
+          "h": "Bricks & power-ups",
+          "body": [
+            "Brick types: normal, steel (indestructible), bomb (explodes) and gold (extra points).",
+            "Power-ups: x2/x3 balls, [L] laser, [F] fireball, [G] sticky, [U] shield, coins for bonus points - plus a combo multiplier for fast hits."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Play the ball along the side walls behind the brick block - it clears by itself up there.",
+            "- The shield catches exactly one breakthrough: save it for risky multiball phases."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tetris",
+      "category": "games",
+      "game": "TetrisGame",
+      "title": "Tetris",
+      "keywords": ["pieces", "rows", "rotate", "versus", "stack"],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Left/right moves the piece, up rotates it, down is the soft drop and the action key (default: [Space] ) the hard drop."
+          ]
+        },
+        {
+          "h": "Modes & scoring",
+          "body": [
+            "Full rows score points - several at once score much more. Every 10 rows the level and speed increase.",
+            "Versus (multiplayer): two boards side by side, whoever's stack hits the top first loses."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Keep one column free for the long I-piece and clear with quadruple rows.",
+            "- Build flat: tall towers tip over quickly as the speed rises."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "invaders",
+      "category": "games",
+      "game": "InvadersGame",
+      "title": "Invaders",
+      "keywords": ["aliens", "waves", "boss", "weapons", "arena", "shoot"],
+      "sections": [
+        {
+          "h": "Modes",
+          "body": [
+            "- Classic: the classic alien block descends. In the setup you choose movement (left/right only or free with WASD) and aiming (always up or at the mouse).",
+            "- Arena: free movement in all directions, enemies stream in from all edges, you aim in your movement direction."
+          ]
+        },
+        {
+          "h": "Weapons & power-ups",
+          "body": [
+            "Four weapons, switch with [1] to [4] : blaster, spread shot, rapid fire and laser.",
+            "Destroyed aliens drop power-ups: extra life, shield and weapon upgrades. Every 4th level has a boss."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- The spread shot clears dense blocks, the laser pierces whole columns - switch per wave.",
+            "- Never stand still in the arena: circle along the edge and pull enemies into a line."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asteroids",
+      "category": "games",
+      "game": "AsteroidsGame",
+      "title": "Asteroids",
+      "keywords": ["ship", "rocks", "ufo", "hyperspace", "waves", "vector"],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Up thrusts in the view direction, left/right rotates the ship, the action key fires. The ship keeps drifting (inertia) and wraps around the screen edges.",
+            "Down triggers hyperspace: an emergency jump to a random position with a 4 second cooldown - and a 12 percent risk of breaking apart."
+          ]
+        },
+        {
+          "h": "Scoring & extras",
+          "body": [
+            "Rocks split into two smaller ones; the three sizes give 20/50/100 points. The UFO (can be disabled) gives 200 points, an extra life comes every 5000 points.",
+            "Power-ups from destroyed rocks: shield (6 seconds invulnerable), triple shot and rapid fire.",
+            "Co-op duel (multiplayer): both ships fly at once with separate lives - whoever has more points wins."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Clear the small, fast splinters first before you crack the next big rock.",
+            "- Hyperspace is a last resort, not a travel option - the risk is real."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pacman",
+      "category": "games",
+      "game": "PacmanGame",
+      "title": "Pac-Man",
+      "keywords": ["ghosts", "pellets", "maze", "fruit", "power"],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Move with the arrow keys or [W] [A] [S] [D] . After the game ends: Enter = new, [S] = setup.",
+            "The tunnels on the left and right warp you to the other side."
+          ]
+        },
+        {
+          "h": "Ghosts & power pellets",
+          "body": [
+            "The four ghosts hunt with their original behaviors: Blinky chases directly, Pinky sets up ambushes, Inky uses a vector via Blinky, Clyde backs off up close.",
+            "Power pellets make ghosts blue and edible for a while - the chain gives 200/400/800/1600 points. Fruit appears as a bonus, an extra life comes at 10,000 points."
+          ]
+        },
+        {
+          "h": "Setup & tips",
+          "body": [
+            "Difficulty normal/hard/extreme sets ghost speed and frightened time; every level gets faster.",
+            "- Eat a power pellet only when several ghosts are close - the chain is what counts.",
+            "- Remember the scatter phases: at every switch all ghosts turn around."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flappy",
+      "category": "games",
+      "game": "FlappyGame",
+      "title": "Flappy Bird",
+      "keywords": ["bird", "pipes", "coins", "shield", "medals", "flap"],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "[Space], arrow up, [W] or a mouse click makes the bird flap - it tilts with its climb and sink speed."
+          ]
+        },
+        {
+          "h": "Scoring & extras",
+          "body": [
+            "Every pipe passed gives one point. Coins (bonus) and a shield power-up that forgives exactly one collision appear in the gaps.",
+            "Day and night themes change with the score; after the game over there are medals from bronze to platinum."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Short, regular taps keep the flight path calmer than rare long ones.",
+            "- The difficulty sets gap size and speed - the gap narrows as your score grows."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doodle",
+      "category": "games",
+      "game": "DoodleGame",
+      "title": "Doodle Jump",
+      "keywords": ["jump", "platforms", "monsters", "spring", "propeller", "height"],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "The doodler jumps automatically on landing - you only steer left/right (with inertia). The edges are open: leaving left brings you back in on the right.",
+            "Shoot upwards with arrow up or [Space] ."
+          ]
+        },
+        {
+          "h": "Platforms & extras",
+          "body": [
+            "- Green: normal. Blue: moves. Brown: breaks when stepped on. White: vanishes after one jump.",
+            "- Springs give a super jump, the propeller hat carries you up automatically for a moment (invulnerable).",
+            "- Monsters are deadly on contact - shooting them gives extra points."
+          ]
+        },
+        {
+          "h": "Scoring & tips",
+          "body": [
+            "Score = height reached; difficulty rises with height.",
+            "- Plan where to land before jumping off - brown platforms won't carry you.",
+            "- Use the open edge as a shortcut to far-away platforms."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2048",
+      "category": "games",
+      "game": "Game2048",
+      "title": "2048",
+      "keywords": ["tiles", "slide", "merge", "numbers"],
+      "sections": [
+        {
+          "h": "Controls & rules",
+          "body": [
+            "Arrows or [W] [A] [S] [D] slide all tiles in one direction at once. Equal numbers merge into their sum; after every move a new tile appears.",
+            "The goal is the 2048 tile - after that it continues endlessly. You lose when no move is possible."
+          ]
+        },
+        {
+          "h": "Scoring",
+          "body": [
+            "Every merge adds the value of the new tile to your score."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Park your biggest tile in a corner and never disturb that corner.",
+            "- Slide mainly in two directions - it keeps the board sorted."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minesweeper",
+      "category": "games",
+      "game": "MinesweeperGame",
+      "title": "Minesweeper",
+      "keywords": ["mines", "flags", "reveal", "chording", "best time"],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Left click reveals a cell, right click places a flag (optionally with a question-mark cycle, [Q] in the setup). [F] flags the cell under the cursor, [R] restarts.",
+            "Chording: clicking a satisfied number (all flags placed) reveals the remaining neighbors at once."
+          ]
+        },
+        {
+          "h": "Levels & scoring",
+          "body": [
+            "Beginner (9x9, 10 mines), intermediate (16x16, 40) and expert (30x16, 99). The best time per level is saved.",
+            "The first click is always safe - mines are placed only afterwards. Points = level base value minus seconds."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Start with the numbers at the edge of open areas - the patterns there are unambiguous.",
+            "- A 1 in a corner with only one covered neighbor is always a safe flag."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sudoku",
+      "category": "games",
+      "game": "SudokuGame",
+      "title": "Sudoku",
+      "keywords": ["puzzle", "numbers", "notes", "levels", "hints", "logic"],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Select a cell with the arrow keys, [W] [A] [S] [D] or a mouse click - the number pad on the right works entirely with the mouse.",
+            "- [1] to [9] enters a digit (numpad works too).",
+            "- [0], Backspace or right click erases.",
+            "- [N] toggles note mode, [H] gives a hint, [R] restarts the level, [Q] opens the level select.",
+            "- After the game ends, [A] hides the banner and reveals the full solution."
+          ]
+        },
+        {
+          "h": "Levels & modes",
+          "body": [
+            "400 fixed levels: 4 difficulties (easy/normal/hard/expert) times 100 levels. Every level is the same puzzle everywhere and uniquely solvable; solved levels get ticked off.",
+            "The game mode sets the assists and the score multiplier:",
+            "- Classic x2.0: no assists, pure like on paper.",
+            "- Notes x1.5: plus pencil notes.",
+            "- Comfort x1.0: errors red instantly, conflict highlighting, correct entries lock in.",
+            "- Assist x0.7: additionally up to 3 hints."
+          ]
+        },
+        {
+          "h": "Errors & scoring",
+          "body": [
+            "Every entry is checked against the solution immediately. With the 3-error limit active (setup, key [F] ) the third mistake ends the game.",
+            "Points = (difficulty base minus time, errors and hints) times the mode multiplier."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Start with rows, columns and boxes that already hold many digits.",
+            "- Note candidates in pairs: if two cells share the same two candidates, they drop out everywhere else.",
+            "- In classic mode take your time: every mistake counts immediately, even without a red mark."
+          ]
+        }
+      ]
+    }
+  ]
+}

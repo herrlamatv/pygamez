@@ -1,0 +1,609 @@
+{
+  "pages": [
+    {
+      "id": "start",
+      "category": "general",
+      "title": "Erste Schritte",
+      "keywords": ["start", "hilfe", "einstieg", "menue", "pause", "vollbild", "sidebar"],
+      "sections": [
+        {
+          "h": "Spiel starten",
+          "body": [
+            "Ein Spiel startest du auf drei Wegen: über die Spieleliste links in der Sidebar, über das Spiele-Raster auf dem Startbildschirm oder direkt aus diesem Wiki heraus über den Vorspiel-Screen.",
+            "Vor jedem Spiel erscheint der Vorspiel-Screen: dort wählst du den Modus (z.B. Einzel- oder Mehrspieler), erreichst die Optionen und dieses Wiki."
+          ]
+        },
+        {
+          "h": "Wichtige Tasten",
+          "body": [
+            "- [Esc] pausiert das laufende Spiel und setzt es fort - in Menüs geht es damit zurück.",
+            "- [F11] schaltet den Vollbildmodus an und aus.",
+            "- Der grüne Button Zurück zum Menü beendet das Spiel und speichert den Highscore."
+          ]
+        },
+        {
+          "h": "Die Sidebar",
+          "body": [
+            "Links siehst du alle Spiele mit ihrem Symbol und deinem Highscore (Stern). Das laufende Spiel bleibt farbig markiert; bei kleinen Fenstern scrollt die Liste per Mausrad.",
+            "Die Status-Karte unten links zeigt Spielname, Zustand (grün = läuft, gold = Pause, rot = Game Over), Punkte und die aktuelle Bildrate."
+          ]
+        },
+        {
+          "h": "Mehrspieler",
+          "body": [
+            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) und Asteroids (Koop-Duell) haben einen lokalen 2-Spieler-Modus - wählbar im Vorspiel-Screen.",
+            "Im Einzelspieler steuern beide Tastenbelegungen dieselbe Figur, im Mehrspieler je eine (Standard: P1 = WASD, P2 = Pfeile bzw. IJKL - siehe Optionen)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "category": "general",
+      "title": "Optionen & Steuerung",
+      "keywords": ["optionen", "einstellungen", "steuerung", "tasten", "aufloesung", "fps", "sound", "sprache"],
+      "sections": [
+        {
+          "h": "Ton & Haptik",
+          "body": [
+            "Sound an/aus und die Lautstärke stellst du im Options-Screen ein. Alle Effekte werden live erzeugt - es gibt keine Audio-Dateien.",
+            "Haptik lässt ein angeschlossenes Gamepad vibrieren (ohne Gamepad wirkungslos)."
+          ]
+        },
+        {
+          "h": "Tastenbelegung",
+          "body": [
+            "Drei Vorlagen stehen bereit: WASD + Pfeile, WASD + IJKL und Pfeile + WASD.",
+            "Jede einzelne Taste ist frei belegbar: Zeile anklicken oder mit Enter bestätigen, dann die gewünschte Taste drücken. [Esc] bricht ab.",
+            "Die Belegung gilt für Spieler 1 und Spieler 2 getrennt und wird dauerhaft gespeichert."
+          ]
+        },
+        {
+          "h": "Grafik & Leistung",
+          "body": [
+            "Die Auflösung bestimmt die interne Spielfläche (480x360 bis 1280x960). Kleiner = weniger Rechenlast, größer = schärferes Bild.",
+            "Auto-Auflösung passt die Spielfläche automatisch an die Fenstergröße an.",
+            "Die FPS-Optionen (15 bis 120) legen die Ziel-Bildrate fest - weniger FPS sparen Strom."
+          ]
+        },
+        {
+          "h": "Sprache",
+          "body": [
+            "Die Oberfläche gibt es auf Deutsch, Englisch und Französisch. Umschalten im Options-Screen oder über Sprache / Language in der Sidebar - auch dieses Wiki wechselt die Sprache."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saving",
+      "category": "general",
+      "title": "Speichern & Highscores",
+      "keywords": ["speichern", "highscore", "rekord", "punkte", "fortschritt", "dateien"],
+      "sections": [
+        {
+          "h": "Highscores",
+          "body": [
+            "Jedes Spiel speichert seinen besten Wert automatisch, sobald eine Partie endet. Bei einem neuen Rekord erscheint ein goldenes Banner - plus Konfetti-Regen.",
+            "Die Bestwerte siehst du überall: als Stern in der Sidebar-Liste, im Laufband auf dem Startbildschirm und in der Status-Karte."
+          ]
+        },
+        {
+          "h": "Was wird wo gespeichert?",
+          "body": [
+            "- settings.json: Sound, Lautstärke, Tastenbelegung, Auflösung, FPS und Spiel-Optionen (z.B. Snake-Modus, Sudoku-Einstellungen).",
+            "- mem.json: Highscores, die gewählte Sprache und der Sudoku-Level-Fortschritt.",
+            "- mem-ngb.json: die Optik-Mods von Snake (Kopffarbe, Raster, Banner).",
+            "Beide Dateien liegen direkt im Spielordner und lassen sich zum Zurücksetzen einfach löschen."
+          ]
+        },
+        {
+          "h": "Tipp",
+          "body": [
+            "Punkte werden nur gespeichert, wenn du das Spiel über Zurück zum Menü verlässt oder die Partie regulär endet - nicht beim harten Schließen des Fensters mitten im Spiel."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake-special",
+      "category": "general",
+      "title": "Snake Spezial",
+      "keywords": ["competitive", "prestige", "hardcore", "mods", "personalisieren", "slot", "gambling", "3d"],
+      "sections": [
+        {
+          "h": "Competitive-Modus",
+          "body": [
+            "Endlos-Modus mit Level-Aufstieg: Du startest mit genau einem Apfel. Je mehr Äpfel du insgesamt sammelst, desto höher dein Level - mehr Äpfel liegen gleichzeitig auf dem Feld und der Punkte-Multiplikator steigt (15 Level, bis x16).",
+            "- Blaue Äpfel öffnen eine Slot-Machine: Einsatz ist deine Länge, drei gleiche Symbole = Jackpot mit Bonus-Äpfeln.",
+            "- Lila Äpfel (Gambling) setzen einen Teil deiner Größe aufs Spiel: normal 50 Prozent Einsatz mit Faktor x0.5 bis x1.5.",
+            "Die exakte Größe steht als Kommazahl oben links - jede Wette baut darauf auf. Die Levelstufen stehen in games/levels/snake-comp.json und sind frei editierbar."
+          ]
+        },
+        {
+          "h": "Hardcore",
+          "body": [
+            "Im Competitive-Setup mit [H] zuschaltbar: Jeder Boost frisst Länge, und lila Äpfel werden riskanter (75 bis 90 Prozent Einsatz, Faktor x0.25 bis x2.25). Ein roter Rahmen markiert den Modus."
+          ]
+        },
+        {
+          "h": "Prestige",
+          "body": [
+            "Im Einzelspieler mit [P] erreichbar: Gesammelte Äpfel lassen sich in Prestige-Level umwandeln, die dauerhafte Vorteile bringen. Der Fortschritt bleibt über Partien hinweg erhalten."
+          ]
+        },
+        {
+          "h": "Mods / Personalisieren",
+          "body": [
+            "Im Setup über den Pinsel-Knopf oder [C] : ein reines Optik-Menü, das nie das Spielverhalten ändert.",
+            "- Kopf: Kopffarbe der Schlange (Vorlagen oder eigene RGB-Farbe).",
+            "- Raster: Koordinaten-Gitter mit Reihen-Nummern und Spalten-Buchstaben als Wegweiser auf großen Feldern.",
+            "- Banner: das Multiplikator-Banner an/aus, Größe und Deckkraft - mit Live-Vorschau.",
+            "Gespeichert wird alles in mem-ngb.json."
+          ]
+        },
+        {
+          "h": "3D-Ansicht",
+          "body": [
+            "Mit [V] im Setup: Das Feld wird als 3D-Szene gerendert, eine Verfolgerkamera schwebt hinter der Schlange, gelenkt wird relativ zur Blickrichtung (zwei schnelle Drücke = Kehrtwende).",
+            "Mit [K] öffnest du die 3D-Kamera-Optionen: Smooth-Shake, Sichtfeld (FOV), Kamerahöhe und das Ruckeln beim Abbiegen. In 3D spielbar: Klassisch und Hindernisse (nur Einzelspieler)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake",
+      "category": "games",
+      "game": "SnakeGame",
+      "title": "Snake",
+      "keywords": ["schlange", "apfel", "boost", "competitive", "3d", "portale"],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Lenken mit [W] [A] [S] [D] oder den Pfeiltasten. In 3D wird relativ zur Blickrichtung gelenkt: links/rechts drehen, zwei schnelle Drücke = Kehrtwende.",
+            "- Boost: [Leertaste] oder Shift gedrückt halten = doppeltes Tempo. Der Ausdauer-Balken leert sich dabei und lädt danach wieder auf.",
+            "- Spieler 2 boostet mit Enter oder der rechten Shift-Taste."
+          ]
+        },
+        {
+          "h": "Modi",
+          "body": [
+            "- Klassisch: das pure Snake.",
+            "- Speed-Rush: jedes Futter macht dich schneller.",
+            "- Hindernisse: tödliche Blöcke auf dem Feld.",
+            "- Portale: Teleporter-Paare versetzen dich quer übers Feld.",
+            "- Zeitangriff: 60 Sekunden, so viele Äpfel wie möglich.",
+            "- Competitive: Endlos-Modus mit Leveln, Slot-Machine und Wett-Äpfeln - Details auf der Seite Snake Spezial.",
+            "Dazu wählbar: Wände-durchgehen (Wrap), Bonus-Äpfel, Hardcore, 2D/3D-Ansicht mit [V] und Mehrspieler."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Äpfel geben Punkte (Bonus-Äpfel zufällig doppelt). Goldäpfel erscheinen zeitweise, geben viele Punkte und füllen den Boost sofort auf. Im Competitive multipliziert dein Level alle Punkte."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Nutze den Boost in langen Geraden, nicht in engen Kurven.",
+            "- Mit aktiviertem Wrap kannst du über den Rand fliehen, wenn du dich einbaust.",
+            "- Im Competitive lohnen lila Äpfel vor allem, wenn du Länge zum Einsetzen übrig hast."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pong",
+      "category": "games",
+      "game": "PongGame",
+      "title": "Pong",
+      "keywords": ["schlaeger", "ball", "ki", "klassiker"],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Spieler 1 bewegt den linken Schläger mit [W] und [S] - im Mehrspieler steuert Spieler 2 rechts mit den Pfeiltasten.",
+            "Der Bewegungsmodus ist je Steuerung umschaltbar: Dauer (einmal drücken, Schläger fährt weiter) oder Halten (bewegt nur solange gedrückt). Umschalten mit [X] für Steuerung 1 und [N] für Steuerung 2."
+          ]
+        },
+        {
+          "h": "Regeln & Punkte",
+          "body": [
+            "Gespielt wird bis 5 Punkte, gegen die KI oder zu zweit.",
+            "Die Ball-Physik beschleunigt mit jedem Schlag; der Abprallwinkel hängt vom Treffpunkt auf dem Schläger ab."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Triff den Ball mit der Schlägerkante, um steile Winkel zu erzeugen.",
+            "- Im Halten-Modus hast du feinere Kontrolle, im Dauer-Modus schnellere Reaktionen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "airhockey",
+      "category": "games",
+      "game": "AirHockeyGame",
+      "title": "Air Hockey",
+      "keywords": ["puck", "schlaeger", "physik", "tore", "powerups", "maus"],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Im Einzelspieler folgt dein Schläger der Maus - jede Taste schaltet zurück auf Tastensteuerung (8 Richtungen).",
+            "Im Mehrspieler spielt P1 links mit [W] [A] [S] [D] und P2 rechts mit [I] [J] [K] [L] ."
+          ]
+        },
+        {
+          "h": "Setup",
+          "body": [
+            "- Schwierigkeit der KI: Leicht, Mittel oder Schwer.",
+            "- [T] wählt die Tore bis zum Sieg (3/5/7/10).",
+            "- [P] schaltet Power-Ups an/aus: XL (größerer Schläger), TOR (Gegnertor schrumpft), Tempo (schnellerer Schläger). Power-Ups gehören dem Spieler, der den Puck zuletzt berührt hat."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Der Puck übernimmt deine Schlägergeschwindigkeit - hol Schwung, statt nur zu blocken.",
+            "- Bleib hinter dem Puck: Wer ihn Richtung eigenes Tor drückt, riskiert Eigentore."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tictactoe",
+      "category": "games",
+      "game": "TicTacToeGame",
+      "title": "Tic-Tac-Toe",
+      "keywords": ["kreuz", "kreis", "brett", "ki", "mnk"],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Felder werden per Mausklick gesetzt. Nach dem Spielende: Enter oder Klick = neue Runde, [S] = zurück zu den Einstellungen."
+          ]
+        },
+        {
+          "h": "Modi & Setup",
+          "body": [
+            "Brettgröße von 3x3 bis 9x9. Die Gewinnlänge passt sich an: 3 in Reihe auf 3x3, 4 auf 4x4, sonst 5.",
+            "Einzelspieler gegen die KI (Easy/Medium/Hard) oder zwei Spieler lokal, X gegen O im Wechsel."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Die Hard-KI auf 3x3 ist unschlagbar - mehr als ein Unentschieden ist dort nicht drin.",
+            "- Auf großen Brettern zählt das Zentrum: Von dort aus entstehen die meisten 5er-Linien."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "breakout",
+      "category": "games",
+      "game": "BreakoutGame",
+      "title": "Breakout",
+      "keywords": ["steine", "ball", "paddle", "powerups", "combo", "level"],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Schläger mit Maus oder Pfeiltasten bewegen. [Leertaste] startet den Ball und feuert den Laser. [P] oder [Esc] pausiert."
+          ]
+        },
+        {
+          "h": "Setup",
+          "body": [
+            "- [1] [2] [3] wählt die Schwierigkeit.",
+            "- Links/Rechts ändert die Ballfarbe, Hoch/Runter das Startlevel, [M] den Aufbau (Standard oder Voll)."
+          ]
+        },
+        {
+          "h": "Steine & Power-Ups",
+          "body": [
+            "Steinsorten: Normal, Stahl (unzerstörbar), Bombe (explodiert) und Gold (Extrapunkte).",
+            "Power-Ups: x2/x3 Bälle, [L] Laser, [F] Feuerball, [G] Klebrig, [U] Schild, Münzen für Bonuspunkte - dazu ein Combo-Multiplikator für schnelle Treffer."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Spiele den Ball über die Seitenwände hinter den Stein-Block - dort räumt er von selbst ab.",
+            "- Der Schild fängt genau einen Durchbruch ab: nutze ihn für riskante Multiball-Phasen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tetris",
+      "category": "games",
+      "game": "TetrisGame",
+      "title": "Tetris",
+      "keywords": ["steine", "reihen", "drehen", "versus", "stapel"],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Links/Rechts verschiebt den Stein, Hoch dreht ihn, Runter ist der Soft-Drop und die Aktionstaste (Standard: [Leertaste] ) der Hard-Drop."
+          ]
+        },
+        {
+          "h": "Modi & Punkte",
+          "body": [
+            "Volle Reihen geben Punkte - mehrere auf einmal deutlich mehr. Alle 10 Reihen steigt das Level und damit das Tempo.",
+            "Versus (Mehrspieler): zwei Felder nebeneinander, wessen Stapel zuerst oben anstößt, verliert."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Halte eine Spalte für das lange I-Teil frei und räume mit Vierfach-Reihen ab.",
+            "- Baue flach: Hohe Türme kippen bei steigendem Tempo schnell weg."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "invaders",
+      "category": "games",
+      "game": "InvadersGame",
+      "title": "Invaders",
+      "keywords": ["aliens", "wellen", "boss", "waffen", "arena", "schiessen"],
+      "sections": [
+        {
+          "h": "Modi",
+          "body": [
+            "- Klassik: der klassische Alien-Block rückt herab. Im Setup wählbar: Bewegung (nur links/rechts oder frei mit WASD) und Zielen (immer nach oben oder zur Maus).",
+            "- Arena: freie Bewegung in alle Richtungen, Gegner strömen von allen Rändern, gezielt wird in Bewegungsrichtung."
+          ]
+        },
+        {
+          "h": "Waffen & Power-Ups",
+          "body": [
+            "Vier Waffen, wechselbar mit [1] bis [4] : Blaster, Streuschuss, Schnellfeuer und Laser.",
+            "Zerstörte Aliens lassen Power-Ups fallen: Extraleben, Schild und Waffen-Upgrades. In jedem 4. Level wartet ein Boss."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Der Streuschuss räumt dichte Blöcke, der Laser durchbohrt ganze Spalten - wechsle je nach Welle.",
+            "- In der Arena nie stehen bleiben: Kreise am Rand entlang und zieh die Gegner in eine Linie."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asteroids",
+      "category": "games",
+      "game": "AsteroidsGame",
+      "title": "Asteroids",
+      "keywords": ["schiff", "brocken", "ufo", "hyperraum", "wellen", "vektor"],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Hoch gibt Schub in Blickrichtung, Links/Rechts dreht das Schiff, die Aktionstaste feuert. Das Schiff driftet weiter (Trägheit) und wickelt über die Bildschirmränder.",
+            "Runter zündet den Hyperraum: Nottransport an eine Zufallsposition mit 4 Sekunden Abklingzeit - und 12 Prozent Risiko zu zerschellen."
+          ]
+        },
+        {
+          "h": "Punkte & Extras",
+          "body": [
+            "Brocken zerspringen in zwei kleinere; die drei Größen geben 20/50/100 Punkte. Das UFO (abschaltbar) bringt 200 Punkte, ein Extraleben gibt es alle 5000 Punkte.",
+            "Power-Ups aus zerstörten Brocken: Schild (6 Sekunden unverwundbar), Dreifachschuss und Schnellfeuer.",
+            "Koop-Duell (Mehrspieler): beide Schiffe fliegen gleichzeitig mit getrennten Leben - wer mehr Punkte hat, gewinnt."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Räume erst die kleinen, schnellen Splitter ab, bevor du den nächsten großen Brocken anspielst.",
+            "- Der Hyperraum ist die letzte Rettung, kein Reisemittel - das Risiko bleibt real."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pacman",
+      "category": "games",
+      "game": "PacmanGame",
+      "title": "Pac-Man",
+      "keywords": ["geister", "pillen", "labyrinth", "fruechte", "power"],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Bewegen mit den Pfeiltasten oder [W] [A] [S] [D] . Nach dem Spielende: Enter = neu, [S] = Setup.",
+            "Die Tunnel links und rechts warpen dich auf die andere Seite."
+          ]
+        },
+        {
+          "h": "Geister & Power-Pillen",
+          "body": [
+            "Die vier Geister jagen mit den Original-Verhaltensweisen: Blinky direkt, Pinky legt den Hinterhalt, Inky nutzt einen Vektor über Blinky, Clyde weicht in der Nähe aus.",
+            "Power-Pillen machen Geister kurz blau und essbar - die Kette gibt 200/400/800/1600 Punkte. Früchte erscheinen als Bonus, ein Extraleben gibt es bei 10.000 Punkten."
+          ]
+        },
+        {
+          "h": "Setup & Tipps",
+          "body": [
+            "Schwierigkeit Normal/Schwer/Extrem regelt Geistertempo und Frightened-Zeit; mit jedem Level wird es schneller.",
+            "- Iss eine Power-Pille erst, wenn mehrere Geister nah sind - die Kette zählt.",
+            "- Merke dir die Scatter-Phasen: Bei jedem Wechsel drehen alle Geister um."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flappy",
+      "category": "games",
+      "game": "FlappyGame",
+      "title": "Flappy Bird",
+      "keywords": ["vogel", "roehren", "muenzen", "schild", "medaillen", "flattern"],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "[Leertaste], Pfeil hoch, [W] oder ein Mausklick lässt den Vogel flattern - er neigt sich je nach Steig- und Sinktempo."
+          ]
+        },
+        {
+          "h": "Punkte & Extras",
+          "body": [
+            "Jede durchflogene Röhre gibt einen Punkt. In den Lücken erscheinen Münzen (Bonus) und ein Schild-Power-Up, das genau eine Kollision verzeiht.",
+            "Tag- und Nacht-Thema wechseln mit der Punktzahl; nach dem Game Over gibt es Medaillen von Bronze bis Platin."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Kurze, regelmäßige Tipps halten die Flugbahn ruhiger als seltene lange.",
+            "- Die Schwierigkeit bestimmt Lückengröße und Tempo - mit steigender Punktzahl wird die Lücke enger."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doodle",
+      "category": "games",
+      "game": "DoodleGame",
+      "title": "Doodle Jump",
+      "keywords": ["springen", "plattformen", "monster", "feder", "propeller", "hoehe"],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Der Doodler springt automatisch beim Landen - du steuerst nur links/rechts (mit Trägheit). Die Ränder sind offen: Links raus heißt rechts wieder rein.",
+            "Mit Pfeil hoch oder [Leertaste] schießt du nach oben."
+          ]
+        },
+        {
+          "h": "Plattformen & Extras",
+          "body": [
+            "- Grün: normal. Blau: bewegt sich. Braun: zerbricht beim Betreten. Weiß: verschwindet nach einem Sprung.",
+            "- Sprungfedern geben einen Superhüpfer, der Propeller-Hut trägt dich kurz automatisch nach oben (unverwundbar).",
+            "- Monster sind tödlich bei Berührung - abschießen gibt Extrapunkte."
+          ]
+        },
+        {
+          "h": "Punkte & Tipps",
+          "body": [
+            "Punkte = erreichte Höhe; mit der Höhe steigt die Schwierigkeit.",
+            "- Plane vor dem Absprung, wo du landen willst - braune Plattformen tragen dich nicht.",
+            "- Nutze den offenen Rand als Abkürzung zu weit entfernten Plattformen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2048",
+      "category": "games",
+      "game": "Game2048",
+      "title": "2048",
+      "keywords": ["kacheln", "schieben", "verschmelzen", "zahlen"],
+      "sections": [
+        {
+          "h": "Steuerung & Regeln",
+          "body": [
+            "Pfeile oder [W] [A] [S] [D] schieben alle Kacheln gleichzeitig in eine Richtung. Gleiche Zahlen verschmelzen zu ihrer Summe, nach jedem Zug erscheint eine neue Kachel.",
+            "Ziel ist die 2048er-Kachel - danach geht es endlos weiter. Verloren ist, wenn kein Zug mehr möglich ist."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Jede Verschmelzung zählt die Summe der neuen Kachel auf dein Konto."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Parke deine größte Kachel in einer Ecke und rühre diese Ecke nie an.",
+            "- Schiebe hauptsächlich in zwei Richtungen - so bleibt das Brett sortiert."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minesweeper",
+      "category": "games",
+      "game": "MinesweeperGame",
+      "title": "Minesweeper",
+      "keywords": ["minen", "flaggen", "aufdecken", "chording", "bestzeit"],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Linksklick deckt ein Feld auf, Rechtsklick setzt eine Flagge (optional mit Fragezeichen-Zyklus, [Q] im Setup). [F] flaggt das Feld unter dem Mauszeiger, [R] startet neu.",
+            "Chording: Ein Klick auf eine fertige Zahl (alle Flaggen gesetzt) deckt die restlichen Nachbarn auf einmal auf."
+          ]
+        },
+        {
+          "h": "Stufen & Punkte",
+          "body": [
+            "Einsteiger (9x9, 10 Minen), Fortgeschritten (16x16, 40) und Experte (30x16, 99). Die Bestzeit je Stufe wird gespeichert.",
+            "Der erste Klick ist immer sicher - die Minen werden erst danach verteilt. Punkte = Grundwert der Stufe minus Sekunden."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Beginne mit den Zahlen am Rand offener Flächen - dort sind die Muster eindeutig.",
+            "- Eine 1 an einer Ecke mit nur einem verdeckten Nachbarn ist immer eine sichere Flagge."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sudoku",
+      "category": "games",
+      "game": "SudokuGame",
+      "title": "Sudoku",
+      "keywords": ["raetsel", "zahlen", "notizen", "level", "tipps", "logik"],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Zelle wählen mit den Pfeiltasten, [W] [A] [S] [D] oder per Mausklick - das Ziffernfeld rechts funktioniert komplett mit der Maus.",
+            "- [1] bis [9] trägt eine Zahl ein (auch am Ziffernblock).",
+            "- [0], Backspace oder Rechtsklick radiert.",
+            "- [N] schaltet den Notiz-Modus um, [H] gibt einen Tipp, [R] startet das Level neu, [Q] öffnet die Levelauswahl.",
+            "- Nach dem Spielende blendet [A] den Banner aus und zeigt die komplette Lösung."
+          ]
+        },
+        {
+          "h": "Level & Modi",
+          "body": [
+            "400 feste Level: 4 Schwierigkeitsgrade (Leicht/Normal/Schwer/Experte) mal 100 Level. Jedes Level ist überall dasselbe Puzzle und eindeutig lösbar; gelöste Level werden abgehakt.",
+            "Der Spielmodus bestimmt die Hilfen und den Punkte-Multiplikator:",
+            "- Klassisch x2.0: keine Hilfen, pur wie auf Papier.",
+            "- Notizen x1.5: plus Bleistift-Notizen.",
+            "- Komfort x1.0: Fehler sofort rot, Konflikt-Hervorhebung, korrekte Eingaben rasten ein.",
+            "- Assistent x0.7: zusätzlich bis zu 3 Tipps."
+          ]
+        },
+        {
+          "h": "Fehler & Punkte",
+          "body": [
+            "Jede Eingabe wird sofort gegen die Lösung geprüft. Mit aktivem 3-Fehler-Limit (Setup, Taste [F] ) ist beim dritten Fehler Schluss.",
+            "Punkte = (Basis der Stufe minus Zeit, Fehler und Tipps) mal Modus-Multiplikator."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Starte mit Reihen, Spalten und Boxen, in denen schon viele Zahlen stehen.",
+            "- Notiere Kandidaten in Ecken-Paaren: Wenn zwei Zellen dieselben zwei Kandidaten haben, fallen sie überall sonst weg.",
+            "- Im Klassisch-Modus lohnt Ruhe: Jeder Fehler zählt sofort, auch ohne rote Anzeige."
+          ]
+        }
+      ]
+    }
+  ]
+}

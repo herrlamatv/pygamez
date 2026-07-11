@@ -287,6 +287,11 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   **Weichzeichner** hinter dem Pause-Overlay.
 - Der **Vorspiel-Screen** jedes Spiels erscheint in dessen Akzentfarbe und zeigt
   den bisherigen Rekord als Chip an.
+- **In-Game-Wiki** („LamaWiki"): ausführliche Hilfe zu jedem Spiel (Steuerung,
+  Modi, Punkte, Tipps) plus allgemeine Seiten - mit **Suchfeld**, Kategorien,
+  scrollbaren Artikeln und Tastenkappen-Chips, in allen drei Sprachen.
+  Erreichbar über den Sidebar-Button **„Wiki / Hilfe"** und aus dem
+  Vorspiel-Screen jedes Spiels (öffnet direkt dessen Seite).
 
 ### Bedienung
 
@@ -334,7 +339,10 @@ competitive.py       Kennzahlen für den Competitive-Modus von Snake (Level, Slo
 ngb.py               Visuelle Personalisierung ("Mods"): Kopffarbe + Koordinaten-Raster + Menü (mem-ngb.json)
 i18n.py              Übersetzungs-Engine (lädt lang/*.json, t("schlüssel"))
 lang/
-  de.json  en.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
+  de.json  en.json  fr.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
+lamawiki/
+  lamawiki.py          In-Game-Wiki (Suche, Kategorien, Artikel-Renderer)
+  de.json  en.json  fr.json   Wiki-Inhalte (eine Seite je Spiel + Allgemeines)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -712,6 +720,11 @@ packages) and styled like a modern game launcher:
   pause overlay.
 - Each game's **pre-game screen** appears in that game's accent colour and shows
   the previous record as a chip.
+- **In-game wiki** ("LamaWiki"): detailed help for every game (controls, modes,
+  scoring, tips) plus general pages - with a **search box**, categories,
+  scrollable articles and keycap chips, in all three languages. Reachable via
+  the **"Wiki / Help"** sidebar button and from every game's pre-game screen
+  (opens that game's page directly).
 
 ### Controls
 
@@ -759,7 +772,10 @@ competitive.py       Tuning for Snake's Competitive mode (levels, slot machine, 
 ngb.py               Visual personalization ("mods"): head color + coordinate grid + menu (mem-ngb.json)
 i18n.py              Translation engine (loads lang/*.json, t("key"))
 lang/
-  de.json  en.json   Language strings (one placeholder key per text)
+  de.json  en.json  fr.json   Language strings (one placeholder key per text)
+lamawiki/
+  lamawiki.py          In-game wiki (search, categories, article renderer)
+  de.json  en.json  fr.json   Wiki content (one page per game + general pages)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
