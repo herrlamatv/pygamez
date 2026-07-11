@@ -260,7 +260,8 @@ Explosions-Effekte, Highscore.
 - Steuerung: Pfeile/WASD = Zelle, **1-9** = Ziffer (auch Ziffernblock),
   **0/Backspace/Rechtsklick** = radieren, **N** = Notizen, **H** = Tipp,
   **R** = Level neu, **Q** = Levelwahl; komplett mit der Maus spielbar
-  (Ziffernfeld rechts).
+  (Ziffernfeld rechts). Nach Spielende blendet **A** den Banner aus und
+  zeigt die komplette **Lösung** auf dem Brett (nochmal A = zurück).
 - Punkte = (Basis der Stufe - Zeit - Fehler - Tipps) x Modus-Multiplikator.
 
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
@@ -682,7 +683,8 @@ explosion effects, high score.
 - Controls: arrows/WASD = cell, **1-9** = digit (numpad too),
   **0/Backspace/right click** = erase, **N** = notes, **H** = hint,
   **R** = restart level, **Q** = level select; fully playable with the mouse
-  (number pad on the right).
+  (number pad on the right). After the game ends, **A** hides the banner
+  and reveals the full **solution** on the board (A again = back).
 - Points = (difficulty base - time - errors - hints) x mode multiplier.
 
 High scores are stored in the `highscores` section of `mem.json` (next to the

@@ -262,6 +262,7 @@ class SudokuGame(Game):
         self.hints_used = 0
         self.elapsed = 0.0
         self.note_mode = False
+        self.reveal = False      # nach Spielende: Lösung statt Banner zeigen
         self.msg = None
         self.msg_t = 0.0
         self._conflicts = frozenset()
@@ -337,6 +338,11 @@ class SudokuGame(Game):
                     self.state = SETUP
                     self.game_over = False
                     self.play_sound("click")
+                elif event.key in ("a", "A"):
+                    # Banner ausblenden und die Lösung auf dem Brett zeigen
+                    # (nochmal A = zurück zum Banner).
+                    self.reveal = not self.reveal
+                    self.play_sound("select")
             return
 
         if event.kind == InputEvent.KEYDOWN:
@@ -545,7 +551,7 @@ class SudokuGame(Game):
             self._draw_hud(s)
             self._draw_board(s)
             self._draw_pad(s)
-            if self.game_over:
+            if self.game_over and not self.reveal:
                 self._draw_result(s)
 
     # ----- Setup ----------------------------------------------------------
@@ -627,7 +633,12 @@ class SudokuGame(Game):
         img = self._small.render(left, True, COL_TEXT)
         s.blit(img, img.get_rect(midleft=(12, cy)))
 
-        clock = self.font.render(self._fmt_time(), True, COL_ACCENT)
+        # In der Lösungs-Ansicht ersetzt der Zurück-Hinweis die (eingefrorene)
+        # Uhr - so bleibt das komplette Brett frei sichtbar.
+        if self.game_over and self.reveal:
+            clock = self._small.render(t("sud.hide_solution"), True, COL_ACCENT)
+        else:
+            clock = self.font.render(self._fmt_time(), True, COL_ACCENT)
         s.blit(clock, clock.get_rect(center=(self.width // 2, cy)))
 
         if self.fail_limit:
@@ -677,6 +688,15 @@ class SudokuGame(Game):
             else:
                 bg = COL_CELL
             pygame.draw.rect(s, bg, rect)
+
+            # Lösungs-Ansicht (A nach Spielende): fehlende/falsche Zellen
+            # zeigen die richtige Ziffer in Akzentfarbe.
+            if self.game_over and self.reveal \
+                    and self.board[i] != self.solution[i]:
+                img = self._num_font.render(str(self.solution[i]), True,
+                                            COL_ACCENT)
+                s.blit(img, img.get_rect(center=rect.center))
+                continue
 
             v = self.board[i]
             if v:
@@ -766,10 +786,12 @@ class SudokuGame(Game):
         if self.won:
             head = self._huge.render(t("sud.win", t=self._fmt_time()), True, COL_OK)
             lines = [(t("common.points", score=self.score), COL_TEXT),
-                     (t("sud.next"), COL_DIM)]
+                     (t("sud.next"), COL_DIM),
+                     (t("sud.show_solution"), COL_DIM)]
         else:
             head = self._huge.render(t("sud.lose"), True, COL_WRONG)
-            lines = [(t("sud.retry"), COL_DIM)]
+            lines = [(t("sud.retry"), COL_DIM),
+                     (t("sud.show_solution"), COL_DIM)]
 
         s.blit(head, head.get_rect(center=(cx, cy - 50)))
         y = cy + 4
