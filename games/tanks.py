@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 tanks.py
-========
+=========
 Panzer-Duell - 2D-Arena-Duell (1 Spieler gegen KI oder 2 Spieler lokal).
 
 - Panzer drehen und fahren (P1: WASD + Leertaste, P2: laut Tastenbelegung);
