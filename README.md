@@ -1,6 +1,6 @@
 # PyGameZ
 
-**🌐 Sprache / Language:** **🇩🇪 [Deutsch](#-deutsch)** · **🇬🇧 [English](#-english)** <br> Game Available in : German, English, French
+**🌐 Sprache / Language:** **🇩🇪 [Deutsch](#-deutsch)** · **🇬🇧 [English](#-english)** · **🇪🇸 [Español](other.readme.md#-espanol)** · **🇵🇹 [Português](other.readme.md#-portugues)** <br> Game Available in : German, English, French, Spanish, Portuguese
 
 ---
 
@@ -12,8 +12,10 @@ Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
 **Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Dreiundzwanzig
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
-**mehrsprachig** (Deutsch / English); die Sprache wird beim ersten Start gewählt
-und lässt sich jederzeit in den Optionen umstellen.
+**mehrsprachig** (Deutsch / English / Français / Español / Português); die
+Sprache wird beim ersten Start gewählt (Spanisch und Portugiesisch stecken dort
+hinter dem dezenten Knopf **„Weitere Sprachen"** ganz unten) und lässt sich
+jederzeit in den Optionen umstellen.
 
 ### Schnellstart
 
@@ -387,7 +389,7 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   den bisherigen Rekord als Chip an.
 - **In-Game-Wiki** („LamaWiki"): ausführliche Hilfe zu jedem Spiel (Steuerung,
   Modi, Punkte, Tipps) plus allgemeine Seiten - mit **Suchfeld**, Kategorien,
-  scrollbaren Artikeln und Tastenkappen-Chips, in allen drei Sprachen.
+  scrollbaren Artikeln und Tastenkappen-Chips, in allen fünf Sprachen.
   Erreichbar über den Sidebar-Button **„Wiki / Hilfe"** und aus dem
   Vorspiel-Screen jedes Spiels (öffnet direkt dessen Seite).
 
@@ -437,10 +439,10 @@ competitive.py       Kennzahlen für den Competitive-Modus von Snake (Level, Slo
 ngb.py               Visuelle Personalisierung ("Mods"): Kopffarbe + Koordinaten-Raster + Menü (mem-ngb.json)
 i18n.py              Übersetzungs-Engine (lädt lang/*.json, t("schlüssel"))
 lang/
-  de.json  en.json  fr.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
+  de.json  en.json  fr.json  es.json  pt.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
 lamawiki/
   lamawiki.py          In-Game-Wiki (Suche, Kategorien, Artikel-Renderer)
-  de.json  en.json  fr.json   Wiki-Inhalte (eine Seite je Spiel + Allgemeines)
+  de.json  en.json  fr.json  es.json  pt.json   Wiki-Inhalte (eine Seite je Spiel + Allgemeines)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -550,8 +552,10 @@ A desktop game collection in Python: **Tkinter** provides the window and menu,
 **Pygame** is embedded as the game display inside the Tkinter window. Twenty-three
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
-**multilingual** (German / English); the language is chosen on first launch and
-can be changed at any time in the options.
+**multilingual** (German / English / French / Spanish / Portuguese); the
+language is chosen on first launch (Spanish and Portuguese sit behind the
+subtle **"Other languages"** button at the very bottom there) and can be
+changed at any time in the options.
 
 ### Quick start
 
@@ -920,7 +924,7 @@ packages) and styled like a modern game launcher:
   the previous record as a chip.
 - **In-game wiki** ("LamaWiki"): detailed help for every game (controls, modes,
   scoring, tips) plus general pages - with a **search box**, categories,
-  scrollable articles and keycap chips, in all three languages. Reachable via
+  scrollable articles and keycap chips, in all five languages. Reachable via
   the **"Wiki / Help"** sidebar button and from every game's pre-game screen
   (opens that game's page directly).
 
@@ -970,10 +974,10 @@ competitive.py       Tuning for Snake's Competitive mode (levels, slot machine, 
 ngb.py               Visual personalization ("mods"): head color + coordinate grid + menu (mem-ngb.json)
 i18n.py              Translation engine (loads lang/*.json, t("key"))
 lang/
-  de.json  en.json  fr.json   Language strings (one placeholder key per text)
+  de.json  en.json  fr.json  es.json  pt.json   Language strings (one placeholder key per text)
 lamawiki/
   lamawiki.py          In-game wiki (search, categories, article renderer)
-  de.json  en.json  fr.json   Wiki content (one page per game + general pages)
+  de.json  en.json  fr.json  es.json  pt.json   Wiki content (one page per game + general pages)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py

@@ -7,7 +7,8 @@ LamaWiki - das In-Game-Wiki der Spielesammlung.
 Inhalte
 -------
 Die Artikel liegen als JSON neben diesem Modul (``de.json``/``en.json``/
-``fr.json``), eine Datei je Sprache mit identischer Struktur:
+``fr.json``/``es.json``/``pt.json``), eine Datei je Sprache mit identischer
+Struktur:
 
     {"pages": [{"id": "...", "category": "general"|"games",
                 "game": "SnakeGame" (optional, exakter Klassenname),

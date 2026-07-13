@@ -605,26 +605,65 @@ class LanguageScreen(_Screen):
 
     def __init__(self, surface, width, height, app, on_done):
         self.on_done = on_done
+        # Beim ersten Start (noch keine Sprache gewählt) werden nur die
+        # Hauptsprachen angezeigt; die weiteren verstecken sich hinter einem
+        # dezenten "Weitere Sprachen"-Button ganz unten. Wird der Screen später
+        # aus dem Menü geöffnet, erscheinen sofort alle Sprachen.
+        self.expanded = i18n.has_language()
         super().__init__(surface, width, height, app)
         self.name = t("lang.name")
         self._build()
-        codes = [c for c, _ in i18n.AVAILABLE]
+        codes = [c for c, _ in self.langs]
         self.sel = codes.index(i18n.get_language()) if i18n.get_language() in codes else 0
 
     def _build(self):
+        self.langs = list(i18n.AVAILABLE) if self.expanded else list(i18n.PRIMARY)
         self.rects = []
-        bw, bh, gap = 300, 56, 16
-        total = len(i18n.AVAILABLE) * (bh + gap) - gap
-        y0 = self.height // 2 - total // 2
-        for i in range(len(i18n.AVAILABLE)):
-            x = self.width // 2 - bw // 2
+        n = len(self.langs)
+        bw = min(300, self.width - 40)
+        # Platz unter dem Titel; im eingeklappten Zustand bleibt unten Raum
+        # für den "Weitere Sprachen"-Button.
+        top = 124
+        bottom = self.height - (44 if self.expanded else 88)
+        bh, gap = 56, 16
+        while n * (bh + gap) - gap > bottom - top and bh > 30:
+            bh -= 2
+            gap = max(6, gap - 1)
+        total = n * (bh + gap) - gap
+        y0 = top + max(0, (bottom - top - total) // 2)
+        x = self.width // 2 - bw // 2
+        for i in range(n):
             self.rects.append(pygame.Rect(x, y0 + i * (bh + gap), bw, bh))
+        # Kleiner, bewusst unauffälliger Button ganz unten (nur eingeklappt).
+        if self.expanded:
+            self.other_rect = None
+        else:
+            f = ui.font(14)
+            w = f.size(t("lang.other"))[0] + 26
+            self.other_rect = pygame.Rect(self.width // 2 - w // 2,
+                                          self.height - 66, w, 24)
+
+    def _item_count(self):
+        """Anzahl wählbarer Einträge (Sprachen + ggf. 'Weitere Sprachen')."""
+        return len(self.rects) + (0 if self.expanded else 1)
 
     def on_surface_changed(self):
         self._build()
+        self.sel = min(self.sel, self._item_count() - 1)
+
+    def _expand(self):
+        """Zeigt die zusätzlichen Sprachen (es, pt) an."""
+        self.expanded = True
+        self._build()
+        # Auswahl auf die erste neu eingeblendete Sprache setzen.
+        self.sel = min(len(i18n.PRIMARY), len(self.rects) - 1)
+        self.play_sound("click")
 
     def _choose(self, i):
-        i18n.set_language(i18n.AVAILABLE[i][0])
+        if not self.expanded and i >= len(self.rects):
+            self._expand()
+            return
+        i18n.set_language(self.langs[i][0])
         self.app.refresh_language()
         self.play_sound("click")
         r = self.rects[i]
@@ -634,10 +673,10 @@ class LanguageScreen(_Screen):
     def handle_event(self, event):
         if event.kind == InputEvent.KEYDOWN:
             if event.key in ("Up", "w", "Left", "a"):
-                self.sel = (self.sel - 1) % len(self.rects)
+                self.sel = (self.sel - 1) % self._item_count()
                 self.play_sound("move")
             elif event.key in ("Down", "s", "Right", "d"):
-                self.sel = (self.sel + 1) % len(self.rects)
+                self.sel = (self.sel + 1) % self._item_count()
                 self.play_sound("move")
             elif event.key in ("Return", "space"):
                 self._choose(self.sel)
@@ -645,10 +684,14 @@ class LanguageScreen(_Screen):
             for i, r in enumerate(self.rects):
                 if r.collidepoint(event.pos):
                     self.sel = i
+            if self.other_rect and self.other_rect.collidepoint(event.pos):
+                self.sel = len(self.rects)
         elif event.kind == InputEvent.MOUSEDOWN:
             for i, r in enumerate(self.rects):
                 if r.collidepoint(event.pos):
                     self._choose(i)
+            if self.other_rect and self.other_rect.collidepoint(event.pos):
+                self._choose(len(self.rects))
 
     def draw(self):
         s = self.surface
@@ -657,8 +700,20 @@ class LanguageScreen(_Screen):
                       big=ui.font(34, bold=True))
         btn_font = ui.font(24, bold=True)
         code_font = ui.font(13)
-        for i, (code, label) in enumerate(i18n.AVAILABLE):
+        for i, (code, label) in enumerate(self.langs):
             ui.draw_button(s, self.rects[i], label, btn_font,
                            selected=(i == self.sel),
                            sub=code.upper(), sub_font=code_font)
+        if self.other_rect:
+            # Bewusst dezent: kleiner Text, gedeckte Farbe, feiner Rahmen
+            # nur bei Auswahl - kein Akzent-Button wie die Sprachen darüber.
+            hot = (self.sel == len(self.rects))
+            col = COL_MUTE if hot else ui.TEXT_FAINT
+            img = ui.font(14).render(t("lang.other"), True, col)
+            if hot:
+                pygame.draw.rect(s, ui.PANEL_LIGHT, self.other_rect,
+                                 border_radius=6)
+                pygame.draw.rect(s, ui.BORDER_LIGHT, self.other_rect,
+                                 width=1, border_radius=6)
+            s.blit(img, img.get_rect(center=self.other_rect.center))
         ui.draw_footer(s, self.width, self.height, t("lang.hint"))

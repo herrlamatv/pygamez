@@ -210,6 +210,7 @@
   "lamawiki.title": "WIKI",
   "lang.hint": "Pfeile/Maus wählen  -  Enter bestätigt",
   "lang.name": "Sprache",
+  "lang.other": "Weitere Sprachen / Other languages",
   "lang.title": "Sprache / Language",
   "maze.base": "Ausgang erreicht: +{n}",
   "maze.level": "Level {n}",

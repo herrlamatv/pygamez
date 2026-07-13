@@ -5,8 +5,8 @@ i18n.py
 Kleine Übersetzungs-Engine (Internationalisierung) für die Spielesammlung.
 
 - Die Sprach-Strings liegen als flache JSON-Dateien im Ordner ``lang/``
-  (``de.json``, ``en.json``). Jeder String hat einen stabilen Platzhalter-
-  Schlüssel, z.B. ``"menu.singleplayer"``.
+  (``de.json``, ``en.json``, ``fr.json``, ``es.json``, ``pt.json``). Jeder
+  String hat einen stabilen Platzhalter-Schlüssel, z.B. ``"menu.singleplayer"``.
 - Die gewählte Sprache wird in ``mem.json`` (neben diesem Modul) gespeichert,
   z.B. ``{"lang": "en"}``. Beim nächsten Start wird sie automatisch geladen.
 - ``t(key, **kwargs)`` liefert den übersetzten Text. Platzhalter im String
@@ -38,11 +38,18 @@ _MEM_SECTION = "mem"
 DEFAULT_LANG = "de"
 
 # Verfügbare Sprachen: (Code, Anzeigename). Reihenfolge = Anzeige im Auswahl-Screen.
-AVAILABLE = [
+# PRIMARY wird beim ersten Start sofort angezeigt; EXTRA erscheint erst nach
+# Klick auf den dezenten "Weitere Sprachen"-Button unten im Auswahl-Screen.
+PRIMARY = [
     ("de", "Deutsch"),
     ("en", "English"),
     ("fr", "Français"),
 ]
+EXTRA = [
+    ("es", "Español"),
+    ("pt", "Português"),
+]
+AVAILABLE = PRIMARY + EXTRA
 _CODES = {code for code, _ in AVAILABLE}
 
 _current = DEFAULT_LANG
