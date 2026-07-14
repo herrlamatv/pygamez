@@ -474,6 +474,7 @@ qui peuvent être coupés globalement.
 install-python.bat  Installation Windows : Python 3.13 + .venv + pygame
 start.bat            Script de lancement (Windows)
 start.sh             Script de lancement (Linux / macOS / Git Bash)
+pyinstall.bat        Build EXE (Windows) : met tout dans builds\PyGameZ.exe
 main.py              Interface Tkinter, intégration Pygame, boucle de jeu centrale
 game_base.py         Classe de base des jeux (update/draw/handle_event) + InputEvent + assistants
 settings.py          Charger/enregistrer les réglages (son/vibration/touches) (JSON)
@@ -579,6 +580,20 @@ macOS p. ex. `brew install python`.
 `install-python.bat` installe Python 3.13 par défaut. Si tu préfères 3.12 (ou
 une autre version), change dans le fichier la ligne `set "PYVER=3.13"` vers la
 version voulue et l'ID winget en conséquence (`Python.Python.3.12`).
+
+#### Créer une EXE autonome (Windows)
+
+```bat
+pyinstall.bat         :: crée builds\PyGameZ.exe (tout dans un seul fichier)
+```
+
+`pyinstall.bat` utilise la `.venv` (et la crée au besoin), installe
+automatiquement **PyInstaller** et empaquette le jeu complet - Python,
+pygame, tous les jeux, les langues, le wiki et les logos - dans **une seule
+`PyGameZ.exe`** dans le dossier **`builds\`**. Le fichier tourne sur
+n'importe quel PC Windows sans Python installé et peut être copié librement.
+Les réglages et meilleurs scores (`settings.json`, `mem.json`,
+`mem-ngb.json`) sont créés à côté de la .exe pendant le jeu.
 
 #### Dépannage
 
@@ -1022,6 +1037,7 @@ globalmente.
 install-python.bat  Instalación en Windows: Python 3.13 + .venv + pygame
 start.bat            Script de arranque (Windows)
 start.sh             Script de arranque (Linux / macOS / Git Bash)
+pyinstall.bat        Build de EXE (Windows): lo empaqueta todo en builds\PyGameZ.exe
 main.py              Interfaz Tkinter, incrustación de Pygame, bucle central
 game_base.py         Clase base de juego (update/draw/handle_event) + InputEvent + ayudas
 settings.py          Cargar/guardar ajustes (sonido/vibración/teclas) (JSON)
@@ -1123,6 +1139,20 @@ p. ej. `brew install python`.
 `install-python.bat` instala Python 3.13 por defecto. Si prefieres 3.12 (u otra
 versión), cambia en el archivo la línea `set "PYVER=3.13"` a la versión deseada
 y el ID de winget en consecuencia (`Python.Python.3.12`).
+
+#### Crear un EXE independiente (Windows)
+
+```bat
+pyinstall.bat         :: crea builds\PyGameZ.exe (todo en un solo archivo)
+```
+
+`pyinstall.bat` usa la `.venv` (y la crea si hace falta), instala
+**PyInstaller** automáticamente y empaqueta el juego completo - Python,
+pygame, todos los juegos, los idiomas, el wiki y los logos - en **un único
+`PyGameZ.exe`** dentro de la carpeta **`builds\`**. El archivo funciona en
+cualquier PC con Windows sin Python instalado y se puede copiar libremente.
+Los ajustes y récords (`settings.json`, `mem.json`, `mem-ngb.json`) se crean
+junto al .exe al jugar.
 
 #### Solución de problemas
 
@@ -1563,6 +1593,7 @@ globalmente.
 install-python.bat  Instalação no Windows: Python 3.13 + .venv + pygame
 start.bat            Script de arranque (Windows)
 start.sh             Script de arranque (Linux / macOS / Git Bash)
+pyinstall.bat        Build de EXE (Windows): empacota tudo em builds\PyGameZ.exe
 main.py              Interface Tkinter, incorporação do Pygame, ciclo central
 game_base.py         Classe base de jogo (update/draw/handle_event) + InputEvent + auxiliares
 settings.py          Carregar/guardar definições (som/vibração/teclas) (JSON)
@@ -1663,6 +1694,20 @@ p. ex. `brew install python`.
 O `install-python.bat` instala por padrão o Python 3.13. Quem preferir o 3.12
 (ou outra versão) muda no ficheiro a linha `set "PYVER=3.13"` para a versão
 desejada e o ID do winget em conformidade (`Python.Python.3.12`).
+
+#### Criar um EXE autónomo (Windows)
+
+```bat
+pyinstall.bat         :: cria builds\PyGameZ.exe (tudo num único ficheiro)
+```
+
+`pyinstall.bat` usa a `.venv` (e cria-a se necessário), instala o
+**PyInstaller** automaticamente e empacota o jogo completo - Python, pygame,
+todos os jogos, os idiomas, o wiki e os logótipos - num **único
+`PyGameZ.exe`** na pasta **`builds\`**. O ficheiro corre em qualquer PC
+Windows sem Python instalado e pode ser copiado livremente. As definições e
+recordes (`settings.json`, `mem.json`, `mem-ngb.json`) são criados ao lado
+do .exe durante o jogo.
 
 #### Resolução de problemas
 

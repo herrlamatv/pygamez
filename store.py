@@ -23,8 +23,14 @@ Struktur uebernommen.
 
 import json
 import os
+import sys
 
-_DIR = os.path.dirname(os.path.abspath(__file__))
+# In einer PyInstaller-.exe (sys.frozen) zeigt __file__ in den temporaeren
+# Entpack-Ordner, der beim Beenden verschwindet - dann neben der .exe speichern.
+if getattr(sys, "frozen", False):
+    _DIR = os.path.dirname(sys.executable)
+else:
+    _DIR = os.path.dirname(os.path.abspath(__file__))
 _PATH = os.path.join(_DIR, "mem.json")
 # Frueherer, separater Speicherort der Highscores (nur noch fuer die Migration).
 _LEGACY_HS_PATH = os.path.join(_DIR, "highscores.json")

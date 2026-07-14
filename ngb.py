@@ -22,13 +22,19 @@ Optik betrifft, hat es eine eigene Datei getrennt von Spielständen/Highscores.
 
 import json
 import os
+import sys
 
 import pygame
 
 import i18n
 from game_base import InputEvent
 
-_DIR = os.path.dirname(os.path.abspath(__file__))
+# In einer PyInstaller-.exe (sys.frozen) zeigt __file__ in den temporären
+# Entpack-Ordner, der beim Beenden verschwindet - dann neben der .exe speichern.
+if getattr(sys, "frozen", False):
+    _DIR = os.path.dirname(sys.executable)
+else:
+    _DIR = os.path.dirname(os.path.abspath(__file__))
 _FILE = os.path.join(_DIR, "mem-ngb.json")
 
 # ----- Kopffarben-Vorlagen (nur Optik) ----------------------------------

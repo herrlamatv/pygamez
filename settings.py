@@ -4,7 +4,8 @@ settings.py
 ===========
 Globale, dauerhaft gespeicherte Einstellungen (analog zu highscore.py).
 
-Gespeichert wird in "settings.json" neben diesem Modul:
+Gespeichert wird in "settings.json" neben diesem Modul (bei einer mit
+pyinstall.bat gebauten .exe: neben der .exe):
 - sound     : Soundeffekte an/aus
 - volume    : Lautstärke 0.0 .. 1.0
 - haptik    : Vibrations-/Rumble-Feedback an/aus (nur mit Gamepad wirksam)
@@ -21,8 +22,14 @@ Die Tastennamen sind Tkinter-"keysym"-Strings (z.B. "Up", "Left", "space",
 
 import json
 import os
+import sys
 
-_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "settings.json")
+# In einer PyInstaller-.exe (sys.frozen) zeigt __file__ in den temporären
+# Entpack-Ordner, der beim Beenden verschwindet - dann neben der .exe speichern.
+if getattr(sys, "frozen", False):
+    _PATH = os.path.join(os.path.dirname(sys.executable), "settings.json")
+else:
+    _PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "settings.json")
 
 # Aktionen, die jedes Spiel kennt (nicht jedes nutzt alle).
 ACTIONS = ["up", "down", "left", "right", "action"]

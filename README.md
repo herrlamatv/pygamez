@@ -427,6 +427,7 @@ keine Extra-Dateien nötig), die sich global stummschalten lassen.
 install-python.bat  Windows-Einrichtung: Python 3.13 + .venv + pygame
 start.bat            Startskript (Windows)
 start.sh             Startskript (Linux / macOS / Git Bash)
+pyinstall.bat        EXE-Build (Windows): packt alles in eine builds\PyGameZ.exe
 main.py              Tkinter-Oberfläche, Pygame-Einbettung, zentrale Game-Loop
 game_base.py         Game-Basisklasse (update/draw/handle_event) + InputEvent + Helfer
 settings.py          Einstellungen (Sound/Haptik/Tastenbelegung) laden/speichern (JSON)
@@ -530,6 +531,20 @@ z. B. `brew install python`.
 `install-python.bat` richtet standardmäßig Python 3.13 ein. Wer 3.12 (oder eine
 andere Version) bevorzugt, ändert in der Datei die Zeile `set "PYVER=3.13"` auf die
 gewünschte Version und die winget-ID entsprechend (`Python.Python.3.12`).
+
+#### Eigenständige EXE bauen (Windows)
+
+```bat
+pyinstall.bat         :: baut builds\PyGameZ.exe (alles in einer Datei)
+```
+
+`pyinstall.bat` nutzt die `.venv` (und erstellt sie bei Bedarf), installiert
+**PyInstaller** automatisch nach und packt das komplette Spiel - Python,
+pygame, alle Spiele, Sprachen, Wiki und Logos - in **eine einzige
+`PyGameZ.exe`** im Ordner **`builds\`**. Die Datei läuft auf jedem Windows-PC
+ohne installiertes Python und lässt sich frei kopieren. Einstellungen und
+Highscores (`settings.json`, `mem.json`, `mem-ngb.json`) legt die .exe beim
+Spielen neben sich an.
 
 #### Fehlersuche
 
@@ -962,6 +977,7 @@ generated, no extra files needed) that can be muted globally.
 install-python.bat  Windows setup: Python 3.13 + .venv + pygame
 start.bat            Launch script (Windows)
 start.sh             Launch script (Linux / macOS / Git Bash)
+pyinstall.bat        EXE build (Windows): bundles everything into builds\PyGameZ.exe
 main.py              Tkinter UI, Pygame embedding, central game loop
 game_base.py         Game base class (update/draw/handle_event) + InputEvent + helpers
 settings.py          Load/save settings (sound/haptics/key bindings) (JSON)
@@ -1061,6 +1077,20 @@ e.g. `brew install python`.
 `install-python.bat` sets up Python 3.13 by default. If you prefer 3.12 (or another
 version), change the line `set "PYVER=3.13"` in the file to the desired version
 and the winget ID accordingly (`Python.Python.3.12`).
+
+#### Building a standalone EXE (Windows)
+
+```bat
+pyinstall.bat         :: builds builds\PyGameZ.exe (everything in one file)
+```
+
+`pyinstall.bat` uses the `.venv` (creating it if needed), automatically
+installs **PyInstaller** and bundles the complete game - Python, pygame, all
+games, languages, wiki and logos - into **a single `PyGameZ.exe`** in the
+**`builds\`** folder. The file runs on any Windows PC without Python
+installed and can be copied freely. Settings and high scores
+(`settings.json`, `mem.json`, `mem-ngb.json`) are created next to the .exe
+while playing.
 
 #### Troubleshooting
 
