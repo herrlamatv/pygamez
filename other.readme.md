@@ -12,7 +12,7 @@
 
 Une collection de jeux de bureau en Python : **Tkinter** fournit la fenêtre et
 le menu, **Pygame** est intégré comme écran de jeu à l'intérieur de la fenêtre
-Tkinter. Vingt-six jeux avec des options partagées, des commandes entièrement
+Tkinter. Vingt-neuf jeux avec des options partagées, des commandes entièrement
 réassignables, des meilleurs scores, des effets sonores procéduraux et, pour
 plusieurs titres, un mode multijoueur. L'interface est **multilingue**
 (allemand / anglais / français / espagnol / portugais) ; la langue se choisit au
@@ -69,11 +69,14 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Reversi**      | 1 / 2 joueurs | Othello 8x8 : encercler et retourner les pions, 3 forces d'IA (minimax) ou un duel local |
 | **Yams**         | 1 / 2 joueurs | Classique de dés à 13 catégories, bonus supérieur et Yams ; course au score ou hotseat à 2 |
 | **Wordle**       | 1 joueur   | Devine le mot de 5 lettres en 6 essais, série sans fin, indices colorés, 5 langues |
+| **T-Rex Runner** | 1 joueur   | Course infinie dans le désert : saut variable, s'accroupir, cactus & ptérodactyles, cycle jour/nuit, vitesse croissante, 3 difficultés |
+| **Dames**        | 1 / 2 joueurs | 3 règles au choix (allemandes 8×8, internationales 10×10, checkers), prise obligatoire & dame volante, 3 niveaux d'IA (minimax) ou duel local |
+| **Poker**        | 1 joueur   | 3 variantes au choix : Texas Hold'em contre l'IA, 5 Card Draw et Vidéo Poker ; tours d'enchères, blinds, compte de jetons persistant |
 
 **Le multijoueur (2 joueurs en local)** est disponible pour **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duel
 coopératif)**, **Memory (duel)**, **Puissance 4**, **Duel de tanks**,
-**Reversi** et **Yams**.
+**Reversi**, **Yams** et **Dames**.
 Le mode se choisit directement sur l'écran de préparation
 (*Un joueur / Multijoueur*).
 
@@ -530,7 +533,8 @@ games/
   game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
+  trexrunner.py  dame.py  poker.py
 ```
 
 La langue choisie est enregistrée dans `mem.json` (dans la section `mem`, à
@@ -650,7 +654,7 @@ Les réglages et meilleurs scores (`settings.json`, `mem.json`,
 
 Una colección de juegos de escritorio en Python: **Tkinter** aporta la ventana y
 el menú, **Pygame** va incrustado como pantalla de juego dentro de la ventana de
-Tkinter. Veintiséis juegos con opciones compartidas, controles totalmente
+Tkinter. Veintinueve juegos con opciones compartidas, controles totalmente
 reasignables, récords, efectos de sonido procedurales y, en varios títulos, modo
 multijugador. La interfaz es **multilingüe** (alemán / inglés / francés /
 español / portugués); el idioma se elige en el primer arranque (el español y el
@@ -706,11 +710,14 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Reversi**      | 1 / 2 jugadores | Othello en 8x8: atrapar y voltear fichas, 3 fuerzas de IA (minimax) o un duelo local |
 | **Yahtzee**      | 1 / 2 jugadores | Clásico de dados con 13 categorías, bono superior y Yahtzee; carrera por el récord o hotseat a 2 |
 | **Wordle**       | 1 jugador    | Adivina la palabra de 5 letras en 6 intentos, racha sin fin, pistas de color, 5 idiomas |
+| **T-Rex Runner** | 1 jugador    | Carrera infinita por el desierto: salto variable, agacharse, cactus y pterodáctilos, ciclo día/noche, velocidad creciente, 3 dificultades |
+| **Damas**        | 1 / 2 jugadores | 3 reglamentos a elegir (alemanas 8×8, internacionales 10×10, checkers), captura obligatoria y dama voladora, 3 fuerzas de IA (minimax) o duelo local |
+| **Póker**        | 1 jugador    | 3 variantes a elegir: Texas Hold'em contra la IA, 5 Card Draw y Video Poker; rondas de apuestas, ciegas, cuenta de fichas persistente |
 
 **El multijugador (2 jugadores en local)** está disponible en **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
 cooperativo)**, **Memory (duelo)**, **Cuatro en raya**, **Duelo de tanques**,
-**Reversi** y **Yahtzee**.
+**Reversi**, **Yahtzee** y **Damas**.
 El modo se elige directamente en la pantalla previa (*Un jugador / Multijugador*).
 
 #### Detalles por juego
@@ -1125,7 +1132,8 @@ games/
   game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
+  trexrunner.py  dame.py  poker.py
 ```
 
 El idioma elegido se guarda en `mem.json` (en la sección `mem`, junto a la
@@ -1239,7 +1247,7 @@ junto al .exe al jugar.
 
 Uma coleção de jogos de desktop em Python: o **Tkinter** fornece a janela e o
 menu, o **Pygame** é incorporado como ecrã de jogo dentro da janela do Tkinter.
-Vinte e seis jogos com opções partilhadas, controlos totalmente reatribuíveis,
+Vinte e nove jogos com opções partilhadas, controlos totalmente reatribuíveis,
 recordes, efeitos sonoros procedurais e, em vários títulos, modo multijogador.
 A interface é **multilingue** (alemão / inglês / francês / espanhol /
 português); o idioma escolhe-se no primeiro arranque (o espanhol e o português
@@ -1295,11 +1303,14 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Reversi**      | 1 / 2 jogadores | Othello em 8x8: cercar e virar peças, 3 forças de IA (minimax) ou um duelo local |
 | **Yahtzee**      | 1 / 2 jogadores | Clássico de dados com 13 categorias, bónus superior e Yahtzee; caça ao recorde ou hotseat a 2 |
 | **Wordle**       | 1 jogador    | Adivinha a palavra de 5 letras em 6 tentativas, série sem fim, pistas coloridas, 5 idiomas |
+| **T-Rex Runner** | 1 jogador    | Corrida infinita pelo deserto: salto variável, agachar, cactos e pterodáctilos, ciclo dia/noite, velocidade crescente, 3 dificuldades |
+| **Damas**        | 1 / 2 jogadores | 3 regulamentos à escolha (alemãs 8×8, internacionais 10×10, checkers), captura obrigatória e dama voadora, 3 forças de IA (minimax) ou duelo local |
+| **Póquer**       | 1 jogador    | 3 variantes à escolha: Texas Hold'em contra a IA, 5 Card Draw e Video Poker; rondas de apostas, blinds, saldo de fichas persistente |
 
 **O multijogador (2 jogadores em local)** está disponível em **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
 cooperativo)**, **Memory (duelo)**, **Quatro em linha**, **Duelo de tanques**,
-**Reversi** e **Yahtzee**.
+**Reversi**, **Yahtzee** e **Damas**.
 O modo escolhe-se diretamente no ecrã de preparação (*Um jogador / Multijogador*).
 
 #### Detalhes por jogo
@@ -1712,7 +1723,8 @@ games/
   game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
+  trexrunner.py  dame.py  poker.py
 ```
 
 O idioma escolhido é guardado em `mem.json` (na secção `mem`, junto à secção

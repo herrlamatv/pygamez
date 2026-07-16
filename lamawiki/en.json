@@ -1345,6 +1345,129 @@
           ]
         }
       ]
+    },
+    {
+      "id": "trex",
+      "category": "games",
+      "game": "TRexRunnerGame",
+      "title": "T-Rex Runner",
+      "keywords": [
+        "trex",
+        "dino",
+        "runner",
+        "jump",
+        "duck",
+        "endless"
+      ],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Start running with [Space] or [Up] - the dino then runs automatically.",
+            "- Jump: tap [Space]/[Up] for small hops, hold for higher jumps.",
+            "- Duck: hold [Down] - in the air this makes you fall faster."
+          ]
+        },
+        {
+          "h": "Obstacles",
+          "body": [
+            "Cacti appear singly or in groups on the ground - jump over them.",
+            "Pterodactyls show up at three heights: high = duck, low/mid = jump.",
+            "Speed keeps rising; every 100 points you get a beep and a short blink."
+          ]
+        },
+        {
+          "h": "Options & tips",
+          "body": [
+            "Toggle on the start screen (saved): [1]-[3] difficulty, [N] day/night, [C] skin.",
+            "- Tapping briefly saves height for quick double obstacles.",
+            "- After a crash, continue right away with [Enter]/[Space]."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dame",
+      "category": "games",
+      "game": "DameGame",
+      "title": "Draughts (Dame)",
+      "keywords": [
+        "draughts",
+        "checkers",
+        "dame",
+        "forced capture",
+        "flying king",
+        "board"
+      ],
+      "sections": [
+        {
+          "h": "Variants",
+          "body": [
+            "Chosen in setup - each with 1 player vs AI or 2 players local:",
+            "- German Draughts 8x8: men capture forwards and backwards, the king flies any distance.",
+            "- International Draughts 10x10: bigger board, forced capture with the maximum rule (longest capture is mandatory).",
+            "- Checkers 8x8 (English): men capture forwards only, the king moves just one square."
+          ]
+        },
+        {
+          "h": "Rules & controls",
+          "body": [
+            "Captures are forced: if a capture exists you must take it - capturable pieces are outlined in red.",
+            "Click a piece, then the target square; play a multi-jump step by step.",
+            "Keyboard: [Arrows]/[WASD] move the frame, [Space]/[Enter] selects.",
+            "A man reaching the far row becomes a king (crown)."
+          ]
+        },
+        {
+          "h": "AI & score",
+          "body": [
+            "Single-player offers three AI strengths (minimax + alpha-beta), pick them in setup with [<]/[>].",
+            "The high score counts your wins against the AI this session; multiplayer is not scored.",
+            "After a game: [Enter] new round, [S] back to setup."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poker",
+      "category": "games",
+      "game": "PokerGame",
+      "title": "Poker",
+      "keywords": [
+        "poker",
+        "holdem",
+        "texas",
+        "video poker",
+        "draw",
+        "chips",
+        "blinds"
+      ],
+      "sections": [
+        {
+          "h": "Modes",
+          "body": [
+            "Pick the variant in the pre-game screen:",
+            "- Texas Hold'em: against 1-3 AI opponents, with dealer button, blinds and four betting rounds (preflop, flop, turn, river).",
+            "- 5 Card Draw: heads-up vs AI - swap cards once, two betting rounds.",
+            "- Video Poker (Jacks or Better): solo against the paytable."
+          ]
+        },
+        {
+          "h": "Actions",
+          "body": [
+            "During betting: [F] fold, [C] check/call, [R] raise, [A] all-in - or click the buttons.",
+            "When swapping/holding: click cards or press [1]-[5], then [Enter] to draw.",
+            "[Enter]/[Space] deals the next hand."
+          ]
+        },
+        {
+          "h": "Chips & hands",
+          "body": [
+            "Chips (start 1000) persist (mem.json). The high score is your highest chip count. Broke = restart with a click.",
+            "Hand ranking: High Card < Pair < Two Pair < Three of a Kind < Straight < Flush < Full House < Four of a Kind < Straight Flush < Royal Flush."
+          ]
+        }
+      ]
     }
   ]
 }

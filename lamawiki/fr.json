@@ -1344,6 +1344,128 @@
           ]
         }
       ]
+    },
+    {
+      "id": "trex",
+      "category": "games",
+      "game": "TRexRunnerGame",
+      "title": "T-Rex Runner",
+      "keywords": [
+        "trex",
+        "dino",
+        "runner",
+        "sauter",
+        "baisser",
+        "infini"
+      ],
+      "sections": [
+        {
+          "h": "Commandes",
+          "body": [
+            "La course demarre avec [Espace] ou [Haut] - le dino s'elance alors tout seul.",
+            "- Sauter : appui bref sur [Espace]/[Haut] pour de petits sauts, maintenir pour sauter plus haut.",
+            "- S'accroupir : maintenir [Bas] - en l'air, tu retombes plus vite."
+          ]
+        },
+        {
+          "h": "Obstacles",
+          "body": [
+            "Les cactus arrivent seuls ou en groupes au sol - saute par-dessus.",
+            "Les pterodactyles apparaissent a trois hauteurs : haut = se baisser, bas/milieu = sauter.",
+            "La vitesse augmente sans cesse ; tous les 100 points, un bip et un clignotement."
+          ]
+        },
+        {
+          "h": "Options & astuces",
+          "body": [
+            "Reglable sur l'ecran d'accueil (sauvegarde) : [1]-[3] difficulte, [N] cycle jour/nuit, [C] personnage.",
+            "- Un appui bref garde de la hauteur pour les doubles obstacles rapides.",
+            "- Apres un accident, on repart aussitot avec [Entree]/[Espace]."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dame",
+      "category": "games",
+      "game": "DameGame",
+      "title": "Dames",
+      "keywords": [
+        "dames",
+        "checkers",
+        "prise obligatoire",
+        "dame volante",
+        "plateau"
+      ],
+      "sections": [
+        {
+          "h": "Variantes",
+          "body": [
+            "Au choix dans les reglages - chacune en 1 joueur contre l'IA ou 2 joueurs en local :",
+            "- Dames allemandes 8x8 : les pions prennent en avant et en arriere, la dame vole sur toute la diagonale.",
+            "- Dames internationales 10x10 : plateau plus grand, prise obligatoire avec la regle du maximum (la plus longue prise est obligatoire).",
+            "- Checkers 8x8 (anglais) : les pions prennent seulement en avant, la dame n'avance que d'une case."
+          ]
+        },
+        {
+          "h": "Regles & commandes",
+          "body": [
+            "La prise est obligatoire : si une prise existe, tu dois la jouer - les pieces jouables sont entourees de rouge.",
+            "Clique une piece, puis la case d'arrivee ; une rafle se joue case par case.",
+            "Clavier : [Fleches]/[WASD] deplacent le cadre, [Espace]/[Entree] valide.",
+            "Un pion qui atteint la derniere rangee devient dame (couronne)."
+          ]
+        },
+        {
+          "h": "IA & score",
+          "body": [
+            "Le mode 1 joueur propose trois niveaux d'IA (minimax + alpha-beta), a choisir dans les reglages avec [<]/[>].",
+            "Le meilleur score compte tes victoires contre l'IA sur la session ; le multijoueur n'est pas compte.",
+            "Apres la partie : [Entree] nouvelle manche, [S] retour aux reglages."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poker",
+      "category": "games",
+      "game": "PokerGame",
+      "title": "Poker",
+      "keywords": [
+        "poker",
+        "holdem",
+        "texas",
+        "video poker",
+        "draw",
+        "jetons",
+        "blinds"
+      ],
+      "sections": [
+        {
+          "h": "Modes",
+          "body": [
+            "Choisis la variante sur l'ecran de preparation :",
+            "- Texas Hold'em : contre 1 a 3 IA, avec bouton donneur, blinds et quatre tours d'encheres (preflop, flop, turn, river).",
+            "- 5 Card Draw : en tete-a-tete contre l'IA - on change ses cartes une fois, deux tours d'encheres.",
+            "- Video Poker (Valets ou mieux) : en solo face a la table des gains."
+          ]
+        },
+        {
+          "h": "Actions",
+          "body": [
+            "Pendant les encheres : [F] se coucher, [C] checker/suivre, [R] relancer, [A] tapis - ou clique les boutons.",
+            "Pour echanger/garder : clique les cartes ou tape [1]-[5], puis [Entree] pour piocher.",
+            "[Entree]/[Espace] distribue la main suivante."
+          ]
+        },
+        {
+          "h": "Jetons & mains",
+          "body": [
+            "Les jetons (depart 1000) sont conserves (mem.json). Le meilleur score est ton plus haut tas de jetons. Ruine = relance d'un clic.",
+            "Ordre des mains : Carte haute < Paire < Deux paires < Brelan < Suite < Couleur < Full < Carre < Quinte flush < Quinte flush royale."
+          ]
+        }
+      ]
     }
   ]
 }

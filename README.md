@@ -9,7 +9,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Sechsundzwanzig
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Neunundzwanzig
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English / Français / Español / Português); die
@@ -66,11 +66,14 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Reversi**      | 1 / 2 Spieler | Othello auf 8x8: Steine einschließen und umdrehen, 3 KI-Stärken (Minimax) oder lokales Duell |
 | **Kniffel**      | 1 / 2 Spieler | Würfelklassiker mit 13 Kategorien, oberem Bonus und Kniffel; Highscore-Jagd oder 2-Spieler-Hotseat |
 | **Wordle**       | 1 Spieler    | Errate das 5-Buchstaben-Wort in 6 Versuchen, Endlos-Streak, farbige Hinweise, 5 Sprachen |
+| **T-Rex Runner** | 1 Spieler    | Endloser Wüstenlauf: variabler Sprung, Ducken, Kakteen & Flugsaurier, Tag/Nacht-Wechsel, steigendes Tempo, 3 Schwierigkeitsgrade |
+| **Dame**         | 1 / 2 Spieler | 3 Regelwerke wählbar (Deutsche 8×8, Internationale 10×10, Checkers), Schlagzwang & fliegende Dame, 3 KI-Stärken (Minimax) oder lokales Duell |
+| **Poker**        | 1 Spieler    | 3 Varianten wählbar: Texas Hold'em gegen KI, 5 Card Draw und Video Poker; Setzrunden, Blinds, dauerhaftes Chip-Konto |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)**, **Memory (Duell)**,
-**Vier gewinnt**, **Panzer-Duell**, **Reversi** und **Kniffel**. Der Modus wird
-direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
+**Vier gewinnt**, **Panzer-Duell**, **Reversi**, **Kniffel** und **Dame**. Der Modus
+wird direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
 
 #### Feature-Details je Spiel
 
@@ -482,7 +485,8 @@ games/
   game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
+  trexrunner.py  dame.py  poker.py
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -596,7 +600,7 @@ Spielen neben sich an.
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Twenty-six
+**Pygame** is embedded as the game display inside the Tkinter window. Twenty-nine
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English / French / Spanish / Portuguese); the
@@ -653,11 +657,14 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Reversi**      | 1 / 2 players | Othello on 8x8: trap and flip discs, 3 AI strengths (minimax) or a local duel |
 | **Kniffel (Yahtzee)** | 1 / 2 players | Dice classic with 13 categories, upper bonus and Yahtzee; high-score chase or 2-player hotseat |
 | **Wordle**       | 1 player     | Guess the 5-letter word in 6 tries, endless streak, colour hints, 5 languages |
+| **T-Rex Runner** | 1 player     | Endless desert run: variable jump, duck, cacti & pterodactyls, day/night cycle, rising speed, 3 difficulties |
+| **Draughts (Dame)** | 1 / 2 players | 3 rule sets (German 8×8, International 10×10, Checkers), forced captures & flying kings, 3 AI strengths (minimax) or a local duel |
+| **Poker**        | 1 player     | 3 selectable variants: Texas Hold'em vs AI, 5 Card Draw and Video Poker; betting rounds, blinds, persistent chip bankroll |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
-duel)**, **Memory (duel)**, **Connect Four**, **Tank Duel**, **Reversi** and
-**Kniffel**. The mode is
+duel)**, **Memory (duel)**, **Connect Four**, **Tank Duel**, **Reversi**,
+**Kniffel** and **Draughts**. The mode is
 chosen right in the pre-game screen (*Single-player / Multiplayer*).
 
 #### Feature details per game
@@ -1065,7 +1072,8 @@ games/
   game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
+  trexrunner.py  dame.py  poker.py
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the

@@ -351,6 +351,30 @@ def _draw_icon(cv, cx, cy, name, color, bg):
         cv.create_line(cx - 5, cy + 3, cx + 3, cy + 3, fill=color, width=2)
         cv.create_line(cx + 3, cy - 4, cx + 3, cy + 3, fill=color, width=2)
         cv.create_oval(cx + 4, cy + 4, cx + 8, cy + 8, fill=color, outline="")
+    elif name == "TRexRunnerGame":
+        cv.create_rectangle(cx - 5, cy - 6, cx + 2, cy + 4, fill=color, outline="")
+        cv.create_rectangle(cx + 1, cy - 9, cx + 8, cy - 3, fill=color, outline="")
+        cv.create_polygon(cx - 5, cy - 3, cx - 10, cy - 6, cx - 5, cy + 1,
+                          fill=color, outline="")
+        cv.create_oval(cx + 5, cy - 8, cx + 7, cy - 6, fill=bg, outline="")
+        cv.create_line(cx - 3, cy + 4, cx - 3, cy + 9, fill=color, width=2)
+        cv.create_line(cx + 1, cy + 4, cx + 1, cy + 9, fill=color, width=2)
+    elif name == "DameGame":
+        cv.create_oval(cx - 9, cy + 1, cx + 1, cy + 9, fill=color, outline="")
+        cv.create_oval(cx - 1, cy - 8, cx + 9, cy + 2, fill=color, outline="")
+        cv.create_polygon(cx + 1, cy - 3, cx + 1, cy - 7, cx + 3, cy - 5,
+                          cx + 4, cy - 8, cx + 5, cy - 5, cx + 7, cy - 7,
+                          cx + 7, cy - 3, fill=bg, outline="")
+    elif name == "PokerGame":
+        _round_rect(cv, cx - 9, cy - 9, cx + 2, cy + 7, 3, fill="",
+                    outline=color)
+        cv.create_text(cx - 4, cy - 4, text="A", fill=color,
+                       font=("Segoe UI", 7, "bold"))
+        cv.create_polygon(cx - 4, cy + 1, cx - 1, cy + 5, cx - 7, cy + 5,
+                          fill=color, outline="")
+        cv.create_oval(cx, cy - 2, cx + 10, cy + 8, fill="", outline=color,
+                       width=2)
+        cv.create_oval(cx + 3, cy + 1, cx + 7, cy + 5, fill="", outline=color)
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))

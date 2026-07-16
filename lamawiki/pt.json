@@ -1343,6 +1343,128 @@
           ]
         }
       ]
+    },
+    {
+      "id": "trex",
+      "category": "games",
+      "game": "TRexRunnerGame",
+      "title": "T-Rex Runner",
+      "keywords": [
+        "trex",
+        "dino",
+        "runner",
+        "pular",
+        "abaixar",
+        "infinito"
+      ],
+      "sections": [
+        {
+          "h": "Controlos",
+          "body": [
+            "A corrida comeca com [Espaco] ou [Cima] - o dino arranca entao sozinho.",
+            "- Pular: toca [Espaco]/[Cima] para saltos curtos, mantem para saltar mais alto.",
+            "- Abaixar: mantem [Baixo] - no ar cais mais depressa."
+          ]
+        },
+        {
+          "h": "Obstaculos",
+          "body": [
+            "Os cactos surgem sozinhos ou em grupos no chao - salta por cima.",
+            "Os pterodactilos aparecem a tres alturas: alto = abaixar, baixo/meio = pular.",
+            "A velocidade sobe sem parar; a cada 100 pontos ha um bip e um piscar."
+          ]
+        },
+        {
+          "h": "Opcoes e dicas",
+          "body": [
+            "Ajustavel no ecra inicial (fica guardado): [1]-[3] dificuldade, [N] ciclo dia/noite, [C] personagem.",
+            "- Um toque breve poupa altura para obstaculos duplos rapidos.",
+            "- Depois de bater, continua ja com [Enter]/[Espaco]."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dame",
+      "category": "games",
+      "game": "DameGame",
+      "title": "Damas",
+      "keywords": [
+        "damas",
+        "checkers",
+        "captura obrigatoria",
+        "dama voadora",
+        "tabuleiro"
+      ],
+      "sections": [
+        {
+          "h": "Variantes",
+          "body": [
+            "A escolha nos ajustes - cada uma em 1 jogador contra a IA ou 2 jogadores em local:",
+            "- Damas alemas 8x8: as pecas capturam para a frente e para tras, a dama voa por toda a diagonal.",
+            "- Damas internacionais 10x10: tabuleiro maior, captura obrigatoria com a regra do maximo (a captura mais longa e obrigatoria).",
+            "- Checkers 8x8 (ingles): as pecas capturam so para a frente, a dama anda apenas uma casa."
+          ]
+        },
+        {
+          "h": "Regras e controlos",
+          "body": [
+            "A captura e obrigatoria: se houver captura, tens de a fazer - as pecas jogaveis ficam contornadas a vermelho.",
+            "Clica numa peca e depois na casa de destino; uma captura multipla joga-se passo a passo.",
+            "Teclado: [Setas]/[WASD] movem o cursor, [Espaco]/[Enter] seleciona.",
+            "Uma peca que chega a ultima fila torna-se dama (coroa)."
+          ]
+        },
+        {
+          "h": "IA e pontos",
+          "body": [
+            "O modo 1 jogador tem tres forcas de IA (minimax + poda alfa-beta), escolhe-as nos ajustes com [<]/[>].",
+            "O recorde conta as tuas vitorias contra a IA na sessao; o multijogador nao pontua.",
+            "Depois da partida: [Enter] nova rodada, [S] voltar aos ajustes."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poker",
+      "category": "games",
+      "game": "PokerGame",
+      "title": "Poquer",
+      "keywords": [
+        "poker",
+        "holdem",
+        "texas",
+        "video poker",
+        "draw",
+        "fichas",
+        "blinds"
+      ],
+      "sections": [
+        {
+          "h": "Modos",
+          "body": [
+            "Escolhe a variante no ecra de preparacao:",
+            "- Texas Hold'em: contra 1-3 IA, com botao de distribuicao, blinds e quatro rondas de apostas (preflop, flop, turn, river).",
+            "- 5 Card Draw: mano a mano contra a IA - trocas cartas uma vez, duas rondas de apostas.",
+            "- Video Poker (Valetes ou melhor): a solo contra a tabela de pagamentos."
+          ]
+        },
+        {
+          "h": "Acoes",
+          "body": [
+            "Nas apostas: [F] desistir, [C] mesa/pagar, [R] aumentar, [A] all-in - ou clica nos botoes.",
+            "Ao trocar/manter: clica nas cartas ou prime [1]-[5], depois [Enter] para comprar.",
+            "[Enter]/[Espaco] distribui a mao seguinte."
+          ]
+        },
+        {
+          "h": "Fichas e maos",
+          "body": [
+            "As fichas (inicio 1000) mantem-se (mem.json). O recorde e o teu maior numero de fichas. Sem fichas = reinicio com um clique.",
+            "Ordem das maos: Carta alta < Par < Dois pares < Trinca < Sequencia < Flush < Full House < Quadra < Straight Flush < Royal Flush."
+          ]
+        }
+      ]
     }
   ]
 }

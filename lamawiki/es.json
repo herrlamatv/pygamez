@@ -1344,6 +1344,128 @@
           ]
         }
       ]
+    },
+    {
+      "id": "trex",
+      "category": "games",
+      "game": "TRexRunnerGame",
+      "title": "T-Rex Runner",
+      "keywords": [
+        "trex",
+        "dino",
+        "runner",
+        "saltar",
+        "agacharse",
+        "infinito"
+      ],
+      "sections": [
+        {
+          "h": "Controles",
+          "body": [
+            "La carrera empieza con [Espacio] o [Arriba] - el dino arranca entonces solo.",
+            "- Saltar: pulsa [Espacio]/[Arriba] para saltos cortos, manten para saltar mas alto.",
+            "- Agacharse: manten [Abajo] - en el aire caes mas rapido."
+          ]
+        },
+        {
+          "h": "Obstaculos",
+          "body": [
+            "Los cactus llegan solos o en grupos por el suelo - salta por encima.",
+            "Los pterodactilos aparecen a tres alturas: alto = agacharse, bajo/medio = saltar.",
+            "La velocidad sube sin parar; cada 100 puntos suena un pitido y parpadea."
+          ]
+        },
+        {
+          "h": "Opciones y trucos",
+          "body": [
+            "Ajustable en la pantalla de inicio (se guarda): [1]-[3] dificultad, [N] ciclo dia/noche, [C] personaje.",
+            "- Un toque breve reserva altura para obstaculos dobles rapidos.",
+            "- Tras chocar, sigue al instante con [Enter]/[Espacio]."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dame",
+      "category": "games",
+      "game": "DameGame",
+      "title": "Damas",
+      "keywords": [
+        "damas",
+        "checkers",
+        "captura obligatoria",
+        "dama voladora",
+        "tablero"
+      ],
+      "sections": [
+        {
+          "h": "Variantes",
+          "body": [
+            "A elegir en los ajustes - cada una en 1 jugador contra la IA o 2 jugadores en local:",
+            "- Damas alemanas 8x8: los peones capturan hacia delante y hacia atras, la dama vuela por toda la diagonal.",
+            "- Damas internacionales 10x10: tablero mayor, captura obligatoria con la regla del maximo (la captura mas larga es obligatoria).",
+            "- Checkers 8x8 (ingles): los peones capturan solo hacia delante, la dama avanza solo una casilla."
+          ]
+        },
+        {
+          "h": "Reglas y controles",
+          "body": [
+            "La captura es obligatoria: si hay captura, debes hacerla - las piezas jugables van bordeadas de rojo.",
+            "Haz clic en una pieza y luego en la casilla destino; una captura multiple se juega paso a paso.",
+            "Teclado: [Flechas]/[WASD] mueven el marco, [Espacio]/[Enter] selecciona.",
+            "Un peon que llega a la ultima fila se convierte en dama (corona)."
+          ]
+        },
+        {
+          "h": "IA y puntos",
+          "body": [
+            "El modo 1 jugador ofrece tres fuerzas de IA (minimax + poda alfa-beta), eligelas en los ajustes con [<]/[>].",
+            "El record cuenta tus victorias contra la IA en la sesion; el multijugador no puntua.",
+            "Tras la partida: [Enter] nueva ronda, [S] volver a los ajustes."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poker",
+      "category": "games",
+      "game": "PokerGame",
+      "title": "Poker",
+      "keywords": [
+        "poker",
+        "holdem",
+        "texas",
+        "video poker",
+        "draw",
+        "fichas",
+        "ciegas"
+      ],
+      "sections": [
+        {
+          "h": "Modos",
+          "body": [
+            "Elige la variante en la pantalla previa:",
+            "- Texas Hold'em: contra 1-3 rivales IA, con boton de reparto, ciegas y cuatro rondas de apuestas (preflop, flop, turn, river).",
+            "- 5 Card Draw: mano a mano contra la IA - cambias cartas una vez, dos rondas de apuestas.",
+            "- Video Poker (Jotas o mejor): en solitario contra la tabla de pagos."
+          ]
+        },
+        {
+          "h": "Acciones",
+          "body": [
+            "En las apuestas: [F] retirarse, [C] pasar/igualar, [R] subir, [A] all-in - o pulsa los botones.",
+            "Al cambiar/mantener: haz clic en las cartas o pulsa [1]-[5], luego [Enter] para robar.",
+            "[Enter]/[Espacio] reparte la siguiente mano."
+          ]
+        },
+        {
+          "h": "Fichas y manos",
+          "body": [
+            "Las fichas (inicio 1000) se conservan (mem.json). El record es tu mayor cantidad de fichas. Sin fichas = reinicio con un clic.",
+            "Orden de manos: Carta alta < Pareja < Doble pareja < Trio < Escalera < Color < Full < Poker < Escalera de color < Escalera real."
+          ]
+        }
+      ]
     }
   ]
 }

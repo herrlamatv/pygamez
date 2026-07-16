@@ -115,6 +115,13 @@ DEFAULTS = {
     "tunnel": {"control": "keys", "blur": 0.35, "last_level": 1},
     # Labyrinth: Ansicht (ego/top), Maus-Empfindlichkeit, letztes Level
     "maze": {"view": "ego", "sens": 1.0, "last_level": 1},
+    # T-Rex Runner: Schwierigkeit (chill/normal/hardcore), Figur/Skin (0-3),
+    # Tag/Nacht-Wechsel an/aus
+    "trex": {"difficulty": "normal", "skin": 1, "night": True},
+    # Dame: Variante (german/international/checkers), KI-Stärke (0-2)
+    "dame": {"variant": "german", "difficulty": 1},
+    # Poker: Anzahl KI-Gegner (1-3, nur Texas Hold'em), KI-Stärke (0-2)
+    "poker": {"opponents": 2, "difficulty": 1},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -234,6 +241,26 @@ def _merge_defaults(data):
                 out["maze"]["sens"] = max(0.5, min(2.0, float(mz["sens"])))
             if isinstance(mz.get("last_level"), int):
                 out["maze"]["last_level"] = max(1, min(50, mz["last_level"]))
+        tx = data.get("trex")
+        if isinstance(tx, dict):
+            if tx.get("difficulty") in ("chill", "normal", "hardcore"):
+                out["trex"]["difficulty"] = tx["difficulty"]
+            if isinstance(tx.get("skin"), int):
+                out["trex"]["skin"] = max(0, min(3, tx["skin"]))
+            if isinstance(tx.get("night"), bool):
+                out["trex"]["night"] = tx["night"]
+        dm = data.get("dame")
+        if isinstance(dm, dict):
+            if dm.get("variant") in ("german", "international", "checkers"):
+                out["dame"]["variant"] = dm["variant"]
+            if isinstance(dm.get("difficulty"), int):
+                out["dame"]["difficulty"] = max(0, min(2, dm["difficulty"]))
+        pk = data.get("poker")
+        if isinstance(pk, dict):
+            if isinstance(pk.get("opponents"), int):
+                out["poker"]["opponents"] = max(1, min(3, pk["opponents"]))
+            if isinstance(pk.get("difficulty"), int):
+                out["poker"]["difficulty"] = max(0, min(2, pk["difficulty"]))
         ctrl = data.get("controls")
         if isinstance(ctrl, dict):
             for player in ("p1", "p2"):

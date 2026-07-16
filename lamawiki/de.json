@@ -1345,6 +1345,129 @@
           ]
         }
       ]
+    },
+    {
+      "id": "trex",
+      "category": "games",
+      "game": "TRexRunnerGame",
+      "title": "T-Rex Runner",
+      "keywords": [
+        "trex",
+        "dino",
+        "runner",
+        "springen",
+        "ducken",
+        "endlos"
+      ],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Laufen startet mit [Leertaste] oder [Hoch] - der Dino laeuft dann automatisch los.",
+            "- Springen: [Leertaste]/[Hoch] antippen fuer kleine Hopser, gedrueckt halten fuer hoehere Spruenge.",
+            "- Ducken: [Runter] gedrueckt halten - in der Luft faellst du damit schneller."
+          ]
+        },
+        {
+          "h": "Hindernisse",
+          "body": [
+            "Kakteen kommen einzeln oder in Gruppen am Boden - drueberspringen.",
+            "Flugsaurier tauchen auf drei Hoehen auf: hoch = ducken, tief/mittig = springen.",
+            "Das Tempo steigt stetig; alle 100 Punkte gibt es einen Ton und ein kurzes Blinken."
+          ]
+        },
+        {
+          "h": "Optionen & Tipps",
+          "body": [
+            "Im Startbildschirm umschaltbar (bleibt gespeichert): [1]-[3] Schwierigkeit, [N] Tag/Nacht, [C] Figur.",
+            "- Kurz antippen spart Hoehe fuer schnelle Doppelhindernisse.",
+            "- Nach dem Aus geht es mit [Enter]/[Leertaste] sofort weiter."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dame",
+      "category": "games",
+      "game": "DameGame",
+      "title": "Dame",
+      "keywords": [
+        "dame",
+        "checkers",
+        "draughts",
+        "schlagzwang",
+        "fliegende dame",
+        "brett"
+      ],
+      "sections": [
+        {
+          "h": "Varianten",
+          "body": [
+            "Im Setup waehlbar - alle mit 1 Spieler gegen KI oder 2 Spieler lokal:",
+            "- Deutsche Dame 8x8: Maenner schlagen vor- und rueckwaerts, die Dame fliegt beliebig weit.",
+            "- Internationale Dame 10x10: groesseres Brett, Schlagzwang mit Maximum-Regel (laengste Schlagfolge ist Pflicht).",
+            "- Checkers 8x8 (englisch): Maenner schlagen nur vorwaerts, der King zieht nur ein Feld."
+          ]
+        },
+        {
+          "h": "Regeln & Steuerung",
+          "body": [
+            "Es herrscht Schlagzwang: ist ein Schlag moeglich, musst du schlagen - schlagbare Steine sind rot umrandet.",
+            "Stein anklicken, dann Zielfeld; einen Mehrfachsprung klickst du Schritt fuer Schritt.",
+            "Tastatur: [Pfeile]/[WASD] bewegen den Rahmen, [Leertaste]/[Enter] waehlt.",
+            "Ein Mann auf der letzten Reihe wird zur Dame (Krone)."
+          ]
+        },
+        {
+          "h": "KI & Punkte",
+          "body": [
+            "Einzelspieler bietet drei KI-Staerken (Minimax + Alpha-Beta), im Setup mit [<]/[>] waehlbar.",
+            "Der Highscore zaehlt deine Siege gegen die KI in dieser Sitzung; Mehrspieler wird nicht gewertet.",
+            "Nach der Partie: [Enter] neue Runde, [S] zurueck zum Setup."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poker",
+      "category": "games",
+      "game": "PokerGame",
+      "title": "Poker",
+      "keywords": [
+        "poker",
+        "holdem",
+        "texas",
+        "video poker",
+        "draw",
+        "chips",
+        "blinds"
+      ],
+      "sections": [
+        {
+          "h": "Modi",
+          "body": [
+            "Die Variante waehlst du im Vorspiel-Screen:",
+            "- Texas Hold'em: gegen 1-3 KI-Gegner, mit Dealer-Button, Blinds und vier Setzrunden (Preflop, Flop, Turn, River).",
+            "- 5 Card Draw: Heads-up gegen die KI - Karten einmal tauschen, zwei Setzrunden.",
+            "- Video Poker (Jacks or Better): Solo gegen die Auszahlungstabelle."
+          ]
+        },
+        {
+          "h": "Aktionen",
+          "body": [
+            "In den Setzrunden: [F] Fold, [C] Check/Call, [R] Raise, [A] All-In - oder die Buttons anklicken.",
+            "Beim Tauschen/Halten: Karten anklicken oder [1]-[5], dann [Enter] zum Ziehen.",
+            "[Enter]/[Leertaste] gibt die naechste Hand."
+          ]
+        },
+        {
+          "h": "Chips & Blaetter",
+          "body": [
+            "Chips (Start 1000) bleiben erhalten (mem.json). Der Highscore ist dein hoechster Chipstand. Pleite = Neustart per Klick.",
+            "Blatt-Rangfolge: Hoechste Karte < Paar < Zwei Paare < Drilling < Strasse < Flush < Full House < Vierling < Straight Flush < Royal Flush."
+          ]
+        }
+      ]
     }
   ]
 }
