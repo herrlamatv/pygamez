@@ -24,10 +24,14 @@ from .tanks import TankDuelGame
 from .blackjack import BlackjackGame
 from .tunnelracer import TunnelRacerGame
 from .labyrinth import LabyrinthGame
+from .reversi import ReversiGame
+from .kniffel import KniffelGame
+from .wordle import WordleGame
 
 # Reihenfolge der Spiele im Menü
 ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
              TetrisGame, InvadersGame, AsteroidsGame, PacmanGame, FlappyGame,
              DoodleGame, Game2048, MinesweeperGame, SudokuGame, FroggerGame,
              MemoryGame, SolitaireGame, AimTrainerGame, ConnectFourGame,
-             TankDuelGame, BlackjackGame, TunnelRacerGame, LabyrinthGame]
+             TankDuelGame, BlackjackGame, TunnelRacerGame, LabyrinthGame,
+             ReversiGame, KniffelGame, WordleGame]

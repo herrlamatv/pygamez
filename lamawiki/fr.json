@@ -1204,6 +1204,146 @@
           ]
         }
       ]
+    },
+    {
+      "id": "reversi",
+      "category": "games",
+      "game": "ReversiGame",
+      "title": "Reversi",
+      "keywords": [
+        "reversi",
+        "othello",
+        "pions",
+        "retourner",
+        "coins",
+        "ia"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Le Reversi (Othello) se joue sur un plateau 8x8. Tu poses un pion de façon à emprisonner une ou plusieurs pièces adverses en ligne droite entre ton nouveau pion et un autre pion de ta couleur - à l'horizontale, à la verticale ou en diagonale. Toutes les pièces encerclées passent à ta couleur.",
+            "Un coup n'est autorisé que s'il retourne au moins un pion. Sans coup possible, ton tour est passé automatiquement. Quand plus personne ne peut jouer, la partie s'arrête : celui qui a le plus de pions gagne.",
+            "En solo, tu (Noir) affrontes l'IA ; à deux, Noir et Blanc jouent à tour de rôle."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Souris : clique sur une case vide. Les cases jouables sont marquées d'un petit point.",
+            "- Clavier : les flèches (ou tes touches de déplacement) déplacent le cadre de sélection, [Espace] ou [Entrée] pose le pion.",
+            "- Après une manche : [Entrée] = nouvelle manche, [S] = retour au choix (solo uniquement)."
+          ]
+        },
+        {
+          "h": "Force de l'IA & astuces",
+          "body": [
+            "Facile joue surtout au hasard, Moyen anticipe quelques coups, Difficile cherche plus profond et valorise fortement les coins.",
+            "- Les coins sont en or : un pion dans un coin ne peut plus jamais être retourné.",
+            "- Méfie-toi des cases voisines d'un coin - elles offrent souvent le coin à l'adversaire.",
+            "- Avoir peu de pions mais plus de mobilité en milieu de partie vaut souvent mieux que d'en avoir beaucoup."
+          ]
+        },
+        {
+          "h": "Score",
+          "body": [
+            "Chaque victoire contre l'IA vaut un point ; le meilleur score est le nombre de victoires d'une session. Le mode à deux n'est pas compté."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kniffel",
+      "category": "games",
+      "game": "KniffelGame",
+      "title": "Yams",
+      "keywords": [
+        "yams",
+        "yahtzee",
+        "dés",
+        "suite",
+        "full",
+        "score"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Tu as 5 dés et jusqu'à 3 lancers par tour. Après chaque lancer, tu peux garder des dés et relancer seulement les autres. Ensuite, tu inscris le résultat dans une seule des 13 catégories.",
+            "Chaque catégorie ne sert qu'une fois. Si rien ne convient, tu en barres une à 0 point. Après 13 tours, la feuille est pleine et la partie se termine.",
+            "En solo, c'est une course au meilleur total ; à deux, vous remplissez deux feuilles à tour de rôle - le total le plus élevé gagne."
+          ]
+        },
+        {
+          "h": "Les catégories",
+          "body": [
+            "Section haute (As à Six) : compte les points du chiffre correspondant. Si ta section haute atteint au moins 63, tu gagnes un bonus de 35 points.",
+            "- Brelan/Carré : somme de tous les dés si au moins 3 resp. 4 sont identiques.",
+            "- Full = 25 (trois + une paire), Petite suite = 30 (quatre à la suite), Grande suite = 40 (cinq à la suite), Yams = 50 (cinq identiques), Chance = somme des dés (toujours permis)."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- [Espace] ou le bouton Lancer relance les dés non gardés.",
+            "- Clique sur un dé ou appuie sur [1] à [5] pour garder ou libérer ce dé.",
+            "- Clique sur une catégorie ou choisis-la avec les flèches, puis [Entrée] pour l'inscrire.",
+            "- Après la partie : [Entrée] recommence."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Vise tôt le bonus de 63 en section haute - les cinq et les six valent gros.",
+            "- Sers-toi de la Chance pour sauver un mauvais lancer ; barre le Yams ou une suite si rien ne marche."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wordle",
+      "category": "games",
+      "game": "WordleGame",
+      "title": "Wordle",
+      "keywords": [
+        "wordle",
+        "mot",
+        "deviner",
+        "lettres",
+        "vert",
+        "jaune"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Devine le mot caché de 5 lettres en 6 essais maximum. Après chaque essai, les cases changent de couleur : vert = bonne lettre au bon endroit, jaune = la lettre existe mais ailleurs, gris = la lettre n'est pas dans le mot.",
+            "Les lettres en double sont gérées correctement : une lettre n'est marquée en jaune ou vert que le nombre de fois où elle apparaît vraiment dans la solution.",
+            "Chaque essai doit faire 5 lettres, mais pas forcément un 'vrai' mot - il n'est pas vérifié dans un dictionnaire. Les solutions correspondent à la langue choisie."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Tape les lettres A-Z, [Retour] efface la dernière, [Entrée] valide la ligne (avec 5 lettres).",
+            "- Le clavier à l'écran fonctionne aussi à la souris ; ses lettres se colorent selon ce que tu as déjà appris."
+          ]
+        },
+        {
+          "h": "Score",
+          "body": [
+            "Ça continue sans fin : chaque mot résolu rapporte des points - moins d'essais, plus de points (10 à 60). Un nouveau mot arrive aussitôt.",
+            "Le premier mot que tu ne trouves PAS met fin à la partie ; les points accumulés sont ton meilleur score."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Commence par un mot avec beaucoup de lettres différentes et fréquentes.",
+            "- Sers-toi des lettres grises pour éliminer et déplace les lettres jaunes à une nouvelle place."
+          ]
+        }
+      ]
     }
   ]
 }

@@ -12,7 +12,7 @@
 
 Une collection de jeux de bureau en Python : **Tkinter** fournit la fenêtre et
 le menu, **Pygame** est intégré comme écran de jeu à l'intérieur de la fenêtre
-Tkinter. Vingt-trois jeux avec des options partagées, des commandes entièrement
+Tkinter. Vingt-six jeux avec des options partagées, des commandes entièrement
 réassignables, des meilleurs scores, des effets sonores procéduraux et, pour
 plusieurs titres, un mode multijoueur. L'interface est **multilingue**
 (allemand / anglais / français / espagnol / portugais) ; la langue se choisit au
@@ -66,10 +66,14 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Blackjack**    | 1 joueur    | Blackjack de casino avec sabot de 4 jeux, doubler/partager, blackjack 3:2 et solde de jetons persistant |
 | **Tunnel Racer** | 1 joueur    | Vol 3D dans un tube néon : mode sans fin + 30 niveaux, pilotage au clavier ou à la souris, motion blur |
 | **Labyrinthe 3D** | 1 joueur   | Raycaster à la première personne (style Wolfenstein) avec 50 niveaux à graine, orbes, minicarte - ou vue 2D de dessus |
+| **Reversi**      | 1 / 2 joueurs | Othello 8x8 : encercler et retourner les pions, 3 forces d'IA (minimax) ou un duel local |
+| **Yams**         | 1 / 2 joueurs | Classique de dés à 13 catégories, bonus supérieur et Yams ; course au score ou hotseat à 2 |
+| **Wordle**       | 1 joueur   | Devine le mot de 5 lettres en 6 essais, série sans fin, indices colorés, 5 langues |
 
 **Le multijoueur (2 joueurs en local)** est disponible pour **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duel
-coopératif)**, **Memory (duel)**, **Puissance 4** et **Duel de tanks**.
+coopératif)**, **Memory (duel)**, **Puissance 4**, **Duel de tanks**,
+**Reversi** et **Yams**.
 Le mode se choisit directement sur l'écran de préparation
 (*Un joueur / Multijoueur*).
 
@@ -408,6 +412,35 @@ fusionnent.
 - Points : 500 par niveau + 100 par orbe + bonus de temps ; les niveaux résolus
   sont cochés et la session s'additionne au meilleur score.
 
+**Reversi**
+- **Othello sur 8x8** : pose des pions qui encerclent les rangées adverses et
+  retourne tout ce qui est enfermé ; les coups illégaux sont bloqués et un tour
+  sans coup possible est **passé automatiquement**.
+- **Solo contre l'IA** (3 forces : negamax avec alpha-bêta, pondération de
+  position + mobilité) **ou un duel local**, Noir contre Blanc.
+- Les cases jouables sont mises en évidence ; joue à la **souris** ou avec le
+  cadre de sélection (flèches + Espace/Entrée). Chaque victoire contre l'IA vaut
+  un point pour le meilleur score.
+
+**Yams**
+- **Classique de dés** : 5 dés, jusqu'à 3 lancers par tour, **garde** les dés un
+  à un, puis inscris l'une des **13 catégories** (avec un aperçu des points
+  possibles).
+- Feuille complète : section haute avec **bonus de 63 (+35)**, brelan/carré,
+  full, petite/grande suite, **Yams (50)** et Chance.
+- **Solo en course au meilleur total** ou **hotseat à 2 joueurs** avec deux
+  feuilles côte à côte ; joue à la souris ou aux touches (Espace, 1-5, flèches,
+  Entrée).
+
+**Wordle**
+- Devine le **mot de 5 lettres en 6 essais** ; retour coloré (vert/jaune/gris)
+  avec un **comptage correct des lettres doubles** et un clavier à l'écran qui se
+  colore.
+- **Série sans fin** : chaque mot résolu rapporte des points (moins d'essais =
+  plus), le premier mot non trouvé met fin à la partie - total = meilleur score.
+- **Listes de mots par langue** (A-Z uniquement) ; les essais ne sont pas
+  vérifiés dans un dictionnaire. Tape au clavier ou clique les touches à l'écran.
+
 Les meilleurs scores sont enregistrés dans la section `highscores` de
 `mem.json` (à côté du code) – avec la langue (section `mem`).
 
@@ -617,7 +650,7 @@ Les réglages et meilleurs scores (`settings.json`, `mem.json`,
 
 Una colección de juegos de escritorio en Python: **Tkinter** aporta la ventana y
 el menú, **Pygame** va incrustado como pantalla de juego dentro de la ventana de
-Tkinter. Veintitrés juegos con opciones compartidas, controles totalmente
+Tkinter. Veintiséis juegos con opciones compartidas, controles totalmente
 reasignables, récords, efectos de sonido procedurales y, en varios títulos, modo
 multijugador. La interfaz es **multilingüe** (alemán / inglés / francés /
 español / portugués); el idioma se elige en el primer arranque (el español y el
@@ -670,10 +703,14 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Blackjack**    | 1 jugador    | Blackjack de casino con zapato de 4 barajas, doblar/dividir, blackjack 3:2 y saldo de fichas persistente |
 | **Tunnel Racer** | 1 jugador    | Vuelo 3D por un tubo de neón: modo sin fin + 30 niveles, control por teclas o ratón, motion blur |
 | **Laberinto 3D** | 1 jugador    | Raycaster en primera persona (estilo Wolfenstein) con 50 niveles con semilla, orbes, minimapa - o vista cenital 2D |
+| **Reversi**      | 1 / 2 jugadores | Othello en 8x8: atrapar y voltear fichas, 3 fuerzas de IA (minimax) o un duelo local |
+| **Yahtzee**      | 1 / 2 jugadores | Clásico de dados con 13 categorías, bono superior y Yahtzee; carrera por el récord o hotseat a 2 |
+| **Wordle**       | 1 jugador    | Adivina la palabra de 5 letras en 6 intentos, racha sin fin, pistas de color, 5 idiomas |
 
 **El multijugador (2 jugadores en local)** está disponible en **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
-cooperativo)**, **Memory (duelo)**, **Cuatro en raya** y **Duelo de tanques**.
+cooperativo)**, **Memory (duelo)**, **Cuatro en raya**, **Duelo de tanques**,
+**Reversi** y **Yahtzee**.
 El modo se elige directamente en la pantalla previa (*Un jugador / Multijugador*).
 
 #### Detalles por juego
@@ -972,6 +1009,34 @@ arma), efectos de explosión, récord.
 - Puntos: 500 por nivel + 100 por orbe + bonus de tiempo; los niveles resueltos
   se marcan y la sesión se suma al récord.
 
+**Reversi**
+- **Othello en 8x8**: coloca fichas que atrapen las filas rivales y voltea todo
+  lo encerrado; los movimientos ilegales están bloqueados y un turno sin jugada
+  se **pasa automáticamente**.
+- **Un jugador contra la IA** (3 fuerzas: negamax con alfa-beta, ponderación de
+  posición + movilidad) **o un duelo local**, Negras contra Blancas.
+- Las casillas válidas se resaltan; juega con el **ratón** o con el marco de
+  selección (flechas + Espacio/Enter). Cada victoria contra la IA suma un punto
+  al récord.
+
+**Yahtzee**
+- **Clásico de dados**: 5 dados, hasta 3 tiradas por turno, **retén** los dados
+  uno a uno, luego anota una de las **13 categorías** (con vista previa de los
+  puntos posibles).
+- Hoja completa: sección superior con **bono de 63 (+35)**, trío/póker, full,
+  escalera menor/mayor, **Yahtzee (50)** y Suerte.
+- **Un jugador como carrera por el mayor total** o **hotseat a 2 jugadores** con
+  dos hojas en paralelo; juega con ratón o teclas (Espacio, 1-5, flechas, Enter).
+
+**Wordle**
+- Adivina la **palabra de 5 letras en 6 intentos**; respuesta de color
+  (verde/amarillo/gris) con **conteo correcto de letras repetidas** y un teclado
+  en pantalla que se colorea.
+- **Racha sin fin**: cada palabra resuelta da puntos (menos intentos = más), la
+  primera palabra no resuelta termina la partida - total = récord.
+- **Listas de palabras por idioma** (solo A-Z); los intentos no se comprueban
+  con un diccionario. Escribe con el teclado o pulsa las teclas en pantalla.
+
 Los récords se guardan en la sección `highscores` de `mem.json` (junto al
 código) – junto con el idioma (sección `mem`).
 
@@ -1174,7 +1239,7 @@ junto al .exe al jugar.
 
 Uma coleção de jogos de desktop em Python: o **Tkinter** fornece a janela e o
 menu, o **Pygame** é incorporado como ecrã de jogo dentro da janela do Tkinter.
-Vinte e três jogos com opções partilhadas, controlos totalmente reatribuíveis,
+Vinte e seis jogos com opções partilhadas, controlos totalmente reatribuíveis,
 recordes, efeitos sonoros procedurais e, em vários títulos, modo multijogador.
 A interface é **multilingue** (alemão / inglês / francês / espanhol /
 português); o idioma escolhe-se no primeiro arranque (o espanhol e o português
@@ -1227,10 +1292,14 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Blackjack**    | 1 jogador    | Blackjack de casino com shoe de 4 baralhos, dobrar/dividir, blackjack 3:2 e saldo de fichas persistente |
 | **Tunnel Racer** | 1 jogador    | Voo 3D num tubo de néon: modo sem fim + 30 níveis, controlo por teclas ou rato, motion blur |
 | **Labirinto 3D** | 1 jogador    | Raycaster na primeira pessoa (estilo Wolfenstein) com 50 níveis com semente, orbes, minimapa - ou vista de cima 2D |
+| **Reversi**      | 1 / 2 jogadores | Othello em 8x8: cercar e virar peças, 3 forças de IA (minimax) ou um duelo local |
+| **Yahtzee**      | 1 / 2 jogadores | Clássico de dados com 13 categorias, bónus superior e Yahtzee; caça ao recorde ou hotseat a 2 |
+| **Wordle**       | 1 jogador    | Adivinha a palavra de 5 letras em 6 tentativas, série sem fim, pistas coloridas, 5 idiomas |
 
 **O multijogador (2 jogadores em local)** está disponível em **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
-cooperativo)**, **Memory (duelo)**, **Quatro em linha** e **Duelo de tanques**.
+cooperativo)**, **Memory (duelo)**, **Quatro em linha**, **Duelo de tanques**,
+**Reversi** e **Yahtzee**.
 O modo escolhe-se diretamente no ecrã de preparação (*Um jogador / Multijogador*).
 
 #### Detalhes por jogo
@@ -1527,6 +1596,33 @@ melhoria de arma), efeitos de explosão, recorde.
   afastado, os **orbes** pelo caminho dão pontos extra.
 - Pontos: 500 por nível + 100 por orbe + bónus de tempo; níveis resolvidos são
   assinalados e a sessão soma-se ao recorde.
+
+**Reversi**
+- **Othello em 8x8**: coloca peças que cercam as filas do adversário e vira tudo
+  o que fica preso; jogadas ilegais estão bloqueadas e uma vez sem jogada é
+  **passada automaticamente**.
+- **Um jogador contra a IA** (3 forças: negamax com alfa-beta, ponderação de
+  posição + mobilidade) **ou um duelo local**, Pretas contra Brancas.
+- As casas válidas são realçadas; joga com o **rato** ou com o cursor de seleção
+  (setas + Espaço/Enter). Cada vitória contra a IA vale um ponto para o recorde.
+
+**Yahtzee**
+- **Clássico de dados**: 5 dados, até 3 lançamentos por vez, **guarda** os dados
+  um a um, depois marca uma das **13 categorias** (com pré-visualização dos
+  pontos possíveis).
+- Folha completa: secção de cima com **bónus de 63 (+35)**, trinca/quadra, full
+  house, sequência baixa/alta, **Yahtzee (50)** e Chance.
+- **Um jogador como caça ao maior total** ou **hotseat a 2 jogadores** com duas
+  folhas lado a lado; joga com o rato ou teclas (Espaço, 1-5, setas, Enter).
+
+**Wordle**
+- Adivinha a **palavra de 5 letras em 6 tentativas**; resposta colorida
+  (verde/amarelo/cinzento) com **contagem correta de letras repetidas** e um
+  teclado no ecrã que se colore.
+- **Série sem fim**: cada palavra resolvida dá pontos (menos tentativas = mais),
+  a primeira palavra não resolvida termina a partida - total = recorde.
+- **Listas de palavras por idioma** (só A-Z); as tentativas não são verificadas
+  num dicionário. Escreve no teclado ou clica as teclas no ecrã.
 
 Os recordes são guardados na secção `highscores` de `mem.json` (junto ao
 código) – juntamente com o idioma (secção `mem`).

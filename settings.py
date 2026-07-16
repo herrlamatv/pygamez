@@ -107,6 +107,8 @@ DEFAULTS = {
     "aim": {"theme": "space", "sens": 1.0, "blur": 0.0},
     # Vier gewinnt: KI-Stärke (0=Leicht, 1=Mittel, 2=Schwer)
     "connect4": {"difficulty": 1},
+    # Reversi (Othello): KI-Stärke (0=Leicht, 1=Mittel, 2=Schwer)
+    "reversi": {"difficulty": 1},
     # Panzer-Duell: KI-Stärke (0-2), Arena (-1 = zufällig, 0-3 = Preset)
     "tanks": {"difficulty": 1, "arena": -1},
     # Tunnel Racer: Steuerung (keys/mouse), Motion-Blur, letztes Level
@@ -206,6 +208,9 @@ def _merge_defaults(data):
         c4 = data.get("connect4")
         if isinstance(c4, dict) and isinstance(c4.get("difficulty"), int):
             out["connect4"]["difficulty"] = max(0, min(2, c4["difficulty"]))
+        rv = data.get("reversi")
+        if isinstance(rv, dict) and isinstance(rv.get("difficulty"), int):
+            out["reversi"]["difficulty"] = max(0, min(2, rv["difficulty"]))
         tk_ = data.get("tanks")
         if isinstance(tk_, dict):
             if isinstance(tk_.get("difficulty"), int):

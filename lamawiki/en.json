@@ -1205,6 +1205,146 @@
           ]
         }
       ]
+    },
+    {
+      "id": "reversi",
+      "category": "games",
+      "game": "ReversiGame",
+      "title": "Reversi",
+      "keywords": [
+        "reversi",
+        "othello",
+        "discs",
+        "flip",
+        "corners",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Reversi (Othello) is played on an 8x8 board. You place a disc so that one or more of the opponent's discs are trapped in a straight line between the new disc and another disc of your colour - horizontally, vertically or diagonally. All trapped discs flip to your colour.",
+            "A move is only legal if it flips at least one disc. If you have no legal move, your turn is passed automatically. When neither player can move, the game ends and whoever has more discs wins.",
+            "In single player you (Black) face the AI; in two-player mode Black and White alternate."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Mouse: click an empty square. Legal squares are marked with a small dot.",
+            "- Keyboard: the arrow keys (or your movement keys) move the selection frame, [Space] or [Enter] places the disc.",
+            "- After a round: [Enter] = new round, [S] = back to setup (single player only)."
+          ]
+        },
+        {
+          "h": "AI strength & tips",
+          "body": [
+            "Easy plays mostly at random, Medium looks a few moves ahead, Hard searches deeper and values the corners highly.",
+            "- Corners are golden: a disc in a corner can never be flipped again.",
+            "- Beware the squares next to a corner - they often hand the corner to your opponent.",
+            "- Having fewer discs but more mobility in the midgame is often better than having many."
+          ]
+        },
+        {
+          "h": "Score",
+          "body": [
+            "Every win against the AI is worth one point; the high score is the most wins in a session. Two-player games are not scored."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kniffel",
+      "category": "games",
+      "game": "KniffelGame",
+      "title": "Yahtzee",
+      "keywords": [
+        "yahtzee",
+        "kniffel",
+        "dice",
+        "straight",
+        "full house",
+        "score"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "You have 5 dice and up to 3 rolls per turn. After each roll you may keep any dice and reroll only the rest. Then you record the result in exactly one of the 13 categories.",
+            "Each category can be used only once. If nothing fits, you cross one out for 0 points. After 13 turns the sheet is full and the game is over.",
+            "Single player is a high-score chase for the highest total; in two-player mode you fill two sheets in turns - the higher total wins."
+          ]
+        },
+        {
+          "h": "The categories",
+          "body": [
+            "Upper section (Ones to Sixes): counts the pips of that number. If your upper section totals at least 63, you earn a 35-point bonus.",
+            "- Three/Four of a kind: sum of all dice if at least 3 resp. 4 are the same.",
+            "- Full house = 25 (three plus a pair), Small straight = 30 (four in a row), Large straight = 40 (five in a row), Yahtzee = 50 (five of a kind), Chance = sum of all dice (always allowed)."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- [Space] or the Roll button rerolls the dice that are not held.",
+            "- Click a die or press [1] to [5] to hold or release that die.",
+            "- Click a category or pick it with the arrow keys and press [Enter] to score it.",
+            "- After the game: [Enter] restarts."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Grab the 63-point upper bonus early - fives and sixes are especially valuable.",
+            "- Use Chance to rescue a bad roll; cross out Yahtzee or a straight if nothing works out."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wordle",
+      "category": "games",
+      "game": "WordleGame",
+      "title": "Wordle",
+      "keywords": [
+        "wordle",
+        "word",
+        "guess",
+        "letters",
+        "green",
+        "yellow"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Guess the hidden 5-letter word within 6 attempts. After each guess the tiles change colour: green = right letter in the right spot, yellow = the letter appears but somewhere else, grey = the letter is not in the word.",
+            "Repeated letters are handled correctly: a letter is only marked yellow or green as often as it actually occurs in the answer.",
+            "Every guess must be 5 letters, but need not be a 'real' word - it is not checked against a dictionary. The answers match the selected language."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Type letters A-Z, [Backspace] deletes the last one, [Enter] checks the row (only with 5 letters).",
+            "- You can also use the on-screen keyboard with the mouse; its letters colour in based on what you have learned so far."
+          ]
+        },
+        {
+          "h": "Score",
+          "body": [
+            "It goes on endlessly: each solved word scores points - fewer guesses means more (10 to 60). A new word appears right after.",
+            "The first word you FAIL to crack ends the game; the points you gathered are your high score."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Open with a word that has many different, common letters.",
+            "- Use grey letters to rule things out and move yellow letters to a new position."
+          ]
+        }
+      ]
     }
   ]
 }

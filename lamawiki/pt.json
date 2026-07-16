@@ -1204,6 +1204,145 @@
           ]
         }
       ]
+    },
+    {
+      "id": "reversi",
+      "category": "games",
+      "game": "ReversiGame",
+      "title": "Reversi",
+      "keywords": [
+        "reversi",
+        "othello",
+        "peças",
+        "virar",
+        "cantos",
+        "ia"
+      ],
+      "sections": [
+        {
+          "h": "Como se joga",
+          "body": [
+            "O Reversi (Othello) joga-se num tabuleiro 8x8. Colocas uma peça de forma a prender uma ou mais peças do adversário em linha reta entre a tua nova peça e outra da tua cor - na horizontal, vertical ou diagonal. Todas as peças cercadas mudam para a tua cor.",
+            "Uma jogada só é válida se virar pelo menos uma peça. Se não tiveres jogada, a tua vez passa automaticamente. Quando nenhum consegue jogar, a partida termina: ganha quem tiver mais peças.",
+            "Num jogador enfrentas (Pretas) a IA; a dois, Pretas e Brancas alternam."
+          ]
+        },
+        {
+          "h": "Comandos",
+          "body": [
+            "- Rato: clica numa casa vazia. As casas válidas têm um pequeno ponto.",
+            "- Teclado: as setas (ou as tuas teclas de movimento) movem o cursor de seleção, [Espaço] ou [Enter] coloca a peça.",
+            "- No fim da ronda: [Enter] = nova ronda, [S] = voltar à seleção (só um jogador)."
+          ]
+        },
+        {
+          "h": "Força da IA e dicas",
+          "body": [
+            "Fácil joga quase ao acaso, Médio prevê algumas jogadas, Difícil procura mais fundo e valoriza muito os cantos.",
+            "- Os cantos valem ouro: uma peça no canto nunca mais pode ser virada.",
+            "- Cuidado com as casas ao lado de um canto - costumam oferecer o canto ao adversário.",
+            "- Ter poucas peças mas mais mobilidade a meio do jogo é muitas vezes melhor do que ter muitas."
+          ]
+        },
+        {
+          "h": "Pontos",
+          "body": [
+            "Cada vitória contra a IA vale um ponto; o recorde é o maior número de vitórias de uma sessão. O modo a dois não conta."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kniffel",
+      "category": "games",
+      "game": "KniffelGame",
+      "title": "Yahtzee",
+      "keywords": [
+        "yahtzee",
+        "dados",
+        "sequência",
+        "full",
+        "pontos"
+      ],
+      "sections": [
+        {
+          "h": "Como se joga",
+          "body": [
+            "Tens 5 dados e até 3 lançamentos por vez. Depois de cada lançamento podes guardar os dados que quiseres e voltar a lançar só os restantes. Depois registas o resultado numa única das 13 categorias.",
+            "Cada categoria só serve uma vez. Se nada encaixar, riscas uma com 0 pontos. Ao fim de 13 jogadas a folha fica cheia e a partida acaba.",
+            "Um jogador é uma caça ao maior total; a dois, preenchem duas folhas à vez - ganha o total mais alto."
+          ]
+        },
+        {
+          "h": "As categorias",
+          "body": [
+            "Secção de cima (Uns a Seis): conta os pontos desse número. Se a secção de cima somar pelo menos 63, ganhas um bónus de 35 pontos.",
+            "- Trinca/Quadra: soma de todos os dados se houver pelo menos 3 ou 4 iguais.",
+            "- Full house = 25 (três mais um par), Sequência baixa = 30 (quatro seguidos), Sequência alta = 40 (cinco seguidos), Yahtzee = 50 (cinco iguais), Chance = soma dos dados (sempre válido)."
+          ]
+        },
+        {
+          "h": "Comandos",
+          "body": [
+            "- [Espaço] ou o botão Lançar relança os dados não guardados.",
+            "- Clica num dado ou carrega em [1] a [5] para guardar ou soltar esse dado.",
+            "- Clica numa categoria ou escolhe-a com as setas e carrega em [Enter] para a marcar.",
+            "- No fim do jogo: [Enter] recomeça."
+          ]
+        },
+        {
+          "h": "Dicas",
+          "body": [
+            "- Garante cedo o bónus de 63 da secção de cima - os cincos e seises valem muito.",
+            "- Usa a Chance para salvar um mau lançamento; risca o Yahtzee ou uma sequência se nada resultar."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wordle",
+      "category": "games",
+      "game": "WordleGame",
+      "title": "Wordle",
+      "keywords": [
+        "wordle",
+        "palavra",
+        "adivinhar",
+        "letras",
+        "verde",
+        "amarelo"
+      ],
+      "sections": [
+        {
+          "h": "Como se joga",
+          "body": [
+            "Adivinha a palavra escondida de 5 letras em 6 tentativas no máximo. Depois de cada tentativa as casas mudam de cor: verde = letra certa no sítio certo, amarelo = a letra existe mas noutro sítio, cinzento = a letra não está na palavra.",
+            "As letras repetidas são tratadas corretamente: uma letra só é marcada a amarelo ou verde tantas vezes quantas aparece mesmo na solução.",
+            "Cada tentativa tem de ter 5 letras, mas não precisa de ser uma palavra 'a sério' - não é verificada num dicionário. As soluções correspondem ao idioma escolhido."
+          ]
+        },
+        {
+          "h": "Comandos",
+          "body": [
+            "- Escreve letras A-Z, [Backspace] apaga a última, [Enter] confirma a linha (com 5 letras).",
+            "- O teclado no ecrã também funciona com o rato; as letras coloram-se conforme o que já descobriste."
+          ]
+        },
+        {
+          "h": "Pontos",
+          "body": [
+            "Continua sem fim: cada palavra resolvida dá pontos - menos tentativas, mais pontos (10 a 60). Logo a seguir aparece uma palavra nova.",
+            "A primeira palavra que NÃO acertares termina a partida; os pontos acumulados são o teu recorde."
+          ]
+        },
+        {
+          "h": "Dicas",
+          "body": [
+            "- Começa com uma palavra com muitas letras diferentes e frequentes.",
+            "- Usa as letras cinzentas para excluir e move as amarelas para uma posição nova."
+          ]
+        }
+      ]
     }
   ]
 }

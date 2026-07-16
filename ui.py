@@ -70,6 +70,7 @@ GAME_COLORS = {
     "ConnectFourGame": "#ff8f2e", "TankDuelGame": "#a8b545",
     "BlackjackGame": "#c8384f", "TunnelRacerGame": "#35e2ff",
     "LabyrinthGame": "#b07a4a",
+    "ReversiGame": "#3fbf8f", "KniffelGame": "#e8b04b", "WordleGame": "#6aaa64",
 }
 
 # Schriftname mit Fallback-Kette (SysFont probiert der Reihe nach durch).

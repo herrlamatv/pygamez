@@ -9,7 +9,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Dreiundzwanzig
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Sechsundzwanzig
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English / Français / Español / Português); die
@@ -63,10 +63,13 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Blackjack**    | 1 Spieler    | Casino-Blackjack mit 4-Deck-Schuh, Double/Split, 3:2-Blackjack und dauerhaftem Chip-Konto |
 | **Tunnel Racer** | 1 Spieler    | 3D-Neon-Röhrenflug: Endlos-Modus + 30 Level, Tasten- oder Maus-Steuerung, Motion Blur |
 | **3D-Labyrinth** | 1 Spieler    | Ego-Raycaster (Wolfenstein-Stil) mit 50 Seed-Leveln, Orbs, Minimap - oder 2D-Draufsicht |
+| **Reversi**      | 1 / 2 Spieler | Othello auf 8x8: Steine einschließen und umdrehen, 3 KI-Stärken (Minimax) oder lokales Duell |
+| **Kniffel**      | 1 / 2 Spieler | Würfelklassiker mit 13 Kategorien, oberem Bonus und Kniffel; Highscore-Jagd oder 2-Spieler-Hotseat |
+| **Wordle**       | 1 Spieler    | Errate das 5-Buchstaben-Wort in 6 Versuchen, Endlos-Streak, farbige Hinweise, 5 Sprachen |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)**, **Memory (Duell)**,
-**Vier gewinnt** und **Panzer-Duell**. Der Modus wird
+**Vier gewinnt**, **Panzer-Duell**, **Reversi** und **Kniffel**. Der Modus wird
 direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
 
 #### Feature-Details je Spiel
@@ -364,6 +367,35 @@ Explosions-Effekte, Highscore.
 - Punkte: 500 je Level + 100 je Orb + Zeitbonus; gelöste Level werden
   abgehakt, die Sitzung summiert sich zum Highscore.
 
+**Reversi**
+- **Othello auf 8x8**: Steine setzen, die gegnerische Reihen einschließen, und
+  alle eingeschlossenen umdrehen; ungültige Züge sind gesperrt, bei fehlendem
+  Zug wird **automatisch gepasst**.
+- **Einzelspieler gegen die KI** (3 Stärken: Negamax mit Alpha-Beta,
+  Positionsgewichtung + Mobilität) **oder lokales Duell** Schwarz gegen Weiss.
+- Gültige Felder werden markiert; Steuerung per **Maus** oder Auswahlrahmen
+  (Pfeile + Leertaste/Enter). Jeder Sieg gegen die KI zählt einen Punkt für den
+  Highscore.
+
+**Kniffel**
+- **Würfelklassiker**: 5 Würfel, bis zu 3 Würfe je Zug, Würfel einzeln
+  **halten**; danach eine der **13 Kategorien** buchen (mit Live-Vorschau der
+  möglichen Punkte).
+- Kompletter Wertungsblock: oberer Block mit **63er-Bonus (+35)**, Dreier-/
+  Viererpasch, Full House, kleine/große Straße, **Kniffel (50)** und Chance.
+- **Einzelspieler als Highscore-Jagd** auf die höchste Endsumme oder
+  **2-Spieler-Hotseat** mit zwei Blöcken nebeneinander; Bedienung per Maus oder
+  Tasten (Leertaste, 1-5, Pfeile, Enter).
+
+**Wordle**
+- Errate das **5-Buchstaben-Wort in 6 Versuchen**; farbige Rückmeldung
+  (grün/gelb/grau) mit korrekter **Doppelbuchstaben-Zählung** und mitfärbender
+  Bildschirmtastatur.
+- **Endlos-Streak**: jedes gelöste Wort bringt Punkte (weniger Versuche = mehr),
+  das erste ungelöste Wort beendet die Partie - Summe = Highscore.
+- **Wortlisten je Sprache** (nur A-Z); Rateversuche werden nicht gegen ein
+  Wörterbuch geprüft. Eingabe per Tastatur oder anklickbarer Bildschirmtastatur.
+
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
@@ -564,7 +596,7 @@ Spielen neben sich an.
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Twenty-three
+**Pygame** is embedded as the game display inside the Tkinter window. Twenty-six
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English / French / Spanish / Portuguese); the
@@ -618,10 +650,14 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Blackjack**    | 1 player     | Casino blackjack with a 4-deck shoe, double/split, 3:2 blackjack and a persistent chip balance |
 | **Tunnel Racer** | 1 player     | 3D neon tube flight: endless mode + 30 levels, key or mouse steering, motion blur |
 | **3D Maze**      | 1 player     | First-person raycaster (Wolfenstein style) with 50 seeded levels, orbs, minimap - or a 2D top-down view |
+| **Reversi**      | 1 / 2 players | Othello on 8x8: trap and flip discs, 3 AI strengths (minimax) or a local duel |
+| **Kniffel (Yahtzee)** | 1 / 2 players | Dice classic with 13 categories, upper bonus and Yahtzee; high-score chase or 2-player hotseat |
+| **Wordle**       | 1 player     | Guess the 5-letter word in 6 tries, endless streak, colour hints, 5 languages |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
-duel)**, **Memory (duel)**, **Connect Four** and **Tank Duel**. The mode is
+duel)**, **Memory (duel)**, **Connect Four**, **Tank Duel**, **Reversi** and
+**Kniffel**. The mode is
 chosen right in the pre-game screen (*Single-player / Multiplayer*).
 
 #### Feature details per game
@@ -913,6 +949,35 @@ explosion effects, high score.
   farthest from the start, **orbs** along the way give bonus points.
 - Scoring: 500 per level + 100 per orb + time bonus; solved levels are
   ticked off and the session total becomes the high score.
+
+**Reversi**
+- **Othello on 8x8**: place discs that trap the opponent's rows and flip
+  everything enclosed; illegal moves are blocked and a turn with no legal move
+  is **passed automatically**.
+- **Single player vs. the AI** (3 strengths: negamax with alpha-beta,
+  positional weighting + mobility) **or a local duel**, Black vs. White.
+- Legal squares are highlighted; play with the **mouse** or the selection frame
+  (arrows + Space/Enter). Every win against the AI counts one point toward the
+  high score.
+
+**Kniffel (Yahtzee)**
+- **Dice classic**: 5 dice, up to 3 rolls per turn, **hold** dice individually,
+  then book one of the **13 categories** (with a live preview of the possible
+  score).
+- Full scoresheet: upper section with **63-point bonus (+35)**, three/four of a
+  kind, full house, small/large straight, **Yahtzee (50)** and Chance.
+- **Single player as a high-score chase** for the highest total, or **2-player
+  hotseat** with two sheets side by side; play by mouse or keys (Space, 1-5,
+  arrows, Enter).
+
+**Wordle**
+- Guess the **5-letter word in 6 tries**; colour feedback (green/yellow/grey)
+  with correct **duplicate-letter counting** and an on-screen keyboard that
+  colours in.
+- **Endless streak**: each solved word scores points (fewer guesses = more), the
+  first unsolved word ends the run - total = high score.
+- **Per-language word lists** (A-Z only); guesses are not checked against a
+  dictionary. Type on the keyboard or click the on-screen keys.
 
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).

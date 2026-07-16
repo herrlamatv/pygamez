@@ -1204,6 +1204,146 @@
           ]
         }
       ]
+    },
+    {
+      "id": "reversi",
+      "category": "games",
+      "game": "ReversiGame",
+      "title": "Reversi",
+      "keywords": [
+        "reversi",
+        "othello",
+        "fichas",
+        "voltear",
+        "esquinas",
+        "ia"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "El Reversi (Othello) se juega en un tablero de 8x8. Colocas una ficha de modo que una o varias fichas rivales queden atrapadas en línea recta entre tu nueva ficha y otra de tu color - en horizontal, vertical o diagonal. Todas las fichas encerradas cambian a tu color.",
+            "Un movimiento solo es válido si voltea al menos una ficha. Si no tienes jugada, tu turno se pasa automáticamente. Cuando ninguno puede mover, la partida termina: gana quien tenga más fichas.",
+            "En un jugador te enfrentas (Negras) a la IA; a dos jugadores, Negras y Blancas se alternan."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Ratón: haz clic en una casilla vacía. Las casillas válidas están marcadas con un punto.",
+            "- Teclado: las flechas (o tus teclas de movimiento) mueven el marco de selección, [Espacio] o [Enter] coloca la ficha.",
+            "- Tras una ronda: [Enter] = nueva ronda, [S] = volver a la selección (solo un jugador)."
+          ]
+        },
+        {
+          "h": "Fuerza de la IA y consejos",
+          "body": [
+            "Fácil juega casi al azar, Medio prevé algunas jugadas, Difícil busca más profundo y valora mucho las esquinas.",
+            "- Las esquinas valen oro: una ficha en la esquina no se puede voltear nunca.",
+            "- Cuidado con las casillas junto a una esquina: suelen regalar la esquina al rival.",
+            "- Tener pocas fichas pero más movilidad a media partida suele ser mejor que tener muchas."
+          ]
+        },
+        {
+          "h": "Puntos",
+          "body": [
+            "Cada victoria contra la IA vale un punto; el récord es el mayor número de victorias de una sesión. El modo a dos no puntúa."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kniffel",
+      "category": "games",
+      "game": "KniffelGame",
+      "title": "Yahtzee",
+      "keywords": [
+        "yahtzee",
+        "generala",
+        "dados",
+        "escalera",
+        "full",
+        "puntos"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "Tienes 5 dados y hasta 3 tiradas por turno. Tras cada tirada puedes conservar los dados que quieras y volver a tirar solo el resto. Luego anotas el resultado en una sola de las 13 categorías.",
+            "Cada categoría se usa una vez. Si no encaja nada, la tachas con 0 puntos. Tras 13 turnos la hoja está llena y la partida termina.",
+            "Un jugador es una carrera por el mayor total; a dos jugadores rellenáis dos hojas por turnos - gana el total más alto."
+          ]
+        },
+        {
+          "h": "Las categorías",
+          "body": [
+            "Sección superior (Unos a Seises): cuenta los puntos de ese número. Si tu sección superior suma al menos 63, ganas un bono de 35 puntos.",
+            "- Trío/Póker: suma de todos los dados si hay al menos 3 o 4 iguales.",
+            "- Full = 25 (tres más pareja), Escalera menor = 30 (cuatro seguidos), Escalera mayor = 40 (cinco seguidos), Yahtzee = 50 (cinco iguales), Suerte = suma de los dados (siempre válido)."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- [Espacio] o el botón Tirar relanza los dados no retenidos.",
+            "- Haz clic en un dado o pulsa [1] a [5] para retener o soltar ese dado.",
+            "- Haz clic en una categoría o elígela con las flechas y pulsa [Enter] para anotarla.",
+            "- Tras la partida: [Enter] reinicia."
+          ]
+        },
+        {
+          "h": "Consejos",
+          "body": [
+            "- Consigue pronto el bono de 63 de la sección superior: los cincos y seises valen mucho.",
+            "- Usa la Suerte para salvar una mala tirada; tacha el Yahtzee o una escalera si no sale nada."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wordle",
+      "category": "games",
+      "game": "WordleGame",
+      "title": "Wordle",
+      "keywords": [
+        "wordle",
+        "palabra",
+        "adivinar",
+        "letras",
+        "verde",
+        "amarillo"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "Adivina la palabra oculta de 5 letras en 6 intentos como máximo. Tras cada intento las casillas cambian de color: verde = letra correcta en el sitio correcto, amarillo = la letra está pero en otro sitio, gris = la letra no está en la palabra.",
+            "Las letras repetidas se tratan bien: una letra solo se marca en amarillo o verde tantas veces como aparece realmente en la solución.",
+            "Cada intento debe tener 5 letras, pero no tiene que ser una palabra 'real': no se comprueba con un diccionario. Las soluciones corresponden al idioma elegido."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Escribe letras A-Z, [Retroceso] borra la última, [Enter] comprueba la fila (con 5 letras).",
+            "- El teclado en pantalla también funciona con el ratón; sus letras se colorean según lo que ya sabes."
+          ]
+        },
+        {
+          "h": "Puntos",
+          "body": [
+            "Sigue sin fin: cada palabra resuelta da puntos - menos intentos, más puntos (10 a 60). Enseguida aparece una palabra nueva.",
+            "La primera palabra que NO aciertes termina la partida; los puntos acumulados son tu récord."
+          ]
+        },
+        {
+          "h": "Consejos",
+          "body": [
+            "- Empieza con una palabra que tenga muchas letras distintas y frecuentes.",
+            "- Usa las letras grises para descartar y mueve las amarillas a una posición nueva."
+          ]
+        }
+      ]
     }
   ]
 }

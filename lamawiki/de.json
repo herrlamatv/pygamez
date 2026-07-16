@@ -1205,6 +1205,146 @@
           ]
         }
       ]
+    },
+    {
+      "id": "reversi",
+      "category": "games",
+      "game": "ReversiGame",
+      "title": "Reversi",
+      "keywords": [
+        "reversi",
+        "othello",
+        "steine",
+        "umdrehen",
+        "ecken",
+        "ki"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Reversi (Othello) wird auf einem 8x8-Brett gespielt. Du setzt einen Stein so, dass eine oder mehrere gegnerische Reihen in gerader Linie zwischen deinem neuen Stein und einem anderen Stein deiner Farbe eingeschlossen werden - waagerecht, senkrecht oder diagonal. Alle eingeschlossenen Steine werden zu deiner Farbe umgedreht.",
+            "Ein Zug ist nur erlaubt, wenn er mindestens einen Stein umdreht. Hast du keinen gültigen Zug, wird automatisch gepasst. Können beide nicht mehr ziehen, endet die Partie - wer mehr Steine hat, gewinnt.",
+            "Im Einzelspieler trittst du (Schwarz) gegen die KI an; im 2-Spieler-Modus spielen Schwarz und Weiss abwechselnd."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Maus: freies Feld anklicken. Gültige Felder sind mit einem kleinen Punkt markiert.",
+            "- Tastatur: Pfeile bzw. deine Bewegungstasten verschieben den Auswahlrahmen, [Leertaste] oder [Enter] setzt den Stein.",
+            "- Nach Rundenende: [Enter] = neue Runde, [S] = zurück zur Auswahl (nur Einzelspieler)."
+          ]
+        },
+        {
+          "h": "KI-Stärken & Tipps",
+          "body": [
+            "Leicht zieht oft zufällig, Mittel plant einige Züge voraus, Schwer sucht tiefer und bewertet die Ecken besonders hoch.",
+            "- Ecken sind Gold wert: Ein Stein in der Ecke kann nie wieder umgedreht werden.",
+            "- Vorsicht mit den Feldern direkt neben einer Ecke - sie verschenken die Ecke oft an den Gegner.",
+            "- Wenige eigene Steine, aber mehr Zugmöglichkeiten (Mobilität) sind im Mittelspiel meist besser als viele."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Jeder Sieg gegen die KI zählt einen Punkt; der Highscore ist die höchste Siegzahl einer Sitzung. Der 2-Spieler-Modus wird nicht gewertet."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kniffel",
+      "category": "games",
+      "game": "KniffelGame",
+      "title": "Kniffel",
+      "keywords": [
+        "kniffel",
+        "yahtzee",
+        "würfel",
+        "pasch",
+        "straße",
+        "full house"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Du hast 5 Würfel und pro Zug bis zu 3 Würfe. Nach jedem Wurf darfst du beliebige Würfel behalten und nur die übrigen neu würfeln. Danach trägst du das Ergebnis in genau eine der 13 Kategorien ein.",
+            "Jede Kategorie lässt sich nur einmal benutzen. Passt nichts, streichst du eine Kategorie mit 0 Punkten. Nach 13 Zügen ist der Block voll und die Partie vorbei.",
+            "Einzelspieler ist eine Highscore-Jagd auf die höchste Endsumme; im 2-Spieler-Modus füllt ihr abwechselnd zwei Blöcke - die höhere Summe gewinnt."
+          ]
+        },
+        {
+          "h": "Die Kategorien",
+          "body": [
+            "Oberer Block (Einser bis Sechser): zählt die Augen der jeweiligen Zahl. Erreichst du oben zusammen mindestens 63 Punkte, gibt es 35 Bonuspunkte.",
+            "- Dreier-/Viererpasch: Augensumme aller Würfel, wenn mindestens 3 bzw. 4 gleiche dabei sind.",
+            "- Full House = 25 (drei plus ein Paar), Kleine Straße = 30 (vier in Folge), Große Straße = 40 (fünf in Folge), Kniffel = 50 (fünf gleiche), Chance = Augensumme (immer erlaubt)."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- [Leertaste] oder der Würfeln-Button würfelt die nicht gehaltenen Würfel.",
+            "- Würfel anklicken oder [1] bis [5] drücken hält bzw. löst den jeweiligen Würfel.",
+            "- Kategorie anklicken oder mit den Pfeilen wählen und [Enter] bucht das Ergebnis.",
+            "- Nach dem Spiel: [Enter] startet neu."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Hol dir früh den 63er-Bonus im oberen Block - vor allem Fünfer und Sechser sind viel wert.",
+            "- Die Chance rettet einen schlechten Wurf; streiche notfalls den Kniffel oder eine der Straßen, wenn nichts läuft."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wordle",
+      "category": "games",
+      "game": "WordleGame",
+      "title": "Wordle",
+      "keywords": [
+        "wordle",
+        "wort",
+        "raten",
+        "buchstaben",
+        "grün",
+        "gelb"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Errate das gesuchte 5-Buchstaben-Wort in höchstens 6 Versuchen. Nach jedem Rateversuch färben sich die Kacheln: Grün = richtiger Buchstabe an richtiger Stelle, Gelb = Buchstabe kommt vor, steht aber woanders, Grau = Buchstabe kommt nicht vor.",
+            "Doppelte Buchstaben werden korrekt behandelt: Ein Buchstabe wird nur so oft gelb oder grün, wie er im Lösungswort tatsächlich vorkommt.",
+            "Jeder Versuch muss 5 Buchstaben haben, aber kein 'echtes' Wort sein - es wird nicht gegen ein Wörterbuch geprüft. Die Lösungswörter passen zur eingestellten Sprache."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Buchstaben A-Z tippen, [Rücktaste] löscht den letzten, [Enter] wertet die Zeile aus (nur bei 5 Buchstaben).",
+            "- Die Bildschirmtastatur unten funktioniert auch mit der Maus; ihre Buchstaben färben sich nach deinem bisherigen Wissen ein."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Es geht endlos weiter: Für jedes gelöste Wort gibt es Punkte - je weniger Versuche, desto mehr (10 bis 60). Danach kommt sofort ein neues Wort.",
+            "Das erste Wort, das du NICHT knackst, beendet die Partie; die gesammelten Punkte sind dein Highscore."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Starte mit einem Wort, das viele verschiedene, häufige Buchstaben enthält.",
+            "- Nutze graue Buchstaben zum Ausschließen und verschiebe gelbe an eine neue Position."
+          ]
+        }
+      ]
     }
   ]
 }
