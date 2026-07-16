@@ -98,6 +98,10 @@ class Variant:
     def on_stock(self):
         return None
 
+    def can_recycle(self):
+        """True, wenn ein Klick auf den leeren Stock die Waste zurücklegt."""
+        return False
+
     def on_right(self, pi):
         return None
 
@@ -232,6 +236,9 @@ class Klondike(Variant):
             rec["extra"] = {"recycle": n}
             return rec
         return None
+
+    def can_recycle(self):
+        return bool(self.g.piles[1].cards) and not self.g.piles[0].cards
 
     def undo_extra(self, extra):
         if "recycle" in extra:
@@ -616,6 +623,10 @@ class Pyramid(Variant):
             rec["extra"] = {"recycle": n}
             return rec
         return None
+
+    def can_recycle(self):
+        return (bool(self.g.piles[1].cards) and not self.g.piles[0].cards
+                and self.redeals > 0)
 
     def undo_extra(self, extra):
         if "recycle" in extra:
@@ -1013,6 +1024,16 @@ class SolitaireGame(Game):
             return
         hit = self._hit(pos)
         if hit is None:
+            # Leerer Stock: Klick auf den kartenlosen Slot löst den Stock-Zug
+            # aus - bei Klondike/Pyramid also das Zurücklegen der Waste, damit
+            # man den Reststapel erneut durchgehen kann.
+            p0 = self.piles[0] if self.piles else None
+            if p0 is not None and p0.kind == "stock" and not p0.cards \
+                    and pygame.Rect(p0.x, p0.y, self.cw, self.ch) \
+                    .collidepoint(pos):
+                self.sel = None
+                self._apply_record(self.variant.on_stock())
+                return
             self.sel = None
             return
         pi, ci = hit
@@ -1126,6 +1147,8 @@ class SolitaireGame(Game):
             if not p.cards:
                 if p.kind != "grid":
                     C.draw_slot(s, (p.x, p.y, cw, ch))
+                if p.kind == "stock" and self.variant.can_recycle():
+                    self._draw_recycle(s, p, cw, ch)
                 continue
             if p.kind in ("stock",):
                 s.blit(self.renderer.get(p.top, cw, ch)
@@ -1149,6 +1172,21 @@ class SolitaireGame(Game):
                         if len(rects) > ci + 1 else rects[ci]
                     pygame.draw.rect(s, COL_SEL, sel_r.inflate(4, 4), 2,
                                      border_radius=6)
+
+    def _draw_recycle(self, s, p, cw, ch):
+        """Kreisförmiger Pfeil (↻) auf dem leeren Stock als Hinweis, dass die
+        Waste zum erneuten Durchgehen zurückgelegt werden kann."""
+        cx, cy = p.x + cw // 2, p.y + ch // 2
+        r = max(8, min(cw, ch) // 4)
+        col = COL_ACCENT
+        # offener Ring (oben rechts eine Lücke für die Pfeilspitze)
+        pygame.draw.arc(s, col, (cx - r, cy - r, 2 * r, 2 * r),
+                        -0.35, 4.9, max(2, r // 4))
+        # Pfeilspitze am oberen Ende des Rings
+        tip = (cx + int(r * 0.95), cy - int(r * 0.33))
+        pygame.draw.polygon(s, col, [tip,
+                                     (tip[0] - r // 2, tip[1] - r // 6),
+                                     (tip[0] - r // 6, tip[1] + r // 2)])
 
     def _draw_drag(self, s):
         d = self.drag
