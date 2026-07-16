@@ -955,6 +955,7 @@ class App:
         self.embed.bind("<Button-1>", self._on_click)
         self.embed.bind("<ButtonRelease-1>", self._on_release)
         self.embed.bind("<Button-3>", self._on_right_click)
+        self.embed.bind("<ButtonRelease-3>", self._on_right_release)
         self.embed.bind("<Motion>", self._on_motion)
         self.embed.bind("<MouseWheel>", self._on_wheel)
         # Klick auf die Fläche holt den Fokus (für Tastatur)
@@ -1037,6 +1038,15 @@ class App:
                 and getattr(self.current, "wants_right_click", False):
             self.current.handle_event(
                 InputEvent(InputEvent.MOUSEDOWN,
+                           pos=self._to_logical(event.x, event.y), button=3))
+
+    def _on_right_release(self, event):
+        """Loslassen der rechten Maustaste (z.B. Billard-Kamera-Drehung beenden)."""
+        from game_base import InputEvent
+        if self.current and not self.current.paused \
+                and getattr(self.current, "wants_right_click", False):
+            self.current.handle_event(
+                InputEvent(InputEvent.MOUSEUP,
                            pos=self._to_logical(event.x, event.y), button=3))
 
     def _on_motion(self, event):

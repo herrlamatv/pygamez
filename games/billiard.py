@@ -321,6 +321,7 @@ class BilliardGame(Game):
 
     def _cycle_view(self):
         self.view = VIEWS[(VIEWS.index(self.view) + 1) % 3]
+        self._dragging_cam = False
         if self.view != "free":
             self.cam_yaw_t = 0.0
         self._save_setting("view", self.view)
@@ -354,7 +355,8 @@ class BilliardGame(Game):
             return
         if self.state != PLAY:
             return
-        # Kamera drehen (rechte Maustaste, nur Frei-Ansicht)
+        # Kamera drehen: rechte Maustaste HALTEN und Maus bewegen (nur Frei-
+        # Ansicht). Loslassen der rechten Taste beendet das Drehen wieder.
         if self.view == "free":
             if event.kind == InputEvent.MOUSEDOWN and event.button == 3:
                 self._dragging_cam = True
@@ -363,11 +365,20 @@ class BilliardGame(Game):
             if event.kind == InputEvent.MOUSEUP and event.button == 3:
                 self._dragging_cam = False
                 return
-            if event.kind == InputEvent.MOUSEMOVE and self._dragging_cam:
-                dx = event.pos[0] - self._last_mx
-                self._last_mx = event.pos[0]
-                self.cam_yaw_t += dx * 0.006
-                return
+            if self._dragging_cam:
+                if event.kind == InputEvent.MOUSEMOVE:
+                    dx = event.pos[0] - getattr(self, "_last_mx", event.pos[0])
+                    self._last_mx = event.pos[0]
+                    self.cam_yaw_t += dx * 0.006
+                    return
+                # Sicherheitsnetz: sollte das Loslassen der rechten Taste einmal
+                # ausbleiben, beendet JEDE andere Aktion (Linksklick, Taste) das
+                # Drehen - danach normal weiterverarbeiten.
+                if event.kind in (InputEvent.MOUSEDOWN, InputEvent.MOUSEUP,
+                                  InputEvent.KEYDOWN):
+                    self._dragging_cam = False
+        elif self._dragging_cam:
+            self._dragging_cam = False
         if not self._human_turn():
             return
         if self.phase == "place":
