@@ -1466,6 +1466,160 @@
           ]
         }
       ]
+    },
+    {
+      "id": "slidepuzzle",
+      "category": "games",
+      "game": "SlidingPuzzleGame",
+      "title": "Puzle deslizante",
+      "keywords": [
+        "puzle deslizante",
+        "15",
+        "fichas",
+        "numeros",
+        "deslizar",
+        "rompecabezas"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "Ordena las fichas numeradas (1, 2, 3 …); el hueco queda en la esquina inferior derecha.",
+            "Las fichas solo se deslizan hacia el hueco libre. Tres tamaños: 3×3 (fácil), 4×4 (clásico) y 5×5 (difícil).",
+            "El tablero se mezcla con muchos movimientos aleatorios, así que siempre tiene solución."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Haz clic en una ficha de la misma fila o columna que el hueco: se desliza toda la línea.",
+            "- Las flechas empujan al hueco la ficha contigua."
+          ]
+        },
+        {
+          "h": "Puntos",
+          "body": [
+            "Empiezas con una puntuación base según el tamaño; cada movimiento y cada segundo restan un poco. Resolver rápido y con pocos movimientos da la mejor puntuación.",
+            "Tras resolverlo, Enter/clic empieza un tablero nuevo enseguida."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastermind",
+      "category": "games",
+      "game": "MastermindGame",
+      "title": "Mastermind",
+      "keywords": [
+        "mastermind",
+        "codigo de color",
+        "codigo",
+        "adivinar",
+        "fichas",
+        "logica"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "El ordenador elige un código oculto de fichas de colores (los colores pueden repetirse). Descífralo fila por fila.",
+            "Tras cada intento aparecen fichas de pista: una ficha NEGRA = color correcto en el lugar correcto, una ficha BLANCA = color correcto en lugar equivocado. El orden de las pistas no indica a qué ficha se refieren.",
+            "Modos: Fácil (4 fichas, 6 colores, 12 filas), Clásico (4/6, 10 filas) y Difícil (5 fichas, 8 colores)."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Haz clic en un color abajo (o teclas 1–8) para rellenar el siguiente hueco.",
+            "- Haz clic en una ficha colocada para quitarla; < o Retroceso borra la última.",
+            "- OK o Enter comprueba la fila completa."
+          ]
+        },
+        {
+          "h": "Puntos",
+          "body": [
+            "Como en Wordle es una racha infinita: cada código descifrado da puntos (menos intentos + modo más difícil = más), y aparece otro código de inmediato.",
+            "El primer código que no descifres termina la partida - el total es tu puntuación máxima."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bubbleshooter",
+      "category": "games",
+      "game": "BubbleShooterGame",
+      "title": "Bubble Shooter",
+      "keywords": [
+        "bubble shooter",
+        "puzzle bobble",
+        "burbujas",
+        "bolas",
+        "disparar",
+        "grupos"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "Dispara burbujas hacia arriba al panal. Cuando se tocan tres o más del mismo color, el grupo estalla.",
+            "Las burbujas que pierden el enlace con la fila superior al estallar un grupo caen y dan puntos extra.",
+            "Modos: Fácil (4 colores, sin filas nuevas), Clásico (5 colores, de vez en cuando baja una fila) y Difícil (6 colores, más rápido)."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- El cañón apunta al ratón; las flechas izquierda/derecha también lo giran.",
+            "- Clic izquierdo o Espacio dispara. Las burbujas rebotan en las paredes laterales.",
+            "- La burbuja pequeña a la izquierda del cañón es tu próximo color."
+          ]
+        },
+        {
+          "h": "Puntos",
+          "body": [
+            "Las burbujas que estallan y caen dan puntos; despejar todo el campo da un bono.",
+            "En cuanto una burbuja encaja bajo la línea roja, la partida termina - el total es tu puntuación máxima."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hangman",
+      "category": "games",
+      "game": "HangmanGame",
+      "title": "Hangman",
+      "keywords": [
+        "ahorcado",
+        "hangman",
+        "palabra",
+        "adivinar",
+        "letras",
+        "horca"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "Adivina la palabra oculta letra a letra. Cada letra fallada dibuja otra parte del ahorcado.",
+            "Tras 6 fallos el dibujo se completa y pierdes la ronda.",
+            "Modos por longitud: Palabras cortas (3–5), Mezclado (3–12) y Palabras largas (7–12). Las palabras siguen el idioma elegido y usan solo A–Z."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Escribe letras A–Z o haz clic en el teclado en pantalla.",
+            "- Las letras correctas aparecen en la palabra; las falladas ponen la tecla gris."
+          ]
+        },
+        {
+          "h": "Puntos",
+          "body": [
+            "Racha infinita: cada palabra acertada da puntos (más vidas restantes y palabras más largas = más), y aparece otra palabra al instante.",
+            "La primera derrota termina la partida - el total es tu puntuación máxima."
+          ]
+        }
+      ]
     }
   ]
 }

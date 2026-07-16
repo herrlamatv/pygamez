@@ -403,6 +403,35 @@ def _draw_icon(cv, cx, cy, name, color, bg):
         cv.create_line(cx - 10, cy + 10, cx + 1, cy - 1, fill=color, width=2)
         cv.create_oval(cx - 1, cy - 9, cx + 9, cy + 1, fill=color, outline="")
         cv.create_oval(cx + 2, cy - 6, cx + 5, cy - 3, fill=bg, outline="")
+    elif name == "SlidingPuzzleGame":
+        # 2x2-Kacheln mit einer freien Lücke unten rechts
+        for gx, gy in ((-1, -1), (1, -1), (-1, 1)):
+            ccx, ccy = cx + gx * 5, cy + gy * 5
+            _round_rect(cv, ccx - 4, ccy - 4, ccx + 4, ccy + 4, 2, fill="",
+                        outline=color)
+        cv.create_line(cx + 1, cy + 5, cx + 8, cy + 5, fill=color, width=2,
+                       arrow="last")
+    elif name == "MastermindGame":
+        # Reihe Farbstifte + Rückmeldungs-Pins
+        for i, gx in enumerate((-8, -3, 2, 7)):
+            fill = color if i % 2 == 0 else ""
+            cv.create_oval(cx + gx - 2, cy - 7, cx + gx + 2, cy - 3,
+                           fill=fill, outline=color)
+        for gx in (-8, -3, 2, 7):
+            cv.create_oval(cx + gx - 1, cy + 4, cx + gx + 1, cy + 6,
+                           fill=color, outline="")
+    elif name == "BubbleShooterGame":
+        for gx, gy in ((-5, -7), (1, -7), (-2, -2), (4, -2)):
+            cv.create_oval(cx + gx - 3, cy + gy - 3, cx + gx + 3, cy + gy + 3,
+                           fill=color, outline="")
+        cv.create_line(cx, cy + 9, cx, cy + 3, fill=color, width=2)
+        cv.create_oval(cx - 2, cy + 1, cx + 2, cy + 5, fill=color, outline="")
+    elif name == "HangmanGame":
+        cv.create_line(cx - 8, cy + 9, cx - 1, cy + 9, fill=color, width=2)
+        cv.create_line(cx - 5, cy + 9, cx - 5, cy - 8, fill=color, width=2)
+        cv.create_line(cx - 5, cy - 8, cx + 5, cy - 8, fill=color, width=2)
+        cv.create_line(cx + 5, cy - 8, cx + 5, cy - 5, fill=color, width=1)
+        cv.create_oval(cx + 2, cy - 5, cx + 8, cy + 1, outline=color, width=2)
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))
@@ -1159,6 +1188,11 @@ class App:
             self.status_var.set(t("app.no_game"))
         # Der Highscore-Ticker enthält übersetzten Text -> neu aufbauen.
         self._ticker_key = None
+        # Manche Spielnamen sind sprachabhängig (z.B. Hangman) -> Liste neu
+        # aufbauen und die aktive Markierung wiederherstellen.
+        self._build_game_buttons()
+        if self.current is not None and not getattr(self.current, "is_menu", False):
+            self.game_list.set_active(type(self.current))
         # Neue Beschriftungen können breiter/schmaler sein -> Sidebar anpassen.
         self._fit_sidebar()
 

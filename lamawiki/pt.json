@@ -1465,6 +1465,159 @@
           ]
         }
       ]
+    },
+    {
+      "id": "slidepuzzle",
+      "category": "games",
+      "game": "SlidingPuzzleGame",
+      "title": "Quebra-cabeça deslizante",
+      "keywords": [
+        "quebra-cabeca",
+        "15",
+        "pecas",
+        "numeros",
+        "deslizar",
+        "puzzle"
+      ],
+      "sections": [
+        {
+          "h": "Como jogar",
+          "body": [
+            "Coloque as peças numeradas em ordem (1, 2, 3 …); o vazio fica no canto inferior direito.",
+            "As peças só deslizam para o espaço vazio. Três tamanhos: 3×3 (fácil), 4×4 (clássico) e 5×5 (difícil).",
+            "O tabuleiro é embaralhado com muitos movimentos aleatórios, por isso tem sempre solução."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Clique numa peça na mesma linha ou coluna do vazio: a linha inteira desliza.",
+            "- As setas empurram para o vazio a peça vizinha."
+          ]
+        },
+        {
+          "h": "Pontos",
+          "body": [
+            "Você começa com uma pontuação base por tamanho; cada jogada e cada segundo descontam um pouco. Resolver rápido e com poucas jogadas dá a melhor pontuação.",
+            "Depois de resolver, Enter/clique começa um novo tabuleiro na hora."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastermind",
+      "category": "games",
+      "game": "MastermindGame",
+      "title": "Mastermind",
+      "keywords": [
+        "mastermind",
+        "codigo de cor",
+        "codigo",
+        "adivinhar",
+        "pinos",
+        "logica"
+      ],
+      "sections": [
+        {
+          "h": "Como jogar",
+          "body": [
+            "O computador escolhe um código oculto de pinos coloridos (as cores podem repetir). Decifre-o linha por linha.",
+            "Após cada tentativa surgem pinos de dica: um pino PRETO = cor certa no lugar certo, um pino BRANCO = cor certa no lugar errado. A ordem das dicas não revela a que pino se referem.",
+            "Modos: Fácil (4 pinos, 6 cores, 12 linhas), Clássico (4/6, 10 linhas) e Difícil (5 pinos, 8 cores)."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Clique numa cor embaixo (ou teclas 1–8) para preencher o próximo espaço.",
+            "- Clique num pino colocado para removê-lo; < ou Backspace apaga o último.",
+            "- OK ou Enter confere a linha completa."
+          ]
+        },
+        {
+          "h": "Pontos",
+          "body": [
+            "Como no Wordle é uma sequência infinita: cada código decifrado dá pontos (menos tentativas + modo mais difícil = mais), e surge logo um novo código.",
+            "O primeiro código que você não decifrar termina a partida - o total é o seu recorde."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bubbleshooter",
+      "category": "games",
+      "game": "BubbleShooterGame",
+      "title": "Bubble Shooter",
+      "keywords": [
+        "bubble shooter",
+        "puzzle bobble",
+        "bolhas",
+        "bolas",
+        "atirar",
+        "grupos"
+      ],
+      "sections": [
+        {
+          "h": "Como jogar",
+          "body": [
+            "Atire bolhas para cima no campo em favo de mel. Quando três ou mais da mesma cor se tocam, o grupo estoura.",
+            "As bolhas que perdem a ligação com a fileira do topo quando um grupo estoura caem e dão pontos de bônus.",
+            "Modos: Fácil (4 cores, sem novas fileiras), Clássico (5 cores, de vez em quando desce uma fileira) e Difícil (6 cores, mais rápido)."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- O canhão mira no mouse; as setas esquerda/direita também o giram.",
+            "- Clique esquerdo ou Espaço atira. As bolhas ricocheteiam nas paredes laterais.",
+            "- A bolinha à esquerda do canhão é a sua próxima cor."
+          ]
+        },
+        {
+          "h": "Pontos",
+          "body": [
+            "Bolhas estouradas e caídas dão pontos; limpar todo o campo dá um bônus.",
+            "Assim que uma bolha encaixa abaixo da linha vermelha, o jogo acaba - o total é o seu recorde."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hangman",
+      "category": "games",
+      "game": "HangmanGame",
+      "title": "Hangman",
+      "keywords": [
+        "forca",
+        "hangman",
+        "palavra",
+        "adivinhar",
+        "letras"
+      ],
+      "sections": [
+        {
+          "h": "Como jogar",
+          "body": [
+            "Adivinhe a palavra oculta letra por letra. Cada letra errada desenha mais uma parte do boneco.",
+            "Após 6 erros o boneco fica completo e você perde a rodada.",
+            "Modos por tamanho: Palavras curtas (3–5), Misto (3–12) e Palavras longas (7–12). As palavras seguem o idioma escolhido e usam só A–Z."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Digite letras A–Z ou clique no teclado da tela.",
+            "- As letras certas aparecem na palavra; as erradas deixam a tecla cinza."
+          ]
+        },
+        {
+          "h": "Pontos",
+          "body": [
+            "Sequência infinita: cada palavra acertada dá pontos (mais vidas restantes e palavras mais longas = mais), e surge logo uma nova palavra.",
+            "A primeira derrota termina a partida - o total é o seu recorde."
+          ]
+        }
+      ]
     }
   ]
 }

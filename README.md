@@ -9,7 +9,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Neunundzwanzig
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Siebenunddreißig
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English / Français / Español / Português); die
@@ -73,6 +73,10 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Mühle**        | 1 / 2 Spieler | Nine Men's Morris mit Setz-/Zieh-/Sprungphase, Mühlen & Schlagen, fliegende Steine abschaltbar, 3 KI-Stärken oder lokales Duell |
 | **Simon**        | 1 / 2 Spieler | Senso-Merkspiel: Modi Klassisch/Speed/Reverse/Gemischt + Duell, Ton aus/an/gemischt, 4/6/9 Felder, Bestwert je Modus |
 | **Billard**      | 1 / 2 Spieler | 8-Ball, 9-Ball & Übungsmodus in 2D, fester 3D-Ansicht oder frei drehbarer 3D-Kamera; weiche Physik, Zielhilfe, KI mit 3 Stärken |
+| **Schiebepuzzle** | 1 Spieler    | 15-Puzzle in 3x3/4x4/5x5: durchnummerierte Kacheln in die Lücke schieben, Klick- oder Pfeilsteuerung, Punkte nach Zügen & Zeit |
+| **Mastermind**    | 1 Spieler    | Geheimen Farbcode knacken (3 Modi: 4×6, klassisch, 5×8), schwarze/weiße Rückmeldungs-Pins, Endlos-Streak als Highscore |
+| **Bubble Shooter** | 1 Spieler   | Puzzle-Bobble-Klon: gleiche Farben zu Dreiergruppen schießen, Wandreflexion, herabfallende Cluster, 3 Schwierigkeitsgrade |
+| **Galgenmännchen** | 1 Spieler   | Wort erraten, bevor der Galgen voll ist; Bildschirmtastatur, Wortlisten je Sprache, 3 Längen-Modi, Endlos-Streak |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)**, **Memory (Duell)**,
@@ -445,6 +449,39 @@ Explosions-Effekte, Highscore.
   Ziellinie und Kraft-Meter helfen. Nach Foul **Ball in Hand**. Die Ansicht (V)
   wird in `settings.json` gemerkt; gewonnene Frames zählen für den Highscore.
 
+**Schiebepuzzle**
+- 15-Puzzle in drei Größen: **3×3** (leicht), **4×4** (klassisch) und **5×5**
+  (schwer); durchnummerierte Kacheln in die freie Lücke schieben.
+- Immer lösbar (Mischen über viele zufällige Züge). Steuerung per **Klick** auf
+  eine Kachel in Reihe/Spalte der Lücke (die ganze Linie rutscht) oder
+  **Pfeiltasten**.
+- Punkte = Grundwert je Größe minus Züge und Zeit; nach dem Lösen geht es sofort
+  mit einem neuen Feld weiter.
+
+**Mastermind**
+- Verdeckten **Farbcode** knacken; nach jedem Tipp gibt es **schwarze** Pins
+  (richtige Farbe + Position) und **weiße** Pins (richtige Farbe, falsche Stelle).
+- **3 Modi**: Leicht (4 Stifte / 6 Farben / 12 Reihen), Klassik (4/6/10) und
+  Schwer (5 Stifte / 8 Farben); Farben dürfen mehrfach vorkommen.
+- Bedienung per Farbpalette (Klick oder Tasten **1–8**), OK/Enter wertet die
+  Reihe aus. **Endlos-Streak** wie bei Wordle: jeder geknackte Code bringt Punkte.
+
+**Bubble Shooter**
+- **Puzzle Bobble** auf einem Wabenraster: mit der Maus zielen, Kugeln nach oben
+  schießen, ab **drei gleichen Farben** platzt die Gruppe.
+- Kugeln, die den Halt zur Decke verlieren, **fallen** herab (Bonus); Schüsse
+  **prallen an den Wänden ab**, mit Vorschau der nächsten Kugel.
+- **3 Modi** (4/5/6 Farben, teils nachrückende Reihen); Game Over an der roten
+  Linie.
+
+**Galgenmännchen**
+- Wort **Buchstabe für Buchstabe** erraten; jeder Fehler zeichnet ein Teil des
+  Galgenmännchens, nach **6 Fehlern** verloren.
+- **Wortlisten je Sprache** (nur A–Z), **3 Längen-Modi** (kurz / gemischt / lang);
+  Eingabe per Tastatur oder anklickbarer Bildschirmtastatur.
+- **Endlos-Streak**: jedes erratene Wort bringt Punkte (mehr Restleben +
+  längeres Wort = mehr).
+
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
@@ -533,7 +570,8 @@ games/
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
   labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
   trexrunner.py  dame.py  poker.py  chess.py  muehle.py
-  simon.py  billiard.py
+  simon.py  billiard.py  slidepuzzle.py  mastermind.py
+  bubbleshooter.py  hangman.py  hangman_words.py
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -647,7 +685,7 @@ Spielen neben sich an.
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Twenty-nine
+**Pygame** is embedded as the game display inside the Tkinter window. Thirty-seven
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English / French / Spanish / Portuguese); the
@@ -711,6 +749,10 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Nine Men's Morris** | 1 / 2 players | Placing/moving/flying phases, mills & captures, optional flying rule, 3 AI strengths or a local duel |
 | **Simon**        | 1 / 2 players | Senso memory game: Classic/Speed/Reverse/Mixed modes + Duel, sound off/on/mixed, 4/6/9 pads, best per mode |
 | **Billiards**    | 1 / 2 players | 8-ball, 9-ball & practice in 2D, fixed 3D view or free-orbit 3D camera; smooth physics, aim assist, 3 AI strengths |
+| **Sliding Puzzle** | 1 player    | 15-puzzle in 3x3/4x4/5x5: slide the numbered tiles into the gap, click or arrow control, score from moves & time |
+| **Mastermind**     | 1 player    | Crack the secret colour code (3 modes: 4×6, classic, 5×8), black/white feedback pegs, endless streak high score |
+| **Bubble Shooter** | 1 player    | Puzzle Bobble clone: shoot matching colours into groups of three, wall bounces, falling clusters, 3 difficulties |
+| **Hangman**        | 1 player    | Guess the word before the gallows is finished; on-screen keyboard, per-language word lists, 3 length modes, endless streak |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
@@ -1078,6 +1120,38 @@ explosion effects, high score.
   an aim line and power meter help. **Ball in hand** after a foul. The view (V)
   is remembered in `settings.json`; frames won count towards the high score.
 
+**Sliding Puzzle**
+- 15-puzzle in three sizes: **3×3** (easy), **4×4** (classic) and **5×5** (hard);
+  slide the numbered tiles into the free gap.
+- Always solvable (shuffled with many random moves). Control by **clicking** a
+  tile in the gap's row/column (the whole line slides) or the **arrow keys**.
+- Score = a base value per size minus moves and time; solving starts a fresh
+  board right away.
+
+**Mastermind**
+- Crack the hidden **colour code**; after each guess you get **black** pegs
+  (right colour + position) and **white** pegs (right colour, wrong position).
+- **3 modes**: Easy (4 pegs / 6 colours / 12 rows), Classic (4/6/10) and Hard
+  (5 pegs / 8 colours); duplicate colours allowed.
+- Play via the colour palette (click or keys **1–8**), OK/Enter checks the row.
+  **Endless streak** like Wordle: every cracked code scores points.
+
+**Bubble Shooter**
+- **Puzzle Bobble** on a honeycomb grid: aim with the mouse, shoot bubbles up,
+  **three or more of a colour** pop the group.
+- Bubbles that lose their link to the ceiling **fall** (bonus); shots **bounce
+  off the walls**, with a next-bubble preview.
+- **3 modes** (4/5/6 colours, some with descending rows); game over at the red
+  line.
+
+**Hangman**
+- Guess the word **letter by letter**; each mistake draws a part of the hangman,
+  lost after **6 mistakes**.
+- **Per-language word lists** (A–Z only), **3 length modes** (short / mixed /
+  long); type or click the on-screen keyboard.
+- **Endless streak**: every guessed word scores points (more remaining lives +
+  longer word = more).
+
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
 
@@ -1166,7 +1240,8 @@ games/
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
   labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
   trexrunner.py  dame.py  poker.py  chess.py  muehle.py
-  simon.py  billiard.py
+  simon.py  billiard.py  slidepuzzle.py  mastermind.py
+  bubbleshooter.py  hangman.py  hangman_words.py
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the

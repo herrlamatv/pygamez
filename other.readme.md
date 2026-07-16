@@ -72,6 +72,10 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **T-Rex Runner** | 1 joueur   | Course infinie dans le désert : saut variable, s'accroupir, cactus & ptérodactyles, cycle jour/nuit, vitesse croissante, 3 difficultés |
 | **Dames**        | 1 / 2 joueurs | 3 règles au choix (allemandes 8×8, internationales 10×10, checkers), prise obligatoire & dame volante, 3 niveaux d'IA (minimax) ou duel local |
 | **Poker**        | 1 joueur   | 3 variantes au choix : Texas Hold'em contre l'IA, 5 Card Draw et Vidéo Poker ; tours d'enchères, blinds, compte de jetons persistant |
+| **Taquin**         | 1 joueur   | Jeu du 15 en 3x3/4x4/5x5 : glisse les tuiles numérotées dans le trou, contrôle souris ou flèches, score selon coups & temps |
+| **Mastermind**     | 1 joueur   | Perce le code couleur secret (3 modes : 4×6, classique, 5×8), pions indicateurs noirs/blancs, série sans fin |
+| **Bubble Shooter** | 1 joueur   | Clone de Puzzle Bobble : tire des couleurs identiques par groupes de trois, rebonds sur les parois, grappes qui tombent, 3 difficultés |
+| **Hangman**        | 1 joueur   | Devine le mot avant que la potence soit complète ; clavier à l'écran, listes de mots par langue, 3 modes de longueur, série sans fin |
 
 **Le multijoueur (2 joueurs en local)** est disponible pour **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duel
@@ -713,6 +717,10 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **T-Rex Runner** | 1 jugador    | Carrera infinita por el desierto: salto variable, agacharse, cactus y pterodáctilos, ciclo día/noche, velocidad creciente, 3 dificultades |
 | **Damas**        | 1 / 2 jugadores | 3 reglamentos a elegir (alemanas 8×8, internacionales 10×10, checkers), captura obligatoria y dama voladora, 3 fuerzas de IA (minimax) o duelo local |
 | **Póker**        | 1 jugador    | 3 variantes a elegir: Texas Hold'em contra la IA, 5 Card Draw y Video Poker; rondas de apuestas, ciegas, cuenta de fichas persistente |
+| **Puzle deslizante** | 1 jugador  | Puzle-15 en 3x3/4x4/5x5: desliza las fichas numeradas al hueco, control con ratón o flechas, puntos por movimientos y tiempo |
+| **Mastermind**       | 1 jugador  | Descifra el código de color secreto (3 modos: 4×6, clásico, 5×8), fichas de pista negras/blancas, racha sin fin |
+| **Bubble Shooter**   | 1 jugador  | Clon de Puzzle Bobble: dispara colores iguales en grupos de tres, rebotes en las paredes, racimos que caen, 3 dificultades |
+| **Hangman**          | 1 jugador  | Adivina la palabra antes de completar la horca; teclado en pantalla, listas de palabras por idioma, 3 modos de longitud, racha sin fin |
 
 **El multijugador (2 jugadores en local)** está disponible en **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
@@ -1306,6 +1314,10 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **T-Rex Runner** | 1 jogador    | Corrida infinita pelo deserto: salto variável, agachar, cactos e pterodáctilos, ciclo dia/noite, velocidade crescente, 3 dificuldades |
 | **Damas**        | 1 / 2 jogadores | 3 regulamentos à escolha (alemãs 8×8, internacionais 10×10, checkers), captura obrigatória e dama voadora, 3 forças de IA (minimax) ou duelo local |
 | **Póquer**       | 1 jogador    | 3 variantes à escolha: Texas Hold'em contra a IA, 5 Card Draw e Video Poker; rondas de apostas, blinds, saldo de fichas persistente |
+| **Quebra-cabeça deslizante** | 1 jogador | Jogo do 15 em 3x3/4x4/5x5: deslize as peças numeradas para o vazio, controle por rato ou setas, pontos por jogadas e tempo |
+| **Mastermind**       | 1 jogador  | Decifra o código de cor secreto (3 modos: 4×6, clássico, 5×8), pinos de dica pretos/brancos, série sem fim |
+| **Bubble Shooter**   | 1 jogador  | Clone do Puzzle Bobble: atira cores iguais em grupos de três, ressaltos nas paredes, grupos que caem, 3 dificuldades |
+| **Hangman**          | 1 jogador  | Adivinha a palavra antes de a forca ficar completa; teclado no ecrã, listas de palavras por idioma, 3 modos de tamanho, série sem fim |
 
 **O multijogador (2 jogadores em local)** está disponível em **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo

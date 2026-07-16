@@ -1468,6 +1468,159 @@
           ]
         }
       ]
+    },
+    {
+      "id": "slidepuzzle",
+      "category": "games",
+      "game": "SlidingPuzzleGame",
+      "title": "Sliding Puzzle",
+      "keywords": [
+        "sliding puzzle",
+        "15 puzzle",
+        "fifteen",
+        "tiles",
+        "numbers",
+        "slide"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Put the numbered tiles back in order (1, 2, 3 …); the gap stays in the bottom-right corner.",
+            "Tiles can only slide into the empty gap. Three sizes: 3×3 (easy), 4×4 (classic) and 5×5 (hard).",
+            "The board is shuffled with many random moves, so it is always solvable."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Click a tile in the same row or column as the gap to slide the whole line.",
+            "- Arrow keys push the tile next to the gap into it."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "You start with a base score per size; every move and every second subtract a little. Solving fast and with few moves gives the best high score.",
+            "After solving, Enter/click starts a fresh board right away."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastermind",
+      "category": "games",
+      "game": "MastermindGame",
+      "title": "Mastermind",
+      "keywords": [
+        "mastermind",
+        "colour code",
+        "code",
+        "guess",
+        "pegs",
+        "logic"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "The computer picks a hidden code of coloured pegs (colours may repeat). Crack it row by row.",
+            "After each guess you get feedback pegs: a BLACK peg = right colour in the right spot, a WHITE peg = right colour in the wrong spot. The order of the feedback pegs does not reveal which peg it refers to.",
+            "Modes: Easy (4 pegs, 6 colours, 12 rows), Classic (4/6, 10 rows) and Hard (5 pegs, 8 colours)."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Click a colour at the bottom (or keys 1–8) to fill the next empty slot.",
+            "- Click a placed peg to clear it; < or Backspace removes the last one.",
+            "- OK or Enter checks the full row."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Like Wordle it is an endless streak: each cracked code scores points (fewer guesses + harder mode = more), then a new code appears at once.",
+            "The first code you fail to crack ends the game - the total is your high score."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bubbleshooter",
+      "category": "games",
+      "game": "BubbleShooterGame",
+      "title": "Bubble Shooter",
+      "keywords": [
+        "bubble shooter",
+        "puzzle bobble",
+        "bubbles",
+        "balls",
+        "shoot",
+        "groups"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Shoot bubbles up into the honeycomb field. When three or more of the same colour touch, the group pops.",
+            "Bubbles that lose their link to the top row when a group pops fall down and give bonus points.",
+            "Modes: Easy (4 colours, no new rows), Classic (5 colours, an extra row drops in now and then) and Hard (6 colours, faster)."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- The cannon aims at the mouse; left/right arrows also turn it.",
+            "- Left-click or Space shoots. Bubbles bounce off the side walls.",
+            "- The small bubble to the left of the cannon is your next colour."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Popped and dropped bubbles score points; clearing the whole field gives a bonus.",
+            "As soon as a bubble locks in below the red line the game is over - the total is your high score."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hangman",
+      "category": "games",
+      "game": "HangmanGame",
+      "title": "Hangman",
+      "keywords": [
+        "hangman",
+        "word",
+        "guess",
+        "letters",
+        "gallows"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Guess the hidden word letter by letter. Each wrong letter draws another part of the hangman.",
+            "After 6 mistakes the figure is complete and the round is lost.",
+            "Modes by word length: Short words (3–5), Mixed (3–12) and Long words (7–12). Words match the selected language and use only A–Z."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Type letters A–Z or click them on the on-screen keyboard.",
+            "- Correct letters appear in the word; wrong ones turn the key grey."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Endless streak: each guessed word scores points (more remaining lives and longer words = more), then a new word appears at once.",
+            "The first loss ends the game - the total is your high score."
+          ]
+        }
+      ]
     }
   ]
 }

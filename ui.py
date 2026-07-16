@@ -74,6 +74,8 @@ GAME_COLORS = {
     "TRexRunnerGame": "#8ea3b0", "DameGame": "#d87842", "PokerGame": "#e8c45c",
     "ChessGame": "#c9a24b", "MuehleGame": "#7fae8f", "SimonGame": "#e05a7d",
     "BilliardGame": "#2f9e6a",
+    "SlidingPuzzleGame": "#5ac0e0", "MastermindGame": "#c86ad8",
+    "BubbleShooterGame": "#ff7aa8", "HangmanGame": "#d89a4a",
 }
 
 # Schriftname mit Fallback-Kette (SysFont probiert der Reihe nach durch).

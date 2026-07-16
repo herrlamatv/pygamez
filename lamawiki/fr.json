@@ -1466,6 +1466,160 @@
           ]
         }
       ]
+    },
+    {
+      "id": "slidepuzzle",
+      "category": "games",
+      "game": "SlidingPuzzleGame",
+      "title": "Taquin",
+      "keywords": [
+        "taquin",
+        "15",
+        "tuiles",
+        "nombres",
+        "glisser",
+        "puzzle"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Remets les tuiles numérotées dans l'ordre (1, 2, 3 …) ; le trou reste en bas à droite.",
+            "Les tuiles ne glissent que dans le trou libre. Trois tailles : 3×3 (facile), 4×4 (classique) et 5×5 (difficile).",
+            "Le plateau est mélangé par de nombreux coups aléatoires : il est donc toujours soluble."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Clique une tuile sur la même ligne ou colonne que le trou : toute la ligne glisse.",
+            "- Les flèches poussent dans le trou la tuile qui le touche."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Tu commences avec un score de base selon la taille ; chaque coup et chaque seconde en retirent un peu. Résoudre vite et en peu de coups donne le meilleur score.",
+            "Une fois résolu, Entrée/clic lance aussitôt une nouvelle grille."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastermind",
+      "category": "games",
+      "game": "MastermindGame",
+      "title": "Mastermind",
+      "keywords": [
+        "mastermind",
+        "code couleur",
+        "code",
+        "deviner",
+        "pions",
+        "logique"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "L'ordinateur choisit un code caché de pions colorés (les couleurs peuvent se répéter). Perce-le ligne par ligne.",
+            "Après chaque essai, des pions indicateurs apparaissent : un pion NOIR = bonne couleur au bon endroit, un pion BLANC = bonne couleur au mauvais endroit. L'ordre des indicateurs ne dit pas à quel pion ils se rapportent.",
+            "Modes : Facile (4 pions, 6 couleurs, 12 lignes), Classique (4/6, 10 lignes) et Difficile (5 pions, 8 couleurs)."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Clique une couleur en bas (ou touches 1–8) pour remplir la case libre suivante.",
+            "- Clique un pion posé pour l'effacer ; < ou Retour supprime le dernier.",
+            "- OK ou Entrée valide la ligne complète."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Comme Wordle, c'est une série sans fin : chaque code percé rapporte des points (moins d'essais + mode plus dur = plus), puis un nouveau code apparaît aussitôt.",
+            "Le premier code que tu ne perces pas termine la partie - le total est ton meilleur score."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bubbleshooter",
+      "category": "games",
+      "game": "BubbleShooterGame",
+      "title": "Bubble Shooter",
+      "keywords": [
+        "bubble shooter",
+        "puzzle bobble",
+        "bulles",
+        "billes",
+        "tirer",
+        "groupes"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Tire des bulles vers le haut dans la grille en nid d'abeille. Quand au moins trois de la même couleur se touchent, le groupe éclate.",
+            "Les bulles qui perdent leur lien avec la rangée du haut quand un groupe éclate tombent et rapportent des points bonus.",
+            "Modes : Facile (4 couleurs, sans nouvelles rangées), Classique (5 couleurs, une rangée descend de temps en temps) et Difficile (6 couleurs, plus rapide)."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Le canon vise la souris ; les flèches gauche/droite le tournent aussi.",
+            "- Clic gauche ou Espace tire. Les bulles rebondissent sur les parois.",
+            "- La petite bulle à gauche du canon est ta prochaine couleur."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Les bulles éclatées et tombées rapportent des points ; vider tout le champ donne un bonus.",
+            "Dès qu'une bulle se fixe sous la ligne rouge, la partie est finie - le total est ton meilleur score."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hangman",
+      "category": "games",
+      "game": "HangmanGame",
+      "title": "Hangman",
+      "keywords": [
+        "pendu",
+        "hangman",
+        "mot",
+        "deviner",
+        "lettres",
+        "potence"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Devine le mot caché lettre par lettre. Chaque mauvaise lettre dessine une partie de plus du pendu.",
+            "Après 6 erreurs, le dessin est complet et la manche est perdue.",
+            "Modes selon la longueur : Mots courts (3–5), Mélangé (3–12) et Mots longs (7–12). Les mots suivent la langue choisie et n'utilisent que A–Z."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Tape les lettres A–Z ou clique-les sur le clavier à l'écran.",
+            "- Les bonnes lettres apparaissent dans le mot ; les mauvaises grisent la touche."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Série sans fin : chaque mot trouvé rapporte des points (plus de vies restantes et mots plus longs = plus), puis un nouveau mot apparaît aussitôt.",
+            "La première défaite termine la partie - le total est ton meilleur score."
+          ]
+        }
+      ]
     }
   ]
 }

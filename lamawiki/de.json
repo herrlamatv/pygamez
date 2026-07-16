@@ -1468,6 +1468,160 @@
           ]
         }
       ]
+    },
+    {
+      "id": "slidepuzzle",
+      "category": "games",
+      "game": "SlidingPuzzleGame",
+      "title": "Schiebepuzzle",
+      "keywords": [
+        "schiebepuzzle",
+        "15-puzzle",
+        "taquin",
+        "kacheln",
+        "schieben",
+        "zahlen"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Bring die durchnummerierten Kacheln in die richtige Reihenfolge (1, 2, 3 …) - unten rechts bleibt die Lücke frei.",
+            "Kacheln lassen sich nur in die freie Lücke schieben. Drei Größen: 3×3 (leicht), 4×4 (klassisch) und 5×5 (schwer).",
+            "Gemischt wird durch viele zufällige Züge, das Puzzle ist also immer lösbar."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Klick auf eine Kachel in derselben Reihe oder Spalte wie die Lücke: die ganze Linie rutscht nach.",
+            "- Pfeiltasten schieben die an die Lücke grenzende Kachel hinein."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Du startest mit einer Grundpunktzahl je Größe; jeder Zug und jede Sekunde ziehen etwas ab. Schnell und mit wenigen Zügen lösen bringt den höchsten Highscore.",
+            "Nach dem Lösen geht es mit Enter/Klick sofort mit einem neuen Feld weiter."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastermind",
+      "category": "games",
+      "game": "MastermindGame",
+      "title": "Mastermind",
+      "keywords": [
+        "mastermind",
+        "farbcode",
+        "code",
+        "raten",
+        "pins",
+        "logik"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Der Computer würfelt einen verdeckten Code aus mehreren Farbstiften (Farben dürfen mehrfach vorkommen). Knacke ihn Reihe für Reihe.",
+            "Nach jedem Tipp erscheinen Rückmeldungs-Pins: ein SCHWARZER Pin = richtige Farbe an richtiger Stelle, ein WEISSER Pin = richtige Farbe an falscher Stelle. Die Reihenfolge der Pins verrät nicht, welcher Stift gemeint ist.",
+            "Modi: Leicht (4 Stifte, 6 Farben, 12 Reihen), Klassik (4/6, 10 Reihen) und Schwer (5 Stifte, 8 Farben)."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Farbe unten anklicken (oder Tasten 1–8) füllt den nächsten freien Platz.",
+            "- Klick auf einen gelegten Stift löscht ihn; < bzw. Rücktaste löscht den letzten.",
+            "- OK bzw. Enter wertet die volle Reihe aus."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Wie bei Wordle läuft ein Endlos-Streak: jeder geknackte Code bringt Punkte (weniger Versuche + schwererer Modus = mehr), danach kommt sofort ein neuer Code.",
+            "Der erste Code, den du nicht knackst, beendet die Partie - die Summe ist dein Highscore."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bubbleshooter",
+      "category": "games",
+      "game": "BubbleShooterGame",
+      "title": "Bubble Shooter",
+      "keywords": [
+        "bubble shooter",
+        "puzzle bobble",
+        "kugeln",
+        "blasen",
+        "schiessen",
+        "gruppen"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Schiebe von unten Kugeln nach oben ins Wabenfeld. Treffen mindestens drei gleiche Farben aufeinander, platzt die Gruppe.",
+            "Kugeln, die durch das Platzen den Halt zur obersten Reihe verlieren, fallen herunter und geben Bonuspunkte.",
+            "Modi: Leicht (4 Farben, keine neuen Reihen), Klassik (5 Farben, ab und zu rückt oben eine Reihe nach) und Schwer (6 Farben, schneller)."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Die Kanone zielt zur Maus; Pfeil links/rechts dreht ebenfalls.",
+            "- Linksklick oder Leertaste schießt. Kugeln prallen an den Seitenwänden ab.",
+            "- Die kleine Kugel links neben der Kanone ist die nächste Farbe."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Geplatzte und heruntergefallene Kugeln geben Punkte; ein komplett leer geräumtes Feld bringt einen Bonus.",
+            "Sobald eine Kugel unter die rote Linie einrastet, ist die Partie vorbei - die Summe ist dein Highscore."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hangman",
+      "category": "games",
+      "game": "HangmanGame",
+      "title": "Galgenmännchen",
+      "keywords": [
+        "galgenmännchen",
+        "hangman",
+        "wort",
+        "raten",
+        "buchstaben",
+        "galgen"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Errate das gesuchte Wort Buchstabe für Buchstabe. Jeder falsche Buchstabe zeichnet ein weiteres Teil des Galgenmännchens.",
+            "Nach 6 Fehlern ist das Männchen komplett und die Partie verloren.",
+            "Modi über die Wortlänge: Kurze Wörter (3–5), Gemischt (3–12) und Lange Wörter (7–12). Die Wörter passen zur eingestellten Sprache und nutzen nur A–Z."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Buchstaben A–Z tippen oder unten auf der Bildschirmtastatur anklicken.",
+            "- Richtige Buchstaben erscheinen im Wort, falsche färben die Taste grau."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Endlos-Streak: jedes erratene Wort bringt Punkte (mehr Restleben und längere Wörter = mehr), danach kommt sofort ein neues Wort.",
+            "Der erste Verlust beendet die Partie - die Summe ist dein Highscore."
+          ]
+        }
+      ]
     }
   ]
 }
