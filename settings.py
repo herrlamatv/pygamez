@@ -122,6 +122,16 @@ DEFAULTS = {
     "dame": {"variant": "german", "difficulty": 1},
     # Poker: Anzahl KI-Gegner (1-3, nur Texas Hold'em), KI-Stärke (0-2)
     "poker": {"opponents": 2, "difficulty": 1},
+    # Schach: KI-Stärke (0=Anfänger .. 5=Meister), Spielerfarbe (white/black)
+    "chess": {"difficulty": 2, "color": "white"},
+    # Mühle: KI-Stärke (0-2), Fliegen-Regel bei nur noch 3 Steinen an/aus
+    "muehle": {"difficulty": 1, "flying": True},
+    # Simon: Modus (classic/speed/reverse/duel/mixed), Ton (off/on/mixed),
+    # Feldanzahl (4/6/9)
+    "simon": {"mode": "classic", "audio": "on", "pads": 4},
+    # Billard: Variante (8ball/9ball/practice), Ansicht (2d/3d/free),
+    # KI-Stärke (0-2)
+    "billiard": {"variant": "8ball", "view": "2d", "difficulty": 1},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -261,6 +271,34 @@ def _merge_defaults(data):
                 out["poker"]["opponents"] = max(1, min(3, pk["opponents"]))
             if isinstance(pk.get("difficulty"), int):
                 out["poker"]["difficulty"] = max(0, min(2, pk["difficulty"]))
+        ch = data.get("chess")
+        if isinstance(ch, dict):
+            if isinstance(ch.get("difficulty"), int):
+                out["chess"]["difficulty"] = max(0, min(5, ch["difficulty"]))
+            if ch.get("color") in ("white", "black"):
+                out["chess"]["color"] = ch["color"]
+        mu = data.get("muehle")
+        if isinstance(mu, dict):
+            if isinstance(mu.get("difficulty"), int):
+                out["muehle"]["difficulty"] = max(0, min(2, mu["difficulty"]))
+            if isinstance(mu.get("flying"), bool):
+                out["muehle"]["flying"] = mu["flying"]
+        sim = data.get("simon")
+        if isinstance(sim, dict):
+            if sim.get("mode") in ("classic", "speed", "reverse", "duel", "mixed"):
+                out["simon"]["mode"] = sim["mode"]
+            if sim.get("audio") in ("off", "on", "mixed"):
+                out["simon"]["audio"] = sim["audio"]
+            if sim.get("pads") in (4, 6, 9):
+                out["simon"]["pads"] = sim["pads"]
+        bil = data.get("billiard")
+        if isinstance(bil, dict):
+            if bil.get("variant") in ("8ball", "9ball", "practice"):
+                out["billiard"]["variant"] = bil["variant"]
+            if bil.get("view") in ("2d", "3d", "free"):
+                out["billiard"]["view"] = bil["view"]
+            if isinstance(bil.get("difficulty"), int):
+                out["billiard"]["difficulty"] = max(0, min(2, bil["difficulty"]))
         ctrl = data.get("controls")
         if isinstance(ctrl, dict):
             for player in ("p1", "p2"):

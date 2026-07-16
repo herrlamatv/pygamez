@@ -72,6 +72,8 @@ GAME_COLORS = {
     "LabyrinthGame": "#b07a4a",
     "ReversiGame": "#3fbf8f", "KniffelGame": "#e8b04b", "WordleGame": "#6aaa64",
     "TRexRunnerGame": "#8ea3b0", "DameGame": "#d87842", "PokerGame": "#e8c45c",
+    "ChessGame": "#c9a24b", "MuehleGame": "#7fae8f", "SimonGame": "#e05a7d",
+    "BilliardGame": "#2f9e6a",
 }
 
 # Schriftname mit Fallback-Kette (SysFont probiert der Reihe nach durch).

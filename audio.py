@@ -25,6 +25,7 @@ import pygame
 
 _available = False          # ist der Mixer nutzbar?
 _cache = {}                 # name -> pygame.mixer.Sound
+_tone_cache = {}            # (freq, dur, wave) -> pygame.mixer.Sound (frei erzeugt)
 _joysticks = []             # initialisierte Gamepads (für Rumble)
 
 # Spezifikation der Effekte. f0 = Startfrequenz, f1 = Zielfrequenz (Sweep),
@@ -131,6 +132,36 @@ def play(name, settings=None):
     try:
         vol = 0.6 if settings is None else float(settings.get("volume", 0.6))
         snd.set_volume(max(0.0, min(1.0, vol)))
+        snd.play()
+    except Exception:
+        pass
+
+
+def tone(freq, dur=0.18, settings=None, wave="sine", vol=0.35):
+    """Spielt einen frei wählbaren Ton (Frequenz in Hz).
+
+    Anders als play() sind die Effekte nicht vorab definiert: der Ton wird bei
+    Bedarf synthetisiert und danach gecacht (nach Frequenz/Dauer/Wellenform).
+    Gedacht z.B. für Simon/Senso, das je Feld einen eigenen Klang braucht.
+    Respektiert - wie play() - settings["sound"] und settings["volume"].
+    """
+    if not _available:
+        return
+    if settings is not None and not settings.get("sound", True):
+        return
+    key = (round(float(freq), 1), round(float(dur), 3), wave)
+    snd = _tone_cache.get(key)
+    if snd is None:
+        try:
+            snd = _build(dict(f0=freq, dur=dur, wave=wave, vol=1.0))
+        except Exception:
+            snd = None
+        _tone_cache[key] = snd
+    if snd is None:
+        return
+    try:
+        v = 0.6 if settings is None else float(settings.get("volume", 0.6))
+        snd.set_volume(max(0.0, min(1.0, v * vol)))
         snd.play()
     except Exception:
         pass

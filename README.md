@@ -69,11 +69,16 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **T-Rex Runner** | 1 Spieler    | Endloser Wüstenlauf: variabler Sprung, Ducken, Kakteen & Flugsaurier, Tag/Nacht-Wechsel, steigendes Tempo, 3 Schwierigkeitsgrade |
 | **Dame**         | 1 / 2 Spieler | 3 Regelwerke wählbar (Deutsche 8×8, Internationale 10×10, Checkers), Schlagzwang & fliegende Dame, 3 KI-Stärken (Minimax) oder lokales Duell |
 | **Poker**        | 1 Spieler    | 3 Varianten wählbar: Texas Hold'em gegen KI, 5 Card Draw und Video Poker; Setzrunden, Blinds, dauerhaftes Chip-Konto |
+| **Schach**       | 1 / 2 Spieler | Vollständige Regeln (Rochade, En Passant, Umwandlung, Matt/Patt/Remis), 6 KI-Stärken (Minimax + Alpha-Beta) oder lokales Duell, Farbwahl |
+| **Mühle**        | 1 / 2 Spieler | Nine Men's Morris mit Setz-/Zieh-/Sprungphase, Mühlen & Schlagen, fliegende Steine abschaltbar, 3 KI-Stärken oder lokales Duell |
+| **Simon**        | 1 / 2 Spieler | Senso-Merkspiel: Modi Klassisch/Speed/Reverse/Gemischt + Duell, Ton aus/an/gemischt, 4/6/9 Felder, Bestwert je Modus |
+| **Billard**      | 1 / 2 Spieler | 8-Ball, 9-Ball & Übungsmodus in 2D, fester 3D-Ansicht oder frei drehbarer 3D-Kamera; weiche Physik, Zielhilfe, KI mit 3 Stärken |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)**, **Memory (Duell)**,
-**Vier gewinnt**, **Panzer-Duell**, **Reversi**, **Kniffel** und **Dame**. Der Modus
-wird direkt im Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
+**Vier gewinnt**, **Panzer-Duell**, **Reversi**, **Kniffel**, **Dame**, **Schach**,
+**Mühle**, **Simon (Duell)** und **Billard**. Der Modus wird direkt im
+Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
 
 #### Feature-Details je Spiel
 
@@ -399,6 +404,47 @@ Explosions-Effekte, Highscore.
 - **Wortlisten je Sprache** (nur A-Z); Rateversuche werden nicht gegen ein
   Wörterbuch geprüft. Eingabe per Tastatur oder anklickbarer Bildschirmtastatur.
 
+**Schach**
+- **Vollständiges Schach**: alle Figurenzüge inkl. **Rochade**, **En Passant**
+  und **Bauernumwandlung** (Figur wählbar); **Schach, Schachmatt und Patt** sowie
+  Remis durch **50-Züge-Regel**, **dreifache Stellungswiederholung** und
+  **ungenügendes Material**.
+- **6 KI-Stärken** von *Anfänger* bis *Meister* (Negamax mit Alpha-Beta,
+  Zugsortierung, Figur-/Feldwert-Tabellen, Ruhesuche); ein **Zeitbudget** hält
+  jeden KI-Zug flüssig. **Farbwahl** Weiß/Schwarz oder **lokales Duell**.
+- Legale Züge werden markiert, Schach hervorgehoben; Steuerung per **Maus** oder
+  Auswahlrahmen. Jeder Sieg gegen die KI zählt einen Highscore-Punkt.
+
+**Mühle**
+- **Nine Men's Morris** mit allen drei Phasen: **Setzen** (je 9 Steine),
+  **Ziehen** entlang der Linien und **Springen** bei nur noch 3 Steinen (per
+  Schalter abschaltbar).
+- Geschlossene **Mühlen** entfernen einen Gegnerstein (bevorzugt außerhalb
+  gegnerischer Mühlen); verloren, wer unter 3 Steine fällt oder zugunfähig ist.
+- **3 KI-Stärken** (Minimax mit Alpha-Beta, phasengerechte Bewertung) oder
+  **lokales Duell**; mit Zughinweisen, Mühlen-Hervorhebung und Steinzähler.
+
+**Simon**
+- **Senso-Merkspiel**: die leuchtende Folge wächst jede Runde und muss exakt
+  nachgetippt werden.
+- **Modi**: *Klassisch*, *Speed* (wird schneller), *Reverse* (rückwärts),
+  *Gemischt* (Modus wechselt je Runde) und **Duell** zu zweit (abwechselnd
+  anhängen & wiederholen).
+- **Ton** *aus / an / gemischt* (im gemischten Ton trainierst du visuell UND
+  akustisch), **4/6/9 Felder** als Schwierigkeit; **Bestwert je Modus** wird
+  gespeichert. Steuerung per Maus oder Tasten 1-9.
+
+**Billard**
+- **8-Ball**, **9-Ball** und ein regelfreier **Übungsmodus**, gegen die KI (mit
+  Zielhilfe) oder **zu zweit lokal**.
+- **Drei frei wählbare Ansichten**: klassische **2D-Draufsicht**, feste
+  **3D-Schrägperspektive** mit schattierten Kugeln und **frei drehbare
+  3D-Kamera** (rechte Maustaste). Alle Bewegungen sind zeitschritt-basiert und
+  **weich abgebremst** (Reibung, Teilschritte gegen Durchtunneln).
+- **Stoßen**: linke Maustaste gedrückt halten lädt die Kraft, Loslassen stößt;
+  Ziellinie und Kraft-Meter helfen. Nach Foul **Ball in Hand**. Die Ansicht (V)
+  wird in `settings.json` gemerkt; gewonnene Frames zählen für den Highscore.
+
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
@@ -486,7 +532,8 @@ games/
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
   labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py
+  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  simon.py  billiard.py
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -660,11 +707,16 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **T-Rex Runner** | 1 player     | Endless desert run: variable jump, duck, cacti & pterodactyls, day/night cycle, rising speed, 3 difficulties |
 | **Draughts (Dame)** | 1 / 2 players | 3 rule sets (German 8×8, International 10×10, Checkers), forced captures & flying kings, 3 AI strengths (minimax) or a local duel |
 | **Poker**        | 1 player     | 3 selectable variants: Texas Hold'em vs AI, 5 Card Draw and Video Poker; betting rounds, blinds, persistent chip bankroll |
+| **Chess**        | 1 / 2 players | Full rules (castling, en passant, promotion, mate/stalemate/draws), 6 AI strengths (minimax + alpha-beta) or a local duel, colour choice |
+| **Nine Men's Morris** | 1 / 2 players | Placing/moving/flying phases, mills & captures, optional flying rule, 3 AI strengths or a local duel |
+| **Simon**        | 1 / 2 players | Senso memory game: Classic/Speed/Reverse/Mixed modes + Duel, sound off/on/mixed, 4/6/9 pads, best per mode |
+| **Billiards**    | 1 / 2 players | 8-ball, 9-ball & practice in 2D, fixed 3D view or free-orbit 3D camera; smooth physics, aim assist, 3 AI strengths |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
 duel)**, **Memory (duel)**, **Connect Four**, **Tank Duel**, **Reversi**,
-**Kniffel** and **Draughts**. The mode is
+**Kniffel**, **Draughts**, **Chess**, **Nine Men's Morris**, **Simon (duel)**
+and **Billiards**. The mode is
 chosen right in the pre-game screen (*Single-player / Multiplayer*).
 
 #### Feature details per game
@@ -986,6 +1038,46 @@ explosion effects, high score.
 - **Per-language word lists** (A-Z only); guesses are not checked against a
   dictionary. Type on the keyboard or click the on-screen keys.
 
+**Chess**
+- **Full chess**: every piece move including **castling**, **en passant** and
+  **pawn promotion** (choose the piece); **check, checkmate and stalemate** plus
+  draws by the **fifty-move rule**, **threefold repetition** and **insufficient
+  material**.
+- **6 AI strengths** from *Beginner* to *Master* (negamax with alpha-beta, move
+  ordering, piece-square tables, quiescence search); a **time budget** keeps
+  every AI move smooth. **Colour choice** white/black or a **local duel**.
+- Legal moves are highlighted, check is flagged; play with the **mouse** or a
+  selection cursor. Each win against the AI scores one high-score point.
+
+**Nine Men's Morris**
+- **Mills** with all three phases: **placing** (9 pieces each), **moving** along
+  the lines and **flying** once down to 3 pieces (can be switched off).
+- A completed **mill** removes an opponent's piece (preferably one outside a
+  mill); you lose when reduced below 3 pieces or unable to move.
+- **3 AI strengths** (minimax with alpha-beta, phase-aware evaluation) or a
+  **local duel**; with move hints, mill highlighting and a piece counter.
+
+**Simon**
+- **Senso memory game**: the lit sequence grows every round and must be repeated
+  exactly.
+- **Modes**: *Classic*, *Speed* (gets faster), *Reverse* (backwards), *Mixed*
+  (mode rotates each round) and a two-player **Duel** (take turns to add &
+  repeat).
+- **Sound** *off / on / mixed* (mixed trains your visual AND aural memory),
+  **4/6/9 pads** as difficulty; the **best score per mode** is saved. Play with
+  the mouse or number keys 1-9.
+
+**Billiards**
+- **8-ball**, **9-ball** and a rules-free **practice** mode, versus the AI (with
+  aim assist) or **two players locally**.
+- **Three freely selectable views**: classic **2D top-down**, a fixed **3D
+  angled perspective** with shaded balls and a **free-orbit 3D camera** (right
+  mouse button). All motion is time-step based and **smoothly damped** (friction,
+  sub-steps to avoid tunnelling).
+- **Shooting**: hold the left mouse button to charge power, release to strike;
+  an aim line and power meter help. **Ball in hand** after a foul. The view (V)
+  is remembered in `settings.json`; frames won count towards the high score.
+
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
 
@@ -1073,7 +1165,8 @@ games/
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
   labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py
+  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  simon.py  billiard.py
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the

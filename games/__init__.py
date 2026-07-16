@@ -30,6 +30,10 @@ from .wordle import WordleGame
 from .trexrunner import TRexRunnerGame
 from .dame import DameGame
 from .poker import PokerGame
+from .chess import ChessGame
+from .muehle import MuehleGame
+from .simon import SimonGame
+from .billiard import BilliardGame
 
 # Reihenfolge der Spiele im Menü
 ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
@@ -38,4 +42,5 @@ ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
              MemoryGame, SolitaireGame, AimTrainerGame, ConnectFourGame,
              TankDuelGame, BlackjackGame, TunnelRacerGame, LabyrinthGame,
              ReversiGame, KniffelGame, WordleGame,
-             TRexRunnerGame, DameGame, PokerGame]
+             TRexRunnerGame, DameGame, PokerGame,
+             ChessGame, MuehleGame, SimonGame, BilliardGame]

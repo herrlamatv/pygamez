@@ -375,6 +375,34 @@ def _draw_icon(cv, cx, cy, name, color, bg):
         cv.create_oval(cx, cy - 2, cx + 10, cy + 8, fill="", outline=color,
                        width=2)
         cv.create_oval(cx + 3, cy + 1, cx + 7, cy + 5, fill="", outline=color)
+    elif name == "ChessGame":
+        # König
+        cv.create_rectangle(cx - 6, cy + 4, cx + 6, cy + 8, fill=color, outline="")
+        cv.create_polygon(cx - 5, cy + 4, cx - 3, cy - 3, cx + 3, cy - 3,
+                          cx + 5, cy + 4, fill=color, outline="")
+        cv.create_rectangle(cx - 1, cy - 9, cx + 1, cy - 2, fill=color, outline="")
+        cv.create_rectangle(cx - 3, cy - 7, cx + 3, cy - 5, fill=color, outline="")
+    elif name == "MuehleGame":
+        # Drei konzentrische Quadrate + ein Stein
+        cv.create_rectangle(cx - 9, cy - 9, cx + 9, cy + 9, outline=color, fill="")
+        cv.create_rectangle(cx - 4, cy - 4, cx + 4, cy + 4, outline=color, fill="")
+        cv.create_line(cx, cy - 9, cx, cy - 4, fill=color)
+        cv.create_line(cx, cy + 9, cx, cy + 4, fill=color)
+        cv.create_line(cx - 9, cy, cx - 4, cy, fill=color)
+        cv.create_line(cx + 9, cy, cx + 4, cy, fill=color)
+        cv.create_oval(cx - 10, cy - 10, cx - 6, cy - 6, fill=color, outline="")
+    elif name == "SimonGame":
+        # In vier Felder geteilter Kreis, ein Feld leuchtet
+        cv.create_arc(cx - 9, cy - 9, cx + 9, cy + 9, start=90, extent=90,
+                      fill=color, outline="", style="pieslice")
+        cv.create_oval(cx - 9, cy - 9, cx + 9, cy + 9, outline=color)
+        cv.create_line(cx - 9, cy, cx + 9, cy, fill=color)
+        cv.create_line(cx, cy - 9, cx, cy + 9, fill=color)
+    elif name == "BilliardGame":
+        # Queue + Kugel
+        cv.create_line(cx - 10, cy + 10, cx + 1, cy - 1, fill=color, width=2)
+        cv.create_oval(cx - 1, cy - 9, cx + 9, cy + 1, fill=color, outline="")
+        cv.create_oval(cx + 2, cy - 6, cx + 5, cy - 3, fill=bg, outline="")
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))
