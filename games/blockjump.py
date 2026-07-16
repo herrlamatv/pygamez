@@ -108,6 +108,9 @@ class BlockJumpGame(Game):
         if self.view not in ("first", "third"):
             self.view = "first"
         self.sens = max(0.4, min(2.5, float(cfg.get("sens", 1.0))))
+        # Maus-Richtung: Standard normal (Maus rechts -> Blick rechts). Wer die
+        # frühere/klassische Belegung will, kann invertiert einstellen (Taste I).
+        self.invert = bool(cfg.get("mouse_invert", False))
         self._make_fonts()
         self._sky_cache = None
         self._prev_frame = None
@@ -253,6 +256,8 @@ class BlockJumpGame(Game):
                 self._cycle_blur()
             elif k in ("c", "C"):
                 self.capture_mouse = not self.capture_mouse
+            elif k in ("i", "I"):
+                self._toggle_invert()
             elif k in ("plus", "KP_Add", "equal"):
                 self._change_sens(0.1)
             elif k in ("minus", "KP_Subtract"):
@@ -279,8 +284,11 @@ class BlockJumpGame(Game):
 
     def _apply_look(self, rel):
         k = math.radians(DEG_PER_PX) * self.sens
-        self.yaw = (self.yaw + rel[0] * k) % math.tau
-        self.pitch = max(-PITCH_CLAMP, min(PITCH_CLAMP, self.pitch - rel[1] * k))
+        # s = -1 -> normal (Maus rechts = Blick rechts, Maus hoch = Blick hoch);
+        # s = +1 -> invertiert (beide Achsen umgekehrt).
+        s = 1.0 if self.invert else -1.0
+        self.yaw = (self.yaw + rel[0] * k * s) % math.tau
+        self.pitch = max(-PITCH_CLAMP, min(PITCH_CLAMP, self.pitch + rel[1] * k * s))
 
     def _toggle_view(self):
         self.view = "third" if self.view == "first" else "first"
@@ -289,6 +297,11 @@ class BlockJumpGame(Game):
     def _cycle_blur(self):
         self.blur = 0.0 if self.blur >= 0.79 else round(self.blur + 0.2, 2)
         self._save_setting("blur", self.blur)
+
+    def _toggle_invert(self):
+        self.invert = not self.invert
+        self._save_setting("mouse_invert", self.invert)
+        self.play_sound("click")
 
     def _change_sens(self, d):
         self.sens = round(max(0.4, min(2.5, self.sens + d)), 1)
@@ -801,8 +814,10 @@ class BlockJumpGame(Game):
             True, ui.GOLD)
         s.blit(img, img.get_rect(midright=(self.width - 14, 17)))
         if self.state == PLAY:
-            hint = t("blj.hud_hint", view=(t("blj.view_1p") if self.view == "first"
-                                          else t("blj.view_3p")))
+            mdir = t("common.dir_inverted") if self.invert else t("common.dir_normal")
+            hint = t("blj.hud_hint",
+                     view=(t("blj.view_1p") if self.view == "first" else t("blj.view_3p")),
+                     dir=mdir)
             img = self._small.render(hint, True, ui.TEXT_FAINT)
             s.blit(img, img.get_rect(midbottom=(self.width // 2, self.height - 8)))
 

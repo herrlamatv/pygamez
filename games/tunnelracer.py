@@ -84,6 +84,9 @@ class TunnelRacerGame(Game):
             self.blur = max(0.0, min(0.8, float(tn.get("blur", 0.35))))
         except (TypeError, ValueError):
             self.blur = 0.35
+        # Maus-Richtung: Standard normal (Maus rechts = rechts, hoch = hoch);
+        # invertiert (Taste I) kehrt beide Achsen um (klassischer Flug-Stil).
+        self.invert = bool(tn.get("mouse_invert", False))
         try:
             self.cursor = max(1, min(LEVELS, int(tn.get("last_level", 1))))
         except (TypeError, ValueError):
@@ -164,6 +167,8 @@ class TunnelRacerGame(Game):
             k = event.key
             if k in ("c", "C"):
                 self._toggle_control()
+            elif k in ("i", "I"):
+                self._toggle_invert()
             elif k in ("b", "B"):
                 self.blur = 0.0 if self.blur >= 0.79 \
                     else round(self.blur + 0.1, 1)
@@ -204,6 +209,11 @@ class TunnelRacerGame(Game):
                     return
             if self.start_rect.collidepoint(event.pos):
                 self._start_run(self.cursor if self.mode == "levels" else None)
+
+    def _toggle_invert(self):
+        self.invert = not self.invert
+        self._save_setting("mouse_invert", self.invert)
+        self.play_sound("select")
 
     def _toggle_control(self):
         self.control = "mouse" if self.control == "keys" else "keys"
@@ -364,14 +374,19 @@ class TunnelRacerGame(Game):
                 self.blur = 0.0 if self.blur >= 0.79 \
                     else round(self.blur + 0.1, 1)
                 self._save_setting("blur", self.blur)
+            if k in ("i", "I"):
+                self._toggle_invert()
         elif event.kind == InputEvent.KEYUP:
             k = event.key
             for act in ("up", "down", "left", "right"):
                 if self.is_action(k, act) or k == act.capitalize():
                     self.keys.discard(act)
         elif event.kind == InputEvent.MOUSEREL and self.control == "mouse":
-            self.px += event.rel[0] * 0.011 * H
-            self.py += event.rel[1] * 0.011 * H
+            # normal: Maus rechts = Schiff rechts, Maus hoch = Schiff hoch.
+            hx = -1.0 if self.invert else 1.0
+            hy = 1.0 if self.invert else -1.0
+            self.px += event.rel[0] * 0.011 * H * hx
+            self.py += event.rel[1] * 0.011 * H * hy
 
     # ===================================================== Update
     def update(self, dt):
@@ -766,6 +781,11 @@ class TunnelRacerGame(Game):
             else f"{int(self.blur * 100)}%"
         img = self._big.render(blur_lbl, True, COL_SHIP)
         s.blit(img, img.get_rect(center=self.blur_box.center))
+
+        # Maus-Richtung (nur bei Maussteuerung relevant; Taste I schaltet um)
+        mdir = t("common.dir_inverted") if self.invert else t("common.dir_normal")
+        hint = self._small.render(t("tun.mousedir", dir=mdir), True, COL_DIM)
+        s.blit(hint, hint.get_rect(center=(cx, self.height - 18)))
 
         if self.mode == "levels":
             for n in range(1, LEVELS + 1):
