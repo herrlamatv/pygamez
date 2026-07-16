@@ -1620,6 +1620,54 @@
           ]
         }
       ]
+    },
+    {
+      "id": "blockjump",
+      "category": "games",
+      "game": "BlockJumpGame",
+      "title": "Block Jump",
+      "keywords": [
+        "block jump",
+        "3d",
+        "minecraft",
+        "plateforme",
+        "sauter",
+        "grimper",
+        "parkour"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Un jeu de plateforme 3D façon Minecraft : saute de plateforme en plateforme (des blocs flottants) jusqu'au phare d'arrivée lumineux. Chaque niveau est un parcours généré aléatoirement, de plus en plus difficile.",
+            "La caméra est en 1re personne comme Minecraft par défaut ; appuie sur V pour passer en caméra de poursuite.",
+            "Si tu tombes sous les plateformes, tu perds une vie et réapparais au dernier point de contrôle. À 0 vie (tu commences avec 3), la partie est finie."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- WASD ou flèches : se déplacer (selon le regard). Espace : sauter. Souris : regarder autour.",
+            "- Sur une échelle, W monte et S descend. Un bloc-ressort te catapulte vers le haut.",
+            "- V = vue (1re/3e personne), B = flou de mouvement, C = capturer/libérer la souris, +/- = sensibilité. Échap met en pause et libère la souris."
+          ]
+        },
+        {
+          "h": "Types de blocs",
+          "body": [
+            "- Herbe/terre/pierre/bois : blocs solides sur lesquels on saute et on se tient.",
+            "- Échelle : monter/descendre lentement. Barrière : un petit bloc qui bloque le chemin - saute par-dessus.",
+            "- Bloc-ressort : te propulse très haut (pour les plateformes élevées). Les pièces flottent le long du parcours pour des points bonus."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Chaque pièce vaut 50 points. Atteindre l'arrivée d'un niveau donne 1000 points plus un bonus de temps (plus c'est rapide, plus il est grand).",
+            "Les points s'additionnent sur tous les niveaux ; le total est ton meilleur score."
+          ]
+        }
+      ]
     }
   ]
 }

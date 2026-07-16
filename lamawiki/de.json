@@ -1622,6 +1622,54 @@
           ]
         }
       ]
+    },
+    {
+      "id": "blockjump",
+      "category": "games",
+      "game": "BlockJumpGame",
+      "title": "Block Jump",
+      "keywords": [
+        "block jump",
+        "3d",
+        "minecraft",
+        "jump'n'run",
+        "springen",
+        "klettern",
+        "parkour"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Ein 3D-Jump'n'Run im Minecraft-Stil: Springe über schwebende Block-Plattformen bis zum leuchtenden Ziel-Beacon. Jedes Level ist ein neuer, per Zufallszahl erzeugter Parkour und wird schwerer.",
+            "Die Kamera ist standardmäßig 1st-Person wie in Minecraft; mit V schaltest du auf eine Verfolgerkamera um.",
+            "Fällst du unter die Plattformen, verlierst du ein Leben und startest am letzten Checkpoint neu. Bei 0 Leben (Start mit 3) ist die Partie vorbei."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- WASD oder Pfeiltasten: laufen (relativ zur Blickrichtung). Leertaste: springen. Maus: umsehen.",
+            "- An einer Leiter klettert W hoch und S runter. Auf einem Sprungblock wirst du hoch katapultiert.",
+            "- V = Ansicht (Ego/Verfolger), B = Motion-Blur, C = Maus fangen/freigeben, +/- = Empfindlichkeit. Esc pausiert und gibt die Maus frei."
+          ]
+        },
+        {
+          "h": "Blocktypen",
+          "body": [
+            "- Gras/Erde/Stein/Holz: feste Blöcke, auf die man springt und steht.",
+            "- Leiter: langsam hoch-/runterklettern. Zaun: ein kleiner Block, der den Weg sperrt - einfach drüberspringen.",
+            "- Sprungblock: katapultiert dich weit nach oben (für hohe Plattformen). Coins schweben über dem Weg und geben Extrapunkte."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Jeder eingesammelte Coin gibt 50 Punkte. Das Ziel eines Levels bringt 1000 Punkte plus einen Zeitbonus (je schneller, desto mehr).",
+            "Die Punkte summieren sich über alle Level; die Gesamtsumme ist dein Highscore."
+          ]
+        }
+      ]
     }
   ]
 }

@@ -432,6 +432,15 @@ def _draw_icon(cv, cx, cy, name, color, bg):
         cv.create_line(cx - 5, cy - 8, cx + 5, cy - 8, fill=color, width=2)
         cv.create_line(cx + 5, cy - 8, cx + 5, cy - 5, fill=color, width=1)
         cv.create_oval(cx + 2, cy - 5, cx + 8, cy + 1, outline=color, width=2)
+    elif name == "BlockJumpGame":
+        # Isometrischer Würfel (Kanten per bg getrennt) + hüpfender Klotz
+        cv.create_polygon(cx, cy - 8, cx + 9, cy - 3, cx, cy + 2, cx - 9, cy - 3,
+                          fill=color, outline=bg)
+        cv.create_polygon(cx - 9, cy - 3, cx, cy + 2, cx, cy + 11, cx - 9, cy + 6,
+                          fill=color, outline=bg)
+        cv.create_polygon(cx + 9, cy - 3, cx, cy + 2, cx, cy + 11, cx + 9, cy + 6,
+                          fill=color, outline=bg)
+        cv.create_rectangle(cx - 2, cy - 13, cx + 2, cy - 9, fill=color, outline="")
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))

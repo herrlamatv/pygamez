@@ -1621,6 +1621,54 @@
           ]
         }
       ]
+    },
+    {
+      "id": "blockjump",
+      "category": "games",
+      "game": "BlockJumpGame",
+      "title": "Block Jump",
+      "keywords": [
+        "block jump",
+        "3d",
+        "minecraft",
+        "platformer",
+        "jump",
+        "climb",
+        "parkour"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "A 3D Minecraft-style platformer: jump across floating block platforms to the glowing goal beacon. Every level is a fresh, seed-generated parkour and gets harder.",
+            "The camera is first-person like Minecraft by default; press V to switch to a chase camera.",
+            "Fall below the platforms and you lose a life and respawn at the last checkpoint. At 0 lives (you start with 3) the run ends."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- WASD or arrow keys: move (relative to where you look). Space: jump. Mouse: look around.",
+            "- On a ladder, W climbs up and S climbs down. A spring block launches you high into the air.",
+            "- V = view (first/third person), B = motion blur, C = capture/release mouse, +/- = sensitivity. Esc pauses and frees the mouse."
+          ]
+        },
+        {
+          "h": "Block types",
+          "body": [
+            "- Grass/dirt/stone/wood: solid blocks you jump on and stand on.",
+            "- Ladder: climb up/down slowly. Fence: a small block that blocks the path - just jump over it.",
+            "- Spring block: launches you high (to reach tall platforms). Coins float along the route for extra points."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Each coin is worth 50 points. Reaching a level's goal gives 1000 points plus a time bonus (the faster, the more).",
+            "Points accumulate across all levels; the total is your high score."
+          ]
+        }
+      ]
     }
   ]
 }

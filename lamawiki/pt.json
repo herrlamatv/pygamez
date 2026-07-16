@@ -1618,6 +1618,54 @@
           ]
         }
       ]
+    },
+    {
+      "id": "blockjump",
+      "category": "games",
+      "game": "BlockJumpGame",
+      "title": "Block Jump",
+      "keywords": [
+        "block jump",
+        "3d",
+        "minecraft",
+        "plataforma",
+        "saltar",
+        "escalar",
+        "parkour"
+      ],
+      "sections": [
+        {
+          "h": "Como jogar",
+          "body": [
+            "Um jogo de plataforma 3D no estilo Minecraft: salte por plataformas de blocos flutuantes até o farol de chegada brilhante. Cada nível é um percurso gerado aleatoriamente e fica mais difícil.",
+            "A câmera é em 1ª pessoa como no Minecraft por padrão; pressione V para mudar para uma câmera de perseguição.",
+            "Se cair abaixo das plataformas, perde uma vida e renasce no último checkpoint. Com 0 vidas (começa com 3), a partida acaba."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- WASD ou setas: mover (conforme para onde olha). Espaço: saltar. Mouse: olhar em volta.",
+            "- Numa escada, W sobe e S desce. Um bloco-mola te catapulta para cima.",
+            "- V = vista (1ª/3ª pessoa), B = desfoque de movimento, C = capturar/soltar o mouse, +/- = sensibilidade. Esc pausa e solta o mouse."
+          ]
+        },
+        {
+          "h": "Tipos de blocos",
+          "body": [
+            "- Grama/terra/pedra/madeira: blocos sólidos sobre os quais você salta e fica.",
+            "- Escada: subir/descer devagar. Cerca: um bloco pequeno que bloqueia o caminho - salte por cima.",
+            "- Bloco-mola: te lança bem alto (para plataformas altas). As moedas flutuam pelo percurso para pontos extras."
+          ]
+        },
+        {
+          "h": "Pontos",
+          "body": [
+            "Cada moeda vale 50 pontos. Chegar ao objetivo de um nível dá 1000 pontos mais um bônus de tempo (quanto mais rápido, maior).",
+            "Os pontos se acumulam em todos os níveis; o total é o seu recorde."
+          ]
+        }
+      ]
     }
   ]
 }

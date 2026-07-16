@@ -76,6 +76,7 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Mastermind**     | 1 joueur   | Perce le code couleur secret (3 modes : 4×6, classique, 5×8), pions indicateurs noirs/blancs, série sans fin |
 | **Bubble Shooter** | 1 joueur   | Clone de Puzzle Bobble : tire des couleurs identiques par groupes de trois, rebonds sur les parois, grappes qui tombent, 3 difficultés |
 | **Hangman**        | 1 joueur   | Devine le mot avant que la potence soit complète ; clavier à l'écran, listes de mots par langue, 3 modes de longueur, série sans fin |
+| **Block Jump**     | 1 joueur   | Jeu de plateforme 3D façon Minecraft : monde de blocs (voxels) avec échelles, barrières & blocs-ressorts, caméra 1re/3e personne, flou de mouvement, niveaux générés |
 
 **Le multijoueur (2 joueurs en local)** est disponible pour **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duel
@@ -721,6 +722,7 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Mastermind**       | 1 jugador  | Descifra el código de color secreto (3 modos: 4×6, clásico, 5×8), fichas de pista negras/blancas, racha sin fin |
 | **Bubble Shooter**   | 1 jugador  | Clon de Puzzle Bobble: dispara colores iguales en grupos de tres, rebotes en las paredes, racimos que caen, 3 dificultades |
 | **Hangman**          | 1 jugador  | Adivina la palabra antes de completar la horca; teclado en pantalla, listas de palabras por idioma, 3 modos de longitud, racha sin fin |
+| **Block Jump**       | 1 jugador  | Plataformas 3D estilo Minecraft: mundo de bloques (vóxeles) con escaleras, vallas y bloques-resorte, cámara 1ª/3ª persona, desenfoque, niveles generados |
 
 **El multijugador (2 jugadores en local)** está disponible en **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
@@ -1318,6 +1320,7 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Mastermind**       | 1 jogador  | Decifra o código de cor secreto (3 modos: 4×6, clássico, 5×8), pinos de dica pretos/brancos, série sem fim |
 | **Bubble Shooter**   | 1 jogador  | Clone do Puzzle Bobble: atira cores iguais em grupos de três, ressaltos nas paredes, grupos que caem, 3 dificuldades |
 | **Hangman**          | 1 jogador  | Adivinha a palavra antes de a forca ficar completa; teclado no ecrã, listas de palavras por idioma, 3 modos de tamanho, série sem fim |
+| **Block Jump**       | 1 jogador  | Plataforma 3D estilo Minecraft: mundo de blocos (voxels) com escadas, cercas e blocos-mola, câmera 1ª/3ª pessoa, desfoque, níveis gerados |
 
 **O multijogador (2 jogadores em local)** está disponível em **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo

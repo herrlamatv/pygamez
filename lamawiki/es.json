@@ -1620,6 +1620,54 @@
           ]
         }
       ]
+    },
+    {
+      "id": "blockjump",
+      "category": "games",
+      "game": "BlockJumpGame",
+      "title": "Block Jump",
+      "keywords": [
+        "block jump",
+        "3d",
+        "minecraft",
+        "plataformas",
+        "saltar",
+        "trepar",
+        "parkour"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "Un plataformas 3D estilo Minecraft: salta por plataformas de bloques flotantes hasta el faro de meta brillante. Cada nivel es un parkour generado al azar y cada vez más difícil.",
+            "La cámara es en primera persona como Minecraft por defecto; pulsa V para cambiar a cámara de seguimiento.",
+            "Si caes bajo las plataformas, pierdes una vida y reapareces en el último punto de control. Con 0 vidas (empiezas con 3) termina la partida."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- WASD o flechas: moverte (según hacia dónde miras). Espacio: saltar. Ratón: mirar.",
+            "- En una escalera, W sube y S baja. Un bloque-resorte te catapulta hacia arriba.",
+            "- V = vista (1ª/3ª persona), B = desenfoque de movimiento, C = capturar/soltar el ratón, +/- = sensibilidad. Esc pausa y libera el ratón."
+          ]
+        },
+        {
+          "h": "Tipos de bloques",
+          "body": [
+            "- Hierba/tierra/piedra/madera: bloques sólidos sobre los que saltas y te apoyas.",
+            "- Escalera: subir/bajar despacio. Valla: un bloque pequeño que corta el paso - salta por encima.",
+            "- Bloque-resorte: te lanza muy alto (para plataformas altas). Las monedas flotan por el recorrido para puntos extra."
+          ]
+        },
+        {
+          "h": "Puntos",
+          "body": [
+            "Cada moneda vale 50 puntos. Llegar a la meta de un nivel da 1000 puntos más un bono de tiempo (cuanto más rápido, mayor).",
+            "Los puntos se acumulan en todos los niveles; el total es tu puntuación máxima."
+          ]
+        }
+      ]
     }
   ]
 }

@@ -9,7 +9,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Siebenunddreißig
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Achtunddreißig
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English / Français / Español / Português); die
@@ -77,6 +77,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Mastermind**    | 1 Spieler    | Geheimen Farbcode knacken (3 Modi: 4×6, klassisch, 5×8), schwarze/weiße Rückmeldungs-Pins, Endlos-Streak als Highscore |
 | **Bubble Shooter** | 1 Spieler   | Puzzle-Bobble-Klon: gleiche Farben zu Dreiergruppen schießen, Wandreflexion, herabfallende Cluster, 3 Schwierigkeitsgrade |
 | **Galgenmännchen** | 1 Spieler   | Wort erraten, bevor der Galgen voll ist; Bildschirmtastatur, Wortlisten je Sprache, 3 Längen-Modi, Endlos-Streak |
+| **Block Jump**  | 1 Spieler       | 3D-Jump'n'Run im Minecraft-Stil: Voxel-Welt mit Leitern, Zäunen & Sprungblöcken, Ego-/Verfolgerkamera, Motion-Blur, seed-generierte Parkour-Level |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)**, **Memory (Duell)**,
@@ -482,6 +483,18 @@ Explosions-Effekte, Highscore.
 - **Endlos-Streak**: jedes erratene Wort bringt Punkte (mehr Restleben +
   längeres Wort = mehr).
 
+**Block Jump**
+- **3D-Jump'n'Run im Minecraft-Stil** (Software-3D wie Snakes 3D-Modus): springe
+  über eine schwebende **Voxel-Welt** aus Blöcken bis zum leuchtenden Ziel.
+- Blocktypen: feste Blöcke (Gras/Erde/Stein/Holz), **Leitern** (klettern),
+  **Zäune** (überspringen), **Sprungblöcke** (katapultieren) und **Coins**.
+- Kamera **standardmäßig 1st-Person wie Minecraft**, **V** schaltet auf die
+  Verfolgerkamera; **Maus-Look** mit Pointer-Capture, einstellbarer **Motion-Blur**
+  (**B**) und Empfindlichkeit (**+/-**).
+- **Seed-generierte Parkour-Level** werden schwerer; Ziel = Punkte + Zeitbonus,
+  Coins +50, ein Absturz kostet ein Leben (Start mit 3). Steuerung: WASD/Pfeile,
+  **Leertaste** springen.
+
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
@@ -571,7 +584,7 @@ games/
   labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
   trexrunner.py  dame.py  poker.py  chess.py  muehle.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
-  bubbleshooter.py  hangman.py  hangman_words.py
+  bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -685,7 +698,7 @@ Spielen neben sich an.
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Thirty-seven
+**Pygame** is embedded as the game display inside the Tkinter window. Thirty-eight
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English / French / Spanish / Portuguese); the
@@ -753,6 +766,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Mastermind**     | 1 player    | Crack the secret colour code (3 modes: 4×6, classic, 5×8), black/white feedback pegs, endless streak high score |
 | **Bubble Shooter** | 1 player    | Puzzle Bobble clone: shoot matching colours into groups of three, wall bounces, falling clusters, 3 difficulties |
 | **Hangman**        | 1 player    | Guess the word before the gallows is finished; on-screen keyboard, per-language word lists, 3 length modes, endless streak |
+| **Block Jump**  | 1 player        | 3D Minecraft-style platformer: voxel world with ladders, fences & spring blocks, first/third-person camera, motion blur, seed-generated parkour levels |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
@@ -1152,6 +1166,18 @@ explosion effects, high score.
 - **Endless streak**: every guessed word scores points (more remaining lives +
   longer word = more).
 
+**Block Jump**
+- **3D Minecraft-style platformer** (software 3D like Snake's 3D mode): jump
+  across a floating **voxel world** of blocks to the glowing goal.
+- Block types: solid blocks (grass/dirt/stone/wood), **ladders** (climb),
+  **fences** (jump over), **spring blocks** (launch) and **coins**.
+- Camera **first-person like Minecraft by default**, **V** switches to a chase
+  camera; **mouse look** with pointer capture, adjustable **motion blur** (**B**)
+  and sensitivity (**+/-**).
+- **Seed-generated parkour levels** get harder; goal = points + time bonus,
+  coins +50, a fall costs a life (start with 3). Controls: WASD/arrows, **Space**
+  to jump.
+
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
 
@@ -1241,7 +1267,7 @@ games/
   labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
   trexrunner.py  dame.py  poker.py  chess.py  muehle.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
-  bubbleshooter.py  hangman.py  hangman_words.py
+  bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the
