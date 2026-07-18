@@ -74,14 +74,15 @@ RESOLUTIONS = [
 # Auswählbare Ziel-Bildraten. Weniger FPS = weniger Last = Strom sparen.
 FPS_OPTIONS = [15, 30, 45, 60, 120]
 
-# Verfügbare UI-Designs (siehe ui.py). "modern" = neues Standard-Design,
-# "classic" = die bisherige UI (Sterne/Aurora/Glow), wählbar im Options-Screen
-# unter "Erscheinungsbild".
-THEMES = ("modern", "classic")
+# Verfügbare UI-Designs (siehe ui.py): "v41" = UI v4.1 (Standard, clean +
+# Weltraum-Deko), "modern" = UI v4 (komplett ruhig), "classic" = UI v3
+# (die alte UI mit Sternen/Aurora/Glow). Wählbar im Options-Screen unter
+# "Erscheinungsbild".
+THEMES = ("v41", "modern", "classic")
 
 DEFAULTS = {
-    # UI-Design: "modern" (Standard, aufgeräumt) oder "classic" (bisherige UI).
-    "theme": "modern",
+    # UI-Design: "v41" (Standard), "modern" (UI v4) oder "classic" (UI v3).
+    "theme": "v41",
     # Standardmäßig AUS (Erststart ist leise; im Willkommens-Screen/den Optionen
     # einschaltbar). Bestehende Installationen behalten ihren gespeicherten Wert.
     "sound": False,

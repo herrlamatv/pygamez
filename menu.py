@@ -321,13 +321,16 @@ class OptionsScreen(_Screen):
                     y += step
                 panel_for(grp, head)
 
-        else:   # appearance: zwei große Theme-Karten (Modern / Klassisch)
-            gap = 20
-            cw = min(300, (W - 2 * self._left_x - gap) // 2)
+        else:   # appearance: eine Karte je Design (UI v4.1 / v4 / v3)
+            gap = 16
+            names = ui.THEME_NAMES
+            n = len(names)
+            cw = min(300, (W - 2 * self._left_x - (n - 1) * gap) // n)
             ch = min(210, H - 104 - 56)
-            cx0 = W // 2 - gap // 2 - cw
-            for i, theme in enumerate(("modern", "classic")):
-                add("theme", pygame.Rect(cx0 + i * (cw + gap), 104, cw, ch),
+            total = n * cw + (n - 1) * gap
+            x0 = W // 2 - total // 2
+            for i, theme in enumerate(names):
+                add("theme", pygame.Rect(x0 + i * (cw + gap), 104, cw, ch),
                     theme=theme)
 
         # Schliessen-Button unten (auf jedem Reiter sichtbar).
@@ -731,7 +734,7 @@ class OptionsScreen(_Screen):
 
     def _draw_theme_preview(self, rect, theme):
         """Kleine Stil-Vorschau: Hintergrund, Mini-Titel und Mini-Button."""
-        colors = ui.THEMES[theme][0]
+        colors, fxx = ui.THEMES[theme][0], ui.THEMES[theme][1]
         w, h = rect.w, rect.h
         pv = pygame.Surface((w, h), pygame.SRCALPHA)
 
@@ -740,8 +743,8 @@ class OptionsScreen(_Screen):
             col = ui.mix(colors["BG_TOP"], colors["BG_BOTTOM"], i / 7)
             pygame.draw.rect(pv, col, (0, h * i // 8, w, h // 8 + 1))
 
-        if theme == "classic":
-            # Weiche "Aurora"-Lichter (additiv) + kleines Sternenfeld.
+        if fxx["aurora"]:
+            # Weiche "Aurora"-Lichter (additiv, nur Classic).
             glow = pygame.Surface((w, h))
             pygame.draw.circle(glow, (26, 42, 82),
                                (int(w * 0.25), int(h * 0.35)), max(8, h // 2))
@@ -751,12 +754,19 @@ class OptionsScreen(_Screen):
                                                         max(1, h // 6)))
             pv.blit(pygame.transform.smoothscale(small, (w, h)), (0, 0),
                     special_flags=pygame.BLEND_RGB_ADD)
+        if fxx["stars"]:
             for fx0, fy0 in ((0.08, 0.18), (0.22, 0.62), (0.34, 0.30),
                              (0.48, 0.75), (0.55, 0.14), (0.68, 0.52),
                              (0.80, 0.24), (0.91, 0.66), (0.15, 0.85)):
-                c = 120 + int(90 * fy0)
+                c = int((120 + 90 * fy0) * fxx["star_bright"])
                 pv.fill((c, c, min(255, c + 25)),
                         (int(fx0 * w), int(fy0 * h), 2, 2))
+        if fxx["celestial"]:
+            # Mini-Ausgabe von Schwarzem Loch + Saturn (v4.1).
+            ui.draw_black_hole(pv, (int(w * 0.22), int(h * 0.46)),
+                               max(14, int(h * 0.52)))
+            ui.draw_saturn(pv, (int(w * 0.80), int(h * 0.32)),
+                           max(6, h // 7))
 
         # Mini-Titel: heller Balken + Akzent-Unterstrich.
         ac = colors["ACCENT"]
@@ -769,7 +779,7 @@ class OptionsScreen(_Screen):
         # Mini-Button in der Stil-Sprache des jeweiligen Themes.
         bw, bh = int(w * 0.62), max(12, h // 4)
         br = pygame.Rect(w // 2 - bw // 2, h - bh - 8, bw, bh)
-        if theme == "classic":
+        if fxx["btn_glow"]:
             pygame.draw.rect(pv, (*ac, 70), br.inflate(8, 8), border_radius=8)
             pygame.draw.rect(pv, ui.mix(colors["BTN"], colors["BTN_SEL"], 0.8),
                              br, border_radius=6)

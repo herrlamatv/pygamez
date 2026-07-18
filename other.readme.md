@@ -506,10 +506,12 @@ ou depuis l'écran de préparation. Il est organisé en **trois onglets**
   *Flèches + WASD*) et **chaque touche individuelle** des joueurs 1 et 2 est
   réassignable : choisir la ligne, appuyer sur Entrée, appuyer sur la touche
   voulue (Échap annule).
-- **Apparence** : choisir le **design de l'interface** – **UI v4** (par
-  défaut : un look graphite épuré et plat avec un seul accent indigo) ou
+- **Apparence** : choisir le **design de l'interface** – **UI v4.1** (par
+  défaut : comme UI v4 mais plus vivante – étoiles discrètes plus Saturne et
+  un trou noir en arrière-plan de l'écran d'accueil), **UI v4** (un look
+  graphite épuré, plat et parfaitement calme avec un seul accent indigo) ou
   **UI v3** (l'ancienne interface classique avec ciel étoilé, aurores et
-  halos lumineux). Les deux cartes montrent un petit aperçu ; le choix
+  halos lumineux). Toutes les cartes montrent un petit aperçu ; le choix
   s'applique immédiatement à toute l'interface (zone de jeu **et** barre
   latérale) et est enregistré.
 
@@ -1120,12 +1122,14 @@ izquierda) o desde la pantalla previa. Está organizada en **tres pestañas**
   *Flechas + WASD*) y **cada tecla individual** de los jugadores 1 y 2 es
   reasignable: elegir fila, pulsar Enter, pulsar la tecla deseada (Esc
   cancela).
-- **Apariencia**: elegir el **diseño de la interfaz** – **UI v4**
-  (predeterminado: un look grafito limpio y plano con un solo acento índigo) o
+- **Apariencia**: elegir el **diseño de la interfaz** – **UI v4.1**
+  (predeterminado: como UI v4 pero más viva – estrellas sutiles más Saturno y
+  un agujero negro en el fondo de la pantalla de inicio), **UI v4** (un look
+  grafito limpio, plano y totalmente tranquilo con un solo acento índigo) o
   **UI v3** (la interfaz clásica anterior con cielo estrellado, auroras y
-  brillos). Ambas tarjetas muestran una pequeña vista previa; la elección se
-  aplica al instante a toda la interfaz (área de juego **y** barra lateral) y
-  se guarda.
+  brillos). Todas las tarjetas muestran una pequeña vista previa; la elección
+  se aplica al instante a toda la interfaz (área de juego **y** barra
+  lateral) y se guarda.
 
 Los ajustes se guardan de forma permanente en `settings.json`. En **un jugador**
 ambas asignaciones controlan la misma figura (estándar: WASD *y* flechas), en
@@ -1725,11 +1729,13 @@ partir do ecrã de preparação. Está organizado em **três separadores**
 - **Controlos**: **modelos** (*WASD + Setas*, *WASD + IJKL*, *Setas + WASD*) e
   **cada tecla individual** dos jogadores 1 e 2 é reatribuível: escolher a
   linha, premir Enter, premir a tecla desejada (Esc cancela).
-- **Aparência**: escolher o **design da interface** – **UI v4** (padrão: um
-  visual grafite limpo e plano com um único acento índigo) ou **UI v3** (a
-  interface clássica anterior com céu estrelado, auroras e brilhos). Ambos os
-  cartões mostram uma pequena pré-visualização; a escolha aplica-se de
-  imediato a toda a interface (área de jogo **e** barra lateral) e é guardada.
+- **Aparência**: escolher o **design da interface** – **UI v4.1** (padrão:
+  como a UI v4, mas mais viva – estrelas subtis mais Saturno e um buraco
+  negro no fundo do ecrã inicial), **UI v4** (um visual grafite limpo, plano
+  e totalmente calmo com um único acento índigo) ou **UI v3** (a interface
+  clássica anterior com céu estrelado, auroras e brilhos). Todos os cartões
+  mostram uma pequena pré-visualização; a escolha aplica-se de imediato a
+  toda a interface (área de jogo **e** barra lateral) e é guardada.
 
 As definições são guardadas permanentemente em `settings.json`. Em **um
 jogador** ambas as atribuições controlam a mesma figura (padrão: WASD *e*

@@ -4,14 +4,18 @@ ui.py
 =====
 Gemeinsames UI-Toolkit für alle Pygame-Screens (Menüs, Overlays, Spiele).
 
-Seit dem UI-Update gibt es ZWEI wählbare Designs ("Themes"):
+Seit dem UI-Update gibt es DREI wählbare Designs ("Themes"):
 
-- "modern"  (Standard): ruhiges, aufgeräumtes Graphit-Design mit einem
+- "v41"     (Standard, "UI v4.1"): wie "modern", aber lebendiger - leicht
+  blau-violett getönte Palette, dezentes Sternenfeld und auf dem
+  Startbildschirm ein Saturn und ein Schwarzes Loch (M87-Stil: dunkler
+  Kern, glühender orangener Ring) im Hintergrund.
+- "modern"  ("UI v4"): ruhiges, aufgeräumtes Graphit-Design mit einem
   einzelnen Indigo-Akzent. Flache Panels mit Haarlinien-Rand, dezente
   Hover-Übergänge, keine Deko-Effekte - wirkt clean und professionell.
-- "classic": der bisherige Look - dunkler Farbverlauf mit "Aurora"-Lichtern,
-  Parallax-Sternenfeld inkl. Sternschnuppen, Glow-Buttons, Verlaufstitel
-  mit Leuchten, Funken-Partikel und Scanlinien-Übergang.
+- "classic" ("UI v3"): der bisherige Look - dunkler Farbverlauf mit
+  "Aurora"-Lichtern, Parallax-Sternenfeld inkl. Sternschnuppen,
+  Glow-Buttons, Verlaufstitel mit Leuchten, Funken und Scanlinien-Übergang.
 
 Umgeschaltet wird über set_theme("modern"/"classic") - im Spiel über den
 Reiter "Erscheinungsbild" im Options-Screen. Da ALLE Module die Farben nur
@@ -87,7 +91,9 @@ _MODERN_COLORS = dict(
 )
 
 _CLASSIC_FX = dict(
-    stars=True, aurora=True, shooting=True,   # Sternenfeld/Aurora/Schnuppen
+    stars=True, star_bright=1.0,              # Sternenfeld (+ Helligkeit)
+    aurora=True, shooting=True,               # Aurora-Lichter/Sternschnuppen
+    celestial=False,                          # Saturn + Schwarzes Loch (v4.1)
     vignette=70,                              # Vignetten-Stärke (Alpha)
     title_glow=True, title_grad=True,         # Titel: Glow + Verlaufstext
     btn_glow=True, btn_arrow=True,            # Buttons: Außen-Glow + Pfeil
@@ -95,10 +101,13 @@ _CLASSIC_FX = dict(
     scanline=True, trans_dur=0.35,            # Übergang: Fade + Scanlinie
     panel_radius=12, btn_radius=10,           # Eckenrundungen
     shadow_alpha=90,                          # Panel-Schlagschatten
+    menu_bob=6,                               # Logo-Schweben (Amplitude px)
 )
 
 _MODERN_FX = dict(
-    stars=False, aurora=False, shooting=False,
+    stars=False, star_bright=0.0,
+    aurora=False, shooting=False,
+    celestial=False,
     vignette=42,
     title_glow=False, title_grad=False,
     btn_glow=False, btn_arrow=False,
@@ -106,6 +115,46 @@ _MODERN_FX = dict(
     scanline=False, trans_dur=0.22,
     panel_radius=10, btn_radius=8,
     shadow_alpha=55,
+    menu_bob=0,
+)
+
+# UI v4.1: die cleane Modern-Optik, aber mit etwas Leben im Hintergrund -
+# dezente Sterne, sanftes Logo-Schweben und Saturn + Schwarzes Loch auf dem
+# Startbildschirm. Alle Bedien-Elemente bleiben wie im Modern-Theme.
+_V41_FX = dict(
+    stars=True, star_bright=0.55,
+    aurora=False, shooting=False,
+    celestial=True,
+    vignette=48,
+    title_glow=False, title_grad=False,
+    btn_glow=False, btn_arrow=False,
+    sparks=False,
+    scanline=False, trans_dur=0.22,
+    panel_radius=10, btn_radius=8,
+    shadow_alpha=55,
+    menu_bob=3,
+)
+
+# Palette v4.1: wie Modern, nur mit einem Hauch Blau-Violett im Hintergrund
+# und leicht getönten Panels - weniger monoton, aber genauso ruhig.
+_V41_COLORS = dict(
+    BG_TOP=(16, 18, 28),
+    BG_BOTTOM=(22, 25, 36),
+    PANEL=(28, 31, 42),
+    PANEL_LIGHT=(37, 41, 55),
+    BORDER=(46, 51, 66),
+    BORDER_LIGHT=(66, 72, 92),
+    BTN=(33, 37, 49),
+    BTN_SEL=(48, 57, 80),
+    ACCENT=(91, 141, 239),
+    ACCENT2=(129, 155, 255),
+    ACCENT_SOFT=(64, 94, 156),
+    GREEN=(88, 190, 132),
+    GOLD=(229, 196, 106),
+    RED=(224, 108, 108),
+    TEXT=(233, 235, 241),
+    TEXT_DIM=(150, 157, 172),
+    TEXT_FAINT=(100, 106, 122),
 )
 
 # Passende Farbwerte für die Tkinter-Seite (Sidebar) als Hex-Strings.
@@ -129,20 +178,31 @@ _TK_MODERN = dict(
     BORDER="#2d323e", GREEN="#58be84", GOLD="#e5c46a", RED="#e06c6c",
 )
 
+_TK_V41 = dict(
+    SIDEBAR="#13161f", HEADER="#0f1219", CARD="#1a1e2a",
+    BTN="#1f2431", BTN_HOVER="#293040",
+    ACCENT="#5b8def", ACCENT2="#819bff",
+    DANGER="#7c3540", DANGER_HOVER="#934250",
+    BACK="#3c5a4b", BACK_HOVER="#4b7060",
+    TEXT="#e9ebf1", TEXT_DIM="#969dac", TEXT_FAINT="#646a7a",
+    BORDER="#2e3342", GREEN="#58be84", GOLD="#e5c46a", RED="#e06c6c",
+)
+
 THEMES = {
+    "v41": (_V41_COLORS, _V41_FX, _TK_V41),
     "modern": (_MODERN_COLORS, _MODERN_FX, _TK_MODERN),
     "classic": (_CLASSIC_COLORS, _CLASSIC_FX, _TK_CLASSIC),
 }
-THEME_NAMES = ("modern", "classic")
-DEFAULT_THEME = "modern"
+THEME_NAMES = ("v41", "modern", "classic")
+DEFAULT_THEME = "v41"
 
 _theme = DEFAULT_THEME
-_fx = _MODERN_FX
-_tk = _TK_MODERN
+_fx = _V41_FX
+_tk = _TK_V41
 
 # Die Palette des aktiven Themes liegt in den Modul-Globals (BG_TOP, ACCENT,
 # ...), damit ALLE bestehenden ui.<NAME>-Zugriffe unverändert funktionieren.
-globals().update(_MODERN_COLORS)
+globals().update(_V41_COLORS)
 
 
 def set_theme(name):
@@ -169,8 +229,13 @@ def theme_name():
 
 
 def is_modern():
-    """True im aufgeräumten Standard-Design (ohne Deko-Effekte)."""
-    return _theme == "modern"
+    """True in der aufgeräumten Modern-Familie (UI v4 und v4.1).
+
+    Steuert die "cleanen" Zeichenpfade (flache Buttons/Titel/Panels ohne
+    Glow und Puls). Was sich v4.1 zusätzlich gönnt (Sterne, Saturn,
+    Schwarzes Loch), regeln die fx-Schalter des Themes.
+    """
+    return _theme != "classic"
 
 
 def fx(key):
@@ -409,15 +474,209 @@ def draw_background(surface, w, h, stars=True, aurora=None):
     if not stars or not _fx["stars"]:
         return
     _ensure_stars()
+    bright = _fx["star_bright"]
     for x, y, depth, r in _stars:
         # Langsame Drift nach oben + leichtes Funkeln über Sinus.
         yy = (y - ticks * 0.008 * depth) % 1.0
         tw = 0.5 + 0.5 * math.sin(ticks * (0.8 + depth) + x * 40.0)
-        c = int(40 + 70 * depth * tw)
+        c = int((40 + 70 * depth * tw) * bright)
         surface.fill((c, c + 6, c + 18),
                      (int(x * w), int(yy * h), r, r))
     if _fx["shooting"]:
         _draw_shooting_star(surface, w, h)
+
+
+# ---------------------------------------------------------------------------
+#  Himmelskörper für UI v4.1: Saturn und ein Schwarzes Loch (M87-Stil).
+#  Beide werden einmalig prozedural gerendert (klein zeichnen, weichzeichnen,
+#  skalieren) und dann pro Frame nur noch geblittet - praktisch gratis.
+# ---------------------------------------------------------------------------
+
+_celestial_cache = {}
+
+
+def _render_black_hole(radius):
+    """Schwarzes Loch im "Interstellar"-Stil (Gargantua):
+
+    - dunkle Kugel (Schatten) mit dünnem hellem Photonenring,
+    - eine flache, glühend helle Akkretionsscheibe, die VOR der Kugel
+      quer durchläuft (weiß-gelb innen, orange zu den Spitzen),
+    - gelinstes Scheibenlicht als Glut-Bogen über und unter der Kugel,
+    - Doppler-Hotspot (die auf uns zu rotierende Seite strahlt weiß).
+
+    Wird einmal groß (512 px) gerendert, leicht gekippt und gecacht.
+    """
+    key = ("bh", int(radius))
+    img = _celestial_cache.get(key)
+    if img is not None:
+        return img
+
+    S = 512
+    c = S // 2
+    sh = 66            # Schatten-Radius
+    rh = 84            # Radius des gelinsten Halo-Rings (dicht an der Kugel)
+    Rd = 246           # Scheibenradius (bis fast an den Rand)
+
+    surf = pygame.Surface((S, S), pygame.SRCALPHA)
+
+    # --- 1) Warme Glut + Halo-Ring (wird stark weichgezeichnet) ----------
+    haze = pygame.Surface((S, S), pygame.SRCALPHA)
+    for r in range(rh + 120, 4, -1):
+        d = abs(r - rh) / (100.0 if r > rh else 34.0)
+        i = max(0.0, 1.0 - d) ** 2
+        if i <= 0.004:
+            continue
+        col = (int(255 * min(1.0, i * 1.25)), int(165 * i), int(66 * i))
+        pygame.draw.circle(haze, (*col, int(235 * i)), (c, c), r)
+    # Gelinstes Licht: Bogen über der Kugel deutlich, unter ihr schwächer.
+    arc = pygame.Surface((S, S), pygame.SRCALPHA)
+    for cy_off, strength in ((-rh, 1.0), (rh, 0.6)):
+        for r in range(96, 3, -1):
+            f = (1.0 - r / 96.0) ** 2 * strength
+            pygame.draw.circle(arc, (int(255 * f), int(185 * f), int(90 * f)),
+                               (c, c + cy_off), r)
+    haze.blit(arc, (0, 0), special_flags=pygame.BLEND_RGB_ADD)
+    small = pygame.transform.smoothscale(haze, (S // 4, S // 4))
+    haze = pygame.transform.smoothscale(small, (S, S))
+    surf.blit(haze, (0, 0))
+
+    # --- 2) Schatten-Kugel (dunkelbraun) + Photonenring ------------------
+    pygame.draw.circle(surf, (16, 8, 6, 255), (c, c), sh)
+    pygame.draw.circle(surf, (70, 28, 14, 110), (c, c), sh - 2, width=5)
+    # Photonenring mit weichen Kanten (gestaffelte Alpha-Ringe gegen Treppen).
+    pygame.draw.circle(surf, (255, 200, 130, 80), (c, c), sh + 7, width=8)
+    pygame.draw.circle(surf, (255, 228, 180, 170), (c, c), sh + 5, width=5)
+    pygame.draw.circle(surf, (255, 244, 214, 235), (c, c), sh + 3, width=4)
+
+    # --- 3) Akkretionsscheibe: weißglühendes Band VOR der Kugel ----------
+    TH = 28            # halbe Dicke in der Mitte
+    disk = pygame.Surface((S, S), pygame.SRCALPHA)
+    for t in range(TH, 0, -1):
+        i = (1.0 - t / TH) ** 0.8          # breiter heller Kern
+        col = mix((255, 186, 92), (255, 252, 234), i)
+        pygame.draw.ellipse(disk, (*col, int(238 + 17 * i)),
+                            (c - Rd, c - t, 2 * Rd, 2 * t))
+    # Hauchzarte Wirbel-Bahnen: OPAKE, nur leicht dunklere Linien (pygame
+    # ersetzt Pixel statt zu mischen - halbtransparente Linien würden Löcher
+    # stanzen). Länge an die Ellipsenhöhe angepasst, damit nichts übersteht.
+    for fy, col in ((-0.60, (243, 198, 128)), (-0.28, (248, 214, 154)),
+                    (0.26, (246, 206, 140)), (0.56, (240, 190, 118))):
+        yy = c + int(TH * fy)
+        span = int(Rd * math.sqrt(max(0.0, 1.0 - fy * fy)) * 0.94)
+        pygame.draw.line(disk, (*col, 255), (c - span, yy), (c + span, yy), 2)
+    # Radiale Tönung: Mitte heiß-weiß, zu den Spitzen warmes Orange; erst
+    # ganz außen sanft ausblenden -> das Band leuchtet über die volle Länge.
+    tint = pygame.Surface((S, S), pygame.SRCALPHA)
+    for x in range(S):
+        dx = min(1.0, abs(x - c) / Rd)
+        g = int(255 * (1.0 - 0.18 * dx))
+        b = int(255 * (1.0 - 0.36 * dx))
+        a = int(255 * max(0.0, 1.0 - dx ** 4.0))
+        pygame.draw.line(tint, (255, g, b, a), (x, 0), (x, S))
+    disk.blit(tint, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+    # Leicht weichzeichnen, damit das Band glüht statt hart zu wirken.
+    small = pygame.transform.smoothscale(disk, (S // 2, S // 2))
+    disk = pygame.transform.smoothscale(small, (S, S))
+    # Erst zwei verwaschene Kopien ADDITIV (Leuchten um das ganze Band) ...
+    for div in (6, 10):
+        band = pygame.transform.smoothscale(disk, (S // div, S // div))
+        band = pygame.transform.smoothscale(band, (S, S))
+        surf.blit(band, (0, 0), special_flags=pygame.BLEND_RGB_ADD)
+    # ... dann die Scheibe selbst darüber.
+    surf.blit(disk, (0, 0))
+
+    # --- 4) Doppler-Hotspot: rechte Seite strahlt weiß-gelb --------------
+    hot = pygame.Surface((S, S), pygame.SRCALPHA)
+    for r in range(104, 3, -1):
+        f = (1.0 - r / 104.0) ** 2
+        pygame.draw.circle(hot, (int(255 * f), int(235 * f), int(180 * f)),
+                           (c + sh + 18, c - 4), r)
+    surf.blit(hot, (0, 0), special_flags=pygame.BLEND_RGB_ADD)
+
+    # --- 5) Kippen (Scheibe steigt nach rechts an) + Zielgröße -----------
+    surf = pygame.transform.rotate(surf, 26)
+    img = pygame.transform.smoothscale(surf, (radius * 2, radius * 2))
+    if len(_celestial_cache) > 8:
+        _celestial_cache.clear()
+    _celestial_cache[key] = img
+    return img
+
+
+def _render_saturn(radius):
+    """Saturn mit Bändern, Kugel-Schattierung und gekippten Ringen.
+
+    radius = gewünschter Planeten-Radius; die Ringe stehen seitlich über.
+    """
+    key = ("saturn", int(radius))
+    img = _celestial_cache.get(key)
+    if img is not None:
+        return img
+
+    S = 320            # groß rendern -> bleibt auch hochskaliert glatt
+    c = S // 2
+    pr = 68            # Planeten-Radius auf der Arbeitsfläche
+
+    # Ring-Ebene: Ellipsen von außen nach innen; transparente Ellipsen
+    # "radieren" (pygame.draw ersetzt Pixel), so entstehen die Teilungen.
+    rings = pygame.Surface((S, S), pygame.SRCALPHA)
+
+    def ell(rx, ry, col):
+        pygame.draw.ellipse(rings, col, (c - rx, c - ry, rx * 2, ry * 2))
+
+    ell(124, 38, (205, 183, 148, 175))   # A-Ring
+    ell(112, 34, (0, 0, 0, 0))           # Cassini-Teilung
+    ell(106, 32, (230, 208, 172, 210))   # B-Ring (am hellsten)
+    ell(84, 24, (176, 155, 124, 120))    # C-Ring (blass)
+    ell(74, 22, (0, 0, 0, 0))            # Loch innen
+
+    # Planet: sandfarbene Bänder, rund maskiert, zum Rand hin abgedunkelt.
+    planet = pygame.Surface((S, S), pygame.SRCALPHA)
+    tones = ((232, 210, 170), (212, 186, 142), (226, 202, 162),
+             (206, 180, 138), (228, 204, 164), (216, 190, 148))
+    band_h = (pr * 2) / len(tones)
+    for i, tone in enumerate(tones):
+        pygame.draw.rect(planet, tone,
+                         (c - pr, int(c - pr + i * band_h),
+                          pr * 2, int(band_h) + 1))
+    mask = pygame.Surface((S, S), pygame.SRCALPHA)
+    pygame.draw.circle(mask, (255, 255, 255, 255), (c, c), pr)
+    planet.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MIN)
+    shade = pygame.Surface((S, S), pygame.SRCALPHA)
+    for r in range(pr + 24, 0, -1):
+        a = min(160, int(150 * (r / pr) ** 3))
+        pygame.draw.circle(shade, (18, 14, 24, a), (c + 14, c + 12), r)
+    shade.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MIN)
+    planet.blit(shade, (0, 0))
+
+    # Zusammensetzen: ferne Ringhälfte, Planet, nahe Ringhälfte darüber.
+    surf = pygame.Surface((S, S), pygame.SRCALPHA)
+    surf.blit(rings, (0, 0), area=pygame.Rect(0, 0, S, c))
+    surf.blit(planet, (0, 0))
+    surf.blit(rings, (0, c), area=pygame.Rect(0, c, S, S - c))
+
+    # Leicht kippen und auf die Zielgröße bringen.
+    surf = pygame.transform.rotate(surf, 20)
+    scale = radius / float(pr)
+    size = max(2, int(surf.get_width() * scale))
+    img = pygame.transform.smoothscale(surf, (size, size))
+    if len(_celestial_cache) > 8:
+        _celestial_cache.clear()
+    _celestial_cache[key] = img
+    return img
+
+
+def draw_black_hole(surface, center, radius):
+    """Blittet das (gecachte) Schwarze Loch zentriert an 'center'."""
+    radius = max(8, (int(radius) // 4) * 4)   # Größen bündeln -> Cache klein
+    img = _render_black_hole(radius)
+    surface.blit(img, img.get_rect(center=center))
+
+
+def draw_saturn(surface, center, radius):
+    """Blittet den (gecachten) Saturn zentriert an 'center' (Planetenmitte)."""
+    radius = max(6, (int(radius) // 4) * 4)
+    img = _render_saturn(radius)
+    surface.blit(img, img.get_rect(center=center))
 
 
 # ---------------------------------------------------------------------------

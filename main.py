@@ -1550,8 +1550,14 @@ class App:
         modern = ui.is_modern()
         ticks = self.pygame.time.get_ticks() / 1000.0
         cx = w // 2
-        # Modern: ruhiges Bild ohne Schwebe-Animation.
-        bob = 0 if modern else int(6 * math.sin(ticks * 1.3))
+
+        # UI v4.1: Saturn + Schwarzes Loch im Hintergrund (hinter allem).
+        if ui.fx("celestial"):
+            self._draw_celestial(s, w, h, ticks)
+
+        # Logo-Schweben: Amplitude je Theme (v4 = 0, v4.1 = dezent, v3 = 6).
+        amp = ui.fx("menu_bob")
+        bob = int(amp * math.sin(ticks * 1.3)) if amp else 0
 
         # Logo-Grafik mit weichem Akzent-Glow (Fallback: Schriftzug "PyGameZ").
         # Der Block Logo + Name bleibt zentriert; nur wenn das Spiele-Raster
@@ -1636,6 +1642,22 @@ class App:
         self._draw_score_ticker(s, w, h)
         ui.draw_footer(s, w, h, f"{len(self._game_classes)} Games   ·   "
                                 f"{self.game_w}x{self.game_h} @ {self.fps} FPS")
+
+    def _draw_celestial(self, s, w, h, ticks):
+        """Saturn + Schwarzes Loch im Hintergrund des Startbildschirms (v4.1).
+
+        Beide Grafiken sind gecacht (siehe ui.py) und driften nur ganz
+        langsam auf und ab - Leben im Bild, ohne Unruhe oder Rechenlast.
+        """
+        ui = self.ui
+        m = min(w, h)
+        # Groß genug, dass Scheibe, Schatten und Halo klar erkennbar sind.
+        bx = int(w * 0.18)
+        by = int(h * 0.28 + 4 * math.sin(ticks * 0.18))
+        ui.draw_black_hole(s, (bx, by), max(48, int(m * 0.24)))
+        sx = int(w * 0.84)
+        sy = int(h * 0.20 + 5 * math.sin(ticks * 0.14 + 2.0))
+        ui.draw_saturn(s, (sx, sy), max(16, int(m * 0.075)))
 
     def _flow_menu_tiles(self, w, avail):
         """Layout fürs Spiele-Raster: Pillen in zentrierte Zeilen fließen lassen.

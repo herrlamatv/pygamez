@@ -551,12 +551,13 @@ Tab-Taste):
 - **Steuerung**: **Vorlagen** (*WASD + Pfeile*, *WASD + IJKL*, *Pfeile + WASD*)
   und **jede einzelne Taste** für Spieler 1 und Spieler 2 frei belegen:
   Zeile wählen, Enter drücken, gewünschte Taste drücken (Esc bricht ab).
-- **Erscheinungsbild**: das **UI-Design** wählen – **UI v4** (Standard:
-  aufgeräumtes, flaches Graphit-Design mit einem Indigo-Akzent) oder
-  **UI v3** (die bisherige klassische UI mit Sternenhimmel, Aurora-Lichtern
-  und Glow-Effekten). Beide Karten zeigen eine kleine Vorschau; die Wahl wirkt
-  sofort auf die komplette Oberfläche (Spielfläche **und** Sidebar) und wird
-  gespeichert.
+- **Erscheinungsbild**: das **UI-Design** wählen – **UI v4.1** (Standard: wie
+  UI v4, aber lebendiger – dezente Sterne sowie Saturn und ein Schwarzes Loch
+  im Hintergrund des Startbildschirms), **UI v4** (komplett ruhiges, flaches
+  Graphit-Design mit einem Indigo-Akzent) oder **UI v3** (die bisherige
+  klassische UI mit Sternenhimmel, Aurora-Lichtern und Glow-Effekten). Alle
+  Karten zeigen eine kleine Vorschau; die Wahl wirkt sofort auf die komplette
+  Oberfläche (Spielfläche **und** Sidebar) und wird gespeichert.
 
 Einstellungen werden dauerhaft in `settings.json` gespeichert. Im **Einzelspieler**
 steuern beide Belegungen dieselbe Figur (Standard: WASD *und* Pfeile), im
@@ -1242,11 +1243,13 @@ from the pre-game screen. It is organized into **three tabs**
 - **Controls**: **presets** (*WASD + Arrows*, *WASD + IJKL*, *Arrows + WASD*)
   and **rebind every single key** for player 1 and player 2: select a row,
   press Enter, press the desired key (Esc cancels).
-- **Appearance**: pick the **UI design** – **UI v4** (default: a clean, flat
-  graphite look with a single indigo accent) or **UI v3** (the previous
-  classic UI with starfield, aurora lights and glow effects). Both cards show
-  a small preview; the choice applies instantly to the whole interface (game
-  area **and** sidebar) and is saved.
+- **Appearance**: pick the **UI design** – **UI v4.1** (default: like UI v4
+  but livelier – subtle stars plus Saturn and a black hole in the start
+  screen's background), **UI v4** (a completely calm, flat graphite look with
+  a single indigo accent) or **UI v3** (the previous classic UI with
+  starfield, aurora lights and glow effects). All cards show a small preview;
+  the choice applies instantly to the whole interface (game area **and**
+  sidebar) and is saved.
 
 Settings are stored permanently in `settings.json`. In **single-player** both
 bindings control the same character (default: WASD *and* arrows), in
