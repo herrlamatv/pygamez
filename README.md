@@ -540,13 +540,23 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
 ### Optionen, Steuerung & Sound
 
 Über den Button **„Optionen / Steuerung"** (links) oder aus dem Vorspiel-Screen
-öffnet sich der Options-Bildschirm:
+öffnet sich der Options-Bildschirm. Er ist in **drei Reiter** gegliedert
+(**Allgemein / Steuerung / Erscheinungsbild**; wechseln per Klick oder
+Tab-Taste):
 
-- **Sound** an/aus, **Lautstärke** und **Haptik** (Gamepad-Vibration, nur mit
-  angeschlossenem Controller wirksam) – jeweils per Links/Rechts umschalten.
-- **Vorlagen** für die Steuerung: *WASD + Pfeile*, *WASD + IJKL*, *Pfeile + WASD*.
-- **Jede einzelne Taste** für Spieler 1 und Spieler 2 frei belegen: Zeile wählen,
-  Enter drücken, gewünschte Taste drücken (Esc bricht ab).
+- **Allgemein**: **Sound** an/aus, **Lautstärke** und **Haptik**
+  (Gamepad-Vibration, nur mit angeschlossenem Controller wirksam) sowie
+  **Auto-Auflösung**, **Auflösung**, **FPS** und **Sprache** – jeweils per
+  Links/Rechts umschalten.
+- **Steuerung**: **Vorlagen** (*WASD + Pfeile*, *WASD + IJKL*, *Pfeile + WASD*)
+  und **jede einzelne Taste** für Spieler 1 und Spieler 2 frei belegen:
+  Zeile wählen, Enter drücken, gewünschte Taste drücken (Esc bricht ab).
+- **Erscheinungsbild**: das **UI-Design** wählen – **UI v4** (Standard:
+  aufgeräumtes, flaches Graphit-Design mit einem Indigo-Akzent) oder
+  **UI v3** (die bisherige klassische UI mit Sternenhimmel, Aurora-Lichtern
+  und Glow-Effekten). Beide Karten zeigen eine kleine Vorschau; die Wahl wirkt
+  sofort auf die komplette Oberfläche (Spielfläche **und** Sidebar) und wird
+  gespeichert.
 
 Einstellungen werden dauerhaft in `settings.json` gespeichert. Im **Einzelspieler**
 steuern beide Belegungen dieselbe Figur (Standard: WASD *und* Pfeile), im
@@ -1223,13 +1233,20 @@ packages) and styled like a modern game launcher:
 ### Options, controls & sound
 
 The options screen opens via the **"Options / Controls"** button (on the left) or
-from the pre-game screen:
+from the pre-game screen. It is organized into **three tabs**
+(**General / Controls / Appearance**; switch by clicking or with the Tab key):
 
-- **Sound** on/off, **volume** and **haptics** (gamepad vibration, only effective
-  with a connected controller) – each toggled with Left/Right.
-- **Presets** for the controls: *WASD + Arrows*, *WASD + IJKL*, *Arrows + WASD*.
-- **Rebind every single key** for player 1 and player 2: select a row, press
-  Enter, press the desired key (Esc cancels).
+- **General**: **sound** on/off, **volume** and **haptics** (gamepad vibration,
+  only effective with a connected controller) plus **auto resolution**,
+  **resolution**, **FPS** and **language** – each toggled with Left/Right.
+- **Controls**: **presets** (*WASD + Arrows*, *WASD + IJKL*, *Arrows + WASD*)
+  and **rebind every single key** for player 1 and player 2: select a row,
+  press Enter, press the desired key (Esc cancels).
+- **Appearance**: pick the **UI design** – **UI v4** (default: a clean, flat
+  graphite look with a single indigo accent) or **UI v3** (the previous
+  classic UI with starfield, aurora lights and glow effects). Both cards show
+  a small preview; the choice applies instantly to the whole interface (game
+  area **and** sidebar) and is saved.
 
 Settings are stored permanently in `settings.json`. In **single-player** both
 bindings control the same character (default: WASD *and* arrows), in

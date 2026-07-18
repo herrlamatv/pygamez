@@ -74,7 +74,14 @@ RESOLUTIONS = [
 # Auswählbare Ziel-Bildraten. Weniger FPS = weniger Last = Strom sparen.
 FPS_OPTIONS = [15, 30, 45, 60, 120]
 
+# Verfügbare UI-Designs (siehe ui.py). "modern" = neues Standard-Design,
+# "classic" = die bisherige UI (Sterne/Aurora/Glow), wählbar im Options-Screen
+# unter "Erscheinungsbild".
+THEMES = ("modern", "classic")
+
 DEFAULTS = {
+    # UI-Design: "modern" (Standard, aufgeräumt) oder "classic" (bisherige UI).
+    "theme": "modern",
     # Standardmäßig AUS (Erststart ist leise; im Willkommens-Screen/den Optionen
     # einschaltbar). Bestehende Installationen behalten ihren gespeicherten Wert.
     "sound": False,
@@ -164,6 +171,8 @@ def _merge_defaults(data):
     """Ergänzt fehlende Schlüssel mit den Standardwerten (robust gegen Alt-Dateien)."""
     out = _clone(DEFAULTS)
     if isinstance(data, dict):
+        if data.get("theme") in THEMES:
+            out["theme"] = data["theme"]
         for k in ("sound", "haptik", "auto_resolution"):
             if isinstance(data.get(k), bool):
                 out[k] = data[k]

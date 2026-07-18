@@ -24,14 +24,8 @@ from game_base import Game, InputEvent
 from i18n import t
 
 # Farben kommen zentral aus dem UI-Toolkit (einheitlicher Look überall).
-COL_BG = ui.BG_TOP
-COL_PANEL = ui.PANEL
-COL_SEL = ui.BTN_SEL
-COL_BTN = ui.BTN
-COL_TEXT = ui.TEXT
-COL_MUTE = ui.TEXT_DIM
-COL_ACCENT = ui.GREEN
-COL_KEY = ui.GOLD
+# WICHTIG: immer dynamisch über ui.<NAME> zugreifen (nicht kopieren!), damit
+# ein Theme-Wechsel (Optionen -> Erscheinungsbild) sofort überall wirkt.
 
 # Tkinter-keysym -> Übersetzungsschlüssel für gut lesbare Tastennamen.
 _PRETTY = {
@@ -192,15 +186,20 @@ class PreGameScreen(_Screen):
 
         # Bisheriger Highscore als kleiner Chip über der Fußzeile
         # (nur wenn er nicht mit den Buttons kollidiert, z.B. bei 480p + vielen Modi).
+        # Statt eines "★"-Glyphs (fehlt in Bahnschrift) ein gezeichneter Punkt.
         if self.best > 0:
             img = ui.font(14, bold=True).render(
-                "★ " + t("app.highscore", hs=self.best), True, ui.GOLD)
-            bw, bh = img.get_width() + 26, img.get_height() + 10
+                t("app.highscore", hs=self.best), True, ui.GOLD)
+            dot_w = 12
+            bw, bh = img.get_width() + 26 + dot_w, img.get_height() + 10
             chip = pygame.Rect(self.width // 2 - bw // 2,
                                self.height - 66 - bh // 2, bw, bh)
             if not self.rects or self.rects[-1].bottom + 8 < chip.top:
                 ui.draw_panel(s, chip, radius=bh // 2, shadow=False)
-                s.blit(img, img.get_rect(center=chip.center))
+                pygame.draw.circle(s, ui.GOLD,
+                                   (chip.x + 14, chip.centery), 3)
+                s.blit(img, img.get_rect(midleft=(chip.x + 14 + dot_w // 2 + 4,
+                                                  chip.centery)))
 
         ui.draw_footer(s, self.width, self.height, t("pregame.hint"))
 
@@ -212,13 +211,15 @@ class PreGameScreen(_Screen):
 class OptionsScreen(_Screen):
     name = "Optionen"
 
+    # Reiter oben im Screen: Allgemein / Steuerung / Erscheinungsbild.
+    TABS = ("general", "controls", "appearance")
+
     def __init__(self, surface, width, height, app, on_close):
         self.on_close = on_close
+        self.tab = "general"      # aktiver Reiter
+        self._tab_hover = None
         super().__init__(surface, width, height, app)
         self.name = t("options.name")
-        # Etwas kompaktere Schrift: bei 640px Breite brauchen zwei Spalten
-        # inkl. langer Werte ("640 x 480 (Standard)") sonst zu viel Platz.
-        self.font = ui.font(18, mono=True)
         self.capture = None       # (player, action), während eine Taste neu belegt wird
         self.preset_idx = 0
         # Aktuelle Auswahl für Auflösung/FPS aus den Einstellungen ableiten.
@@ -234,14 +235,26 @@ class OptionsScreen(_Screen):
             self.sel = len(self.items) - 1
 
     def _build_items(self):
-        """Baut die interaktive Liste inkl. Zeichenpositionen auf (an Größe angepasst)."""
+        """Baut Reiterleiste + Liste des aktiven Reiters auf (an Größe angepasst)."""
         self.items = []
+        self._panels = []      # (rect, überschrift oder None) hinter den Gruppen
         W, H = self.width, self.height
+        # Modern: normale UI-Schrift; Classic: Monospace wie früher.
+        self.font = ui.font(17) if ui.is_modern() else ui.font(18, mono=True)
         # Zwei Spalten, deren Position sich an der Breite orientiert -> passt auch
         # bei kleinen Auflösungen.
         self._left_x = 40
         self._right_x = W // 2 + 10
         col_w = min(300, W // 2 - 50)
+
+        # Reiterleiste unter dem Titel (Trefferflächen für Maus + Tab-Taste).
+        self._tab_font = ui.font(14, bold=True)
+        self.tab_rects = []
+        tx = self._left_x
+        for key in self.TABS:
+            tw = self._tab_font.size(t("options.tab_" + key))[0] + 26
+            self.tab_rects.append((pygame.Rect(tx, 48, tw, 26), key))
+            tx += tw + 8
 
         def add(kind, rect, **kw):
             it = dict(kind=kind, rect=rect)
@@ -249,53 +262,86 @@ class OptionsScreen(_Screen):
             self.items.append(it)
             return it
 
-        # Linke Spalte oben: Ton/Steuerungs-Vorlage
-        y = 70
-        for kind, kw in (("toggle", dict(key="sound", label=t("options.sound"))),
-                         ("volume", dict(label=t("options.volume"))),
-                         ("toggle", dict(key="haptik", label=t("options.haptik"))),
-                         ("preset", dict(label=t("options.preset")))):
-            add(kind, pygame.Rect(self._left_x, y, col_w, 30), **kw)
-            y += 38
+        def panel_for(group, head=None):
+            """Karten-Panel hinter einer Item-Gruppe (optional mit Überschrift)."""
+            if not group:
+                return
+            u = group[0]["rect"].copy()
+            for it in group[1:]:
+                u.union_ip(it["rect"])
+            p = u.inflate(28, 24)
+            if head:
+                p.y -= 22
+                p.h += 22
+            self._panels.append((p, head))
 
-        # Rechte Spalte oben: Grafik & Leistung (Auto / Auflösung / FPS / Sprache)
-        ry = 70
-        add("toggle", pygame.Rect(self._right_x, ry, col_w, 30),
-            key="auto_resolution", label=t("options.auto_res"))
-        ry += 38
-        add("resolution", pygame.Rect(self._right_x, ry, col_w, 30),
-            label=t("options.resolution"))
-        ry += 38
-        add("fps", pygame.Rect(self._right_x, ry, col_w, 30), label=t("options.fps"))
-        ry += 38
-        add("language", pygame.Rect(self._right_x, ry, col_w, 30),
-            label=t("options.language"))
+        compact = H < 420
 
-        # Steuerungs-Spalten für Spieler 1 (links) und Spieler 2 (rechts)
-        for player, px in (("p1", self._left_x), ("p2", self._right_x)):
-            y = 262
-            for act in settings_mod.ACTIONS:
-                add("bind", pygame.Rect(px, y, col_w, 26), player=player, action=act,
-                    label=action_label(act))
-                y += 30
+        if self.tab == "general":
+            # Linke Spalte: Ton & Feedback / rechte Spalte: Grafik & Sprache.
+            y = 116
+            grp = []
+            for kind, kw in (("toggle", dict(key="sound", label=t("options.sound"))),
+                             ("volume", dict(label=t("options.volume"))),
+                             ("toggle", dict(key="haptik", label=t("options.haptik")))):
+                grp.append(add(kind, pygame.Rect(self._left_x, y, col_w, 30), **kw))
+                y += 38
+            panel_for(grp, t("options.audio"))
 
-        # Schliessen-Button unten
+            ry = 116
+            grp = []
+            grp.append(add("toggle", pygame.Rect(self._right_x, ry, col_w, 30),
+                           key="auto_resolution", label=t("options.auto_res")))
+            ry += 38
+            grp.append(add("resolution", pygame.Rect(self._right_x, ry, col_w, 30),
+                           label=t("options.resolution")))
+            ry += 38
+            grp.append(add("fps", pygame.Rect(self._right_x, ry, col_w, 30),
+                           label=t("options.fps")))
+            ry += 38
+            grp.append(add("language", pygame.Rect(self._right_x, ry, col_w, 30),
+                           label=t("options.language")))
+            panel_for(grp, t("options.graphics"))
+
+        elif self.tab == "controls":
+            # Vorlage oben, darunter die Spalten für Spieler 1 und 2.
+            py = 108 if compact else 116
+            panel_for([add("preset", pygame.Rect(self._left_x, py, col_w, 30),
+                           label=t("options.preset"))])
+            by = 184 if compact else 196
+            step, bh = (24, 22) if compact else (30, 26)
+            for player, px, head in (("p1", self._left_x, t("common.player1")),
+                                     ("p2", self._right_x, t("common.player2"))):
+                y = by
+                grp = []
+                for act in settings_mod.ACTIONS:
+                    grp.append(add("bind", pygame.Rect(px, y, col_w, bh),
+                                   player=player, action=act,
+                                   label=action_label(act)))
+                    y += step
+                panel_for(grp, head)
+
+        else:   # appearance: zwei große Theme-Karten (Modern / Klassisch)
+            gap = 20
+            cw = min(300, (W - 2 * self._left_x - gap) // 2)
+            ch = min(210, H - 104 - 56)
+            cx0 = W // 2 - gap // 2 - cw
+            for i, theme in enumerate(("modern", "classic")):
+                add("theme", pygame.Rect(cx0 + i * (cw + gap), 104, cw, ch),
+                    theme=theme)
+
+        # Schliessen-Button unten (auf jedem Reiter sichtbar).
         add("button", pygame.Rect(W // 2 - 190, H - 44, 380, 34),
             label=t("options.save_back"), on_activate=self._close)
 
-        # Karten-Panels hinter den vier Gruppen berechnen (Audio, Grafik,
-        # Steuerung P1/P2) - rein optisch, aus den Item-Rechtecken abgeleitet.
-        n_act = len(settings_mod.ACTIONS)
-        groups = (self.items[0:4], self.items[4:8],
-                  self.items[8:8 + n_act], self.items[8 + n_act:8 + 2 * n_act])
-        self._panels = []
-        for grp in groups:
-            if not grp:
-                continue
-            u = grp[0]["rect"].copy()
-            for it in grp[1:]:
-                u.union_ip(it["rect"])
-            self._panels.append(u.inflate(28, 24))
+    def _switch_tab(self, key):
+        """Wechselt den aktiven Reiter und baut die Liste neu auf."""
+        if key == self.tab:
+            return
+        self.tab = key
+        self._build_items()
+        self.sel = 0
+        self.play_sound("move")
 
     def _close(self):
         settings_mod.save_settings(self.settings)
@@ -311,10 +357,18 @@ class OptionsScreen(_Screen):
                 return
             self._key_nav(event.key)
         elif event.kind == InputEvent.MOUSEMOVE:
+            self._tab_hover = None
+            for r, key in self.tab_rects:
+                if r.collidepoint(event.pos):
+                    self._tab_hover = key
             for i, it in enumerate(self.items):
                 if it["rect"].collidepoint(event.pos):
                     self.sel = i
         elif event.kind == InputEvent.MOUSEDOWN:
+            for r, key in self.tab_rects:
+                if r.collidepoint(event.pos):
+                    self._switch_tab(key)
+                    return
             for i, it in enumerate(self.items):
                 if it["rect"].collidepoint(event.pos):
                     self.sel = i
@@ -324,7 +378,7 @@ class OptionsScreen(_Screen):
     def _click_item(self, it, pos):
         """Maus-Klick: Pfeile < > getrennt auswerten, Lautstärke-Balken direkt setzen."""
         kind = it["kind"]
-        if kind in ("bind", "button"):
+        if kind in ("bind", "button", "theme"):
             self._activate(it)
         elif kind == "volume":
             bar = it.get("bar_rect")
@@ -356,6 +410,10 @@ class OptionsScreen(_Screen):
     def _key_nav(self, key):
         if key == "Escape":
             self._close()
+        elif key == "Tab":
+            # Tab wechselt zum nächsten Reiter (Maus: Klick auf die Leiste).
+            idx = self.TABS.index(self.tab)
+            self._switch_tab(self.TABS[(idx + 1) % len(self.TABS)])
         elif key in ("Up", "w"):
             self.sel = (self.sel - 1) % len(self.items)
             self.play_sound("move")
@@ -371,7 +429,15 @@ class OptionsScreen(_Screen):
 
     def _adjust(self, it, direction):
         """Links/Rechts: Toggles umschalten, Lautstärke/Vorlage ändern."""
-        if it["kind"] == "toggle":
+        if it["kind"] == "theme":
+            # Links/Rechts springt zwischen den Theme-Karten.
+            idxs = [i for i, x in enumerate(self.items) if x["kind"] == "theme"]
+            if self.sel in idxs:
+                self.sel = idxs[(idxs.index(self.sel) + direction) % len(idxs)]
+            else:
+                self.sel = idxs[0]
+            self.play_sound("move")
+        elif it["kind"] == "toggle":
             self.settings[it["key"]] = not self.settings.get(it["key"], False)
             if it["key"] == "auto_resolution":
                 # Sofort anwenden (an Fenster anpassen bzw. feste Auflösung zurück).
@@ -410,13 +476,21 @@ class OptionsScreen(_Screen):
             self.play_sound("select")
 
     def _activate(self, it):
-        """Enter/Klick: Belegen starten, Button auslösen oder Toggle schalten."""
+        """Enter/Klick: Belegen starten, Button/Theme auslösen oder Toggle schalten."""
         if it["kind"] == "bind":
             self.capture = (it["player"], it["action"])
             self.play_sound("click")
         elif it["kind"] == "button":
             self.play_sound("click")
             it["on_activate"]()
+        elif it["kind"] == "theme":
+            # Theme sofort anwenden (Pygame-Seite + Tkinter-Sidebar).
+            if self.settings.get("theme") != it["theme"]:
+                sel = self.sel
+                self.app.apply_theme(it["theme"])
+                self._build_items()   # Schrift/Farben dieses Screens anpassen
+                self.sel = min(sel, len(self.items) - 1)
+            self.play_sound("select")
         else:
             self._adjust(it, +1)
 
@@ -430,31 +504,53 @@ class OptionsScreen(_Screen):
         s = self.surface
         ui.draw_background(s, self.width, self.height, stars=False)
 
-        # Karten-Panels hinter den Gruppen (rein optisch, mit Akzent-Lichtkante).
-        for p in getattr(self, "_panels", ()):
+        # Karten-Panels hinter den Gruppen (rein optisch, ggf. mit Überschrift).
+        head_font = ui.font(14, bold=True)
+        for p, head in self._panels:
             ui.draw_panel(s, p, radius=10, shadow=False,
-                          accent_top=ui.mix(ui.PANEL, ui.ACCENT, 0.45))
+                          accent_top=None if ui.is_modern()
+                          else ui.mix(ui.PANEL, ui.ACCENT, 0.45))
+            if head:
+                s.blit(head_font.render(head, True, ui.ACCENT),
+                       (p.x + 14, p.y + 8))
 
         # Titel oben links mit Akzent-Unterstrich.
         title_font = ui.font(22, bold=True)
-        title = title_font.render(t("options.title"), True, COL_TEXT)
-        s.blit(title, (self._left_x, 16))
+        title = title_font.render(t("options.title"), True, ui.TEXT)
+        s.blit(title, (self._left_x, 10))
         pygame.draw.rect(s, ui.ACCENT,
-                         (self._left_x, 18 + title.get_height(),
-                          title.get_width(), 3), border_radius=2)
+                         (self._left_x, 14 + title.get_height(),
+                          title.get_width(), 2), border_radius=2)
 
-        # Abschnitts-Überschriften (klein, Akzentfarbe).
-        head_font = ui.font(15, bold=True)
-        s.blit(head_font.render(t("options.graphics"), True, ui.ACCENT),
-               (self._right_x, 38))
-        s.blit(head_font.render(t("common.player1"), True, ui.ACCENT),
-               (self._left_x, 232))
-        s.blit(head_font.render(t("common.player2"), True, ui.ACCENT),
-               (self._right_x, 232))
+        # Reiterleiste (aktiver Reiter mit Akzentlinie unten).
+        for r, key in self.tab_rects:
+            active = (key == self.tab)
+            if active:
+                pygame.draw.rect(s, ui.PANEL_LIGHT, r, border_radius=8)
+                pygame.draw.rect(s, ui.ACCENT,
+                                 (r.x + 8, r.bottom - 3, r.w - 16, 3),
+                                 border_radius=2)
+            elif key == self._tab_hover:
+                pygame.draw.rect(s, ui.PANEL, r, border_radius=8)
+                pygame.draw.rect(s, ui.BORDER, r, width=1, border_radius=8)
+            img = self._tab_font.render(t("options.tab_" + key), True,
+                                        ui.TEXT if active else ui.TEXT_DIM)
+            s.blit(img, img.get_rect(center=r.center))
+
+        # Kleiner Hinweis rechts neben der Leiste (nur wenn Platz ist).
+        hint = ui.font(12).render(t("options.tabs_hint"), True, ui.TEXT_FAINT)
+        tabs_right = self.tab_rects[-1][0].right if self.tab_rects else 0
+        if tabs_right + 24 + hint.get_width() <= self.width - self._left_x:
+            s.blit(hint, hint.get_rect(
+                midright=(self.width - self._left_x, 48 + 13)))
+
+        if self.tab == "appearance":
+            s.blit(ui.font(13).render(t("options.theme_hint"), True,
+                                      ui.TEXT_DIM), (self._left_x, 82))
 
         for i, it in enumerate(self.items):
             r = it["rect"]
-            if i == self.sel and it["kind"] != "button":
+            if i == self.sel and it["kind"] not in ("button", "theme"):
                 hl = r.inflate(16, 8)
                 pygame.draw.rect(s, ui.PANEL_LIGHT, hl, border_radius=6)
                 pygame.draw.rect(s, ui.ACCENT, (hl.x, hl.y + 3, 3, hl.h - 6),
@@ -467,10 +563,11 @@ class OptionsScreen(_Screen):
     def _fit_render(self, text, color, max_w):
         """Rendert Text; wird er breiter als max_w, in kleineren Stufen erneut."""
         img = self.font.render(text, True, color)
+        mono = not ui.is_modern()
         for size in (16, 14, 12):
             if img.get_width() <= max_w:
                 break
-            img = ui.font(size, mono=True).render(text, True, color)
+            img = ui.font(size, mono=mono).render(text, True, color)
         return img
 
     def _draw_arrow_value(self, it, farbe, value_text, value_col):
@@ -502,17 +599,17 @@ class OptionsScreen(_Screen):
     def _draw_item(self, it, selected):
         s = self.surface
         r = it["rect"]
-        farbe = COL_TEXT if selected else COL_MUTE
+        farbe = ui.TEXT if selected else ui.TEXT_DIM
         kind = it["kind"]
 
         if kind == "toggle":
             an = self.settings.get(it["key"], False)
             wert = t("common.on") if an else t("common.off")
-            self._draw_arrow_value(it, farbe, wert, COL_ACCENT if an else COL_MUTE)
+            self._draw_arrow_value(it, farbe, wert, ui.GREEN if an else ui.TEXT_DIM)
 
         elif kind == "language":
             self._draw_arrow_value(it, farbe, dict(i18n.AVAILABLE)[i18n.get_language()],
-                                   COL_KEY)
+                                   ui.GOLD)
 
         elif kind == "volume":
             s.blit(self.font.render(it["label"], True, farbe), (r.x, r.y))
@@ -521,7 +618,7 @@ class OptionsScreen(_Screen):
             pct = self.font.render(f"{int(v * 100)}%", True, farbe)
             bar = pygame.Rect(r.right - pct.get_width() - 8 - 110, r.y + 8, 110, 12)
             it["bar_rect"] = bar
-            pygame.draw.rect(s, COL_BTN, bar, border_radius=6)
+            pygame.draw.rect(s, ui.BTN, bar, border_radius=6)
             fill_w = int(bar.w * v)
             if fill_w > 0:
                 pygame.draw.rect(s, ui.ACCENT,
@@ -529,12 +626,12 @@ class OptionsScreen(_Screen):
             pygame.draw.rect(s, ui.BORDER_LIGHT, bar, width=1, border_radius=6)
             # Griff-Knopf am Ende des Füllstands
             knob_x = bar.x + max(4, min(bar.w - 4, fill_w))
-            pygame.draw.circle(s, COL_TEXT, (knob_x, bar.centery), 5)
+            pygame.draw.circle(s, ui.TEXT, (knob_x, bar.centery), 5)
             s.blit(pct, (r.right - pct.get_width(), r.y))
 
         elif kind == "preset":
             self._draw_arrow_value(it, farbe,
-                                   t(settings_mod.PRESETS[self.preset_idx][0]), COL_KEY)
+                                   t(settings_mod.PRESETS[self.preset_idx][0]), ui.GOLD)
 
         elif kind == "resolution":
             if self.settings.get("auto_resolution"):
@@ -543,32 +640,160 @@ class OptionsScreen(_Screen):
                 label = self.font.render(it["label"], True, farbe)
                 s.blit(label, (r.x, r.y))
                 txt = t("options.res_auto", w=self.width, h=self.height)
-                img = self._fit_render(txt, COL_MUTE,
+                img = self._fit_render(txt, ui.TEXT_DIM,
                                        r.w - label.get_width() - 12)
                 s.blit(img, (r.right - img.get_width(), r.y))
             else:
                 self._draw_arrow_value(it, farbe,
                                        t(settings_mod.RESOLUTIONS[self.res_idx][0]),
-                                       COL_KEY)
+                                       ui.GOLD)
 
         elif kind == "fps":
             self._draw_arrow_value(it, farbe,
-                                   str(settings_mod.FPS_OPTIONS[self.fps_idx]), COL_ACCENT)
+                                   str(settings_mod.FPS_OPTIONS[self.fps_idx]), ui.GREEN)
 
         elif kind == "bind":
             s.blit(self.font.render(it["label"], True, farbe), (r.x, r.y))
             key = self.key_for(it["player"], it["action"])
-            img = self.font.render(pretty_key(key), True, COL_KEY)
+            img = self.font.render(pretty_key(key), True, ui.GOLD)
             # Tastenkappen-Chip hinter dem Tastennamen
             chip = pygame.Rect(0, 0, img.get_width() + 14, img.get_height() + 4)
             chip.midright = (r.right, r.centery)
-            pygame.draw.rect(s, ui.PANEL_LIGHT if selected else COL_BTN, chip,
+            pygame.draw.rect(s, ui.PANEL_LIGHT if selected else ui.BTN, chip,
                              border_radius=5)
             pygame.draw.rect(s, ui.BORDER_LIGHT, chip, width=1, border_radius=5)
             s.blit(img, img.get_rect(center=chip.center))
 
+        elif kind == "theme":
+            self._draw_theme_card(it, selected)
+
         elif kind == "button":
             ui.draw_button(s, r, it["label"], self.font, selected=selected)
+
+    # ----- Erscheinungsbild-Reiter --------------------------------------
+
+    def _draw_theme_card(self, it, selected):
+        """Große Auswahlkarte für ein UI-Design (mit Mini-Vorschau)."""
+        s = self.surface
+        r = it["rect"]
+        theme = it["theme"]
+        active = self.settings.get("theme", ui.DEFAULT_THEME) == theme
+
+        ui.draw_panel(s, r, radius=10, shadow=False)
+        if selected:
+            pygame.draw.rect(s, ui.ACCENT, r, width=2, border_radius=10)
+        elif active:
+            pygame.draw.rect(s, ui.mix(ui.BORDER, ui.GREEN, 0.55), r, width=1,
+                             border_radius=10)
+
+        # Mini-Vorschau des Designs im oberen Kartenbereich.
+        pv = pygame.Rect(r.x + 12, r.y + 12, r.w - 24,
+                         max(40, int(r.h * 0.44)))
+        self._draw_theme_preview(pv, theme)
+
+        # Name + kurze Beschreibung darunter.
+        name = ui.font(16, bold=True).render(t("options.theme_" + theme),
+                                             True, ui.TEXT)
+        s.blit(name, (r.x + 14, pv.bottom + 10))
+        dy = pv.bottom + 14 + name.get_height()
+        for line in self._wrap_text(t("options.theme_%s_desc" % theme),
+                                    ui.font(12), r.w - 28)[:3]:
+            img = ui.font(12).render(line, True, ui.TEXT_DIM)
+            s.blit(img, (r.x + 14, dy))
+            dy += img.get_height() + 2
+
+        # "Aktiv"-Plakette unten rechts, wenn das Design gerade läuft.
+        if active:
+            tag = ui.font(11, bold=True).render(t("options.theme_active"),
+                                                True, ui.GREEN)
+            chip = pygame.Rect(0, 0, tag.get_width() + 14, tag.get_height() + 6)
+            chip.bottomright = (r.right - 10, r.bottom - 8)
+            pygame.draw.rect(s, ui.mix(ui.PANEL, ui.GREEN, 0.18), chip,
+                             border_radius=chip.h // 2)
+            pygame.draw.rect(s, ui.GREEN, chip, width=1,
+                             border_radius=chip.h // 2)
+            s.blit(tag, tag.get_rect(center=chip.center))
+
+    @staticmethod
+    def _wrap_text(text, fnt, max_w):
+        """Bricht Text an Wortgrenzen um, so dass jede Zeile in max_w passt."""
+        lines, cur = [], ""
+        for word in text.split():
+            probe = (cur + " " + word).strip()
+            if cur and fnt.size(probe)[0] > max_w:
+                lines.append(cur)
+                cur = word
+            else:
+                cur = probe
+        if cur:
+            lines.append(cur)
+        return lines
+
+    def _draw_theme_preview(self, rect, theme):
+        """Kleine Stil-Vorschau: Hintergrund, Mini-Titel und Mini-Button."""
+        colors = ui.THEMES[theme][0]
+        w, h = rect.w, rect.h
+        pv = pygame.Surface((w, h), pygame.SRCALPHA)
+
+        # Hintergrund-Verlauf in 8 Bändern.
+        for i in range(8):
+            col = ui.mix(colors["BG_TOP"], colors["BG_BOTTOM"], i / 7)
+            pygame.draw.rect(pv, col, (0, h * i // 8, w, h // 8 + 1))
+
+        if theme == "classic":
+            # Weiche "Aurora"-Lichter (additiv) + kleines Sternenfeld.
+            glow = pygame.Surface((w, h))
+            pygame.draw.circle(glow, (26, 42, 82),
+                               (int(w * 0.25), int(h * 0.35)), max(8, h // 2))
+            pygame.draw.circle(glow, (46, 30, 82),
+                               (int(w * 0.78), int(h * 0.65)), max(8, h // 2))
+            small = pygame.transform.smoothscale(glow, (max(1, w // 6),
+                                                        max(1, h // 6)))
+            pv.blit(pygame.transform.smoothscale(small, (w, h)), (0, 0),
+                    special_flags=pygame.BLEND_RGB_ADD)
+            for fx0, fy0 in ((0.08, 0.18), (0.22, 0.62), (0.34, 0.30),
+                             (0.48, 0.75), (0.55, 0.14), (0.68, 0.52),
+                             (0.80, 0.24), (0.91, 0.66), (0.15, 0.85)):
+                c = 120 + int(90 * fy0)
+                pv.fill((c, c, min(255, c + 25)),
+                        (int(fx0 * w), int(fy0 * h), 2, 2))
+
+        # Mini-Titel: heller Balken + Akzent-Unterstrich.
+        ac = colors["ACCENT"]
+        tw = int(w * 0.42)
+        pygame.draw.rect(pv, colors["TEXT"], (w // 2 - tw // 2, 8, tw, 5),
+                         border_radius=2)
+        pygame.draw.rect(pv, ac, (w // 2 - tw // 4, 17, tw // 2, 2),
+                         border_radius=1)
+
+        # Mini-Button in der Stil-Sprache des jeweiligen Themes.
+        bw, bh = int(w * 0.62), max(12, h // 4)
+        br = pygame.Rect(w // 2 - bw // 2, h - bh - 8, bw, bh)
+        if theme == "classic":
+            pygame.draw.rect(pv, (*ac, 70), br.inflate(8, 8), border_radius=8)
+            pygame.draw.rect(pv, ui.mix(colors["BTN"], colors["BTN_SEL"], 0.8),
+                             br, border_radius=6)
+            pygame.draw.rect(pv, ac, br, width=1, border_radius=6)
+            pygame.draw.rect(pv, ac, (br.x + 4, br.centery - bh // 4, 3,
+                                      bh // 2), border_radius=1)
+        else:
+            pygame.draw.rect(pv, colors["BTN"], br, border_radius=5)
+            pygame.draw.rect(pv, ac, br, width=1, border_radius=5)
+            pygame.draw.rect(pv, ac, (br.x + 5, br.centery - bh // 4, 2,
+                                      bh // 2), border_radius=1)
+        # Text-Andeutung auf dem Button.
+        pygame.draw.rect(pv, colors["TEXT_DIM"],
+                         (br.centerx - bw // 5, br.centery - 2,
+                          int(bw * 0.4), 3), border_radius=1)
+
+        # Abgerundete Ecken über eine Alpha-Maske, dann Rand darüber.
+        mask = pygame.Surface((w, h), pygame.SRCALPHA)
+        pygame.draw.rect(mask, (255, 255, 255, 255), (0, 0, w, h),
+                         border_radius=6)
+        pv.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MIN)
+        self.surface.blit(pv, rect.topleft)
+        pygame.draw.rect(self.surface, colors["BORDER_LIGHT"], rect, width=1,
+                         border_radius=6)
 
     def _draw_capture_overlay(self):
         s = self.surface
@@ -581,19 +806,21 @@ class OptionsScreen(_Screen):
         card = pygame.Rect(self.width // 2 - cw // 2,
                            self.height // 2 - ch // 2, cw, ch)
         ui.draw_panel(s, card, radius=14)
-        glow = int(120 + 100 * ui.pulse(2.6))
         pygame.draw.rect(s, (ui.ACCENT[0], ui.ACCENT[1], ui.ACCENT[2]),
                          card, width=2, border_radius=14)
-        pygame.draw.rect(s, (glow // 3, glow // 2, glow),
-                         card.inflate(8, 8), width=1, border_radius=16)
+        if not ui.is_modern():
+            # Classic: zusätzlich ein pulsierender Außenrahmen.
+            glow = int(120 + 100 * ui.pulse(2.6))
+            pygame.draw.rect(s, (glow // 3, glow // 2, glow),
+                             card.inflate(8, 8), width=1, border_radius=16)
 
         player, action = self.capture
         who = t("common.player1") if player == "p1" else t("common.player2")
         self.draw_center_text(f"{who}  -  {action_label(action)}",
                               self.font, ui.ACCENT, -44)
         self.draw_center_text(t("options.press_key"),
-                              ui.font(30, bold=True), COL_TEXT, 0)
-        self.draw_center_text(t("options.cancel"), self.font, COL_MUTE, 46)
+                              ui.font(30, bold=True), ui.TEXT, 0)
+        self.draw_center_text(t("options.cancel"), self.font, ui.TEXT_DIM, 46)
 
 
 # ---------------------------------------------------------------------------
@@ -954,7 +1181,7 @@ class WelcomeScreen(_Screen):
         s = self.surface
         if focused:
             self._draw_row_focus(rect)
-        col = COL_TEXT if focused else COL_MUTE
+        col = ui.TEXT if focused else ui.TEXT_DIM
         img = ui.font(17).render(label, True, col)
         s.blit(img, (rect.x, rect.centery - img.get_height() // 2))
         # Schiebe-Pille rechts + Zustandswort AN/AUS links davon.
@@ -966,9 +1193,9 @@ class WelcomeScreen(_Screen):
         pygame.draw.rect(s, ui.BORDER_LIGHT, pill, width=1, border_radius=pill_h // 2)
         knob_r = pill_h // 2 - 3
         knob_x = pill.right - knob_r - 4 if on else pill.left + knob_r + 4
-        pygame.draw.circle(s, COL_TEXT, (knob_x, pill.centery), knob_r)
+        pygame.draw.circle(s, ui.TEXT, (knob_x, pill.centery), knob_r)
         word = ui.font(13, bold=True).render(t("common.on") if on else t("common.off"),
-                                             True, COL_ACCENT if on else COL_MUTE)
+                                             True, ui.GREEN if on else ui.TEXT_DIM)
         s.blit(word, (pill.left - 8 - word.get_width(),
                       rect.centery - word.get_height() // 2))
 
@@ -976,7 +1203,7 @@ class WelcomeScreen(_Screen):
         s = self.surface
         if focused:
             self._draw_row_focus(rect)
-        col = COL_TEXT if focused else COL_MUTE
+        col = ui.TEXT if focused else ui.TEXT_DIM
         f = ui.font(17)
         label = f.render(t("options.resolution"), True, col)
         s.blit(label, (rect.x, rect.centery - label.get_height() // 2))
@@ -984,14 +1211,14 @@ class WelcomeScreen(_Screen):
             # Auto-Modus: keine Pfeile, aktuelle Fenster-Auflösung anzeigen.
             self._res_dec = self._res_inc = None
             img = f.render(t("options.res_auto", w=self.width, h=self.height),
-                           True, COL_MUTE)
+                           True, ui.TEXT_DIM)
             s.blit(img, (rect.right - img.get_width(),
                          rect.centery - img.get_height() // 2))
             return
         lt = f.render("<", True, col)
         gt = f.render(">", True, col)
         val = ui.font(15).render(t(settings_mod.RESOLUTIONS[self.res_idx][0]),
-                                 True, COL_KEY)
+                                 True, ui.GOLD)
         pad = 10
         gx = rect.right - gt.get_width()
         vx = gx - pad - val.get_width()
@@ -1116,7 +1343,7 @@ class LanguageScreen(_Screen):
             # Bewusst dezent: kleiner Text, gedeckte Farbe, feiner Rahmen
             # nur bei Auswahl - kein Akzent-Button wie die Sprachen darüber.
             hot = (self.sel == len(self.rects))
-            col = COL_MUTE if hot else ui.TEXT_FAINT
+            col = ui.TEXT_DIM if hot else ui.TEXT_FAINT
             img = ui.font(14).render(t("lang.other"), True, col)
             if hot:
                 pygame.draw.rect(s, ui.PANEL_LIGHT, self.other_rect,

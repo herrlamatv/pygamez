@@ -51,26 +51,41 @@ GAME_H = 480
 FPS = 60
 
 # ---------------------------------------------------------------------------
-#  Farbschema der Tkinter-Seite (abgestimmt auf ui.py der Pygame-Seite)
+#  Farbschema der Tkinter-Seite - kommt zentral aus dem UI-Toolkit (ui.py)
+#  und hängt vom gewählten Theme ab ("modern"/"classic", einstellbar unter
+#  Optionen -> Erscheinungsbild). _apply_tk_palette() schreibt die Werte des
+#  aktiven Themes in die C_*-Globals; nach einem Theme-Wechsel wird die
+#  Sidebar neu aufgebaut (App._rebuild_sidebar), weil Tkinter-Widgets ihre
+#  Farben beim Erzeugen übernehmen.
+#
+#  ui wird hier bewusst NICHT auf Modulebene importiert: ui importiert pygame,
+#  und _check_dependencies() soll bei fehlendem pygame zuerst eine
+#  verständliche Meldung zeigen können.
 # ---------------------------------------------------------------------------
-C_SIDEBAR = "#12151f"      # Sidebar-Hintergrund
-C_HEADER = "#0c0f18"       # Kopfbereich (etwas dunkler)
-C_CARD = "#1a2030"         # Karten/Panels
-C_BTN = "#1f2636"          # Buttons/Zeilen normal
-C_BTN_HOVER = "#2c3650"    # Buttons/Zeilen unter der Maus
-C_ACCENT = "#589cff"       # Primär-Akzent (Blau)
-C_ACCENT2 = "#9b6eff"      # Zweit-Akzent (Violett)
-C_DANGER = "#8e3540"       # Beenden
-C_DANGER_HOVER = "#ab414e"
-C_BACK = "#4b6b5a"         # Zurück zum Menü (helles Grün-Grau)
-C_BACK_HOVER = "#5f8a73"
-C_TEXT = "#e9edf5"
-C_TEXT_DIM = "#98a2b8"
-C_TEXT_FAINT = "#5f6680"
-C_BORDER = "#2a3147"
-C_GREEN = "#6ecd8c"        # Status: läuft
-C_GOLD = "#f5cd64"         # Status: Pause
-C_RED = "#e15f5f"          # Status: Game Over
+C_SIDEBAR = C_HEADER = C_CARD = C_BTN = C_BTN_HOVER = "#000000"
+C_ACCENT = C_ACCENT2 = C_DANGER = C_DANGER_HOVER = "#000000"
+C_BACK = C_BACK_HOVER = C_TEXT = C_TEXT_DIM = C_TEXT_FAINT = "#000000"
+C_BORDER = C_GREEN = C_GOLD = C_RED = "#000000"
+
+_TK_PALETTE_KEYS = (
+    ("C_SIDEBAR", "SIDEBAR"), ("C_HEADER", "HEADER"), ("C_CARD", "CARD"),
+    ("C_BTN", "BTN"), ("C_BTN_HOVER", "BTN_HOVER"), ("C_ACCENT", "ACCENT"),
+    ("C_ACCENT2", "ACCENT2"), ("C_DANGER", "DANGER"),
+    ("C_DANGER_HOVER", "DANGER_HOVER"), ("C_BACK", "BACK"),
+    ("C_BACK_HOVER", "BACK_HOVER"), ("C_TEXT", "TEXT"),
+    ("C_TEXT_DIM", "TEXT_DIM"), ("C_TEXT_FAINT", "TEXT_FAINT"),
+    ("C_BORDER", "BORDER"), ("C_GREEN", "GREEN"), ("C_GOLD", "GOLD"),
+    ("C_RED", "RED"),
+)
+
+
+def _apply_tk_palette():
+    """Übernimmt die Hex-Farben des aktiven Themes in die C_*-Globals."""
+    import ui
+    tkc = ui.tk_colors()
+    g = globals()
+    for name, key in _TK_PALETTE_KEYS:
+        g[name] = tkc[key]
 
 
 def _mix_hex(c1, c2, f):
@@ -644,18 +659,6 @@ def _enable_dpi_awareness():
 class App:
     """Die Tkinter-Anwendung mit eingebettetem Pygame-Display."""
 
-    # Farbschema als Klassen-Attribute verfügbar halten (siehe Konstanten oben).
-    C_SIDEBAR = C_SIDEBAR
-    C_HEADER = C_HEADER
-    C_CARD = C_CARD
-    C_BTN = C_BTN
-    C_BTN_HOVER = C_BTN_HOVER
-    C_ACCENT = C_ACCENT
-    C_DANGER = C_DANGER
-    C_DANGER_HOVER = C_DANGER_HOVER
-    C_TEXT = C_TEXT
-    C_TEXT_DIM = C_TEXT_DIM
-
     def __init__(self):
         # Sprache laden (aus mem.json), bevor irgendein Text aufgebaut wird.
         i18n.init()
@@ -691,6 +694,12 @@ class App:
         res = self.settings.get("resolution", [GAME_W, GAME_H])
         self.game_w, self.game_h = int(res[0]), int(res[1])
         self.fps = int(self.settings.get("fps", FPS))
+
+        # UI-Design ("modern"/"classic") VOR dem Oberflächen-Aufbau aktivieren,
+        # damit Sidebar UND Pygame-Screens von Anfang an im gewählten Look sind.
+        import ui
+        ui.set_theme(self.settings.get("theme", ui.DEFAULT_THEME))
+        _apply_tk_palette()
 
         self._build_ui()
 
@@ -761,7 +770,16 @@ class App:
         return None
 
     def _build_header_gradient(self, parent):
-        """Akzentlinie unter dem Kopf: Verlauf Blau -> Violett."""
+        """Akzentlinie unter dem Kopf.
+
+        Modern : eine ruhige, einfarbige Haarlinie.
+        Classic: Farbverlauf Blau -> Violett (wie bisher).
+        """
+        import ui
+        if ui.is_modern():
+            tk.Frame(parent, bg=_mix_hex(C_BORDER, C_ACCENT, 0.35),
+                     height=1).pack(fill="x")
+            return
         grad = tk.Canvas(parent, height=2, bg=C_HEADER, bd=0,
                          highlightthickness=0)
         grad.pack(fill="x")
@@ -778,9 +796,29 @@ class App:
         grad.bind("<Configure>", paint)
 
     def _build_ui(self):
+        """Baut die Oberfläche auf: Sidebar links, Spielfläche rechts."""
+        self._build_sidebar()
+
+        # Rechte Seite: Anzeige des Spielbildes. Ein normales tk.Label zeigt das
+        # pro Frame erzeugte Bild (siehe _present). fill/expand -> es füllt den
+        # verfügbaren Platz; wir bauen das Bild jeweils in dieser Größe.
+        self.embed = tk.Label(self.root, bg="black", bd=0, highlightthickness=0)
+        self.embed.pack(side="right", fill="both", expand=True)
+        # width/height beim Label sind Zeichen/Pixel je nach Inhalt -> sobald ein
+        # Bild gesetzt ist, zählt dessen Größe. fill/expand bestimmt die Fläche.
+        # Fokus, damit Tastatur-Events (auf root gebunden) sicher ankommen.
+        self.embed.configure(takefocus=True)
+        self.embed.focus_set()
+
+    def _build_sidebar(self):
         # Linke Seite: Sidebar mit Kopf, Spieleliste, Aktionen und Status.
+        # Nach einem Theme-Wechsel wird sie zerstört und hier neu aufgebaut -
+        # dann muss sie in der Pack-Reihenfolge wieder VOR die Spielfläche.
         menu = tk.Frame(self.root, width=232, bg=C_SIDEBAR)
-        menu.pack(side="left", fill="y")
+        if getattr(self, "embed", None) is not None:
+            menu.pack(side="left", fill="y", before=self.embed)
+        else:
+            menu.pack(side="left", fill="y")
         menu.pack_propagate(False)
         self._menu_frame = menu
 
@@ -877,17 +915,6 @@ class App:
 
         self.game_list = GameList(menu, self)
         self.game_list.pack(fill="both", expand=True, padx=12)
-
-        # Rechte Seite: Anzeige des Spielbildes. Ein normales tk.Label zeigt das
-        # pro Frame erzeugte Bild (siehe _present). fill/expand -> es füllt den
-        # verfügbaren Platz; wir bauen das Bild jeweils in dieser Größe.
-        self.embed = tk.Label(self.root, bg="black", bd=0, highlightthickness=0)
-        self.embed.pack(side="right", fill="both", expand=True)
-        # width/height beim Label sind Zeichen/Pixel je nach Inhalt -> sobald ein
-        # Bild gesetzt ist, zählt dessen Größe. fill/expand bestimmt die Fläche.
-        # Fokus, damit Tastatur-Events (auf root gebunden) sicher ankommen.
-        self.embed.configure(takefocus=True)
-        self.embed.focus_set()
 
     def _fit_sidebar(self):
         """Passt die Sidebar-Breite an die Inhalte an.
@@ -1212,6 +1239,39 @@ class App:
         # Neue Beschriftungen können breiter/schmaler sein -> Sidebar anpassen.
         self._fit_sidebar()
 
+    def apply_theme(self, name):
+        """Wechselt das UI-Design ("modern"/"classic") zur Laufzeit.
+
+        Die Pygame-Seite übernimmt die neue Palette sofort (alle Screens lesen
+        die Farben dynamisch über ui.<NAME>); die Tkinter-Sidebar wird mit den
+        neuen Farben komplett neu aufgebaut. Wird auch gespeichert.
+        """
+        if name not in self.ui.THEMES:
+            return
+        self.ui.set_theme(name)
+        self.settings["theme"] = name
+        import settings as settings_mod
+        settings_mod.save_settings(self.settings)
+        _apply_tk_palette()
+        self._rebuild_sidebar()
+        # Gecachte Startbildschirm-Flächen mit alten Farben verwerfen.
+        self._ticker_key = None
+        self._ticker_band = None
+
+    def _rebuild_sidebar(self):
+        """Baut die Sidebar neu auf (nach Theme-Wechsel) und stellt den
+        Zustand (aktives Spiel, Statusanzeige) wieder her."""
+        active = self.game_list.active
+        self._menu_frame.destroy()
+        self._build_sidebar()
+        self._build_game_buttons()
+        self.game_list.set_active(active)
+        self._fit_sidebar()
+        if self.current is None:
+            self.status_var.set(t("app.no_game"))
+        # LED/Statustext eines laufenden Spiels setzt _update_status im
+        # nächsten Frame ohnehin frisch.
+
     def apply_resolution(self, w, h, persist=True):
         """Setzt die logische Auflösung neu (Canvas wird passend neu erzeugt).
 
@@ -1459,7 +1519,7 @@ class App:
         band = getattr(self, "_ticker_band", None)
         if band is None or band.get_width() != w:
             band = self.pygame.Surface((w, band_h), self.pygame.SRCALPHA)
-            band.fill((14, 18, 32, 130))
+            band.fill((*ui.BG_TOP, 135))
             self._ticker_band = band
         s.blit(band, (0, band_y))
         line_col = ui.mix(ui.BG_BOTTOM, ui.ACCENT, 0.35)
@@ -1487,9 +1547,11 @@ class App:
         w, h, s = self.game_w, self.game_h, self.canvas
         ui.draw_background(s, w, h)
 
+        modern = ui.is_modern()
         ticks = self.pygame.time.get_ticks() / 1000.0
         cx = w // 2
-        bob = int(6 * math.sin(ticks * 1.3))   # sanftes Auf und Ab
+        # Modern: ruhiges Bild ohne Schwebe-Animation.
+        bob = 0 if modern else int(6 * math.sin(ticks * 1.3))
 
         # Logo-Grafik mit weichem Akzent-Glow (Fallback: Schriftzug "PyGameZ").
         # Der Block Logo + Name bleibt zentriert; nur wenn das Spiele-Raster
@@ -1505,46 +1567,65 @@ class App:
         if logo is not None:
             lrect = logo.get_rect(center=(cx, center_y))
             rad = max(12, size // 8)
-            glow = self.pygame.Surface((lrect.w + 26, lrect.h + 26),
-                                       self.pygame.SRCALPHA)
-            self.pygame.draw.rect(glow, (*ui.ACCENT, int(55 + 35 * ui.pulse(1.4))),
-                                  glow.get_rect(), border_radius=rad + 8)
-            s.blit(glow, glow.get_rect(center=lrect.center))
-            s.blit(logo, lrect)
-            self.pygame.draw.rect(s, ui.ACCENT, lrect.inflate(4, 4), 2,
-                                  border_radius=rad + 2)
+            if modern:
+                # Ruhige Darstellung: nur eine feine Rahmenlinie, kein Glow.
+                s.blit(logo, lrect)
+                self.pygame.draw.rect(s, ui.BORDER_LIGHT, lrect.inflate(4, 4),
+                                      1, border_radius=rad + 2)
+            else:
+                glow = self.pygame.Surface((lrect.w + 26, lrect.h + 26),
+                                           self.pygame.SRCALPHA)
+                self.pygame.draw.rect(glow,
+                                      (*ui.ACCENT, int(55 + 35 * ui.pulse(1.4))),
+                                      glow.get_rect(), border_radius=rad + 8)
+                s.blit(glow, glow.get_rect(center=lrect.center))
+                s.blit(logo, lrect)
+                self.pygame.draw.rect(s, ui.ACCENT, lrect.inflate(4, 4), 2,
+                                      border_radius=rad + 2)
             base_y, line_w = lrect.bottom - bob, lrect.w
         else:
             logo_font = ui.font(min(64, max(40, w // 11)), bold=True)
-            glow = logo_font.render("PyGameZ", True, ui.ACCENT)
-            glow.set_alpha(int(40 + 30 * ui.pulse(1.4)))
-            img = ui.grad_text(logo_font, "PyGameZ")
-            for dx, dy in ((-2, 0), (2, 0), (0, -2), (0, 2)):
-                s.blit(glow, glow.get_rect(center=(cx + dx, center_y + dy)))
+            if modern:
+                img = logo_font.render("PyGameZ", True, ui.TEXT)
+            else:
+                glow = logo_font.render("PyGameZ", True, ui.ACCENT)
+                glow.set_alpha(int(40 + 30 * ui.pulse(1.4)))
+                img = ui.grad_text(logo_font, "PyGameZ")
+                for dx, dy in ((-2, 0), (2, 0), (0, -2), (0, 2)):
+                    s.blit(glow, glow.get_rect(center=(cx + dx, center_y + dy)))
             s.blit(img, img.get_rect(center=(cx, center_y)))
             base_y = center_y - bob + img.get_height() // 2
             line_w = img.get_width() + 30
 
-        # Drei kleine Funken kreisen ums Logo (je eigene Bahn/Tempo/Farbe).
-        for k, col in enumerate((ui.ACCENT, ui.ACCENT2, ui.GOLD)):
-            ang = ticks * (0.6 + 0.17 * k) + k * 2.09
-            ox = cx + int(math.cos(ang) * (size // 2 + 34))
-            oy = center_y + int(math.sin(ang) * (size // 2 + 12))
-            if 2 <= ox < w - 2 and 2 <= oy < h - 2:
-                g = ui.mix((0, 0, 0), col, 0.5)
-                s.fill(g, (ox - 2, oy - 2, 5, 5),
-                       special_flags=self.pygame.BLEND_ADD)
-                self.pygame.draw.circle(s, col, (ox, oy), 2)
+        if not modern:
+            # Drei kleine Funken kreisen ums Logo (je eigene Bahn/Tempo/Farbe).
+            for k, col in enumerate((ui.ACCENT, ui.ACCENT2, ui.GOLD)):
+                ang = ticks * (0.6 + 0.17 * k) + k * 2.09
+                ox = cx + int(math.cos(ang) * (size // 2 + 34))
+                oy = center_y + int(math.sin(ang) * (size // 2 + 12))
+                if 2 <= ox < w - 2 and 2 <= oy < h - 2:
+                    g = ui.mix((0, 0, 0), col, 0.5)
+                    s.fill(g, (ox - 2, oy - 2, 5, 5),
+                           special_flags=self.pygame.BLEND_ADD)
+                    self.pygame.draw.circle(s, col, (ox, oy), 2)
 
         # Akzentlinie + Untertitel (übersetzt).
-        self.pygame.draw.rect(s, ui.ACCENT, (cx - line_w // 2, base_y + 12, line_w, 3),
-                              border_radius=2)
+        if modern:
+            lw2 = max(72, min(line_w, 180))
+            self.pygame.draw.rect(s, ui.ACCENT,
+                                  (cx - lw2 // 2, base_y + 12, lw2, 2),
+                                  border_radius=2)
+        else:
+            self.pygame.draw.rect(s, ui.ACCENT,
+                                  (cx - line_w // 2, base_y + 12, line_w, 3),
+                                  border_radius=2)
         sub = ui.font(18).render(t("app.menu_title"), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, base_y + 36)))
 
-        # Pulsierender Hinweis ("Wähle ein Spiel aus:")
+        # Hinweis "Wähle ein Spiel aus:" (nur im Classic-Theme pulsierend).
         hint = ui.font(15).render(t("app.menu_sub"), True, ui.ACCENT)
-        hint.set_alpha(int(255 * ui.pulse(2.2, lo=0.45)))
+        if not modern:
+            hint.set_alpha(int(255 * ui.pulse(2.2, lo=0.45)))
         s.blit(hint, hint.get_rect(center=(cx, base_y + 62)))
 
         # Klickbares Spiele-Raster zwischen Hinweis und Laufband.
@@ -1605,11 +1686,13 @@ class App:
                 idx = len(self._menu_tiles)
                 accent = ui.game_color(cls.__name__)
                 if idx == hover:
-                    glow = self.pygame.Surface((tw + 14, row_h + 14),
-                                               self.pygame.SRCALPHA)
-                    self.pygame.draw.rect(glow, (*accent, 55), glow.get_rect(),
-                                          border_radius=row_h // 2 + 7)
-                    s.blit(glow, (x - 7, y - 7))
+                    if not ui.is_modern():
+                        glow = self.pygame.Surface((tw + 14, row_h + 14),
+                                                   self.pygame.SRCALPHA)
+                        self.pygame.draw.rect(glow, (*accent, 55),
+                                              glow.get_rect(),
+                                              border_radius=row_h // 2 + 7)
+                        s.blit(glow, (x - 7, y - 7))
                     self.pygame.draw.rect(s, ui.PANEL_LIGHT, rect,
                                           border_radius=row_h // 2)
                     self.pygame.draw.rect(s, accent, rect, 1,
@@ -1664,20 +1747,23 @@ class App:
         overlay.fill((8, 10, 18, 140))
         s.blit(overlay, (0, 0))
 
-        # Karte in der Mitte mit pulsierendem Akzentrahmen
+        # Karte in der Mitte (Classic: mit pulsierendem Akzentrahmen)
         cw, ch = min(360, w - 40), 150
         card = pygame.Rect(w // 2 - cw // 2, h // 2 - ch // 2, cw, ch)
         ui.draw_panel(s, card, radius=14)
         pygame.draw.rect(s, ui.ACCENT, (card.x, card.y, card.w, 4),
                          border_top_left_radius=14,
                          border_top_right_radius=14)
-        pygame.draw.rect(s, ui.mix(ui.BORDER, ui.ACCENT, ui.pulse(2.0)),
-                         card.inflate(8, 8), width=1, border_radius=16)
-
-        img = ui.grad_text(ui.font(42, bold=True), t("app.pause"))
+        if ui.is_modern():
+            img = ui.font(42, bold=True).render(t("app.pause"), True, ui.TEXT)
+        else:
+            pygame.draw.rect(s, ui.mix(ui.BORDER, ui.ACCENT, ui.pulse(2.0)),
+                             card.inflate(8, 8), width=1, border_radius=16)
+            img = ui.grad_text(ui.font(42, bold=True), t("app.pause"))
         s.blit(img, img.get_rect(center=(card.centerx, card.centery - 18)))
         img2 = ui.font(16).render(t("app.pause_resume"), True, ui.TEXT_DIM)
-        img2.set_alpha(int(255 * ui.pulse(2.0, lo=0.5)))
+        if not ui.is_modern():
+            img2.set_alpha(int(255 * ui.pulse(2.0, lo=0.5)))
         s.blit(img2, img2.get_rect(center=(card.centerx, card.centery + 34)))
 
     def _set_state_dot(self, color):

@@ -495,13 +495,23 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
 ### Options, commandes et son
 
 L'écran d'options s'ouvre avec le bouton **« Options / Commandes »** (à gauche)
-ou depuis l'écran de préparation :
+ou depuis l'écran de préparation. Il est organisé en **trois onglets**
+(**Général / Commandes / Apparence** ; changer par clic ou avec la touche Tab) :
 
-- **Son** oui/non, **volume** et **vibration** (vibration de la manette,
-  effective seulement avec une manette branchée) – chacun avec Gauche/Droite.
-- **Modèles** de commandes : *WASD + Flèches*, *WASD + IJKL*, *Flèches + WASD*.
-- **Chaque touche individuelle** des joueurs 1 et 2 est réassignable : choisir
-  la ligne, appuyer sur Entrée, appuyer sur la touche voulue (Échap annule).
+- **Général** : **son** oui/non, **volume** et **vibration** (vibration de la
+  manette, effective seulement avec une manette branchée) ainsi que
+  **résolution auto**, **résolution**, **FPS** et **langue** – chacun avec
+  Gauche/Droite.
+- **Commandes** : **modèles** (*WASD + Flèches*, *WASD + IJKL*,
+  *Flèches + WASD*) et **chaque touche individuelle** des joueurs 1 et 2 est
+  réassignable : choisir la ligne, appuyer sur Entrée, appuyer sur la touche
+  voulue (Échap annule).
+- **Apparence** : choisir le **design de l'interface** – **UI v4** (par
+  défaut : un look graphite épuré et plat avec un seul accent indigo) ou
+  **UI v3** (l'ancienne interface classique avec ciel étoilé, aurores et
+  halos lumineux). Les deux cartes montrent un petit aperçu ; le choix
+  s'applique immédiatement à toute l'interface (zone de jeu **et** barre
+  latérale) et est enregistré.
 
 Les réglages sont enregistrés durablement dans `settings.json`. En **un
 joueur** les deux assignations contrôlent le même personnage (par défaut :
@@ -1100,13 +1110,22 @@ extra) y pulida con aspecto de lanzador moderno:
 ### Opciones, controles y sonido
 
 La pantalla de opciones se abre con el botón **«Opciones / Controles»** (a la
-izquierda) o desde la pantalla previa:
+izquierda) o desde la pantalla previa. Está organizada en **tres pestañas**
+(**General / Controles / Apariencia**; se cambia con clic o con la tecla Tab):
 
-- **Sonido** sí/no, **volumen** y **vibración** (vibración del gamepad, solo
-  efectiva con mando conectado) – cada uno con Izq/Der.
-- **Plantillas** de controles: *WASD + Flechas*, *WASD + IJKL*, *Flechas + WASD*.
-- **Cada tecla individual** de los jugadores 1 y 2 es reasignable: elegir fila,
-  pulsar Enter, pulsar la tecla deseada (Esc cancela).
+- **General**: **sonido** sí/no, **volumen** y **vibración** (vibración del
+  gamepad, solo efectiva con mando conectado) además de **resolución
+  automática**, **resolución**, **FPS** e **idioma** – cada uno con Izq/Der.
+- **Controles**: **plantillas** (*WASD + Flechas*, *WASD + IJKL*,
+  *Flechas + WASD*) y **cada tecla individual** de los jugadores 1 y 2 es
+  reasignable: elegir fila, pulsar Enter, pulsar la tecla deseada (Esc
+  cancela).
+- **Apariencia**: elegir el **diseño de la interfaz** – **UI v4**
+  (predeterminado: un look grafito limpio y plano con un solo acento índigo) o
+  **UI v3** (la interfaz clásica anterior con cielo estrellado, auroras y
+  brillos). Ambas tarjetas muestran una pequeña vista previa; la elección se
+  aplica al instante a toda la interfaz (área de juego **y** barra lateral) y
+  se guarda.
 
 Los ajustes se guardan de forma permanente en `settings.json`. En **un jugador**
 ambas asignaciones controlan la misma figura (estándar: WASD *y* flechas), en
@@ -1697,13 +1716,20 @@ e polida com aspeto de launcher moderno:
 ### Opções, controlos e som
 
 O ecrã de opções abre com o botão **«Opções / Controlos»** (à esquerda) ou a
-partir do ecrã de preparação:
+partir do ecrã de preparação. Está organizado em **três separadores**
+(**Geral / Controlos / Aparência**; muda-se com clique ou com a tecla Tab):
 
-- **Som** sim/não, **volume** e **vibração** (vibração do gamepad, só com
-  comando ligado) – cada um com Esq/Dir.
-- **Modelos** de controlos: *WASD + Setas*, *WASD + IJKL*, *Setas + WASD*.
-- **Cada tecla individual** dos jogadores 1 e 2 é reatribuível: escolher a
+- **Geral**: **som** sim/não, **volume** e **vibração** (vibração do gamepad,
+  só com comando ligado) além de **resolução automática**, **resolução**,
+  **FPS** e **idioma** – cada um com Esq/Dir.
+- **Controlos**: **modelos** (*WASD + Setas*, *WASD + IJKL*, *Setas + WASD*) e
+  **cada tecla individual** dos jogadores 1 e 2 é reatribuível: escolher a
   linha, premir Enter, premir a tecla desejada (Esc cancela).
+- **Aparência**: escolher o **design da interface** – **UI v4** (padrão: um
+  visual grafite limpo e plano com um único acento índigo) ou **UI v3** (a
+  interface clássica anterior com céu estrelado, auroras e brilhos). Ambos os
+  cartões mostram uma pequena pré-visualização; a escolha aplica-se de
+  imediato a toda a interface (área de jogo **e** barra lateral) e é guardada.
 
 As definições são guardadas permanentemente em `settings.json`. Em **um
 jogador** ambas as atribuições controlam a mesma figura (padrão: WASD *e*

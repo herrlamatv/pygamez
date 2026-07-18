@@ -4,25 +4,32 @@ ui.py
 =====
 Gemeinsames UI-Toolkit für alle Pygame-Screens (Menüs, Overlays, Spiele).
 
-Ziel: ein einheitlicher, moderner Look für die ganze Sammlung -
-dunkler Farbverlauf mit "Aurora"-Lichtern und Parallax-Sternenfeld
-(inkl. gelegentlicher Sternschnuppen), abgerundete Panels mit
-Schattenwurf, weich animierte Buttons mit Auswahl-Glow sowie Titel
-mit Farbverlauf und Glow. Dazu kleine Effekt-Helfer: Partikel
-(Funken/Konfetti) und weiche Screen-Übergänge.
+Seit dem UI-Update gibt es ZWEI wählbare Designs ("Themes"):
+
+- "modern"  (Standard): ruhiges, aufgeräumtes Graphit-Design mit einem
+  einzelnen Indigo-Akzent. Flache Panels mit Haarlinien-Rand, dezente
+  Hover-Übergänge, keine Deko-Effekte - wirkt clean und professionell.
+- "classic": der bisherige Look - dunkler Farbverlauf mit "Aurora"-Lichtern,
+  Parallax-Sternenfeld inkl. Sternschnuppen, Glow-Buttons, Verlaufstitel
+  mit Leuchten, Funken-Partikel und Scanlinien-Übergang.
+
+Umgeschaltet wird über set_theme("modern"/"classic") - im Spiel über den
+Reiter "Erscheinungsbild" im Options-Screen. Da ALLE Module die Farben nur
+über ui.<NAME> (dynamisch) lesen, wirkt der Wechsel sofort überall.
 
 Alles rein in Software gerendert (SDL-dummy), deshalb werden teure
-Flächen (Verläufe, Glows, Vignette, Text-Verläufe) gecacht.
+Flächen (Verläufe, Glows, Vignette, Text-Verläufe) gecacht; set_theme()
+leert die Caches.
 
 Verwendung (in draw()):
     import ui
-    ui.draw_background(surface, w, h)          # animierter Hintergrund
+    ui.draw_background(surface, w, h)          # Hintergrund im aktiven Theme
     ui.draw_title(surface, w, "TITEL", sub)    # Kopfzeile mit Akzentlinie
     ui.draw_button(surface, rect, "Start", font, selected=True)
     ui.draw_panel(surface, rect)               # Karten-Panel
 
 Effekte (einmal auslösen, main.py zeichnet sie pro Frame über draw_fx):
-    ui.spawn_burst(x, y, color)                # Funken beim Klick/Start
+    ui.spawn_burst(x, y, color)                # Funken (nur im Classic-Theme)
     ui.spawn_confetti(w, h)                    # Konfetti-Regen (Rekord!)
     ui.begin_transition()                      # weicher Screen-Übergang
 """
@@ -33,28 +40,148 @@ import random
 import pygame
 
 # ---------------------------------------------------------------------------
-#  Farbpalette (dunkles Navy mit kühlem Blau/Violett-Akzent + Signalfarben)
+#  Themes: Farbpaletten + Effekt-Schalter
 # ---------------------------------------------------------------------------
+#  Jedes Theme besteht aus einer Farbpalette (wird per set_theme() in die
+#  Modul-Globals BG_TOP, PANEL, ACCENT, ... geschrieben) und einem fx-Dict
+#  mit Schaltern/Werten für die Deko-Effekte.
 
-BG_TOP = (14, 17, 29)        # Hintergrund-Verlauf oben
-BG_BOTTOM = (24, 28, 44)     # Hintergrund-Verlauf unten
-PANEL = (30, 35, 52)         # Panel-Fläche
-PANEL_LIGHT = (38, 44, 64)   # hellere Panel-Variante / Hover
-BORDER = (52, 60, 86)        # Panel-/Button-Rand
-BORDER_LIGHT = (74, 84, 116)
+_CLASSIC_COLORS = dict(
+    BG_TOP=(14, 17, 29),        # Hintergrund-Verlauf oben
+    BG_BOTTOM=(24, 28, 44),     # Hintergrund-Verlauf unten
+    PANEL=(30, 35, 52),         # Panel-Fläche
+    PANEL_LIGHT=(38, 44, 64),   # hellere Panel-Variante / Hover
+    BORDER=(52, 60, 86),        # Panel-/Button-Rand
+    BORDER_LIGHT=(74, 84, 116),
+    BTN=(40, 46, 66),           # Button normal
+    BTN_SEL=(56, 88, 152),      # Button ausgewählt
+    ACCENT=(88, 156, 255),      # Primär-Akzent (kühles Blau)
+    ACCENT2=(155, 110, 255),    # Zweit-Akzent (Violett, für Verläufe)
+    ACCENT_SOFT=(66, 110, 180),
+    GREEN=(110, 205, 140),      # Erfolg / "AN"
+    GOLD=(245, 205, 100),       # Highscore / Tastenwerte
+    RED=(225, 95, 95),          # Gefahr / "AUS"
+    TEXT=(235, 238, 245),       # Haupttext
+    TEXT_DIM=(150, 158, 178),   # Nebentext
+    TEXT_FAINT=(95, 102, 124),  # Fußnoten
+)
 
-BTN = (40, 46, 66)           # Button normal
-BTN_SEL = (56, 88, 152)      # Button ausgewählt
-ACCENT = (88, 156, 255)      # Primär-Akzent (kühles Blau)
-ACCENT2 = (155, 110, 255)    # Zweit-Akzent (Violett, für Verläufe)
-ACCENT_SOFT = (66, 110, 180)
-GREEN = (110, 205, 140)      # Erfolg / "AN"
-GOLD = (245, 205, 100)       # Highscore / Tastenwerte
-RED = (225, 95, 95)          # Gefahr / "AUS"
+_MODERN_COLORS = dict(
+    BG_TOP=(17, 19, 24),        # neutrales Graphit, kaum Verlauf
+    BG_BOTTOM=(22, 25, 32),
+    PANEL=(28, 31, 40),
+    PANEL_LIGHT=(37, 41, 52),
+    BORDER=(45, 50, 62),
+    BORDER_LIGHT=(64, 70, 86),
+    BTN=(33, 37, 47),
+    BTN_SEL=(47, 56, 76),
+    ACCENT=(91, 141, 239),      # Indigo-Blau, einziger Schmuck-Akzent
+    ACCENT2=(129, 155, 255),
+    ACCENT_SOFT=(64, 94, 156),
+    GREEN=(88, 190, 132),
+    GOLD=(229, 196, 106),
+    RED=(224, 108, 108),
+    TEXT=(233, 235, 241),
+    TEXT_DIM=(150, 157, 172),
+    TEXT_FAINT=(100, 106, 122),
+)
 
-TEXT = (235, 238, 245)       # Haupttext
-TEXT_DIM = (150, 158, 178)   # Nebentext
-TEXT_FAINT = (95, 102, 124)  # Fußnoten
+_CLASSIC_FX = dict(
+    stars=True, aurora=True, shooting=True,   # Sternenfeld/Aurora/Schnuppen
+    vignette=70,                              # Vignetten-Stärke (Alpha)
+    title_glow=True, title_grad=True,         # Titel: Glow + Verlaufstext
+    btn_glow=True, btn_arrow=True,            # Buttons: Außen-Glow + Pfeil
+    sparks=True,                              # Funken-Partikel bei Klicks
+    scanline=True, trans_dur=0.35,            # Übergang: Fade + Scanlinie
+    panel_radius=12, btn_radius=10,           # Eckenrundungen
+    shadow_alpha=90,                          # Panel-Schlagschatten
+)
+
+_MODERN_FX = dict(
+    stars=False, aurora=False, shooting=False,
+    vignette=42,
+    title_glow=False, title_grad=False,
+    btn_glow=False, btn_arrow=False,
+    sparks=False,
+    scanline=False, trans_dur=0.22,
+    panel_radius=10, btn_radius=8,
+    shadow_alpha=55,
+)
+
+# Passende Farbwerte für die Tkinter-Seite (Sidebar) als Hex-Strings.
+_TK_CLASSIC = dict(
+    SIDEBAR="#12151f", HEADER="#0c0f18", CARD="#1a2030",
+    BTN="#1f2636", BTN_HOVER="#2c3650",
+    ACCENT="#589cff", ACCENT2="#9b6eff",
+    DANGER="#8e3540", DANGER_HOVER="#ab414e",
+    BACK="#4b6b5a", BACK_HOVER="#5f8a73",
+    TEXT="#e9edf5", TEXT_DIM="#98a2b8", TEXT_FAINT="#5f6680",
+    BORDER="#2a3147", GREEN="#6ecd8c", GOLD="#f5cd64", RED="#e15f5f",
+)
+
+_TK_MODERN = dict(
+    SIDEBAR="#14161c", HEADER="#101217", CARD="#1b1e27",
+    BTN="#20242e", BTN_HOVER="#2a2f3b",
+    ACCENT="#5b8def", ACCENT2="#819bff",
+    DANGER="#7c3540", DANGER_HOVER="#934250",
+    BACK="#3c5a4b", BACK_HOVER="#4b7060",
+    TEXT="#e9ebf1", TEXT_DIM="#969dac", TEXT_FAINT="#646a7a",
+    BORDER="#2d323e", GREEN="#58be84", GOLD="#e5c46a", RED="#e06c6c",
+)
+
+THEMES = {
+    "modern": (_MODERN_COLORS, _MODERN_FX, _TK_MODERN),
+    "classic": (_CLASSIC_COLORS, _CLASSIC_FX, _TK_CLASSIC),
+}
+THEME_NAMES = ("modern", "classic")
+DEFAULT_THEME = "modern"
+
+_theme = DEFAULT_THEME
+_fx = _MODERN_FX
+_tk = _TK_MODERN
+
+# Die Palette des aktiven Themes liegt in den Modul-Globals (BG_TOP, ACCENT,
+# ...), damit ALLE bestehenden ui.<NAME>-Zugriffe unverändert funktionieren.
+globals().update(_MODERN_COLORS)
+
+
+def set_theme(name):
+    """Aktiviert ein Theme ("modern"/"classic") und leert alle Render-Caches."""
+    global _theme, _fx, _tk
+    if name not in THEMES:
+        name = DEFAULT_THEME
+    colors, fx, tkcols = THEMES[name]
+    _theme = name
+    _fx = fx
+    _tk = tkcols
+    globals().update(colors)
+    # Gecachte Flächen basieren auf der alten Palette -> wegwerfen.
+    _bg_cache.clear()
+    _glow_cache.clear()
+    _text_fx_cache.clear()
+    _fade_cache.clear()
+    _btn_anim.clear()
+
+
+def theme_name():
+    """Name des aktiven Themes ('modern' oder 'classic')."""
+    return _theme
+
+
+def is_modern():
+    """True im aufgeräumten Standard-Design (ohne Deko-Effekte)."""
+    return _theme == "modern"
+
+
+def fx(key):
+    """Effekt-Schalter/-Wert des aktiven Themes (z.B. fx('stars'))."""
+    return _fx[key]
+
+
+def tk_colors():
+    """Hex-Farbpalette des aktiven Themes für die Tkinter-Sidebar."""
+    return dict(_tk)
+
 
 # Eigene Akzentfarbe je Spiel - genutzt von der Tkinter-Sidebar (hex) UND
 # von den Pygame-Screens (über game_color() als RGB-Tupel).
@@ -138,8 +265,9 @@ def _tick():
 
 
 # ---------------------------------------------------------------------------
-#  Hintergrund: Verlauf + Vignette (gecacht), Aurora-Lichter, Sternenfeld
-#  mit Parallax-Drift + Funkeln und gelegentliche Sternschnuppen.
+#  Hintergrund: Verlauf + Vignette (gecacht). Im Classic-Theme zusätzlich
+#  Aurora-Lichter und Sternenfeld mit Parallax-Drift + Sternschnuppen;
+#  das Modern-Theme bleibt bewusst ruhig und statisch.
 # ---------------------------------------------------------------------------
 
 _bg_cache = {}       # (w, h) -> Surface mit Verlauf + Vignette
@@ -166,7 +294,7 @@ def _base_background(w, h):
         # statt harter Ellipsen-Kante (smoothscale interpoliert die Ränder).
         sw, sh = max(8, w // 8), max(8, h // 8)
         shade = pygame.Surface((sw, sh), pygame.SRCALPHA)
-        shade.fill((0, 0, 0, 70))
+        shade.fill((0, 0, 0, _fx["vignette"]))
         pygame.draw.ellipse(shade, (0, 0, 0, 0),
                             (-sw // 3, -sh // 3, sw + 2 * sw // 3, sh + 2 * sh // 3))
         surf.blit(pygame.transform.smoothscale(shade, (w, h)), (0, 0))
@@ -213,9 +341,9 @@ _AURORA = (
 
 def _draw_aurora(surface, w, h, tsec):
     """Langsam driftende, additive Licht-Flecken hinter allem."""
-    for color, size_f, spd, ph, fx, fy in _AURORA:
+    for color, size_f, spd, ph, fx_, fy in _AURORA:
         size = int(size_f * max(w, h))
-        cx = int((fx + 0.07 * math.sin(tsec * spd + ph)) * w)
+        cx = int((fx_ + 0.07 * math.sin(tsec * spd + ph)) * w)
         cy = int((fy + 0.06 * math.cos(tsec * spd * 0.9 + ph)) * h)
         g = _glow_surface(color, size)
         surface.blit(g, g.get_rect(center=(cx, cy)),
@@ -265,18 +393,20 @@ def _draw_shooting_star(surface, w, h):
 
 
 def draw_background(surface, w, h, stars=True, aurora=None):
-    """Zeichnet den Standard-Hintergrund (Verlauf, Aurora, Sternenfeld).
+    """Zeichnet den Standard-Hintergrund des aktiven Themes.
 
-    stars=False (z.B. Options-Screen) -> ruhiger Hintergrund ohne Bewegung.
+    Modern : ruhiger Verlauf + dezente Vignette, keine Bewegung.
+    Classic: zusätzlich Aurora-Lichter, Sternenfeld und Sternschnuppen.
+    stars=False (z.B. Options-Screen) -> auch im Classic-Theme ruhig.
     """
     _tick()
     surface.blit(_base_background(w, h), (0, 0))
     if aurora is None:
         aurora = stars
     ticks = pygame.time.get_ticks() / 1000.0
-    if aurora:
+    if aurora and _fx["aurora"]:
         _draw_aurora(surface, w, h, ticks)
-    if not stars:
+    if not stars or not _fx["stars"]:
         return
     _ensure_stars()
     for x, y, depth, r in _stars:
@@ -286,23 +416,28 @@ def draw_background(surface, w, h, stars=True, aurora=None):
         c = int(40 + 70 * depth * tw)
         surface.fill((c, c + 6, c + 18),
                      (int(x * w), int(yy * h), r, r))
-    _draw_shooting_star(surface, w, h)
+    if _fx["shooting"]:
+        _draw_shooting_star(surface, w, h)
 
 
 # ---------------------------------------------------------------------------
 #  Panels & Buttons
 # ---------------------------------------------------------------------------
 
-def draw_panel(surface, rect, color=PANEL, border=BORDER, radius=12,
+def draw_panel(surface, rect, color=None, border=None, radius=None,
                shadow=True, accent_top=None):
     """Abgerundetes Panel mit Rand und weichem Schlagschatten.
 
+    color/border/radius=None -> Werte des aktiven Themes.
     accent_top: optionale Farbe für eine dezente 2px-Lichtkante oben.
     """
+    color = color if color is not None else PANEL
+    border = border if border is not None else BORDER
+    radius = radius if radius is not None else _fx["panel_radius"]
     r = pygame.Rect(rect)
     if shadow:
         sh = pygame.Surface((r.w + 12, r.h + 12), pygame.SRCALPHA)
-        pygame.draw.rect(sh, (0, 0, 0, 90), (4, 6, r.w, r.h),
+        pygame.draw.rect(sh, (0, 0, 0, _fx["shadow_alpha"]), (4, 6, r.w, r.h),
                          border_radius=radius + 2)
         surface.blit(sh, (r.x - 2, r.y - 2))
     pygame.draw.rect(surface, color, r, border_radius=radius)
@@ -329,14 +464,49 @@ def _btn_progress(key, selected):
     return v
 
 
+def _blit_button_label(surface, r, label, fnt, text_col, sub, sub_font, sub_col):
+    """Zentriert Label (und optional Unterzeile) auf dem Button."""
+    img = fnt.render(label, True, text_col)
+    if sub and sub_font:
+        sub_img = sub_font.render(sub, True, sub_col)
+        total_h = img.get_height() + 2 + sub_img.get_height()
+        y0 = r.centery - total_h // 2
+        surface.blit(img, img.get_rect(midtop=(r.centerx, y0)))
+        surface.blit(sub_img, sub_img.get_rect(
+            midtop=(r.centerx, y0 + img.get_height() + 2)))
+    else:
+        surface.blit(img, img.get_rect(center=r.center))
+
+
 def draw_button(surface, rect, label, fnt, selected=False, icon=None,
                 sub=None, sub_font=None, accent=None):
-    """Menü-Button: weich animierte Auswahl mit Glow, Akzentbalken + Pfeil."""
+    """Menü-Button im aktiven Theme.
+
+    Modern : flache Fläche mit Haarlinien-Rand; bei Auswahl Akzent-Rand,
+             hellere Füllung und ein schmaler Akzentbalken links - ohne
+             Glow, Pfeil oder Puls-Animationen.
+    Classic: weich animierte Auswahl mit Glow, Akzentbalken + Pfeil.
+    """
     ac = accent or ACCENT
     r = pygame.Rect(rect)
     v = _btn_progress((r.x, r.y, r.w, r.h), selected)
+    radius = _fx["btn_radius"]
 
-    if v > 0.02:
+    if is_modern():
+        fill = mix(BTN, mix(PANEL_LIGHT, ac, 0.10), v)
+        pygame.draw.rect(surface, fill, r, border_radius=radius)
+        pygame.draw.rect(surface, mix(BORDER, ac, 0.85 * v), r,
+                         width=1, border_radius=radius)
+        if v > 0.05:
+            bh = max(6, int((r.h - 14) * v))
+            pygame.draw.rect(surface, ac,
+                             (r.x + 7, r.centery - bh // 2, 3, bh),
+                             border_radius=2)
+        _blit_button_label(surface, r, label, fnt, mix(TEXT_DIM, TEXT, v),
+                           sub, sub_font, mix(TEXT_FAINT, TEXT_DIM, v))
+        return r
+
+    if v > 0.02 and _fx["btn_glow"]:
         # Weicher Außen-Glow, pulsiert leicht
         glow_a = int(52 * v * (0.7 + 0.3 * pulse(2.2)))
         glow = pygame.Surface((r.w + 22, r.h + 22), pygame.SRCALPHA)
@@ -345,35 +515,27 @@ def draw_button(surface, rect, label, fnt, selected=False, icon=None,
         surface.blit(glow, (r.x - 11, r.y - 11))
 
     fill = mix(BTN, mix(BTN_SEL, ac, 0.15), v)
-    pygame.draw.rect(surface, fill, r, border_radius=10)
+    pygame.draw.rect(surface, fill, r, border_radius=radius)
     # dezente Lichtkante oben (wirkt "erhaben")
     pygame.draw.rect(surface, mix(fill, (255, 255, 255), 0.05 + 0.10 * v),
                      (r.x + 10, r.y + 1, r.w - 20, 1))
     pygame.draw.rect(surface, mix(BORDER, ac, v), r,
-                     width=2 if v > 0.5 else 1, border_radius=10)
+                     width=2 if v > 0.5 else 1, border_radius=radius)
 
     if v > 0.05:
         # Akzentbalken links wächst mit der Auswahl
         bh = max(4, int((r.h - 16) * v))
         pygame.draw.rect(surface, ac, (r.x + 6, r.centery - bh // 2, 4, bh),
                          border_radius=2)
-        # Pfeil-Marker rechts gleitet ein und "atmet" leicht
-        cx = r.right - 18 + int((1.0 - v) * 10) + int(2 * pulse(2.6, lo=0.0))
-        cy = r.centery
-        pygame.draw.polygon(surface, mix(fill, TEXT, v),
-                            [(cx - 4, cy - 6), (cx + 4, cy), (cx - 4, cy + 6)])
+        if _fx["btn_arrow"]:
+            # Pfeil-Marker rechts gleitet ein und "atmet" leicht
+            cx = r.right - 18 + int((1.0 - v) * 10) + int(2 * pulse(2.6, lo=0.0))
+            cy = r.centery
+            pygame.draw.polygon(surface, mix(fill, TEXT, v),
+                                [(cx - 4, cy - 6), (cx + 4, cy), (cx - 4, cy + 6)])
 
-    text_col = mix(TEXT_DIM, TEXT, v)
-    img = fnt.render(label, True, text_col)
-    if sub and sub_font:
-        sub_img = sub_font.render(sub, True, mix(TEXT_FAINT, TEXT_DIM, v))
-        total_h = img.get_height() + 2 + sub_img.get_height()
-        y0 = r.centery - total_h // 2
-        surface.blit(img, img.get_rect(midtop=(r.centerx, y0)))
-        surface.blit(sub_img, sub_img.get_rect(
-            midtop=(r.centerx, y0 + img.get_height() + 2)))
-    else:
-        surface.blit(img, img.get_rect(center=r.center))
+    _blit_button_label(surface, r, label, fnt, mix(TEXT_DIM, TEXT, v),
+                       sub, sub_font, mix(TEXT_FAINT, TEXT_DIM, v))
     return r
 
 
@@ -425,10 +587,28 @@ def _text_glow(fnt, text, color):
 
 def draw_title(surface, width, title, subtitle=None, y=52, big=None,
                small=None, accent=None):
-    """Zentrierter Titel: Glow + Schatten + Verlaufstext + Akzent-Unterstrich."""
+    """Zentrierter Titel im aktiven Theme.
+
+    Modern : klarer Titel in Textfarbe + kurze Akzentlinie darunter.
+    Classic: Glow + Schatten + Verlaufstext + doppelter Akzent-Unterstrich.
+    """
     big = big or font(40, bold=True)
     ac = accent or ACCENT
     cx = width // 2
+
+    if is_modern():
+        img = big.render(title, True, TEXT)
+        surface.blit(img, img.get_rect(center=(cx, y)))
+        # Kurze, ruhige Akzentlinie unter dem Titel.
+        lw = max(56, min(img.get_width() // 2, 160))
+        ly = y + img.get_height() // 2 + 10
+        pygame.draw.rect(surface, ac, (cx - lw // 2, ly, lw, 3),
+                         border_radius=2)
+        if subtitle:
+            small = small or font(17)
+            sub = small.render(subtitle, True, TEXT_DIM)
+            surface.blit(sub, sub.get_rect(center=(cx, ly + 24)))
+        return ly
 
     glow = _text_glow(big, title, tuple(int(c * 0.55) for c in ac))
     surface.blit(glow, glow.get_rect(center=(cx, y)),
@@ -473,6 +653,7 @@ def pulse(speed=2.0, lo=0.35, hi=1.0):
 #  Partikel: Funken (Klick/Start) und Konfetti (neuer Rekord).
 #  Menüs/Screens SPAWNEN nur - gezeichnet wird zentral in main.py (draw_fx),
 #  damit die Effekte auch über Screen-Wechsel hinweg weiterlaufen.
+#  Im Modern-Theme sind die Deko-Funken aus; Konfetti (Rekord-Feedback) bleibt.
 # ---------------------------------------------------------------------------
 
 _particles = []
@@ -481,6 +662,8 @@ _MAX_PARTICLES = 420
 
 def spawn_burst(x, y, color=None, n=18, speed=260):
     """Kleine Funken-Explosion, z.B. wenn ein Menüpunkt aktiviert wird."""
+    if not _fx["sparks"]:
+        return
     color = color or ACCENT
     for _ in range(n):
         if len(_particles) >= _MAX_PARTICLES:
@@ -497,6 +680,8 @@ def spawn_burst(x, y, color=None, n=18, speed=260):
 def spawn_confetti(w, h, n=90):
     """Konfetti-Regen von oben (neuer Highscore!)."""
     cols = [ACCENT, ACCENT2, GREEN, GOLD, RED, (240, 240, 250)]
+    if is_modern():
+        n = min(n, 60)   # etwas zurückhaltender, aber Feiern bleibt erlaubt
     for _ in range(n):
         if len(_particles) >= _MAX_PARTICLES:
             break
@@ -541,17 +726,18 @@ def _draw_particles(surface, dt):
 
 
 # ---------------------------------------------------------------------------
-#  Screen-Übergang: kurzes Aufblenden aus Dunkel + Akzent-Scanlinie.
+#  Screen-Übergang: kurzes Aufblenden aus Dunkel; im Classic-Theme läuft
+#  zusätzlich eine Akzent-Scanlinie durch.
 # ---------------------------------------------------------------------------
 
 _trans = {"start": None, "dur": 0.35}
 _fade_cache = {}
 
 
-def begin_transition(dur=0.35):
+def begin_transition(dur=None):
     """Startet den Übergangs-Effekt (beim nächsten draw_fx sichtbar)."""
     _trans["start"] = pygame.time.get_ticks()
-    _trans["dur"] = dur
+    _trans["dur"] = dur if dur is not None else _fx["trans_dur"]
 
 
 def _fade_surface(w, h):
@@ -577,7 +763,9 @@ def _draw_transition(surface, w, h):
     ov = _fade_surface(w, h)
     ov.set_alpha(int(210 * (1.0 - t) ** 1.5))
     surface.blit(ov, (0, 0))
-    # ... während eine Akzent-Scanlinie nach unten durchläuft.
+    if not _fx["scanline"]:
+        return
+    # ... während eine Akzent-Scanlinie nach unten durchläuft (Classic).
     y = int(h * t)
     glow_a = int(90 * (1.0 - t))
     line = pygame.Surface((w, 7), pygame.SRCALPHA)
