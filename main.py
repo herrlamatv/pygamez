@@ -722,9 +722,10 @@ class App:
             self.disp_h = max(1, self.embed.winfo_height())
             self._match_resolution_to_window()
 
-        # Beim ersten Start (noch keine Sprache in mem.json): Sprache wählen lassen.
+        # Beim allerersten Start (noch keine Sprache in mem.json): den
+        # Willkommens-Screen zeigen (Auflösung/Sound/Sprache einrichten).
         if not i18n.has_language():
-            self.open_language()
+            self.open_welcome()
 
         # Game-Loop über die Tkinter-Schleife starten
         self.root.after(0, self._loop)
@@ -1172,6 +1173,12 @@ class App:
         from menu import OptionsScreen
         self.show_screen(OptionsScreen(self.canvas, self.game_w, self.game_h, self,
                                        on_close=self.back_to_menu))
+
+    def open_welcome(self):
+        """Zeigt beim allerersten Start den Willkommens-Screen (Erst-Einrichtung)."""
+        from menu import WelcomeScreen
+        self.show_screen(WelcomeScreen(self.canvas, self.game_w, self.game_h, self,
+                                       on_done=self.back_to_menu))
 
     def open_language(self):
         """Zeigt den Sprachauswahl-Screen im Spielbereich."""

@@ -75,7 +75,9 @@ RESOLUTIONS = [
 FPS_OPTIONS = [15, 30, 45, 60, 120]
 
 DEFAULTS = {
-    "sound": True,
+    # Standardmäßig AUS (Erststart ist leise; im Willkommens-Screen/den Optionen
+    # einschaltbar). Bestehende Installationen behalten ihren gespeicherten Wert.
+    "sound": False,
     "volume": 0.6,
     "haptik": False,
     "resolution": [640, 480],

@@ -13,9 +13,10 @@ Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** (Deutsch / English / Français / Español / Português); die
-Sprache wird beim ersten Start gewählt (Spanisch und Portugiesisch stecken dort
-hinter dem dezenten Knopf **„Weitere Sprachen"** ganz unten) und lässt sich
-jederzeit in den Optionen umstellen.
+Sprache wird beim ersten Start auf einem **Willkommens-Screen** gewählt, auf dem
+sich zugleich **Auflösung** und **Sound** (Standard: aus) einrichten lassen;
+Spanisch und Portugiesisch verbergen sich hinter dem Knopf **„Mehr"**. Alles
+lässt sich später jederzeit in den Optionen ändern.
 
 ### Schnellstart
 
@@ -702,9 +703,9 @@ A desktop game collection in Python: **Tkinter** provides the window and menu,
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** (German / English / French / Spanish / Portuguese); the
-language is chosen on first launch (Spanish and Portuguese sit behind the
-subtle **"Other languages"** button at the very bottom there) and can be
-changed at any time in the options.
+language is chosen on a **welcome screen** at first launch, which also lets you
+set the **resolution** and **sound** (off by default); Spanish and Portuguese sit
+behind the **"More"** button. Everything can be changed later in the options.
 
 ### Quick start
 

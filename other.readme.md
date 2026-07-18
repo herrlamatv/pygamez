@@ -16,9 +16,9 @@ Tkinter. Vingt-neuf jeux avec des options partagées, des commandes entièrement
 réassignables, des meilleurs scores, des effets sonores procéduraux et, pour
 plusieurs titres, un mode multijoueur. L'interface est **multilingue**
 (allemand / anglais / français / espagnol / portugais) ; la langue se choisit au
-premier démarrage (l'espagnol et le portugais s'y trouvent derrière le discret
-bouton **« Autres langues »** tout en bas) et peut être changée à tout moment
-dans les options.
+premier démarrage sur un **écran d'accueil** qui permet aussi de régler la
+**résolution** et le **son** (désactivé par défaut) ; l'espagnol et le portugais
+se cachent derrière le bouton **« Plus »**. Tout reste modifiable dans les options.
 
 ### Démarrage rapide
 
@@ -662,9 +662,10 @@ el menú, **Pygame** va incrustado como pantalla de juego dentro de la ventana d
 Tkinter. Veintinueve juegos con opciones compartidas, controles totalmente
 reasignables, récords, efectos de sonido procedurales y, en varios títulos, modo
 multijugador. La interfaz es **multilingüe** (alemán / inglés / francés /
-español / portugués); el idioma se elige en el primer arranque (el español y el
-portugués están allí tras el discreto botón **«Otros idiomas»** abajo del todo)
-y se puede cambiar en cualquier momento en las opciones.
+español / portugués); el idioma se elige en una **pantalla de bienvenida** en el
+primer arranque, que también permite ajustar la **resolución** y el **sonido**
+(desactivado por defecto); el español y el portugués están tras el botón
+**«Más»**. Todo se puede cambiar en cualquier momento en las opciones.
 
 ### Inicio rápido
 
@@ -1260,9 +1261,10 @@ menu, o **Pygame** é incorporado como ecrã de jogo dentro da janela do Tkinter
 Vinte e nove jogos com opções partilhadas, controlos totalmente reatribuíveis,
 recordes, efeitos sonoros procedurais e, em vários títulos, modo multijogador.
 A interface é **multilingue** (alemão / inglês / francês / espanhol /
-português); o idioma escolhe-se no primeiro arranque (o espanhol e o português
-estão lá atrás do discreto botão **«Outros idiomas»** em baixo de tudo) e pode
-ser mudado a qualquer momento nas opções.
+português); o idioma escolhe-se num **ecrã de boas-vindas** no primeiro arranque,
+que também permite definir a **resolução** e o **som** (desligado por omissão); o
+espanhol e o português estão atrás do botão **«Mais»**. Tudo pode ser mudado a
+qualquer momento nas opções.
 
 ### Início rápido
 

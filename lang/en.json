@@ -768,5 +768,11 @@
   "wd.score": "Score: {n}",
   "wd.solved": "Solved! +{n}",
   "wd.solved_n": "Solved: {n}",
-  "wd.tries": "Guess {a}/{b}"
+  "wd.tries": "Guess {a}/{b}",
+  "welcome.hint": "Arrows/mouse to choose  -  Enter confirms",
+  "welcome.more": "More",
+  "welcome.name": "Welcome",
+  "welcome.setup": "Display & Sound",
+  "welcome.start": "Let's go!",
+  "welcome.subtitle": "Welcome to PyGameZ - quick setup"
 }

@@ -768,5 +768,11 @@
   "wd.score": "Pontos: {n}",
   "wd.solved": "Resolvido! +{n}",
   "wd.solved_n": "Resolvidas: {n}",
-  "wd.tries": "Tentativa {a}/{b}"
+  "wd.tries": "Tentativa {a}/{b}",
+  "welcome.hint": "Setas/rato para escolher  -  Enter confirma",
+  "welcome.more": "Mais",
+  "welcome.name": "Bem-vindo",
+  "welcome.setup": "Imagem e som",
+  "welcome.start": "Vamos lá!",
+  "welcome.subtitle": "Bem-vindo ao PyGameZ - configuração rápida"
 }

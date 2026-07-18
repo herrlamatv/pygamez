@@ -597,6 +597,414 @@ class OptionsScreen(_Screen):
 
 
 # ---------------------------------------------------------------------------
+#  Willkommens-Screen (nur beim allerersten Start)
+# ---------------------------------------------------------------------------
+#
+#  Vereint die wichtigsten Ersteinstellungen auf EINER Seite, von oben nach
+#  unten angeordnet - genau wie gewünscht:
+#    - Auto-Auflösung an/aus   (ganz oben)
+#    - feste Auflösung wählen   (mittig oben)
+#    - Sound an/aus             (darunter; Standard: AUS)
+#    - Sprache wählen           (unten: Englisch links, Deutsch mittig = Standard,
+#                                Französisch rechts, "Mehr" für weitere Sprachen)
+#  Bestätigt wird über den großen grünen "Los geht's"-Button: dabei werden die
+#  Einstellungen gespeichert UND die Sprache dauerhaft in mem.json vermerkt,
+#  damit dieser Screen beim nächsten Start nicht erneut erscheint.
+
+class WelcomeScreen(_Screen):
+    name = "Willkommen"
+
+    # Anzeige-Reihenfolge der Hauptsprachen in der unteren Reihe:
+    # Englisch links, Deutsch mittig (= Standard), Französisch rechts.
+    PRIMARY_ORDER = ("en", "de", "fr")
+    # Fokussierbare Reihen von oben nach unten (Auf/Ab bewegt sich hier durch).
+    ROWS = ("auto", "resolution", "sound", "lang", "start")
+
+    def __init__(self, surface, width, height, app, on_done):
+        self.on_done = on_done
+        self.expanded = False          # weitere Sprachen (es, pt) eingeblendet?
+        super().__init__(surface, width, height, app)
+        self.res_idx = settings_mod.resolution_index(
+            self.settings.get("resolution", [640, 480]))
+        self.name = t("welcome.name")
+        self._build_langs()
+        self._build()
+        # Startfokus auf die Sprachreihe, Cursor auf der aktiven Sprache.
+        self.row = self.ROWS.index("lang")
+        self.lang_sel = self._active_lang_col()
+
+    # ----- Aufbau / Layout ----------------------------------------------
+
+    def _build_langs(self):
+        """Legt die anzuzeigende Sprachreihe an (Hauptsprachen + evtl. weitere)."""
+        names = dict(i18n.AVAILABLE)
+        self.langs = [(c, names[c]) for c in self.PRIMARY_ORDER if c in names]
+        if self.expanded:
+            self.langs += [(c, n) for c, n in i18n.EXTRA]
+
+    def _active_lang_col(self):
+        """Index der aktuell aktiven Sprache in self.langs (sonst 0)."""
+        cur = i18n.get_language()
+        for i, (c, _) in enumerate(self.langs):
+            if c == cur:
+                return i
+        return 0
+
+    def _build(self):
+        W, H = self.width, self.height
+        cx = W // 2
+        compact = H < 380
+        self.panel_w = min(400, W - 40)
+        px = cx - self.panel_w // 2
+        self.ctrl_x = px + 18
+        ctrl_w = self.panel_w - 36
+
+        head1_y = 96 if compact else 112
+        gap = 26 if compact else 34
+        self.head1_y = head1_y
+        self.rect_auto = pygame.Rect(self.ctrl_x, head1_y + 24, ctrl_w, 26)
+        self.rect_res = pygame.Rect(self.ctrl_x, self.rect_auto.y + gap, ctrl_w, 26)
+        self.rect_sound = pygame.Rect(self.ctrl_x, self.rect_res.y + gap, ctrl_w, 26)
+        self.panel1 = pygame.Rect(px, head1_y - 6, self.panel_w,
+                                  (self.rect_sound.bottom + 12) - (head1_y - 6))
+
+        # Sprach-Überschrift nur bei genug Höhe (spart Platz auf 360px-Screens).
+        self.show_lang_head = not compact
+        if compact:
+            self.lang_head_y = self.panel1.bottom + 12
+            lang_row_y = self.panel1.bottom + 12
+        else:
+            self.lang_head_y = self.panel1.bottom + 14
+            lang_row_y = self.lang_head_y + 24
+        self._layout_langs(lang_row_y)
+
+        bw = min(300, W - 100)
+        start_y = self._lang_bottom + (12 if compact else 18)
+        self.rect_start = pygame.Rect(cx - bw // 2, start_y, bw,
+                                      34 if compact else 40)
+
+    def _layout_langs(self, y):
+        """Ordnet die Sprach-Buttons (eine Reihe) plus 'Mehr'-Button an."""
+        W, H = self.width, self.height
+        cx = W // 2
+        gap = 8
+        lh = 36 if H < 380 else 48
+        area_w = min(452, W - 24)
+        n = len(self.langs)
+        if self.expanded:
+            langs_w, other_w = area_w, 0
+        else:
+            other_w = max(60, min(84, area_w // 6))
+            langs_w = area_w - other_w - gap
+        bwid = max(1, (langs_w - (n - 1) * gap) // n)
+        x0 = cx - area_w // 2
+        self.lang_rects = [pygame.Rect(x0 + i * (bwid + gap), y, bwid, lh)
+                           for i in range(n)]
+        if self.expanded:
+            self.other_rect = None
+        else:
+            self.other_rect = pygame.Rect(x0 + langs_w + gap, y, other_w, lh)
+        self._lang_bwid = bwid
+        self._lang_bottom = y + lh
+
+    def on_surface_changed(self):
+        """Nach einer Auflösungsänderung das Layout neu berechnen."""
+        self._build_langs()
+        self._build()
+        self.row = min(self.row, len(self.ROWS) - 1)
+        self.lang_sel = min(self.lang_sel, len(self._lang_targets()) - 1)
+
+    def _lang_targets(self):
+        """Fokussierbare Ziele der Sprachreihe: alle Sprachen + evtl. 'Mehr'."""
+        ts = [("lang", i) for i in range(len(self.langs))]
+        if self.other_rect is not None:
+            ts.append(("other", None))
+        return ts
+
+    # ----- Eingabe ------------------------------------------------------
+
+    def handle_event(self, event):
+        if event.kind == InputEvent.KEYDOWN:
+            self._on_key(event.key)
+        elif event.kind == InputEvent.MOUSEMOVE:
+            self._hover(event.pos)
+        elif event.kind == InputEvent.MOUSEDOWN:
+            self._hover(event.pos)
+            self._click(event.pos)
+
+    def _on_key(self, key):
+        if key == "Escape":
+            self._finish()                 # Erststart: Escape übernimmt & startet
+        elif key in ("Up", "w"):
+            self.row = (self.row - 1) % len(self.ROWS)
+            self.play_sound("move")
+        elif key in ("Down", "s"):
+            self.row = (self.row + 1) % len(self.ROWS)
+            self.play_sound("move")
+        elif key in ("Left", "a"):
+            self._horizontal(-1)
+        elif key in ("Right", "d"):
+            self._horizontal(+1)
+        elif key in ("Return", "space"):
+            self._activate()
+
+    def _horizontal(self, d):
+        kind = self.ROWS[self.row]
+        if kind == "auto":
+            self._set_auto(d > 0)
+        elif kind == "sound":
+            self._set_sound(d > 0)
+        elif kind == "resolution":
+            self._change_res(d)
+        elif kind == "lang":
+            self.lang_sel = (self.lang_sel + d) % len(self._lang_targets())
+            self.play_sound("move")
+
+    def _activate(self):
+        kind = self.ROWS[self.row]
+        if kind == "auto":
+            self._set_auto(not self.settings.get("auto_resolution", False))
+        elif kind == "sound":
+            self._set_sound(not self.settings.get("sound", False))
+        elif kind == "resolution":
+            self._change_res(+1)
+        elif kind == "lang":
+            tkind, idx = self._lang_targets()[self.lang_sel]
+            self._select_lang(idx) if tkind == "lang" else self._expand()
+        elif kind == "start":
+            self._finish()
+
+    def _hover(self, pos):
+        if self.rect_auto.collidepoint(pos):
+            self.row = self.ROWS.index("auto")
+        elif self.rect_res.collidepoint(pos):
+            self.row = self.ROWS.index("resolution")
+        elif self.rect_sound.collidepoint(pos):
+            self.row = self.ROWS.index("sound")
+        elif self.rect_start.collidepoint(pos):
+            self.row = self.ROWS.index("start")
+        else:
+            for i, r in enumerate(self.lang_rects):
+                if r and r.collidepoint(pos):
+                    self.row = self.ROWS.index("lang")
+                    self.lang_sel = i
+                    return
+            if self.other_rect and self.other_rect.collidepoint(pos):
+                self.row = self.ROWS.index("lang")
+                self.lang_sel = len(self.langs)   # "Mehr" ist das letzte Ziel
+
+    def _click(self, pos):
+        if self.rect_auto.collidepoint(pos):
+            self._set_auto(not self.settings.get("auto_resolution", False))
+        elif self.rect_sound.collidepoint(pos):
+            self._set_sound(not self.settings.get("sound", False))
+        elif self.rect_res.collidepoint(pos):
+            dec, inc = getattr(self, "_res_dec", None), getattr(self, "_res_inc", None)
+            if dec and dec.collidepoint(pos):
+                self._change_res(-1)
+            elif inc and inc.collidepoint(pos):
+                self._change_res(+1)
+            elif not self.settings.get("auto_resolution"):
+                self._change_res(+1)
+        elif self.rect_start.collidepoint(pos):
+            self._finish()
+        else:
+            for i, r in enumerate(self.lang_rects):
+                if r and r.collidepoint(pos):
+                    self._select_lang(i)
+                    return
+            if self.other_rect and self.other_rect.collidepoint(pos):
+                self._expand()
+
+    # ----- Aktionen -----------------------------------------------------
+
+    def _save(self):
+        settings_mod.save_settings(self.settings)
+
+    def _set_auto(self, on):
+        on = bool(on)
+        if self.settings.get("auto_resolution", False) == on:
+            return
+        self.settings["auto_resolution"] = on
+        self.app.set_auto_resolution(on)   # wendet sofort an (Fenster/feste Auflösung)
+        self._save()
+        self.play_sound("select")
+
+    def _set_sound(self, on):
+        on = bool(on)
+        if self.settings.get("sound", False) == on:
+            return
+        self.settings["sound"] = on
+        self._save()
+        self.play_sound("select")          # nur hörbar, wenn Sound nun an ist
+
+    def _change_res(self, d):
+        if self.settings.get("auto_resolution"):
+            return
+        self.res_idx = (self.res_idx + d) % len(settings_mod.RESOLUTIONS)
+        w, h = settings_mod.RESOLUTIONS[self.res_idx][1]
+        self.app.apply_resolution(w, h)    # setzt die Fläche neu -> on_surface_changed()
+        self._save()
+        self.play_sound("select")
+
+    def _select_lang(self, i):
+        i18n.set_language(self.langs[i][0])   # persistiert die Sprache in mem.json
+        self.app.refresh_language()           # Tkinter-Menü neu beschriften
+        self.name = t("welcome.name")
+        self._build_langs()
+        self._build()                         # Beschriftungen dieses Screens neu
+        self.row = self.ROWS.index("lang")
+        self.lang_sel = i
+        self.play_sound("click")
+        r = self.lang_rects[i]
+        if r:
+            ui.spawn_burst(r.centerx, r.centery, ui.ACCENT)
+
+    def _expand(self):
+        if self.expanded:
+            return
+        self.expanded = True
+        self._build_langs()
+        self._build()
+        self.lang_sel = len(self.PRIMARY_ORDER)   # Fokus auf erste neue Sprache
+        self.play_sound("click")
+
+    def _finish(self):
+        # Sprache dauerhaft vermerken (auch wenn der Standard beibehalten wurde),
+        # damit der Willkommens-Screen künftig nicht erneut erscheint.
+        i18n.set_language(i18n.get_language())
+        self._save()
+        self.play_sound("select")
+        ui.spawn_burst(self.rect_start.centerx, self.rect_start.centery, ui.GREEN)
+        self.on_done()
+
+    # ----- Zeichnen -----------------------------------------------------
+
+    def draw(self):
+        s = self.surface
+        compact = self.height < 380
+        ui.draw_background(s, self.width, self.height)
+        ui.draw_title(s, self.width, "PyGameZ",
+                      subtitle=t("welcome.subtitle"),
+                      y=30 if compact else 42,
+                      big=ui.font(26 if compact else 32, bold=True),
+                      small=ui.font(14 if compact else 16))
+
+        # Karte "Bild & Ton": Auto-Auflösung / Auflösung / Sound.
+        ui.draw_panel(s, self.panel1, radius=10, shadow=False,
+                      accent_top=ui.mix(ui.PANEL, ui.ACCENT, 0.45))
+        s.blit(ui.font(14, bold=True).render(t("welcome.setup"), True, ui.ACCENT),
+               (self.ctrl_x, self.head1_y + 2))
+
+        auto_on = self.settings.get("auto_resolution", False)
+        self._draw_toggle(self.rect_auto, t("options.auto_res"), auto_on,
+                          self.row == self.ROWS.index("auto"))
+        self._draw_resolution(self.rect_res,
+                              self.row == self.ROWS.index("resolution"), auto_on)
+        self._draw_toggle(self.rect_sound, t("options.sound"),
+                          self.settings.get("sound", False),
+                          self.row == self.ROWS.index("sound"))
+
+        # Sprach-Überschrift + Sprach-Buttons.
+        if self.show_lang_head:
+            head = ui.font(15, bold=True).render(t("lang.name"), True, ui.ACCENT)
+            s.blit(head, head.get_rect(midtop=(self.width // 2, self.lang_head_y)))
+
+        lang_focus = (self.row == self.ROWS.index("lang"))
+        bw = self._lang_bwid
+        bsize = 20 if bw >= 100 else (16 if bw >= 82 else 14)
+        if compact:
+            bsize = max(13, bsize - 2)
+        bfont = ui.font(bsize, bold=True)
+        cfont = ui.font(11)
+        cur = i18n.get_language()
+        for i, (code, label) in enumerate(self.langs):
+            r = self.lang_rects[i]
+            if not r:
+                continue
+            ui.draw_button(s, r, label, bfont,
+                           selected=(lang_focus and self.lang_sel == i),
+                           sub=code.upper(), sub_font=cfont)
+            # Aktuell aktive Sprache dezent grün umranden (auch ohne Fokus).
+            if code == cur:
+                pygame.draw.rect(s, ui.GREEN, r.inflate(4, 4), width=2,
+                                 border_radius=12)
+
+        if self.other_rect is not None:
+            hot = lang_focus and self.lang_sel == len(self.langs)
+            ui.draw_button(s, self.other_rect, t("welcome.more"), ui.font(15),
+                           selected=hot, accent=ui.ACCENT2)
+
+        # Großer grüner Start-Button.
+        ui.draw_button(s, self.rect_start, t("welcome.start"),
+                       ui.font(19 if compact else 22, bold=True),
+                       selected=(self.row == self.ROWS.index("start")),
+                       accent=ui.GREEN)
+
+        ui.draw_footer(s, self.width, self.height, t("welcome.hint"))
+
+    def _draw_row_focus(self, rect):
+        """Weiche Auswahl-Fläche + Akzentbalken links (wie im Options-Screen)."""
+        s = self.surface
+        hl = rect.inflate(16, 8)
+        pygame.draw.rect(s, ui.PANEL_LIGHT, hl, border_radius=6)
+        pygame.draw.rect(s, ui.ACCENT, (hl.x, hl.y + 3, 3, hl.h - 6), border_radius=2)
+
+    def _draw_toggle(self, rect, label, on, focused):
+        s = self.surface
+        if focused:
+            self._draw_row_focus(rect)
+        col = COL_TEXT if focused else COL_MUTE
+        img = ui.font(17).render(label, True, col)
+        s.blit(img, (rect.x, rect.centery - img.get_height() // 2))
+        # Schiebe-Pille rechts + Zustandswort AN/AUS links davon.
+        pill_w, pill_h = 46, 22
+        pill = pygame.Rect(rect.right - pill_w, rect.centery - pill_h // 2,
+                           pill_w, pill_h)
+        pygame.draw.rect(s, ui.mix(ui.BTN, ui.GREEN, 1.0 if on else 0.0), pill,
+                         border_radius=pill_h // 2)
+        pygame.draw.rect(s, ui.BORDER_LIGHT, pill, width=1, border_radius=pill_h // 2)
+        knob_r = pill_h // 2 - 3
+        knob_x = pill.right - knob_r - 4 if on else pill.left + knob_r + 4
+        pygame.draw.circle(s, COL_TEXT, (knob_x, pill.centery), knob_r)
+        word = ui.font(13, bold=True).render(t("common.on") if on else t("common.off"),
+                                             True, COL_ACCENT if on else COL_MUTE)
+        s.blit(word, (pill.left - 8 - word.get_width(),
+                      rect.centery - word.get_height() // 2))
+
+    def _draw_resolution(self, rect, focused, auto_on):
+        s = self.surface
+        if focused:
+            self._draw_row_focus(rect)
+        col = COL_TEXT if focused else COL_MUTE
+        f = ui.font(17)
+        label = f.render(t("options.resolution"), True, col)
+        s.blit(label, (rect.x, rect.centery - label.get_height() // 2))
+        if auto_on:
+            # Auto-Modus: keine Pfeile, aktuelle Fenster-Auflösung anzeigen.
+            self._res_dec = self._res_inc = None
+            img = f.render(t("options.res_auto", w=self.width, h=self.height),
+                           True, COL_MUTE)
+            s.blit(img, (rect.right - img.get_width(),
+                         rect.centery - img.get_height() // 2))
+            return
+        lt = f.render("<", True, col)
+        gt = f.render(">", True, col)
+        val = ui.font(15).render(t(settings_mod.RESOLUTIONS[self.res_idx][0]),
+                                 True, COL_KEY)
+        pad = 10
+        gx = rect.right - gt.get_width()
+        vx = gx - pad - val.get_width()
+        lx = vx - pad - lt.get_width()
+        cy = rect.centery
+        s.blit(lt, (lx, cy - lt.get_height() // 2))
+        s.blit(val, (vx, cy - val.get_height() // 2))
+        s.blit(gt, (gx, cy - gt.get_height() // 2))
+        self._res_dec = pygame.Rect(lx - 6, rect.y - 4, lt.get_width() + 12, rect.h + 8)
+        self._res_inc = pygame.Rect(gx - 6, rect.y - 4, gt.get_width() + 12, rect.h + 8)
+
+
+# ---------------------------------------------------------------------------
 #  Sprachauswahl-Screen (beim ersten Start; zweisprachige Beschriftung)
 # ---------------------------------------------------------------------------
 
