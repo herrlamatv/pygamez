@@ -21,21 +21,17 @@ import random
 import pygame
 
 import settings as settings_mod
-from game_base import Game, InputEvent
+import ui
+from game_base import Game, InputEvent, LocalizedName
 from i18n import t
 
-COL_BG = (13, 16, 27)
+# Identitätsfarben des Spiels (bewusst fest, unabhängig vom Theme):
+# blaue Brettplatte mit roten/gelben Steinen IST Vier gewinnt.
 COL_PLATE = (38, 58, 140)
 COL_PLATE_EDGE = (26, 40, 100)
 COL_EMPTY = (18, 22, 36)
 COL_P1 = (230, 90, 80)        # Rot
 COL_P2 = (245, 205, 90)       # Gelb
-COL_TEXT = (225, 228, 238)
-COL_DIM = (150, 158, 178)
-COL_ACCENT = (255, 143, 46)   # = Sidebar-Farbe #ff8f2e
-COL_BTN = (40, 46, 66)
-COL_BTN_ON = (92, 62, 36)
-COL_BTN_BORDER = (74, 84, 116)
 
 DIFFS = ["easy", "medium", "hard"]
 DEPTHS = [2, 4, 5]
@@ -46,8 +42,14 @@ ORDER = [3, 2, 4, 1, 5, 0, 6]     # Spaltenreihenfolge für Alpha-Beta
 SETUP, PLAY, ANIM, OVER = "setup", "play", "anim", "over"
 
 
+def _rgba(color, alpha):
+    """Palette-Farbe (RGB) mit einem Alpha-Wert zu RGBA kombinieren."""
+    return (color[0], color[1], color[2], alpha)
+
+
 class ConnectFourGame(Game):
-    name = "Vier gewinnt"
+    name = LocalizedName("Connect Four", de="Vier gewinnt", fr="Puissance 4",
+                         es="Cuatro en línea", pt="Quatro em linha")
     highscore_key = "connect4"
     supports_multiplayer = True
 
@@ -59,24 +61,26 @@ class ConnectFourGame(Game):
         c4 = self.settings.get("connect4", {}) if isinstance(self.settings, dict) else {}
         self.diff = max(0, min(2, int(c4.get("difficulty", 1))))
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self.wins = [0, 0]
         self.starter = 0
         self._build_setup_layout()
         self._new_round()
         self.state = PLAY if self.multiplayer else SETUP
 
+    def _make_fonts(self):
+        """Theme-Schriften, Größen aus der Fensterhöhe abgeleitet."""
+        self._small = ui.font(max(13, min(22, self.height // 30)))
+        self._tiny = ui.font(max(11, min(18, self.height // 38)))
+        self._huge = ui.font(max(26, self.height // 11), bold=True)
+
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self._build_setup_layout()
         self._layout()
 
     def _layout(self):
-        self.hud_h = 46
+        self.hud_h = max(40, int(self.height * 0.085))
         self.cell = int(min((self.width - 40) / 7,
                             (self.height - self.hud_h - 20) / 7))
         self.bw = 7 * self.cell
@@ -386,7 +390,7 @@ class ConnectFourGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
         if self.state == SETUP:
             self._draw_setup(s)
             return
@@ -410,7 +414,7 @@ class ConnectFourGame(Game):
             hy = self.by - self.cell // 2
             pygame.draw.circle(s, self._disc_color(self.player), (hx, hy),
                                self.r)
-            pygame.draw.circle(s, COL_BG, (hx, hy), self.r, 2)
+            pygame.draw.circle(s, COL_PLATE_EDGE, (hx, hy), self.r, 2)
 
         # Brettplatte
         plate = pygame.Rect(self.bx - 8, self.by - 8, self.bw + 16,
@@ -450,8 +454,8 @@ class ConnectFourGame(Game):
                                    self.r + 2, max(2, int(4 * k)))
 
     def _draw_hud(self, s):
-        pygame.draw.rect(s, (24, 29, 44), (0, 0, self.width, self.hud_h))
-        pygame.draw.line(s, (52, 60, 86), (0, self.hud_h),
+        pygame.draw.rect(s, ui.PANEL, (0, 0, self.width, self.hud_h))
+        pygame.draw.line(s, ui.BORDER, (0, self.hud_h),
                          (self.width, self.hud_h))
         cy = self.hud_h // 2
         n1 = t("common.player1") if self.multiplayer else t("c4.score_sp")
@@ -472,18 +476,24 @@ class ConnectFourGame(Game):
                                      self._disc_color(self.player))
             s.blit(img, img.get_rect(center=(self.width // 2, cy)))
         if self.msg:
-            img = self._tiny.render(self.msg, True, (245, 160, 90))
+            img = self._tiny.render(self.msg, True, ui.GOLD)
             s.blit(img, img.get_rect(center=(self.width // 2,
                                              self.hud_h + 12)))
 
     def _draw_over(self, s):
-        ov = pygame.Surface((self.width, 90), pygame.SRCALPHA)
-        ov.fill((10, 12, 22, 200))
-        y = self.height // 2 - 45
+        hh = self._huge.get_height()
+        sh = self._small.get_height()
+        band_h = hh + sh + 36
+        y = self.height // 2 - band_h // 2
+        ov = pygame.Surface((self.width, band_h), pygame.SRCALPHA)
+        ov.fill(_rgba(ui.PANEL, 235))
         s.blit(ov, (0, y))
+        pygame.draw.line(s, self.accent, (0, y), (self.width, y), 2)
+        pygame.draw.line(s, self.accent, (0, y + band_h - 1),
+                         (self.width, y + band_h - 1), 2)
         cx = self.width // 2
         if self.winner is None:
-            head = self._huge.render(t("common.draw"), True, COL_DIM)
+            head = self._huge.render(t("common.draw"), True, ui.TEXT_DIM)
         elif self.multiplayer:
             head = self._huge.render(
                 t("common.player_wins", n=self.winner + 1), True,
@@ -492,29 +502,31 @@ class ConnectFourGame(Game):
             key = "c4.win_you" if self.winner == 0 else "c4.win_ai"
             head = self._huge.render(t(key), True,
                                      self._disc_color(self.winner))
-        s.blit(head, head.get_rect(center=(cx, y + 32)))
-        hint = self._small.render(t("c4.new_round"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, y + 70)))
+        s.blit(head, head.get_rect(midtop=(cx, y + 12)))
+        # Im Mehrspieler gibt es kein Setup -> nur den Neustart-Hinweis zeigen.
+        hint_key = "common.enter_restart" if self.multiplayer else "c4.new_round"
+        hint = self._small.render(t(hint_key), True, ui.TEXT_DIM)
+        s.blit(hint, hint.get_rect(midtop=(cx, y + 12 + hh + 10)))
 
     # ----- Setup zeichnen -----------------------------------------------
     def _draw_setup(self, s):
         cx = self.width // 2
-        title = self._huge.render("VIER GEWINNT", True, COL_ACCENT)
+        title = self._huge.render(self.name.upper(), True, self.accent)
         s.blit(title, title.get_rect(center=(cx, int(self.height * 0.14))))
-        sub = self._small.render(t("c4.subtitle"), True, COL_DIM)
+        sub = self._small.render(t("c4.subtitle"), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.21))))
         for i, r in enumerate(self.diff_rects):
             on = (i == self.diff)
-            pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, r,
+            pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, r,
                              border_radius=10)
-            pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, r,
+            pygame.draw.rect(s, self.accent if on else ui.BORDER, r,
                              2 if on else 1, border_radius=10)
             lbl = self.font.render(t("c4.diff." + DIFFS[i]), True,
-                                   COL_TEXT if on else COL_DIM)
+                                   ui.TEXT if on else ui.TEXT_DIM)
             s.blit(lbl, lbl.get_rect(midleft=(r.x + 18, r.centery)))
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.start_rect, 2, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=10)
+        pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=10)
+        st = self.font.render(t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
-        hint = self._tiny.render(t("c4.setup_hint"), True, COL_DIM)
+        hint = self._tiny.render(t("c4.setup_hint"), True, ui.TEXT_FAINT)
         s.blit(hint, hint.get_rect(center=(cx, self.height - 16)))

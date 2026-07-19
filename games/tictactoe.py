@@ -15,21 +15,23 @@ Tic-Tac-Toe mit Setup-Menü, mehreren Brettgrößen und KI-Schwierigkeiten.
 - Modus: 1 Spieler (gegen die KI) oder 2 Spieler (lokal X gegen O).
 - Spieler = X, KI/Spieler 2 = O, Klick-Steuerung.
 - "Score"/Highscore = Anzahl gewonnener Runden (Siege) im 1-Spieler-Modus.
+- Optik: Themen-Hintergrund, ui.*-Palette und responsives Layout
+  (on_surface_changed baut Setup- und Brett-Geometrie neu auf).
 """
 
 import random
 import pygame
 
 import i18n
+import ui
 from game_base import Game, InputEvent
 
-COL_BG = (20, 22, 30)
-COL_LINE = (90, 95, 120)
-COL_X = (90, 180, 255)
-COL_O = (255, 140, 90)
-COL_TEXT = (235, 235, 235)
-COL_DIM = (150, 160, 180)
-COL_WIN = (240, 240, 120)
+# Identitätsfarben des Bretts (bewusst fest, unabhängig vom Theme).
+COL_LINE = (90, 95, 120)     # Gitterlinien
+COL_X = (90, 180, 255)       # Spieler X (blau)
+COL_O = (255, 140, 90)       # Spieler O (orange)
+COL_WIN = (240, 240, 120)    # Gewinnlinie
+COL_WIN_BG = (60, 70, 40)    # Hinterlegung der Gewinnzellen
 
 HUMAN = "X"
 AI = "O"
@@ -66,81 +68,107 @@ class TicTacToeGame(Game):
         self.diff_name = "Hard"
         self.size = 3
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._mid = pygame.font.SysFont("consolas", 20, bold=True)
+        self._make_fonts()
         self._build_setup_layout()
+
+    # ===== Layout / Theme ===============================================
+
+    def _make_fonts(self):
+        """Themen-Schriften, Grössen aus der Fensterhöhe abgeleitet."""
+        h = self.height
+        self.font = ui.font(max(16, h // 24))
+        self.big_font = ui.font(max(30, h // 11), bold=True)
+        self._small = ui.font(max(13, h // 32))
+        self._mid = ui.font(max(15, h // 27), bold=True)
+
+    def on_surface_changed(self):
+        """Auflösungswechsel: Schriften und Layout neu aufbauen."""
+        self._make_fonts()
+        self._build_setup_layout()
+        if self.state != SETUP:
+            self._layout_board()
+
+    @staticmethod
+    def _diff_label(name):
+        """Lokalisierter Anzeigename einer Schwierigkeit."""
+        return i18n.t("ttt.diff." + name.lower())
 
     # ===== Setup-Screen =================================================
 
     def _build_setup_layout(self):
         cx = self.width // 2
+        h = self.height
+        bh = max(40, min(52, h // 10))
 
+        self._diff_y = max(120, int(h * 0.25))
         self.diff_rects = {}
         for i, name in enumerate(DIFF_ORDER):
-            self.diff_rects[name] = pygame.Rect(cx - 165 + i * 112, 120, 100, 48)
+            self.diff_rects[name] = pygame.Rect(cx - 165 + i * 112, self._diff_y, 100, bh)
 
+        self._size_y = self._diff_y + bh + max(60, int(h * 0.12))
         self.size_rects = {}
         bw, gap = 52, 6
         start = cx - (len(SIZES) * (bw + gap) - gap) // 2
         for i, n in enumerate(SIZES):
-            self.size_rects[n] = pygame.Rect(start + i * (bw + gap), 240, bw, 48)
+            self.size_rects[n] = pygame.Rect(start + i * (bw + gap), self._size_y, bw, bh)
 
-        self.start_rect = pygame.Rect(cx - 90, 330, 180, 50)
+        self.start_rect = pygame.Rect(cx - 90, self._size_y + bh + 46, 180, 50)
 
     def _draw_setup(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
         titel = i18n.t("ttt.setup_title_mp") if self.multiplayer \
             else i18n.t("ttt.setup_title")
-        title = self.big_font.render(titel, True, COL_TEXT)
-        s.blit(title, title.get_rect(center=(self.width // 2, 56)))
+        ui.draw_title(s, self.width, titel, accent=self.accent)
 
-        # Schwierigkeit (nur im 1-Spieler-Modus relevant)
-        diff_dim = (80, 84, 96) if self.multiplayer else COL_DIM
-        s.blit(self._mid.render(i18n.t("ttt.difficulty"), True, diff_dim),
-               (self.width // 2 - 165, 92))
+        # Schwierigkeit (nur im 1-Spieler-Modus relevant -> sonst abgeblendet)
+        label_col = ui.TEXT_FAINT if self.multiplayer else ui.TEXT_DIM
+        img = self._mid.render(i18n.t("ttt.difficulty"), True, label_col)
+        s.blit(img, (self.width // 2 - 165, self._diff_y - img.get_height() - 8))
         for name, r in self.diff_rects.items():
-            aktiv = (name == self.diff_name and not self.multiplayer)
-            pygame.draw.rect(s, (70, 110, 170) if aktiv else (45, 50, 64), r, border_radius=8)
-            rand = COL_TEXT if aktiv else diff_dim
-            pygame.draw.rect(s, rand, r, 2, border_radius=8)
-            t = self._mid.render(name, True, COL_TEXT if not self.multiplayer else diff_dim)
-            s.blit(t, t.get_rect(center=r.center))
+            if self.multiplayer:
+                pygame.draw.rect(s, ui.BTN, r, border_radius=8)
+                pygame.draw.rect(s, ui.BORDER, r, 1, border_radius=8)
+                lab = self._mid.render(self._diff_label(name), True, ui.TEXT_FAINT)
+                s.blit(lab, lab.get_rect(center=r.center))
+            else:
+                ui.draw_button(s, r, self._diff_label(name), self._mid,
+                               selected=(name == self.diff_name),
+                               accent=self.accent)
 
-        s.blit(self._mid.render(i18n.t("ttt.field"), True, COL_DIM),
-               (self.width // 2 - 165, 212))
+        img = self._mid.render(i18n.t("ttt.field"), True, ui.TEXT_DIM)
+        s.blit(img, (self.width // 2 - 165, self._size_y - img.get_height() - 8))
         for n, r in self.size_rects.items():
-            aktiv = (n == self.size)
-            pygame.draw.rect(s, (70, 110, 170) if aktiv else (45, 50, 64), r, border_radius=8)
-            pygame.draw.rect(s, COL_TEXT if aktiv else COL_DIM, r, 2, border_radius=8)
-            t = self._mid.render(f"{n}x{n}", True, COL_TEXT)
-            s.blit(t, t.get_rect(center=r.center))
+            ui.draw_button(s, r, f"{n}x{n}", self._mid,
+                           selected=(n == self.size), accent=self.accent)
 
         info = self._small.render(
-            i18n.t("ttt.goal", k=win_length(self.size)), True, COL_DIM)
-        s.blit(info, info.get_rect(center=(self.width // 2, 300)))
+            i18n.t("ttt.goal", k=win_length(self.size)), True, ui.TEXT_DIM)
+        s.blit(info, info.get_rect(center=(self.width // 2, self.start_rect.y - 22)))
 
-        pygame.draw.rect(s, (70, 150, 90), self.start_rect, border_radius=10)
-        st = self._mid.render(i18n.t("common.start"), True, COL_TEXT)
-        s.blit(st, st.get_rect(center=self.start_rect.center))
+        ui.draw_button(s, self.start_rect, i18n.t("common.start"), self._mid,
+                       selected=True, accent=ui.GREEN)
 
-        hint = self._small.render(i18n.t("ttt.setup_hint"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(self.width // 2, 420)))
+        ui.draw_footer(s, self.width, self.height, i18n.t("ttt.setup_hint"))
 
     def _handle_setup_event(self, event):
         if event.kind == InputEvent.KEYDOWN:
-            if event.key in ("1", "2", "3"):
+            if event.key in ("1", "2", "3") and not self.multiplayer:
                 self.diff_name = DIFF_ORDER[int(event.key) - 1]
+                self.play_sound("select")
             elif event.key in ("Return", "space"):
                 self._start_run()
         elif event.kind == InputEvent.MOUSEDOWN:
             p = event.pos
             for name, r in self.diff_rects.items():
-                if r.collidepoint(p):
+                # Im Mehrspieler-Modus ist die Schwierigkeit abgeblendet.
+                if r.collidepoint(p) and not self.multiplayer:
                     self.diff_name = name
+                    self.play_sound("select")
             for n, r in self.size_rects.items():
                 if r.collidepoint(p):
                     self.size = n
+                    self.play_sound("select")
             if self.start_rect.collidepoint(p):
                 self._start_run()
 
@@ -153,6 +181,7 @@ class TicTacToeGame(Game):
         self._precompute_windows()
         self._neue_runde()
         self.state = PLAY
+        self.play_sound("click")
 
     def _neue_runde(self):
         n = self.n
@@ -162,8 +191,11 @@ class TicTacToeGame(Game):
         self.win_cells = None
         self.ai_timer = 0.0
         self.game_over = False
+        self._layout_board()
 
-        # Brett-Geometrie (zentriertes Quadrat)
+    def _layout_board(self):
+        """Brett-Geometrie (zentriertes Quadrat) aus width/height ableiten."""
+        n = self.n
         self.board_size = min(self.width, self.height) - 90
         self.cell = self.board_size // n
         self.board_size = self.cell * n      # exakt durch n teilbar
@@ -199,6 +231,7 @@ class TicTacToeGame(Game):
         if self.state == OVER:
             if event.kind == InputEvent.KEYDOWN and event.key in ("s", "S"):
                 self.state = SETUP
+                self.play_sound("click")
             elif (event.kind == InputEvent.MOUSEDOWN or
                   (event.kind == InputEvent.KEYDOWN and event.key in ("Return", "space"))):
                 self._neue_runde()
@@ -456,9 +489,16 @@ class TicTacToeGame(Game):
             return
 
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
         n, cell = self.n, self.cell
         lw = max(2, cell // 20)             # Linienbreite passend zur Zellgröße
+
+        # Gewinnzellen hinterlegen (unter dem Gitter)
+        if self.win_cells:
+            for idx in self.win_cells:
+                r, c = divmod(idx, n)
+                rect = pygame.Rect(self.ox + c * cell, self.oy + r * cell, cell, cell)
+                pygame.draw.rect(s, COL_WIN_BG, rect)
 
         # Gitter
         for i in range(1, n):
@@ -468,13 +508,6 @@ class TicTacToeGame(Game):
             pygame.draw.line(s, COL_LINE, (self.ox, y), (self.ox + self.board_size, y), lw)
         pygame.draw.rect(s, COL_LINE,
                          (self.ox, self.oy, self.board_size, self.board_size), lw)
-
-        # Gewinnzellen hervorheben
-        if self.win_cells:
-            for idx in self.win_cells:
-                r, c = divmod(idx, n)
-                rect = pygame.Rect(self.ox + c * cell, self.oy + r * cell, cell, cell)
-                pygame.draw.rect(s, (60, 70, 40), rect)
 
         # Symbole
         rad = int(cell * 0.30)
@@ -504,12 +537,13 @@ class TicTacToeGame(Game):
         if self.multiplayer:
             kopf = i18n.t("ttt.header_mp", n=n, k=self.k)
             stand = self._small.render(
-                i18n.t("ttt.score_mp", x=self.wins_x, o=self.wins_o), True, COL_TEXT)
+                i18n.t("ttt.score_mp", x=self.wins_x, o=self.wins_o), True, ui.TEXT)
         else:
-            kopf = i18n.t("ttt.header_sp", diff=self.diff_name, n=n, k=self.k)
+            kopf = i18n.t("ttt.header_sp", diff=self._diff_label(self.diff_name),
+                          n=n, k=self.k)
             stand = self._small.render(
-                i18n.t("ttt.score_sp", wins=self.wins_x), True, COL_TEXT)
-        s.blit(self._small.render(kopf, True, COL_DIM), (10, 8))
+                i18n.t("ttt.score_sp", wins=self.wins_x), True, ui.TEXT)
+        s.blit(self._small.render(kopf, True, ui.TEXT_DIM), (10, 8))
         s.blit(stand, (self.width - stand.get_width() - 10, 8))
         if self.state == PLAY:
             if self.multiplayer:
@@ -518,27 +552,44 @@ class TicTacToeGame(Game):
             else:
                 zug = i18n.t("ttt.turn_you") if self.current == HUMAN \
                     else i18n.t("ttt.turn_ai")
-            s.blit(self._small.render(zug, True, COL_TEXT), (10, self.height - 24))
+            s.blit(self._small.render(zug, True, ui.TEXT),
+                   (10, self.height - self._small.get_height() - 8))
 
         if self.state == OVER:
             self._draw_over()
 
     def _draw_over(self):
         s = self.surface
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((0, 0, 0, 150))
-        s.blit(ov, (0, 0))
         if self.winner == "Unentschieden":
-            msg, farbe = i18n.t("common.draw"), COL_WIN
+            msg, farbe = i18n.t("common.draw"), ui.GOLD
         elif self.multiplayer:
             if self.winner == HUMAN:
-                msg, farbe = i18n.t("ttt.win_p1"), (120, 210, 255)
+                msg, farbe = i18n.t("ttt.win_p1"), COL_X
             else:
-                msg, farbe = i18n.t("ttt.win_p2"), (255, 170, 120)
+                msg, farbe = i18n.t("ttt.win_p2"), COL_O
         elif self.winner == HUMAN:
-            msg, farbe = i18n.t("ttt.win_you"), (120, 230, 140)
+            msg, farbe = i18n.t("ttt.win_you"), ui.GREEN
         else:
-            msg, farbe = i18n.t("ttt.win_ai"), (230, 120, 120)
-        self.draw_center_text(msg, self.big_font, farbe, -20)
-        self.draw_center_text(i18n.t("ttt.new_round"), self.font, COL_TEXT, 25)
-        self.draw_center_text(i18n.t("ttt.settings"), self._small, COL_DIM, 55)
+            msg, farbe = i18n.t("ttt.win_ai"), ui.RED
+
+        # Kompaktes, transluzentes Panel statt Vollbild-Abdunklung.
+        zeilen = [(msg, self.big_font, farbe),
+                  (i18n.t("ttt.new_round"), self.font, None),   # None -> pulsierend
+                  (i18n.t("ttt.settings"), self._small, ui.TEXT_DIM)]
+        bw = max(f.size(txt)[0] for txt, f, _ in zeilen) + 80
+        bh = sum(f.get_height() for _, f, _ in zeilen) + 66
+        rect = pygame.Rect(0, 0, bw, bh)
+        rect.center = (self.width // 2, self.height // 2)
+
+        panel = pygame.Surface(rect.size, pygame.SRCALPHA)
+        pygame.draw.rect(panel, (*ui.PANEL[:3], 235), panel.get_rect(), border_radius=16)
+        pygame.draw.rect(panel, farbe, panel.get_rect(), 2, border_radius=16)
+        s.blit(panel, rect)
+
+        y = rect.y + 20
+        for txt, f, col in zeilen:
+            if col is None:
+                col = ui.mix(ui.TEXT_DIM, ui.TEXT, ui.pulse(2.0, 0.2, 1.0))
+            img = f.render(txt, True, col)
+            s.blit(img, img.get_rect(midtop=(rect.centerx, y)))
+            y += f.get_height() + 11

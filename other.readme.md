@@ -473,6 +473,12 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
   **flou** derrière la superposition de pause.
 - L'**écran de préparation** de chaque jeu apparaît dans sa couleur d'accent et
   affiche le record précédent sous forme de puce.
+- **Look unifié en jeu** : les 38 jeux partagent la palette et la police du
+  menu - les HUD, écrans de préparation et superpositions suivent le design
+  choisi dans les options (v4.1 / v4 / Classique), tandis que chaque terrain
+  garde ses couleurs d'identité. Chaque jeu gère proprement un changement de
+  résolution en cours de partie, et les noms des jeux dans le menu s'adaptent à
+  la langue (p. ex. « Schach » → « Échecs »).
 - **Wiki intégré** (« LamaWiki ») : aide détaillée pour chaque jeu (commandes,
   modes, points, astuces) plus des pages générales - avec **champ de
   recherche**, catégories, articles défilables et puces de touches, dans les
@@ -1091,6 +1097,12 @@ extra) y pulida con aspecto de lanzador moderno:
   **desenfoque real** tras la superposición de pausa.
 - La **pantalla previa** de cada juego aparece en su color de acento y muestra
   el récord anterior como chip.
+- **Aspecto unificado en el juego**: los 38 juegos comparten la paleta y la
+  tipografía del menú - los HUD, pantallas de configuración y superposiciones
+  siguen el diseño elegido en las opciones (v4.1 / v4 / Clásico), mientras cada
+  campo de juego conserva sus colores de identidad. Todos los juegos gestionan
+  limpiamente un cambio de resolución a mitad de partida, y los nombres de los
+  juegos en el menú se adaptan al idioma (p. ej. «Schach» → «Ajedrez»).
 - **Wiki integrado** ("LamaWiki"): ayuda detallada de cada juego (controles,
   modos, puntos, consejos) más páginas generales - con **buscador**, categorías,
   artículos desplazables y chips de teclas, en los cinco idiomas. Accesible por
@@ -1699,6 +1711,12 @@ e polida com aspeto de launcher moderno:
   verdadeiro** atrás da sobreposição de pausa.
 - O **ecrã de preparação** de cada jogo aparece na sua cor de destaque e mostra
   o recorde anterior como chip.
+- **Visual unificado no jogo**: os 38 jogos partilham a paleta e a tipografia do
+  menu - os HUD, ecrãs de preparação e sobreposições seguem o design escolhido
+  nas opções (v4.1 / v4 / Clássico), enquanto cada campo de jogo mantém as suas
+  cores de identidade. Todos os jogos lidam corretamente com uma mudança de
+  resolução a meio da partida, e os nomes dos jogos no menu adaptam-se ao idioma
+  (p. ex. «Schach» → «Xadrez»).
 - **Wiki integrado** ("LamaWiki"): ajuda detalhada de cada jogo (controlos,
   modos, pontos, dicas) mais páginas gerais - com **campo de pesquisa**,
   categorias, artigos deslocáveis e chips de teclas, nos cinco idiomas.

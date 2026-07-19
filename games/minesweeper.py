@@ -23,9 +23,11 @@ Features
   Timer rechts.
 - Bestzeit je Schwierigkeitsgrad wird in settings.json gespeichert und im
   Setup angezeigt. Highscore-Punkte = Grundwert der Stufe minus Sekunden.
-- Optik: dunkles Theme mit 3D-Kanten, klassisch gefärbte Zahlen, Hover-
+- Optik: Themen-Hintergrund + ui.*-Palette für HUD/Setup, klassische
+  Zellen mit 3D-Kanten und gefärbten Zahlen (Identitätsfarben), Hover-
   Markierung, rote Explosionszelle, falsche Flaggen werden durchgestrichen,
-  Konfetti-Regen beim Sieg.
+  Konfetti-Regen beim Sieg. Layout skaliert mit der Auflösung
+  (on_surface_changed).
 """
 
 import math
@@ -33,11 +35,11 @@ import random
 import pygame
 
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
-COL_BG = (13, 16, 27)
-COL_PANEL = (24, 29, 44)
+# Identitätsfarben des Spielfelds (bewusst fest, unabhängig vom Theme).
 COL_TILE = (52, 60, 82)          # verdeckte Zelle
 COL_TILE_HOVER = (64, 74, 100)
 COL_BEVEL_L = (88, 99, 128)      # helle 3D-Kante (oben/links)
@@ -45,13 +47,8 @@ COL_BEVEL_D = (30, 34, 48)       # dunkle 3D-Kante (unten/rechts)
 COL_OPEN = (33, 38, 54)          # aufgedeckte Zelle
 COL_OPEN_LINE = (24, 28, 40)
 COL_BOOM = (168, 66, 66)         # explodierte Mine
-COL_TEXT = (232, 234, 240)
-COL_DIM = (140, 148, 168)
-COL_LED = (240, 90, 90)
+COL_LED = (240, 90, 90)          # LED-Ziffern (klassisch rot)
 COL_FLAG = (235, 90, 90)
-COL_BTN = (44, 50, 66)
-COL_BTN_ON = (60, 120, 80)
-COL_ACCENT = (240, 143, 176)
 
 # Klassische Zahlenfarben (für dunklen Hintergrund aufgehellt)
 NUMBER_COLORS = {
@@ -91,9 +88,7 @@ class MinesweeperGame(Game):
         self.qmarks = bool(ms.get("qmarks", False))
         self.best = dict(ms.get("best", {}))    # preset -> Sekunden (Bestzeit)
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._led = pygame.font.SysFont("consolas", 26, bold=True)
+        self._make_fonts()
         self.anim_t = 0.0
 
         self._build_setup_layout()
@@ -104,17 +99,28 @@ class MinesweeperGame(Game):
     def preset(self):
         return PRESETS[self.preset_index]
 
+    # ----- Layout / Theme --------------------------------------------------
+    def _make_fonts(self):
+        """Themen-Schriften, Grössen aus der Fensterhöhe abgeleitet."""
+        h = self.height
+        self.font = ui.font(max(16, h // 26))
+        self.big_font = ui.font(max(30, h // 11), bold=True)
+        self._small = ui.font(max(13, h // 32))
+        self._tiny = ui.font(max(11, h // 40))
+        # LED-Anzeige: Mono-Schrift, damit die Ziffern nicht "wackeln".
+        self._led = ui.font(max(18, min(26, h // 24)), bold=True, mono=True)
+
+    def on_surface_changed(self):
+        """Auflösungswechsel: Schriften und Layout neu aufbauen;
+        der Brett-Zustand (Minen, aufgedeckte Zellen, Timer) bleibt erhalten."""
+        self._make_fonts()
+        self._build_setup_layout()
+        self._layout_board()
+        self.hover = None
+
     def _start_board(self):
         """Baut ein frisches Brett für den aktuellen Schwierigkeitsgrad."""
         _, self.cols, self.rows, self.n_mines, self.base_points = self.preset
-
-        # Zellgröße/Lage: unter dem HUD zentriert, ganzzahlige Pixel
-        aw = self.width - 24
-        ah = self.height - HUD_H - 24
-        self.cell = max(10, min(aw // self.cols, ah // self.rows))
-        bw, bh = self.cell * self.cols, self.cell * self.rows
-        self.bx = (self.width - bw) // 2
-        self.by = HUD_H + 12 + (ah - bh) // 2
 
         self.mines = set()
         self.numbers = {}          # (x,y) -> Anzahl Nachbarminen
@@ -131,8 +137,18 @@ class MinesweeperGame(Game):
         self.surprise = 0.0
         self.particles = []
 
-        self._num_font = pygame.font.SysFont(
-            "consolas", max(12, int(self.cell * 0.62)), bold=True)
+        self._layout_board()
+
+    def _layout_board(self):
+        """Zellgröße/Lage: unter dem HUD zentriert, ganzzahlige Pixel."""
+        aw = self.width - 24
+        ah = self.height - HUD_H - 24
+        self.cell = max(10, min(aw // self.cols, ah // self.rows))
+        bw, bh = self.cell * self.cols, self.cell * self.rows
+        self.bx = (self.width - bw) // 2
+        self.by = HUD_H + 12 + (ah - bh) // 2
+
+        self._num_font = ui.font(max(11, int(self.cell * 0.55)), bold=True)
 
         # Smiley-Knopf im HUD
         self.face_rect = pygame.Rect(self.width // 2 - 20, 8, 40, 40)
@@ -174,7 +190,7 @@ class MinesweeperGame(Game):
         cx = self.width // 2
         bw = min(440, self.width - 60)
         bh, gap = 46, 10
-        y0 = 118
+        y0 = max(124, int(self.height * 0.24))
         self.preset_rects = [pygame.Rect(cx - bw // 2, y0 + i * (bh + gap), bw, bh)
                              for i in range(len(PRESETS))]
         y1 = y0 + len(PRESETS) * (bh + gap) + 4
@@ -235,8 +251,9 @@ class MinesweeperGame(Game):
             return
 
         if event.kind == InputEvent.MOUSEDOWN:
-            if self.face_rect.collidepoint(event.pos):
-                self._start_board()          # Smiley = neues Spiel
+            # Smiley = neues Spiel (nur Linksklick, wie beim Original)
+            if event.button == 1 and self.face_rect.collidepoint(event.pos):
+                self._start_board()
                 self.play_sound("click")
                 return
             if self.game_over:
@@ -397,7 +414,7 @@ class MinesweeperGame(Game):
             return
 
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
         self._draw_hud(s)
         self._draw_board(s)
         for p in self.particles:
@@ -407,34 +424,39 @@ class MinesweeperGame(Game):
 
     # ----- HUD ---------------------------------------------------------------
     def _draw_hud(self, s):
-        pygame.draw.rect(s, COL_PANEL, (10, 6, self.width - 20, HUD_H - 4),
-                         border_radius=10)
+        hud = pygame.Rect(10, 6, self.width - 20, HUD_H - 4)
+        pygame.draw.rect(s, ui.PANEL, hud, border_radius=10)
+        pygame.draw.rect(s, ui.BORDER, hud, 1, border_radius=10)
         # Minenzähler (Minen minus Flaggen)
         flaggen = sum(1 for v in self.flags.values() if v == 1)
         wert = max(-99, self.n_mines - flaggen)
-        self._draw_led(s, f"{wert:03d}", 24)
+        led_l = self._draw_led(s, f"{wert:03d}", 24)
         # Timer
         sek = int(self.elapsed)
         self._draw_led(s, f"{min(sek, 999):03d}", None,
                        rechts=self.width - 24)
         # Schwierigkeitsname klein daneben
         name = self._tiny.render(t("mines.preset." + PRESET_KEYS[self.preset_index]),
-                                 True, COL_DIM)
-        s.blit(name, (110, HUD_H // 2 - name.get_height() // 2 + 2))
+                                 True, ui.TEXT_DIM)
+        s.blit(name, (led_l.right + 12,
+                      HUD_H // 2 - name.get_height() // 2 + 2))
         self._draw_face(s)
 
     def _draw_led(self, s, text, links, rechts=None):
+        """Zeichnet eine LED-Anzeige und liefert ihr Rechteck zurück."""
         img = self._led.render(text, True, COL_LED)
-        w, h = img.get_width() + 14, 34
+        w, h = img.get_width() + 14, img.get_height() + 8
         x = links if rechts is None else rechts - w
         y = (HUD_H - h) // 2 + 2
-        pygame.draw.rect(s, (16, 12, 14), (x, y, w, h), border_radius=6)
-        pygame.draw.rect(s, (60, 40, 44), (x, y, w, h), 1, border_radius=6)
+        rect = pygame.Rect(x, y, w, h)
+        pygame.draw.rect(s, (16, 12, 14), rect, border_radius=6)
+        pygame.draw.rect(s, (60, 40, 44), rect, 1, border_radius=6)
         s.blit(img, (x + 7, y + h // 2 - img.get_height() // 2))
+        return rect
 
     def _draw_face(self, s):
         r = self.face_rect
-        pygame.draw.rect(s, COL_BTN, r, border_radius=8)
+        pygame.draw.rect(s, ui.BTN, r, border_radius=8)
         pygame.draw.rect(s, COL_BEVEL_L, r, 2, border_radius=8)
         cx, cy = r.center
         gelb = (245, 205, 90)
@@ -464,10 +486,10 @@ class MinesweeperGame(Game):
 
     # ----- Spielfeld ----------------------------------------------------------
     def _draw_board(self, s):
-        pygame.draw.rect(s, COL_PANEL,
-                         (self.bx - 8, self.by - 8,
-                          self.cols * self.cell + 16, self.rows * self.cell + 16),
-                         border_radius=10)
+        brett = pygame.Rect(self.bx - 8, self.by - 8,
+                            self.cols * self.cell + 16, self.rows * self.cell + 16)
+        pygame.draw.rect(s, ui.PANEL, brett, border_radius=10)
+        pygame.draw.rect(s, ui.BORDER, brett, 1, border_radius=10)
         for x in range(self.cols):
             for y in range(self.rows):
                 self._draw_cell(s, (x, y))
@@ -513,7 +535,7 @@ class MinesweeperGame(Game):
                     pygame.draw.line(s, (250, 90, 90), rect.topright,
                                      rect.bottomleft, 2)
             elif zustand == 2:
-                img = self._num_font.render("?", True, COL_DIM)
+                img = self._num_font.render("?", True, ui.TEXT_DIM)
                 s.blit(img, img.get_rect(center=rect.center))
 
     def _draw_mine(self, s, rect):
@@ -539,64 +561,69 @@ class MinesweeperGame(Game):
                          (x + h * 0.3, cy + h / 2), 2)
 
     def _draw_result(self, s):
+        """Ergebnis-Banner mit Neustart-Hinweis (transluzentes Themen-Panel)."""
         if self.won:
             text = t("mines.win", t=f"{int(self.elapsed)}s")
-            farbe = (120, 230, 140)
+            farbe = ui.GREEN
         else:
             text = t("mines.lose")
-            farbe = (245, 110, 110)
+            farbe = ui.RED
         img = self.font.render(text, True, farbe)
-        w = img.get_width() + 30
-        r = pygame.Rect(self.width // 2 - w // 2, self.by - 6, w, 30)
-        pygame.draw.rect(s, COL_PANEL, r, border_radius=8)
-        pygame.draw.rect(s, farbe, r, 1, border_radius=8)
-        s.blit(img, img.get_rect(center=r.center))
+        hint_col = ui.mix(ui.TEXT_DIM, ui.TEXT, ui.pulse(2.0, 0.2, 1.0))
+        hint = self._small.render(t("common.enter_restart"), True, hint_col)
+
+        w = max(img.get_width(), hint.get_width()) + 36
+        h = img.get_height() + hint.get_height() + 22
+        r = pygame.Rect(self.width // 2 - w // 2, self.by - 10, w, h)
+        panel = pygame.Surface(r.size, pygame.SRCALPHA)
+        pygame.draw.rect(panel, (*ui.PANEL[:3], 235), panel.get_rect(), border_radius=10)
+        pygame.draw.rect(panel, farbe, panel.get_rect(), 2, border_radius=10)
+        s.blit(panel, r)
+        s.blit(img, img.get_rect(midtop=(r.centerx, r.y + 8)))
+        s.blit(hint, hint.get_rect(midtop=(r.centerx,
+                                           r.y + 8 + img.get_height() + 4)))
 
     # ----- Setup zeichnen ------------------------------------------------
     def _draw_setup(self):
         s = self.surface
-        s.fill(COL_BG)
-        title = self.big_font.render("MINESWEEPER", True, COL_TEXT)
-        s.blit(title, title.get_rect(center=(self.width // 2, 52)))
-        sub = self._small.render(t("mines.subtitle"), True, COL_DIM)
-        s.blit(sub, sub.get_rect(center=(self.width // 2, 90)))
+        ui.draw_background(s, self.width, self.height)
+        ui.draw_title(s, self.width, "MINESWEEPER",
+                      subtitle=t("mines.subtitle"), accent=self.accent)
 
         for i, (key, cols, rows, minen, _pts) in enumerate(PRESETS):
             r = self.preset_rects[i]
             an = (i == self.preset_index)
-            pygame.draw.rect(s, COL_BTN_ON if an else COL_BTN, r, border_radius=8)
-            pygame.draw.rect(s, COL_ACCENT if an else COL_DIM, r,
+            pygame.draw.rect(s, ui.BTN_SEL if an else ui.BTN, r, border_radius=8)
+            pygame.draw.rect(s, self.accent if an else ui.BORDER, r,
                              2 if an else 1, border_radius=8)
-            lab = self.font.render(t("mines.preset." + key), True, COL_TEXT)
-            s.blit(lab, (r.x + 16, r.y + 6))
+            lab = self.font.render(t("mines.preset." + key), True, ui.TEXT)
+            s.blit(lab, (r.x + 16, r.y + 5))
             details = f"{cols}x{rows}   {minen} {t('mines.mines')}"
-            det = self._tiny.render(details, True, COL_DIM)
-            s.blit(det, (r.x + 16, r.y + 28))
+            det = self._tiny.render(details, True, ui.TEXT_DIM)
+            s.blit(det, (r.x + 16, r.bottom - det.get_height() - 5))
             best = self.best.get(key)
             btxt = t("mines.best", t=f"{int(best)}s") if best is not None \
                 else t("mines.best_none")
             img = self._small.render(btxt, True,
-                                     (245, 205, 90) if best is not None else COL_DIM)
+                                     ui.GOLD if best is not None else ui.TEXT_DIM)
             s.blit(img, (r.right - img.get_width() - 16,
                          r.centery - img.get_height() // 2))
 
         # Fragezeichen-Toggle
         r = self.qmark_rect
-        pygame.draw.rect(s, COL_BTN_ON if self.qmarks else COL_BTN, r, border_radius=8)
-        pygame.draw.rect(s, COL_DIM, r, 1, border_radius=8)
-        lab = self.font.render(t("mines.qmarks"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL if self.qmarks else ui.BTN, r, border_radius=8)
+        pygame.draw.rect(s, ui.BORDER, r, 1, border_radius=8)
+        lab = self.font.render(t("mines.qmarks"), True, ui.TEXT)
         s.blit(lab, (r.x + 16, r.centery - lab.get_height() // 2))
         wert = t("common.on") if self.qmarks else t("common.off")
         img = self.font.render(f"< {wert} >", True,
-                               COL_ACCENT if self.qmarks else COL_DIM)
+                               self.accent if self.qmarks else ui.TEXT_DIM)
         s.blit(img, (r.right - img.get_width() - 16,
                      r.centery - img.get_height() // 2))
 
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
-        s.blit(st, st.get_rect(center=self.start_rect.center))
+        ui.draw_button(s, self.start_rect, t("common.start"), self.font,
+                       selected=True, accent=ui.GREEN)
 
-        hint = self._small.render(t("mines.setup_hint"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 34)))
-        h2 = self._tiny.render(t("mines.hint"), True, (120, 200, 150))
-        s.blit(h2, h2.get_rect(center=(self.width // 2, self.height - 14)))
+        h2 = self._tiny.render(t("mines.hint"), True, ui.GREEN)
+        s.blit(h2, h2.get_rect(center=(self.width // 2, self.height - 48)))
+        ui.draw_footer(s, self.width, self.height, t("mines.setup_hint"))

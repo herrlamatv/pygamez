@@ -4,7 +4,8 @@ tanks.py
 =========
 Panzer-Duell - 2D-Arena-Duell (1 Spieler gegen KI oder 2 Spieler lokal).
 
-- Panzer drehen und fahren (P1: WASD + Leertaste, P2: laut Tastenbelegung);
+- Panzer drehen und fahren (P1: WASD + Leertaste, P2: laut Tastenbelegung;
+  im Einzelspieler steuern beide Belegungen den eigenen Panzer);
   Schüsse prallen EINMAL von Wänden ab (Ricochet) und verschwinden beim
   zweiten Wandkontakt. Auch der eigene Schuss ist gefährlich (kurze
   Schonfrist nach dem Abfeuern).
@@ -23,22 +24,18 @@ import random
 import pygame
 
 import settings as settings_mod
-from game_base import Game, InputEvent
+import ui
+from game_base import Game, InputEvent, LocalizedName
 from i18n import t
 
-COL_BG = (16, 19, 27)
+# Identitätsfarben des Spiels (bewusst fest, unabhängig vom Theme):
+# Arena-Boden/-Wände und die beiden Panzerfarben.
 COL_FLOOR = (24, 28, 38)
 COL_WALL = (72, 80, 100)
 COL_WALL_EDGE = (100, 110, 134)
 COL_P1 = (120, 180, 90)       # Grün-oliv
 COL_P2 = (200, 120, 70)       # Rost
 COL_BULLET = (240, 240, 250)
-COL_TEXT = (225, 228, 238)
-COL_DIM = (150, 158, 178)
-COL_ACCENT = (168, 181, 69)   # = Sidebar-Farbe #a8b545
-COL_BTN = (40, 46, 66)
-COL_BTN_ON = (74, 80, 40)
-COL_BTN_BORDER = (74, 84, 116)
 POWER_COLS = {"rapid": (245, 205, 90), "shield": (110, 190, 255),
               "triple": (230, 120, 200)}
 
@@ -64,8 +61,14 @@ SETUP, COUNTDOWN, PLAY, ROUND_END, MATCH_END = \
     "setup", "countdown", "play", "round_end", "match_end"
 
 
+def _rgba(color, alpha):
+    """Palette-Farbe (RGB) mit einem Alpha-Wert zu RGBA kombinieren."""
+    return (color[0], color[1], color[2], alpha)
+
+
 class TankDuelGame(Game):
-    name = "Panzer-Duell"
+    name = LocalizedName("Tank Duel", de="Panzer-Duell", fr="Duel de chars",
+                         es="Duelo de tanques", pt="Duelo de tanques")
     highscore_key = "tanks"
     supports_multiplayer = True
 
@@ -78,21 +81,32 @@ class TankDuelGame(Game):
         self.diff = max(0, min(2, int(tk.get("difficulty", 1))))
         self.arena_sel = max(-1, min(3, int(tk.get("arena", -1))))
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self.rounds = [0, 0]
         self._arena_cycle = []
         self._build_setup_layout()
         self.state = SETUP
 
+    def _make_fonts(self):
+        """Theme-Schriften, Größen aus der Fensterhöhe abgeleitet."""
+        self._small = ui.font(max(13, min(22, self.height // 30)))
+        self._tiny = ui.font(max(11, min(18, self.height // 38)))
+        self._huge = ui.font(max(26, self.height // 11), bold=True)
+
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self._build_setup_layout()
-        if self.state in (COUNTDOWN, PLAY, ROUND_END):
+        if self.state != SETUP:
             self._layout_arena()
+
+    def _dim_surface(self):
+        """Abdunkelnde Vollbild-Fläche (gecacht, nur bei Größenwechsel neu)."""
+        key = (self.width, self.height)
+        if getattr(self, "_dim_key", None) != key:
+            self._dim_key = key
+            self._dim = pygame.Surface(key, pygame.SRCALPHA)
+            self._dim.fill((8, 10, 16, 150))
+        return self._dim
 
     # ===================================================== Setup-Screen
     def _build_setup_layout(self):
@@ -158,7 +172,7 @@ class TankDuelGame(Game):
         self.play_sound("click")
 
     def _layout_arena(self):
-        self.hud_h = 40
+        self.hud_h = max(34, int(self.height * 0.075))
         self.arena = pygame.Rect(8, self.hud_h, self.width - 16,
                                  self.height - self.hud_h - 8)
         self.sc = min(self.width / 640.0, self.height / 480.0)
@@ -214,6 +228,9 @@ class TankDuelGame(Game):
                     self.game_over = False
                     self.state = SETUP
                     self.play_sound("click")
+            elif event.kind == InputEvent.MOUSEDOWN:
+                self.game_over = False
+                self._start_match()
             return
         if event.kind == InputEvent.KEYDOWN:
             self._set_key(event.key, True)
@@ -221,9 +238,16 @@ class TankDuelGame(Game):
             self._set_key(event.key, False)
 
     def _set_key(self, key, down):
-        """Gehaltene Aktionen je Spieler puffern; Feuern sofort auslösen."""
-        players = ("p1", "p2") if self.multiplayer else ("p1",)
-        for i, p in enumerate(players):
+        """Gehaltene Aktionen je Spieler puffern; Feuern sofort auslösen.
+
+        Im Einzelspieler steuern BEIDE Tastenbelegungen (P1 und P2) den
+        eigenen Panzer - wie in der Basisklasse als Konvention beschrieben.
+        """
+        if self.multiplayer:
+            mapping = (("p1", 0), ("p2", 1))
+        else:
+            mapping = (("p1", 0), ("p2", 0))
+        for p, i in mapping:
             for act in ("up", "down", "left", "right"):
                 if self.key_for(p, act) == key:
                     if down:
@@ -571,7 +595,7 @@ class TankDuelGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
         if self.state == SETUP:
             self._draw_setup(s)
             return
@@ -591,7 +615,7 @@ class TankDuelGame(Game):
         self._draw_hud(s)
         if self.state == COUNTDOWN:
             n = max(1, int(math.ceil(self.count_t / 0.8)))
-            img = self._huge.render(str(n), True, COL_ACCENT)
+            img = self._huge.render(str(n), True, self.accent)
             s.blit(img, img.get_rect(center=(self.width // 2,
                                              self.height // 2)))
         elif self.state == ROUND_END:
@@ -639,37 +663,52 @@ class TankDuelGame(Game):
         s.blit(img, img.get_rect(center=(x, y)))
 
     def _draw_hud(self, s):
-        pygame.draw.rect(s, (24, 29, 44), (0, 0, self.width, self.hud_h))
-        pygame.draw.line(s, (52, 60, 86), (0, self.hud_h),
+        pygame.draw.rect(s, ui.PANEL, (0, 0, self.width, self.hud_h))
+        pygame.draw.line(s, ui.BORDER, (0, self.hud_h),
                          (self.width, self.hud_h))
         cy = self.hud_h // 2
+        pr = max(3, self.hud_h // 9)      # Runden-Punkte ("Pips") als Kreise
+        gap = 2 * pr + 6
         for i, col in ((0, COL_P1), (1, COL_P2)):
             name = t("common.player1") if i == 0 else \
                 (t("common.player2") if self.multiplayer else t("common.ai"))
-            pips = "".join("*" if k < self.rounds[i] else "-"
-                           for k in range(ROUNDS_TO_WIN))
-            txt = f"{name}  {pips}" if i == 0 else f"{pips}  {name}"
-            img = self._small.render(txt, True, col)
+            img = self._small.render(name, True, col)
             if i == 0:
                 s.blit(img, img.get_rect(midleft=(12, cy)))
+                x0 = 12 + img.get_width() + 12 + pr
+                for k in range(ROUNDS_TO_WIN):
+                    x = x0 + k * gap
+                    if k < self.rounds[i]:
+                        pygame.draw.circle(s, col, (x, cy), pr)
+                    else:
+                        pygame.draw.circle(s, ui.BORDER_LIGHT, (x, cy), pr, 1)
             else:
                 s.blit(img, img.get_rect(midright=(self.width - 12, cy)))
+                x0 = self.width - 12 - img.get_width() - 12 - pr
+                for k in range(ROUNDS_TO_WIN):
+                    x = x0 - k * gap
+                    if k < self.rounds[i]:
+                        pygame.draw.circle(s, col, (x, cy), pr)
+                    else:
+                        pygame.draw.circle(s, ui.BORDER_LIGHT, (x, cy), pr, 1)
         mid = self._small.render(t("tank.first_to", n=ROUNDS_TO_WIN), True,
-                                 COL_DIM)
+                                 ui.TEXT_DIM)
         s.blit(mid, mid.get_rect(center=(self.width // 2, cy)))
 
     def _draw_banner(self, s, text):
-        ov = pygame.Surface((self.width, 80), pygame.SRCALPHA)
-        ov.fill((10, 12, 22, 200))
-        y = self.height // 2 - 40
+        img = self._huge.render(text, True, self.accent)
+        band_h = img.get_height() + 28
+        y = self.height // 2 - band_h // 2
+        ov = pygame.Surface((self.width, band_h), pygame.SRCALPHA)
+        ov.fill(_rgba(ui.PANEL, 225))
         s.blit(ov, (0, y))
-        img = self._huge.render(text, True, COL_ACCENT)
-        s.blit(img, img.get_rect(center=(self.width // 2, y + 40)))
+        pygame.draw.line(s, self.accent, (0, y), (self.width, y), 2)
+        pygame.draw.line(s, self.accent, (0, y + band_h - 1),
+                         (self.width, y + band_h - 1), 2)
+        s.blit(img, img.get_rect(center=(self.width // 2, y + band_h // 2)))
 
     def _draw_match_end(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((10, 12, 22, 185))
-        s.blit(ov, (0, 0))
+        s.blit(self._dim_surface(), (0, 0))
         cx, cy = self.width // 2, self.height // 2
         winner = 0 if self.rounds[0] >= ROUNDS_TO_WIN else 1
         if self.multiplayer:
@@ -678,30 +717,41 @@ class TankDuelGame(Game):
         else:
             key = "tank.match_win" if winner == 0 else "common.game_over"
             head = self._huge.render(t(key), True,
-                                     COL_P1 if winner == 0 else (225, 95, 95))
-        s.blit(head, head.get_rect(center=(cx, cy - 50)))
-        sc = self.font.render(f"{self.rounds[0]} : {self.rounds[1]}", True,
-                              COL_TEXT)
-        s.blit(sc, sc.get_rect(center=(cx, cy + 2)))
+                                     COL_P1 if winner == 0 else ui.RED)
+        rows = [head,
+                self.font.render(f"{self.rounds[0]} : {self.rounds[1]}",
+                                 True, ui.TEXT)]
         if not self.multiplayer:
-            pt = self._small.render(t("common.points", score=self.score),
-                                    True, COL_DIM)
-            s.blit(pt, pt.get_rect(center=(cx, cy + 32)))
-        hint = self._small.render(t("tank.rematch"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, cy + 62)))
+            rows.append(self._small.render(
+                t("common.points", score=self.score), True, ui.TEXT_DIM))
+        rows.append(self._small.render(t("tank.rematch"), True, ui.TEXT_DIM))
+        gap = 10
+        total = sum(r.get_height() for r in rows) + gap * (len(rows) - 1)
+        pw = min(self.width - 30,
+                 max(340, max(r.get_width() for r in rows) + 64))
+        panel = pygame.Rect(0, 0, pw, total + 48)
+        panel.center = (cx, cy)
+        ov = pygame.Surface(panel.size, pygame.SRCALPHA)
+        ov.fill(_rgba(ui.PANEL, 235))
+        s.blit(ov, panel.topleft)
+        pygame.draw.rect(s, self.accent, panel, 2, border_radius=14)
+        yy = panel.y + 24
+        for r in rows:
+            s.blit(r, r.get_rect(midtop=(cx, yy)))
+            yy += r.get_height() + gap
 
     # ----- Setup zeichnen -----------------------------------------------
     def _draw_setup(self, s):
         cx = self.width // 2
-        title = self._huge.render("PANZER-DUELL", True, COL_ACCENT)
+        title = self._huge.render(self.name.upper(), True, self.accent)
         s.blit(title, title.get_rect(center=(cx, int(self.height * 0.13))))
-        sub = self._small.render(t("tank.subtitle"), True, COL_DIM)
+        sub = self._small.render(t("tank.subtitle"), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.20))))
         for i, r in enumerate(self.row_rects):
             on = (i == self.sel_row)
-            pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, r,
+            pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, r,
                              border_radius=10)
-            pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, r,
+            pygame.draw.rect(s, self.accent if on else ui.BORDER, r,
                              2 if on else 1, border_radius=10)
             if self.setup_rows[i] == "diff":
                 label = t("tank.difficulty")
@@ -710,16 +760,16 @@ class TankDuelGame(Game):
                 label = t("tank.arena")
                 value = t("tank.arena." + ARENAS[self.arena_sel + 1])
             img = self._small.render(label, True,
-                                     COL_TEXT if on else COL_DIM)
+                                     ui.TEXT if on else ui.TEXT_DIM)
             s.blit(img, img.get_rect(midleft=(r.x + 16, r.centery)))
-            img = self._small.render("< " + value + " >", True, COL_ACCENT)
+            img = self._small.render("< " + value + " >", True, self.accent)
             s.blit(img, img.get_rect(midright=(r.right - 16, r.centery)))
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.start_rect, 2, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=10)
+        pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=10)
+        st = self.font.render(t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
-        hint = self._tiny.render(t("tank.setup_hint"), True, COL_DIM)
+        hint = self._tiny.render(t("tank.setup_hint"), True, ui.TEXT_FAINT)
         s.blit(hint, hint.get_rect(center=(cx, self.height - 30)))
         ctrl = self._tiny.render(t("tank.controls_hint"), True,
-                                 (170, 185, 120))
+                                 ui.mix(self.accent, ui.TEXT, 0.45))
         s.blit(ctrl, ctrl.get_rect(center=(cx, self.height - 12)))

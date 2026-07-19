@@ -34,6 +34,7 @@ import pygame
 
 import highscore
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
@@ -122,7 +123,9 @@ DIFFS = [
     dict(key="extreme", gspeed=1.13, fright=3.5),
 ]
 
-# Farben
+# Identitätsfarben (Labyrinth-Blau, Pillen, Pac-Gelb, Frightened-Blau) -
+# bewusst NICHT ans Theme gekoppelt. Generische UI-Farben (Text, Panels,
+# Akzent) kommen zur Zeichenzeit dynamisch aus ui.* bzw. self.accent.
 COL_BG = (0, 0, 0)
 COL_WALL = (36, 46, 190)
 COL_WALL_HI = (80, 110, 255)
@@ -130,13 +133,8 @@ COL_DOOR = (255, 180, 210)
 COL_PILL = (250, 220, 170)
 COL_POWER = (255, 200, 120)
 COL_PAC = (255, 235, 50)
-COL_TEXT = (240, 240, 245)
-COL_DIM = (150, 158, 176)
 COL_FRIGHT = (36, 40, 210)
 COL_FRIGHT_END = (245, 245, 255)
-COL_ACCENT = (255, 225, 90)
-COL_BTN = (44, 50, 66)
-COL_BTN_ON = (60, 90, 150)
 
 SETUP, READY, PLAY, DYING, LEVELCLEAR, GAMEOVER = \
     "setup", "ready", "play", "dying", "levelclear", "gameover"
@@ -189,6 +187,7 @@ class PacmanGame(Game):
         pm = self.settings.get("pacman", {}) if isinstance(self.settings, dict) else {}
         self.diff = max(0, min(2, int(pm.get("difficulty", 0))))
 
+        self._panel_cache = {}       # (Größe, Palette) -> Panel-Fläche
         self._layout()
         self.highscore = highscore.load_highscores().get(self.highscore_key, 0)
         self.anim_t = 0.0
@@ -209,11 +208,21 @@ class PacmanGame(Game):
         top = int(2.2 * self.CELL)
         self.oy = top + max(0, (self.height - top - self.maze_h - 2 * self.CELL) // 2)
 
+        # Themen-Schriften, Größen aus der Zellgröße abgeleitet;
+        # Punktestände in Monospace, damit die Ziffern nicht "zappeln".
         c = self.CELL
-        self._font = pygame.font.SysFont("consolas", max(11, int(c * 1.15)), bold=True)
-        self._small = pygame.font.SysFont("consolas", max(10, int(c * 0.95)))
-        self._tiny = pygame.font.SysFont("consolas", max(9, int(c * 0.8)))
-        self._big = pygame.font.SysFont("consolas", max(20, int(c * 2.0)), bold=True)
+        self._font = ui.font(max(11, int(c * 1.15)), bold=True)
+        self._digit = ui.font(max(11, int(c * 1.15)), bold=True, mono=True)
+        self._small = ui.font(max(10, int(c * 0.95)))
+        self._tiny = ui.font(max(9, int(c * 0.8)))
+        self._big = ui.font(max(20, int(c * 2.0)), bold=True)
+
+    def on_surface_changed(self):
+        """Nach einem Auflösungswechsel Zellraster, Schriften und Layout neu aufbauen."""
+        self._layout()
+        self._build_setup_layout()
+        self._panel_cache.clear()
+        self.popups = []             # Pixel-Positionen passen zur neuen Fläche nicht mehr
 
     # ----- Level / Positionen -------------------------------------------
     def _new_game(self):
@@ -277,10 +286,11 @@ class PacmanGame(Game):
     def _build_setup_layout(self):
         cx = self.width // 2
         bw = min(420, self.width - 60)
-        self.diff_panel = pygame.Rect(cx - bw // 2, 150, bw, 60)
-        self.diff_left = pygame.Rect(self.diff_panel.left, 150, 42, 60)
-        self.diff_right = pygame.Rect(self.diff_panel.right - 42, 150, 42, 60)
-        self.start_rect = pygame.Rect(cx - 95, 238, 190, 52)
+        top = max(150, int(self.height * 0.30))
+        self.diff_panel = pygame.Rect(cx - bw // 2, top, bw, 60)
+        self.diff_left = pygame.Rect(self.diff_panel.left, top, 42, 60)
+        self.diff_right = pygame.Rect(self.diff_panel.right - 42, top, 42, 60)
+        self.start_rect = pygame.Rect(cx - 95, top + 88, 190, 52)
 
     def _save(self, key, value):
         if isinstance(self.settings, dict):
@@ -842,18 +852,42 @@ class PacmanGame(Game):
         pygame.draw.lines(s, (255, 220, 230), False, pts, 2)
 
     # ----- HUD / Overlays -----------------------------------------------
+    def _blit_panel(self, s, rect, border=2):
+        """Halbtransparentes Themen-Panel mit Akzent-Rahmen (Fläche gecacht).
+
+        Über dem schwarzen Labyrinth sorgt das Panel dafür, dass die
+        Theme-Textfarben in jedem Theme lesbar bleiben.
+        """
+        key = (rect.width, rect.height, tuple(ui.PANEL))
+        surf = self._panel_cache.get(key)
+        if surf is None:
+            if len(self._panel_cache) > 12:
+                self._panel_cache.clear()
+            c = ui.PANEL
+            surf = pygame.Surface(rect.size, pygame.SRCALPHA)
+            pygame.draw.rect(surf, (c[0], c[1], c[2], 222), surf.get_rect(),
+                             border_radius=10)
+            self._panel_cache[key] = surf
+        s.blit(surf, rect.topleft)
+        pygame.draw.rect(s, self.accent, rect, border, border_radius=10)
+
     def _draw_hud(self, s):
         self.highscore = max(self.highscore, self.score)
-        score = self._font.render(str(self.score), True, COL_TEXT)
-        lab = self._tiny.render(t("pac.1up"), True, COL_ACCENT)
-        s.blit(lab, (10, 4))
-        s.blit(score, (10, 4 + lab.get_height()))
-        hlab = self._tiny.render(t("pac.high"), True, COL_ACCENT)
-        himg = self._font.render(str(self.highscore), True, COL_TEXT)
-        s.blit(hlab, hlab.get_rect(midtop=(self.width // 2, 4)))
-        s.blit(himg, himg.get_rect(midtop=(self.width // 2, 4 + hlab.get_height())))
-        lv = self._small.render(t("pac.level", n=self.level), True, COL_DIM)
-        s.blit(lv, lv.get_rect(topright=(self.width - 10, 6)))
+        lab = self._tiny.render(t("pac.1up"), True, self.accent)
+        score = self._digit.render(str(self.score), True, ui.TEXT)
+        hlab = self._tiny.render(t("pac.high"), True, self.accent)
+        himg = self._digit.render(str(self.highscore), True, ui.TEXT)
+        lv = self._small.render(t("pac.level", n=self.level), True, ui.TEXT_DIM)
+
+        # Themen-Leiste über dem Labyrinth, genau so hoch wie der Inhalt
+        bar = pygame.Rect(6, 2, self.width - 12,
+                          lab.get_height() + score.get_height() + 8)
+        self._blit_panel(s, bar, border=1)
+        s.blit(lab, (14, 5))
+        s.blit(score, (14, 5 + lab.get_height()))
+        s.blit(hlab, hlab.get_rect(midtop=(self.width // 2, 5)))
+        s.blit(himg, himg.get_rect(midtop=(self.width // 2, 5 + hlab.get_height())))
+        s.blit(lv, lv.get_rect(topright=(self.width - 14, 7)))
 
         # Leben (unten links) + gesammelte Früchte (unten rechts)
         y = self.height - int(self.CELL * 1.2)
@@ -875,42 +909,50 @@ class PacmanGame(Game):
         cx = self.ox + self.maze_w // 2
         cy = self.oy + int(17.2 * self.CELL)
         if self.state == READY:
-            img = self._font.render(t("pac.ready"), True, COL_ACCENT)
+            img = self._font.render(t("pac.ready"), True, self.accent)
+            box = img.get_rect(center=(cx, cy)).inflate(int(self.CELL * 1.8),
+                                                        int(self.CELL * 0.9))
+            self._blit_panel(s, box)
             s.blit(img, img.get_rect(center=(cx, cy)))
         elif self.state == GAMEOVER:
-            img = self._big.render(t("common.game_over"), True, (255, 90, 90))
+            img = self._big.render(t("common.game_over"), True, ui.RED)
+            hint = self._small.render(t("pac.restart_hint"), True, ui.TEXT)
+            pad = int(self.CELL * 0.8)
+            bw = max(img.get_width(), hint.get_width()) + 2 * pad + self.CELL
+            top = cy - img.get_height() // 2 - pad
+            bottom = cy + int(self.CELL * 2.2) + hint.get_height() // 2 + pad
+            box = pygame.Rect(0, 0, bw, bottom - top)
+            box.midtop = (cx, top)
+            self._blit_panel(s, box)
             s.blit(img, img.get_rect(center=(cx, cy)))
-            hint = self._small.render(t("pac.restart_hint"), True, COL_TEXT)
             s.blit(hint, hint.get_rect(center=(cx, cy + int(self.CELL * 2.2))))
 
     # ----- Setup zeichnen -----------------------------------------------
     def _draw_setup(self):
+        """Setup-Screen im Theme-Stil (Palette wird zur Zeichenzeit gelesen)."""
         s = self.surface
-        s.fill(COL_BG)
-        title = self._big.render("PAC-MAN", True, COL_ACCENT)
-        s.blit(title, title.get_rect(center=(self.width // 2, 70)))
-        sub = self._small.render(t("snake.singleplayer"), True, COL_DIM)
-        s.blit(sub, sub.get_rect(center=(self.width // 2, 110)))
+        ui.draw_background(s, self.width, self.height)
+        ui.draw_title(s, self.width, "PAC-MAN",
+                      subtitle=t("snake.singleplayer"), accent=self.accent)
 
         d = DIFFS[self.diff]
-        pygame.draw.rect(s, (30, 36, 58), self.diff_panel, border_radius=10)
-        pygame.draw.rect(s, COL_BTN_ON, self.diff_panel, 2, border_radius=10)
+        pygame.draw.rect(s, ui.PANEL, self.diff_panel, border_radius=10)
+        pygame.draw.rect(s, self.accent, self.diff_panel, 2, border_radius=10)
         name = self._font.render(
-            t("pac.difficulty") + ":  " + t("pac.diff." + d["key"]), True, COL_TEXT)
+            t("pac.difficulty") + ":  " + t("pac.diff." + d["key"]), True, ui.TEXT)
         s.blit(name, name.get_rect(center=(self.diff_panel.centerx,
                                            self.diff_panel.top + 22)))
-        note = self._tiny.render(t("pac.diff_note"), True, COL_DIM)
+        note = self._tiny.render(t("pac.diff_note"), True, ui.TEXT_DIM)
         s.blit(note, note.get_rect(center=(self.diff_panel.centerx,
                                            self.diff_panel.top + 44)))
         for rect, sym in ((self.diff_left, "<"), (self.diff_right, ">")):
-            arr = self._big.render(sym, True, COL_ACCENT)
+            arr = self._big.render(sym, True, self.accent)
             s.blit(arr, arr.get_rect(center=rect.center))
 
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        st = self._font.render(t("common.start"), True, COL_TEXT)
-        s.blit(st, st.get_rect(center=self.start_rect.center))
+        ui.draw_button(s, self.start_rect, t("common.start"), self._font,
+                       selected=True, accent=ui.GREEN)
 
-        hint = self._small.render(t("pac.setup_hint"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 34)))
-        ctrl = self._tiny.render(t("pac.controls_hint"), True, (120, 200, 150))
-        s.blit(ctrl, ctrl.get_rect(center=(self.width // 2, self.height - 14)))
+        hint = self._small.render(t("pac.setup_hint"), True, ui.TEXT_DIM)
+        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 38)))
+        ctrl = self._tiny.render(t("pac.controls_hint"), True, ui.GREEN)
+        s.blit(ctrl, ctrl.get_rect(center=(self.width // 2, self.height - 16)))

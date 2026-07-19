@@ -33,18 +33,13 @@ import pygame
 import audio
 import settings as settings_mod
 import store
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
 # ----------------------------------------------------------------- Farben
-COL_BG = (18, 16, 26)
-COL_TEXT = (236, 232, 244)
-COL_DIM = (158, 150, 176)
-COL_ACCENT = (224, 90, 125)       # = Sidebar-Farbe #e05a7d
-COL_BTN = (40, 34, 52)
-COL_BTN_ON = (66, 46, 66)
-COL_BTN_BORDER = (96, 74, 108)
-
+# Die Leuchtfarben der Felder sind die Identität des Spiels und bleiben
+# fest; alle generischen UI-Farben kommen dynamisch aus der ui-Palette.
 # Leuchtfarben je Feld (bis zu 9).
 PAD_COLORS = [
     (46, 204, 113), (231, 76, 60), (241, 196, 15), (52, 152, 219),
@@ -91,10 +86,8 @@ class SimonGame(Game):
         if self.pads not in PAD_OPTS:
             self.pads = 4
 
-        self._small = pygame.font.SysFont("consolas", 15)
-        self._tiny = pygame.font.SysFont("consolas", 12)
-        self._huge = pygame.font.SysFont("consolas", max(28, self.height // 10),
-                                         bold=True)
+        self._build_fonts()
+        self._over_cache = None
         self._best = self._load_best()
         self._build_setup_layout()
         self._layout()
@@ -109,9 +102,16 @@ class SimonGame(Game):
         self.winner = 0
         self.active = self.mode if self.mode != "mixed" else "classic"
 
+    def _build_fonts(self):
+        """Schriftgrößen aus der aktuellen Auflösung ableiten (Theme-Fonts)."""
+        h = self.height
+        self._small = ui.font(max(14, h // 32))
+        self._tiny = ui.font(max(11, h // 40))
+        self._huge = ui.font(max(28, h // 10), bold=True)
+
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(28, self.height // 10),
-                                         bold=True)
+        self._build_fonts()
+        self._over_cache = None
         self._build_setup_layout()
         self._layout()
 
@@ -147,6 +147,9 @@ class SimonGame(Game):
             x = self.grid_x + c * (cell + self.pad_gap)
             y = self.grid_y + r * (cell + self.pad_gap)
             self.pad_rects.append(pygame.Rect(int(x), int(y), int(cell), int(cell)))
+        # Glow-Fläche für leuchtende Felder einmalig anlegen (gecacht).
+        self._glow = pygame.Surface((int(cell), int(cell)), pygame.SRCALPHA)
+        self._glow.fill((255, 255, 255, 60))
 
     # ===================================================== Setup-Screen
     def _build_setup_layout(self):
@@ -392,7 +395,7 @@ class SimonGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
         if self.state == SETUP:
             self._draw_setup(s)
             return
@@ -409,31 +412,32 @@ class SimonGame(Game):
             pygame.draw.rect(s, fill, rc, border_radius=14)
             pygame.draw.rect(s, _dim(col, 0.8), rc, 3, border_radius=14)
             if on:
-                glow = pygame.Surface((rc.w, rc.h), pygame.SRCALPHA)
-                glow.fill((255, 255, 255, 60))
-                s.blit(glow, rc.topleft)
+                s.blit(self._glow, rc.topleft)
             num = self._small.render(str(i + 1), True, (255, 255, 255)
                                      if on else _dim(col, 0.85))
             s.blit(num, num.get_rect(center=rc.center))
 
     def _draw_hud(self, s):
-        pygame.draw.rect(s, (28, 24, 38), (0, 0, self.width, self.hud_h))
-        pygame.draw.line(s, (58, 48, 72), (0, self.hud_h), (self.width, self.hud_h))
+        pygame.draw.rect(s, ui.PANEL, (0, 0, self.width, self.hud_h))
+        pygame.draw.line(s, ui.BORDER, (0, self.hud_h), (self.width, self.hud_h))
         cy = self.hud_h // 2
         if self.mode == "duel":
             left = self._small.render(t("common.player1"), True,
-                                      COL_ACCENT if self.turn_player == 0 else COL_DIM)
+                                      self.accent if self.turn_player == 0
+                                      else ui.TEXT_DIM)
             s.blit(left, left.get_rect(midleft=(14, cy)))
             right = self._small.render(t("common.player2"), True,
-                                       COL_ACCENT if self.turn_player == 1 else COL_DIM)
+                                       self.accent if self.turn_player == 1
+                                       else ui.TEXT_DIM)
             s.blit(right, right.get_rect(midright=(self.width - 14, cy)))
             mid = (t("simon.add") if self.adding else t("simon.repeat"))
             mid += f"  ({len(self.seq)})"
         else:
-            sc = self._small.render(t("simon.round", n=len(self.seq)), True, COL_TEXT)
+            sc = self._small.render(t("simon.round", n=len(self.seq)), True,
+                                    ui.TEXT)
             s.blit(sc, sc.get_rect(midleft=(14, cy)))
             best = self._best.get(self.mode, 0)
-            bimg = self._small.render(t("simon.best", n=best), True, COL_DIM)
+            bimg = self._small.render(t("simon.best", n=best), True, ui.TEXT_DIM)
             s.blit(bimg, bimg.get_rect(midright=(self.width - 14, cy)))
             if self.phase == "show":
                 mid = t("simon.watch")
@@ -441,38 +445,44 @@ class SimonGame(Game):
                 mid = t("simon.your_input")
             if self.mode == "mixed":
                 mid += "  ·  " + t("simon.mode." + self.active)
-        img = self._small.render(mid, True, COL_ACCENT)
+        img = self._small.render(mid, True, self.accent)
         s.blit(img, img.get_rect(center=(self.width // 2, cy)))
 
     def _draw_over(self, s):
-        ov = pygame.Surface((self.width, 108), pygame.SRCALPHA)
-        ov.fill((12, 10, 18, 210))
+        # Halbtransparentes Banner-Panel wird gecacht (Software-Rendering).
+        if self._over_cache is None or self._over_cache.get_width() != self.width:
+            ov = pygame.Surface((self.width, 108), pygame.SRCALPHA)
+            ov.fill((10, 8, 16, 210))
+            self._over_cache = ov
         y = self.height // 2 - 54
-        s.blit(ov, (0, y))
+        s.blit(self._over_cache, (0, y))
+        pygame.draw.line(s, self.accent, (0, y), (self.width, y))
+        pygame.draw.line(s, self.accent, (0, y + 107), (self.width, y + 107))
         cx = self.width // 2
         if self.mode == "duel":
             head = self._huge.render(t("common.player_wins", n=self.winner + 1),
-                                     True, COL_ACCENT)
+                                     True, self.accent)
             sub = self._small.render(t("simon.duel_len", n=len(self.seq)),
-                                     True, COL_TEXT)
+                                     True, ui.TEXT)
         else:
-            head = self._huge.render(t("simon.score", n=self.score), True, COL_ACCENT)
+            head = self._huge.render(t("simon.score", n=self.score), True,
+                                     self.accent)
             sub = self._small.render(t("simon.best", n=self._best.get(self.mode, 0)),
-                                     True, COL_TEXT)
+                                     True, ui.TEXT)
         s.blit(head, head.get_rect(center=(cx, y + 34)))
         s.blit(sub, sub.get_rect(center=(cx, y + 68)))
-        hint = self._tiny.render(t("simon.new_round"), True, COL_DIM)
+        hint = self._tiny.render(t("simon.new_round"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(cx, y + 92)))
 
     def _draw_setup(self, s):
         cx = self.width // 2
-        title = self._huge.render(t("simon.title"), True, COL_ACCENT)
+        title = self._huge.render(t("simon.title"), True, self.accent)
         s.blit(title, title.get_rect(center=(cx, int(self.height * 0.12))))
-        sub = self._small.render(t("simon.subtitle"), True, COL_DIM)
+        sub = self._small.render(t("simon.subtitle"), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.185))))
 
         def label(y, txt):
-            im = self._tiny.render(txt, True, COL_DIM)
+            im = self._tiny.render(txt, True, ui.TEXT_DIM)
             s.blit(im, im.get_rect(midbottom=(cx, y - 4)))
 
         label(self.mode_rects[0].top, t("simon.lbl_mode"))
@@ -487,16 +497,16 @@ class SimonGame(Game):
         for i, rc in enumerate(self.pad_rects_setup):
             on = (self.pads == PAD_OPTS[i])
             self._btn(s, rc, str(PAD_OPTS[i]), on, self._small)
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=9)
-        pygame.draw.rect(s, COL_ACCENT, self.start_rect, 2, border_radius=9)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=9)
+        pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=9)
+        st = self.font.render(t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
-        hint = self._tiny.render(t("simon.setup_hint"), True, COL_DIM)
+        hint = self._tiny.render(t("simon.setup_hint"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(cx, self.height - 14)))
 
     def _btn(self, s, rc, text, on, fnt):
-        pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, rc, border_radius=8)
-        pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, rc,
+        pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, rc, border_radius=8)
+        pygame.draw.rect(s, self.accent if on else ui.BORDER, rc,
                          2 if on else 1, border_radius=8)
-        im = fnt.render(text, True, COL_TEXT if on else COL_DIM)
+        im = fnt.render(text, True, ui.TEXT if on else ui.TEXT_DIM)
         s.blit(im, im.get_rect(center=rc.center))

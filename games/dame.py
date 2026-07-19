@@ -24,7 +24,7 @@ gewertet.
 
 Steuerung: Stein anklicken, dann Zielfeld(er). Mehrfachsprung Schritt fuer Schritt
 anklicken. Tastatur: Pfeile/WASD bewegen den Rahmen, Leertaste/Enter waehlt.
-Nach Rundenende: Enter = neue Runde, S = Setup (nur Einzelspieler).
+Nach Rundenende: Enter = neue Runde, S = Setup (Variantenwahl, beide Modi).
 """
 
 import random
@@ -32,7 +32,8 @@ import random
 import pygame
 
 import settings as settings_mod
-from game_base import Game, InputEvent
+import ui
+from game_base import Game, InputEvent, LocalizedName
 from i18n import t
 
 # ---- Feldkodierung
@@ -42,24 +43,17 @@ P1_MAN, P1_KING = 3, 4      # Spieler 1 (oben, dunkel) - zieht nach unten (row +
 
 DIRS4 = [(-1, -1), (-1, 1), (1, -1), (1, 1)]
 
-# ---- Farben
-COL_BG = (26, 20, 15)
+# ---- Brett-Identitätsfarben (generische UI-Farben liefert die ui-Palette)
 COL_LIGHT = (222, 196, 150)     # helle (unbespielte) Felder
 COL_DARK = (120, 84, 52)        # dunkle (bespielte) Felder
-COL_PLATE = (40, 28, 20)
+COL_PLATE = (40, 28, 20)        # Brettrahmen
 COL_P0 = (236, 230, 214)        # Steine Spieler 0 (creme)
 COL_P0_HI = (255, 255, 250)
 COL_P1 = (188, 60, 60)          # Steine Spieler 1 (rot)
 COL_P1_HI = (232, 120, 120)
 COL_KING = (245, 205, 90)       # Krone/Ring der Dame
-COL_TEXT = (238, 232, 224)
-COL_DIM = (176, 158, 142)
-COL_ACCENT = (216, 120, 66)     # = Sidebar-Farbe #d87842
-COL_HINT = (250, 236, 150)
-COL_CAP = (232, 90, 80)
-COL_BTN = (46, 34, 26)
-COL_BTN_ON = (78, 54, 38)
-COL_BTN_BORDER = (110, 82, 60)
+COL_HINT = (250, 236, 150)      # Auswahl-/Zughinweise auf dem Holzbrett
+COL_CAP = (232, 90, 80)         # Schlagzwang-/Schlag-Markierungen
 
 VARIANTS = ["german", "international", "checkers"]
 DIFFS = ["easy", "medium", "hard"]
@@ -269,7 +263,8 @@ def _count(board):
 
 
 class DameGame(Game):
-    name = "Dame"
+    name = LocalizedName("Checkers", de="Dame", fr="Jeu de dames",
+                         es="Damas", pt="Damas")
     highscore_key = "dame"
     supports_multiplayer = True
 
@@ -284,19 +279,21 @@ class DameGame(Game):
             self.variant = "german"
         self.diff = max(0, min(2, int(dv.get("difficulty", 1))))
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self.wins = [0, 0]
         self.starter = 0
         self._build_setup_layout()
         self._new_round()
         self.state = SETUP
 
+    def _make_fonts(self):
+        """Theme-Schriften, Grösse abhängig von der Fensterhöhe."""
+        self._small = ui.font(max(14, self.height // 32))
+        self._tiny = ui.font(max(12, self.height // 40))
+        self._huge = ui.font(max(26, self.height // 11), bold=True)
+
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self._build_setup_layout()
         self._layout()
 
@@ -401,7 +398,9 @@ class DameGame(Game):
             if event.kind == InputEvent.KEYDOWN:
                 if event.key in ("Return", "space"):
                     self._restart()
-                elif event.key in ("s", "S") and not self.multiplayer:
+                elif event.key in ("s", "S"):
+                    # Setup (Variantenwahl) gibt es hier auch im Mehrspieler -
+                    # der Hinweis "S = Setup" gilt daher für beide Modi.
                     self.game_over = False
                     self.state = SETUP
                     self.play_sound("click")
@@ -647,7 +646,7 @@ class DameGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height, stars=False, aurora=True)
         if self.state == SETUP:
             self._draw_setup(s)
             return
@@ -662,6 +661,8 @@ class DameGame(Game):
         n = self.flags["size"]
         plate = pygame.Rect(self.bx - 8, self.by - 8, self.bw + 16, self.bh + 16)
         pygame.draw.rect(s, COL_PLATE, plate, border_radius=10)
+        pygame.draw.rect(s, ui.mix(COL_PLATE, self.accent, 0.45), plate, 1,
+                         border_radius=10)
         for r in range(n):
             for c in range(n):
                 x = self.bx + c * self.cell
@@ -681,10 +682,12 @@ class DameGame(Game):
                                  (x + self.cell - 6, y + self.cell - 6), 2)
                 pygame.draw.line(s, COL_CAP, (x + self.cell - 6, y + 6),
                                  (x + 6, y + self.cell - 6), 2)
+            last_col = ui.mix(COL_DARK, self.accent,
+                              0.55 + 0.35 * ui.pulse(1.6, 0.0, 1.0))
             for pos in (self.last_move["start"], self.last_move["end"]):
                 x = self.bx + pos[1] * self.cell
                 y = self.by + pos[0] * self.cell
-                pygame.draw.rect(s, COL_ACCENT, (x, y, self.cell, self.cell), 2)
+                pygame.draw.rect(s, last_col, (x, y, self.cell, self.cell), 2)
 
         # waehlbare Steine (Schlagzwang: nur diese) hervorheben
         if human_turn and self.sel is None:
@@ -718,7 +721,7 @@ class DameGame(Game):
             r, c = self.cursor
             x = self.bx + c * self.cell
             y = self.by + r * self.cell
-            k = 0.5 + 0.5 * abs(pygame.time.get_ticks() % 900 - 450) / 450
+            k = ui.pulse(2.2, 0.0, 1.0)
             pygame.draw.rect(s, (int(150 + 100 * k),) * 3,
                              (x + 1, y + 1, self.cell - 2, self.cell - 2), 2)
 
@@ -744,16 +747,18 @@ class DameGame(Game):
             pygame.draw.polygon(s, COL_KING, pts)
 
     def _draw_hud(self, s):
-        pygame.draw.rect(s, (34, 24, 18), (0, 0, self.width, self.hud_h))
-        pygame.draw.line(s, (72, 52, 38), (0, self.hud_h), (self.width, self.hud_h))
-        cy = self.hud_h // 2
+        panel = pygame.Rect(8, 6, self.width - 16, self.hud_h - 10)
+        ui.draw_panel(s, panel, shadow=False, accent_top=self.accent)
+        cy = panel.centery
         a, b = _count(self.board)
-        pygame.draw.circle(s, COL_P0, (18, cy), 9)
-        img = self._small.render(str(a), True, COL_TEXT)
-        s.blit(img, img.get_rect(midleft=(32, cy)))
-        pygame.draw.circle(s, COL_P1, (self.width - 18, cy), 9)
-        img = self._small.render(str(b), True, COL_TEXT)
-        s.blit(img, img.get_rect(midright=(self.width - 32, cy)))
+        pygame.draw.circle(s, COL_P0, (panel.x + 18, cy), 9)
+        pygame.draw.circle(s, ui.BORDER_LIGHT, (panel.x + 18, cy), 9, 1)
+        img = self._small.render(str(a), True, ui.TEXT)
+        s.blit(img, img.get_rect(midleft=(panel.x + 34, cy)))
+        pygame.draw.circle(s, COL_P1, (panel.right - 18, cy), 9)
+        pygame.draw.circle(s, ui.BORDER_LIGHT, (panel.right - 18, cy), 9, 1)
+        img = self._small.render(str(b), True, ui.TEXT)
+        s.blit(img, img.get_rect(midright=(panel.right - 34, cy)))
 
         if self.state == PLAY:
             if not self.multiplayer and self.player == 1:
@@ -763,17 +768,13 @@ class DameGame(Game):
             else:
                 who = t("common.player1") if self.player == 0 else t("common.player2")
                 mid = t("dame.turn", name=who)
-            img = self._small.render(mid, True, COL_ACCENT)
+            img = self._small.render(mid, True, self.accent)
             s.blit(img, img.get_rect(center=(self.width // 2, cy)))
             if self.forced:
-                fi = self._tiny.render(t("dame.must_capture"), True, COL_CAP)
+                fi = self._tiny.render(t("dame.must_capture"), True, ui.RED)
                 s.blit(fi, fi.get_rect(center=(self.width // 2, self.hud_h + 11)))
 
     def _draw_over(self, s):
-        ov = pygame.Surface((self.width, 96), pygame.SRCALPHA)
-        ov.fill((10, 8, 6, 205))
-        y = self.height // 2 - 48
-        s.blit(ov, (0, y))
         cx = self.width // 2
         if self.multiplayer:
             head = self._huge.render(t("common.player_wins", n=self.winner + 1),
@@ -781,41 +782,32 @@ class DameGame(Game):
         else:
             key = "dame.win_you" if self.winner == 0 else "dame.win_ai"
             head = self._huge.render(t(key), True,
-                                     COL_ACCENT if self.winner == 0 else COL_DIM)
-        s.blit(head, head.get_rect(center=(cx, y + 34)))
-        hint = self._tiny.render(t("dame.new_round"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, y + 74)))
+                                     self.accent if self.winner == 0
+                                     else ui.TEXT_DIM)
+        hint = self._tiny.render(t("dame.new_round"), True, ui.TEXT_DIM)
+        w = min(self.width - 24, max(head.get_width(), hint.get_width()) + 64)
+        panel = pygame.Rect(cx - w // 2, self.height // 2 - 48, w, 96)
+        ui.draw_panel(s, panel, shadow=False, accent_top=self.accent)
+        s.blit(head, head.get_rect(center=(cx, panel.y + 36)))
+        s.blit(hint, hint.get_rect(center=(cx, panel.y + 74)))
 
     # ----- Setup zeichnen -----------------------------------------------
     def _draw_setup(self, s):
         cx = self.width // 2
-        title = self._huge.render(t("dame.title"), True, COL_ACCENT)
-        s.blit(title, title.get_rect(center=(cx, int(self.height * 0.13))))
-        sub = self._small.render(t("dame.variant"), True, COL_DIM)
-        s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.20))))
+        ui.draw_title(s, self.width, t("dame.title"), subtitle=t("dame.variant"),
+                      y=int(self.height * 0.13), big=self._huge,
+                      small=self._small, accent=self.accent)
         for i, rc in enumerate(self.var_rects):
-            on = (VARIANTS[i] == self.variant)
-            pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, rc, border_radius=10)
-            pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, rc,
-                             2 if on else 1, border_radius=10)
-            lbl = self._small.render(t("dame.var." + VARIANTS[i]), True,
-                                     COL_TEXT if on else COL_DIM)
-            s.blit(lbl, lbl.get_rect(midleft=(rc.x + 16, rc.centery)))
+            ui.draw_button(s, rc, t("dame.var." + VARIANTS[i]), self._small,
+                           selected=(VARIANTS[i] == self.variant),
+                           accent=self.accent)
         if not self.multiplayer:
-            dl = self._tiny.render(t("dame.difficulty"), True, COL_DIM)
+            dl = self._tiny.render(t("dame.difficulty"), True, ui.TEXT_DIM)
             s.blit(dl, dl.get_rect(midbottom=(cx, self.diff_rects[0].y - 4)))
             for i, rc in enumerate(self.diff_rects):
-                on = (i == self.diff)
-                pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, rc,
-                                 border_radius=8)
-                pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, rc,
-                                 2 if on else 1, border_radius=8)
-                lbl = self._tiny.render(t("dame.diff." + DIFFS[i]), True,
-                                        COL_TEXT if on else COL_DIM)
-                s.blit(lbl, lbl.get_rect(center=rc.center))
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.start_rect, 2, border_radius=10)
-        st = self._small.render(t("common.start"), True, COL_TEXT)
-        s.blit(st, st.get_rect(center=self.start_rect.center))
-        hint = self._tiny.render(t("dame.setup_hint"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, self.height - 16)))
+                ui.draw_button(s, rc, t("dame.diff." + DIFFS[i]), self._tiny,
+                               selected=(i == self.diff), accent=self.accent)
+        ui.draw_button(s, self.start_rect, t("common.start"), self._small,
+                       selected=True, accent=self.accent)
+        ui.draw_footer(s, self.width, self.height, t("dame.setup_hint"),
+                       self._tiny)

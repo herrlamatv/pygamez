@@ -2,6 +2,8 @@
 
 **🌐 Sprache / Language:** **🇩🇪 [Deutsch](#-deutsch)** · **🇬🇧 [English](#-english)** · **🇫🇷 [Français](other.readme.md#-francais)** · **🇪🇸 [Español](other.readme.md#-espanol)** · **🇵🇹 [Português](other.readme.md#-portugues)** <br> Game Available in : German, English, French, Spanish, Portuguese
 
+**📋 [Changelog](changelog.md)** (Deutsch / English)
+
 ---
 
 <a name="-deutsch"></a>
@@ -519,6 +521,12 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   **Weichzeichner** hinter dem Pause-Overlay.
 - Der **Vorspiel-Screen** jedes Spiels erscheint in dessen Akzentfarbe und zeigt
   den bisherigen Rekord als Chip an.
+- **Einheitlicher Spiel-Look**: alle 38 Spiele nutzen dieselbe Theme-Palette und
+  -Schrift wie das Menü - HUDs, Setup-Screens und Overlays folgen dem in den
+  Optionen gewählten Design (v4.1 / v4 / Classic), die Spielfelder behalten ihre
+  Identitätsfarben. Auflösungswechsel mitten im Spiel übernimmt jedes Spiel
+  sauber, und die Spielnamen im Menü sind sprachabhängig
+  (z. B. „Schach" → "Chess" / « Échecs »).
 - **In-Game-Wiki** („LamaWiki"): ausführliche Hilfe zu jedem Spiel (Steuerung,
   Modi, Punkte, Tipps) plus allgemeine Seiten - mit **Suchfeld**, Kategorien,
   scrollbaren Artikeln und Tastenkappen-Chips, in allen fünf Sprachen.
@@ -1213,6 +1221,11 @@ packages) and styled like a modern game launcher:
   pause overlay.
 - Each game's **pre-game screen** appears in that game's accent colour and shows
   the previous record as a chip.
+- **Unified in-game look**: all 38 games share the menu's theme palette and
+  font - HUDs, setup screens and overlays follow the design chosen in the
+  options (v4.1 / v4 / Classic), while each playfield keeps its identity
+  colours. Every game now handles mid-game resolution changes cleanly, and
+  menu names are language-aware (e.g. "Schach" → "Chess" / « Échecs »).
 - **In-game wiki** ("LamaWiki"): detailed help for every game (controls, modes,
   scoring, tips) plus general pages - with a **search box**, categories,
   scrollable articles and keycap chips, in all five languages. Reachable via

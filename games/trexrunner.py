@@ -24,6 +24,7 @@ import random
 import pygame
 
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
@@ -69,12 +70,7 @@ class TRexRunnerGame(Game):
         self.skin = max(0, min(len(SKINS) - 1, int(tr.get("skin", 1))))
         self.night_on = bool(tr.get("night", True))
 
-        self._big = pygame.font.SysFont("consolas", max(26, self.height // 12),
-                                        bold=True)
-        self._mid = pygame.font.SysFont("consolas", 20, bold=True)
-        self._small = pygame.font.SysFont("consolas", 15)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._mono = pygame.font.SysFont("consolas", 18, bold=True)
+        self._make_fonts()
 
         import highscore
         self.best = highscore.load_highscores().get(self.highscore_key, 0)
@@ -83,10 +79,27 @@ class TRexRunnerGame(Game):
         self._new_run()
         self.state = READY
 
+    def _make_fonts(self):
+        """Schriftgroessen aus der Fensterhoehe ableiten (Theme-Schriftart).
+
+        Der Punktestand nutzt eine Monospace-Schrift, damit die Ziffern im
+        Chrome-Stil ("HI 00512  00047") nicht wackeln.
+        """
+        h = self.height
+        self._big = ui.font(max(26, h // 12), bold=True)
+        self._mid = ui.font(max(16, h // 24), bold=True)
+        self._small = ui.font(max(12, h // 32))
+        self._tiny = ui.font(max(11, h // 36))
+        self._mono = ui.font(max(14, h // 26), bold=True, mono=True)
+
     def on_surface_changed(self):
-        self._big = pygame.font.SysFont("consolas", max(26, self.height // 12),
-                                        bold=True)
+        self._make_fonts()
         self._layout()
+        # Sterne ueber die neue Flaeche verteilen (sonst decken sie nach einem
+        # Wechsel auf eine groessere Aufloesung nur den alten Bereich ab).
+        self.stars = [(random.uniform(0, self.width),
+                       random.uniform(0, self.gy * 0.7),
+                       random.choice((1, 1, 2))) for _ in range(46)]
 
     def _layout(self):
         self.scale = self.height / 480.0
@@ -173,10 +186,13 @@ class TRexRunnerGame(Game):
             elif k in ("Down", "s", "S") or self.is_action(k, "down"):
                 self.duck_held = True
         elif event.kind == InputEvent.KEYUP:
+            # WICHTIG: dieselben Tasten pruefen wie beim KEYDOWN (inkl. der frei
+            # belegbaren Aktionstasten) - sonst bleibt der Sprung "haengen".
             k = event.key
-            if k in ("space", "Up", "w", "W"):
+            if k in ("space", "Up", "w", "W") or self.is_action(k, "action") \
+                    or self.is_action(k, "up"):
                 self.jump_held = False
-            elif k in ("Down", "s", "S"):
+            elif k in ("Down", "s", "S") or self.is_action(k, "down"):
                 self.duck_held = False
         elif event.kind == InputEvent.MOUSEDOWN:
             self.jump_held = True
@@ -538,7 +554,7 @@ class TRexRunnerGame(Game):
         go = self._big.render(t("common.game_over"), True, self._pal("text"))
         s.blit(go, go.get_rect(center=(cx, cy)))
         if self.score >= self.best and self.score > 0:
-            rec = self._small.render(t("trex.new_record"), True, (240, 190, 90))
+            rec = self._small.render(t("trex.new_record"), True, ui.GOLD)
             s.blit(rec, rec.get_rect(center=(cx, cy + int(30 * self.scale))))
         if int(self.dead_t * 2) % 2 == 0:
             hint = self._small.render(t("common.enter_restart"), True,

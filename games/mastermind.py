@@ -19,6 +19,7 @@ Klick auf einen gelegten Stift löscht ihn, [Enter]/OK wertet die Reihe aus,
 [Rücktaste]/< löscht den letzten. Nach Ende: Enter/Klick geht weiter.
 """
 
+import random
 from collections import Counter
 
 import pygame
@@ -66,7 +67,6 @@ class MastermindGame(Game):
     def reset(self):
         self.pins, self.colors, self.max_rows = MODE_CFG.get(self.mode,
                                                              MODE_CFG["classic"])
-        self.accent = ui.game_color(type(self).__name__)
         self.score = 0
         self.game_over = False
         self.solved_count = 0
@@ -85,7 +85,6 @@ class MastermindGame(Game):
         self._layout()
 
     def _new_code(self):
-        import random
         self.secret = [random.randrange(self.colors) for _ in range(self.pins)]
         self.rows_data = []              # (guess, (black, white))
         self.current = [None] * self.pins

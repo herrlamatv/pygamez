@@ -26,10 +26,12 @@ import random
 import pygame
 
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
-COL_BG = (14, 20, 17)
+# Identitaetsfarben des Spiels (bewusst fest, unabhaengig vom Theme):
+# das gruene Brett und die Schwarz/Weiss-Steine SIND Reversi.
 COL_BOARD = (28, 92, 58)
 COL_BOARD_DARK = (22, 74, 46)
 COL_GRID = (16, 54, 34)
@@ -38,13 +40,7 @@ COL_P1 = (30, 33, 42)         # Schwarz (Spieler 0)
 COL_P1_HI = (78, 84, 100)
 COL_P2 = (238, 240, 246)      # Weiss (Spieler 1)
 COL_P2_HI = (255, 255, 255)
-COL_TEXT = (228, 232, 240)
-COL_DIM = (150, 168, 158)
-COL_ACCENT = (63, 191, 143)   # = Sidebar-Farbe #3fbf8f
 COL_HINT = (90, 200, 150)
-COL_BTN = (30, 46, 38)
-COL_BTN_ON = (34, 78, 56)
-COL_BTN_BORDER = (64, 110, 86)
 
 DIFFS = ["easy", "medium", "hard"]
 DEPTHS = [1, 3, 4]
@@ -66,6 +62,11 @@ WEIGHTS = [
 ]
 
 SETUP, PLAY, OVER = "setup", "play", "over"
+
+
+def _rgba(color, alpha):
+    """Palette-Farbe (RGB) mit einem Alpha-Wert zu RGBA kombinieren."""
+    return (color[0], color[1], color[2], alpha)
 
 
 def _flips_for(board, r, c, pv):
@@ -130,24 +131,26 @@ class ReversiGame(Game):
         rv = self.settings.get("reversi", {}) if isinstance(self.settings, dict) else {}
         self.diff = max(0, min(2, int(rv.get("difficulty", 1))))
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self.wins = [0, 0]
         self.starter = 0
         self._build_setup_layout()
         self._new_round()
         self.state = PLAY if self.multiplayer else SETUP
 
+    def _make_fonts(self):
+        """Theme-Schriften, Groessen aus der Fensterhoehe abgeleitet."""
+        self._small = ui.font(max(13, min(22, self.height // 30)))
+        self._tiny = ui.font(max(11, min(18, self.height // 38)))
+        self._huge = ui.font(max(26, self.height // 11), bold=True)
+
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self._build_setup_layout()
         self._layout()
 
     def _layout(self):
-        self.hud_h = 46
+        self.hud_h = max(40, int(self.height * 0.085))
         self.cell = int(min((self.width - 40) / N,
                             (self.height - self.hud_h - 24) / N))
         self.bw = N * self.cell
@@ -448,7 +451,7 @@ class ReversiGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
         if self.state == SETUP:
             self._draw_setup(s)
             return
@@ -511,7 +514,7 @@ class ReversiGame(Game):
             r, c = self.last_move
             x = self.bx + c * self.cell
             y = self.by + r * self.cell
-            pygame.draw.rect(s, COL_ACCENT, (x, y, self.cell, self.cell), 2)
+            pygame.draw.rect(s, self.accent, (x, y, self.cell, self.cell), 2)
 
         # Auswahlrahmen (Tastatur/Maus)
         if human_turn:
@@ -523,17 +526,19 @@ class ReversiGame(Game):
                              (x + 1, y + 1, self.cell - 2, self.cell - 2), 2)
 
     def _draw_hud(self, s):
-        pygame.draw.rect(s, (20, 30, 24), (0, 0, self.width, self.hud_h))
-        pygame.draw.line(s, (40, 66, 50), (0, self.hud_h), (self.width, self.hud_h))
+        pygame.draw.rect(s, ui.PANEL, (0, 0, self.width, self.hud_h))
+        pygame.draw.line(s, ui.BORDER, (0, self.hud_h), (self.width, self.hud_h))
         cy = self.hud_h // 2
         a, b = _count(self.board)
         # Stein-Zaehler links (Schwarz) und rechts (Weiss)
         pygame.draw.circle(s, COL_P1, (18, cy), 9)
         pygame.draw.circle(s, COL_P1_HI, (15, cy - 3), 3)
-        img = self._small.render(str(a), True, COL_TEXT)
+        pygame.draw.circle(s, ui.BORDER_LIGHT, (18, cy), 9, 1)
+        img = self._small.render(str(a), True, ui.TEXT)
         s.blit(img, img.get_rect(midleft=(32, cy)))
         pygame.draw.circle(s, COL_P2, (self.width - 18, cy), 9)
-        img = self._small.render(str(b), True, COL_TEXT)
+        pygame.draw.circle(s, ui.BORDER_LIGHT, (self.width - 18, cy), 9, 1)
+        img = self._small.render(str(b), True, ui.TEXT)
         s.blit(img, img.get_rect(midright=(self.width - 32, cy)))
 
         if self.state == PLAY:
@@ -544,52 +549,77 @@ class ReversiGame(Game):
             else:
                 who = t("common.player1") if self.player == 0 else t("common.player2")
                 mid = t("rev.turn", name=who)
-            img = self._small.render(mid, True, COL_ACCENT)
+            img = self._small.render(mid, True, self.accent)
             s.blit(img, img.get_rect(center=(self.width // 2, cy)))
         if self.msg:
-            img = self._tiny.render(self.msg, True, (245, 200, 120))
+            img = self._tiny.render(self.msg, True, ui.GOLD)
             s.blit(img, img.get_rect(center=(self.width // 2, self.hud_h + 12)))
 
     def _draw_over(self, s):
-        ov = pygame.Surface((self.width, 96), pygame.SRCALPHA)
-        ov.fill((8, 14, 10, 205))
-        y = self.height // 2 - 48
+        hh = self._huge.get_height()
+        sh = self._small.get_height()
+        th = self._tiny.get_height()
+        band_h = hh + sh + th + 40
+        y = self.height // 2 - band_h // 2
+        ov = pygame.Surface((self.width, band_h), pygame.SRCALPHA)
+        ov.fill(_rgba(ui.PANEL, 235))
         s.blit(ov, (0, y))
+        pygame.draw.line(s, self.accent, (0, y), (self.width, y), 2)
+        pygame.draw.line(s, self.accent, (0, y + band_h - 1),
+                         (self.width, y + band_h - 1), 2)
         cx = self.width // 2
         a, b = _count(self.board)
+        yy = y + 12
         if self.winner is None:
-            head = self._huge.render(t("common.draw"), True, COL_DIM)
+            head = self._huge.render(t("common.draw"), True, ui.TEXT_DIM)
+            s.blit(head, head.get_rect(midtop=(cx, yy)))
         elif self.multiplayer:
+            # Siegtext in Theme-Farbe (lesbar), Stein-Symbol zeigt die Farbe.
             head = self._huge.render(t("common.player_wins", n=self.winner + 1),
-                                     True, self._disc_color(self.winner))
+                                     True, ui.TEXT)
+            ri = max(8, hh // 3)
+            x0 = cx - (head.get_width() + 2 * ri + 14) // 2
+            cyc = yy + hh // 2
+            pygame.draw.circle(s, self._disc_color(self.winner),
+                               (x0 + ri, cyc), ri)
+            pygame.draw.circle(s, self._disc_hi(self.winner),
+                               (x0 + ri - ri // 3, cyc - ri // 3),
+                               max(2, ri // 4))
+            pygame.draw.circle(s, ui.BORDER_LIGHT, (x0 + ri, cyc), ri, 1)
+            s.blit(head, head.get_rect(midleft=(x0 + 2 * ri + 14, cyc)))
         else:
             key = "rev.win_you" if self.winner == 0 else "rev.win_ai"
-            head = self._huge.render(t(key), True,
-                                     COL_ACCENT if self.winner == 0 else COL_DIM)
-        s.blit(head, head.get_rect(center=(cx, y + 30)))
-        sub = self._small.render(f"{a} : {b}", True, COL_TEXT)
-        s.blit(sub, sub.get_rect(center=(cx, y + 62)))
-        hint = self._tiny.render(t("rev.new_round"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, y + 84)))
+            head = self._huge.render(
+                t(key), True, self.accent if self.winner == 0 else ui.RED)
+            s.blit(head, head.get_rect(midtop=(cx, yy)))
+        yy += hh + 8
+        sub = self._small.render(f"{a} : {b}", True, ui.TEXT)
+        s.blit(sub, sub.get_rect(midtop=(cx, yy)))
+        yy += sh + 6
+        # Im Mehrspieler gibt es kein Setup -> nur den Neustart-Hinweis zeigen.
+        hint_key = "common.enter_restart" if self.multiplayer else "rev.new_round"
+        hint = self._tiny.render(t(hint_key), True, ui.TEXT_DIM)
+        s.blit(hint, hint.get_rect(midtop=(cx, yy)))
 
     # ----- Setup zeichnen -----------------------------------------------
     def _draw_setup(self, s):
         cx = self.width // 2
-        title = self._huge.render("REVERSI", True, COL_ACCENT)
+        title = self._huge.render(self.name.upper(), True, self.accent)
         s.blit(title, title.get_rect(center=(cx, int(self.height * 0.14))))
-        sub = self._small.render(t("rev.subtitle"), True, COL_DIM)
+        sub = self._small.render(t("rev.subtitle"), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.21))))
         for i, rc in enumerate(self.diff_rects):
             on = (i == self.diff)
-            pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, rc, border_radius=10)
-            pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, rc,
+            pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, rc,
+                             border_radius=10)
+            pygame.draw.rect(s, self.accent if on else ui.BORDER, rc,
                              2 if on else 1, border_radius=10)
             lbl = self.font.render(t("rev.diff." + DIFFS[i]), True,
-                                   COL_TEXT if on else COL_DIM)
+                                   ui.TEXT if on else ui.TEXT_DIM)
             s.blit(lbl, lbl.get_rect(midleft=(rc.x + 18, rc.centery)))
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.start_rect, 2, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=10)
+        pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=10)
+        st = self.font.render(t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
-        hint = self._tiny.render(t("rev.setup_hint"), True, COL_DIM)
+        hint = self._tiny.render(t("rev.setup_hint"), True, ui.TEXT_FAINT)
         s.blit(hint, hint.get_rect(center=(cx, self.height - 16)))

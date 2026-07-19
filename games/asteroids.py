@@ -39,12 +39,19 @@ import random
 import pygame
 
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
+# Identitätsfarben der Vektor-Optik - bewusst NICHT ans Theme gekoppelt.
+# Das Spielfeld ist immer dunkler Weltraum, daher brauchen Texte AUF dem
+# Feld helle Festfarben; der Setup-Screen dagegen nutzt die dynamische
+# ui.*-Palette (zur Zeichenzeit gelesen, damit ein Theme-Wechsel greift).
 COL_BG = (8, 10, 20)
 COL_TEXT = (232, 234, 240)
 COL_DIM = (140, 148, 168)
+COL_OK = (120, 200, 150)     # "bereit"-Grün auf dunklem Feld
+COL_BAD = (245, 110, 110)    # Game-Over-Rot auf dunklem Feld
 COL_ROCK = (205, 210, 225)
 COL_ROCK_FILL = (26, 30, 44)
 COL_P1 = (120, 230, 160)
@@ -52,9 +59,6 @@ COL_P2 = (140, 195, 255)
 COL_BULLET = (245, 245, 250)
 COL_UFO = (240, 150, 90)
 COL_UFO_SHOT = (250, 110, 110)
-COL_BTN = (44, 50, 66)
-COL_BTN_ON = (60, 120, 80)
-COL_ACCENT = (185, 194, 217)
 
 SHIP_R = 12                  # Kollisionsradius des Schiffs
 SHIP_TURN = 3.9              # Drehgeschwindigkeit (rad/s)
@@ -134,18 +138,45 @@ class AsteroidsGame(Game):
         self.ufos_on = bool(a.get("ufos", True))
         self.powerups_on = bool(a.get("powerups", True))
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
+        self._make_fonts()
         self.anim_t = 0.0
+        self._overlay = None     # gecachte Abdunkel-Fläche für den Game-Over-Schirm
 
-        # Sternenhimmel (statisch, zwei Helligkeiten)
-        self.stars = [(random.randrange(self.width), random.randrange(self.height),
-                       random.choice((1, 1, 2)),
-                       random.randint(60, 150)) for _ in range(70)]
+        self._make_stars()
 
         self._build_setup_layout()
         self.state = SETUP
         self._start_run()
+
+    def _make_fonts(self):
+        """Themen-Schriften, Größen aus der Fensterhöhe abgeleitet."""
+        h = self.height
+        self.font = ui.font(max(16, min(26, int(h * 0.040))))
+        self.big_font = ui.font(max(30, min(56, int(h * 0.088))), bold=True)
+        self._small = ui.font(max(13, min(20, int(h * 0.030))))
+        self._tiny = ui.font(max(11, min(17, int(h * 0.024))))
+        # Monospace für laufende Timer, damit die Anzeige nicht "zappelt"
+        self._tiny_mono = ui.font(max(11, min(17, int(h * 0.024))), mono=True)
+
+    def _make_stars(self):
+        """Sternenhimmel (statisch, zwei Helligkeiten) neu auswürfeln."""
+        self.stars = [(random.randrange(self.width), random.randrange(self.height),
+                       random.choice((1, 1, 2)),
+                       random.randint(60, 150)) for _ in range(70)]
+
+    def on_surface_changed(self):
+        """Nach einem Auflösungswechsel Schriften, Layout und Caches neu aufbauen."""
+        self._make_fonts()
+        self._make_stars()
+        self._build_setup_layout()
+        self._overlay = None
+        # Respawn-Punkte relativ zur neuen Fläche setzen
+        if self.multiplayer and len(self.ships) == 2:
+            self.ships[0].home = (self.width * 0.35, self.height / 2)
+            self.ships[1].home = (self.width * 0.65, self.height / 2)
+        else:
+            for sh in self.ships:
+                sh.home = (self.width / 2, self.height / 2)
 
     def _start_run(self):
         self.score = 0
@@ -174,16 +205,18 @@ class AsteroidsGame(Game):
         self._ending = 0.0           # Nachlauf zwischen letztem Tod und Game Over
 
         self._pressed = {"p1": set(), "p2": set()}
+        self.hint_t = 0.0            # zählt nur echte Spielzeit für den Steuerungs-Hinweis
 
     # ===================================================== Setup-Screen
     def _build_setup_layout(self):
         cx = self.width // 2
         bw = min(420, self.width - 60)
-        self.diff_panel = pygame.Rect(cx - bw // 2, 108, bw, 56)
-        self.diff_left = pygame.Rect(self.diff_panel.left, 108, 40, 56)
-        self.diff_right = pygame.Rect(self.diff_panel.right - 40, 108, 40, 56)
+        top = max(108, int(self.height * 0.22))
+        self.diff_panel = pygame.Rect(cx - bw // 2, top, bw, 56)
+        self.diff_left = pygame.Rect(self.diff_panel.left, top, 40, 56)
+        self.diff_right = pygame.Rect(self.diff_panel.right - 40, top, 40, 56)
         bh, gap = 42, 10
-        y0 = 186
+        y0 = top + 78
         self.ufo_rect = pygame.Rect(cx - bw // 2, y0, bw, bh)
         self.power_rect = pygame.Rect(cx - bw // 2, y0 + (bh + gap), bw, bh)
         self.start_rect = pygame.Rect(cx - 95, y0 + 2 * (bh + gap) + 8, 190, 50)
@@ -327,6 +360,7 @@ class AsteroidsGame(Game):
             self.shake = max(0.0, self.shake - dt * 1.6)
         if self.state != PLAY or self.game_over:
             return
+        self.hint_t += dt
 
         if self.flash_msg is not None:
             text, farbe, rest = self.flash_msg
@@ -773,28 +807,28 @@ class AsteroidsGame(Game):
             for lv in range(sh.lives):
                 lx = x - 14 - lv * 16 if rechts else x + 6 + lv * 16
                 self._draw_life_icon(s, lx, 44, sh.color)
-            # Aktive Power-Ups
+            # Aktive Power-Ups (Monospace, damit die Timer nicht springen)
             y = 58
             for kind, sym, farbe, _d in POWERUP_KINDS:
                 if kind in sh.powers:
-                    txt = self._tiny.render(f"{sym} {sh.powers[kind]:2.0f}s",
-                                            True, farbe)
+                    txt = self._tiny_mono.render(
+                        f"{sym} {math.ceil(sh.powers[kind]):2d}s", True, farbe)
                     s.blit(txt, (x - txt.get_width() if rechts else x, y))
                     y += 15
             # Hyperraum-Anzeige
             if sh.alive:
                 if sh.hyper_cd <= 0:
-                    txt = self._tiny.render(t("ast.hyper"), True, (120, 200, 150))
+                    txt = self._tiny.render(t("ast.hyper"), True, COL_OK)
                 else:
-                    txt = self._tiny.render(f"{t('ast.hyper')} {sh.hyper_cd:.0f}s",
-                                            True, COL_DIM)
+                    txt = self._tiny_mono.render(
+                        f"{t('ast.hyper')} {math.ceil(sh.hyper_cd)}s", True, COL_DIM)
                 s.blit(txt, (x - txt.get_width() if rechts else x, y))
 
-        w = self._small.render(t("ast.wave", n=self.wave), True, COL_ACCENT)
+        w = self._small.render(t("ast.wave", n=self.wave), True, self.accent)
         s.blit(w, w.get_rect(midtop=(self.width // 2, 8)))
 
         if self.banner_t > 0 and not self.game_over:
-            img = self.big_font.render(t("ast.wave", n=self.wave), True, COL_ACCENT)
+            img = self.big_font.render(t("ast.wave", n=self.wave), True, self.accent)
             img.set_alpha(max(0, min(255, int(255 * self.banner_t))))
             s.blit(img, img.get_rect(center=(self.width // 2, self.height // 2 - 40)))
 
@@ -803,7 +837,7 @@ class AsteroidsGame(Game):
             img = self.font.render(text, True, farbe)
             s.blit(img, img.get_rect(midtop=(self.width // 2, 40)))
 
-        if self.anim_t < 6:
+        if self.hint_t < 6:
             hint = self._tiny.render(t("ast.controls_hint"), True, COL_DIM)
             s.blit(hint, hint.get_rect(midbottom=(self.width // 2, self.height - 8)))
 
@@ -812,10 +846,16 @@ class AsteroidsGame(Game):
                             ((x + 5, y - 6), (x, y + 6), (x + 5, y + 3),
                              (x + 10, y + 6)), 1)
 
+    def _dim_overlay(self):
+        """Abdunkel-Fläche für den Game-Over-Schirm (gecacht statt pro Frame neu)."""
+        if self._overlay is None \
+                or self._overlay.get_size() != (self.width, self.height):
+            self._overlay = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            self._overlay.fill((0, 0, 0, 150))
+        return self._overlay
+
     def _draw_game_over(self):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((0, 0, 0, 150))
-        self.surface.blit(ov, (0, 0))
+        self.surface.blit(self._dim_overlay(), (0, 0))
         if self.multiplayer:
             if self.winner is None:
                 text, farbe = t("common.draw"), COL_TEXT
@@ -827,7 +867,7 @@ class AsteroidsGame(Game):
             self.draw_center_text(stand, self.font, COL_TEXT, -6)
         else:
             self.draw_center_text(t("common.game_over"), self.big_font,
-                                  (245, 110, 110), -50)
+                                  COL_BAD, -50)
             self.draw_center_text(t("common.points", score=self.ships[0].score),
                                   self.font, COL_TEXT, -6)
         self.draw_center_text(t("ast.wave_reached", n=self.wave),
@@ -836,29 +876,25 @@ class AsteroidsGame(Game):
 
     # ----- Setup zeichnen ---------------------------------------------------
     def _draw_setup(self):
+        """Setup-Screen im Theme-Stil (Palette wird zur Zeichenzeit gelesen)."""
         s = self.surface
-        s.fill(COL_BG)
-        for (x, y, gr, hell) in self.stars:
-            pygame.draw.circle(s, (hell, hell, min(255, hell + 25)), (x, y), gr)
+        ui.draw_background(s, self.width, self.height, stars=True)
 
-        title = self.big_font.render("ASTEROIDS", True, COL_TEXT)
-        s.blit(title, title.get_rect(center=(self.width // 2, 50)))
         modus = t("snake.multiplayer") if self.multiplayer else t("snake.singleplayer")
-        sub = self._small.render(modus, True, COL_DIM)
-        s.blit(sub, sub.get_rect(center=(self.width // 2, 86)))
+        ui.draw_title(s, self.width, "ASTEROIDS", subtitle=modus, accent=self.accent)
 
         d = DIFFS[self.diff]
-        pygame.draw.rect(s, (38, 44, 60), self.diff_panel, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.diff_panel, 2, border_radius=10)
+        pygame.draw.rect(s, ui.PANEL, self.diff_panel, border_radius=10)
+        pygame.draw.rect(s, self.accent, self.diff_panel, 2, border_radius=10)
         name = self.font.render(
-            t("ah.difficulty") + ":  " + t("ah.diff." + d["key"]), True, COL_TEXT)
+            t("ah.difficulty") + ":  " + t("ah.diff." + d["key"]), True, ui.TEXT)
         s.blit(name, name.get_rect(center=(self.diff_panel.centerx,
                                            self.diff_panel.top + 19)))
-        info = self._tiny.render(t("ast.diff_note"), True, COL_DIM)
+        info = self._tiny.render(t("ast.diff_note"), True, ui.TEXT_DIM)
         s.blit(info, info.get_rect(center=(self.diff_panel.centerx,
                                            self.diff_panel.top + 41)))
         for r, sym in ((self.diff_left, "<"), (self.diff_right, ">")):
-            arr = self.big_font.render(sym, True, COL_ACCENT)
+            arr = self.big_font.render(sym, True, self.accent)
             s.blit(arr, arr.get_rect(center=r.center))
 
         self._draw_row(self.ufo_rect, t("ast.ufos"),
@@ -868,22 +904,22 @@ class AsteroidsGame(Game):
                        t("common.on") if self.powerups_on else t("common.off"),
                        self.powerups_on)
 
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
-        s.blit(st, st.get_rect(center=self.start_rect.center))
+        ui.draw_button(s, self.start_rect, t("common.start"), self.font,
+                       selected=True, accent=ui.GREEN)
 
-        hint = self._small.render(t("ast.setup_hint"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 34)))
-        h2 = self._tiny.render(t("ast.controls_hint"), True, (120, 200, 150))
-        s.blit(h2, h2.get_rect(center=(self.width // 2, self.height - 14)))
+        hint = self._small.render(t("ast.setup_hint"), True, ui.TEXT_DIM)
+        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 38)))
+        h2 = self._tiny.render(t("ast.controls_hint"), True, ui.GREEN)
+        s.blit(h2, h2.get_rect(center=(self.width // 2, self.height - 16)))
 
     def _draw_row(self, rect, label, wert, an):
         s = self.surface
-        pygame.draw.rect(s, COL_BTN_ON if an else COL_BTN, rect, border_radius=8)
-        pygame.draw.rect(s, COL_DIM, rect, 1, border_radius=8)
-        lab = self.font.render(label, True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL if an else ui.BTN, rect, border_radius=8)
+        pygame.draw.rect(s, self.accent if an else ui.BORDER, rect, 1,
+                         border_radius=8)
+        lab = self.font.render(label, True, ui.TEXT)
         s.blit(lab, (rect.x + 16, rect.centery - lab.get_height() // 2))
         img = self.font.render(f"< {wert} >", True,
-                               COL_ACCENT if an else COL_DIM)
+                               self.accent if an else ui.TEXT_DIM)
         s.blit(img, (rect.right - img.get_width() - 16,
                      rect.centery - img.get_height() // 2))

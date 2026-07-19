@@ -99,7 +99,6 @@ class BlockJumpGame(Game):
 
     # ===================================================== Aufbau / Reset
     def reset(self):
-        self.accent = ui.game_color(type(self).__name__)
         mode = self.mode if self.mode in SEED_BASE else "normal"
         self.mode = mode
         cfg = self.settings.get("blockjump", {}) if isinstance(self.settings, dict) else {}
@@ -248,7 +247,7 @@ class BlockJumpGame(Game):
                     self._start_or_restart()
                 return
             self.held.add(k)
-            if k in ("space", "Up") and k == "space":
+            if k == "space":
                 self._jump()
             elif k in ("v", "V"):
                 self._toggle_view()

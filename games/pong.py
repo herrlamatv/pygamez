@@ -17,23 +17,22 @@ Pong - Einzelspieler (gegen KI) oder Mehrspieler (2 Spieler).
   Die Einstellung wird dauerhaft in settings.json ("pong") gespeichert.
 - Ball-Physik mit Beschleunigung und Winkel je nach Treffpunkt.
 - Es wird bis 5 Punkte gespielt. Als Highscore zählen die Punkte links (P1).
+- Optik: Themen-Hintergrund und dynamische ui.*-Palette; Schriftgrössen und
+  Positionen passen sich der Auflösung an (on_surface_changed).
 """
 
 import random
 import pygame
 
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
-COL_BG = (10, 10, 20)
-COL_FG = (235, 235, 235)
-COL_BALL = (255, 220, 90)
-COL_NET = (60, 60, 80)
-COL_P1 = (140, 230, 160)
-COL_P2 = (150, 200, 255)
-COL_DIM = (120, 128, 148)
-COL_HOLD = (120, 220, 140)   # "Halten"-Modus (grün)
+# Identitätsfarben des Spielfelds (bewusst fest, unabhängig vom Theme).
+COL_BALL = (255, 220, 90)    # klassischer gelber Ball
+COL_P1 = (140, 230, 160)     # linker Schläger (Spieler 1)
+COL_P2 = (150, 200, 255)     # rechter Schläger (Spieler 2)
 
 PADDLE_W = 12
 PADDLE_H = 80
@@ -77,9 +76,27 @@ class PongGame(Game):
         self.hold = {"p1": bool(pg.get("hold_p1", False)),
                      "p2": bool(pg.get("hold_p2", False))}
 
-        self._small = pygame.font.SysFont("consolas", 15)
+        self._make_fonts()
 
         self._serve(toward_player=random.choice([True, False]))
+
+    # ----- Layout / Theme ------------------------------------------------
+
+    def _make_fonts(self):
+        """Themen-Schriften, Grössen aus der Fensterhöhe abgeleitet."""
+        h = self.height
+        self.font = ui.font(max(16, h // 26))
+        self.big_font = ui.font(max(36, h // 10), bold=True)
+        self._small = ui.font(max(13, h // 36))
+
+    def on_surface_changed(self):
+        """Auflösungswechsel: Schriften neu aufbauen und alle
+        beweglichen Objekte in das neue Spielfeld einpassen."""
+        self._make_fonts()
+        self.player_y = max(0, min(self.height - PADDLE_H, self.player_y))
+        self.ai_y = max(0, min(self.height - PADDLE_H, self.ai_y))
+        self.ball_x = max(0.0, min(float(self.width - BALL_SIZE), self.ball_x))
+        self.ball_y = max(0.0, min(float(self.height - BALL_SIZE), self.ball_y))
 
     def _serve(self, toward_player):
         """Setzt den Ball in die Mitte und gibt ihm eine Startrichtung."""
@@ -228,14 +245,16 @@ class PongGame(Game):
 
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        # Themen-Hintergrund (intern gecacht - Sterne/Aurora bleiben lebendig).
+        ui.draw_background(s, self.width, self.height)
 
+        # Gestrichelte Mittellinie im dezenten Rahmenton des Themes.
         for y in range(0, self.height, 28):
-            pygame.draw.rect(s, COL_NET, (self.width // 2 - 2, y, 4, 16))
+            pygame.draw.rect(s, ui.BORDER, (self.width // 2 - 2, y, 4, 16))
 
         pygame.draw.rect(s, COL_P1, (20, self.player_y, PADDLE_W, PADDLE_H),
                          border_radius=4)
-        rechts_farbe = COL_P2 if self.multiplayer else COL_FG
+        rechts_farbe = COL_P2 if self.multiplayer else ui.TEXT
         pygame.draw.rect(s, rechts_farbe,
                          (self.width - 20 - PADDLE_W, self.ai_y, PADDLE_W, PADDLE_H),
                          border_radius=4)
@@ -243,15 +262,17 @@ class PongGame(Game):
         pygame.draw.rect(s, COL_BALL, (self.ball_x, self.ball_y, BALL_SIZE, BALL_SIZE),
                          border_radius=3)
 
-        ps = self.big_font.render(str(self.player_score), True, COL_FG)
-        ais = self.big_font.render(str(self.ai_score), True, COL_FG)
-        s.blit(ps, (self.width // 2 - 70, 20))
-        s.blit(ais, (self.width // 2 + 50, 20))
+        # Spielstand mittig oben (rechtsbündig/linksbündig um die Mittellinie).
+        ps = self.big_font.render(str(self.player_score), True, ui.TEXT)
+        ais = self.big_font.render(str(self.ai_score), True, ui.TEXT)
+        s.blit(ps, ps.get_rect(topright=(self.width // 2 - 44, 16)))
+        s.blit(ais, (self.width // 2 + 44, 16))
+
         links = "P1" if self.multiplayer else t("pong.you")
         rechts = "P2" if self.multiplayer else t("pong.ai")
-        s.blit(self.font.render(links, True, COL_P1), (30, 10))
-        r = self.font.render(rechts, True, rechts_farbe)
-        s.blit(r, (self.width - 60, 10))
+        s.blit(self.font.render(links, True, COL_P1), (34, 12))
+        r_img = self.font.render(rechts, True, rechts_farbe)
+        s.blit(r_img, (self.width - r_img.get_width() - 34, 12))
 
         if not self.game_over:
             self._draw_mode_hud()
@@ -264,24 +285,45 @@ class PongGame(Game):
             else:
                 gewonnen = self.player_score > self.ai_score
                 text = t("pong.won") if gewonnen else t("pong.lost")
-                farbe = (120, 230, 140) if gewonnen else (230, 120, 120)
-            self.draw_center_text(text, self.big_font, farbe, -20)
-            self.draw_center_text(t("common.enter_restart"), self.font, COL_FG, 30)
+                farbe = ui.GREEN if gewonnen else ui.RED
+            self._draw_overlay(text, farbe, t("common.enter_restart"))
+
+    def _draw_overlay(self, titel, farbe, hinweis):
+        """Endstand-Box: transluzentes Themen-Panel mit farbigem Rahmen."""
+        th = self.big_font.get_height()
+        hh = self.font.get_height()
+        bw = max(self.big_font.size(titel)[0], self.font.size(hinweis)[0]) + 80
+        bh = th + hh + 58
+        rect = pygame.Rect(0, 0, bw, bh)
+        rect.center = (self.width // 2, self.height // 2)
+
+        panel = pygame.Surface(rect.size, pygame.SRCALPHA)
+        pygame.draw.rect(panel, (*ui.PANEL[:3], 235), panel.get_rect(), border_radius=16)
+        pygame.draw.rect(panel, farbe, panel.get_rect(), 2, border_radius=16)
+        self.surface.blit(panel, rect)
+
+        img = self.big_font.render(titel, True, farbe)
+        self.surface.blit(img, img.get_rect(midtop=(rect.centerx, rect.y + 20)))
+        # Neustart-Hinweis sanft pulsieren lassen.
+        hint_col = ui.mix(ui.TEXT_DIM, ui.TEXT, ui.pulse(2.0, 0.2, 1.0))
+        img = self.font.render(hinweis, True, hint_col)
+        self.surface.blit(img, img.get_rect(midtop=(rect.centerx, rect.y + 20 + th + 14)))
 
     def _draw_mode_hud(self):
         """Zeigt unten den Bewegungsmodus je Steuerung + die Umschalttasten."""
         s = self.surface
+        y = self.height - self._small.get_height() - 8
 
         def zeile(scheme):
             modus = t("pong.hold") if self.hold[scheme] else t("pong.continuous")
-            col = COL_HOLD if self.hold[scheme] else COL_DIM
+            col = ui.GREEN if self.hold[scheme] else ui.TEXT_DIM
             return modus, col
 
         # Einzelspieler: beide Steuerungen gehören dir. Mehrspieler: 1=links, 2=rechts.
         m1, c1 = zeile("p1")
         t1 = self._small.render(t("pong.scheme1", mode=m1), True, c1)
-        s.blit(t1, (10, self.height - 22))
+        s.blit(t1, (10, y))
 
         m2, c2 = zeile("p2")
         t2 = self._small.render(t("pong.scheme2", mode=m2), True, c2)
-        s.blit(t2, (self.width - t2.get_width() - 10, self.height - 22))
+        s.blit(t2, (self.width - t2.get_width() - 10, y))

@@ -28,22 +28,16 @@ import random
 import pygame
 
 import store
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
 from . import cards as C
 
-COL_FELT = (20, 46, 36)
-COL_FELT_EDGE = (14, 34, 26)
-COL_TEXT = (225, 228, 238)
-COL_DIM = (170, 190, 180)
-COL_ACCENT = (200, 56, 79)     # = Sidebar-Farbe #c8384f
-COL_OK = (110, 205, 140)
-COL_BAD = (225, 95, 95)
-COL_GOLD = (245, 205, 100)
-COL_BTN = (30, 64, 50)
-COL_BTN_ON = (44, 92, 72)
-COL_BTN_BORDER = (80, 120, 100)
+# Tisch-Identität (Filz + Chip-Farben). Generische UI-Farben kommen zur
+# Zeichenzeit aus ui.* (Theme), die Akzentfarbe aus self.accent (Sidebar).
+COL_FELT = (23, 46, 37)
+COL_FELT_EDGE = (15, 33, 26)
 CHIP_COLS = {10: (110, 160, 235), 25: (110, 205, 140),
              50: (230, 120, 90), 100: (40, 40, 48)}
 
@@ -92,12 +86,8 @@ class BlackjackGame(Game):
             self.best = max(self.chips, START_CHIPS)
         self.score = self.best
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._big = pygame.font.SysFont("consolas", 22, bold=True)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
-        self.renderer = C.CardRenderer(COL_ACCENT)
+        self._make_fonts()
+        self.renderer = C.CardRenderer(self.accent)
         self._layout()
 
         self.shoe = []
@@ -110,14 +100,21 @@ class BlackjackGame(Game):
         self.dealer = []
         self.hole_hidden = True
         self.results = []        # Texte je Hand im PAYOUT
-        self.tweens = []         # (card, from, to, t, dur, flip_up)
+        self.tweens = []         # Karten-Fluege (card, dealer, idx, t, delay)
+        self._fly = {}
         self.dealer_wait = 0.0
         self.flip_t = 0.0
         self.state = BET if self.chips >= BETS[0] else BROKE
 
+    def _make_fonts(self):
+        """Theme-Schriften (ui.font cached selbst); _huge haengt an height."""
+        self._small = ui.font(16)
+        self._tiny = ui.font(13)
+        self._big = ui.font(22, bold=True)
+        self._huge = ui.font(max(26, self.height // 11), bold=True)
+
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self.renderer.clear()
         self._layout()
 
@@ -128,6 +125,14 @@ class BlackjackGame(Game):
         self.dealer_y = int(self.height * 0.20)
         self.player_y = int(self.height * 0.58)
         self.strip = pygame.Rect(0, self.height - 72, self.width, 72)
+        # Gecachte Flaechen (Software-Rendering: nicht pro Frame neu bauen)
+        self._felt = C.make_felt(self.width, self.height,
+                                 COL_FELT, COL_FELT_EDGE)
+        self._strip_bg = pygame.Surface(self.strip.size, pygame.SRCALPHA)
+        self._strip_bg.fill((8, 22, 16, 224))
+        self._overlay = pygame.Surface((self.width, self.height),
+                                       pygame.SRCALPHA)
+        self._overlay.fill((6, 14, 10, 200))
         # BET-Bedienung
         self.chip_rects = [pygame.Rect(24 + i * 56, self.strip.y + 14, 44, 44)
                            for i in range(4)]
@@ -191,18 +196,18 @@ class BlackjackGame(Game):
         self.tweens = []
         self.state = DEALING
         # Reihenfolge: Spieler, Dealer, Spieler, Dealer (verdeckt)
-        for i, (target, up) in enumerate(((self.hands[0], True),
-                                          (self.dealer, True),
-                                          (self.hands[0], True),
-                                          (self.dealer, False))):
+        for target, up in ((self.hands[0], True), (self.dealer, True),
+                           (self.hands[0], True), (self.dealer, False)):
             card = self._draw_card(up)
             target.append(card)
-            self._enqueue(card, target is self.dealer)
+            self._enqueue(card, target is self.dealer, len(target) - 1)
         self.play_sound("move")
 
-    def _enqueue(self, card, is_dealer):
-        self.tweens.append(dict(card=card, t=0.0,
-                                delay=len(self.tweens) * DEAL_T))
+    def _enqueue(self, card, is_dealer, idx):
+        """Karte fliegt zeitversetzt vom Schuh an ihren Platz (idx in Hand)."""
+        self.tweens.append(dict(card=card, dealer=is_dealer, idx=idx, t=0.0,
+                                delay=len(self.tweens) * DEAL_T,
+                                landed=False))
 
     def _after_deal(self):
         """Nach der Startausgabe: Peek/Blackjack prüfen."""
@@ -299,8 +304,12 @@ class BlackjackGame(Game):
 
     def _start_dealer(self):
         self.state = DEALER
+        # Hole-Card JETZT aufdecken, damit der Flip sichtbar ablaeuft
+        # (vorher blieb hole_hidden True und die Animation war toter Code).
+        self.hole_hidden = False
         self.flip_t = FLIP_T
         self.dealer_wait = DEALER_T
+        self.play_sound("rotate")
 
     # ----- Dealer + Auszahlung ------------------------------------------------
 
@@ -444,7 +453,11 @@ class BlackjackGame(Game):
             done = True
             for tw in self.tweens:
                 tw["t"] += dt
-                if tw["t"] < tw["delay"] + DEAL_T:
+                if tw["t"] >= tw["delay"] + DEAL_T:
+                    if not tw["landed"]:
+                        tw["landed"] = True
+                        self.play_sound("click")
+                else:
                     done = False
             if done:
                 self.tweens = []
@@ -460,16 +473,19 @@ class BlackjackGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_FELT)
-        pygame.draw.rect(s, COL_FELT_EDGE, (0, 0, self.width, self.height), 6)
+        s.blit(self._felt, (0, 0))
 
         # Schuh oben rechts
         s.blit(self.renderer.back(self.cw, self.ch), self.shoe_pos)
-        n = self._tiny.render(str(len(self.shoe)), True, COL_DIM)
+        n = self._tiny.render(str(len(self.shoe)), True, ui.TEXT_DIM)
         s.blit(n, (self.shoe_pos[0], self.shoe_pos[1] + self.ch + 4))
 
+        # Karten, die gerade vom Schuh fliegen, im Stapel auslassen
+        self._fly = self._flying_cards() if self.state == DEALING else {}
         self._draw_dealer(s)
         self._draw_player(s)
+        if self._fly:
+            self._draw_flying(s)
         self._draw_topbar(s)
 
         if self.state == BET:
@@ -484,46 +500,72 @@ class BlackjackGame(Game):
     def _card_img(self, card, w=None, h=None):
         return self.renderer.get(card, w or self.cw, h or self.ch)
 
+    def _flying_cards(self):
+        """{id(card): True} fuer Karten, die noch nicht gelandet sind."""
+        return {id(tw["card"]): True for tw in self.tweens
+                if tw["t"] < tw["delay"] + DEAL_T}
+
+    def _draw_flying(self, s):
+        """Karten-Tween: vom Schuh mit Ease-Out an den Zielplatz fliegen."""
+        for tw in self.tweens:
+            p = (tw["t"] - tw["delay"]) / DEAL_T
+            if p <= 0 or p >= 1:
+                continue                     # noch im Schuh bzw. gelandet
+            e = 1 - (1 - p) ** 2
+            if tw["dealer"]:
+                tx, ty = self._dealer_positions(len(self.dealer))[tw["idx"]]
+            else:
+                tx, ty = self._hand_positions(0, len(self.hands[0]))[tw["idx"]]
+            sx, sy = self.shoe_pos
+            card = tw["card"]
+            img = self._card_img(card) if card.face_up \
+                else self.renderer.back(self.cw, self.ch)
+            s.blit(img, (int(sx + (tx - sx) * e), int(sy + (ty - sy) * e)))
+
     def _draw_dealer(self, s):
-        lbl = self._small.render(t("bj.dealer"), True, COL_DIM)
+        lbl = self._small.render(t("bj.dealer"), True, ui.TEXT_DIM)
         s.blit(lbl, lbl.get_rect(midbottom=(self.width // 2,
                                             self.dealer_y - 8)))
         pos = self._dealer_positions(len(self.dealer))
         for i, card in enumerate(self.dealer):
+            if id(card) in self._fly:
+                continue
             x, y = pos[i]
-            if i == 1 and self.hole_hidden:
-                s.blit(self.renderer.back(self.cw, self.ch), (x, y))
-            elif i == 1 and self.state == DEALER and self.flip_t > 0:
-                # Flip-Animation: Breite skaliert
+            if i == 1 and self.state == DEALER and self.flip_t > 0:
+                # Flip-Animation: Breite skaliert (Rücken -> Vorderseite)
                 f = self.flip_t / FLIP_T
                 w = max(2, int(self.cw * abs(2 * f - 1)))
                 img = self.renderer.back(self.cw, self.ch) if f > 0.5 \
                     else self._card_img(card)
                 img = pygame.transform.scale(img, (w, self.ch))
                 s.blit(img, (x + (self.cw - w) // 2, y))
+            elif i == 1 and self.hole_hidden:
+                s.blit(self.renderer.back(self.cw, self.ch), (x, y))
             else:
                 s.blit(self._card_img(card), (x, y))
         if self.dealer and not self.hole_hidden and \
                 not (self.state == DEALER and self.flip_t > 0):
             dv, _ = hand_value(self.dealer)
             img = self._big.render(str(dv), True,
-                                   COL_BAD if dv > 21 else COL_TEXT)
+                                   ui.RED if dv > 21 else ui.TEXT)
             s.blit(img, (pos[-1][0] + self.cw + 12, self.dealer_y + 4))
 
     def _draw_player(self, s):
         for hi, h in enumerate(self.hands):
             pos = self._hand_positions(hi, len(h))
             for i, card in enumerate(h):
+                if id(card) in self._fly:
+                    continue
                 s.blit(self._card_img(card), pos[i])
-            if h:
+            if h and self.state != DEALING:
                 total, soft = hand_value(h)
                 txt = f"{total}" + ("s" if soft and total <= 21 else "")
-                col = COL_BAD if total > 21 else \
-                    (COL_GOLD if total == 21 else COL_TEXT)
+                col = ui.RED if total > 21 else \
+                    (ui.GOLD if total == 21 else ui.TEXT)
                 img = self._big.render(txt, True, col)
                 s.blit(img, (pos[-1][0] + self.cw + 12, self.player_y + 4))
                 bet = self._tiny.render(f"{t('bj.bet')}: {self.hand_bets[hi]}",
-                                        True, COL_DIM)
+                                        True, ui.TEXT_DIM)
                 s.blit(bet, (pos[0][0], self.player_y + self.ch + 6))
             # Pfeil auf aktive Hand (bei Split)
             if len(self.hands) > 1 and hi == self.active \
@@ -531,86 +573,96 @@ class BlackjackGame(Game):
                 k = abs(pygame.time.get_ticks() % 800 - 400) / 400
                 ax = pos[0][0] - 18
                 ay = self.player_y + self.ch // 2 + int(6 * k)
-                pygame.draw.polygon(s, COL_GOLD,
+                pygame.draw.polygon(s, ui.GOLD,
                                     [(ax, ay - 8), (ax + 12, ay),
                                      (ax, ay + 8)])
 
     def _draw_topbar(self, s):
         img = self._big.render(f"{t('bj.chips')}: {self.chips}", True,
-                               COL_GOLD)
+                               ui.GOLD)
         s.blit(img, (16, 12))
-        img = self._small.render(f"{t('bj.best')}: {self.best}", True, COL_DIM)
+        img = self._small.render(f"{t('bj.best')}: {self.best}", True,
+                                 ui.TEXT_DIM)
         s.blit(img, (16, 40))
 
+    def _draw_strip(self, s):
+        """Halbtransparente Bedienleiste unten mit Akzent-Oberkante."""
+        s.blit(self._strip_bg, self.strip.topleft)
+        pygame.draw.line(s, self.accent, self.strip.topleft,
+                         self.strip.topright, 2)
+
+    def _draw_btn(self, s, rect, label, primary=False, on=True):
+        """Button im Theme-Look; primary = Akzentrahmen mit sanftem Puls."""
+        pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, rect,
+                         border_radius=10)
+        if primary and on:
+            border = ui.mix(self.accent, (255, 255, 255),
+                            0.25 * ui.pulse(2.2, 0.0, 1.0))
+            pygame.draw.rect(s, border, rect, 2, border_radius=10)
+        else:
+            pygame.draw.rect(s, ui.BORDER_LIGHT, rect, 1, border_radius=10)
+        img = self._small.render(label, True, ui.TEXT if on else ui.TEXT_DIM)
+        s.blit(img, img.get_rect(center=rect.center))
+
     def _draw_bet_ui(self, s):
-        pygame.draw.rect(s, (14, 34, 26), self.strip)
-        pygame.draw.line(s, COL_BTN_BORDER, self.strip.topleft,
-                         self.strip.topright)
+        self._draw_strip(s)
         for i, r in enumerate(self.chip_rects):
             val = BETS[i]
             col = CHIP_COLS[val]
             pygame.draw.circle(s, col, r.center, 22)
-            pygame.draw.circle(s, (240, 240, 245), r.center, 22, 2)
-            pygame.draw.circle(s, (240, 240, 245), r.center, 15, 1)
+            pygame.draw.circle(s, ui.TEXT, r.center, 22, 2)
+            pygame.draw.circle(s, ui.TEXT, r.center, 15, 1)
             img = self._tiny.render(str(val), True,
-                                    (20, 24, 30) if val != 100 else COL_TEXT)
+                                    (20, 24, 30) if val != 100 else ui.TEXT)
             s.blit(img, img.get_rect(center=r.center))
-        mid = self._big.render(f"{t('bj.bet')}: {self.bet}", True, COL_TEXT)
+        mid = self._big.render(f"{t('bj.bet')}: {self.bet}", True, ui.TEXT)
         s.blit(mid, mid.get_rect(center=(self.width // 2,
                                          self.strip.centery)))
-        for r, key, active in ((self.clear_rect, "bj.clear", self.bet > 0),
-                               (self.deal_rect, "bj.deal",
-                                self.bet >= BETS[0])):
-            pygame.draw.rect(s, COL_BTN_ON if active else COL_BTN, r,
-                             border_radius=10)
-            pygame.draw.rect(s, COL_BTN_BORDER, r, 1, border_radius=10)
-            img = self._small.render(t(key), True,
-                                     COL_TEXT if active else COL_DIM)
-            s.blit(img, img.get_rect(center=r.center))
+        self._draw_btn(s, self.clear_rect, t("bj.clear"), on=self.bet > 0)
+        self._draw_btn(s, self.deal_rect, t("bj.deal"), primary=True,
+                       on=self.bet >= BETS[0])
         if self.bet < BETS[0]:
             hint = self._tiny.render(t("bj.min_bet", n=BETS[0]), True,
-                                     COL_DIM)
+                                     ui.TEXT_DIM)
             s.blit(hint, hint.get_rect(midbottom=(self.width // 2,
                                                   self.strip.y - 6)))
 
     def _draw_action_ui(self, s):
-        pygame.draw.rect(s, (14, 34, 26), self.strip)
-        pygame.draw.line(s, COL_BTN_BORDER, self.strip.topleft,
-                         self.strip.topright)
+        self._draw_strip(s)
         avail = {"hit": True, "stand": True,
                  "double": self._can_double(), "split": self._can_split()}
         keys = {"hit": "H", "stand": "S", "double": "D", "split": "X"}
         for key, r in self.action_rects.items():
-            on = avail[key]
-            pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, r,
-                             border_radius=10)
-            pygame.draw.rect(s, COL_BTN_BORDER, r, 1, border_radius=10)
-            img = self._small.render(f"{t('bj.' + key)} ({keys[key]})", True,
-                                     COL_TEXT if on else COL_DIM)
-            s.blit(img, img.get_rect(center=r.center))
+            self._draw_btn(s, r, f"{t('bj.' + key)} ({keys[key]})",
+                           on=avail[key])
 
     def _draw_results(self, s):
-        pygame.draw.rect(s, (14, 34, 26), self.strip)
+        self._draw_strip(s)
         texts = []
         for i, res in enumerate(self.results):
             label = t("bj." + res)
             if len(self.results) > 1:
                 label = f"{t('bj.hand')} {i + 1}: {label}"
             texts.append(label)
-        img = self._big.render("   ·   ".join(texts), True, COL_GOLD)
+        img = self._big.render("   ·   ".join(texts), True, ui.GOLD)
         s.blit(img, img.get_rect(center=(self.width // 2,
                                          self.strip.centery - 10)))
-        hint = self._tiny.render(t("common.enter_restart"), True, COL_DIM)
+        hint = self._tiny.render(t("common.enter_restart"), True,
+                                 ui.TEXT_FAINT)
         s.blit(hint, hint.get_rect(center=(self.width // 2,
                                            self.strip.bottom - 14)))
 
     def _draw_broke(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((10, 12, 22, 185))
-        s.blit(ov, (0, 0))
+        s.blit(self._overlay, (0, 0))
         cx, cy = self.width // 2, self.height // 2
-        head = self._huge.render(t("bj.broke"), True, COL_BAD)
-        s.blit(head, head.get_rect(center=(cx, cy - 40)))
+        pw = min(self.width - 60, 460)
+        panel = pygame.Rect(cx - pw // 2, cy - 92, pw, 184)
+        ui.draw_panel(s, panel, accent_top=ui.RED)
+        head = self._huge.render(t("bj.broke"), True, ui.RED)
+        s.blit(head, head.get_rect(center=(cx, cy - 42)))
+        best = self._small.render(f"{t('bj.best')}: {self.best}", True,
+                                  ui.TEXT_DIM)
+        s.blit(best, best.get_rect(center=(cx, cy + 2)))
         sub = self._small.render(t("bj.broke_restart", n=START_CHIPS), True,
-                                 COL_DIM)
-        s.blit(sub, sub.get_rect(center=(cx, cy + 8)))
+                                 ui.TEXT)
+        s.blit(sub, sub.get_rect(center=(cx, cy + 34)))

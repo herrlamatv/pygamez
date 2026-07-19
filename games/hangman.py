@@ -22,7 +22,7 @@ import pygame
 
 import ui
 import i18n
-from game_base import Game, InputEvent
+from game_base import Game, InputEvent, LocalizedName
 from i18n import t
 
 from .hangman_words import words_for
@@ -42,19 +42,9 @@ _QWERTZ = ["QWERTZUIOP", "ASDFGHJKL", "YXCVBNM"]
 PLAY, SOLVED, OVER = "play", "solved", "over"
 
 
-class _MenuName:
-    """Menü-Name: auf Deutsch 'Galgenmännchen', in allen anderen Sprachen 'Hangman'.
-
-    Als Deskriptor gebaut, weil das Menü den Namen direkt über die KLASSE liest
-    (``cls.name``) und nicht übersetzt - so bleibt er trotzdem sprachabhängig.
-    """
-
-    def __get__(self, obj, owner=None):
-        return "Galgenmännchen" if i18n.get_language() == "de" else "Hangman"
-
-
 class HangmanGame(Game):
-    name = _MenuName()
+    name = LocalizedName("Hangman", de="Galgenmännchen", fr="Le pendu",
+                         es="Ahorcado", pt="Forca")
     highscore_key = "hangman"
     supports_multiplayer = False
 
@@ -63,7 +53,6 @@ class HangmanGame(Game):
 
     # ===================================================== Aufbau / Reset
     def reset(self):
-        self.accent = ui.game_color(type(self).__name__)
         self.lang = i18n.get_language()
         self.words = words_for(self.lang, self.mode if self.mode in
                                ("short", "mixed", "long") else "mixed")

@@ -22,21 +22,17 @@ import random
 import pygame
 
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
-COL_BG = (13, 16, 27)
+# Identitätsfarben der Karten & Spieler - bleiben bewusst fest, alle
+# generischen UI-Farben kommen zur Laufzeit dynamisch aus der ui-Palette.
 COL_CARD_BACK = (56, 64, 92)
 COL_CARD_BACK_D = (40, 46, 66)
 COL_CARD_FACE = (232, 234, 240)
 COL_CARD_DONE = (58, 66, 88)
-COL_TEXT = (225, 228, 238)
-COL_DIM = (150, 158, 178)
-COL_ACCENT = (143, 126, 242)      # = Sidebar-Farbe #8f7ef2
-COL_OK = (110, 205, 140)
-COL_BTN = (40, 46, 66)
-COL_BTN_ON = (66, 58, 104)
-COL_BTN_BORDER = (74, 84, 116)
+COL_CARD_EDGE = (74, 84, 116)
 COL_P1 = (88, 156, 255)
 COL_P2 = (245, 205, 100)
 
@@ -64,12 +60,12 @@ def _pts_star(cx, cy, r):
     return pts
 
 
-def _draw_star(s, rect, col):
+def _draw_star(s, rect, col, face=COL_CARD_FACE):
     pygame.draw.polygon(s, col, _pts_star(rect.centerx, rect.centery,
                                           rect.w * 0.45))
 
 
-def _draw_heart(s, rect, col):
+def _draw_heart(s, rect, col, face=COL_CARD_FACE):
     r = rect.w // 4
     cx, cy = rect.centerx, rect.centery - r // 3
     pygame.draw.circle(s, col, (cx - r + 1, cy), r)
@@ -79,33 +75,35 @@ def _draw_heart(s, rect, col):
                                  (cx, cy + 2 * r)])
 
 
-def _draw_moon(s, rect, col):
+def _draw_moon(s, rect, col, face=COL_CARD_FACE):
+    # Der "Ausschnitt" wird mit der aktuellen Kartenfarbe gefüllt - sonst
+    # bliebe auf gedimmten (gefundenen) Karten ein heller Kreis stehen.
     r = int(rect.w * 0.4)
     pygame.draw.circle(s, col, rect.center, r)
-    pygame.draw.circle(s, COL_CARD_FACE,
+    pygame.draw.circle(s, face,
                        (rect.centerx + r // 2, rect.centery - r // 3), r)
 
 
-def _draw_diamond(s, rect, col):
+def _draw_diamond(s, rect, col, face=COL_CARD_FACE):
     cx, cy = rect.center
     w, h = rect.w * 0.38, rect.h * 0.46
     pygame.draw.polygon(s, col, [(cx, cy - h), (cx + w, cy),
                                  (cx, cy + h), (cx - w, cy)])
 
 
-def _draw_triangle(s, rect, col):
+def _draw_triangle(s, rect, col, face=COL_CARD_FACE):
     cx, cy = rect.center
     r = rect.w * 0.42
     pygame.draw.polygon(s, col, [(cx, cy - r), (cx + r, cy + r * 0.7),
                                  (cx - r, cy + r * 0.7)])
 
 
-def _draw_ring(s, rect, col):
+def _draw_ring(s, rect, col, face=COL_CARD_FACE):
     pygame.draw.circle(s, col, rect.center, int(rect.w * 0.4),
                        max(3, rect.w // 8))
 
 
-def _draw_cross(s, rect, col):
+def _draw_cross(s, rect, col, face=COL_CARD_FACE):
     cx, cy = rect.center
     a = int(rect.w * 0.42)
     b = max(3, rect.w // 7)
@@ -113,7 +111,7 @@ def _draw_cross(s, rect, col):
     pygame.draw.rect(s, col, (cx - a, cy - b, 2 * a, 2 * b), border_radius=b)
 
 
-def _draw_bolt(s, rect, col):
+def _draw_bolt(s, rect, col, face=COL_CARD_FACE):
     cx, cy = rect.center
     w, h = rect.w * 0.32, rect.h * 0.45
     pygame.draw.polygon(s, col, [(cx + w * 0.4, cy - h), (cx - w, cy + h * 0.15),
@@ -140,16 +138,21 @@ class MemoryGame(Game):
         key = ms.get("size", "6x6")
         self.size_idx = SIZE_KEYS.index(key) if key in SIZE_KEYS else 1
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._build_fonts()
+        self._overlay = None
         self._build_setup_layout()
         self.state = SETUP
 
+    def _build_fonts(self):
+        """Schriftgrößen aus der aktuellen Auflösung ableiten (Theme-Fonts)."""
+        h = self.height
+        self._small = ui.font(max(14, h // 30))
+        self._tiny = ui.font(max(11, h // 36))
+        self._huge = ui.font(max(26, h // 11), bold=True)
+
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._build_fonts()
+        self._overlay = None
         self._build_setup_layout()
         if self.state == PLAY:
             self._layout_board()
@@ -290,8 +293,10 @@ class MemoryGame(Game):
         r, c = divmod(self.cursor, self.cols)
         c = max(0, min(self.cols - 1, c + dx))
         r = max(0, min(self.rows_n - 1, r + dy))
-        self.cursor = r * self.cols + c
-        self.play_sound("move")
+        new = r * self.cols + c
+        if new != self.cursor:      # am Rand: kein Klick-Geräusch
+            self.cursor = new
+            self.play_sound("move")
 
     # ===================================================== Spiellogik
     def _flip(self, i):
@@ -362,7 +367,7 @@ class MemoryGame(Game):
             self._draw_setup()
             return
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
         for i, card in enumerate(self.cards):
             self._draw_card(s, i, card)
         self._draw_hud(s)
@@ -381,28 +386,28 @@ class MemoryGame(Game):
         if front:
             face_col = COL_CARD_DONE if card["state"] == "done" else COL_CARD_FACE
             pygame.draw.rect(s, face_col, r, border_radius=rad)
-            pygame.draw.rect(s, COL_BTN_BORDER, r, 2, border_radius=rad)
+            pygame.draw.rect(s, COL_CARD_EDGE, r, 2, border_radius=rad)
             if w > rect.w * 0.5:   # Motiv erst zeigen, wenn Karte weit genug offen
                 shape_i, col_i = card["motif"]
                 col = MOTIF_COLORS[col_i]
                 if card["state"] == "done":
                     col = tuple(int(v * 0.55) for v in col)
                 inner = rect.inflate(-rect.w // 4, -rect.h // 3)
-                SHAPES[shape_i](s, inner, col)
+                SHAPES[shape_i](s, inner, col, face_col)
                 if card["state"] == "done":
                     bx, by = rect.right - 12, rect.bottom - 10
-                    pygame.draw.lines(s, COL_OK, False,
+                    pygame.draw.lines(s, ui.GREEN, False,
                                       [(bx - 6, by - 3), (bx - 3, by),
                                        (bx + 3, by - 7)], 2)
         else:
             pygame.draw.rect(s, COL_CARD_BACK, r, border_radius=rad)
             pygame.draw.rect(s, COL_CARD_BACK_D, r, 2, border_radius=rad)
             if w > rect.w * 0.5:
-                q = self._small.render("?", True, COL_ACCENT)
+                q = self._small.render("?", True, self.accent)
                 s.blit(q, q.get_rect(center=rect.center))
 
         if i == self.cursor and not self.game_over:
-            pygame.draw.rect(s, COL_ACCENT, rect.inflate(6, 6), 2,
+            pygame.draw.rect(s, self.accent, rect.inflate(6, 6), 2,
                              border_radius=rad + 3)
 
     def _fmt_time(self):
@@ -410,83 +415,92 @@ class MemoryGame(Game):
         return f"{sec // 60:02d}:{sec % 60:02d}"
 
     def _draw_hud(self, s):
-        pygame.draw.rect(s, (24, 29, 44), (0, 0, self.width, self.hud_h))
-        pygame.draw.line(s, (52, 60, 86), (0, self.hud_h),
+        pygame.draw.rect(s, ui.PANEL, (0, 0, self.width, self.hud_h))
+        pygame.draw.line(s, ui.BORDER, (0, self.hud_h),
                          (self.width, self.hud_h))
         cy = self.hud_h // 2
         if self.multiplayer:
             p1 = self._small.render(
                 t("common.player1") + "  " + t("mem.player_pairs", n=self.pairs[0]),
-                True, COL_P1 if self.turn == 0 else COL_DIM)
+                True, COL_P1 if self.turn == 0 else ui.TEXT_DIM)
             s.blit(p1, p1.get_rect(midleft=(12, cy)))
             p2 = self._small.render(
                 t("mem.player_pairs", n=self.pairs[1]) + "  " + t("common.player2"),
-                True, COL_P2 if self.turn == 1 else COL_DIM)
+                True, COL_P2 if self.turn == 1 else ui.TEXT_DIM)
             s.blit(p2, p2.get_rect(midright=(self.width - 12, cy)))
             who = t("common.player1") if self.turn == 0 else t("common.player2")
-            mid = self._small.render(t("mem.turn", name=who), True, COL_ACCENT)
+            mid = self._small.render(t("mem.turn", name=who), True, self.accent)
             s.blit(mid, mid.get_rect(center=(self.width // 2, cy)))
         else:
-            mv = self._small.render(t("mem.moves", n=self.moves), True, COL_TEXT)
+            mv = self._small.render(t("mem.moves", n=self.moves), True, ui.TEXT)
             s.blit(mv, mv.get_rect(midleft=(12, cy)))
             tm = self._small.render(t("mem.time", t=self._fmt_time()), True,
-                                    COL_ACCENT)
+                                    self.accent)
             s.blit(tm, tm.get_rect(center=(self.width // 2, cy)))
             left = len(self.cards) // 2 - self.found
-            pr = self._small.render(t("mem.pairs", n=left), True, COL_DIM)
+            pr = self._small.render(t("mem.pairs", n=left), True, ui.TEXT_DIM)
             s.blit(pr, pr.get_rect(midright=(self.width - 12, cy)))
 
     def _draw_result(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((10, 12, 22, 185))
-        s.blit(ov, (0, 0))
+        # Abdunkelung wird gecacht (kein Alpha-Vollbild-Fill pro Frame).
+        if self._overlay is None \
+                or self._overlay.get_size() != (self.width, self.height):
+            ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            ov.fill((8, 10, 16, 185))
+            self._overlay = ov
+        s.blit(self._overlay, (0, 0))
         cx, cy = self.width // 2, self.height // 2
         if self.multiplayer:
             if self.pairs[0] == self.pairs[1]:
-                head = self._huge.render(t("common.draw"), True, COL_DIM)
+                head = self._huge.render(t("common.draw"), True, ui.TEXT_DIM)
             else:
                 n = 1 if self.pairs[0] > self.pairs[1] else 2
                 head = self._huge.render(t("common.player_wins", n=n), True,
                                          COL_P1 if n == 1 else COL_P2)
             sub = self.font.render(f"{self.pairs[0]} : {self.pairs[1]}", True,
-                                   COL_TEXT)
+                                   ui.TEXT)
         else:
             head = self._huge.render(
-                t("mem.win", t=self._fmt_time(), m=self.moves), True, COL_OK)
+                t("mem.win", t=self._fmt_time(), m=self.moves), True, ui.GREEN)
             sub = self.font.render(t("common.points", score=self.score), True,
-                                   COL_TEXT)
+                                   ui.TEXT)
+        # Panel hinter dem Ergebnis (Akzent-Rahmen, Breite folgt dem Inhalt).
+        pw = max(min(self.width - 40, 460), head.get_width() + 40)
+        panel = pygame.Rect(cx - pw // 2, cy - 90, pw, 160)
+        pygame.draw.rect(s, ui.PANEL, panel, border_radius=14)
+        pygame.draw.rect(s, self.accent, panel, 2, border_radius=14)
         s.blit(head, head.get_rect(center=(cx, cy - 50)))
         s.blit(sub, sub.get_rect(center=(cx, cy + 4)))
-        hint = self._small.render(t("mem.retry"), True, COL_DIM)
+        hint = self._small.render(t("mem.retry"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(cx, cy + 40)))
 
     # ----- Setup zeichnen -----------------------------------------------
     def _draw_setup(self):
         s = self.surface
-        s.fill(COL_BG)
-        title = self._huge.render("MEMORY", True, COL_ACCENT)
+        ui.draw_background(s, self.width, self.height)
+        title = self._huge.render("MEMORY", True, self.accent)
         s.blit(title, title.get_rect(center=(self.width // 2,
                                              int(self.height * 0.14))))
-        sub = self._small.render(t("mem.subtitle"), True, COL_DIM)
+        sub = self._small.render(t("mem.subtitle"), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(self.width // 2,
                                          int(self.height * 0.21))))
         for i, r in enumerate(self.size_rects):
             on = (i == self.size_idx)
-            pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, r, border_radius=10)
-            pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, r,
+            pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, r, border_radius=10)
+            pygame.draw.rect(s, self.accent if on else ui.BORDER, r,
                              2 if on else 1, border_radius=10)
             key, cols, rows, _base = SIZES[i]
             name = self.font.render(f"{cols} x {rows}", True,
-                                    COL_TEXT if on else COL_DIM)
+                                    ui.TEXT if on else ui.TEXT_DIM)
             s.blit(name, name.get_rect(midleft=(r.x + 18, r.centery)))
             pairs = self._tiny.render(t("mem.pairs", n=cols * rows // 2), True,
-                                      COL_DIM)
+                                      ui.TEXT_DIM)
             s.blit(pairs, pairs.get_rect(midright=(r.right - 18, r.centery)))
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.start_rect, 2, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=10)
+        pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=10)
+        st = self.font.render(t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
-        hint = self._tiny.render(t("mem.setup_hint"), True, COL_DIM)
+        hint = self._tiny.render(t("mem.setup_hint"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 30)))
-        ctrl = self._tiny.render(t("mem.hint"), True, (150, 140, 220))
+        ctrl = self._tiny.render(t("mem.hint"), True, ui.TEXT_FAINT)
         s.blit(ctrl, ctrl.get_rect(center=(self.width // 2, self.height - 12)))

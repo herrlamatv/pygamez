@@ -28,6 +28,7 @@ import pygame
 
 import highscore
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
@@ -46,6 +47,7 @@ DIFFS = [
 ]
 
 # Tag/Nacht-Paletten: (sky_top, sky_bottom, pipe, pipe_dark, ground, ground_dark)
+# Identitätsfarben des Spielfelds - bewusst NICHT aus dem UI-Theme.
 THEMES = [
     ((120, 200, 245), (200, 235, 250), (110, 205, 90), (70, 150, 60),
      (222, 200, 120), (180, 155, 90)),
@@ -60,12 +62,9 @@ THEMES = [
 MEDALS = [(70, "platin", (225, 235, 245)), (45, "gold", (245, 205, 70)),
           (25, "silber", (200, 205, 215)), (10, "bronze", (205, 140, 85))]
 
-COL_TEXT = (245, 245, 250)
-COL_DIM = (150, 158, 176)
-COL_ACCENT = (255, 210, 90)
-COL_BTN = (44, 50, 66)
-COL_BTN_ON = (60, 120, 90)
-COL_SETUP_BG = (18, 24, 40)
+# Weitere Identitätsfarben (Spielobjekte, nicht Theme-abhängig)
+COL_COIN = (250, 205, 70)      # Münzen-Gold
+COL_SHIELD = (120, 220, 255)   # Schild-Blau
 
 SETUP, READY, PLAY, DYING, GAMEOVER = "setup", "ready", "play", "dying", "gameover"
 
@@ -83,25 +82,47 @@ class FlappyGame(Game):
         fb = self.settings.get("flappy", {}) if isinstance(self.settings, dict) else {}
         self.diff = max(0, min(2, int(fb.get("difficulty", 1))))
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._huge = pygame.font.SysFont("consolas", max(30, self.height // 9),
-                                         bold=True)
         self.highscore = highscore.load_highscores().get(self.highscore_key, 0)
         self.anim_t = 0.0
 
-        self.ground_h = int(self.height * 0.12)
-        self.bird_x = self.width * BIRD_X_FRAC
-        self.bird_r = max(9, int(self.height * 0.028))
-        self.pipe_w = int(self.width * PIPE_W_FRAC)
         self._sky_cache = None
+        self._ui_bg_cache = None
+        self._dim_cache = None
+        self._apply_layout()
 
         self.clouds = [self._new_cloud(random.uniform(0, self.width))
                        for _ in range(5)]
 
-        self._build_setup_layout()
         self._new_game()
         self.state = SETUP
+
+    def _make_fonts(self):
+        """Schriftgrößen aus der Fensterhöhe ableiten (Theme-Schrift)."""
+        h = self.height
+        self.font = ui.font(max(18, min(26, h // 26)))
+        self.big_font = ui.font(max(32, min(52, h // 12)), bold=True)
+        self._small = ui.font(max(14, min(20, h // 32)))
+        self._tiny = ui.font(max(12, min(16, h // 42)))
+        self._huge = ui.font(max(30, h // 9), bold=True)
+
+    def _apply_layout(self):
+        """Layout-Größen aus width/height berechnen (auch nach Resize)."""
+        self._make_fonts()
+        self.ground_h = int(self.height * 0.12)
+        self.bird_x = self.width * BIRD_X_FRAC
+        self.bird_r = max(9, int(self.height * 0.028))
+        self.pipe_w = int(self.width * PIPE_W_FRAC)
+        self._build_setup_layout()
+
+    def on_surface_changed(self):
+        """Nach Auflösungswechsel: Schriften, Layout und Caches neu aufbauen."""
+        self._apply_layout()
+        self._sky_cache = None
+        self._ui_bg_cache = None
+        self._dim_cache = None
+        # Vogel im gültigen Bereich halten
+        self.bird_y = max(self.bird_r,
+                          min(self.bird_y, self.height - self.ground_h - self.bird_r))
 
     def _new_cloud(self, x=None):
         return dict(x=self.width if x is None else x,
@@ -124,6 +145,8 @@ class FlappyGame(Game):
         self.ground_x = 0.0
         self.dist = 0.0
         self.wing_t = 0.0
+        self.new_best = False
+        self._over_t = 0.0
         self.state = READY
 
     @property
@@ -143,11 +166,13 @@ class FlappyGame(Game):
     # ===================================================== Setup-Screen
     def _build_setup_layout(self):
         cx = self.width // 2
-        bw = min(420, self.width - 60)
-        self.diff_panel = pygame.Rect(cx - bw // 2, 150, bw, 60)
-        self.diff_left = pygame.Rect(self.diff_panel.left, 150, 42, 60)
-        self.diff_right = pygame.Rect(self.diff_panel.right - 42, 150, 42, 60)
-        self.start_rect = pygame.Rect(cx - 95, 240, 190, 52)
+        bw = min(440, self.width - 60)
+        ph = max(56, min(72, int(self.height * 0.14)))
+        y0 = max(140, int(self.height * 0.34))
+        self.diff_panel = pygame.Rect(cx - bw // 2, y0, bw, ph)
+        self.diff_left = pygame.Rect(self.diff_panel.left, y0, 44, ph)
+        self.diff_right = pygame.Rect(self.diff_panel.right - 44, y0, 44, ph)
+        self.start_rect = pygame.Rect(cx - 95, self.diff_panel.bottom + 26, 190, 52)
 
     def _save(self, key, value):
         if isinstance(self.settings, dict):
@@ -186,16 +211,23 @@ class FlappyGame(Game):
         if self.state == SETUP:
             self._handle_setup(event)
             return
-        flap = (event.kind == InputEvent.MOUSEDOWN) or \
-               (event.kind == InputEvent.KEYDOWN and self._is_flap(event.key))
         if self.state == GAMEOVER:
             if event.kind == InputEvent.KEYDOWN:
                 if event.key in ("Return", "space"):
                     self._new_game()
+                    self.play_sound("click")
                 elif event.key in ("s", "S"):
                     self.state = SETUP
                     self.play_sound("click")
+            elif event.kind == InputEvent.MOUSEDOWN and \
+                    self.anim_t - self._over_t > 0.5:
+                # Klick startet neu - aber erst nach kurzer Sperre, damit
+                # hektisches Weiterklicken den Ergebnis-Screen nicht überspringt.
+                self._new_game()
+                self.play_sound("click")
             return
+        flap = (event.kind == InputEvent.MOUSEDOWN) or \
+               (event.kind == InputEvent.KEYDOWN and self._is_flap(event.key))
         if flap:
             if self.state == READY:
                 self.state = PLAY
@@ -262,10 +294,10 @@ class FlappyGame(Game):
             n = len(self.pipes)
             if n % 3 == 0:
                 self.pickups.append(dict(x=pipe["x"] + self.pipe_w / 2, y=gy,
-                                         kind="coin", taken=False, pipe=pipe))
+                                         kind="coin", taken=False))
             elif n % 7 == 0 and not self.shield:
                 self.pickups.append(dict(x=pipe["x"] + self.pipe_w / 2, y=gy,
-                                         kind="shield", taken=False, pipe=pipe))
+                                         kind="shield", taken=False))
 
     def _move_pipes(self, dt):
         v = self._speed() * dt
@@ -307,7 +339,7 @@ class FlappyGame(Game):
                 else:
                     self.shield = True
                     self.play_sound("powerup")
-                self._sparkle(pk["x"], pk["y"], COL_ACCENT)
+                self._sparkle(pk["x"], pk["y"], COL_COIN)
 
     @staticmethod
     def _circle_rect(cx, cy, r, rect):
@@ -321,7 +353,7 @@ class FlappyGame(Game):
             self.bird_v = FLAP_V * 0.8
             self.shake = 0.4
             self.play_sound("hit")
-            self._sparkle(self.bird_x, self.bird_y, (120, 220, 255))
+            self._sparkle(self.bird_x, self.bird_y, COL_SHIELD)
             return
         self.state = DYING
         self.bird_v = FLAP_V * 0.5
@@ -332,7 +364,9 @@ class FlappyGame(Game):
 
     def _finish(self):
         self.game_over = True
+        self.new_best = self.score > self.highscore
         self.highscore = max(self.highscore, self.score)
+        self._over_t = self.anim_t
         self.play_sound("gameover")
 
     def _medal(self):
@@ -367,6 +401,40 @@ class FlappyGame(Game):
             if c["x"] < -80:
                 c.update(self._new_cloud())
                 c["x"] = self.width + 60
+
+    # ----- Theme-UI-Helfer ----------------------------------------------
+    def _ui_bg(self):
+        """Gecachter Theme-Hintergrund für den Setup-Screen."""
+        key = (self.width, self.height, ui.BG_TOP, ui.BG_BOTTOM)
+        if self._ui_bg_cache is None or self._ui_bg_cache[0] != key:
+            surf = pygame.Surface((self.width, self.height))
+            ui.draw_background(surf, self.width, self.height)
+            self._ui_bg_cache = (key, surf)
+        return self._ui_bg_cache[1]
+
+    def _dim(self):
+        """Gecachte Abdunkel-Fläche fürs Game-Over (kein per-Frame-Fill)."""
+        key = (self.width, self.height)
+        if self._dim_cache is None or self._dim_cache[0] != key:
+            surf = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            surf.fill((10, 12, 20, 140))
+            self._dim_cache = (key, surf)
+        return self._dim_cache[1]
+
+    def _panel(self, s, rect, alpha=235, border=2):
+        """Halbtransparentes Theme-Panel mit Akzent-Rahmen."""
+        surf = pygame.Surface(rect.size, pygame.SRCALPHA)
+        pygame.draw.rect(surf, (*ui.PANEL, alpha), surf.get_rect(),
+                         border_radius=12)
+        s.blit(surf, rect.topleft)
+        pygame.draw.rect(s, self.accent, rect, border, border_radius=12)
+
+    def _chip(self, s, text, font, center, color=None):
+        """Kleine Info-Plakette im Theme-Stil (über dem Spielfeld lesbar)."""
+        img = font.render(text, True, color or ui.TEXT)
+        box = img.get_rect(center=center).inflate(24, 12)
+        self._panel(s, box, alpha=200, border=1)
+        s.blit(img, img.get_rect(center=box.center))
 
     # ===================================================== Zeichnen
     def draw(self):
@@ -423,9 +491,6 @@ class FlappyGame(Game):
         x = p["x"] + ox
         top_h = p["gy"] - p["gap"] / 2
         bot_y = p["gy"] + p["gap"] / 2
-        for (ry, rh, cap_y) in ((0, top_h - cap, top_h - cap),
-                                (bot_y + cap, self.height, None)):
-            pass
         # oberes Rohr
         pygame.draw.rect(s, pipe, (x, oy, w, top_h - cap))
         pygame.draw.rect(s, pipe, (x - 4, top_h - cap + oy, w + 8, cap),
@@ -442,12 +507,12 @@ class FlappyGame(Game):
         x, y = int(pk["x"] + ox), int(pk["y"] + oy)
         if pk["kind"] == "coin":
             w = int(10 + 5 * math.sin(self.anim_t * 6))
-            pygame.draw.ellipse(s, (250, 205, 70), (x - w, y - 12, 2 * w, 24))
+            pygame.draw.ellipse(s, COL_COIN, (x - w, y - 12, 2 * w, 24))
             pygame.draw.ellipse(s, (255, 240, 160), (x - w + 2, y - 9, 2 * w - 4, 18), 2)
         else:
             surf = pygame.Surface((36, 36), pygame.SRCALPHA)
-            pygame.draw.circle(surf, (120, 220, 255, 90), (18, 18), 17)
-            pygame.draw.circle(surf, (120, 220, 255), (18, 18), 17, 2)
+            pygame.draw.circle(surf, (*COL_SHIELD, 90), (18, 18), 17)
+            pygame.draw.circle(surf, COL_SHIELD, (18, 18), 17, 2)
             s.blit(surf, (x - 18, y - 18))
             st = self._tiny.render("S", True, (240, 250, 255))
             s.blit(st, st.get_rect(center=(x, y)))
@@ -464,8 +529,6 @@ class FlappyGame(Game):
                              (x - off + 12, self.height), 2)
 
     def _draw_bird(self, s, ox, oy):
-        if self.state == GAMEOVER and self.bird_y >= self.height - self.ground_h - self.bird_r:
-            pass
         r = self.bird_r
         wing = math.sin(min(self.wing_t, 0.3) * 30) * r * 0.5 \
             if self.state in (PLAY, READY) else 0
@@ -475,7 +538,7 @@ class FlappyGame(Game):
         s.blit(rot, rot.get_rect(center=(self.bird_x + ox, self.bird_y + oy)))
         if self.shield:
             bub = pygame.Surface((int(r * 4), int(r * 4)), pygame.SRCALPHA)
-            pygame.draw.circle(bub, (120, 220, 255, 70), (int(r * 2),) * 2, int(r * 1.9))
+            pygame.draw.circle(bub, (*COL_SHIELD, 70), (int(r * 2),) * 2, int(r * 1.9))
             pygame.draw.circle(bub, (150, 235, 255), (int(r * 2),) * 2,
                                int(r * 1.9), 2)
             s.blit(bub, (self.bird_x + ox - r * 2, self.bird_y + oy - r * 2))
@@ -505,43 +568,63 @@ class FlappyGame(Game):
     # ----- HUD / Overlays -----------------------------------------------
     def _draw_hud(self, s):
         if self.state in (PLAY, DYING):
-            img = self._huge.render(str(self.score), True, COL_TEXT)
+            # Punktzahl mit Kontur - bleibt auf jedem Himmel lesbar
+            img = self._huge.render(str(self.score), True, (245, 245, 250))
             outline = self._huge.render(str(self.score), True, (30, 30, 40))
             r = img.get_rect(center=(self.width // 2, int(self.height * 0.14)))
             for dx, dy in ((-2, 0), (2, 0), (0, -2), (0, 2)):
                 s.blit(outline, r.move(dx, dy))
             s.blit(img, r)
         if self.state == READY:
-            self._center(s, t("fb.tap_hint"), self._small, COL_TEXT, -self.height * 0.12)
-            best = self._small.render(t("fb.best", hs=self.highscore), True, COL_TEXT)
-            s.blit(best, best.get_rect(center=(self.width // 2, int(self.height * 0.1))))
+            self._chip(s, t("fb.best", hs=self.highscore), self._small,
+                       (self.width // 2, int(self.height * 0.1)), ui.TEXT_DIM)
+            hint_col = ui.mix(ui.TEXT_DIM, ui.TEXT, ui.pulse(2.4, 0.0, 1.0))
+            self._chip(s, t("fb.tap_hint"), self._small,
+                       (self.width // 2, int(self.height * 0.38)), hint_col)
         if self.state == GAMEOVER:
             self._draw_gameover(s)
 
     def _draw_gameover(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((0, 0, 0, 120))
-        s.blit(ov, (0, 0))
-        cx, cy = self.width // 2, int(self.height * 0.34)
-        self._center(s, t("common.game_over"), self._huge, (255, 210, 90),
-                     cy - self.height // 2)
-        panel = pygame.Rect(cx - 150, cy, 300, 150)
-        pygame.draw.rect(s, (245, 235, 210), panel, border_radius=12)
-        pygame.draw.rect(s, (180, 160, 120), panel, 3, border_radius=12)
-        sc = self._small.render(t("common.points", score=self.score), True, (60, 50, 40))
-        s.blit(sc, (panel.x + 20, panel.y + 20))
-        co = self._small.render(t("fb.coins", n=self.coins), True, (160, 120, 40))
-        s.blit(co, (panel.x + 20, panel.y + 46))
-        bs = self._small.render(t("fb.best", hs=self.highscore), True, (60, 50, 40))
-        s.blit(bs, (panel.x + 20, panel.y + 78))
+        s.blit(self._dim(), (0, 0))
+        cx = self.width // 2
+        img = self._huge.render(t("common.game_over"), True, self.accent)
+        s.blit(img, img.get_rect(center=(cx, int(self.height * 0.18))))
+
+        lh = self._small.get_height() + 8
+        pw = min(360, self.width - 40)
+        ph = lh * 3 + 40
+        panel = pygame.Rect(cx - pw // 2, int(self.height * 0.32), pw, ph)
+        self._panel(s, panel)
+        x, y = panel.x + 20, panel.y + 18
+        s.blit(self._small.render(t("common.points", score=self.score),
+                                  True, ui.TEXT), (x, y))
+        y += lh
+        s.blit(self._small.render(t("fb.coins", n=self.coins), True, ui.GOLD),
+               (x, y))
+        y += lh
+        best_col = ui.GOLD if self.new_best else ui.TEXT_DIM
+        s.blit(self._small.render(t("fb.best", hs=self.highscore), True, best_col),
+               (x, y))
+
+        # Medaille rechts im Panel (Identitätsfarben)
         key, col = self._medal()
         if key:
-            mcx, mcy = panel.right - 55, panel.centery + 6
-            pygame.draw.circle(s, col, (mcx, mcy), 34)
-            pygame.draw.circle(s, tuple(int(c * 0.7) for c in col), (mcx, mcy), 34, 3)
-            self._star(s, mcx, mcy, 18, (255, 255, 255))
-        hint = self._small.render(t("fb.restart_hint"), True, COL_TEXT)
-        s.blit(hint, hint.get_rect(center=(cx, panel.bottom + 28)))
+            mr = max(24, min(36, panel.h // 4))
+            mcx, mcy = panel.right - mr - 24, panel.centery - 8
+            pygame.draw.circle(s, col, (mcx, mcy), mr)
+            pygame.draw.circle(s, tuple(int(c * 0.7) for c in col), (mcx, mcy), mr, 3)
+            self._star(s, mcx, mcy, int(mr * 0.55), (255, 255, 255))
+            lab = self._tiny.render(t("fb.medal." + key), True, col)
+            s.blit(lab, lab.get_rect(center=(mcx, mcy + mr + 12)))
+
+        if self.new_best:
+            rec_col = ui.mix(ui.GOLD, ui.TEXT, ui.pulse(3.0, 0.0, 0.5))
+            rec = self._small.render(t("trex.new_record"), True, rec_col)
+            s.blit(rec, rec.get_rect(center=(cx, panel.top - 18)))
+
+        hint_col = ui.mix(ui.TEXT_DIM, ui.TEXT, ui.pulse(2.4, 0.0, 1.0))
+        hint = self._small.render(t("fb.restart_hint"), True, hint_col)
+        s.blit(hint, hint.get_rect(center=(cx, panel.bottom + 26)))
 
     def _star(self, s, cx, cy, r, col):
         pts = []
@@ -558,32 +641,31 @@ class FlappyGame(Game):
     # ----- Setup zeichnen -----------------------------------------------
     def _draw_setup(self):
         s = self.surface
-        s.fill(COL_SETUP_BG)
+        s.blit(self._ui_bg(), (0, 0))
         self._draw_clouds(s, 0, 0)
-        title = self._huge.render("FLAPPY BIRD", True, COL_ACCENT)
-        s.blit(title, title.get_rect(center=(self.width // 2, 74)))
-        sub = self._small.render(t("snake.singleplayer"), True, COL_DIM)
-        s.blit(sub, sub.get_rect(center=(self.width // 2, 116)))
+        ui.draw_title(s, self.width, "FLAPPY BIRD",
+                      subtitle=t("snake.singleplayer"), accent=self.accent)
 
         d = DIFFS[self.diff]
-        pygame.draw.rect(s, (30, 40, 62), self.diff_panel, border_radius=10)
-        pygame.draw.rect(s, COL_BTN_ON, self.diff_panel, 2, border_radius=10)
+        self._panel(s, self.diff_panel)
         name = self.font.render(
-            t("fb.difficulty") + ":  " + t("fb.diff." + d["key"]), True, COL_TEXT)
+            t("fb.difficulty") + ":  " + t("fb.diff." + d["key"]), True, ui.TEXT)
         s.blit(name, name.get_rect(center=(self.diff_panel.centerx,
-                                           self.diff_panel.top + 22)))
-        note = self._tiny.render(t("fb.diff_note"), True, COL_DIM)
+                                           self.diff_panel.top
+                                           + int(self.diff_panel.h * 0.36))))
+        note = self._tiny.render(t("fb.diff_note"), True, ui.TEXT_DIM)
         s.blit(note, note.get_rect(center=(self.diff_panel.centerx,
-                                           self.diff_panel.top + 44)))
+                                           self.diff_panel.top
+                                           + int(self.diff_panel.h * 0.72))))
+        arr_col = ui.mix(self.accent, ui.TEXT, ui.pulse(3.0, 0.0, 0.3))
         for rect, sym in ((self.diff_left, "<"), (self.diff_right, ">")):
-            arr = self.big_font.render(sym, True, COL_ACCENT)
+            arr = self.big_font.render(sym, True, arr_col)
             s.blit(arr, arr.get_rect(center=rect.center))
 
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
-        s.blit(st, st.get_rect(center=self.start_rect.center))
+        ui.draw_button(s, self.start_rect, t("common.start"), self.font,
+                       selected=True, accent=self.accent)
 
-        hint = self._small.render(t("fb.setup_hint"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 34)))
-        ctrl = self._tiny.render(t("fb.controls_hint"), True, (120, 200, 150))
-        s.blit(ctrl, ctrl.get_rect(center=(self.width // 2, self.height - 14)))
+        ctrl = self._tiny.render(t("fb.controls_hint"), True, ui.GREEN)
+        s.blit(ctrl, ctrl.get_rect(center=(self.width // 2,
+                                           self.start_rect.bottom + 24)))
+        ui.draw_footer(s, self.width, self.height, t("fb.setup_hint"))

@@ -56,6 +56,7 @@ import i18n
 import ngb
 import prestige
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 
 CELL = 20                       # Kantenlänge einer Rasterzelle in Pixeln
@@ -112,19 +113,14 @@ def _ease_out_back(p):
 # Spielzustände
 SETUP, PLAY, PERSONALIZE, CAM3D = "setup", "play", "personalize", "cam3d"
 
+# Spielfeld-/Gameplay-Farben (bewusst fest, unabhängig vom UI-Theme).
+# Generische HUD-/Menü-Farben kommen dagegen aus der dynamischen ui-Palette
+# (ui.TEXT, ui.TEXT_DIM, ui.GOLD, ui.GREEN, ui.RED, ui.BTN, ...).
 COL_BG = (15, 15, 25)
 COL_GRID = (25, 25, 40)
 COL_FOOD = (240, 90, 90)
 COL_GOLD = (255, 205, 70)
-COL_TEXT = (230, 230, 230)
-COL_DIM = (150, 158, 176)
-COL_BTN = (44, 50, 66)
-COL_BTN_ON = (60, 120, 80)
-COL_WLS_ON = (90, 230, 130)     # WLS grün = durch die Wände gehen ist AN
-COL_WLS_OFF = (105, 105, 120)   # WLS grau  = feste Wände
-COL_MULT = (255, 210, 90)       # Multiplikator / Prestige (gold)
 COL_WALL = (70, 78, 98)         # Hindernis-Blöcke
-COL_ACCENT = (90, 160, 240)
 COL_BLUE = (90, 150, 245)       # blauer Apfel (Slot-Machine)
 COL_PURPLE = (185, 110, 240)    # lila Apfel (Längen-Wette)
 COL_HARDCORE = (235, 45, 55)    # HARDCORE-Modus (rotes Leuchten)
@@ -243,8 +239,8 @@ class SnakeGame(Game):
         if self.multiplayer and self.mode_key == "competitive":
             self.mode_index = MODE_KEYS.index("classic")   # Competitive = Einzelspieler
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
+        self._small = ui.font(16)
+        self._tiny = ui.font(13)
         self.highscore = highscore.load_highscores().get(self.highscore_key, 0)
 
         self.particles = []
@@ -252,7 +248,7 @@ class SnakeGame(Game):
         self._ngb_menu = None          # aktives Personalisierungs-Menü (oder None)
         self._grid_surf = None         # gecachtes Raster-Overlay (NGB)
         self._grid_key = None
-        self._grid_font = pygame.font.SysFont("consolas", max(9, CELL - 8))
+        self._grid_font = ui.font(max(9, CELL - 8), mono=True)
 
         # Zustand der 3D-Ansicht
         self.particles3d = []          # [x, y, z, vx, vy, vz, life, farbe]
@@ -266,6 +262,22 @@ class SnakeGame(Game):
         self._reset_run_stats()
         self._new_board()
         self.state = SETUP
+
+    def on_surface_changed(self):
+        """Auflösungswechsel: Schriften, Layout und Render-Caches neu aufbauen.
+
+        Das laufende Spielfeld bleibt unangetastet (cols/rows werden beim
+        nächsten Rundenstart in _new_board() neu berechnet).
+        """
+        self.font = ui.font(22)
+        self.big_font = ui.font(48, bold=True)
+        self._small = ui.font(16)
+        self._tiny = ui.font(13)
+        self._grid_font = ui.font(max(9, CELL - 8), mono=True)
+        self._grid_surf = None          # Raster-Overlay lazily neu rendern
+        self._grid_key = None
+        self._sky_cache = None          # 3D-Himmel an die neue Größe anpassen
+        self._build_setup_layout()
 
     @property
     def mode_key(self):
@@ -314,6 +326,9 @@ class SnakeGame(Game):
 
     def _new_board(self):
         """Baut die Schlange(n), das Modus-Layout und das erste Futter."""
+        # Feldgröße neu ableiten, falls sich die Auflösung geändert hat.
+        self.cols = self.width // CELL
+        self.rows = self.height // CELL
         cy = self.rows // 2
         self.snakes = []
         if self.multiplayer:
@@ -1135,7 +1150,7 @@ class SnakeGame(Game):
         new_size = max(MIN_LENGTH, size * (1.0 - stake) + size * stake * factor)
         self._set_snake_size(sn, new_size)
         gewonnen = new_size >= size
-        col = COL_WLS_ON if gewonnen else COL_FOOD
+        col = ui.GREEN if gewonnen else ui.RED
         self.play_sound("powerup" if gewonnen else "hit")
         self.rumble(80)
         self._spawn_particles(sn.body[-1], COL_PURPLE, 14)
@@ -1223,7 +1238,7 @@ class SnakeGame(Game):
             self.play_sound("level")
             self.rumble(90)
             self._add_float_text(self.snakes[0].body[-1],
-                                 i18n.t("snake.comp.levelup", n=lvl), COL_MULT)
+                                 i18n.t("snake.comp.levelup", n=lvl), ui.GOLD)
             self._place_food()                 # das neue Level legt einen Apfel nach
         if self.spawn_bonus_t > 0:
             self.spawn_bonus_t = max(0.0, self.spawn_bonus_t - dt)
@@ -1615,13 +1630,13 @@ class SnakeGame(Game):
         if a <= 0:
             return
         big = self.big_font.render(b["text"], True, b["color"])
-        sub = self._small.render(b["sub"], True, COL_DIM) if b.get("sub") else None
+        sub = self._small.render(b["sub"], True, ui.TEXT_DIM) if b.get("sub") else None
         pad = 18
         tw = max(big.get_width(), sub.get_width() if sub else 0)
         th = big.get_height() + (sub.get_height() + 4 if sub else 0)
         pw, ph = tw + pad * 2, th + pad
         panel = pygame.Surface((pw, ph), pygame.SRCALPHA)
-        pygame.draw.rect(panel, (18, 20, 32, 215), panel.get_rect(), border_radius=12)
+        pygame.draw.rect(panel, (*ui.PANEL, 215), panel.get_rect(), border_radius=12)
         pygame.draw.rect(panel, (*b["color"], 255), panel.get_rect(), 2, border_radius=12)
         y = pad // 2
         if sub:
@@ -2114,23 +2129,24 @@ class SnakeGame(Game):
 
         # WLS-Anzeige (durch die Wände?) bzw. 3D-Badge
         if self.view3d_active:
-            badge = self.font.render(i18n.t("snake.view_3d"), True, COL_ACCENT)
+            badge = self.font.render(i18n.t("snake.view_3d"), True, ui.ACCENT)
             s.blit(badge, badge.get_rect(midtop=(self.width // 2, 6)))
         else:
-            wls_col = COL_WLS_ON if self.wrap_active else COL_WLS_OFF
+            wls_col = ui.GREEN if self.wrap_active else ui.TEXT_FAINT
             wls = self.font.render(i18n.t("snake.wls"), True, wls_col)
             s.blit(wls, wls.get_rect(midtop=(self.width // 2, 6)))
         mode_name = i18n.t("snake.mode." + self.mode_key)
-        mimg = self._small.render(mode_name, True, COL_ACCENT)
+        mimg = self._small.render(mode_name, True, ui.ACCENT)
         s.blit(mimg, mimg.get_rect(midtop=(self.width // 2, 30)))
         if self.view3d_active and not self.game_over and self._run_t < 6.0:
-            hint = self._tiny.render(i18n.t("snake.steer_hint"), True, COL_DIM)
+            hint = self._tiny.render(i18n.t("snake.steer_hint"), True, ui.TEXT_DIM)
             s.blit(hint, hint.get_rect(midtop=(self.width // 2, 50)))
 
-        # Zeitangriff-Uhr
+        # Zeitangriff-Uhr (Monospace, damit die tickenden Ziffern nicht zappeln)
         if self.mode_key == "timed":
-            col = COL_FOOD if self.time_left <= 10 else COL_TEXT
-            timg = self.font.render(f"{self.time_left:04.1f}s", True, col)
+            col = ui.RED if self.time_left <= 10 else ui.TEXT
+            timg = ui.font(22, mono=True).render(
+                i18n.t("snake.time", t=f"{self.time_left:04.1f}"), True, col)
             s.blit(timg, timg.get_rect(midtop=(self.width // 2, 50)))
 
         if self.multiplayer:
@@ -2145,7 +2161,7 @@ class SnakeGame(Game):
 
         # Einzelspieler
         s.blit(self.font.render(i18n.t("common.points", score=self.score),
-                                True, COL_TEXT), (10, 8))
+                                True, ui.TEXT), (10, 8))
         if self.competitive:
             self._draw_comp_hud()
         else:
@@ -2157,10 +2173,10 @@ class SnakeGame(Game):
                 info = self._small.render(
                     i18n.t("snake.prestige_info", roman=prestige.roman(self.prestige),
                            blocks=blocks),
-                    True, COL_MULT)
+                    True, ui.GOLD)
                 s.blit(info, (10, 54))
 
-        best = self._small.render(i18n.t("snake.best", hs=self.highscore), True, COL_DIM)
+        best = self._small.render(i18n.t("snake.best", hs=self.highscore), True, ui.TEXT_DIM)
         s.blit(best, (self.width - best.get_width() - 10, 10))
 
         self._draw_boost_bar(10, self.height - 22, 180, self.snakes[0], 0)
@@ -2181,7 +2197,7 @@ class SnakeGame(Game):
         # Größe als Kommazahl (fürs Gambling weiter nutzbar), oben links.
         groesse = self._snake_size(self.snakes[0])
         gtxt = f"{groesse:.2f}".rstrip("0").rstrip(".")
-        gimg = self._small.render(i18n.t("snake.comp.size", size=gtxt), True, COL_MULT)
+        gimg = self._small.render(i18n.t("snake.comp.size", size=gtxt), True, ui.GOLD)
         s.blit(gimg, (10, 54))
         if self.spawn_bonus_t > 0 and self.spawn_bonus > 0:
             b = self._small.render(
@@ -2207,18 +2223,18 @@ class SnakeGame(Game):
         step = competitive.next_step(self.apples_total)
         if step is None:
             img = self._small.render(i18n.t("snake.comp.max", level=self.comp_level),
-                                     True, COL_MULT)
+                                     True, ui.GOLD)
             s.blit(img, img.get_rect(midbottom=(self.width // 2, self.height - 8)))
             return
         have, need = step
         w, y = 220, self.height - 20
         x = self.width // 2 - w // 2
-        pygame.draw.rect(s, (30, 34, 46), (x, y, w, 12), border_radius=5)
+        pygame.draw.rect(s, ui.PANEL, (x, y, w, 12), border_radius=5)
         fw = int((w - 2) * max(0.0, min(1.0, have / max(1, need))))
-        pygame.draw.rect(s, COL_MULT, (x + 1, y + 1, fw, 10), border_radius=5)
+        pygame.draw.rect(s, ui.GOLD, (x + 1, y + 1, fw, 10), border_radius=5)
         lab = self._tiny.render(
             i18n.t("snake.comp.next", level=self.comp_level + 1, have=have, need=need),
-            True, COL_DIM)
+            True, ui.TEXT_DIM)
         s.blit(lab, lab.get_rect(midbottom=(self.width // 2, y - 2)))
 
     # ----- Slot-Machine zeichnen ----------------------------------------
@@ -2231,13 +2247,13 @@ class SnakeGame(Game):
 
         pw, ph = min(360, self.width - 40), 260
         panel = pygame.Rect((self.width - pw) // 2, (self.height - ph) // 2, pw, ph)
-        pygame.draw.rect(s, (30, 34, 52), panel, border_radius=14)
+        pygame.draw.rect(s, ui.PANEL, panel, border_radius=14)
         pygame.draw.rect(s, COL_BLUE, panel, 3, border_radius=14)
 
         title = self.font.render(i18n.t("snake.slot.title"), True, COL_BLUE)
         s.blit(title, title.get_rect(midtop=(panel.centerx, panel.top + 12)))
         stake = self._small.render(i18n.t("snake.slot.stake", n=sl["stake"]),
-                                   True, COL_DIM)
+                                   True, ui.TEXT_DIM)
         s.blit(stake, stake.get_rect(midtop=(panel.centerx, panel.top + 40)))
 
         rw, rh, gap = 78, 96, 12
@@ -2266,14 +2282,14 @@ class SnakeGame(Game):
                                            int(win.centery + row * cell_h - scroll),
                                            cell_h // 2 - 4)
             s.set_clip(old_clip)
-            pygame.draw.rect(s, (70, 80, 110), win, 2, border_radius=8)
+            pygame.draw.rect(s, ui.BORDER, win, 2, border_radius=8)
         pygame.draw.line(s, COL_BLUE, (x0 - 4, ry + rh // 2),
                          (x0 + total + 4, ry + rh // 2), 1)
 
         if sl["applied"]:
             res = i18n.t("snake.slot." + sl["result"])
-            col = COL_GOLD if sl["result"] == "jackpot" \
-                else (COL_WLS_ON if sl["result"] == "pair" else COL_DIM)
+            col = ui.GOLD if sl["result"] == "jackpot" \
+                else (ui.GREEN if sl["result"] == "pair" else ui.TEXT_DIM)
             rimg = self.font.render(f"{res}  x{sl['mult']:g}", True, col)
             s.blit(rimg, rimg.get_rect(midbottom=(panel.centerx, panel.bottom - 14)))
 
@@ -2303,10 +2319,10 @@ class SnakeGame(Game):
 
     def _draw_boost_bar(self, x, y, w, sn, idx):
         s = self.surface
-        pygame.draw.rect(s, (30, 34, 46), (x, y, w, 14), border_radius=5)
+        pygame.draw.rect(s, ui.PANEL, (x, y, w, 14), border_radius=5)
         fw = int((w - 2) * max(0.0, min(1.0, sn.stamina)))
         if sn.boost_on and sn.stamina > 0:
-            col = (255, 200, 80)          # aktiv = gold
+            col = ui.GOLD                 # aktiv = gold
         elif sn.stamina >= BOOST_MIN_START:
             col = BOOST_GLOW[idx % 2]     # bereit
         else:
@@ -2320,15 +2336,15 @@ class SnakeGame(Game):
         req, ok = self._can_prestige()
         if req is None:
             txt = i18n.t("snake.max_prestige", roman=prestige.roman(self.prestige))
-            col = COL_MULT
+            col = ui.GOLD
         else:
             txt = i18n.t("snake.next_prestige", roman=req['roman'],
                          apples=req['apples'], length=req['length'])
             if ok:
                 txt += i18n.t("snake.press_p")
-                col = COL_MULT
+                col = ui.GOLD
             else:
-                col = COL_DIM
+                col = ui.TEXT_DIM
         img = self._small.render(txt, True, col)
         s.blit(img, img.get_rect(midbottom=(self.width // 2, self.height - 8)))
 
@@ -2339,63 +2355,63 @@ class SnakeGame(Game):
 
         if self.multiplayer:
             if self.winner is None:
-                text, farbe = i18n.t("common.draw"), COL_TEXT
+                text, farbe = i18n.t("common.draw"), ui.TEXT
             else:
                 text = i18n.t("common.player_wins", n=self.winner + 1)
                 farbe = SNAKE_COLORS[self.winner][1]
             self.draw_center_text(text, self.big_font, farbe, -30)
             a0, a1 = self.snakes[0].apples, self.snakes[1].apples
             self.draw_center_text(i18n.t("snake.apples_pp", a0=a0, a1=a1),
-                                  self.font, COL_DIM, 14)
-            self.draw_center_text(i18n.t("common.enter_restart"), self.font, COL_TEXT, 48)
+                                  self.font, ui.TEXT_DIM, 14)
+            self.draw_center_text(i18n.t("common.enter_restart"), self.font, ui.TEXT, 48)
             return
 
         titel = i18n.t("snake.time_up") \
             if (self.mode_key == "timed" and self.snakes[0].alive) \
             else i18n.t("common.game_over")
-        self.draw_center_text(titel, self.big_font, COL_FOOD, -60)
+        self.draw_center_text(titel, self.big_font, ui.RED, -60)
         self.draw_center_text(i18n.t("snake.apples_collected", n=self.apples_total),
                               self.font, COL_FOOD, -14)
         if self.competitive:
             self.draw_center_text(i18n.t("snake.comp.result", level=self.comp_level),
-                                  self.font, COL_MULT, 16)
+                                  self.font, ui.GOLD, 16)
         elif self.prestige > 0:
             self.draw_center_text(
                 i18n.t("snake.prestige", roman=prestige.roman(self.prestige)),
-                self.font, COL_MULT, 16)
-        self.draw_center_text(i18n.t("common.enter_restart"), self.font, COL_TEXT, 46)
+                self.font, ui.GOLD, 16)
+        self.draw_center_text(i18n.t("common.enter_restart"), self.font, ui.TEXT, 46)
 
     # ----- Setup zeichnen ----------------------------------------------
     def _draw_setup(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
 
-        title = self.big_font.render("SNAKE", True, COL_TEXT)
+        title = self.big_font.render("SNAKE", True, ui.TEXT)
         s.blit(title, title.get_rect(center=(self.width // 2, 52)))
         modus = i18n.t("snake.multiplayer") if self.multiplayer \
             else i18n.t("snake.singleplayer")
         sub = self._small.render(i18n.t("snake.subtitle", mode=modus, hs=self.highscore),
-                                 True, COL_DIM)
+                                 True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(self.width // 2, 88)))
 
         # Modus-Auswahl
         m = MODES[self.mode_index]
-        pygame.draw.rect(s, (38, 44, 60), self.mode_panel, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.mode_panel, 2, border_radius=10)
-        name = self.font.render(i18n.t("snake.mode." + m["key"]), True, COL_TEXT)
+        pygame.draw.rect(s, ui.PANEL_LIGHT, self.mode_panel, border_radius=10)
+        pygame.draw.rect(s, ui.ACCENT, self.mode_panel, 2, border_radius=10)
+        name = self.font.render(i18n.t("snake.mode." + m["key"]), True, ui.TEXT)
         s.blit(name, name.get_rect(center=(self.mode_panel.centerx,
                                            self.mode_panel.top + 18)))
         desc = self._small.render(i18n.t("snake.mode." + m["key"] + ".desc"),
-                                  True, COL_DIM)
+                                  True, ui.TEXT_DIM)
         s.blit(desc, desc.get_rect(center=(self.mode_panel.centerx,
                                            self.mode_panel.top + 41)))
         for r, sym in ((self.mode_left, "<"), (self.mode_right, ">")):
-            arr = self.big_font.render(sym, True, COL_ACCENT)
+            arr = self.big_font.render(sym, True, ui.ACCENT)
             s.blit(arr, arr.get_rect(center=r.center))
         allowed = self._allowed_modes()
         pos = allowed.index(self.mode_index) if self.mode_index in allowed else 0
         dots = " ".join("*" if i == pos else "." for i in range(len(allowed)))
-        d = self._tiny.render(dots, True, COL_DIM)
+        d = self._tiny.render(dots, True, ui.TEXT_DIM)
         s.blit(d, d.get_rect(center=(self.width // 2, self.mode_panel.bottom + 9)))
 
         # Ansicht 2D/3D
@@ -2403,15 +2419,15 @@ class SnakeGame(Game):
             self._draw_disabled_row(self.view_rect, i18n.t("snake.view_toggle"),
                                     i18n.t("snake.view_mp_hint"))
         else:
-            pygame.draw.rect(s, COL_BTN_ON if self.view3d else COL_BTN,
+            pygame.draw.rect(s, ui.BTN_SEL if self.view3d else ui.BTN,
                              self.view_rect, border_radius=8)
-            pygame.draw.rect(s, COL_ACCENT if self.view3d else COL_DIM,
+            pygame.draw.rect(s, ui.ACCENT if self.view3d else ui.BORDER,
                              self.view_rect, 1, border_radius=8)
-            lab = self.font.render(i18n.t("snake.view_toggle"), True, COL_TEXT)
+            lab = self.font.render(i18n.t("snake.view_toggle"), True, ui.TEXT)
             s.blit(lab, (self.view_rect.x + 16,
                          self.view_rect.centery - lab.get_height() // 2))
             wert = i18n.t("snake.view_3d") if self.view3d else i18n.t("snake.view_2d")
-            col = COL_ACCENT if self.view3d else COL_DIM
+            col = ui.ACCENT if self.view3d else ui.TEXT_DIM
             img = self.font.render(f"< {wert} >", True, col)
             s.blit(img, (self.view_rect.right - img.get_width() - 16,
                          self.view_rect.centery - img.get_height() // 2))
@@ -2429,14 +2445,14 @@ class SnakeGame(Game):
             self._draw_setup_value(self.apples_rect, i18n.t("snake.apples_toggle"),
                                    str(self.apple_count), self.apple_count > 1)
 
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        st = self.font.render(i18n.t("common.start"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=10)
+        st = self.font.render(i18n.t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
 
         if self.view3d_active:
-            extra = self._tiny.render(i18n.t("snake.hint_3d"), True, COL_ACCENT)
+            extra = self._tiny.render(i18n.t("snake.hint_3d"), True, ui.ACCENT)
             s.blit(extra, extra.get_rect(center=(self.width // 2, self.height - 54)))
-        hint = self._small.render(i18n.t("snake.setup_hint"), True, COL_DIM)
+        hint = self._small.render(i18n.t("snake.setup_hint"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 34)))
         if self.competitive and self.hardcore:
             puls = 0.5 + 0.5 * math.sin(pygame.time.get_ticks() * 0.006)
@@ -2444,7 +2460,7 @@ class SnakeGame(Game):
                                    (255, int(80 + 60 * puls), int(80 + 60 * puls)))
             s.blit(hc, hc.get_rect(center=(self.width // 2, self.height - 14)))
         else:
-            boost = self._tiny.render(i18n.t("snake.boost_hint"), True, (120, 200, 150))
+            boost = self._tiny.render(i18n.t("snake.boost_hint"), True, ui.GREEN)
             s.blit(boost, boost.get_rect(center=(self.width // 2, self.height - 14)))
 
         self._draw_brush_button(s)
@@ -2452,8 +2468,8 @@ class SnakeGame(Game):
     def _draw_brush_button(self, s):
         """Pinsel-Knopf oben rechts (Personalisieren) - ohne Text, mit Farb-Spitze."""
         r = self.brush_rect
-        pygame.draw.rect(s, COL_BTN, r, border_radius=8)
-        pygame.draw.rect(s, COL_ACCENT, r, 1, border_radius=8)
+        pygame.draw.rect(s, ui.BTN, r, border_radius=8)
+        pygame.draw.rect(s, ui.ACCENT, r, 1, border_radius=8)
         tip = ngb.head_color()                       # Spitze zeigt die aktive Kopffarbe
         hx0, hy0 = r.left + 10, r.bottom - 10        # Borsten-Spitze (unten links)
         hx1, hy1 = r.right - 8, r.top + 8            # Griffende (oben rechts)
@@ -2468,22 +2484,22 @@ class SnakeGame(Game):
     def _draw_cam_button(self, rect):
         """Setup-Zeile im 3D-Modus: öffnet das 3D-Kamera-Menü."""
         s = self.surface
-        pygame.draw.rect(s, COL_BTN, rect, border_radius=8)
-        pygame.draw.rect(s, COL_ACCENT, rect, 1, border_radius=8)
-        lab = self.font.render(i18n.t("snake.cam.open"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN, rect, border_radius=8)
+        pygame.draw.rect(s, ui.ACCENT, rect, 1, border_radius=8)
+        lab = self.font.render(i18n.t("snake.cam.open"), True, ui.TEXT)
         s.blit(lab, (rect.x + 16, rect.centery - lab.get_height() // 2))
         stat = i18n.t("common.on") if self.cam_smooth else i18n.t("common.off")
-        img = self.font.render(f"{stat}  ›", True, COL_ACCENT)
+        img = self.font.render(f"{stat}  ›", True, ui.ACCENT)
         s.blit(img, (rect.right - img.get_width() - 14,
                      rect.centery - img.get_height() // 2))
 
     # ----- 3D-Kamera-Menü ----------------------------------------------
     def _draw_cam3d(self):
         s = self.surface
-        s.fill(COL_BG)
-        title = self.big_font.render(i18n.t("snake.cam.title"), True, COL_TEXT)
+        ui.draw_background(s, self.width, self.height)
+        title = self.big_font.render(i18n.t("snake.cam.title"), True, ui.TEXT)
         s.blit(title, title.get_rect(center=(self.width // 2, 60)))
-        sub = self._small.render(i18n.t("snake.cam.subtitle"), True, COL_DIM)
+        sub = self._small.render(i18n.t("snake.cam.subtitle"), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(self.width // 2, 100)))
 
         self._draw_setup_toggle(self.cam_smooth_rect, i18n.t("snake.cam.smooth"),
@@ -2496,34 +2512,34 @@ class SnakeGame(Game):
         self._draw_setup_toggle(self.cam_turn_rect, i18n.t("snake.cam.turn_shake"),
                                 self.cam_turn_shake)
 
-        pygame.draw.rect(s, COL_BTN_ON, self.cam_back_rect, border_radius=10)
-        bt = self.font.render(i18n.t("snake.cam.back"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL, self.cam_back_rect, border_radius=10)
+        bt = self.font.render(i18n.t("snake.cam.back"), True, ui.TEXT)
         s.blit(bt, bt.get_rect(center=self.cam_back_rect.center))
-        hint = self._tiny.render(i18n.t("snake.cam.hint"), True, COL_DIM)
+        hint = self._tiny.render(i18n.t("snake.cam.hint"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 16)))
 
     def _draw_cam_value(self, rect, label, value, minus, plus):
         """Wertzeile mit -/+ Knöpfen (FOV / Kamerahöhe)."""
         s = self.surface
-        pygame.draw.rect(s, COL_BTN, rect, border_radius=8)
-        pygame.draw.rect(s, COL_DIM, rect, 1, border_radius=8)
-        lab = self.font.render(label, True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN, rect, border_radius=8)
+        pygame.draw.rect(s, ui.BORDER, rect, 1, border_radius=8)
+        lab = self.font.render(label, True, ui.TEXT)
         s.blit(lab, (rect.x + 16, rect.centery - lab.get_height() // 2))
         for r, sym in ((minus, "-"), (plus, "+")):
-            pygame.draw.rect(s, COL_BTN_ON, r, border_radius=6)
-            g = self.font.render(sym, True, COL_TEXT)
+            pygame.draw.rect(s, ui.BTN_SEL, r, border_radius=6)
+            g = self.font.render(sym, True, ui.TEXT)
             s.blit(g, g.get_rect(center=r.center))
-        val = self.font.render(value, True, COL_WLS_ON)
+        val = self.font.render(value, True, ui.GREEN)
         s.blit(val, val.get_rect(center=((minus.right + plus.left) // 2, rect.centery)))
 
     def _draw_disabled_row(self, rect, label, note):
         """Abgeblendete Setup-Zeile mit Hinweistext (nicht anklickbar)."""
         s = self.surface
-        pygame.draw.rect(s, (36, 40, 52), rect, border_radius=8)
-        pygame.draw.rect(s, COL_DIM, rect, 1, border_radius=8)
-        lab = self.font.render(label, True, COL_DIM)
+        pygame.draw.rect(s, ui.PANEL, rect, border_radius=8)
+        pygame.draw.rect(s, ui.BORDER, rect, 1, border_radius=8)
+        lab = self.font.render(label, True, ui.TEXT_DIM)
         s.blit(lab, (rect.x + 16, rect.centery - lab.get_height() // 2))
-        info = self._small.render(note, True, COL_DIM)
+        info = self._small.render(note, True, ui.TEXT_DIM)
         s.blit(info, (rect.right - info.get_width() - 16,
                       rect.centery - info.get_height() // 2))
 
@@ -2540,9 +2556,9 @@ class SnakeGame(Game):
             pygame.draw.rect(s, COL_HARDCORE, rect, 2, border_radius=8)
             lab_col, val_col = (255, 210, 210), (255, 120, 120)
         else:
-            pygame.draw.rect(s, COL_BTN, rect, border_radius=8)
-            pygame.draw.rect(s, COL_DIM, rect, 1, border_radius=8)
-            lab_col, val_col = COL_TEXT, COL_DIM
+            pygame.draw.rect(s, ui.BTN, rect, border_radius=8)
+            pygame.draw.rect(s, ui.BORDER, rect, 1, border_radius=8)
+            lab_col, val_col = ui.TEXT, ui.TEXT_DIM
         lab = self.font.render(i18n.t("snake.hardcore_toggle"), True, lab_col)
         s.blit(lab, (rect.x + 16, rect.centery - lab.get_height() // 2))
         wert = i18n.t("common.on") if an else i18n.t("common.off")
@@ -2557,11 +2573,11 @@ class SnakeGame(Game):
     def _draw_setup_value(self, rect, label, wert, hervor):
         """Setup-Zeile mit einem Wert in < .. >-Klammern (Toggle oder Zahl)."""
         s = self.surface
-        pygame.draw.rect(s, COL_BTN_ON if hervor else COL_BTN, rect, border_radius=8)
-        pygame.draw.rect(s, COL_DIM, rect, 1, border_radius=8)
-        lab = self.font.render(label, True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL if hervor else ui.BTN, rect, border_radius=8)
+        pygame.draw.rect(s, ui.BORDER, rect, 1, border_radius=8)
+        lab = self.font.render(label, True, ui.TEXT)
         s.blit(lab, (rect.x + 16, rect.centery - lab.get_height() // 2))
-        col = COL_WLS_ON if hervor else COL_DIM
+        col = ui.GREEN if hervor else ui.TEXT_DIM
         img = self.font.render(f"< {wert} >", True, col)
         s.blit(img, (rect.right - img.get_width() - 16,
                      rect.centery - img.get_height() // 2))

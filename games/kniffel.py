@@ -31,7 +31,6 @@ import ui
 from game_base import Game, InputEvent
 from i18n import t
 
-COL_BG = (18, 18, 24)
 COL_PANEL = (28, 28, 38)
 COL_PANEL_HI = (40, 40, 54)
 COL_TEXT = (228, 230, 238)
@@ -303,7 +302,8 @@ class KniffelGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        # Themen-Hintergrund statt flacher Fläche (reagiert auf Theme-Wechsel).
+        ui.draw_background(s, self.width, self.height, stars=False, aurora=True)
         self._draw_hud(s)
         self._draw_card(s)
         self._draw_dice(s)

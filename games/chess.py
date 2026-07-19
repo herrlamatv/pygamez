@@ -27,27 +27,23 @@ import time
 import pygame
 
 import settings as settings_mod
-from game_base import Game, InputEvent
+import ui
+from game_base import Game, InputEvent, LocalizedName
 from i18n import t
 
-# ----------------------------------------------------------------- Farben
-COL_BG = (24, 22, 30)
-COL_LIGHT = (232, 219, 196)
-COL_DARK = (129, 100, 74)
-COL_PLATE = (40, 34, 30)
+# ------------------------------------------------- Brett-Identitätsfarben
+# Generische UI-Farben (Hintergrund, Panels, Text) kommen zur Laufzeit aus
+# der dynamischen ui-Palette; hier bleiben nur die Brett-/Figurenfarben.
+COL_LIGHT = (232, 219, 196)      # helle Felder
+COL_DARK = (129, 100, 74)        # dunkle Felder
+COL_PLATE = (40, 34, 30)         # Brettrahmen
 COL_SEL = (246, 214, 92)
 COL_MOVE = (110, 200, 130)
 COL_LAST = (120, 160, 240)
 COL_CHECK = (224, 84, 84)
-COL_TEXT = (236, 232, 224)
-COL_DIM = (168, 160, 150)
-COL_ACCENT = (201, 162, 75)      # = Sidebar-Farbe #c9a24b
-COL_WHITE = (244, 244, 248)
-COL_BLACK = (34, 32, 38)
+COL_WHITE = (244, 244, 248)      # weisse Figuren
+COL_BLACK = (34, 32, 38)         # schwarze Figuren
 COL_OUTLINE = (16, 14, 18)
-COL_BTN = (44, 40, 36)
-COL_BTN_ON = (74, 62, 40)
-COL_BTN_BORDER = (110, 92, 60)
 
 # ----------------------------------------------------------------- Regeln
 SETUP, PLAY, OVER = "setup", "play", "over"
@@ -381,7 +377,8 @@ def _pos_key(board, color, castling, ep):
 
 
 class ChessGame(Game):
-    name = "Schach"
+    name = LocalizedName("Chess", de="Schach", fr="Échecs",
+                         es="Ajedrez", pt="Xadrez")
     highscore_key = "chess"
     supports_multiplayer = True
 
@@ -393,19 +390,21 @@ class ChessGame(Game):
         self.diff = max(0, min(5, int(cs.get("difficulty", 2))))
         self.human_color = "b" if cs.get("color") == "black" else "w"
 
-        self._small = pygame.font.SysFont("consolas", 15)
-        self._tiny = pygame.font.SysFont("consolas", 12)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 12),
-                                         bold=True)
+        self._make_fonts()
         self.wins = [0, 0]           # [Mensch, KI] bzw. [Weiss, Schwarz]
         self._make_piece_font()
         self._build_setup_layout()
         self._new_round()
         self.state = PLAY if self.multiplayer else SETUP
 
+    def _make_fonts(self):
+        """Theme-Schriften, Grösse abhängig von der Fensterhöhe."""
+        self._small = ui.font(max(14, self.height // 34))
+        self._tiny = ui.font(max(12, self.height // 44))
+        self._huge = ui.font(max(26, self.height // 12), bold=True)
+
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 12),
-                                         bold=True)
+        self._make_fonts()
         self._build_setup_layout()
         self._layout()
         self._make_piece_font()
@@ -548,11 +547,13 @@ class ChessGame(Game):
         if event.kind == InputEvent.MOUSEMOVE:
             rc = self._cell_at(event.pos)
             if rc:
-                self.cursor = list(rc)
+                # Cursor speichert ANZEIGE-Koordinaten (wichtig bei gedrehtem
+                # Brett, wenn der Mensch Schwarz spielt).
+                self.cursor = list(self._board_to_disp(*rc))
         elif event.kind == InputEvent.MOUSEDOWN:
             rc = self._cell_at(event.pos)
             if rc:
-                self.cursor = list(rc)
+                self.cursor = list(self._board_to_disp(*rc))
                 self._click_cell(rc[0], rc[1])
         elif event.kind == InputEvent.KEYDOWN:
             k = event.key
@@ -821,7 +822,7 @@ class ChessGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height, stars=False, aurora=True)
         if self.state == SETUP:
             self._draw_setup(s)
             return
@@ -842,18 +843,21 @@ class ChessGame(Game):
     def _draw_board(self, s):
         plate = pygame.Rect(self.bx - 7, self.by - 7, self.bw + 14, self.bh + 14)
         pygame.draw.rect(s, COL_PLATE, plate, border_radius=8)
+        pygame.draw.rect(s, ui.mix(COL_PLATE, self.accent, 0.45), plate, 1,
+                         border_radius=8)
         for r in range(8):
             for c in range(8):
                 rect = self._sq_rect(r, c)
                 base = COL_LIGHT if (r + c) % 2 == 0 else COL_DARK
                 pygame.draw.rect(s, base, rect)
-        # Letzter Zug
+        # Letzter Zug (sanft pulsierend)
         if self.last_move:
+            alpha = int(60 + 45 * ui.pulse(1.6))
             for (r, c) in ((self.last_move[0], self.last_move[1]),
                            (self.last_move[2], self.last_move[3])):
                 rect = self._sq_rect(r, c)
                 ov = pygame.Surface((self.cell, self.cell), pygame.SRCALPHA)
-                ov.fill((*COL_LAST, 90))
+                ov.fill((*COL_LAST, alpha))
                 s.blit(ov, rect.topleft)
         # König im Schach markieren
         if self.check and self.state == PLAY:
@@ -887,7 +891,7 @@ class ChessGame(Game):
             dr, dc = self.cursor
             rect = pygame.Rect(self.bx + dc * self.cell, self.by + dr * self.cell,
                                self.cell, self.cell)
-            k = 0.5 + 0.5 * abs(pygame.time.get_ticks() % 900 - 450) / 450
+            k = ui.pulse(2.2, 0.0, 1.0)
             pygame.draw.rect(s, (int(120 + 120 * k),) * 3,
                              (rect.x + 1, rect.y + 1, self.cell - 2, self.cell - 2),
                              2)
@@ -904,27 +908,34 @@ class ChessGame(Game):
         s.blit(img, img.get_rect(center=(cx, cy)))
 
     def _draw_hud(self, s):
-        pygame.draw.rect(s, (34, 30, 26), (0, 0, self.width, self.hud_h))
-        pygame.draw.line(s, (70, 58, 44), (0, self.hud_h), (self.width, self.hud_h))
-        cy = self.hud_h // 2
-        # Siegzähler
-        left = self._small.render(f"{self.wins[0]}", True, COL_TEXT)
-        s.blit(left, left.get_rect(midleft=(14, cy)))
-        right = self._small.render(f"{self.wins[1]}", True, COL_TEXT)
-        s.blit(right, right.get_rect(midright=(self.width - 14, cy)))
+        panel = pygame.Rect(8, 6, self.width - 16, self.hud_h - 10)
+        ui.draw_panel(s, panel, shadow=False, accent_top=self.accent)
+        cy = panel.centery
+        # Siegzähler mit Farbpunkt (links Weiss, rechts Schwarz)
+        pygame.draw.circle(s, COL_WHITE, (panel.x + 16, cy), 7)
+        pygame.draw.circle(s, ui.BORDER_LIGHT, (panel.x + 16, cy), 7, 1)
+        left = self._small.render(f"{self.wins[0]}", True, ui.TEXT)
+        s.blit(left, left.get_rect(midleft=(panel.x + 30, cy)))
+        pygame.draw.circle(s, COL_BLACK, (panel.right - 16, cy), 7)
+        pygame.draw.circle(s, ui.BORDER_LIGHT, (panel.right - 16, cy), 7, 1)
+        right = self._small.render(f"{self.wins[1]}", True, ui.TEXT)
+        s.blit(right, right.get_rect(midright=(panel.right - 30, cy)))
         if self.state == PLAY:
+            warn = False
             if self.promo_move is not None:
                 mid = t("chess.promote")
             elif not self.multiplayer and self.turn != self.human_color:
                 mid = t("chess.ai_thinks")
             elif not self.multiplayer:
                 mid = t("chess.check") if self.check else t("chess.your_turn")
+                warn = self.check
             else:
                 who = t("common.player1") if self.turn == "w" else t("common.player2")
                 mid = t("chess.turn", name=who)
                 if self.check:
                     mid += "  +"
-            img = self._small.render(mid, True, COL_ACCENT)
+                    warn = True
+            img = self._small.render(mid, True, ui.RED if warn else self.accent)
             s.blit(img, img.get_rect(center=(self.width // 2, cy)))
 
     def _promo_rects(self):
@@ -939,73 +950,59 @@ class ChessGame(Game):
         ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         ov.fill((10, 8, 12, 180))
         s.blit(ov, (0, 0))
-        head = self._small.render(t("chess.promote"), True, COL_TEXT)
+        head = self._small.render(t("chess.promote"), True, ui.TEXT)
         rects = self._promo_rects()
         s.blit(head, head.get_rect(center=(self.width // 2, rects[0].y - 26)))
         for i, ch in enumerate(["Q", "R", "B", "N"]):
             rc = rects[i]
-            pygame.draw.rect(s, COL_BTN_ON, rc, border_radius=8)
-            pygame.draw.rect(s, COL_ACCENT, rc, 2, border_radius=8)
+            pygame.draw.rect(s, ui.BTN_SEL, rc, border_radius=8)
+            pygame.draw.rect(s, self.accent, rc, 2, border_radius=8)
             self._draw_piece(s, self.turn + ch, rc)
 
     def _draw_over(self, s):
-        ov = pygame.Surface((self.width, 104), pygame.SRCALPHA)
-        ov.fill((10, 8, 12, 210))
-        y = self.height // 2 - 52
-        s.blit(ov, (0, y))
         cx = self.width // 2
         if self.winner is None:
-            head = self._huge.render(t("common.draw"), True, COL_DIM)
-            sub = self._small.render(t("chess.reason." + (self.result_key or "")),
-                                     True, COL_TEXT)
+            head = self._huge.render(t("common.draw"), True, ui.TEXT_DIM)
         elif self.multiplayer:
-            col = COL_WHITE if self.winner == 0 else COL_BLACK
             head = self._huge.render(t("common.player_wins", n=self.winner + 1),
-                                     True, COL_ACCENT)
-            sub = self._small.render(t("chess.reason." + (self.result_key or "")),
-                                     True, col)
+                                     True, self.accent)
         else:
             human_idx = 0 if self.human_color == "w" else 1
             won = self.winner == human_idx
             head = self._huge.render(t("chess.win_you") if won
                                      else t("chess.win_ai"), True,
-                                     COL_ACCENT if won else COL_DIM)
-            sub = self._small.render(t("chess.reason." + (self.result_key or "")),
-                                     True, COL_TEXT)
-        s.blit(head, head.get_rect(center=(cx, y + 34)))
-        s.blit(sub, sub.get_rect(center=(cx, y + 66)))
-        hint = self._tiny.render(t("chess.new_round"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, y + 90)))
+                                     self.accent if won else ui.TEXT_DIM)
+        sub = self._small.render(t("chess.reason." + (self.result_key or "")),
+                                 True, ui.TEXT)
+        hint_key = "common.enter_restart" if self.multiplayer else "chess.new_round"
+        hint = self._tiny.render(t(hint_key), True, ui.TEXT_DIM)
+        w = min(self.width - 24, max(head.get_width(), sub.get_width(),
+                                     hint.get_width()) + 64)
+        panel = pygame.Rect(cx - w // 2, self.height // 2 - 56, w, 112)
+        ui.draw_panel(s, panel, shadow=False, accent_top=self.accent)
+        s.blit(head, head.get_rect(center=(cx, panel.y + 34)))
+        s.blit(sub, sub.get_rect(center=(cx, panel.y + 68)))
+        s.blit(hint, hint.get_rect(center=(cx, panel.y + 94)))
 
     def _draw_setup(self, s):
         cx = self.width // 2
-        title = self._huge.render(t("chess.title"), True, COL_ACCENT)
-        s.blit(title, title.get_rect(center=(cx, int(self.height * 0.14))))
-        sub = self._small.render(t("chess.subtitle"), True, COL_DIM)
-        s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.21))))
+        ui.draw_title(s, self.width, t("chess.title"),
+                      subtitle=t("chess.subtitle"), y=int(self.height * 0.14),
+                      big=self._huge, small=self._small, accent=self.accent)
         # Schwierigkeits-Buttons (1-6)
         for i, rc in enumerate(self.diff_rects):
-            on = (i == self.diff)
-            pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, rc, border_radius=8)
-            pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, rc,
-                             2 if on else 1, border_radius=8)
-            lbl = self.font.render(str(i + 1), True, COL_TEXT if on else COL_DIM)
-            s.blit(lbl, lbl.get_rect(center=rc.center))
-        name = self._small.render(t("chess.diff." + DIFFS[self.diff]), True, COL_TEXT)
+            ui.draw_button(s, rc, str(i + 1), self.font,
+                           selected=(i == self.diff), accent=self.accent)
+        name = self._small.render(t("chess.diff." + DIFFS[self.diff]), True, ui.TEXT)
         s.blit(name, name.get_rect(center=(cx, self.diff_rects[0].bottom + 18)))
         # Farbwahl
         labels = [t("chess.white"), t("chess.black")]
         for i, rc in enumerate(self.color_rects):
             on = (self.human_color == ("w" if i == 0 else "b"))
-            pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, rc, border_radius=8)
-            pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, rc,
-                             2 if on else 1, border_radius=8)
-            lbl = self._small.render(labels[i], True, COL_TEXT if on else COL_DIM)
-            s.blit(lbl, lbl.get_rect(center=rc.center))
+            ui.draw_button(s, rc, labels[i], self._small,
+                           selected=on, accent=self.accent)
         # Start
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=8)
-        pygame.draw.rect(s, COL_ACCENT, self.start_rect, 2, border_radius=8)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
-        s.blit(st, st.get_rect(center=self.start_rect.center))
-        hint = self._tiny.render(t("chess.setup_hint"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, self.height - 16)))
+        ui.draw_button(s, self.start_rect, t("common.start"), self.font,
+                       selected=True, accent=self.accent)
+        ui.draw_footer(s, self.width, self.height, t("chess.setup_hint"),
+                       self._tiny)

@@ -25,21 +25,16 @@ import time as _time
 import pygame
 
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
 from . import cards as C
 
-COL_FELT = (18, 44, 34)          # Filz-Hintergrund
-COL_FELT_EDGE = (12, 32, 24)
-COL_TEXT = (225, 228, 238)
-COL_DIM = (165, 185, 175)
-COL_ACCENT = (47, 167, 124)      # = Sidebar-Farbe #2fa77c
-COL_SEL = (245, 205, 100)        # Auswahl-/Hover-Rahmen
-COL_BTN = (28, 62, 48)
-COL_BTN_ON = (40, 96, 72)
-COL_BTN_BORDER = (74, 116, 96)
-COL_WIN = (245, 205, 100)
+# Tisch-Identität (Filz). Generische UI-Farben kommen zur Zeichenzeit aus
+# ui.* (Theme), die Akzentfarbe aus self.accent (= Sidebar-Farbe #2fa77c).
+COL_FELT = (20, 44, 35)          # Filz-Hintergrund
+COL_FELT_EDGE = (13, 31, 24)
 
 SETUP, PLAY = "setup", "play"
 
@@ -793,12 +788,10 @@ class SolitaireGame(Game):
         vkey = self.mode if self.mode in VARIANTS else "klondike"
         self.variant = VARIANTS[vkey](self)
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
-        self.renderer = C.CardRenderer(COL_ACCENT)
+        self._make_fonts()
+        self.renderer = C.CardRenderer(self.accent)
         self.hud_h = max(34, int(self.height * 0.075))
+        self._rebuild_static()
 
         self.piles = []
         self.sel = None            # Klick-Klick-Auswahl: (pile_i, card_i)
@@ -831,11 +824,29 @@ class SolitaireGame(Game):
             self.settings.setdefault("solitaire", {})[key] = value
             settings_mod.save_settings(self.settings)
 
+    def _make_fonts(self):
+        """Theme-Schriften; _mono fuer die HUD-Mitte (Zeit/Zahlen ruhig)."""
+        self._small = ui.font(16)
+        self._tiny = ui.font(13)
+        self._mono = ui.font(15, mono=True)
+        self._huge = ui.font(max(26, self.height // 11), bold=True)
+
+    def _rebuild_static(self):
+        """Groessenabhaengige, gecachte Flaechen (Filz, HUD, Overlay)."""
+        self._felt = C.make_felt(self.width, self.height,
+                                 COL_FELT, COL_FELT_EDGE)
+        self._hud_bg = pygame.Surface((self.width, self.hud_h),
+                                      pygame.SRCALPHA)
+        self._hud_bg.fill((8, 22, 16, 224))
+        self._overlay = pygame.Surface((self.width, self.height),
+                                       pygame.SRCALPHA)
+        self._overlay.fill((6, 14, 10, 190))
+
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self.hud_h = max(34, int(self.height * 0.075))
         self.renderer.clear()
+        self._rebuild_static()
         self._build_setup_layout()
         if self.state == PLAY:
             self.variant.layout(self.width, self.height)
@@ -907,15 +918,21 @@ class SolitaireGame(Game):
     def _undo(self):
         if not self.undo_stack or self.game_over:
             return
+        # Laufendes Drag zuerst zurücklegen, sonst zieht das Undo Karten
+        # unter der Maus weg und der Stapelzustand geht kaputt.
+        self._cancel_drag()
         rec = self.undo_stack.pop()
-        for src_i, dst_i, n in reversed(rec["ops"]):
-            moved = self.piles[dst_i].cards[-n:]
-            del self.piles[dst_i].cards[-n:]
-            self.piles[src_i].cards.extend(moved)
+        # WICHTIG: Flips VOR den Ops rückgängig machen - die Indizes beziehen
+        # sich auf den Zustand nach dem Zug. (Vorher blieben z.B. nach dem
+        # Undo eines Stock-Zugs die zurückgelegten Karten offen im Stock.)
         for pi, ci in rec["flips"]:
             if ci < len(self.piles[pi].cards):
                 card = self.piles[pi].cards[ci]
                 card.face_up = not card.face_up
+        for src_i, dst_i, n in reversed(rec["ops"]):
+            moved = self.piles[dst_i].cards[-n:]
+            del self.piles[dst_i].cards[-n:]
+            self.piles[src_i].cards.extend(moved)
         self.score -= rec["score"]
         self.moves = max(0, self.moves - 1)
         self.variant.undo_extra(rec.get("extra", {}))
@@ -979,7 +996,7 @@ class SolitaireGame(Game):
             return
         if self.game_over:
             if event.kind == InputEvent.KEYDOWN:
-                if event.key in ("Return", "space"):
+                if event.key in ("Return", "space", "r", "R"):
                     self._new_deal()
                 elif event.key in ("s", "S"):
                     self.state = SETUP
@@ -1130,8 +1147,7 @@ class SolitaireGame(Game):
             self._draw_setup()
             return
         s = self.surface
-        s.fill(COL_FELT)
-        pygame.draw.rect(s, COL_FELT_EDGE, (0, 0, self.width, self.height), 6)
+        s.blit(self._felt, (0, 0))
         self._draw_piles(s)
         if self.drag is not None:
             self._draw_drag(s)
@@ -1155,7 +1171,8 @@ class SolitaireGame(Game):
                        if p.top.face_up else self.renderer.back(cw, ch),
                        (p.x, p.y))
                 if len(p.cards) > 1:
-                    n = self._tiny.render(str(len(p.cards)), True, COL_DIM)
+                    n = self._tiny.render(str(len(p.cards)), True,
+                                          ui.TEXT_DIM)
                     s.blit(n, (p.x + 2, p.y + ch + 2))
             elif p.kind in ("waste", "foundation", "cell", "grid"):
                 s.blit(self.renderer.get(p.top, cw, ch), (p.x, p.y))
@@ -1170,7 +1187,7 @@ class SolitaireGame(Game):
                 if rects:
                     sel_r = rects[ci].unionall(rects[ci:]) \
                         if len(rects) > ci + 1 else rects[ci]
-                    pygame.draw.rect(s, COL_SEL, sel_r.inflate(4, 4), 2,
+                    pygame.draw.rect(s, ui.GOLD, sel_r.inflate(4, 4), 2,
                                      border_radius=6)
 
     def _draw_recycle(self, s, p, cw, ch):
@@ -1178,7 +1195,7 @@ class SolitaireGame(Game):
         Waste zum erneuten Durchgehen zurückgelegt werden kann."""
         cx, cy = p.x + cw // 2, p.y + ch // 2
         r = max(8, min(cw, ch) // 4)
-        col = COL_ACCENT
+        col = self.accent
         # offener Ring (oben rechts eine Lücke für die Pfeilspitze)
         pygame.draw.arc(s, col, (cx - r, cy - r, 2 * r, 2 * r),
                         -0.35, 4.9, max(2, r // 4))
@@ -1198,68 +1215,62 @@ class SolitaireGame(Game):
             s.blit(self.renderer.get(card, self.cw, self.ch), (x, y + i * dy))
 
     def _draw_hud(self, s):
-        pygame.draw.rect(s, (14, 34, 26), (0, 0, self.width, self.hud_h))
-        pygame.draw.line(s, COL_BTN_BORDER, (0, self.hud_h),
-                         (self.width, self.hud_h))
+        s.blit(self._hud_bg, (0, 0))
+        pygame.draw.line(s, self.accent, (0, self.hud_h),
+                         (self.width, self.hud_h), 2)
         cy = self.hud_h // 2
         name = self._small.render(t("sol.mode." + self.variant.key), True,
-                                  COL_ACCENT)
+                                  self.accent)
         s.blit(name, name.get_rect(midleft=(12, cy)))
-        mid = self._small.render(
+        # Monospace: Zeit/Zahlen aendern sich, ohne dass die Zeile "springt".
+        mid = self._mono.render(
             t("common.points", score=max(0, self.score)) + "   ·   "
             + t("sol.moves", n=self.moves) + "   ·   " + self._fmt_time(),
-            True, COL_TEXT)
+            True, ui.TEXT)
         s.blit(mid, mid.get_rect(center=(self.width // 2, cy)))
         x = self.width - 12
         for txt in self.variant.hud_extra():
-            img = self._small.render(txt, True, COL_DIM)
+            img = self._small.render(txt, True, ui.TEXT_DIM)
             s.blit(img, img.get_rect(midright=(x, cy)))
             x -= img.get_width() + 16
         if self.msg:
-            img = self._small.render(self.msg, True, COL_SEL)
+            img = self._small.render(self.msg, True, ui.GOLD)
             s.blit(img, img.get_rect(center=(self.width // 2,
                                              self.hud_h + 14)))
-        hint = self._tiny.render(t("sol.hint"), True, COL_DIM)
+        hint = self._tiny.render(t("sol.hint"), True, ui.TEXT_FAINT)
         s.blit(hint, hint.get_rect(midbottom=(self.width // 2,
                                               self.height - 4)))
 
     def _draw_result(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((8, 20, 14, 185))
-        s.blit(ov, (0, 0))
+        s.blit(self._overlay, (0, 0))
         cx, cy = self.width // 2, self.height // 2
         head = self._huge.render(t("sol.win", bonus=self.win_bonus), True,
-                                 COL_WIN)
-        s.blit(head, head.get_rect(center=(cx, cy - 50)))
+                                 ui.GOLD)
+        pw = min(self.width - 40, max(380, head.get_width() + 70))
+        panel = pygame.Rect(cx - pw // 2, cy - 96, pw, 192)
+        ui.draw_panel(s, panel, accent_top=self.accent)
+        s.blit(head, head.get_rect(center=(cx, cy - 46)))
         sc = self.font.render(t("common.points", score=self.score), True,
-                              COL_TEXT)
-        s.blit(sc, sc.get_rect(center=(cx, cy + 4)))
-        hint = self._small.render(t("sol.retry"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, cy + 40)))
+                              ui.TEXT)
+        s.blit(sc, sc.get_rect(center=(cx, cy + 10)))
+        hint = self._small.render(t("sol.retry"), True, ui.TEXT_DIM)
+        s.blit(hint, hint.get_rect(center=(cx, cy + 52)))
 
     # ----- Setup zeichnen -----------------------------------------------
     def _draw_setup(self):
         s = self.surface
-        s.fill(COL_FELT)
-        title = self._huge.render(t("sol.mode." + self.variant.key).upper(),
-                                  True, COL_ACCENT)
-        s.blit(title, title.get_rect(center=(self.width // 2,
-                                             int(self.height * 0.15))))
-        sub = self._small.render(t("sol.subtitle." + self.variant.key), True,
-                                 COL_DIM)
-        s.blit(sub, sub.get_rect(center=(self.width // 2,
-                                         int(self.height * 0.23))))
+        ui.draw_background(s, self.width, self.height, stars=False)
+        ui.draw_title(s, self.width, t("sol.mode." + self.variant.key),
+                      subtitle=t("sol.subtitle." + self.variant.key),
+                      y=int(self.height * 0.14), big=self._huge,
+                      accent=self.accent)
         rows = self.variant.setup_rows()
         for i, r in enumerate(self.option_rects):
             if i >= len(rows):
                 break
-            pygame.draw.rect(s, COL_BTN, r, border_radius=10)
-            pygame.draw.rect(s, COL_BTN_BORDER, r, 1, border_radius=10)
-            lbl = self._small.render(rows[i][0](), True, COL_TEXT)
-            s.blit(lbl, lbl.get_rect(center=r.center))
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.start_rect, 2, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
-        s.blit(st, st.get_rect(center=self.start_rect.center))
-        hint = self._tiny.render(t("sol.setup_hint"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 16)))
+            ui.draw_button(s, r, rows[i][0](), self._small,
+                           accent=self.accent)
+        ui.draw_button(s, self.start_rect, t("common.start"), self.font,
+                       selected=True, accent=self.accent)
+        ui.draw_footer(s, self.width, self.height, t("sol.setup_hint"),
+                       self._tiny)

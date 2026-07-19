@@ -24,6 +24,7 @@ import pygame
 
 import settings as settings_mod
 import store
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
@@ -35,6 +36,8 @@ SHIP_W, SHIP_H = 0.45, 0.35
 VIEW_DIST = 120.0
 LEVELS = 30
 
+# 3D-Welt-Palette (bewusst fest - unabhängig vom UI-Theme);
+# Akzent-/Schiffsfarbe kommt dynamisch aus self.accent (= Sidebar-Farbe).
 COL_BG_TOP = (8, 6, 24)
 COL_BG_BOT = (24, 10, 48)
 COL_RING = (90, 240, 255)
@@ -43,12 +46,6 @@ COL_RAIL = (150, 90, 255)
 COL_OBST = (200, 40, 120)
 COL_OBST_EDGE = (255, 120, 190)
 COL_COIN = (255, 210, 80)
-COL_SHIP = (53, 226, 255)   # = Sidebar-Farbe #35e2ff
-COL_TEXT = (225, 228, 238)
-COL_DIM = (150, 158, 178)
-COL_BTN = (32, 38, 54)
-COL_BTN_ON = (36, 84, 96)
-COL_BTN_BORDER = (74, 84, 116)
 
 SETUP, READY, PLAY, CRASH, FINISH = "setup", "ready", "play", "crash", "finish"
 
@@ -92,13 +89,10 @@ class TunnelRacerGame(Game):
         except (TypeError, ValueError):
             self.cursor = 1
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._big = pygame.font.SysFont("consolas", 22, bold=True)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self._sky_cache = None
         self._prev_frame = None
+        self._ov_cache = {}          # gecachte Vollbild-Abdunklungen
         self.capture_mouse = False
         self._load_solved()
         self.level = 1
@@ -106,11 +100,30 @@ class TunnelRacerGame(Game):
         self.state = SETUP
 
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self._sky_cache = None
         self._prev_frame = None
+        self._ov_cache = {}
         self._build_setup_layout()
+
+    def _make_fonts(self):
+        """Schriftgrößen aus der aktuellen Auflösung ableiten (Theme-Schrift)."""
+        h = self.height
+        self._small = ui.font(max(13, h // 30))
+        self._tiny = ui.font(max(11, h // 36))
+        self._big = ui.font(max(16, h // 21), bold=True)
+        self._huge = ui.font(max(26, h // 11), bold=True)
+
+    def _dim(self, s, rgb, alpha):
+        """Vollbild-Überblendung über eine gecachte Surface - vermeidet den
+        SRCALPHA-Fill über die ganze Fläche in jedem Frame."""
+        surf = self._ov_cache.get(rgb)
+        if surf is None or surf.get_size() != (self.width, self.height):
+            surf = pygame.Surface((self.width, self.height))
+            surf.fill(rgb)
+            self._ov_cache[rgb] = surf
+        surf.set_alpha(alpha)
+        s.blit(surf, (0, 0))
 
     def _save_setting(self, key, value):
         if isinstance(self.settings, dict):
@@ -147,8 +160,7 @@ class TunnelRacerGame(Game):
             self.lv_cell = cell
             self.lv_x = cx - cell * 5
             self.lv_y = top
-            self._lv_font = pygame.font.SysFont("consolas",
-                                                max(10, cell * 2 // 5))
+            self._lv_font = ui.font(max(10, cell * 2 // 5))
             self.start_rect = pygame.Rect(cx - 95, top + 3 * cell + 14,
                                           190, 46)
         else:
@@ -557,13 +569,10 @@ class TunnelRacerGame(Game):
         self._draw_ship(s)
         self._apply_blur(s)
         if self.flash_t > 0:
-            ov = pygame.Surface((self.width, self.height))
-            ov.fill((255, 255, 255))
-            ov.set_alpha(int(200 * self.flash_t / 0.15))
-            s.blit(ov, (0, 0))
+            self._dim(s, (255, 255, 255), int(200 * self.flash_t / 0.15))
         self._draw_hud(s)
         if self.state == READY:
-            img = self._huge.render(t("tun.start_hint"), True, COL_SHIP)
+            img = self._huge.render(t("tun.start_hint"), True, self.accent)
             s.blit(img, img.get_rect(center=(self.width // 2,
                                              int(self.height * 0.42))))
         elif self.state == CRASH:
@@ -590,7 +599,6 @@ class TunnelRacerGame(Game):
 
     def _draw_tunnel(self, s):
         z0 = math.floor(self.z / 6.0) * 6.0
-        prev = None
         rings = []
         for i in range(int(VIEW_DIST / 6) + 1):
             z = z0 + i * 6.0
@@ -671,7 +679,7 @@ class TunnelRacerGame(Game):
             return
         pts = [self._proj(c) for c in cams]
         ipts = [(int(x), int(y)) for x, y in pts]
-        pygame.draw.polygon(s, COL_SHIP, ipts)
+        pygame.draw.polygon(s, self.accent, ipts)
         pygame.draw.polygon(s, (240, 250, 255), ipts, 2)
 
     def _apply_blur(self, s):
@@ -688,7 +696,7 @@ class TunnelRacerGame(Game):
 
     def _draw_hud(self, s):
         img = self._big.render(t("common.points", score=self.score), True,
-                               COL_SHIP)
+                               self.accent)
         s.blit(img, (14, 10))
         right = [t("tun.coins", n=self.coins)]
         if self.mode == "endless":
@@ -701,93 +709,113 @@ class TunnelRacerGame(Game):
             right.append(f"{min(100, pct)}%")
         y = 12
         for line in right:
-            img = self._small.render(line, True, COL_DIM)
+            img = self._small.render(line, True, ui.TEXT_DIM)
             s.blit(img, img.get_rect(topright=(self.width - 14, y)))
             y += 22
         # Fortschrittsbalken (Level-Modus)
         if self.mode == "levels" and self.state == PLAY:
             frac = min(1.0, self.z / max(1, self.length))
-            pygame.draw.rect(s, (40, 46, 66),
+            pygame.draw.rect(s, ui.PANEL_LIGHT,
                              (0, self.height - 6, self.width, 6))
-            pygame.draw.rect(s, COL_SHIP,
+            pygame.draw.rect(s, self.accent,
                              (0, self.height - 6,
                               int(self.width * frac), 6))
 
     def _draw_crash(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((10, 6, 20, 175))
-        s.blit(ov, (0, 0))
+        self._dim(s, (10, 6, 20), 175)
         cx, cy = self.width // 2, self.height // 2
-        head = self._huge.render(t("tun.crash"), True, (255, 110, 110))
-        s.blit(head, head.get_rect(center=(cx, cy - 50)))
+        head = self._huge.render(t("tun.crash"), True, ui.RED)
         sc = self.font.render(t("common.points", score=self.score), True,
-                              COL_TEXT)
-        s.blit(sc, sc.get_rect(center=(cx, cy + 2)))
+                              ui.TEXT)
         key = "common.enter_restart" if self.mode == "endless" else "tun.retry"
-        hint = self._small.render(t(key), True, COL_DIM)
+        hint = self._small.render(t(key), True, ui.TEXT_DIM)
+
+        # Panel hinter dem Ergebnis (dynamische ui-Palette)
+        top = cy - 50 - head.get_height() // 2 - 22
+        bottom = cy + 40 + hint.get_height() // 2 + 22
+        pw = min(self.width - 40,
+                 max(380, head.get_width() + 80, hint.get_width() + 60,
+                     sc.get_width() + 60))
+        panel = pygame.Rect(cx - pw // 2, top, pw, bottom - top)
+        pygame.draw.rect(s, ui.PANEL, panel, border_radius=14)
+        pygame.draw.rect(s, ui.BORDER_LIGHT, panel, 1, border_radius=14)
+
+        s.blit(head, head.get_rect(center=(cx, cy - 50)))
+        s.blit(sc, sc.get_rect(center=(cx, cy + 2)))
         s.blit(hint, hint.get_rect(center=(cx, cy + 40)))
 
     def _draw_finish(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((6, 12, 24, 185))
-        s.blit(ov, (0, 0))
+        self._dim(s, (6, 12, 24), 185)
         cx, cy = self.width // 2, self.height // 2
         head = self._huge.render(t("tun.level_done", n=self.level), True,
-                                 COL_SHIP)
-        s.blit(head, head.get_rect(center=(cx, cy - 70)))
+                                 self.accent)
         lines = [t("tun.base", n=1000),
                  t("tun.coin_bonus", n=self.coin_bonus),
                  t("tun.time_bonus", n=self.time_bonus),
                  t("common.points", score=self.score)]
+        imgs = [self.font.render(line, True, ui.TEXT) for line in lines]
+        hint = self._small.render(t("tun.next"), True, ui.TEXT_DIM)
+
+        # Panel hinter dem Ergebnis (dynamische ui-Palette)
+        top = cy - 70 - head.get_height() // 2 - 22
+        bottom = cy - 20 + 30 * len(imgs) + 12 + hint.get_height() // 2 + 22
+        pw = min(self.width - 40,
+                 max(400, head.get_width() + 80, hint.get_width() + 60,
+                     max(i.get_width() for i in imgs) + 60))
+        panel = pygame.Rect(cx - pw // 2, top, pw, bottom - top)
+        pygame.draw.rect(s, ui.PANEL, panel, border_radius=14)
+        pygame.draw.rect(s, ui.BORDER_LIGHT, panel, 1, border_radius=14)
+
+        s.blit(head, head.get_rect(center=(cx, cy - 70)))
         y = cy - 20
-        for line in lines:
-            img = self.font.render(line, True, COL_TEXT)
+        for img in imgs:
             s.blit(img, img.get_rect(center=(cx, y)))
             y += 30
-        hint = self._small.render(t("tun.next"), True, COL_DIM)
         s.blit(hint, hint.get_rect(center=(cx, y + 12)))
 
     # ----- Setup zeichnen -----------------------------------------------
     def _draw_setup(self, s):
-        s.fill(COL_BG_TOP)
-        self._draw_sky(s)
+        ui.draw_background(s, self.width, self.height)
         cx = self.width // 2
-        title = self._huge.render("TUNNEL RACER", True, COL_SHIP)
+        title = self._huge.render("TUNNEL RACER", True, self.accent)
         s.blit(title, title.get_rect(center=(cx, int(self.height * 0.10))))
         mode_lbl = t("tun.mode." + self.mode)
         sub = self._small.render(mode_lbl + "   -   " + t("tun.subtitle"),
-                                 True, COL_DIM)
+                                 True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.17))))
 
-        lbl = self._small.render(t("tun.control"), True, (200, 205, 220))
+        lbl = self._small.render(t("tun.control"), True, ui.TEXT_DIM)
         s.blit(lbl, lbl.get_rect(midright=(self.ctrl_rect.x - 16,
                                            self.ctrl_rect.centery)))
-        pygame.draw.rect(s, COL_BTN_ON, self.ctrl_rect, border_radius=8)
-        pygame.draw.rect(s, COL_BTN_BORDER, self.ctrl_rect, 1,
+        pygame.draw.rect(s, ui.BTN_SEL, self.ctrl_rect, border_radius=8)
+        pygame.draw.rect(s, ui.BORDER, self.ctrl_rect, 1,
                          border_radius=8)
         img = self._small.render(
-            t("tun.control." + self.control) + "  [C]", True, COL_TEXT)
+            t("tun.control." + self.control) + "  [C]", True, ui.TEXT)
         s.blit(img, img.get_rect(center=self.ctrl_rect.center))
 
-        lbl = self._small.render(t("tun.blur"), True, (200, 205, 220))
+        lbl = self._small.render(t("tun.blur"), True, ui.TEXT_DIM)
         s.blit(lbl, lbl.get_rect(midright=(self.blur_minus.x - 16,
                                            self.blur_minus.centery)))
         for r, sym in ((self.blur_minus, "-"), (self.blur_plus, "+")):
-            pygame.draw.rect(s, COL_BTN, r, border_radius=8)
-            pygame.draw.rect(s, COL_BTN_BORDER, r, 1, border_radius=8)
-            img = self._big.render(sym, True, COL_TEXT)
+            pygame.draw.rect(s, ui.BTN, r, border_radius=8)
+            pygame.draw.rect(s, ui.BORDER, r, 1, border_radius=8)
+            img = self._big.render(sym, True, ui.TEXT)
             s.blit(img, img.get_rect(center=r.center))
         blur_lbl = t("common.off") if self.blur <= 0 \
             else f"{int(self.blur * 100)}%"
-        img = self._big.render(blur_lbl, True, COL_SHIP)
+        img = self._big.render(blur_lbl, True, self.accent)
         s.blit(img, img.get_rect(center=self.blur_box.center))
 
         # Maus-Richtung (nur bei Maussteuerung relevant; Taste I schaltet um)
         mdir = t("common.dir_inverted") if self.invert else t("common.dir_normal")
-        hint = self._small.render(t("tun.mousedir", dir=mdir), True, COL_DIM)
+        hint = self._small.render(t("tun.mousedir", dir=mdir), True,
+                                  ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(cx, self.height - 18)))
 
         if self.mode == "levels":
+            done_fill = ui.mix(ui.BTN, self.accent, 0.25)
+            done_text = ui.mix(self.accent, ui.TEXT, 0.35)
             for n in range(1, LEVELS + 1):
                 i = n - 1
                 x = self.lv_x + (i % 10) * self.lv_cell
@@ -795,20 +823,20 @@ class TunnelRacerGame(Game):
                 cell = pygame.Rect(x + 1, y + 1, self.lv_cell - 2,
                                    self.lv_cell - 2)
                 done = n in self.solved
-                pygame.draw.rect(s, (26, 56, 52) if done else (30, 36, 52),
+                pygame.draw.rect(s, done_fill if done else ui.BTN,
                                  cell, border_radius=4)
                 if n == self.cursor:
-                    pygame.draw.rect(s, COL_SHIP, cell, 2, border_radius=4)
+                    pygame.draw.rect(s, self.accent, cell, 2, border_radius=4)
                 num = self._lv_font.render(str(n), True,
-                                           (110, 220, 190) if done else COL_DIM)
+                                           done_text if done else ui.TEXT_DIM)
                 s.blit(num, num.get_rect(center=cell.center))
             prog = self._small.render(
                 t("tun.progress", n=len(self.solved), m=LEVELS), True,
-                COL_DIM)
+                ui.TEXT_DIM)
             s.blit(prog, prog.get_rect(
                 center=(cx, self.lv_y + 3 * self.lv_cell + 40)))
 
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        pygame.draw.rect(s, COL_SHIP, self.start_rect, 2, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=10)
+        pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=10)
+        st = self.font.render(t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))

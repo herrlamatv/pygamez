@@ -37,16 +37,13 @@ import random
 import pygame
 
 import i18n
+import ui
 from game_base import Game, InputEvent
 
 # ---------------------------------------------------------------- Farben
-COL_BG_TOP = (16, 18, 30)
-COL_BG_BOT = (6, 7, 14)
-COL_PADDLE = (225, 228, 240)
-COL_PADDLE_EDGE = (120, 150, 220)
-COL_TEXT = (238, 240, 248)
-COL_DIM = (150, 160, 185)
-COL_ACCENT = (90, 150, 240)
+# Allgemeine UI-Farben kommen zur Zeichenzeit dynamisch aus der ui.*-Palette
+# (ein Theme-Wechsel färbt das Spiel sofort um). Hier stehen nur noch die
+# Identitätsfarben des Spiels (Steine, Bälle, Power-ups).
 
 # Steinfarbe nach Resthärte (Treffer bis zur Zerstörung)
 STR_COLORS = {1: (120, 205, 120), 2: (235, 185, 80), 3: (230, 95, 95)}
@@ -107,10 +104,6 @@ LEVEL_DEFS = [
 ]
 NUM_LEVELS = len(LEVEL_DEFS)
 
-# Farbe der Level-Typen (für Anzeige)
-TAG_COLORS = {"Normal": (150, 160, 185), "Schwer": (235, 110, 110),
-              "Spass": (130, 220, 130), "Voll": (130, 200, 235)}
-
 PADDLE_H = 16
 BALL_R = 8
 BALL_MIN_SPEED = 200
@@ -155,6 +148,7 @@ class PowerUp:
 
     def __init__(self, x, y, kind):
         self.kind = kind
+        self.y = float(y)               # exakte Fallposition (Rects sind int)
         self.rect = pygame.Rect(int(x) - 17, int(y) - 11, 34, 22)
         self.phase = random.uniform(0, math.tau)
 
@@ -208,9 +202,7 @@ class BreakoutGame(Game):
         self.start_level_index = 0
         self.level_mode = "Standard"    # "Standard" (gemischt) oder "Voll"
 
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._mid = pygame.font.SysFont("consolas", 20, bold=True)
+        self._make_fonts()
 
         # Visuelle Extras
         self.particles = []
@@ -220,7 +212,6 @@ class BreakoutGame(Game):
         self.anim_t = 0.0
 
         self._scene = None
-        self._bg = None
         self._stars = []
         self._build_bg()
         self._build_setup_layout()
@@ -228,22 +219,20 @@ class BreakoutGame(Game):
     def on_surface_changed(self):
         """Wird vom Rahmen bei Größenänderung aufgerufen."""
         self._scene = None
+        self._make_fonts()
         self._build_bg()
         self._build_setup_layout()
 
-    # ----- Hintergrund (Verlauf + Sterne) -------------------------------
+    def _make_fonts(self):
+        """Schriftgrössen aus der Fensterhöhe ableiten (Theme-Schriftart)."""
+        h = self.height
+        self._tiny = ui.font(max(11, h // 36))
+        self._small = ui.font(max(13, h // 30))
+        self._mid = ui.font(max(16, h // 24), bold=True)
+
+    # ----- Hintergrund (Theme-Verlauf + eigene Funkel-Sterne) -----------
     def _build_bg(self):
         w, h = self.width, self.height
-        bg = pygame.Surface((w, h))
-        try:
-            bg = bg.convert()           # schnelleres Blitten, falls Display gesetzt
-        except pygame.error:
-            pass
-        for y in range(h):
-            t = y / max(1, h - 1)
-            col = tuple(int(a + (b - a) * t) for a, b in zip(COL_BG_TOP, COL_BG_BOT))
-            pygame.draw.line(bg, col, (0, y), (w, y))
-        self._bg = bg
         self._stars = [(random.randint(0, w), random.randint(0, h),
                         random.uniform(0.4, 1.0), random.uniform(0.5, 1.6))
                        for _ in range(70)]
@@ -258,13 +247,16 @@ class BreakoutGame(Game):
         return self._scene
 
     def _blit_bg(self, s):
-        if self._bg is None or self._bg.get_size() != (self.width, self.height):
-            self._build_bg()
-        s.blit(self._bg, (0, 0))
+        ui.draw_background(s, self.width, self.height)
         for (x, y, b, r) in self._stars:
             tw = 0.6 + 0.4 * math.sin(self.anim_t * 1.5 + x)
-            c = int(80 + 120 * b * tw)
-            pygame.draw.circle(s, (c, c, min(255, c + 25)), (x, y), max(1, int(r)))
+            col = ui.mix(ui.BG_TOP, ui.TEXT, 0.2 + 0.5 * b * tw)
+            pygame.draw.circle(s, col, (x, y), max(1, int(r)))
+
+    def _tag_color(self, tag):
+        """Theme-Farbe für den Level-Typ (zur Zeichenzeit ausgewertet)."""
+        return {"Normal": ui.TEXT_DIM, "Schwer": ui.RED,
+                "Spass": ui.GREEN, "Voll": ui.ACCENT}.get(tag, ui.TEXT_DIM)
 
     # ===== Setup-Screen =================================================
 
@@ -290,67 +282,67 @@ class BreakoutGame(Game):
         s = self.surface
         self._blit_bg(s)
 
-        # Titel mit leichtem Glanz
-        title = self.big_font.render("BREAKOUT", True, COL_TEXT)
-        glow = self.big_font.render("BREAKOUT", True, COL_ACCENT)
+        # Titel mit leichtem Glanz in der Akzentfarbe
+        title = self.big_font.render("BREAKOUT", True, ui.TEXT)
+        glow = self.big_font.render("BREAKOUT", True, self.accent)
         s.blit(glow, glow.get_rect(center=(self.width // 2 + 2, 58)))
         s.blit(title, title.get_rect(center=(self.width // 2, 56)))
-        sub = self._small.render(i18n.t("bo.deluxe"), True, COL_ACCENT)
+        sub = self._small.render(i18n.t("bo.deluxe"), True, self.accent)
         s.blit(sub, sub.get_rect(center=(self.width // 2, 86)))
 
         # Level-Wahl (oben rechts)
         ld = self._level_def(self.start_level_index)
-        s.blit(self._small.render(i18n.t("bo.startlevel"), True, COL_DIM),
+        s.blit(self._small.render(i18n.t("bo.startlevel"), True, ui.TEXT_DIM),
                (self.width - 170, 12))
-        lvl_txt = self._mid.render(f"{self.start_level_index + 1:>2}/{NUM_LEVELS}", True, COL_TEXT)
+        lvl_txt = self._mid.render(f"{self.start_level_index + 1:>2}/{NUM_LEVELS}", True, ui.TEXT)
         s.blit(lvl_txt, (self.width - 170, 36))
         tag_txt = self._small.render(i18n.t("bo.tag." + ld["tag"]), True,
-                                     TAG_COLORS[ld["tag"]])
+                                     self._tag_color(ld["tag"]))
         s.blit(tag_txt, (self.width - 170, 62))
         for r, sym in ((self.level_up_rect, "+"), (self.level_down_rect, "-")):
-            self._panel(s, r, (45, 50, 68))
-            t = self._mid.render(sym, True, COL_TEXT)
+            self._panel(s, r, ui.BTN)
+            t = self._mid.render(sym, True, ui.TEXT)
             s.blit(t, t.get_rect(center=r.center))
 
-        s.blit(self._mid.render(i18n.t("bo.difficulty"), True, COL_DIM),
+        s.blit(self._mid.render(i18n.t("bo.difficulty"), True, ui.TEXT_DIM),
                (self.width // 2 - 165, 104))
         for name, r in self.diff_rects.items():
             aktiv = (name == self.diff_name)
-            self._panel(s, r, (70, 110, 175) if aktiv else (40, 45, 60),
-                        border=COL_TEXT if aktiv else COL_DIM)
-            t = self._mid.render(name, True, COL_TEXT)
+            self._panel(s, r, ui.BTN_SEL if aktiv else ui.BTN,
+                        border=self.accent if aktiv else ui.BORDER)
+            t = self._mid.render(i18n.t("bo.diff." + name.lower()), True, ui.TEXT)
             s.blit(t, t.get_rect(center=r.center))
 
         # Aufbau-Umschalter
         voll = (self.level_mode == "Voll")
-        self._panel(s, self.mode_rect, (60, 95, 120) if voll else (40, 45, 60))
+        self._panel(s, self.mode_rect, ui.BTN_SEL if voll else ui.BTN)
         mt = self._small.render(
             i18n.t("bo.build_full") if voll else i18n.t("bo.build_std"),
-            True, COL_TEXT)
+            True, ui.TEXT)
         s.blit(mt, mt.get_rect(center=self.mode_rect.center))
 
-        s.blit(self._mid.render(i18n.t("bo.ballcolor"), True, COL_DIM),
+        s.blit(self._mid.render(i18n.t("bo.ballcolor"), True, ui.TEXT_DIM),
                (self.width // 2 - 165, 234))
         for i, r in enumerate(self.color_rects):
             pygame.draw.rect(s, BALL_COLORS[i][1], r, border_radius=8)
             if i == self.color_index:
-                pygame.draw.rect(s, COL_TEXT, r.inflate(8, 8), 3, border_radius=10)
+                pygame.draw.rect(s, ui.TEXT, r.inflate(8, 8), 3, border_radius=10)
 
         # Start-Knopf (pulsierend)
-        pulse = int(20 * (0.5 + 0.5 * math.sin(self.anim_t * 4)))
-        pygame.draw.rect(s, (60 + pulse, 150 + pulse, 90), self.start_rect, border_radius=12)
-        pygame.draw.rect(s, COL_TEXT, self.start_rect, 2, border_radius=12)
-        st = self._mid.render(i18n.t("common.start"), True, COL_TEXT)
+        col = ui.mix(ui.GREEN, (255, 255, 255), ui.pulse(4, 0.0, 0.22))
+        pygame.draw.rect(s, col, self.start_rect, border_radius=12)
+        pygame.draw.rect(s, ui.TEXT, self.start_rect, 2, border_radius=12)
+        st = self._mid.render(i18n.t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
 
-        hint = self._tiny.render(i18n.t("bo.setup_hint"), True, COL_DIM)
+        hint = self._tiny.render(i18n.t("bo.setup_hint"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, 428)))
-        leg = self._tiny.render(i18n.t("bo.legend"), True, (110, 120, 145))
+        leg = self._tiny.render(i18n.t("bo.legend"), True, ui.TEXT_FAINT)
         s.blit(leg, leg.get_rect(center=(self.width // 2, 448)))
 
     def _panel(self, s, rect, fill, border=None):
         pygame.draw.rect(s, fill, rect, border_radius=8)
-        pygame.draw.rect(s, border or COL_DIM, rect, 1, border_radius=8)
+        pygame.draw.rect(s, border or ui.BORDER, rect, 1, border_radius=8)
 
     def _handle_setup_event(self, event):
         if event.kind == InputEvent.KEYDOWN:
@@ -692,28 +684,27 @@ class BreakoutGame(Game):
         self.balls = überlebende
 
     def _ball_bricks(self, b, ball_rect, fire):
-        for i, brick in enumerate(self.bricks):
+        # Kopie durchlaufen: _hit_brick/_explode entfernen Steine aus der Liste.
+        for brick in list(self.bricks):
+            if brick not in self.bricks:      # durch Kettenexplosion schon weg
+                continue
             if not ball_rect.colliderect(brick.rect):
                 continue
             rect = brick.rect
 
-            # Stahl: immer abprallen, nie zerstören
-            if brick.kind == Brick.STEEL and not fire:
-                self._bounce(b, ball_rect, rect)
-                self.play_sound("bounce")
-                return
-            if brick.kind == Brick.STEEL and fire:
+            # Stahl: immer abprallen (auch beim Feuerball), nie zerstören
+            if brick.kind == Brick.STEEL:
                 self._bounce(b, ball_rect, rect)
                 self.play_sound("bounce")
                 return
 
             if fire:
                 # Feuerball durchschlägt Steine ohne abzuprallen
-                self._hit_brick(i, full=True)
+                self._hit_brick(brick, full=True)
                 continue
 
             self._bounce(b, ball_rect, rect)
-            self._hit_brick(i, full=False)
+            self._hit_brick(brick, full=False)
             return
 
     @staticmethod
@@ -725,22 +716,20 @@ class BreakoutGame(Game):
         else:
             b.vy = -b.vy
 
-    def _hit_brick(self, index, full):
+    def _hit_brick(self, brick, full):
         """Fügt einem Stein Schaden zu; zerstört ihn ggf. inkl. Effekten."""
-        if index >= len(self.bricks):
+        if brick not in self.bricks:
             return
-        brick = self.bricks[index]
         dmg = brick.strength if full else 1
         brick.strength -= dmg
         if brick.strength > 0:
             self.score += 5
             self.play_sound("eat")
             return
+        # WICHTIG: erst entfernen, dann poppen - sonst erwischt die
+        # Bomben-Kettenexplosion denselben Stein ein zweites Mal.
+        self.bricks.remove(brick)
         self._pop_brick(brick, chain=True)
-        try:
-            self.bricks.remove(brick)
-        except ValueError:
-            pass
 
     def _pop_brick(self, brick, chain):
         """Stein zerstören: Punkte, Combo, Partikel, evtl. Kettenexplosion."""
@@ -796,12 +785,12 @@ class BreakoutGame(Game):
                 continue
             r = pygame.Rect(int(shot[0]) - 2, int(shot[1]) - 10, 4, 12)
             getroffen = False
-            for i, brick in enumerate(self.bricks):
+            for brick in self.bricks:
                 if r.colliderect(brick.rect):
                     if brick.kind == Brick.STEEL:
                         getroffen = True     # Stahl schluckt den Schuss
                     else:
-                        self._hit_brick(i, full=False)
+                        self._hit_brick(brick, full=False)
                         getroffen = True
                     break
             if not getroffen:
@@ -824,7 +813,10 @@ class BreakoutGame(Game):
     def _update_powerups(self, dt, paddle_rect):
         bleibt = []
         for p in self.powerups:
-            p.rect.y += int(POWERUP_FALL * dt)
+            # Fallposition als float führen (int-Abschneiden wäre je nach
+            # Framerate unterschiedlich schnell).
+            p.y += POWERUP_FALL * dt
+            p.rect.centery = int(p.y)
             if p.rect.colliderect(paddle_rect):
                 self._activate(p.kind)
             elif p.rect.top <= self.height:
@@ -987,7 +979,7 @@ class BreakoutGame(Game):
         self._draw_hud(s)
 
         if self.ball_hängt and self.intro_timer <= 0:
-            img = self.font.render(i18n.t("bo.start_ball"), True, COL_TEXT)
+            img = self.font.render(i18n.t("bo.start_ball"), True, ui.TEXT)
             s.blit(img, img.get_rect(center=(self.width // 2, self.height // 2 + 60)))
 
         # Level-Intro-Banner
@@ -998,7 +990,7 @@ class BreakoutGame(Game):
         if self.shake > 0.5:
             dx = random.uniform(-self.shake, self.shake)
             dy = random.uniform(-self.shake, self.shake)
-            self.surface.fill(COL_BG_BOT)
+            self.surface.fill(ui.BG_BOTTOM)
             self.surface.blit(s, (dx, dy))
         else:
             self.surface.blit(s, (0, 0))
@@ -1010,11 +1002,11 @@ class BreakoutGame(Game):
 
     def _draw_paddle(self, s):
         rect = pygame.Rect(int(self.paddle_x), int(self.paddle_y), int(self.paddle_w), PADDLE_H)
-        base = COL_PADDLE
+        base = ui.TEXT                      # hell im Dark-, dunkel im Light-Theme
         if self.fx["sticky"] > 0:
             base = (150, 240, 160)
         pygame.draw.rect(s, base, rect, border_radius=8)
-        pygame.draw.rect(s, COL_PADDLE_EDGE, rect, 2, border_radius=8)
+        pygame.draw.rect(s, self.accent, rect, 2, border_radius=8)
         # Laser-Kanonen
         if self.fx["laser"] > 0:
             for gx in (rect.left + 8, rect.right - 8):
@@ -1063,18 +1055,20 @@ class BreakoutGame(Game):
         s.blit(t, t.get_rect(center=r.center))
 
     def _draw_hud(self, s):
-        # Halbtransparenter Streifen oben
+        # Halbtransparenter Panel-Streifen oben (im Theme-Ton)
         bar = pygame.Surface((self.width, 34), pygame.SRCALPHA)
-        bar.fill((0, 0, 0, 90))
+        bar.fill((*ui.PANEL, 150))
         s.blit(bar, (0, 0))
+        pygame.draw.line(s, ui.BORDER, (0, 33), (self.width, 33))
 
         s.blit(self.font.render(i18n.t("common.points", score=self.score), True,
-                                COL_TEXT), (10, 6))
+                                ui.TEXT), (10, 6))
         tag = self.level_def["tag"]
         mid = self._small.render(
-            i18n.t("bo.hud", diff=self.diff_name, level=self.level_index + 1,
+            i18n.t("bo.hud", diff=i18n.t("bo.diff." + self.diff_name.lower()),
+                   level=self.level_index + 1,
                    total=NUM_LEVELS, tag=i18n.t("bo.tag." + tag)),
-            True, TAG_COLORS[tag])
+            True, self._tag_color(tag))
         s.blit(mid, mid.get_rect(midtop=(self.width // 2, 8)))
 
         # Leben als Herzen
@@ -1085,12 +1079,12 @@ class BreakoutGame(Game):
             pygame.draw.polygon(s, (230, 80, 110),
                                 [(hx - 6, 15), (hx + 6, 15), (hx, 23)])
         if self.lives > 8:
-            s.blit(self._tiny.render(f"x{self.lives}", True, COL_TEXT),
+            s.blit(self._tiny.render(f"x{self.lives}", True, ui.TEXT),
                    (self.width - 20 - 8 * 20 - 24, 8))
 
         # Combo-Anzeige
         if self.combo > 1:
-            ct = self._mid.render(f"COMBO x{self.mult}", True, (255, 210, 90))
+            ct = self._mid.render(i18n.t("bo.combo", mult=self.mult), True, ui.GOLD)
             s.blit(ct, ct.get_rect(midtop=(self.width // 2, 38)))
 
         # Aktive Effekte mit Restzeit-Balken (unten links)
@@ -1102,7 +1096,7 @@ class BreakoutGame(Game):
             if self.fx[key] <= 0:
                 continue
             frac = self.fx[key] / FX_DUR[key]
-            pygame.draw.rect(s, (30, 34, 46), (x, y, 54, 14), border_radius=4)
+            pygame.draw.rect(s, ui.PANEL, (x, y, 54, 14), border_radius=4)
             pygame.draw.rect(s, col, (x, y, int(54 * frac), 14), border_radius=4)
             s.blit(self._tiny.render(lab, True, (10, 10, 10)), (x + 4, y))
             x += 60
@@ -1111,13 +1105,17 @@ class BreakoutGame(Game):
         a = min(1.0, self.intro_timer / 0.4) if self.intro_timer < 0.4 else 1.0
         alpha = int(220 * min(1.0, a))
         band = pygame.Surface((self.width, 90), pygame.SRCALPHA)
-        band.fill((0, 0, 0, int(alpha * 0.6)))
+        band.fill((*ui.PANEL, int(alpha * 0.7)))
+        band.fill((*self.accent, alpha), (0, 0, self.width, 2))
+        band.fill((*self.accent, alpha), (0, 88, self.width, 2))
         s.blit(band, (0, self.height // 2 - 45))
         tag = self.level_def["tag"]
-        big = self.big_font.render(f"LEVEL {self.level_index + 1}", True, COL_TEXT)
+        big = self.big_font.render(
+            i18n.t("bo.level_intro", level=self.level_index + 1), True, ui.TEXT)
         big.set_alpha(alpha)
         s.blit(big, big.get_rect(center=(self.width // 2, self.height // 2 - 10)))
-        sub = self._mid.render(f"[{i18n.t('bo.tag.' + tag)}]", True, TAG_COLORS[tag])
+        sub = self._mid.render(f"[{i18n.t('bo.tag.' + tag)}]", True,
+                               self._tag_color(tag))
         sub.set_alpha(alpha)
         s.blit(sub, sub.get_rect(center=(self.width // 2, self.height // 2 + 26)))
 
@@ -1125,8 +1123,8 @@ class BreakoutGame(Game):
         ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         ov.fill((0, 0, 0, 170))
         s.blit(ov, (0, 0))
-        self.draw_center_text(i18n.t("app.pause"), self.big_font, COL_TEXT, -10)
-        self.draw_center_text(i18n.t("bo.pause_resume"), self.font, COL_DIM, 40)
+        self.draw_center_text(i18n.t("app.pause"), self.big_font, ui.TEXT, -10)
+        self.draw_center_text(i18n.t("bo.pause_resume"), self.font, ui.TEXT_DIM, 40)
 
     def _draw_over(self, s):
         ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
@@ -1134,10 +1132,11 @@ class BreakoutGame(Game):
         s.blit(ov, (0, 0))
         if self.won:
             self.draw_center_text(i18n.t("bo.cleared"), self.big_font,
-                                  (120, 230, 140), -30)
+                                  ui.GREEN, -30)
         else:
             self.draw_center_text(i18n.t("common.game_over"), self.big_font,
-                                  (230, 120, 120), -30)
+                                  ui.RED, -30)
         self.draw_center_text(i18n.t("common.points", score=self.score),
-                              self.font, COL_TEXT, 18)
-        self.draw_center_text(i18n.t("bo.back_to_select"), self.font, COL_DIM, 52)
+                              self.font, ui.TEXT, 18)
+        self.draw_center_text(i18n.t("bo.back_to_select"), self.font,
+                              ui.TEXT_DIM, 52)

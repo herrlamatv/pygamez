@@ -35,21 +35,18 @@ import random
 import pygame
 
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
-COL_BG = (12, 15, 26)
+# Identitätsfarben des Tisches und der Spieler - bewusst NICHT aus dem UI-Theme.
 COL_TABLE = (21, 27, 44)
+COL_TABLE_DARK = (10, 13, 22)      # Tor-Maul (dunkle Öffnung)
 COL_TABLE_LINE = (46, 58, 88)
 COL_BORDER = (90, 110, 150)
-COL_TEXT = (232, 234, 240)
-COL_DIM = (140, 148, 168)
 COL_P1 = (120, 230, 160)
 COL_P2 = (140, 195, 255)
 COL_PUCK = (245, 205, 90)
-COL_BTN = (44, 50, 66)
-COL_BTN_ON = (60, 120, 80)
-COL_ACCENT = (110, 224, 208)
 
 PUCK_R = 12
 MALLET_R = 26
@@ -114,19 +111,53 @@ class AirHockeyGame(Game):
         self.win_goals = goals if goals in GOALS_CHOICES else 5
         self.powerups_on = bool(ah.get("powerups", True))
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
         self.anim_t = 0.0
+        self._bg_cache = None
+        self._dim_cache = None
 
-        # Feldgeometrie
+        self._apply_geometry()
+        self.state = SETUP
+        self._new_match()
+
+    def _make_fonts(self):
+        """Schriftgrößen aus der Fensterhöhe ableiten (Theme-Schrift)."""
+        h = self.height
+        self.font = ui.font(max(16, min(26, h // 26)))
+        self.big_font = ui.font(max(30, min(54, h // 10)), bold=True)
+        self._small = ui.font(max(13, min(20, h // 32)))
+        self._tiny = ui.font(max(11, min(16, h // 42)))
+
+    def _apply_geometry(self):
+        """Feldgeometrie, Schriften und Setup-Layout aus width/height ableiten."""
+        self._make_fonts()
         self.fx0, self.fy0 = 14, 14
         self.fx1, self.fy1 = self.width - 14, self.height - 14
         self.cx = self.width // 2
         self.cy = self.height // 2
-
+        self._size = (self.width, self.height)
         self._build_setup_layout()
-        self.state = SETUP
-        self._new_match()
+
+    def on_surface_changed(self):
+        """Nach Auflösungswechsel: Geometrie neu berechnen und die laufende
+        Partie proportional auf die neue Fläche skalieren."""
+        old_w, old_h = getattr(self, "_size", (self.width, self.height))
+        self._apply_geometry()
+        sx = self.width / max(1, old_w)
+        sy = self.height / max(1, old_h)
+        for side in ("p1", "p2"):
+            m = self.mallets[side]
+            m.x *= sx
+            m.y *= sy
+            self._clamp_mallet(m, side)
+        self.puck_x *= sx
+        self.puck_y *= sy
+        self._mouse_pos = (self._mouse_pos[0] * sx, self._mouse_pos[1] * sy)
+        if self.powerup is not None:
+            px, py, idx = self.powerup
+            self.powerup = (px * sx, py * sy, idx)
+        self.trail = []
+        self._bg_cache = None
+        self._dim_cache = None
 
     def _new_match(self):
         self.goals = {"p1": 0, "p2": 0}
@@ -142,6 +173,7 @@ class AirHockeyGame(Game):
         self.goal_flash_side = None           # wer hat getroffen
         self.particles = []
         self.trail = []                       # letzte Puck-Positionen
+        self._over_t = 0.0
 
         qh = self.height / 2
         self.mallets = {
@@ -189,15 +221,18 @@ class AirHockeyGame(Game):
     # ===================================================== Setup-Screen
     def _build_setup_layout(self):
         cx = self.width // 2
-        bw = min(420, self.width - 60)
-        self.diff_panel = pygame.Rect(cx - bw // 2, 108, bw, 56)
-        self.diff_left = pygame.Rect(self.diff_panel.left, 108, 40, 56)
-        self.diff_right = pygame.Rect(self.diff_panel.right - 40, 108, 40, 56)
-        bh, gap = 42, 10
-        y0 = 186
-        self.goals_rect = pygame.Rect(cx - bw // 2, y0, bw, bh)
-        self.power_rect = pygame.Rect(cx - bw // 2, y0 + (bh + gap), bw, bh)
-        self.start_rect = pygame.Rect(cx - 95, y0 + 2 * (bh + gap) + 8, 190, 50)
+        bw = min(440, self.width - 60)
+        ph = max(52, min(64, int(self.height * 0.12)))
+        y0 = max(108, int(self.height * 0.24))
+        self.diff_panel = pygame.Rect(cx - bw // 2, y0, bw, ph)
+        self.diff_left = pygame.Rect(self.diff_panel.left, y0, 42, ph)
+        self.diff_right = pygame.Rect(self.diff_panel.right - 42, y0, 42, ph)
+        bh = max(38, min(46, int(self.height * 0.085)))
+        gap = 10
+        y = self.diff_panel.bottom + 14
+        self.goals_rect = pygame.Rect(cx - bw // 2, y, bw, bh)
+        self.power_rect = pygame.Rect(cx - bw // 2, y + bh + gap, bw, bh)
+        self.start_rect = pygame.Rect(cx - 95, y + 2 * (bh + gap) + 8, 190, 50)
 
     def _save_setting(self, key, value):
         if isinstance(self.settings, dict):
@@ -256,10 +291,23 @@ class AirHockeyGame(Game):
             self._handle_setup_event(event)
             return
 
+        if self.game_over:
+            if event.kind == InputEvent.KEYDOWN:
+                if event.key in ("Return", "space"):
+                    self._start_play()
+                elif event.key in ("s", "S"):
+                    self.state = SETUP
+                    self.play_sound("click")
+            elif event.kind == InputEvent.MOUSEDOWN and \
+                    self.anim_t - self._over_t > 0.5:
+                # Klick startet die Revanche - mit kurzer Sperre nach Spielende
+                self._start_play()
+            return
+
         if event.kind == InputEvent.MOUSEMOVE:
             # Maus übernimmt P1 (nur Einzelspieler sinnvoll - im Mehrspieler
             # würde sie mit der Tastatur von Spieler 1 kollidieren).
-            if not self.multiplayer and not self.game_over:
+            if not self.multiplayer:
                 self._mouse_mode = True
                 self._mouse_pos = event.pos
             return
@@ -272,14 +320,6 @@ class AirHockeyGame(Game):
             return
 
         if event.kind != InputEvent.KEYDOWN:
-            return
-
-        if self.game_over:
-            if event.key in ("Return", "space"):
-                self._start_play()
-            elif event.key in ("s", "S"):
-                self.state = SETUP
-                self.play_sound("click")
             return
 
         gedrueckt = False
@@ -549,6 +589,7 @@ class AirHockeyGame(Game):
         if self.goals[by] >= self.win_goals:
             self.game_over = True
             self.winner = by
+            self._over_t = self.anim_t
             gewonnen = (by == "p1") or self.multiplayer
             self.play_sound("win" if gewonnen else "gameover")
             self.rumble(250)
@@ -596,6 +637,34 @@ class AirHockeyGame(Game):
                 rest.append(p)
         self.particles = rest
 
+    # ----- Theme-UI-Helfer ----------------------------------------------
+    def _bg(self):
+        """Gecachter Theme-Hintergrund hinter dem Tisch."""
+        key = (self.width, self.height, ui.BG_TOP, ui.BG_BOTTOM)
+        if self._bg_cache is None or self._bg_cache[0] != key:
+            surf = pygame.Surface((self.width, self.height))
+            ui.draw_background(surf, self.width, self.height)
+            self._bg_cache = (key, surf)
+        return self._bg_cache[1]
+
+    def _dim(self):
+        """Gecachte Abdunkel-Fläche fürs Spielende (kein per-Frame-Fill)."""
+        key = (self.width, self.height)
+        if self._dim_cache is None or self._dim_cache[0] != key:
+            surf = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            surf.fill((8, 10, 16, 150))
+            self._dim_cache = (key, surf)
+        return self._dim_cache[1]
+
+    def _panel(self, s, rect, alpha=235, border=2, border_col=None):
+        """Halbtransparentes Theme-Panel mit Akzent-Rahmen."""
+        surf = pygame.Surface(rect.size, pygame.SRCALPHA)
+        pygame.draw.rect(surf, (*ui.PANEL, alpha), surf.get_rect(),
+                         border_radius=12)
+        s.blit(surf, rect.topleft)
+        pygame.draw.rect(s, border_col or self.accent, rect, border,
+                         border_radius=12)
+
     # ===================================================== Zeichnen
     def draw(self):
         if self.state == SETUP:
@@ -603,7 +672,7 @@ class AirHockeyGame(Game):
             return
 
         s = self.surface
-        s.fill(COL_BG)
+        s.blit(self._bg(), (0, 0))
         self._draw_table(s)
         self._draw_powerup(s)
         self._draw_trail(s)
@@ -636,7 +705,7 @@ class AirHockeyGame(Game):
         pulse = 2 + int(2 * math.sin(self.anim_t * 4))
         for side, farbe, x in (("p1", COL_P1, self.fx0), ("p2", COL_P2, self.fx1)):
             gy0, gy1 = self._goal_range(side)
-            pygame.draw.rect(s, COL_BG, (x - 5, gy0, 10, gy1 - gy0))
+            pygame.draw.rect(s, COL_TABLE_DARK, (x - 5, gy0, 10, gy1 - gy0))
             pygame.draw.rect(s, farbe, (x - 3, gy0, 6, gy1 - gy0),
                              border_radius=3)
             glow = pygame.Surface((16, int(gy1 - gy0) + 20), pygame.SRCALPHA)
@@ -684,18 +753,22 @@ class AirHockeyGame(Game):
         s.blit(img, img.get_rect(center=(int(x), int(y))))
 
     def _draw_hud(self, s):
+        y0 = self.fy0 + 8
         g1 = self.big_font.render(str(self.goals["p1"]), True, COL_P1)
         g2 = self.big_font.render(str(self.goals["p2"]), True, COL_P2)
-        s.blit(g1, g1.get_rect(midtop=(self.cx - 70, 22)))
-        s.blit(g2, g2.get_rect(midtop=(self.cx + 70, 22)))
+        s.blit(g1, g1.get_rect(midtop=(self.cx - 70, y0)))
+        s.blit(g2, g2.get_rect(midtop=(self.cx + 70, y0)))
         links = "P1" if self.multiplayer else t("ah.you")
         rechts = "P2" if self.multiplayer else t("ah.ai")
+        ly = y0 + self.big_font.get_height() + 2
         l1 = self._small.render(links, True, COL_P1)
         l2 = self._small.render(rechts, True, COL_P2)
-        s.blit(l1, l1.get_rect(midtop=(self.cx - 70, 74)))
-        s.blit(l2, l2.get_rect(midtop=(self.cx + 70, 74)))
-        ziel = self._tiny.render(t("ah.first_to", n=self.win_goals), True, COL_DIM)
-        s.blit(ziel, ziel.get_rect(midtop=(self.cx, 96)))
+        s.blit(l1, l1.get_rect(midtop=(self.cx - 70, ly)))
+        s.blit(l2, l2.get_rect(midtop=(self.cx + 70, ly)))
+        ziel = self._tiny.render(t("ah.first_to", n=self.win_goals), True,
+                                 ui.TEXT_DIM)
+        s.blit(ziel, ziel.get_rect(midtop=(self.cx,
+                                           ly + self._small.get_height() + 4)))
 
         # Aktive Effekte als kleine Anzeigen unter dem Spielstand
         for side, basex, richtung in (("p1", self.fx0 + 12, 1),
@@ -720,52 +793,53 @@ class AirHockeyGame(Game):
 
         # Steuerungs-Hinweis (nur die ersten Sekunden)
         if self.anim_t < 6 and not self.multiplayer:
-            hint = self._tiny.render(t("ah.mouse_hint"), True, COL_DIM)
+            hint = self._tiny.render(t("ah.mouse_hint"), True, ui.TEXT_DIM)
             s.blit(hint, hint.get_rect(midbottom=(self.cx, self.fy1 - 6)))
 
     def _draw_game_over(self):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((0, 0, 0, 150))
-        self.surface.blit(ov, (0, 0))
+        s = self.surface
+        s.blit(self._dim(), (0, 0))
         if self.multiplayer:
             text = t("common.player_wins", n=1 if self.winner == "p1" else 2)
             farbe = COL_P1 if self.winner == "p1" else COL_P2
         else:
             gewonnen = self.winner == "p1"
             text = t("ah.win") if gewonnen else t("ah.lose")
-            farbe = COL_P1 if gewonnen else (230, 120, 120)
+            farbe = COL_P1 if gewonnen else ui.RED
         self.draw_center_text(text, self.big_font, farbe, -40)
         stand = f"{self.goals['p1']} : {self.goals['p2']}"
-        self.draw_center_text(stand, self.font, COL_TEXT, 4)
-        self.draw_center_text(t("ah.restart_hint"), self.font, COL_DIM, 44)
+        self.draw_center_text(stand, self.font, ui.TEXT, 4)
+        hint_col = ui.mix(ui.TEXT_DIM, ui.TEXT, ui.pulse(2.4, 0.0, 1.0))
+        self.draw_center_text(t("ah.restart_hint"), self.font, hint_col, 44)
 
     # ----- Setup zeichnen -----------------------------------------------
     def _draw_setup(self):
         s = self.surface
-        s.fill(COL_BG)
-        title = self.big_font.render("AIR HOCKEY", True, COL_TEXT)
-        s.blit(title, title.get_rect(center=(self.width // 2, 50)))
+        s.blit(self._bg(), (0, 0))
         modus = t("snake.multiplayer") if self.multiplayer else t("snake.singleplayer")
-        sub = self._small.render(modus, True, COL_DIM)
-        s.blit(sub, sub.get_rect(center=(self.width // 2, 86)))
+        ui.draw_title(s, self.width, "AIR HOCKEY", subtitle=modus,
+                      accent=self.accent)
 
         # Schwierigkeit (im Mehrspieler ohne Wirkung -> abgeblendet)
         lvl = AI_LEVELS[self.diff]
         aktiv = not self.multiplayer
-        pygame.draw.rect(s, (38, 44, 60), self.diff_panel, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT if aktiv else COL_DIM,
-                         self.diff_panel, 2, border_radius=10)
-        col = COL_TEXT if aktiv else COL_DIM
+        self._panel(s, self.diff_panel,
+                    border_col=self.accent if aktiv else ui.BORDER)
+        col = ui.TEXT if aktiv else ui.TEXT_DIM
         name = self.font.render(
             t("ah.difficulty") + ":  " + t("ah.diff." + lvl["key"]), True, col)
         s.blit(name, name.get_rect(center=(self.diff_panel.centerx,
-                                           self.diff_panel.top + 19)))
+                                           self.diff_panel.top
+                                           + int(self.diff_panel.h * 0.34))))
         info = self._tiny.render(
-            t("ah.diff_note") if aktiv else t("ah.diff_mp"), True, COL_DIM)
+            t("ah.diff_note") if aktiv else t("ah.diff_mp"), True, ui.TEXT_DIM)
         s.blit(info, info.get_rect(center=(self.diff_panel.centerx,
-                                           self.diff_panel.top + 41)))
+                                           self.diff_panel.top
+                                           + int(self.diff_panel.h * 0.72))))
+        arr_col = ui.mix(self.accent, ui.TEXT, ui.pulse(3.0, 0.0, 0.3)) \
+            if aktiv else ui.TEXT_DIM
         for r, sym in ((self.diff_left, "<"), (self.diff_right, ">")):
-            arr = self.big_font.render(sym, True, COL_ACCENT if aktiv else COL_DIM)
+            arr = self.big_font.render(sym, True, arr_col)
             s.blit(arr, arr.get_rect(center=r.center))
 
         self._draw_row(self.goals_rect, t("ah.goals"), str(self.win_goals), True)
@@ -773,22 +847,22 @@ class AirHockeyGame(Game):
                        t("common.on") if self.powerups_on else t("common.off"),
                        self.powerups_on)
 
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
-        s.blit(st, st.get_rect(center=self.start_rect.center))
+        ui.draw_button(s, self.start_rect, t("common.start"), self.font,
+                       selected=True, accent=self.accent)
 
-        hint = self._small.render(t("ah.setup_hint"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 34)))
-        h2 = self._tiny.render(t("ah.mouse_hint"), True, (120, 200, 150))
-        s.blit(h2, h2.get_rect(center=(self.width // 2, self.height - 14)))
+        h2 = self._tiny.render(t("ah.mouse_hint"), True, ui.GREEN)
+        s.blit(h2, h2.get_rect(center=(self.width // 2,
+                                       self.start_rect.bottom + 22)))
+        ui.draw_footer(s, self.width, self.height, t("ah.setup_hint"))
 
     def _draw_row(self, rect, label, wert, an):
         s = self.surface
-        pygame.draw.rect(s, COL_BTN_ON if an else COL_BTN, rect, border_radius=8)
-        pygame.draw.rect(s, COL_DIM, rect, 1, border_radius=8)
-        lab = self.font.render(label, True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL if an else ui.BTN, rect, border_radius=8)
+        pygame.draw.rect(s, ui.BORDER_LIGHT if an else ui.BORDER, rect, 1,
+                         border_radius=8)
+        lab = self.font.render(label, True, ui.TEXT)
         s.blit(lab, (rect.x + 16, rect.centery - lab.get_height() // 2))
         img = self.font.render(f"< {wert} >", True,
-                               COL_ACCENT if an else COL_DIM)
+                               self.accent if an else ui.TEXT_DIM)
         s.blit(img, (rect.right - img.get_width() - 16,
                      rect.centery - img.get_height() // 2))

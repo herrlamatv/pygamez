@@ -20,7 +20,8 @@ import pygame
 
 import settings as settings_mod
 import store
-from game_base import Game, InputEvent
+import ui
+from game_base import Game, InputEvent, LocalizedName
 from games import maze_gen
 from i18n import t
 
@@ -31,6 +32,7 @@ TURN_KEY = 90.0           # Grad/s über Q/E
 DEG_PER_PX = 0.12
 FOG_DIST = 14.0
 
+# 3D-Welt-Palette (bewusst fest - unabhängig vom UI-Theme)
 COL_BG = (16, 14, 22)
 COL_CEIL_TOP = (30, 34, 52)
 COL_CEIL_BOT = (20, 22, 34)
@@ -38,18 +40,13 @@ COL_FLOOR = (34, 30, 40)
 COL_WALL = (90, 110, 170)
 COL_EXIT = (120, 255, 170)
 COL_ORB = (120, 200, 255)
-COL_ACCENT = (176, 122, 74)   # = Sidebar-Farbe #b07a4a
-COL_TEXT = (225, 228, 238)
-COL_DIM = (150, 158, 178)
-COL_BTN = (32, 38, 54)
-COL_BTN_ON = (66, 52, 38)
-COL_BTN_BORDER = (74, 84, 116)
 
 SETUP, PLAY, FINISH = "setup", "play", "finish"
 
 
 class LabyrinthGame(Game):
-    name = "3D-Labyrinth"
+    name = LocalizedName("3D Maze", de="3D-Labyrinth", fr="Labyrinthe 3D",
+                         es="Laberinto 3D", pt="Labirinto 3D")
     highscore_key = "maze"
     supports_multiplayer = False
 
@@ -71,11 +68,8 @@ class LabyrinthGame(Game):
         except (TypeError, ValueError):
             self.cursor = 1
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._big = pygame.font.SysFont("consolas", 22, bold=True)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
+        self._ov_cache = {}          # gecachte Vollbild-Abdunklungen
         self.capture_mouse = False
         self.show_map = False
         self._load_solved()
@@ -84,9 +78,28 @@ class LabyrinthGame(Game):
         self.state = SETUP
 
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
+        self._ov_cache = {}
         self._build_setup_layout()
+
+    def _make_fonts(self):
+        """Schriftgrößen aus der aktuellen Auflösung ableiten (Theme-Schrift)."""
+        h = self.height
+        self._small = ui.font(max(13, h // 30))
+        self._tiny = ui.font(max(11, h // 36))
+        self._big = ui.font(max(16, h // 21), bold=True)
+        self._huge = ui.font(max(26, h // 11), bold=True)
+
+    def _dim(self, s, rgb, alpha):
+        """Vollbild-Abdunklung über eine gecachte Surface - vermeidet den
+        SRCALPHA-Fill über die ganze Fläche in jedem Frame."""
+        surf = self._ov_cache.get(rgb)
+        if surf is None or surf.get_size() != (self.width, self.height):
+            surf = pygame.Surface((self.width, self.height))
+            surf.fill(rgb)
+            self._ov_cache[rgb] = surf
+        surf.set_alpha(alpha)
+        s.blit(surf, (0, 0))
 
     def _save_setting(self, key, value):
         if isinstance(self.settings, dict):
@@ -122,7 +135,7 @@ class LabyrinthGame(Game):
         self.lv_cell = cell
         self.lv_x = cx - cell * 5
         self.lv_y = top
-        self._lv_font = pygame.font.SysFont("consolas", max(9, cell * 2 // 5))
+        self._lv_font = ui.font(max(9, cell * 2 // 5))
         self.start_rect = pygame.Rect(cx - 95, top + 5 * cell + 12, 190, 44)
 
     def _level_at(self, pos):
@@ -505,72 +518,82 @@ class LabyrinthGame(Game):
     # ----- HUD / Overlays -------------------------------------------------
     def _draw_hud(self, s):
         img = self._big.render(t("common.points", score=self.score), True,
-                               COL_ACCENT)
+                               self.accent)
         s.blit(img, (14, 8))
         lines = [t("maze.level", n=self.level),
                  t("maze.orbs", n=self.got, m=self.orbs_total),
                  t("maze.time", s=int(self.elapsed))]
         y = 10
         for line in lines:
-            img = self._small.render(line, True, COL_DIM)
+            img = self._small.render(line, True, ui.TEXT_DIM)
             s.blit(img, img.get_rect(topright=(self.width - 14, y)))
             y += 20
         if self.view == "ego" and self.state == PLAY and not self.show_map:
-            hint = self._tiny.render(t("maze.map_hint"), True,
-                                     (110, 116, 136))
+            hint = self._tiny.render(t("maze.map_hint"), True, ui.TEXT_FAINT)
             s.blit(hint, hint.get_rect(
                 midbottom=(self.width // 2, self.height - 6)))
 
     def _draw_finish(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((8, 14, 12, 190))
-        s.blit(ov, (0, 0))
+        self._dim(s, (8, 14, 12), 190)
         cx, cy = self.width // 2, self.height // 2
         head = self._huge.render(t("maze.level_done", n=self.level), True,
                                  COL_EXIT)
-        s.blit(head, head.get_rect(center=(cx, cy - 70)))
         lines = [t("maze.base", n=500),
                  t("maze.orb_bonus", n=self.orb_bonus),
                  t("maze.time_bonus", n=self.time_bonus),
                  t("common.points", score=self.score)]
+        imgs = [self.font.render(line, True, ui.TEXT) for line in lines]
+        hint = self._small.render(t("maze.next"), True, ui.TEXT_DIM)
+
+        # Panel hinter dem Ergebnis (dynamische ui-Palette)
+        top = cy - 70 - head.get_height() // 2 - 22
+        bottom = cy - 20 + 30 * len(imgs) + 12 + hint.get_height() // 2 + 22
+        pw = min(self.width - 40,
+                 max(400, head.get_width() + 80, hint.get_width() + 60,
+                     max(i.get_width() for i in imgs) + 60))
+        panel = pygame.Rect(cx - pw // 2, top, pw, bottom - top)
+        pygame.draw.rect(s, ui.PANEL, panel, border_radius=14)
+        pygame.draw.rect(s, ui.BORDER_LIGHT, panel, 1, border_radius=14)
+
+        s.blit(head, head.get_rect(center=(cx, cy - 70)))
         y = cy - 20
-        for line in lines:
-            img = self.font.render(line, True, COL_TEXT)
+        for img in imgs:
             s.blit(img, img.get_rect(center=(cx, y)))
             y += 30
-        hint = self._small.render(t("maze.next"), True, COL_DIM)
         s.blit(hint, hint.get_rect(center=(cx, y + 12)))
 
     # ----- Setup ----------------------------------------------------------
     def _draw_setup(self, s):
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
         cx = self.width // 2
-        title = self._huge.render(t("maze.title"), True, COL_ACCENT)
+        title = self._huge.render(t("maze.title"), True, self.accent)
         s.blit(title, title.get_rect(center=(cx, int(self.height * 0.09))))
-        sub = self._small.render(t("maze.subtitle"), True, COL_DIM)
+        sub = self._small.render(t("maze.subtitle"), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.15))))
 
-        lbl = self._small.render(t("maze.view"), True, (200, 205, 220))
+        lbl = self._small.render(t("maze.view"), True, ui.TEXT_DIM)
         s.blit(lbl, lbl.get_rect(midright=(self.view_rect.x - 16,
                                            self.view_rect.centery)))
-        pygame.draw.rect(s, COL_BTN_ON, self.view_rect, border_radius=8)
-        pygame.draw.rect(s, COL_BTN_BORDER, self.view_rect, 1,
+        pygame.draw.rect(s, ui.BTN_SEL, self.view_rect, border_radius=8)
+        pygame.draw.rect(s, ui.BORDER, self.view_rect, 1,
                          border_radius=8)
         img = self._small.render(
-            t("maze.view." + self.view) + "  [V]", True, COL_TEXT)
+            t("maze.view." + self.view) + "  [V]", True, ui.TEXT)
         s.blit(img, img.get_rect(center=self.view_rect.center))
 
-        lbl = self._small.render(t("maze.sens"), True, (200, 205, 220))
+        lbl = self._small.render(t("maze.sens"), True, ui.TEXT_DIM)
         s.blit(lbl, lbl.get_rect(midright=(self.sens_minus.x - 16,
                                            self.sens_minus.centery)))
         for r, sym in ((self.sens_minus, "-"), (self.sens_plus, "+")):
-            pygame.draw.rect(s, COL_BTN, r, border_radius=8)
-            pygame.draw.rect(s, COL_BTN_BORDER, r, 1, border_radius=8)
-            img = self._big.render(sym, True, COL_TEXT)
+            pygame.draw.rect(s, ui.BTN, r, border_radius=8)
+            pygame.draw.rect(s, ui.BORDER, r, 1, border_radius=8)
+            img = self._big.render(sym, True, ui.TEXT)
             s.blit(img, img.get_rect(center=r.center))
-        img = self._big.render(f"{self.sens:.1f}x", True, COL_ACCENT)
+        img = self._big.render(f"{self.sens:.1f}x", True, self.accent)
         s.blit(img, img.get_rect(center=self.sens_box.center))
 
+        done_fill = ui.mix(ui.BTN, self.accent, 0.25)
+        done_text = ui.mix(self.accent, ui.TEXT, 0.35)
         for n in range(1, LEVELS + 1):
             i = n - 1
             x = self.lv_x + (i % 10) * self.lv_cell
@@ -578,19 +601,20 @@ class LabyrinthGame(Game):
             cell = pygame.Rect(x + 1, y + 1, self.lv_cell - 2,
                                self.lv_cell - 2)
             done = n in self.solved
-            pygame.draw.rect(s, (46, 40, 30) if done else (30, 36, 52),
+            pygame.draw.rect(s, done_fill if done else ui.BTN,
                              cell, border_radius=4)
             if n == self.cursor:
-                pygame.draw.rect(s, COL_ACCENT, cell, 2, border_radius=4)
+                pygame.draw.rect(s, self.accent, cell, 2, border_radius=4)
             num = self._lv_font.render(
-                str(n), True, (230, 180, 120) if done else COL_DIM)
+                str(n), True, done_text if done else ui.TEXT_DIM)
             s.blit(num, num.get_rect(center=cell.center))
         prog = self._small.render(
-            t("maze.progress", n=len(self.solved), m=LEVELS), True, COL_DIM)
+            t("maze.progress", n=len(self.solved), m=LEVELS), True,
+            ui.TEXT_DIM)
         s.blit(prog, prog.get_rect(
             center=(cx, self.lv_y + 5 * self.lv_cell + 34)))
 
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.start_rect, 2, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=10)
+        pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=10)
+        st = self.font.render(t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))

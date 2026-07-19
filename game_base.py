@@ -17,7 +17,31 @@ Gemeinsame Grundlagen für alle Spiele.
 import pygame
 
 import audio
+import i18n
 import settings as settings_mod
+import ui
+
+
+class LocalizedName:
+    """Sprachabhängiger Menü-Name als Deskriptor.
+
+    Das Menü liest den Namen direkt über die KLASSE (``cls.name``) und
+    übersetzt ihn nicht - dieser Deskriptor liefert den Namen trotzdem in
+    der aktiven Sprache. Verwendung:
+
+        class ChessGame(Game):
+            name = LocalizedName("Chess", de="Schach", fr="Échecs",
+                                 es="Ajedrez", pt="Xadrez")
+
+    Der erste Wert ist der Fallback für alle nicht angegebenen Sprachen.
+    """
+
+    def __init__(self, default, **per_lang):
+        self.default = default
+        self.per_lang = per_lang
+
+    def __get__(self, obj, owner=None):
+        return self.per_lang.get(i18n.get_language(), self.default)
 
 
 class InputEvent:
@@ -46,9 +70,22 @@ class Game:
 
     Jedes Spiel zeichnet auf 'surface' (das eingebettete pygame-Display).
     Die Spielfläche ist 'width' x 'height' Pixel gross.
+
+    Optionale Erweiterungen (werden vom Shell-Code per getattr/hasattr
+    abgefragt, ein Spiel definiert sie nur bei Bedarf):
+
+    - ``MODES = [(mode_key, i18n_key), ...]`` als Klassen-Attribut ersetzt
+      im Vorbereitungs-Screen die Einzel-/Mehrspieler-Buttons durch eigene
+      Modus-Buttons; der gewählte mode_key landet in ``self.mode``.
+    - ``capture_mouse`` (bool, siehe unten): True = Cursor wird eingefangen
+      und versteckt, das Spiel erhält relative MOUSEREL-Bewegungen
+      (FPS-Look). Darf zur Laufzeit umgeschaltet werden.
+    - ``on_surface_changed()`` (siehe unten): Layout/Schriften aus den
+      neuen width/height-Werten neu aufbauen.
     """
 
-    name = "Spiel"            # Anzeigename (wird im Menü verwendet)
+    name = "Spiel"            # Anzeigename (wird im Menü verwendet);
+                              # sprachabhängig über LocalizedName möglich
     highscore_key = "base"    # Schlüssel für die Highscore-JSON
 
     # Bietet das Spiel einen echten 2-Spieler-Modus? (Menü zeigt "Mehrspieler")
@@ -58,6 +95,8 @@ class Game:
     # Möchte das Spiel Rechtsklicks erhalten? (MOUSEDOWN mit button=3).
     # Standard False, damit sich das Verhalten bestehender Spiele nicht ändert.
     wants_right_click = False
+    # Pointer-Capture: True = Cursor einfangen, Spiel bekommt MOUSEREL-Events.
+    capture_mouse = False
 
     def __init__(self, surface, width, height, mode="single", game_settings=None):
         self.surface = surface
@@ -74,9 +113,14 @@ class Game:
         self.game_over = False
         self.paused = False
 
-        # Standard-Schriftarten (pygame.font wurde von pygame.init() initialisiert)
-        self.font = pygame.font.SysFont("consolas", 22)
-        self.big_font = pygame.font.SysFont("consolas", 48, bold=True)
+        # Standard-Schriftarten im aktiven Theme (gecacht über ui.font).
+        # Für Stellen, die feste Zeichenbreiten brauchen: ui.font(n, mono=True).
+        self.font = ui.font(22)
+        self.big_font = ui.font(48, bold=True)
+
+        # Akzentfarbe des Spiels (= Sidebar-Farbe aus ui.GAME_COLORS);
+        # für Titel/HUD verwenden, damit jedes Spiel seine Identität behält.
+        self.accent = ui.game_color(type(self).__name__)
 
         self.reset()
 
@@ -98,6 +142,16 @@ class Game:
     def handle_event(self, event):
         """Verarbeitet ein InputEvent."""
         raise NotImplementedError
+
+    # ----- Optionale Hooks ---------------------------------------------
+
+    def on_surface_changed(self):
+        """Wird nach einem Auflösungswechsel aufgerufen.
+
+        self.surface/width/height sind dann bereits aktualisiert; Spiele
+        überschreiben das, um Layout und Schriftgrössen neu zu berechnen.
+        """
+        pass
 
     # ----- Hilfsfunktionen für alle Spiele -----------------------------
 

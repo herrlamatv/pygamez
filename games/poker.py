@@ -30,25 +30,17 @@ from collections import Counter
 import pygame
 
 import store
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
 from . import cards as C
 
-# ---- Farben (gruener Filz + Gold)
-COL_FELT = (18, 52, 40)
-COL_FELT_EDGE = (12, 38, 28)
-COL_TEXT = (228, 232, 238)
-COL_DIM = (168, 190, 178)
-COL_ACCENT = (232, 196, 92)     # = Sidebar-Farbe #e8c45c (Gold)
-COL_OK = (110, 205, 140)
-COL_BAD = (226, 96, 96)
-COL_GOLD = (245, 205, 100)
-COL_BTN = (28, 66, 52)
-COL_BTN_ON = (44, 96, 74)
-COL_BTN_BORDER = (76, 120, 98)
-COL_POT = (240, 214, 130)
-COL_HOLD = (245, 205, 100)
+# ---- Tisch-Identität (gruener Filz, leicht entsaettigt).
+#      Alle generischen UI-Farben kommen zur Zeichenzeit aus ui.* (Theme),
+#      die Akzentfarbe (Gold) aus self.accent (= Sidebar-Farbe).
+COL_FELT = (20, 50, 39)
+COL_FELT_EDGE = (13, 35, 27)
 
 START_CHIPS = 1000
 SMALL_BLIND = 10
@@ -231,12 +223,8 @@ class PokerGame(Game):
         elif self.mode == "video":
             self.n_opponents = 0
 
-        self._small = pygame.font.SysFont("consolas", 15)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._big = pygame.font.SysFont("consolas", 22, bold=True)
-        self._huge = pygame.font.SysFont("consolas", max(24, self.height // 12),
-                                         bold=True)
-        self.renderer = C.CardRenderer(COL_ACCENT)
+        self._make_fonts()
+        self.renderer = C.CardRenderer(self.accent)
 
         self.deck = []
         self.community = []
@@ -254,6 +242,8 @@ class PokerGame(Game):
         self.holds = set()             # gehaltene/zu behaltende Karten (video/draw)
         self.video_bet = VIDEO_BETS[0]
         self.win_amount = 0
+        self.rank_shown = None
+        self.winner_names = []
         self._layout()
 
         self.phase = BET_VIDEO if self.mode == "video" else PREHAND
@@ -262,9 +252,15 @@ class PokerGame(Game):
         if self.mode == "video" and self.chips < VIDEO_BETS[0]:
             self.phase = BROKE
 
+    def _make_fonts(self):
+        """Theme-Schriften (ui.font cached selbst); _huge haengt an height."""
+        self._small = ui.font(15)
+        self._tiny = ui.font(13)
+        self._big = ui.font(22, bold=True)
+        self._huge = ui.font(max(24, self.height // 12), bold=True)
+
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(24, self.height // 12),
-                                         bold=True)
+        self._make_fonts()
         self.renderer.clear()
         self._layout()
 
@@ -272,6 +268,14 @@ class PokerGame(Game):
         self.ch = int(self.height * 0.19)
         self.cw = int(self.ch * 0.72)
         self.strip = pygame.Rect(0, self.height - 66, self.width, 66)
+        # Gecachte Flaechen (Software-Rendering: nicht pro Frame neu bauen)
+        self._felt = C.make_felt(self.width, self.height,
+                                 COL_FELT, COL_FELT_EDGE)
+        self._strip_bg = pygame.Surface(self.strip.size, pygame.SRCALPHA)
+        self._strip_bg.fill((8, 22, 16, 224))
+        self._overlay = pygame.Surface((self.width, self.height),
+                                       pygame.SRCALPHA)
+        self._overlay.fill((6, 14, 10, 200))
         # Aktions-Buttons
         labels = ("fold", "call", "raise", "allin")
         bw = int(self.width * 0.17)
@@ -656,6 +660,7 @@ class PokerGame(Game):
     def _video_deal(self):
         if self.chips < self.video_bet:
             self.phase = BROKE
+            self.play_sound("gameover")
             return
         self.chips -= self.video_bet
         self._save()
@@ -794,7 +799,10 @@ class PokerGame(Game):
             elif k in ("Return", "space"):
                 on_confirm()
         elif event.kind == InputEvent.MOUSEDOWN:
-            for i, rect in enumerate(self._hole_rects(me, center=True)):
+            # WICHTIG: dieselben Rechtecke wie beim Zeichnen verwenden
+            # (center=True verschob die Klickflaechen im Draw-Modus nach
+            # unten und liess Klicks auf die Karten ins Leere gehen).
+            for i, rect in enumerate(self._hole_rects(me)):
                 if rect.collidepoint(event.pos):
                     self.holds.symmetric_difference_update({i})
                     self.play_sound("click")
@@ -839,8 +847,7 @@ class PokerGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_FELT)
-        pygame.draw.rect(s, COL_FELT_EDGE, (0, 0, self.width, self.height), 6)
+        s.blit(self._felt, (0, 0))
         self._draw_topbar(s)
         if self.phase == BROKE:
             self._draw_broke(s)
@@ -857,15 +864,18 @@ class PokerGame(Game):
             self._draw_table(s)
 
     def _draw_topbar(self, s):
-        img = self._big.render(f"{t('poker.chips')}: {self.chips}", True, COL_GOLD)
+        img = self._big.render(f"{t('poker.chips')}: {self.chips}", True,
+                               ui.GOLD)
         s.blit(img, (16, 12))
-        img = self._small.render(f"{t('poker.best')}: {self.best}", True, COL_DIM)
+        img = self._small.render(f"{t('poker.best')}: {self.best}", True,
+                                 ui.TEXT_DIM)
         s.blit(img, (16, 40))
         mode_lbl = t("poker.mode." + self.mode)
-        mi = self._small.render(mode_lbl, True, COL_ACCENT)
+        mi = self._small.render(mode_lbl, True, self.accent)
         s.blit(mi, mi.get_rect(topright=(self.width - 16, 14)))
         if self.pot and self.phase not in (BET_VIDEO, PREHAND):
-            pi = self._big.render(f"{t('poker.pot')}: {self.pot}", True, COL_POT)
+            pi = self._big.render(f"{t('poker.pot')}: {self.pot}", True,
+                                  ui.GOLD)
             s.blit(pi, pi.get_rect(center=(self.width // 2, 24)))
 
     def _hole_rects(self, player, center=False):
@@ -896,16 +906,17 @@ class PokerGame(Game):
         for i, rect in enumerate(self._hole_rects(me)):
             s.blit(self.renderer.get(me.hole[i], self.cw, self.ch), rect)
             if highlight_hold and i in self.holds:
-                pygame.draw.rect(s, COL_HOLD, rect, 3, border_radius=6)
-                lbl = self._tiny.render(t("poker.keep"), True, COL_HOLD)
+                pygame.draw.rect(s, ui.GOLD, rect, 3, border_radius=6)
+                lbl = self._tiny.render(t("poker.keep"), True, ui.GOLD)
                 s.blit(lbl, lbl.get_rect(midtop=(rect.centerx, rect.bottom + 2)))
         # Dealer-Button + Namen
         me_label = f"{t('poker.you')}"
         if me.folded:
             me_label += f"  ({t('poker.folded')})"
         li = self._small.render(me_label, True,
-                                COL_ACCENT if (self.turn == 0 and
-                                               self.phase == ACTING) else COL_DIM)
+                                self.accent if (self.turn == 0 and
+                                                self.phase == ACTING)
+                                else ui.TEXT_DIM)
         s.blit(li, li.get_rect(midtop=(self.width // 2,
                                        int(self.height * 0.60) - 22)))
 
@@ -929,17 +940,18 @@ class PokerGame(Game):
                 else self.renderer.back(w, h)
             s.blit(img, (x0 + i * dx, cy))
         name = p.name + (f" ({t('poker.folded')})" if p.folded else "")
-        col = COL_ACCENT if active else (COL_DIM if not p.folded else COL_BAD)
+        col = self.accent if active else (ui.TEXT_DIM if not p.folded
+                                          else ui.RED)
         ni = self._tiny.render(name, True, col)
         s.blit(ni, ni.get_rect(midtop=(cx, cy - 16)))
-        si = self._tiny.render(f"{p.stack}", True, COL_GOLD)
+        si = self._tiny.render(f"{p.stack}", True, ui.GOLD)
         s.blit(si, si.get_rect(midtop=(cx, cy + h + 2)))
         if p.round_bet:
-            bi = self._tiny.render(f"+{p.round_bet}", True, COL_POT)
+            bi = self._tiny.render(f"+{p.round_bet}", True, ui.GOLD)
             s.blit(bi, bi.get_rect(midtop=(cx, cy + h + 18)))
         if self.phase == SHOWDOWN and p.result and not p.folded:
             hi = self._tiny.render(t("poker.hand." + category_key(p.result)),
-                                   True, COL_TEXT)
+                                   True, ui.TEXT)
             s.blit(hi, hi.get_rect(midtop=(cx, cy + h + 18)))
 
     def _draw_community(self, s):
@@ -952,9 +964,27 @@ class PokerGame(Game):
         for i, card in enumerate(self.community):
             s.blit(self.renderer.get(card, w, h), (x0 + i * dx, y))
 
+    def _draw_strip(self, s):
+        """Halbtransparente Bedienleiste unten mit Akzent-Oberkante."""
+        s.blit(self._strip_bg, self.strip.topleft)
+        pygame.draw.line(s, self.accent, self.strip.topleft,
+                         self.strip.topright, 2)
+
+    def _draw_btn(self, s, rect, label, primary=False, on=True):
+        """Button im Theme-Look; primary = Akzentrahmen mit sanftem Puls."""
+        pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, rect,
+                         border_radius=10)
+        if primary:
+            border = ui.mix(self.accent, (255, 255, 255),
+                            0.25 * ui.pulse(2.2, 0.0, 1.0))
+            pygame.draw.rect(s, border, rect, 2, border_radius=10)
+        else:
+            pygame.draw.rect(s, ui.BORDER_LIGHT, rect, 1, border_radius=10)
+        img = self._small.render(label, True, ui.TEXT if on else ui.TEXT_DIM)
+        s.blit(img, img.get_rect(center=rect.center))
+
     def _draw_actions(self, s):
-        pygame.draw.rect(s, (12, 40, 30), self.strip)
-        pygame.draw.line(s, COL_BTN_BORDER, self.strip.topleft, self.strip.topright)
+        self._draw_strip(s)
         p = self.players[self.turn]
         to_call = self._to_call(p)
         call_lbl = t("poker.check") if to_call == 0 else \
@@ -963,24 +993,17 @@ class PokerGame(Game):
                   "raise": t("poker.raise"), "allin": t("poker.allin")}
         keys = {"fold": "F", "call": "C", "raise": "R", "allin": "A"}
         for key, r in self.action_rects.items():
-            pygame.draw.rect(s, COL_BTN_ON, r, border_radius=10)
-            pygame.draw.rect(s, COL_BTN_BORDER, r, 1, border_radius=10)
-            img = self._small.render(f"{labels[key]} ({keys[key]})", True, COL_TEXT)
-            s.blit(img, img.get_rect(center=r.center))
+            self._draw_btn(s, r, f"{labels[key]} ({keys[key]})")
 
     def _draw_confirm(self, s, label):
-        pygame.draw.rect(s, (12, 40, 30), self.strip)
-        pygame.draw.line(s, COL_BTN_BORDER, self.strip.topleft, self.strip.topright)
-        pygame.draw.rect(s, COL_BTN_ON, self.deal_rect, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.deal_rect, 2, border_radius=10)
-        img = self._small.render(label, True, COL_TEXT)
-        s.blit(img, img.get_rect(center=self.deal_rect.center))
+        self._draw_strip(s)
+        self._draw_btn(s, self.deal_rect, label, primary=True)
 
     def _draw_result_strip(self, s):
         self._draw_confirm(s, t("poker.next_hand"))
 
     def _draw_msg(self, s):
-        img = self._small.render(self.msg, True, COL_GOLD)
+        img = self._small.render(self.msg, True, ui.GOLD)
         s.blit(img, img.get_rect(center=(self.width // 2, self.strip.y - 16)))
 
     # ----- Video Poker zeichnen -----------------------------------------
@@ -990,10 +1013,10 @@ class PokerGame(Game):
             s.blit(self.renderer.get(me.hole[i], self.cw, self.ch), rect)
             held = i in self.holds
             if self.phase == VIDEO_HOLD and held:
-                pygame.draw.rect(s, COL_HOLD, rect, 3, border_radius=6)
-                lbl = self._small.render(t("poker.held"), True, COL_HOLD)
+                pygame.draw.rect(s, ui.GOLD, rect, 3, border_radius=6)
+                lbl = self._small.render(t("poker.held"), True, ui.GOLD)
                 s.blit(lbl, lbl.get_rect(midbottom=(rect.centerx, rect.y - 3)))
-            num = self._tiny.render(str(i + 1), True, COL_DIM)
+            num = self._tiny.render(str(i + 1), True, ui.TEXT_DIM)
             s.blit(num, num.get_rect(midtop=(rect.centerx, rect.bottom + 3)))
         self._draw_paytable(s)
         if self.phase == VIDEO_HOLD:
@@ -1009,62 +1032,63 @@ class PokerGame(Game):
                 ("trips", 3), ("two_pair", 2), ("jacks", 1)]
         x = 16
         y = int(self.height * 0.16)
-        title = self._tiny.render(t("poker.paytable"), True, COL_ACCENT)
+        title = self._tiny.render(t("poker.paytable"), True, self.accent)
         s.blit(title, (x, y - 18))
         for name, mult in rows:
             key = "poker.hand." + name if name != "jacks" else "poker.jacks"
-            lbl = self._tiny.render(f"{t(key)}", True, COL_DIM)
+            lbl = self._tiny.render(f"{t(key)}", True, ui.TEXT_DIM)
             s.blit(lbl, (x, y))
-            mi = self._tiny.render(f"x{mult}", True, COL_GOLD)
+            mi = self._tiny.render(f"x{mult}", True, ui.GOLD)
             s.blit(mi, (x + 150, y))
             y += 16
 
     def _draw_video_bet(self, s):
         cx = self.width // 2
-        title = self._huge.render(t("poker.mode.video"), True, COL_ACCENT)
+        title = self._huge.render(t("poker.mode.video"), True, self.accent)
         s.blit(title, title.get_rect(center=(cx, int(self.height * 0.22))))
         self._draw_paytable(s)
         # Chips
-        pygame.draw.rect(s, (12, 40, 30), self.strip)
-        pygame.draw.line(s, COL_BTN_BORDER, self.strip.topleft, self.strip.topright)
+        self._draw_strip(s)
         for i, r in enumerate(self.chip_rects):
             val = VIDEO_BETS[i]
             on = (val == self.video_bet)
-            pygame.draw.circle(s, COL_GOLD if on else COL_BTN_ON, r.center, 21)
-            pygame.draw.circle(s, (240, 240, 245), r.center, 21, 2)
+            pygame.draw.circle(s, ui.GOLD if on else ui.BTN_SEL, r.center, 21)
+            pygame.draw.circle(s, ui.TEXT, r.center, 21, 2)
             img = self._tiny.render(str(val), True,
-                                    (20, 24, 30) if on else COL_TEXT)
+                                    (20, 24, 30) if on else ui.TEXT)
             s.blit(img, img.get_rect(center=r.center))
-        mid = self._big.render(f"{t('poker.bet')}: {self.video_bet}", True, COL_TEXT)
+        mid = self._big.render(f"{t('poker.bet')}: {self.video_bet}", True,
+                               ui.TEXT)
         s.blit(mid, mid.get_rect(center=(cx, self.strip.centery)))
-        pygame.draw.rect(s, COL_BTN_ON, self.deal_rect, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.deal_rect, 2, border_radius=10)
-        di = self._small.render(t("poker.deal_btn"), True, COL_TEXT)
-        s.blit(di, di.get_rect(center=self.deal_rect.center))
+        self._draw_btn(s, self.deal_rect, t("poker.deal_btn"), primary=True)
 
     def _draw_broke(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((8, 16, 12, 200))
-        s.blit(ov, (0, 0))
+        s.blit(self._overlay, (0, 0))
         cx, cy = self.width // 2, self.height // 2
-        head = self._huge.render(t("poker.broke"), True, COL_BAD)
-        s.blit(head, head.get_rect(center=(cx, cy - 34)))
+        pw = min(self.width - 60, 460)
+        panel = pygame.Rect(cx - pw // 2, cy - 92, pw, 184)
+        ui.draw_panel(s, panel, accent_top=ui.RED)
+        head = self._huge.render(t("poker.broke"), True, ui.RED)
+        s.blit(head, head.get_rect(center=(cx, cy - 42)))
+        best = self._small.render(f"{t('poker.best')}: {self.best}", True,
+                                  ui.TEXT_DIM)
+        s.blit(best, best.get_rect(center=(cx, cy + 2)))
         sub = self._small.render(t("poker.broke_restart", n=START_CHIPS), True,
-                                 COL_DIM)
-        s.blit(sub, sub.get_rect(center=(cx, cy + 8)))
+                                 ui.TEXT)
+        s.blit(sub, sub.get_rect(center=(cx, cy + 32)))
+        hint = self._tiny.render(t("common.enter_restart"), True, ui.TEXT_FAINT)
+        s.blit(hint, hint.get_rect(center=(cx, cy + 60)))
 
     def _draw_prehand(self, s):
         cx = self.width // 2
-        title = self._huge.render(t("poker.mode." + self.mode), True, COL_ACCENT)
+        title = self._huge.render(t("poker.mode." + self.mode), True,
+                                  self.accent)
         s.blit(title, title.get_rect(center=(cx, int(self.height * 0.28))))
         info = [t("poker.blinds", sb=SMALL_BLIND, bb=BIG_BLIND)] \
             if self.mode == "holdem" else [t("poker.ante", n=ANTE)]
         if self.mode == "holdem":
             info.append(t("poker.opponents", n=self.n_opponents))
         for i, line in enumerate(info):
-            im = self._small.render(line, True, COL_DIM)
+            im = self._small.render(line, True, ui.TEXT_DIM)
             s.blit(im, im.get_rect(center=(cx, int(self.height * 0.40) + i * 22)))
-        pygame.draw.rect(s, COL_BTN_ON, self.deal_rect, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.deal_rect, 2, border_radius=10)
-        di = self._small.render(t("poker.deal_btn"), True, COL_TEXT)
-        s.blit(di, di.get_rect(center=self.deal_rect.center))
+        self._draw_btn(s, self.deal_rect, t("poker.deal_btn"), primary=True)

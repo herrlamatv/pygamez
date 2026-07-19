@@ -10,23 +10,31 @@ Alles wird mit pygame-Primitiven gezeichnet - keine Bild-Dateien:
 - ``make_deck``       : Standard-52er-Deck oder Spider-Varianten (104 Karten).
 - ``CardRenderer``    : rendert Vorder-/Rückseiten in beliebiger Größe und
                         cached sie je (Rang, Farbe, Breite, Höhe, Seite).
+                        Die Schrift kommt aus ui.font (Theme-Schrift), die
+                        Rückseite trägt den Akzentton des jeweiligen Spiels.
                         Die Farbsymbole (Pips) sind Polygone/Kreise:
                         Herz = 2 Kreise + Dreieck, Karo = Raute,
                         Pik = umgedrehtes Herz + Fuß, Kreuz = 3 Kreise + Fuß.
 - ``draw_slot``       : gestrichelte Umrandung für leere Ablagen.
 - ``fan_rects``       : Trefferflächen eines aufgefächerten Stapels.
 - ``hit_index``       : oberste getroffene Karte eines Stapels.
+- ``make_felt``       : einmalig gerenderter Filz-Hintergrund (Verlauf +
+                        Tischlicht + Vignette), damit alle Kartenspiele
+                        denselben Tisch-Look teilen.
 """
 
 import pygame
+
+import ui
 
 SUIT_SPADE, SUIT_HEART, SUIT_DIAMOND, SUIT_CLUB = 0, 1, 2, 3
 
 RANK_LABELS = {1: "A", 11: "J", 12: "Q", 13: "K"}
 
-COL_RED = (200, 60, 60)
-COL_BLACK = (35, 38, 48)
-COL_FACE = (238, 240, 246)
+# Karten-Identität: leicht entsättigt, damit sie zum v4.1-Look passt.
+COL_RED = (198, 58, 62)
+COL_BLACK = (36, 40, 52)
+COL_FACE = (240, 242, 247)
 COL_FACE_EDGE = (150, 158, 178)
 
 
@@ -133,18 +141,28 @@ class CardRenderer:
         if surf is None:
             surf = pygame.Surface((w, h), pygame.SRCALPHA)
             rad = max(3, w // 8)
-            pygame.draw.rect(surf, self.accent, (0, 0, w, h), border_radius=rad)
-            dark = tuple(int(v * 0.6) for v in self.accent)
-            pygame.draw.rect(surf, dark, (0, 0, w, h), 2, border_radius=rad)
-            # Rauten-Muster
-            inner = pygame.Rect(3, 3, w - 6, h - 6)
+            # Akzent leicht abgedunkelt = Grundton der Rückseite
+            base = ui.mix(self.accent, (16, 20, 28), 0.30)
+            dark = ui.mix(base, (0, 0, 0), 0.35)
+            # weißer Kartenrand wie bei echten Rückseiten
+            pygame.draw.rect(surf, COL_FACE, (0, 0, w, h), border_radius=rad)
+            inner = pygame.Rect(2, 2, w - 4, h - 4)
+            irad = max(2, rad - 2)
+            pygame.draw.rect(surf, base, inner, border_radius=irad)
+            # Rauten-Muster (auf die Innenfläche geclippt)
+            pat = inner.inflate(-4, -4)
             step = max(6, w // 5)
-            for yy in range(inner.y, inner.bottom, step):
-                for xx in range(inner.x, inner.right, step):
+            surf.set_clip(pat)
+            for yy in range(pat.y, pat.bottom, step):
+                for xx in range(pat.x, pat.right, step):
                     pygame.draw.line(surf, dark, (xx, yy + step // 2),
                                      (xx + step // 2, yy), 1)
                     pygame.draw.line(surf, dark, (xx + step // 2, yy),
                                      (xx + step, yy + step // 2), 1)
+            surf.set_clip(None)
+            pygame.draw.rect(surf, dark, inner, 1, border_radius=irad)
+            pygame.draw.rect(surf, COL_FACE_EDGE, (0, 0, w, h), 1,
+                             border_radius=rad)
             self._cache[key] = surf
         return surf
 
@@ -154,7 +172,7 @@ class CardRenderer:
         pygame.draw.rect(surf, COL_FACE, (0, 0, w, h), border_radius=rad)
         pygame.draw.rect(surf, COL_FACE_EDGE, (0, 0, w, h), 1, border_radius=rad)
         col = COL_RED if is_red(suit) else COL_BLACK
-        fnt = pygame.font.SysFont("consolas", max(10, h // 5), bold=True)
+        fnt = ui.font(max(10, h // 5), bold=True)
         label = rank_label(rank)
         img = fnt.render(label, True, col)
         # Rang + kleines Symbol oben links
@@ -169,7 +187,7 @@ class CardRenderer:
         # Großes Symbol in der Mitte (Bildkarten: großer Buchstabe + Symbol)
         big = max(4, w // 4)
         if rank > 10 or rank == 1:
-            bfnt = pygame.font.SysFont("consolas", max(14, h // 3), bold=True)
+            bfnt = ui.font(max(14, h // 3), bold=True)
             bimg = bfnt.render(label, True, col)
             surf.blit(bimg, bimg.get_rect(center=(w // 2, h // 2 - big // 2)))
             _draw_suit(surf, suit, w // 2, h // 2 + big, big // 2 + 2, col)
@@ -178,7 +196,33 @@ class CardRenderer:
         return surf
 
 
-def draw_slot(surf, rect, color=(74, 84, 116)):
+def make_felt(w, h, base=(22, 48, 38), edge=(13, 30, 23)):
+    """Filz-Hintergrund EINMAL rendern (Software-Rendering: cachen!):
+    sanfter vertikaler Verlauf, weiches Tischlicht oben und eine dunkle
+    Bande mit Zierlinie am Rand. Rückgabe: opake Surface in (w, h)."""
+    surf = pygame.Surface((max(1, w), max(1, h)))
+    top = ui.mix(base, (255, 255, 255), 0.10)
+    for y in range(h):
+        f = y / max(1, h - 1)
+        surf.fill(ui.mix(top, edge, f * 0.85), (0, y, w, 1))
+    # weiches Oval-Licht in der oberen Tischhälfte
+    glow = pygame.Surface((w, h), pygame.SRCALPHA)
+    gw, gh = int(w * 0.86), int(h * 0.62)
+    pygame.draw.ellipse(glow, (255, 255, 255, 14),
+                        (w // 2 - gw // 2, int(h * 0.14), gw, gh))
+    pygame.draw.ellipse(glow, (255, 255, 255, 10),
+                        (w // 2 - int(gw * 0.42), int(h * 0.20),
+                         int(gw * 0.84), int(gh * 0.8)))
+    surf.blit(glow, (0, 0))
+    # Bande/Vignette am Rand
+    pygame.draw.rect(surf, edge, (0, 0, w, h), 6)
+    pygame.draw.rect(surf, ui.mix(edge, base, 0.5), (6, 6, w - 12, h - 12), 2)
+    pygame.draw.rect(surf, ui.mix(base, (255, 255, 255), 0.06),
+                     (8, 8, w - 16, h - 16), 1)
+    return surf
+
+
+def draw_slot(surf, rect, color=(92, 118, 104)):
     """Umrandung für eine leere Ablage (gestrichelter Look)."""
     r = pygame.Rect(rect)
     rad = max(3, r.w // 8)

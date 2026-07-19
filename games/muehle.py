@@ -31,28 +31,23 @@ import time
 import pygame
 
 import settings as settings_mod
-from game_base import Game, InputEvent
+import ui
+from game_base import Game, InputEvent, LocalizedName
 from i18n import t
 
-# ----------------------------------------------------------------- Farben
-COL_BG = (20, 28, 24)
-COL_BOARD = (60, 96, 78)
+# ------------------------------------------------- Brett-Identitätsfarben
+# Generische UI-Farben (Hintergrund, Panels, Text) liefert die ui-Palette.
+COL_PLATE = (24, 38, 31)         # Grundplatte hinter dem Liniennetz
 COL_LINE = (120, 168, 140)
 COL_SPOT = (46, 74, 60)
 COL_P1 = (238, 240, 246)         # Spieler 0 (hell)
 COL_P1_HI = (255, 255, 255)
 COL_P2 = (44, 52, 66)            # Spieler 1 (dunkel)
 COL_P2_HI = (96, 108, 130)
-COL_TEXT = (230, 238, 232)
-COL_DIM = (150, 178, 162)
-COL_ACCENT = (127, 174, 143)     # = Sidebar-Farbe #7fae8f
 COL_SEL = (246, 214, 92)
 COL_HINT = (120, 210, 150)
 COL_MILL = (240, 180, 80)
 COL_REMOVE = (224, 96, 96)
-COL_BTN = (34, 50, 42)
-COL_BTN_ON = (40, 74, 58)
-COL_BTN_BORDER = (70, 110, 88)
 
 SETUP, PLAY, OVER = "setup", "play", "over"
 
@@ -215,7 +210,8 @@ def _evaluate(board, placed, player, flying):
 
 
 class MuehleGame(Game):
-    name = "Mühle"
+    name = LocalizedName("Nine Men's Morris", de="Mühle", fr="Moulin",
+                         es="Molino", pt="Trilha")
     highscore_key = "muehle"
     supports_multiplayer = True
 
@@ -227,19 +223,21 @@ class MuehleGame(Game):
         self.diff = max(0, min(2, int(ms.get("difficulty", 1))))
         self.flying = bool(ms.get("flying", True))
 
-        self._small = pygame.font.SysFont("consolas", 15)
-        self._tiny = pygame.font.SysFont("consolas", 12)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 12),
-                                         bold=True)
+        self._make_fonts()
         self.wins = [0, 0]
         self.starter = 0
         self._build_setup_layout()
         self._new_round()
         self.state = PLAY if self.multiplayer else SETUP
 
+    def _make_fonts(self):
+        """Theme-Schriften, Grösse abhängig von der Fensterhöhe."""
+        self._small = ui.font(max(14, self.height // 34))
+        self._tiny = ui.font(max(12, self.height // 44))
+        self._huge = ui.font(max(26, self.height // 12), bold=True)
+
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 12),
-                                         bold=True)
+        self._make_fonts()
         self._build_setup_layout()
         self._layout()
 
@@ -253,6 +251,11 @@ class MuehleGame(Game):
         self.pr = max(9, int(self.step * 0.28))     # Steinradius
         self.pts = [(int(self.bx + col * self.step),
                      int(self.by + row * self.step)) for (col, row) in POS]
+        # Grundplatte hinter dem Liniennetz (im Fenster/unter dem HUD halten)
+        pad = max(10, min(int(self.step * 0.5), self.bx - 8,
+                          self.by - self.hud_h - 8))
+        self.plate_rect = pygame.Rect(self.bx - pad, self.by - pad,
+                                      size + 2 * pad, size + 2 * pad)
 
     def _new_round(self):
         self.board = [0] * 24
@@ -264,6 +267,7 @@ class MuehleGame(Game):
         self.targets = []
         self.last_spot = None
         self.mill_spots = []
+        self.mill_t = 0.0           # Restzeit der KI-Mühlen-Anzeige
         self.winner = None
         self.msg = None
         self.msg_t = 0.0
@@ -414,6 +418,7 @@ class MuehleGame(Game):
         if _forms_mill(self.board, p, val):
             self.mill_spots = [m for m in _MILLS_AT[p]
                                if all(self.board[q] == val for q in m)]
+            self.mill_t = 0.0       # Anzeige gehört jetzt dem Menschen
             self.removable = _removable(self.board, opp)
             if self.removable:
                 self.remove_mode = True
@@ -471,6 +476,13 @@ class MuehleGame(Game):
             self.msg_t -= dt
             if self.msg_t <= 0:
                 self.msg = None
+        if self.mill_t > 0:
+            # KI-Mühle nur kurz anzeigen, dann wieder ausblenden.
+            self.mill_t -= dt
+            if self.mill_t <= 0:
+                self.mill_t = 0.0
+                if not self.remove_mode:
+                    self.mill_spots = []
         if (self.state == PLAY and not self.multiplayer and self.player == 1):
             self.ai_delay -= dt
             if self.ai_delay <= 0:
@@ -493,13 +505,18 @@ class MuehleGame(Game):
             self.last_spot = b
         spot = a if kind == "place" else b
         if rp is not None:
-            self.mill_spots = [m for m in _MILLS_AT[spot]
-                               if all(self.board[q] == val for q in m)]
+            mills = [m for m in _MILLS_AT[spot]
+                     if all(self.board[q] == val for q in m)]
             self.board[rp] = 0
             self.play_sound("hit")
+            self._end_turn()
+            # _end_turn() löscht mill_spots sofort - die geschlossene
+            # KI-Mühle danach kurz anzeigen, sonst sieht man sie nie.
+            self.mill_spots = mills
+            self.mill_t = 1.2
         else:
             self.play_sound("lock")
-        self._end_turn()
+            self._end_turn()
 
     def _pick_ai_move(self):
         moves = _gen_moves(self.board, self.placed, 1, self.flying)
@@ -559,7 +576,7 @@ class MuehleGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height, stars=False, aurora=True)
         if self.state == SETUP:
             self._draw_setup(s)
             return
@@ -571,6 +588,10 @@ class MuehleGame(Game):
             self._draw_over(s)
 
     def _draw_board(self, s):
+        # Grundplatte, damit sich das Liniennetz vom Hintergrund abhebt
+        pygame.draw.rect(s, COL_PLATE, self.plate_rect, border_radius=12)
+        pygame.draw.rect(s, ui.mix(COL_PLATE, self.accent, 0.45),
+                         self.plate_rect, 1, border_radius=12)
         # Linien (jede Kante einmal)
         for i in range(24):
             for j in ADJ[i]:
@@ -607,95 +628,84 @@ class MuehleGame(Game):
                                    max(4, self.pr // 3))
         # Entfern-Markierung
         if human and self.remove_mode:
-            k = 0.5 + 0.5 * abs(pygame.time.get_ticks() % 700 - 350) / 350
+            k = ui.pulse(2.8, 0.0, 1.0)
             for i in self.removable:
                 pygame.draw.circle(s, COL_REMOVE, self.pts[i],
                                    self.pr + 2 + int(3 * k), 3)
-        # Letzter Punkt
+        # Letzter Punkt (sanft pulsierender Akzentring)
         if self.last_spot is not None and self.board[self.last_spot] != 0:
-            pygame.draw.circle(s, COL_ACCENT, self.pts[self.last_spot],
+            col = ui.mix(COL_SPOT, self.accent,
+                         0.55 + 0.35 * ui.pulse(1.6, 0.0, 1.0))
+            pygame.draw.circle(s, col, self.pts[self.last_spot],
                                self.pr + 4, 2)
 
     def _draw_hud(self, s):
-        pygame.draw.rect(s, (26, 38, 32), (0, 0, self.width, self.hud_h))
-        pygame.draw.line(s, (50, 78, 62), (0, self.hud_h), (self.width, self.hud_h))
-        cy = self.hud_h // 2
+        panel = pygame.Rect(8, 6, self.width - 16, self.hud_h - 10)
+        ui.draw_panel(s, panel, shadow=False, accent_top=self.accent)
+        cy = panel.centery
         # Steinbestand: verbleibend zu setzen + auf dem Brett
-        for idx, (col, hi) in enumerate([(COL_P1, COL_P1_HI), (COL_P2, COL_P2_HI)]):
+        for idx, col in enumerate((COL_P1, COL_P2)):
             on = _count(self.board, idx + 1)
             left = 9 - self.placed[idx]
             txt = f"{on}" + (f" (+{left})" if left else "")
-            img = self._small.render(txt, True, COL_TEXT)
+            img = self._small.render(txt, True, ui.TEXT)
             if idx == 0:
-                pygame.draw.circle(s, col, (16, cy), 8)
-                s.blit(img, img.get_rect(midleft=(30, cy)))
+                pygame.draw.circle(s, col, (panel.x + 16, cy), 8)
+                pygame.draw.circle(s, ui.BORDER_LIGHT, (panel.x + 16, cy), 8, 1)
+                s.blit(img, img.get_rect(midleft=(panel.x + 30, cy)))
             else:
-                pygame.draw.circle(s, col, (self.width - 16, cy), 8)
-                s.blit(img, img.get_rect(midright=(self.width - 30, cy)))
+                pygame.draw.circle(s, col, (panel.right - 16, cy), 8)
+                pygame.draw.circle(s, ui.BORDER_LIGHT, (panel.right - 16, cy), 8, 1)
+                s.blit(img, img.get_rect(midright=(panel.right - 30, cy)))
         if self.state == PLAY:
             if self.remove_mode and self._human_turn():
                 mid = t("mill.remove")
             elif not self.multiplayer and self.player == 1:
                 mid = t("mill.ai_thinks")
             elif self.placed[self.player] < 9:
-                mid = (t("mill.place_you") if (self.multiplayer or self.player == 0)
-                       else t("mill.ai_thinks"))
                 if self.multiplayer:
                     who = t("common.player1") if self.player == 0 else t("common.player2")
                     mid = t("mill.place_turn", name=who)
+                else:
+                    mid = t("mill.place_you")
             else:
                 if self.multiplayer:
                     who = t("common.player1") if self.player == 0 else t("common.player2")
                     mid = t("mill.move_turn", name=who)
                 else:
                     mid = t("mill.move_you")
-            img = self._small.render(mid, True, COL_ACCENT)
+            img = self._small.render(mid, True, self.accent)
             s.blit(img, img.get_rect(center=(self.width // 2, cy)))
 
     def _draw_over(self, s):
-        ov = pygame.Surface((self.width, 96), pygame.SRCALPHA)
-        ov.fill((10, 16, 12, 210))
-        y = self.height // 2 - 48
-        s.blit(ov, (0, y))
         cx = self.width // 2
         if self.multiplayer:
             head = self._huge.render(t("common.player_wins", n=self.winner + 1),
-                                     True, COL_ACCENT)
+                                     True, self.accent)
         else:
             won = self.winner == 0
             head = self._huge.render(t("mill.win_you") if won else t("mill.win_ai"),
-                                     True, COL_ACCENT if won else COL_DIM)
-        s.blit(head, head.get_rect(center=(cx, y + 34)))
-        hint = self._tiny.render(t("mill.new_round"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, y + 74)))
+                                     True, self.accent if won else ui.TEXT_DIM)
+        hint_key = "common.enter_restart" if self.multiplayer else "mill.new_round"
+        hint = self._tiny.render(t(hint_key), True, ui.TEXT_DIM)
+        w = min(self.width - 24, max(head.get_width(), hint.get_width()) + 64)
+        panel = pygame.Rect(cx - w // 2, self.height // 2 - 48, w, 96)
+        ui.draw_panel(s, panel, shadow=False, accent_top=self.accent)
+        s.blit(head, head.get_rect(center=(cx, panel.y + 36)))
+        s.blit(hint, hint.get_rect(center=(cx, panel.y + 74)))
 
     def _draw_setup(self, s):
-        cx = self.width // 2
-        title = self._huge.render(t("mill.title"), True, COL_ACCENT)
-        s.blit(title, title.get_rect(center=(cx, int(self.height * 0.14))))
-        sub = self._small.render(t("mill.subtitle"), True, COL_DIM)
-        s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.21))))
+        ui.draw_title(s, self.width, t("mill.title"),
+                      subtitle=t("mill.subtitle"), y=int(self.height * 0.14),
+                      big=self._huge, small=self._small, accent=self.accent)
         for i, rc in enumerate(self.diff_rects):
-            on = (i == self.diff)
-            pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, rc, border_radius=9)
-            pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, rc,
-                             2 if on else 1, border_radius=9)
-            lbl = self.font.render(t("mill.diff." + DIFFS[i]), True,
-                                   COL_TEXT if on else COL_DIM)
-            s.blit(lbl, lbl.get_rect(midleft=(rc.x + 18, rc.centery)))
+            ui.draw_button(s, rc, t("mill.diff." + DIFFS[i]), self.font,
+                           selected=(i == self.diff), accent=self.accent)
         # Fliegen-Schalter
-        rc = self.fly_rect
-        pygame.draw.rect(s, COL_BTN_ON if self.flying else COL_BTN, rc,
-                         border_radius=9)
-        pygame.draw.rect(s, COL_ACCENT if self.flying else COL_BTN_BORDER, rc,
-                         2 if self.flying else 1, border_radius=9)
         state = t("common.on") if self.flying else t("common.off")
-        lbl = self.font.render(t("mill.flying") + ": " + state, True,
-                               COL_TEXT if self.flying else COL_DIM)
-        s.blit(lbl, lbl.get_rect(midleft=(rc.x + 18, rc.centery)))
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=9)
-        pygame.draw.rect(s, COL_ACCENT, self.start_rect, 2, border_radius=9)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
-        s.blit(st, st.get_rect(center=self.start_rect.center))
-        hint = self._tiny.render(t("mill.setup_hint"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, self.height - 16)))
+        ui.draw_button(s, self.fly_rect, t("mill.flying") + ": " + state,
+                       self.font, selected=self.flying, accent=self.accent)
+        ui.draw_button(s, self.start_rect, t("common.start"), self.font,
+                       selected=True, accent=self.accent)
+        ui.draw_footer(s, self.width, self.height, t("mill.setup_hint"),
+                       self._tiny)

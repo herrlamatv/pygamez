@@ -57,7 +57,6 @@ class BubbleShooterGame(Game):
     def reset(self):
         self.ncolors, self.start_rows, self.drop_every = \
             MODE_CFG.get(self.mode, MODE_CFG["classic"])
-        self.accent = ui.game_color(type(self).__name__)
         self.score = 0
         self.game_over = False
         self.state = PLAY

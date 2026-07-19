@@ -38,6 +38,7 @@ import time
 import pygame
 
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
@@ -127,11 +128,8 @@ class AimTrainerGame(Game):
         self.blur = blur             # Motion-Blur-Stärke (0.0 = aus .. 0.8)
         self._prev_frame = None      # letztes Bild für die Blur-Mischung
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._big = pygame.font.SysFont("consolas", 22, bold=True)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
+        self._ov_cache = {}          # gecachte Vollbild-Abdunklungen
 
         self.yaw = 0.0
         self.pitch = 0.0
@@ -150,13 +148,32 @@ class AimTrainerGame(Game):
         self.state = SETUP
 
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self._sky_cache = None
         self._bh_cache = None
         self._sun_cache = None
         self._prev_frame = None
+        self._ov_cache = {}
         self._build_setup_layout()
+
+    def _make_fonts(self):
+        """Schriftgrößen aus der aktuellen Auflösung ableiten (Theme-Schrift)."""
+        h = self.height
+        self._small = ui.font(max(13, h // 30))
+        self._tiny = ui.font(max(11, h // 36))
+        self._big = ui.font(max(16, h // 21), bold=True)
+        self._huge = ui.font(max(26, h // 11), bold=True)
+
+    def _dim(self, s, rgb, alpha):
+        """Vollbild-Abdunklung über eine gecachte Surface - vermeidet den
+        SRCALPHA-Fill über die ganze Fläche in jedem Frame."""
+        surf = self._ov_cache.get(rgb)
+        if surf is None or surf.get_size() != (self.width, self.height):
+            surf = pygame.Surface((self.width, self.height))
+            surf.fill(rgb)
+            self._ov_cache[rgb] = surf
+        surf.set_alpha(alpha)
+        s.blit(surf, (0, 0))
 
     def _aim_settings(self):
         aim = self.settings.get("aim", {}) if isinstance(self.settings, dict) else {}
@@ -1067,8 +1084,7 @@ class AimTrainerGame(Game):
         if self.mode == "reflex" and self.last_reaction is not None \
                 and self.play_t - self.last_reaction_t < 0.8:
             ms = self.last_reaction
-            c = (110, 220, 140) if ms < 400 else \
-                (240, 240, 240) if ms < 700 else (245, 160, 90)
+            c = ui.GREEN if ms < 400 else ui.TEXT if ms < 700 else ui.GOLD
             img = self._big.render(f"{ms} ms", True, c)
             s.blit(img, img.get_rect(center=(self.width // 2,
                                              int(self.height * 0.72))))
@@ -1079,20 +1095,17 @@ class AimTrainerGame(Game):
                                                 self.height - 6)))
 
         if self._toast and self._toast_t > 0:
-            img = self._small.render(self._toast, True, (240, 240, 240))
+            img = self._small.render(self._toast, True, ui.TEXT)
             s.blit(img, img.get_rect(midtop=(self.width // 2, 12)))
 
     def _draw_result(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((0, 0, 0, 140))
-        s.blit(ov, (0, 0))
+        self._dim(s, (0, 0, 0), 140)
         cx = self.width // 2
         cy = self.height // 2 - 40
         acc = int(self.hits / self.shots * 100) if self.shots else 100
 
         head = self._huge.render(t("aim.result_title"), True,
                                  self._theme()["accent"])
-        s.blit(head, head.get_rect(center=(cx, cy - 70)))
         lines = [t("common.points", score=self.score)]
         if self.mode == "precision":
             lines += [f"{t('aim.hits', n=self.hits)}   ·   "
@@ -1113,13 +1126,24 @@ class AimTrainerGame(Game):
             lines += [t("aim.hits", n=self.hits),
                       t("aim.max_combo", m=1.0 + 0.25 * min(self.max_combo, 12)),
                       t("aim.session_time", t=self._fmt_mmss(self.play_t))]
+        imgs = [self.font.render(str(line), True, ui.TEXT) for line in lines]
+        hint = self._small.render(t("common.enter_restart"), True, ui.TEXT_DIM)
+
+        # Panel hinter dem Ergebnis (dynamische ui-Palette)
+        top = cy - 70 - head.get_height() // 2 - 22
+        bottom = cy - 24 + 32 * len(imgs) + 10 + hint.get_height() // 2 + 22
+        pw = min(self.width - 40,
+                 max(400, head.get_width() + 80, hint.get_width() + 60,
+                     max(i.get_width() for i in imgs) + 60))
+        panel = pygame.Rect(cx - pw // 2, top, pw, bottom - top)
+        pygame.draw.rect(s, ui.PANEL, panel, border_radius=14)
+        pygame.draw.rect(s, ui.BORDER_LIGHT, panel, 1, border_radius=14)
+
+        s.blit(head, head.get_rect(center=(cx, cy - 70)))
         y = cy - 24
-        for line in lines:
-            img = self.font.render(str(line), True, (235, 238, 245))
+        for img in imgs:
             s.blit(img, img.get_rect(center=(cx, y)))
             y += 32
-        hint = self._small.render(t("common.enter_restart"), True,
-                                  (150, 158, 178))
         s.blit(hint, hint.get_rect(center=(cx, y + 10)))
 
     # ----- Setup zeichnen -----------------------------------------------------------
@@ -1133,9 +1157,7 @@ class AimTrainerGame(Game):
         self._apply_blur(s)          # Live-Vorschau der Blur-Einstellung
         self.yaw, self.pitch = old_yaw, old_pitch
 
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((5, 6, 12, 120))
-        s.blit(ov, (0, 0))
+        self._dim(s, (5, 6, 12), 120)
 
         cx = self.width // 2
         title = self._huge.render("AIM TRAINER", True, self._theme()["accent"])
@@ -1143,19 +1165,19 @@ class AimTrainerGame(Game):
         mode_lbl = t("aim.mode." + self.mode) if self.mode in MODE_CFG \
             else self.mode
         sub = self._small.render(mode_lbl + "   -   " + t("aim.subtitle"),
-                                 True, (200, 205, 220))
+                                 True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.20))))
 
-        lbl = self._small.render(t("aim.setup_theme"), True, (150, 158, 178))
+        lbl = self._small.render(t("aim.setup_theme"), True, ui.TEXT_DIM)
         s.blit(lbl, lbl.get_rect(midbottom=(cx, self.theme_rects[0].y - 8)))
         for i, r in enumerate(self.theme_rects):
             on = (THEME_KEYS[i] == self.theme_key)
-            pygame.draw.rect(s, (48, 60, 84) if on else (32, 38, 54), r,
+            pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, r,
                              border_radius=8)
-            pygame.draw.rect(s, self._theme()["accent"] if on else (74, 84, 116),
+            pygame.draw.rect(s, self._theme()["accent"] if on else ui.BORDER,
                              r, 2 if on else 1, border_radius=8)
             img = self._small.render(t("aim.theme." + THEME_KEYS[i]), True,
-                                     (235, 238, 245) if on else (150, 158, 178))
+                                     ui.TEXT if on else ui.TEXT_DIM)
             s.blit(img, img.get_rect(center=r.center))
 
         for label_key, minus, plus, box, value in (
@@ -1163,21 +1185,21 @@ class AimTrainerGame(Game):
                  self.sens_box, f"{self.sens:.1f}"),
                 ("aim.setup_blur", self.blur_minus, self.blur_plus,
                  self.blur_box, self._blur_label())):
-            lbl = self._small.render(t(label_key), True, (200, 205, 220))
+            lbl = self._small.render(t(label_key), True, ui.TEXT_DIM)
             s.blit(lbl, lbl.get_rect(midright=(minus.x - 16, minus.centery)))
             for r, sym in ((minus, "-"), (plus, "+")):
-                pygame.draw.rect(s, (32, 38, 54), r, border_radius=8)
-                pygame.draw.rect(s, (74, 84, 116), r, 1, border_radius=8)
-                img = self._big.render(sym, True, (235, 238, 245))
+                pygame.draw.rect(s, ui.BTN, r, border_radius=8)
+                pygame.draw.rect(s, ui.BORDER, r, 1, border_radius=8)
+                img = self._big.render(sym, True, ui.TEXT)
                 s.blit(img, img.get_rect(center=r.center))
             img = self._big.render(value, True, self._theme()["accent"])
             s.blit(img, img.get_rect(center=box.center))
 
-        pygame.draw.rect(s, (48, 60, 84), self.start_rect, border_radius=10)
+        pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=10)
         pygame.draw.rect(s, self._theme()["accent"], self.start_rect, 2,
                          border_radius=10)
-        st = self.font.render(t("common.start"), True, (235, 238, 245))
+        st = self.font.render(t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
 
-        hint = self._tiny.render(t("aim.setup_hint"), True, (150, 158, 178))
+        hint = self._tiny.render(t("aim.setup_hint"), True, ui.TEXT_FAINT)
         s.blit(hint, hint.get_rect(center=(cx, self.height - 14)))

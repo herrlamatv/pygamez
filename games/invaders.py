@@ -30,16 +30,15 @@ import random
 
 import pygame
 
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
 # ----- Farben ---------------------------------------------------------------
-COL_BG = (8, 10, 18)
-COL_STAR = (40, 46, 66)
+# Allgemeine UI-Farben kommen zur Zeichenzeit dynamisch aus der ui.*-Palette;
+# hier stehen nur die Identitätsfarben (Schiff, Gegner, Waffen, Projektile).
 COL_PLAYER = (110, 220, 140)
 COL_PLAYER_HIT = (240, 240, 240)
-COL_TEXT = (230, 230, 235)
-COL_MUTE = (150, 158, 176)
 COL_SHIELD = (90, 170, 220)
 COL_EBULLET = (240, 120, 120)
 
@@ -135,10 +134,6 @@ class InvadersGame(Game):
         self._banner = ""
         self._banner_t = 0.0
         self._start_count = 0
-
-        # Sternenhimmel (einmalig gewürfelt)
-        self._stars = [(random.randint(0, self.width), random.randint(0, self.height),
-                        random.choice((1, 1, 2))) for _ in range(70)]
 
     def _enter_play(self):
         """Leitet aus den (Klassik-)Optionen die Flags ab und startet Level 1."""
@@ -319,9 +314,7 @@ class InvadersGame(Game):
                                  "w": 52, "h": 18, "hp": 6})
 
     def on_surface_changed(self):
-        """Falls die Auflösung wechselt: Sterne neu würfeln, Spieler einpassen."""
-        self._stars = [(random.randint(0, self.width), random.randint(0, self.height),
-                        random.choice((1, 1, 2))) for _ in range(70)]
+        """Falls die Auflösung wechselt: Spieler einpassen, Setup neu bauen."""
         self.px = max(16, min(self.width - 16, self.px))
         self.py = max(40, min(self.height - 16, self.py))
         if self.state == "setup":
@@ -483,9 +476,12 @@ class InvadersGame(Game):
         self.play_sound("shoot")
 
     def _add_bullet(self, x, y, ang, spd, dmg, pierce, rad=3):
+        # Farbe beim Abschuss festhalten - so färben sich fliegende Kugeln
+        # beim Waffenwechsel nicht nachträglich um.
         self.bullets.append({"x": x, "y": y, "vx": math.cos(ang) * spd,
                              "vy": math.sin(ang) * spd, "dmg": dmg,
-                             "pierce": pierce, "rad": rad, "hits": set()})
+                             "pierce": pierce, "rad": rad, "hits": set(),
+                             "col": WEAPON_COL.get(self.weapon, (240, 240, 120))})
 
     # ----- Gegner: Klassik ----------------------------------------------
 
@@ -770,9 +766,8 @@ class InvadersGame(Game):
 
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
-        for (sx, sy, r) in self._stars:
-            pygame.draw.circle(s, COL_STAR, (sx, sy), r)
+        # Theme-Weltraum-Hintergrund mit Sternenfeld (v4.1-Look)
+        ui.draw_background(s, self.width, self.height, stars=True)
 
         # Setup-Screen (Klassik) statt Spielfeld.
         if self.state == "setup":
@@ -798,8 +793,7 @@ class InvadersGame(Game):
 
         # Schüsse
         for b in self.bullets:
-            col = WEAPON_COL.get(self.weapon, (240, 240, 120))
-            pygame.draw.circle(s, col, (int(b["x"]), int(b["y"])), b["rad"] + 1)
+            pygame.draw.circle(s, b["col"], (int(b["x"]), int(b["y"])), b["rad"] + 1)
         for b in self.ebullets:
             pygame.draw.circle(s, COL_EBULLET, (int(b["x"]), int(b["y"])), b["rad"])
 
@@ -814,23 +808,26 @@ class InvadersGame(Game):
         # Maus-Fadenkreuz beim Maus-Zielen
         if self.mouse_aim:
             mx, my = int(self.mouse_pos[0]), int(self.mouse_pos[1])
-            pygame.draw.circle(s, (240, 240, 240), (mx, my), 8, 1)
-            pygame.draw.line(s, (240, 240, 240), (mx - 11, my), (mx - 4, my))
-            pygame.draw.line(s, (240, 240, 240), (mx + 4, my), (mx + 11, my))
+            pygame.draw.circle(s, ui.TEXT, (mx, my), 8, 1)
+            pygame.draw.line(s, ui.TEXT, (mx - 11, my), (mx - 4, my))
+            pygame.draw.line(s, ui.TEXT, (mx + 4, my), (mx + 11, my))
 
         self._draw_hud(s)
         self._draw_banner(s)
 
         if self.game_over:
             self.draw_center_text(t("common.game_over"), self.big_font,
-                                  (235, 110, 110), -20)
-            self.draw_center_text(t("common.enter_restart"), self.font, COL_TEXT, 30)
+                                  ui.RED, -20)
+            self.draw_center_text(t("common.enter_restart"), self.font, ui.TEXT, 30)
 
     def _draw_setup(self, s):
         """Zeichnet den Klassik-Setup-Screen (Bewegung/Zielen wählen)."""
-        title = self.big_font.render(self.name, True, COL_TEXT)
+        # Titel mit leichtem Glanz in der Akzentfarbe des Spiels
+        glow = self.big_font.render(self.name, True, self.accent)
+        s.blit(glow, glow.get_rect(center=(self.width // 2 + 2, 72)))
+        title = self.big_font.render(self.name, True, ui.TEXT)
         s.blit(title, title.get_rect(center=(self.width // 2, 70)))
-        sub = self.font.render(t("inv.setup_title"), True, COL_MUTE)
+        sub = self.font.render(t("inv.setup_title"), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(self.width // 2, 112)))
 
         rows = [
@@ -842,21 +839,23 @@ class InvadersGame(Game):
         ]
         for i, r in enumerate(self._setup_rects):
             selected = (i == self._setup_sel)
-            pygame.draw.rect(s, (70, 96, 150) if selected else (44, 50, 66),
+            pygame.draw.rect(s, ui.BTN_SEL if selected else ui.BTN,
                              r, border_radius=8)
+            pygame.draw.rect(s, self.accent if selected else ui.BORDER,
+                             r, 1, border_radius=8)
             label, value = rows[i]
             if value is None:   # Start-Button: zentriert
-                img = self.font.render(label, True, COL_TEXT)
+                img = self.font.render(label, True, ui.TEXT)
                 s.blit(img, img.get_rect(center=r.center))
             else:
-                limg = self.font.render(label, True, COL_TEXT)
+                limg = self.font.render(label, True, ui.TEXT)
                 s.blit(limg, (r.x + 14, r.centery - limg.get_height() // 2))
                 vimg = self.font.render("< %s >" % value, True,
-                                        (240, 210, 120) if selected else COL_MUTE)
+                                        ui.GOLD if selected else ui.TEXT_DIM)
                 s.blit(vimg, (r.right - vimg.get_width() - 14,
                               r.centery - vimg.get_height() // 2))
 
-        hint = self.font.render(t("inv.setup_hint"), True, COL_MUTE)
+        hint = self.font.render(t("inv.setup_hint"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 24)))
 
     def _draw_alien(self, s, a):
@@ -868,21 +867,21 @@ class InvadersGame(Game):
         x = int(a["cx"] - a["w"] / 2)
         y = int(a["cy"] - a["h"] / 2)
         pygame.draw.rect(s, col, (x, y, a["w"], a["h"]), border_radius=6)
-        # Augen
+        # Augen ("Löcher" in der Hintergrundfarbe des Themes)
         ey = y + a["h"] // 3
-        pygame.draw.rect(s, COL_BG, (x + 7, ey, 4, 4))
-        pygame.draw.rect(s, COL_BG, (x + a["w"] - 11, ey, 4, 4))
+        pygame.draw.rect(s, ui.BG_TOP, (x + 7, ey, 4, 4))
+        pygame.draw.rect(s, ui.BG_TOP, (x + a["w"] - 11, ey, 4, 4))
         if a["kind"] == "boss":
             # HP-Balken über dem Boss
             bw = a["w"]
-            pygame.draw.rect(s, (60, 60, 70), (x, y - 10, bw, 5))
+            pygame.draw.rect(s, ui.PANEL, (x, y - 10, bw, 5))
             pygame.draw.rect(s, (235, 90, 140),
                              (x, y - 10, int(bw * a["hp"] / a["maxhp"]), 5))
 
     def _draw_powerup(self, s, p):
         icons = {"life": ("+", (240, 110, 120)), "shield": ("S", (90, 170, 220)),
                  "weapon": ("W", (240, 210, 120))}
-        letter, col = icons.get(p["kind"], ("?", COL_TEXT))
+        letter, col = icons.get(p["kind"], ("?", ui.TEXT))
         pygame.draw.circle(s, col, (int(p["x"]), int(p["y"])), 11, 2)
         img = self.font.render(letter, True, col)
         s.blit(img, img.get_rect(center=(int(p["x"]), int(p["y"]))))
@@ -910,11 +909,17 @@ class InvadersGame(Game):
             pygame.draw.circle(s, COL_SHIELD, (int(self.px), int(self.py)), r, 2)
 
     def _draw_hud(self, s):
-        s.blit(self.font.render(t("common.points", score=self.score), True, COL_TEXT),
+        # Halbtransparenter Panel-Streifen oben (im Theme-Ton)
+        bar = pygame.Surface((self.width, 32), pygame.SRCALPHA)
+        bar.fill((*ui.PANEL, 140))
+        s.blit(bar, (0, 0))
+        pygame.draw.line(s, ui.BORDER, (0, 31), (self.width, 31))
+
+        s.blit(self.font.render(t("common.points", score=self.score), True, ui.TEXT),
                (10, 6))
-        lvl = self.font.render(t("inv.level", level=self.level), True, COL_TEXT)
+        lvl = self.font.render(t("inv.level", level=self.level), True, ui.TEXT)
         s.blit(lvl, (self.width // 2 - lvl.get_width() // 2, 6))
-        leben = self.font.render(t("inv.lives", lives=self.lives), True, COL_TEXT)
+        leben = self.font.render(t("inv.lives", lives=self.lives), True, ui.TEXT)
         s.blit(leben, (self.width - leben.get_width() - 10, 6))
 
         # Waffe (unten links), mit befristeter Restzeit falls Upgrade.
@@ -922,13 +927,19 @@ class InvadersGame(Game):
         if self.weapon_timer > 0:
             wname += f"  {self.weapon_timer:0.0f}s"
         wimg = self.font.render(t("inv.weapon", weapon=wname), True,
-                                WEAPON_COL.get(self.weapon, COL_TEXT))
+                                WEAPON_COL.get(self.weapon, ui.TEXT))
         s.blit(wimg, (10, self.height - 26))
 
     def _draw_banner(self, s):
         if self._banner_t <= 0:
             return
-        img = self.big_font.render(self._banner, True, COL_TEXT)
+        # Halbtransparentes Panel-Band mit Akzent-Kanten hinter dem Banner
+        band = pygame.Surface((self.width, 96), pygame.SRCALPHA)
+        band.fill((*ui.PANEL, 150))
+        band.fill((*self.accent, 200), (0, 0, self.width, 2))
+        band.fill((*self.accent, 200), (0, 94, self.width, 2))
+        s.blit(band, (0, self.height // 2 - 62))
+        img = self.big_font.render(self._banner, True, ui.TEXT)
         s.blit(img, img.get_rect(center=(self.width // 2, self.height // 2 - 30)))
         if self.mouse_aim:
             hint = t("inv.hint_mouse")
@@ -938,5 +949,5 @@ class InvadersGame(Game):
             hint = t("inv.hint_classic_free")
         else:
             hint = t("inv.hint_classic")
-        himg = self.font.render(hint, True, COL_MUTE)
+        himg = self.font.render(hint, True, ui.TEXT_DIM)
         s.blit(himg, himg.get_rect(center=(self.width // 2, self.height // 2 + 16)))

@@ -30,26 +30,22 @@ import random
 import pygame
 
 import settings as settings_mod
-from game_base import Game, InputEvent
+import ui
+from game_base import Game, InputEvent, LocalizedName
 from i18n import t
 
-# ----------------------------------------------------------------- Farben
-COL_BG = (16, 26, 22)
+# ------------------------------------------------- Identitätsfarben (Tisch)
+# Filz, Banden, Taschen, Queue & Kugeln bleiben bewusst fest - alle
+# generischen UI-Farben kommen zur Laufzeit dynamisch aus der ui-Palette.
 COL_CLOTH = (26, 112, 72)
 COL_CLOTH_D = (20, 92, 58)
 COL_RAIL = (74, 48, 30)
 COL_RAIL_HI = (104, 70, 44)
 COL_POCKET = (10, 12, 10)
-COL_TEXT = (232, 240, 234)
-COL_DIM = (150, 178, 162)
-COL_ACCENT = (47, 158, 106)       # = Sidebar-Farbe #2f9e6a
 COL_CUE = (245, 245, 240)
 COL_AIM = (240, 240, 200)
 COL_STICK = (208, 168, 96)
 COL_STICK_D = (150, 116, 60)
-COL_BTN = (28, 46, 38)
-COL_BTN_ON = (34, 74, 56)
-COL_BTN_BORDER = (64, 104, 84)
 
 # Kugelfarben nach Nummer (1..15). 8 = schwarz.
 BALL_COLORS = {
@@ -96,7 +92,8 @@ class _Ball:
 
 
 class BilliardGame(Game):
-    name = "Billard"
+    name = LocalizedName("Billiards", de="Billard", fr="Billard",
+                         es="Billar", pt="Bilhar")
     highscore_key = "billiard"
     supports_multiplayer = True
     wants_right_click = True
@@ -114,10 +111,8 @@ class BilliardGame(Game):
             self.view = "2d"
         self.diff = max(0, min(2, int(bs.get("difficulty", 1))))
 
-        self._small = pygame.font.SysFont("consolas", 15)
-        self._tiny = pygame.font.SysFont("consolas", 12)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 12),
-                                         bold=True)
+        self._build_fonts()
+        self._over_cache = None
         self.wins = [0, 0]
         self.cam_yaw = 0.0
         self.cam_yaw_t = 0.0
@@ -127,9 +122,16 @@ class BilliardGame(Game):
         self._new_rack()
         self.state = SETUP
 
+    def _build_fonts(self):
+        """Schriftgrößen aus der aktuellen Auflösung ableiten (Theme-Fonts)."""
+        h = self.height
+        self._small = ui.font(max(14, h // 32))
+        self._tiny = ui.font(max(11, h // 40))
+        self._huge = ui.font(max(26, h // 12), bold=True)
+
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 12),
-                                         bold=True)
+        self._build_fonts()
+        self._over_cache = None
         self._build_setup_layout()
         self._setup_camera()
 
@@ -786,8 +788,6 @@ class BilliardGame(Game):
         best = None
         for tb in self._ai_legal_targets():
             for (px, py) in POCKETS:
-                gx = tb.x - (px - tb.x)
-                gy = tb.y - (py - tb.y)
                 dpx, dpy = px - tb.x, py - tb.y
                 dl = math.hypot(dpx, dpy) or 1.0
                 ghost_x = tb.x - dpx / dl * 2 * BR
@@ -840,7 +840,7 @@ class BilliardGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
         if self.state == SETUP:
             self._draw_setup(s)
             return
@@ -986,20 +986,20 @@ class BilliardGame(Game):
         pygame.draw.line(s, COL_STICK_D, (bs2[0], bs2[1]), (es2[0], es2[1]), 1)
 
     def _draw_hud(self, s):
-        pygame.draw.rect(s, (22, 34, 28), (0, 0, self.width, self.hud_h))
-        pygame.draw.line(s, (44, 74, 58), (0, self.hud_h), (self.width, self.hud_h))
+        pygame.draw.rect(s, ui.PANEL, (0, 0, self.width, self.hud_h))
+        pygame.draw.line(s, ui.BORDER, (0, self.hud_h), (self.width, self.hud_h))
         cy = self.hud_h // 2
         # Ansicht + Variante links
         vt = self._tiny.render(t("bil.view." + self.view) + "  ·  "
-                               + t("bil.var." + self.variant), True, COL_DIM)
+                               + t("bil.var." + self.variant), True, ui.TEXT_DIM)
         s.blit(vt, vt.get_rect(midleft=(12, cy)))
         # Kraft-Meter rechts
         mw, mh = 90, 10
         mx = self.width - mw - 14
-        pygame.draw.rect(s, (30, 40, 34), (mx, cy - mh // 2, mw, mh),
+        pygame.draw.rect(s, ui.BTN, (mx, cy - mh // 2, mw, mh),
                          border_radius=4)
-        pygame.draw.rect(s, COL_ACCENT, (mx, cy - mh // 2, int(mw * self.power),
-                                         mh), border_radius=4)
+        pygame.draw.rect(s, self.accent, (mx, cy - mh // 2, int(mw * self.power),
+                                          mh), border_radius=4)
         # Mitte: wer ist dran / Gruppe / Nachricht
         if self.msg:
             mid = self.msg
@@ -1016,38 +1016,43 @@ class BilliardGame(Game):
             if g:
                 who += " (" + t("bil.grp." + g) + ")"
             mid = who
-        img = self._small.render(mid, True, COL_ACCENT)
+        img = self._small.render(mid, True, self.accent)
         s.blit(img, img.get_rect(center=(self.width // 2, cy)))
 
     def _draw_over(self, s):
-        ov = pygame.Surface((self.width, 100), pygame.SRCALPHA)
-        ov.fill((10, 16, 12, 210))
+        # Halbtransparentes Banner-Panel wird gecacht (Software-Rendering).
+        if self._over_cache is None or self._over_cache.get_width() != self.width:
+            ov = pygame.Surface((self.width, 100), pygame.SRCALPHA)
+            ov.fill((8, 12, 10, 210))
+            self._over_cache = ov
         y = self.height // 2 - 50
-        s.blit(ov, (0, y))
+        s.blit(self._over_cache, (0, y))
+        pygame.draw.line(s, self.accent, (0, y), (self.width, y))
+        pygame.draw.line(s, self.accent, (0, y + 99), (self.width, y + 99))
         cx = self.width // 2
         if self.variant == "practice":
             head = self._huge.render(t("bil.potted", n=len(self.potted_all)),
-                                     True, COL_ACCENT)
+                                     True, self.accent)
         elif self.multiplayer:
             head = self._huge.render(t("common.player_wins", n=self.winner + 1),
-                                     True, COL_ACCENT)
+                                     True, self.accent)
         else:
             won = self.winner == 0
             head = self._huge.render(t("bil.win_you") if won else t("bil.win_ai"),
-                                     True, COL_ACCENT if won else COL_DIM)
+                                     True, self.accent if won else ui.TEXT_DIM)
         s.blit(head, head.get_rect(center=(cx, y + 36)))
-        hint = self._tiny.render(t("bil.new_round"), True, COL_DIM)
+        hint = self._tiny.render(t("bil.new_round"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(cx, y + 76)))
 
     def _draw_setup(self, s):
         cx = self.width // 2
-        title = self._huge.render(t("bil.title"), True, COL_ACCENT)
+        title = self._huge.render(t("bil.title"), True, self.accent)
         s.blit(title, title.get_rect(center=(cx, int(self.height * 0.12))))
-        sub = self._small.render(t("bil.subtitle"), True, COL_DIM)
+        sub = self._small.render(t("bil.subtitle"), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.185))))
 
         def label(rects, txt):
-            im = self._tiny.render(txt, True, COL_DIM)
+            im = self._tiny.render(txt, True, ui.TEXT_DIM)
             s.blit(im, im.get_rect(midbottom=(cx, rects[0].top - 4)))
 
         label(self.var_rects, t("bil.lbl_variant"))
@@ -1059,16 +1064,16 @@ class BilliardGame(Game):
         label(self.diff_rects, t("bil.lbl_diff"))
         for i, rc in enumerate(self.diff_rects):
             self._btn(s, rc, t("bil.diff." + DIFFS[i]), self.diff == i)
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=9)
-        pygame.draw.rect(s, COL_ACCENT, self.start_rect, 2, border_radius=9)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=9)
+        pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=9)
+        st = self.font.render(t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
-        hint = self._tiny.render(t("bil.setup_hint"), True, COL_DIM)
+        hint = self._tiny.render(t("bil.setup_hint"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(cx, self.height - 14)))
 
     def _btn(self, s, rc, text, on):
-        pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, rc, border_radius=8)
-        pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, rc,
+        pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, rc, border_radius=8)
+        pygame.draw.rect(s, self.accent if on else ui.BORDER, rc,
                          2 if on else 1, border_radius=8)
-        im = self._small.render(text, True, COL_TEXT if on else COL_DIM)
+        im = self._small.render(text, True, ui.TEXT if on else ui.TEXT_DIM)
         s.blit(im, im.get_rect(center=rc.center))

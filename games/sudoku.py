@@ -39,32 +39,17 @@ import pygame
 
 import settings as settings_mod
 import store
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
 from . import sudoku_gen
 
-# ----- Farbschema (dunkles Navy, Akzent Orchidee) ---------------------------
-COL_BG = (13, 16, 27)
-COL_PANEL = (24, 29, 44)
-COL_GRID = (52, 60, 86)          # dünne Gitterlinien
-COL_GRID_BOLD = (115, 125, 155)  # 3x3-Blocklinien
-COL_CELL = (33, 38, 54)
-COL_CELL_SEL = (66, 76, 112)     # ausgewählte Zelle
-COL_CELL_PEER = (42, 48, 68)     # gleiche Zeile/Spalte/Box
-COL_CELL_SAME = (58, 66, 98)     # gleiche Ziffer (comfort+)
-COL_CELL_BAD = (86, 46, 58)      # Konflikt-Zellen (comfort+)
-COL_GIVEN = (232, 234, 240)      # Vorgaben
+# ----- Farben ---------------------------------------------------------------
+# Eigene Ziffern bleiben bewusst blau (klassische Sudoku-Optik). Alle
+# generischen UI-Farben kommen zur Laufzeit dynamisch aus der ui-Palette;
+# die Zellhintergründe werden in _draw_board() aus Palette + Akzent gemischt.
 COL_USER = (110, 165, 255)       # eigene Ziffern
-COL_WRONG = (250, 110, 110)      # falsche Ziffern (comfort+)
-COL_NOTE = (138, 146, 168)       # Bleistift-Notizen
-COL_ACCENT = (199, 125, 186)     # Akzent (= Sidebar-Farbe #c77dba)
-COL_OK = (110, 205, 140)
-COL_TEXT = (225, 228, 238)
-COL_DIM = (150, 158, 178)
-COL_BTN = (40, 46, 66)
-COL_BTN_ON = (82, 58, 96)        # aktive Auswahl (akzent-getönt)
-COL_BTN_BORDER = (74, 84, 116)
 
 # (i18n-Suffix, Basispunkte) je Schwierigkeitsgrad; Vorgaben-Anzahl siehe
 # sudoku_gen.CLUES.
@@ -106,10 +91,8 @@ class SudokuGame(Game):
         self.can_check = self.mode in ("comfort", "assist")   # rot + Konflikte
         self.can_hint = self.mode == "assist"
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._build_fonts()
+        self._overlay = None
 
         self._load_progress()
         self.cursor = self._last_level.get(str(self.diff), 1)
@@ -121,10 +104,19 @@ class SudokuGame(Game):
         self._build_setup_layout()
         self.state = SETUP
 
+    def _build_fonts(self):
+        """Schriftgrößen aus der aktuellen Auflösung ableiten (Theme-Fonts)."""
+        h = self.height
+        self._small = ui.font(max(14, h // 30))
+        self._tiny = ui.font(max(11, h // 36))
+        self._huge = ui.font(max(26, h // 11), bold=True)
+        # Uhr mit fester Zeichenbreite, damit sie beim Ticken nicht "zittert".
+        self._clock_font = ui.font(max(18, h // 22), mono=True)
+
     def on_surface_changed(self):
         """Layout nach einer Auflösungsänderung neu berechnen (Options-Screen)."""
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._build_fonts()
+        self._overlay = None
         self._build_setup_layout()
         if self.state == PLAY:
             self._build_play_layout()
@@ -176,7 +168,7 @@ class SudokuGame(Game):
         self.lv_cell = cell
         self.lv_x = cx - cell * 5
         self.lv_y = top
-        self._lv_font = pygame.font.SysFont("consolas", max(10, cell * 2 // 5))
+        self._lv_font = ui.font(max(10, cell * 2 // 5), mono=True)
 
     def _level_at(self, pos):
         """Pixel -> Levelnummer 1..100 (oder None)."""
@@ -283,10 +275,10 @@ class SudokuGame(Game):
         self.bx = max(12, (W - pad_w - bs) // 2)
         self.by = self.hud_h + (H - self.hud_h - 28 - bs) // 2
 
-        self._num_font = pygame.font.SysFont("consolas",
-                                             max(14, self.cell * 3 // 5), bold=True)
-        self._note_font = pygame.font.SysFont("consolas",
-                                              max(8, self.cell * 2 // 7))
+        # Mono-Fonts: Ziffern stehen so in jeder Zelle exakt gleich breit.
+        self._num_font = ui.font(max(14, self.cell * 3 // 5),
+                                 bold=True, mono=True)
+        self._note_font = ui.font(max(8, self.cell * 2 // 7), mono=True)
 
         # Ziffernfeld: 3x3-Raster + Funktionsleiste darunter.
         px = self.bx + bs + 24
@@ -542,7 +534,7 @@ class SudokuGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
         if self.state == SETUP:
             self._draw_setup(s)
         elif self.state == GENERATING:
@@ -557,64 +549,65 @@ class SudokuGame(Game):
     # ----- Setup ----------------------------------------------------------
     def _draw_setup(self, s):
         cx = self.width // 2
-        title = self._huge.render("SUDOKU", True, COL_ACCENT)
+        title = self._huge.render("SUDOKU", True, self.accent)
         s.blit(title, title.get_rect(center=(cx, int(self.height * 0.07))))
         mode_lbl = t("sud.mode." + self.mode) if self.mode in MODE_MULT \
             else self.mode
         sub_txt = mode_lbl + "   -   " + t("sud.subtitle")
-        sub = self._small.render(sub_txt, True, COL_DIM)
+        sub = self._small.render(sub_txt, True, ui.TEXT_DIM)
         if sub.get_width() > self.width - 24:        # bei 480px Breite kleiner
-            sub = self._tiny.render(sub_txt, True, COL_DIM)
+            sub = self._tiny.render(sub_txt, True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.115))))
 
         # Stufen-Buttons
         for i, r in enumerate(self.diff_rects):
             on = (i == self.diff)
-            pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, r, border_radius=8)
-            pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, r,
+            pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, r, border_radius=8)
+            pygame.draw.rect(s, self.accent if on else ui.BORDER, r,
                              2 if on else 1, border_radius=8)
             lbl = self._small.render(t("sud.diff." + DIFFICULTIES[i][0]), True,
-                                     COL_TEXT if on else COL_DIM)
+                                     ui.TEXT if on else ui.TEXT_DIM)
             s.blit(lbl, lbl.get_rect(center=r.center))
 
         # Fehler-Limit-Toggle
         r = self.limit_rect
-        pygame.draw.rect(s, COL_BTN, r, border_radius=6)
-        pygame.draw.rect(s, COL_BTN_BORDER, r, 1, border_radius=6)
+        pygame.draw.rect(s, ui.BTN, r, border_radius=6)
+        pygame.draw.rect(s, ui.BORDER, r, 1, border_radius=6)
         state = t("common.on") if self.fail_limit else t("common.off")
-        col = COL_OK if self.fail_limit else COL_DIM
+        col = ui.GREEN if self.fail_limit else ui.TEXT_DIM
         lbl = self._small.render(t("sud.fail_limit") + ":  " + state, True, col)
         s.blit(lbl, lbl.get_rect(center=r.center))
 
         # 10x10-Levelraster
         solved = set(self.solved.get(str(self.diff), []))
+        solved_bg = ui.mix(ui.PANEL, ui.GREEN, 0.22)
         for n in range(1, 101):
             i = n - 1
             x = self.lv_x + (i % 10) * self.lv_cell
             y = self.lv_y + (i // 10) * self.lv_cell
             cell = pygame.Rect(x + 1, y + 1, self.lv_cell - 2, self.lv_cell - 2)
             is_solved = n in solved
-            pygame.draw.rect(s, (36, 56, 46) if is_solved else COL_CELL, cell,
+            pygame.draw.rect(s, solved_bg if is_solved else ui.BTN, cell,
                              border_radius=4)
             if n == self.cursor:
-                pygame.draw.rect(s, COL_ACCENT, cell, 2, border_radius=4)
+                pygame.draw.rect(s, self.accent, cell, 2, border_radius=4)
             num = self._lv_font.render(str(n), True,
-                                       COL_OK if is_solved else COL_DIM)
+                                       ui.GREEN if is_solved else ui.TEXT_DIM)
             s.blit(num, num.get_rect(center=cell.center))
             if is_solved:
                 # kleiner Haken unten rechts
                 bx, by = cell.right - 7, cell.bottom - 6
-                pygame.draw.lines(s, COL_OK, False,
+                pygame.draw.lines(s, ui.GREEN, False,
                                   [(bx - 4, by - 2), (bx - 2, by), (bx + 2, by - 5)], 2)
 
-        prog = self._small.render(t("sud.progress", n=len(solved)), True, COL_DIM)
+        prog = self._small.render(t("sud.progress", n=len(solved)), True, ui.TEXT_DIM)
         s.blit(prog, prog.get_rect(center=(self.width // 2,
                                            self.lv_y + 10 * self.lv_cell + 18)))
-        hint = self._tiny.render(t("sud.setup_hint"), True, COL_DIM)
+        hint = self._tiny.render(t("sud.setup_hint"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 16)))
 
     def _draw_generating(self, s):
-        lbl = self.font.render(t("sud.generating"), True, COL_TEXT)
+        lbl = self.font.render(t("sud.generating"), True, ui.TEXT)
         s.blit(lbl, lbl.get_rect(center=(self.width // 2, self.height // 2)))
         self._gen_drawn = True
 
@@ -624,33 +617,34 @@ class SudokuGame(Game):
         return f"{sec // 60:02d}:{sec % 60:02d}"
 
     def _draw_hud(self, s):
-        pygame.draw.rect(s, COL_PANEL, (0, 0, self.width, self.hud_h))
-        pygame.draw.line(s, COL_GRID, (0, self.hud_h), (self.width, self.hud_h))
+        pygame.draw.rect(s, ui.PANEL, (0, 0, self.width, self.hud_h))
+        pygame.draw.line(s, ui.BORDER, (0, self.hud_h), (self.width, self.hud_h))
         cy = self.hud_h // 2
 
         left = t("sud.level", n=self.level) + "  ·  " \
             + t("sud.diff." + DIFFICULTIES[self.diff][0])
-        img = self._small.render(left, True, COL_TEXT)
+        img = self._small.render(left, True, ui.TEXT)
         s.blit(img, img.get_rect(midleft=(12, cy)))
 
         # In der Lösungs-Ansicht ersetzt der Zurück-Hinweis die (eingefrorene)
         # Uhr - so bleibt das komplette Brett frei sichtbar.
         if self.game_over and self.reveal:
-            clock = self._small.render(t("sud.hide_solution"), True, COL_ACCENT)
+            clock = self._small.render(t("sud.hide_solution"), True, self.accent)
         else:
-            clock = self.font.render(self._fmt_time(), True, COL_ACCENT)
+            clock = self._clock_font.render(self._fmt_time(), True, self.accent)
         s.blit(clock, clock.get_rect(center=(self.width // 2, cy)))
 
         if self.fail_limit:
             err_txt = t("sud.errors", n=self.errors, m=FAIL_LIMIT)
         else:
             err_txt = t("sud.errors_free", n=self.errors)
-        col = COL_WRONG if self.errors else COL_DIM
+        col = ui.RED if self.errors else ui.TEXT_DIM
         right = [(err_txt, col)]
         if self.can_hint:
-            right.append((t("sud.hints", n=MAX_HINTS - self.hints_used), COL_DIM))
+            right.append((t("sud.hints", n=MAX_HINTS - self.hints_used),
+                          ui.TEXT_DIM))
         if self.note_mode:
-            right.append((t("sud.pad_note").upper(), COL_ACCENT))
+            right.append((t("sud.pad_note").upper(), self.accent))
         x = self.width - 12
         for txt, c in right:
             img = self._small.render(txt, True, c)
@@ -658,7 +652,7 @@ class SudokuGame(Game):
             x -= img.get_width() + 16
 
         if self.msg:
-            img = self._small.render(self.msg, True, COL_WRONG)
+            img = self._small.render(self.msg, True, ui.RED)
             s.blit(img, img.get_rect(center=(self.width // 2,
                                              self.hud_h + 14)))
 
@@ -670,6 +664,13 @@ class SudokuGame(Game):
         sel_r, sel_c = sel // 9, sel % 9
         sel_b = sudoku_gen.BOX_OF[sel]
 
+        # Zellfarben je Frame aus Palette + Akzent mischen (Theme-fähig).
+        c_cell = ui.PANEL
+        c_peer = ui.PANEL_LIGHT
+        c_sel = ui.mix(ui.PANEL_LIGHT, self.accent, 0.35)
+        c_same = ui.mix(ui.PANEL_LIGHT, self.accent, 0.18)
+        c_bad = ui.mix(ui.PANEL, ui.RED, 0.35)
+
         for i in range(81):
             r, c = i // 9, i % 9
             x = self.bx + c * self.cell
@@ -678,15 +679,15 @@ class SudokuGame(Game):
 
             # Zellhintergrund: Auswahl > Konflikt > gleiche Ziffer > Peers
             if i == sel:
-                bg = COL_CELL_SEL
+                bg = c_sel
             elif self.can_check and i in self._conflicts:
-                bg = COL_CELL_BAD
+                bg = c_bad
             elif self.can_check and sel_val and self.board[i] == sel_val:
-                bg = COL_CELL_SAME
+                bg = c_same
             elif r == sel_r or c == sel_c or sudoku_gen.BOX_OF[i] == sel_b:
-                bg = COL_CELL_PEER
+                bg = c_peer
             else:
-                bg = COL_CELL
+                bg = c_cell
             pygame.draw.rect(s, bg, rect)
 
             # Lösungs-Ansicht (A nach Spielende): fehlende/falsche Zellen
@@ -694,18 +695,18 @@ class SudokuGame(Game):
             if self.game_over and self.reveal \
                     and self.board[i] != self.solution[i]:
                 img = self._num_font.render(str(self.solution[i]), True,
-                                            COL_ACCENT)
+                                            self.accent)
                 s.blit(img, img.get_rect(center=rect.center))
                 continue
 
             v = self.board[i]
             if v:
                 if self.given[i]:
-                    col = COL_GIVEN
+                    col = ui.TEXT
                 elif self.can_check and i in self.wrong:
-                    col = COL_WRONG
+                    col = ui.RED
                 elif self.locked[i]:
-                    col = COL_OK if not self.given[i] else COL_GIVEN
+                    col = ui.GREEN if not self.given[i] else ui.TEXT
                 else:
                     col = COL_USER
                 img = self._num_font.render(str(v), True, col)
@@ -715,13 +716,13 @@ class SudokuGame(Game):
                 for d in self.notes[i]:
                     nx = x + ((d - 1) % 3) * third + third // 2
                     ny = y + ((d - 1) // 3) * third + third // 2
-                    img = self._note_font.render(str(d), True, COL_NOTE)
+                    img = self._note_font.render(str(d), True, ui.TEXT_FAINT)
                     s.blit(img, img.get_rect(center=(nx, ny)))
 
         # Gitterlinien (dünn + 3x3 fett)
         for k in range(10):
             w = 2 if k % 3 == 0 else 1
-            col = COL_GRID_BOLD if k % 3 == 0 else COL_GRID
+            col = ui.BORDER_LIGHT if k % 3 == 0 else ui.BORDER
             x = self.bx + k * self.cell
             y = self.by + k * self.cell
             pygame.draw.line(s, col, (x, self.by), (x, self.by + bs), w)
@@ -737,61 +738,72 @@ class SudokuGame(Game):
         for d in range(1, 10):
             r = self.pad_rects[str(d)]
             done = counts[d] >= 9
-            pygame.draw.rect(s, COL_BTN, r, border_radius=6)
-            pygame.draw.rect(s, COL_BTN_BORDER, r, 1, border_radius=6)
-            col = COL_DIM if done else COL_TEXT
+            pygame.draw.rect(s, ui.BTN, r, border_radius=6)
+            pygame.draw.rect(s, ui.BORDER, r, 1, border_radius=6)
+            col = ui.TEXT_DIM if done else ui.TEXT
             img = self._num_font.render(str(d), True, col)
             s.blit(img, img.get_rect(center=(r.centerx,
                                              r.centery - (5 if self.can_check else 0))))
             if self.can_check and not done:
-                rem = self._tiny.render(str(9 - counts[d]), True, COL_DIM)
+                rem = self._tiny.render(str(9 - counts[d]), True, ui.TEXT_DIM)
                 s.blit(rem, rem.get_rect(center=(r.centerx, r.bottom - 9)))
 
         r = self.pad_rects["erase"]
-        pygame.draw.rect(s, COL_BTN, r, border_radius=6)
-        pygame.draw.rect(s, COL_BTN_BORDER, r, 1, border_radius=6)
-        # Bewusst ASCII: "⌫" fehlt in Consolas und würde als Kästchen enden.
-        img = self._tiny.render("DEL (0)", True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN, r, border_radius=6)
+        pygame.draw.rect(s, ui.BORDER, r, 1, border_radius=6)
+        # Lokalisiert; bewusst ohne "⌫"-Symbol (nicht in jedem Font enthalten).
+        img = self._tiny.render(t("sud.pad_erase"), True, ui.TEXT)
         s.blit(img, img.get_rect(center=r.center))
 
         if "note" in self.pad_rects:
             r = self.pad_rects["note"]
             on = self.note_mode
-            pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, r, border_radius=6)
-            pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, r,
+            pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, r, border_radius=6)
+            pygame.draw.rect(s, self.accent if on else ui.BORDER, r,
                              2 if on else 1, border_radius=6)
             img = self._tiny.render(t("sud.pad_note") + " (N)", True,
-                                    COL_TEXT if on else COL_DIM)
+                                    ui.TEXT if on else ui.TEXT_DIM)
             s.blit(img, img.get_rect(center=r.center))
 
         if "hint" in self.pad_rects:
             r = self.pad_rects["hint"]
             left = MAX_HINTS - self.hints_used
-            pygame.draw.rect(s, COL_BTN, r, border_radius=6)
-            pygame.draw.rect(s, COL_BTN_BORDER, r, 1, border_radius=6)
+            pygame.draw.rect(s, ui.BTN, r, border_radius=6)
+            pygame.draw.rect(s, ui.BORDER, r, 1, border_radius=6)
             img = self._tiny.render(f"{t('sud.pad_hint')} (H) x{left}", True,
-                                    COL_OK if left else COL_DIM)
+                                    ui.GREEN if left else ui.TEXT_DIM)
             s.blit(img, img.get_rect(center=r.center))
 
-        hint = self._tiny.render(t("sud.hint"), True, COL_DIM)
+        hint = self._tiny.render(t("sud.hint"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 12)))
 
     # ----- Ergebnis-Overlay ---------------------------------------------------
     def _draw_result(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((10, 12, 22, 185))
-        s.blit(ov, (0, 0))
+        # Abdunkelung wird gecacht (kein Alpha-Vollbild-Fill pro Frame).
+        if self._overlay is None \
+                or self._overlay.get_size() != (self.width, self.height):
+            ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            ov.fill((8, 10, 16, 185))
+            self._overlay = ov
+        s.blit(self._overlay, (0, 0))
         cx, cy = self.width // 2, self.height // 2
 
         if self.won:
-            head = self._huge.render(t("sud.win", t=self._fmt_time()), True, COL_OK)
-            lines = [(t("common.points", score=self.score), COL_TEXT),
-                     (t("sud.next"), COL_DIM),
-                     (t("sud.show_solution"), COL_DIM)]
+            head = self._huge.render(t("sud.win", t=self._fmt_time()), True,
+                                     ui.GREEN)
+            lines = [(t("common.points", score=self.score), ui.TEXT),
+                     (t("sud.next"), ui.TEXT_DIM),
+                     (t("sud.show_solution"), ui.TEXT_DIM)]
         else:
-            head = self._huge.render(t("sud.lose"), True, COL_WRONG)
-            lines = [(t("sud.retry"), COL_DIM),
-                     (t("sud.show_solution"), COL_DIM)]
+            head = self._huge.render(t("sud.lose"), True, ui.RED)
+            lines = [(t("sud.retry"), ui.TEXT_DIM),
+                     (t("sud.show_solution"), ui.TEXT_DIM)]
+
+        # Panel hinter dem Ergebnis (Akzent-Rahmen, Breite folgt dem Inhalt).
+        pw = max(min(self.width - 40, 460), head.get_width() + 40)
+        panel = pygame.Rect(cx - pw // 2, cy - 92, pw, 184)
+        pygame.draw.rect(s, ui.PANEL, panel, border_radius=14)
+        pygame.draw.rect(s, self.accent, panel, 2, border_radius=14)
 
         s.blit(head, head.get_rect(center=(cx, cy - 50)))
         y = cy + 4

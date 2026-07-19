@@ -26,11 +26,12 @@ import random
 import pygame
 
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
-# ----- Farben (dunkles Thema, abgestimmt auf die Sammlung) -------------------
-COL_BG = (13, 16, 27)
+# ----- Identitätsfarben des Spielfelds (bewusst fest, unabhängig vom Theme):
+# Ufer, Fluss und Straße samt Fahrzeugen/Stämmen SIND Frogger. --------------
 COL_GRASS = (36, 66, 46)          # Ufer/Mittel-/Startstreifen
 COL_GRASS_DARK = (28, 52, 38)
 COL_ROAD = (30, 33, 44)
@@ -38,7 +39,7 @@ COL_ROAD_LINE = (70, 76, 96)
 COL_RIVER = (24, 38, 66)
 COL_BAY = (16, 24, 38)            # leere Bucht
 COL_BAY_DONE = (56, 120, 80)      # gefüllte Bucht
-COL_FROG = (108, 205, 109)        # = Sidebar-Akzent #4caf6d, aufgehellt
+COL_FROG = (108, 205, 109)        # Froschkörper (helles Grün)
 COL_FROG_DARK = (58, 130, 78)
 COL_CAR = [(225, 95, 95), (245, 205, 100), (150, 160, 235), (240, 240, 250)]
 COL_TRUCK = (150, 158, 178)
@@ -48,14 +49,6 @@ COL_TURTLE = (90, 160, 120)
 COL_TURTLE_DARK = (60, 110, 84)
 COL_CROC = (70, 130, 70)
 COL_FLY = (245, 205, 100)
-COL_TEXT = (225, 228, 238)
-COL_DIM = (150, 158, 178)
-COL_ACCENT = (76, 175, 109)       # #4caf6d
-COL_BTN = (40, 46, 66)
-COL_BTN_ON = (48, 84, 62)
-COL_BTN_BORDER = (74, 84, 116)
-COL_TIMER = (110, 205, 140)
-COL_TIMER_LOW = (225, 95, 95)
 
 # Schwierigkeit: Tempo-Faktor, Lücken (Zellen), Zeit je Frosch (s),
 # Krokodile ab Level, tauchende Schildkröten ab Level.
@@ -80,6 +73,11 @@ DIVE_CYCLE = 10.0        # 6s oben, 1s blinken, 2s unten, 1s auftauchen
 SETUP, PLAY = "setup", "play"
 
 
+def _rgba(color, alpha):
+    """Palette-Farbe (RGB) mit einem Alpha-Wert zu RGBA kombinieren."""
+    return (color[0], color[1], color[2], alpha)
+
+
 class FroggerGame(Game):
     name = "Frogger"
     highscore_key = "frogger"
@@ -94,15 +92,18 @@ class FroggerGame(Game):
         key = fs.get("difficulty", "normal")
         self.diff_idx = DIFF_KEYS.index(key) if key in DIFF_KEYS else 1
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self.anim_t = 0.0
 
         self._layout()
         self._build_setup_layout()
         self.state = SETUP
+
+    def _make_fonts(self):
+        """Theme-Schriften, Größen aus der Fensterhöhe abgeleitet."""
+        self._small = ui.font(max(13, min(22, self.height // 30)))
+        self._tiny = ui.font(max(11, min(18, self.height // 38)))
+        self._huge = ui.font(max(26, self.height // 11), bold=True)
 
     def _diff(self):
         return DIFFS[self.diff_idx]
@@ -115,13 +116,21 @@ class FroggerGame(Game):
         self.field_top = self.hud_h
 
     def on_surface_changed(self):
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
+        self._make_fonts()
         self._layout()
         self._build_setup_layout()
         if self.state == PLAY:
             self._build_lanes()
             self._respawn(full=False)
+
+    def _dim_surface(self):
+        """Abdunkelnde Vollbild-Fläche (gecacht, nur bei Größenwechsel neu)."""
+        key = (self.width, self.height)
+        if getattr(self, "_dim_key", None) != key:
+            self._dim_key = key
+            self._dim = pygame.Surface(key, pygame.SRCALPHA)
+            self._dim.fill((8, 10, 16, 150))
+        return self._dim
 
     def _row_y(self, row):
         return self.field_top + row * self.cell
@@ -239,6 +248,7 @@ class FroggerGame(Game):
                 if event.key in ("Return", "space"):
                     self._new_game()
                 elif event.key in ("s", "S"):
+                    self.game_over = False
                     self.state = SETUP
                     self.play_sound("click")
             return
@@ -296,6 +306,11 @@ class FroggerGame(Game):
                     e["x"] -= lane["span"]
                 elif lane["speed"] < 0 and e["x"] + e["w"] < -lane["margin"]:
                     e["x"] += lane["span"]
+
+        # Nach dem Ende läuft nur noch der Verkehr als Kulisse weiter -
+        # sonst würden Timer/Fluss den toten Frosch erneut "töten".
+        if self.game_over:
+            return
 
         if self.clear_t > 0:
             self.clear_t -= dt
@@ -466,7 +481,7 @@ class FroggerGame(Game):
             self._draw_setup()
             return
         s = self.surface
-        s.fill(COL_BG)
+        ui.draw_background(s, self.width, self.height)
         self._draw_field(s)
         self._draw_entities(s)
         self._draw_bay_extras(s)
@@ -596,18 +611,19 @@ class FroggerGame(Game):
             px, py = cx + math.cos(a) * d, cy + math.sin(a) * d
             pygame.draw.circle(s, COL_FROG_DARK, (int(px), int(py)),
                                max(1, int(4 * (1 - f))))
-        img = self._small.render("+", True, COL_TIMER_LOW)
+        img = self._small.render("+", True, ui.RED)
         s.blit(img, img.get_rect(center=(cx, cy)))
 
     def _draw_hud(self, s):
-        pygame.draw.rect(s, (24, 29, 44), (0, 0, self.width, self.hud_h))
-        pygame.draw.line(s, (52, 60, 86), (0, self.hud_h),
+        pygame.draw.rect(s, ui.PANEL, (0, 0, self.width, self.hud_h))
+        pygame.draw.line(s, ui.BORDER, (0, self.hud_h),
                          (self.width, self.hud_h))
         cy = self.hud_h // 2
         img = self._small.render(t("common.points", score=self.score), True,
-                                 COL_TEXT)
+                                 ui.TEXT)
         s.blit(img, img.get_rect(midleft=(12, cy)))
-        lvl = self._small.render(t("frog.level", n=self.level), True, COL_ACCENT)
+        lvl = self._small.render(t("frog.level", n=self.level), True,
+                                 self.accent)
         s.blit(lvl, lvl.get_rect(center=(self.width // 2, cy)))
         # Leben als Mini-Frösche rechts
         for i in range(self.lives):
@@ -618,54 +634,69 @@ class FroggerGame(Game):
         frac = max(0.0, self.time_left / self._diff()["timer"])
         bar = pygame.Rect(0, self.height - self.bar_h, int(self.width * frac),
                           self.bar_h)
-        pygame.draw.rect(s, COL_TIMER if frac > 0.25 else COL_TIMER_LOW, bar)
+        pygame.draw.rect(s, ui.GREEN if frac > 0.25 else ui.RED, bar)
 
     def _draw_banner(self, s, text):
-        img = self._huge.render(text, True, COL_ACCENT)
-        bg = img.get_rect(center=(self.width // 2, self.height // 2)).inflate(40, 20)
+        img = self._huge.render(text, True, self.accent)
+        bg = img.get_rect(center=(self.width // 2, self.height // 2)).inflate(48, 26)
         ov = pygame.Surface(bg.size, pygame.SRCALPHA)
-        ov.fill((13, 16, 27, 200))
+        ov.fill(_rgba(ui.PANEL, 225))
         s.blit(ov, bg)
+        pygame.draw.rect(s, self.accent, bg, 2, border_radius=12)
         s.blit(img, img.get_rect(center=bg.center))
 
     def _draw_gameover(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((10, 12, 22, 185))
-        s.blit(ov, (0, 0))
+        s.blit(self._dim_surface(), (0, 0))
         cx, cy = self.width // 2, self.height // 2
-        img = self._huge.render(t("common.game_over"), True, COL_TIMER_LOW)
-        s.blit(img, img.get_rect(center=(cx, cy - 50)))
-        sc = self.font.render(t("common.points", score=self.score), True, COL_TEXT)
-        s.blit(sc, sc.get_rect(center=(cx, cy + 4)))
-        hint = self._small.render(t("frog.retry"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, cy + 40)))
+        rows = [
+            self._huge.render(t("common.game_over"), True, ui.RED),
+            self.font.render(t("common.points", score=self.score), True,
+                             ui.TEXT),
+            self._small.render(t("frog.retry"), True, ui.TEXT_DIM),
+        ]
+        gap = 10
+        total = sum(r.get_height() for r in rows) + gap * (len(rows) - 1)
+        pw = min(self.width - 30,
+                 max(340, max(r.get_width() for r in rows) + 64))
+        panel = pygame.Rect(0, 0, pw, total + 48)
+        panel.center = (cx, cy)
+        ov = pygame.Surface(panel.size, pygame.SRCALPHA)
+        ov.fill(_rgba(ui.PANEL, 235))
+        s.blit(ov, panel.topleft)
+        pygame.draw.rect(s, self.accent, panel, 2, border_radius=14)
+        yy = panel.y + 24
+        for r in rows:
+            s.blit(r, r.get_rect(midtop=(cx, yy)))
+            yy += r.get_height() + gap
 
     # ----- Setup zeichnen -----------------------------------------------
     def _draw_setup(self):
         s = self.surface
-        s.fill(COL_BG)
-        title = self._huge.render("FROGGER", True, COL_ACCENT)
+        ui.draw_background(s, self.width, self.height)
+        title = self._huge.render(self.name.upper(), True, self.accent)
         s.blit(title, title.get_rect(center=(self.width // 2,
                                              int(self.height * 0.14))))
-        sub = self._small.render(t("frog.subtitle"), True, COL_DIM)
+        sub = self._small.render(t("frog.subtitle"), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(self.width // 2,
                                          int(self.height * 0.20))))
         for i, r in enumerate(self.diff_rects):
             on = (i == self.diff_idx)
-            pygame.draw.rect(s, COL_BTN_ON if on else COL_BTN, r, border_radius=10)
-            pygame.draw.rect(s, COL_ACCENT if on else COL_BTN_BORDER, r,
+            pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, r,
+                             border_radius=10)
+            pygame.draw.rect(s, self.accent if on else ui.BORDER, r,
                              2 if on else 1, border_radius=10)
             name = self.font.render(t("frog.diff." + DIFF_KEYS[i]), True,
-                                    COL_TEXT if on else COL_DIM)
+                                    ui.TEXT if on else ui.TEXT_DIM)
             s.blit(name, name.get_rect(midleft=(r.x + 18, r.y + 18)))
             desc = self._tiny.render(t("frog.diff_desc." + DIFF_KEYS[i]), True,
-                                     COL_DIM)
+                                     ui.TEXT_DIM)
             s.blit(desc, desc.get_rect(midleft=(r.x + 18, r.bottom - 15)))
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        pygame.draw.rect(s, COL_ACCENT, self.start_rect, 2, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT)
+        pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=10)
+        pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=10)
+        st = self.font.render(t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
-        hint = self._tiny.render(t("frog.setup_hint"), True, COL_DIM)
+        hint = self._tiny.render(t("frog.setup_hint"), True, ui.TEXT_FAINT)
         s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 30)))
-        ctrl = self._tiny.render(t("frog.hint"), True, (110, 190, 140))
+        ctrl = self._tiny.render(t("frog.hint"), True,
+                                 ui.mix(self.accent, ui.TEXT, 0.45))
         s.blit(ctrl, ctrl.get_rect(center=(self.width // 2, self.height - 12)))

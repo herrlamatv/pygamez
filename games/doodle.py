@@ -32,6 +32,7 @@ import pygame
 
 import highscore
 import settings as settings_mod
+import ui
 from game_base import Game, InputEvent
 from i18n import t
 
@@ -52,17 +53,12 @@ DIFFS = [
     dict(key="hard", gap=86, move=0.28, brittle=0.24, monster=0.14),
 ]
 
+# Identitätsfarben des Spielfelds (Papier-Look) - bewusst NICHT aus dem UI-Theme.
 COL_BG_TOP = (222, 236, 250)
 COL_BG_BOT = (238, 246, 252)
+COL_GRID = (220, 228, 240)
 COL_DOODLE = (120, 210, 90)
 COL_DOODLE_DARK = (70, 150, 55)
-COL_TEXT = (60, 66, 86)
-COL_TEXT_LIGHT = (245, 245, 250)
-COL_DIM = (150, 158, 176)
-COL_ACCENT = (120, 190, 90)
-COL_BTN = (44, 50, 66)
-COL_BTN_ON = (70, 140, 80)
-COL_SETUP_BG = (26, 34, 44)
 
 PLAT_COLORS = {
     "normal": (110, 205, 90), "move": (90, 160, 235),
@@ -100,20 +96,41 @@ class DoodleGame(Game):
         dj = self.settings.get("doodle", {}) if isinstance(self.settings, dict) else {}
         self.diff = max(0, min(2, int(dj.get("difficulty", 1))))
 
-        self._small = pygame.font.SysFont("consolas", 16)
-        self._tiny = pygame.font.SysFont("consolas", 13)
-        self._huge = pygame.font.SysFont("consolas", max(26, self.height // 11),
-                                         bold=True)
         self.highscore = highscore.load_highscores().get(self.highscore_key, 0)
         self.anim_t = 0.0
 
-        self.plat_w = max(46, int(self.width * 0.16))
-        self.dr = max(12, int(self.height * 0.03))
         self._bg_cache = None
+        self._ui_bg_cache = None
+        self._dim_cache = None
+        self._apply_layout()
 
-        self._build_setup_layout()
         self._new_game()
         self.state = SETUP
+
+    def _make_fonts(self):
+        """Schriftgrößen aus der Fensterhöhe ableiten (Theme-Schrift)."""
+        h = self.height
+        self.font = ui.font(max(18, min(26, h // 26)))
+        self.big_font = ui.font(max(32, min(52, h // 12)), bold=True)
+        self._small = ui.font(max(14, min(20, h // 32)))
+        self._tiny = ui.font(max(12, min(16, h // 42)))
+        self._huge = ui.font(max(26, h // 11), bold=True)
+
+    def _apply_layout(self):
+        """Layout-Größen aus width/height berechnen (auch nach Resize)."""
+        self._make_fonts()
+        self.plat_w = max(46, int(self.width * 0.16))
+        self.dr = max(12, int(self.height * 0.03))
+        self._build_setup_layout()
+
+    def on_surface_changed(self):
+        """Nach Auflösungswechsel: Schriften, Layout und Caches neu aufbauen."""
+        self._apply_layout()
+        self._bg_cache = None
+        self._ui_bg_cache = None
+        self._dim_cache = None
+        # Doodler im gültigen Bereich halten (Wrap-Bereich = Breite)
+        self.x = max(0.0, min(float(self.width), self.x))
 
     def _new_game(self):
         self.score = 0
@@ -135,6 +152,9 @@ class DoodleGame(Game):
         self.monsters = []       # dicts: x,y,vx,kind
         self.bullets = []        # dicts: x,y
         self.particles = []
+        self.new_best = False
+        self._over_t = 0.0
+        self._prev_kind = ""
         # Startplattform + erste Plattformen aufbauen
         self.platforms.append(_Plat(self.width / 2 - self.plat_w / 2,
                                     self.height * 0.75, self.plat_w, "normal"))
@@ -152,11 +172,13 @@ class DoodleGame(Game):
     # ===================================================== Setup-Screen
     def _build_setup_layout(self):
         cx = self.width // 2
-        bw = min(420, self.width - 60)
-        self.diff_panel = pygame.Rect(cx - bw // 2, 150, bw, 60)
-        self.diff_left = pygame.Rect(self.diff_panel.left, 150, 42, 60)
-        self.diff_right = pygame.Rect(self.diff_panel.right - 42, 150, 42, 60)
-        self.start_rect = pygame.Rect(cx - 95, 240, 190, 52)
+        bw = min(440, self.width - 60)
+        ph = max(56, min(72, int(self.height * 0.14)))
+        y0 = max(140, int(self.height * 0.34))
+        self.diff_panel = pygame.Rect(cx - bw // 2, y0, bw, ph)
+        self.diff_left = pygame.Rect(self.diff_panel.left, y0, 44, ph)
+        self.diff_right = pygame.Rect(self.diff_panel.right - 44, y0, 44, ph)
+        self.start_rect = pygame.Rect(cx - 95, self.diff_panel.bottom + 26, 190, 52)
 
     def _save(self, key, value):
         if isinstance(self.settings, dict):
@@ -205,9 +227,15 @@ class DoodleGame(Game):
             if event.kind == InputEvent.KEYDOWN:
                 if event.key in ("Return", "space"):
                     self._new_game()
+                    self.play_sound("click")
                 elif event.key in ("s", "S"):
                     self.state = SETUP
                     self.play_sound("click")
+            elif event.kind == InputEvent.MOUSEDOWN and \
+                    self.anim_t - self._over_t > 0.5:
+                # Klick startet neu - mit kurzer Sperre gegen Durchklicken
+                self._new_game()
+                self.play_sound("click")
             return
         if event.kind == InputEvent.KEYDOWN:
             if self._is_left(event.key):
@@ -338,6 +366,7 @@ class DoodleGame(Game):
                 m["hp"] = 0
                 self.score += 200
                 self._sparkle(m["x"], m["y"], (255, 120, 120))
+                self.play_sound("explode")
         self.monsters = [m for m in self.monsters if m.get("hp", 1) > 0]
 
     def _update_bullets(self, dt):
@@ -382,7 +411,7 @@ class DoodleGame(Game):
             kind = self._pick_kind(d, scale)
             # Nie zwei verschwindende Plattformen direkt hintereinander -
             # sonst fehlt nach deren Benutzung ein ganzes Stück Gerüst.
-            if kind == "vanish" and getattr(self, "_prev_kind", "") == "vanish":
+            if kind == "vanish" and self._prev_kind == "vanish":
                 kind = "normal"
             self._prev_kind = kind
             p = _Plat(x, self.gen_y, self.plat_w, kind)
@@ -436,7 +465,9 @@ class DoodleGame(Game):
             return
         self.state = GAMEOVER
         self.game_over = True
+        self.new_best = self.score > self.highscore
         self.highscore = max(self.highscore, self.score)
+        self._over_t = self.anim_t
         self.play_sound("gameover")
         self.rumble(220)
         self._sparkle(self.x, self.y, COL_DOODLE, 16)
@@ -459,6 +490,33 @@ class DoodleGame(Game):
             if p[4] > 0:
                 rest.append(p)
         self.particles = rest
+
+    # ----- Theme-UI-Helfer ----------------------------------------------
+    def _ui_bg(self):
+        """Gecachter Theme-Hintergrund für den Setup-Screen."""
+        key = (self.width, self.height, ui.BG_TOP, ui.BG_BOTTOM)
+        if self._ui_bg_cache is None or self._ui_bg_cache[0] != key:
+            surf = pygame.Surface((self.width, self.height))
+            ui.draw_background(surf, self.width, self.height)
+            self._ui_bg_cache = (key, surf)
+        return self._ui_bg_cache[1]
+
+    def _dim(self):
+        """Gecachte Abdunkel-Fläche fürs Game-Over (kein per-Frame-Fill)."""
+        key = (self.width, self.height)
+        if self._dim_cache is None or self._dim_cache[0] != key:
+            surf = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            surf.fill((10, 12, 20, 140))
+            self._dim_cache = (key, surf)
+        return self._dim_cache[1]
+
+    def _panel(self, s, rect, alpha=235, border=2):
+        """Halbtransparentes Theme-Panel mit Akzent-Rahmen."""
+        surf = pygame.Surface(rect.size, pygame.SRCALPHA)
+        pygame.draw.rect(surf, (*ui.PANEL, alpha), surf.get_rect(),
+                         border_radius=12)
+        s.blit(surf, rect.topleft)
+        pygame.draw.rect(s, self.accent, rect, border, border_radius=12)
 
     # ===================================================== Zeichnen
     def _sy(self, wy):
@@ -501,11 +559,10 @@ class DoodleGame(Game):
         # feines Karo-Muster (scrollt mit)
         step = 40
         off = int(-self.cam_y) % step
-        line = (220, 228, 240)
         for y in range(-step, self.height + step, step):
-            pygame.draw.line(s, line, (0, y + off), (self.width, y + off), 1)
+            pygame.draw.line(s, COL_GRID, (0, y + off), (self.width, y + off), 1)
         for x in range(0, self.width, step):
-            pygame.draw.line(s, line, (x, 0), (x, self.height), 1)
+            pygame.draw.line(s, COL_GRID, (x, 0), (x, self.height), 1)
 
     def _draw_plat(self, s, p):
         sy = self._sy(p.y)
@@ -556,8 +613,10 @@ class DoodleGame(Game):
             pygame.draw.ellipse(s, (90, 170, 70), (x - 6, y - r * 1.4, 12, 12))
         else:
             nx = x + self.face * r * 0.8
+            # Schnauze je nach Blickrichtung leicht versetzt (vorher: beide
+            # Zweige identisch - die Schnauze hing beim Blick nach links schief)
             pygame.draw.ellipse(s, (90, 170, 70),
-                                (nx - 6 if self.face > 0 else nx - 6, y - 4, 14, 12))
+                                (nx - 6 if self.face > 0 else nx - 8, y - 4, 14, 12))
         # Augen
         for sx in (-1, 1):
             ex = x + sx * r * 0.4
@@ -581,57 +640,72 @@ class DoodleGame(Game):
 
     # ----- HUD / Overlays -----------------------------------------------
     def _draw_hud(self, s):
-        img = self._small.render(str(self.score), True, COL_TEXT)
-        pygame.draw.rect(s, (255, 255, 255), (6, 6, img.get_width() + 16, 26),
-                         border_radius=6)
-        s.blit(img, (14, 10))
-        best = self._tiny.render(t("dj.best", hs=self.highscore), True, COL_DIM)
-        s.blit(best, best.get_rect(topright=(self.width - 8, 10)))
+        # Punkte-Plakette links, Bestwert rechts - Theme-Panels über dem Papier
+        img = self._small.render(str(self.score), True, ui.TEXT)
+        box = img.get_rect().inflate(24, 10)
+        box.topleft = (8, 8)
+        self._panel(s, box, alpha=210, border=1)
+        s.blit(img, img.get_rect(center=box.center))
+        best = self._tiny.render(t("dj.best", hs=self.highscore), True, ui.TEXT_DIM)
+        bbox = best.get_rect().inflate(20, 10)
+        bbox.topright = (self.width - 8, 8)
+        self._panel(s, bbox, alpha=210, border=1)
+        s.blit(best, best.get_rect(center=bbox.center))
         if self.state == GAMEOVER:
             self._draw_gameover(s)
 
     def _draw_gameover(self, s):
-        ov = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        ov.fill((255, 255, 255, 120))
-        s.blit(ov, (0, 0))
+        s.blit(self._dim(), (0, 0))
         cx, cy = self.width // 2, self.height // 2
-        img = self._huge.render(t("common.game_over"), True, (230, 90, 90))
-        s.blit(img, img.get_rect(center=(cx, cy - 60)))
-        sc = self.font.render(t("common.points", score=self.score), True, COL_TEXT)
-        s.blit(sc, sc.get_rect(center=(cx, cy - 12)))
-        bs = self._small.render(t("dj.best", hs=self.highscore), True, COL_TEXT)
-        s.blit(bs, bs.get_rect(center=(cx, cy + 18)))
-        hint = self._small.render(t("dj.restart_hint"), True, COL_TEXT)
-        s.blit(hint, hint.get_rect(center=(cx, cy + 54)))
+        img = self._huge.render(t("common.game_over"), True, ui.RED)
+        s.blit(img, img.get_rect(center=(cx, cy - int(self.height * 0.16))))
+
+        pw = min(340, self.width - 40)
+        ph = self.font.get_height() + self._small.get_height() + 46
+        panel = pygame.Rect(cx - pw // 2, cy - ph // 2 + 10, pw, ph)
+        self._panel(s, panel)
+        sc = self.font.render(t("common.points", score=self.score), True, ui.TEXT)
+        s.blit(sc, sc.get_rect(midtop=(cx, panel.y + 14)))
+        best_col = ui.GOLD if self.new_best else ui.TEXT_DIM
+        bs = self._small.render(t("dj.best", hs=self.highscore), True, best_col)
+        s.blit(bs, bs.get_rect(midbottom=(cx, panel.bottom - 14)))
+
+        if self.new_best:
+            rec_col = ui.mix(ui.GOLD, ui.TEXT, ui.pulse(3.0, 0.0, 0.5))
+            rec = self._small.render(t("trex.new_record"), True, rec_col)
+            s.blit(rec, rec.get_rect(center=(cx, panel.top - 18)))
+
+        hint_col = ui.mix(ui.TEXT_DIM, ui.TEXT, ui.pulse(2.4, 0.0, 1.0))
+        hint = self._small.render(t("dj.restart_hint"), True, hint_col)
+        s.blit(hint, hint.get_rect(center=(cx, panel.bottom + 28)))
 
     # ----- Setup zeichnen -----------------------------------------------
     def _draw_setup(self):
         s = self.surface
-        s.fill(COL_SETUP_BG)
-        title = self._huge.render("DOODLE JUMP", True, COL_ACCENT)
-        s.blit(title, title.get_rect(center=(self.width // 2, 74)))
-        sub = self._small.render(t("snake.singleplayer"), True, COL_DIM)
-        s.blit(sub, sub.get_rect(center=(self.width // 2, 116)))
+        s.blit(self._ui_bg(), (0, 0))
+        ui.draw_title(s, self.width, "DOODLE JUMP",
+                      subtitle=t("snake.singleplayer"), accent=self.accent)
 
         d = DIFFS[self.diff]
-        pygame.draw.rect(s, (34, 44, 40), self.diff_panel, border_radius=10)
-        pygame.draw.rect(s, COL_BTN_ON, self.diff_panel, 2, border_radius=10)
+        self._panel(s, self.diff_panel)
         name = self.font.render(
-            t("dj.difficulty") + ":  " + t("dj.diff." + d["key"]), True, COL_TEXT_LIGHT)
+            t("dj.difficulty") + ":  " + t("dj.diff." + d["key"]), True, ui.TEXT)
         s.blit(name, name.get_rect(center=(self.diff_panel.centerx,
-                                           self.diff_panel.top + 22)))
-        note = self._tiny.render(t("dj.diff_note"), True, COL_DIM)
+                                           self.diff_panel.top
+                                           + int(self.diff_panel.h * 0.36))))
+        note = self._tiny.render(t("dj.diff_note"), True, ui.TEXT_DIM)
         s.blit(note, note.get_rect(center=(self.diff_panel.centerx,
-                                           self.diff_panel.top + 44)))
+                                           self.diff_panel.top
+                                           + int(self.diff_panel.h * 0.72))))
+        arr_col = ui.mix(self.accent, ui.TEXT, ui.pulse(3.0, 0.0, 0.3))
         for rect, sym in ((self.diff_left, "<"), (self.diff_right, ">")):
-            arr = self.big_font.render(sym, True, COL_ACCENT)
+            arr = self.big_font.render(sym, True, arr_col)
             s.blit(arr, arr.get_rect(center=rect.center))
 
-        pygame.draw.rect(s, COL_BTN_ON, self.start_rect, border_radius=10)
-        st = self.font.render(t("common.start"), True, COL_TEXT_LIGHT)
-        s.blit(st, st.get_rect(center=self.start_rect.center))
+        ui.draw_button(s, self.start_rect, t("common.start"), self.font,
+                       selected=True, accent=self.accent)
 
-        hint = self._small.render(t("dj.setup_hint"), True, COL_DIM)
-        s.blit(hint, hint.get_rect(center=(self.width // 2, self.height - 34)))
-        ctrl = self._tiny.render(t("dj.controls_hint"), True, (120, 200, 150))
-        s.blit(ctrl, ctrl.get_rect(center=(self.width // 2, self.height - 14)))
+        ctrl = self._tiny.render(t("dj.controls_hint"), True, ui.GREEN)
+        s.blit(ctrl, ctrl.get_rect(center=(self.width // 2,
+                                           self.start_rect.bottom + 24)))
+        ui.draw_footer(s, self.width, self.height, t("dj.setup_hint"))

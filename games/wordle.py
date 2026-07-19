@@ -30,7 +30,6 @@ from i18n import t
 
 from .wordle_words import words_for
 
-COL_BG = (18, 18, 22)
 COL_TILE_EMPTY = (30, 30, 38)
 COL_TILE_BORDER = (58, 58, 70)
 COL_TILE_ACTIVE = (90, 90, 108)
@@ -253,7 +252,8 @@ class WordleGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        s.fill(COL_BG)
+        # Themen-Hintergrund statt flacher Fläche (reagiert auf Theme-Wechsel).
+        ui.draw_background(s, self.width, self.height, stars=False, aurora=True)
         self._draw_hud(s)
         self._draw_grid(s)
         self._draw_keyboard(s)

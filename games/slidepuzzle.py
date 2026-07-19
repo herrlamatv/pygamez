@@ -21,8 +21,7 @@ import random
 import pygame
 
 import ui
-import i18n
-from game_base import Game, InputEvent
+from game_base import Game, InputEvent, LocalizedName
 from i18n import t
 
 COL_BG = (16, 19, 30)
@@ -35,20 +34,9 @@ TIME_PEN = 5
 PLAY, SOLVED = "play", "solved"
 
 
-# Menü-Name je Sprache (passend zum bereits lokalisierten In-Game-Titel).
-_NAMES = {"de": "Schiebepuzzle", "en": "Sliding Puzzle", "fr": "Taquin",
-          "es": "Puzle deslizante", "pt": "Quebra-cabeça deslizante"}
-
-
-class _MenuName:
-    """Sprachabhängiger Menü-Name (das Menü liest cls.name direkt, ohne t())."""
-
-    def __get__(self, obj, owner=None):
-        return _NAMES.get(i18n.get_language(), _NAMES["en"])
-
-
 class SlidingPuzzleGame(Game):
-    name = _MenuName()
+    name = LocalizedName("Sliding Puzzle", de="Schiebepuzzle", fr="Taquin",
+                         es="Puzle deslizante", pt="Quebra-cabeça deslizante")
     highscore_key = "slide"
     supports_multiplayer = False
 
@@ -58,7 +46,6 @@ class SlidingPuzzleGame(Game):
     # ===================================================== Aufbau / Reset
     def reset(self):
         self.N = {"3": 3, "4": 4, "5": 5}.get(self.mode, 4)
-        self.accent = ui.game_color(type(self).__name__)
         self.score = 0
         self.game_over = False
         self.state = PLAY
