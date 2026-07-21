@@ -29,6 +29,11 @@ import store
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 _LANG_DIR = os.path.join(_DIR, "lang")
+# Die neun "Sprach-Erweiterungs"-Sprachen (pl, tr, da, no, sv, fi, cs, sl, hr)
+# liegen gebündelt in diesem Unterordner, damit sie sauber beisammen sind. Der
+# Loader durchsucht beide Verzeichnisse - so bleiben die Kern-Sprachen (de/en/
+# fr/es/pt) direkt in lang/, die Erweiterungen in lang/lang.expansion/.
+_EXPANSION_DIR = os.path.join(_LANG_DIR, "lang.expansion")
 
 # Name des Abschnitts in mem.json, in dem Oberflaechen-Einstellungen (Sprache)
 # liegen. Die Highscores stehen im Abschnitt "highscores" derselben Datei.
@@ -48,6 +53,18 @@ PRIMARY = [
 EXTRA = [
     ("es", "Español"),
     ("pt", "Português"),
+    # Sprach-Erweiterung: beim ersten Start ebenfalls hinter "Weitere Sprachen"
+    # versteckt. JSON-Dateien liegen in lang/lang.expansion/ bzw.
+    # lamawiki/lang.expansion/.
+    ("pl", "Polski"),
+    ("tr", "Türkçe"),
+    ("da", "Dansk"),
+    ("no", "Norsk"),
+    ("sv", "Svenska"),
+    ("fi", "Suomi"),
+    ("cs", "Čeština"),
+    ("sl", "Slovenščina"),
+    ("hr", "Hrvatski"),
 ]
 AVAILABLE = PRIMARY + EXTRA
 _CODES = {code for code, _ in AVAILABLE}
@@ -60,14 +77,17 @@ _fallback = {}       # Strings der Standardsprache
 # ----- Laden/Speichern ---------------------------------------------------
 
 def _load_lang_file(code):
-    """Liest lang/<code>.json und gibt ein dict zurück (leer bei Fehler)."""
-    path = os.path.join(_LANG_DIR, f"{code}.json")
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            return data if isinstance(data, dict) else {}
-    except (OSError, json.JSONDecodeError, ValueError):
-        return {}
+    """Liest <code>.json aus lang/ oder lang/lang.expansion/ (dict, leer bei Fehler)."""
+    for base in (_LANG_DIR, _EXPANSION_DIR):
+        path = os.path.join(base, f"{code}.json")
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if isinstance(data, dict):
+                return data
+        except (OSError, json.JSONDecodeError, ValueError):
+            continue
+    return {}
 
 
 def load_memory():

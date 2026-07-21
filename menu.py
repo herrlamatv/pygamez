@@ -921,28 +921,49 @@ class WelcomeScreen(_Screen):
                                       34 if compact else 40)
 
     def _layout_langs(self, y):
-        """Ordnet die Sprach-Buttons (eine Reihe) plus 'Mehr'-Button an."""
+        """Ordnet die Sprach-Buttons an: eingeklappt eine Reihe (+ 'Mehr'-Button),
+        ausgeklappt ein mehrzeiliges Raster (bis zu fünf Spalten), damit auch die
+        vielen zusätzlichen Sprachen sauber Platz finden."""
         W, H = self.width, self.height
         cx = W // 2
         gap = 8
-        lh = 36 if H < 380 else 48
-        area_w = min(452, W - 24)
         n = len(self.langs)
         if self.expanded:
-            langs_w, other_w = area_w, 0
+            compact = H < 380
+            area_w = min(620, W - 24)
+            cols = min(5, n)
+            rows = (n + cols - 1) // cols
+            bwid = max(1, (area_w - (cols - 1) * gap) // cols)
+            # Zeilenhöhe so wählen, dass Raster UND Start-Button auf den Screen
+            # passen (wichtig bei 480x360): unten Platz für den Start-Button
+            # reservieren und die verbleibende Höhe auf die Zeilen verteilen.
+            start_h = 34 if compact else 40
+            reserve = start_h + (12 if compact else 18) + 8
+            avail = max(60, (H - reserve) - y)
+            lh = (avail - (rows - 1) * gap) // rows
+            lh = max(24, min(34 if compact else 44, lh))
+            x0 = cx - area_w // 2
+            self.lang_rects = [
+                pygame.Rect(x0 + (i % cols) * (bwid + gap),
+                            y + (i // cols) * (lh + gap), bwid, lh)
+                for i in range(n)]
+            self.other_rect = None
+            self._lang_cols = cols
+            self._lang_bwid = bwid
+            self._lang_bottom = y + rows * (lh + gap) - gap
         else:
+            lh = 36 if H < 380 else 48
+            area_w = min(452, W - 24)
             other_w = max(60, min(84, area_w // 6))
             langs_w = area_w - other_w - gap
-        bwid = max(1, (langs_w - (n - 1) * gap) // n)
-        x0 = cx - area_w // 2
-        self.lang_rects = [pygame.Rect(x0 + i * (bwid + gap), y, bwid, lh)
-                           for i in range(n)]
-        if self.expanded:
-            self.other_rect = None
-        else:
+            bwid = max(1, (langs_w - (n - 1) * gap) // n)
+            x0 = cx - area_w // 2
+            self.lang_rects = [pygame.Rect(x0 + i * (bwid + gap), y, bwid, lh)
+                               for i in range(n)]
             self.other_rect = pygame.Rect(x0 + langs_w + gap, y, other_w, lh)
-        self._lang_bwid = bwid
-        self._lang_bottom = y + lh
+            self._lang_cols = n
+            self._lang_bwid = bwid
+            self._lang_bottom = y + lh
 
     def on_surface_changed(self):
         """Nach einer Auflösungsänderung das Layout neu berechnen."""
@@ -1149,9 +1170,12 @@ class WelcomeScreen(_Screen):
 
         lang_focus = (self.row == self.ROWS.index("lang"))
         bw = self._lang_bwid
-        bsize = 20 if bw >= 100 else (16 if bw >= 82 else 14)
-        if compact:
-            bsize = max(13, bsize - 2)
+        # Schriftgröße an die (bei vielen Sprachen schmaleren) Buttons anpassen,
+        # damit auch lange Namen wie "Slovenščina" nicht überlaufen.
+        longest = max((lbl for _, lbl in self.langs), key=len, default="")
+        bsize = 18 if compact else 22
+        while bsize > 11 and ui.font(bsize, bold=True).size(longest)[0] > bw - 12:
+            bsize -= 1
         bfont = ui.font(bsize, bold=True)
         cfont = ui.font(11)
         cur = i18n.get_language()
@@ -1265,20 +1289,43 @@ class LanguageScreen(_Screen):
         self.langs = list(i18n.AVAILABLE) if self.expanded else list(i18n.PRIMARY)
         self.rects = []
         n = len(self.langs)
-        bw = min(300, self.width - 40)
+        W, H = self.width, self.height
+        # Wenige Hauptsprachen: eine Spalte (wie bisher). Sind alle Sprachen
+        # sichtbar (14), wird ein 2-3-spaltiges Raster genutzt - je nach Breite -,
+        # damit alles ohne Gedränge auf den Screen passt.
+        area_w = min(760, W - 40)
+        gap = 16
         # Platz unter dem Titel; im eingeklappten Zustand bleibt unten Raum
         # für den "Weitere Sprachen"-Button.
         top = 124
-        bottom = self.height - (44 if self.expanded else 88)
-        bh, gap = 56, 16
-        while n * (bh + gap) - gap > bottom - top and bh > 30:
+        bottom = H - (44 if self.expanded else 88)
+        if n <= 4:
+            cols = 1
+        else:
+            # Möglichst wenige Spalten (= breite Buttons), aber so viele wie nötig,
+            # damit alle Zeilen auch bei kleiner Höhe (480x360) auf den Screen
+            # passen. 36 = minimale Zeilenhöhe (30) + minimaler Abstand (6).
+            cols = 4
+            for cand in (2, 3, 4):
+                cw = (area_w - (cand - 1) * gap) // cand
+                rws = (n + cand - 1) // cand
+                if rws * 36 - 6 <= (bottom - top) and (cand == 2 or cw >= 120):
+                    cols = cand
+                    break
+        self.cols = cols
+        col_w = (area_w - (cols - 1) * gap) // cols
+        rows = (n + cols - 1) // cols
+        bh, vgap = 56, 16
+        while rows * (bh + vgap) - vgap > bottom - top and bh > 30:
             bh -= 2
-            gap = max(6, gap - 1)
-        total = n * (bh + gap) - gap
-        y0 = top + max(0, (bottom - top - total) // 2)
-        x = self.width // 2 - bw // 2
+            vgap = max(6, vgap - 1)
+        grid_h = rows * (bh + vgap) - vgap
+        y0 = top + max(0, (bottom - top - grid_h) // 2)
+        x0 = W // 2 - area_w // 2
         for i in range(n):
-            self.rects.append(pygame.Rect(x, y0 + i * (bh + gap), bw, bh))
+            r, c = divmod(i, cols)
+            self.rects.append(pygame.Rect(x0 + c * (col_w + gap),
+                                          y0 + r * (bh + vgap), col_w, bh))
         # Kleiner, bewusst unauffälliger Button ganz unten (nur eingeklappt).
         if self.expanded:
             self.other_rect = None
@@ -1317,11 +1364,18 @@ class LanguageScreen(_Screen):
 
     def handle_event(self, event):
         if event.kind == InputEvent.KEYDOWN:
-            if event.key in ("Up", "w", "Left", "a"):
-                self.sel = (self.sel - 1) % self._item_count()
+            n = self._item_count()
+            if event.key in ("Left", "a"):
+                self.sel = (self.sel - 1) % n
                 self.play_sound("move")
-            elif event.key in ("Down", "s", "Right", "d"):
-                self.sel = (self.sel + 1) % self._item_count()
+            elif event.key in ("Right", "d"):
+                self.sel = (self.sel + 1) % n
+                self.play_sound("move")
+            elif event.key in ("Up", "w"):
+                self.sel = (self.sel - self.cols) % n
+                self.play_sound("move")
+            elif event.key in ("Down", "s"):
+                self.sel = (self.sel + self.cols) % n
                 self.play_sound("move")
             elif event.key in ("Return", "space"):
                 self._choose(self.sel)
@@ -1343,8 +1397,15 @@ class LanguageScreen(_Screen):
         ui.draw_background(s, self.width, self.height)
         ui.draw_title(s, self.width, t("lang.title"), y=80,
                       big=ui.font(34, bold=True))
-        btn_font = ui.font(24, bold=True)
-        code_font = ui.font(13)
+        # Schriftgröße an die Spaltenbreite anpassen, damit lange Sprachnamen
+        # (z.B. "Slovenščina") in den schmaleren Rasterspalten nicht überlaufen.
+        btn_w = self.rects[0].w if self.rects else 240
+        longest = max((lbl for _, lbl in self.langs), key=len, default="")
+        bsize = 24
+        while bsize > 13 and ui.font(bsize, bold=True).size(longest)[0] > btn_w - 20:
+            bsize -= 1
+        btn_font = ui.font(bsize, bold=True)
+        code_font = ui.font(13 if bsize >= 18 else 11)
         for i, (code, label) in enumerate(self.langs):
             ui.draw_button(s, self.rects[i], label, btn_font,
                            selected=(i == self.sel),

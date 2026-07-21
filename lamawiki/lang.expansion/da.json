@@ -1,0 +1,1674 @@
+{
+  "pages": [
+    {
+      "id": "start",
+      "category": "general",
+      "title": "Kom godt i gang",
+      "keywords": [
+        "start",
+        "hjælp",
+        "intro",
+        "menu",
+        "pause",
+        "fuldskærm",
+        "sidebjælke"
+      ],
+      "sections": [
+        {
+          "h": "Start et spil",
+          "body": [
+            "Du kan starte et spil på tre måder: fra spillisten i venstre sidebjælke, fra spilgitteret på startskærmen eller direkte fra denne wiki via forberedelsesskærmen.",
+            "Før hvert spil vises forberedelsesskærmen: der vælger du tilstanden (f.eks. enkelt- eller flerspiller) og får adgang til indstillingerne og denne wiki."
+          ]
+        },
+        {
+          "h": "Vigtige taster",
+          "body": [
+            "- [Esc] sætter det kørende spil på pause og genoptager det - i menuer går den tilbage.",
+            "- [F11] slår fuldskærm til og fra.",
+            "- Den grønne Tilbage til menu-knap afslutter spillet og gemmer highscoren."
+          ]
+        },
+        {
+          "h": "Sidebjælken",
+          "body": [
+            "Til venstre ser du alle spil med deres ikon og din highscore (stjerne). Det kørende spil forbliver fremhævet; i små vinduer ruller listen med musehjulet.",
+            "Statuskortet nederst til venstre viser spillets navn, tilstand (grøn = kører, guld = pause, rød = game over), point og den aktuelle billedhastighed."
+          ]
+        },
+        {
+          "h": "Flerspiller",
+          "body": [
+            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) og Asteroids (co-op-duel) har en lokal 2-spillertilstand - vælges på forberedelsesskærmen.",
+            "I enkeltspiller styrer begge tastebindinger den samme figur; i flerspiller én hver (standard: P1 = WASD, P2 = piletaster eller IJKL - se indstillinger)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "category": "general",
+      "title": "Indstillinger og styring",
+      "keywords": [
+        "indstillinger",
+        "opsætning",
+        "styring",
+        "taster",
+        "opløsning",
+        "fps",
+        "lyd",
+        "sprog"
+      ],
+      "sections": [
+        {
+          "h": "Lyd og haptik",
+          "body": [
+            "Slå lyd til/fra og indstil lydstyrken i indstillingsskærmen. Alle effekter genereres live - der er ingen lydfiler.",
+            "Haptik får en tilsluttet gamepad til at vibrere (gør intet uden en)."
+          ]
+        },
+        {
+          "h": "Tastebindinger",
+          "body": [
+            "Tre forudindstillinger er tilgængelige: WASD + piletaster, WASD + IJKL og piletaster + WASD.",
+            "Hver enkelt tast kan ombindes: klik på en række eller bekræft med Enter, og tryk derefter på den ønskede tast. [Esc] annullerer.",
+            "Bindingerne er adskilt for spiller 1 og spiller 2 og gemmes permanent."
+          ]
+        },
+        {
+          "h": "Grafik og ydeevne",
+          "body": [
+            "Opløsningen bestemmer det interne spilområde (480x360 op til 1280x960). Mindre = mindre belastning, større = skarpere billede.",
+            "Automatisk opløsning tilpasser spilområdet til vinduesstørrelsen automatisk.",
+            "FPS-indstillingerne (15 til 120) bestemmer den ønskede billedhastighed - færre FPS sparer strøm."
+          ]
+        },
+        {
+          "h": "Sprog",
+          "body": [
+            "Grænsefladen er tilgængelig på tysk, engelsk, fransk, spansk og portugisisk. Skift i indstillingsskærmen eller via Sprog i sidebjælken - denne wiki skifter også sprog."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saving",
+      "category": "general",
+      "title": "Gemning og highscores",
+      "keywords": [
+        "gemning",
+        "highscore",
+        "rekord",
+        "point",
+        "fremskridt",
+        "filer"
+      ],
+      "sections": [
+        {
+          "h": "Highscores",
+          "body": [
+            "Hvert spil gemmer automatisk sin bedste værdi, når en runde slutter. En ny rekord viser et gyldent banner - plus konfettiregn.",
+            "Du kan se de bedste værdier overalt: som en stjerne i sidebjælkelisten, i tickeren på startskærmen og i statuskortet."
+          ]
+        },
+        {
+          "h": "Hvad gemmes hvor?",
+          "body": [
+            "- settings.json: lyd, lydstyrke, tastebindinger, opløsning, FPS og spilindstillinger (f.eks. Snake-tilstand, Sudoku-indstillinger).",
+            "- mem.json: highscores, det valgte sprog og Sudoku-niveaufremskridtet.",
+            "- mem-ngb.json: Snakes visuelle mods (hovedfarve, gitter, banner).",
+            "Filerne ligger direkte i spilmappen og kan simpelthen slettes for at nulstille alt."
+          ]
+        },
+        {
+          "h": "Tip",
+          "body": [
+            "Point gemmes kun, når du forlader via Tilbage til menu, eller når runden slutter normalt - ikke når vinduet lukkes hårdt midt i spillet."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake-special",
+      "category": "general",
+      "title": "Snake special",
+      "keywords": [
+        "konkurrence",
+        "prestige",
+        "hardcore",
+        "mods",
+        "tilpasning",
+        "slot",
+        "gambling",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Konkurrencetilstand",
+          "body": [
+            "Endeløs tilstand med niveaustigning: du starter med præcis ét æble. Jo flere æbler du samler i alt, jo højere bliver dit niveau - flere æbler dukker op ad gangen, og pointmultiplikatoren stiger (15 niveauer, op til x16).",
+            "- Blå æbler åbner en spilleautomat: indsatsen er din længde, tre ens symboler = jackpot med bonusæbler.",
+            "- Lilla æbler (gambling) satser en del af din størrelse: normalt en indsats på 50 procent med en faktor på x0.5 til x1.5.",
+            "Din nøjagtige størrelse vises som en decimal øverst til venstre - hvert væddemål bygger på den. Niveautrinnene ligger i games/levels/snake-comp.json og kan frit redigeres."
+          ]
+        },
+        {
+          "h": "Hardcore",
+          "body": [
+            "Slå til med [H] i konkurrenceopsætningen: hvert boost æder længde, og lilla æbler bliver mere risikable (75 til 90 procent indsats, faktor x0.25 til x2.25). En rød kant markerer tilstanden."
+          ]
+        },
+        {
+          "h": "Prestige",
+          "body": [
+            "Kan nås med [P] i enkeltspiller: samlede æbler kan omdannes til prestigeniveauer, der giver varige fordele. Fremskridtet bevares på tværs af spilgange."
+          ]
+        },
+        {
+          "h": "Mods / tilpasning",
+          "body": [
+            "I opsætningen via penselknappen eller [C] : en ren udseendemenu, der aldrig ændrer gameplayet.",
+            "- Hoved: slangens hovedfarve (forudindstillinger eller en brugerdefineret RGB-farve).",
+            "- Gitter: et koordinatgitter med rækkenumre og kolonnebogstaver som guide på store brætter.",
+            "- Banner: slå multiplikatorbanneret til/fra, plus størrelse og gennemsigtighed - med live-forhåndsvisning.",
+            "Alt gemmes i mem-ngb.json."
+          ]
+        },
+        {
+          "h": "3D-visning",
+          "body": [
+            "Med [V] i opsætningen: brættet gengives som en 3D-scene, et forfølgelseskamera svæver bag slangen, og styringen er relativ til synsretningen (to hurtige tryk = U-vending).",
+            "Med [K] åbner du 3D-kameraindstillingerne: blød rysten, synsfelt (FOV), kamerahøjde og drejerysten til/fra. Kan spilles i 3D: Klassisk og Forhindringer (kun enkeltspiller)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake",
+      "category": "games",
+      "game": "SnakeGame",
+      "title": "Snake",
+      "keywords": [
+        "snake",
+        "æble",
+        "boost",
+        "konkurrence",
+        "3d",
+        "portaler"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Styr med [W] [A] [S] [D] eller piletasterne. I 3D styrer du relativt til synsretningen: venstre/højre drejer, to hurtige tryk = U-vending.",
+            "- Boost: hold [Space] eller Shift = dobbelt hastighed. Udholdenhedsbjælken tømmes og oplades igen bagefter.",
+            "- Spiller 2 booster med Enter eller den højre Shift-tast."
+          ]
+        },
+        {
+          "h": "Tilstande",
+          "body": [
+            "- Klassisk: ren snake.",
+            "- Fartræs: hver mad gør dig hurtigere.",
+            "- Forhindringer: dødbringende blokke på brættet.",
+            "- Portaler: teleporterpar flytter dig på tværs af brættet.",
+            "- Tidsjagt: 60 sekunder, så mange æbler som muligt.",
+            "- Konkurrence: endeløs tilstand med niveauer, spilleautomat og gambling-æbler - detaljer på Snake special-siden.",
+            "Kan også vælges: vægoverføring, bonusæbler, hardcore, 2D/3D-visning med [V] og flerspiller."
+          ]
+        },
+        {
+          "h": "Pointgivning",
+          "body": [
+            "Æbler giver point (bonusæbler fordobler tilfældigt). Gyldne æbler dukker op midlertidigt, giver mange point og fylder boostet op med det samme. I konkurrence multiplicerer dit niveau alle point."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Brug boostet på lange lige strækninger, ikke i snævre hjørner.",
+            "- Med overføring slået til kan du undslippe over kanten, når du spærrer dig selv inde.",
+            "- I konkurrence betaler lilla æbler sig bedst, når du har længde til overs at satse."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pong",
+      "category": "games",
+      "game": "PongGame",
+      "title": "Pong",
+      "keywords": [
+        "bat",
+        "bold",
+        "ai",
+        "klassisk"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Spiller 1 flytter det venstre bat med [W] og [S] - i flerspiller styrer spiller 2 det højre med piletasterne.",
+            "Bevægelsestilstanden kan skiftes pr. styring: kontinuerlig (tryk én gang, battet fortsætter) eller hold (bevæger sig kun, mens der trykkes). Skift med [X] for styring 1 og [N] for styring 2."
+          ]
+        },
+        {
+          "h": "Regler og pointgivning",
+          "body": [
+            "Spil til 5 point, mod AI'en eller med to spillere.",
+            "Boldfysikken accelererer ved hvert slag; afprelvinklen afhænger af, hvor bolden rammer battet."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Ram bolden med kanten af battet for at skabe stejle vinkler.",
+            "- Hold-tilstand giver finere kontrol, kontinuerlig tilstand hurtigere reaktioner."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "airhockey",
+      "category": "games",
+      "game": "AirHockeyGame",
+      "title": "Air Hockey",
+      "keywords": [
+        "puck",
+        "kølle",
+        "fysik",
+        "mål",
+        "powerups",
+        "mus"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "I enkeltspiller følger din kølle musen - en vilkårlig tast skifter tilbage til tastaturstyring (8 retninger).",
+            "I flerspiller spiller P1 til venstre med [W] [A] [S] [D] og P2 til højre med [I] [J] [K] [L] ."
+          ]
+        },
+        {
+          "h": "Opsætning",
+          "body": [
+            "- AI-sværhedsgrad: let, mellem eller svær.",
+            "- [T] vælger antal mål for at vinde (3/5/7/10).",
+            "- [P] slår power-ups til/fra: XL (større kølle), GOAL (modstanderens mål krymper), fart (hurtigere kølle). Power-ups tilhører den spiller, der sidst rørte pucken."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Pucken arver din køllehastighed - opbyg fart i stedet for bare at blokere.",
+            "- Bliv bag pucken: at skubbe den mod dit eget mål risikerer selvmål."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tictactoe",
+      "category": "games",
+      "game": "TicTacToeGame",
+      "title": "Tic-Tac-Toe",
+      "keywords": [
+        "kryds",
+        "cirkel",
+        "bræt",
+        "ai",
+        "mnk"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Placér markeringer med et museklik. Efter spillet slutter: Enter eller klik = ny runde, [S] = tilbage til indstillingerne."
+          ]
+        },
+        {
+          "h": "Tilstande og opsætning",
+          "body": [
+            "Brætstørrelser fra 3x3 op til 9x9. Vinderlængden tilpasser sig: 3 på stribe på 3x3, 4 på 4x4, ellers 5.",
+            "Enkeltspiller mod AI'en (let/mellem/svær) eller to spillere lokalt, X mod O på skift."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Den svære AI på 3x3 er uovervindelig - uafgjort er det bedste, du kan opnå der.",
+            "- På store brætter betyder midten mest: de fleste 5-linjer går gennem den."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "breakout",
+      "category": "games",
+      "game": "BreakoutGame",
+      "title": "Breakout",
+      "keywords": [
+        "mursten",
+        "bold",
+        "bat",
+        "powerups",
+        "combo",
+        "niveauer"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Flyt battet med musen eller piletasterne. [Space] affyrer bolden og skyder laseren. [P] eller [Esc] pauser."
+          ]
+        },
+        {
+          "h": "Opsætning",
+          "body": [
+            "- [1] [2] [3] vælger sværhedsgraden.",
+            "- Venstre/højre ændrer boldfarven, op/ned startniveauet, [M] layoutet (standard eller fuldt)."
+          ]
+        },
+        {
+          "h": "Mursten og power-ups",
+          "body": [
+            "Murstenstyper: normal, stål (uødelæggelig), bombe (eksploderer) og guld (ekstra point).",
+            "Power-ups: x2/x3 bolde, [L] laser, [F] ildkugle, [G] klæbrig, [U] skjold, mønter for bonuspoint - plus en combo-multiplikator for hurtige træf."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Spil bolden langs sidevæggene bag murstensblokken - den rydder sig selv deroppe.",
+            "- Skjoldet fanger præcis ét gennembrud: gem det til risikable multiboldfaser."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tetris",
+      "category": "games",
+      "game": "TetrisGame",
+      "title": "Tetris",
+      "keywords": [
+        "brikker",
+        "rækker",
+        "rotér",
+        "versus",
+        "stak"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Venstre/højre flytter brikken, op roterer den, ned er det bløde fald, og handlingstasten (standard: [Space] ) det hårde fald."
+          ]
+        },
+        {
+          "h": "Tilstande og pointgivning",
+          "body": [
+            "Fulde rækker giver point - flere på én gang giver meget mere. For hver 10 rækker stiger niveauet og farten.",
+            "Versus (flerspiller): to brætter side om side, den, hvis stak rammer toppen først, taber."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Hold én kolonne fri til den lange I-brik og ryd med firedobbelte rækker.",
+            "- Byg fladt: høje tårne vælter hurtigt, når farten stiger."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "invaders",
+      "category": "games",
+      "game": "InvadersGame",
+      "title": "Invaders",
+      "keywords": [
+        "rumvæsener",
+        "bølger",
+        "boss",
+        "våben",
+        "arena",
+        "skyd"
+      ],
+      "sections": [
+        {
+          "h": "Tilstande",
+          "body": [
+            "- Klassisk: den klassiske rumvæsenblok sænker sig. I opsætningen vælger du bevægelse (kun venstre/højre eller frit med WASD) og sigte (altid op eller mod musen).",
+            "- Arena: fri bevægelse i alle retninger, fjender strømmer ind fra alle kanter, du sigter i din bevægelsesretning."
+          ]
+        },
+        {
+          "h": "Våben og power-ups",
+          "body": [
+            "Fire våben, skift med [1] til [4] : blaster, spredningsskud, hurtigskydning og laser.",
+            "Destruerede rumvæsener taber power-ups: ekstra liv, skjold og våbenopgraderinger. Hvert 4. niveau har en boss."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Spredningsskuddet rydder tætte blokke, laseren gennemborer hele kolonner - skift pr. bølge.",
+            "- Stå aldrig stille i arenaen: cirkl langs kanten og træk fjenderne ind på en linje."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asteroids",
+      "category": "games",
+      "game": "AsteroidsGame",
+      "title": "Asteroids",
+      "keywords": [
+        "skib",
+        "sten",
+        "ufo",
+        "hyperrum",
+        "bølger",
+        "vektor"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Op giver fremdrift i synsretningen, venstre/højre roterer skibet, handlingstasten skyder. Skibet driver videre (inerti) og føres om ved skærmkanterne.",
+            "Ned udløser hyperrum: et nødspring til en tilfældig position med 4 sekunders nedkøling - og 12 procents risiko for at gå i stykker."
+          ]
+        },
+        {
+          "h": "Pointgivning og ekstra",
+          "body": [
+            "Sten deler sig i to mindre; de tre størrelser giver 20/50/100 point. UFO'en (kan deaktiveres) giver 200 point, et ekstra liv kommer for hver 5000 point.",
+            "Power-ups fra destruerede sten: skjold (6 sekunder usårlig), tripelskud og hurtigskydning.",
+            "Co-op-duel (flerspiller): begge skibe flyver på én gang med hver deres liv - den med flest point vinder."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Ryd de små, hurtige splinter først, før du knækker den næste store sten.",
+            "- Hyperrum er en sidste udvej, ikke en rejsemulighed - risikoen er reel."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pacman",
+      "category": "games",
+      "game": "PacmanGame",
+      "title": "Pac-Man",
+      "keywords": [
+        "spøgelser",
+        "kugler",
+        "labyrint",
+        "frugt",
+        "power"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Bevæg dig med piletasterne eller [W] [A] [S] [D] . Efter spillet slutter: Enter = ny, [S] = opsætning.",
+            "Tunnellerne til venstre og højre teleporterer dig til den anden side."
+          ]
+        },
+        {
+          "h": "Spøgelser og power-kugler",
+          "body": [
+            "De fire spøgelser jager med deres oprindelige adfærd: Blinky forfølger direkte, Pinky lægger baghold, Inky bruger en vektor via Blinky, Clyde trækker sig tilbage tæt på.",
+            "Power-kugler gør spøgelserne blå og spiselige et stykke tid - kæden giver 200/400/800/1600 point. Frugt dukker op som bonus, et ekstra liv kommer ved 10.000 point."
+          ]
+        },
+        {
+          "h": "Opsætning og tips",
+          "body": [
+            "Sværhedsgraden normal/svær/ekstrem bestemmer spøgelsernes fart og skræktiden; hvert niveau bliver hurtigere.",
+            "- Spis kun en power-kugle, når flere spøgelser er tæt på - det er kæden, der tæller.",
+            "- Husk spredningsfaserne: ved hvert skift vender alle spøgelser om."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flappy",
+      "category": "games",
+      "game": "FlappyGame",
+      "title": "Flappy Bird",
+      "keywords": [
+        "fugl",
+        "rør",
+        "mønter",
+        "skjold",
+        "medaljer",
+        "basken"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "[Space], pil op, [W] eller et museklik får fuglen til at baske - den hælder med sin stige- og synkehastighed."
+          ]
+        },
+        {
+          "h": "Pointgivning og ekstra",
+          "body": [
+            "Hvert passeret rør giver ét point. Mønter (bonus) og en skjold-power-up, der tilgiver præcis én kollision, dukker op i mellemrummene.",
+            "Dag- og nattemaer skifter med pointene; efter game over er der medaljer fra bronze til platin."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Korte, regelmæssige tryk holder flyvebanen roligere end sjældne lange.",
+            "- Sværhedsgraden bestemmer mellemrummets størrelse og fart - mellemrummet bliver smallere, efterhånden som din score vokser."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doodle",
+      "category": "games",
+      "game": "DoodleGame",
+      "title": "Doodle Jump",
+      "keywords": [
+        "hop",
+        "platforme",
+        "monstre",
+        "fjeder",
+        "propel",
+        "højde"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Doodleren hopper automatisk ved landing - du styrer kun venstre/højre (med inerti). Kanterne er åbne: forlader du til venstre, kommer du ind igen til højre.",
+            "Skyd opad med pil op eller [Space] ."
+          ]
+        },
+        {
+          "h": "Platforme og ekstra",
+          "body": [
+            "- Grøn: normal. Blå: bevæger sig. Brun: går i stykker, når man træder på den. Hvid: forsvinder efter ét hop.",
+            "- Fjedre giver et superhop, propelhatten bærer dig automatisk opad et øjeblik (usårlig).",
+            "- Monstre er dødbringende ved kontakt - at skyde dem giver ekstra point."
+          ]
+        },
+        {
+          "h": "Pointgivning og tips",
+          "body": [
+            "Score = nået højde; sværhedsgraden stiger med højden.",
+            "- Planlæg, hvor du lander, før du hopper fra - brune platforme bærer dig ikke.",
+            "- Brug den åbne kant som genvej til fjerne platforme."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2048",
+      "category": "games",
+      "game": "Game2048",
+      "title": "2048",
+      "keywords": [
+        "fliser",
+        "skub",
+        "sammenlæg",
+        "tal"
+      ],
+      "sections": [
+        {
+          "h": "Styring og regler",
+          "body": [
+            "Piletaster eller [W] [A] [S] [D] skubber alle fliser i én retning på én gang. Ens tal lægges sammen til deres sum; efter hvert træk dukker en ny flise op.",
+            "Målet er 2048-flisen - derefter fortsætter det endeløst. Du taber, når intet træk er muligt."
+          ]
+        },
+        {
+          "h": "Pointgivning",
+          "body": [
+            "Hver sammenlægning føjer værdien af den nye flise til din score."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Parkér din største flise i et hjørne, og forstyr aldrig det hjørne.",
+            "- Skub hovedsageligt i to retninger - det holder brættet sorteret."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minesweeper",
+      "category": "games",
+      "game": "MinesweeperGame",
+      "title": "Minesweeper",
+      "keywords": [
+        "miner",
+        "flag",
+        "afdæk",
+        "chording",
+        "bedste tid"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Venstreklik afdækker en celle, højreklik placerer et flag (valgfrit med en spørgsmålstegn-cyklus, [Q] i opsætningen). [F] sætter flag på cellen under markøren, [R] genstarter.",
+            "Chording: at klikke på et opfyldt tal (alle flag placeret) afdækker de resterende naboer på én gang."
+          ]
+        },
+        {
+          "h": "Niveauer og pointgivning",
+          "body": [
+            "Begynder (9x9, 10 miner), mellem (16x16, 40) og ekspert (30x16, 99). Den bedste tid pr. niveau gemmes.",
+            "Det første klik er altid sikkert - miner placeres først bagefter. Point = niveauets basisværdi minus sekunder."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Start med tallene ved kanten af åbne områder - mønstrene der er entydige.",
+            "- Et 1-tal i et hjørne med kun én tildækket nabo er altid et sikkert flag."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sudoku",
+      "category": "games",
+      "game": "SudokuGame",
+      "title": "Sudoku",
+      "keywords": [
+        "puslespil",
+        "tal",
+        "noter",
+        "niveauer",
+        "tips",
+        "logik"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Vælg en celle med piletasterne, [W] [A] [S] [D] eller et museklik - taltastaturet til højre fungerer helt med musen.",
+            "- [1] til [9] indtaster et ciffer (numpad fungerer også).",
+            "- [0], Backspace eller højreklik sletter.",
+            "- [N] slår notetilstand til/fra, [H] giver et tip, [R] genstarter niveauet, [Q] åbner niveauvalget.",
+            "- Efter spillet slutter, skjuler [A] banneret og afslører hele løsningen."
+          ]
+        },
+        {
+          "h": "Niveauer og tilstande",
+          "body": [
+            "400 faste niveauer: 4 sværhedsgrader (let/normal/svær/ekspert) gange 100 niveauer. Hvert niveau er det samme puslespil overalt og har en entydig løsning; løste niveauer bliver krydset af.",
+            "Spiltilstanden bestemmer hjælpemidlerne og pointmultiplikatoren:",
+            "- Klassisk x2.0: ingen hjælpemidler, rent som på papir.",
+            "- Noter x1.5: plus blyantsnoter.",
+            "- Komfort x1.0: fejl bliver røde med det samme, konfliktmarkering, korrekte indtastninger låses fast.",
+            "- Hjælp x0.7: derudover op til 3 tips."
+          ]
+        },
+        {
+          "h": "Fejl og pointgivning",
+          "body": [
+            "Hver indtastning tjekkes straks mod løsningen. Med 3-fejls-grænsen aktiv (opsætning, tast [F] ) afslutter den tredje fejl spillet.",
+            "Point = (sværhedsgradsbasis minus tid, fejl og tips) gange tilstandsmultiplikatoren."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Start med rækker, kolonner og bokse, der allerede indeholder mange cifre.",
+            "- Notér kandidater i par: hvis to celler deler de samme to kandidater, falder de ud alle andre steder.",
+            "- I klassisk tilstand tag dig god tid: hver fejl tæller med det samme, selv uden en rød markering."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frogger",
+      "category": "games",
+      "game": "FroggerGame",
+      "title": "Frogger",
+      "keywords": [
+        "frø",
+        "vej",
+        "flod",
+        "målbåse",
+        "flue",
+        "krokodille"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Hop celle for celle med piletasterne eller [W] [A] [S] [D] .",
+            "- [R] genstarter, [S] åbner opsætningen.",
+            "Efter game over: [Enter] = prøv igen."
+          ]
+        },
+        {
+          "h": "Vej, flod og målbåse",
+          "body": [
+            "Nederst 5 trafikbaner med biler og lastbiler i skiftende retninger - kontakt er dødbringende.",
+            "Ovenover 5 flodbaner: træstammer og skildpadder bærer dig; falder du i vandet, drukner du. Skildpadder dykker med jævne mellemrum på højere niveauer (blinken = advarsel).",
+            "Øverst venter 5 målbåse - at fylde dem alle fuldfører niveauet, hvorefter alt sætter farten op.",
+            "- Ekstra: en bonusflue (+200) dukker kort op i tomme målbåse, krokodiller besætter målbåse på højere niveauer (landing = død), og tidsbjælken nederst tømmes pr. frø."
+          ]
+        },
+        {
+          "h": "Pointgivning",
+          "body": [
+            "Hver nynået række giver 10 point, en målbås 50 plus 10 pr. resterende sekund.",
+            "Alle 5 målbåse giver 1000 point og det næste niveau.",
+            "Ved 10.000 point får du et engangs-ekstraliv (start: 3 liv)."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Planlæg trafikhuller én bane frem i stedet for at vente ved kanten.",
+            "- Brug træstammer, der driver mod din målbås, som taxa.",
+            "- Land tidligt: tidsbonussen slår en omvej til fluen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "category": "games",
+      "game": "MemoryGame",
+      "title": "Memory",
+      "keywords": [
+        "par",
+        "kort",
+        "husk",
+        "duel",
+        "vend"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Vend kort med et museklik - eller flyt rammen med piletaster/WASD og vend med [Space] eller [Enter] .",
+            "- [R] blander en ny runde, [S] åbner opsætningen.",
+            "Et par, der ikke matcher, forbliver synligt kort og vender så tilbage af sig selv."
+          ]
+        },
+        {
+          "h": "Brætter og duel",
+          "body": [
+            "Tre brætstørrelser: 4x4 (8 par), 6x6 (18) og 8x6 (24) - motiverne er form-farve-kombinationer.",
+            "Solo tæller hver afdækket tokorts-kombination som et træk; uret kører.",
+            "- Duel (flerspiller på forberedelsesskærmen): skiftes til at vende, et match betyder, at du fortsætter - den med flest par til sidst vinder."
+          ]
+        },
+        {
+          "h": "Pointgivning",
+          "body": [
+            "Solo: brætstørrelsesbasis minus 15 pr. træk og 2 pr. sekund (minimum 100).",
+            "Duel: vinderens par gange 100 kommer på highscore-listen."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Vend ukendte kort først - hvert af dem viser dig et motiv gratis.",
+            "- Forankr motiver efter deres farvegruppe, det halverer søgeområdet.",
+            "- I en duel afdæk aldrig et nyt par til din modstander."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solitaire",
+      "category": "games",
+      "game": "SolitaireGame",
+      "title": "Kabale",
+      "keywords": [
+        "kort",
+        "klondike",
+        "spider",
+        "freecell",
+        "pyramide",
+        "tripeaks"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Træk kort med musen (træk og slip) eller flyt dem klik for klik; højreklik sender det øverste kort til fundamentet (Klondike/FreeCell).",
+            "- [U] fortryder et vilkårligt antal træk, [R] giver en ny hånd, [S] åbner opsætningen.",
+            "[Space] eller [Enter] betjener lageret (træk/giv)."
+          ]
+        },
+        {
+          "h": "De fem varianter",
+          "body": [
+            "- Klondike: den klassiske kabale - fire fundamenter fra es til konge, tableau faldende i skiftende farver; valg: træk 1 eller 3.",
+            "- Spider: 10 kolonner, 104 kort - komplette konge-til-es-rækker i én kulør forsvinder; valg: 1, 2 eller 4 kulører.",
+            "- FreeCell: alt med billedsiden op, 4 frie celler; supertræk begrænses af frie celler og tomme kolonner.",
+            "- Pyramide: fjern par, der summer til 13, kongen tæller alene; 2 omdelinger.",
+            "- TriPeaks: altid én rang over eller under kastebunken (es og konge føres om) - lange kæder giver combo-point."
+          ]
+        },
+        {
+          "h": "Pointgivning",
+          "body": [
+            "Klondike: +10 pr. fundamentskort, +5 pr. afdækket kort, tidsbonus ved sejr. FreeCell: +10 pr. fundamentskort plus tidsbonus.",
+            "Spider: 500 minus træk plus 100 pr. fuldført række. Pyramide: +5 pr. kort, +500 for at rydde.",
+            "TriPeaks: 10 gange combo pr. kort - lageret nulstiller comboen; +500 for at rydde."
+          ]
+        },
+        {
+          "h": "Indstillinger",
+          "body": [
+            "Træk-3 (Klondike) og Spider-kulørantallet gemmes permanent.",
+            "Fortryd er ubegrænset og gratis - eksperimentér frit.",
+            "Alle varianter deler én highscore-liste."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Frigør esser og toere så tidligt som muligt (Klondike/FreeCell).",
+            "- Hold én kolonne tom - det er dit vigtigste værktøj (Spider/FreeCell).",
+            "- I Pyramide tæl de opnåelige 13-par, før du rører lageret."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aimtrainer",
+      "category": "games",
+      "game": "AimTrainerGame",
+      "title": "Aim Trainer",
+      "keywords": [
+        "sigte",
+        "sigtekorn",
+        "refleks",
+        "3d",
+        "rummet",
+        "skydning"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Musen styrer kameraet direkte som i en shooter: hver bevægelse drejer synet øjeblikkeligt med den tilsvarende mængde (markøren fanges usynligt inde i vinduet). [Esc] pauser og frigiver musen. Drejning til siderne er ubegrænset, op/ned begrænses ved 60 grader.",
+            "Venstreklik skyder præcis gennem skærmens midte (kort nedkøling mellem skud).",
+            "- [+] og [-] ændrer følsomheden (selv midt i spillet), [E] afslutter en chill-session."
+          ]
+        },
+        {
+          "h": "Tilstande",
+          "body": [
+            "- Præcision (60 s): altid 3 kugler ad gangen - at skyde én frembringer straks en ny; en præcisionsbonus lægges til til sidst.",
+            "- Refleks (30 mål): mål dukker op ét ad gangen og skrumper væk efter et øjeblik - reaktionstiden tæller, statistik til sidst.",
+            "- Bevægelige mål (60 s): kugler driver på baner (svingende, kredsende, dinglende) - fortløbende træf hæver combo-multiplikatoren.",
+            "- Chill (endeløs): ingen timer, ingen straf for forbier - bare slap af og skyd; scoren gemmes, når du vender tilbage til menuen."
+          ]
+        },
+        {
+          "h": "Pointgivning",
+          "body": [
+            "Præcision: 100 point pr. træf plus en afstandsbonus; til sidst præcisionen i anden gange 1500 oveni.",
+            "Refleks: jo hurtigere reaktionen, jo flere point (1000 minus millisekunder, mindst 50).",
+            "Bevægelige mål: 80 point gange combo-multiplikatoren (op til x4 ved 12 fortløbende træf) - en forbier nulstiller comboen.",
+            "Chill: 50 point gange multiplikatoren; comboen falmer først efter 5 sekunder uden et træf."
+          ]
+        },
+        {
+          "h": "Temaer",
+          "body": [
+            "- Rummet (standard): en fuld stjernesfære, et sort hul med en klart lysende ring og en fjern planet.",
+            "- Neon: en synthwave-arena med et lysende gulvgitter og en stribet sol.",
+            "- Bane: en indendørs hal med baner, lamper og klassiske skydeskiver. Tema og justerbar bevægelsessløring (0 til 80 procent, tast [B] eller opsætningsknapper) gemmes."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Små, rolige musebevægelser rammer bedre end hektiske sving - synet følger 1:1.",
+            "- Lav følsomhed til præcision, højere til refleks og bevægelige mål.",
+            "- Fjerne mål har en lille tilgivelsesmargin - hold roligt i stedet for at overkorrigere."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "connect4",
+      "category": "games",
+      "game": "ConnectFourGame",
+      "title": "Fire på stribe",
+      "keywords": [
+        "fire",
+        "stribe",
+        "brikker",
+        "kolonner",
+        "ai",
+        "strategi"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "To farver skiftes til at slippe brikker ned i en af 7 kolonner; hver brik falder til den laveste frie celle. Den første, der får fire på stribe - vandret, lodret eller diagonalt - vinder runden.",
+            "I enkeltspiller møder du AI'en (tre styrker i opsætningen); i 2-spillertilstand skiftes I ved én mus eller ét tastatur.",
+            "Startspilleren skifter hver runde. [Enter] starter den næste runde, [S] vender tilbage til opsætningen."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Mus: hold over en kolonne (forhåndsvisningsbrikken viser stedet), og klik.",
+            "- Tastatur: [Left] [Right] vælger kolonnen, slip med [Down], [Space] eller [Enter].",
+            "- Direkte valg: tallene [1] til [7] slipper direkte ned i den kolonne."
+          ]
+        },
+        {
+          "h": "AI-styrker",
+          "body": [
+            "Let overser bevidst nogle trusler og spiller nogle gange kun det næstbedste træk - fint til at lære. Mellem planlægger nogle træk frem og blokerer pålideligt.",
+            "Svær søger meget dybere og straffer hver fejl med det samme - kun dobbelttrusler vinder her."
+          ]
+        },
+        {
+          "h": "Pointgivning + tips",
+          "body": [
+            "Hver sejr mod AI'en giver ét point; highscoren er flest sejre i én session. Der er ingen pointgivning i 2-spillertilstand.",
+            "- Den midterste kolonne er den stærkeste: de fleste fire-på-stribe går gennem den.",
+            "- Byg dobbelttrusler (to åbne treere på én gang) - din modstander kan kun blokere den ene af dem."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tanks",
+      "category": "games",
+      "game": "TankDuelGame",
+      "title": "Tankduel",
+      "keywords": [
+        "tank",
+        "duel",
+        "rikochet",
+        "arena",
+        "powerup",
+        "2 spillere"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "1-mod-1 i en arena af vægge: ram din modstander for at tage runden - først til 5 runder vinder matchen.",
+            "Skud preller af væggene én gang (rikochet) og forsvinder ved den anden kontakt. Pas på: et afprellet skud kan også ramme dig.",
+            "Spil mod AI'en (tre styrker) eller med to spillere på ét tastatur. Efter matchen: [Enter] = omkamp, [S] = opsætning."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Spiller 1: [W] [S] kører frem og tilbage, [A] [D] drejer, [Space] skyder.",
+            "- Spiller 2: piletasterne kører og drejer, [Enter] skyder. Bindingerne følger indstillingerne.",
+            "- Højst 4 af dine skud er i luften ad gangen, med en kort genopladning imellem."
+          ]
+        },
+        {
+          "h": "Power-ups",
+          "body": [
+            "- Hurtigskydning: 8 sekunder med næsten ingen genopladning.",
+            "- Skjold: absorberer præcis ét træf (ring om tanken).",
+            "- Tripelskud: de næste 5 skud spredes i tre retninger. Power-ups dukker op hvert par sekunder i arenaen og udløber efter 12 sekunder."
+          ]
+        },
+        {
+          "h": "Arenaer + AI",
+          "body": [
+            "Fire arenaer at vælge imellem: Åben (ingen dækning), Kryds, Søjler og Labyrint - eller Tilfældig, som skifter arena hver runde.",
+            "Den lette AI kører planløst rundt og sigter dårligt; den mellemsvære forfølger dig og træder til side.",
+            "Den svære AI holder afstand, sigter sine skud foran din bevægelse og banker endda skud af væggene med vilje."
+          ]
+        },
+        {
+          "h": "Pointgivning + tips",
+          "body": [
+            "Mod AI'en får du point pr. matchsejr: mere for højere styrker og rene sejre; point lægges sammen på tværs af omkampe. Der er ingen pointgivning i 2-spillertilstand.",
+            "- Brug væggene: at banke skud rundt om hjørner rammer uden at blotte dig selv."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blackjack",
+      "category": "games",
+      "game": "BlackjackGame",
+      "title": "Blackjack",
+      "keywords": [
+        "kort",
+        "kasino",
+        "21",
+        "jetoner",
+        "dealer",
+        "indsats"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Mål: kom tættere på 21 end dealeren uden at gå over. Talkort tæller pålydende, billedkort 10, esset 11 eller 1.",
+            "Spillet bruger en sko med 4 kortspil; dealeren trækker til 16 og står ved ethvert 17.",
+            "Placér din indsats først (jetonknapper eller tasterne [1] til [4], [Backspace] rydder den), og giv derefter kort med [Enter]."
+          ]
+        },
+        {
+          "h": "Handlinger",
+          "body": [
+            "- Kort [H]: træk endnu et kort.",
+            "- Stå [S]: behold din nuværende sum.",
+            "- Fordoble [D]: fordobl indsatsen, tag præcis ét kort, og stå så automatisk - kun på dine første to kort.",
+            "- Del [X]: adskil to kort af samme værdi i to hænder (én gang pr. runde; delte esser får kun ét kort hver)."
+          ]
+        },
+        {
+          "h": "Udbetalinger",
+          "body": [
+            "- Blackjack (es + kort til værdi 10) betaler 3:2.",
+            "- En normal sejr betaler 1:1, en push (uafgjort) returnerer din indsats.",
+            "- Bust eller tab: indsatsen er væk. Hvis dealeren viser et es eller en 10, tjekker de straks for blackjack."
+          ]
+        },
+        {
+          "h": "Jetoner",
+          "body": [
+            "Du starter med 500 jetoner; din saldo og rekord gemmes permanent og overlever enhver genstart.",
+            "Highscoren er den højeste jetonsaldo, du nogensinde har nået.",
+            "Under 10 jetoner er du flad: [Enter] genstarter med 500 nye jetoner - rekorden bliver."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Grundstrategi: mod et opkort på 7 eller højere træk til 17; mod 4 til 6 stå tidligt - dealeren buster ofte der.",
+            "- Del altid esser og ottere, del aldrig tiere."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tunnelracer",
+      "category": "games",
+      "game": "TunnelRacerGame",
+      "title": "Tunnel Racer",
+      "keywords": [
+        "tunnel",
+        "racer",
+        "3d",
+        "neon",
+        "undvig",
+        "endeløs"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Du flyver gennem et buet neonrør og undviger bjælker, blokke og ringporte - ét træf, og turen er slut.",
+            "Gyldne mønter svæver i mellemrummene; de giver ekstra point og markerer normalt den sikre linje.",
+            "Ringporte har præcis ét hul: sno dig igennem det i stedet for at undvige."
+          ]
+        },
+        {
+          "h": "Tilstande",
+          "body": [
+            "- Endeløs: farten stiger konstant, og mellemrummene bliver snævrere - hvor langt kan du nå? Et styrt afslutter turen og gemmer highscoren.",
+            "- Niveauer: 30 faste baner med en mållinje, fra afslappet til brutalt. Fuldførte niveauer bliver krydset af; sessionspoint lægges sammen."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Taster (standard): [W] [A] [S] [D] eller piletasterne skubber skibet rundt i røret.",
+            "- Mus: slå til i opsætningen med [C] - direkte 1:1-styring, markøren fanges, og [Esc] frigiver den.",
+            "- [B] skifter bevægelsessløring i trin på 10 procent (0 til 80, gemmes).",
+            "- I niveautilstand: [R] prøver igen efter et styrt, [S] åbner udvalget."
+          ]
+        },
+        {
+          "h": "Pointgivning",
+          "body": [
+            "- Endeløs: 10 point pr. meter plus 50 pr. mønt.",
+            "- Niveauer: 1000 for målgang, 50 pr. mønt og en tidsbonus, når du slår par-tiden.",
+            "Highscoren i niveautilstand er din bedste sessionssum - at spille flere niveauer i træk betaler sig."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Hold øje med ringene langt foran: røret afslører sin kurve tidligt nok til at modstyre.",
+            "- Bliv nær midten, når det er muligt - hvert mellemrum kan nås derfra."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "labyrinth",
+      "category": "games",
+      "game": "LabyrinthGame",
+      "title": "3D-labyrint",
+      "keywords": [
+        "labyrint",
+        "irgang",
+        "raycaster",
+        "kugler",
+        "udgang",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "50 seed-genererede labyrinter, der vokser med hvert niveau. Find den grønne pulserende udgang - den sidder altid på det punkt, der er længst fra starten.",
+            "Blå kugler svæver rundt i labyrinten; hver indsamlet kugle giver bonuspoint.",
+            "Fuldførte niveauer bliver krydset af i udvalget; [Enter] ved mål starter det næste med det samme."
+          ]
+        },
+        {
+          "h": "Visninger",
+          "body": [
+            "- Førsteperson (3D): Wolfenstein-agtig visning med mouselook - midt i det i stedet for ovenfra.",
+            "- Fugleperspektiv (2D): det klassiske kort oppefra, uden nogen musefangst overhovedet. Slå til i opsætningen med [V]; valget gemmes."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Førsteperson: [W] [S] frem og tilbage, [A] [D] sidelæns, musen drejer dit syn - eller drej med [Q] og [E] på tastaturet.",
+            "- [M] slår minikortet til/fra, [Esc] pauser og frigiver musen.",
+            "- Fugleperspektiv: [W] [A] [S] [D] eller piletasterne går i verdensretninger."
+          ]
+        },
+        {
+          "h": "Pointgivning",
+          "body": [
+            "- At nå udgangen: 500 point.",
+            "- Pr. kugle: 100 ekstra point.",
+            "- Plus en tidsbonus, når du slår niveauets par-tid; sessionspoint lægges sammen til highscoren."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Højrehåndsreglen: altid at følge den samme væg når med garanti udgangen.",
+            "- Kuglerne markerer nogenlunde vejen til udgangen - at samle dem betyder som regel, at du er på rette vej."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reversi",
+      "category": "games",
+      "game": "ReversiGame",
+      "title": "Reversi",
+      "keywords": [
+        "reversi",
+        "othello",
+        "brikker",
+        "vend",
+        "hjørner",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Reversi (Othello) spilles på et 8x8-bræt. Du placerer en brik, så en eller flere af modstanderens brikker fanges i en lige linje mellem den nye brik og en anden brik af din farve - vandret, lodret eller diagonalt. Alle fangede brikker vender til din farve.",
+            "Et træk er kun lovligt, hvis det vender mindst én brik. Har du intet lovligt træk, springes din tur automatisk over. Når ingen af spillerne kan trække, slutter spillet, og den med flest brikker vinder.",
+            "I enkeltspiller møder du (Sort) AI'en; i to-spillertilstand skiftes Sort og Hvid."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Mus: klik på et tomt felt. Lovlige felter er markeret med en lille prik.",
+            "- Tastatur: piletasterne (eller dine bevægelsestaster) flytter valgrammen, [Space] eller [Enter] placerer brikken.",
+            "- Efter en runde: [Enter] = ny runde, [S] = tilbage til opsætning (kun enkeltspiller)."
+          ]
+        },
+        {
+          "h": "AI-styrke og tips",
+          "body": [
+            "Let spiller mest tilfældigt, Mellem ser nogle træk frem, Svær søger dybere og værdsætter hjørnerne højt.",
+            "- Hjørner er guld værd: en brik i et hjørne kan aldrig vendes igen.",
+            "- Pas på felterne ved siden af et hjørne - de forærer ofte hjørnet til din modstander.",
+            "- At have færre brikker, men mere bevægelighed i midtspillet er ofte bedre end at have mange."
+          ]
+        },
+        {
+          "h": "Point",
+          "body": [
+            "Hver sejr mod AI'en er ét point værd; highscoren er flest sejre i en session. To-spillerspil giver ikke point."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kniffel",
+      "category": "games",
+      "game": "KniffelGame",
+      "title": "Yatzy",
+      "keywords": [
+        "yatzy",
+        "kniffel",
+        "terninger",
+        "stige",
+        "fuldt hus",
+        "point"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Du har 5 terninger og op til 3 kast pr. tur. Efter hvert kast kan du beholde vilkårlige terninger og kun kaste resten om. Derefter fører du resultatet ind i præcis en af de 13 kategorier.",
+            "Hver kategori kan kun bruges én gang. Passer intet, streger du en ud for 0 point. Efter 13 ture er arket fyldt, og spillet er slut.",
+            "Enkeltspiller er en jagt på den højeste sum i highscoren; i to-spillertilstand udfylder I to ark på skift - den højeste sum vinder."
+          ]
+        },
+        {
+          "h": "Kategorierne",
+          "body": [
+            "Øverste sektion (Enere til Seksere): tæller øjnene af det tal. Hvis din øverste sektion summer til mindst 63, får du en bonus på 35 point.",
+            "- Tre/fire ens: summen af alle terninger, hvis mindst 3 hhv. 4 er ens.",
+            "- Fuldt hus = 25 (tre plus et par), Lille stige = 30 (fire i træk), Stor stige = 40 (fem i træk), Yatzy = 50 (fem ens), Chance = summen af alle terninger (altid tilladt)."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- [Space] eller Kast-knappen kaster de terninger om, der ikke holdes.",
+            "- Klik på en terning eller tryk [1] til [5] for at holde eller frigive den terning.",
+            "- Klik på en kategori eller vælg den med piletasterne, og tryk [Enter] for at føre den ind.",
+            "- Efter spillet: [Enter] genstarter."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Sikr dig 63-point-bonussen i øverste sektion tidligt - femmere og seksere er særligt værdifulde.",
+            "- Brug Chance til at redde et dårligt kast; streg Yatzy eller en stige ud, hvis intet lykkes."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wordle",
+      "category": "games",
+      "game": "WordleGame",
+      "title": "Wordle",
+      "keywords": [
+        "wordle",
+        "ord",
+        "gæt",
+        "bogstaver",
+        "grøn",
+        "gul"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Gæt det skjulte 5-bogstavsord inden for 6 forsøg. Efter hvert gæt skifter fliserne farve: grøn = rigtigt bogstav på rette plads, gul = bogstavet forekommer, men et andet sted, grå = bogstavet er ikke i ordet.",
+            "Gentagne bogstaver håndteres korrekt: et bogstav markeres kun gult eller grønt så mange gange, som det faktisk forekommer i svaret.",
+            "Hvert gæt skal være på 5 bogstaver, men behøver ikke være et 'rigtigt' ord - det tjekkes ikke mod en ordbog. Svarene passer til det valgte sprog."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Skriv bogstaver A-Z, [Backspace] sletter det sidste, [Enter] tjekker rækken (kun med 5 bogstaver).",
+            "- Du kan også bruge skærmtastaturet med musen; dets bogstaver farves ud fra, hvad du hidtil har lært."
+          ]
+        },
+        {
+          "h": "Point",
+          "body": [
+            "Det fortsætter endeløst: hvert løst ord giver point - færre gæt betyder flere (10 til 60). Et nyt ord dukker op straks efter.",
+            "Det første ord, du IKKE knækker, afslutter spillet; de point, du har samlet, er din highscore."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Åbn med et ord, der har mange forskellige, almindelige bogstaver.",
+            "- Brug grå bogstaver til at udelukke ting, og flyt gule bogstaver til en ny position."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "trex",
+      "category": "games",
+      "game": "TRexRunnerGame",
+      "title": "T-Rex Runner",
+      "keywords": [
+        "trex",
+        "dino",
+        "løber",
+        "hop",
+        "buk",
+        "endeløs"
+      ],
+      "sections": [
+        {
+          "h": "Styring",
+          "body": [
+            "Start med at løbe med [Space] eller [Up] - dinoen løber derefter automatisk.",
+            "- Hop: tryk kort på [Space]/[Up] for små hop, hold for højere hop.",
+            "- Buk: hold [Down] - i luften får dette dig til at falde hurtigere."
+          ]
+        },
+        {
+          "h": "Forhindringer",
+          "body": [
+            "Kaktusser dukker op enkeltvis eller i grupper på jorden - hop over dem.",
+            "Pterodaktyler dukker op i tre højder: højt = buk, lavt/midt = hop.",
+            "Farten stiger konstant; for hver 100 point får du et bip og et kort blink."
+          ]
+        },
+        {
+          "h": "Indstillinger og tips",
+          "body": [
+            "Skift på startskærmen (gemmes): [1]-[3] sværhedsgrad, [N] dag/nat, [C] skin.",
+            "- Et kort tryk sparer højde til hurtige dobbeltforhindringer.",
+            "- Efter et styrt, fortsæt straks med [Enter]/[Space]."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dame",
+      "category": "games",
+      "game": "DameGame",
+      "title": "Dam (Dame)",
+      "keywords": [
+        "dam",
+        "damspil",
+        "dame",
+        "slagtvang",
+        "flyvende dam",
+        "bræt"
+      ],
+      "sections": [
+        {
+          "h": "Varianter",
+          "body": [
+            "Vælges i opsætningen - hver med 1 spiller mod AI eller 2 spillere lokalt:",
+            "- Tysk dam 8x8: menige slår fremad og bagud, dammen flyver enhver afstand.",
+            "- International dam 10x10: større bræt, slagtvang med maksimumreglen (den længste slåning er obligatorisk).",
+            "- Checkers 8x8 (engelsk): menige slår kun fremad, dammen flytter kun ét felt."
+          ]
+        },
+        {
+          "h": "Regler og styring",
+          "body": [
+            "Slåning er tvungen: findes en slåning, skal du tage den - brikker, der kan slå, er markeret med rødt omrids.",
+            "Klik på en brik, derefter målfeltet; spil et multispring trin for trin.",
+            "Tastatur: [Arrows]/[WASD] flytter rammen, [Space]/[Enter] vælger.",
+            "En menig, der når den fjerneste række, bliver til en dam (krone)."
+          ]
+        },
+        {
+          "h": "AI og point",
+          "body": [
+            "Enkeltspiller tilbyder tre AI-styrker (minimax + alfa-beta), vælg dem i opsætningen med [<]/[>].",
+            "Highscoren tæller dine sejre mod AI'en i denne session; flerspiller giver ikke point.",
+            "Efter et spil: [Enter] ny runde, [S] tilbage til opsætning."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poker",
+      "category": "games",
+      "game": "PokerGame",
+      "title": "Poker",
+      "keywords": [
+        "poker",
+        "holdem",
+        "texas",
+        "video poker",
+        "draw",
+        "jetoner",
+        "blinds"
+      ],
+      "sections": [
+        {
+          "h": "Tilstande",
+          "body": [
+            "Vælg varianten på forberedelsesskærmen:",
+            "- Texas Hold'em: mod 1-3 AI-modstandere, med dealerknap, blinds og fire budrunder (preflop, flop, turn, river).",
+            "- 5 Card Draw: heads-up mod AI - byt kort én gang, to budrunder.",
+            "- Video Poker (Jacks or Better): solo mod udbetalingstabellen."
+          ]
+        },
+        {
+          "h": "Handlinger",
+          "body": [
+            "Under buddet: [F] fold, [C] check/call, [R] raise, [A] all-in - eller klik på knapperne.",
+            "Ved bytte/hold: klik på kort eller tryk [1]-[5], og tryk derefter [Enter] for at trække.",
+            "[Enter]/[Space] giver den næste hånd."
+          ]
+        },
+        {
+          "h": "Jetoner og hænder",
+          "body": [
+            "Jetoner (start 1000) bevares (mem.json). Highscoren er dit højeste jetonantal. Flad = genstart med et klik.",
+            "Håndrangering: High Card < Pair < Two Pair < Three of a Kind < Straight < Flush < Full House < Four of a Kind < Straight Flush < Royal Flush."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slidepuzzle",
+      "category": "games",
+      "game": "SlidingPuzzleGame",
+      "title": "Skydepuslespil",
+      "keywords": [
+        "skydepuslespil",
+        "15-spil",
+        "femten",
+        "brikker",
+        "tal",
+        "skub"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Sæt de nummererede brikker tilbage i rækkefølge (1, 2, 3 …); hullet ender i nederste højre hjørne.",
+            "Brikker kan kun skubbes ind i det tomme hul. Tre størrelser: 3×3 (let), 4×4 (klassisk) og 5×5 (svær).",
+            "Brættet blandes med mange tilfældige træk, så det altid kan løses."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Klik på en brik i samme række eller kolonne som hullet for at skubbe hele linjen.",
+            "- Piletasterne skubber brikken ved siden af hullet ind i det."
+          ]
+        },
+        {
+          "h": "Point",
+          "body": [
+            "Du starter med en basisscore pr. størrelse; hvert træk og hvert sekund trækker lidt fra. At løse hurtigt og med få træk giver den bedste highscore.",
+            "Efter løsning starter Enter/klik et nyt bræt med det samme."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastermind",
+      "category": "games",
+      "game": "MastermindGame",
+      "title": "Mastermind",
+      "keywords": [
+        "mastermind",
+        "farvekode",
+        "kode",
+        "gæt",
+        "pinde",
+        "logik"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Computeren vælger en skjult kode af farvede pinde (farver kan gentages). Knæk den række for række.",
+            "Efter hvert gæt får du feedbackpinde: en SORT pind = rigtig farve på rette plads, en HVID pind = rigtig farve på forkert plads. Rækkefølgen af feedbackpindene afslører ikke, hvilken pind den henviser til.",
+            "Tilstande: Let (4 pinde, 6 farver, 12 rækker), Klassisk (4/6, 10 rækker) og Svær (5 pinde, 8 farver)."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Klik på en farve nederst (eller tasterne 1–8) for at fylde den næste tomme plads.",
+            "- Klik på en placeret pind for at fjerne den; < eller Backspace fjerner den sidste.",
+            "- OK eller Enter tjekker hele rækken."
+          ]
+        },
+        {
+          "h": "Point",
+          "body": [
+            "Ligesom Wordle er det en endeløs stime: hver knækket kode giver point (færre gæt + sværere tilstand = flere), så dukker en ny kode op med det samme.",
+            "Den første kode, du ikke knækker, afslutter spillet - summen er din highscore."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bubbleshooter",
+      "category": "games",
+      "game": "BubbleShooterGame",
+      "title": "Bubble Shooter",
+      "keywords": [
+        "bubble shooter",
+        "puzzle bobble",
+        "bobler",
+        "kugler",
+        "skyd",
+        "grupper"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Skyd bobler op i bikagefeltet. Når tre eller flere af samme farve rører hinanden, springer gruppen.",
+            "Bobler, der mister deres forbindelse til øverste række, når en gruppe springer, falder ned og giver bonuspoint.",
+            "Tilstande: Let (4 farver, ingen nye rækker), Klassisk (5 farver, en ekstra række falder ind nu og da) og Svær (6 farver, hurtigere)."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Kanonen sigter mod musen; venstre/højre piletaster drejer den også.",
+            "- Venstreklik eller Space skyder. Bobler preller af sidevæggene.",
+            "- Den lille boble til venstre for kanonen er din næste farve."
+          ]
+        },
+        {
+          "h": "Point",
+          "body": [
+            "Sprungne og nedfaldne bobler giver point; at rydde hele feltet giver en bonus.",
+            "Så snart en boble låser sig fast under den røde linje, er spillet slut - summen er din highscore."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hangman",
+      "category": "games",
+      "game": "HangmanGame",
+      "title": "Galgemand",
+      "keywords": [
+        "galgemand",
+        "ord",
+        "gæt",
+        "bogstaver",
+        "galge"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Gæt det skjulte ord bogstav for bogstav. Hvert forkert bogstav tegner endnu en del af galgemanden.",
+            "Efter 6 fejl er figuren komplet, og runden er tabt.",
+            "Tilstande efter ordlængde: Korte ord (3–5), Blandet (3–12) og Lange ord (7–12). Ordene passer til det valgte sprog og bruger kun A–Z."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Skriv bogstaver A–Z eller klik på dem på skærmtastaturet.",
+            "- Rigtige bogstaver dukker op i ordet; forkerte gør tasten grå."
+          ]
+        },
+        {
+          "h": "Point",
+          "body": [
+            "Endeløs stime: hvert gættet ord giver point (flere tilbageværende liv og længere ord = flere), så dukker et nyt ord op med det samme.",
+            "Det første tab afslutter spillet - summen er din highscore."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blockjump",
+      "category": "games",
+      "game": "BlockJumpGame",
+      "title": "Block Jump",
+      "keywords": [
+        "block jump",
+        "3d",
+        "minecraft",
+        "platformspil",
+        "hop",
+        "klatr",
+        "parkour"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Et 3D-platformspil i Minecraft-stil: hop over svævende blokplatforme til det lysende målfyr. Hvert niveau er en ny, seed-genereret parkour og bliver sværere.",
+            "Kameraet er førsteperson som i Minecraft som standard; tryk V for at skifte til et forfølgelseskamera.",
+            "Falder du under platformene, mister du et liv og genopstår ved det sidste checkpoint. Ved 0 liv (du starter med 3) slutter turen."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- WASD eller piletaster: bevæg dig (relativt til, hvor du kigger). Space: hop. Mus: kig rundt.",
+            "- På en stige klatrer W op og S ned. En fjederblok kaster dig højt op i luften.",
+            "- V = visning (første/tredje person), B = bevægelsessløring, C = fang/frigiv mus, +/- = følsomhed. Esc pauser og frigiver musen."
+          ]
+        },
+        {
+          "h": "Bloktyper",
+          "body": [
+            "- Græs/jord/sten/træ: solide blokke, du hopper på og står på.",
+            "- Stige: klatr langsomt op/ned. Hegn: en lille blok, der spærrer vejen - hop bare over den.",
+            "- Fjederblok: kaster dig højt op (for at nå høje platforme). Mønter svæver langs ruten for ekstra point."
+          ]
+        },
+        {
+          "h": "Point",
+          "body": [
+            "Hver mønt er 50 point værd. At nå et niveaus mål giver 1000 point plus en tidsbonus (jo hurtigere, jo mere).",
+            "Point akkumuleres på tværs af alle niveauer; summen er din highscore."
+          ]
+        }
+      ]
+    }
+  ]
+}

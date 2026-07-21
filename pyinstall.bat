@@ -4,7 +4,8 @@ REM  Baut eine eigenstaendige PyGameZ.exe mit PyInstaller.
 REM
 REM  - nutzt die lokale .venv (wird bei Bedarf wie in start.bat erstellt)
 REM  - installiert PyInstaller (und Pillow fuer das Icon) automatisch nach
-REM  - packt alle Daten mit ein: lang\, lamawiki\*.json, games\levels\, logo\
+REM  - packt alle Daten mit ein: lang\ (inkl. lang.expansion\), lamawiki\*.json
+REM    + lamawiki\lang.expansion\*.json, games\levels\, logo\
 REM  - Ergebnis: builds\PyGameZ.exe  (alles in EINER Datei)
 REM
 REM  Die .exe laeuft ohne installiertes Python. Einstellungen und
@@ -77,6 +78,7 @@ echo Baue PyGameZ.exe - das kann einige Minuten dauern...
     %ICON_OPT% ^
     --add-data "%CD%\lang;lang" ^
     --add-data "%CD%\lamawiki\*.json;lamawiki" ^
+    --add-data "%CD%\lamawiki\lang.expansion\*.json;lamawiki\lang.expansion" ^
     --add-data "%CD%\games\levels;games\levels" ^
     --add-data "%CD%\logo;logo" ^
     "%CD%\main.py"
@@ -95,7 +97,7 @@ echo  werden beim Spielen neben der .exe angelegt.
 echo ===================================================================
 echo.
 pause
-goto :eof
+exit /b 0
 
 :no_python
 echo.
@@ -105,14 +107,14 @@ echo     https://www.python.org/downloads/
 echo Oder einmalig install-python.bat ausfuehren.
 echo.
 pause
-goto :eof
+exit /b 1
 
 :no_venv
 echo.
 echo Konnte keine .venv erstellen - bitte install-python.bat ausfuehren.
 echo.
 pause
-goto :eof
+exit /b 1
 
 :no_pyinstaller
 echo.
@@ -120,7 +122,7 @@ echo PyInstaller konnte nicht installiert werden (Internetverbindung?).
 echo Manuell versuchen:  .venv\Scripts\python -m pip install pyinstaller
 echo.
 pause
-goto :eof
+exit /b 1
 
 :build_failed
 echo.
@@ -128,4 +130,4 @@ echo Der Build ist fehlgeschlagen - Meldungen oben beachten.
 echo Der build\-Ordner bleibt fuer die Fehlersuche erhalten.
 echo.
 pause
-goto :eof
+exit /b 1

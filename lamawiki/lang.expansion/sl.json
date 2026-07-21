@@ -1,0 +1,1674 @@
+{
+  "pages": [
+    {
+      "id": "start",
+      "category": "general",
+      "title": "Kako začeti",
+      "keywords": [
+        "začetek",
+        "pomoč",
+        "uvod",
+        "meni",
+        "pavza",
+        "celozaslonsko",
+        "stranska vrstica"
+      ],
+      "sections": [
+        {
+          "h": "Zagon igre",
+          "body": [
+            "Igro lahko zaženeš na tri načine: s seznama iger v levi stranski vrstici, iz mreže iger na začetnem zaslonu ali neposredno iz tega wikija prek predigralnega zaslona.",
+            "Pred vsako igro se prikaže predigralni zaslon: tam izbereš način (npr. za enega ali za več igralcev) ter dostopaš do možnosti in tega wikija."
+          ]
+        },
+        {
+          "h": "Pomembne tipke",
+          "body": [
+            "- [Esc] začasno ustavi in nadaljuje tekočo igro - v menijih se vrne nazaj.",
+            "- [F11] vklopi in izklopi celozaslonski način.",
+            "- Zeleni gumb Nazaj v meni konča igro in shrani najboljši rezultat."
+          ]
+        },
+        {
+          "h": "Stranska vrstica",
+          "body": [
+            "Na levi vidiš vse igre z njihovo ikono in svojim najboljšim rezultatom (zvezdica). Tekoča igra ostane označena; v majhnih oknih se seznam pomika s kolescem miške.",
+            "Kartica stanja spodaj levo prikazuje ime igre, stanje (zeleno = teče, zlato = pavza, rdeče = konec igre), rezultat in trenutno hitrost sličic."
+          ]
+        },
+        {
+          "h": "Za več igralcev",
+          "body": [
+            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) in Asteroids (sodelovalni dvoboj) imajo lokalni način za 2 igralca - izbereš ga na predigralnem zaslonu.",
+            "Pri enem igralcu obe razporeditvi tipk upravljata isti lik; pri več igralcih vsaka po enega (privzeto: I1 = WASD, I2 = puščice ali IJKL - glej možnosti)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "category": "general",
+      "title": "Možnosti in upravljanje",
+      "keywords": [
+        "možnosti",
+        "nastavitve",
+        "upravljanje",
+        "tipke",
+        "ločljivost",
+        "fps",
+        "zvok",
+        "jezik"
+      ],
+      "sections": [
+        {
+          "h": "Zvok in vibriranje",
+          "body": [
+            "Zvok vklopiš ali izklopiš in nastaviš glasnost na zaslonu z možnostmi. Vsi učinki nastajajo v živo - zvočnih datotek ni.",
+            "Vibriranje zatrese priključeno igralno ploščico (brez nje nima učinka)."
+          ]
+        },
+        {
+          "h": "Razporeditev tipk",
+          "body": [
+            "Na voljo so tri prednastavitve: WASD + puščice, WASD + IJKL in puščice + WASD.",
+            "Vsako posamezno tipko lahko na novo dodeliš: klikni vrstico ali potrdi z Enter, nato pritisni želeno tipko. [Esc] prekliče.",
+            "Razporeditve so ločene za igralca 1 in igralca 2 ter se shranijo trajno."
+          ]
+        },
+        {
+          "h": "Grafika in zmogljivost",
+          "body": [
+            "Ločljivost določa notranje igralno območje (480x360 do 1280x960). Manjša = manjša obremenitev, večja = ostrejša slika.",
+            "Samodejna ločljivost samodejno prilagodi igralno območje velikosti okna.",
+            "Možnosti FPS (15 do 120) določajo ciljno hitrost sličic - manj FPS varčuje z energijo."
+          ]
+        },
+        {
+          "h": "Jezik",
+          "body": [
+            "Vmesnik je na voljo v nemščini, angleščini, francoščini, španščini in portugalščini. Preklopiš ga na zaslonu z možnostmi ali prek Jezik v stranski vrstici - ta wiki prav tako zamenja jezik."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saving",
+      "category": "general",
+      "title": "Shranjevanje in najboljši rezultati",
+      "keywords": [
+        "shranjevanje",
+        "najboljši rezultat",
+        "rekord",
+        "točke",
+        "napredek",
+        "datoteke"
+      ],
+      "sections": [
+        {
+          "h": "Najboljši rezultati",
+          "body": [
+            "Vsaka igra samodejno shrani svoj najboljši rezultat, ko se runda konča. Ob novem rekordu se pokaže zlat trak - poleg tega še dež konfetov.",
+            "Najboljše rezultate vidiš povsod: kot zvezdico na seznamu v stranski vrstici, na drsečem traku na začetnem zaslonu in v kartici stanja."
+          ]
+        },
+        {
+          "h": "Kaj se shrani kam?",
+          "body": [
+            "- settings.json: zvok, glasnost, razporeditev tipk, ločljivost, FPS in možnosti iger (npr. način Snake, nastavitve Sudokuja).",
+            "- mem.json: najboljši rezultati, izbrani jezik in napredek po stopnjah Sudokuja.",
+            "- mem-ngb.json: vizualni modi Snake (barva glave, mreža, trak).",
+            "Obe datoteki sta neposredno v mapi igre in ju lahko preprosto izbrišeš za ponastavitev."
+          ]
+        },
+        {
+          "h": "Namig",
+          "body": [
+            "Točke se shranijo le, ko izstopiš prek Nazaj v meni ali ko se runda normalno konča - ne pa, ko med igro na silo zapreš okno."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake-special",
+      "category": "general",
+      "title": "Snake posebnosti",
+      "keywords": [
+        "tekmovalno",
+        "prestiž",
+        "hardcore",
+        "modi",
+        "prilagoditev",
+        "avtomat",
+        "igre na srečo",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Tekmovalni način",
+          "body": [
+            "Neskončni način z vzpenjanjem po stopnjah: začneš z natanko enim jabolkom. Več jabolk kot skupno zbereš, višja je tvoja stopnja - naenkrat se pojavi več jabolk in množitelj rezultata narašča (15 stopenj, do x16).",
+            "- Modra jabolka odprejo igralni avtomat: vložek je tvoja dolžina, trije enaki simboli = glavni dobitek z bonus jabolki.",
+            "- Vijolična jabolka (igre na srečo) stavijo del tvoje velikosti: običajno 50-odstotni vložek s faktorjem x0.5 do x1.5.",
+            "Tvoja natančna velikost je zgoraj levo prikazana kot decimalno število - vsaka stava izhaja iz nje. Ravni stopenj so v games/levels/snake-comp.json in jih lahko prosto urejaš."
+          ]
+        },
+        {
+          "h": "Hardcore",
+          "body": [
+            "Vklopiš ga z [H] v nastavitvah tekmovalnega načina: vsak pospešek požre dolžino, vijolična jabolka pa postanejo bolj tvegana (75- do 90-odstotni vložek, faktor x0.25 do x2.25). Rdeč rob označuje ta način."
+          ]
+        },
+        {
+          "h": "Prestiž",
+          "body": [
+            "Dosegljiv z [P] pri enem igralcu: zbrana jabolka lahko pretvoriš v ravni prestiža, ki podeljujejo trajne ugodnosti. Napredek ostane med posameznimi igrami."
+          ]
+        },
+        {
+          "h": "Modi / prilagoditev",
+          "body": [
+            "V nastavitvah prek gumba s čopičem ali [C] : čisto vizualni meni, ki nikoli ne spremeni poteka igre.",
+            "- Glava: barva glave kače (prednastavitve ali lastna barva RGB).",
+            "- Mreža: koordinatna mreža s številkami vrstic in črkami stolpcev kot pomoč na velikih poljih.",
+            "- Trak: vklopi ali izklopi trak z množiteljem, poleg tega velikost in prosojnost - z živim predogledom.",
+            "Vse se shrani v mem-ngb.json."
+          ]
+        },
+        {
+          "h": "3D pogled",
+          "body": [
+            "Z [V] v nastavitvah: polje je upodobljeno kot 3D-prizor, kamera za zasledovanje lebdi za kačo, krmiljenje pa je relativno glede na smer pogleda (dva hitra pritiska = obrat).",
+            "Z [K] odpreš možnosti 3D-kamere: mehko tresenje, vidno polje (FOV), višino kamere in preklop tresenja ob zavoju. Igrljivo v 3D: Klasika in Ovire (samo za enega igralca)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake",
+      "category": "games",
+      "game": "SnakeGame",
+      "title": "Snake",
+      "keywords": [
+        "kača",
+        "jabolko",
+        "pospešek",
+        "tekmovalno",
+        "3d",
+        "portali"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Krmariš s [W] [A] [S] [D] ali puščičnimi tipkami. V 3D krmariš relativno glede na smer pogleda: levo/desno zavijanje, dva hitra pritiska = obrat.",
+            "- Pospešek: pridrži [Space] ali Shift = dvojna hitrost. Vrstica vzdržljivosti se prazni in se nato spet napolni.",
+            "- Igralec 2 pospeši z Enter ali desno tipko Shift."
+          ]
+        },
+        {
+          "h": "Načini",
+          "body": [
+            "- Klasika: čista kača.",
+            "- Hitrostni naval: vsaka hrana te pospeši.",
+            "- Ovire: smrtonosni bloki na polju.",
+            "- Portali: pari teleporterjev te prenesejo čez polje.",
+            "- Napad na čas: 60 sekund, čim več jabolk.",
+            "- Tekmovalno: neskončni način s stopnjami, igralnim avtomatom in jabolki za stave - podrobnosti na strani Snake posebnosti.",
+            "Izbirljivo je tudi: prehod skozi steno, bonus jabolka, hardcore, 2D/3D pogled z [V] in način za več igralcev."
+          ]
+        },
+        {
+          "h": "Točkovanje",
+          "body": [
+            "Jabolka dajejo točke (bonus jabolka naključno podvojijo). Zlata jabolka se pojavijo začasno, dajo veliko točk in takoj napolnijo pospešek. V tekmovalnem načinu tvoja stopnja pomnoži vse točke."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Pospešek uporabi na dolgih ravninah, ne v tesnih ovinkih.",
+            "- Z vklopljenim prehodom skozi steno lahko pobegneš čez rob, ko se zapreš v kot.",
+            "- V tekmovalnem načinu se vijolična jabolka najbolj izplačajo, ko imaš odvečno dolžino za stavo."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pong",
+      "category": "games",
+      "game": "PongGame",
+      "title": "Pong",
+      "keywords": [
+        "lopar",
+        "žoga",
+        "ai",
+        "klasika"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Igralec 1 premika levi lopar s [W] in [S] - pri več igralcih igralec 2 upravlja desnega s puščičnimi tipkami.",
+            "Način gibanja je za vsak lopar preklopljiv: neprekinjeno (enkrat pritisni, lopar drsi naprej) ali držanje (premika se le, dokler držiš). Preklopiš z [X] za lopar 1 in [N] za lopar 2."
+          ]
+        },
+        {
+          "h": "Pravila in točkovanje",
+          "body": [
+            "Igra se do 5 točk, proti računalniku ali z dvema igralcema.",
+            "Fizika žoge se z vsakim odbojem pospeši; kot odboja je odvisen od tega, kje žoga zadene lopar."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Žogo zadeni z robom loparja, da ustvariš strme kote.",
+            "- Način držanja daje natančnejši nadzor, neprekinjeni način pa hitrejše reakcije."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "airhockey",
+      "category": "games",
+      "game": "AirHockeyGame",
+      "title": "Air Hockey",
+      "keywords": [
+        "plošček",
+        "kladivce",
+        "fizika",
+        "goli",
+        "okrepitve",
+        "miška"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Pri enem igralcu tvoje kladivce sledi miški - katera koli tipka preklopi nazaj na tipkovnico (8 smeri).",
+            "Pri več igralcih I1 igra levo s [W] [A] [S] [D] , I2 pa desno z [I] [J] [K] [L] ."
+          ]
+        },
+        {
+          "h": "Nastavitve",
+          "body": [
+            "- Težavnost računalnika: lahka, srednja ali težka.",
+            "- [T] izbere goli za zmago (3/5/7/10).",
+            "- [P] vklopi okrepitve: XL (večje kladivce), GOAL (nasprotnikov gol se skrči), hitrost (hitrejše kladivce). Okrepitve pripadajo igralcu, ki se je zadnji dotaknil ploščka."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Plošček prevzame hitrost tvojega kladivca - gradi zagon, namesto da le blokiraš.",
+            "- Ostani za ploščkom: potiskanje proti lastnemu golu tvega avtogol."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tictactoe",
+      "category": "games",
+      "game": "TicTacToeGame",
+      "title": "Tic-Tac-Toe",
+      "keywords": [
+        "križec",
+        "krogec",
+        "polje",
+        "ai",
+        "mnk"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Znake postavljaš s klikom miške. Po koncu igre: Enter ali klik = nova runda, [S] = nazaj na nastavitve."
+          ]
+        },
+        {
+          "h": "Načini in nastavitve",
+          "body": [
+            "Velikosti polja od 3x3 do 9x9. Zmagovalna dolžina se prilagodi: 3 v vrsti na 3x3, 4 na 4x4, sicer 5.",
+            "Za enega igralca proti računalniku (lahko/srednje/težko) ali dva igralca lokalno, X proti O izmenično."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Težki računalnik na 3x3 je nepremagljiv - neodločeno je tam najboljše, kar lahko dosežeš.",
+            "- Na velikih poljih je najpomembnejše središče: skozenj poteka večina petih vrst."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "breakout",
+      "category": "games",
+      "game": "BreakoutGame",
+      "title": "Breakout",
+      "keywords": [
+        "opeke",
+        "žoga",
+        "lopar",
+        "okrepitve",
+        "kombo",
+        "stopnje"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Lopar premikaš z miško ali puščičnimi tipkami. [Space] izstreli žogo in sproži laser. [P] ali [Esc] naredi pavzo."
+          ]
+        },
+        {
+          "h": "Nastavitve",
+          "body": [
+            "- [1] [2] [3] izberejo težavnost.",
+            "- Levo/desno spremeni barvo žoge, gor/dol začetno stopnjo, [M] razporeditev (standardno ali polno)."
+          ]
+        },
+        {
+          "h": "Opeke in okrepitve",
+          "body": [
+            "Vrste opek: navadna, jeklena (neuničljiva), bomba (eksplodira) in zlata (dodatne točke).",
+            "Okrepitve: x2/x3 žoge, [L] laser, [F] ognjena krogla, [G] lepljivo, [U] ščit, kovanci za bonus točke - poleg tega množitelj kombo za hitre zadetke."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Vodi žogo ob stranskih stenah za blok opek - tam se sam počisti.",
+            "- Ščit ujame natanko en preboj: prihrani ga za tvegane faze z več žogami."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tetris",
+      "category": "games",
+      "game": "TetrisGame",
+      "title": "Tetris",
+      "keywords": [
+        "kosi",
+        "vrste",
+        "vrtenje",
+        "versus",
+        "sklad"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Levo/desno premika kos, gor ga zavrti, dol je mehki spust, akcijska tipka (privzeto: [Space] ) pa trdi spust."
+          ]
+        },
+        {
+          "h": "Načini in točkovanje",
+          "body": [
+            "Polne vrste dajejo točke - več hkrati jih da veliko več. Vsakih 10 vrst se stopnja in hitrost povečata.",
+            "Versus (za več igralcev): dve polji drug ob drugem, kdor prej doseže vrh s svojim skladom, izgubi."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Pusti en stolpec prazen za dolgi kos I in počisti s štirikratnimi vrstami.",
+            "- Gradi plosko: visoki stolpi se hitro prevrnejo, ko hitrost narašča."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "invaders",
+      "category": "games",
+      "game": "InvadersGame",
+      "title": "Invaders",
+      "keywords": [
+        "vesoljci",
+        "valovi",
+        "šef",
+        "orožja",
+        "arena",
+        "streljanje"
+      ],
+      "sections": [
+        {
+          "h": "Načini",
+          "body": [
+            "- Klasika: klasični blok vesoljcev se spušča. V nastavitvah izbereš gibanje (samo levo/desno ali prosto z WASD) in merjenje (vedno navzgor ali proti miški).",
+            "- Arena: prosto gibanje v vse smeri, sovražniki pritekajo z vseh robov, meriš v smeri svojega gibanja."
+          ]
+        },
+        {
+          "h": "Orožja in okrepitve",
+          "body": [
+            "Štiri orožja, preklopiš z [1] do [4] : blaster, razpršeni strel, hitri ogenj in laser.",
+            "Uničeni vesoljci spustijo okrepitve: dodatno življenje, ščit in nadgradnje orožja. Vsaka 4. stopnja ima šefa."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Razpršeni strel počisti goste bloke, laser preluknja cele stolpce - preklapljaj po valovih.",
+            "- Nikoli ne stoj pri miru v areni: kroži ob robu in potegni sovražnike v vrsto."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asteroids",
+      "category": "games",
+      "game": "AsteroidsGame",
+      "title": "Asteroids",
+      "keywords": [
+        "ladja",
+        "skale",
+        "ufo",
+        "hiperprostor",
+        "valovi",
+        "vektor"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Gor potiska v smeri pogleda, levo/desno vrti ladjo, akcijska tipka strelja. Ladja drsi naprej (vztrajnost) in prehaja čez robove zaslona.",
+            "Dol sproži hiperprostor: zasilni skok na naključni položaj s 4-sekundnim premorom - in 12-odstotnim tveganjem, da razpade."
+          ]
+        },
+        {
+          "h": "Točkovanje in dodatki",
+          "body": [
+            "Skale se razdelijo na dve manjši; tri velikosti dajejo 20/50/100 točk. UFO (lahko ga izklopiš) da 200 točk, dodatno življenje pa dobiš na vsakih 5000 točk.",
+            "Okrepitve iz uničenih skal: ščit (6 sekund neranljiv), trojni strel in hitri ogenj.",
+            "Sodelovalni dvoboj (za več igralcev): obe ladji letita hkrati z ločenimi življenji - zmaga tisti z več točkami."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Najprej počisti majhne, hitre drobce, preden razbiješ naslednjo veliko skalo.",
+            "- Hiperprostor je zadnja možnost, ne način potovanja - tveganje je resnično."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pacman",
+      "category": "games",
+      "game": "PacmanGame",
+      "title": "Pac-Man",
+      "keywords": [
+        "duhovi",
+        "pike",
+        "labirint",
+        "sadje",
+        "moč"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Premikaš s puščičnimi tipkami ali [W] [A] [S] [D] . Po koncu igre: Enter = nova, [S] = nastavitve.",
+            "Predora na levi in desni te preneseta na drugo stran."
+          ]
+        },
+        {
+          "h": "Duhovi in energijske pike",
+          "body": [
+            "Štirje duhovi lovijo s svojim izvirnim vedenjem: Blinky zasleduje neposredno, Pinky pripravlja zasede, Inky uporablja vektor prek Blinkyja, Clyde se od blizu umakne.",
+            "Energijske pike naredijo duhove modre in užitne za nekaj časa - veriga daje 200/400/800/1600 točk. Sadje se pojavi kot bonus, dodatno življenje dobiš pri 10.000 točkah."
+          ]
+        },
+        {
+          "h": "Nastavitve in namigi",
+          "body": [
+            "Težavnost normalno/težko/ekstremno določa hitrost duhov in čas prestrašenosti; vsaka stopnja je hitrejša.",
+            "- Energijsko piko pojej šele, ko je blizu več duhov - šteje veriga.",
+            "- Zapomni si faze razpršitve: ob vsakem preklopu se vsi duhovi obrnejo."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flappy",
+      "category": "games",
+      "game": "FlappyGame",
+      "title": "Flappy Bird",
+      "keywords": [
+        "ptica",
+        "cevi",
+        "kovanci",
+        "ščit",
+        "medalje",
+        "zamah"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "[Space], puščica gor, [W] ali klik miške ptico požene v zamah - nagne se glede na hitrost vzpona in spusta."
+          ]
+        },
+        {
+          "h": "Točkovanje in dodatki",
+          "body": [
+            "Vsaka prečkana cev da eno točko. V vrzelih se pojavijo kovanci (bonus) in okrepitev ščit, ki odpusti natanko en trk.",
+            "Dnevne in nočne teme se menjajo z rezultatom; po koncu igre so na voljo medalje od brona do platine."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Kratki, redni dotiki ohranjajo pot leta mirnejšo kot redki dolgi.",
+            "- Težavnost določa velikost vrzeli in hitrost - vrzel se oži, ko tvoj rezultat narašča."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doodle",
+      "category": "games",
+      "game": "DoodleGame",
+      "title": "Doodle Jump",
+      "keywords": [
+        "skok",
+        "ploščadi",
+        "pošasti",
+        "vzmet",
+        "propeler",
+        "višina"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Doodler ob pristanku samodejno skoči - ti krmariš le levo/desno (z vztrajnostjo). Robovi so odprti: če odideš levo, se vrneš na desni.",
+            "Streljaj navzgor s puščico gor ali [Space] ."
+          ]
+        },
+        {
+          "h": "Ploščadi in dodatki",
+          "body": [
+            "- Zelena: navadna. Modra: premika se. Rjava: se zlomi, ko stopiš nanjo. Bela: izgine po enem skoku.",
+            "- Vzmeti dajo super skok, klobuk s propelerjem te za trenutek samodejno ponese navzgor (neranljiv).",
+            "- Pošasti so ob dotiku smrtonosne - streljanje vanje daje dodatne točke."
+          ]
+        },
+        {
+          "h": "Točkovanje in namigi",
+          "body": [
+            "Rezultat = dosežena višina; težavnost narašča z višino.",
+            "- Preden odskočiš, načrtuj, kam pristaneš - rjave ploščadi te ne bodo obdržale.",
+            "- Odprt rob uporabi kot bližnjico do oddaljenih ploščadi."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2048",
+      "category": "games",
+      "game": "Game2048",
+      "title": "2048",
+      "keywords": [
+        "ploščice",
+        "drsenje",
+        "združevanje",
+        "številke"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje in pravila",
+          "body": [
+            "Puščice ali [W] [A] [S] [D] naenkrat potisnejo vse ploščice v eno smer. Enake številke se združijo v svojo vsoto; po vsaki potezi se pojavi nova ploščica.",
+            "Cilj je ploščica 2048 - po njej se nadaljuje v neskončnost. Izgubiš, ko poteza ni več mogoča."
+          ]
+        },
+        {
+          "h": "Točkovanje",
+          "body": [
+            "Vsako združevanje k tvojemu rezultatu doda vrednost nove ploščice."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Svojo največjo ploščico parkiraj v kotu in tega kota nikoli ne moti.",
+            "- Drsi predvsem v dveh smereh - tako ostane polje urejeno."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minesweeper",
+      "category": "games",
+      "game": "MinesweeperGame",
+      "title": "Minesweeper",
+      "keywords": [
+        "mine",
+        "zastavice",
+        "razkrivanje",
+        "akordiranje",
+        "najboljši čas"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Levi klik razkrije celico, desni klik postavi zastavico (po želji z vprašajevim krogom, [Q] v nastavitvah). [F] označi celico pod kazalcem, [R] ponovno zažene.",
+            "Akordiranje: klik na izpolnjeno število (vse zastavice postavljene) naenkrat razkrije preostale sosede."
+          ]
+        },
+        {
+          "h": "Stopnje in točkovanje",
+          "body": [
+            "Začetnik (9x9, 10 min), srednji (16x16, 40) in strokovnjak (30x16, 99). Najboljši čas za vsako stopnjo se shrani.",
+            "Prvi klik je vedno varen - mine se razporedijo šele zatem. Točke = osnovna vrednost stopnje minus sekunde."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Začni s številkami na robu odprtih območij - vzorci tam so nedvoumni.",
+            "- Enka v kotu z le enim pokritim sosedom je vedno varna zastavica."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sudoku",
+      "category": "games",
+      "game": "SudokuGame",
+      "title": "Sudoku",
+      "keywords": [
+        "uganka",
+        "številke",
+        "zapiski",
+        "stopnje",
+        "namigi",
+        "logika"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Celico izbereš s puščičnimi tipkami, [W] [A] [S] [D] ali klikom miške - številska tipkovnica na desni deluje povsem z miško.",
+            "- [1] do [9] vnese številko (deluje tudi numerična tipkovnica).",
+            "- [0], Backspace ali desni klik izbriše.",
+            "- [N] preklopi način zapiskov, [H] da namig, [R] ponovno zažene stopnjo, [Q] odpre izbor stopenj.",
+            "- Po koncu igre [A] skrije trak in razkrije celotno rešitev."
+          ]
+        },
+        {
+          "h": "Stopnje in načini",
+          "body": [
+            "400 fiksnih stopenj: 4 težavnosti (lahko/normalno/težko/strokovno) krat 100 stopenj. Vsaka stopnja je povsod ista uganka in enolično rešljiva; rešene stopnje se odkljukajo.",
+            "Način igre določa pomoč in množitelj rezultata:",
+            "- Klasika x2.0: brez pomoči, čisto kot na papirju.",
+            "- Zapiski x1.5: poleg tega še svinčnikovi zapiski.",
+            "- Udobno x1.0: napake takoj rdeče, poudarjanje sporov, pravilni vnosi se zaklenejo.",
+            "- Pomoč x0.7: poleg tega še do 3 namigi."
+          ]
+        },
+        {
+          "h": "Napake in točkovanje",
+          "body": [
+            "Vsak vnos se takoj preveri glede na rešitev. Z vklopljeno omejitvijo 3 napak (nastavitve, tipka [F] ) tretja napaka konča igro.",
+            "Točke = (osnova težavnosti minus čas, napake in namigi) krat množitelj načina."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Začni z vrsticami, stolpci in kvadrati, ki že vsebujejo veliko številk.",
+            "- Kandidate zapisuj v parih: če imata dve celici enaka kandidata, ta drugod odpadeta.",
+            "- V klasičnem načinu si vzemi čas: vsaka napaka takoj šteje, tudi brez rdeče oznake."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frogger",
+      "category": "games",
+      "game": "FroggerGame",
+      "title": "Frogger",
+      "keywords": [
+        "žaba",
+        "cesta",
+        "reka",
+        "zalivi",
+        "muha",
+        "krokodil"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Skači celico za celico s puščičnimi tipkami ali [W] [A] [S] [D] .",
+            "- [R] ponovno zažene, [S] odpre nastavitve.",
+            "Po koncu igre: [Enter] = ponovni poskus."
+          ]
+        },
+        {
+          "h": "Cesta, reka in zalivi",
+          "body": [
+            "Spodaj 5 prometnih pasov z avtomobili in tovornjaki v izmeničnih smereh - stik je smrtonosen.",
+            "Zgoraj 5 rečnih pasov: hlodi in želve te nosijo; padec v vodo pomeni utopitev. Na višjih stopnjah se želve občasno potopijo (utripanje = opozorilo).",
+            "Na vrhu čaka 5 zalivov - napolnitev vseh dokonča stopnjo, nato se vse pospeši.",
+            "- Dodatki: bonus muha (+200) se za trenutek pojavi v praznih zalivih, na višjih stopnjah krokodili zasedejo zalive (pristanek = smrt), časovna vrstica spodaj pa se prazni za vsako žabo."
+          ]
+        },
+        {
+          "h": "Točkovanje",
+          "body": [
+            "Vsaka na novo dosežena vrsta da 10 točk, zaliv 50 plus 10 za vsako preostalo sekundo.",
+            "Vseh 5 zalivov podeli 1000 točk in naslednjo stopnjo.",
+            "Pri 10.000 točkah dobiš enkratno dodatno življenje (začetek: 3 življenja)."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Prometne vrzeli načrtuj eno vrsto vnaprej, namesto da čakaš na robu.",
+            "- Hlode, ki drsijo proti tvojemu ciljnemu zalivu, uporabi kot taksi.",
+            "- Pristani zgodaj: časovni bonus je vrednejši od ovinka do muhe."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "category": "games",
+      "game": "MemoryGame",
+      "title": "Memory",
+      "keywords": [
+        "pari",
+        "karte",
+        "pomni",
+        "dvoboj",
+        "obračanje"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Karte obrneš s klikom miške - ali premakni okvir s puščicami/WASD in obrni s [Space] ali [Enter] .",
+            "- [R] premeša novo rundo, [S] odpre nastavitve.",
+            "Neujemajoč par ostane kratko viden in se nato sam obrne nazaj."
+          ]
+        },
+        {
+          "h": "Polja in dvoboj",
+          "body": [
+            "Tri velikosti polj: 4x4 (8 parov), 6x6 (18) in 8x6 (24) - motivi so kombinacije oblike in barve.",
+            "Samostojno vsaka razkrita kombinacija dveh kart šteje kot poteza; ura teče.",
+            "- Dvoboj (za več igralcev na predigralnem zaslonu): izmenično obračaš, ujemanje pomeni, da igraš znova - kdor ima na koncu več parov, zmaga."
+          ]
+        },
+        {
+          "h": "Točkovanje",
+          "body": [
+            "Samostojno: osnova glede na velikost polja minus 15 na potezo in 2 na sekundo (najmanj 100).",
+            "Dvoboj: zmagovalčevi pari krat 100 gredo na lestvico najboljših rezultatov."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Najprej obrni neznane karte - vsaka ti zastonj pokaže motiv.",
+            "- Motive si zapomni po njihovi barvni skupini, to prepolovi prostor iskanja.",
+            "- V dvoboju nasprotniku nikoli ne razkrij svežega para."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solitaire",
+      "category": "games",
+      "game": "SolitaireGame",
+      "title": "Solitaire",
+      "keywords": [
+        "karte",
+        "klondike",
+        "spider",
+        "freecell",
+        "piramida",
+        "tripeaks"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Karte vlečeš z miško (povleci in spusti) ali jih premikaš s klikom za klikom; desni klik pošlje zgornjo karto na temelj (Klondike/FreeCell).",
+            "- [U] razveljavi poljubno število potez, [R] razdeli novo deljenje, [S] odpre nastavitve.",
+            "[Space] ali [Enter] upravlja kupček (poteg/deljenje)."
+          ]
+        },
+        {
+          "h": "Pet različic",
+          "body": [
+            "- Klondike: klasični pasjans - štirje temelji od asa do kralja, tabla padajoče v izmeničnih barvah; možnost: poteg 1 ali 3.",
+            "- Spider: 10 stolpcev, 104 karte - dokončane nize od kralja do asa iste barve izginejo; možnost: 1, 2 ali 4 barve.",
+            "- FreeCell: vse obrnjeno navzgor, 4 proste celice; superpoteze so omejene s prostimi celicami in praznimi stolpci.",
+            "- Piramida: odstrani pare z vsoto 13, kralj šteje sam; 2 ponovni deljenji.",
+            "- TriPeaks: vedno ena vrednost nad ali pod odlagalnim kupom (as in kralj se ovijeta) - dolge verige dajejo kombo točke."
+          ]
+        },
+        {
+          "h": "Točkovanje",
+          "body": [
+            "Klondike: +10 na karto temelja, +5 na razkrito karto, časovni bonus ob zmagi. FreeCell: +10 na karto temelja plus časovni bonus.",
+            "Spider: 500 minus poteze plus 100 na dokončan niz. Piramida: +5 na karto, +500 za počiščenje.",
+            "TriPeaks: 10 krat kombo na karto - kupček ponastavi kombo; +500 za počiščenje."
+          ]
+        },
+        {
+          "h": "Možnosti",
+          "body": [
+            "Poteg-3 (Klondike) in število barv pri Spiderju se shranita trajno.",
+            "Razveljavitev je neomejena in brezplačna - le eksperimentiraj.",
+            "Vse različice si delijo eno lestvico najboljših rezultatov."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Ase in dvojke sprosti čim prej (Klondike/FreeCell).",
+            "- Ohrani en stolpec prazen - to je tvoje najpomembnejše orodje (Spider/FreeCell).",
+            "- Pri Piramidi preštej dosegljive pare z vsoto 13, preden se dotakneš kupčka."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aimtrainer",
+      "category": "games",
+      "game": "AimTrainerGame",
+      "title": "Aim Trainer",
+      "keywords": [
+        "merjenje",
+        "merek",
+        "refleks",
+        "3d",
+        "vesolje",
+        "streljanje"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Miška krmari kamero neposredno kot v strelski igri: vsak premik takoj obrne pogled za toliko (kazalec je nevidno ujet znotraj okna). [Esc] naredi pavzo in sprosti miško. Vodoravno vrtenje je neomejeno, gor/dol se ustavi pri 60 stopinjah.",
+            "Levi klik strelja natanko skozi središče zaslona (kratek premor med streli).",
+            "- [+] in [-] spremenita občutljivost (tudi med igro), [E] konča sprostitveno sejo."
+          ]
+        },
+        {
+          "h": "Načini",
+          "body": [
+            "- Natančnost (60 s): vedno 3 krogle hkrati - ustrelitev ene takoj ustvari novo; na koncu se doda bonus za natančnost.",
+            "- Refleks (30 tarč): tarče se pojavljajo ena za drugo in se po trenutku skrčijo - šteje reakcijski čas, statistika na koncu.",
+            "- Gibljive tarče (60 s): krogle drsijo po poteh (nihanje, kroženje, poskakovanje) - zaporedni zadetki dvigajo množitelj kombo.",
+            "- Sprostitev (neskončno): brez časovnika, brez kazni za zgrešitev - le sprosti se in streljaj; rezultat se shrani, ko se vrneš v meni."
+          ]
+        },
+        {
+          "h": "Točkovanje",
+          "body": [
+            "Natančnost: 100 točk na zadetek plus bonus za razdaljo; na koncu še natančnost na kvadrat krat 1500.",
+            "Refleks: hitrejša kot je reakcija, več točk (1000 minus milisekunde, najmanj 50).",
+            "Gibljive tarče: 80 točk krat množitelj kombo (do x4 pri 12 zaporednih zadetkih) - zgrešitev ponastavi kombo.",
+            "Sprostitev: 50 točk krat množitelj; kombo ugasne šele po 5 sekundah brez zadetka."
+          ]
+        },
+        {
+          "h": "Teme",
+          "body": [
+            "- Vesolje (privzeto): polna zvezdna krogla, črna luknja s svetlo žarečim obročem in oddaljen planet.",
+            "- Neon: synthwave arena s svetlečo talno mrežo in progastim soncem.",
+            "- Strelišče: notranja dvorana s stezami, lučmi in klasičnimi tarčami. Tema in nastavljiva zabrisanost gibanja (0 do 80 odstotkov, tipka [B] ali gumbi v nastavitvah) se shranita."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Majhni, mirni premiki miške zadenejo bolje kot mrzlični zamahi - pogled sledi 1:1.",
+            "- Nizka občutljivost za natančnost, višja za refleks in gibljive tarče.",
+            "- Oddaljene tarče imajo majhno mero prizanesljivosti - drži mirno, namesto da pretiravaš s popravki."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "connect4",
+      "category": "games",
+      "game": "ConnectFourGame",
+      "title": "Štiri v vrsto",
+      "keywords": [
+        "štiri",
+        "vrsta",
+        "žetoni",
+        "stolpci",
+        "ai",
+        "strategija"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Dve barvi izmenično spuščata žetone v enega od 7 stolpcev; vsak žeton pade v najnižjo prosto celico. Kdor prvi poveže štiri - vodoravno, navpično ali diagonalno - dobi rundo.",
+            "Pri enem igralcu se soočiš z računalnikom (tri jakosti v nastavitvah); v načinu za 2 igralca se izmenjujeta ob eni miški ali tipkovnici.",
+            "Začetni igralec se menja vsako rundo. [Enter] začne naslednjo rundo, [S] se vrne na nastavitve."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Miška: pomakni se nad stolpec (predoglednji žeton pokaže mesto) in klikni.",
+            "- Tipkovnica: [Left] [Right] izbereta stolpec, spustiš z [Down], [Space] ali [Enter].",
+            "- Neposreden izbor: številke [1] do [7] spustijo naravnost v tisti stolpec."
+          ]
+        },
+        {
+          "h": "Jakosti računalnika",
+          "body": [
+            "Lahek namenoma spregleda nekatere grožnje in včasih odigra le drugo najboljšo potezo - odlično za učenje. Srednji načrtuje nekaj potez vnaprej in zanesljivo blokira.",
+            "Težek išče veliko globlje in vsako napako takoj kaznuje - tu zmagajo le dvojne grožnje."
+          ]
+        },
+        {
+          "h": "Točkovanje in namigi",
+          "body": [
+            "Vsaka zmaga proti računalniku prinese eno točko; najboljši rezultat je največ zmag v eni seji. V načinu za 2 igralca ni točkovanja.",
+            "- Srednji stolpec je najmočnejši: skozenj poteka večina štirih v vrsti.",
+            "- Gradi dvojne grožnje (dve odprti trojki hkrati) - nasprotnik lahko blokira le eno od njiju."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tanks",
+      "category": "games",
+      "game": "TankDuelGame",
+      "title": "Tankovski dvoboj",
+      "keywords": [
+        "tank",
+        "dvoboj",
+        "odboj",
+        "arena",
+        "okrepitev",
+        "2 igralca"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "1 na 1 v areni sten: zadeni nasprotnika, da dobiš rundo - kdor prvi doseže 5 rund, dobi dvoboj.",
+            "Streli se enkrat odbijejo od sten (odboj) in ob drugem stiku izginejo. Pozor: odbit strel lahko zadene tudi tebe.",
+            "Igraj proti računalniku (tri jakosti) ali z dvema igralcema na eni tipkovnici. Po dvoboju: [Enter] = revanš, [S] = nastavitve."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Igralec 1: [W] [S] vozita naprej in nazaj, [A] [D] obračata, [Space] strelja.",
+            "- Igralec 2: puščične tipke vozijo in obračajo, [Enter] strelja. Razporeditve sledijo možnostim.",
+            "- Naenkrat živijo največ 4 tvoji streli, med njimi je kratko polnjenje."
+          ]
+        },
+        {
+          "h": "Okrepitve",
+          "body": [
+            "- Hitri ogenj: 8 sekund skoraj brez polnjenja.",
+            "- Ščit: vpije natanko en zadetek (obroč okrog tanka).",
+            "- Trojni strel: naslednjih 5 strelov se razprši v tri smeri. Okrepitve se v areni pojavijo vsakih nekaj sekund in potečejo po 12 sekundah."
+          ]
+        },
+        {
+          "h": "Arene in računalnik",
+          "body": [
+            "Na izbiro so štiri arene: Odprta (brez zaklonov), Križ, Stebri in Labirint - ali Naključna, ki areno menja vsako rundo.",
+            "Lahek računalnik brezciljno vozi naokrog in slabo meri; srednji te zasleduje in se umika.",
+            "Težek ohranja razdaljo, cilja pred tvoje gibanje in celo namerno odbija strele od sten."
+          ]
+        },
+        {
+          "h": "Točkovanje in namigi",
+          "body": [
+            "Proti računalniku dobiš točke za zmago v dvoboju: več za višje jakosti in čiste zmage; točke se seštevajo prek revanšev. V načinu za 2 igralca ni točkovanja.",
+            "- Uporabi stene: odbijanje strelov okrog vogalov zadene, ne da bi se izpostavil."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blackjack",
+      "category": "games",
+      "game": "BlackjackGame",
+      "title": "Blackjack",
+      "keywords": [
+        "karte",
+        "kazino",
+        "21",
+        "žetoni",
+        "delilec",
+        "stava"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Cilj: pridi bližje 21 kot delilec, ne da bi ga presegel. Številske karte štejejo svojo vrednost, slike 10, as 11 ali 1.",
+            "Igra uporablja čevelj s 4 kompleti; delilec vleče do 16 in obstane na vsaki 17.",
+            "Najprej postavi stavo (gumbi žetonov ali tipke [1] do [4], [Backspace] jo počisti), nato razdeli z [Enter]."
+          ]
+        },
+        {
+          "h": "Dejanja",
+          "body": [
+            "- Vleci [H]: potegni še eno karto.",
+            "- Ostani [S]: obdrži trenutno vsoto.",
+            "- Podvoji [D]: podvoji stavo, vzemi natanko eno karto, nato samodejno obstani - le pri prvih dveh kartah.",
+            "- Razdeli [X]: dve karti enake vrednosti razdeli v dve roki (enkrat na rundo; razdeljena asa dobita vsak le eno karto)."
+          ]
+        },
+        {
+          "h": "Izplačila",
+          "body": [
+            "- Blackjack (as + karta z vrednostjo deset) plača 3:2.",
+            "- Navadna zmaga plača 1:1, izenačenje (neodločeno) vrne tvojo stavo.",
+            "- Prekoračitev ali poraz: stava je izgubljena. Če delilec pokaže asa ali 10, takoj preveri za blackjack."
+          ]
+        },
+        {
+          "h": "Žetoni",
+          "body": [
+            "Začneš s 500 žetoni; tvoje stanje in rekord se shranita trajno in preživita vsak ponovni zagon.",
+            "Najboljši rezultat je najvišje stanje žetonov, kar si ga kdaj dosegel.",
+            "Pod 10 žetoni si na suhem: [Enter] ponovno zažene s 500 svežimi žetoni - rekord ostane."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Osnovna strategija: proti odprti karti 7 ali višji vleci do 17; proti 4 do 6 ostani zgodaj - delilec tam pogosto prekorači.",
+            "- Vedno razdeli asa in osmice, nikoli ne razdeli desetk."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tunnelracer",
+      "category": "games",
+      "game": "TunnelRacerGame",
+      "title": "Tunnel Racer",
+      "keywords": [
+        "tunel",
+        "dirkač",
+        "3d",
+        "neon",
+        "izmikanje",
+        "neskončno"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Letiš skozi vijugasto neonsko cev in se izmikaš palicam, blokom in obročnim vratom - en zadetek in igra je končana.",
+            "V vrzelih lebdijo zlati kovanci; dajejo dodatne točke in običajno označujejo varno linijo.",
+            "Obročna vrata imajo natanko eno luknjo: predeni se skoznjo, namesto da se izmikaš."
+          ]
+        },
+        {
+          "h": "Načini",
+          "body": [
+            "- Neskončno: hitrost nenehno narašča, vrzeli pa se ožijo - kako daleč prideš? Trk konča igro in shrani najboljši rezultat.",
+            "- Stopnje: 30 fiksnih prog s ciljno črto, od sproščenih do brutalnih. Dokončane stopnje se odkljukajo; točke seje se seštevajo."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Tipke (privzeto): [W] [A] [S] [D] ali puščice potiskajo ladjo okrog cevi.",
+            "- Miška: preklopiš v nastavitvah z [C] - neposredno krmiljenje 1:1, kazalec je ujet, [Esc] ga sprosti.",
+            "- [B] menja zabrisanost gibanja v korakih po 10 odstotkov (0 do 80, shrani se).",
+            "- V načinu stopenj: [R] po trku poskusi znova, [S] odpre izbor."
+          ]
+        },
+        {
+          "h": "Točkovanje",
+          "body": [
+            "- Neskončno: 10 točk na meter plus 50 na kovanec.",
+            "- Stopnje: 1000 za cilj, 50 na kovanec in časovni bonus, ko premagaš normirani čas.",
+            "Najboljši rezultat v načinu stopenj je tvoja najboljša skupna vsota v seji - igranje več stopenj zapored se izplača."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Opazuj obroče daleč naprej: cev dovolj zgodaj napove svoj zavoj, da lahko protikrmariš.",
+            "- Ostani blizu središča, kadar je mogoče - vsaka vrzel je od tam dosegljiva."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "labyrinth",
+      "category": "games",
+      "game": "LabyrinthGame",
+      "title": "3D labirint",
+      "keywords": [
+        "labirint",
+        "maze",
+        "raycaster",
+        "krogle",
+        "izhod",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "50 labirintov, ustvarjenih iz semena, ki rastejo z vsako stopnjo. Poišči zeleni utripajoči izhod - vedno je na točki, najbolj oddaljeni od začetka.",
+            "Po labirintu lebdijo modre krogle; vsaka zbrana krogla prinese bonus točke.",
+            "Dokončane stopnje se v izboru odkljukajo; [Enter] na cilju takoj zažene naslednjo."
+          ]
+        },
+        {
+          "h": "Pogledi",
+          "body": [
+            "- Prvoosebni (3D): pogled v slogu Wolfenstein z gledanjem z miško - naravnost v sredini namesto od zgoraj.",
+            "- Od zgoraj (2D): klasični zemljevid od zgoraj, brez zajema miške. Preklopiš v nastavitvah z [V]; izbira se shrani."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Prvoosebni: [W] [S] naprej in nazaj, [A] [D] stransko, miška obrača tvoj pogled - ali obrni s [Q] in [E] na tipkovnici.",
+            "- [M] preklopi mini zemljevid, [Esc] naredi pavzo in sprosti miško.",
+            "- Od zgoraj: [W] [A] [S] [D] ali puščice hodijo v smereh sveta."
+          ]
+        },
+        {
+          "h": "Točkovanje",
+          "body": [
+            "- Dosego izhoda: 500 točk.",
+            "- Na kroglo: 100 dodatnih točk.",
+            "- Poleg tega časovni bonus, ko premagaš normirani čas stopnje; točke seje se seštevajo v najboljši rezultat."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Pravilo desne roke: če vedno slediš isti steni, zagotovo prideš do izhoda.",
+            "- Krogle približno začrtajo pot do izhoda - njihovo zbiranje običajno pomeni, da si na pravi poti."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reversi",
+      "category": "games",
+      "game": "ReversiGame",
+      "title": "Reversi",
+      "keywords": [
+        "reversi",
+        "othello",
+        "žetoni",
+        "obračanje",
+        "vogali",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Reversi (Othello) se igra na plošči 8x8. Žeton postaviš tako, da so eden ali več nasprotnikovih žetonov ujeti v ravni črti med novim žetonom in drugim žetonom tvoje barve - vodoravno, navpično ali diagonalno. Vsi ujeti žetoni se obrnejo v tvojo barvo.",
+            "Poteza je veljavna le, če obrne vsaj en žeton. Če nimaš veljavne poteze, se tvoja poteza samodejno preskoči. Ko se ne more premakniti noben igralec, se igra konča in zmaga tisti z več žetoni.",
+            "Pri enem igralcu se ti (Črni) soočiš z računalnikom; v načinu za dva igralca se Črni in Beli izmenjujeta."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Miška: klikni prazno polje. Veljavna polja so označena z majhno piko.",
+            "- Tipkovnica: puščične tipke (ali tvoje tipke za gibanje) premikajo izbirni okvir, [Space] ali [Enter] postavi žeton.",
+            "- Po rundi: [Enter] = nova runda, [S] = nazaj na nastavitve (samo za enega igralca)."
+          ]
+        },
+        {
+          "h": "Jakost računalnika in namigi",
+          "body": [
+            "Lahek igra večinoma naključno, Srednji gleda nekaj potez naprej, Težek išče globlje in visoko ceni vogale.",
+            "- Vogali so zlati: žetona v vogalu ni več mogoče obrniti.",
+            "- Pazi na polja ob vogalu - ta pogosto izročijo vogal nasprotniku.",
+            "- Imeti manj žetonov, a več gibljivosti v sredini igre, je pogosto boljše kot imeti veliko."
+          ]
+        },
+        {
+          "h": "Rezultat",
+          "body": [
+            "Vsaka zmaga proti računalniku je vredna eno točko; najboljši rezultat je največ zmag v seji. Igre za dva igralca se ne točkujejo."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kniffel",
+      "category": "games",
+      "game": "KniffelGame",
+      "title": "Yahtzee",
+      "keywords": [
+        "yahtzee",
+        "kniffel",
+        "kocke",
+        "lestvica",
+        "polna hiša",
+        "rezultat"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Imaš 5 kock in do 3 mete na potezo. Po vsakem metu lahko obdržiš poljubne kocke in znova vržeš le preostale. Nato rezultat zapišeš v natanko eno od 13 kategorij.",
+            "Vsaka kategorija se lahko uporabi le enkrat. Če nič ne ustreza, jo prečrtaš za 0 točk. Po 13 potezah je list poln in igra je končana.",
+            "En igralec je lov za najboljšim rezultatom za najvišjo vsoto; v načinu za dva igralca izmenično izpolnjujeta dva lista - višja vsota zmaga."
+          ]
+        },
+        {
+          "h": "Kategorije",
+          "body": [
+            "Zgornji del (od Enke do Šestke): šteje pike te številke. Če je tvoj zgornji del vsaj 63, si prislužiš 35-točkovni bonus.",
+            "- Tri/štiri enake: vsota vseh kock, če so vsaj 3 oz. 4 enake.",
+            "- Polna hiša = 25 (tri plus par), Mala lestvica = 30 (štiri v vrsti), Velika lestvica = 40 (pet v vrsti), Yahtzee = 50 (pet enakih), Priložnost = vsota vseh kock (vedno dovoljeno)."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- [Space] ali gumb Vrzi znova vrže kocke, ki niso obdržane.",
+            "- Klikni kocko ali pritisni [1] do [5], da obdržiš ali sprostiš tisto kocko.",
+            "- Klikni kategorijo ali jo izberi s puščičnimi tipkami in pritisni [Enter], da jo točkuješ.",
+            "- Po koncu igre: [Enter] ponovno zažene."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Zgrabi 63-točkovni zgornji bonus zgodaj - petice in šestice so še posebej dragocene.",
+            "- Priložnost uporabi za rešitev slabega meta; prečrtaj Yahtzee ali lestvico, če ne izide nič."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wordle",
+      "category": "games",
+      "game": "WordleGame",
+      "title": "Wordle",
+      "keywords": [
+        "wordle",
+        "beseda",
+        "ugibanje",
+        "črke",
+        "zelena",
+        "rumena"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Ugani skrito 5-črkovno besedo v 6 poskusih. Po vsakem ugibanju ploščice spremenijo barvo: zelena = prava črka na pravem mestu, rumena = črka se pojavi, a nekje drugje, siva = črke v besedi ni.",
+            "Ponovljene črke so pravilno obravnavane: črka je označena rumeno ali zeleno le tolikokrat, kolikor se dejansko pojavi v odgovoru.",
+            "Vsako ugibanje mora imeti 5 črk, ni pa nujno 'prava' beseda - ne preverja se v slovarju. Odgovori ustrezajo izbranemu jeziku."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Tipkaj črke A-Z, [Backspace] izbriše zadnjo, [Enter] preveri vrstico (le s 5 črkami).",
+            "- Uporabiš lahko tudi zaslonsko tipkovnico z miško; njene črke se pobarvajo glede na to, kar si dozdaj izvedel."
+          ]
+        },
+        {
+          "h": "Rezultat",
+          "body": [
+            "Nadaljuje se v neskončnost: vsaka rešena beseda prinese točke - manj ugibanj pomeni več (10 do 60). Takoj zatem se pojavi nova beseda.",
+            "Prva beseda, ki je NE uspeš rešiti, konča igro; točke, ki si jih nabral, so tvoj najboljši rezultat."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "- Odpri z besedo, ki ima veliko različnih, pogostih črk.",
+            "- Sive črke uporabi za izločanje, rumene črke pa premakni na novo mesto."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "trex",
+      "category": "games",
+      "game": "TRexRunnerGame",
+      "title": "T-Rex Runner",
+      "keywords": [
+        "trex",
+        "dino",
+        "tekač",
+        "skok",
+        "sklonitev",
+        "neskončno"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Začni teči s [Space] ali [Up] - dino nato teče samodejno.",
+            "- Skok: tapni [Space]/[Up] za majhne poskoke, drži za višje skoke.",
+            "- Sklonitev: drži [Down] - v zraku te to hitreje spusti."
+          ]
+        },
+        {
+          "h": "Ovire",
+          "body": [
+            "Kaktusi se pojavijo posamično ali v skupinah na tleh - preskoči jih.",
+            "Pterodaktili se pojavljajo na treh višinah: visoko = skloni se, nizko/srednje = skoči.",
+            "Hitrost nenehno narašča; vsakih 100 točk dobiš pisk in kratek utrip."
+          ]
+        },
+        {
+          "h": "Možnosti in namigi",
+          "body": [
+            "Preklopi na začetnem zaslonu (shrani se): [1]-[3] težavnost, [N] dan/noč, [C] videz.",
+            "- Kratek tap prihrani višino za hitre dvojne ovire.",
+            "- Po trku takoj nadaljuj z [Enter]/[Space]."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dame",
+      "category": "games",
+      "game": "DameGame",
+      "title": "Dama",
+      "keywords": [
+        "dama",
+        "checkers",
+        "dame",
+        "obvezno jemanje",
+        "leteča dama",
+        "plošča"
+      ],
+      "sections": [
+        {
+          "h": "Različice",
+          "body": [
+            "Izbrane v nastavitvah - vsaka z 1 igralcem proti računalniku ali 2 igralcema lokalno:",
+            "- Nemška dama 8x8: možje jemljejo naprej in nazaj, dama leti poljubno daleč.",
+            "- Mednarodna dama 10x10: večja plošča, obvezno jemanje s pravilom maksimuma (najdaljše jemanje je obvezno).",
+            "- Dama 8x8 (angleška): možje jemljejo le naprej, dama se premakne le eno polje."
+          ]
+        },
+        {
+          "h": "Pravila in upravljanje",
+          "body": [
+            "Jemanja so obvezna: če jemanje obstaja, ga moraš izvesti - figure, ki jih lahko vzameš, so orisane rdeče.",
+            "Klikni figuro, nato ciljno polje; večkratni skok odigraj korak za korakom.",
+            "Tipkovnica: [Arrows]/[WASD] premikajo okvir, [Space]/[Enter] izbere.",
+            "Mož, ki doseže zadnjo vrsto, postane dama (krona)."
+          ]
+        },
+        {
+          "h": "Računalnik in rezultat",
+          "body": [
+            "Za enega igralca so na voljo tri jakosti računalnika (minimax + alfa-beta), izbereš jih v nastavitvah z [<]/[>].",
+            "Najboljši rezultat šteje tvoje zmage proti računalniku v tej seji; način za več igralcev se ne točkuje.",
+            "Po koncu igre: [Enter] nova runda, [S] nazaj na nastavitve."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poker",
+      "category": "games",
+      "game": "PokerGame",
+      "title": "Poker",
+      "keywords": [
+        "poker",
+        "holdem",
+        "texas",
+        "video poker",
+        "menjava",
+        "žetoni",
+        "blindi"
+      ],
+      "sections": [
+        {
+          "h": "Načini",
+          "body": [
+            "Izberi različico na predigralnem zaslonu:",
+            "- Texas Hold'em: proti 1-3 nasprotnikom računalnika, z gumbom delilca, blindi in štirimi krogi stav (preflop, flop, turn, river).",
+            "- 5 Card Draw: ena na ena proti računalniku - enkrat zamenjaš karte, dva kroga stav.",
+            "- Video Poker (Jacks or Better): samostojno proti tabeli izplačil."
+          ]
+        },
+        {
+          "h": "Dejanja",
+          "body": [
+            "Med stavami: [F] odstop, [C] preveri/izenači, [R] zvišaj, [A] all-in - ali klikni gumbe.",
+            "Pri menjavi/zadržanju: klikni karte ali pritisni [1]-[5], nato [Enter] za poteg.",
+            "[Enter]/[Space] razdeli naslednjo roko."
+          ]
+        },
+        {
+          "h": "Žetoni in roke",
+          "body": [
+            "Žetoni (začetek 1000) ostanejo (mem.json). Najboljši rezultat je tvoje najvišje število žetonov. Na suhem = ponovni zagon s klikom.",
+            "Razvrstitev rok: visoka karta < par < dva para < trojka < lestvica < barva < polna hiša < štirje enaki < barvna lestvica < kraljeva barvna lestvica."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slidepuzzle",
+      "category": "games",
+      "game": "SlidingPuzzleGame",
+      "title": "Drsna uganka",
+      "keywords": [
+        "drsna uganka",
+        "uganka 15",
+        "petnajst",
+        "ploščice",
+        "številke",
+        "drsenje"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Oštevilčene ploščice postavi nazaj v red (1, 2, 3 …); vrzel ostane v spodnjem desnem vogalu.",
+            "Ploščice lahko zdrsnejo le v prazno vrzel. Tri velikosti: 3×3 (lahko), 4×4 (klasika) in 5×5 (težko).",
+            "Polje je premešano z veliko naključnimi potezami, zato je vedno rešljivo."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Klikni ploščico v isti vrstici ali stolpcu kot vrzel, da zdrsne cela linija.",
+            "- Puščične tipke potisnejo ploščico ob vrzeli vanjo."
+          ]
+        },
+        {
+          "h": "Točke",
+          "body": [
+            "Začneš z osnovnim rezultatom glede na velikost; vsaka poteza in vsaka sekunda malo odštejeta. Hitro reševanje z malo potezami da najboljši rezultat.",
+            "Po rešitvi Enter/klik takoj zažene sveže polje."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastermind",
+      "category": "games",
+      "game": "MastermindGame",
+      "title": "Mastermind",
+      "keywords": [
+        "mastermind",
+        "barvna koda",
+        "koda",
+        "ugibanje",
+        "čepki",
+        "logika"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Računalnik izbere skrito kodo barvnih čepkov (barve se lahko ponovijo). Razvozlaj jo vrstico za vrstico.",
+            "Po vsakem ugibanju dobiš povratne čepke: ČRN čepek = prava barva na pravem mestu, BEL čepek = prava barva na napačnem mestu. Vrstni red povratnih čepkov ne razkrije, na katerega se nanaša.",
+            "Načini: Lahek (4 čepki, 6 barv, 12 vrstic), Klasika (4/6, 10 vrstic) in Težek (5 čepkov, 8 barv)."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Klikni barvo spodaj (ali tipke 1–8), da zapolniš naslednje prazno mesto.",
+            "- Klikni postavljen čepek, da ga počistiš; < ali Backspace odstrani zadnjega.",
+            "- OK ali Enter preveri celo vrstico."
+          ]
+        },
+        {
+          "h": "Točke",
+          "body": [
+            "Kot Wordle je neskončni niz: vsaka razvozlana koda prinese točke (manj ugibanj + težji način = več), nato se takoj pojavi nova koda.",
+            "Prva koda, ki je ne uspeš razvozlati, konča igro - skupna vsota je tvoj najboljši rezultat."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bubbleshooter",
+      "category": "games",
+      "game": "BubbleShooterGame",
+      "title": "Bubble Shooter",
+      "keywords": [
+        "bubble shooter",
+        "puzzle bobble",
+        "mehurčki",
+        "kroglice",
+        "streljanje",
+        "skupine"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Streljaj mehurčke navzgor v satasto polje. Ko se dotaknejo trije ali več enake barve, skupina poči.",
+            "Mehurčki, ki ob poku skupine izgubijo povezavo z zgornjo vrsto, padejo dol in dajo bonus točke.",
+            "Načini: Lahek (4 barve, brez novih vrst), Klasika (5 barv, občasno se spusti dodatna vrsta) in Težek (6 barv, hitreje)."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Top meri proti miški; obračajo ga tudi leve/desne puščice.",
+            "- Levi klik ali Space strelja. Mehurčki se odbijejo od stranskih sten.",
+            "- Majhen mehurček levo od topa je tvoja naslednja barva."
+          ]
+        },
+        {
+          "h": "Točke",
+          "body": [
+            "Počeni in padli mehurčki dajejo točke; počiščenje celega polja da bonus.",
+            "Takoj ko se mehurček zaskoči pod rdečo črto, je igra končana - skupna vsota je tvoj najboljši rezultat."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hangman",
+      "category": "games",
+      "game": "HangmanGame",
+      "title": "Hangman",
+      "keywords": [
+        "vislice",
+        "beseda",
+        "ugibanje",
+        "črke",
+        "vešala"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Ugani skrito besedo črko za črko. Vsaka napačna črka nariše nov del obešenca.",
+            "Po 6 napakah je figura dokončana in runda je izgubljena.",
+            "Načini po dolžini besede: Kratke besede (3–5), Mešano (3–12) in Dolge besede (7–12). Besede ustrezajo izbranemu jeziku in uporabljajo le A–Z."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Tipkaj črke A–Z ali jih klikni na zaslonski tipkovnici.",
+            "- Pravilne črke se pojavijo v besedi; napačne obarvajo tipko sivo."
+          ]
+        },
+        {
+          "h": "Točke",
+          "body": [
+            "Neskončni niz: vsaka uganjena beseda prinese točke (več preostalih življenj in daljše besede = več), nato se takoj pojavi nova beseda.",
+            "Prvi poraz konča igro - skupna vsota je tvoj najboljši rezultat."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blockjump",
+      "category": "games",
+      "game": "BlockJumpGame",
+      "title": "Block Jump",
+      "keywords": [
+        "block jump",
+        "3d",
+        "minecraft",
+        "ploščadna igra",
+        "skok",
+        "vzpon",
+        "parkour"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "3D ploščadna igra v slogu Minecrafta: skači po lebdečih blokovnih ploščadih do žarečega ciljnega svetilnika. Vsaka stopnja je svež parkour, ustvarjen iz semena, in postaja težja.",
+            "Kamera je privzeto prvoosebna kot v Minecraftu; pritisni V za preklop na kamero za zasledovanje.",
+            "Če padeš pod ploščadi, izgubiš življenje in se ponovno pojaviš na zadnji kontrolni točki. Pri 0 življenjih (začneš s 3) je igra končana."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- WASD ali puščične tipke: gibanje (relativno glede na to, kam gledaš). Space: skok. Miška: gledanje naokrog.",
+            "- Na lestvi W pleza gor in S pleza dol. Vzmetni blok te vrže visoko v zrak.",
+            "- V = pogled (prva/tretja oseba), B = zabrisanost gibanja, C = zajem/sprostitev miške, +/- = občutljivost. Esc naredi pavzo in sprosti miško."
+          ]
+        },
+        {
+          "h": "Vrste blokov",
+          "body": [
+            "- Trava/prst/kamen/les: trdni bloki, na katere skočiš in stojiš.",
+            "- Lestev: plezaj gor/dol počasi. Ograja: majhen blok, ki blokira pot - le preskoči ga.",
+            "- Vzmetni blok: vrže te visoko (za dosego visokih ploščadi). Kovanci lebdijo vzdolž poti za dodatne točke."
+          ]
+        },
+        {
+          "h": "Točke",
+          "body": [
+            "Vsak kovanec je vreden 50 točk. Dosega cilja stopnje da 1000 točk plus časovni bonus (hitreje, več).",
+            "Točke se seštevajo prek vseh stopenj; skupna vsota je tvoj najboljši rezultat."
+          ]
+        }
+      ]
+    }
+  ]
+}

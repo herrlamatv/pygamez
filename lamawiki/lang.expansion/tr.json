@@ -1,0 +1,1674 @@
+{
+  "pages": [
+    {
+      "id": "start",
+      "category": "general",
+      "title": "Başlangıç",
+      "keywords": [
+        "başlangıç",
+        "yardım",
+        "giriş",
+        "menü",
+        "duraklat",
+        "tam ekran",
+        "kenar çubuğu"
+      ],
+      "sections": [
+        {
+          "h": "Bir oyun başlatmak",
+          "body": [
+            "Bir oyunu üç şekilde başlatabilirsin: soldaki kenar çubuğundaki oyun listesinden, başlangıç ekranındaki oyun ızgarasından veya oyun öncesi ekranı üzerinden doğrudan bu wiki'den.",
+            "Her oyundan önce oyun öncesi ekranı belirir: modu orada seç (ör. tek oyunculu veya çok oyunculu) ve seçeneklere ve bu wiki'ye ulaş."
+          ]
+        },
+        {
+          "h": "Önemli tuşlar",
+          "body": [
+            "- [Esc] çalışan oyunu duraklatır ve devam ettirir - menülerde geri gider.",
+            "- [F11] tam ekranı açar ve kapatır.",
+            "- Yeşil Menüye dön düğmesi oyunu bitirir ve en yüksek skoru kaydeder."
+          ]
+        },
+        {
+          "h": "Kenar çubuğu",
+          "body": [
+            "Solda tüm oyunları simgeleriyle ve en yüksek skorunla (yıldız) görürsün. Çalışan oyun vurgulanmış kalır; küçük pencerelerde liste fare tekerleğiyle kaydırılır.",
+            "Sol alttaki durum kartı oyun adını, durumu (yeşil = çalışıyor, altın = duraklatıldı, kırmızı = oyun bitti), skoru ve mevcut kare hızını gösterir."
+          ]
+        },
+        {
+          "h": "Çok oyunculu",
+          "body": [
+            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) ve Asteroids (kooperatif düello) yerel 2 oyunculu moda sahiptir - oyun öncesi ekranından seçilebilir.",
+            "Tek oyunculuda her iki tuş ataması da aynı karakteri kontrol eder; çok oyunculuda her biri birer tane (varsayılan: P1 = WASD, P2 = ok tuşları veya IJKL - seçeneklere bak)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "category": "general",
+      "title": "Seçenekler ve kontroller",
+      "keywords": [
+        "seçenekler",
+        "ayarlar",
+        "kontroller",
+        "tuşlar",
+        "çözünürlük",
+        "fps",
+        "ses",
+        "dil"
+      ],
+      "sections": [
+        {
+          "h": "Ses ve titreşim",
+          "body": [
+            "Sesi aç/kapat ve ses seviyesini seçenekler ekranında ayarla. Tüm efektler canlı olarak üretilir - hiç ses dosyası yoktur.",
+            "Titreşim, bağlı bir oyun kolunu titretir (kol yoksa hiçbir şey yapmaz)."
+          ]
+        },
+        {
+          "h": "Tuş atamaları",
+          "body": [
+            "Üç hazır ayar mevcuttur: WASD + ok tuşları, WASD + IJKL ve ok tuşları + WASD.",
+            "Her bir tuş yeniden atanabilir: bir satıra tıkla veya Enter ile onayla, ardından istediğin tuşa bas. [Esc] iptal eder.",
+            "Atamalar oyuncu 1 ve oyuncu 2 için ayrıdır ve kalıcı olarak kaydedilir."
+          ]
+        },
+        {
+          "h": "Grafik ve performans",
+          "body": [
+            "Çözünürlük dahili oyun alanını belirler (480x360'tan 1280x960'a kadar). Daha küçük = daha az yük, daha büyük = daha keskin görüntü.",
+            "Otomatik çözünürlük oyun alanını pencere boyutuna otomatik olarak uyarlar.",
+            "FPS seçenekleri (15 ila 120) hedef kare hızını belirler - daha az FPS güç tasarrufu sağlar."
+          ]
+        },
+        {
+          "h": "Dil",
+          "body": [
+            "Arayüz Almanca, İngilizce, Fransızca, İspanyolca ve Portekizce olarak mevcuttur. Seçenekler ekranından veya kenar çubuğundaki Dil (Language) üzerinden değiştir - bu wiki de dil değiştirir."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saving",
+      "category": "general",
+      "title": "Kayıt ve en yüksek skorlar",
+      "keywords": [
+        "kayıt",
+        "en yüksek skor",
+        "rekor",
+        "puan",
+        "ilerleme",
+        "dosyalar"
+      ],
+      "sections": [
+        {
+          "h": "En yüksek skorlar",
+          "body": [
+            "Her oyun bir tur bittiğinde en iyi değerini otomatik olarak kaydeder. Yeni bir rekor altın bir afiş gösterir - üstüne bir de konfeti yağmuru.",
+            "En iyi değerleri her yerde görebilirsin: kenar çubuğu listesinde yıldız olarak, başlangıç ekranındaki kayan yazıda ve durum kartında."
+          ]
+        },
+        {
+          "h": "Ne, nerede saklanır?",
+          "body": [
+            "- settings.json: ses, ses seviyesi, tuş atamaları, çözünürlük, FPS ve oyun seçenekleri (ör. Snake modu, Sudoku ayarları).",
+            "- mem.json: en yüksek skorlar, seçilen dil ve Sudoku seviye ilerlemesi.",
+            "- mem-ngb.json: Snake'in görsel modları (kafa rengi, ızgara, afiş).",
+            "Her iki dosya da doğrudan oyun klasöründe bulunur ve sıfırlamak için basitçe silinebilir."
+          ]
+        },
+        {
+          "h": "İpucu",
+          "body": [
+            "Puanlar yalnızca Menüye dön ile çıktığında veya tur normal şekilde bittiğinde kaydedilir - oyunun ortasında pencere sertçe kapatıldığında değil."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake-special",
+      "category": "general",
+      "title": "Snake özel",
+      "keywords": [
+        "rekabetçi",
+        "prestij",
+        "hardcore",
+        "modlar",
+        "kişiselleştir",
+        "slot",
+        "kumar",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Rekabetçi mod",
+          "body": [
+            "Seviye tırmanışlı sonsuz mod: tam olarak bir elmayla başlarsın. Toplamda ne kadar çok elma toplarsan seviyen o kadar yükselir - aynı anda daha çok elma belirir ve skor çarpanı artar (15 seviye, x16'ya kadar).",
+            "- Mavi elmalar bir slot makinesi açar: bahis uzunluğundur, üç aynı sembol = bonus elmalarla jackpot.",
+            "- Mor elmalar (kumar) boyutunun bir kısmını bahse yatırır: normalde yüzde 50 bahisle x0.5 ile x1.5 arası bir çarpan.",
+            "Tam boyutun sol üstte ondalık olarak gösterilir - her bahis onun üzerine kurulur. Seviye kademeleri games/levels/snake-comp.json içinde bulunur ve serbestçe düzenlenebilir."
+          ]
+        },
+        {
+          "h": "Hardcore",
+          "body": [
+            "Rekabetçi kurulumda [H] ile aç/kapat: her hızlanma uzunluğu yer, ve mor elmalar daha riskli olur (yüzde 75 ila 90 bahis, çarpan x0.25 ila x2.25). Kırmızı bir kenarlık bu modu işaretler."
+          ]
+        },
+        {
+          "h": "Prestij",
+          "body": [
+            "Tek oyunculuda [P] ile erişilebilir: toplanan elmalar, kalıcı avantajlar sağlayan prestij seviyelerine dönüştürülebilir. İlerleme turlar arasında korunur."
+          ]
+        },
+        {
+          "h": "Modlar / kişiselleştirme",
+          "body": [
+            "Kurulumda fırça düğmesi veya [C] ile: oynanışı asla değiştirmeyen tamamen görsel bir menü.",
+            "- Kafa: yılanın kafa rengi (hazır ayarlar veya özel bir RGB rengi).",
+            "- Izgara: büyük tahtalarda kılavuz olarak satır numaraları ve sütun harfleriyle bir koordinat ızgarası.",
+            "- Afiş: çarpan afişini aç/kapat, ayrıca boyut ve saydamlık - canlı önizlemeyle.",
+            "Her şey mem-ngb.json içinde saklanır."
+          ]
+        },
+        {
+          "h": "3D görünüm",
+          "body": [
+            "Kurulumda [V] ile: tahta bir 3D sahne olarak işlenir, yılanın arkasında bir takip kamerası süzülür ve yönlendirme görüş yönüne göredir (iki hızlı basış = U dönüşü).",
+            "[K] ile 3D kamera seçeneklerini açarsın: yumuşak sarsıntı, görüş alanı (FOV), kamera yüksekliği ve dönüş sarsıntısı düğmesi. 3D'de oynanabilir: Klasik ve Engeller (yalnızca tek oyunculu)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake",
+      "category": "games",
+      "game": "SnakeGame",
+      "title": "Snake",
+      "keywords": [
+        "yılan",
+        "elma",
+        "hızlanma",
+        "rekabetçi",
+        "3d",
+        "portallar"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "[W] [A] [S] [D] veya ok tuşlarıyla yönlendir. 3D'de görüş yönüne göre yönlendirirsin: sola/sağa dön, iki hızlı basış = U dönüşü.",
+            "- Hızlanma: [Space] veya Shift'i basılı tut = çift hız. Dayanıklılık çubuğu boşalır ve ardından yeniden dolar.",
+            "- Oyuncu 2, Enter veya sağ Shift tuşuyla hızlanır."
+          ]
+        },
+        {
+          "h": "Modlar",
+          "body": [
+            "- Klasik: saf yılan.",
+            "- Hız koşusu: her yiyecek seni hızlandırır.",
+            "- Engeller: tahtada ölümcül bloklar.",
+            "- Portallar: ışınlanma çiftleri seni tahta boyunca taşır.",
+            "- Zamana karşı: 60 saniye, mümkün olduğunca çok elma.",
+            "- Rekabetçi: seviyeler, slot makinesi ve kumar elmalarıyla sonsuz mod - ayrıntılar Snake özel sayfasında.",
+            "Ayrıca seçilebilir: duvardan geçiş, bonus elmalar, hardcore, [V] ile 2D/3D görünüm ve çok oyunculu."
+          ]
+        },
+        {
+          "h": "Puanlama",
+          "body": [
+            "Elmalar puan verir (bonus elmalar rastgele iki katına çıkarır). Altın elmalar geçici olarak belirir, çok puan verir ve hızlanmayı anında doldurur. Rekabetçide seviyen tüm puanları çarpar."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Hızlanmayı uzun düzlüklerde kullan, dar köşelerde değil.",
+            "- Duvardan geçiş açıkken kendini köşeye sıkıştırdığında kenardan kaçabilirsin.",
+            "- Rekabetçide, bahse yatıracak fazla uzunluğun olduğunda mor elmalar en çok kazandırır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pong",
+      "category": "games",
+      "game": "PongGame",
+      "title": "Pong",
+      "keywords": [
+        "raket",
+        "top",
+        "yapay zeka",
+        "klasik"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Oyuncu 1 sol raketi [W] ve [S] ile hareket ettirir - çok oyunculuda oyuncu 2 sağdakini ok tuşlarıyla kontrol eder.",
+            "Hareket modu her kontrol için değiştirilebilir: sürekli (bir kez bas, raket gitmeye devam eder) veya basılı tut (yalnızca basılıyken hareket eder). Kontrol 1 için [X], kontrol 2 için [N] ile aç/kapat."
+          ]
+        },
+        {
+          "h": "Kurallar ve puanlama",
+          "body": [
+            "5 puana kadar, yapay zekaya karşı veya iki oyunculu oyna.",
+            "Top fiziği her vuruşta hızlanır; sekme açısı topun rakete nereden geldiğine bağlıdır."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Dik açılar oluşturmak için topa raketin kenarıyla vur.",
+            "- Basılı tut modu daha ince kontrol, sürekli mod daha hızlı tepki verir."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "airhockey",
+      "category": "games",
+      "game": "AirHockeyGame",
+      "title": "Air Hockey",
+      "keywords": [
+        "disk",
+        "tokmak",
+        "fizik",
+        "goller",
+        "güçlendirmeler",
+        "fare"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Tek oyunculuda tokmağın fareyi takip eder - herhangi bir tuş klavye kontrolüne geçirir (8 yön).",
+            "Çok oyunculuda P1 solda [W] [A] [S] [D] ile ve P2 sağda [I] [J] [K] [L] ile oynar."
+          ]
+        },
+        {
+          "h": "Kurulum",
+          "body": [
+            "- Yapay zeka zorluğu: kolay, orta veya zor.",
+            "- [T] kazanmak için gerekli gol sayısını seçer (3/5/7/10).",
+            "- [P] güçlendirmeleri açar/kapatır: XL (daha büyük tokmak), GOAL (rakibin kalesi küçülür), hız (daha hızlı tokmak). Güçlendirmeler diske en son dokunan oyuncuya aittir."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Disk tokmağının hızını alır - sadece engellemek yerine momentum oluştur.",
+            "- Diskin arkasında kal: onu kendi kalene doğru itmek kendi kalene gol riski taşır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tictactoe",
+      "category": "games",
+      "game": "TicTacToeGame",
+      "title": "Tic-Tac-Toe",
+      "keywords": [
+        "çarpı",
+        "daire",
+        "tahta",
+        "yapay zeka",
+        "mnk"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "İşaretleri fare tıklamasıyla yerleştir. Oyun bittikten sonra: Enter veya tıklama = yeni tur, [S] = ayarlara geri dön."
+          ]
+        },
+        {
+          "h": "Modlar ve kurulum",
+          "body": [
+            "3x3'ten 9x9'a kadar tahta boyutları. Kazanma uzunluğu uyum sağlar: 3x3'te 3 sıra, 4x4'te 4, aksi halde 5.",
+            "Yapay zekaya karşı tek oyunculu (kolay/orta/zor) veya yerel olarak iki oyunculu, sırayla X'e karşı O."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- 3x3'te zor yapay zeka yenilmezdir - orada elde edebileceğin en iyi sonuç beraberliktir.",
+            "- Büyük tahtalarda en çok merkez önemlidir: çoğu 5'li sıra oradan geçer."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "breakout",
+      "category": "games",
+      "game": "BreakoutGame",
+      "title": "Breakout",
+      "keywords": [
+        "tuğlalar",
+        "top",
+        "raket",
+        "güçlendirmeler",
+        "kombo",
+        "seviyeler"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Raketi fare veya ok tuşlarıyla hareket ettir. [Space] topu fırlatır ve lazeri ateşler. [P] veya [Esc] duraklatır."
+          ]
+        },
+        {
+          "h": "Kurulum",
+          "body": [
+            "- [1] [2] [3] zorluğu seçer.",
+            "- Sol/sağ top rengini, yukarı/aşağı başlangıç seviyesini, [M] düzeni (standart veya tam) değiştirir."
+          ]
+        },
+        {
+          "h": "Tuğlalar ve güçlendirmeler",
+          "body": [
+            "Tuğla türleri: normal, çelik (kırılmaz), bomba (patlar) ve altın (ekstra puan).",
+            "Güçlendirmeler: x2/x3 top, [L] lazer, [F] ateş topu, [G] yapışkan, [U] kalkan, bonus puan için madeni paralar - ayrıca hızlı vuruşlar için bir kombo çarpanı."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Topu tuğla bloğunun arkasından yan duvarlar boyunca oynat - orada yukarıda kendiliğinden temizlenir.",
+            "- Kalkan tam olarak bir geçişi yakalar: onu riskli çoklu top aşamaları için sakla."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tetris",
+      "category": "games",
+      "game": "TetrisGame",
+      "title": "Tetris",
+      "keywords": [
+        "parçalar",
+        "sıralar",
+        "döndür",
+        "versus",
+        "yığın"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Sol/sağ parçayı hareket ettirir, yukarı onu döndürür, aşağı yumuşak düşüş ve eylem tuşu (varsayılan: [Space]) sert düşüştür."
+          ]
+        },
+        {
+          "h": "Modlar ve puanlama",
+          "body": [
+            "Dolu sıralar puan verir - aynı anda birkaç tanesi çok daha fazla verir. Her 10 sırada bir seviye ve hız artar.",
+            "Versus (çok oyunculu): yan yana iki tahta, yığını önce en tepeye çarpan kaybeder."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Uzun I parçası için bir sütunu boş tut ve dörtlü sıralarla temizle.",
+            "- Düz kur: hız arttıkça yüksek kuleler çabucak devrilir."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "invaders",
+      "category": "games",
+      "game": "InvadersGame",
+      "title": "Invaders",
+      "keywords": [
+        "uzaylılar",
+        "dalgalar",
+        "patron",
+        "silahlar",
+        "arena",
+        "ateş"
+      ],
+      "sections": [
+        {
+          "h": "Modlar",
+          "body": [
+            "- Klasik: klasik uzaylı bloğu aşağı iner. Kurulumda hareketi (yalnızca sol/sağ veya WASD ile serbest) ve nişan almayı (her zaman yukarı veya fareye) seçersin.",
+            "- Arena: her yönde serbest hareket, düşmanlar tüm kenarlardan akın eder, hareket yönünde nişan alırsın."
+          ]
+        },
+        {
+          "h": "Silahlar ve güçlendirmeler",
+          "body": [
+            "Dört silah, [1] ile [4] arasında değiştir: blaster, yayılan atış, hızlı ateş ve lazer.",
+            "Yok edilen uzaylılar güçlendirme düşürür: ekstra can, kalkan ve silah yükseltmeleri. Her 4. seviyede bir patron vardır."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Yayılan atış yoğun blokları temizler, lazer tüm sütunları deler - her dalgada değiştir.",
+            "- Arenada asla hareketsiz durma: kenar boyunca dolaş ve düşmanları bir çizgiye çek."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asteroids",
+      "category": "games",
+      "game": "AsteroidsGame",
+      "title": "Asteroids",
+      "keywords": [
+        "gemi",
+        "kayalar",
+        "ufo",
+        "hiperuzay",
+        "dalgalar",
+        "vektör"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Yukarı görüş yönünde iter, sol/sağ gemiyi döndürür, eylem tuşu ateş eder. Gemi sürüklenmeye devam eder (atalet) ve ekran kenarlarından döner.",
+            "Aşağı hiperuzayı tetikler: rastgele bir konuma acil sıçrayış, 4 saniyelik bekleme süresiyle - ve yüzde 12 parçalanma riskiyle."
+          ]
+        },
+        {
+          "h": "Puanlama ve ekstralar",
+          "body": [
+            "Kayalar iki küçük parçaya bölünür; üç boyut 20/50/100 puan verir. UFO (devre dışı bırakılabilir) 200 puan verir, her 5000 puanda ekstra bir can gelir.",
+            "Yok edilen kayalardan güçlendirmeler: kalkan (6 saniye dokunulmazlık), üçlü atış ve hızlı ateş.",
+            "Kooperatif düello (çok oyunculu): her iki gemi de ayrı canlarla aynı anda uçar - daha çok puanı olan kazanır."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Bir sonraki büyük kayayı kırmadan önce küçük, hızlı parçaları temizle.",
+            "- Hiperuzay bir seyahat seçeneği değil, son çaredir - risk gerçektir."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pacman",
+      "category": "games",
+      "game": "PacmanGame",
+      "title": "Pac-Man",
+      "keywords": [
+        "hayaletler",
+        "yem",
+        "labirent",
+        "meyve",
+        "güç"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Ok tuşları veya [W] [A] [S] [D] ile hareket et. Oyun bittikten sonra: Enter = yeni, [S] = kurulum.",
+            "Sol ve sağdaki tüneller seni diğer tarafa ışınlar."
+          ]
+        },
+        {
+          "h": "Hayaletler ve güç yemleri",
+          "body": [
+            "Dört hayalet kendi orijinal davranışlarıyla avlanır: Blinky doğrudan kovalar, Pinky pusu kurar, Inky Blinky üzerinden bir vektör kullanır, Clyde yakınlaşınca geri çekilir.",
+            "Güç yemleri hayaletleri bir süreliğine mavi ve yenilebilir yapar - zincir 200/400/800/1600 puan verir. Meyve bonus olarak belirir, 10.000 puanda ekstra bir can gelir."
+          ]
+        },
+        {
+          "h": "Kurulum ve ipuçları",
+          "body": [
+            "Zorluk normal/zor/aşırı, hayalet hızını ve korkmuş süresini belirler; her seviye hızlanır.",
+            "- Güç yemini yalnızca birkaç hayalet yakınken ye - önemli olan zincirdir.",
+            "- Dağılma aşamalarını hatırla: her geçişte tüm hayaletler geri döner."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flappy",
+      "category": "games",
+      "game": "FlappyGame",
+      "title": "Flappy Bird",
+      "keywords": [
+        "kuş",
+        "borular",
+        "madeni paralar",
+        "kalkan",
+        "madalyalar",
+        "kanat çırp"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "[Space], yukarı ok, [W] veya bir fare tıklaması kuşa kanat çırptırır - kuş, tırmanış ve iniş hızına göre eğilir."
+          ]
+        },
+        {
+          "h": "Puanlama ve ekstralar",
+          "body": [
+            "Geçilen her boru bir puan verir. Boşluklarda madeni paralar (bonus) ve tam olarak bir çarpışmayı bağışlayan bir kalkan güçlendirmesi belirir.",
+            "Gündüz ve gece temaları skorla değişir; oyun bittikten sonra bronzdan platine madalyalar vardır."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Kısa, düzenli dokunuşlar uçuş yolunu nadir uzun dokunuşlardan daha sakin tutar.",
+            "- Zorluk boşluk boyutunu ve hızı belirler - skorun büyüdükçe boşluk daralır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doodle",
+      "category": "games",
+      "game": "DoodleGame",
+      "title": "Doodle Jump",
+      "keywords": [
+        "zıpla",
+        "platformlar",
+        "canavarlar",
+        "yay",
+        "pervane",
+        "yükseklik"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Doodler inişte otomatik olarak zıplar - sen yalnızca sola/sağa yönlendirirsin (ataletle). Kenarlar açıktır: soldan çıkmak seni sağdan geri getirir.",
+            "Yukarı ok veya [Space] ile yukarı doğru ateş et."
+          ]
+        },
+        {
+          "h": "Platformlar ve ekstralar",
+          "body": [
+            "- Yeşil: normal. Mavi: hareket eder. Kahverengi: basılınca kırılır. Beyaz: bir zıplamadan sonra kaybolur.",
+            "- Yaylar bir süper zıplama verir, pervane şapkası seni bir an için otomatik olarak yukarı taşır (dokunulmaz).",
+            "- Canavarlar temasta ölümcüldür - onlara ateş etmek ekstra puan verir."
+          ]
+        },
+        {
+          "h": "Puanlama ve ipuçları",
+          "body": [
+            "Skor = ulaşılan yükseklik; zorluk yükseklikle artar.",
+            "- Zıplamadan önce nereye ineceğini planla - kahverengi platformlar seni taşımaz.",
+            "- Açık kenarı uzaktaki platformlara kestirme olarak kullan."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2048",
+      "category": "games",
+      "game": "Game2048",
+      "title": "2048",
+      "keywords": [
+        "kutucuklar",
+        "kaydır",
+        "birleştir",
+        "sayılar"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller ve kurallar",
+          "body": [
+            "Ok tuşları veya [W] [A] [S] [D] tüm kutucukları aynı anda tek bir yöne kaydırır. Eşit sayılar toplamlarında birleşir; her hamleden sonra yeni bir kutucuk belirir.",
+            "Amaç 2048 kutucuğudur - ondan sonra sonsuza kadar devam eder. Hiçbir hamle mümkün olmadığında kaybedersin."
+          ]
+        },
+        {
+          "h": "Puanlama",
+          "body": [
+            "Her birleşme yeni kutucuğun değerini skoruna ekler."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- En büyük kutucuğunu bir köşeye park et ve o köşeyi asla bozma.",
+            "- Ağırlıklı olarak iki yönde kaydır - bu tahtayı düzenli tutar."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minesweeper",
+      "category": "games",
+      "game": "MinesweeperGame",
+      "title": "Mayın Tarlası",
+      "keywords": [
+        "mayınlar",
+        "bayraklar",
+        "aç",
+        "chording",
+        "en iyi süre"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Sol tıklama bir hücreyi açar, sağ tıklama bir bayrak koyar (isteğe bağlı olarak soru işareti döngüsüyle, kurulumda [Q]). [F] imlecin altındaki hücreye bayrak koyar, [R] yeniden başlatır.",
+            "Chording: tatmin edilmiş bir sayıya (tüm bayraklar yerleştirilmiş) tıklamak kalan komşuları aynı anda açar."
+          ]
+        },
+        {
+          "h": "Seviyeler ve puanlama",
+          "body": [
+            "Başlangıç (9x9, 10 mayın), orta (16x16, 40) ve uzman (30x16, 99). Seviye başına en iyi süre kaydedilir.",
+            "İlk tıklama her zaman güvenlidir - mayınlar yalnızca ondan sonra yerleştirilir. Puan = seviye taban değeri eksi saniyeler."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Açık alanların kenarındaki sayılarla başla - oradaki desenler kesindir.",
+            "- Yalnızca bir kapalı komşusu olan köşedeki bir 1 her zaman güvenli bir bayraktır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sudoku",
+      "category": "games",
+      "game": "SudokuGame",
+      "title": "Sudoku",
+      "keywords": [
+        "bulmaca",
+        "sayılar",
+        "notlar",
+        "seviyeler",
+        "ipuçları",
+        "mantık"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Bir hücreyi ok tuşları, [W] [A] [S] [D] veya fare tıklamasıyla seç - sağdaki sayı tuş takımı tamamen fareyle çalışır.",
+            "- [1] ile [9] bir rakam girer (numpad de çalışır).",
+            "- [0], Backspace veya sağ tıklama siler.",
+            "- [N] not modunu açar/kapatır, [H] bir ipucu verir, [R] seviyeyi yeniden başlatır, [Q] seviye seçimini açar.",
+            "- Oyun bittikten sonra, [A] afişi gizler ve tam çözümü gösterir."
+          ]
+        },
+        {
+          "h": "Seviyeler ve modlar",
+          "body": [
+            "400 sabit seviye: 4 zorluk (kolay/normal/zor/uzman) çarpı 100 seviye. Her seviye her yerde aynı bulmacadır ve tek çözümlüdür; çözülen seviyeler işaretlenir.",
+            "Oyun modu yardımları ve skor çarpanını belirler:",
+            "- Klasik x2.0: yardım yok, kağıt üzerindeki gibi saf.",
+            "- Notlar x1.5: artı kurşun kalem notları.",
+            "- Konfor x1.0: hatalar anında kırmızı, çakışma vurgusu, doğru girişler kilitlenir.",
+            "- Yardım x0.7: ek olarak 3'e kadar ipucu."
+          ]
+        },
+        {
+          "h": "Hatalar ve puanlama",
+          "body": [
+            "Her giriş anında çözüme göre kontrol edilir. 3 hata sınırı etkinken (kurulum, tuş [F]) üçüncü hata oyunu bitirir.",
+            "Puan = (zorluk tabanı eksi süre, hatalar ve ipuçları) çarpı mod çarpanı."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Zaten çok rakam içeren satırlar, sütunlar ve kutularla başla.",
+            "- Adayları çiftler halinde not al: iki hücre aynı iki adayı paylaşıyorsa, başka her yerden elenirler.",
+            "- Klasik modda acele etme: her hata anında sayılır, kırmızı bir işaret olmasa bile."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frogger",
+      "category": "games",
+      "game": "FroggerGame",
+      "title": "Frogger",
+      "keywords": [
+        "kurbağa",
+        "yol",
+        "nehir",
+        "koylar",
+        "sinek",
+        "timsah"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Ok tuşları veya [W] [A] [S] [D] ile hücre hücre zıpla.",
+            "- [R] yeniden başlatır, [S] kurulumu açar.",
+            "Oyun bittikten sonra: [Enter] = tekrar dene."
+          ]
+        },
+        {
+          "h": "Yol, nehir ve koylar",
+          "body": [
+            "Altta değişen yönlerde arabalar ve kamyonlarla 5 trafik şeridi - temas ölümcüldür.",
+            "Yukarıda 5 nehir şeridi: kütükler ve kaplumbağalar seni taşır; suya düşmek boğulmak demektir. Kaplumbağalar üst seviyelerde periyodik olarak dalar (yanıp sönme = uyarı).",
+            "En üstte 5 koy bekler - hepsini doldurmak seviyeyi tamamlar, sonra her şey hızlanır.",
+            "- Ekstralar: boş koylarda kısa süreliğine bir bonus sinek (+200) belirir, timsahlar üst seviyelerde koyları işgal eder (üstüne inmek = ölüm) ve alttaki zaman çubuğu her kurbağada boşalır."
+          ]
+        },
+        {
+          "h": "Puanlama",
+          "body": [
+            "Yeni ulaşılan her satır 10 puan, bir koy 50 artı kalan her saniye için 10 verir.",
+            "5 koyun tamamı 1000 puan ve bir sonraki seviyeyi kazandırır.",
+            "10.000 puanda bir kereye mahsus ekstra bir can alırsın (başlangıç: 3 can)."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Kenarda beklemek yerine trafik boşluklarını bir şerit önden planla.",
+            "- Hedef koyuna doğru sürüklenen kütükleri taksi olarak kullan.",
+            "- Erken in: zaman bonusu sineğe yapılan sapmadan daha değerlidir."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "category": "games",
+      "game": "MemoryGame",
+      "title": "Hafıza",
+      "keywords": [
+        "çiftler",
+        "kartlar",
+        "hatırla",
+        "düello",
+        "çevir"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Kartları fare tıklamasıyla çevir - ya da çerçeveyi ok tuşları/WASD ile hareket ettir ve [Space] veya [Enter] ile çevir.",
+            "- [R] yeni bir tur karar, [S] kurulumu açar.",
+            "Eşleşmeyen bir çift kısa süre görünür kalır ve sonra kendiliğinden geri çevrilir."
+          ]
+        },
+        {
+          "h": "Tahtalar ve düello",
+          "body": [
+            "Üç tahta boyutu: 4x4 (8 çift), 6x6 (18) ve 8x6 (24) - motifler şekil-renk kombinasyonlarıdır.",
+            "Tek başına, açığa çıkarılan her iki kartlı kombinasyon bir hamle sayılır; saat çalışıyor.",
+            "- Düello (oyun öncesi ekranında çok oyunculu): sırayla çevir, bir eşleşme tekrar oynaman demektir - sonunda daha çok çifti olan kazanır."
+          ]
+        },
+        {
+          "h": "Puanlama",
+          "body": [
+            "Tek başına: tahta boyutu tabanı eksi hamle başına 15 ve saniye başına 2 (en az 100).",
+            "Düello: kazananın çiftlerinin çarpı 100'ü en yüksek skor listesine gider."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Önce bilinmeyen kartları çevir - her biri sana bedavaya bir motif gösterir.",
+            "- Motifleri renk gruplarına göre sabitle, bu arama alanını yarıya indirir.",
+            "- Bir düelloda rakibin için asla taze bir çift açığa çıkarma."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solitaire",
+      "category": "games",
+      "game": "SolitaireGame",
+      "title": "Solitaire",
+      "keywords": [
+        "kartlar",
+        "klondike",
+        "spider",
+        "freecell",
+        "pyramid",
+        "tripeaks"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Kartları fareyle sürükle (sürükle bırak) veya tık tık hareket ettir; sağ tıklama en üstteki kartı temele gönderir (Klondike/FreeCell).",
+            "- [U] istediğin sayıda hamleyi geri alır, [R] yeni bir el dağıtır, [S] kurulumu açar.",
+            "[Space] veya [Enter] deste yığınını çalıştırır (çek/dağıt)."
+          ]
+        },
+        {
+          "h": "Beş varyant",
+          "body": [
+            "- Klondike: klasik solitaire - astan papaza dört temel, tabloda renkler değişerek azalan sıra; seçenek: 1 veya 3 çek.",
+            "- Spider: 10 sütun, 104 kart - tek renkte papazdan asa tamamlanan diziler kaybolur; seçenek: 1, 2 veya 4 takım.",
+            "- FreeCell: her şey açık, 4 boş hücre; süper hamleler boş hücreler ve boş sütunlarla sınırlıdır.",
+            "- Pyramid: toplamı 13 olan çiftleri kaldır, papaz tek başına sayılır; 2 yeniden dağıtma.",
+            "- TriPeaks: her zaman atık yığınının bir üstü veya altı (as ve papaz döner) - uzun zincirler kombo puanı verir."
+          ]
+        },
+        {
+          "h": "Puanlama",
+          "body": [
+            "Klondike: temel kart başına +10, açığa çıkan kart başına +5, kazanınca zaman bonusu. FreeCell: temel kart başına +10 artı zaman bonusu.",
+            "Spider: 500 eksi hamleler artı tamamlanan dizi başına 100. Pyramid: kart başına +5, temizlemek için +500.",
+            "TriPeaks: kart başına 10 çarpı kombo - deste yığını komboyu sıfırlar; temizlemek için +500."
+          ]
+        },
+        {
+          "h": "Seçenekler",
+          "body": [
+            "3 çek (Klondike) ve Spider takım sayısı kalıcı olarak kaydedilir.",
+            "Geri alma sınırsız ve ücretsizdir - çekinmeden dene.",
+            "Tüm varyantlar tek bir en yüksek skor listesini paylaşır."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Asları ve ikilileri mümkün olan en erken zamanda serbest bırak (Klondike/FreeCell).",
+            "- Bir sütunu boş tut - o en önemli aracındır (Spider/FreeCell).",
+            "- Pyramid'de, deste yığınına dokunmadan önce ulaşılabilir 13'lü çiftleri say."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aimtrainer",
+      "category": "games",
+      "game": "AimTrainerGame",
+      "title": "Nişan Antrenörü",
+      "keywords": [
+        "nişan alma",
+        "artı imleç",
+        "refleks",
+        "3d",
+        "uzay",
+        "atış"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Fare, kamerayı bir nişancı oyunundaki gibi doğrudan yönlendirir: her hareket görüşü anında o kadar çevirir (imleç pencere içinde görünmez şekilde yakalanır). [Esc] duraklatır ve fareyi serbest bırakır. Yatay dönüş sınırsızdır, yukarı/aşağı 60 derecede kilitlenir.",
+            "Sol tıklama tam olarak ekran merkezinden ateş eder (atışlar arasında kısa bir bekleme).",
+            "- [+] ve [-] hassasiyeti değiştirir (oyun ortasında bile), [E] bir chill oturumunu bitirir."
+          ]
+        },
+        {
+          "h": "Modlar",
+          "body": [
+            "- Hassasiyet (60 sn): her zaman aynı anda 3 küre - birini vurmak anında yeni bir tane oluşturur; sonunda bir isabet bonusu eklenir.",
+            "- Refleks (30 hedef): hedefler teker teker belirir ve bir an sonra küçülerek kaybolur - tepki süresi sayılır, sonunda istatistikler.",
+            "- Hareketli hedefler (60 sn): küreler yollar üzerinde sürüklenir (sallanan, yörüngede dönen, sekip zıplayan) - ardışık isabetler kombo çarpanını yükseltir.",
+            "- Chill (sonsuz): zamanlayıcı yok, ıskalama cezası yok - sadece rahatla ve ateş et; skor menüye döndüğünde kaydedilir."
+          ]
+        },
+        {
+          "h": "Puanlama",
+          "body": [
+            "Hassasiyet: isabet başına 100 puan artı bir mesafe bonusu; sonunda isabetin karesi çarpı 1500 üstüne.",
+            "Refleks: tepki ne kadar hızlıysa o kadar çok puan (1000 eksi milisaniye, en az 50).",
+            "Hareketli hedefler: 80 puan çarpı kombo çarpanı (12 ardışık isabette x4'e kadar) - bir ıskalama komboyu sıfırlar.",
+            "Chill: 50 puan çarpı çarpan; kombo yalnızca isabetsiz 5 saniyeden sonra kaybolur."
+          ]
+        },
+        {
+          "h": "Temalar",
+          "body": [
+            "- Uzay (varsayılan): tam bir yıldız küresi, parlak şekilde parıldayan bir halkalı kara delik ve uzak bir gezegen.",
+            "- Neon: parlayan bir zemin ızgarası ve çizgili bir güneşe sahip synthwave arenası.",
+            "- Poligon: şeritli, lambalı ve klasik hedef tahtalı kapalı bir salon. Tema ve ayarlanabilir hareket bulanıklığı (yüzde 0 ila 80, tuş [B] veya kurulum düğmeleri) kaydedilir."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Küçük, sakin fare hareketleri çılgın savuruşlardan daha iyi isabet eder - görüş 1:1 takip eder.",
+            "- Hassasiyet için düşük duyarlılık, refleks ve hareketli hedefler için daha yüksek.",
+            "- Uzak hedeflerin küçük bir hoşgörü payı vardır - aşırı düzeltme yapmak yerine sabit tut."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "connect4",
+      "category": "games",
+      "game": "ConnectFourGame",
+      "title": "Dört Bir Arada",
+      "keywords": [
+        "dört",
+        "sıra",
+        "diskler",
+        "sütunlar",
+        "yapay zeka",
+        "strateji"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "İki renk sırayla 7 sütundan birine disk bırakır; her disk en alttaki boş hücreye düşer. Yatay, dikey veya çapraz olarak dördü ilk sıralayan turu kazanır.",
+            "Tek oyunculuda yapay zekaya karşı oynarsın (kurulumda üç güç); 2 oyunculu modda tek bir fare veya klavyede sırayla oynarsın.",
+            "Başlayan oyuncu her turda değişir. [Enter] bir sonraki turu başlatır, [S] kuruluma döner."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Fare: bir sütunun üzerine gel (önizleme diski noktayı gösterir) ve tıkla.",
+            "- Klavye: [Left] [Right] sütunu seçer, [Down], [Space] veya [Enter] ile bırakır.",
+            "- Doğrudan seçim: [1] ile [7] arasındaki sayılar doğrudan o sütuna bırakır."
+          ]
+        },
+        {
+          "h": "Yapay zeka güçleri",
+          "body": [
+            "Kolay bazı tehditleri bilerek gözden kaçırır ve bazen yalnızca ikinci en iyi hamleyi oynar - öğrenmek için harika. Orta birkaç hamle ileriyi planlar ve güvenilir şekilde bloke eder.",
+            "Zor çok daha derin arar ve her hatayı anında cezalandırır - burada yalnızca çifte tehditler kazanır."
+          ]
+        },
+        {
+          "h": "Puanlama ve ipuçları",
+          "body": [
+            "Yapay zekaya karşı her galibiyet bir puan kazandırır; en yüksek skor tek bir oturumdaki en çok galibiyettir. 2 oyunculu modda puanlama yoktur.",
+            "- Merkez sütun en güçlüsüdür: çoğu dörtlü sıra oradan geçer.",
+            "- Çifte tehditler kur (aynı anda iki açık üçlü) - rakibin bunlardan yalnızca birini bloke edebilir."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tanks",
+      "category": "games",
+      "game": "TankDuelGame",
+      "title": "Tank Düellosu",
+      "keywords": [
+        "tank",
+        "düello",
+        "sekme",
+        "arena",
+        "güçlendirme",
+        "2 oyuncu"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Duvarlardan oluşan bir arenada 1'e 1: turu almak için rakibine vur - maçı ilk 5 tura ulaşan kazanır.",
+            "Atışlar duvarlardan bir kez seker (sekme) ve ikinci temasta kaybolur. Dikkat: seken bir atış sana da isabet edebilir.",
+            "Yapay zekaya karşı (üç güç) veya tek klavyede iki oyunculu oyna. Maçtan sonra: [Enter] = rövanş, [S] = kurulum."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Oyuncu 1: [W] [S] ileri geri sürer, [A] [D] döner, [Space] ateş eder.",
+            "- Oyuncu 2: ok tuşları sürer ve döndürür, [Enter] ateş eder. Atamalar seçenekleri takip eder.",
+            "- Aynı anda en fazla 4 atışın havada olur, aralarında kısa bir yeniden dolum vardır."
+          ]
+        },
+        {
+          "h": "Güçlendirmeler",
+          "body": [
+            "- Hızlı ateş: neredeyse hiç yeniden dolum olmadan 8 saniye.",
+            "- Kalkan: tam olarak bir isabeti emer (tankın etrafında bir halka).",
+            "- Üçlü atış: sonraki 5 atış üç yöne yayılır. Güçlendirmeler arenada birkaç saniyede bir belirir ve 12 saniye sonra kaybolur."
+          ]
+        },
+        {
+          "h": "Arenalar ve yapay zeka",
+          "body": [
+            "Seçilebilecek dört arena: Açık (siperlik yok), Haç, Sütunlar ve Labirent - veya her turda arenayı değiştiren Rastgele.",
+            "Kolay yapay zeka amaçsızca dolaşır ve kötü nişan alır; orta olan seni kovalar ve yana kaçar.",
+            "Zor yapay zeka mesafesini korur, atışlarını hareketinin önüne kurar ve hatta atışları bilerek duvarlardan sektirir."
+          ]
+        },
+        {
+          "h": "Puanlama ve ipuçları",
+          "body": [
+            "Yapay zekaya karşı maç galibiyeti başına puan alırsın: daha yüksek güçler ve temiz zaferler için daha fazla; puanlar rövanşlar boyunca birikir. 2 oyunculu modda puanlama yoktur.",
+            "- Duvarları kullan: atışları köşelerden sektirmek kendini açığa vermeden isabet ettirir."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blackjack",
+      "category": "games",
+      "game": "BlackjackGame",
+      "title": "Blackjack",
+      "keywords": [
+        "kartlar",
+        "kumarhane",
+        "21",
+        "fişler",
+        "krupiye",
+        "bahis"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Amaç: 21'i geçmeden krupiyeden 21'e daha yakın olmak. Sayı kartları yüz değerinde, resimliler 10, as 11 veya 1 sayılır.",
+            "Oyun 4 desteli bir ayakkabı kullanır; krupiye 16'ya kadar çeker ve her 17'de durur.",
+            "Önce bahsini yatır (fiş düğmeleri veya [1] ile [4] tuşları, [Backspace] temizler), sonra [Enter] ile dağıt."
+          ]
+        },
+        {
+          "h": "Eylemler",
+          "body": [
+            "- Kart çek [H]: başka bir kart çek.",
+            "- Dur [S]: mevcut toplamını koru.",
+            "- İkiye katla [D]: bahsi ikiye katla, tam olarak bir kart al, sonra otomatik olarak dur - yalnızca ilk iki kartında.",
+            "- Ayır [X]: aynı değerli iki kartı iki ele ayır (tur başına bir kez; ayrılan aslar her biri yalnızca bir kart alır)."
+          ]
+        },
+        {
+          "h": "Ödemeler",
+          "body": [
+            "- Blackjack (as + on değerli kart) 3:2 öder.",
+            "- Normal bir galibiyet 1:1 öder, bir push (beraberlik) bahsini iade eder.",
+            "- Batmak veya kaybetmek: bahis gider. Krupiye as veya 10 gösterirse, hemen blackjack olup olmadığını kontrol eder."
+          ]
+        },
+        {
+          "h": "Fişler",
+          "body": [
+            "500 fişle başlarsın; bakiyen ve rekorun kalıcı olarak kaydedilir ve her yeniden başlatmada korunur.",
+            "En yüksek skor, şimdiye kadar ulaştığın en yüksek fiş bakiyesidir.",
+            "10 fişin altında iflas etmişsindir: [Enter] taze 500 fişle yeniden başlar - rekor kalır."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Temel strateji: 7 veya üstü bir açık karta karşı 17'ye kadar çek; 4 ila 6'ya karşı erken dur - krupiye orada sık batar.",
+            "- Asları ve sekizleri her zaman ayır, onluları asla ayırma."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tunnelracer",
+      "category": "games",
+      "game": "TunnelRacerGame",
+      "title": "Tünel Yarışçısı",
+      "keywords": [
+        "tünel",
+        "yarışçı",
+        "3d",
+        "neon",
+        "kaçın",
+        "sonsuz"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Kıvrımlı bir neon tüpten uçarsın, çubuklardan, bloklardan ve halka kapılardan kaçarsın - tek bir isabet ve tur biter.",
+            "Boşluklarda altın madeni paralar süzülür; ekstra puan verirler ve genellikle güvenli çizgiyi işaretlerler.",
+            "Halka kapılarının tam olarak bir deliği vardır: kaçınmak yerine içinden geç."
+          ]
+        },
+        {
+          "h": "Modlar",
+          "body": [
+            "- Sonsuz: hız artmaya devam eder ve boşluklar daralır - ne kadar ileri gidebilirsin? Bir çarpışma turu bitirir ve en yüksek skoru kaydeder.",
+            "- Seviyeler: bitiş çizgili 30 sabit parkur, rahattan acımasıza. Tamamlanan seviyeler işaretlenir; oturum puanları birikir."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Tuşlar (varsayılan): [W] [A] [S] [D] veya ok tuşları gemiyi tüp etrafında iter.",
+            "- Fare: kurulumda [C] ile aç/kapat - doğrudan 1:1 yönlendirme, imleç yakalanır ve [Esc] serbest bırakır.",
+            "- [B] hareket bulanıklığını yüzde 10'luk adımlarla döngüler (0 ila 80, kaydedilir).",
+            "- Seviye modunda: [R] çarpışmadan sonra tekrar dener, [S] seçimi açar."
+          ]
+        },
+        {
+          "h": "Puanlama",
+          "body": [
+            "- Sonsuz: metre başına 10 puan artı madeni para başına 50.",
+            "- Seviyeler: bitiş için 1000, madeni para başına 50 ve par süresini geçtiğinde bir zaman bonusu.",
+            "Seviye modu en yüksek skoru, en iyi oturum toplamındır - birkaç seviyeyi arka arkaya oynamak kazandırır."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Halkaları çok önden izle: tüp virajını ters yönlendirmeye yetecek kadar erken belli eder.",
+            "- Mümkünse merkeze yakın kal - her boşluk oradan ulaşılabilir."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "labyrinth",
+      "category": "games",
+      "game": "LabyrinthGame",
+      "title": "3D Labirent",
+      "keywords": [
+        "labirent",
+        "labirent oyunu",
+        "raycaster",
+        "küreler",
+        "çıkış",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Her seviyeyle büyüyen 50 tohum üretimli labirent. Yeşil, atan çıkışı bul - her zaman başlangıçtan en uzak noktada durur.",
+            "Labirentin çevresinde mavi küreler süzülür; toplanan her küre bonus puan kazandırır.",
+            "Tamamlanan seviyeler seçimde işaretlenir; bitişte [Enter] bir sonrakini hemen başlatır."
+          ]
+        },
+        {
+          "h": "Görünümler",
+          "body": [
+            "- Birinci şahıs (3D): fare bakışıyla Wolfenstein tarzı görünüm - yukarıdan değil, tam ortasında.",
+            "- Yukarıdan (2D): hiç fare yakalaması olmayan, yukarıdan klasik harita. Kurulumda [V] ile aç/kapat; seçim kaydedilir."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Birinci şahıs: [W] [S] ileri geri, [A] [D] yana kayma, fare görüşünü çevirir - veya klavyede [Q] ve [E] ile dön.",
+            "- [M] mini haritayı açar/kapatır, [Esc] duraklatır ve fareyi serbest bırakır.",
+            "- Yukarıdan: [W] [A] [S] [D] veya ok tuşları dünya yönlerinde yürür."
+          ]
+        },
+        {
+          "h": "Puanlama",
+          "body": [
+            "- Çıkışa ulaşma: 500 puan.",
+            "- Küre başına: 100 ekstra puan.",
+            "- Ayrıca seviyenin par süresini geçtiğinde bir zaman bonusu; oturum puanları en yüksek skorda birikir."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Sağ el kuralı: her zaman aynı duvarı takip etmek çıkışa ulaşmayı garantiler.",
+            "- Küreler kabaca çıkışa giden yolu belirler - onları toplamak genellikle doğru yolda olduğun anlamına gelir."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reversi",
+      "category": "games",
+      "game": "ReversiGame",
+      "title": "Reversi",
+      "keywords": [
+        "reversi",
+        "othello",
+        "diskler",
+        "çevir",
+        "köşeler",
+        "yapay zeka"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Reversi (Othello) 8x8'lik bir tahtada oynanır. Bir diski, rakibin bir veya daha fazla diski yeni disk ile kendi renginden başka bir disk arasında düz bir çizgide sıkışacak şekilde yerleştirirsin - yatay, dikey veya çapraz. Sıkışan tüm diskler senin rengine döner.",
+            "Bir hamle yalnızca en az bir diski çevirirse geçerlidir. Geçerli hamlen yoksa sıran otomatik olarak geçilir. Hiçbir oyuncu hamle yapamadığında oyun biter ve daha çok diski olan kazanır.",
+            "Tek oyunculuda sen (Siyah) yapay zekaya karşı oynarsın; iki oyunculu modda Siyah ve Beyaz sırayla oynar."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Fare: boş bir kareye tıkla. Geçerli kareler küçük bir noktayla işaretlenir.",
+            "- Klavye: ok tuşları (veya hareket tuşların) seçim çerçevesini hareket ettirir, [Space] veya [Enter] diski yerleştirir.",
+            "- Bir turdan sonra: [Enter] = yeni tur, [S] = kuruluma geri dön (yalnızca tek oyunculu)."
+          ]
+        },
+        {
+          "h": "Yapay zeka gücü ve ipuçları",
+          "body": [
+            "Kolay çoğunlukla rastgele oynar, Orta birkaç hamle ileriyi görür, Zor daha derin arar ve köşelere yüksek değer verir.",
+            "- Köşeler altındır: bir köşedeki disk asla tekrar çevrilemez.",
+            "- Bir köşenin yanındaki karelere dikkat et - genellikle köşeyi rakibine verirler.",
+            "- Oyun ortasında daha az diske ama daha çok hareket kabiliyetine sahip olmak, çoğu zaman çok diske sahip olmaktan daha iyidir."
+          ]
+        },
+        {
+          "h": "Skor",
+          "body": [
+            "Yapay zekaya karşı her galibiyet bir puan değerindedir; en yüksek skor bir oturumdaki en çok galibiyettir. İki oyunculu oyunlar puanlanmaz."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kniffel",
+      "category": "games",
+      "game": "KniffelGame",
+      "title": "Yahtzee",
+      "keywords": [
+        "yahtzee",
+        "kniffel",
+        "zar",
+        "sıralı",
+        "full house",
+        "skor"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "5 zarın ve tur başına en fazla 3 atışın var. Her atıştan sonra istediğin zarları tutabilir ve yalnızca geri kalanını yeniden atabilirsin. Sonra sonucu 13 kategoriden tam olarak birine kaydedersin.",
+            "Her kategori yalnızca bir kez kullanılabilir. Hiçbir şey uymuyorsa, birini 0 puan için çizersin. 13 turdan sonra kağıt dolar ve oyun biter.",
+            "Tek oyunculu, en yüksek toplam için bir en yüksek skor kovalamacasıdır; iki oyunculu modda sırayla iki kağıt doldurursun - yüksek toplam kazanır."
+          ]
+        },
+        {
+          "h": "Kategoriler",
+          "body": [
+            "Üst bölüm (Birler'den Altılar'a): o sayının benlerini sayar. Üst bölümün toplamı en az 63 ise, 35 puanlık bir bonus kazanırsın.",
+            "- Üç/Dört benzer: en az 3 ya da 4 aynıysa tüm zarların toplamı.",
+            "- Full house = 25 (üç artı bir çift), Küçük sıra = 30 (arka arkaya dört), Büyük sıra = 40 (arka arkaya beş), Yahtzee = 50 (beş benzer), Şans = tüm zarların toplamı (her zaman izinli)."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- [Space] veya At düğmesi tutulmayan zarları yeniden atar.",
+            "- Bir zara tıkla veya [1] ile [5] arasına basarak o zarı tut veya bırak.",
+            "- Puanlamak için bir kategoriye tıkla veya ok tuşlarıyla seç ve [Enter] bas.",
+            "- Oyun bittikten sonra: [Enter] yeniden başlatır."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- 63 puanlık üst bonusu erken kap - beşliler ve altılılar özellikle değerlidir.",
+            "- Kötü bir atışı kurtarmak için Şans'ı kullan; hiçbir şey olmuyorsa Yahtzee'yi veya bir sırayı çiz."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wordle",
+      "category": "games",
+      "game": "WordleGame",
+      "title": "Wordle",
+      "keywords": [
+        "wordle",
+        "kelime",
+        "tahmin",
+        "harfler",
+        "yeşil",
+        "sarı"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Gizli 5 harfli kelimeyi 6 denemede tahmin et. Her tahminden sonra kutucuklar renk değiştirir: yeşil = doğru yerde doğru harf, sarı = harf var ama başka yerde, gri = harf kelimede yok.",
+            "Tekrarlanan harfler doğru şekilde işlenir: bir harf yalnızca cevapta gerçekten geçtiği sayıda sarı veya yeşil işaretlenir.",
+            "Her tahmin 5 harf olmalıdır, ancak 'gerçek' bir kelime olması gerekmez - bir sözlüğe göre kontrol edilmez. Cevaplar seçilen dile uyar."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- A-Z harfleri yaz, [Backspace] sonuncuyu siler, [Enter] satırı kontrol eder (yalnızca 5 harfle).",
+            "- Ekrandaki klavyeyi fareyle de kullanabilirsin; harfleri şimdiye kadar öğrendiklerine göre renklenir."
+          ]
+        },
+        {
+          "h": "Skor",
+          "body": [
+            "Sonsuza kadar devam eder: çözülen her kelime puan verir - daha az tahmin daha çok anlamına gelir (10 ila 60). Hemen ardından yeni bir kelime belirir.",
+            "Çözemediğin ilk kelime oyunu bitirir; topladığın puanlar en yüksek skorundur."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Birbirinden farklı, yaygın birçok harf içeren bir kelimeyle başla.",
+            "- Gri harfleri elemek için kullan ve sarı harfleri yeni bir konuma taşı."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "trex",
+      "category": "games",
+      "game": "TRexRunnerGame",
+      "title": "T-Rex Koşucusu",
+      "keywords": [
+        "trex",
+        "dino",
+        "koşucu",
+        "zıpla",
+        "eğil",
+        "sonsuz"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "[Space] veya [Up] ile koşmaya başla - dino sonra otomatik olarak koşar.",
+            "- Zıpla: küçük sıçramalar için [Space]/[Up] tuşuna dokun, daha yüksek zıplamalar için basılı tut.",
+            "- Eğil: [Down] tuşunu basılı tut - havadayken bu seni daha hızlı düşürür."
+          ]
+        },
+        {
+          "h": "Engeller",
+          "body": [
+            "Kaktüsler yerde tek tek veya gruplar halinde belirir - üzerlerinden atla.",
+            "Pterodaktiller üç yükseklikte gelir: yüksek = eğil, alçak/orta = zıpla.",
+            "Hız artmaya devam eder; her 100 puanda bir bip sesi ve kısa bir yanıp sönme alırsın."
+          ]
+        },
+        {
+          "h": "Seçenekler ve ipuçları",
+          "body": [
+            "Başlangıç ekranında aç/kapat (kaydedilir): [1]-[3] zorluk, [N] gündüz/gece, [C] kaplama.",
+            "- Kısaca dokunmak hızlı ikili engeller için yükseklik tasarrufu sağlar.",
+            "- Bir çarpışmadan sonra [Enter]/[Space] ile hemen devam et."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dame",
+      "category": "games",
+      "game": "DameGame",
+      "title": "Dama",
+      "keywords": [
+        "dama",
+        "checkers",
+        "dame",
+        "zorunlu alma",
+        "uçan dama",
+        "tahta"
+      ],
+      "sections": [
+        {
+          "h": "Varyantlar",
+          "body": [
+            "Kurulumda seçilir - her biri yapay zekaya karşı 1 oyuncu veya yerel 2 oyunculu:",
+            "- Alman Daması 8x8: taşlar ileri ve geri alır, dama istediği mesafeye uçar.",
+            "- Uluslararası Dama 10x10: daha büyük tahta, maksimum kuralıyla zorunlu alma (en uzun alma zorunludur).",
+            "- Checkers 8x8 (İngiliz): taşlar yalnızca ileri alır, dama yalnızca bir kare hareket eder."
+          ]
+        },
+        {
+          "h": "Kurallar ve kontroller",
+          "body": [
+            "Almalar zorunludur: bir alma varsa onu yapmalısın - alınabilir taşlar kırmızı çerçevelenir.",
+            "Bir taşa, sonra hedef kareye tıkla; çoklu bir sıçramayı adım adım oyna.",
+            "Klavye: [Arrows]/[WASD] çerçeveyi hareket ettirir, [Space]/[Enter] seçer.",
+            "En uzak satıra ulaşan bir taş dama (taç) olur."
+          ]
+        },
+        {
+          "h": "Yapay zeka ve skor",
+          "body": [
+            "Tek oyunculu üç yapay zeka gücü sunar (minimax + alfa-beta), kurulumda [<]/[>] ile seç.",
+            "En yüksek skor bu oturumda yapay zekaya karşı galibiyetlerini sayar; çok oyunculu puanlanmaz.",
+            "Bir oyundan sonra: [Enter] yeni tur, [S] kuruluma geri dön."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poker",
+      "category": "games",
+      "game": "PokerGame",
+      "title": "Poker",
+      "keywords": [
+        "poker",
+        "holdem",
+        "texas",
+        "video poker",
+        "çek",
+        "fişler",
+        "körler"
+      ],
+      "sections": [
+        {
+          "h": "Modlar",
+          "body": [
+            "Oyun öncesi ekranında varyantı seç:",
+            "- Texas Hold'em: 1-3 yapay zeka rakibine karşı, krupiye düğmesi, körler ve dört bahis turuyla (preflop, flop, turn, river).",
+            "- 5 Kart Çek: yapay zekaya karşı ikili - bir kez kart değiştir, iki bahis turu.",
+            "- Video Poker (Jacks or Better): ödeme tablosuna karşı tek başına."
+          ]
+        },
+        {
+          "h": "Eylemler",
+          "body": [
+            "Bahis sırasında: [F] pas, [C] görme/çağırma, [R] yükseltme, [A] all-in - veya düğmelere tıkla.",
+            "Değiştirirken/tutarken: kartlara tıkla veya [1]-[5] tuşlarına bas, sonra çekmek için [Enter].",
+            "[Enter]/[Space] bir sonraki eli dağıtır."
+          ]
+        },
+        {
+          "h": "Fişler ve eller",
+          "body": [
+            "Fişler (başlangıç 1000) kalıcıdır (mem.json). En yüksek skor en yüksek fiş sayındır. İflas = bir tıkla yeniden başla.",
+            "El sıralaması: Yüksek Kart < İkili < İki İkili < Üçlü < Kent < Floş < Full House < Dörtlü < Kent Floş < Royal Floş."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slidepuzzle",
+      "category": "games",
+      "game": "SlidingPuzzleGame",
+      "title": "Kaydırmalı Bulmaca",
+      "keywords": [
+        "kaydırmalı bulmaca",
+        "15 bulmaca",
+        "onbeş",
+        "kutucuklar",
+        "sayılar",
+        "kaydır"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Numaralı kutucukları sıraya geri koy (1, 2, 3 …); boşluk sağ alt köşede kalır.",
+            "Kutucuklar yalnızca boş boşluğa kayabilir. Üç boyut: 3×3 (kolay), 4×4 (klasik) ve 5×5 (zor).",
+            "Tahta birçok rastgele hamleyle karıştırılır, bu yüzden her zaman çözülebilir."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Tüm sırayı kaydırmak için boşlukla aynı satır veya sütundaki bir kutucuğa tıkla.",
+            "- Ok tuşları, boşluğun yanındaki kutucuğu içine iter."
+          ]
+        },
+        {
+          "h": "Puanlar",
+          "body": [
+            "Boyut başına bir taban skorla başlarsın; her hamle ve her saniye biraz çıkarır. Hızlı ve az hamleyle çözmek en iyi en yüksek skoru verir.",
+            "Çözdükten sonra, Enter/tıklama hemen taze bir tahta başlatır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastermind",
+      "category": "games",
+      "game": "MastermindGame",
+      "title": "Mastermind",
+      "keywords": [
+        "mastermind",
+        "renk kodu",
+        "kod",
+        "tahmin",
+        "çiviler",
+        "mantık"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Bilgisayar renkli çivilerden gizli bir kod seçer (renkler tekrarlanabilir). Onu satır satır kır.",
+            "Her tahminden sonra geri bildirim çivileri alırsın: SİYAH çivi = doğru yerde doğru renk, BEYAZ çivi = yanlış yerde doğru renk. Geri bildirim çivilerinin sırası hangi çiviye ait olduğunu göstermez.",
+            "Modlar: Kolay (4 çivi, 6 renk, 12 satır), Klasik (4/6, 10 satır) ve Zor (5 çivi, 8 renk)."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Bir sonraki boş yuvayı doldurmak için alttaki bir renge (veya 1–8 tuşları) tıkla.",
+            "- Yerleştirilmiş bir çiviyi temizlemek için ona tıkla; < veya Backspace sonuncuyu kaldırır.",
+            "- OK veya Enter tüm satırı kontrol eder."
+          ]
+        },
+        {
+          "h": "Puanlar",
+          "body": [
+            "Wordle gibi bu da sonsuz bir seridir: kırılan her kod puan verir (daha az tahmin + daha zor mod = daha fazla), sonra hemen yeni bir kod belirir.",
+            "Kıramadığın ilk kod oyunu bitirir - toplam en yüksek skorundur."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bubbleshooter",
+      "category": "games",
+      "game": "BubbleShooterGame",
+      "title": "Baloncuk Atıcı",
+      "keywords": [
+        "baloncuk atıcı",
+        "puzzle bobble",
+        "baloncuklar",
+        "toplar",
+        "ateş",
+        "gruplar"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Baloncukları petek alanına doğru yukarı ateşle. Aynı renkten üç veya daha fazlası temas ettiğinde grup patlar.",
+            "Bir grup patladığında en üst sıraya bağlantısını kaybeden baloncuklar aşağı düşer ve bonus puan verir.",
+            "Modlar: Kolay (4 renk, yeni sıra yok), Klasik (5 renk, ara sıra ekstra bir sıra iner) ve Zor (6 renk, daha hızlı)."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Top fareye nişan alır; sol/sağ ok tuşları da onu döndürür.",
+            "- Sol tıklama veya Space ateş eder. Baloncuklar yan duvarlardan seker.",
+            "- Topun solundaki küçük baloncuk bir sonraki rengindir."
+          ]
+        },
+        {
+          "h": "Puanlar",
+          "body": [
+            "Patlayan ve düşen baloncuklar puan verir; tüm alanı temizlemek bir bonus verir.",
+            "Bir baloncuk kırmızı çizginin altında kilitlenir kilitlenmez oyun biter - toplam en yüksek skorundur."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hangman",
+      "category": "games",
+      "game": "HangmanGame",
+      "title": "Adam Asmaca",
+      "keywords": [
+        "adam asmaca",
+        "kelime",
+        "tahmin",
+        "harfler",
+        "darağacı"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Gizli kelimeyi harf harf tahmin et. Her yanlış harf adam asmacanın başka bir parçasını çizer.",
+            "6 hatadan sonra figür tamamlanır ve tur kaybedilir.",
+            "Kelime uzunluğuna göre modlar: Kısa kelimeler (3–5), Karışık (3–12) ve Uzun kelimeler (7–12). Kelimeler seçilen dile uyar ve yalnızca A–Z kullanır."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- A–Z harfleri yaz veya ekrandaki klavyede onlara tıkla.",
+            "- Doğru harfler kelimede belirir; yanlış olanlar tuşu grileştirir."
+          ]
+        },
+        {
+          "h": "Puanlar",
+          "body": [
+            "Sonsuz seri: tahmin edilen her kelime puan verir (daha çok kalan can ve daha uzun kelimeler = daha fazla), sonra hemen yeni bir kelime belirir.",
+            "İlk kayıp oyunu bitirir - toplam en yüksek skorundur."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blockjump",
+      "category": "games",
+      "game": "BlockJumpGame",
+      "title": "Blok Zıplama",
+      "keywords": [
+        "blok zıplama",
+        "3d",
+        "minecraft",
+        "platform oyunu",
+        "zıpla",
+        "tırman",
+        "parkur"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "3D Minecraft tarzı bir platform oyunu: parlayan hedef fenerine ulaşmak için havada asılı blok platformlar arasında zıpla. Her seviye taze, tohum üretimli bir parkurdur ve zorlaşır.",
+            "Kamera varsayılan olarak Minecraft gibi birinci şahıstır; takip kamerasına geçmek için V'ye bas.",
+            "Platformların altına düşersen bir can kaybeder ve son kontrol noktasında yeniden doğarsın. 0 canda (3 canla başlarsın) tur biter."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- WASD veya ok tuşları: hareket (baktığın yere göre). Space: zıpla. Fare: etrafa bak.",
+            "- Merdivende, W yukarı ve S aşağı tırmanır. Bir yay bloğu seni havaya yükseğe fırlatır.",
+            "- V = görünüm (birinci/üçüncü şahıs), B = hareket bulanıklığı, C = fareyi yakala/serbest bırak, +/- = hassasiyet. Esc duraklatır ve fareyi serbest bırakır."
+          ]
+        },
+        {
+          "h": "Blok türleri",
+          "body": [
+            "- Çim/toprak/taş/tahta: üzerine zıpladığın ve durduğun katı bloklar.",
+            "- Merdiven: yavaşça yukarı/aşağı tırman. Çit: yolu tıkayan küçük bir blok - üzerinden atla.",
+            "- Yay bloğu: seni yükseğe fırlatır (yüksek platformlara ulaşmak için). Madeni paralar ekstra puan için rota boyunca süzülür."
+          ]
+        },
+        {
+          "h": "Puanlar",
+          "body": [
+            "Her madeni para 50 puan değerindedir. Bir seviyenin hedefine ulaşmak 1000 puan artı bir zaman bonusu verir (ne kadar hızlı, o kadar çok).",
+            "Puanlar tüm seviyeler boyunca birikir; toplam en yüksek skorundur."
+          ]
+        }
+      ]
+    }
+  ]
+}

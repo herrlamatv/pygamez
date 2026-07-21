@@ -105,6 +105,7 @@ REM dafuer, dass der Wrapper main.py und alle Module im Projekt findet.
     %ICON_OPT% ^
     --add-data "%CD%\lang;lang" ^
     --add-data "%CD%\lamawiki\*.json;lamawiki" ^
+    --add-data "%CD%\lamawiki\lang.expansion\*.json;lamawiki\lang.expansion" ^
     --add-data "%CD%\games\levels;games\levels" ^
     --add-data "%CD%\logo;logo" ^
     "%CD%\build\pygamez_boot.py"

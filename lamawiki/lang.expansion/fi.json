@@ -1,0 +1,1674 @@
+{
+  "pages": [
+    {
+      "id": "start",
+      "category": "general",
+      "title": "Aloitus",
+      "keywords": [
+        "aloitus",
+        "apu",
+        "esittely",
+        "valikko",
+        "tauko",
+        "koko näyttö",
+        "sivupalkki"
+      ],
+      "sections": [
+        {
+          "h": "Pelin aloittaminen",
+          "body": [
+            "Voit aloittaa pelin kolmella tavalla: vasemman sivupalkin pelilistasta, aloitusnäytön peliruudukosta tai suoraan tästä wikistä pelin esinäytön kautta.",
+            "Ennen jokaista peliä avautuu esinäyttö: valitse siellä pelitila (esim. yksin- tai moninpeli) ja pääset asetuksiin ja tähän wikiin."
+          ]
+        },
+        {
+          "h": "Tärkeät näppäimet",
+          "body": [
+            "- [Esc] keskeyttää ja jatkaa käynnissä olevaa peliä - valikoissa se palaa takaisin.",
+            "- [F11] vaihtaa koko näytön tilaa päälle ja pois.",
+            "- Vihreä Takaisin valikkoon -painike lopettaa pelin ja tallentaa ennätyksen."
+          ]
+        },
+        {
+          "h": "Sivupalkki",
+          "body": [
+            "Vasemmalla näet kaikki pelit kuvakkeineen ja ennätyksesi (tähti). Käynnissä oleva peli pysyy korostettuna; pienissä ikkunoissa listaa vieritetään hiiren rullalla.",
+            "Vasemman alakulman tilakortti näyttää pelin nimen, tilan (vihreä = käynnissä, kulta = tauko, punainen = peli ohi), pisteet ja nykyisen kuvataajuuden."
+          ]
+        },
+        {
+          "h": "Moninpeli",
+          "body": [
+            "Snakessa, Pongissa, Air Hockeyssa, Tic-Tac-Toessa, Tetriksessä (Versus) ja Asteroidsissa (yhteistyökaksintaistelu) on paikallinen 2 pelaajan tila - valittavissa esinäytöllä.",
+            "Yksinpelissä molemmat näppäinasettelut ohjaavat samaa hahmoa; moninpelissä kumpikin omaansa (oletus: P1 = WASD, P2 = nuolet tai IJKL - katso asetukset)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "category": "general",
+      "title": "Asetukset ja ohjaus",
+      "keywords": [
+        "valinnat",
+        "asetukset",
+        "ohjaus",
+        "näppäimet",
+        "resoluutio",
+        "fps",
+        "ääni",
+        "kieli"
+      ],
+      "sections": [
+        {
+          "h": "Ääni ja värinä",
+          "body": [
+            "Ota äänet käyttöön ja säädä äänenvoimakkuus asetusnäytöllä. Kaikki tehosteet luodaan reaaliaikaisesti - äänitiedostoja ei ole.",
+            "Värinä tärisyttää liitettyä ohjainta (ilman ohjainta ei tee mitään)."
+          ]
+        },
+        {
+          "h": "Näppäinasettelut",
+          "body": [
+            "Käytettävissä on kolme esiasetusta: WASD + nuolet, WASD + IJKL ja nuolet + WASD.",
+            "Jokaisen näppäimen voi määrittää uudelleen: napsauta riviä tai vahvista Enterillä, ja paina sitten haluamaasi näppäintä. [Esc] peruuttaa.",
+            "Asettelut ovat erilliset pelaajalle 1 ja pelaajalle 2, ja ne tallennetaan pysyvästi."
+          ]
+        },
+        {
+          "h": "Grafiikka ja suorituskyky",
+          "body": [
+            "Resoluutio määrittää sisäisen pelialueen (480x360 aina 1280x960 asti). Pienempi = kevyempi, suurempi = terävämpi kuva.",
+            "Automaattiresoluutio sovittaa pelialueen ikkunan kokoon automaattisesti.",
+            "FPS-asetukset (15-120) määrittävät tavoitekuvataajuuden - pienempi FPS säästää virtaa."
+          ]
+        },
+        {
+          "h": "Kieli",
+          "body": [
+            "Käyttöliittymä on saatavilla saksaksi, englanniksi, ranskaksi, espanjaksi ja portugaliksi. Vaihda asetusnäytöltä tai sivupalkin Language-kohdasta - myös tämä wiki vaihtaa kieltä."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saving",
+      "category": "general",
+      "title": "Tallennus ja ennätykset",
+      "keywords": [
+        "tallennus",
+        "ennätys",
+        "record",
+        "pisteet",
+        "edistyminen",
+        "tiedostot"
+      ],
+      "sections": [
+        {
+          "h": "Ennätykset",
+          "body": [
+            "Jokainen peli tallentaa parhaan tuloksensa automaattisesti, kun kierros päättyy. Uudesta ennätyksestä ilmestyy kultainen banneri - ja konfettisade.",
+            "Näet parhaat tulokset kaikkialla: tähtenä sivupalkin listassa, aloitusnäytön tikkerissä ja tilakortissa."
+          ]
+        },
+        {
+          "h": "Mitä tallennetaan mihinkin?",
+          "body": [
+            "- settings.json: ääni, äänenvoimakkuus, näppäinasettelut, resoluutio, FPS ja peliasetukset (esim. Snaken tila, Sudokun asetukset).",
+            "- mem.json: ennätykset, valittu kieli ja Sudokun tasoedistyminen.",
+            "- mem-ngb.json: Snaken visuaaliset modit (pään väri, ruudukko, banneri).",
+            "Molemmat tiedostot sijaitsevat suoraan pelin kansiossa, ja ne voi yksinkertaisesti poistaa nollataksesi kaiken."
+          ]
+        },
+        {
+          "h": "Vinkki",
+          "body": [
+            "Pisteet tallennetaan vain, kun poistut Takaisin valikkoon -painikkeella tai kierros päättyy normaalisti - ei silloin, kun ikkuna suljetaan väkisin kesken pelin."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake-special",
+      "category": "general",
+      "title": "Snake special",
+      "keywords": [
+        "kilpailu",
+        "prestige",
+        "hardcore",
+        "modit",
+        "muokkaus",
+        "hedelmäpeli",
+        "uhkapeli",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Kilpailutila",
+          "body": [
+            "Loputon tila tasokiipeilyllä: aloitat täsmälleen yhdellä omenalla. Mitä enemmän omenoita keräät yhteensä, sitä korkeampi tasosi - kerralla ilmestyy enemmän omenoita ja pistekerroin kasvaa (15 tasoa, jopa x16).",
+            "- Siniset omenat avaavat hedelmäpelin: panoksena on pituutesi, kolme samaa symbolia = jättipotti bonusomenoineen.",
+            "- Violetit omenat (uhkapeli) panostavat osan koostasi: normaalisti 50 prosentin panos kertoimella x0.5 aina x1.5 asti.",
+            "Tarkka kokosi näkyy desimaalilukuna vasemmassa yläkulmassa - jokainen panos rakentuu sen päälle. Tasoportaat sijaitsevat tiedostossa games/levels/snake-comp.json ja ovat vapaasti muokattavissa."
+          ]
+        },
+        {
+          "h": "Hardcore",
+          "body": [
+            "Vaihda painamalla [H] kilpailun asetuksissa: jokainen boosti syö pituutta, ja violetit omenat käyvät riskialttiimmiksi (75-90 prosentin panos, kerroin x0.25 aina x2.25). Punainen reunus merkitsee tilan."
+          ]
+        },
+        {
+          "h": "Prestige",
+          "body": [
+            "Avattavissa painamalla [P] yksinpelissä: kerätyt omenat voi muuntaa prestige-tasoiksi, jotka antavat pysyviä etuja. Edistyminen säilyy pelikertojen välillä."
+          ]
+        },
+        {
+          "h": "Modit / muokkaus",
+          "body": [
+            "Asetuksissa sivellinpainikkeella tai painamalla [C]: puhtaasti ulkonäköön keskittyvä valikko, joka ei koskaan muuta pelattavuutta.",
+            "- Pää: käärmeen pään väri (esiasetukset tai oma RGB-väri).",
+            "- Ruudukko: koordinaattiruudukko rivinumeroineen ja sarakekirjaimineen apuna suurilla laudoilla.",
+            "- Banneri: kerroinbannerin vaihto sekä koko ja läpinäkyvyys - reaaliaikaisella esikatselulla.",
+            "Kaikki tallennetaan tiedostoon mem-ngb.json."
+          ]
+        },
+        {
+          "h": "3D-näkymä",
+          "body": [
+            "Painamalla [V] asetuksissa: lauta piirretään 3D-näkymänä, seurantakamera leijuu käärmeen takana ja ohjaus on suhteessa katselusuuntaan (kaksi nopeaa painallusta = U-käännös).",
+            "Painamalla [K] avaat 3D-kamera-asetukset: pehmeä täräys, näkökenttä (FOV), kameran korkeus ja käännöstäräyksen vaihto. Pelattavissa 3D:nä: Klassinen ja Esteet (vain yksinpeli)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake",
+      "category": "games",
+      "game": "SnakeGame",
+      "title": "Snake",
+      "keywords": [
+        "snake",
+        "omena",
+        "boosti",
+        "kilpailu",
+        "3d",
+        "portaalit"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Ohjaa näppäimillä [W] [A] [S] [D] tai nuolinäppäimillä. 3D:ssä ohjaat suhteessa katselusuuntaan: vasen/oikea kääntää, kaksi nopeaa painallusta = U-käännös.",
+            "- Boosti: pidä [Space] tai Shift pohjassa = kaksinkertainen nopeus. Kestopalkki tyhjenee ja latautuu jälkeenpäin.",
+            "- Pelaaja 2 boostaa Enterillä tai oikealla Shift-näppäimellä."
+          ]
+        },
+        {
+          "h": "Pelitilat",
+          "body": [
+            "- Klassinen: puhdasta snakea.",
+            "- Nopeusryntäys: jokainen ruoka tekee sinusta nopeamman.",
+            "- Esteet: tappavia palikoita laudalla.",
+            "- Portaalit: teleportterparit siirtävät sinut laudan poikki.",
+            "- Aikahyökkäys: 60 sekuntia, mahdollisimman monta omenaa.",
+            "- Kilpailu: loputon tila tasoineen, hedelmäpeleineen ja uhkapeliomenoineen - yksityiskohdat Snake special -sivulla.",
+            "Valittavissa myös: seinän läpikulku, bonusomenat, hardcore, 2D/3D-näkymä painamalla [V] ja moninpeli."
+          ]
+        },
+        {
+          "h": "Pisteytys",
+          "body": [
+            "Omenat antavat pisteitä (bonusomenat kaksinkertaistavat satunnaisesti). Kultaomenat ilmestyvät hetkeksi, antavat paljon pisteitä ja täyttävät boostin heti. Kilpailussa tasosi kertoo kaikki pisteet."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Käytä boostia pitkillä suorilla, älä ahtaissa kulmissa.",
+            "- Kun läpikulku on käytössä, voit paeta reunan yli, kun jäät itsesi loukkuun.",
+            "- Kilpailussa violetit omenat kannattavat parhaiten, kun sinulla on ylimääräistä pituutta panostettavaksi."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pong",
+      "category": "games",
+      "game": "PongGame",
+      "title": "Pong",
+      "keywords": [
+        "maila",
+        "pallo",
+        "tekoäly",
+        "klassikko"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Pelaaja 1 liikuttaa vasenta mailaa näppäimillä [W] ja [S] - moninpelissä pelaaja 2 ohjaa oikeaa nuolinäppäimillä.",
+            "Liiketila on vaihdettavissa ohjaimittain: jatkuva (paina kerran, maila jatkaa liikettä) tai pito (liikkuu vain painettaessa). Vaihda painamalla [X] ohjaimelle 1 ja [N] ohjaimelle 2."
+          ]
+        },
+        {
+          "h": "Säännöt ja pisteytys",
+          "body": [
+            "Pelataan 5 pisteeseen, tekoälyä vastaan tai kahdella pelaajalla.",
+            "Pallon fysiikka kiihtyy jokaisesta osumasta; kimmoituskulma riippuu siitä, mihin kohtaan mailaa pallo osuu."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Osu palloon mailan reunalla luodaksesi jyrkkiä kulmia.",
+            "- Pitotila antaa tarkemman hallinnan, jatkuva tila nopeammat reaktiot."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "airhockey",
+      "category": "games",
+      "game": "AirHockeyGame",
+      "title": "Air Hockey",
+      "keywords": [
+        "kiekko",
+        "maila",
+        "fysiikka",
+        "maalit",
+        "tehostukset",
+        "hiiri"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Yksinpelissä mailasi seuraa hiirtä - mikä tahansa näppäin vaihtaa takaisin näppäimistöohjaukseen (8 suuntaa).",
+            "Moninpelissä P1 pelaa vasemmalla näppäimillä [W] [A] [S] [D] ja P2 oikealla näppäimillä [I] [J] [K] [L]."
+          ]
+        },
+        {
+          "h": "Asetukset",
+          "body": [
+            "- Tekoälyn vaikeus: helppo, keskitaso tai vaikea.",
+            "- [T] valitsee voittoon vaadittavat maalit (3/5/7/10).",
+            "- [P] vaihtaa tehostukset: XL (isompi maila), GOAL (vastustajan maali kutistuu), nopeus (nopeampi maila). Tehostukset kuuluvat pelaajalle, joka kosketti kiekkoa viimeksi."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Kiekko perii mailasi nopeuden - kerää vauhtia sen sijaan, että vain torjuisit.",
+            "- Pysy kiekon takana: sen työntäminen omaa maalia kohti riskeeraa oman maalin."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tictactoe",
+      "category": "games",
+      "game": "TicTacToeGame",
+      "title": "Tic-Tac-Toe",
+      "keywords": [
+        "risti",
+        "ympyrä",
+        "lauta",
+        "tekoäly",
+        "mnk"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Aseta merkit hiiren napsautuksella. Pelin päätyttyä: Enter tai napsautus = uusi kierros, [S] = takaisin asetuksiin."
+          ]
+        },
+        {
+          "h": "Tilat ja asetukset",
+          "body": [
+            "Lautakoot 3x3:sta aina 9x9:ään. Voittopituus mukautuu: 3 riviin 3x3:ssa, 4 laudalla 4x4, muuten 5.",
+            "Yksinpeli tekoälyä vastaan (helppo/keskitaso/vaikea) tai kaksi pelaajaa paikallisesti, X vastaan O vuorotellen."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Vaikea tekoäly 3x3:ssa on voittamaton - tasapeli on paras, minkä siellä saat.",
+            "- Suurilla laudoilla keskusta on tärkein: useimmat 5:n rivit kulkevat sen läpi."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "breakout",
+      "category": "games",
+      "game": "BreakoutGame",
+      "title": "Breakout",
+      "keywords": [
+        "tiilet",
+        "pallo",
+        "maila",
+        "tehostukset",
+        "combo",
+        "tasot"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Liikuta mailaa hiirellä tai nuolinäppäimillä. [Space] laukaisee pallon ja ampuu laserin. [P] tai [Esc] keskeyttää."
+          ]
+        },
+        {
+          "h": "Asetukset",
+          "body": [
+            "- [1] [2] [3] valitsee vaikeustason.",
+            "- Vasen/oikea vaihtaa pallon värin, ylös/alas aloitustason, [M] asettelun (vakio tai täysi)."
+          ]
+        },
+        {
+          "h": "Tiilet ja tehostukset",
+          "body": [
+            "Tiilityypit: normaali, teräs (tuhoutumaton), pommi (räjähtää) ja kulta (lisäpisteitä).",
+            "Tehostukset: x2/x3 palloa, [L] laser, [F] tulipallo, [G] tarttuva, [U] kilpi, kolikoita bonuspisteiksi - sekä combo-kerroin nopeista osumista."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Pelaa pallo sivuseiniä pitkin tiiliblokin taakse - siellä ylhäällä se raivaa tilaa itsestään.",
+            "- Kilpi torjuu täsmälleen yhden läpimurron: säästä se riskialttiisiin monipallovaiheisiin."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tetris",
+      "category": "games",
+      "game": "TetrisGame",
+      "title": "Tetris",
+      "keywords": [
+        "palat",
+        "rivit",
+        "kierrä",
+        "versus",
+        "pino"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Vasen/oikea liikuttaa palaa, ylös kiertää sitä, alas on pehmeä pudotus ja toimintonäppäin (oletus: [Space]) kova pudotus."
+          ]
+        },
+        {
+          "h": "Tilat ja pisteytys",
+          "body": [
+            "Täydet rivit antavat pisteitä - useampi kerralla antaa paljon enemmän. Joka 10 rivin välein taso ja nopeus kasvavat.",
+            "Versus (moninpeli): kaksi lautaa vierekkäin, se jonka pino osuu huippuun ensin häviää."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Pidä yksi sarake vapaana pitkälle I-palalle ja raivaa nelinkertaisilla riveillä.",
+            "- Rakenna matalaa: korkeat tornit kaatuvat nopeasti nopeuden noustessa."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "invaders",
+      "category": "games",
+      "game": "InvadersGame",
+      "title": "Invaders",
+      "keywords": [
+        "avaruusoliot",
+        "aallot",
+        "pomo",
+        "aseet",
+        "areena",
+        "ammu"
+      ],
+      "sections": [
+        {
+          "h": "Tilat",
+          "body": [
+            "- Klassinen: klassinen avaruusolioblokki laskeutuu. Asetuksissa valitset liikkeen (vain vasen/oikea tai vapaa WASD:lla) ja tähtäyksen (aina ylös tai hiirtä kohti).",
+            "- Areena: vapaa liike kaikkiin suuntiin, viholliset virtaavat sisään kaikilta reunoilta, tähtäät liikesuuntaasi."
+          ]
+        },
+        {
+          "h": "Aseet ja tehostukset",
+          "body": [
+            "Neljä asetta, vaihda näppäimillä [1]-[4]: blasteri, hajalaukaus, sarjatuli ja laser.",
+            "Tuhotut avaruusoliot pudottavat tehostuksia: lisäelämä, kilpi ja aseparannukset. Joka 4. tasolla on pomo."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Hajalaukaus raivaa tiiviit blokit, laser lävistää kokonaisia sarakkeita - vaihda aallon mukaan.",
+            "- Älä koskaan seiso paikallaan areenassa: kierrä reunaa pitkin ja houkuttele viholliset jonoon."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asteroids",
+      "category": "games",
+      "game": "AsteroidsGame",
+      "title": "Asteroids",
+      "keywords": [
+        "alus",
+        "kivet",
+        "ufo",
+        "hyperavaruus",
+        "aallot",
+        "vektori"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Ylös työntää katselusuuntaan, vasen/oikea kääntää alusta, toimintonäppäin ampuu. Alus jatkaa ajelehtimista (hitaus) ja kietoutuu näytön reunojen yli.",
+            "Alas laukaisee hyperavaruuden: hätähyppy satunnaiseen paikkaan 4 sekunnin viiveellä - ja 12 prosentin riskillä hajota palasiksi."
+          ]
+        },
+        {
+          "h": "Pisteytys ja lisät",
+          "body": [
+            "Kivet halkeavat kahdeksi pienemmäksi; kolme kokoa antavat 20/50/100 pistettä. UFO (voidaan poistaa käytöstä) antaa 200 pistettä, lisäelämä tulee joka 5000 pisteen välein.",
+            "Tehostukset tuhotuista kivistä: kilpi (6 sekuntia haavoittumaton), kolmoislaukaus ja sarjatuli.",
+            "Yhteistyökaksintaistelu (moninpeli): molemmat alukset lentävät yhtä aikaa erillisin elämin - se jolla on enemmän pisteitä voittaa."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Raivaa pienet, nopeat sirpaleet ensin ennen kuin murrat seuraavan ison kiven.",
+            "- Hyperavaruus on viimeinen keino, ei matkustusvaihtoehto - riski on todellinen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pacman",
+      "category": "games",
+      "game": "PacmanGame",
+      "title": "Pac-Man",
+      "keywords": [
+        "haamut",
+        "pallerot",
+        "sokkelo",
+        "hedelmä",
+        "voima"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Liiku nuolinäppäimillä tai näppäimillä [W] [A] [S] [D]. Pelin päätyttyä: Enter = uusi, [S] = asetukset.",
+            "Vasemman ja oikean laidan tunnelit siirtävät sinut toiselle puolelle."
+          ]
+        },
+        {
+          "h": "Haamut ja voimapallerot",
+          "body": [
+            "Neljä haamua jahtaavat alkuperäisillä käyttäytymisillään: Blinky ajaa suoraan takaa, Pinky virittää väijytyksiä, Inky käyttää vektoria Blinkyn kautta, Clyde perääntyy lähietäisyydeltä.",
+            "Voimapallerot tekevät haamuista sinisiä ja syötäviä hetkeksi - ketju antaa 200/400/800/1600 pistettä. Hedelmä ilmestyy bonuksena, lisäelämä tulee 10 000 pisteessä."
+          ]
+        },
+        {
+          "h": "Asetukset ja vinkit",
+          "body": [
+            "Vaikeus normaali/vaikea/äärimmäinen määrittää haamujen nopeuden ja pelkoajan; joka taso käy nopeammaksi.",
+            "- Syö voimapallero vasta, kun useita haamuja on lähellä - ketju on se, mikä ratkaisee.",
+            "- Muista hajaannusvaiheet: joka vaihdossa kaikki haamut kääntyvät ympäri."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flappy",
+      "category": "games",
+      "game": "FlappyGame",
+      "title": "Flappy Bird",
+      "keywords": [
+        "lintu",
+        "putket",
+        "kolikot",
+        "kilpi",
+        "mitalit",
+        "räpytys"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "[Space], nuoli ylös, [W] tai hiiren napsautus saa linnun räpyttämään - se kallistuu nousu- ja laskunopeutensa mukaan."
+          ]
+        },
+        {
+          "h": "Pisteytys ja lisät",
+          "body": [
+            "Jokainen ohitettu putki antaa yhden pisteen. Kolikoita (bonus) ja kilpitehostus, joka antaa anteeksi täsmälleen yhden törmäyksen, ilmestyy väleihin.",
+            "Päivä- ja yöteemat vaihtuvat pisteiden mukaan; pelin päätyttyä on mitaleja pronssista platinaan."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Lyhyet, säännölliset napautukset pitävät lentoradan rauhallisempana kuin harvat pitkät.",
+            "- Vaikeus määrittää raon koon ja nopeuden - rako kapenee pistemääräsi kasvaessa."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doodle",
+      "category": "games",
+      "game": "DoodleGame",
+      "title": "Doodle Jump",
+      "keywords": [
+        "hyppy",
+        "alustat",
+        "hirviöt",
+        "jousi",
+        "potkuri",
+        "korkeus"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Doodler hyppää automaattisesti laskeutuessaan - sinä vain ohjaat vasen/oikea (hitaudella). Reunat ovat avoimet: vasemmalle poistuminen tuo sinut takaisin oikealta.",
+            "Ammu ylöspäin nuolella ylös tai [Space]."
+          ]
+        },
+        {
+          "h": "Alustat ja lisät",
+          "body": [
+            "- Vihreä: normaali. Sininen: liikkuu. Ruskea: hajoaa päälle astuttaessa. Valkoinen: katoaa yhden hypyn jälkeen.",
+            "- Jouset antavat superhypyn, potkurihattu kantaa sinut ylös automaattisesti hetkeksi (haavoittumaton).",
+            "- Hirviöt ovat tappavia kosketuksesta - niiden ampuminen antaa lisäpisteitä."
+          ]
+        },
+        {
+          "h": "Pisteytys ja vinkit",
+          "body": [
+            "Pisteet = saavutettu korkeus; vaikeus kasvaa korkeuden myötä.",
+            "- Suunnittele mihin laskeudut ennen ponnahdusta - ruskeat alustat eivät kanna sinua.",
+            "- Käytä avointa reunaa oikoreittinä kaukaisiin alustoihin."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2048",
+      "category": "games",
+      "game": "Game2048",
+      "title": "2048",
+      "keywords": [
+        "laatat",
+        "liu'uta",
+        "yhdistä",
+        "numerot"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus ja säännöt",
+          "body": [
+            "Nuolet tai [W] [A] [S] [D] liu'uttavat kaikki laatat yhteen suuntaan kerralla. Samat numerot yhdistyvät summakseen; joka siirron jälkeen ilmestyy uusi laatta.",
+            "Tavoitteena on 2048-laatta - sen jälkeen jatkuu loputtomiin. Häviät, kun yksikään siirto ei ole mahdollinen."
+          ]
+        },
+        {
+          "h": "Pisteytys",
+          "body": [
+            "Jokainen yhdistäminen lisää uuden laatan arvon pistemäärääsi."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Pysäköi suurin laattasi kulmaan äläkä koskaan häiritse sitä kulmaa.",
+            "- Liu'uta pääasiassa kahteen suuntaan - se pitää laudan järjestyksessä."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minesweeper",
+      "category": "games",
+      "game": "MinesweeperGame",
+      "title": "Miinaharava",
+      "keywords": [
+        "miinat",
+        "liput",
+        "paljasta",
+        "chording",
+        "paras aika"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Vasen napsautus paljastaa ruudun, oikea napsautus asettaa lipun (valinnaisesti kysymysmerkkikierrolla, [Q] asetuksissa). [F] merkitsee kohdistimen alla olevan ruudun, [R] aloittaa alusta.",
+            "Chording: tyydytetyn numeron (kaikki liput asetettu) napsauttaminen paljastaa loput naapurit kerralla."
+          ]
+        },
+        {
+          "h": "Tasot ja pisteytys",
+          "body": [
+            "Aloittelija (9x9, 10 miinaa), keskitaso (16x16, 40) ja asiantuntija (30x16, 99). Kunkin tason paras aika tallennetaan.",
+            "Ensimmäinen napsautus on aina turvallinen - miinat asetetaan vasta sen jälkeen. Pisteet = tason perusarvo miinus sekunnit."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Aloita avointen alueiden reunan numeroista - siellä kuviot ovat yksiselitteisiä.",
+            "- 1 kulmassa, jolla on vain yksi peitetty naapuri, on aina turvallinen lippu."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sudoku",
+      "category": "games",
+      "game": "SudokuGame",
+      "title": "Sudoku",
+      "keywords": [
+        "pulma",
+        "numerot",
+        "muistiinpanot",
+        "tasot",
+        "vihjeet",
+        "logiikka"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Valitse ruutu nuolinäppäimillä, näppäimillä [W] [A] [S] [D] tai hiiren napsautuksella - oikean laidan numeronäppäimistö toimii kokonaan hiirellä.",
+            "- [1]-[9] syöttää numeron (myös numeronäppäimistö toimii).",
+            "- [0], Backspace tai oikea napsautus pyyhkii.",
+            "- [N] vaihtaa muistiinpanotilan, [H] antaa vihjeen, [R] aloittaa tason alusta, [Q] avaa tasonvalinnan.",
+            "- Pelin päätyttyä [A] piilottaa bannerin ja paljastaa täyden ratkaisun."
+          ]
+        },
+        {
+          "h": "Tasot ja pelitilat",
+          "body": [
+            "400 kiinteää tasoa: 4 vaikeustasoa (helppo/normaali/vaikea/asiantuntija) kertaa 100 tasoa. Jokainen taso on kaikkialla sama pulma ja yksikäsitteisesti ratkaistavissa; ratkaistut tasot merkitään suoritetuiksi.",
+            "Pelitila määrittää avut ja pistekertoimen:",
+            "- Klassinen x2.0: ei apuja, puhdasta kuin paperilla.",
+            "- Muistiinpanot x1.5: lisäksi lyijykynämuistiinpanot.",
+            "- Mukavuus x1.0: virheet heti punaisina, ristiriitojen korostus, oikeat syötöt lukittuvat.",
+            "- Apu x0.7: lisäksi jopa 3 vihjettä."
+          ]
+        },
+        {
+          "h": "Virheet ja pisteytys",
+          "body": [
+            "Jokainen syöttö tarkistetaan ratkaisua vastaan heti. Kun 3 virheen raja on käytössä (asetukset, näppäin [F]), kolmas virhe päättää pelin.",
+            "Pisteet = (vaikeuden perusarvo miinus aika, virheet ja vihjeet) kertaa tilan kerroin."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Aloita riveistä, sarakkeista ja lohkoista, joissa on jo monta numeroa.",
+            "- Merkitse ehdokkaat pareina: jos kahdella ruudulla on samat kaksi ehdokasta, ne putoavat pois kaikkialta muualta.",
+            "- Klassisessa tilassa ota aikasi: jokainen virhe lasketaan heti, myös ilman punaista merkkiä."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frogger",
+      "category": "games",
+      "game": "FroggerGame",
+      "title": "Frogger",
+      "keywords": [
+        "sammakko",
+        "tie",
+        "joki",
+        "poukamat",
+        "kärpänen",
+        "krokotiili"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Hyppää ruutu kerrallaan nuolinäppäimillä tai näppäimillä [W] [A] [S] [D].",
+            "- [R] aloittaa alusta, [S] avaa asetukset.",
+            "Pelin päätyttyä: [Enter] = uudelleen."
+          ]
+        },
+        {
+          "h": "Tie, joki ja poukamat",
+          "body": [
+            "Alhaalla 5 liikennekaistaa autoineen ja rekkoineen vuorotteleviin suuntiin - kosketus on tappava.",
+            "Ylempänä 5 jokikaistaa: tukit ja kilpikonnat kantavat sinua; veteen putoaminen tarkoittaa hukkumista. Kilpikonnat sukeltavat ajoittain korkeammilla tasoilla (vilkkuminen = varoitus).",
+            "Ylhäällä odottaa 5 poukamaa - niiden kaikkien täyttäminen suorittaa tason, minkä jälkeen kaikki nopeutuu.",
+            "- Lisät: bonuskärpänen (+200) ilmestyy hetkeksi tyhjiin poukamiin, krokotiilit valtaavat poukamia korkeammilla tasoilla (laskeutuminen = kuolema), ja alalaidan aikapalkki tyhjenee sammakkoa kohti."
+          ]
+        },
+        {
+          "h": "Pisteytys",
+          "body": [
+            "Jokainen uusi saavutettu rivi antaa 10 pistettä, poukama 50 plus 10 jäljellä olevaa sekuntia kohti.",
+            "Kaikki 5 poukamaa palkitsevat 1000 pisteellä ja seuraavalla tasolla.",
+            "10 000 pisteessä saat kertaluonteisen lisäelämän (aloitus: 3 elämää)."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Suunnittele liikenteen aukot yhtä kaistaa edellä sen sijaan, että odottaisit reunalla.",
+            "- Käytä kohdepoukamaasi kohti ajelehtivia tukkeja taksina.",
+            "- Laskeudu aikaisin: aikabonus voittaa mutkan kärpäselle."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "category": "games",
+      "game": "MemoryGame",
+      "title": "Muistipeli",
+      "keywords": [
+        "parit",
+        "kortit",
+        "muista",
+        "kaksintaistelu",
+        "käännä"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Käännä kortteja hiiren napsautuksella - tai liikuta kehystä nuolilla/WASD:lla ja käännä painamalla [Space] tai [Enter].",
+            "- [R] sekoittaa uuden kierroksen, [S] avaa asetukset.",
+            "Väärä pari pysyy hetken näkyvissä ja kääntyy sitten takaisin itsestään."
+          ]
+        },
+        {
+          "h": "Laudat ja kaksintaistelu",
+          "body": [
+            "Kolme lautakokoa: 4x4 (8 paria), 6x6 (18) ja 8x6 (24) - aiheet ovat muoto-väri-yhdistelmiä.",
+            "Yksin jokainen paljastettu kahden kortin yhdistelmä lasketaan siirroksi; kello käy.",
+            "- Kaksintaistelu (moninpeli esinäytöllä): kääntäkää vuorotellen, osuma tarkoittaa uutta vuoroa - se jolla on enemmän pareja lopussa voittaa."
+          ]
+        },
+        {
+          "h": "Pisteytys",
+          "body": [
+            "Yksin: lautakoon perusarvo miinus 15 siirtoa kohti ja 2 sekuntia kohti (vähintään 100).",
+            "Kaksintaistelu: voittajan parit kertaa 100 menevät ennätyslistalle."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Käännä tuntemattomat kortit ensin - jokainen näyttää sinulle aiheen ilmaiseksi.",
+            "- Ankkuroi aiheet niiden väriryhmän mukaan, se puolittaa hakualueen.",
+            "- Kaksintaistelussa älä koskaan paljasta tuoretta paria vastustajallesi."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solitaire",
+      "category": "games",
+      "game": "SolitaireGame",
+      "title": "Pasianssi",
+      "keywords": [
+        "kortit",
+        "klondike",
+        "spider",
+        "freecell",
+        "pyramidi",
+        "tripeaks"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Vedä kortteja hiirellä (raahaa ja pudota) tai siirrä niitä napsautus kerrallaan; oikea napsautus lähettää ylimmän kortin perustuspinoon (Klondike/FreeCell).",
+            "- [U] peruu kuinka monta siirtoa tahansa, [R] jakaa uuden käden, [S] avaa asetukset.",
+            "[Space] tai [Enter] käyttää pakkaa (nosto/jako)."
+          ]
+        },
+        {
+          "h": "Viisi muunnelmaa",
+          "body": [
+            "- Klondike: klassinen pasianssi - neljä perustuspinoa ässästä kuninkaaseen, pöytä laskeva vuorottelevin värein; valinta: nosta 1 tai 3.",
+            "- Spider: 10 saraketta, 104 korttia - kuninkaasta ässään yhtä maata olevat sarjat katoavat; valinta: 1, 2 tai 4 maata.",
+            "- FreeCell: kaikki kuvapuoli ylöspäin, 4 vapaasolua; supersiirtoja rajoittavat vapaasolut ja tyhjät sarakkeet.",
+            "- Pyramidi: poista pareja, joiden summa on 13, kuningas käy yksin; 2 uudelleenjakoa.",
+            "- TriPeaks: aina yksi arvo poistopinoa ylempi tai alempi (ässä ja kuningas kietoutuvat) - pitkät ketjut antavat combo-pisteitä."
+          ]
+        },
+        {
+          "h": "Pisteytys",
+          "body": [
+            "Klondike: +10 perustuskorttia kohti, +5 paljastettua korttia kohti, aikabonus voittaessa. FreeCell: +10 perustuskorttia kohti sekä aikabonus.",
+            "Spider: 500 miinus siirrot plus 100 valmista sarjaa kohti. Pyramidi: +5 korttia kohti, +500 tyhjennyksestä.",
+            "TriPeaks: 10 kertaa combo korttia kohti - pakka nollaa combon; +500 tyhjennyksestä."
+          ]
+        },
+        {
+          "h": "Asetukset",
+          "body": [
+            "Nosta-3 (Klondike) ja Spiderin maiden määrä tallennetaan pysyvästi.",
+            "Peruminen on rajaton ja ilmainen - kokeile vapaasti.",
+            "Kaikilla muunnelmilla on yhteinen ennätyslista."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Vapauta ässät ja kakkoset mahdollisimman aikaisin (Klondike/FreeCell).",
+            "- Pidä yksi sarake tyhjänä - se on tärkein työkalusi (Spider/FreeCell).",
+            "- Pyramidissa laske saavutettavissa olevat 13-parit ennen kuin kosket pakkaan."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aimtrainer",
+      "category": "games",
+      "game": "AimTrainerGame",
+      "title": "Tähtäysharjoittelija",
+      "keywords": [
+        "tähtäys",
+        "tähtäin",
+        "refleksi",
+        "3d",
+        "avaruus",
+        "ampuminen"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Hiiri ohjaa kameraa suoraan kuten räiskintäpelissä: jokainen liike kääntää näkymää heti sen verran (kohdistin on vangittu näkymättömästi ikkunan sisään). [Esc] keskeyttää ja vapauttaa hiiren. Vaakakäännös on rajaton, ylös/alas rajautuu 60 asteeseen.",
+            "Vasen napsautus ampuu täsmälleen näytön keskikohdan läpi (lyhyt viive laukausten välillä).",
+            "- [+] ja [-] muuttavat herkkyyttä (myös kesken pelin), [E] päättää chill-istunnon."
+          ]
+        },
+        {
+          "h": "Tilat",
+          "body": [
+            "- Tarkkuus (60 s): aina 3 palloa kerralla - yhden ampuminen luo uuden heti; tarkkuusbonus lisätään lopussa.",
+            "- Refleksi (30 kohdetta): kohteet ilmestyvät yksi kerrallaan ja kutistuvat pois hetken kuluttua - reaktioaika ratkaisee, tilastot lopussa.",
+            "- Liikkuvat kohteet (60 s): pallot ajelehtivat radoilla (heiluen, kiertäen, keinuen) - peräkkäiset osumat nostavat combo-kerrointa.",
+            "- Chill (loputon): ei ajastinta, ei hutiten rangaistusta - rentoudu vain ja ammu; pistemäärä tallennetaan, kun palaat valikkoon."
+          ]
+        },
+        {
+          "h": "Pisteytys",
+          "body": [
+            "Tarkkuus: 100 pistettä osumaa kohti plus etäisyysbonus; lopussa tarkkuus toiseen kertaa 1500 päälle.",
+            "Refleksi: mitä nopeampi reaktio, sitä enemmän pisteitä (1000 miinus millisekunnit, vähintään 50).",
+            "Liikkuvat kohteet: 80 pistettä kertaa combo-kerroin (jopa x4 12 peräkkäisellä osumalla) - huti nollaa combon.",
+            "Chill: 50 pistettä kertaa kerroin; combo haipuu vasta 5 sekunnin jälkeen ilman osumaa."
+          ]
+        },
+        {
+          "h": "Teemat",
+          "body": [
+            "- Avaruus (oletus): täysi tähtipallo, musta aukko kirkkaasti hehkuvine renkaineen ja kaukainen planeetta.",
+            "- Neon: synthwave-areena hehkuvine lattiaruudukkoineen ja raidallisine aurinkoineen.",
+            "- Ampumarata: sisähalli kaistoineen, lamppuineen ja klassisine maalitauluineen. Teema ja säädettävä liike-epäterävyys (0-80 prosenttia, näppäin [B] tai asetuspainikkeet) tallennetaan."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Pienet, rauhalliset hiiren liikkeet osuvat paremmin kuin hätäiset heilautukset - näkymä seuraa 1:1.",
+            "- Matala herkkyys tarkkuuteen, korkeampi refleksiin ja liikkuviin kohteisiin.",
+            "- Kaukaisilla kohteilla on pieni armonvara - pidä vakaana sen sijaan, että ylikorjaisit."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "connect4",
+      "category": "games",
+      "game": "ConnectFourGame",
+      "title": "Neljän suora",
+      "keywords": [
+        "neljä",
+        "rivi",
+        "kiekot",
+        "sarakkeet",
+        "tekoäly",
+        "strategia"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "Kaksi väriä pudottaa vuorotellen kiekkoja johonkin 7 sarakkeesta; jokainen kiekko putoaa alimpaan vapaaseen ruutuun. Ensimmäinen, joka saa neljä riviin - vaaka-, pysty- tai vinosuunnassa - voittaa kierroksen.",
+            "Yksinpelissä kohtaat tekoälyn (kolme vahvuutta asetuksissa); 2 pelaajan tilassa pelaatte vuorotellen yhdellä hiirellä tai näppäimistöllä.",
+            "Aloittava pelaaja vaihtuu joka kierros. [Enter] aloittaa seuraavan kierroksen, [S] palaa asetuksiin."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Hiiri: vie kohdistin sarakkeen päälle (esikatselukiekko näyttää paikan) ja napsauta.",
+            "- Näppäimistö: [Left] [Right] valitsee sarakkeen, pudota näppäimillä [Down], [Space] tai [Enter].",
+            "- Suora valinta: numerot [1]-[7] pudottavat suoraan kyseiseen sarakkeeseen."
+          ]
+        },
+        {
+          "h": "Tekoälyn vahvuudet",
+          "body": [
+            "Helppo jättää tarkoituksella huomiotta joitakin uhkia ja pelaa joskus vain toiseksi parhaan siirron - mainio oppimiseen. Keskitaso suunnittelee muutaman siirron eteenpäin ja torjuu luotettavasti.",
+            "Vaikea etsii paljon syvemmältä ja rankaisee jokaisesta virheestä heti - vain kaksoisuhat voittavat täällä."
+          ]
+        },
+        {
+          "h": "Pisteytys + vinkit",
+          "body": [
+            "Jokainen voitto tekoälyä vastaan antaa yhden pisteen; ennätys on eniten voittoja yhdessä istunnossa. 2 pelaajan tilassa ei ole pisteytystä.",
+            "- Keskisarake on vahvin: useimmat neljän suorat kulkevat sen läpi.",
+            "- Rakenna kaksoisuhkia (kaksi avointa kolmikkoa kerralla) - vastustajasi voi torjua vain toisen niistä."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tanks",
+      "category": "games",
+      "game": "TankDuelGame",
+      "title": "Tankkikaksintaistelu",
+      "keywords": [
+        "tankki",
+        "kaksintaistelu",
+        "kimmoke",
+        "areena",
+        "tehostus",
+        "2 pelaajaa"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "1 vastaan 1 seinistä koostuvassa areenassa: osu vastustajaasi voittaaksesi kierroksen - ensimmäinen 5 kierrokseen voittaa ottelun.",
+            "Laukaukset kimpoavat seinistä kerran (kimmoke) ja katoavat toisesta kosketuksesta. Varo: kimmonnut laukaus voi osua myös sinuun.",
+            "Pelaa tekoälyä vastaan (kolme vahvuutta) tai kahdella pelaajalla yhdellä näppäimistöllä. Ottelun jälkeen: [Enter] = uusinta, [S] = asetukset."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Pelaaja 1: [W] [S] ajavat eteen ja taakse, [A] [D] kääntävät, [Space] ampuu.",
+            "- Pelaaja 2: nuolinäppäimet ajavat ja kääntävät, [Enter] ampuu. Asettelut noudattavat asetuksia.",
+            "- Enintään 4 laukaustasi on ilmassa kerralla, ja niiden välissä on lyhyt lataus."
+          ]
+        },
+        {
+          "h": "Tehostukset",
+          "body": [
+            "- Sarjatuli: 8 sekuntia lähes ilman latausta.",
+            "- Kilpi: imee täsmälleen yhden osuman (rengas tankin ympärillä).",
+            "- Kolmoislaukaus: seuraavat 5 laukausta leviävät kolmeen suuntaan. Tehostuksia ilmestyy muutaman sekunnin välein areenaan ja ne vanhenevat 12 sekunnin kuluttua."
+          ]
+        },
+        {
+          "h": "Areenat + tekoäly",
+          "body": [
+            "Neljä areenaa valittavana: Avoin (ei suojaa), Risti, Pylväät ja Sokkelo - tai Satunnainen, joka vaihtaa areenaa joka kierros.",
+            "Helppo tekoäly ajelee päämäärättömästi ja tähtää huonosti; keskitaso jahtaa sinua ja väistää sivuun.",
+            "Vaikea tekoäly pitää etäisyyttä, ennakoi laukauksensa liikkeesi edelle ja jopa kimmottaa laukauksia seinistä tarkoituksella."
+          ]
+        },
+        {
+          "h": "Pisteytys + vinkit",
+          "body": [
+            "Tekoälyä vastaan saat pisteitä ottelun voitosta: enemmän korkeammista vahvuuksista ja puhtaista voitoista; pisteet kertyvät uusintojen yli. 2 pelaajan tilassa ei ole pisteytystä.",
+            "- Käytä seiniä: laukausten kimmottaminen kulmien ympäri osuu paljastamatta itseäsi."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blackjack",
+      "category": "games",
+      "game": "BlackjackGame",
+      "title": "Blackjack",
+      "keywords": [
+        "kortit",
+        "kasino",
+        "21",
+        "pelimerkit",
+        "jakaja",
+        "panos"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "Tavoite: päästä lähemmäs 21:tä kuin jakaja menemättä yli. Numerokortit lasketaan silmäluvun mukaan, kuvakortit 10, ässä 11 tai 1.",
+            "Peli käyttää 4 pakan kenkää; jakaja nostaa 16:een asti ja jää joka 17:llä.",
+            "Aseta panoksesi ensin (pelimerkkipainikkeet tai näppäimet [1]-[4], [Backspace] tyhjentää sen), jaa sitten painamalla [Enter]."
+          ]
+        },
+        {
+          "h": "Toiminnot",
+          "body": [
+            "- Nosto [H]: nosta toinen kortti.",
+            "- Jää [S]: pidä nykyinen summasi.",
+            "- Tuplaus [D]: tuplaa panos, ota täsmälleen yksi kortti ja jää sitten automaattisesti - vain kahdella ensimmäisellä kortilla.",
+            "- Jako [X]: erottele kaksi samanarvoista korttia kahdeksi kädeksi (kerran kierroksessa; jaetut ässät saavat vain yhden kortin kumpikin)."
+          ]
+        },
+        {
+          "h": "Voitot",
+          "body": [
+            "- Blackjack (ässä + 10:n arvoinen kortti) maksaa 3:2.",
+            "- Normaali voitto maksaa 1:1, tasapeli palauttaa panoksesi.",
+            "- Yli meno tai häviö: panos on menetetty. Jos jakaja näyttää ässän tai 10:n, hän tarkistaa heti blackjackin varalta."
+          ]
+        },
+        {
+          "h": "Pelimerkit",
+          "body": [
+            "Aloitat 500 pelimerkillä; saldosi ja ennätyksesi tallennetaan pysyvästi ja säilyvät jokaisen uudelleenkäynnistyksen läpi.",
+            "Ennätys on korkein pelimerkkisaldo, jonka olet koskaan saavuttanut.",
+            "Alle 10 pelimerkillä olet vararikossa: [Enter] käynnistää uudelleen 500 tuoreella pelimerkillä - ennätys säilyy."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Perusstrategia: jakajan avokorttia 7 tai enemmän vastaan nosta 17:ään; 4-6 vastaan jää aikaisin - jakaja menee usein yli siellä.",
+            "- Jaa aina ässät ja kahdeksikot, älä koskaan jaa kymppejä."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tunnelracer",
+      "category": "games",
+      "game": "TunnelRacerGame",
+      "title": "Tunnel Racer",
+      "keywords": [
+        "tunneli",
+        "kilpuri",
+        "3d",
+        "neon",
+        "väistä",
+        "loputon"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "Lennät mutkittelevan neonputken läpi väistellen tankoja, palikoita ja rengasportteja - yksi osuma ja pelikerta on ohi.",
+            "Kultaisia kolikoita leijuu aukoissa; ne antavat lisäpisteitä ja merkitsevät yleensä turvallisen linjan.",
+            "Rengasporteissa on täsmälleen yksi reikä: pujahda sen läpi väistämisen sijaan."
+          ]
+        },
+        {
+          "h": "Tilat",
+          "body": [
+            "- Loputon: nopeus kasvaa jatkuvasti ja aukot käyvät ahtaammiksi - kuinka pitkälle pääset? Törmäys päättää pelikerran ja tallentaa ennätyksen.",
+            "- Tasot: 30 kiinteää rataa maalilinjoineen, rennosta raakaan. Suoritetut tasot merkitään valmiiksi; istunnon pisteet kertyvät."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Näppäimet (oletus): [W] [A] [S] [D] tai nuolet työntävät alusta putkessa.",
+            "- Hiiri: vaihda asetuksissa painamalla [C] - suora 1:1-ohjaus, kohdistin vangitaan ja [Esc] vapauttaa sen.",
+            "- [B] kiertää liike-epäterävyyttä 10 prosentin askelin (0-80, tallennetaan).",
+            "- Tasotilassa: [R] yrittää uudelleen törmäyksen jälkeen, [S] avaa valinnan."
+          ]
+        },
+        {
+          "h": "Pisteytys",
+          "body": [
+            "- Loputon: 10 pistettä metriä kohti plus 50 kolikkoa kohti.",
+            "- Tasot: 1000 maalista, 50 kolikkoa kohti ja aikabonus, kun päihität par-ajan.",
+            "Tasotilan ennätys on paras istuntosummasi - useiden tasojen pelaaminen peräkkäin kannattaa."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Tarkkaile renkaita kaukana edessä: putki paljastaa mutkansa tarpeeksi ajoissa vastaohjaukseen.",
+            "- Pysy lähellä keskustaa kun mahdollista - jokainen aukko on saavutettavissa sieltä."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "labyrinth",
+      "category": "games",
+      "game": "LabyrinthGame",
+      "title": "3D-sokkelo",
+      "keywords": [
+        "sokkelo",
+        "labyrintti",
+        "raycaster",
+        "pallot",
+        "uloskäynti",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "50 siemenluvuilla luotua sokkeloa, jotka kasvavat joka tasolla. Löydä vihreä sykkivä uloskäynti - se sijaitsee aina kauimpana lähtöpisteestä.",
+            "Sinisiä palloja leijuu sokkelossa; jokainen kerätty pallo ansaitsee bonuspisteitä.",
+            "Suoritetut tasot merkitään valmiiksi valinnassa; [Enter] maalissa aloittaa seuraavan heti."
+          ]
+        },
+        {
+          "h": "Näkymät",
+          "body": [
+            "- Ensimmäinen persoona (3D): Wolfenstein-tyylinen näkymä hiirikatseella - keskellä ylhäällä katsomisen sijaan.",
+            "- Ylhäältä (2D): klassinen kartta ylhäältä, ilman minkäänlaista hiiren vangitsemista. Vaihda asetuksissa painamalla [V]; valinta tallennetaan."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Ensimmäinen persoona: [W] [S] eteen ja taakse, [A] [D] sivuaskel, hiiri kääntää näkymääsi - tai käänny näppäimillä [Q] ja [E].",
+            "- [M] vaihtaa minikartan, [Esc] keskeyttää ja vapauttaa hiiren.",
+            "- Ylhäältä: [W] [A] [S] [D] tai nuolet kävelevät maailmansuuntiin."
+          ]
+        },
+        {
+          "h": "Pisteytys",
+          "body": [
+            "- Uloskäyntiin pääsy: 500 pistettä.",
+            "- Palloa kohti: 100 lisäpistettä.",
+            "- Lisäksi aikabonus, kun päihität tason par-ajan; istunnon pisteet kertyvät ennätykseksi."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Oikean käden sääntö: saman seinän seuraaminen aina takaa uloskäyntiin pääsyn.",
+            "- Pallot reunustavat karkeasti tietä uloskäyntiin - niiden kerääminen tarkoittaa yleensä, että olet oikeilla jäljillä."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reversi",
+      "category": "games",
+      "game": "ReversiGame",
+      "title": "Reversi",
+      "keywords": [
+        "reversi",
+        "othello",
+        "kiekot",
+        "käännä",
+        "kulmat",
+        "tekoäly"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "Reversiä (Othelloa) pelataan 8x8-laudalla. Asetat kiekon niin, että yksi tai useampi vastustajan kiekko jää loukkuun suoraan linjaan uuden kiekon ja toisen omanvärisesi kiekon väliin - vaaka-, pysty- tai vinosuunnassa. Kaikki loukkuun jääneet kiekot kääntyvät väriksesi.",
+            "Siirto on laillinen vain, jos se kääntää vähintään yhden kiekon. Jos sinulla ei ole laillista siirtoa, vuorosi ohitetaan automaattisesti. Kun kumpikaan pelaaja ei voi siirtää, peli päättyy ja se jolla on enemmän kiekkoja voittaa.",
+            "Yksinpelissä sinä (Musta) kohtaat tekoälyn; kahden pelaajan tilassa Musta ja Valkoinen vuorottelevat."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Hiiri: napsauta tyhjää ruutua. Lailliset ruudut on merkitty pienellä pisteellä.",
+            "- Näppäimistö: nuolinäppäimet (tai liikenäppäimesi) liikuttavat valintakehystä, [Space] tai [Enter] asettaa kiekon.",
+            "- Kierroksen jälkeen: [Enter] = uusi kierros, [S] = takaisin asetuksiin (vain yksinpeli)."
+          ]
+        },
+        {
+          "h": "Tekoälyn vahvuus ja vinkit",
+          "body": [
+            "Helppo pelaa enimmäkseen satunnaisesti, Keskitaso katsoo muutaman siirron eteenpäin, Vaikea etsii syvemmältä ja arvostaa kulmia korkealle.",
+            "- Kulmat ovat kultaa: kulmassa olevaa kiekkoa ei voi koskaan enää kääntää.",
+            "- Varo kulman viereisiä ruutuja - ne luovuttavat usein kulman vastustajallesi.",
+            "- Kiekkojen vähyys mutta suurempi liikkuvuus keskipelissä on usein parempi kuin niiden runsaus."
+          ]
+        },
+        {
+          "h": "Pisteet",
+          "body": [
+            "Jokainen voitto tekoälyä vastaan on yhden pisteen arvoinen; ennätys on eniten voittoja istunnossa. Kahden pelaajan pelejä ei pisteytetä."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kniffel",
+      "category": "games",
+      "game": "KniffelGame",
+      "title": "Yatzy",
+      "keywords": [
+        "yatzy",
+        "kniffel",
+        "nopat",
+        "suora",
+        "täyskäsi",
+        "pisteet"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "Sinulla on 5 noppaa ja enintään 3 heittoa vuoroa kohti. Jokaisen heiton jälkeen voit pitää mitä tahansa noppia ja heittää uudelleen vain loput. Sitten kirjaat tuloksen täsmälleen yhteen 13 kategoriasta.",
+            "Jokaista kategoriaa voi käyttää vain kerran. Jos mikään ei sovi, vedät yhden yli 0 pisteellä. 13 vuoron jälkeen lomake on täynnä ja peli on ohi.",
+            "Yksinpeli on ennätysjahti korkeimmasta yhteissummasta; kahden pelaajan tilassa täytätte kaksi lomaketta vuorotellen - korkeampi summa voittaa."
+          ]
+        },
+        {
+          "h": "Kategoriat",
+          "body": [
+            "Yläosa (Ykköset - Kuutoset): laskee kyseisen numeron silmäluvut. Jos yläosasi summa on vähintään 63, ansaitset 35 pisteen bonuksen.",
+            "- Kolme/Neljä samaa: kaikkien noppien summa, jos vähintään 3 tai 4 ovat samat.",
+            "- Täyskäsi = 25 (kolmikko plus pari), Pieni suora = 30 (neljä peräkkäin), Iso suora = 40 (viisi peräkkäin), Yatzy = 50 (viisi samaa), Sattuma = kaikkien noppien summa (aina sallittu)."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- [Space] tai Heitä-painike heittää uudelleen nopat, joita ei pidetä.",
+            "- Napsauta noppaa tai paina [1]-[5] pitääksesi tai vapauttaaksesi kyseisen nopan.",
+            "- Napsauta kategoriaa tai valitse se nuolinäppäimillä ja paina [Enter] kirjataksesi sen.",
+            "- Pelin jälkeen: [Enter] aloittaa alusta."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Nappaa 63 pisteen yläbonus aikaisin - vitoset ja kuutoset ovat erityisen arvokkaita.",
+            "- Käytä Sattumaa pelastaaksesi huonon heiton; vedä Yatzy tai suora yli, jos mikään ei toimi."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wordle",
+      "category": "games",
+      "game": "WordleGame",
+      "title": "Wordle",
+      "keywords": [
+        "wordle",
+        "sana",
+        "arvaa",
+        "kirjaimet",
+        "vihreä",
+        "keltainen"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "Arvaa piilotettu 5-kirjaiminen sana 6 yrityksellä. Jokaisen arvauksen jälkeen laatat vaihtavat väriä: vihreä = oikea kirjain oikeassa paikassa, keltainen = kirjain esiintyy mutta muualla, harmaa = kirjainta ei ole sanassa.",
+            "Toistuvat kirjaimet käsitellään oikein: kirjain merkitään keltaiseksi tai vihreäksi vain niin monta kertaa kuin se todella esiintyy vastauksessa.",
+            "Jokaisen arvauksen on oltava 5 kirjainta, mutta sen ei tarvitse olla 'oikea' sana - sitä ei tarkisteta sanakirjasta vastaan. Vastaukset vastaavat valittua kieltä."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Kirjoita kirjaimia A-Z, [Backspace] poistaa viimeisen, [Enter] tarkistaa rivin (vain 5 kirjaimella).",
+            "- Voit käyttää myös näytön näppäimistöä hiirellä; sen kirjaimet värittyvät sen mukaan, mitä olet tähän mennessä oppinut."
+          ]
+        },
+        {
+          "h": "Pisteet",
+          "body": [
+            "Peli jatkuu loputtomiin: jokainen ratkaistu sana antaa pisteitä - vähemmän arvauksia tarkoittaa enemmän (10-60). Uusi sana ilmestyy heti perään.",
+            "Ensimmäinen sana, jota et onnistu murtamaan, päättää pelin; keräämäsi pisteet ovat ennätyksesi."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Avaa sanalla, jossa on monta eri, yleistä kirjainta.",
+            "- Käytä harmaita kirjaimia asioiden poissulkemiseen ja siirrä keltaiset kirjaimet uuteen paikkaan."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "trex",
+      "category": "games",
+      "game": "TRexRunnerGame",
+      "title": "T-Rex Runner",
+      "keywords": [
+        "trex",
+        "dino",
+        "juoksija",
+        "hyppy",
+        "kyykky",
+        "loputon"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Aloita juoksu painamalla [Space] tai [Up] - dino juoksee sitten automaattisesti.",
+            "- Hyppy: napauta [Space]/[Up] pieniin loikkiin, pidä pohjassa korkeampiin hyppyihin.",
+            "- Kyykky: pidä [Down] pohjassa - ilmassa tämä saa sinut putoamaan nopeammin."
+          ]
+        },
+        {
+          "h": "Esteet",
+          "body": [
+            "Kaktuksia ilmestyy yksittäin tai ryhmissä maahan - hyppää niiden yli.",
+            "Pterodaktyylejä ilmestyy kolmella korkeudella: ylhäällä = kyykky, alhaalla/keskellä = hyppy.",
+            "Nopeus kasvaa jatkuvasti; joka 100 pisteen välein kuulet piippauksen ja lyhyen välähdyksen."
+          ]
+        },
+        {
+          "h": "Asetukset ja vinkit",
+          "body": [
+            "Vaihda aloitusnäytöllä (tallennetaan): [1]-[3] vaikeus, [N] päivä/yö, [C] ulkoasu.",
+            "- Lyhyt napautus säästää korkeutta nopeisiin kaksoisesteisiin.",
+            "- Törmäyksen jälkeen jatka heti painamalla [Enter]/[Space]."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dame",
+      "category": "games",
+      "game": "DameGame",
+      "title": "Tammi (Dame)",
+      "keywords": [
+        "tammi",
+        "checkers",
+        "dame",
+        "pakkolyönti",
+        "lentävä kuningas",
+        "lauta"
+      ],
+      "sections": [
+        {
+          "h": "Muunnelmat",
+          "body": [
+            "Valitaan asetuksissa - kukin joko 1 pelaaja vs tekoäly tai 2 pelaajaa paikallisesti:",
+            "- Saksalainen tammi 8x8: sotilaat lyövät eteen- ja taaksepäin, kuningas lentää minkä tahansa matkan.",
+            "- Kansainvälinen tammi 10x10: isompi lauta, pakkolyönti maksimisäännöllä (pisin lyönti on pakollinen).",
+            "- Checkers 8x8 (englantilainen): sotilaat lyövät vain eteenpäin, kuningas liikkuu vain yhden ruudun."
+          ]
+        },
+        {
+          "h": "Säännöt ja ohjaus",
+          "body": [
+            "Lyönnit ovat pakollisia: jos lyönti on olemassa, sinun on otettava se - lyötävissä olevat nappulat on reunustettu punaisella.",
+            "Napsauta nappulaa, sitten kohderuutua; pelaa monilyönti askel askeleelta.",
+            "Näppäimistö: [Arrows]/[WASD] liikuttavat kehystä, [Space]/[Enter] valitsee.",
+            "Kauimmaiselle riville päässyt sotilas muuttuu kuninkaaksi (kruunu)."
+          ]
+        },
+        {
+          "h": "Tekoäly ja pisteet",
+          "body": [
+            "Yksinpeli tarjoaa kolme tekoälyn vahvuutta (minimax + alfa-beta), valitse ne asetuksissa näppäimillä [<]/[>].",
+            "Ennätys laskee voittosi tekoälyä vastaan tässä istunnossa; moninpeliä ei pisteytetä.",
+            "Pelin jälkeen: [Enter] uusi kierros, [S] takaisin asetuksiin."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poker",
+      "category": "games",
+      "game": "PokerGame",
+      "title": "Pokeri",
+      "keywords": [
+        "pokeri",
+        "holdem",
+        "texas",
+        "video poker",
+        "vaihto",
+        "pelimerkit",
+        "blindit"
+      ],
+      "sections": [
+        {
+          "h": "Tilat",
+          "body": [
+            "Valitse muunnelma esinäytöllä:",
+            "- Texas Hold'em: 1-3 tekoälyvastustajaa vastaan, jakajanapilla, blindeillä ja neljällä panostuskierroksella (preflop, flop, turn, river).",
+            "- 5 Card Draw: heads-up vs tekoäly - vaihda kortteja kerran, kaksi panostuskierrosta.",
+            "- Video Poker (Jacks or Better): yksin maksutaulukkoa vastaan."
+          ]
+        },
+        {
+          "h": "Toiminnot",
+          "body": [
+            "Panostuksen aikana: [F] luovuta, [C] tsekkaa/maksa, [R] korota, [A] all-in - tai napsauta painikkeita.",
+            "Vaihtaessa/pitäessä: napsauta kortteja tai paina [1]-[5], sitten [Enter] nostaaksesi.",
+            "[Enter]/[Space] jakaa seuraavan käden."
+          ]
+        },
+        {
+          "h": "Pelimerkit ja kädet",
+          "body": [
+            "Pelimerkit (aloitus 1000) säilyvät (mem.json). Ennätys on korkein pelimerkkimääräsi. Vararikko = uudelleenkäynnistys napsautuksella.",
+            "Kätten järjestys: Korkea kortti < Pari < Kaksi paria < Kolmoset < Suora < Väri < Täyskäsi < Neloset < Värisuora < Kuningasvärisuora."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slidepuzzle",
+      "category": "games",
+      "game": "SlidingPuzzleGame",
+      "title": "Liukupalapeli",
+      "keywords": [
+        "liukupalapeli",
+        "15-peli",
+        "viisitoista",
+        "laatat",
+        "numerot",
+        "liu'uta"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "Aseta numeroidut laatat takaisin järjestykseen (1, 2, 3 …); aukko jää oikeaan alakulmaan.",
+            "Laatat voivat liukua vain tyhjään aukkoon. Kolme kokoa: 3×3 (helppo), 4×4 (klassinen) ja 5×5 (vaikea).",
+            "Lauta sekoitetaan monilla satunnaisilla siirroilla, joten se on aina ratkaistavissa."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Napsauta laattaa samalla rivillä tai sarakkeella kuin aukko liu'uttaaksesi koko linjan.",
+            "- Nuolinäppäimet työntävät aukon vieressä olevan laatan siihen."
+          ]
+        },
+        {
+          "h": "Pisteet",
+          "body": [
+            "Aloitat perusarvolla kokoa kohti; jokainen siirto ja jokainen sekunti vähentävät hieman. Nopea ratkaisu vähin siirroin antaa parhaan ennätyksen.",
+            "Ratkaisun jälkeen Enter/napsautus aloittaa tuoreen laudan heti."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastermind",
+      "category": "games",
+      "game": "MastermindGame",
+      "title": "Mastermind",
+      "keywords": [
+        "mastermind",
+        "värikoodi",
+        "koodi",
+        "arvaa",
+        "tapit",
+        "logiikka"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "Tietokone valitsee piilotetun värillisistä tapeista koostuvan koodin (värit voivat toistua). Murra se rivi riviltä.",
+            "Jokaisen arvauksen jälkeen saat palautetapit: MUSTA tappi = oikea väri oikeassa paikassa, VALKOINEN tappi = oikea väri väärässä paikassa. Palautetappien järjestys ei paljasta, mihin tappiin se viittaa.",
+            "Tilat: Helppo (4 tappia, 6 väriä, 12 riviä), Klassinen (4/6, 10 riviä) ja Vaikea (5 tappia, 8 väriä)."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Napsauta väriä alhaalla (tai näppäimet 1-8) täyttääksesi seuraavan tyhjän paikan.",
+            "- Napsauta asetettua tappia poistaaksesi sen; < tai Backspace poistaa viimeisen.",
+            "- OK tai Enter tarkistaa koko rivin."
+          ]
+        },
+        {
+          "h": "Pisteet",
+          "body": [
+            "Kuten Wordlessa, kyseessä on loputon putki: jokainen murrettu koodi antaa pisteitä (vähemmän arvauksia + vaikeampi tila = enemmän), sitten uusi koodi ilmestyy heti.",
+            "Ensimmäinen koodi, jota et onnistu murtamaan, päättää pelin - summa on ennätyksesi."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bubbleshooter",
+      "category": "games",
+      "game": "BubbleShooterGame",
+      "title": "Bubble Shooter",
+      "keywords": [
+        "bubble shooter",
+        "puzzle bobble",
+        "kuplat",
+        "pallot",
+        "ammu",
+        "ryhmät"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "Ammu kuplia ylös hunajakennokenttään. Kun kolme tai useampi samanväristä koskettaa, ryhmä poksahtaa.",
+            "Kuplat, jotka menettävät yhteytensä ylimpään riviin ryhmän poksahtaessa, putoavat alas ja antavat bonuspisteitä.",
+            "Tilat: Helppo (4 väriä, ei uusia rivejä), Klassinen (5 väriä, ylimääräinen rivi tippuu silloin tällöin) ja Vaikea (6 väriä, nopeampi)."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Tykki tähtää hiirtä kohti; vasen/oikea nuoli kääntää sitä myös.",
+            "- Vasen napsautus tai Space ampuu. Kuplat kimpoavat sivuseinistä.",
+            "- Pieni kupla tykin vasemmalla puolella on seuraava värisi."
+          ]
+        },
+        {
+          "h": "Pisteet",
+          "body": [
+            "Poksautetut ja pudonneet kuplat antavat pisteitä; koko kentän tyhjentäminen antaa bonuksen.",
+            "Heti kun kupla lukittuu punaisen viivan alapuolelle, peli on ohi - summa on ennätyksesi."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hangman",
+      "category": "games",
+      "game": "HangmanGame",
+      "title": "Hirsipuu",
+      "keywords": [
+        "hirsipuu",
+        "sana",
+        "arvaa",
+        "kirjaimet",
+        "hirttolava"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "Arvaa piilotettu sana kirjain kerrallaan. Jokainen väärä kirjain piirtää uuden osan hirsipuuhun.",
+            "6 virheen jälkeen hahmo on valmis ja kierros on hävitty.",
+            "Tilat sanan pituuden mukaan: Lyhyet sanat (3-5), Sekoitettu (3-12) ja Pitkät sanat (7-12). Sanat vastaavat valittua kieltä ja käyttävät vain A-Z."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Kirjoita kirjaimia A-Z tai napsauta niitä näytön näppäimistöllä.",
+            "- Oikeat kirjaimet ilmestyvät sanaan; väärät muuttavat näppäimen harmaaksi."
+          ]
+        },
+        {
+          "h": "Pisteet",
+          "body": [
+            "Loputon putki: jokainen arvattu sana antaa pisteitä (enemmän jäljellä olevia elämiä ja pidemmät sanat = enemmän), sitten uusi sana ilmestyy heti.",
+            "Ensimmäinen häviö päättää pelin - summa on ennätyksesi."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blockjump",
+      "category": "games",
+      "game": "BlockJumpGame",
+      "title": "Block Jump",
+      "keywords": [
+        "block jump",
+        "3d",
+        "minecraft",
+        "tasohyppely",
+        "hyppy",
+        "kiipeä",
+        "parkour"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "3D-Minecraft-tyylinen tasohyppely: hyppää leijuvien palikka-alustojen yli hehkuvaan maalimajakkaan. Jokainen taso on tuore, siemenluvuilla luotu parkour ja käy vaikeammaksi.",
+            "Kamera on oletuksena ensimmäisen persoonan kuten Minecraftissa; paina V vaihtaaksesi seurantakameraan.",
+            "Putoa alustojen alle niin menetät elämän ja ilmestyt uudelleen viimeisellä tarkistuspisteellä. 0 elämällä (aloitat 3:lla) pelikerta päättyy."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- WASD tai nuolinäppäimet: liiku (suhteessa katsomissuuntaan). Space: hyppy. Hiiri: katsele ympäri.",
+            "- Tikkailla W kiipeää ylös ja S alas. Jousipalikka laukaisee sinut korkealle ilmaan.",
+            "- V = näkymä (ensimmäinen/kolmas persoona), B = liike-epäterävyys, C = vangitse/vapauta hiiri, +/- = herkkyys. Esc keskeyttää ja vapauttaa hiiren."
+          ]
+        },
+        {
+          "h": "Palikkatyypit",
+          "body": [
+            "- Ruoho/multa/kivi/puu: kiinteitä palikoita, joiden päälle hyppäät ja seisot.",
+            "- Tikkaat: kiipeä ylös/alas hitaasti. Aita: pieni palikka, joka tukkii reitin - hyppää vain sen yli.",
+            "- Jousipalikka: laukaisee sinut korkealle (korkeiden alustojen saavuttamiseksi). Kolikoita leijuu reitin varrella lisäpisteiksi."
+          ]
+        },
+        {
+          "h": "Pisteet",
+          "body": [
+            "Jokainen kolikko on 50 pisteen arvoinen. Tason maaliin pääsy antaa 1000 pistettä plus aikabonus (mitä nopeampi, sitä enemmän).",
+            "Pisteet kertyvät kaikkien tasojen yli; summa on ennätyksesi."
+          ]
+        }
+      ]
+    }
+  ]
+}

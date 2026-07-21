@@ -44,6 +44,9 @@ from i18n import t
 from menu import _Screen
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
+# Wiki-Dateien der neun Erweiterungs-Sprachen (pl/tr/da/no/sv/fi/cs/sl/hr) liegen
+# gebündelt hier; der Loader durchsucht beide Verzeichnisse.
+_EXPANSION_DIR = os.path.join(_DIR, "lang.expansion")
 
 _CACHE = {}          # Sprachcode -> geparste Seitenliste
 
@@ -67,17 +70,21 @@ def load_pages(lang=None):
     pages = _CACHE.get(lang)
     if pages is None:
         for code in (lang, "de"):
-            try:
-                with open(os.path.join(_DIR, f"{code}.json"),
-                          encoding="utf-8") as f:
-                    data = json.load(f)
-                pages = [p for p in data.get("pages", [])
-                         if isinstance(p, dict) and p.get("id")
-                         and p.get("title") and p.get("sections")]
-                if pages:
-                    break
-            except (OSError, json.JSONDecodeError, ValueError):
-                pages = None
+            for base in (_DIR, _EXPANSION_DIR):
+                try:
+                    with open(os.path.join(base, f"{code}.json"),
+                              encoding="utf-8") as f:
+                        data = json.load(f)
+                    cand = [p for p in data.get("pages", [])
+                            if isinstance(p, dict) and p.get("id")
+                            and p.get("title") and p.get("sections")]
+                    if cand:
+                        pages = cand
+                        break
+                except (OSError, json.JSONDecodeError, ValueError):
+                    continue
+            if pages:
+                break
         _CACHE[lang] = pages = pages or []
     return pages
 

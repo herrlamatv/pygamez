@@ -8,6 +8,39 @@
 
 ## 🇩🇪 Deutsch
 
+### Sprach-Erweiterung: 9 neue Sprachen – 2026-07-21
+
+Die Oberfläche gibt es jetzt in **14 Sprachen**. Neu hinzugekommen sind neun
+Sprachen, die – wie zuvor Spanisch und Portugiesisch – beim ersten Start hinter
+dem Knopf **„Weitere Sprachen"** liegen: **Polski, Türkçe, Dansk, Norsk,
+Svenska, Suomi, Čeština, Slovenščina, Hrvatski**.
+
+#### Neu
+- **9 neue UI-Sprachen**, je vollständig übersetzt (802 Texte pro Sprache):
+  Polnisch, Türkisch, Dänisch, Norwegisch, Schwedisch, Finnisch, Tschechisch,
+  Slowenisch, Kroatisch.
+- **LamaWiki komplett mitübersetzt**: alle 38 Wiki-Seiten in jeder der neun
+  neuen Sprachen.
+- **Dokumentation**: für jede der neun Sprachen ein vollständiger
+  README-Abschnitt in `other.readme.md` (Format wie FR/ES/PT).
+- Die neuen Sprachdateien liegen gebündelt in `lang/lang.expansion/` bzw.
+  `lamawiki/lang.expansion/` – die Kern-Sprachen (de/en/fr/es/pt) bleiben unberührt.
+
+#### Geändert
+- **Sprachauswahl als Raster**: Sprach- und Willkommens-Screen zeigen die nun
+  14 Sprachen in einem responsiven Raster mit automatischer Schriftanpassung –
+  passt sauber von 480×360 bis 1280×960 (langer Name wie „Slovenščina" läuft
+  nicht mehr über).
+- Loader (`i18n.py`, `lamawiki.py`) durchsuchen zusätzlich die
+  `lang.expansion`-Unterordner; fehlt ein Text, wird wie gehabt auf Deutsch
+  zurückgegriffen.
+- Build-Skripte (`pyinstall.bat`, `pyinstall-pyarmor.bat`) packen die neuen
+  `lamawiki/lang.expansion/*.json` mit in die EXE.
+
+#### Hinweise
+- Wordle und Hangman nutzen für die neuen Sprachen vorerst die englischen
+  Wortlisten (eigene Listen können später ergänzt werden).
+
 ### Games Rework – 2026-07-19
 
 Die bisher größte Überarbeitung: **alle 38 Spiele** wurden in einem Durchgang auf
@@ -88,6 +121,37 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Language expansion: 9 new languages – 2026-07-21
+
+The interface is now available in **14 languages**. Nine new ones were added
+which — like Spanish and Portuguese before them — hide behind the **"More
+languages"** button on first launch: **Polski, Türkçe, Dansk, Norsk, Svenska,
+Suomi, Čeština, Slovenščina, Hrvatski**.
+
+#### New
+- **9 new UI languages**, each fully translated (802 strings per language):
+  Polish, Turkish, Danish, Norwegian, Swedish, Finnish, Czech, Slovenian,
+  Croatian.
+- **LamaWiki fully translated too**: all 38 wiki pages in each of the nine new
+  languages.
+- **Documentation**: a complete README section for every new language in
+  `other.readme.md` (same format as FR/ES/PT).
+- The new language files are bundled in `lang/lang.expansion/` and
+  `lamawiki/lang.expansion/` — the core languages (de/en/fr/es/pt) are untouched.
+
+#### Changed
+- **Grid language picker**: the language and welcome screens now lay out the 14
+  languages in a responsive grid with automatic font sizing — fits cleanly from
+  480×360 to 1280×960 (long names like "Slovenščina" no longer overflow).
+- Loaders (`i18n.py`, `lamawiki.py`) also search the `lang.expansion`
+  subfolders; a missing string still falls back to German.
+- Build scripts (`pyinstall.bat`, `pyinstall-pyarmor.bat`) now bundle the new
+  `lamawiki/lang.expansion/*.json` into the EXE.
+
+#### Notes
+- Wordle and Hangman use the English word lists for the new languages for now
+  (dedicated word lists can be added later).
 
 ### Games Rework – 2026-07-19
 

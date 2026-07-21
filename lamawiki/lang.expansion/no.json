@@ -1,0 +1,1674 @@
+{
+  "pages": [
+    {
+      "id": "start",
+      "category": "general",
+      "title": "Komme i gang",
+      "keywords": [
+        "start",
+        "hjelp",
+        "intro",
+        "meny",
+        "pause",
+        "fullskjerm",
+        "sidepanel"
+      ],
+      "sections": [
+        {
+          "h": "Starte et spill",
+          "body": [
+            "Du kan starte et spill på tre måter: fra spillisten i det venstre sidepanelet, fra spillrutenettet på startskjermen, eller rett fra denne wikien via forhåndsskjermen.",
+            "Før hvert spill vises forhåndsskjermen: der velger du modusen (f.eks. én spiller eller flerspiller) og når innstillingene og denne wikien."
+          ]
+        },
+        {
+          "h": "Viktige taster",
+          "body": [
+            "- [Esc] pauser og gjenopptar det pågående spillet - i menyer går den tilbake.",
+            "- [F11] slår fullskjerm på og av.",
+            "- Den grønne knappen Tilbake til menyen avslutter spillet og lagrer rekorden."
+          ]
+        },
+        {
+          "h": "Sidepanelet",
+          "body": [
+            "Til venstre ser du alle spillene med ikonet sitt og rekorden din (stjerne). Det pågående spillet forblir markert; i små vinduer ruller listen med musehjulet.",
+            "Statuskortet nederst til venstre viser spillets navn, tilstand (grønn = pågår, gull = pauset, rød = game over), poeng og den nåværende bildefrekvensen."
+          ]
+        },
+        {
+          "h": "Flerspiller",
+          "body": [
+            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) og Asteroids (co-op-duell) har en lokal 2-spillermodus - valgbar på forhåndsskjermen.",
+            "I én spiller styrer begge tastebindingene den samme figuren; i flerspiller én hver (standard: P1 = WASD, P2 = piltaster eller IJKL - se innstillinger)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "category": "general",
+      "title": "Alternativer og kontroller",
+      "keywords": [
+        "alternativer",
+        "innstillinger",
+        "kontroller",
+        "taster",
+        "oppløsning",
+        "fps",
+        "lyd",
+        "språk"
+      ],
+      "sections": [
+        {
+          "h": "Lyd og haptikk",
+          "body": [
+            "Slå lyd av og på og still inn volumet i innstillingsskjermen. Alle effekter genereres live - det finnes ingen lydfiler.",
+            "Haptikk får en tilkoblet spillkontroller til å vibrere (gjør ingenting uten en)."
+          ]
+        },
+        {
+          "h": "Tastebindinger",
+          "body": [
+            "Tre forhåndsinnstillinger er tilgjengelige: WASD + piltaster, WASD + IJKL og piltaster + WASD.",
+            "Hver enkelt tast kan bindes om: klikk på en rad eller bekreft med Enter, og trykk deretter ønsket tast. [Esc] avbryter.",
+            "Bindingene er separate for spiller 1 og spiller 2 og lagres permanent."
+          ]
+        },
+        {
+          "h": "Grafikk og ytelse",
+          "body": [
+            "Oppløsningen bestemmer det interne spillområdet (480x360 opp til 1280x960). Mindre = lavere belastning, større = skarpere bilde.",
+            "Auto-oppløsning tilpasser spillområdet til vindusstørrelsen automatisk.",
+            "FPS-alternativene (15 til 120) bestemmer målbildefrekvensen - færre FPS sparer strøm."
+          ]
+        },
+        {
+          "h": "Språk",
+          "body": [
+            "Grensesnittet er tilgjengelig på tysk, engelsk, fransk, spansk og portugisisk. Bytt i innstillingsskjermen eller via Språk i sidepanelet - denne wikien bytter også språk."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saving",
+      "category": "general",
+      "title": "Lagring og rekorder",
+      "keywords": [
+        "lagring",
+        "highscore",
+        "rekord",
+        "poeng",
+        "fremgang",
+        "filer"
+      ],
+      "sections": [
+        {
+          "h": "Rekorder",
+          "body": [
+            "Hvert spill lagrer sin beste verdi automatisk når en runde slutter. En ny rekord viser et gyllent banner - pluss konfettiregn.",
+            "Du kan se de beste verdiene overalt: som en stjerne i sidepanellisten, i tickeren på startskjermen og i statuskortet."
+          ]
+        },
+        {
+          "h": "Hva lagres hvor?",
+          "body": [
+            "- settings.json: lyd, volum, tastebindinger, oppløsning, FPS og spillalternativer (f.eks. Snake-modus, Sudoku-innstillinger).",
+            "- mem.json: rekorder, det valgte språket og Sudoku-nivåfremgangen.",
+            "- mem-ngb.json: Snakes visuelle mods (hodefarge, rutenett, banner).",
+            "Begge filene ligger rett i spillmappen og kan ganske enkelt slettes for å tilbakestille."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "Poeng lagres bare når du forlater via Tilbake til menyen eller når runden slutter normalt - ikke når vinduet lukkes hardt midt i spillet."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake-special",
+      "category": "general",
+      "title": "Snake special",
+      "keywords": [
+        "konkurranse",
+        "prestisje",
+        "hardcore",
+        "mods",
+        "tilpass",
+        "spilleautomat",
+        "gambling",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Konkurransemodus",
+          "body": [
+            "Endeløs modus med nivåklatring: du starter med nøyaktig ett eple. Jo flere epler du samler totalt, desto høyere nivå - flere epler dukker opp samtidig og poengmultiplikatoren stiger (15 nivåer, opp til x16).",
+            "- Blå epler åpner en spilleautomat: innsatsen er lengden din, tre like symboler = jackpot med bonusepler.",
+            "- Lilla epler (gambling) satser en del av størrelsen din: normalt 50 prosent innsats med en faktor på x0.5 til x1.5.",
+            "Din nøyaktige størrelse vises som et desimaltall øverst til venstre - hver innsats bygger på den. Nivåtrinnene ligger i games/levels/snake-comp.json og kan redigeres fritt."
+          ]
+        },
+        {
+          "h": "Hardcore",
+          "body": [
+            "Slå på med [H] i konkurranseoppsettet: hver boost spiser lengde, og lilla epler blir mer risikable (75 til 90 prosent innsats, faktor x0.25 til x2.25). En rød ramme markerer modusen."
+          ]
+        },
+        {
+          "h": "Prestisje",
+          "body": [
+            "Nås med [P] i én spiller: innsamlede epler kan omdannes til prestisjenivåer som gir varige fordeler. Fremgangen består på tvers av runder."
+          ]
+        },
+        {
+          "h": "Mods / tilpass",
+          "body": [
+            "I oppsettet via penselknappen eller [C] : en rent visuell meny som aldri endrer spillingen.",
+            "- Hode: slangens hodefarge (forhåndsinnstillinger eller en egen RGB-farge).",
+            "- Rutenett: et koordinatrutenett med radnumre og kolonnebokstaver som hjelp på store brett.",
+            "- Banner: slå multiplikatorbanneret av og på, pluss størrelse og gjennomsiktighet - med sanntidsforhåndsvisning.",
+            "Alt lagres i mem-ngb.json."
+          ]
+        },
+        {
+          "h": "3D-visning",
+          "body": [
+            "Med [V] i oppsettet: brettet gjengis som en 3D-scene, et forfølgelseskamera svever bak slangen og styringen er relativ til synsretningen (to raske trykk = U-sving).",
+            "Med [K] åpner du 3D-kameraalternativene: myk risting, synsfelt (FOV), kamerahøyde og risting-ved-sving-bryteren. Spillbart i 3D: Klassisk og Hindringer (kun én spiller)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake",
+      "category": "games",
+      "game": "SnakeGame",
+      "title": "Snake",
+      "keywords": [
+        "snake",
+        "eple",
+        "boost",
+        "konkurranse",
+        "3d",
+        "portaler"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Styr med [W] [A] [S] [D] eller piltastene. I 3D styrer du relativt til synsretningen: venstre/høyre svinger, to raske trykk = U-sving.",
+            "- Boost: hold [Space] eller Shift = dobbel hastighet. Utholdenhetsmåleren tømmes og lades opp igjen etterpå.",
+            "- Spiller 2 booster med Enter eller høyre Shift-tast."
+          ]
+        },
+        {
+          "h": "Moduser",
+          "body": [
+            "- Klassisk: ren Snake.",
+            "- Speed rush: hver mat gjør deg raskere.",
+            "- Hindringer: dødelige blokker på brettet.",
+            "- Portaler: teleportørpar flytter deg tvers over brettet.",
+            "- Tidsangrep: 60 sekunder, så mange epler som mulig.",
+            "- Konkurranse: endeløs modus med nivåer, spilleautomat og gambleepler - detaljer på Snake special-siden.",
+            "Også valgbart: veggomslutning, bonusepler, hardcore, 2D/3D-visning med [V] og flerspiller."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Epler gir poeng (bonusepler dobler tilfeldig). Gullepler dukker opp midlertidig, gir masse poeng og fyller boosten på umiddelbart. I konkurranse multipliserer nivået ditt alle poeng."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Bruk boosten på lange rettstrekk, ikke i trange hjørner.",
+            "- Med omslutning aktivert kan du rømme over kanten når du sperrer deg selv inne.",
+            "- I konkurranse lønner lilla epler seg best når du har lengde til overs å satse."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pong",
+      "category": "games",
+      "game": "PongGame",
+      "title": "Pong",
+      "keywords": [
+        "racket",
+        "ball",
+        "ai",
+        "klassisk"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Spiller 1 flytter den venstre racketen med [W] og [S] - i flerspiller styrer spiller 2 den høyre med piltastene.",
+            "Bevegelsesmodusen kan byttes per kontroll: kontinuerlig (trykk én gang, racketen fortsetter) eller hold (beveger seg bare mens du holder). Veksle med [X] for kontroll 1 og [N] for kontroll 2."
+          ]
+        },
+        {
+          "h": "Regler og poeng",
+          "body": [
+            "Spill til 5 poeng, mot KI-en eller med to spillere.",
+            "Ballfysikken akselererer for hvert treff; spretvinkelen avhenger av hvor ballen møter racketen."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Treff ballen med racketkanten for å skape bratte vinkler.",
+            "- Hold-modus gir finere kontroll, kontinuerlig modus raskere reaksjoner."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "airhockey",
+      "category": "games",
+      "game": "AirHockeyGame",
+      "title": "Air Hockey",
+      "keywords": [
+        "puck",
+        "kølle",
+        "fysikk",
+        "mål",
+        "powerups",
+        "mus"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "I én spiller følger kølla di musen - hvilken som helst tast bytter tilbake til tastaturstyring (8 retninger).",
+            "I flerspiller spiller P1 til venstre med [W] [A] [S] [D] og P2 til høyre med [I] [J] [K] [L] ."
+          ]
+        },
+        {
+          "h": "Oppsett",
+          "body": [
+            "- KI-vanskelighetsgrad: lett, middels eller vanskelig.",
+            "- [T] velger antall mål for å vinne (3/5/7/10).",
+            "- [P] slår power-ups av og på: XL (større kølle), MÅL (motstanderens mål krymper), fart (raskere kølle). Power-ups tilhører spilleren som sist berørte pucken."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Pucken arver hastigheten til kølla di - bygg fart i stedet for bare å blokkere.",
+            "- Hold deg bak pucken: å dytte den mot ditt eget mål risikerer selvmål."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tictactoe",
+      "category": "games",
+      "game": "TicTacToeGame",
+      "title": "Tre på rad",
+      "keywords": [
+        "kryss",
+        "sirkel",
+        "brett",
+        "ai",
+        "mnk"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Plasser markeringer med et museklikk. Etter at spillet slutter: Enter eller klikk = ny runde, [S] = tilbake til innstillingene."
+          ]
+        },
+        {
+          "h": "Moduser og oppsett",
+          "body": [
+            "Brettstørrelser fra 3x3 opp til 9x9. Vinnerlengden tilpasses: 3 på rad på 3x3, 4 på 4x4, ellers 5.",
+            "Én spiller mot KI-en (lett/middels/vanskelig) eller to spillere lokalt, X mot O etter tur."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Den vanskelige KI-en på 3x3 er uslåelig - uavgjort er det beste du kan få der.",
+            "- På store brett er midten viktigst: de fleste 5-linjer går gjennom den."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "breakout",
+      "category": "games",
+      "game": "BreakoutGame",
+      "title": "Breakout",
+      "keywords": [
+        "murstein",
+        "ball",
+        "racket",
+        "powerups",
+        "combo",
+        "nivåer"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Flytt racketen med musen eller piltastene. [Space] skyter ballen av gårde og avfyrer laseren. [P] eller [Esc] pauser."
+          ]
+        },
+        {
+          "h": "Oppsett",
+          "body": [
+            "- [1] [2] [3] velger vanskelighetsgrad.",
+            "- Venstre/høyre endrer ballfargen, opp/ned startnivået, [M] utformingen (standard eller full)."
+          ]
+        },
+        {
+          "h": "Murstein og power-ups",
+          "body": [
+            "Mursteintyper: normal, stål (uødeleggelig), bombe (eksploderer) og gull (ekstrapoeng).",
+            "Power-ups: x2/x3 baller, [L] laser, [F] ildkule, [G] klebrig, [U] skjold, mynter for bonuspoeng - pluss en combomultiplikator for raske treff."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Spill ballen langs sideveggene bak mursteinblokken - der oppe rydder den seg selv.",
+            "- Skjoldet fanger nøyaktig ett gjennombrudd: spar det til risikable multiball-faser."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tetris",
+      "category": "games",
+      "game": "TetrisGame",
+      "title": "Tetris",
+      "keywords": [
+        "brikker",
+        "rader",
+        "roter",
+        "versus",
+        "stabel"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Venstre/høyre flytter brikken, opp roterer den, ned er mykt fall og handlingstasten (standard: [Space] ) hardt fall."
+          ]
+        },
+        {
+          "h": "Moduser og poeng",
+          "body": [
+            "Fulle rader gir poeng - flere samtidig gir mye mer. For hver 10. rad øker nivået og hastigheten.",
+            "Versus (flerspiller): to brett side ved side, den hvis stabel når toppen først taper."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Hold én kolonne fri for den lange I-brikken og rydd med firedoble rader.",
+            "- Bygg flatt: høye tårn velter raskt når hastigheten stiger."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "invaders",
+      "category": "games",
+      "game": "InvadersGame",
+      "title": "Invaders",
+      "keywords": [
+        "romvesener",
+        "bølger",
+        "boss",
+        "våpen",
+        "arena",
+        "skyte"
+      ],
+      "sections": [
+        {
+          "h": "Moduser",
+          "body": [
+            "- Klassisk: den klassiske romvesenblokken senker seg. I oppsettet velger du bevegelse (bare venstre/høyre eller fritt med WASD) og sikting (alltid opp eller mot musen).",
+            "- Arena: fri bevegelse i alle retninger, fiender strømmer inn fra alle kanter, du sikter i bevegelsesretningen din."
+          ]
+        },
+        {
+          "h": "Våpen og power-ups",
+          "body": [
+            "Fire våpen, bytt med [1] til [4] : blaster, spredningsskudd, hurtigild og laser.",
+            "Ødelagte romvesener slipper power-ups: ekstraliv, skjold og våpenoppgraderinger. Hvert 4. nivå har en boss."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Spredningsskuddet rydder tette blokker, laseren gjennomborer hele kolonner - bytt per bølge.",
+            "- Stå aldri stille i arenaen: sirkle langs kanten og trekk fiendene inn på en linje."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asteroids",
+      "category": "games",
+      "game": "AsteroidsGame",
+      "title": "Asteroids",
+      "keywords": [
+        "skip",
+        "steiner",
+        "ufo",
+        "hyperrom",
+        "bølger",
+        "vektor"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Opp gir fremdrift i synsretningen, venstre/høyre roterer skipet, handlingstasten skyter. Skipet fortsetter å drive (treghet) og slår rundt ved skjermkantene.",
+            "Ned utløser hyperrom: et nødhopp til en tilfeldig posisjon med 4 sekunders nedkjøling - og 12 prosent risiko for å falle fra hverandre."
+          ]
+        },
+        {
+          "h": "Poeng og ekstra",
+          "body": [
+            "Steiner deler seg i to mindre; de tre størrelsene gir 20/50/100 poeng. UFO-en (kan deaktiveres) gir 200 poeng, et ekstraliv kommer for hvert 5000. poeng.",
+            "Power-ups fra ødelagte steiner: skjold (6 sekunder usårbar), trippelskudd og hurtigild.",
+            "Co-op-duell (flerspiller): begge skipene flyr samtidig med separate liv - den med flest poeng vinner."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Rydd de små, raske splintene først før du knuser den neste store steinen.",
+            "- Hyperrom er en siste utvei, ikke et reisemiddel - risikoen er reell."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pacman",
+      "category": "games",
+      "game": "PacmanGame",
+      "title": "Pac-Man",
+      "keywords": [
+        "spøkelser",
+        "prikker",
+        "labyrint",
+        "frukt",
+        "power"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Beveg deg med piltastene eller [W] [A] [S] [D] . Etter at spillet slutter: Enter = ny, [S] = oppsett.",
+            "Tunnelene til venstre og høyre teleporterer deg til den andre siden."
+          ]
+        },
+        {
+          "h": "Spøkelser og kraftprikker",
+          "body": [
+            "De fire spøkelsene jakter med sin opprinnelige oppførsel: Blinky forfølger direkte, Pinky legger bakhold, Inky bruker en vektor via Blinky, Clyde trekker seg unna på nært hold.",
+            "Kraftprikker gjør spøkelsene blå og spiselige en stund - kjeden gir 200/400/800/1600 poeng. Frukt dukker opp som bonus, et ekstraliv kommer ved 10 000 poeng."
+          ]
+        },
+        {
+          "h": "Oppsett og tips",
+          "body": [
+            "Vanskelighetsgraden normal/vanskelig/ekstrem bestemmer spøkelseshastigheten og skremt-tiden; hvert nivå blir raskere.",
+            "- Spis en kraftprikk bare når flere spøkelser er nær - det er kjeden som teller.",
+            "- Husk scatter-fasene: ved hver veksling snur alle spøkelsene."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flappy",
+      "category": "games",
+      "game": "FlappyGame",
+      "title": "Flappy Bird",
+      "keywords": [
+        "fugl",
+        "rør",
+        "mynter",
+        "skjold",
+        "medaljer",
+        "flakse"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "[Space], pil opp, [W] eller et museklikk får fuglen til å flakse - den heller etter stige- og synkehastigheten."
+          ]
+        },
+        {
+          "h": "Poeng og ekstra",
+          "body": [
+            "Hvert passert rør gir ett poeng. Mynter (bonus) og en skjold-power-up som tilgir nøyaktig én kollisjon dukker opp i åpningene.",
+            "Dag- og natt-temaer veksler med poengsummen; etter game over finnes medaljer fra bronse til platina."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Korte, jevne trykk holder flygebanen roligere enn sjeldne lange.",
+            "- Vanskelighetsgraden bestemmer åpningens størrelse og hastigheten - åpningen smalner når poengsummen din vokser."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doodle",
+      "category": "games",
+      "game": "DoodleGame",
+      "title": "Doodle Jump",
+      "keywords": [
+        "hopp",
+        "plattformer",
+        "monstre",
+        "fjær",
+        "propell",
+        "høyde"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Doodleren hopper automatisk ved landing - du styrer bare venstre/høyre (med treghet). Kantene er åpne: å forlate til venstre bringer deg tilbake inn til høyre.",
+            "Skyt oppover med pil opp eller [Space] ."
+          ]
+        },
+        {
+          "h": "Plattformer og ekstra",
+          "body": [
+            "- Grønn: normal. Blå: beveger seg. Brun: går i stykker når du tråkker på. Hvit: forsvinner etter ett hopp.",
+            "- Fjærer gir et superhopp, propellhatten bærer deg oppover automatisk et øyeblikk (usårbar).",
+            "- Monstre er dødelige ved berøring - å skyte dem gir ekstrapoeng."
+          ]
+        },
+        {
+          "h": "Poeng og tips",
+          "body": [
+            "Poeng = oppnådd høyde; vanskelighetsgraden stiger med høyden.",
+            "- Planlegg hvor du skal lande før du hopper av - brune plattformer bærer deg ikke.",
+            "- Bruk den åpne kanten som en snarvei til fjerne plattformer."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2048",
+      "category": "games",
+      "game": "Game2048",
+      "title": "2048",
+      "keywords": [
+        "brikker",
+        "skyv",
+        "slå sammen",
+        "tall"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller og regler",
+          "body": [
+            "Piltastene eller [W] [A] [S] [D] skyver alle brikker i én retning samtidig. Like tall slås sammen til summen sin; etter hvert trekk dukker en ny brikke opp.",
+            "Målet er 2048-brikken - deretter fortsetter det endeløst. Du taper når ingen trekk er mulig."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Hver sammenslåing legger den nye brikkens verdi til poengsummen din."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Parker den største brikken din i et hjørne og forstyrr aldri det hjørnet.",
+            "- Skyv hovedsakelig i to retninger - det holder brettet sortert."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minesweeper",
+      "category": "games",
+      "game": "MinesweeperGame",
+      "title": "Minesveiper",
+      "keywords": [
+        "miner",
+        "flagg",
+        "avdekke",
+        "chording",
+        "beste tid"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Venstreklikk avdekker en celle, høyreklikk plasserer et flagg (valgfritt med spørsmålstegnsyklus, [Q] i oppsettet). [F] flagger cellen under markøren, [R] starter på nytt.",
+            "Chording: å klikke på et oppfylt tall (alle flagg plassert) avdekker de gjenværende naboene samtidig."
+          ]
+        },
+        {
+          "h": "Nivåer og poeng",
+          "body": [
+            "Nybegynner (9x9, 10 miner), middels (16x16, 40) og ekspert (30x16, 99). Den beste tiden per nivå lagres.",
+            "Det første klikket er alltid trygt - minene plasseres først etterpå. Poeng = nivåets basisverdi minus sekunder."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Start med tallene i kanten av åpne områder - mønstrene der er entydige.",
+            "- Et 1-tall i et hjørne med bare én tildekket nabo er alltid et trygt flagg."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sudoku",
+      "category": "games",
+      "game": "SudokuGame",
+      "title": "Sudoku",
+      "keywords": [
+        "puslespill",
+        "tall",
+        "notater",
+        "nivåer",
+        "hint",
+        "logikk"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Velg en celle med piltastene, [W] [A] [S] [D] eller et museklikk - tallpanelet til høyre fungerer helt med musen.",
+            "- [1] til [9] skriver inn et siffer (numerisk tastatur fungerer også).",
+            "- [0], Backspace eller høyreklikk sletter.",
+            "- [N] veksler notatmodus, [H] gir et hint, [R] starter nivået på nytt, [Q] åpner nivåvalget.",
+            "- Etter at spillet slutter, skjuler [A] banneret og viser hele løsningen."
+          ]
+        },
+        {
+          "h": "Nivåer og moduser",
+          "body": [
+            "400 faste nivåer: 4 vanskelighetsgrader (lett/normal/vanskelig/ekspert) ganger 100 nivåer. Hvert nivå er det samme puslespillet overalt og har en unik løsning; løste nivåer krysses av.",
+            "Spillmodusen bestemmer hjelpemidlene og poengmultiplikatoren:",
+            "- Klassisk x2.0: ingen hjelpemidler, rent som på papir.",
+            "- Notater x1.5: pluss blyantnotater.",
+            "- Komfort x1.0: feil blir røde umiddelbart, konfliktmarkering, riktige inntastinger låses fast.",
+            "- Assistent x0.7: i tillegg opptil 3 hint."
+          ]
+        },
+        {
+          "h": "Feil og poeng",
+          "body": [
+            "Hver inntasting kontrolleres mot løsningen umiddelbart. Med 3-feilsgrensen aktiv (oppsett, tast [F] ) avslutter den tredje feilen spillet.",
+            "Poeng = (vanskelighetsbasis minus tid, feil og hint) ganger modusens multiplikator."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Start med rader, kolonner og bokser som allerede inneholder mange siffer.",
+            "- Noter kandidater i par: hvis to celler deler de samme to kandidatene, faller de bort overalt ellers.",
+            "- I klassisk modus ta det med ro: hver feil teller umiddelbart, selv uten en rød markering."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frogger",
+      "category": "games",
+      "game": "FroggerGame",
+      "title": "Frogger",
+      "keywords": [
+        "frosk",
+        "vei",
+        "elv",
+        "buer",
+        "flue",
+        "krokodille"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Hopp celle for celle med piltastene eller [W] [A] [S] [D] .",
+            "- [R] starter på nytt, [S] åpner oppsettet.",
+            "Etter game over: [Enter] = prøv igjen."
+          ]
+        },
+        {
+          "h": "Vei, elv og buer",
+          "body": [
+            "Nederst 5 trafikkfelt med biler og lastebiler i vekslende retninger - kontakt er dødelig.",
+            "Over, 5 elvefelt: tømmerstokker og skilpadder bærer deg; å falle i vannet betyr å drukne. Skilpadder dykker periodisk på høyere nivåer (blinking = advarsel).",
+            "Øverst venter 5 buer - å fylle alle fullfører nivået, deretter går alt raskere.",
+            "- Ekstra: en bonusflue (+200) dukker opp kort i tomme buer, krokodiller opptar buer på høyere nivåer (landing = død), og tidsmåleren nederst tømmes per frosk."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Hver nylig nådd rad gir 10 poeng, en bue 50 pluss 10 per gjenværende sekund.",
+            "Alle 5 buer gir 1000 poeng og neste nivå.",
+            "Ved 10 000 poeng får du et engangs-ekstraliv (start: 3 liv)."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Planlegg trafikkluker ett felt i forveien i stedet for å vente ved kanten.",
+            "- Bruk tømmerstokker som driver mot målbuen din som en taxi.",
+            "- Land tidlig: tidsbonusen slår en omvei til fluen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "category": "games",
+      "game": "MemoryGame",
+      "title": "Memory",
+      "keywords": [
+        "par",
+        "kort",
+        "huske",
+        "duell",
+        "snu"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Snu kort med et museklikk - eller flytt rammen med piltaster/WASD og snu med [Space] eller [Enter] .",
+            "- [R] stokker en ny runde, [S] åpner oppsettet.",
+            "Et par som ikke stemmer overens forblir synlig en kort stund og snus deretter tilbake av seg selv."
+          ]
+        },
+        {
+          "h": "Brett og duell",
+          "body": [
+            "Tre brettstørrelser: 4x4 (8 par), 6x6 (18) og 8x6 (24) - motivene er form-farge-kombinasjoner.",
+            "Solo teller hver avdekket tokortskombinasjon som et trekk; klokka går.",
+            "- Duell (flerspiller på forhåndsskjermen): bytt på å snu, en match betyr at du får gå igjen - den med flest par til slutt vinner."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Solo: brettstørrelse-basis minus 15 per trekk og 2 per sekund (minst 100).",
+            "Duell: vinnerens par ganger 100 går til rekordlisten."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Snu ukjente kort først - hvert enkelt viser deg et motiv gratis.",
+            "- Forankre motiver etter fargegruppen deres, det halverer søkerommet.",
+            "- I en duell, avdekk aldri et ferskt par for motstanderen din."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solitaire",
+      "category": "games",
+      "game": "SolitaireGame",
+      "title": "Kabal",
+      "keywords": [
+        "kort",
+        "klondike",
+        "spider",
+        "freecell",
+        "pyramid",
+        "tripeaks"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Dra kort med musen (dra og slipp) eller flytt dem klikk for klikk; høyreklikk sender det øverste kortet til grunnstabelen (Klondike/FreeCell).",
+            "- [U] angrer valgfritt antall trekk, [R] deler en ny giv, [S] åpner oppsettet.",
+            "[Space] eller [Enter] betjener trekkbunken (trekk/del)."
+          ]
+        },
+        {
+          "h": "De fem variantene",
+          "body": [
+            "- Klondike: den klassiske kabalen - fire grunnstabler fra ess til konge, tablå synkende i vekslende farger; alternativ: trekk 1 eller 3.",
+            "- Spider: 10 kolonner, 104 kort - komplette rekker fra konge til ess i én farge forsvinner; alternativ: 1, 2 eller 4 farger.",
+            "- FreeCell: alt opp-vendt, 4 frie celler; superflytt begrenses av frie celler og tomme kolonner.",
+            "- Pyramid: fjern par som summerer til 13, kongen teller alene; 2 omdelinger.",
+            "- TriPeaks: alltid én valør over eller under kasthaugen (ess og konge slår rundt) - lange kjeder gir combopoeng."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Klondike: +10 per grunnstabelkort, +5 per avdekket kort, tidsbonus ved seier. FreeCell: +10 per grunnstabelkort pluss tidsbonus.",
+            "Spider: 500 minus trekk pluss 100 per fullført rekke. Pyramid: +5 per kort, +500 for å rydde.",
+            "TriPeaks: 10 ganger combo per kort - trekkbunken nullstiller comboen; +500 for å rydde."
+          ]
+        },
+        {
+          "h": "Alternativer",
+          "body": [
+            "Trekk-3 (Klondike) og antall farger i Spider lagres permanent.",
+            "Angre er ubegrenset og gratis - eksperimenter gjerne.",
+            "Alle varianter deler én rekordliste."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Frigjør ess og toere så tidlig som mulig (Klondike/FreeCell).",
+            "- Hold én kolonne tom - den er ditt viktigste verktøy (Spider/FreeCell).",
+            "- I Pyramid, tell de tilgjengelige 13-parene før du rører trekkbunken."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aimtrainer",
+      "category": "games",
+      "game": "AimTrainerGame",
+      "title": "Aim Trainer",
+      "keywords": [
+        "sikte",
+        "siktekryss",
+        "refleks",
+        "3d",
+        "rom",
+        "skyte"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Musen styrer kameraet direkte som i et skytespill: hver bevegelse dreier synet umiddelbart med den mengden (markøren fanges usynlig inne i vinduet). [Esc] pauser og slipper musen. Girering er ubegrenset, opp/ned låser ved 60 grader.",
+            "Venstreklikk skyter nøyaktig gjennom skjermens midte (kort nedkjøling mellom skuddene).",
+            "- [+] og [-] endrer følsomheten (også midt i spillet), [E] avslutter en chill-økt."
+          ]
+        },
+        {
+          "h": "Moduser",
+          "body": [
+            "- Presisjon (60 s): alltid 3 kuler samtidig - å skyte en skaper umiddelbart en ny; en treffsikkerhetsbonus legges til på slutten.",
+            "- Refleks (30 mål): mål dukker opp ett om gangen og krymper bort etter et øyeblikk - reaksjonstiden teller, statistikk på slutten.",
+            "- Bevegelige mål (60 s): kuler driver langs baner (svinger, kretser, gynger) - treff på rad hever combomultiplikatoren.",
+            "- Chill (endeløst): ingen timer, ingen bomstraff - bare slapp av og skyt; poengsummen lagres når du går tilbake til menyen."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Presisjon: 100 poeng per treff pluss en avstandsbonus; på slutten treffsikkerhet i kvadrat ganger 1500 på toppen.",
+            "Refleks: jo raskere reaksjon, desto flere poeng (1000 minus millisekunder, minst 50).",
+            "Bevegelige mål: 80 poeng ganger combomultiplikatoren (opptil x4 ved 12 treff på rad) - en bom nullstiller comboen.",
+            "Chill: 50 poeng ganger multiplikatoren; comboen avtar først etter 5 sekunder uten et treff."
+          ]
+        },
+        {
+          "h": "Temaer",
+          "body": [
+            "- Rom (standard): en full stjernesfære, et svart hull med en sterkt lysende ring og en fjern planet.",
+            "- Neon: en synthwave-arena med et lysende gulvrutenett og en stripete sol.",
+            "- Skytebane: en innendørshall med baner, lamper og klassiske blinker. Tema og justerbar bevegelsesuskarphet (0 til 80 prosent, tast [B] eller oppsettknapper) lagres."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Små, rolige musebevegelser treffer bedre enn hektiske sveip - synet følger 1:1.",
+            "- Lav følsomhet for presisjon, høyere for refleks og bevegelige mål.",
+            "- Fjerne mål har en liten tilgivelsesmargin - hold stødig i stedet for å overkorrigere."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "connect4",
+      "category": "games",
+      "game": "ConnectFourGame",
+      "title": "Fire på rad",
+      "keywords": [
+        "fire",
+        "rad",
+        "brikker",
+        "kolonner",
+        "ai",
+        "strategi"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "To farger bytter på å slippe brikker i en av 7 kolonner; hver brikke faller til den laveste ledige cellen. Den første som får fire på rad - vannrett, loddrett eller diagonalt - vinner runden.",
+            "I én spiller møter du KI-en (tre styrker i oppsettet); i 2-spillermodus bytter dere på ved én mus eller ett tastatur.",
+            "Startspilleren veksler hver runde. [Enter] starter neste runde, [S] går tilbake til oppsettet."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Mus: hold musen over en kolonne (forhåndsvisningsbrikken viser plassen) og klikk.",
+            "- Tastatur: [Left] [Right] velger kolonnen, slipp med [Down], [Space] eller [Enter].",
+            "- Direktevalg: tallene [1] til [7] slipper rett i den kolonnen."
+          ]
+        },
+        {
+          "h": "KI-styrker",
+          "body": [
+            "Lett bommer med vilje på noen trusler og spiller iblant bare det nest beste trekket - flott for å lære. Middels planlegger noen trekk fremover og blokkerer pålitelig.",
+            "Vanskelig søker mye dypere og straffer hver feil umiddelbart - her vinner bare doble trusler."
+          ]
+        },
+        {
+          "h": "Poeng + tips",
+          "body": [
+            "Hver seier mot KI-en gir ett poeng; rekorden er flest seiere i én økt. Det finnes ingen poeng i 2-spillermodus.",
+            "- Midtkolonnen er sterkest: de fleste fire-på-rad går gjennom den.",
+            "- Bygg doble trusler (to åpne treere samtidig) - motstanderen din kan bare blokkere en av dem."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tanks",
+      "category": "games",
+      "game": "TankDuelGame",
+      "title": "Tankduell",
+      "keywords": [
+        "tank",
+        "duell",
+        "rikosjett",
+        "arena",
+        "powerup",
+        "2 spillere"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "1-mot-1 i en arena av vegger: treff motstanderen din for å ta runden - først til 5 runder vinner kampen.",
+            "Skudd spretter av vegger én gang (rikosjett) og forsvinner ved den andre kontakten. Vær forsiktig: et sprettet skudd kan treffe deg også.",
+            "Spill mot KI-en (tre styrker) eller med to spillere på ett tastatur. Etter kampen: [Enter] = omkamp, [S] = oppsett."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Spiller 1: [W] [S] kjører fremover og bakover, [A] [D] svinger, [Space] skyter.",
+            "- Spiller 2: piltastene kjører og svinger, [Enter] skyter. Bindingene følger innstillingene.",
+            "- Høyst 4 av skuddene dine eksisterer samtidig, med en kort omlading imellom."
+          ]
+        },
+        {
+          "h": "Power-ups",
+          "body": [
+            "- Hurtigild: 8 sekunder med nesten ingen omlading.",
+            "- Skjold: absorberer nøyaktig ett treff (ring rundt tanken).",
+            "- Trippelskudd: de neste 5 skuddene sprer seg i tre retninger. Power-ups dukker opp med noen sekunders mellomrom i arenaen og utløper etter 12 sekunder."
+          ]
+        },
+        {
+          "h": "Arenaer + KI",
+          "body": [
+            "Fire arenaer å velge mellom: Åpen (ingen dekning), Kors, Søyler og Labyrint - eller Tilfeldig, som roterer arenaen hver runde.",
+            "Den lette KI-en kjører rundt planløst og sikter dårlig; den middels jakter på deg og steg til side.",
+            "Den vanskelige KI-en holder avstand, leder skuddene sine foran bevegelsen din og spretter til og med skudd av vegger med vilje."
+          ]
+        },
+        {
+          "h": "Poeng + tips",
+          "body": [
+            "Mot KI-en får du poeng per kampseier: mer for høyere styrker og rene seiere; poengene legges sammen på tvers av omkamper. Det finnes ingen poeng i 2-spillermodus.",
+            "- Bruk veggene: å sprette skudd rundt hjørner treffer uten at du blottstiller deg."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blackjack",
+      "category": "games",
+      "game": "BlackjackGame",
+      "title": "Blackjack",
+      "keywords": [
+        "kort",
+        "kasino",
+        "21",
+        "sjetonger",
+        "dealer",
+        "innsats"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Mål: kom nærmere 21 enn dealeren uten å gå over. Tallkort teller sin pålydende verdi, bildekort 10, esset 11 eller 1.",
+            "Spillet bruker en sko med 4 kortstokker; dealeren trekker opp til 16 og står på hver 17.",
+            "Plasser innsatsen din først (sjetongknapper eller tastene [1] til [4], [Backspace] tømmer den), del deretter med [Enter]."
+          ]
+        },
+        {
+          "h": "Handlinger",
+          "body": [
+            "- Trekk [H]: trekk et kort til.",
+            "- Stå [S]: behold din nåværende sum.",
+            "- Doble [D]: doble innsatsen, ta nøyaktig ett kort, og stå deretter automatisk - bare på de to første kortene dine.",
+            "- Del [X]: skill to kort med samme verdi i to hender (én gang per runde; delte ess får bare ett kort hver)."
+          ]
+        },
+        {
+          "h": "Utbetalinger",
+          "body": [
+            "- Blackjack (ess + kort med verdien ti) betaler 3:2.",
+            "- En normal seier betaler 1:1, en push (uavgjort) gir tilbake innsatsen din.",
+            "- Spretning eller tap: innsatsen er borte. Hvis dealeren viser et ess eller en 10, sjekker de umiddelbart for blackjack."
+          ]
+        },
+        {
+          "h": "Sjetonger",
+          "body": [
+            "Du starter med 500 sjetonger; saldoen og rekorden din lagres permanent og overlever hver omstart.",
+            "Rekorden er den høyeste sjetongsaldoen du noensinne har nådd.",
+            "Under 10 sjetonger er du blakk: [Enter] starter på nytt med 500 nye sjetonger - rekorden består."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Grunnstrategi: mot et åpent kort på 7 eller høyere, trekk til 17; mot 4 til 6 stå tidlig - dealeren spretter ofte der.",
+            "- Del alltid ess og åttere, del aldri tiere."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tunnelracer",
+      "category": "games",
+      "game": "TunnelRacerGame",
+      "title": "Tunnel Racer",
+      "keywords": [
+        "tunnel",
+        "racer",
+        "3d",
+        "neon",
+        "unnvik",
+        "endeløs"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Du flyr gjennom et buktende neonrør og unnviker stenger, blokker og ringporter - ett treff og runden er over.",
+            "Gyllene mynter flyter i åpningene; de gir ekstrapoeng og markerer som regel den trygge linjen.",
+            "Ringporter har nøyaktig ett hull: tre deg gjennom det i stedet for å unnvike."
+          ]
+        },
+        {
+          "h": "Moduser",
+          "body": [
+            "- Endeløs: hastigheten stiger hele tiden og åpningene blir trangere - hvor langt kommer du? En krasj avslutter runden og lagrer rekorden.",
+            "- Nivåer: 30 faste baner med en mållinje, fra avslappet til brutalt. Fullførte nivåer krysses av; øktpoengene legges sammen."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Taster (standard): [W] [A] [S] [D] eller piltastene skyver skipet rundt i røret.",
+            "- Mus: veksle i oppsettet med [C] - direkte 1:1-styring, markøren fanges og [Esc] slipper den.",
+            "- [B] blar gjennom bevegelsesuskarphet i 10-prosents trinn (0 til 80, lagres).",
+            "- I nivåmodus: [R] prøver igjen etter en krasj, [S] åpner utvalget."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "- Endeløs: 10 poeng per meter pluss 50 per mynt.",
+            "- Nivåer: 1000 for målet, 50 per mynt og en tidsbonus når du slår partiden.",
+            "Rekorden i nivåmodus er din beste øktsum - å spille flere nivåer på rad lønner seg."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Følg med på ringene langt fremme: røret varsler kurven sin tidlig nok til å motstyre.",
+            "- Hold deg nær midten når det går - hver åpning er tilgjengelig derfra."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "labyrinth",
+      "category": "games",
+      "game": "LabyrinthGame",
+      "title": "3D-labyrint",
+      "keywords": [
+        "labyrint",
+        "irrgang",
+        "raycaster",
+        "kuler",
+        "utgang",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "50 seed-genererte labyrinter som vokser med hvert nivå. Finn den grønne pulserende utgangen - den ligger alltid på punktet lengst fra starten.",
+            "Blå kuler flyter rundt i labyrinten; hver innsamlet kule gir bonuspoeng.",
+            "Fullførte nivåer krysses av i utvalget; [Enter] ved målet starter det neste med en gang."
+          ]
+        },
+        {
+          "h": "Visninger",
+          "body": [
+            "- Førsteperson (3D): Wolfenstein-aktig visning med mouselook - midt i det i stedet for ovenfra.",
+            "- Ovenfra (2D): det klassiske kartet ovenfra, helt uten musefangst. Veksle i oppsettet med [V]; valget lagres."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Førsteperson: [W] [S] fremover og bakover, [A] [D] sidesteg, musen dreier synet ditt - eller drei med [Q] og [E] på tastaturet.",
+            "- [M] veksler minikartet, [Esc] pauser og slipper musen.",
+            "- Ovenfra: [W] [A] [S] [D] eller piltastene går i verdensretninger."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "- Å nå utgangen: 500 poeng.",
+            "- Per kule: 100 ekstrapoeng.",
+            "- Pluss en tidsbonus når du slår nivåets partid; øktpoengene legges sammen til rekorden."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Høyrehåndsregelen: å alltid følge den samme veggen fører garantert til utgangen.",
+            "- Kulene kanter omtrent veien til utgangen - å samle dem betyr som regel at du er på rett spor."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reversi",
+      "category": "games",
+      "game": "ReversiGame",
+      "title": "Reversi",
+      "keywords": [
+        "reversi",
+        "othello",
+        "brikker",
+        "snu",
+        "hjørner",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Reversi (Othello) spilles på et 8x8-brett. Du plasserer en brikke slik at en eller flere av motstanderens brikker fanges i en rett linje mellom den nye brikken og en annen brikke i din farge - vannrett, loddrett eller diagonalt. Alle fangede brikker snus til din farge.",
+            "Et trekk er bare gyldig hvis det snur minst én brikke. Hvis du ikke har noe gyldig trekk, hoppes turen din over automatisk. Når ingen av spillerne kan trekke, slutter spillet og den med flest brikker vinner.",
+            "I én spiller møter du (Svart) KI-en; i tospillermodus veksler Svart og Hvit."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Mus: klikk på en tom rute. Gyldige ruter markeres med en liten prikk.",
+            "- Tastatur: piltastene (eller bevegelsestastene dine) flytter valgrammen, [Space] eller [Enter] plasserer brikken.",
+            "- Etter en runde: [Enter] = ny runde, [S] = tilbake til oppsett (kun én spiller)."
+          ]
+        },
+        {
+          "h": "KI-styrke og tips",
+          "body": [
+            "Lett spiller mest tilfeldig, Middels ser noen trekk fremover, Vanskelig søker dypere og verdsetter hjørnene høyt.",
+            "- Hjørner er gull verdt: en brikke i et hjørne kan aldri snus igjen.",
+            "- Pass på rutene ved siden av et hjørne - de gir ofte hjørnet til motstanderen din.",
+            "- Å ha færre brikker men mer mobilitet i midtspillet er ofte bedre enn å ha mange."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Hver seier mot KI-en er verdt ett poeng; rekorden er flest seiere i en økt. Tospillerspill gir ingen poeng."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kniffel",
+      "category": "games",
+      "game": "KniffelGame",
+      "title": "Yatzy",
+      "keywords": [
+        "yatzy",
+        "kniffel",
+        "terninger",
+        "rekke",
+        "hus",
+        "poeng"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Du har 5 terninger og opptil 3 kast per tur. Etter hvert kast kan du beholde valgfrie terninger og bare kaste resten på nytt. Deretter fører du inn resultatet i nøyaktig en av de 13 kategoriene.",
+            "Hver kategori kan bare brukes én gang. Hvis ingenting passer, stryker du en for 0 poeng. Etter 13 turer er arket fullt og spillet er over.",
+            "Én spiller er en rekordjakt etter den høyeste totalen; i tospillermodus fyller dere to ark etter tur - den høyeste totalen vinner."
+          ]
+        },
+        {
+          "h": "Kategoriene",
+          "body": [
+            "Øvre del (Enere til Seksere): teller øynene av det tallet. Hvis din øvre del summerer til minst 63, får du en bonus på 35 poeng.",
+            "- Tre/Fire like: summen av alle terninger hvis minst 3 hhv. 4 er like.",
+            "- Hus = 25 (tre pluss et par), Liten rekke = 30 (fire på rad), Stor rekke = 40 (fem på rad), Yatzy = 50 (fem like), Sjanse = summen av alle terninger (alltid tillatt)."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- [Space] eller Kast-knappen kaster om terningene som ikke holdes.",
+            "- Klikk på en terning eller trykk [1] til [5] for å holde eller slippe den terningen.",
+            "- Klikk på en kategori eller velg den med piltastene og trykk [Enter] for å føre den inn.",
+            "- Etter spillet: [Enter] starter på nytt."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Grip den øvre bonusen på 63 poeng tidlig - femmere og seksere er spesielt verdifulle.",
+            "- Bruk Sjanse til å redde et dårlig kast; stryk Yatzy eller en rekke hvis ingenting går opp."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wordle",
+      "category": "games",
+      "game": "WordleGame",
+      "title": "Wordle",
+      "keywords": [
+        "wordle",
+        "ord",
+        "gjett",
+        "bokstaver",
+        "grønn",
+        "gul"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Gjett det skjulte 5-bokstavsordet innen 6 forsøk. Etter hver gjetning skifter rutene farge: grønn = riktig bokstav på riktig plass, gul = bokstaven finnes men et annet sted, grå = bokstaven er ikke i ordet.",
+            "Gjentatte bokstaver håndteres riktig: en bokstav markeres gul eller grønn bare så mange ganger som den faktisk forekommer i svaret.",
+            "Hver gjetning må være 5 bokstaver, men trenger ikke være et 'ekte' ord - det kontrolleres ikke mot en ordbok. Svarene matcher det valgte språket."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Skriv bokstaver A-Z, [Backspace] sletter den siste, [Enter] kontrollerer raden (bare med 5 bokstaver).",
+            "- Du kan også bruke skjermtastaturet med musen; bokstavene farges etter det du har lært hittil."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Det fortsetter endeløst: hvert løst ord gir poeng - færre gjetninger betyr mer (10 til 60). Et nytt ord dukker opp rett etter.",
+            "Det første ordet du IKKE klarer å knekke avslutter spillet; poengene du samlet er rekorden din."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Åpne med et ord som har mange ulike, vanlige bokstaver.",
+            "- Bruk grå bokstaver til å utelukke og flytt gule bokstaver til en ny posisjon."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "trex",
+      "category": "games",
+      "game": "TRexRunnerGame",
+      "title": "T-Rex Runner",
+      "keywords": [
+        "trex",
+        "dino",
+        "runner",
+        "hopp",
+        "dukk",
+        "endeløs"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Begynn å løpe med [Space] eller [Up] - dinoen løper deretter automatisk.",
+            "- Hopp: trykk [Space]/[Up] for små hopp, hold for høyere hopp.",
+            "- Dukk: hold [Down] - i luften får dette deg til å falle raskere."
+          ]
+        },
+        {
+          "h": "Hindringer",
+          "body": [
+            "Kaktuser dukker opp enkeltvis eller i grupper på bakken - hopp over dem.",
+            "Pterodaktyler viser seg i tre høyder: høyt = dukk, lavt/midt = hopp.",
+            "Hastigheten stiger hele tiden; for hvert 100. poeng får du et pip og et kort blink."
+          ]
+        },
+        {
+          "h": "Alternativer og tips",
+          "body": [
+            "Veksle på startskjermen (lagres): [1]-[3] vanskelighetsgrad, [N] dag/natt, [C] skin.",
+            "- Å trykke kort lagrer høyde for raske doble hindringer.",
+            "- Etter en krasj, fortsett med en gang med [Enter]/[Space]."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dame",
+      "category": "games",
+      "game": "DameGame",
+      "title": "Dam (Dame)",
+      "keywords": [
+        "dam",
+        "checkers",
+        "dame",
+        "tvungen slag",
+        "flygende dame",
+        "brett"
+      ],
+      "sections": [
+        {
+          "h": "Varianter",
+          "body": [
+            "Velges i oppsettet - hver med 1 spiller mot KI eller 2 spillere lokalt:",
+            "- Tysk dam 8x8: menn slår forover og bakover, damen flyr en hvilken som helst avstand.",
+            "- Internasjonal dam 10x10: større brett, tvungen slag med maksregelen (det lengste slaget er obligatorisk).",
+            "- Checkers 8x8 (engelsk): menn slår bare forover, damen flytter bare én rute."
+          ]
+        },
+        {
+          "h": "Regler og kontroller",
+          "body": [
+            "Slag er tvungne: hvis et slag finnes må du ta det - brikker som kan slås omrisses i rødt.",
+            "Klikk på en brikke, deretter målruten; spill et flerhopp steg for steg.",
+            "Tastatur: [Arrows]/[WASD] flytter rammen, [Space]/[Enter] velger.",
+            "En mann som når den fjerneste raden blir en dame (krone)."
+          ]
+        },
+        {
+          "h": "KI og poeng",
+          "body": [
+            "Én spiller tilbyr tre KI-styrker (minimax + alfa-beta), velg dem i oppsettet med [<]/[>].",
+            "Rekorden teller seirene dine mot KI-en denne økten; flerspiller gir ingen poeng.",
+            "Etter et spill: [Enter] ny runde, [S] tilbake til oppsett."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poker",
+      "category": "games",
+      "game": "PokerGame",
+      "title": "Poker",
+      "keywords": [
+        "poker",
+        "holdem",
+        "texas",
+        "video poker",
+        "draw",
+        "sjetonger",
+        "blinds"
+      ],
+      "sections": [
+        {
+          "h": "Moduser",
+          "body": [
+            "Velg varianten i forhåndsskjermen:",
+            "- Texas Hold'em: mot 1-3 KI-motstandere, med dealerknapp, blinds og fire innsatsrunder (preflop, flop, turn, river).",
+            "- 5 Card Draw: heads-up mot KI - bytt kort én gang, to innsatsrunder.",
+            "- Video Poker (Jacks or Better): solo mot utbetalingstabellen."
+          ]
+        },
+        {
+          "h": "Handlinger",
+          "body": [
+            "Under innsats: [F] kast, [C] sjekk/syn, [R] høyne, [A] all-in - eller klikk på knappene.",
+            "Ved bytte/holding: klikk på kort eller trykk [1]-[5], deretter [Enter] for å trekke.",
+            "[Enter]/[Space] deler den neste hånden."
+          ]
+        },
+        {
+          "h": "Sjetonger og hender",
+          "body": [
+            "Sjetonger (start 1000) består (mem.json). Rekorden er ditt høyeste sjetongtall. Blakk = start på nytt med et klikk.",
+            "Handrangering: Høyt kort < Par < To par < Tre like < Straight < Flush < Fullt hus < Fire like < Straight flush < Royal flush."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slidepuzzle",
+      "category": "games",
+      "game": "SlidingPuzzleGame",
+      "title": "Skyvepuslespill",
+      "keywords": [
+        "skyvepuslespill",
+        "15-spillet",
+        "femten",
+        "brikker",
+        "tall",
+        "skyv"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Sett de nummererte brikkene tilbake i rekkefølge (1, 2, 3 …); åpningen holder seg i nedre høyre hjørne.",
+            "Brikker kan bare skyves inn i den tomme åpningen. Tre størrelser: 3×3 (lett), 4×4 (klassisk) og 5×5 (vanskelig).",
+            "Brettet stokkes med mange tilfeldige trekk, så det er alltid løsbart."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Klikk på en brikke i samme rad eller kolonne som åpningen for å skyve hele linjen.",
+            "- Piltastene dytter brikken ved siden av åpningen inn i den."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Du starter med en basispoengsum per størrelse; hvert trekk og hvert sekund trekker fra litt. Å løse raskt og med få trekk gir den beste rekorden.",
+            "Etter å ha løst, starter Enter/klikk et ferskt brett med en gang."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastermind",
+      "category": "games",
+      "game": "MastermindGame",
+      "title": "Mastermind",
+      "keywords": [
+        "mastermind",
+        "fargekode",
+        "kode",
+        "gjett",
+        "pinner",
+        "logikk"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Datamaskinen velger en skjult kode av fargede pinner (farger kan gjentas). Knekk den rad for rad.",
+            "Etter hver gjetning får du tilbakemeldingspinner: en SVART pinne = riktig farge på riktig plass, en HVIT pinne = riktig farge på feil plass. Rekkefølgen på tilbakemeldingspinnene avslører ikke hvilken pinne den refererer til.",
+            "Moduser: Lett (4 pinner, 6 farger, 12 rader), Klassisk (4/6, 10 rader) og Vanskelig (5 pinner, 8 farger)."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Klikk på en farge nederst (eller tastene 1–8) for å fylle den neste tomme plassen.",
+            "- Klikk på en plassert pinne for å fjerne den; < eller Backspace fjerner den siste.",
+            "- OK eller Enter kontrollerer hele raden."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Som i Wordle er det en endeløs rekke: hver knekt kode gir poeng (færre gjetninger + vanskeligere modus = mer), deretter dukker en ny kode opp med en gang.",
+            "Den første koden du ikke klarer å knekke avslutter spillet - totalen er rekorden din."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bubbleshooter",
+      "category": "games",
+      "game": "BubbleShooterGame",
+      "title": "Bubble Shooter",
+      "keywords": [
+        "bubble shooter",
+        "puzzle bobble",
+        "bobler",
+        "baller",
+        "skyt",
+        "grupper"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Skyt bobler opp i honningkakefeltet. Når tre eller flere av samme farge berører hverandre, sprekker gruppen.",
+            "Bobler som mister forbindelsen til den øverste raden når en gruppe sprekker, faller ned og gir bonuspoeng.",
+            "Moduser: Lett (4 farger, ingen nye rader), Klassisk (5 farger, en ekstra rad kommer inn nå og da) og Vanskelig (6 farger, raskere)."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Kanonen sikter mot musen; venstre/høyre piltaster dreier den også.",
+            "- Venstreklikk eller Space skyter. Bobler spretter av sideveggene.",
+            "- Den lille boblen til venstre for kanonen er din neste farge."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Sprukne og falne bobler gir poeng; å rydde hele feltet gir en bonus.",
+            "Så snart en boble låser seg fast under den røde linjen er spillet over - totalen er rekorden din."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hangman",
+      "category": "games",
+      "game": "HangmanGame",
+      "title": "Hangman",
+      "keywords": [
+        "hangman",
+        "ord",
+        "gjett",
+        "bokstaver",
+        "galge"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Gjett det skjulte ordet bokstav for bokstav. Hver feil bokstav tegner en ny del av hengemannen.",
+            "Etter 6 feil er figuren komplett og runden er tapt.",
+            "Moduser etter ordlengde: Korte ord (3–5), Blandet (3–12) og Lange ord (7–12). Ordene matcher det valgte språket og bruker bare A–Z."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Skriv bokstaver A–Z eller klikk på dem på skjermtastaturet.",
+            "- Riktige bokstaver dukker opp i ordet; feil bokstaver gjør tasten grå."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Endeløs rekke: hvert gjettet ord gir poeng (flere gjenværende liv og lengre ord = mer), deretter dukker et nytt ord opp med en gang.",
+            "Det første tapet avslutter spillet - totalen er rekorden din."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blockjump",
+      "category": "games",
+      "game": "BlockJumpGame",
+      "title": "Block Jump",
+      "keywords": [
+        "block jump",
+        "3d",
+        "minecraft",
+        "platformer",
+        "hopp",
+        "klatre",
+        "parkour"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "En 3D-platformer i Minecraft-stil: hopp over svevende blokkplattformer til det glødende målfyret. Hvert nivå er en fersk, seed-generert parkour og blir vanskeligere.",
+            "Kameraet er førsteperson som i Minecraft som standard; trykk V for å bytte til et forfølgelseskamera.",
+            "Fall under plattformene og du mister et liv og gjenoppstår ved det siste sjekkpunktet. Ved 0 liv (du starter med 3) er runden over."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- WASD eller piltaster: beveg deg (relativt til hvor du ser). Space: hopp. Mus: se deg rundt.",
+            "- På en stige klatrer W opp og S ned. En fjærblokk skyter deg høyt opp i luften.",
+            "- V = visning (første-/tredjeperson), B = bevegelsesuskarphet, C = fang/slipp mus, +/- = følsomhet. Esc pauser og frigjør musen."
+          ]
+        },
+        {
+          "h": "Blokktyper",
+          "body": [
+            "- Gress/jord/stein/tre: solide blokker du hopper på og står på.",
+            "- Stige: klatre opp/ned sakte. Gjerde: en liten blokk som sperrer veien - bare hopp over den.",
+            "- Fjærblokk: skyter deg høyt (for å nå høye plattformer). Mynter flyter langs ruten for ekstrapoeng."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Hver mynt er verdt 50 poeng. Å nå et nivås mål gir 1000 poeng pluss en tidsbonus (jo raskere, desto mer).",
+            "Poeng akkumuleres på tvers av alle nivåer; totalen er rekorden din."
+          ]
+        }
+      ]
+    }
+  ]
+}

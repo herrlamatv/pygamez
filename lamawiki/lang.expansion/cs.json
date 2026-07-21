@@ -1,0 +1,1674 @@
+{
+  "pages": [
+    {
+      "id": "start",
+      "category": "general",
+      "title": "Začínáme",
+      "keywords": [
+        "začátek",
+        "nápověda",
+        "úvod",
+        "menu",
+        "pauza",
+        "celá obrazovka",
+        "postranní panel"
+      ],
+      "sections": [
+        {
+          "h": "Spuštění hry",
+          "body": [
+            "Hru můžeš spustit třemi způsoby: ze seznamu her v levém postranním panelu, z mřížky her na úvodní obrazovce nebo přímo z této wiki přes předherní obrazovku.",
+            "Před každou hrou se objeví předherní obrazovka: tam si zvol režim (např. pro jednoho nebo více hráčů) a dostaneš se k možnostem a této wiki."
+          ]
+        },
+        {
+          "h": "Důležité klávesy",
+          "body": [
+            "- [Esc] pozastaví a znovu spustí běžící hru - v menu se vrátí zpět.",
+            "- [F11] zapíná a vypíná celou obrazovku.",
+            "- Zelené tlačítko Zpět do menu ukončí hru a uloží nejlepší skóre."
+          ]
+        },
+        {
+          "h": "Postranní panel",
+          "body": [
+            "Vlevo vidíš všechny hry s jejich ikonou a svým nejlepším skóre (hvězdička). Běžící hra zůstane zvýrazněná; v malých oknech se seznam posouvá kolečkem myši.",
+            "Stavová karta vlevo dole zobrazuje název hry, stav (zelená = běží, zlatá = pozastaveno, červená = konec hry), skóre a aktuální snímkovou frekvenci."
+          ]
+        },
+        {
+          "h": "Pro více hráčů",
+          "body": [
+            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) a Asteroids (kooperativní souboj) mají místní režim pro 2 hráče - vybereš ho na předherní obrazovce.",
+            "Pro jednoho hráče ovládají obě přiřazení kláves stejnou postavu; pro více hráčů každé jednu (výchozí: P1 = WASD, P2 = šipky nebo IJKL - viz možnosti)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "category": "general",
+      "title": "Možnosti a ovládání",
+      "keywords": [
+        "možnosti",
+        "nastavení",
+        "ovládání",
+        "klávesy",
+        "rozlišení",
+        "fps",
+        "zvuk",
+        "jazyk"
+      ],
+      "sections": [
+        {
+          "h": "Zvuk a haptika",
+          "body": [
+            "Zvuk zapneš či vypneš a hlasitost nastavíš na obrazovce možností. Všechny efekty se generují živě - žádné zvukové soubory neexistují.",
+            "Haptika rozvibruje připojený gamepad (bez něj nedělá nic)."
+          ]
+        },
+        {
+          "h": "Přiřazení kláves",
+          "body": [
+            "K dispozici jsou tři přednastavení: WASD + šipky, WASD + IJKL a šipky + WASD.",
+            "Každou jednotlivou klávesu lze přeřadit: klikni na řádek nebo potvrď klávesou Enter, poté stiskni požadovanou klávesu. [Esc] zruší.",
+            "Přiřazení jsou oddělená pro hráče 1 a hráče 2 a ukládají se trvale."
+          ]
+        },
+        {
+          "h": "Grafika a výkon",
+          "body": [
+            "Rozlišení určuje vnitřní herní plochu (480x360 až 1280x960). Menší = menší zátěž, větší = ostřejší obraz.",
+            "Automatické rozlišení přizpůsobí herní plochu velikosti okna automaticky.",
+            "Možnosti FPS (15 až 120) určují cílovou snímkovou frekvenci - méně FPS šetří energii."
+          ]
+        },
+        {
+          "h": "Jazyk",
+          "body": [
+            "Rozhraní je k dispozici v němčině, angličtině, francouzštině, španělštině a portugalštině. Přepneš ho na obrazovce možností nebo přes Jazyk v postranním panelu - tato wiki změní jazyk také."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saving",
+      "category": "general",
+      "title": "Ukládání a nejlepší skóre",
+      "keywords": [
+        "ukládání",
+        "nejlepší skóre",
+        "rekord",
+        "body",
+        "postup",
+        "soubory"
+      ],
+      "sections": [
+        {
+          "h": "Nejlepší skóre",
+          "body": [
+            "Každá hra automaticky uloží svou nejlepší hodnotu, když skončí kolo. Nový rekord zobrazí zlatý banner - a k tomu déšť konfet.",
+            "Nejlepší hodnoty vidíš všude: jako hvězdičku v seznamu v postranním panelu, v běžícím pásu na úvodní obrazovce a ve stavové kartě."
+          ]
+        },
+        {
+          "h": "Co se ukládá kam?",
+          "body": [
+            "- settings.json: zvuk, hlasitost, přiřazení kláves, rozlišení, FPS a možnosti her (např. režim Snake, nastavení Sudoku).",
+            "- mem.json: nejlepší skóre, zvolený jazyk a postup úrovněmi Sudoku.",
+            "- mem-ngb.json: vizuální úpravy Snake (barva hlavy, mřížka, banner).",
+            "Oba soubory jsou přímo ve složce hry a pro reset je stačí prostě smazat."
+          ]
+        },
+        {
+          "h": "Tip",
+          "body": [
+            "Body se uloží jen tehdy, když odejdeš přes Zpět do menu nebo když kolo normálně skončí - ne když natvrdo zavřeš okno uprostřed hry."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake-special",
+      "category": "general",
+      "title": "Snake speciál",
+      "keywords": [
+        "kompetitivní",
+        "prestiž",
+        "hardcore",
+        "úpravy",
+        "personalizace",
+        "automat",
+        "sázení",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Kompetitivní režim",
+          "body": [
+            "Nekonečný režim se šplháním po úrovních: začínáš s přesně jedním jablkem. Čím více jablek celkem nasbíráš, tím vyšší je tvá úroveň - najednou se objeví více jablek a násobitel skóre roste (15 úrovní, až x16).",
+            "- Modrá jablka otevřou hrací automat: sázkou je tvá délka, tři stejné symboly = jackpot s bonusovými jablky.",
+            "- Fialová jablka (sázení) vsadí část tvé velikosti: obvykle 50procentní sázka s faktorem x0.5 až x1.5.",
+            "Tvá přesná velikost se zobrazuje jako desetinné číslo vlevo nahoře - každá sázka z ní vychází. Stupně úrovní jsou v games/levels/snake-comp.json a lze je volně upravovat."
+          ]
+        },
+        {
+          "h": "Hardcore",
+          "body": [
+            "Zapneš klávesou [H] v nastavení kompetitivního režimu: každé zrychlení ukrojí z délky a fialová jablka jsou rizikovější (75 až 90procentní sázka, faktor x0.25 až x2.25). Režim značí červený okraj."
+          ]
+        },
+        {
+          "h": "Prestiž",
+          "body": [
+            "Dostupné klávesou [P] pro jednoho hráče: nasbíraná jablka lze přeměnit na úrovně prestiže, které udělují trvalé výhody. Postup zůstává napříč hrami."
+          ]
+        },
+        {
+          "h": "Úpravy / personalizace",
+          "body": [
+            "V nastavení přes tlačítko se štětcem nebo [C] : čistě vzhledové menu, které nikdy nemění hratelnost.",
+            "- Hlava: barva hlavy hada (přednastavení nebo vlastní barva RGB).",
+            "- Mřížka: souřadnicová mřížka s čísly řádků a písmeny sloupců jako pomůcka na velkých plochách.",
+            "- Banner: zapíná banner s násobitelem, k tomu velikost a průhlednost - se živým náhledem.",
+            "Vše se ukládá do mem-ngb.json."
+          ]
+        },
+        {
+          "h": "3D pohled",
+          "body": [
+            "Klávesou [V] v nastavení: plocha se vykreslí jako 3D scéna, sledovací kamera se vznáší za hadem a řízení je relativní ke směru pohledu (dvě rychlá stisknutí = obrat).",
+            "Klávesou [K] otevřeš možnosti 3D kamery: plynulé chvění, zorné pole (FOV), výšku kamery a přepínač chvění při zatáčení. Hratelné v 3D: Klasika a Překážky (pouze pro jednoho hráče)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "snake",
+      "category": "games",
+      "game": "SnakeGame",
+      "title": "Snake",
+      "keywords": [
+        "had",
+        "jablko",
+        "zrychlení",
+        "kompetitivní",
+        "3d",
+        "portály"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Řiď klávesami [W] [A] [S] [D] nebo šipkami. V 3D řídíš relativně ke směru pohledu: vlevo/vpravo zatáčení, dvě rychlá stisknutí = obrat.",
+            "- Zrychlení: podrž [Space] nebo Shift = dvojnásobná rychlost. Ukazatel výdrže se vyprázdní a poté se znovu dobije.",
+            "- Hráč 2 zrychluje klávesou Enter nebo pravým Shiftem."
+          ]
+        },
+        {
+          "h": "Režimy",
+          "body": [
+            "- Klasika: čistý had.",
+            "- Rychlostní nával: každé jídlo tě zrychlí.",
+            "- Překážky: smrtící bloky na ploše.",
+            "- Portály: dvojice teleportů tě přesunou přes plochu.",
+            "- Závod s časem: 60 sekund, co nejvíce jablek.",
+            "- Kompetitivní: nekonečný režim s úrovněmi, hracím automatem a sázecími jablky - podrobnosti na stránce Snake speciál.",
+            "Volitelné je i: průchod stěnou, bonusová jablka, hardcore, 2D/3D pohled klávesou [V] a hra pro více hráčů."
+          ]
+        },
+        {
+          "h": "Skórování",
+          "body": [
+            "Jablka dávají body (bonusová jablka náhodně zdvojnásobí). Zlatá jablka se objevují dočasně, dávají spoustu bodů a okamžitě doplní zrychlení. V kompetitivním režimu tvá úroveň násobí všechny body."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Zrychlení používej na dlouhých rovinkách, ne v těsných zatáčkách.",
+            "- Se zapnutým průchodem stěnou můžeš uniknout přes okraj, když se zavřeš do kouta.",
+            "- V kompetitivním režimu se fialová jablka nejvíc vyplatí, když máš délku navíc na sázku."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pong",
+      "category": "games",
+      "game": "PongGame",
+      "title": "Pong",
+      "keywords": [
+        "pálka",
+        "míček",
+        "ai",
+        "klasika"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Hráč 1 pohybuje levou pálkou klávesami [W] a [S] - pro více hráčů ovládá hráč 2 pravou pálku šipkami.",
+            "Režim pohybu lze přepínat pro každé ovládání zvlášť: nepřetržitý (stiskni jednou, pálka jede dál) nebo držení (pohyb jen po dobu stisku). Přepneš klávesou [X] pro ovládání 1 a [N] pro ovládání 2."
+          ]
+        },
+        {
+          "h": "Pravidla a skórování",
+          "body": [
+            "Hraje se do 5 bodů, proti AI nebo ve dvou hráčích.",
+            "Fyzika míčku se s každým odrazem zrychluje; úhel odrazu závisí na tom, kde míček zasáhne pálku."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Zasáhni míček okrajem pálky, abys vytvořil ostré úhly.",
+            "- Režim držení dává jemnější kontrolu, nepřetržitý režim rychlejší reakce."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "airhockey",
+      "category": "games",
+      "game": "AirHockeyGame",
+      "title": "Air Hockey",
+      "keywords": [
+        "puk",
+        "úderník",
+        "fyzika",
+        "góly",
+        "vylepšení",
+        "myš"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Pro jednoho hráče tvůj úderník sleduje myš - jakákoli klávesa přepne zpět na ovládání klávesnicí (8 směrů).",
+            "Pro více hráčů hraje P1 vlevo klávesami [W] [A] [S] [D] a P2 vpravo klávesami [I] [J] [K] [L] ."
+          ]
+        },
+        {
+          "h": "Nastavení",
+          "body": [
+            "- Obtížnost AI: lehká, střední nebo těžká.",
+            "- [T] volí počet gólů k vítězství (3/5/7/10).",
+            "- [P] zapíná vylepšení: XL (větší úderník), GOAL (soupeřova branka se zmenší), rychlost (rychlejší úderník). Vylepšení patří hráči, který se puku dotkl naposled."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Puk přebírá rychlost tvého úderníku - buduj hybnost, místo abys jen blokoval.",
+            "- Zůstávej za pukem: tlačit ho k vlastní brance riskuje vlastní góly."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tictactoe",
+      "category": "games",
+      "game": "TicTacToeGame",
+      "title": "Tic-Tac-Toe",
+      "keywords": [
+        "křížek",
+        "kolečko",
+        "plocha",
+        "ai",
+        "mnk"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Značky umísťuj kliknutím myši. Po skončení hry: Enter nebo kliknutí = nové kolo, [S] = zpět do nastavení."
+          ]
+        },
+        {
+          "h": "Režimy a nastavení",
+          "body": [
+            "Velikosti plochy od 3x3 až po 9x9. Vítězná délka se přizpůsobí: 3 v řadě na 3x3, 4 na 4x4, jinak 5.",
+            "Pro jednoho hráče proti AI (lehká/střední/těžká) nebo dva hráči místně, X proti O na střídačku."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Těžká AI na 3x3 je neporazitelná - remíza je tam to nejlepší, čeho dosáhneš.",
+            "- Na velkých plochách nejvíc záleží na středu: prochází jím většina pětic v řadě."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "breakout",
+      "category": "games",
+      "game": "BreakoutGame",
+      "title": "Breakout",
+      "keywords": [
+        "cihly",
+        "míček",
+        "pálka",
+        "vylepšení",
+        "kombo",
+        "úrovně"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Pálkou pohybuj myší nebo šipkami. [Space] vypustí míček a vystřelí laser. [P] nebo [Esc] pozastaví."
+          ]
+        },
+        {
+          "h": "Nastavení",
+          "body": [
+            "- [1] [2] [3] volí obtížnost.",
+            "- Vlevo/vpravo mění barvu míčku, nahoru/dolů počáteční úroveň, [M] rozložení (standardní nebo plné)."
+          ]
+        },
+        {
+          "h": "Cihly a vylepšení",
+          "body": [
+            "Typy cihel: normální, ocelová (nezničitelná), bomba (vybuchne) a zlatá (body navíc).",
+            "Vylepšení: x2/x3 míčky, [L] laser, [F] ohnivá koule, [G] lepkavost, [U] štít, mince za bonusové body - a k tomu kombo násobitel za rychlé zásahy."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Veď míček podél bočních stěn za blok cihel - tam se sám vyčistí.",
+            "- Štít zachytí přesně jeden průnik: uschovej si ho na rizikové fáze s více míčky."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tetris",
+      "category": "games",
+      "game": "TetrisGame",
+      "title": "Tetris",
+      "keywords": [
+        "kostky",
+        "řady",
+        "otočit",
+        "versus",
+        "hromada"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Vlevo/vpravo posouvá kostku, nahoru ji otočí, dolů je pomalý pád a akční klávesa (výchozí: [Space] ) rychlý pád."
+          ]
+        },
+        {
+          "h": "Režimy a skórování",
+          "body": [
+            "Plné řady dávají body - více najednou dá mnohem víc. Každých 10 řad se zvýší úroveň a rychlost.",
+            "Versus (více hráčů): dvě plochy vedle sebe, kdo první dosáhne hromadou vrcholu, prohrává."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Nech jeden sloupec volný pro dlouhou kostku I a čisti čtyřnásobnými řadami.",
+            "- Stavěj naplocho: vysoké věže se rychle převrátí, jak roste rychlost."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "invaders",
+      "category": "games",
+      "game": "InvadersGame",
+      "title": "Invaders",
+      "keywords": [
+        "vetřelci",
+        "vlny",
+        "boss",
+        "zbraně",
+        "aréna",
+        "střílení"
+      ],
+      "sections": [
+        {
+          "h": "Režimy",
+          "body": [
+            "- Klasika: klasický blok vetřelců se snáší dolů. V nastavení volíš pohyb (jen vlevo/vpravo nebo volně s WASD) a míření (vždy nahoru nebo na myš).",
+            "- Aréna: volný pohyb do všech směrů, nepřátelé proudí ze všech okrajů, míříš ve směru svého pohybu."
+          ]
+        },
+        {
+          "h": "Zbraně a vylepšení",
+          "body": [
+            "Čtyři zbraně, přepínáš klávesami [1] až [4] : blaster, rozptylová střela, rychlopalba a laser.",
+            "Zničení vetřelci upouštějí vylepšení: život navíc, štít a vylepšení zbraní. Každá 4. úroveň má bosse."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Rozptylová střela čistí husté bloky, laser prostřelí celé sloupce - přepínej podle vlny.",
+            "- Nikdy v aréně nestůj na místě: krouži podél okraje a stahuj nepřátele do řady."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asteroids",
+      "category": "games",
+      "game": "AsteroidsGame",
+      "title": "Asteroids",
+      "keywords": [
+        "loď",
+        "kameny",
+        "ufo",
+        "hyperprostor",
+        "vlny",
+        "vektor"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Nahoru pohání ve směru pohledu, vlevo/vpravo otáčí loď, akční klávesa střílí. Loď dál klouže (setrvačnost) a přechází přes okraje obrazovky.",
+            "Dolů spustí hyperprostor: nouzový skok na náhodnou pozici se 4sekundovou prodlevou - a 12procentním rizikem rozpadnutí."
+          ]
+        },
+        {
+          "h": "Skórování a extra",
+          "body": [
+            "Kameny se rozpadnou na dva menší; tři velikosti dávají 20/50/100 bodů. UFO (lze vypnout) dává 200 bodů, život navíc přichází každých 5000 bodů.",
+            "Vylepšení ze zničených kamenů: štít (6 sekund nezranitelný), trojitá střela a rychlopalba.",
+            "Kooperativní souboj (více hráčů): obě lodě létají zároveň s oddělenými životy - vyhrává ten s více body."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Nejdřív ukliď malé, rychlé úlomky, než rozbiješ další velký kámen.",
+            "- Hyperprostor je poslední možnost, ne způsob cestování - riziko je skutečné."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pacman",
+      "category": "games",
+      "game": "PacmanGame",
+      "title": "Pac-Man",
+      "keywords": [
+        "duchové",
+        "kuličky",
+        "bludiště",
+        "ovoce",
+        "síla"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Pohybuj se šipkami nebo [W] [A] [S] [D] . Po skončení hry: Enter = nová, [S] = nastavení.",
+            "Tunely vlevo a vpravo tě přenesou na druhou stranu."
+          ]
+        },
+        {
+          "h": "Duchové a silové kuličky",
+          "body": [
+            "Čtyři duchové loví se svým původním chováním: Blinky pronásleduje přímo, Pinky chystá léčky, Inky používá vektor přes Blinkyho, Clyde se zblízka stáhne.",
+            "Silové kuličky na chvíli udělají duchy modré a snědené - řetěz dává 200/400/800/1600 bodů. Ovoce se objeví jako bonus, život navíc přichází při 10 000 bodech."
+          ]
+        },
+        {
+          "h": "Nastavení a tipy",
+          "body": [
+            "Obtížnost normální/těžká/extrémní určuje rychlost duchů a dobu vystrašení; každá úroveň je rychlejší.",
+            "- Silovou kuličku sněz jen tehdy, když je poblíž několik duchů - záleží na řetězu.",
+            "- Pamatuj na rozptylové fáze: při každé změně se všichni duchové otočí."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flappy",
+      "category": "games",
+      "game": "FlappyGame",
+      "title": "Flappy Bird",
+      "keywords": [
+        "pták",
+        "trubky",
+        "mince",
+        "štít",
+        "medaile",
+        "mávnutí"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "[Space], šipka nahoru, [W] nebo kliknutí myší přiměje ptáka mávnout - naklání se podle rychlosti stoupání a klesání."
+          ]
+        },
+        {
+          "h": "Skórování a extra",
+          "body": [
+            "Každá prošlá trubka dává jeden bod. V mezerách se objevují mince (bonus) a vylepšení štít, které odpustí přesně jednu srážku.",
+            "Denní a noční motivy se mění se skóre; po konci hry jsou k dispozici medaile od bronzu po platinu."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Krátká, pravidelná ťuknutí udrží dráhu letu klidnější než vzácná dlouhá.",
+            "- Obtížnost určuje velikost mezery a rychlost - mezera se zužuje, jak roste tvé skóre."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doodle",
+      "category": "games",
+      "game": "DoodleGame",
+      "title": "Doodle Jump",
+      "keywords": [
+        "skok",
+        "plošiny",
+        "příšery",
+        "pružina",
+        "vrtule",
+        "výška"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Doodler při dopadu automaticky vyskočí - ty jen řídíš vlevo/vpravo (se setrvačností). Okraje jsou otevřené: odchod vlevo tě přivede zpět vpravo.",
+            "Střílej nahoru šipkou nahoru nebo [Space] ."
+          ]
+        },
+        {
+          "h": "Plošiny a extra",
+          "body": [
+            "- Zelená: normální. Modrá: pohybuje se. Hnědá: rozbije se při došlápnutí. Bílá: zmizí po jednom skoku.",
+            "- Pružiny dají super skok, vrtulová čepice tě na okamžik automaticky vynese nahoru (nezranitelný).",
+            "- Příšery jsou při dotyku smrtící - jejich sestřelení dává body navíc."
+          ]
+        },
+        {
+          "h": "Skórování a tipy",
+          "body": [
+            "Skóre = dosažená výška; obtížnost roste s výškou.",
+            "- Než odskočíš, naplánuj, kam dopadneš - hnědé plošiny tě neudrží.",
+            "- Otevřený okraj využij jako zkratku k vzdáleným plošinám."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2048",
+      "category": "games",
+      "game": "Game2048",
+      "title": "2048",
+      "keywords": [
+        "dlaždice",
+        "posun",
+        "sloučení",
+        "čísla"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání a pravidla",
+          "body": [
+            "Šipky nebo [W] [A] [S] [D] naráz posunou všechny dlaždice jedním směrem. Stejná čísla se sloučí do svého součtu; po každém tahu se objeví nová dlaždice.",
+            "Cílem je dlaždice 2048 - poté hra pokračuje donekonečna. Prohráváš, když už není možný žádný tah."
+          ]
+        },
+        {
+          "h": "Skórování",
+          "body": [
+            "Každé sloučení přičte hodnotu nové dlaždice k tvému skóre."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Zaparkuj svou největší dlaždici do rohu a ten roh nikdy neruš.",
+            "- Posunuj hlavně ve dvou směrech - udrží to plochu uspořádanou."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minesweeper",
+      "category": "games",
+      "game": "MinesweeperGame",
+      "title": "Minesweeper",
+      "keywords": [
+        "miny",
+        "vlajky",
+        "odkrytí",
+        "akordování",
+        "nejlepší čas"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Levé kliknutí odkryje políčko, pravé kliknutí umístí vlajku (volitelně s cyklem otazníku, [Q] v nastavení). [F] označí políčko pod kurzorem, [R] restartuje.",
+            "Akordování: kliknutí na splněné číslo (všechny vlajky umístěny) naráz odkryje zbývající sousedy."
+          ]
+        },
+        {
+          "h": "Úrovně a skórování",
+          "body": [
+            "Začátečník (9x9, 10 min), pokročilý (16x16, 40) a expert (30x16, 99). Nejlepší čas pro každou úroveň se ukládá.",
+            "První kliknutí je vždy bezpečné - miny se rozmístí až poté. Body = základní hodnota úrovně mínus sekundy."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Začni s čísly na okraji otevřených oblastí - vzory tam jsou jednoznačné.",
+            "- Jednička v rohu s jediným zakrytým sousedem je vždy bezpečná vlajka."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sudoku",
+      "category": "games",
+      "game": "SudokuGame",
+      "title": "Sudoku",
+      "keywords": [
+        "hlavolam",
+        "čísla",
+        "poznámky",
+        "úrovně",
+        "nápovědy",
+        "logika"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Políčko vyber šipkami, [W] [A] [S] [D] nebo kliknutím myši - číselná klávesnice vpravo funguje výhradně myší.",
+            "- [1] až [9] zadá číslici (funguje i numerická klávesnice).",
+            "- [0], Backspace nebo pravé kliknutí smaže.",
+            "- [N] přepíná režim poznámek, [H] dá nápovědu, [R] restartuje úroveň, [Q] otevře výběr úrovní.",
+            "- Po skončení hry [A] skryje banner a odhalí celé řešení."
+          ]
+        },
+        {
+          "h": "Úrovně a režimy",
+          "body": [
+            "400 pevných úrovní: 4 obtížnosti (lehká/normální/těžká/expert) krát 100 úrovní. Každá úroveň je všude stejný hlavolam a jednoznačně řešitelná; vyřešené úrovně se odškrtnou.",
+            "Herní režim určuje pomůcky a násobitel skóre:",
+            "- Klasika x2.0: bez pomůcek, čistě jako na papíře.",
+            "- Poznámky x1.5: k tomu tužkové poznámky.",
+            "- Komfort x1.0: chyby okamžitě červeně, zvýrazňování konfliktů, správné vklady se zamknou.",
+            "- Pomoc x0.7: navíc až 3 nápovědy."
+          ]
+        },
+        {
+          "h": "Chyby a skórování",
+          "body": [
+            "Každý vklad se okamžitě porovná s řešením. Se zapnutým limitem 3 chyb (nastavení, klávesa [F] ) třetí chyba ukončí hru.",
+            "Body = (základ obtížnosti mínus čas, chyby a nápovědy) krát násobitel režimu."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Začni s řádky, sloupci a bloky, které už obsahují mnoho číslic.",
+            "- Kandidáty si zapisuj v párech: pokud dvě políčka sdílejí stejné dva kandidáty, jinde všude odpadnou.",
+            "- V klasickém režimu si dej načas: každá chyba se počítá okamžitě, i bez červené značky."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frogger",
+      "category": "games",
+      "game": "FroggerGame",
+      "title": "Frogger",
+      "keywords": [
+        "žába",
+        "silnice",
+        "řeka",
+        "zátoky",
+        "moucha",
+        "krokodýl"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Skákej políčko po políčku šipkami nebo [W] [A] [S] [D] .",
+            "- [R] restartuje, [S] otevře nastavení.",
+            "Po konci hry: [Enter] = zkusit znovu."
+          ]
+        },
+        {
+          "h": "Silnice, řeka a zátoky",
+          "body": [
+            "Dole 5 jízdních pruhů s auty a náklaďáky ve střídavých směrech - kontakt je smrtící.",
+            "Nad tím 5 říčních pruhů: klády a želvy tě nesou; pád do vody znamená utopení. Na vyšších úrovních se želvy pravidelně potápějí (blikání = varování).",
+            "Nahoře čeká 5 zátok - zaplnění všech dokončí úroveň, poté se vše zrychlí.",
+            "- Extra: bonusová moucha (+200) se na chvíli objeví v prázdných zátokách, na vyšších úrovních obsadí zátoky krokodýli (přistání = smrt) a časový ukazatel dole se pro každou žábu vyprazdňuje."
+          ]
+        },
+        {
+          "h": "Skórování",
+          "body": [
+            "Každá nově dosažená řada dává 10 bodů, zátoka 50 plus 10 za každou zbývající sekundu.",
+            "Všech 5 zátok udělí 1000 bodů a další úroveň.",
+            "Při 10 000 bodech získáš jednorázový život navíc (start: 3 životy)."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Mezery v provozu plánuj o jeden pruh dopředu, místo abys čekal na okraji.",
+            "- Klády plující k tvé cílové zátoce využij jako taxi.",
+            "- Přistaň brzy: časový bonus je lepší než zajížďka pro mouchu."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "category": "games",
+      "game": "MemoryGame",
+      "title": "Memory",
+      "keywords": [
+        "páry",
+        "karty",
+        "pamatování",
+        "duel",
+        "otočení"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Karty otáčej kliknutím myši - nebo posuň rámeček šipkami/WASD a otoč klávesou [Space] nebo [Enter] .",
+            "- [R] zamíchá nové kolo, [S] otevře nastavení.",
+            "Neshodující se pár zůstane na chvíli viditelný a poté se sám otočí zpět."
+          ]
+        },
+        {
+          "h": "Plochy a duel",
+          "body": [
+            "Tři velikosti ploch: 4x4 (8 párů), 6x6 (18) a 8x6 (24) - motivy jsou kombinace tvaru a barvy.",
+            "Sólo se každá odkrytá kombinace dvou karet počítá jako tah; čas běží.",
+            "- Duel (více hráčů na předherní obrazovce): střídáte se v otáčení, shoda znamená, že hraješ znovu - kdo má na konci více párů, vyhrává."
+          ]
+        },
+        {
+          "h": "Skórování",
+          "body": [
+            "Sólo: základ podle velikosti plochy mínus 15 za tah a 2 za sekundu (minimálně 100).",
+            "Duel: páry vítěze krát 100 jdou na žebříček nejlepších skóre."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Nejdřív otáčej neznámé karty - každá ti zdarma ukáže motiv.",
+            "- Motivy si ukotvi podle jejich barevné skupiny, zmenší to prostor hledání na polovinu.",
+            "- V duelu nikdy neodkrývej soupeři čerstvý pár."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solitaire",
+      "category": "games",
+      "game": "SolitaireGame",
+      "title": "Solitaire",
+      "keywords": [
+        "karty",
+        "klondike",
+        "spider",
+        "freecell",
+        "pyramida",
+        "tripeaks"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Karty táhni myší (drag & drop) nebo je přesouvej klik po kliku; pravé kliknutí odešle horní kartu na základnu (Klondike/FreeCell).",
+            "- [U] vrátí libovolný počet tahů, [R] rozdá novou hru, [S] otevře nastavení.",
+            "[Space] nebo [Enter] obsluhuje balíček (líznutí/rozdání)."
+          ]
+        },
+        {
+          "h": "Pět variant",
+          "body": [
+            "- Klondike: klasický solitaire - čtyři základny od esa po krále, tablo sestupně ve střídavých barvách; možnost: líznout 1 nebo 3.",
+            "- Spider: 10 sloupců, 104 karet - dokončené řady od krále po eso jedné barvy zmizí; možnost: 1, 2 nebo 4 barvy.",
+            "- FreeCell: vše lícem nahoru, 4 volné buňky; supertahy jsou omezené volnými buňkami a prázdnými sloupci.",
+            "- Pyramida: odstraňuj páry se součtem 13, král počítá sám; 2 nová rozdání.",
+            "- TriPeaks: vždy o jednu hodnotu nad nebo pod odkládacím balíčkem (eso a král navazují) - dlouhé řetězy dávají kombo body."
+          ]
+        },
+        {
+          "h": "Skórování",
+          "body": [
+            "Klondike: +10 za kartu na základně, +5 za odkrytou kartu, časový bonus při výhře. FreeCell: +10 za kartu na základně plus časový bonus.",
+            "Spider: 500 mínus tahy plus 100 za dokončenou řadu. Pyramida: +5 za kartu, +500 za vyčištění.",
+            "TriPeaks: 10 krát kombo za kartu - balíček resetuje kombo; +500 za vyčištění."
+          ]
+        },
+        {
+          "h": "Možnosti",
+          "body": [
+            "Líznutí 3 (Klondike) a počet barev u Spidera se ukládají trvale.",
+            "Vracení tahů je neomezené a zdarma - klidně experimentuj.",
+            "Všechny varianty sdílejí jeden žebříček nejlepších skóre."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Esa a dvojky uvolňuj co nejdříve (Klondike/FreeCell).",
+            "- Nech jeden sloupec prázdný - je to tvůj nejdůležitější nástroj (Spider/FreeCell).",
+            "- U Pyramidy spočítej dosažitelné páry se součtem 13, než se dotkneš balíčku."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aimtrainer",
+      "category": "games",
+      "game": "AimTrainerGame",
+      "title": "Aim Trainer",
+      "keywords": [
+        "míření",
+        "zaměřovač",
+        "reflex",
+        "3d",
+        "vesmír",
+        "střílení"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Myš řídí kameru přímo jako ve střílečce: každý pohyb okamžitě otočí pohled o daný kus (kurzor je neviditelně zachycen uvnitř okna). [Esc] pozastaví a uvolní myš. Otáčení do stran je neomezené, nahoru/dolů se zastaví na 60 stupních.",
+            "Levé kliknutí střílí přesně skrz střed obrazovky (krátká prodleva mezi výstřely).",
+            "- [+] a [-] mění citlivost (i uprostřed hry), [E] ukončí odpočinkovou relaci."
+          ]
+        },
+        {
+          "h": "Režimy",
+          "body": [
+            "- Přesnost (60 s): vždy 3 koule najednou - sestřelení jedné okamžitě vytvoří novou; na konci se přičte bonus za přesnost.",
+            "- Reflex (30 terčů): terče se objevují jeden po druhém a po chvíli se zmenší pryč - počítá se reakční čas, statistiky na konci.",
+            "- Pohyblivé terče (60 s): koule se pohybují po drahách (kývání, kroužení, poskakování) - po sobě jdoucí zásahy zvyšují kombo násobitel.",
+            "- Odpočinek (nekonečně): žádný časovač, žádný postih za minutí - jen se uvolni a střílej; skóre se uloží, když se vrátíš do menu."
+          ]
+        },
+        {
+          "h": "Skórování",
+          "body": [
+            "Přesnost: 100 bodů za zásah plus bonus za vzdálenost; na konci ještě přesnost na druhou krát 1500.",
+            "Reflex: čím rychlejší reakce, tím více bodů (1000 mínus milisekundy, nejméně 50).",
+            "Pohyblivé terče: 80 bodů krát kombo násobitel (až x4 při 12 po sobě jdoucích zásazích) - minutí resetuje kombo.",
+            "Odpočinek: 50 bodů krát násobitel; kombo mizí až po 5 sekundách bez zásahu."
+          ]
+        },
+        {
+          "h": "Motivy",
+          "body": [
+            "- Vesmír (výchozí): plná hvězdná koule, černá díra s jasně zářícím prstencem a vzdálená planeta.",
+            "- Neon: synthwave aréna se zářící podlahovou mřížkou a pruhovaným sluncem.",
+            "- Střelnice: vnitřní hala s dráhami, lampami a klasickými terči s terčovým středem. Motiv a nastavitelné rozmazání pohybu (0 až 80 procent, klávesa [B] nebo tlačítka v nastavení) se ukládají."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Malé, klidné pohyby myší zasahují lépe než zběsilé švihy - pohled sleduje 1:1.",
+            "- Nízká citlivost pro přesnost, vyšší pro reflex a pohyblivé terče.",
+            "- Vzdálené terče mají malou míru tolerance - drž klidně, místo abys přeháněl korekce."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "connect4",
+      "category": "games",
+      "game": "ConnectFourGame",
+      "title": "Čtyři v řadě",
+      "keywords": [
+        "čtyři",
+        "řada",
+        "žetony",
+        "sloupce",
+        "ai",
+        "strategie"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "Dvě barvy střídavě spouštějí žetony do jednoho ze 7 sloupců; každý žeton padá do nejnižšího volného políčka. Kdo první spojí čtyři - vodorovně, svisle nebo úhlopříčně - vyhrává kolo.",
+            "Pro jednoho hráče čelíš AI (tři síly v nastavení); v režimu pro 2 hráče se střídáte u jedné myši nebo klávesnice.",
+            "Začínající hráč se každé kolo střídá. [Enter] spustí další kolo, [S] se vrátí do nastavení."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Myš: najeď nad sloupec (náhledový žeton ukazuje místo) a klikni.",
+            "- Klávesnice: [Left] [Right] volí sloupec, spustíš klávesou [Down], [Space] nebo [Enter].",
+            "- Přímý výběr: čísla [1] až [7] spustí žeton rovnou do daného sloupce."
+          ]
+        },
+        {
+          "h": "Síly AI",
+          "body": [
+            "Lehká záměrně přehlédne některé hrozby a někdy zahraje jen druhý nejlepší tah - skvělé pro učení. Střední plánuje pár tahů dopředu a spolehlivě blokuje.",
+            "Těžká hledá mnohem hlouběji a každou chybu okamžitě potrestá - tady vyhrají jen dvojité hrozby."
+          ]
+        },
+        {
+          "h": "Skórování a tipy",
+          "body": [
+            "Každá výhra proti AI dává jeden bod; nejlepší skóre je nejvíce výher v jedné relaci. V režimu pro 2 hráče se neskóruje.",
+            "- Prostřední sloupec je nejsilnější: prochází jím většina čtveřic v řadě.",
+            "- Buduj dvojité hrozby (dvě otevřené trojice najednou) - soupeř může zablokovat jen jednu z nich."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tanks",
+      "category": "games",
+      "game": "TankDuelGame",
+      "title": "Tankový souboj",
+      "keywords": [
+        "tank",
+        "souboj",
+        "odraz",
+        "aréna",
+        "vylepšení",
+        "2 hráči"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "1 na 1 v aréně ze stěn: zasáhni soupeře, abys získal kolo - kdo první dosáhne 5 kol, vyhrává zápas.",
+            "Střely se od stěn jednou odrazí (odraz) a při druhém kontaktu zmizí. Pozor: odražená střela může zasáhnout i tebe.",
+            "Hraj proti AI (tři síly) nebo se dvěma hráči na jedné klávesnici. Po zápase: [Enter] = odveta, [S] = nastavení."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Hráč 1: [W] [S] jedou vpřed a vzad, [A] [D] otáčejí, [Space] střílí.",
+            "- Hráč 2: šipky jedou a otáčejí, [Enter] střílí. Přiřazení se řídí možnostmi.",
+            "- Najednou existují nanejvýš 4 tvé střely, mezi nimi je krátké nabíjení."
+          ]
+        },
+        {
+          "h": "Vylepšení",
+          "body": [
+            "- Rychlopalba: 8 sekund téměř bez nabíjení.",
+            "- Štít: pohltí přesně jeden zásah (prstenec kolem tanku).",
+            "- Trojitá střela: následujících 5 střel se rozvětví do tří směrů. Vylepšení se v aréně objevují každých pár sekund a po 12 sekundách vyprší."
+          ]
+        },
+        {
+          "h": "Arény a AI",
+          "body": [
+            "Na výběr jsou čtyři arény: Otevřená (bez krytu), Kříž, Sloupy a Bludiště - nebo Náhodná, která arénu každé kolo mění.",
+            "Lehká AI bezcílně jezdí kolem a špatně míří; střední tě pronásleduje a uhýbá.",
+            "Těžká AI si drží odstup, míří střely před tvůj pohyb a dokonce záměrně odráží střely od stěn."
+          ]
+        },
+        {
+          "h": "Skórování a tipy",
+          "body": [
+            "Proti AI skóruješ za výhru zápasu: více za vyšší síly a čistá vítězství; body se sčítají napříč odvetami. V režimu pro 2 hráče se neskóruje.",
+            "- Využívej stěny: odrážení střel kolem rohů zasáhne, aniž by ses odhalil."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blackjack",
+      "category": "games",
+      "game": "BlackjackGame",
+      "title": "Blackjack",
+      "keywords": [
+        "karty",
+        "kasino",
+        "21",
+        "žetony",
+        "krupiér",
+        "sázka"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "Cíl: dostat se blíž k 21 než krupiér, aniž bys ji přesáhl. Číselné karty počítají svou hodnotu, obrázkové 10, eso 11 nebo 1.",
+            "Hra používá botu se 4 balíčky; krupiér dobírá do 16 a na každé 17 stojí.",
+            "Nejdřív umísti sázku (tlačítka žetonů nebo klávesy [1] až [4], [Backspace] ji smaže), poté rozdej klávesou [Enter]."
+          ]
+        },
+        {
+          "h": "Akce",
+          "body": [
+            "- Táhnout [H]: dober další kartu.",
+            "- Stát [S]: ponech si aktuální součet.",
+            "- Zdvojit [D]: zdvojnásob sázku, vezmi přesně jednu kartu, poté automaticky stůj - jen u prvních dvou karet.",
+            "- Rozdělit [X]: rozděl dvě karty stejné hodnoty do dvou rukou (jednou za kolo; rozdělená esa dostanou každé jen jednu kartu)."
+          ]
+        },
+        {
+          "h": "Výplaty",
+          "body": [
+            "- Blackjack (eso + karta s hodnotou deset) platí 3:2.",
+            "- Normální výhra platí 1:1, remíza (shoda) vrátí tvou sázku.",
+            "- Přetažení nebo prohra: sázka je pryč. Pokud krupiér ukazuje eso nebo 10, okamžitě zkontroluje blackjack."
+          ]
+        },
+        {
+          "h": "Žetony",
+          "body": [
+            "Začínáš s 500 žetony; tvůj zůstatek a rekord se ukládají trvale a přežijí každý restart.",
+            "Nejlepší skóre je nejvyšší zůstatek žetonů, jakého jsi kdy dosáhl.",
+            "Pod 10 žetony jsi na mizině: [Enter] restartuje s 500 čerstvými žetony - rekord zůstává."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Základní strategie: proti odkryté kartě 7 nebo vyšší dobírej do 17; proti 4 až 6 stůj brzy - krupiér se tam často přetáhne.",
+            "- Vždy rozděl esa a osmičky, nikdy nerozděluj desítky."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tunnelracer",
+      "category": "games",
+      "game": "TunnelRacerGame",
+      "title": "Tunnel Racer",
+      "keywords": [
+        "tunel",
+        "závodník",
+        "3d",
+        "neon",
+        "uhýbání",
+        "nekonečno"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "Letíš zakřivenou neonovou trubicí a uhýbáš tyčím, blokům a prstencovým branám - jeden zásah a je po jízdě.",
+            "V mezerách se vznášejí zlaté mince; dávají body navíc a obvykle značí bezpečnou linii.",
+            "Prstencové brány mají přesně jednu díru: proplétej se skrz ni místo uhýbání."
+          ]
+        },
+        {
+          "h": "Režimy",
+          "body": [
+            "- Nekonečno: rychlost stále roste a mezery se zužují - jak daleko se dostaneš? Náraz ukončí jízdu a uloží nejlepší skóre.",
+            "- Úrovně: 30 pevných tratí s cílovou čárou, od pohodových po brutální. Dokončené úrovně se odškrtnou; body relace se sčítají."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Klávesy (výchozí): [W] [A] [S] [D] nebo šipky posouvají loď kolem trubice.",
+            "- Myš: přepneš v nastavení klávesou [C] - přímé řízení 1:1, kurzor je zachycen a [Esc] ho uvolní.",
+            "- [B] přepíná rozmazání pohybu v krocích po 10 procentech (0 až 80, ukládá se).",
+            "- V režimu úrovní: [R] zkusí znovu po nárazu, [S] otevře výběr."
+          ]
+        },
+        {
+          "h": "Skórování",
+          "body": [
+            "- Nekonečno: 10 bodů za metr plus 50 za minci.",
+            "- Úrovně: 1000 za cíl, 50 za minci a časový bonus, když překonáš normovaný čas.",
+            "Nejlepší skóre v režimu úrovní je tvůj nejlepší součet za relaci - hraní několika úrovní za sebou se vyplácí."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Sleduj prstence daleko dopředu: trubice svůj zákrut naznačí dost brzy, abys stihl kontrovat.",
+            "- Zůstávej blízko středu, kdykoli to jde - odtud je každá mezera dosažitelná."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "labyrinth",
+      "category": "games",
+      "game": "LabyrinthGame",
+      "title": "3D bludiště",
+      "keywords": [
+        "bludiště",
+        "labyrint",
+        "raycaster",
+        "koule",
+        "východ",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "50 bludišť generovaných ze semínka, která rostou s každou úrovní. Najdi zelený pulzující východ - vždy leží v bodě nejvzdálenějším od startu.",
+            "Bludištěm se vznášejí modré koule; každá sebraná koule přináší bonusové body.",
+            "Dokončené úrovně se ve výběru odškrtnou; [Enter] v cíli okamžitě spustí další."
+          ]
+        },
+        {
+          "h": "Pohledy",
+          "body": [
+            "- První osoba (3D): pohled ve stylu Wolfenstein s rozhlížením myší - přímo uprostřed místo shora.",
+            "- Shora (2D): klasická mapa z ptačí perspektivy, zcela bez zachycení myši. Přepneš v nastavení klávesou [V]; volba se ukládá."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- První osoba: [W] [S] vpřed a vzad, [A] [D] úkrok, myš otáčí tvůj pohled - nebo otáčej klávesami [Q] a [E].",
+            "- [M] přepíná minimapu, [Esc] pozastaví a uvolní myš.",
+            "- Shora: [W] [A] [S] [D] nebo šipky chodí ve světových směrech."
+          ]
+        },
+        {
+          "h": "Skórování",
+          "body": [
+            "- Dosažení východu: 500 bodů.",
+            "- Za kouli: 100 bodů navíc.",
+            "- K tomu časový bonus, když překonáš normovaný čas úrovně; body relace se sčítají do nejlepšího skóre."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Pravidlo pravé ruky: pokud vždy sleduješ stejnou stěnu, zaručeně dojdeš k východu.",
+            "- Koule zhruba lemují cestu k východu - jejich sbírání obvykle znamená, že jsi na správné trase."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reversi",
+      "category": "games",
+      "game": "ReversiGame",
+      "title": "Reversi",
+      "keywords": [
+        "reversi",
+        "othello",
+        "žetony",
+        "otočení",
+        "rohy",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "Reversi (Othello) se hraje na ploše 8x8. Žeton umístíš tak, aby jeden nebo více soupeřových žetonů byly uvězněny v přímé linii mezi novým žetonem a jiným žetonem tvé barvy - vodorovně, svisle nebo úhlopříčně. Všechny uvězněné žetony se otočí na tvou barvu.",
+            "Tah je platný jen tehdy, pokud otočí alespoň jeden žeton. Pokud nemáš platný tah, tvůj tah se automaticky přeskočí. Když se nemůže pohnout ani jeden hráč, hra končí a vyhrává ten, kdo má více žetonů.",
+            "Pro jednoho hráče ty (Černý) čelíš AI; v režimu pro dva hráče se Černý a Bílý střídají."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Myš: klikni na prázdné pole. Platná pole jsou označena malou tečkou.",
+            "- Klávesnice: šipky (nebo tvé klávesy pro pohyb) posouvají výběrový rámeček, [Space] nebo [Enter] umístí žeton.",
+            "- Po kole: [Enter] = nové kolo, [S] = zpět do nastavení (pouze pro jednoho hráče)."
+          ]
+        },
+        {
+          "h": "Síla AI a tipy",
+          "body": [
+            "Lehká hraje většinou náhodně, Střední se dívá pár tahů dopředu, Těžká hledá hlouběji a vysoce cení rohy.",
+            "- Rohy jsou zlaté: žeton v rohu už nikdy nelze otočit.",
+            "- Pozor na pole vedle rohu - často předají roh soupeři.",
+            "- Mít méně žetonů, ale více pohyblivosti ve střední fázi hry je často lepší než jich mít mnoho."
+          ]
+        },
+        {
+          "h": "Skóre",
+          "body": [
+            "Každá výhra proti AI má hodnotu jednoho bodu; nejlepší skóre je nejvíce výher v relaci. Hry pro dva hráče se neskórují."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kniffel",
+      "category": "games",
+      "game": "KniffelGame",
+      "title": "Yahtzee",
+      "keywords": [
+        "yahtzee",
+        "kniffel",
+        "kostky",
+        "postupka",
+        "full house",
+        "skóre"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "Máš 5 kostek a až 3 hody na tah. Po každém hodu si můžeš ponechat libovolné kostky a přehodit jen zbytek. Poté výsledek zapíšeš do přesně jedné z 13 kategorií.",
+            "Každou kategorii lze použít jen jednou. Pokud nic nesedí, jednu škrtneš za 0 bodů. Po 13 tazích je list plný a hra končí.",
+            "Pro jednoho hráče jde o hon za nejlepším skóre s nejvyšším součtem; v režimu pro dva hráče vyplňujete dva listy na střídačku - vyšší součet vyhrává."
+          ]
+        },
+        {
+          "h": "Kategorie",
+          "body": [
+            "Horní část (od Jedniček po Šestky): počítá oka daného čísla. Pokud tvá horní část dá alespoň 63, získáš 35bodový bonus.",
+            "- Tři/Čtyři stejné: součet všech kostek, pokud jsou alespoň 3 resp. 4 stejné.",
+            "- Full house = 25 (tři plus pár), Malá postupka = 30 (čtyři v řadě), Velká postupka = 40 (pět v řadě), Yahtzee = 50 (pět stejných), Šance = součet všech kostek (vždy povoleno)."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- [Space] nebo tlačítko Hod přehodí kostky, které nejsou podržené.",
+            "- Klikni na kostku nebo stiskni [1] až [5] pro podržení či uvolnění dané kostky.",
+            "- Klikni na kategorii nebo ji vyber šipkami a stiskni [Enter] pro její zapsání.",
+            "- Po hře: [Enter] restartuje."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Získej 63bodový horní bonus brzy - pětky a šestky jsou obzvlášť cenné.",
+            "- Šanci využij k záchraně špatného hodu; škrtni Yahtzee nebo postupku, pokud nic nevychází."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wordle",
+      "category": "games",
+      "game": "WordleGame",
+      "title": "Wordle",
+      "keywords": [
+        "wordle",
+        "slovo",
+        "hádání",
+        "písmena",
+        "zelená",
+        "žlutá"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "Uhodni skryté pětipísmenné slovo do 6 pokusů. Po každém hádání dlaždice změní barvu: zelená = správné písmeno na správném místě, žlutá = písmeno se vyskytuje, ale jinde, šedá = písmeno ve slově není.",
+            "Opakující se písmena se řeší správně: písmeno se označí žlutě nebo zeleně jen tolikrát, kolikrát se skutečně vyskytuje v odpovědi.",
+            "Každé hádání musí mít 5 písmen, ale nemusí být 'skutečné' slovo - nekontroluje se proti slovníku. Odpovědi odpovídají zvolenému jazyku."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Piš písmena A-Z, [Backspace] smaže poslední, [Enter] zkontroluje řádek (jen s 5 písmeny).",
+            "- Můžeš také použít klávesnici na obrazovce myší; její písmena se obarví podle toho, co ses dosud dozvěděl."
+          ]
+        },
+        {
+          "h": "Skóre",
+          "body": [
+            "Pokračuje to donekonečna: každé vyřešené slovo dává body - méně hádání znamená více (10 až 60). Hned poté se objeví nové slovo.",
+            "První slovo, které se ti NEPODAŘÍ rozluštit, ukončí hru; body, které jsi nasbíral, jsou tvé nejlepší skóre."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Začni slovem, které má mnoho různých, běžných písmen.",
+            "- Šedá písmena využij k vyloučení a žlutá písmena přesuň na novou pozici."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "trex",
+      "category": "games",
+      "game": "TRexRunnerGame",
+      "title": "T-Rex Runner",
+      "keywords": [
+        "trex",
+        "dino",
+        "běžec",
+        "skok",
+        "krčení",
+        "nekonečno"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Rozeběhni se klávesou [Space] nebo [Up] - dino poté běží automaticky.",
+            "- Skok: ťukni [Space]/[Up] pro malé skoky, podrž pro vyšší skoky.",
+            "- Krčení: podrž [Down] - ve vzduchu tě to nechá padat rychleji."
+          ]
+        },
+        {
+          "h": "Překážky",
+          "body": [
+            "Kaktusy se objevují jednotlivě nebo ve skupinách na zemi - přeskoč je.",
+            "Pterodaktylové se objevují ve třech výškách: vysoko = krčit se, nízko/uprostřed = skočit.",
+            "Rychlost stále roste; každých 100 bodů zazní pípnutí a krátké bliknutí."
+          ]
+        },
+        {
+          "h": "Možnosti a tipy",
+          "body": [
+            "Přepínej na úvodní obrazovce (ukládá se): [1]-[3] obtížnost, [N] den/noc, [C] vzhled.",
+            "- Krátké ťuknutí šetří výšku pro rychlé dvojité překážky.",
+            "- Po nárazu pokračuj hned klávesou [Enter]/[Space]."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dame",
+      "category": "games",
+      "game": "DameGame",
+      "title": "Dáma",
+      "keywords": [
+        "dáma",
+        "checkers",
+        "dame",
+        "povinný skok",
+        "létající dáma",
+        "deska"
+      ],
+      "sections": [
+        {
+          "h": "Varianty",
+          "body": [
+            "Vybírá se v nastavení - každá s 1 hráčem proti AI nebo 2 hráči místně:",
+            "- Německá dáma 8x8: kameny berou vpřed i vzad, dáma létá na libovolnou vzdálenost.",
+            "- Mezinárodní dáma 10x10: větší deska, povinný skok s pravidlem maxima (nejdelší braní je povinné).",
+            "- Anglická dáma 8x8 (checkers): kameny berou jen vpřed, dáma se posune jen o jedno pole."
+          ]
+        },
+        {
+          "h": "Pravidla a ovládání",
+          "body": [
+            "Braní je povinné: pokud existuje skok, musíš ho provést - kameny, které lze sebrat, jsou orámovány červeně.",
+            "Klikni na kámen, poté na cílové pole; vícenásobný skok zahraj krok po kroku.",
+            "Klávesnice: [Arrows]/[WASD] posouvají rámeček, [Space]/[Enter] vybírá.",
+            "Kámen, který dosáhne poslední řady, se stane dámou (koruna)."
+          ]
+        },
+        {
+          "h": "AI a skóre",
+          "body": [
+            "Pro jednoho hráče nabízí tři síly AI (minimax + alfa-beta), vyber je v nastavení klávesami [<]/[>].",
+            "Nejlepší skóre počítá tvé výhry proti AI v této relaci; hra pro více hráčů se neskóruje.",
+            "Po hře: [Enter] nové kolo, [S] zpět do nastavení."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poker",
+      "category": "games",
+      "game": "PokerGame",
+      "title": "Poker",
+      "keywords": [
+        "poker",
+        "holdem",
+        "texas",
+        "video poker",
+        "draw",
+        "žetony",
+        "blindy"
+      ],
+      "sections": [
+        {
+          "h": "Režimy",
+          "body": [
+            "Zvol variantu na předherní obrazovce:",
+            "- Texas Hold'em: proti 1-3 soupeřům s AI, s tlačítkem dealera, blindy a čtyřmi sázkovými koly (preflop, flop, turn, river).",
+            "- 5 Card Draw: jeden na jednoho proti AI - jednou vyměníš karty, dvě sázková kola.",
+            "- Video Poker (Jacks or Better): sólo proti výplatní tabulce."
+          ]
+        },
+        {
+          "h": "Akce",
+          "body": [
+            "Během sázení: [F] složit, [C] dorovnat/čekat, [R] navýšit, [A] all-in - nebo klikni na tlačítka.",
+            "Při výměně/podržení: klikni na karty nebo stiskni [1]-[5], poté [Enter] pro dobrání.",
+            "[Enter]/[Space] rozdá další hru."
+          ]
+        },
+        {
+          "h": "Žetony a kombinace",
+          "body": [
+            "Žetony (start 1000) zůstávají (mem.json). Nejlepší skóre je tvůj nejvyšší počet žetonů. Na mizině = restart kliknutím.",
+            "Pořadí kombinací: High Card < Pair < Two Pair < Three of a Kind < Straight < Flush < Full House < Four of a Kind < Straight Flush < Royal Flush."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slidepuzzle",
+      "category": "games",
+      "game": "SlidingPuzzleGame",
+      "title": "Posuvný hlavolam",
+      "keywords": [
+        "posuvný hlavolam",
+        "15 puzzle",
+        "patnáctka",
+        "dlaždice",
+        "čísla",
+        "posun"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "Poskládej očíslované dlaždice zpět do pořadí (1, 2, 3 …); mezera zůstává v pravém dolním rohu.",
+            "Dlaždice lze posouvat jen do prázdné mezery. Tři velikosti: 3×3 (lehká), 4×4 (klasická) a 5×5 (těžká).",
+            "Plocha se zamíchá mnoha náhodnými tahy, takže je vždy řešitelná."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Klikni na dlaždici ve stejném řádku nebo sloupci jako mezera, abys posunul celou linii.",
+            "- Šipky zasunou dlaždici vedle mezery do ní."
+          ]
+        },
+        {
+          "h": "Body",
+          "body": [
+            "Začínáš se základním skóre podle velikosti; každý tah a každá sekunda trochu ubírají. Rychlé vyřešení s málo tahy dá nejlepší skóre.",
+            "Po vyřešení Enter/kliknutí okamžitě spustí novou plochu."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastermind",
+      "category": "games",
+      "game": "MastermindGame",
+      "title": "Mastermind",
+      "keywords": [
+        "mastermind",
+        "barevný kód",
+        "kód",
+        "hádání",
+        "kolíky",
+        "logika"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "Počítač zvolí skrytý kód z barevných kolíků (barvy se mohou opakovat). Rozlušti ho řádek po řádku.",
+            "Po každém hádání dostaneš zpětné kolíky: ČERNÝ kolík = správná barva na správném místě, BÍLÝ kolík = správná barva na špatném místě. Pořadí zpětných kolíků neprozrazuje, ke kterému kolíku se vztahuje.",
+            "Režimy: Lehký (4 kolíky, 6 barev, 12 řádků), Klasický (4/6, 10 řádků) a Těžký (5 kolíků, 8 barev)."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Klikni na barvu dole (nebo klávesy 1–8) pro vyplnění dalšího prázdného místa.",
+            "- Klikni na umístěný kolík, abys ho odstranil; < nebo Backspace odebere poslední.",
+            "- OK nebo Enter zkontroluje celý řádek."
+          ]
+        },
+        {
+          "h": "Body",
+          "body": [
+            "Jako u Wordle jde o nekonečnou sérii: každý rozluštěný kód dává body (méně hádání + těžší režim = více), poté se hned objeví nový kód.",
+            "První kód, který se ti nepodaří rozluštit, ukončí hru - součet je tvé nejlepší skóre."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bubbleshooter",
+      "category": "games",
+      "game": "BubbleShooterGame",
+      "title": "Bubble Shooter",
+      "keywords": [
+        "bubble shooter",
+        "puzzle bobble",
+        "bubliny",
+        "kuličky",
+        "střílení",
+        "skupiny"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "Střílej bubliny nahoru do plástvového pole. Když se dotknou tři nebo více stejné barvy, skupina praskne.",
+            "Bubliny, které při prasknutí skupiny ztratí spojení s horní řadou, spadnou dolů a dají bonusové body.",
+            "Režimy: Lehký (4 barvy, žádné nové řady), Klasický (5 barev, čas od času přibude řada navíc) a Těžký (6 barev, rychlejší)."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Dělo míří na myš; otáčejí ho i šipky vlevo/vpravo.",
+            "- Levé kliknutí nebo Space střílí. Bubliny se odrážejí od bočních stěn.",
+            "- Malá bublina vlevo od děla je tvá další barva."
+          ]
+        },
+        {
+          "h": "Body",
+          "body": [
+            "Prasklé a spadlé bubliny dávají body; vyčištění celého pole dá bonus.",
+            "Jakmile se bublina uchytí pod červenou čárou, hra končí - součet je tvé nejlepší skóre."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hangman",
+      "category": "games",
+      "game": "HangmanGame",
+      "title": "Šibenice",
+      "keywords": [
+        "oběšenec",
+        "slovo",
+        "hádání",
+        "písmena",
+        "šibenice"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "Hádej skryté slovo písmeno po písmenu. Každé špatné písmeno dokreslí další část oběšence.",
+            "Po 6 chybách je postava dokreslena a kolo je prohráno.",
+            "Režimy podle délky slova: Krátká slova (3–5), Smíšená (3–12) a Dlouhá slova (7–12). Slova odpovídají zvolenému jazyku a používají jen A–Z."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Piš písmena A–Z nebo na ně klikej na klávesnici na obrazovce.",
+            "- Správná písmena se objeví ve slově; špatná zbarví klávesu šedě."
+          ]
+        },
+        {
+          "h": "Body",
+          "body": [
+            "Nekonečná série: každé uhodnuté slovo dává body (více zbývajících životů a delší slova = více), poté se hned objeví nové slovo.",
+            "První prohra ukončí hru - součet je tvé nejlepší skóre."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blockjump",
+      "category": "games",
+      "game": "BlockJumpGame",
+      "title": "Block Jump",
+      "keywords": [
+        "block jump",
+        "3d",
+        "minecraft",
+        "plošinovka",
+        "skok",
+        "šplhání",
+        "parkour"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "3D plošinovka ve stylu Minecraftu: skákej po plovoucích blokových plošinách k zářícímu cílovému majáku. Každá úroveň je nový parkour generovaný ze semínka a je těžší.",
+            "Kamera je ve výchozím stavu z pohledu první osoby jako v Minecraftu; stiskni V pro přepnutí na sledovací kameru.",
+            "Spadneš-li pod plošiny, ztratíš život a znovu se objevíš u posledního kontrolního bodu. Při 0 životech (začínáš se 3) jízda končí."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- WASD nebo šipky: pohyb (vzhledem ke směru pohledu). Space: skok. Myš: rozhlížení.",
+            "- Na žebříku W šplhá nahoru a S šplhá dolů. Pružinový blok tě vymrští vysoko do vzduchu.",
+            "- V = pohled (první/třetí osoba), B = rozmazání pohybu, C = zachytit/uvolnit myš, +/- = citlivost. Esc pozastaví a uvolní myš."
+          ]
+        },
+        {
+          "h": "Typy bloků",
+          "body": [
+            "- Tráva/hlína/kámen/dřevo: pevné bloky, na které skáčeš a stojíš na nich.",
+            "- Žebřík: pomalu šplhej nahoru/dolů. Plot: malý blok, který blokuje cestu - prostě ho přeskoč.",
+            "- Pružinový blok: vymrští tě vysoko (k dosažení vysokých plošin). Podél trasy se vznášejí mince za body navíc."
+          ]
+        },
+        {
+          "h": "Body",
+          "body": [
+            "Každá mince má hodnotu 50 bodů. Dosažení cíle úrovně dá 1000 bodů plus časový bonus (čím rychleji, tím více).",
+            "Body se hromadí napříč všemi úrovněmi; součet je tvé nejlepší skóre."
+          ]
+        }
+      ]
+    }
+  ]
+}

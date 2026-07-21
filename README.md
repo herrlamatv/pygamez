@@ -1,6 +1,6 @@
 # PyGameZ
 
-**🌐 Sprache / Language:** **🇩🇪 [Deutsch](#-deutsch)** · **🇬🇧 [English](#-english)** · **🇫🇷 [Français](other.readme.md#-francais)** · **🇪🇸 [Español](other.readme.md#-espanol)** · **🇵🇹 [Português](other.readme.md#-portugues)** <br> Game Available in : German, English, French, Spanish, Portuguese
+**🌐 Sprache / Language:** **🇩🇪 [Deutsch](#-deutsch)** · **🇬🇧 [English](#-english)** · **🇫🇷 [Français](other.readme.md#-francais)** · **🇪🇸 [Español](other.readme.md#-espanol)** · **🇵🇹 [Português](other.readme.md#-portugues)** · **🇵🇱 [Polski](other.readme.md#-polski)** · **🇹🇷 [Türkçe](other.readme.md#-turkce)** · **🇩🇰 [Dansk](other.readme.md#-dansk)** · **🇳🇴 [Norsk](other.readme.md#-norsk)** · **🇸🇪 [Svenska](other.readme.md#-svenska)** · **🇫🇮 [Suomi](other.readme.md#-suomi)** · **🇨🇿 [Čeština](other.readme.md#-cestina)** · **🇸🇮 [Slovenščina](other.readme.md#-slovenscina)** · **🇭🇷 [Hrvatski](other.readme.md#-hrvatski)** <br> Game Available in : German, English, French, Spanish, Portuguese, Polish, Turkish, Danish, Norwegian, Swedish, Finnish, Czech, Slovenian, Croatian (14 languages)
 
 **📋 [Changelog](changelog.md)** (Deutsch / English)
 
@@ -14,11 +14,14 @@ Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
 **Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Achtunddreißig
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
-**mehrsprachig** (Deutsch / English / Français / Español / Português); die
-Sprache wird beim ersten Start auf einem **Willkommens-Screen** gewählt, auf dem
-sich zugleich **Auflösung** und **Sound** (Standard: aus) einrichten lassen;
-Spanisch und Portugiesisch verbergen sich hinter dem Knopf **„Mehr"**. Alles
-lässt sich später jederzeit in den Optionen ändern.
+**mehrsprachig** – **14 Sprachen** (Deutsch / English / Français / Español /
+Português / Polski / Türkçe / Dansk / Norsk / Svenska / Suomi / Čeština /
+Slovenščina / Hrvatski); die Sprache wird beim ersten Start auf einem
+**Willkommens-Screen** gewählt, auf dem sich zugleich **Auflösung** und
+**Sound** (Standard: aus) einrichten lassen; außer den drei Hauptsprachen
+verbergen sich alle weiteren (Spanisch, Portugiesisch und die neun zusätzlichen)
+hinter dem Knopf **„Mehr"**. Alles lässt sich später jederzeit in den Optionen
+ändern.
 
 ### Schnellstart
 
@@ -721,10 +724,13 @@ A desktop game collection in Python: **Tkinter** provides the window and menu,
 **Pygame** is embedded as the game display inside the Tkinter window. Thirty-eight
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
-**multilingual** (German / English / French / Spanish / Portuguese); the
-language is chosen on a **welcome screen** at first launch, which also lets you
-set the **resolution** and **sound** (off by default); Spanish and Portuguese sit
-behind the **"More"** button. Everything can be changed later in the options.
+**multilingual** – **14 languages** (German / English / French / Spanish /
+Portuguese / Polish / Turkish / Danish / Norwegian / Swedish / Finnish / Czech /
+Slovenian / Croatian); the language is chosen on a **welcome screen** at first
+launch, which also lets you set the **resolution** and **sound** (off by
+default); apart from the three main languages, all the others (Spanish,
+Portuguese and the nine additional ones) sit behind the **"More"** button.
+Everything can be changed later in the options.
 
 ### Quick start
 
