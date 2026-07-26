@@ -535,6 +535,15 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   scrollbaren Artikeln und Tastenkappen-Chips, in allen fünf Sprachen.
   Erreichbar über den Sidebar-Button **„Wiki / Hilfe"** und aus dem
   Vorspiel-Screen jedes Spiels (öffnet direkt dessen Seite).
+- **Erfolge & Statistiken**: **69 Erfolge** in drei Kategorien - sammlungsweite
+  Ziele (Partien, Spielzeit, Rekorde, Siege …), ein **Punkte-Meilenstein je
+  Spiel** und **besondere Momente** (Schachmatt gegen die KI, KNIFFEL, die
+  2048er-Kachel, ein Wordle in 2 Versuchen …). Beim Freischalten erscheint ein
+  **goldener Toast mit Fanfare** - auch mitten im Spiel; alte Highscores werden
+  beim ersten Start automatisch angerechnet. Dazu ein **Statistik-Reiter** mit
+  Gesamtspielzeit, Partien, Siegen, Rekorden, Lieblingsspiel und einer nach
+  Spielzeit sortierten **Pro-Spiel-Tabelle** (Klick auf eine Zeile öffnet das
+  Spiel). Erreichbar über den Sidebar-Button **„Erfolge & Statistik"**.
 
 ### Bedienung
 
@@ -588,7 +597,10 @@ settings.py          Einstellungen (Sound/Haptik/Tastenbelegung) laden/speichern
 audio.py             Prozedurale Soundeffekte + Gamepad-Rumble
 menu.py              Sprach-, Vorspiel- (Modus) und Options-Screen (Sound/Steuerung)
 highscore.py         Laden/Speichern der Highscores (Abschnitt in mem.json)
-store.py             Zentrale Speicherdatei mem.json (Abschnitte: mem, highscores)
+store.py             Zentrale Speicherdatei mem.json (Abschnitte: mem, highscores, stats, achievements)
+stats.py             Spielerstatistiken (Partien, Spielzeit, Siege, Rekorde) je Spiel
+achievements.py      Erfolge: Definitionen, Freischalt-Logik, Toast-Einblendung
+progress.py          Erfolge-&-Statistik-Screen (zwei Reiter, scrollbar)
 prestige.py          Prestige-System für Snake
 competitive.py       Kennzahlen für den Competitive-Modus von Snake (Level, Slot, Wett-Äpfel)
 ngb.py               Visuelle Personalisierung ("Mods"): Kopffarbe + Koordinaten-Raster + Menü (mem-ngb.json)
@@ -1237,6 +1249,15 @@ packages) and styled like a modern game launcher:
   scrollable articles and keycap chips, in all five languages. Reachable via
   the **"Wiki / Help"** sidebar button and from every game's pre-game screen
   (opens that game's page directly).
+- **Achievements & statistics**: **69 achievements** in three categories -
+  collection-wide goals (games played, play time, records, wins …), one
+  **score milestone per game** and **special moments** (checkmating the AI, a
+  YAHTZEE, the 2048 tile, a Wordle in 2 tries …). Unlocking shows a **golden
+  toast with a fanfare** - even mid-game; old high scores are credited
+  automatically on first launch. Plus a **statistics tab** with total play
+  time, games, wins, records, favourite game and a **per-game table** sorted
+  by play time (clicking a row opens that game). Reachable via the
+  **"Achievements & Stats"** sidebar button.
 
 ### Controls
 
@@ -1288,7 +1309,10 @@ settings.py          Load/save settings (sound/haptics/key bindings) (JSON)
 audio.py             Procedural sound effects + gamepad rumble
 menu.py              Language, pre-game (mode) and options screen (sound/controls)
 highscore.py         Load/save high scores (section in mem.json)
-store.py             Central save file mem.json (sections: mem, highscores)
+store.py             Central save file mem.json (sections: mem, highscores, stats, achievements)
+stats.py             Player statistics (plays, play time, wins, records) per game
+achievements.py      Achievements: definitions, unlock logic, toast overlay
+progress.py          Achievements & statistics screen (two tabs, scrollable)
 prestige.py          Prestige system for Snake
 competitive.py       Tuning for Snake's Competitive mode (levels, slot machine, gamble apples)
 ngb.py               Visual personalization ("mods"): head color + coordinate grid + menu (mem-ngb.json)

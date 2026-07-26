@@ -214,10 +214,13 @@ class MastermindGame(Game):
             self.score += pts
             self.solved_count += 1
             self.state = SOLVED
+            self.report_result(True)
             self.play_sound("win")
         elif self.row >= self.max_rows:
             self.state = OVER
             self.game_over = True             # main.py speichert den Highscore
+            if self.solved_count == 0:
+                self.report_result(False)
             self.play_sound("gameover")
         else:
             self.play_sound("move")

@@ -196,6 +196,7 @@ class SlidingPuzzleGame(Game):
         self.score = pts
         self.state = SOLVED
         self.game_over = True                # main.py speichert den Highscore
+        self.report_result(True)
         self.play_sound("win")
 
     # ===================================================== Update

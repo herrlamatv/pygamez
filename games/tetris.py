@@ -174,6 +174,8 @@ class _Board:
             punkte = {1: 40, 2: 100, 3: 300, 4: 1200}.get(entfernt, 0)
             self.score += punkte * self.level
             self.level = 1 + self.lines // 10
+            if entfernt == 4:
+                self.game.ach_event("tetris_four")
             self.game.play_sound("line")
             self.game.rumble(120)
 

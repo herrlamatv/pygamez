@@ -128,6 +128,54 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Logros y estadísticas",
+      "keywords": [
+        "logros",
+        "estadísticas",
+        "progreso",
+        "récord",
+        "victorias",
+        "tiempo de juego",
+        "hito"
+      ],
+      "sections": [
+        {
+          "h": "Resumen",
+          "body": [
+            "La colección ahora registra tu progreso: 69 logros y estadísticas detalladas de los 38 juegos. Ambos están tras el botón Logros y estadísticas de la barra lateral; cambia de pestaña con [Tab] o con un clic."
+          ]
+        },
+        {
+          "h": "Logros",
+          "body": [
+            "Hay tres categorías:",
+            "- General: metas globales como partidas iniciadas, juegos probados, tiempo total de juego, récords batidos y victorias, más extras como el Búho nocturno (jugar después de medianoche).",
+            "- Hitos de puntuación: una puntuación objetivo justa por juego, ajustada a su escala.",
+            "- Momentos especiales: dar jaque mate a la IA, un YAHTZEE, la ficha de 2048, un Wordle en 2 intentos y más.",
+            "Al desbloquear aparece un aviso dorado arriba a la derecha con una pequeña fanfarria, incluso en plena partida.",
+            "Lo existente cuenta: en el primer arranque tras la actualización se acreditan automáticamente tus récords antiguos (sin fuegos artificiales de avisos).",
+            "Los logros bloqueados muestran una barra de progreso; los desbloqueados, su fecha."
+          ]
+        },
+        {
+          "h": "Estadísticas",
+          "body": [
+            "Arriba, unas tarjetas lo resumen todo: tiempo total, partidas, victorias, récords batidos, juegos probados y tu recuento de logros, además de tu juego favorito (más tiempo jugado).",
+            "Debajo, una tabla lista cada juego jugado con partidas, tiempo, victorias y récord, ordenada por tiempo de juego. Un clic en una fila abre directamente ese juego.",
+            "Solo cuenta el tiempo de juego activo: pausas y menús no suman. Las victorias las registran los juegos con resultado claro (tablero, cartas y puzles) en un jugador."
+          ]
+        },
+        {
+          "h": "Guardado",
+          "body": [
+            "Todo se guarda localmente en mem.json (secciones stats y achievements), junto con el idioma y los récords. Si borras el archivo, también se reinician logros y estadísticas."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake especial",

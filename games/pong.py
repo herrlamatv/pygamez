@@ -239,6 +239,8 @@ class PongGame(Game):
         if self.player_score >= WIN_SCORE or self.ai_score >= WIN_SCORE:
             self.game_over = True
             self.play_sound("win" if self.player_score > self.ai_score else "gameover")
+            if not self.multiplayer:
+                self.report_result(self.player_score > self.ai_score)
             self.rumble(200)
         else:
             self._serve(toward_player=toward_player)

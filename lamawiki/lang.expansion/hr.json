@@ -129,6 +129,54 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Postignuća i statistika",
+      "keywords": [
+        "postignuća",
+        "statistika",
+        "napredak",
+        "rekord",
+        "pobjede",
+        "vrijeme igranja",
+        "prekretnica"
+      ],
+      "sections": [
+        {
+          "h": "Pregled",
+          "body": [
+            "Kolekcija sada prati tvoj napredak: 69 postignuća i detaljna statistika svih 38 igara. Oboje ćeš naći iza gumba Postignuća i statistika u bočnoj traci; kartice mijenjaš s [Tab] ili klikom."
+          ]
+        },
+        {
+          "h": "Postignuća",
+          "body": [
+            "Postoje tri kategorije:",
+            "- Općenito: ciljevi na razini kolekcije poput pokrenutih partija, isprobanih igara, ukupnog vremena igranja, srušenih rekorda i pobjeda - plus sitnice poput Noćne ptice (igranje iza ponoći).",
+            "- Bodovne prekretnice: jedan pošten ciljni rezultat po igri, prilagođen njezinoj bodovnoj ljestvici.",
+            "- Posebni trenuci: šah-mat AI-ju, KNIFFEL, pločica 2048, Wordle u 2 pokušaja i još toga.",
+            "Pri otključavanju se gore desno pojavi zlatna obavijest s kratkom fanfarom - čak i usred igre.",
+            "Postojeći podaci se računaju: pri prvom pokretanju nakon ažuriranja tvoji se stari rekordi automatski priznaju (bez vatrometa obavijesti).",
+            "Zaključana postignuća pokazuju traku napretka, otključana svoj datum."
+          ]
+        },
+        {
+          "h": "Statistika",
+          "body": [
+            "Gore kartice sažimaju sve: ukupno vrijeme igranja, partije, pobjede, srušene rekorde, isprobane igre i brojač postignuća - plus tvoju najdražu igru (najviše vremena).",
+            "Ispod toga tablica navodi svaku odigranu igru s partijama, vremenom, pobjedama i rekordom, poredanu po vremenu igranja. Klik na redak izravno otvara igru.",
+            "Računa se samo aktivno vrijeme igranja - pauze i izbornici ne. Pobjede bilježe igre s jasnim ishodom pobjeda/poraz (društvene, kartaške i logičke) u igri za jednog igrača."
+          ]
+        },
+        {
+          "h": "Spremanje",
+          "body": [
+            "Sve se sprema lokalno u mem.json (odjeljci stats i achievements) zajedno s jezikom i rekordima. Izbrišeš li datoteku, resetiraju se i postignuća i statistika."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake posebno",

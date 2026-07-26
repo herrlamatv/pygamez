@@ -834,6 +834,7 @@ class SnakeGame(Game):
         del sn.body[:req["length"]]
         sn.grow = 0
         self.prestige += 1
+        self.ach_event("snake_prestige")
         self.play_sound("select")
         self.rumble(120)
 
@@ -1235,6 +1236,7 @@ class SnakeGame(Game):
         lvl = competitive.level_for_apples(self.apples_total)
         if lvl > self.comp_level:
             self.comp_level = lvl
+            self.ach_event("snake_comp5", lvl)
             self.play_sound("level")
             self.rumble(90)
             self._add_float_text(self.snakes[0].body[-1],

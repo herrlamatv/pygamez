@@ -8,6 +8,56 @@
 
 ## 🇩🇪 Deutsch
 
+### Erfolge & Statistiken – 2026-07-26
+
+Das Progression-Update: Die Sammlung zählt jetzt, was du spielst - **69 Erfolge**
+und dauerhafte **Spielerstatistiken** über alle 38 Spiele, erreichbar über den
+neuen Sidebar-Button **„Erfolge & Statistik"** (Pokal-Symbol).
+
+#### Neu
+- **69 Erfolge** in drei Kategorien:
+  - **Allgemein** (21): sammlungsweite Ziele wie gestartete Partien (1/10/50/200),
+    ausprobierte Spiele (5/15/alle 38), Gesamtspielzeit (1 h/5 h/20 h), gebrochene
+    Rekorde (1/10/25), Siege (10/50, in 5 verschiedenen Spielen) - plus Extras wie
+    **Nachteule** (nach Mitternacht), **Frühaufsteher**, **Polyglott**
+    (Sprachwechsel), **Leseratte** (Wiki geöffnet) und **Ganz mein Stil**
+    (Snake-Personalisierung).
+  - **Punkte-Meilensteine** (30): eine faire Ziel-Punktzahl je Spiel, abgestimmt
+    auf dessen Punkteskala (z. B. Snake 500, Tetris 10 000, Flappy 25, Simon 12).
+  - **Besondere Momente** (18): Schachmatt gegen die KI, KNIFFEL, die
+    2048er-Kachel, Tetris-Vierfachreihe, Blackjack mit zwei Karten, Wordle in
+    ≤ 2 Versuchen, Galgenmännchen ohne Fehlversuch, fehlerfreies Sudoku,
+    Minesweeper- und Solitär-Sieg, perfektes Memory, leergefressenes
+    Pacman-Labyrinth, alle Breakout-Level, alle Frogger-Buchten, 100 %
+    Aim-Trainer-Genauigkeit, 2 000 Poker-Chips, Snake-Prestige und
+    Competitive-Level 5.
+- **Toast-Einblendung**: goldenes Banner mit gezeichnetem Abzeichen und kleinem
+  Arpeggio oben rechts beim Freischalten - auch mitten im Spiel.
+- **Erfolge-&-Statistik-Screen**: Reiter **Erfolge** mit Gesamtfortschritts-Balken,
+  Kategorien, Fortschrittsanzeige je Erfolg und Freischalt-Datum; Reiter
+  **Statistiken** mit Übersichtskarten (Gesamtspielzeit, Partien, Siege, Rekorde,
+  ausprobierte Spiele, Erfolgs-Stand), **Lieblingsspiel** und einer nach Spielzeit
+  sortierten **Pro-Spiel-Tabelle** (Partien · Zeit · Siege · Bestwert). Ein Klick
+  auf eine Zeile springt direkt ins Spiel.
+- **Persistente Statistiken** je Spiel: Partien (inkl. Neustarts), **aktive**
+  Spielzeit (Pausen/Menüs zählen nicht), Siege/Niederlagen (Spiele mit klarem
+  Ausgang, im Einzelspieler), gebrochene Rekorde, zuletzt gespielt - gespeichert
+  als Abschnitte `stats`/`achievements` in `mem.json`.
+- **Bestand zählt**: Beim ersten Start nach dem Update werden vorhandene
+  Highscores automatisch angerechnet (ohne Toast-Feuerwerk).
+- **94 neue Übersetzungs-Keys in allen 14 Sprachen** (~1 300 neue Strings) und
+  eine **neue LamaWiki-Seite** „Erfolge & Statistiken" - ebenfalls in allen
+  14 Sprachen (das Wiki hat jetzt 39 Seiten).
+
+#### Geändert
+- `game_base.py`: neue Hooks für alle Spiele - `report_result()` (Sieg/Niederlage,
+  zählt einmal pro Partie) und `ach_event()` (besondere Momente); in über
+  30 Spiele eingebaut.
+- Zentrale Game-Loop (`main.py`): zählt Partie-Starts und -Neustarts sowie
+  Spielzeit automatisch; die Rekord-Speicherung prüft jetzt zusätzlich
+  Meilenstein-Erfolge. Statistiken werden gedrosselt geschrieben (höchstens
+  alle 20 s sowie bei Partie-Start/-Ende und beim Beenden).
+
 ### Sprach-Erweiterung: 9 neue Sprachen – 2026-07-21
 
 Die Oberfläche gibt es jetzt in **14 Sprachen**. Neu hinzugekommen sind neun
@@ -121,6 +171,54 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Achievements & Statistics – 2026-07-26
+
+The progression update: the collection now tracks what you play - **69
+achievements** and persistent **player statistics** across all 38 games,
+reachable via the new **"Achievements & Stats"** sidebar button (trophy icon).
+
+#### Added
+- **69 achievements** in three categories:
+  - **General** (21): collection-wide goals such as games started (1/10/50/200),
+    games tried (5/15/all 38), total play time (1 h/5 h/20 h), records broken
+    (1/10/25), wins (10/50, in 5 different games) - plus extras like **Night
+    Owl** (play after midnight), **Early Bird**, **Polyglot** (switch language),
+    **Bookworm** (open the wiki) and **My Own Style** (Snake personalisation).
+  - **Score milestones** (30): one fair target score per game, tuned to its
+    scoring scale (e.g. Snake 500, Tetris 10,000, Flappy 25, Simon 12).
+  - **Special moments** (18): checkmating the AI, a YAHTZEE, the 2048 tile, a
+    Tetris quadruple line clear, a two-card Blackjack, a Wordle in ≤ 2 tries,
+    Hangman without a miss, a flawless Sudoku, Minesweeper and Solitaire wins,
+    a perfect Memory run, an emptied Pac-Man maze, all Breakout levels, all
+    Frogger bays, 100% Aim Trainer accuracy, 2,000 poker chips, Snake prestige
+    and competitive level 5.
+- **Toast notification**: a golden banner with a drawn badge and a little
+  arpeggio in the top-right corner on unlock - even mid-game.
+- **Achievements & statistics screen**: an **Achievements** tab with an overall
+  progress bar, categories, per-achievement progress and unlock dates; a
+  **Statistics** tab with overview cards (total play time, games, wins,
+  records, games tried, achievement count), your **favourite game** and a
+  **per-game table** sorted by play time (plays · time · wins · best).
+  Clicking a row jumps straight to that game.
+- **Persistent statistics** per game: plays (including restarts), **active**
+  play time (pauses/menus don't count), wins/losses (games with a clear
+  outcome, in single-player), records broken, last played - stored as the
+  `stats`/`achievements` sections of `mem.json`.
+- **Existing data counts**: on the first launch after the update, your old
+  high scores are credited automatically (without the toast fireworks).
+- **94 new translation keys in all 14 languages** (~1,300 new strings) and a
+  **new LamaWiki page** "Achievements & Statistics" - also in all 14 languages
+  (the wiki now has 39 pages).
+
+#### Changed
+- `game_base.py`: new hooks for every game - `report_result()` (win/loss,
+  counted once per round) and `ach_event()` (special moments); wired into
+  30+ games.
+- Central game loop (`main.py`): counts game starts/restarts and play time
+  automatically; saving a record now also checks milestone achievements.
+  Statistics are written throttled (at most every 20 s plus on game
+  start/end and on quit).
 
 ### Language expansion: 9 new languages – 2026-07-21
 

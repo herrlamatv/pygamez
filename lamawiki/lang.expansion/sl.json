@@ -129,6 +129,54 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Dosežki in statistika",
+      "keywords": [
+        "dosežki",
+        "statistika",
+        "napredek",
+        "rekord",
+        "zmage",
+        "čas igranja",
+        "mejnik"
+      ],
+      "sections": [
+        {
+          "h": "Pregled",
+          "body": [
+            "Zbirka zdaj spremlja tvoj napredek: 69 dosežkov in podrobna statistika vseh 38 iger. Oboje najdeš za gumbom Dosežki in statistika v stranski vrstici; med zavihkoma preklapljaš s [Tab] ali s klikom."
+          ]
+        },
+        {
+          "h": "Dosežki",
+          "body": [
+            "Obstajajo tri kategorije:",
+            "- Splošno: cilji na ravni zbirke, kot so začete partije, preizkušene igre, skupni čas igranja, podrti rekordi in zmage - plus drobnarije, kot je Nočna sova (igranje po polnoči).",
+            "- Točkovni mejniki: en pošten ciljni rezultat na igro, prilagojen njeni točkovni lestvici.",
+            "- Posebni trenutki: šah-mat UI, KNIFFEL, ploščica 2048, Wordle v 2 poskusih in več.",
+            "Ob odklepanju se zgoraj desno pojavi zlato obvestilo s kratko fanfaro - tudi sredi igre.",
+            "Obstoječi podatki štejejo: ob prvem zagonu po posodobitvi se tvoji stari rekordi samodejno upoštevajo (brez ognjemata obvestil).",
+            "Zaklenjeni dosežki kažejo vrstico napredka, odklenjeni svoj datum."
+          ]
+        },
+        {
+          "h": "Statistika",
+          "body": [
+            "Zgoraj kartice povzamejo vse: skupni čas igranja, partije, zmage, podrte rekorde, preizkušene igre in števec dosežkov - plus tvojo najljubšo igro (največ časa).",
+            "Spodaj tabela našteje vsako igrano igro s partijami, časom, zmagami in rekordom, razvrščeno po času igranja. Klik na vrstico odpre igro neposredno.",
+            "Šteje samo aktivni čas igranja - premori in meniji ne. Zmage beležijo igre z jasnim izidom zmaga/poraz (namizne, karte in miselne) v enoigralskem načinu."
+          ]
+        },
+        {
+          "h": "Shranjevanje",
+          "body": [
+            "Vse je shranjeno lokalno v mem.json (razdelka stats in achievements) skupaj z jezikom in rekordi. Če datoteko izbrišeš, se ponastavijo tudi dosežki in statistika."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake posebnosti",

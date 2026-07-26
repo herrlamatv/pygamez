@@ -149,6 +149,8 @@ class HangmanGame(Game):
             if self.wrong >= MAX_WRONG:
                 self.state = OVER
                 self.game_over = True        # main.py speichert den Highscore
+                if self.solved_count == 0:
+                    self.report_result(False)
                 self.play_sound("gameover")
 
     def _solve(self):
@@ -157,6 +159,9 @@ class HangmanGame(Game):
         self.score += pts
         self.solved_count += 1
         self.state = SOLVED
+        self.report_result(True)
+        if self.wrong == 0:
+            self.ach_event("hangman_clean")
         self.play_sound("win")
 
     def update(self, dt):

@@ -351,6 +351,9 @@ class AimTrainerGame(Game):
                 self.play_sound("point")
         else:
             self.acc_bonus = 0
+        # 100% Genauigkeit bei einer echten Sitzung (min. 20 Schüsse).
+        if self.shots >= 20 and self.hits == self.shots:
+            self.ach_event("aim_perfect")
         self.game_over = True
         self.capture_mouse = False
         self.play_sound("win")

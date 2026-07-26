@@ -278,8 +278,10 @@ class ConnectFourGame(Game):
                 if winner == 0:
                     self.score = self.wins[0]
                     self.play_sound("win")
+                    self.report_result(True)
                 else:
                     self.play_sound("gameover")
+                    self.report_result(False)
             else:
                 self.play_sound("win")
         self.game_over = True     # main.py speichert den Score einmalig

@@ -260,6 +260,8 @@ class KniffelGame(Game):
             self.play_sound("click")
             return
         card[key] = score_category(key, self.dice)
+        if key == "kniffel" and card[key] > 0:
+            self.ach_event("kniffel_five")
         if card[key] > 0:
             self.play_sound("point")
         else:

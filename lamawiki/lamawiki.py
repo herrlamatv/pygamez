@@ -128,6 +128,9 @@ class LamaWikiScreen(_Screen):
         self._start_page_id = page_id
         super().__init__(surface, width, height, app)
         self.name = t("lamawiki.name")
+        # Erfolg "Leseratte": das Wiki (mindestens) einmal geöffnet.
+        import achievements
+        achievements.event("wiki_reader")
 
     def reset(self):
         super().reset()

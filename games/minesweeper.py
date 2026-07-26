@@ -358,6 +358,7 @@ class MinesweeperGame(Game):
         self.game_over = True
         self.won = False
         self.score = 0
+        self.report_result(False)
         self.play_sound("explode")
         self.play_sound("gameover")
         self.rumble(250)
@@ -377,6 +378,8 @@ class MinesweeperGame(Game):
         if key not in self.best or sekunden < int(self.best[key]):
             self.best[key] = sekunden
             self._save_setting("best", self.best)
+        self.report_result(True)
+        self.ach_event("mine_win")
         self._confetti()
         self.play_sound("win")
         self.rumble(200)

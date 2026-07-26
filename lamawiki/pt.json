@@ -128,6 +128,54 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Conquistas e estatísticas",
+      "keywords": [
+        "conquistas",
+        "estatísticas",
+        "progresso",
+        "recorde",
+        "vitórias",
+        "tempo de jogo",
+        "marco"
+      ],
+      "sections": [
+        {
+          "h": "Visão geral",
+          "body": [
+            "A coleção agora acompanha o teu progresso: 69 conquistas e estatísticas detalhadas dos 38 jogos. Ambas estão atrás do botão Conquistas e estatísticas na barra lateral; muda de separador com [Tab] ou com um clique."
+          ]
+        },
+        {
+          "h": "Conquistas",
+          "body": [
+            "Há três categorias:",
+            "- Geral: metas globais como partidas iniciadas, jogos experimentados, tempo total de jogo, recordes batidos e vitórias - mais extras como a Coruja noturna (jogar depois da meia-noite).",
+            "- Marcos de pontuação: uma pontuação-alvo justa por jogo, ajustada à sua escala.",
+            "- Momentos especiais: dar xeque-mate à IA, um YAHTZEE, a peça 2048, um Wordle em 2 tentativas e mais.",
+            "Ao desbloquear aparece um aviso dourado no canto superior direito com uma pequena fanfarra - mesmo a meio do jogo.",
+            "O que já existe conta: no primeiro arranque após a atualização, os teus recordes antigos são creditados automaticamente (sem fogo de artifício de avisos).",
+            "Conquistas bloqueadas mostram uma barra de progresso; desbloqueadas, a sua data."
+          ]
+        },
+        {
+          "h": "Estatísticas",
+          "body": [
+            "Em cima, cartões resumem tudo: tempo total, partidas, vitórias, recordes batidos, jogos experimentados e a tua contagem de conquistas - mais o teu jogo favorito (mais tempo jogado).",
+            "Por baixo, uma tabela lista cada jogo jogado com partidas, tempo, vitórias e recorde, ordenada por tempo de jogo. Um clique numa linha abre logo esse jogo.",
+            "Só conta o tempo de jogo ativo - pausas e menus não somam. As vitórias são registadas pelos jogos com resultado claro (tabuleiro, cartas e puzzles) a um jogador."
+          ]
+        },
+        {
+          "h": "Guardar",
+          "body": [
+            "Tudo fica guardado localmente em mem.json (secções stats e achievements), junto com o idioma e os recordes. Apagar o ficheiro também repõe conquistas e estatísticas."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake especial",

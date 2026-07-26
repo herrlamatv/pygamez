@@ -334,6 +334,9 @@ class MemoryGame(Game):
         else:
             self.score = max(100, self.base - 15 * self.moves
                              - 2 * int(self.elapsed))
+            # Perfekt = jedes Paar im ersten Anlauf gefunden.
+            if self.moves == len(self.cards) // 2:
+                self.ach_event("memory_perfect")
         self.game_over = True
         self.play_sound("win")
         self.rumble(200)

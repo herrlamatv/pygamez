@@ -302,6 +302,7 @@ class PokerGame(Game):
         if self.chips > self.best:
             self.best = self.chips
         self.score = self.best
+        self.ach_event("poker_rich", self.chips)
         self._save()
 
     # ===================================================== Deck

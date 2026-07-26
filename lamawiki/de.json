@@ -129,6 +129,55 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Erfolge & Statistiken",
+      "keywords": [
+        "erfolge",
+        "achievements",
+        "statistik",
+        "fortschritt",
+        "rekord",
+        "siege",
+        "spielzeit",
+        "meilenstein"
+      ],
+      "sections": [
+        {
+          "h": "Überblick",
+          "body": [
+            "Die Sammlung zählt deinen Fortschritt: 69 Erfolge und ausführliche Statistiken über alle 38 Spiele. Beides erreichst du über den Knopf Erfolge & Statistik in der Sidebar; die zwei Reiter wechselst du mit [Tab] oder per Klick."
+          ]
+        },
+        {
+          "h": "Erfolge",
+          "body": [
+            "Es gibt drei Kategorien:",
+            "- Allgemein: sammlungsweite Ziele wie gestartete Partien, ausprobierte Spiele, Gesamtspielzeit, gebrochene Rekorde und Siege - dazu kleine Extras wie die Nachteule (nach Mitternacht spielen).",
+            "- Punkte-Meilensteine: eine faire Ziel-Punktzahl je Spiel, abgestimmt auf dessen Punkteskala.",
+            "- Besondere Momente: Schachmatt gegen die KI, KNIFFEL, die 2048er-Kachel, ein Wordle in 2 Versuchen und mehr.",
+            "Beim Freischalten erscheint oben rechts eine goldene Einblendung mit kleiner Fanfare - auch mitten im Spiel.",
+            "Bestandsdaten zählen: Beim ersten Start nach dem Update werden vorhandene Highscores automatisch angerechnet (ohne Einblendungs-Feuerwerk).",
+            "Noch gesperrte Erfolge zeigen einen Fortschrittsbalken, freigeschaltete ihr Datum."
+          ]
+        },
+        {
+          "h": "Statistiken",
+          "body": [
+            "Oben fassen Karten alles zusammen: Gesamtspielzeit, Partien, Siege, gebrochene Rekorde, ausprobierte Spiele und dein Erfolgs-Stand - plus dein Lieblingsspiel (meiste Spielzeit).",
+            "Darunter listet eine Tabelle jedes gespielte Spiel mit Partien, Zeit, Siegen und Bestwert, sortiert nach Spielzeit. Ein Klick auf eine Zeile springt direkt zum Spiel.",
+            "Gezählt wird nur aktive Spielzeit - Pausen und Menüs laufen nicht mit. Siege erfassen die Spiele mit klarem Gewonnen/Verloren (Brett-, Karten- und Rätselspiele) im Einzelspieler."
+          ]
+        },
+        {
+          "h": "Speicherung",
+          "body": [
+            "Alles liegt lokal in mem.json (Abschnitte stats und achievements), zusammen mit Sprache und Highscores. Löschst du die Datei, sind auch Erfolge und Statistiken zurückgesetzt."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake Spezial",

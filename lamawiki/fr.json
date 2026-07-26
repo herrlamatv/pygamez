@@ -128,6 +128,54 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Succès & statistiques",
+      "keywords": [
+        "succès",
+        "statistiques",
+        "progression",
+        "record",
+        "victoires",
+        "temps de jeu",
+        "palier"
+      ],
+      "sections": [
+        {
+          "h": "Aperçu",
+          "body": [
+            "La collection suit désormais ta progression : 69 succès et des statistiques détaillées sur les 38 jeux. Tu trouves les deux derrière le bouton Succès & statistiques de la barre latérale ; passe d'un onglet à l'autre avec [Tab] ou d'un clic."
+          ]
+        },
+        {
+          "h": "Succès",
+          "body": [
+            "Il existe trois catégories :",
+            "- Général : des objectifs globaux comme les parties lancées, les jeux essayés, le temps de jeu total, les records battus et les victoires - plus quelques extras comme l'Oiseau de nuit (jouer après minuit).",
+            "- Paliers de points : un score cible équitable par jeu, adapté à son barème.",
+            "- Moments spéciaux : mettre l'IA échec et mat, un YAMS, la tuile 2048, un Wordle en 2 essais et plus encore.",
+            "Au déblocage, une notification dorée apparaît en haut à droite avec une petite fanfare - même en pleine partie.",
+            "L'existant compte : au premier lancement après la mise à jour, tes anciens records sont crédités automatiquement (sans feu d'artifice de notifications).",
+            "Les succès verrouillés affichent une barre de progression, les débloqués leur date."
+          ]
+        },
+        {
+          "h": "Statistiques",
+          "body": [
+            "En haut, des cartes résument tout : temps de jeu total, parties, victoires, records battus, jeux essayés et ton compteur de succès - plus ton jeu préféré (le plus joué).",
+            "En dessous, un tableau liste chaque jeu joué avec parties, temps, victoires et record, trié par temps de jeu. Un clic sur une ligne ouvre directement le jeu.",
+            "Seul le temps de jeu actif compte - pauses et menus ne tournent pas. Les victoires sont suivies par les jeux à issue claire (plateau, cartes, réflexion) en solo."
+          ]
+        },
+        {
+          "h": "Sauvegarde",
+          "body": [
+            "Tout est stocké localement dans mem.json (sections stats et achievements), avec la langue et les records. Supprimer le fichier réinitialise aussi succès et statistiques."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake spécial",

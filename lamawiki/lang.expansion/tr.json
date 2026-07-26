@@ -129,6 +129,54 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Başarımlar ve istatistikler",
+      "keywords": [
+        "başarımlar",
+        "istatistikler",
+        "ilerleme",
+        "rekor",
+        "galibiyet",
+        "oyun süresi",
+        "kilometre taşı"
+      ],
+      "sections": [
+        {
+          "h": "Genel bakış",
+          "body": [
+            "Koleksiyon artık ilerlemeni takip ediyor: 69 başarım ve 38 oyunun tamamı için ayrıntılı istatistikler. İkisine de kenar çubuğundaki Başarımlar ve istatistikler düğmesinden ulaşırsın; sekmeler arasında [Tab] veya tıklamayla geçersin."
+          ]
+        },
+        {
+          "h": "Başarımlar",
+          "body": [
+            "Üç kategori var:",
+            "- Genel: başlatılan oyunlar, denenen oyunlar, toplam oyun süresi, kırılan rekorlar ve galibiyetler gibi koleksiyon geneli hedefler - artı Gece kuşu (gece yarısından sonra oynamak) gibi küçük sürprizler.",
+            "- Puan kilometre taşları: her oyun için puan ölçeğine göre ayarlanmış adil bir hedef puan.",
+            "- Özel anlar: yapay zekâyı mat etmek, KNIFFEL, 2048 taşı, 2 denemede Wordle ve daha fazlası.",
+            "Bir başarım açıldığında sağ üstte altın rengi bir bildirim ve kısa bir fanfar belirir - oyunun ortasında bile.",
+            "Mevcut veriler sayılır: güncellemeden sonraki ilk açılışta eski rekorların otomatik olarak işlenir (bildirim havai fişekleri olmadan).",
+            "Kilitli başarımlar ilerleme çubuğu, açılanlar tarihlerini gösterir."
+          ]
+        },
+        {
+          "h": "İstatistikler",
+          "body": [
+            "Üstte kartlar her şeyi özetler: toplam oyun süresi, oyunlar, galibiyetler, kırılan rekorlar, denenen oyunlar ve başarım sayacın - artı favori oyunun (en çok süre).",
+            "Altında bir tablo, oynadığın her oyunu oyun sayısı, süre, galibiyet ve rekorla listeler; oyun süresine göre sıralıdır. Bir satıra tıklamak doğrudan o oyunu açar.",
+            "Sadece aktif oyun süresi sayılır - duraklatma ve menüler saymaz. Galibiyetler, net kazan/kaybet sonucu olan oyunlarda (masa, kart ve bulmaca) tek oyunculuda kaydedilir."
+          ]
+        },
+        {
+          "h": "Kaydetme",
+          "body": [
+            "Her şey yerel olarak mem.json dosyasında saklanır (stats ve achievements bölümleri), dil ve rekorlarla birlikte. Dosyayı silersen başarımlar ve istatistikler de sıfırlanır."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake özel",

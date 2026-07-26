@@ -499,6 +499,9 @@ class SudokuGame(Game):
         if self.level not in self.solved[key]:
             self.solved[key] = sorted(self.solved[key] + [self.level])
             self._save_progress()
+        self.report_result(True)
+        if self.errors == 0:
+            self.ach_event("sudoku_clean")
         self.play_sound("win")
         self.rumble(200)
 
@@ -506,6 +509,7 @@ class SudokuGame(Game):
         self.won = False
         self.game_over = True
         self.score = 0
+        self.report_result(False)
         self.play_sound("gameover")
         self.rumble(250)
 

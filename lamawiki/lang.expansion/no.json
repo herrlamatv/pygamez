@@ -129,6 +129,54 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Prestasjoner & statistikk",
+      "keywords": [
+        "prestasjoner",
+        "statistikk",
+        "fremgang",
+        "rekord",
+        "seire",
+        "spilletid",
+        "milepæl"
+      ],
+      "sections": [
+        {
+          "h": "Oversikt",
+          "body": [
+            "Samlingen følger nå fremgangen din: 69 prestasjoner og detaljert statistikk for alle 38 spill. Begge finner du bak knappen Prestasjoner & statistikk i sidefeltet; bytt mellom de to fanene med [Tab] eller et klikk."
+          ]
+        },
+        {
+          "h": "Prestasjoner",
+          "body": [
+            "Det finnes tre kategorier:",
+            "- Generelt: mål på tvers av samlingen som startede partier, prøvde spill, total spilletid, slåtte rekorder og seire - pluss små ekstra som Nattugla (spill etter midnatt).",
+            "- Poengmilepæler: ett rettferdig målpoeng per spill, tilpasset spillets poengskala.",
+            "- Spesielle øyeblikk: sett AI-en sjakkmatt, en KNIFFEL, 2048-brikken, en Wordle på 2 forsøk og mer.",
+            "Ved opplåsing dukker et gyllent varsel opp øverst til høyre med en liten fanfare - selv midt i spillet.",
+            "Eksisterende data teller: ved første oppstart etter oppdateringen godskrives de gamle rekordene dine automatisk (uten varsel-fyrverkeri).",
+            "Låste prestasjoner viser en fremdriftslinje, opplåste datoen sin."
+          ]
+        },
+        {
+          "h": "Statistikk",
+          "body": [
+            "Øverst oppsummerer kort alt: total spilletid, partier, seire, slåtte rekorder, prøvde spill og prestasjonstelleren din - pluss favorittspillet ditt (mest spilletid).",
+            "Under viser en tabell hvert spilte spill med partier, tid, seire og rekord, sortert etter spilletid. Et klikk på en rad åpner spillet direkte.",
+            "Bare aktiv spilletid teller - pauser og menyer telles ikke. Seire registreres av spill med et klart vunnet/tapt-utfall (brett-, kort- og puslespill) i singleplayer."
+          ]
+        },
+        {
+          "h": "Lagring",
+          "body": [
+            "Alt lagres lokalt i mem.json (seksjonene stats og achievements) sammen med språk og rekorder. Sletter du filen, nullstilles også prestasjoner og statistikk."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake special",

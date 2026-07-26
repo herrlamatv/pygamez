@@ -129,6 +129,55 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Achievements & Statistics",
+      "keywords": [
+        "achievements",
+        "statistics",
+        "stats",
+        "progress",
+        "record",
+        "wins",
+        "play time",
+        "milestone"
+      ],
+      "sections": [
+        {
+          "h": "Overview",
+          "body": [
+            "The collection now tracks your progress: 69 achievements and detailed statistics across all 38 games. Both live behind the Achievements & Stats button in the sidebar; switch between the two tabs with [Tab] or a click."
+          ]
+        },
+        {
+          "h": "Achievements",
+          "body": [
+            "There are three categories:",
+            "- General: collection-wide goals such as games started, games tried, total play time, records broken and wins - plus little extras like the Night Owl (play after midnight).",
+            "- Score milestones: one fair target score per game, tuned to its scoring scale.",
+            "- Special moments: checkmating the AI, a YAHTZEE, the 2048 tile, a Wordle in 2 tries and more.",
+            "Unlocking shows a golden toast in the top-right corner with a little fanfare - even mid-game.",
+            "Existing data counts: on the first launch after the update, your old high scores are credited automatically (without the toast fireworks).",
+            "Locked achievements show a progress bar, unlocked ones their date."
+          ]
+        },
+        {
+          "h": "Statistics",
+          "body": [
+            "Cards at the top sum everything up: total play time, games played, wins, records broken, games tried and your achievement count - plus your favourite game (most play time).",
+            "Below, a table lists every game you have played with plays, time, wins and best score, sorted by play time. Clicking a row jumps straight to that game.",
+            "Only active play time counts - pauses and menus don't. Wins are tracked by games with a clear win/lose outcome (board, card and puzzle games) in single-player."
+          ]
+        },
+        {
+          "h": "Saving",
+          "body": [
+            "Everything is stored locally in mem.json (sections stats and achievements), together with your language and high scores. Deleting the file also resets achievements and statistics."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake special",

@@ -119,6 +119,8 @@ class Game2048(Game):
                 self.play_sound("merge" if self.score > vorher else "move")
                 if self.won and not hatte_2048:
                     # 2048 zum ersten Mal erreicht -> kleine Fanfare.
+                    self.report_result(True)
+                    self.ach_event("tile_2048")
                     self.play_sound("win")
                     self.rumble(150)
                 self._add_tile()

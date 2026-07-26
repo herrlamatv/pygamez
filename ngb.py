@@ -286,6 +286,9 @@ class PersonalizeMenu:
         self.height = height
         self.done = False
         self._play = play_sound or (lambda name: None)
+        # Erfolg "Ganz mein Stil": die Personalisierung entdeckt.
+        import achievements
+        achievements.event("painter")
         self._big = pygame.font.SysFont("consolas", 32, bold=True)
         self._font = pygame.font.SysFont("consolas", 20)
         self._small = pygame.font.SysFont("consolas", 15)

@@ -225,6 +225,7 @@ class BlackjackGame(Game):
                 return
         if player_bj:
             self.hole_hidden = False
+            self.ach_event("blackjack_two")
             self._settle(["blackjack"])
             return
         self.state = PLAYER

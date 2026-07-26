@@ -697,8 +697,11 @@ class ChessGame(Game):
                 if self.winner == human_idx:
                     self.score = self.wins[human_idx]
                     self.play_sound("win")
+                    self.report_result(True)
+                    self.ach_event("chess_win")
                 else:
                     self.play_sound("gameover")
+                    self.report_result(False)
             else:
                 self.play_sound("win")
         else:

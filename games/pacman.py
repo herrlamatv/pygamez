@@ -420,6 +420,7 @@ class PacmanGame(Game):
         if self.dots_eaten >= self.dots_total:
             self.state = LEVELCLEAR
             self.levelclear_timer = 1.8
+            self.ach_event("pacman_clear")
             self.play_sound("win")
 
     def _update_modes(self, dt):

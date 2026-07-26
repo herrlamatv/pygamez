@@ -905,6 +905,9 @@ class BreakoutGame(Game):
         self.won = gewonnen
         self.state = OVER
         self.game_over = True
+        if gewonnen:
+            self.report_result(True)
+            self.ach_event("breakout_clear")
         self.play_sound("win" if gewonnen else "gameover")
         self.rumble(220)
 

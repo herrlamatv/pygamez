@@ -485,6 +485,14 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
   cinq langues. Accessible via le bouton **« Wiki / Aide »** de la barre
   latérale et depuis l'écran de préparation de chaque jeu (ouvre directement sa
   page).
+- **Succès & statistiques** : **69 succès** en trois catégories (objectifs
+  globaux, un palier de points par jeu et des moments spéciaux comme un échec
+  et mat contre l'IA ou la tuile 2048) avec **notification dorée et fanfare**
+  au déblocage - même en pleine partie ; les anciens records sont crédités
+  automatiquement. Plus un onglet **Statistiques** : temps de jeu total,
+  parties, victoires, records, jeu préféré et tableau par jeu trié par temps
+  de jeu. Accessible via le bouton **« Succès & statistiques »** de la barre
+  latérale.
 
 ### Prise en main
 
@@ -540,7 +548,10 @@ settings.py          Charger/enregistrer les réglages (son/vibration/touches) (
 audio.py             Effets sonores procéduraux + vibration de manette
 menu.py              Écrans de langue, de préparation (mode) et d'options (son/commandes)
 highscore.py         Charger/enregistrer les meilleurs scores (section dans mem.json)
-store.py             Fichier de sauvegarde central mem.json (sections : mem, highscores)
+store.py             Fichier de sauvegarde central mem.json (sections : mem, highscores, stats, achievements)
+stats.py             Statistiques du joueur (parties, temps de jeu, victoires, records) par jeu
+achievements.py      Succès : définitions, logique de déblocage, notification (toast)
+progress.py          Écran Succès & statistiques (deux onglets, défilable)
 prestige.py          Système de prestige de Snake
 competitive.py       Paramètres du mode Compétitif de Snake (niveaux, machine à sous, pommes de pari)
 ngb.py               Personnalisation visuelle (« mods ») : couleur de tête + grille + menu (mem-ngb.json)
@@ -1108,6 +1119,13 @@ extra) y pulida con aspecto de lanzador moderno:
   artículos desplazables y chips de teclas, en los cinco idiomas. Accesible por
   el botón **«Wiki / Ayuda»** de la barra lateral y desde la pantalla previa de
   cada juego (abre directamente su página).
+- **Logros y estadísticas**: **69 logros** en tres categorías (metas globales,
+  un hito de puntuación por juego y momentos especiales como un jaque mate a
+  la IA o la ficha de 2048) con **aviso dorado y fanfarria** al desbloquear,
+  incluso en plena partida; los récords antiguos se acreditan automáticamente.
+  Además, una pestaña de **estadísticas**: tiempo total, partidas, victorias,
+  récords, juego favorito y tabla por juego ordenada por tiempo. Accesible por
+  el botón **«Logros y estadísticas»** de la barra lateral.
 
 ### Manejo
 
@@ -1162,7 +1180,10 @@ settings.py          Cargar/guardar ajustes (sonido/vibración/teclas) (JSON)
 audio.py             Efectos de sonido procedurales + vibración de gamepad
 menu.py              Pantallas de idioma, previa (modo) y opciones (sonido/controles)
 highscore.py         Cargar/guardar récords (sección en mem.json)
-store.py             Archivo central mem.json (secciones: mem, highscores)
+store.py             Archivo central mem.json (secciones: mem, highscores, stats, achievements)
+stats.py             Estadísticas del jugador (partidas, tiempo, victorias, récords) por juego
+achievements.py      Logros: definiciones, lógica de desbloqueo, aviso (toast)
+progress.py          Pantalla de logros y estadísticas (dos pestañas, desplazable)
 prestige.py          Sistema de prestigio de Snake
 competitive.py       Parámetros del modo Competitivo de Snake (niveles, tragaperras, manzanas de apuesta)
 ngb.py               Personalización visual ("mods"): color de cabeza + rejilla + menú (mem-ngb.json)
@@ -1722,6 +1743,14 @@ e polida com aspeto de launcher moderno:
   categorias, artigos deslocáveis e chips de teclas, nos cinco idiomas.
   Acessível pelo botão **«Wiki / Ajuda»** da barra lateral e a partir do ecrã de
   preparação de cada jogo (abre logo a sua página).
+- **Conquistas e estatísticas**: **69 conquistas** em três categorias (metas
+  globais, um marco de pontuação por jogo e momentos especiais como um
+  xeque-mate à IA ou a peça 2048) com **aviso dourado e fanfarra** ao
+  desbloquear - mesmo a meio do jogo; os recordes antigos são creditados
+  automaticamente. Além disso, um separador de **estatísticas**: tempo total,
+  partidas, vitórias, recordes, jogo favorito e tabela por jogo ordenada por
+  tempo. Acessível pelo botão **«Conquistas e estatísticas»** da barra
+  lateral.
 
 ### Utilização
 
@@ -1774,7 +1803,10 @@ settings.py          Carregar/guardar definições (som/vibração/teclas) (JSON
 audio.py             Efeitos sonoros procedurais + vibração de gamepad
 menu.py              Ecrãs de idioma, preparação (modo) e opções (som/controlos)
 highscore.py         Carregar/guardar recordes (secção em mem.json)
-store.py             Ficheiro central mem.json (secções: mem, highscores)
+store.py             Ficheiro central mem.json (secções: mem, highscores, stats, achievements)
+stats.py             Estatísticas do jogador (partidas, tempo, vitórias, recordes) por jogo
+achievements.py      Conquistas: definições, lógica de desbloqueio, aviso (toast)
+progress.py          Ecrã de conquistas e estatísticas (dois separadores, deslocável)
 prestige.py          Sistema de prestígio do Snake
 competitive.py       Parâmetros do modo Competitivo do Snake (níveis, slot machine, maçãs de aposta)
 ngb.py               Personalização visual ("mods"): cor da cabeça + grelha + menu (mem-ngb.json)
@@ -2440,6 +2472,13 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
   kategoriami, przewijanymi artykułami i chipami klawiszy, we wszystkich pięciu
   językach. Dostępna przez przycisk **„Wiki / Pomoc"** na pasku bocznym i z ekranu
   przygotowania każdej gry (otwiera bezpośrednio jej stronę).
+- **Osiągnięcia i statystyki**: **69 osiągnięć** w trzech kategoriach (cele
+  ogólne, próg punktowy dla każdej gry i wyjątkowe momenty, jak mat SI czy
+  kafelek 2048) ze **złotym powiadomieniem i fanfarą** przy odblokowaniu -
+  nawet w trakcie gry; stare rekordy są zaliczane automatycznie. Do tego
+  zakładka **statystyk**: łączny czas gry, rozgrywki, zwycięstwa, rekordy,
+  ulubiona gra i tabela gier posortowana według czasu. Dostępne przez przycisk
+  **„Osiągnięcia i statystyki"** na pasku bocznym.
 
 ### Obsługa
 
@@ -2491,7 +2530,10 @@ settings.py          Wczytywanie/zapis ustawień (dźwięk/haptyka/przypisania k
 audio.py             Proceduralne efekty dźwiękowe + wibracje gamepada
 menu.py              Ekran języka, przygotowania (tryb) i opcji (dźwięk/sterowanie)
 highscore.py         Wczytywanie/zapis rekordów (sekcja w mem.json)
-store.py             Centralny plik zapisu mem.json (sekcje: mem, highscores)
+store.py             Centralny plik zapisu mem.json (sekcje: mem, highscores, stats, achievements)
+stats.py             Statystyki gracza (rozgrywki, czas, zwycięstwa, rekordy) na grę
+achievements.py      Osiągnięcia: definicje, logika odblokowań, powiadomienie (toast)
+progress.py          Ekran osiągnięć i statystyk (dwie zakładki, przewijany)
 prestige.py          System prestiżu dla Snake
 competitive.py       Strojenie trybu Competitive w Snake (poziomy, slot machine, jabłka zakładów)
 ngb.py               Personalizacja wizualna („mody"): kolor głowy + siatka współrzędnych + menu (mem-ngb.json)
@@ -3161,6 +3203,13 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
   kaydırılabilir makaleler ve tuş çipleriyle, beş dilde. Kenar çubuğundaki
   **"Wiki / Yardım"** düğmesiyle ve her oyunun oyun öncesi ekranından erişilebilir
   (doğrudan o oyunun sayfasını açar).
+- **Başarımlar ve istatistikler**: üç kategoride **69 başarım** (genel
+  hedefler, her oyun için bir puan hedefi ve yapay zekâyı mat etmek ya da 2048
+  taşı gibi özel anlar); açıldığında **altın bildirim ve fanfar** - oyunun
+  ortasında bile; eski rekorlar otomatik sayılır. Ayrıca bir **istatistik**
+  sekmesi: toplam süre, oyunlar, galibiyetler, rekorlar, favori oyun ve süreye
+  göre sıralı oyun tablosu. Kenar çubuğundaki **"Başarımlar ve
+  istatistikler"** düğmesinden ulaşılır.
 
 ### Kullanım
 
@@ -3212,7 +3261,10 @@ settings.py         Ayarları yükle/kaydet (ses/titreşim/tuş atamaları) (JSO
 audio.py            Prosedürel ses efektleri + gamepad titreşimi
 menu.py             Dil, oyun öncesi (mod) ve seçenekler ekranı (ses/kontroller)
 highscore.py        Yüksek skorları yükle/kaydet (mem.json içindeki bölüm)
-store.py            Merkezî kayıt dosyası mem.json (bölümler: mem, highscores)
+store.py            Merkezî kayıt dosyası mem.json (bölümler: mem, highscores, stats, achievements)
+stats.py             Oyuncu istatistikleri (oyun, süre, galibiyet, rekor) oyun başına
+achievements.py      Başarımlar: tanımlar, açma mantığı, bildirim (toast)
+progress.py          Başarımlar ve istatistikler ekranı (iki sekme, kaydırılabilir)
 prestige.py         Snake için prestij sistemi
 competitive.py      Snake'in Rekabetçi modu için ince ayar (seviyeler, slot makinesi, kumar elmaları)
 ngb.py              Görsel kişiselleştirme ("mods"): baş rengi + koordinat ızgarası + menü (mem-ngb.json)
@@ -3852,6 +3904,13 @@ og stylet som en moderne spil-launcher:
   rulbare artikler og tastekap-chips, på alle fem sprog. Nås via sidebjælkeknappen
   **»Wiki / Hjælp«** og fra hvert spils forspils-skærm (åbner det pågældende spils
   side direkte).
+- **Præstationer & statistik**: **69 præstationer** i tre kategorier (mål på
+  tværs af samlingen, én point-milepæl pr. spil og særlige øjeblikke som
+  skakmat mod AI'en eller 2048-brikken) med **gylden notifikation og fanfare**
+  ved oplåsning - selv midt i spillet; gamle rekorder godskrives automatisk.
+  Dertil en **statistik**-fane: samlet spilletid, partier, sejre, rekorder,
+  yndlingsspil og en tabel pr. spil sorteret efter spilletid. Nås via knappen
+  **"Præstationer & statistik"** i sidepanelet.
 
 ### Betjening
 
@@ -3904,7 +3963,10 @@ settings.py          Indlæs/gem indstillinger (lyd/haptik/tastebindinger) (JSON
 audio.py             Procedurale lydeffekter + gamepad-rumble
 menu.py              Sprog-, forspils- (tilstand) og indstillingsskærm (lyd/styring)
 highscore.py         Indlæs/gem highscores (afsnit i mem.json)
-store.py             Central gemmefil mem.json (afsnit: mem, highscores)
+store.py             Central gemmefil mem.json (afsnit: mem, highscores, stats, achievements)
+stats.py             Spillerstatistik (partier, spilletid, sejre, rekorder) pr. spil
+achievements.py      Præstationer: definitioner, oplåsning, notifikation (toast)
+progress.py          Skærm for præstationer & statistik (to faner, rulbar)
 prestige.py          Prestige-system til Snake
 competitive.py       Finindstilling til Snakes Competitive-tilstand (niveauer, enarmet tyveknægt, gamble-æbler)
 ngb.py               Visuel tilpasning ("mods"): hovedfarve + koordinatgitter + menu (mem-ngb.json)
@@ -4543,6 +4605,13 @@ pakker) og stylet som en moderne spill-launcher:
   rullbare artikler og tastekapsler, på alle fem språk. Nåbar via sidefelt-knappen
   **«Wiki / Hjelp»** og fra hvert spills forspillskjerm (åpner spillets side
   direkte).
+- **Prestasjoner & statistikk**: **69 prestasjoner** i tre kategorier (mål på
+  tvers av samlingen, én poengmilepæl per spill og spesielle øyeblikk som
+  sjakkmatt mot AI-en eller 2048-brikken) med **gyllent varsel og fanfare**
+  ved opplåsing - selv midt i spillet; gamle rekorder godskrives automatisk.
+  I tillegg en **statistikk**-fane: total spilletid, partier, seire, rekorder,
+  favorittspill og en tabell per spill sortert etter spilletid. Nås via
+  knappen **«Prestasjoner & statistikk»** i sidefeltet.
 
 ### Betjening
 
@@ -4593,7 +4662,10 @@ settings.py          Laste/lagre innstillinger (lyd/haptikk/tastebindinger) (JSO
 audio.py             Prosedyregenererte lydeffekter + gamepad-rumble
 menu.py              Språk-, forspill- (modus) og alternativskjerm (lyd/styring)
 highscore.py         Laste/lagre rekorder (del i mem.json)
-store.py             Sentral lagringsfil mem.json (deler: mem, highscores)
+store.py             Sentral lagringsfil mem.json (deler: mem, highscores, stats, achievements)
+stats.py             Spillerstatistikk (partier, spilletid, seire, rekorder) per spill
+achievements.py      Prestasjoner: definisjoner, opplåsing, varsel (toast)
+progress.py          Skjerm for prestasjoner & statistikk (to faner, rullbar)
 prestige.py          Prestige-system for Snake
 competitive.py       Finjustering av Snakes Competitive-modus (nivåer, enarmet banditt, gambleepler)
 ngb.py               Visuell tilpasning («mods»): hodefarge + koordinatrutenett + meny (mem-ngb.json)
@@ -5203,6 +5275,13 @@ modern spel-launcher:
   allmänna sidor - med en **sökruta**, kategorier, scrollbara artiklar och tangentchips, på alla fem
   språk. Nås via sidofältsknappen **”Wiki / Hjälp”** och från varje spels förspelsskärm (öppnar det
   spelets sida direkt).
+- **Prestationer & statistik**: **69 prestationer** i tre kategorier (mål för
+  hela samlingen, en poängmilstolpe per spel och speciella ögonblick som
+  schackmatt mot AI:n eller 2048-brickan) med **gyllene avisering och fanfar**
+  vid upplåsning - även mitt i spelet; gamla rekord tillgodoräknas
+  automatiskt. Dessutom en **statistik**-flik: total speltid, partier, segrar,
+  rekord, favoritspel och en tabell per spel sorterad efter speltid. Nås via
+  knappen **”Prestationer & statistik”** i sidofältet.
 
 ### Användning
 
@@ -5250,7 +5329,10 @@ settings.py          Ladda/spara inställningar (ljud/haptik/tangentbindningar) 
 audio.py             Procedurella ljudeffekter + gamepad-vibration
 menu.py              Skärmar för språk, förspel (läge) och alternativ (ljud/styrning)
 highscore.py         Ladda/spara topplistor (avsnitt i mem.json)
-store.py             Central sparfil mem.json (avsnitt: mem, highscores)
+store.py             Central sparfil mem.json (avsnitt: mem, highscores, stats, achievements)
+stats.py             Spelarstatistik (partier, speltid, segrar, rekord) per spel
+achievements.py      Prestationer: definitioner, upplåsning, avisering (toast)
+progress.py          Skärm för prestationer & statistik (två flikar, rullbar)
 prestige.py          Prestige-system för Snake
 competitive.py       Finjustering av Snakes Competitive-läge (nivåer, enarmad bandit, speläpplen)
 ngb.py               Visuell personalisering ("mods"): huvudfärg + koordinatrutnät + meny (mem-ngb.json)
@@ -5904,6 +5986,13 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
   kategorioilla, vieritettävillä artikkeleilla ja näppäinsiruilla, kaikilla viidellä
   kielellä. Saavutettavissa sivupalkin **"Wiki / Ohje"** -painikkeella ja jokaisen
   pelin esinäytöstä (avaa suoraan kyseisen pelin sivun).
+- **Saavutukset ja tilastot**: **69 saavutusta** kolmessa kategoriassa (koko
+  kokoelman tavoitteet, yksi pistevirstanpylväs peliä kohden ja erityiset
+  hetket kuten shakkimatti tekoälylle tai 2048-laatta); avautuessa **kultainen
+  ilmoitus ja fanfaari** - myös kesken pelin; vanhat ennätykset hyvitetään
+  automaattisesti. Lisäksi **tilastot**-välilehti: kokonaispeliaika,
+  pelikerrat, voitot, ennätykset, lempipeli ja peliajan mukaan järjestetty
+  pelitaulukko. Avautuu sivupalkin painikkeesta **"Saavutukset ja tilastot"**.
 
 ### Käyttö
 
@@ -5955,7 +6044,10 @@ settings.py          Asetusten lataus/tallennus (ääni/haptiikka/näppäinmää
 audio.py             Proseduraaliset äänitehosteet + peliohjaimen värinä
 menu.py              Kieli-, esinäyttö- (tila) ja asetusnäytöt (ääni/ohjaus)
 highscore.py         Ennätysten lataus/tallennus (osio tiedostossa mem.json)
-store.py             Keskitetty tallennustiedosto mem.json (osiot: mem, highscores)
+store.py             Keskitetty tallennustiedosto mem.json (osiot: mem, highscores, stats, achievements)
+stats.py             Pelaajatilastot (pelikerrat, peliaika, voitot, ennätykset) peliä kohden
+achievements.py      Saavutukset: määritykset, avaaminen, ilmoitus (toast)
+progress.py          Saavutukset ja tilastot -näyttö (kaksi välilehteä, vieritettävä)
 prestige.py          Snaken prestige-järjestelmä
 competitive.py       Snaken Competitive-tilan hienosäätö (tasot, kolikkopeli, veto-omenat)
 ngb.py               Visuaalinen mukauttaminen ("modit"): pään väri + koordinaattiruudukko + valikko (mem-ngb.json)
@@ -6607,6 +6699,13 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
   kategoriemi, rolovatelnými články a čipy kláves, ve všech pěti jazycích.
   Dostupná přes tlačítko **„Wiki / Nápověda"** v postranním panelu a z přípravné
   obrazovky každé hry (otevře přímo její stránku).
+- **Úspěchy a statistiky**: **69 úspěchů** ve třech kategoriích (cíle napříč
+  sbírkou, jeden bodový milník na hru a výjimečné okamžiky jako šachmat AI
+  nebo dlaždice 2048) se **zlatým oznámením a fanfárou** při odemčení - i
+  uprostřed hry; staré rekordy se započítají automaticky. K tomu záložka
+  **statistik**: celkový herní čas, partie, výhry, rekordy, oblíbená hra a
+  tabulka her seřazená podle času. Dostupné tlačítkem **„Úspěchy a
+  statistiky"** v postranním panelu.
 
 ### Ovládání
 
@@ -6658,7 +6757,10 @@ settings.py          Načtení/uložení nastavení (zvuk/haptika/klávesy) (JSO
 audio.py             Procedurální zvukové efekty + vibrace gamepadu
 menu.py              Obrazovky jazyka, přípravy (režim) a nastavení (zvuk/ovládání)
 highscore.py         Načtení/uložení nejlepších skóre (sekce v mem.json)
-store.py             Centrální soubor mem.json (sekce: mem, highscores)
+store.py             Centrální soubor mem.json (sekce: mem, highscores, stats, achievements)
+stats.py             Statistiky hráče (partie, herní čas, výhry, rekordy) na hru
+achievements.py      Úspěchy: definice, odemykání, oznámení (toast)
+progress.py          Obrazovka úspěchů a statistik (dvě záložky, posuvná)
 prestige.py          Systém prestiže pro Snake
 competitive.py       Parametry Kompetitivního režimu Snaku (úrovně, automat, sázková jablka)
 ngb.py               Vizuální přizpůsobení („mody"): barva hlavy + souřadnicová mřížka + menu (mem-ngb.json)
@@ -7305,6 +7407,13 @@ oblikovan kot sodoben zaganjalnik iger:
   kategorijami, drsečimi članki in čipi tipk, v vseh petih jezikih. Dostopen prek
   gumba **»Wiki / Pomoč«** v stranski vrstici in z predigralnega zaslona vsake
   igre (odpre neposredno njeno stran).
+- **Dosežki in statistika**: **69 dosežkov** v treh kategorijah (cilji na
+  ravni zbirke, en točkovni mejnik na igro in posebni trenutki, kot sta
+  šah-mat UI ali ploščica 2048) z **zlatim obvestilom in fanfaro** ob
+  odklepanju - tudi sredi igre; stari rekordi se upoštevajo samodejno. Poleg
+  tega zavihek **statistike**: skupni čas igranja, partije, zmage, rekordi,
+  najljubša igra in tabela iger, razvrščena po času. Na voljo prek gumba
+  **»Dosežki in statistika«** v stranski vrstici.
 
 ### Upravljanje
 
@@ -7356,7 +7465,10 @@ settings.py          Nalaganje/shranjevanje nastavitev (zvok/haptika/preslikave 
 audio.py             Proceduralni zvočni učinki + tresenje krmilnika (rumble)
 menu.py              Zasloni za jezik, predigro (način) in možnosti (zvok/upravljanje)
 highscore.py         Nalaganje/shranjevanje rekordov (razdelek v mem.json)
-store.py             Osrednja datoteka za shranjevanje mem.json (razdelka: mem, highscores)
+store.py             Osrednja datoteka za shranjevanje mem.json (razdelka: mem, highscores, stats, achievements)
+stats.py             Statistika igralca (partije, čas igranja, zmage, rekordi) na igro
+achievements.py      Dosežki: definicije, odklepanje, obvestilo (toast)
+progress.py          Zaslon dosežkov in statistike (dva zavihka, drsni)
 prestige.py          Sistem prestiža za Snake
 competitive.py       Nastavitve za Tekmovalni način igre Snake (ravni, igralni avtomat, jabolka za stave)
 ngb.py               Vizualna prilagoditev (»modi«): barva glave + koordinatna mreža + meni (mem-ngb.json)
@@ -8007,6 +8119,13 @@ dotjerano poput modernog pokretača igara:
   kategorijama, člancima koji se pomiču i čipovima s tipkama, na svih pet jezika.
   Dostupan preko gumba **„Wiki / Pomoć"** u bočnoj traci i sa zaslona pripreme
   svake igre (izravno otvara njezinu stranicu).
+- **Postignuća i statistika**: **69 postignuća** u tri kategorije (ciljevi na
+  razini kolekcije, jedna bodovna prekretnica po igri i posebni trenuci poput
+  šah-mata AI-ju ili pločice 2048) sa **zlatnom obavijesti i fanfarom** pri
+  otključavanju - čak i usred igre; stari rekordi priznaju se automatski. Uz
+  to kartica **statistike**: ukupno vrijeme igranja, partije, pobjede,
+  rekordi, najdraža igra i tablica igara poredana po vremenu. Dostupno preko
+  gumba **„Postignuća i statistika"** u bočnoj traci.
 
 ### Upravljanje
 
@@ -8057,7 +8176,10 @@ settings.py          Učitavanje/spremanje postavki (zvuk/haptika/tipke) (JSON)
 audio.py             Proceduralni zvučni efekti + vibracija gamepada
 menu.py              Zasloni jezika, pripreme (mod) i opcija (zvuk/upravljanje)
 highscore.py         Učitavanje/spremanje rekorda (odjeljak u mem.json)
-store.py             Središnja datoteka mem.json (odjeljci: mem, highscores)
+store.py             Središnja datoteka mem.json (odjeljci: mem, highscores, stats, achievements)
+stats.py             Statistika igrača (partije, vrijeme, pobjede, rekordi) po igri
+achievements.py      Postignuća: definicije, otključavanje, obavijest (toast)
+progress.py          Zaslon postignuća i statistike (dvije kartice, pomični)
 prestige.py          Prestiž-sustav za Snake
 competitive.py       Ugađanje Competitive moda za Snake (razine, slot machine, kockarske jabuke)
 ngb.py               Vizualna personalizacija ("mods"): boja glave + koordinatna mreža + izbornik (mem-ngb.json)

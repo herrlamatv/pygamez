@@ -129,6 +129,54 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Præstationer & statistik",
+      "keywords": [
+        "præstationer",
+        "statistik",
+        "fremskridt",
+        "rekord",
+        "sejre",
+        "spilletid",
+        "milepæl"
+      ],
+      "sections": [
+        {
+          "h": "Overblik",
+          "body": [
+            "Samlingen holder nu styr på dine fremskridt: 69 præstationer og detaljeret statistik for alle 38 spil. Begge dele finder du bag knappen Præstationer & statistik i sidepanelet; skift mellem de to faner med [Tab] eller et klik."
+          ]
+        },
+        {
+          "h": "Præstationer",
+          "body": [
+            "Der er tre kategorier:",
+            "- Generelt: mål på tværs af samlingen som startede partier, prøvede spil, samlet spilletid, slåede rekorder og sejre - plus små ekstra som Natuglen (spil efter midnat).",
+            "- Point-milepæle: ét fair målscore pr. spil, tilpasset spillets pointskala.",
+            "- Særlige øjeblikke: sæt AI'en skakmat, en KNIFFEL, 2048-brikken, en Wordle på 2 forsøg og mere.",
+            "Ved oplåsning dukker en gylden notifikation op øverst til højre med en lille fanfare - selv midt i spillet.",
+            "Eksisterende data tæller: ved første start efter opdateringen godskrives dine gamle rekorder automatisk (uden notifikations-fyrværkeri).",
+            "Låste præstationer viser en statuslinje, oplåste deres dato."
+          ]
+        },
+        {
+          "h": "Statistik",
+          "body": [
+            "Øverst opsummerer kort det hele: samlet spilletid, partier, sejre, slåede rekorder, prøvede spil og din præstationstæller - plus dit yndlingsspil (mest spilletid).",
+            "Nedenunder viser en tabel hvert spillet spil med partier, tid, sejre og rekord, sorteret efter spilletid. Et klik på en række åbner spillet direkte.",
+            "Kun aktiv spilletid tæller - pauser og menuer tæller ikke med. Sejre registreres af spil med et klart vundet/tabt-udfald (bræt-, kort- og puslespil) i singleplayer."
+          ]
+        },
+        {
+          "h": "Lagring",
+          "body": [
+            "Alt gemmes lokalt i mem.json (afsnittene stats og achievements) sammen med sprog og rekorder. Sletter du filen, nulstilles præstationer og statistik også."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake special",

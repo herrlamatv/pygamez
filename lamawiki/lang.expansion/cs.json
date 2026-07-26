@@ -129,6 +129,54 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Úspěchy a statistiky",
+      "keywords": [
+        "úspěchy",
+        "statistiky",
+        "postup",
+        "rekord",
+        "výhry",
+        "herní čas",
+        "milník"
+      ],
+      "sections": [
+        {
+          "h": "Přehled",
+          "body": [
+            "Sbírka nyní sleduje tvůj postup: 69 úspěchů a podrobné statistiky všech 38 her. Obojí najdeš pod tlačítkem Úspěchy a statistiky v postranním panelu; mezi záložkami přepínáš klávesou [Tab] nebo kliknutím."
+          ]
+        },
+        {
+          "h": "Úspěchy",
+          "body": [
+            "Existují tři kategorie:",
+            "- Obecné: cíle napříč sbírkou jako spuštěné partie, vyzkoušené hry, celkový herní čas, překonané rekordy a výhry - plus drobnosti jako Noční sova (hraní po půlnoci).",
+            "- Bodové milníky: jeden férový cílový počet bodů na hru, přizpůsobený její bodové škále.",
+            "- Výjimečné okamžiky: šachmat AI, KNIFFEL, dlaždice 2048, Wordle na 2 pokusy a další.",
+            "Při odemčení se vpravo nahoře objeví zlaté oznámení s krátkou fanfárou - i uprostřed hry.",
+            "Stará data se počítají: při prvním spuštění po aktualizaci se tvé dosavadní rekordy započítají automaticky (bez ohňostroje oznámení).",
+            "Zamčené úspěchy ukazují ukazatel postupu, odemčené své datum."
+          ]
+        },
+        {
+          "h": "Statistiky",
+          "body": [
+            "Nahoře karty shrnují vše: celkový herní čas, partie, výhry, překonané rekordy, vyzkoušené hry a počítadlo úspěchů - plus tvou oblíbenou hru (nejvíce času).",
+            "Níže tabulka vypisuje každou hranou hru s partiemi, časem, výhrami a rekordem, seřazenou podle herního času. Kliknutí na řádek otevře přímo danou hru.",
+            "Počítá se jen aktivní herní čas - pauzy a menu ne. Výhry zaznamenávají hry s jasným výsledkem výhra/prohra (deskové, karetní a logické) v singleplayeru."
+          ]
+        },
+        {
+          "h": "Ukládání",
+          "body": [
+            "Vše je uloženo lokálně v mem.json (sekce stats a achievements) spolu s jazykem a rekordy. Smazáním souboru se vynulují i úspěchy a statistiky."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake speciál",

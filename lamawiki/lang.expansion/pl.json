@@ -129,6 +129,54 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Osiągnięcia i statystyki",
+      "keywords": [
+        "osiągnięcia",
+        "statystyki",
+        "postęp",
+        "rekord",
+        "zwycięstwa",
+        "czas gry",
+        "próg"
+      ],
+      "sections": [
+        {
+          "h": "Przegląd",
+          "body": [
+            "Kolekcja śledzi teraz twoje postępy: 69 osiągnięć i szczegółowe statystyki wszystkich 38 gier. Znajdziesz je pod przyciskiem Osiągnięcia i statystyki na pasku bocznym; zakładki przełączasz [Tab] lub kliknięciem."
+          ]
+        },
+        {
+          "h": "Osiągnięcia",
+          "body": [
+            "Są trzy kategorie:",
+            "- Ogólne: cele dla całej kolekcji, np. rozpoczęte rozgrywki, wypróbowane gry, łączny czas gry, pobite rekordy i zwycięstwa - plus smaczki jak Nocny marek (granie po północy).",
+            "- Progi punktowe: jeden uczciwy cel punktowy na grę, dopasowany do jej skali.",
+            "- Wyjątkowe momenty: mat na SI, KNIFFEL, kafelek 2048, Wordle w 2 próbach i więcej.",
+            "Przy odblokowaniu w prawym górnym rogu pojawia się złote powiadomienie z krótką fanfarą - nawet w trakcie gry.",
+            "Stare dane się liczą: przy pierwszym uruchomieniu po aktualizacji dotychczasowe rekordy zostają zaliczone automatycznie (bez fajerwerków powiadomień).",
+            "Zablokowane osiągnięcia pokazują pasek postępu, odblokowane - datę."
+          ]
+        },
+        {
+          "h": "Statystyki",
+          "body": [
+            "U góry karty podsumowują wszystko: łączny czas gry, rozgrywki, zwycięstwa, pobite rekordy, wypróbowane gry i licznik osiągnięć - plus ulubiona gra (najwięcej czasu).",
+            "Poniżej tabela wymienia każdą zagraną grę z liczbą rozgrywek, czasem, zwycięstwami i rekordem, posortowaną według czasu gry. Kliknięcie wiersza otwiera daną grę.",
+            "Liczy się tylko aktywny czas gry - pauzy i menu nie. Zwycięstwa rejestrują gry z jasnym wynikiem (planszowe, karciane i logiczne) w trybie jednoosobowym."
+          ]
+        },
+        {
+          "h": "Zapis",
+          "body": [
+            "Wszystko jest zapisywane lokalnie w mem.json (sekcje stats i achievements), razem z językiem i rekordami. Usunięcie pliku resetuje też osiągnięcia i statystyki."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake specjalny",

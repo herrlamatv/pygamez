@@ -592,6 +592,8 @@ class AirHockeyGame(Game):
             self._over_t = self.anim_t
             gewonnen = (by == "p1") or self.multiplayer
             self.play_sound("win" if gewonnen else "gameover")
+            if not self.multiplayer:
+                self.report_result(by == "p1")
             self.rumble(250)
             return
         # Anspiel beim Spieler, der das Tor kassiert hat

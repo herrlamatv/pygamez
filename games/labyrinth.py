@@ -323,6 +323,7 @@ class LabyrinthGame(Game):
         self.score += self.level_score
         self._mark_solved(self.level)
         self.state = FINISH
+        self.report_result(True)
         self.play_sound("win")
 
     # ===================================================== Zeichnen

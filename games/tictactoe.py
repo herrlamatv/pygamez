@@ -305,6 +305,8 @@ class TicTacToeGame(Game):
     def _ende(self):
         self.state = OVER
         self.game_over = True     # damit main.py den Highscore speichert
+        if not self.multiplayer and self.winner in (HUMAN, AI):
+            self.report_result(self.winner == HUMAN)
         if self.winner == "Unentschieden":
             self.play_sound("point")
         elif not self.multiplayer and self.winner == AI:

@@ -720,6 +720,11 @@ class App:
         self._game_classes = ALL_GAMES
         self._build_game_buttons()
 
+        # Erfolge: bereits Erreichtes aus Bestandsdaten (alte Highscores/
+        # Statistiken) ohne Toast-Parade anrechnen.
+        import achievements
+        achievements.backfill_silent()
+
         # Sidebar-Breite/Fenster-Mindesthöhe an den tatsächlichen Bedarf koppeln.
         self._fit_sidebar()
 
@@ -892,6 +897,7 @@ class App:
         for key, cmd, icon in (("fullscreen", self.toggle_fullscreen, "⛶"),
                                ("language", self.open_language, "🌐"),
                                ("options", self.open_options, "⚙"),
+                               ("progress", self.open_progress, "🏆"),
                                ("lamawiki", self.open_lamawiki, "📖")):
             btn = NeoButton(menu, t("app." + key), self._with_click(cmd),
                             icon=icon, fill=C_BTN, hover=C_BTN_HOVER,
@@ -1174,6 +1180,11 @@ class App:
                                 mode=mode, game_settings=self.settings)
         self.current.paused = False
         self.game_list.set_active(game_cls)
+        # Statistik: neue Partie zählen (+ ggf. daran hängende Erfolge).
+        import stats
+        import achievements
+        stats.game_started(game_cls.highscore_key)
+        achievements.on_game_started(game_cls.highscore_key)
         self.ui.begin_transition()
         self.embed.focus_set()
 
@@ -1219,6 +1230,12 @@ class App:
         self.show_screen(LamaWikiScreen(self.canvas, self.game_w, self.game_h,
                                         self, on_close=self.back_to_menu,
                                         page_id=page_id))
+
+    def open_progress(self):
+        """Öffnet den Erfolge-&-Statistik-Screen im Spielbereich."""
+        from progress import ProgressScreen
+        self.show_screen(ProgressScreen(self.canvas, self.game_w, self.game_h,
+                                        self, on_close=self.back_to_menu))
 
     def refresh_language(self):
         """Beschriftet das Tkinter-Menü nach einem Sprachwechsel neu."""
@@ -1318,6 +1335,9 @@ class App:
         """Beendet das aktuelle Spiel und kehrt zum Startbildschirm zurück."""
         if self.current:
             self._highscore_speichern(self.current)
+        # Gesammelte Spielzeit sofort sichern (sonst erst beim nächsten Flush).
+        import stats
+        stats.flush()
         self.current = None
         self.status_var.set(t("app.no_game"))
         self._set_state_dot(C_TEXT_DIM)
@@ -1336,6 +1356,13 @@ class App:
         # Für die Game-Over-Einblendung merken.
         game._hs_value = hs
         game._hs_record = rekord
+        # Statistik & Erfolge: Rekorde zählen, Punkte-Meilensteine prüfen.
+        import stats
+        import achievements
+        if rekord:
+            stats.record_broken(game.highscore_key)
+        achievements.on_highscore(game.highscore_key, hs)
+        achievements.check_stats()
 
     def _draw_highscore_overlay(self, game):
         """Blendet bei Game Over für JEDES Spiel den Highscore als Banner ein."""
@@ -1412,12 +1439,18 @@ class App:
             except tk.TclError:
                 pass
 
+        import stats
+        import achievements
         if self.current is None:
             self._draw_menu_screen()
         else:
             game = self.current
+            is_menu_screen = getattr(game, "is_menu", False)
             if not game.paused and not game.game_over:
                 game.update(dt)
+                # Statistik: aktive Spielzeit sammeln (nicht in Menü-Screens).
+                if not is_menu_screen:
+                    stats.add_playtime(game.highscore_key, dt)
             game.draw()
 
             if game.paused:
@@ -1432,15 +1465,32 @@ class App:
                 # Neuer Rekord -> Konfetti-Regen über dem Game-Over-Bild.
                 if getattr(game, "_hs_record", False):
                     self.ui.spawn_confetti(self.game_w, self.game_h)
-            if not game.game_over:
+            if game.game_over:
+                game._was_over = True
+            else:
                 game._hs_saved = False
+                # Übergang Game Over -> läuft wieder: das Spiel wurde intern
+                # neu gestartet (Enter/Leertaste) -> als neue Partie zählen
+                # und den Sieg/Niederlage-Riegel (report_result) freigeben.
+                if getattr(game, "_was_over", False) and not is_menu_screen:
+                    game._was_over = False
+                    game._result_reported = False
+                    stats.game_started(game.highscore_key)
+                    achievements.on_game_started(game.highscore_key)
 
             # Highscore bei Game Over für jedes Spiel einblenden.
-            if game.game_over and not getattr(game, "is_menu", False):
+            if game.game_over and not is_menu_screen:
                 self._draw_highscore_overlay(game)
+
+        # Gesammelte Statistik gedrosselt auf die Platte schreiben.
+        stats.maybe_flush()
 
         # Globale Effekte (Partikel/Konfetti + Screen-Übergang) obendrauf.
         self.ui.draw_fx(self.canvas, self.game_w, self.game_h, dt)
+
+        # Erfolgs-Einblendungen (Toast oben rechts) über allem - auch im Spiel.
+        achievements.draw_toasts(self.canvas, self.game_w, self.game_h, dt,
+                                 self.settings)
 
         # Logische Fläche skaliert (mit Letterbox) auf das echte Display bringen
         self._present()
@@ -1818,6 +1868,11 @@ class App:
         self._closing = True
         if self.current:
             self._highscore_speichern(self.current)
+        try:
+            import stats
+            stats.flush()
+        except Exception:
+            pass
         try:
             self.pygame.quit()
         except Exception:

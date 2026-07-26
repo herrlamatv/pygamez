@@ -129,6 +129,54 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Prestationer & statistik",
+      "keywords": [
+        "prestationer",
+        "statistik",
+        "framsteg",
+        "rekord",
+        "segrar",
+        "speltid",
+        "milstolpe"
+      ],
+      "sections": [
+        {
+          "h": "Översikt",
+          "body": [
+            "Samlingen håller nu koll på dina framsteg: 69 prestationer och detaljerad statistik för alla 38 spel. Båda hittar du bakom knappen Prestationer & statistik i sidofältet; växla mellan de två flikarna med [Tab] eller ett klick."
+          ]
+        },
+        {
+          "h": "Prestationer",
+          "body": [
+            "Det finns tre kategorier:",
+            "- Allmänt: mål för hela samlingen som startade partier, testade spel, total speltid, slagna rekord och segrar - plus små extra som Nattugglan (spela efter midnatt).",
+            "- Poängmilstolpar: ett rättvist målpoäng per spel, anpassat till spelets poängskala.",
+            "- Speciella ögonblick: gör AI:n schackmatt, en KNIFFEL, 2048-brickan, en Wordle på 2 försök och mer.",
+            "Vid upplåsning dyker en gyllene avisering upp uppe till höger med en liten fanfar - även mitt i spelet.",
+            "Befintliga data räknas: vid första starten efter uppdateringen tillgodoräknas dina gamla rekord automatiskt (utan aviserings-fyrverkeri).",
+            "Låsta prestationer visar en förloppsindikator, upplåsta sitt datum."
+          ]
+        },
+        {
+          "h": "Statistik",
+          "body": [
+            "Överst sammanfattar kort allt: total speltid, partier, segrar, slagna rekord, testade spel och din prestationsräknare - plus ditt favoritspel (mest speltid).",
+            "Under listar en tabell varje spelat spel med partier, tid, segrar och rekord, sorterat efter speltid. Ett klick på en rad öppnar spelet direkt.",
+            "Bara aktiv speltid räknas - pauser och menyer räknas inte. Segrar registreras av spel med ett tydligt vunnet/förlorat-utfall (bräd-, kort- och pusselspel) i enspelarläge."
+          ]
+        },
+        {
+          "h": "Sparande",
+          "body": [
+            "Allt sparas lokalt i mem.json (sektionerna stats och achievements) tillsammans med språk och rekord. Raderar du filen nollställs även prestationer och statistik."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake special",

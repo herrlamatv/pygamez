@@ -542,10 +542,12 @@ class TankDuelGame(Game):
             self.score += (self.diff + 1) * 100 \
                 + (ROUNDS_TO_WIN - self.rounds[1]) * 20
             self.play_sound("win")
+            self.report_result(True)
         elif self.multiplayer:
             self.play_sound("win")
         else:
             self.play_sound("gameover")
+            self.report_result(False)
         self.game_over = True
 
     # ===================================================== Update

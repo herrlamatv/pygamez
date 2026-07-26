@@ -425,6 +425,7 @@ class FroggerGame(Game):
         if all(self.bays_done):
             self.score += 1000
             self.clear_t = 1.5
+            self.ach_event("frog_home")
             self.play_sound("level")
         else:
             self._respawn()

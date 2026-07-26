@@ -129,6 +129,54 @@
       ]
     },
     {
+      "id": "achievements",
+      "category": "general",
+      "title": "Saavutukset ja tilastot",
+      "keywords": [
+        "saavutukset",
+        "tilastot",
+        "edistyminen",
+        "ennätys",
+        "voitot",
+        "peliaika",
+        "virstanpylväs"
+      ],
+      "sections": [
+        {
+          "h": "Yleiskatsaus",
+          "body": [
+            "Kokoelma seuraa nyt edistymistäsi: 69 saavutusta ja yksityiskohtaiset tilastot kaikista 38 pelistä. Molemmat löytyvät sivupalkin painikkeesta Saavutukset ja tilastot; välilehteä vaihdat [Tab]-näppäimellä tai klikkaamalla."
+          ]
+        },
+        {
+          "h": "Saavutukset",
+          "body": [
+            "Kategorioita on kolme:",
+            "- Yleiset: koko kokoelman tavoitteita, kuten aloitetut pelikerrat, kokeillut pelit, kokonaispeliaika, rikotut ennätykset ja voitot - sekä pieniä ekstroja kuten Yökyöpeli (pelaa keskiyön jälkeen).",
+            "- Pistevirstanpylväät: yksi reilu tavoitepistemäärä peliä kohden, sovitettu pelin pisteskaalaan.",
+            "- Erityiset hetket: shakkimatti tekoälylle, KNIFFEL, 2048-laatta, Wordle 2 yrityksellä ja paljon muuta.",
+            "Avautuessa oikeaan yläkulmaan ilmestyy kultainen ilmoitus pienellä fanfaarilla - myös kesken pelin.",
+            "Vanhat tiedot lasketaan: päivityksen jälkeisellä ensimmäisellä käynnistyksellä vanhat ennätyksesi hyvitetään automaattisesti (ilman ilmoitusilotulitusta).",
+            "Lukitut saavutukset näyttävät edistymispalkin, avatut päivämääränsä."
+          ]
+        },
+        {
+          "h": "Tilastot",
+          "body": [
+            "Ylhäällä kortit kokoavat kaiken: kokonaispeliaika, pelikerrat, voitot, rikotut ennätykset, kokeillut pelit ja saavutuslaskurisi - sekä lempipelisi (eniten peliaikaa).",
+            "Alla taulukko listaa jokaisen pelatun pelin pelikertoineen, aikoineen, voittoineen ja ennätyksineen, järjestettynä peliajan mukaan. Rivin klikkaus avaa pelin suoraan.",
+            "Vain aktiivinen peliaika lasketaan - tauot ja valikot eivät. Voitot kirjaavat pelit, joissa on selkeä voitto/tappio (lauta-, kortti- ja pulmapelit) yksinpelissä."
+          ]
+        },
+        {
+          "h": "Tallennus",
+          "body": [
+            "Kaikki tallentuu paikallisesti mem.json-tiedostoon (osiot stats ja achievements) yhdessä kielen ja ennätysten kanssa. Tiedoston poistaminen nollaa myös saavutukset ja tilastot."
+          ]
+        }
+      ]
+    },
+    {
       "id": "snake-special",
       "category": "general",
       "title": "Snake special",

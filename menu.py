@@ -473,6 +473,8 @@ class OptionsScreen(_Screen):
             codes = [c for c, _ in i18n.AVAILABLE]
             cur = codes.index(i18n.get_language()) if i18n.get_language() in codes else 0
             i18n.set_language(codes[(cur + direction) % len(codes)])
+            import achievements
+            achievements.event("polyglot")
             self.app.refresh_language()   # Tkinter-Menü neu beschriften
             self.name = t("options.name")
             self._build_items()           # Labels dieses Screens neu übersetzen
@@ -1355,7 +1357,12 @@ class LanguageScreen(_Screen):
         if not self.expanded and i >= len(self.rects):
             self._expand()
             return
+        changed = self.langs[i][0] != i18n.get_language()
         i18n.set_language(self.langs[i][0])
+        if changed:
+            # Erfolg "Polyglott": bewusst eine andere Sprache ausprobiert.
+            import achievements
+            achievements.event("polyglot")
         self.app.refresh_language()
         self.play_sound("click")
         r = self.rects[i]

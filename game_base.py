@@ -185,3 +185,32 @@ class Game:
     def rumble(self, ms=120):
         """Löst Gamepad-Vibration aus (respektiert die Haptik-Einstellung)."""
         audio.rumble(self.settings, ms)
+
+    # ----- Statistik & Erfolge -------------------------------------------
+
+    def report_result(self, won):
+        """Meldet Sieg (True) / Niederlage (False) des Spielers an die Statistik.
+
+        Für Spiele mit klarem Gewonnen/Verloren-Konzept (Brett-, Karten- und
+        Rätselspiele); gedacht für den Einzelspieler-/KI-Modus. Pro Partie
+        zählt nur der erste Aufruf - den Riegel setzt main.py beim Neustart
+        (Game-Over -> neue Partie) automatisch zurück.
+        """
+        if self.is_menu or getattr(self, "_result_reported", False):
+            return
+        self._result_reported = True
+        import stats
+        stats.record_result(self.highscore_key, bool(won))
+        import achievements
+        achievements.check_stats()
+
+    def ach_event(self, event_id):
+        """Löst ein Erfolgs-Ereignis aus (z.B. 'kniffel_five').
+
+        Die bekannten Ereignisse stehen in achievements.py; unbekannte werden
+        ignoriert. Bereits freigeschaltete Erfolge lösen nicht erneut aus.
+        """
+        if self.is_menu:
+            return
+        import achievements
+        achievements.event(event_id)

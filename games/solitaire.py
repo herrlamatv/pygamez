@@ -945,6 +945,8 @@ class SolitaireGame(Game):
             self.win_bonus = self.variant.win_bonus()
             self.score = max(0, self.score + self.win_bonus)
             self.game_over = True
+            self.report_result(True)
+            self.ach_event("solitaire_win")
             self.play_sound("win")
             self.rumble(220)
 
