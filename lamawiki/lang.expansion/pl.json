@@ -1717,6 +1717,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "wieże",
+        "fale",
+        "złoto",
+        "boss",
+        "strategia"
+      ],
+      "sections": [
+        {
+          "h": "Jak grać",
+          "body": [
+            "Wrogowie maszerują falami wzdłuż ścieżki. Buduj obok wieże, aby zatrzymać ich przed wyjściem - każde przebicie kosztuje życia (bossowie 5), przy 0 koniec.",
+            "Każda mapa jest nieskończona: fale stają się coraz silniejsze, a co 8 fal nadchodzi boss. Między falami budujesz w spokoju; kolejną rozpoczynasz sam.",
+            "Zestrzelenia dają złoto, do tego bonusy za fale i 5% odsetek. Zablokowane mapy odblokujesz najlepszą falą."
+          ]
+        },
+        {
+          "h": "Sterowanie",
+          "body": [
+            "- Kliknij kartę wieży (lub 1-9), potem postaw ją na polu. Prawy przycisk anuluje.",
+            "- Kliknij wieżę: Ulepsz [U] (do 3 poziomów), Sprzedaj [X] (70% zwrotu). W trybie Maksymalnym na najwyższym poziomie wybierasz specjalizację A/B.",
+            "- [Spacja] rozpoczyna falę, [F] = tempo x2, [G] = wszystkie zasięgi, kółko przewija menu budowy. Maksymalny: [Q] Meteor, [W] Nova mrozu, [E] Gorączka złota."
+          ]
+        },
+        {
+          "h": "Wieże",
+          "body": [
+            "- Łucznicza = szybka i tania, Armata = obrażenia obszarowe, Mróz = spowalnia i wykrywa, Snajper = ogromny zasięg, przebija pancerz, trafia latających.",
+            "- Klasyczny dodaje Truciznę (obrażenia w czasie), Teslę (łańcuchowa błyskawica, przeciwlotnicza) i Sztandar (aura +20% obrażeń).",
+            "- Tylko Maksymalny: Moździerz (strzały łukiem przez prawie całe pole), Flak (obrona przeciwlotnicza), Laser (ciągły promień o rosnących obrażeniach) i Bank złota (dochód co falę)."
+          ]
+        },
+        {
+          "h": "Wrogowie",
+          "body": [
+            "- Biegacze, sprinterzy, roje i czołgi to podstawa; później dołączają opancerzeni, regenerujący i dzielący się.",
+            "- Tylko Maksymalny: latający lecą prosto (trafiają ich tylko Snajper/Tesla/Flak/Laser), zamaskowani są widoczni tylko blisko wież mrozu, sztandaru lub snajpera, uzdrowiciele leczą sąsiadów.",
+            "- Co 8. falę maszeruje boss: mnóstwo życia, 5 żyć straty przy przebiciu, wielka nagroda."
+          ]
+        },
+        {
+          "h": "Tryby i mapy",
+          "body": [
+            "- Klasyczny = główny tryb z 7 wieżami. Kompaktowy = 4 wieże, 2 poziomy, więcej złota na start - szybki początek. Maksymalny = 11 wież, gałęzie A/B, specjalni wrogowie i zdolności aktywne.",
+            "- Łąka (wolna), Kanion (od fali 5), Skrzyżowanie (od 10, ścieżka się krzyżuje - mocne dla wież, ale twardsi wrogowie) i Szpaler (od 15, budować można tylko przy ścieżce)."
+          ]
+        },
+        {
+          "h": "Punkty",
+          "body": [
+            "Punkty zdobywasz za każde zestrzelenie plus bonus za falę, rosnący z numerem fali i trudnością mapy. Kamień milowy to 10 000 punktów - mniej więcej fala 18-20 na Łące."
+          ]
+        }
+      ]
     }
   ]
 }

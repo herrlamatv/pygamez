@@ -1717,6 +1717,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "tornit",
+        "aallot",
+        "kulta",
+        "pomo",
+        "strategia"
+      ],
+      "sections": [
+        {
+          "h": "Pelin kulku",
+          "body": [
+            "Viholliset marssivat aaltoina polkua pitkin. Rakenna torneja viereen pysäyttääksesi heidät ennen uloskäyntiä - jokainen läpimurto maksaa elämiä (pomot 5), nollassa peli päättyy.",
+            "Jokainen kartta on loputon: aallot vahvistuvat jatkuvasti ja joka 8. aallolla saapuu pomo. Aaltojen välissä rakennat rauhassa; seuraavan aloitat itse.",
+            "Tuhotut viholliset antavat kultaa, lisäksi aaltobonuksia ja 5% korkoa. Lukitut kartat avautuvat parhaalla aallollasi."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Napsauta tornikorttia (tai 1-9) ja sijoita se kentälle. Oikea painike peruu.",
+            "- Napsauta tornia: Paranna [U] (jopa 3 tasoa), Myy [X] (70% takaisin). Maksimi-tilassa valitset korkeimmalla tasolla A/B-erikoistumisen.",
+            "- [Välilyönti] aloittaa aallon, [F] = 2x nopeus, [G] = kaikki kantamat, hiiren rulla vierittää rakennusvalikkoa. Maksimi: [Q] Meteori, [W] Pakkasnova, [E] Kultaryntäys."
+          ]
+        },
+        {
+          "h": "Tornit",
+          "body": [
+            "- Nuoli = nopea ja halpa, Tykki = aluevahinko, Pakkanen = hidastaa ja paljastaa, Tarkka-ampuja = valtava kantama, läpäisee panssarin, osuu lentäjiin.",
+            "- Klassinen lisää Myrkyn (vahinkoa ajan myötä), Teslan (ketjusalama, ilmatorjunta) ja Lipun (+20% vahinkoaura).",
+            "- Vain Maksimi: Kranaatinheitin (kaariammukset lähes koko kentälle), Ilmatorjunta, Laser (jatkuva säde, kasvava vahinko) ja Kultapankki (tuloja joka aallolta)."
+          ]
+        },
+        {
+          "h": "Viholliset",
+          "body": [
+            "- Juoksijat, pikajuoksijat, parvet ja tankit ovat perusta; myöhemmin mukaan tulevat panssaroidut, uusiutuvat ja jakautuvat.",
+            "- Vain Maksimi: lentäjät kulkevat suoraan ilmateitse (vain Tarkka-ampuja/Tesla/Ilmatorjunta/Laser osuvat), naamioituneet näkyvät vain pakkas-, lippu- tai tarkka-ampujatornien lähellä, parantajat paikkaavat naapureitaan.",
+            "- Joka 8. aallolla marssii pomo: paljon elämää, 5 elämän menetys läpimurrossa, iso palkkio."
+          ]
+        },
+        {
+          "h": "Tilat & kartat",
+          "body": [
+            "- Klassinen = päätila, 7 tornia. Kompakti = 4 tornia, 2 tasoa, enemmän aloituskultaa - nopea aloitus. Maksimi = 11 tornia, A/B-haarat, erikoisviholliset ja aktiiviset kyvyt.",
+            "- Niitty (vapaa), Kanjoni (aallosta 5), Risteys (aallosta 10, polku risteää itsensä kanssa - vahva torneille, mutta sitkeämmät viholliset) ja Kujanjuoksu (aallosta 15, rakentaa saa vain polun viereen)."
+          ]
+        },
+        {
+          "h": "Pisteet",
+          "body": [
+            "Pisteitä saa jokaisesta tuhotusta vihollisesta sekä aaltobonuksesta, joka kasvaa aallon ja kartan vaikeuden myötä. Merkkipaalu on 10 000 pistettä - suunnilleen aalto 18-20 Niityllä."
+          ]
+        }
+      ]
     }
   ]
 }

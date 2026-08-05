@@ -1717,6 +1717,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "tårne",
+        "bølger",
+        "guld",
+        "boss",
+        "strategi"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Fjender marcherer i bølger langs stien. Byg tårne ved siden af for at stoppe dem før udgangen - hvert gennembrud koster liv (bosser 5), ved 0 er det slut.",
+            "Hvert kort er uendeligt: Bølgerne bliver stærkere og stærkere, og hver 8. bølge kommer en boss. Mellem bølgerne bygger du i ro og mag; den næste starter du selv.",
+            "Nedskydninger giver guld, plus bølgebonusser og 5% renter. Låste kort låses op med din bedste bølge."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Klik på et tårnkort (eller 1-9), og placer det på banen. Højreklik annullerer.",
+            "- Klik på et tårn: Opgrader [U] (op til 3 niveauer), Sælg [X] (70% retur). I Maksimal-tilstand vælger du en A/B-specialisering på højeste niveau.",
+            "- [Mellemrum] starter bølgen, [F] = 2x tempo, [G] = alle rækkevidder, musehjulet ruller byggemenuen. Maksimal: [Q] Meteor, [W] Frostnova, [E] Guldfeber."
+          ]
+        },
+        {
+          "h": "Tårne",
+          "body": [
+            "- Pil = hurtig og billig, Kanon = områdeskade, Frost = sløver og afslører, Snigskytte = enorm rækkevidde, gennembryder panser, rammer flyvere.",
+            "- Klassisk tilføjer Gift (skade over tid), Tesla (kædelyn, luftværn) og Banner (+20% skade som aura).",
+            "- Kun Maksimal: Morter (buede skud over næsten hele banen), Luftværn, Laser (konstant stråle med stigende skade) og Guldbank (indtægt pr. bølge)."
+          ]
+        },
+        {
+          "h": "Fjender",
+          "body": [
+            "- Løbere, sprintere, sværme og kampvogne er basen; senere kommer pansrede, regenererende og delende fjender til.",
+            "- Kun Maksimal: Flyvere tager luftvejen (kun Snigskytte/Tesla/Luftværn/Laser rammer dem), skjulte ses kun nær frost-, banner- eller snigskyttetårne, healere lapper naboerne sammen.",
+            "- Hver 8. bølge marcherer en boss ind: masser af liv, 5 liv tabt ved gennembrud, stor belønning."
+          ]
+        },
+        {
+          "h": "Tilstande & kort",
+          "body": [
+            "- Klassisk = hovedtilstanden med 7 tårne. Kompakt = 4 tårne, 2 niveauer, mere startguld - den hurtige start. Maksimal = 11 tårne, A/B-grene, specialfjender og aktive evner.",
+            "- Eng (fri), Kløft (fra bølge 5), Korsvej (fra 10, stien krydser sig selv - stærkt for tårne, men sejere fjender) og Spidsrod (fra 15, der bygges kun lige ved stien)."
+          ]
+        },
+        {
+          "h": "Point",
+          "body": [
+            "Point kommer fra hver nedskydning plus en bølgebonus, der vokser med bølge og kortets sværhedsgrad. Milepælen ligger på 10.000 point - cirka bølge 18-20 på Engen."
+          ]
+        }
+      ]
     }
   ]
 }

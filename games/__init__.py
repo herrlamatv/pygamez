@@ -39,6 +39,7 @@ from .mastermind import MastermindGame
 from .bubbleshooter import BubbleShooterGame
 from .hangman import HangmanGame
 from .blockjump import BlockJumpGame
+from .lamatowerdefense import LamaTowerDefenseGame
 
 # Reihenfolge der Spiele im Menü
 ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
@@ -50,4 +51,4 @@ ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
              TRexRunnerGame, DameGame, PokerGame,
              ChessGame, MuehleGame, SimonGame, BilliardGame,
              SlidingPuzzleGame, MastermindGame, BubbleShooterGame, HangmanGame,
-             BlockJumpGame]
+             BlockJumpGame, LamaTowerDefenseGame]

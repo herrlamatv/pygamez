@@ -1717,6 +1717,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "kuleler",
+        "dalgalar",
+        "altın",
+        "boss",
+        "strateji"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Düşmanlar yol boyunca dalgalar halinde ilerler. Onları çıkıştan önce durdurmak için yolun yanına kuleler inşa et - her geçiş can kaybettirir (bosslar 5), 0'da oyun biter.",
+            "Her harita sonsuzdur: dalgalar giderek güçlenir ve her 8 dalgada bir boss gelir. Dalgalar arasında rahatça inşa edersin; sonrakini kendin başlatırsın.",
+            "Yok edilen düşmanlar altın verir, ayrıca dalga bonusları ve %5 faiz kazanırsın. Kilitli haritalar en iyi dalganla açılır."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Bir kule kartına tıkla (veya 1-9), sonra sahaya yerleştir. Sağ tık iptal eder.",
+            "- Bir kuleye tıkla: Geliştir [U] (3 seviyeye kadar), Sat [X] (%70 geri). Maksimum modunda en yüksek seviyede A/B uzmanlaşması seçersin.",
+            "- [Boşluk] dalgayı başlatır, [F] = 2x hız, [G] = tüm menziller, fare tekerleği inşa menüsünü kaydırır. Maksimum: [Q] Meteor, [W] Buz novası, [E] Altına hücum."
+          ]
+        },
+        {
+          "h": "Kuleler",
+          "body": [
+            "- Ok = hızlı ve ucuz, Top = alan hasarı, Buz = yavaşlatır ve ortaya çıkarır, Keskin nişancı = dev menzil, zırh deler, uçanları vurur.",
+            "- Klasik moda Zehir (zamanla hasar), Tesla (zincir yıldırım, uçaksavar) ve Sancak (+%20 hasar aurası) eklenir.",
+            "- Sadece Maksimum: Havan (neredeyse tüm sahaya yaylı atış), Uçaksavar, Lazer (artan hasarlı sürekli ışın) ve Altın bankası (dalga başına gelir)."
+          ]
+        },
+        {
+          "h": "Düşmanlar",
+          "body": [
+            "- Koşucular, sprinterler, sürüler ve tanklar temeli oluşturur; sonra zırhlılar, yenilenenler ve bölünenler katılır.",
+            "- Sadece Maksimum: uçanlar düz hava rotasını izler (sadece Keskin nişancı/Tesla/Uçaksavar/Lazer vurabilir), gizlenenler sadece buz, sancak veya keskin nişancı kulelerinin yakınında görünür, şifacılar komşularını iyileştirir.",
+            "- Her 8. dalgada bir boss gelir: çok can, geçerse 5 can kaybı, büyük ödül."
+          ]
+        },
+        {
+          "h": "Modlar ve haritalar",
+          "body": [
+            "- Klasik = 7 kuleli ana mod. Kompakt = 4 kule, 2 seviye, daha fazla başlangıç altını - hızlı giriş. Maksimum = 11 kule, A/B dalları, özel düşmanlar ve aktif yetenekler.",
+            "- Çayır (serbest), Kanyon (dalga 5'ten), Kavşak (10'dan, yol kendini keser - kuleler için güçlü ama düşmanlar daha dayanıklı) ve Dar Geçit (15'ten, sadece yolun hemen yanına inşa edilir)."
+          ]
+        },
+        {
+          "h": "Puanlar",
+          "body": [
+            "Puanlar her yok edilen düşmandan ve dalga ile harita zorluğuyla büyüyen dalga bonusundan gelir. Kilometre taşı 10.000 puan - Çayır'da aşağı yukarı dalga 18-20."
+          ]
+        }
+      ]
     }
   ]
 }

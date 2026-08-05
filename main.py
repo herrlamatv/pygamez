@@ -456,6 +456,17 @@ def _draw_icon(cv, cx, cy, name, color, bg):
         cv.create_polygon(cx + 9, cy - 3, cx, cy + 2, cx, cy + 11, cx + 9, cy + 6,
                           fill=color, outline=bg)
         cv.create_rectangle(cx - 2, cy - 13, cx + 2, cy - 9, fill=color, outline="")
+    elif name == "LamaTowerDefenseGame":
+        # Burgturm mit Zinnen, Tor und Wimpel
+        cv.create_rectangle(cx - 6, cy - 4, cx + 6, cy + 9, fill=color, outline="")
+        for dx in (-6, -1, 4):
+            cv.create_rectangle(cx + dx, cy - 8, cx + dx + 2, cy - 4,
+                                fill=color, outline="")
+        cv.create_arc(cx - 3, cy + 3, cx + 3, cy + 12, start=0, extent=180,
+                      fill=bg, outline="")
+        cv.create_line(cx + 6, cy - 8, cx + 6, cy - 13, fill=color, width=1)
+        cv.create_polygon(cx + 6, cy - 13, cx + 11, cy - 11, cx + 6, cy - 9,
+                          fill=color, outline="")
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))

@@ -1716,6 +1716,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "tours",
+        "vagues",
+        "or",
+        "boss",
+        "stratégie"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Les ennemis avancent en vagues le long du chemin. Construis des tours à côté pour les arrêter avant la sortie - chaque percée coûte des vies (les boss 5), à 0 la partie s'arrête.",
+            "Chaque carte est sans fin : les vagues deviennent toujours plus fortes et un boss arrive toutes les 8 vagues. Entre les vagues, tu construis tranquillement ; tu lances la suivante toi-même.",
+            "Les éliminations rapportent de l'or, plus des bonus de vague et 5% d'intérêts. Les cartes verrouillées se débloquent avec ta meilleure vague."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Clique sur une carte de tour (ou 1-9), puis place-la sur le terrain. Clic droit pour annuler.",
+            "- Clique sur une tour : Améliorer [U] (jusqu'à 3 niveaux), Vendre [X] (70% remboursés). En mode Maximal, tu choisis une spécialisation A/B au niveau maximum.",
+            "- [Espace] lance la vague, [F] = vitesse x2, [G] = toutes les portées, la molette fait défiler le menu. Maximal : [Q] Météore, [W] Nova de givre, [E] Ruée vers l'or."
+          ]
+        },
+        {
+          "h": "Tours",
+          "body": [
+            "- Flèches = rapide et bon marché, Canon = dégâts de zone, Givre = ralentit et révèle, Sniper = portée énorme, perce l'armure, touche les volants.",
+            "- Le mode Classique ajoute le Poison (dégâts sur la durée), le Tesla (éclair en chaîne, antiaérien) et l'Étendard (aura +20% de dégâts).",
+            "- Maximal uniquement : Mortier (tirs en cloche sur presque tout le terrain), DCA (antiaérien), Laser (rayon continu aux dégâts croissants) et Banque d'or (revenu par vague)."
+          ]
+        },
+        {
+          "h": "Ennemis",
+          "body": [
+            "- Coureurs, sprinteurs, essaims et blindés forment la base ; plus tard s'ajoutent les cuirassés, les régénérants et les diviseurs.",
+            "- Maximal uniquement : les volants prennent la voie des airs (seuls Sniper/Tesla/DCA/Laser les touchent), les invisibles ne sont visibles que près des tours de givre, d'étendard ou de sniper, les soigneurs réparent leurs voisins.",
+            "- Toutes les 8 vagues, un boss débarque : beaucoup de vie, 5 vies perdues en cas de percée, grosse récompense."
+          ]
+        },
+        {
+          "h": "Modes & cartes",
+          "body": [
+            "- Classique = le mode principal avec 7 tours. Compact = 4 tours, 2 niveaux, plus d'or de départ - l'entrée rapide. Maximal = 11 tours, branches A/B, ennemis spéciaux et capacités actives.",
+            "- Prairie (libre), Canyon (dès la vague 5), Croisement (dès 10, le chemin se croise - fort pour les tours, mais ennemis plus coriaces) et Gantelet (dès 15, on ne construit que le long du chemin)."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Les points viennent de chaque élimination plus un bonus de vague qui grandit avec la vague et la difficulté de la carte. Le palier est à 10 000 points - environ la vague 18-20 sur Prairie."
+          ]
+        }
+      ]
     }
   ]
 }

@@ -1719,6 +1719,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "türme",
+        "wellen",
+        "gold",
+        "boss",
+        "strategie"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Gegner laufen in Wellen den Pfad entlang. Baue Türme daneben, um sie vor dem Ziel aufzuhalten - jeder Durchbruch kostet Leben (Bosse 5), bei 0 ist Schluss.",
+            "Jede Karte läuft endlos: Die Wellen werden immer stärker, alle 8 Wellen kommt ein Boss. Zwischen den Wellen baust du in Ruhe; die nächste startest du selbst.",
+            "Abschüsse bringen Gold, dazu Wellen-Boni und 5% Zinsen. Gesperrte Karten schaltest du über deine beste Welle frei."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Turmkarte anklicken (oder 1-9), dann im Feld platzieren. Rechtsklick bricht ab.",
+            "- Turm anklicken: Ausbauen [U] (bis 3 Stufen), Verkaufen [X] (70% zurück). Im Maximal-Modus wählst du auf höchster Stufe eine A/B-Spezialisierung.",
+            "- [Leertaste] startet die Welle, [F] = Tempo x2, [G] = alle Reichweiten, Mausrad scrollt das Baumenü. Maximal: [Q] Meteor, [W] Frostnova, [E] Goldsegen."
+          ]
+        },
+        {
+          "h": "Türme",
+          "body": [
+            "- Pfeil = schnell & günstig, Kanone = Flächenschaden, Frost = bremst & enttarnt, Scharfschütze = Riesenreichweite, Panzerbrecher, trifft Flieger.",
+            "- Klassisch ergänzt Gift (Schaden über Zeit), Tesla (Kettenblitz, Luft) und Banner (+20% Schaden als Aura).",
+            "- Nur Maximal: Mörser (Bogenschuss, fast das ganze Feld), Flak (Luftabwehr), Laser (Dauerstrahl mit steigendem Schaden) und Goldbank (Einkommen je Welle)."
+          ]
+        },
+        {
+          "h": "Gegner",
+          "body": [
+            "- Läufer, Sprinter, Schwarm und Panzer bilden die Basis; später kommen Gepanzerte, Regenerierer und Teiler dazu.",
+            "- Nur Maximal: Flieger nehmen die Luftlinie (nur Scharfschütze/Tesla/Flak/Laser treffen), Getarnte sind nur nahe Frost-, Banner- oder Scharfschützen-Türmen sichtbar, Heiler flicken ihre Nachbarn.",
+            "- Alle 8 Wellen marschiert ein Boss: viel Leben, 5 Leben Schaden beim Durchbruch, dicke Belohnung."
+          ]
+        },
+        {
+          "h": "Modi & Karten",
+          "body": [
+            "- Klassisch = Hauptmodus mit 7 Türmen. Kompakt = 4 Türme, 2 Stufen, mehr Startgold - der schnelle Einstieg. Maximal = 11 Türme, A/B-Zweige, Spezialgegner und Aktiv-Fähigkeiten.",
+            "- Wiese (frei), Schlucht (ab Welle 5), Kreuzung (ab 10, der Pfad kreuzt sich - stark für Türme, dafür zähere Gegner) und Spießrutenlauf (ab 15, gebaut wird nur direkt am Pfad)."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Punkte gibt es pro Abschuss und als Wellen-Bonus, der mit Welle und Karten-Schwierigkeit steigt. Der Meilenstein liegt bei 10.000 Punkten - etwa Welle 18-20 auf der Wiese."
+          ]
+        }
+      ]
     }
   ]
 }

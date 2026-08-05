@@ -1717,6 +1717,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "torn",
+        "vågor",
+        "guld",
+        "boss",
+        "strategi"
+      ],
+      "sections": [
+        {
+          "h": "Så spelar du",
+          "body": [
+            "Fiender marscherar i vågor längs stigen. Bygg torn bredvid för att stoppa dem före utgången - varje genombrott kostar liv (bossar 5), vid 0 är det slut.",
+            "Varje karta är oändlig: Vågorna blir allt starkare och var 8:e våg kommer en boss. Mellan vågorna bygger du i lugn och ro; nästa startar du själv.",
+            "Nedskjutningar ger guld, plus vågbonusar och 5% ränta. Låsta kartor låses upp med din bästa våg."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Klicka på ett tornkort (eller 1-9) och placera det på banan. Högerklick avbryter.",
+            "- Klicka på ett torn: Uppgradera [U] (upp till 3 nivåer), Sälj [X] (70% tillbaka). I Maximal-läget väljer du en A/B-specialisering på högsta nivån.",
+            "- [Mellanslag] startar vågen, [F] = 2x tempo, [G] = alla räckvidder, mushjulet rullar byggmenyn. Maximal: [Q] Meteor, [W] Frostnova, [E] Guldrush."
+          ]
+        },
+        {
+          "h": "Torn",
+          "body": [
+            "- Pil = snabb och billig, Kanon = områdesskada, Frost = saktar ner och avslöjar, Krypskytt = enorm räckvidd, genomborrar pansar, träffar flygare.",
+            "- Klassisk lägger till Gift (skada över tid), Tesla (kedjeblixt, luftvärn) och Banér (+20% skada som aura).",
+            "- Endast Maximal: Granatkastare (bågskott över nästan hela banan), Luftvärn, Laser (konstant stråle med stigande skada) och Guldbank (inkomst per våg)."
+          ]
+        },
+        {
+          "h": "Fiender",
+          "body": [
+            "- Löpare, sprinters, svärmar och stridsvagnar är basen; senare tillkommer bepansrade, regenererande och delande fiender.",
+            "- Endast Maximal: Flygare tar luftvägen (bara Krypskytt/Tesla/Luftvärn/Laser träffar dem), dolda syns bara nära frost-, banér- eller krypskyttetorn, helare lappar ihop grannarna.",
+            "- Var 8:e våg marscherar en boss in: massor av liv, 5 liv förlorade vid genombrott, stor belöning."
+          ]
+        },
+        {
+          "h": "Lägen & kartor",
+          "body": [
+            "- Klassisk = huvudläget med 7 torn. Kompakt = 4 torn, 2 nivåer, mer startguld - den snabba starten. Maximal = 11 torn, A/B-grenar, specialfiender och aktiva förmågor.",
+            "- Äng (fri), Ravin (från våg 5), Korsning (från 10, stigen korsar sig själv - starkt för torn, men segare fiender) och Gatlopp (från 15, man bygger bara precis vid stigen)."
+          ]
+        },
+        {
+          "h": "Poäng",
+          "body": [
+            "Poäng kommer från varje nedskjutning plus en vågbonus som växer med våg och kartans svårighetsgrad. Milstolpen ligger på 10 000 poäng - ungefär våg 18-20 på Ängen."
+          ]
+        }
+      ]
     }
   ]
 }

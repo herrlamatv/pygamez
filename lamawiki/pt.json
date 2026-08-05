@@ -1714,6 +1714,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "torres",
+        "ondas",
+        "ouro",
+        "chefe",
+        "estratégia"
+      ],
+      "sections": [
+        {
+          "h": "Como jogar",
+          "body": [
+            "Os inimigos avançam em ondas pelo caminho. Constrói torres ao lado para os travar antes da saída - cada passagem custa vidas (chefes 5), a 0 acaba.",
+            "Cada mapa é infinito: as ondas ficam cada vez mais fortes e a cada 8 chega um chefe. Entre ondas constróis com calma; a próxima começas tu.",
+            "As baixas dão ouro, mais bónus de onda e 5% de juros. Os mapas bloqueados desbloqueiam-se com a tua melhor onda."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Clica numa carta de torre (ou 1-9) e coloca-a no campo. Botão direito cancela.",
+            "- Clica numa torre: Melhorar [U] (até 3 níveis), Vender [X] (70% de volta). No modo Máximo escolhes uma especialização A/B no nível máximo.",
+            "- [Espaço] inicia a onda, [F] = velocidade x2, [G] = todos os alcances, a roda percorre o menu. Máximo: [Q] Meteoro, [W] Nova de gelo, [E] Corrida ao ouro."
+          ]
+        },
+        {
+          "h": "Torres",
+          "body": [
+            "- Flechas = rápida e barata, Canhão = dano em área, Gelo = abranda e revela, Atirador = alcance enorme, perfura blindagem, atinge voadores.",
+            "- O Clássico junta Veneno (dano ao longo do tempo), Tesla (relâmpago em cadeia, antiaéreo) e Estandarte (aura de +20% de dano).",
+            "- Só no Máximo: Morteiro (tiros em arco por quase todo o campo), Antiaérea, Laser (raio contínuo com dano crescente) e Banco de ouro (rendimento por onda)."
+          ]
+        },
+        {
+          "h": "Inimigos",
+          "body": [
+            "- Corredores, velocistas, enxames e tanques formam a base; depois juntam-se blindados, regeneradores e divisores.",
+            "- Só no Máximo: os voadores seguem em linha reta pelo ar (só Atirador/Tesla/Antiaérea/Laser lhes acertam), os camuflados só se veem perto de torres de gelo, estandarte ou atirador, os curandeiros tratam dos vizinhos.",
+            "- A cada 8 ondas marcha um chefe: muita vida, 5 vidas perdidas se passar, grande recompensa."
+          ]
+        },
+        {
+          "h": "Modos e mapas",
+          "body": [
+            "- Clássico = o modo principal com 7 torres. Compacto = 4 torres, 2 níveis, mais ouro inicial - a entrada rápida. Máximo = 11 torres, ramos A/B, inimigos especiais e habilidades ativas.",
+            "- Campina (livre), Desfiladeiro (a partir da onda 5), Cruzamento (a partir de 10, o caminho cruza-se - forte para torres, mas inimigos mais duros) e Corredor (a partir de 15, só se constrói junto ao caminho)."
+          ]
+        },
+        {
+          "h": "Pontos",
+          "body": [
+            "Os pontos vêm de cada baixa mais um bónus de onda que cresce com a onda e a dificuldade do mapa. O marco está nos 10.000 pontos - por volta da onda 18-20 na Campina."
+          ]
+        }
+      ]
     }
   ]
 }

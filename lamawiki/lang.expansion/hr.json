@@ -1717,6 +1717,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "tornjevi",
+        "valovi",
+        "zlato",
+        "boss",
+        "strategija"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Neprijatelji marširaju u valovima duž staze. Sagradi tornjeve pokraj nje da ih zaustaviš prije izlaza - svaki proboj košta živote (bossovi 5), na 0 je kraj.",
+            "Svaka karta je beskonačna: valovi postaju sve jači, a svaki 8. val dolazi boss. Između valova gradiš na miru; sljedeći pokrećeš sam.",
+            "Obaranja donose zlato, uz to bonuse za valove i 5% kamata. Zaključane karte otključavaš najboljim valom."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Klikni kartu tornja (ili 1-9), zatim je postavi na polje. Desni klik odustaje.",
+            "- Klikni toranj: Nadogradi [U] (do 3 razine), Prodaj [X] (70% natrag). U Maksimalnom načinu na najvišoj razini biraš specijalizaciju A/B.",
+            "- [Razmaknica] pokreće val, [F] = 2x brzina, [G] = svi dometi, kotačić miša pomiče izbornik gradnje. Maksimalni: [Q] Meteor, [W] Ledena nova, [E] Zlatna groznica."
+          ]
+        },
+        {
+          "h": "Tornjevi",
+          "body": [
+            "- Strijela = brz i jeftin, Top = područna šteta, Led = usporava i otkriva, Snajperist = golem domet, probija oklop, pogađa letače.",
+            "- Klasični dodaje Otrov (šteta kroz vrijeme), Teslu (lančana munja, protuzračna) i Stijeg (aura +20% štete).",
+            "- Samo Maksimalni: Minobacač (lučni hici preko većine polja), Flak (protuzračna obrana), Laser (neprekidna zraka s rastućom štetom) i Zlatna banka (prihod po valu)."
+          ]
+        },
+        {
+          "h": "Neprijatelji",
+          "body": [
+            "- Trkači, sprinteri, rojevi i tenkovi čine osnovu; kasnije se pridružuju oklopljeni, regenerirajući i oni koji se dijele.",
+            "- Samo Maksimalni: letači lete ravno zrakom (pogađaju ih samo Snajperist/Tesla/Flak/Laser), prikriveni su vidljivi samo blizu ledenih, stjegovnih ili snajperskih tornjeva, iscjelitelji krpaju susjede.",
+            "- Svaki 8. val umaršira boss: mnogo života, 5 izgubljenih života pri proboju, velika nagrada."
+          ]
+        },
+        {
+          "h": "Načini i karte",
+          "body": [
+            "- Klasični = glavni način sa 7 tornjeva. Kompaktni = 4 tornja, 2 razine, više početnog zlata - brzi ulazak. Maksimalni = 11 tornjeva, grane A/B, posebni neprijatelji i aktivne sposobnosti.",
+            "- Livada (slobodna), Kanjon (od vala 5), Raskrižje (od 10, staza se križa - snažno za tornjeve, ali žilaviji neprijatelji) i Špalir (od 15, gradi se samo uz stazu)."
+          ]
+        },
+        {
+          "h": "Bodovi",
+          "body": [
+            "Bodove dobivaš za svako obaranje plus bonus za val koji raste s brojem vala i težinom karte. Prekretnica je 10.000 bodova - otprilike val 18-20 na Livadi."
+          ]
+        }
+      ]
     }
   ]
 }

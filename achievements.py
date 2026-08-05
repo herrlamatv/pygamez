@@ -115,6 +115,7 @@ MILESTONES = {
     "bubble": 1500,        # großes Feld geräumt
     "hangman": 150,        # mehrere Wörter in Folge
     "blockjump": 3000,     # einige Level geschafft
+    "lamatowerdef": 10000,     # ~Welle 18-20 auf der Wiese (Klassisch)
 }
 
 # Besondere Momente: (id, icon, highscore_key, target).
@@ -141,6 +142,10 @@ SPECIALS = [
     ("aim_perfect",    "star",  "aim",         None),   # 100% Genauigkeit
     ("snake_prestige", "gem",   "snake",       None),   # Prestige I erreicht
     ("snake_comp5",    "crown", "snake",       5),      # Competitive Level 5
+    ("td_boss",        "crown", "lamatowerdef",    None),   # ersten Boss besiegt
+    ("td_wave20",      "flag",  "lamatowerdef",    None),   # Welle 20 geschafft
+    ("td_perfect10",   "heart", "lamatowerdef",    None),   # Welle 10 ohne Verlust
+    ("td_maxed",       "gem",   "lamatowerdef",    None),   # Turm voll ausgebaut
 ]
 
 _unlocked = None      # {id: "YYYY-MM-DD HH:MM"} (In-Memory-Kopie)

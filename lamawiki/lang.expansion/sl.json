@@ -1717,6 +1717,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "stolpi",
+        "valovi",
+        "zlato",
+        "boss",
+        "strategija"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Sovražniki korakajo v valovih po poti. Zraven postavi stolpe, da jih ustaviš pred izhodom - vsak preboj stane življenja (bossi 5), pri 0 je konec.",
+            "Vsak zemljevid je neskončen: valovi so vse močnejši, vsak 8. val pride boss. Med valovi v miru gradiš; naslednjega začneš sam.",
+            "Sestrelitve prinašajo zlato, poleg tega bonuse za valove in 5% obresti. Zaklenjene zemljevide odkleneš z najboljšim valom."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Klikni karto stolpa (ali 1-9), nato jo postavi na polje. Desni klik prekliče.",
+            "- Klikni stolp: Nadgradi [U] (do 3 stopnje), Prodaj [X] (70% nazaj). V Maksimalnem načinu na najvišji stopnji izbereš specializacijo A/B.",
+            "- [Preslednica] začne val, [F] = 2x hitrost, [G] = vsi dosegi, kolešček miške premika gradbeni meni. Maksimalni: [Q] Meteor, [W] Ledena nova, [E] Zlata mrzlica."
+          ]
+        },
+        {
+          "h": "Stolpi",
+          "body": [
+            "- Puščica = hiter in poceni, Top = ploskovna škoda, Led = upočasni in razkrije, Ostrostrelec = ogromen doseg, prebije oklep, zadene letalce.",
+            "- Klasični doda Strup (škoda skozi čas), Teslo (verižna strela, zračna obramba) in Zastavo (avra +20% škode).",
+            "- Samo Maksimalni: Minomet (ločni streli čez večino polja), Flak (zračna obramba), Laser (neprekinjen žarek z naraščajočo škodo) in Zlata banka (prihodek na val)."
+          ]
+        },
+        {
+          "h": "Sovražniki",
+          "body": [
+            "- Tekači, šprinterji, roji in tanki so osnova; kasneje se pridružijo oklepljeni, regenerirajoči in deleči se.",
+            "- Samo Maksimalni: letalci letijo naravnost po zraku (zadenejo jih le Ostrostrelec/Tesla/Flak/Laser), prikriti so vidni le blizu ledenih, zastavnih ali ostrostrelskih stolpov, zdravilci krpajo sosede.",
+            "- Vsak 8. val prikoraka boss: veliko življenja, 5 izgubljenih življenj ob preboju, velika nagrada."
+          ]
+        },
+        {
+          "h": "Načini in zemljevidi",
+          "body": [
+            "- Klasični = glavni način s 7 stolpi. Kompaktni = 4 stolpi, 2 stopnji, več začetnega zlata - hiter začetek. Maksimalni = 11 stolpov, veje A/B, posebni sovražniki in aktivne sposobnosti.",
+            "- Travnik (prost), Kanjon (od vala 5), Križišče (od 10, pot se križa - močno za stolpe, a trši sovražniki) in Špalir (od 15, gradi se le tik ob poti)."
+          ]
+        },
+        {
+          "h": "Točke",
+          "body": [
+            "Točke dobiš za vsako sestrelitev in bonus za val, ki raste s številko vala in težavnostjo zemljevida. Mejnik je 10.000 točk - približno val 18-20 na Travniku."
+          ]
+        }
+      ]
     }
   ]
 }

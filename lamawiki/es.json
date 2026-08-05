@@ -1716,6 +1716,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "torres",
+        "oleadas",
+        "oro",
+        "jefe",
+        "estrategia"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "Los enemigos avanzan en oleadas por el camino. Construye torres al lado para detenerlos antes de la salida: cada avance cuesta vidas (los jefes 5), a 0 se acaba.",
+            "Cada mapa es infinito: las oleadas se hacen cada vez más fuertes y cada 8 llega un jefe. Entre oleadas construyes con calma; la siguiente la inicias tú.",
+            "Las bajas dan oro, más bonos de oleada y un 5% de intereses. Los mapas bloqueados se desbloquean con tu mejor oleada."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Haz clic en una carta de torre (o 1-9) y colócala en el campo. Clic derecho cancela.",
+            "- Haz clic en una torre: Mejorar [U] (hasta 3 niveles), Vender [X] (70% de vuelta). En el modo Máximo eliges una especialización A/B al nivel máximo.",
+            "- [Espacio] inicia la oleada, [F] = velocidad x2, [G] = todos los alcances, la rueda desplaza el menú. Máximo: [Q] Meteoro, [W] Nova de hielo, [E] Fiebre del oro."
+          ]
+        },
+        {
+          "h": "Torres",
+          "body": [
+            "- Flechas = rápida y barata, Cañón = daño de área, Hielo = ralentiza y revela, Francotirador = alcance enorme, perfora blindaje, alcanza voladores.",
+            "- El Clásico añade Veneno (daño en el tiempo), Tesla (rayo en cadena, antiaéreo) y Estandarte (aura de +20% de daño).",
+            "- Solo Máximo: Mortero (tiros parabólicos por casi todo el campo), Antiaérea, Láser (rayo continuo con daño creciente) y Banco de oro (ingresos por oleada)."
+          ]
+        },
+        {
+          "h": "Enemigos",
+          "body": [
+            "- Corredores, velocistas, enjambres y tanques forman la base; luego se suman acorazados, regeneradores y divisores.",
+            "- Solo Máximo: los voladores van en línea recta por el aire (solo Francotirador/Tesla/Antiaérea/Láser los alcanzan), los ocultos solo se ven cerca de torres de hielo, estandarte o francotirador, los sanadores curan a sus vecinos.",
+            "- Cada 8 oleadas marcha un jefe: mucha vida, 5 vidas perdidas si pasa, gran recompensa."
+          ]
+        },
+        {
+          "h": "Modos y mapas",
+          "body": [
+            "- Clásico = el modo principal con 7 torres. Compacto = 4 torres, 2 niveles, más oro inicial: la entrada rápida. Máximo = 11 torres, ramas A/B, enemigos especiales y habilidades activas.",
+            "- Pradera (libre), Cañón (desde la oleada 5), Cruce (desde 10, el camino se cruza: fuerte para las torres, pero enemigos más duros) y Guantelete (desde 15, solo se construye junto al camino)."
+          ]
+        },
+        {
+          "h": "Puntos",
+          "body": [
+            "Los puntos vienen de cada baja más un bono de oleada que crece con la oleada y la dificultad del mapa. El hito está en 10.000 puntos: más o menos la oleada 18-20 en Pradera."
+          ]
+        }
+      ]
     }
   ]
 }

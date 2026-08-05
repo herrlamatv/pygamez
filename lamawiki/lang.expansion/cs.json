@@ -1717,6 +1717,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "věže",
+        "vlny",
+        "zlato",
+        "boss",
+        "strategie"
+      ],
+      "sections": [
+        {
+          "h": "Jak hrát",
+          "body": [
+            "Nepřátelé pochodují ve vlnách po cestě. Stav vedle ní věže, aby ses jich zbavil před východem - každý průnik stojí životy (bossové 5), při 0 je konec.",
+            "Každá mapa je nekonečná: vlny neustále sílí a každou 8. vlnu dorazí boss. Mezi vlnami v klidu stavíš; další spouštíš sám.",
+            "Sestřely přinášejí zlato, k tomu bonusy za vlny a 5% úrok. Zamčené mapy odemkneš svou nejlepší vlnou."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Klikni na kartu věže (nebo 1-9) a umísti ji na pole. Pravé tlačítko ruší.",
+            "- Klikni na věž: Vylepšit [U] (až 3 úrovně), Prodat [X] (70% zpět). V Maximálním režimu si na nejvyšší úrovni vybíráš specializaci A/B.",
+            "- [Mezerník] spustí vlnu, [F] = 2x rychlost, [G] = všechny dosahy, kolečko myši posouvá stavební nabídku. Maximální: [Q] Meteor, [W] Mrazivá nova, [E] Zlatá horečka."
+          ]
+        },
+        {
+          "h": "Věže",
+          "body": [
+            "- Šíp = rychlý a levný, Kanón = plošné poškození, Mráz = zpomaluje a odhaluje, Odstřelovač = obrovský dosah, probíjí pancíř, zasáhne letce.",
+            "- Klasický přidává Jed (poškození v čase), Teslu (řetězový blesk, protivzdušná) a Prapor (aura +20% poškození).",
+            "- Jen Maximální: Minomet (obloukové střely přes většinu pole), Flak (protivzdušná obrana), Laser (nepřetržitý paprsek s rostoucím poškozením) a Zlatá banka (příjem za vlnu)."
+          ]
+        },
+        {
+          "h": "Nepřátelé",
+          "body": [
+            "- Běžci, sprinteři, roje a tanky tvoří základ; později se přidají obrnění, regenerující a dělící se.",
+            "- Jen Maximální: letci letí vzdušnou čarou (zasáhnou je jen Odstřelovač/Tesla/Flak/Laser), maskovaní jsou vidět jen u mrazivých, praporových nebo odstřelovačských věží, léčitelé spravují sousedy.",
+            "- Každou 8. vlnu pochoduje boss: spousta životů, 5 ztracených životů při průniku, velká odměna."
+          ]
+        },
+        {
+          "h": "Režimy a mapy",
+          "body": [
+            "- Klasický = hlavní režim se 7 věžemi. Kompaktní = 4 věže, 2 úrovně, více zlata na start - rychlý vstup. Maximální = 11 věží, větve A/B, speciální nepřátelé a aktivní schopnosti.",
+            "- Louka (volná), Kaňon (od vlny 5), Křižovatka (od 10, cesta se kříží - silné pro věže, ale tužší nepřátelé) a Ulička (od 15, staví se jen přímo u cesty)."
+          ]
+        },
+        {
+          "h": "Body",
+          "body": [
+            "Body získáváš za každý sestřel plus bonus za vlnu, který roste s číslem vlny a obtížností mapy. Milník je 10 000 bodů - zhruba vlna 18-20 na Louce."
+          ]
+        }
+      ]
     }
   ]
 }

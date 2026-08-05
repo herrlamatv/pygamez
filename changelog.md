@@ -8,6 +8,54 @@
 
 ## 🇩🇪 Deutsch
 
+### Tower Defense – 2026-08-06
+
+Spiel Nr. 39: ein komplettes **Tower Defense** mit endlosen Wellen, 4 Karten
+und 3 Umfangs-Modi - inklusive Erfolgen, Wiki-Seite und Übersetzungen in alle
+14 Sprachen.
+
+#### Neu
+- **Tower Defense** (`games/lamatowerdefense.py`): Gegner laufen in Wellen einen
+  Pfad entlang; Türme daneben bauen, ausbauen (bis 3 Stufen) und mit **70%
+  Erstattung verkaufen**. Jeder Durchbruch kostet Leben (Bosse 5), bei 0 ist
+  Schluss - die Punkte zählen als Highscore.
+- **4 Karten** mit eigenem Pfad und HP-Schwierigkeitsfaktor: **Wiese**,
+  **Schlucht**, **Kreuzung** (der Pfad kreuzt sich - stark für Türme, dafür
+  zähere Gegner) und **Spießrutenlauf** (gebaut wird nur direkt am Pfad).
+  Gesperrte Karten schaltet die beste erreichte Welle frei (5/10/15); die
+  Bestwelle je Karte wird gespeichert (Abschnitt `lamatowerdef` in `mem.json`).
+- **Endlos-Wellen per Formel** statt Wellen-Skript: Budget, Gegner-HP und
+  Beute skalieren mit der Wellen-Nummer (ab Welle 25 zusätzlich exponentiell);
+  alle **8 Wellen ein Boss**, jede 5. Welle eine Themen-Welle, der
+  Karten-Faktor greift über eine Anlaufkurve erst ab Welle 10 voll.
+- **3 Modi** im Vorspiel-Screen: **Klassisch** (7 Türme, Hauptmodus),
+  **Kompakt** (4 Türme, 2 Stufen, mehr Startgold) und **Maximal** (11 Türme,
+  **A/B-Spezialisierung** auf höchster Stufe, Spezialgegner und
+  Aktiv-Fähigkeiten **Meteor [Q] / Frostnova [W] / Goldsegen [E]**).
+- **11 Turmtypen**: Pfeil, Kanone (Splash), Frost (bremst + enttarnt),
+  Scharfschütze (Riesenreichweite, Panzerbrecher, Luft), Gift (Schaden über
+  Zeit), Tesla (Kettenblitz), Banner (+20%-Aura), Mörser (Bogenschuss über
+  fast das ganze Feld), Flak (Luftabwehr), Laser (Dauerstrahl mit Aufladung)
+  und Goldbank (Einkommen) - jeder mit eigener A/B-Verzweigung im
+  Maximal-Modus (22 Zweige, z. B. Doppelschuss/Durchschlag beim Pfeilturm).
+- **11 Gegnertypen**: Läufer, Sprinter, Schwarm, Panzer, Gepanzerte
+  (Schadensabzug), Regenerierer, Teiler, **Flieger** (eigene Luftroute, nur
+  Luftabwehr trifft), **Getarnte** (nur bei Frost/Banner/Scharfschütze
+  sichtbar), **Heiler** (Heil-Aura) und **Boss**.
+- **Komfort**: Geist-Vorschau mit Reichweitenkreis, Rechtsklick bricht ab,
+  **1-9** Schnellwahl, **[F]** Tempo x2, **[G]** alle Reichweiten, Mausrad
+  scrollt das Baumenü, **+5% Zinsen** je Bauphase, Wellen-Bonus.
+- **5 neue Erfolge**: Punkte-Meilenstein 10 000 sowie **Königsjäger** (erster
+  Boss), **Wellenbrecher** (Welle 20), **Festung** (Welle 10 ohne Verlust)
+  und **Endausbau** (Turm voll ausgebaut) - jetzt 74 Erfolge insgesamt.
+- **76 neue Übersetzungs-Keys je Sprache** und eine **neue LamaWiki-Seite** in
+  allen 14 Sprachen (das Wiki hat jetzt 40 Seiten); beide READMEs (DE/EN +
+  12 weitere Sprachen) um Tabellenzeile und Feature-Details ergänzt.
+
+#### Geändert
+- Sidebar: neues gezeichnetes **Burgturm-Icon** und Terracotta-Akzentfarbe
+  für Tower Defense (`ui.GAME_COLORS`); die Spieleliste zählt damit 39 Spiele.
+
 ### Erfolge & Statistiken – 2026-07-26
 
 Das Progression-Update: Die Sammlung zählt jetzt, was du spielst - **69 Erfolge**
@@ -171,6 +219,54 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Tower Defense – 2026-08-06
+
+Game no. 39: a complete **tower defense** with endless waves, 4 maps and
+3 content modes - including achievements, a wiki page and translations into
+all 14 languages.
+
+#### Added
+- **Tower Defense** (`games/lamatowerdefense.py`): enemies march along a path in
+  waves; build towers next to it, upgrade them (up to 3 levels) and sell at a
+  **70% refund**. Every breakthrough costs lives (bosses 5), at 0 the run
+  ends - your points count as the high score.
+- **4 maps**, each with its own path and HP difficulty factor: **Meadow**,
+  **Canyon**, **Crossroads** (the path crosses itself - strong for towers,
+  but tougher enemies) and **Gauntlet** (building only right next to the
+  path). Locked maps unlock via your best wave (5/10/15); the best wave per
+  map is stored (section `lamatowerdef` in `mem.json`).
+- **Endless waves by formula** instead of a wave script: budget, enemy HP and
+  bounty scale with the wave number (exponentially after wave 25); a **boss
+  every 8 waves**, a themed wave every 5th, and the map factor ramps up fully
+  only from wave 10.
+- **3 modes** on the pre-game screen: **Classic** (7 towers, the main mode),
+  **Compact** (4 towers, 2 levels, more starting gold) and **Maximal**
+  (11 towers, **A/B specialisation** at top level, special enemies and active
+  abilities **Meteor [Q] / Frost Nova [W] / Gold Rush [E]**).
+- **11 tower types**: Arrow, Cannon (splash), Frost (slows + reveals), Sniper
+  (huge range, armor piercing, anti-air), Poison (damage over time), Tesla
+  (chain lightning), Banner (+20% aura), Mortar (arcing shots across most of
+  the field), Flak (anti-air), Laser (ramping beam) and Gold Bank (income) -
+  each with its own A/B branch in Maximal mode (22 branches, e.g. Double
+  Shot/Piercing on the arrow tower).
+- **11 enemy types**: runt, sprinter, swarm, tank, armored (flat damage
+  reduction), regenerator, splitter, **flyer** (own air route, only anti-air
+  hits), **cloaked** (visible only near Frost/Banner/Sniper), **healer**
+  (heal aura) and **boss**.
+- **Comfort**: ghost preview with range circle, right-click cancels, **1-9**
+  quick select, **[F]** 2x speed, **[G]** all ranges, mouse wheel scrolls the
+  build bar, **+5% interest** per build phase, wave bonuses.
+- **5 new achievements**: a 10,000-point milestone plus **Boss Hunter**
+  (first boss), **Wavebreaker** (wave 20), **Fortress** (wave 10 without
+  losses) and **Full Build** (fully upgraded tower) - 74 achievements total.
+- **76 new translation keys per language** and a **new LamaWiki page** in all
+  14 languages (the wiki now has 40 pages); both READMEs (DE/EN + 12 more
+  languages) extended with a table row and feature details.
+
+#### Changed
+- Sidebar: new hand-drawn **castle-tower icon** and terracotta accent colour
+  for Tower Defense (`ui.GAME_COLORS`); the game list now counts 39 games.
 
 ### Achievements & Statistics – 2026-07-26
 

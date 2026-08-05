@@ -1718,6 +1718,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "lamatowerdefense",
+      "category": "games",
+      "game": "LamaTowerDefenseGame",
+      "title": "Tower Defense",
+      "keywords": [
+        "tower defense",
+        "towers",
+        "waves",
+        "gold",
+        "boss",
+        "strategy"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Enemies march along the path in waves. Build towers next to it to stop them before the exit - every breakthrough costs lives (bosses 5), at 0 the run ends.",
+            "Every map is endless: waves keep growing stronger and a boss arrives every 8 waves. Between waves you build at your leisure; you start the next one yourself.",
+            "Kills earn gold, plus wave bonuses and 5% interest. Locked maps unlock via your best wave."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Click a tower card (or 1-9), then place it on the field. Right-click cancels.",
+            "- Click a tower: Upgrade [U] (up to 3 levels), Sell [X] (70% back). In Maximal mode you pick an A/B specialisation at top level.",
+            "- [Space] starts the wave, [F] = 2x speed, [G] = show all ranges, mouse wheel scrolls the build bar. Maximal: [Q] Meteor, [W] Frost Nova, [E] Gold Rush."
+          ]
+        },
+        {
+          "h": "Towers",
+          "body": [
+            "- Arrow = fast & cheap, Cannon = area damage, Frost = slows & reveals, Sniper = huge range, pierces armor, hits flyers.",
+            "- Classic adds Poison (damage over time), Tesla (chain lightning, anti-air) and Banner (+20% damage aura).",
+            "- Maximal only: Mortar (arcing shots across most of the field), Flak (anti-air), Laser (continuous beam with ramping damage) and Gold Bank (income per wave)."
+          ]
+        },
+        {
+          "h": "Enemies",
+          "body": [
+            "- Runts, sprinters, swarms and tanks form the base; armored, regenerating and splitting enemies join later.",
+            "- Maximal only: flyers take the direct air route (only Sniper/Tesla/Flak/Laser hit them), cloaked enemies are visible only near Frost, Banner or Sniper towers, healers patch up their neighbours.",
+            "- Every 8th wave a boss marches in: lots of health, 5 lives lost on breakthrough, big reward."
+          ]
+        },
+        {
+          "h": "Modes & maps",
+          "body": [
+            "- Classic = the main mode with 7 towers. Compact = 4 towers, 2 levels, more starting gold - the quick start. Maximal = 11 towers, A/B branches, special enemies and active abilities.",
+            "- Meadow (free), Canyon (from wave 5), Crossroads (from 10, the path crosses itself - strong for towers, but enemies are tougher) and Gauntlet (from 15, you may only build right next to the path)."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Points come from every kill plus a wave bonus that grows with wave number and map difficulty. The milestone sits at 10,000 points - roughly wave 18-20 on Meadow."
+          ]
+        }
+      ]
     }
   ]
 }

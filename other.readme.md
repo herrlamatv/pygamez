@@ -77,6 +77,7 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Bubble Shooter** | 1 joueur   | Clone de Puzzle Bobble : tire des couleurs identiques par groupes de trois, rebonds sur les parois, grappes qui tombent, 3 difficultés |
 | **Hangman**        | 1 joueur   | Devine le mot avant que la potence soit complète ; clavier à l'écran, listes de mots par langue, 3 modes de longueur, série sans fin |
 | **Block Jump**     | 1 joueur   | Jeu de plateforme 3D façon Minecraft : monde de blocs (voxels) avec échelles, barrières & blocs-ressorts, caméra 1re/3e personne, flou de mouvement, niveaux générés |
+| **Tower Defense** | 1 joueur   | Repousse des vagues infinies sur 4 cartes : jusqu'à 11 types de tours avec améliorations, vente & spécialisation A/B, boss, 3 modes, capacités actives |
 
 **Le multijoueur (2 joueurs en local)** est disponible pour **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duel
@@ -449,6 +450,20 @@ fusionnent.
 - **Listes de mots par langue** (A-Z uniquement) ; les essais ne sont pas
   vérifiés dans un dictionnaire. Tape au clavier ou clique les touches à l'écran.
 
+**Tower Defense**
+- **Défense de vagues sans fin** sur **4 cartes** (Prairie, Canyon, Croisement,
+  Gantelet), chacune avec son propre chemin ; les cartes verrouillées se
+  débloquent avec ta meilleure vague, un **boss** arrive toutes les **8 vagues**.
+- **3 modes** : Classique (7 tours, le mode principal), Compact (4 tours,
+  2 niveaux) et Maximal (**11 tours**, **spécialisation A/B** au niveau maximum,
+  ennemis spéciaux, capacités actives **Météore/Nova de givre/Ruée vers l'or**).
+- **11 types de tours**, des flèches au laser et à la banque d'or, jusqu'à
+  **3 niveaux d'amélioration** chacune, vente remboursée à 70% ; ennemis avec
+  armure, régénération, division, camouflage, aura de soin et route aérienne.
+- **Économie** : or par élimination, bonus de vague + 5% d'intérêts ; points par
+  élimination et par vague. **F** = vitesse x2, **G** = portées, clic droit
+  annule.
+
 Les meilleurs scores sont enregistrés dans la section `highscores` de
 `mem.json` (à côté du code) – avec la langue (section `mem`).
 
@@ -473,7 +488,7 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
   **flou** derrière la superposition de pause.
 - L'**écran de préparation** de chaque jeu apparaît dans sa couleur d'accent et
   affiche le record précédent sous forme de puce.
-- **Look unifié en jeu** : les 38 jeux partagent la palette et la police du
+- **Look unifié en jeu** : les 39 jeux partagent la palette et la police du
   menu - les HUD, écrans de préparation et superpositions suivent le design
   choisi dans les options (v4.1 / v4 / Classique), tandis que chaque terrain
   garde ses couleurs d'identité. Chaque jeu gère proprement un changement de
@@ -753,6 +768,7 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Bubble Shooter**   | 1 jugador  | Clon de Puzzle Bobble: dispara colores iguales en grupos de tres, rebotes en las paredes, racimos que caen, 3 dificultades |
 | **Hangman**          | 1 jugador  | Adivina la palabra antes de completar la horca; teclado en pantalla, listas de palabras por idioma, 3 modos de longitud, racha sin fin |
 | **Block Jump**       | 1 jugador  | Plataformas 3D estilo Minecraft: mundo de bloques (vóxeles) con escaleras, vallas y bloques-resorte, cámara 1ª/3ª persona, desenfoque, niveles generados |
+| **Tower Defense**    | 1 jugador  | Repele oleadas infinitas en 4 mapas: hasta 11 tipos de torres con mejoras, venta y especialización A/B, jefes, 3 modos, habilidades activas |
 
 **El multijugador (2 jugadores en local)** está disponible en **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
@@ -1084,6 +1100,20 @@ arma), efectos de explosión, récord.
 - **Listas de palabras por idioma** (solo A-Z); los intentos no se comprueban
   con un diccionario. Escribe con el teclado o pulsa las teclas en pantalla.
 
+**Tower Defense**
+- **Defensa de oleadas sin fin** en **4 mapas** (Pradera, Cañón, Cruce,
+  Guantelete), cada uno con su propio camino; los mapas bloqueados se
+  desbloquean con tu mejor oleada, un **jefe** llega cada **8 oleadas**.
+- **3 modos**: Clásico (7 torres, el modo principal), Compacto (4 torres,
+  2 niveles) y Máximo (**11 torres**, **especialización A/B** al nivel máximo,
+  enemigos especiales, habilidades activas **Meteoro/Nova de hielo/Fiebre del
+  oro**).
+- **11 tipos de torres**, de las flechas al láser y el banco de oro, hasta
+  **3 niveles de mejora** cada una, la venta devuelve el 70%; enemigos con
+  blindaje, regeneración, división, camuflaje, aura curativa y ruta aérea.
+- **Economía**: oro por baja, bono de oleada + 5% de intereses; puntos por baja
+  y oleada. **F** = velocidad x2, **G** = alcances, clic derecho cancela.
+
 Los récords se guardan en la sección `highscores` de `mem.json` (junto al
 código) – junto con el idioma (sección `mem`).
 
@@ -1108,7 +1138,7 @@ extra) y pulida con aspecto de lanzador moderno:
   **desenfoque real** tras la superposición de pausa.
 - La **pantalla previa** de cada juego aparece en su color de acento y muestra
   el récord anterior como chip.
-- **Aspecto unificado en el juego**: los 38 juegos comparten la paleta y la
+- **Aspecto unificado en el juego**: los 39 juegos comparten la paleta y la
   tipografía del menú - los HUD, pantallas de configuración y superposiciones
   siguen el diseño elegido en las opciones (v4.1 / v4 / Clásico), mientras cada
   campo de juego conserva sus colores de identidad. Todos los juegos gestionan
@@ -1379,6 +1409,7 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Bubble Shooter**   | 1 jogador  | Clone do Puzzle Bobble: atira cores iguais em grupos de três, ressaltos nas paredes, grupos que caem, 3 dificuldades |
 | **Hangman**          | 1 jogador  | Adivinha a palavra antes de a forca ficar completa; teclado no ecrã, listas de palavras por idioma, 3 modos de tamanho, série sem fim |
 | **Block Jump**       | 1 jogador  | Plataforma 3D estilo Minecraft: mundo de blocos (voxels) com escadas, cercas e blocos-mola, câmera 1ª/3ª pessoa, desfoque, níveis gerados |
+| **Tower Defense**    | 1 jogador  | Repele ondas infinitas em 4 mapas: até 11 tipos de torres com melhorias, venda e especialização A/B, chefes, 3 modos, habilidades ativas |
 
 **O multijogador (2 jogadores em local)** está disponível em **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
@@ -1708,6 +1739,20 @@ melhoria de arma), efeitos de explosão, recorde.
 - **Listas de palavras por idioma** (só A-Z); as tentativas não são verificadas
   num dicionário. Escreve no teclado ou clica as teclas no ecrã.
 
+**Tower Defense**
+- **Defesa de ondas sem fim** em **4 mapas** (Campina, Desfiladeiro, Cruzamento,
+  Corredor), cada um com o seu caminho; os mapas bloqueados desbloqueiam-se com
+  a tua melhor onda, um **chefe** chega a cada **8 ondas**.
+- **3 modos**: Clássico (7 torres, o modo principal), Compacto (4 torres,
+  2 níveis) e Máximo (**11 torres**, **especialização A/B** no nível máximo,
+  inimigos especiais, habilidades ativas **Meteoro/Nova de gelo/Corrida ao
+  ouro**).
+- **11 tipos de torres**, das flechas ao laser e ao banco de ouro, até
+  **3 níveis de melhoria** cada, a venda devolve 70%; inimigos com blindagem,
+  regeneração, divisão, camuflagem, aura de cura e rota aérea.
+- **Economia**: ouro por baixa, bónus de onda + 5% de juros; pontos por baixa e
+  onda. **F** = velocidade x2, **G** = alcances, botão direito cancela.
+
 Os recordes são guardados na secção `highscores` de `mem.json` (junto ao
 código) – juntamente com o idioma (secção `mem`).
 
@@ -1732,7 +1777,7 @@ e polida com aspeto de launcher moderno:
   verdadeiro** atrás da sobreposição de pausa.
 - O **ecrã de preparação** de cada jogo aparece na sua cor de destaque e mostra
   o recorde anterior como chip.
-- **Visual unificado no jogo**: os 38 jogos partilham a paleta e a tipografia do
+- **Visual unificado no jogo**: os 39 jogos partilham a paleta e a tipografia do
   menu - os HUD, ecrãs de preparação e sobreposições seguem o design escolhido
   nas opções (v4.1 / v4 / Clássico), enquanto cada campo de jogo mantém as suas
   cores de identidade. Todos os jogos lidam corretamente com uma mudança de
@@ -2007,6 +2052,7 @@ krok po kroku znajduje się na samym dole w sekcji
 | **Bubble Shooter** | 1 gracz   | Klon Puzzle Bobble: strzelaj pasujące kolory w grupy po trzy, odbicia od ścian, opadające grupy, 3 poziomy trudności |
 | **Wisielec** | 1 gracz         | Odgadnij słowo, zanim szubienica będzie gotowa; klawiatura ekranowa, listy słów na język, 3 tryby długości, nieskończona seria |
 | **Block Jump** | 1 gracz       | Platformówka 3D w stylu Minecraft: świat wokseli z drabinami, płotami i blokami-sprężynami, kamera z 1./3. osoby, motion blur, generowane z ziarna poziomy parkour |
+| **Tower Defense** | 1 gracz     | Odpieraj niekończące się fale na 4 mapach: do 11 typów wież z ulepszeniami, sprzedażą i specjalizacją A/B, bossowie, 3 tryby, zdolności aktywne |
 
 **Tryb wieloosobowy (2 graczy lokalnie)** jest dostępny w grach **Snake**, **Pong**,
 **Air Hockey**, **Kółko i krzyżyk**, **Tetris (Versus)**, **Asteroids (pojedynek
@@ -2439,6 +2485,20 @@ broni), efekty wybuchów, rekord.
   + bonus czasowy, monety +50, upadek kosztuje życie (start z 3). Sterowanie:
   WASD/strzałki, **Spacja** = skok.
 
+**Tower Defense**
+- **Niekończąca się obrona przed falami** na **4 mapach** (Łąka, Kanion,
+  Skrzyżowanie, Szpaler), każda z własną ścieżką; zablokowane mapy odblokowuje
+  najlepsza fala, co **8 fal** nadchodzi **boss**.
+- **3 tryby**: Klasyczny (7 wież, tryb główny), Kompaktowy (4 wieże, 2 poziomy)
+  i Maksymalny (**11 wież**, **specjalizacja A/B** na najwyższym poziomie,
+  specjalni wrogowie, zdolności aktywne **Meteor/Nova mrozu/Gorączka złota**).
+- **11 typów wież**, od łuczniczej po laser i bank złota, każda z maks.
+  **3 poziomami ulepszeń**, sprzedaż zwraca 70%; wrogowie z pancerzem,
+  regeneracją, podziałem, kamuflażem, aurą leczenia i trasą powietrzną.
+- **Ekonomia**: złoto za zestrzelenia, bonus za falę + 5% odsetek; punkty za
+  zestrzelenia i fale. **F** = tempo x2, **G** = zasięgi, prawy przycisk
+  anuluje.
+
 Rekordy są przechowywane w sekcji `highscores` pliku `mem.json` (obok kodu) —
 razem z językiem (sekcja `mem`).
 
@@ -2462,7 +2522,7 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
   pauzy.
 - **Ekran przygotowania** każdej gry pojawia się w jej kolorze akcentu i pokazuje
   poprzedni rekord jako chip.
-- **Jednolity wygląd w grze**: wszystkie 38 gier korzysta z tej samej palety motywu
+- **Jednolity wygląd w grze**: wszystkie 39 gier korzysta z tej samej palety motywu
   i czcionki co menu — HUD-y, ekrany konfiguracji i nakładki podążają za wyglądem
   wybranym w opcjach (v4.1 / v4 / Klasyczny), a każde pole gry zachowuje swoje
   kolory tożsamości. Każda gra poprawnie obsługuje zmianę rozdzielczości w trakcie
@@ -2738,6 +2798,7 @@ yoksa sistemdeki Python'ı. Ayrıntılı, adım adım bir kılavuz en altta
 | **Bubble Shooter** | 1 oyuncu  | Puzzle Bobble klonu: eşleşen renkleri üçlü gruplar halinde ateşle, duvar sekmeleri, düşen kümeler, 3 zorluk |
 | **Adam Asmaca**    | 1 oyuncu  | Darağacı tamamlanmadan kelimeyi tahmin et; ekran klavyesi, dile göre kelime listeleri, 3 uzunluk modu, sonsuz seri |
 | **Block Jump**  | 1 oyuncu     | Minecraft tarzı 3D platform oyunu: merdivenler, çitler ve yay bloklarıyla voksel dünyası, birinci/üçüncü şahıs kamera, hareket bulanıklığı, tohumla üretilen parkur bölümleri |
+| **Tower Defense** | 1 oyuncu   | 4 haritada sonsuz dalgaları püskürt: geliştirme, satış ve A/B uzmanlaşmalı 11 kule tipine kadar, bosslar, 3 mod, aktif yetenekler |
 
 **Çok oyunculu (2 oyuncu yerel)** şu oyunlarda mevcuttur: **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (ortaklaşa
@@ -3169,6 +3230,19 @@ patlama efektleri, yüksek skor.
   madeni paralar +50, düşmek bir cana mal olur (3 ile başlar). Kontroller:
   WASD/oklar, zıplamak için **Boşluk**.
 
+**Tower Defense**
+- **4 haritada** (Çayır, Kanyon, Kavşak, Dar Geçit) **sonsuz dalga savunması**;
+  her haritanın kendi yolu var, kilitli haritalar en iyi dalganla açılır, her
+  **8 dalgada** bir **boss** gelir.
+- **3 mod**: Klasik (7 kule, ana mod), Kompakt (4 kule, 2 seviye) ve Maksimum
+  (**11 kule**, en yüksek seviyede **A/B uzmanlaşması**, özel düşmanlar, aktif
+  yetenekler **Meteor/Buz novası/Altına hücum**).
+- Oktan lazere ve altın bankasına **11 kule tipi**, her biri en fazla
+  **3 geliştirme seviyesi**, satış %70 iade eder; zırhlı, yenilenen, bölünen,
+  gizlenen, şifa auralı ve hava rotalı düşmanlar.
+- **Ekonomi**: yok etme başına altın, dalga bonusu + %5 faiz; yok etme ve dalga
+  başına puan. **F** = 2x hız, **G** = menziller, sağ tık iptal eder.
+
 Yüksek skorlar `mem.json` dosyasının `highscores` bölümünde (kodun yanında) - dil
 ile birlikte (`mem` bölümü) saklanır.
 
@@ -3192,7 +3266,7 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
   katmanının arkasında gerçek bir **bulanıklık**.
 - Her oyunun **oyun öncesi ekranı** o oyunun vurgu renginde belirir ve önceki
   rekoru bir çip olarak gösterir.
-- **Birleşik oyun içi görünüm**: 38 oyunun tamamı menünün tema paletini ve yazı
+- **Birleşik oyun içi görünüm**: 39 oyunun tamamı menünün tema paletini ve yazı
   tipini paylaşır - HUD'lar, setup ekranları ve katmanlar seçeneklerde belirlenen
   tasarımı (v4.1 / v4 / Klasik) izlerken her oyun alanı kendi kimlik renklerini
   korur. Artık her oyun, oyun ortasındaki çözünürlük değişikliklerini düzgün
@@ -3464,6 +3538,7 @@ nederst under **[Installationsguide](#installationsguide)**.
 | **Bubble Shooter** | 1 spiller | Puzzle Bobble-klon: skyd ens farver i grupper af tre, vægafspring, faldende klynger, 3 sværhedsgrader |
 | **Galgemand**   | 1 spiller    | Gæt ordet, før galgen er færdig; skærmtastatur, ordlister pr. sprog, 3 længdetilstande, endeløs streak |
 | **Block Jump**  | 1 spiller    | 3D-platformspil i Minecraft-stil: voxelverden med stiger, hegn og fjederblokke, første-/tredjepersonskamera, motion blur, seed-genererede parkourbaner |
+| **Tower Defense** | 1 spiller   | Slå endeløse bølger tilbage på 4 kort: op til 11 tårntyper med opgraderinger, salg & A/B-specialisering, bosser, 3 tilstande, aktive evner |
 
 **Multiplayer (2 spillere lokalt)** findes til **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op-duel)**,
@@ -3872,6 +3947,20 @@ eksplosionseffekter, highscore.
   +50, et fald koster et liv (start med 3). Styring: WASD/piletaster, **Mellemrum**
   for at hoppe.
 
+**Tower Defense**
+- **Endeløst bølgeforsvar** på **4 kort** (Eng, Kløft, Korsvej, Spidsrod), hvert
+  med sin egen sti; låste kort låses op med din bedste bølge, en **boss**
+  ankommer hver **8. bølge**.
+- **3 tilstande**: Klassisk (7 tårne, hovedtilstanden), Kompakt (4 tårne,
+  2 niveauer) og Maksimal (**11 tårne**, **A/B-specialisering** på højeste
+  niveau, specialfjender, aktive evner **Meteor/Frostnova/Guldfeber**).
+- **11 tårntyper** fra pil til laser og guldbank, hver med op til
+  **3 opgraderingsniveauer**, salg refunderer 70%; fjender med panser,
+  regeneration, deling, camouflage, healingaura og luftrute.
+- **Økonomi**: guld pr. nedskydning, bølgebonus + 5% renter; point pr.
+  nedskydning og bølge. **F** = 2x tempo, **G** = rækkevidder, højreklik
+  annullerer.
+
 Highscores gemmes i afsnittet `highscores` i `mem.json` (ved siden af koden) –
 sammen med sproget (afsnittet `mem`).
 
@@ -3894,7 +3983,7 @@ og stylet som en moderne spil-launcher:
   pause-overlayet.
 - Hvert spils **forspils-skærm** vises i det pågældende spils accentfarve og viser
   den tidligere rekord som en chip.
-- **Ensartet look i spillet**: alle 38 spil deler menuens temapalet og skrifttype -
+- **Ensartet look i spillet**: alle 39 spil deler menuens temapalet og skrifttype -
   HUD'er, setup-skærme og overlays følger det design, der er valgt i indstillingerne
   (v4.1 / v4 / Klassisk), mens hvert spillefelt beholder sine identitetsfarver.
   Hvert spil håndterer nu en opløsningsændring midt i spillet rent, og menunavnene
@@ -4166,6 +4255,7 @@ nederst under **[Installasjonsveiledning](#installasjonsveiledning)**.
 | **Bubble Shooter** | 1 spiller  | Puzzle Bobble-klone: skyt like farger i grupper på tre, veggsprett, fallende klynger, 3 vanskelighetsgrader |
 | **Hangman**        | 1 spiller  | Gjett ordet før galgen er ferdig; skjermtastatur, ordlister per språk, 3 lengdemoduser, endeløs streak |
 | **Block Jump**  | 1 spiller       | 3D-plattformspill i Minecraft-stil: voxelverden med stiger, gjerder og hoppeblokker, første-/tredjepersonskamera, motion blur, seed-genererte parkour-nivåer |
+| **Tower Defense** | 1 spiller      | Slå tilbake endeløse bølger på 4 kart: opptil 11 tårntyper med oppgraderinger, salg & A/B-spesialisering, bosser, 3 moduser, aktive evner |
 
 **Flerspiller (2 spillere lokalt)** er tilgjengelig for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids
@@ -4573,6 +4663,19 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   mynter +50, et fall koster et liv (start med 3). Styring: WASD/piler, **mellomrom**
   for å hoppe.
 
+**Tower Defense**
+- **Endeløst bølgeforsvar** på **4 kart** (Eng, Kløft, Veikryss, Spissrotgang),
+  hvert med sin egen sti; låste kart låses opp med din beste bølge, en **boss**
+  ankommer hver **8. bølge**.
+- **3 moduser**: Klassisk (7 tårn, hovedmodusen), Kompakt (4 tårn, 2 nivåer) og
+  Maksimal (**11 tårn**, **A/B-spesialisering** på høyeste nivå, spesialfiender,
+  aktive evner **Meteor/Frostnova/Gullrush**).
+- **11 tårntyper** fra pil til laser og gullbank, hvert med opptil
+  **3 oppgraderingsnivåer**, salg refunderer 70%; fiender med panser,
+  regenerering, deling, kamuflasje, healingaura og luftrute.
+- **Økonomi**: gull per nedskyting, bølgebonus + 5% renter; poeng per nedskyting
+  og bølge. **F** = 2x tempo, **G** = rekkevidder, høyreklikk avbryter.
+
 Rekordene lagres i `highscores`-delen av `mem.json` (ved siden av koden) – sammen
 med språket (delen `mem`).
 
@@ -4595,7 +4698,7 @@ pakker) og stylet som en moderne spill-launcher:
   pause-overlegget.
 - Hvert spills **forspillskjerm** vises i spillets aksentfarge og viser forrige
   rekord som en chip.
-- **Enhetlig utseende i spillet**: alle 38 spillene deler menyens temapalett og
+- **Enhetlig utseende i spillet**: alle 39 spillene deler menyens temapalett og
   skrift – HUD-er, oppsettskjermer og overlegg følger designet valgt i
   alternativene (v4.1 / v4 / Classic), mens hver spillflate beholder sine
   identitetsfarger. Hvert spill håndterer nå oppløsningsendringer midt i spillet
@@ -4866,6 +4969,7 @@ under **[Installationsguide](#installationsguide)**.
 | **Bubble Shooter** | 1 spelare  | Puzzle Bobble-klon: skjut matchande färger i grupper om tre, väggstudsar, fallande kluster, 3 svårighetsgrader |
 | **Hänga gubbe**  | 1 spelare    | Gissa ordet innan galgen är färdig; skärmtangentbord, ordlistor per språk, 3 längdlägen, oändlig streak |
 | **Block Jump**   | 1 spelare    | 3D-plattformsspel i Minecraft-stil: voxelvärld med stegar, staket & fjäderblock, första-/tredjepersonskamera, motion blur, seed-genererade parkourbanor |
+| **Tower Defense** | 1 spelare    | Slå tillbaka oändliga vågor på 4 kartor: upp till 11 torntyper med uppgraderingar, försäljning & A/B-specialisering, bossar, 3 lägen, aktiva förmågor |
 
 **Flerspelarläge (2 spelare lokalt)** finns för **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op-duell)**,
@@ -5247,6 +5351,20 @@ explosionseffekter, topplista.
 - **Seed-genererade parkourbanor** blir svårare; mål = poäng + tidsbonus, mynt +50, ett fall kostar
   ett liv (börja med 3). Styrning: WASD/pilar, **Mellanslag** för att hoppa.
 
+**Tower Defense**
+- **Oändligt vågförsvar** på **4 kartor** (Äng, Ravin, Korsning, Gatlopp), var
+  och en med sin egen stig; låsta kartor låses upp med din bästa våg, en **boss**
+  anländer var **8:e våg**.
+- **3 lägen**: Klassisk (7 torn, huvudläget), Kompakt (4 torn, 2 nivåer) och
+  Maximal (**11 torn**, **A/B-specialisering** på högsta nivån, specialfiender,
+  aktiva förmågor **Meteor/Frostnova/Guldrush**).
+- **11 torntyper** från pil till laser och guldbank, vart och ett med upp till
+  **3 uppgraderingsnivåer**, försäljning återbetalar 70%; fiender med pansar,
+  regenerering, delning, kamouflage, helandeaura och luftrutt.
+- **Ekonomi**: guld per nedskjutning, vågbonus + 5% ränta; poäng per
+  nedskjutning och våg. **F** = 2x tempo, **G** = räckvidder, högerklick
+  avbryter.
+
 Topplistorna sparas i avsnittet `highscores` i `mem.json` (bredvid koden) – tillsammans med
 språket (avsnittet `mem`).
 
@@ -5267,7 +5385,7 @@ modern spel-launcher:
   vid nytt rekord** och en riktig **oskärpa** bakom pausöverlägget.
 - Varje spels **förspelsskärm** visas i det spelets accentfärg och visar det tidigare rekordet som ett
   chip.
-- **Enhetlig look i spelet**: alla 38 spel delar menyns temapalett och typsnitt - HUD:ar, setup-skärmar
+- **Enhetlig look i spelet**: alla 39 spel delar menyns temapalett och typsnitt - HUD:ar, setup-skärmar
   och överlägg följer den design som valts i alternativen (v4.1 / v4 / Classic), medan varje spelplan
   behåller sina identitetsfärger. Varje spel hanterar nu upplösningsbyten mitt i spelet snyggt, och
   menynamnen är språkanpassade (t.ex. ”Schach” → ”Schack”).
@@ -5530,6 +5648,7 @@ ohje löytyy aivan alhaalta kohdasta **[Asennusopas](#asennusopas)**.
 | **Bubble Shooter** | 1 pelaaja  | Puzzle Bobble -klooni: ammu samat värit kolmen ryhmiksi, seinäkimmokkeet, putoavat rykelmät, 3 vaikeustasoa |
 | **Hirsipuu**       | 1 pelaaja  | Arvaa sana ennen kuin hirsipuu valmistuu; ruutunäppäimistö, kielikohtaiset sanalistat, 3 pituustilaa, loputon putki |
 | **Block Jump**  | 1 pelaaja       | 3D-Minecraft-tyylinen tasoloikka: voxel-maailma tikkailla, aidoilla ja jousiblokeilla, ensimmäisen/kolmannen persoonan kamera, motion blur, siemenpohjaiset parkour-kentät |
+| **Tower Defense** | 1 pelaaja      | Torju loputtomia aaltoja 4 kartalla: jopa 11 tornityyppiä parannuksineen, myynteineen ja A/B-erikoistumisineen, pomoja, 3 tilaa, aktiivisia kykyjä |
 
 **Moninpeli (2 pelaajaa paikallisesti)** on saatavilla peleihin **Snake**,
 **Pong**, **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids
@@ -5954,6 +6073,20 @@ räjähdystehosteet, ennätys.
   +50, putoaminen maksaa elämän (aloitat 3:lla). Ohjaus: WASD/nuolet, **Välilyönti**
   hyppää.
 
+**Tower Defense**
+- **Loputon aaltopuolustus** **4 kartalla** (Niitty, Kanjoni, Risteys,
+  Kujanjuoksu), jokaisella oma polkunsa; lukitut kartat avautuvat parhaalla
+  aallollasi, **pomo** saapuu joka **8. aallolla**.
+- **3 tilaa**: Klassinen (7 tornia, päätila), Kompakti (4 tornia, 2 tasoa) ja
+  Maksimi (**11 tornia**, **A/B-erikoistuminen** korkeimmalla tasolla,
+  erikoisviholliset, aktiiviset kyvyt **Meteori/Pakkasnova/Kultaryntäys**).
+- **11 tornityyppiä** nuolesta laseriin ja kultapankkiin, kussakin jopa
+  **3 parannustasoa**, myynti palauttaa 70%; vihollisilla panssaria,
+  uusiutumista, jakautumista, naamiointia, parannusaura ja ilmareitti.
+- **Talous**: kultaa jokaisesta tuhotusta, aaltobonus + 5% korkoa; pisteitä
+  tuhotuista ja aalloista. **F** = 2x nopeus, **G** = kantamat, oikea painike
+  peruu.
+
 Ennätykset tallennetaan tiedoston `mem.json` osioon `highscores` (koodin vieressä)
 – yhdessä kielen kanssa (osio `mem`).
 
@@ -5976,7 +6109,7 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
   **konfettisade uudesta ennätyksestä** ja aito **sumennus** taukopeiton takana.
 - Jokaisen pelin **esinäyttö** ilmestyy kyseisen pelin korostusvärissä ja näyttää
   edellisen ennätyksen chippinä.
-- **Yhtenäinen pelin ilme**: kaikki 38 peliä jakavat valikon teemapaletin ja fontin –
+- **Yhtenäinen pelin ilme**: kaikki 39 peliä jakavat valikon teemapaletin ja fontin –
   HUDit, asetusnäytöt ja peittokerrokset noudattavat asetuksissa valittua ulkoasua
   (v4.1 / v4 / Klassinen), kun taas jokainen pelikenttä säilyttää identiteettivärinsä.
   Jokainen peli käsittelee nyt siististi resoluution vaihdon kesken pelin, ja valikon
@@ -6247,6 +6380,7 @@ existuje, jinak systémový Python. Podrobný návod krok za krokem je úplně d
 | **Bubble Shooter** | 1 hráč    | Klon Puzzle Bobble: střílej stejné barvy do trojic, odrazy od stěn, padající shluky, 3 obtížnosti |
 | **Hangman**        | 1 hráč    | Uhodni slovo, než se dokreslí šibenice; klávesnice na obrazovce, seznamy slov podle jazyka, 3 délkové režimy, nekonečná série |
 | **Block Jump**   | 1 hráč      | 3D plošinovka ve stylu Minecraftu: voxelový svět se žebříky, ploty a pružinovými bloky, kamera z první/třetí osoby, motion blur, parkourové úrovně ze semínka |
+| **Tower Defense** | 1 hráč      | Odrážej nekonečné vlny na 4 mapách: až 11 typů věží s vylepšeními, prodejem a specializací A/B, bossové, 3 režimy, aktivní schopnosti |
 
 **Více hráčů (2 hráči lokálně)** je k dispozici pro **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (kooperativní
@@ -6666,6 +6800,19 @@ zbraně), efekty explozí, nejlepší skóre.
 - **Parkourové úrovně ze semínka** se ztěžují; cíl = body + časový bonus, mince
   +50, pád stojí život (start se 3). Ovládání: WASD/šipky, **Mezerník** skok.
 
+**Tower Defense**
+- **Nekonečná obrana proti vlnám** na **4 mapách** (Louka, Kaňon, Křižovatka,
+  Ulička), každá s vlastní cestou; zamčené mapy odemyká tvá nejlepší vlna,
+  každou **8. vlnu** dorazí **boss**.
+- **3 režimy**: Klasický (7 věží, hlavní režim), Kompaktní (4 věže, 2 úrovně) a
+  Maximální (**11 věží**, **specializace A/B** na nejvyšší úrovni, speciální
+  nepřátelé, aktivní schopnosti **Meteor/Mrazivá nova/Zlatá horečka**).
+- **11 typů věží** od šípů po laser a zlatou banku, každá s až **3 úrovněmi
+  vylepšení**, prodej vrací 70%; nepřátelé s pancířem, regenerací, dělením,
+  maskováním, léčivou aurou a vzdušnou trasou.
+- **Ekonomika**: zlato za sestřel, bonus za vlnu + 5% úrok; body za sestřely a
+  vlny. **F** = 2x rychlost, **G** = dosahy, pravé tlačítko ruší.
+
 Nejlepší skóre se ukládají do sekce `highscores` souboru `mem.json` (vedle
 kódu) – spolu s jazykem (sekce `mem`).
 
@@ -6689,7 +6836,7 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
   pauzy.
 - **Přípravná obrazovka** každé hry se zobrazuje v její akcentové barvě a ukazuje
   dosavadní rekord jako čip.
-- **Jednotný vzhled ve hře**: všech 38 her sdílí paletu témat a písmo menu -
+- **Jednotný vzhled ve hře**: všech 39 her sdílí paletu témat a písmo menu -
   HUDy, obrazovky nastavení a překrytí následují design zvolený v nastavení
   (v4.1 / v4 / Klasický), zatímco každé hrací pole si ponechává své identitní
   barvy. Každá hra nyní čistě zvládne změnu rozlišení uprostřed partie a názvy
@@ -6962,6 +7109,7 @@ obstaja, sicer sistemski Python. Na dnu dokumenta je podroben vodnik po korakih:
 | **Bubble Shooter** | 1 igralec  | Klon Puzzle Bobble: streljaj enake barve v skupine po tri, odboji od sten, padajoče gruče, 3 težavnosti |
 | **Vislice**        | 1 igralec  | Ugani besedo, preden so vislice končane; zaslonska tipkovnica, seznami besed po jeziku, 3 dolžinski načini, neskončni niz |
 | **Block Jump**  | 1 igralec       | 3D-ploščadnica v slogu Minecrafta: voksel svet z lestvami, ograjami in vzmetnimi bloki, kamera v prvi/tretji osebi, motion blur, ravni parkourja s semenom |
+| **Tower Defense** | 1 igralec      | Odbijaj neskončne valove na 4 zemljevidih: do 11 vrst stolpov z nadgradnjami, prodajo in specializacijo A/B, bossi, 3 načini, aktivne sposobnosti |
 
 **Večigralski način (2 igralca lokalno)** je na voljo za igre **Snake**,
 **Pong**, **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**,
@@ -7374,6 +7522,21 @@ nadgradnja orožja), učinki eksplozij, rekord.
   kovanci +50, padec stane življenje (začneš s 3). Upravljanje: WASD/puščice,
   **preslednica** za skok.
 
+**Tower Defense**
+- **Neskončna obramba pred valovi** na **4 zemljevidih** (Travnik, Kanjon,
+  Križišče, Špalir), vsak s svojo potjo; zaklenjene zemljevide odklene tvoj
+  najboljši val, vsak **8. val** prikoraka **boss**.
+- **3 načini**: Klasični (7 stolpov, glavni način), Kompaktni (4 stolpi,
+  2 stopnji) in Maksimalni (**11 stolpov**, **specializacija A/B** na najvišji
+  stopnji, posebni sovražniki, aktivne sposobnosti **Meteor/Ledena nova/Zlata
+  mrzlica**).
+- **11 vrst stolpov** od puščic do laserja in zlate banke, vsak z do
+  **3 stopnjami nadgradnje**, prodaja vrne 70%; sovražniki z oklepom,
+  regeneracijo, delitvijo, prikrivanjem, zdravilno avro in zračno potjo.
+- **Ekonomija**: zlato za sestrelitev, bonus za val + 5% obresti; točke za
+  sestrelitve in valove. **F** = 2x hitrost, **G** = dosegi, desni klik
+  prekliče.
+
 Rekordi se shranijo v razdelku `highscores` datoteke `mem.json` (poleg kode) –
 skupaj z jezikom (razdelek `mem`).
 
@@ -7397,7 +7560,7 @@ oblikovan kot sodoben zaganjalnik iger:
   pavze.
 - **Predigralni zaslon** vsake igre se pojavi v njeni poudarni barvi in prejšnji
   rekord prikaže kot čip.
-- **Poenoten videz v igri**: vseh 38 iger si deli barvno paleto in pisavo menija -
+- **Poenoten videz v igri**: vseh 39 iger si deli barvno paleto in pisavo menija -
   HUD-i, nastavitveni zasloni in prekrivni sloji sledijo izbranemu dizajnu v
   možnostih (v4.1 / v4 / Klasični), medtem ko vsako igrišče obdrži svoje
   identitetne barve. Vsaka igra zdaj čisto obvlada spremembo ločljivosti med igro,
@@ -7667,6 +7830,7 @@ dnu pod **[Vodič za instalaciju](#vodič-za-instalaciju)**.
 | **Bubble Shooter** | 1 igrač   | Klon Puzzle Bobblea: ispaljujte jednake boje u skupine od tri, odbijanje od zidova, padajuće skupine, 3 težine |
 | **Vješala**        | 1 igrač   | Pogodite riječ prije nego što se dovrši vješalo; zaslonska tipkovnica, popisi riječi po jeziku, 3 moda duljine, beskonačni niz |
 | **Block Jump**  | 1 igrač        | 3D platformer u stilu Minecrafta: voxel svijet s ljestvama, ogradama i odskočnim blokovima, kamera iz prvog/trećeg lica, motion blur, parkour razine generirane sjemenom |
+| **Tower Defense** | 1 igrač        | Odbijaj beskonačne valove na 4 karte: do 11 vrsta tornjeva s nadogradnjama, prodajom i specijalizacijom A/B, bossovi, 3 načina, aktivne sposobnosti |
 
 **Više igrača (2 igrača lokalno)** dostupno je za **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (kooperativni
@@ -8087,6 +8251,20 @@ nadogradnja oružja), efekti eksplozije, rekord.
   vremenski bonus, novčići +50, pad stoji jedan život (počinjete s 3).
   Upravljanje: WASD/strelice, **razmaknica** za skok.
 
+**Tower Defense**
+- **Beskonačna obrana od valova** na **4 karte** (Livada, Kanjon, Raskrižje,
+  Špalir), svaka s vlastitom stazom; zaključane karte otključava tvoj najbolji
+  val, svaki **8. val** stiže **boss**.
+- **3 načina**: Klasični (7 tornjeva, glavni način), Kompaktni (4 tornja,
+  2 razine) i Maksimalni (**11 tornjeva**, **specijalizacija A/B** na najvišoj
+  razini, posebni neprijatelji, aktivne sposobnosti **Meteor/Ledena nova/Zlatna
+  groznica**).
+- **11 vrsta tornjeva** od strijela do lasera i zlatne banke, svaki s do
+  **3 razine nadogradnje**, prodaja vraća 70%; neprijatelji s oklopom,
+  regeneracijom, dijeljenjem, kamuflažom, aurom liječenja i zračnom rutom.
+- **Ekonomija**: zlato po obaranju, bonus za val + 5% kamata; bodovi po obaranju
+  i valu. **F** = 2x brzina, **G** = dometi, desni klik odustaje.
+
 Rekordi se spremaju u odjeljak `highscores` datoteke `mem.json` (uz kôd) – zajedno
 s jezikom (odjeljak `mem`).
 
@@ -8109,7 +8287,7 @@ dotjerano poput modernog pokretača igara:
   **kiša konfeta pri novom rekordu** i pravi **blur** iza pauznog prekrivača.
 - **Zaslon pripreme** svake igre pojavljuje se u njezinoj naglasnoj boji i
   prikazuje prethodni rekord kao čip.
-- **Ujednačen izgled u igri**: svih 38 igara dijeli paletu teme i font izbornika -
+- **Ujednačen izgled u igri**: svih 39 igara dijeli paletu teme i font izbornika -
   HUD-ovi, zasloni pripreme i prekrivači slijede dizajn odabran u opcijama
   (v4.1 / v4 / Classic), dok svako igralište zadržava svoje prepoznatljive boje.
   Svaka igra sada uredno obrađuje promjenu razlučivosti usred partije, a nazivi u

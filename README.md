@@ -84,6 +84,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Bubble Shooter** | 1 Spieler   | Puzzle-Bobble-Klon: gleiche Farben zu Dreiergruppen schießen, Wandreflexion, herabfallende Cluster, 3 Schwierigkeitsgrade |
 | **Galgenmännchen** | 1 Spieler   | Wort erraten, bevor der Galgen voll ist; Bildschirmtastatur, Wortlisten je Sprache, 3 Längen-Modi, Endlos-Streak |
 | **Block Jump**  | 1 Spieler       | 3D-Jump'n'Run im Minecraft-Stil: Voxel-Welt mit Leitern, Zäunen & Sprungblöcken, Ego-/Verfolgerkamera, Motion-Blur, seed-generierte Parkour-Level |
+| **Tower Defense** | 1 Spieler     | Endlose Wellen auf 4 Karten abwehren: bis zu 11 Turmtypen mit Ausbau, Verkauf & A/B-Spezialisierung, Bosse, 3 Modi, Aktiv-Fähigkeiten |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)**, **Memory (Duell)**,
@@ -501,6 +502,19 @@ Explosions-Effekte, Highscore.
   Coins +50, ein Absturz kostet ein Leben (Start mit 3). Steuerung: WASD/Pfeile,
   **Leertaste** springen.
 
+**Tower Defense**
+- **Endlos-Wellenabwehr** auf **4 Karten** (Wiese, Schlucht, Kreuzung,
+  Spießrutenlauf) mit eigenem Pfad; gesperrte Karten schaltet die beste
+  erreichte Welle frei, alle **8 Wellen** marschiert ein **Boss**.
+- **3 Modi**: Klassisch (7 Türme, Hauptmodus), Kompakt (4 Türme, 2 Stufen)
+  und Maximal (**11 Türme**, **A/B-Spezialisierung** auf höchster Stufe,
+  Spezialgegner, Aktiv-Fähigkeiten **Meteor/Frostnova/Goldsegen**).
+- **11 Turmtypen** von Pfeil bis Laser & Goldbank, je bis zu **3 Ausbaustufen**,
+  Verkauf mit 70% Erstattung; Gegner mit Panzerung, Regeneration, Teilung,
+  Tarnung, Heil-Aura und eigener Flug-Route.
+- **Ökonomie**: Gold je Abschuss, Wellen-Bonus + 5% Zinsen; Punkte je Abschuss
+  und Welle. **F** = Tempo x2, **G** = Reichweiten, Rechtsklick bricht ab.
+
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
@@ -524,7 +538,7 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   **Weichzeichner** hinter dem Pause-Overlay.
 - Der **Vorspiel-Screen** jedes Spiels erscheint in dessen Akzentfarbe und zeigt
   den bisherigen Rekord als Chip an.
-- **Einheitlicher Spiel-Look**: alle 38 Spiele nutzen dieselbe Theme-Palette und
+- **Einheitlicher Spiel-Look**: alle 39 Spiele nutzen dieselbe Theme-Palette und
   -Schrift wie das Menü - HUDs, Setup-Screens und Overlays folgen dem in den
   Optionen gewählten Design (v4.1 / v4 / Classic), die Spielfelder behalten ihre
   Identitätsfarben. Auflösungswechsel mitten im Spiel übernimmt jedes Spiel
@@ -805,6 +819,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Bubble Shooter** | 1 player    | Puzzle Bobble clone: shoot matching colours into groups of three, wall bounces, falling clusters, 3 difficulties |
 | **Hangman**        | 1 player    | Guess the word before the gallows is finished; on-screen keyboard, per-language word lists, 3 length modes, endless streak |
 | **Block Jump**  | 1 player        | 3D Minecraft-style platformer: voxel world with ladders, fences & spring blocks, first/third-person camera, motion blur, seed-generated parkour levels |
+| **Tower Defense** | 1 player      | Fend off endless waves on 4 maps: up to 11 tower types with upgrades, selling & A/B specialisation, bosses, 3 modes, active abilities |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
@@ -1216,6 +1231,19 @@ explosion effects, high score.
   coins +50, a fall costs a life (start with 3). Controls: WASD/arrows, **Space**
   to jump.
 
+**Tower Defense**
+- **Endless wave defence** on **4 maps** (Meadow, Canyon, Crossroads,
+  Gauntlet), each with its own path; locked maps unlock via your best wave,
+  a **boss** marches in every **8 waves**.
+- **3 modes**: Classic (7 towers, the main mode), Compact (4 towers, 2 levels)
+  and Maximal (**11 towers**, **A/B specialisation** at top level, special
+  enemies, active abilities **Meteor/Frost Nova/Gold Rush**).
+- **11 tower types** from arrow to laser & gold bank, up to **3 upgrade
+  levels** each, selling refunds 70%; enemies with armor, regeneration,
+  splitting, cloaking, heal auras and their own air route.
+- **Economy**: gold per kill, wave bonus + 5% interest; points per kill and
+  wave. **F** = 2x speed, **G** = ranges, right-click cancels.
+
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
 
@@ -1239,7 +1267,7 @@ packages) and styled like a modern game launcher:
   pause overlay.
 - Each game's **pre-game screen** appears in that game's accent colour and shows
   the previous record as a chip.
-- **Unified in-game look**: all 38 games share the menu's theme palette and
+- **Unified in-game look**: all 39 games share the menu's theme palette and
   font - HUDs, setup screens and overlays follow the design chosen in the
   options (v4.1 / v4 / Classic), while each playfield keeps its identity
   colours. Every game now handles mid-game resolution changes cleanly, and
