@@ -142,6 +142,10 @@ DEFAULTS = {
     # Billard: Variante (8ball/9ball/practice), Ansicht (2d/3d/free),
     # KI-Stärke (0-2)
     "billiard": {"variant": "8ball", "view": "2d", "difficulty": 1},
+    # Block Jump: Kamera (first/third), Motion-Blur (0.0-0.8),
+    # Maus-Empfindlichkeit (0.4-2.5), invertierte Maus-Richtung
+    "blockjump": {"view": "first", "blur": 0.35, "sens": 1.0,
+                  "mouse_invert": False},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -311,6 +315,16 @@ def _merge_defaults(data):
                 out["billiard"]["view"] = bil["view"]
             if isinstance(bil.get("difficulty"), int):
                 out["billiard"]["difficulty"] = max(0, min(2, bil["difficulty"]))
+        blj = data.get("blockjump")
+        if isinstance(blj, dict):
+            if blj.get("view") in ("first", "third"):
+                out["blockjump"]["view"] = blj["view"]
+            if isinstance(blj.get("blur"), (int, float)):
+                out["blockjump"]["blur"] = max(0.0, min(0.8, float(blj["blur"])))
+            if isinstance(blj.get("sens"), (int, float)):
+                out["blockjump"]["sens"] = max(0.4, min(2.5, float(blj["sens"])))
+            if isinstance(blj.get("mouse_invert"), bool):
+                out["blockjump"]["mouse_invert"] = blj["mouse_invert"]
         ctrl = data.get("controls")
         if isinstance(ctrl, dict):
             for player in ("p1", "p2"):

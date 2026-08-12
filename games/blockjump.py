@@ -62,7 +62,9 @@ EPS = 1e-4
 #  Blocktypen + Farben (Oberseite, Seiten)
 # ---------------------------------------------------------------------------
 EMPTY, GRASS, DIRT, STONE, PLANK, LADDER, FENCE, SPRING, GOAL = range(9)
-SOLID = {GRASS, DIRT, STONE, PLANK, FENCE, SPRING, GOAL}
+SOLID = {GRASS, DIRT, STONE, PLANK, GOAL}   # volle 1x1x1-Bloecke
+FENCE_H = 0.8    # Zaun: niedriges Hindernis, per Sprung ueberwindbar
+SPRING_H = 0.78  # Sprungblock: nur Landeflaeche (blockiert nie seitlich)
 
 BLOCK_COLS = {
     GRASS: ((104, 184, 84), (124, 94, 58)),
@@ -116,6 +118,7 @@ class BlockJumpGame(Game):
         self.anim = 0.0
         self.held = set()
         self.capture_mouse = False
+        self._want_capture = True
         self._new_run()
 
     def _make_fonts(self):
@@ -171,13 +174,17 @@ class BlockJumpGame(Game):
             if feat == "ladder":
                 climb = rng.choice([3, 4] if easy else [3, 4, 5])
                 # Leiter-Saeule mit Stuetzwand dahinter
+                lad_z = cz + 1
                 for yy in range(cy + 1, cy + climb + 1):
-                    self.world[(cx, yy, cz + 1)] = LADDER
-                    self.world[(cx, yy, cz + 2)] = STONE
+                    self.world[(cx, yy, lad_z)] = LADDER
+                    self.world[(cx, yy, lad_z + 1)] = STONE
+                # Coin mittig in der Kletterspalte
+                self.coins.append((cx + 0.5, cy + climb / 2.0 + 1.4, lad_z + 0.5))
                 cy = cy + climb
-                cz = cz + 2
+                # Pad beginnt HINTER der Stuetzwand, damit der Leiterschacht
+                # (z = lad_z) nach oben offen bleibt
+                cz = cz + 2 + hd
                 self._pad(cx, cz, cy, hw, hd, top_type)
-                self.coins.append((cx + 0.5, cy - climb / 2.0 + 1.4, cz - 1.5))
 
             elif feat == "spring":
                 # erhoehter Sprungblock auf dem aktuellen Pad ...
@@ -196,6 +203,12 @@ class BlockJumpGame(Game):
                 dx = rng.choice(dxr)
                 dyr = [-1, 0] if easy else [-2, -1, 0, 1]
                 dy = rng.choice(dyr)
+                if hard and dz >= 4:
+                    # Max-Luecke entschaerfen: nie bergauf und immer ein
+                    # tiefes Lande-Pad (max. Sprungweite ~3.6 Bloecke flach,
+                    # nur ~2.8 bei dy = +1)
+                    dy = min(dy, 0)
+                    hd = 1
                 mx, my, mz = cx, cy, cz
                 cx = cx + dx
                 cy = max(self._min_y - 3, cy + dy)
@@ -235,10 +248,31 @@ class BlockJumpGame(Game):
     def _is_solid(self, x, y, z):
         return self.world.get((int(x), int(y), int(z)), EMPTY) in SOLID
 
+    def _col_h(self, x, y, z, axis, delta):
+        """Kollisionshoehe der Zelle fuer diese Bewegung (None = frei)."""
+        typ = self.world.get((int(x), int(y), int(z)), EMPTY)
+        if typ in SOLID:
+            return 1.0
+        if typ == FENCE:
+            return FENCE_H
+        if typ == SPRING and axis == 1 and delta < 0:
+            return SPRING_H          # nur Landung von oben
+        return None
+
     def _cell(self, x, y, z):
         return self.world.get((int(x), int(y), int(z)), EMPTY)
 
     # ===================================================== Eingabe
+    _ARROWS = {"Up": "up", "Down": "down", "Left": "left", "Right": "right"}
+
+    def _move_acts(self, key):
+        """Bewegungs-Aktionen, die 'key' laut Belegung ausloest."""
+        k = key.lower() if len(key) == 1 else key   # "W" (Shift) == "w"
+        acts = {a for a in ("up", "down", "left", "right") if self.is_action(k, a)}
+        if key in self._ARROWS:                     # Pfeiltasten-Fallback
+            acts.add(self._ARROWS[key])
+        return acts
+
     def handle_event(self, event):
         if event.kind == InputEvent.KEYDOWN:
             k = event.key
@@ -246,15 +280,15 @@ class BlockJumpGame(Game):
                 if k in ("Return", "space"):
                     self._start_or_restart()
                 return
-            self.held.add(k)
-            if k == "space":
+            self.held |= self._move_acts(k)
+            if k == "space" or self.is_action(k, "action"):
                 self._jump()
             elif k in ("v", "V"):
                 self._toggle_view()
             elif k in ("b", "B"):
                 self._cycle_blur()
             elif k in ("c", "C"):
-                self.capture_mouse = not self.capture_mouse
+                self._want_capture = not self._want_capture
             elif k in ("i", "I"):
                 self._toggle_invert()
             elif k in ("plus", "KP_Add", "equal"):
@@ -262,11 +296,12 @@ class BlockJumpGame(Game):
             elif k in ("minus", "KP_Subtract"):
                 self._change_sens(-0.1)
         elif event.kind == InputEvent.KEYUP:
-            self.held.discard(event.key)
+            self.held -= self._move_acts(event.key)
         elif event.kind == InputEvent.MOUSEDOWN:
             if self.state in (READY, GAMEOVER):
                 self._start_or_restart()
             elif self.state == PLAY and not self.capture_mouse:
+                self._want_capture = True
                 self.capture_mouse = True
         elif event.kind == InputEvent.MOUSEREL and self.state == PLAY:
             self._apply_look(event.rel)
@@ -278,6 +313,7 @@ class BlockJumpGame(Game):
         self.held.clear()
         self.state = PLAY
         self.level_time = 0.0
+        self._want_capture = True
         self.capture_mouse = True
         self.play_sound("click")
 
@@ -342,12 +378,8 @@ class BlockJumpGame(Game):
         return p - n
 
     def _physics(self, dt):
-        UP = {"w", "W", "Up"}
-        DOWN = {"s", "S", "Down"}
-        RIGHT = {"d", "D", "Right"}
-        LEFT = {"a", "A", "Left"}
-        fwd = self._held_axis(UP, DOWN)
-        strafe = self._held_axis(RIGHT, LEFT)
+        fwd = self._held_axis({"up"}, {"down"})
+        strafe = self._held_axis({"right"}, {"left"})
 
         self.on_ladder = self._in_ladder()
         f = _dir_from(self.yaw, 0.0)
@@ -416,7 +448,13 @@ class BlockJumpGame(Game):
         xr = range(int(math.floor(mn[0] + EPS)), int(math.floor(mx[0] - EPS)) + 1)
         yr = range(int(math.floor(mn[1] + EPS)), int(math.floor(mx[1] - EPS)) + 1)
         zr = range(int(math.floor(mn[2] + EPS)), int(math.floor(mx[2] - EPS)) + 1)
-        hits = [(x, y, z) for x in xr for y in yr for z in zr if self._is_solid(x, y, z)]
+        hits = []
+        for x in xr:
+            for y in yr:
+                for z in zr:
+                    h = self._col_h(x, y, z, axis, delta)
+                    if h is not None and mn[1] + EPS < y + h:
+                        hits.append((x, y, z, h))
         if not hits:
             return
         if axis == 0:
@@ -436,11 +474,12 @@ class BlockJumpGame(Game):
                 self.py = min(h[1] for h in hits) - PLAYER_H - EPS
                 self.vy = 0.0
             elif delta < 0:                      # Landung auf dem Boden
-                top = max(h[1] for h in hits)
-                self.py = top + 1 + EPS
+                top = max(h[1] + h[3] for h in hits)
+                self.py = top + EPS
                 self.vy = 0.0
                 self.on_ground = True
-                self._land_cells = [h for h in hits if h[1] == top]
+                self._land_cells = [(h[0], h[1], h[2]) for h in hits
+                                    if h[1] + h[3] == top]
 
     def _in_ladder(self):
         mn, mx = self._aabb()
@@ -719,7 +758,8 @@ class BlockJumpGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
-        self.capture_mouse = (self.state == PLAY and not getattr(self, "paused", False))
+        self.capture_mouse = (self._want_capture and self.state == PLAY
+                              and not getattr(self, "paused", False))
         self._update_cam()
         self._scx = self.width / 2
         self._scy = self.height * 0.5

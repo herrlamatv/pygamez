@@ -8,6 +8,44 @@
 
 ## 🇩🇪 Deutsch
 
+### Block Jump Bugfixes – 2026-08-12
+
+Wartungs-Update: **Block Jump** ist jetzt tatsächlich durchspielbar - der
+Leiter-Aufstieg endete bisher in praktisch jedem Level in einer Sackgasse.
+
+#### Behoben
+- **Leitern waren Sackgassen**: Das Folge-Pad wurde direkt über dem
+  Leiterschacht gebaut und überschrieb die oberste Sprosse - der Spieler
+  stieß beim Klettern mit dem Kopf an und kam nie oben an. Das Pad beginnt
+  jetzt hinter der Stützwand, der Schacht bleibt offen (betraf 44 von 45
+  geprüften Leveln, inklusive Level 1 aller drei Modi).
+- **Leiter-Coin unerreichbar**: Der Coin hing einen Block vor der Leiter
+  statt in der Kletterspalte - jetzt wird er beim Aufstieg eingesammelt.
+- **Taste C (Maus fangen/frei) war wirkungslos**: Die Zeichenroutine
+  überschrieb den Schalter in jedem Frame; der HUD-Hinweis stimmt jetzt
+  wieder.
+- **Unsichtbare Wände**: Zäune und Sprungblöcke kollidierten als volle
+  1×1×1-Blöcke, obwohl sie viel kleiner gezeichnet werden. Zäune sind jetzt
+  0,8 Blöcke hoch (bequem überspringbar, wie im README beschrieben),
+  Sprungblöcke blockieren seitlich gar nicht mehr und katapultieren auch
+  beim Hineinlaufen; die Pad-Fläche unter beiden wird nicht mehr weggecullt
+  (sichtbare Löcher) und die 3rd-Person-Kamera bleibt nicht mehr an Zäunen
+  hängen.
+- **Schwer-Modus**: Bei maximaler Lücke (4 Blöcke) konnten 1 Block tiefe
+  Ziel-Pads plus Aufwärtsversatz framegenau-unmögliche Sprünge erzeugen -
+  große Lücken erzwingen jetzt ebene/abwärts führende, tiefe Lande-Pads.
+- **Tastenbelegung**: Block Jump ignorierte die in den Optionen belegten
+  Tasten (fest WASD/Pfeile) - läuft jetzt über die zentrale Belegung wie
+  die übrigen Spiele (Pfeiltasten bleiben als Fallback erhalten).
+- **Einstellungen gingen verloren**: Ansicht/Motion-Blur/Empfindlichkeit/
+  Maus-Richtung überlebten den Neustart nicht (fehlender
+  `blockjump`-Abschnitt in den Settings-Defaults).
+
+#### Neu
+- **Headless-Audit** `tests/blockjump_audit.py`: prüft alle 45 Level
+  (1-15 × 3 Modi) automatisch auf offene Leiterschächte, erreichbare Coins,
+  per Sprungphysik schaffbare Lücken und simuliert jeden Leiter-Aufstieg.
+
 ### Tower Defense – 2026-08-06
 
 Spiel Nr. 39: ein komplettes **Tower Defense** mit endlosen Wellen, 4 Karten
@@ -219,6 +257,43 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Block Jump bugfixes – 2026-08-12
+
+Maintenance update: **Block Jump** is now actually beatable - the ladder
+climb used to end in a dead end in practically every level.
+
+#### Fixed
+- **Ladders were dead ends**: The follow-up pad was built directly on top of
+  the ladder shaft and overwrote the top rung - the player bumped their head
+  while climbing and never reached the top. The pad now starts behind the
+  support wall, keeping the shaft open (affected 44 of 45 audited levels,
+  including level 1 of all three modes).
+- **Ladder coin unreachable**: The coin floated one block in front of the
+  ladder instead of inside the climbing column - it is now collected during
+  the ascent.
+- **The C key (capture/release mouse) did nothing**: The draw routine
+  overwrote the toggle every frame; the HUD hint is accurate again.
+- **Invisible walls**: Fences and spring blocks collided as full 1×1×1
+  cubes even though they are drawn much smaller. Fences are now 0.8 blocks
+  tall (comfortably jumpable, as the README describes), spring blocks no
+  longer block sideways at all and also catapult when walked into; the pad
+  surface underneath both is no longer culled away (visible holes) and the
+  third-person camera no longer snags on fences.
+- **Hard mode**: At the maximum gap (4 blocks), 1-block-deep target pads
+  plus an upward offset could produce frame-perfect-impossible jumps -
+  large gaps now force level/downhill, deep landing pads.
+- **Key bindings**: Block Jump ignored the keys configured in the options
+  (hardcoded WASD/arrows) - it now uses the central bindings like the other
+  games (arrow keys remain as a fallback).
+- **Settings were lost**: View/motion blur/sensitivity/mouse direction did
+  not survive a restart (missing `blockjump` section in the settings
+  defaults).
+
+#### Added
+- **Headless audit** `tests/blockjump_audit.py`: automatically checks all
+  45 levels (1-15 × 3 modes) for open ladder shafts, reachable coins, gaps
+  clearable by the jump physics, and simulates every ladder climb.
 
 ### Tower Defense – 2026-08-06
 
