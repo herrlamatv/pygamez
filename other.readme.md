@@ -78,7 +78,7 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Hangman**        | 1 joueur   | Devine le mot avant que la potence soit complète ; clavier à l'écran, listes de mots par langue, 3 modes de longueur, série sans fin |
 | **Block Jump**     | 1 joueur   | Jeu de plateforme 3D façon Minecraft : monde de blocs texturés au skin Minecraft avec figurine Steve, échelles, barrières & blocs-ressorts, caméra 1re/3e personne, flou de mouvement, niveaux générés |
 | **Tower Defense** | 1 joueur   | Repousse des vagues infinies sur 4 cartes : jusqu'à 11 types de tours avec améliorations, vente & spécialisation A/B, boss, 3 modes, capacités actives |
-| **Minigolf**    | 1 / 2 joueurs | 18 trous construits à la main sur 3 parcours : sable, rampes, eau, pare-chocs, moulins & blocs mobiles ; carte de score avec par et bonus trou en un |
+| **Minigolf**    | 1 / 2 joueurs | 360 trous sur 40 parcours (18 construits à la main, 342 générés) : sable, rampes, eau, pare-chocs, moulins & blocs mobiles ; carte de score avec par et bonus trou en un |
 | **Pinball**     | 1 / 2 joueurs | Flipper avec 3 tables : bumpers, slingshots, cibles, couloirs L-A-M-A, multibille avec jackpot, sauvegarde de bille, secousse & tilt |
 | **Bowling**     | 1 / 2 joueurs | 10 frames avec la vraie règle strike/spare, physique des quilles, effet hook et piste en perspective, 3 difficultés |
 
@@ -468,9 +468,10 @@ fusionnent.
   annule.
 
 **Minigolf**
-- **18 trous construits à la main** sur trois parcours : *Classic* (9 trous, mise
-  en jambes), *Pro* (9 trous coriaces avec green en île, double moulin et blocs
-  mobiles) et *Random* (neuf trous tirés des deux parcours et inversés au hasard).
+- **360 trous sur 40 parcours** : *Classic* et *Pro* avec 9 trous construits à
+  la main chacun, la **Tour** avec 38 parcours de 9 trous générés (342 au total)
+  à difficulté croissante, plus *Random* tiré de l'ensemble. Le parcours 7,
+  trou 3 est partout identique - rien n'a besoin d'être enregistré.
 - **Surfaces et obstacles** : le sable freine, les rampes accélèrent, l'eau coûte
   un coup de pénalité, les pare-chocs renvoient de la vitesse, moulins et blocs
   mobiles demandent du timing. La physique tourne en sous-pas avec frottement
@@ -816,7 +817,7 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Hangman**          | 1 jugador  | Adivina la palabra antes de completar la horca; teclado en pantalla, listas de palabras por idioma, 3 modos de longitud, racha sin fin |
 | **Block Jump**       | 1 jugador  | Plataformas 3D estilo Minecraft: mundo de bloques texturizados con skin de Minecraft y figura de Steve, escaleras, vallas y bloques-resorte, cámara 1ª/3ª persona, desenfoque, niveles generados |
 | **Tower Defense**    | 1 jugador  | Repele oleadas infinitas en 4 mapas: hasta 11 tipos de torres con mejoras, venta y especialización A/B, jefes, 3 modos, habilidades activas |
-| **Minigolf**    | 1 / 2 jugadores | 18 hoyos hechos a mano en 3 recorridos: arena, rampas, agua, parachoques, molinos y bloques móviles; tarjeta con par y bonus de hoyo en uno |
+| **Minigolf**    | 1 / 2 jugadores | 360 hoyos en 40 recorridos (18 hechos a mano, 342 generados): arena, rampas, agua, parachoques, molinos y bloques móviles; tarjeta con par y bonus de hoyo en uno |
 | **Pinball**     | 1 / 2 jugadores | Máquina de pinball con 3 mesas: bumpers, slingshots, dianas, carriles L-A-M-A, multibola con jackpot, salvabolas, empujón y tilt |
 | **Bowling**     | 1 / 2 jugadores | 10 frames con la puntuación oficial de strike/spare, física real de bolos, efecto hook y pista en perspectiva, 3 dificultades |
 
@@ -1165,9 +1166,10 @@ arma), efectos de explosión, récord.
   y oleada. **F** = velocidad x2, **G** = alcances, clic derecho cancela.
 
 **Minigolf**
-- **18 hoyos hechos a mano** en tres recorridos: *Classic* (9 hoyos, entrada
-  suave), *Pro* (9 hoyos difíciles con green isla, molino doble y bloques
-  móviles) y *Random* (nueve hoyos sacados de ambos y reflejados al azar).
+- **360 hoyos en 40 recorridos**: *Classic* y *Pro* con 9 hoyos hechos a mano
+  cada uno, la **Tour** con 38 recorridos de 9 hoyos generados (342 en total) y
+  dificultad creciente, más *Random* sacado de todo el conjunto. El recorrido 7,
+  hoyo 3 se ve igual en todas partes; no hay que guardar nada.
 - **Superficies y obstáculos**: la arena frena, las rampas aceleran, el agua
   cuesta un golpe de penalización, los parachoques devuelven velocidad y molinos
   y bloques móviles exigen ritmo. La física corre en subpasos con rozamiento como
@@ -1504,7 +1506,7 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Hangman**          | 1 jogador  | Adivinha a palavra antes de a forca ficar completa; teclado no ecrã, listas de palavras por idioma, 3 modos de tamanho, série sem fim |
 | **Block Jump**       | 1 jogador  | Plataforma 3D estilo Minecraft: mundo de blocos texturizados com skin de Minecraft e figura do Steve, escadas, cercas e blocos-mola, câmera 1ª/3ª pessoa, desfoque, níveis gerados |
 | **Tower Defense**    | 1 jogador  | Repele ondas infinitas em 4 mapas: até 11 tipos de torres com melhorias, venda e especialização A/B, chefes, 3 modos, habilidades ativas |
-| **Minigolf**    | 1 / 2 jogadores | 18 buracos feitos à mão em 3 percursos: areia, rampas, água, para-choques, moinhos e blocos móveis; cartão com par e bónus de buraco em um |
+| **Minigolf**    | 1 / 2 jogadores | 360 buracos em 40 percursos (18 feitos à mão, 342 gerados): areia, rampas, água, para-choques, moinhos e blocos móveis; cartão com par e bónus de buraco em um |
 | **Pinball**     | 1 / 2 jogadores | Máquina de pinball com 3 mesas: bumpers, slingshots, alvos, corredores L-A-M-A, multibola com jackpot, salva-bolas, empurrão e tilt |
 | **Bowling**     | 1 / 2 jogadores | 10 frames com a pontuação oficial de strike/spare, física real dos pinos, efeito hook e pista em perspetiva, 3 dificuldades |
 
@@ -1851,9 +1853,10 @@ melhoria de arma), efeitos de explosão, recorde.
   onda. **F** = velocidade x2, **G** = alcances, botão direito cancela.
 
 **Minigolf**
-- **18 buracos feitos à mão** em três percursos: *Classic* (9 buracos, entrada
-  suave), *Pro* (9 buracos difíceis com green em ilha, moinho duplo e blocos
-  móveis) e *Random* (nove buracos sorteados de ambos e espelhados ao acaso).
+- **360 buracos em 40 percursos**: *Classic* e *Pro* com 9 buracos feitos à mão
+  cada, a **Tour** com 38 percursos de 9 buracos gerados (342 no total) com
+  dificuldade crescente, mais *Random* sorteado de tudo. O percurso 7, buraco 3
+  fica igual em todo o lado - não é preciso guardar nada.
 - **Pisos e obstáculos**: a areia trava, as rampas aceleram, a água custa uma
   tacada de penalização, os para-choques devolvem velocidade e moinhos e blocos
   móveis exigem sentido de tempo. A física corre em subpassos com atrito como no
@@ -2194,7 +2197,7 @@ krok po kroku znajduje się na samym dole w sekcji
 | **Wisielec** | 1 gracz         | Odgadnij słowo, zanim szubienica będzie gotowa; klawiatura ekranowa, listy słów na język, 3 tryby długości, nieskończona seria |
 | **Block Jump** | 1 gracz       | Platformówka 3D w stylu Minecraft: teksturowany świat wokseli z postacią Steve'a, drabinami, płotami i blokami-sprężynami, kamera z 1./3. osoby, motion blur, generowane z ziarna poziomy parkour |
 | **Tower Defense** | 1 gracz     | Odpieraj niekończące się fale na 4 mapach: do 11 typów wież z ulepszeniami, sprzedażą i specjalizacją A/B, bossowie, 3 tryby, zdolności aktywne |
-| **Minigolf**    | 1 / 2 graczy    | 18 ręcznie zbudowanych dołków na 3 polach: piasek, rampy, woda, odbijacze, wiatraki i ruchome bloki; karta z par i bonusem hole in one |
+| **Minigolf**    | 1 / 2 graczy    | 360 dołków na 40 polach (18 ręcznych, 342 generowane): piasek, rampy, woda, odbijacze, wiatraki i ruchome bloki; karta z par i bonusem hole in one |
 | **Pinball**     | 1 / 2 graczy    | Automat do flipera z 3 stołami: bumpery, slingshoty, cele, tory L-A-M-A, multiball z jackpotem, ratunek kuli, potrącenie i tilt |
 | **Bowling**     | 1 / 2 graczy    | 10 frame'ów z oficjalną punktacją strike/spare, prawdziwą fizyką kręgli, hookiem i torem w perspektywie, 3 poziomy trudności |
 
@@ -2651,10 +2654,10 @@ broni), efekty wybuchów, rekord.
   anuluje.
 
 **Minigolf**
-- **18 ręcznie zbudowanych dołków** na trzech polach: *Classic* (9 dołków, łagodne
-  wprowadzenie), *Pro* (9 trudnych dołków z wyspowym greenem, podwójnym wiatrakiem
-  i ruchomymi blokami) oraz *Random* (dziewięć dołków losowanych z obu pól i
-  losowo odbijanych lustrzanie).
+- **360 dołków na 40 polach**: *Classic* i *Pro* po 9 ręcznie zbudowanych
+  dołków, **Tour** z 38 polami po 9 generowanych dołków (łącznie 342) o rosnącej
+  trudności, do tego *Random* z całości. Pole 7, dołek 3 wygląda wszędzie tak
+  samo - nic nie trzeba zapisywać.
 - **Nawierzchnie i przeszkody**: piasek hamuje, rampy przyspieszają, woda kosztuje
   uderzenie karne, gumowe odbijacze oddają prędkość, a wiatraki i ruchome bloki
   wymagają wyczucia czasu. Fizyka liczy się w podkrokach z tarciem jak w bilardzie
@@ -2995,7 +2998,7 @@ yoksa sistemdeki Python'ı. Ayrıntılı, adım adım bir kılavuz en altta
 | **Adam Asmaca**    | 1 oyuncu  | Darağacı tamamlanmadan kelimeyi tahmin et; ekran klavyesi, dile göre kelime listeleri, 3 uzunluk modu, sonsuz seri |
 | **Block Jump**  | 1 oyuncu     | Minecraft tarzı 3D platform oyunu: dokulu voksel dünyası, Steve figürü, merdivenler, çitler ve balçık blokları, birinci/üçüncü şahıs kamera, hareket bulanıklığı, tohumla üretilen parkur bölümleri |
 | **Tower Defense** | 1 oyuncu   | 4 haritada sonsuz dalgaları püskürt: geliştirme, satış ve A/B uzmanlaşmalı 11 kule tipine kadar, bosslar, 3 mod, aktif yetenekler |
-| **Minigolf**    | 1 / 2 oyuncu | 3 parkurda elle tasarlanmış 18 delik: kum, rampalar, su, tamponlar, yel değirmenleri ve gezen bloklar; par ve hole-in-one bonuslu skor kartı |
+| **Minigolf**    | 1 / 2 oyuncu | 40 parkurda 360 delik (18 elle tasarlanmış, 342 üretilmiş): kum, rampalar, su, tamponlar, yel değirmenleri ve gezen bloklar; par ve hole-in-one bonuslu skor kartı |
 | **Pinball**     | 1 / 2 oyuncu | 3 masalı pinball makinesi: bumperlar, slingshotlar, hedefler, L-A-M-A şeritleri, jackpotlu multiball, top koruma, sarsma ve tilt |
 | **Bowling**     | 1 / 2 oyuncu | Resmî strike/spare puanlamasıyla 10 frame, gerçek labut fiziği, hook efekti ve perspektifli pist, 3 zorluk |
 
@@ -3450,9 +3453,10 @@ patlama efektleri, yüksek skor.
   başına puan. **F** = 2x hız, **G** = menziller, sağ tık iptal eder.
 
 **Minigolf**
-- **Elle tasarlanmış 18 delik**, üç parkurda: *Classic* (9 delik, yumuşak giriş),
-  *Pro* (ada green, çift değirmen ve gezen bloklarla 9 zorlu delik) ve *Random*
-  (iki parkurdan çekilip rastgele aynalanan dokuz delik).
+- **40 parkurda 360 delik**: *Classic* ve *Pro* dokuzar elle tasarlanmış delikle,
+  **Tour** giderek zorlaşan dokuzar üretilmiş delikten oluşan 38 parkurla
+  (toplam 342) ve tüm havuzdan çeken *Random*. Parkur 7, delik 3 her yerde aynı
+  görünür - bunun için hiçbir şey kaydedilmez.
 - **Zeminler ve engeller**: kum yavaşlatır, rampalar hızlandırır, su bir ceza
   vuruşuna mal olur, lastik tamponlar hız geri verir, yel değirmenleri ve gezen
   bloklar zamanlama ister. Fizik, bilardodaki gibi sürtünmeli alt adımlarla çalışır
@@ -3788,7 +3792,7 @@ nederst under **[Installationsguide](#installationsguide)**.
 | **Galgemand**   | 1 spiller    | Gæt ordet, før galgen er færdig; skærmtastatur, ordlister pr. sprog, 3 længdetilstande, endeløs streak |
 | **Block Jump**  | 1 spiller    | 3D-platformspil i Minecraft-stil: tekstureret voxelverden med Steve-figur, stiger, hegn og slimblokke, første-/tredjepersonskamera, motion blur, seed-genererede parkourbaner |
 | **Tower Defense** | 1 spiller   | Slå endeløse bølger tilbage på 4 kort: op til 11 tårntyper med opgraderinger, salg & A/B-specialisering, bosser, 3 tilstande, aktive evner |
-| **Minigolf**    | 1 / 2 spillere | 18 håndbyggede baner på 3 forløb: sand, ramper, vand, bumpere, vindmøller & vandrende klodser; scorekort med par og hole-in-one-bonus |
+| **Minigolf**    | 1 / 2 spillere | 360 baner på 40 forløb (18 håndbyggede, 342 genererede): sand, ramper, vand, bumpere, vindmøller & vandrende klodser; scorekort med par og hole-in-one-bonus |
 | **Pinball**     | 1 / 2 spillere | Flippermaskine med 3 borde: bumpere, slingshots, mål, L-A-M-A-baner, multiball med jackpot, kugleredning, puf & tilt |
 | **Bowling**     | 1 / 2 spillere | 10 frames med officiel strike/spare-optælling, ægte keglefysik, hook-skrue og bane i perspektiv, 3 sværhedsgrader |
 
@@ -4221,9 +4225,10 @@ eksplosionseffekter, highscore.
   annullerer.
 
 **Minigolf**
-- **18 håndbyggede baner** på tre forløb: *Classic* (9 baner, blid start), *Pro*
-  (9 drilske baner med ø-green, dobbelt vindmølle og vandrende klodser) og
-  *Random* (ni baner trukket fra begge og spejlvendt tilfældigt).
+- **360 baner på 40 forløb**: *Classic* og *Pro* med 9 håndbyggede baner hver,
+  **Touren** med 38 forløb à 9 genererede baner (342 i alt) og stigende
+  sværhedsgrad, dertil *Random* fra det hele. Forløb 7, bane 3 ser ens ud alle
+  steder - der skal ikke gemmes noget.
 - **Underlag og forhindringer**: sand bremser, ramper accelererer, vand koster et
   strafslag, gummibumpere giver fart tilbage, og vindmøller og vandrende klodser
   kræver timing. Fysikken kører i deltrin med friktion som i billard - intet
@@ -4557,7 +4562,7 @@ nederst under **[Installasjonsveiledning](#installasjonsveiledning)**.
 | **Hangman**        | 1 spiller  | Gjett ordet før galgen er ferdig; skjermtastatur, ordlister per språk, 3 lengdemoduser, endeløs streak |
 | **Block Jump**  | 1 spiller       | 3D-plattformspill i Minecraft-stil: teksturert voxelverden med Steve-figur, stiger, gjerder og slimblokker, første-/tredjepersonskamera, motion blur, seed-genererte parkour-nivåer |
 | **Tower Defense** | 1 spiller      | Slå tilbake endeløse bølger på 4 kart: opptil 11 tårntyper med oppgraderinger, salg & A/B-spesialisering, bosser, 3 moduser, aktive evner |
-| **Minigolf**    | 1 / 2 spillere | 18 håndlagde baner på 3 løyper: sand, ramper, vann, støtfangere, vindmøller & vandrende klosser; scorekort med par og hole-in-one-bonus |
+| **Minigolf**    | 1 / 2 spillere | 360 baner på 40 løyper (18 håndlagde, 342 genererte): sand, ramper, vann, støtfangere, vindmøller & vandrende klosser; scorekort med par og hole-in-one-bonus |
 | **Pinball**     | 1 / 2 spillere | Flipperautomat med 3 bord: bumpere, slingshots, mål, L-A-M-A-baner, multiball med jackpot, kuleredning, dytt & tilt |
 | **Bowling**     | 1 / 2 spillere | 10 frames med offisiell strike/spare-telling, ekte kjeglefysikk, hook-skru og bane i perspektiv, 3 vanskelighetsgrader |
 
@@ -4987,9 +4992,10 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   og bølge. **F** = 2x tempo, **G** = rekkevidder, høyreklikk avbryter.
 
 **Minigolf**
-- **18 håndlagde baner** på tre løyper: *Classic* (9 baner, myk start), *Pro*
-  (9 lumske baner med øygreen, dobbel vindmølle og vandrende klosser) og *Random*
-  (ni baner trukket fra begge og speilet tilfeldig).
+- **360 baner på 40 løyper**: *Classic* og *Pro* med 9 håndlagde baner hver,
+  **Touren** med 38 løyper à 9 genererte baner (342 totalt) og stigende
+  vanskelighet, i tillegg *Random* fra alt sammen. Løype 7, bane 3 ser lik ut
+  overalt - ingenting må lagres.
 - **Underlag og hindringer**: sand bremser, ramper akselererer, vann koster et
   straffeslag, gummistøtfangere gir fart tilbake, og vindmøller og vandrende
   klosser krever timing. Fysikken går i deltrinn med friksjon som i biljard -
@@ -5322,7 +5328,7 @@ under **[Installationsguide](#installationsguide)**.
 | **Hänga gubbe**  | 1 spelare    | Gissa ordet innan galgen är färdig; skärmtangentbord, ordlistor per språk, 3 längdlägen, oändlig streak |
 | **Block Jump**   | 1 spelare    | 3D-plattformsspel i Minecraft-stil: texturerad voxelvärld med Steve-figur, stegar, staket & slime-block, första-/tredjepersonskamera, motion blur, seed-genererade parkourbanor |
 | **Tower Defense** | 1 spelare    | Slå tillbaka oändliga vågor på 4 kartor: upp till 11 torntyper med uppgraderingar, försäljning & A/B-specialisering, bossar, 3 lägen, aktiva förmågor |
-| **Minigolf**    | 1 / 2 spelare | 18 handbyggda banor på 3 slingor: sand, ramper, vatten, kuddar, väderkvarnar & vandrande block; scorekort med par och hole-in-one-bonus |
+| **Minigolf**    | 1 / 2 spelare | 360 banor på 40 slingor (18 handbyggda, 342 genererade): sand, ramper, vatten, kuddar, väderkvarnar & vandrande block; scorekort med par och hole-in-one-bonus |
 | **Pinball**     | 1 / 2 spelare | Flipperspel med 3 bord: bumpers, slingshots, mål, L-A-M-A-banor, multiboll med jackpot, bollräddning, knuff & tilt |
 | **Bowling**     | 1 / 2 spelare | 10 frames med officiell strike/spare-räkning, äkta kägelfysik, skruv och bana i perspektiv, 3 svårighetsgrader |
 
@@ -5728,9 +5734,10 @@ explosionseffekter, topplista.
   avbryter.
 
 **Minigolf**
-- **18 handbyggda banor** på tre slingor: *Classic* (9 banor, mjuk start), *Pro*
-  (9 kluriga banor med ögreen, dubbel väderkvarn och vandrande block) och *Random*
-  (nio banor dragna ur båda och speglade slumpvis).
+- **360 banor på 40 slingor**: *Classic* och *Pro* med 9 handbyggda banor var,
+  **Touren** med 38 slingor à 9 genererade banor (342 totalt) och stigande
+  svårighet, därtill *Random* ur alltihop. Slinga 7, bana 3 ser likadan ut
+  överallt - inget behöver sparas.
 - **Underlag och hinder**: sand bromsar, ramper accelererar, vatten kostar ett
   straffslag, gummikuddar ger fart tillbaka, och väderkvarnar och vandrande block
   kräver timing. Fysiken går i delsteg med friktion precis som i biljard -
@@ -6054,7 +6061,7 @@ ohje löytyy aivan alhaalta kohdasta **[Asennusopas](#asennusopas)**.
 | **Hirsipuu**       | 1 pelaaja  | Arvaa sana ennen kuin hirsipuu valmistuu; ruutunäppäimistö, kielikohtaiset sanalistat, 3 pituustilaa, loputon putki |
 | **Block Jump**  | 1 pelaaja       | 3D-Minecraft-tyylinen tasoloikka: teksturoitu voxel-maailma, Steve-hahmo, tikkaat, aidat ja limapalikat, ensimmäisen/kolmannen persoonan kamera, motion blur, siemenpohjaiset parkour-kentät |
 | **Tower Defense** | 1 pelaaja      | Torju loputtomia aaltoja 4 kartalla: jopa 11 tornityyppiä parannuksineen, myynteineen ja A/B-erikoistumisineen, pomoja, 3 tilaa, aktiivisia kykyjä |
-| **Minigolf**    | 1 / 2 pelaajaa | 18 käsin rakennettua rataa kolmella kierroksella: hiekkaa, ramppeja, vettä, puskureita, tuulimyllyjä ja vaeltavia lohkoja; tuloskortti parilla ja hole-in-one-bonuksella |
+| **Minigolf**    | 1 / 2 pelaajaa | 360 rataa 40 kierroksella (18 käsin rakennettua, 342 luotua): hiekkaa, ramppeja, vettä, puskureita, tuulimyllyjä ja vaeltavia lohkoja; tuloskortti parilla ja hole-in-one-bonuksella |
 | **Pinball**     | 1 / 2 pelaajaa | Flipperiautomaatti kolmella pöydällä: puskurit, slingshotit, maalit, L-A-M-A-kaistat, multiball ja jackpot, pallonpelastus, töytäisy ja tilt |
 | **Bowling**     | 1 / 2 pelaajaa | 10 framea virallisella strike/spare-laskennalla, aito keilafysiikka, hook-kierre ja perspektiivinen rata, 3 vaikeustasoa |
 
@@ -6504,10 +6511,10 @@ räjähdystehosteet, ennätys.
   peruu.
 
 **Minigolf**
-- **18 käsin rakennettua rataa** kolmella kierroksella: *Classic* (9 rataa, lempeä
-  aloitus), *Pro* (9 kinkkistä rataa saariviheriöineen, kaksoismyllyineen ja
-  vaeltavine lohkoineen) ja *Random* (yhdeksän molemmista arvottua ja
-  satunnaisesti peilattua rataa).
+- **360 rataa 40 kierroksella**: *Classic* ja *Pro*, joissa on yhdeksän käsin
+  rakennettua rataa kumpikin, **Tour** 38 kierroksella à yhdeksän luotua rataa
+  (yhteensä 342) ja nousevalla vaikeudella, lisäksi *Random* koko joukosta.
+  Kierros 7, rata 3 näyttää kaikkialla samalta - mitään ei tarvitse tallentaa.
 - **Alustat ja esteet**: hiekka jarruttaa, rampit kiihdyttävät, vesi maksaa
   rangaistuslyönnin, kumipuskurit antavat vauhtia takaisin, ja tuulimyllyt ja
   vaeltavat lohkot vaativat ajoitusta. Fysiikka lasketaan osa-askelin kitkan
@@ -6842,7 +6849,7 @@ existuje, jinak systémový Python. Podrobný návod krok za krokem je úplně d
 | **Hangman**        | 1 hráč    | Uhodni slovo, než se dokreslí šibenice; klávesnice na obrazovce, seznamy slov podle jazyka, 3 délkové režimy, nekonečná série |
 | **Block Jump**   | 1 hráč      | 3D plošinovka ve stylu Minecraftu: texturovaný voxelový svět se Stevem, žebříky, ploty a slizovými bloky, kamera z první/třetí osoby, motion blur, parkourové úrovně ze semínka |
 | **Tower Defense** | 1 hráč      | Odrážej nekonečné vlny na 4 mapách: až 11 typů věží s vylepšeními, prodejem a specializací A/B, bossové, 3 režimy, aktivní schopnosti |
-| **Minigolf**    | 1 / 2 hráči | 18 ručně postavených drah na 3 hřištích: písek, rampy, voda, odrazníky, mlýny a bloudící bloky; karta s parem a bonusem za hole in one |
+| **Minigolf**    | 1 / 2 hráči | 360 drah na 40 hřištích (18 ručních, 342 vytvořených): písek, rampy, voda, odrazníky, mlýny a bloudící bloky; karta s parem a bonusem za hole in one |
 | **Pinball**     | 1 / 2 hráči | Pinballový automat se 3 stoly: bumpery, slingshoty, terče, dráhy L-A-M-A, multiball s jackpotem, záchrana koule, šťouch a tilt |
 | **Bowling**     | 1 / 2 hráči | 10 framů s oficiálním počítáním strike/spare, skutečnou fyzikou kuželek, hookem a dráhou v perspektivě, 3 obtížnosti |
 
@@ -7284,10 +7291,10 @@ zbraně), efekty explozí, nejlepší skóre.
   vlny. **F** = 2x rychlost, **G** = dosahy, pravé tlačítko ruší.
 
 **Minigolf**
-- **18 ručně postavených drah** na třech hřištích: *Classic* (9 drah, jemný
-  začátek), *Pro* (9 záludných drah s ostrovním greenem, dvojitým mlýnem a
-  bloudícími bloky) a *Random* (devět drah vylosovaných z obou a náhodně
-  zrcadlených).
+- **360 drah na 40 hřištích**: *Classic* a *Pro* s devíti ručně postavenými
+  drahami každé, **Tour** s 38 hřišti po devíti vytvořených drahách (celkem 342)
+  a stoupající obtížností, k tomu *Random* ze všeho dohromady. Hřiště 7, dráha 3
+  vypadá všude stejně - nic se kvůli tomu neukládá.
 - **Povrchy a překážky**: písek brzdí, rampy zrychlují, voda stojí trestný úder,
   gumové odrazníky vracejí rychlost a mlýny s bloudícími bloky vyžadují
   načasování. Fyzika běží v dílčích krocích s třením jako u kulečníku - nic
@@ -7623,7 +7630,7 @@ obstaja, sicer sistemski Python. Na dnu dokumenta je podroben vodnik po korakih:
 | **Vislice**        | 1 igralec  | Ugani besedo, preden so vislice končane; zaslonska tipkovnica, seznami besed po jeziku, 3 dolžinski načini, neskončni niz |
 | **Block Jump**  | 1 igralec       | 3D-ploščadnica v slogu Minecrafta: teksturiran voksel svet s Stevom, lestvami, ograjami in sluzastimi bloki, kamera v prvi/tretji osebi, motion blur, ravni parkourja s semenom |
 | **Tower Defense** | 1 igralec      | Odbijaj neskončne valove na 4 zemljevidih: do 11 vrst stolpov z nadgradnjami, prodajo in specializacijo A/B, bossi, 3 načini, aktivne sposobnosti |
-| **Minigolf**    | 1 / 2 igralca | 18 ročno zgrajenih stez na 3 igriščih: pesek, klančine, voda, odbijači, mlini in tavajoči bloki; kartica s parom in bonusom za hole in one |
+| **Minigolf**    | 1 / 2 igralca | 360 stez na 40 igriščih (18 ročnih, 342 ustvarjenih): pesek, klančine, voda, odbijači, mlini in tavajoči bloki; kartica s parom in bonusom za hole in one |
 | **Pinball**     | 1 / 2 igralca | Pinball avtomat s 3 mizami: odbijači, slingshoti, tarče, steze L-A-M-A, multiball z jackpotom, rešitev krogle, sunek in tilt |
 | **Bowling**     | 1 / 2 igralca | 10 framov z uradnim štetjem strike/spare, pravo fiziko kegljev, hookom in stezo v perspektivi, 3 težavnosti |
 
@@ -8061,9 +8068,10 @@ nadgradnja orožja), učinki eksplozij, rekord.
   prekliče.
 
 **Minigolf**
-- **18 ročno zgrajenih stez** na treh igriščih: *Classic* (9 stez, mehak začetek),
-  *Pro* (9 zahtevnih stez z otoškim greenom, dvojnim mlinom in tavajočimi bloki)
-  in *Random* (devet stez, izžrebanih iz obeh in naključno zrcaljenih).
+- **360 stez na 40 igriščih**: *Classic* in *Pro* z devetimi ročno zgrajenimi
+  stezami vsako, **Tour** z 38 igrišči po devet ustvarjenih stez (skupaj 342) in
+  naraščajočo težavnostjo, poleg tega *Random* iz vsega skupaj. Igrišče 7,
+  steza 3 je povsod enaka - shranjevati ni treba ničesar.
 - **Podlage in ovire**: pesek zavira, klančine pospešujejo, voda stane kazenski
   udarec, gumijasti odbijači vračajo hitrost, mlini in tavajoči bloki pa zahtevajo
   občutek za čas. Fizika teče v podkorakih s trenjem kot pri biljardu - nič ne
@@ -8396,7 +8404,7 @@ dnu pod **[Vodič za instalaciju](#vodič-za-instalaciju)**.
 | **Vješala**        | 1 igrač   | Pogodite riječ prije nego što se dovrši vješalo; zaslonska tipkovnica, popisi riječi po jeziku, 3 moda duljine, beskonačni niz |
 | **Block Jump**  | 1 igrač        | 3D platformer u stilu Minecrafta: teksturirani voxel svijet sa Steveom, ljestvama, ogradama i sluzavim blokovima, kamera iz prvog/trećeg lica, motion blur, parkour razine generirane sjemenom |
 | **Tower Defense** | 1 igrač        | Odbijaj beskonačne valove na 4 karte: do 11 vrsta tornjeva s nadogradnjama, prodajom i specijalizacijom A/B, bossovi, 3 načina, aktivne sposobnosti |
-| **Minigolf**    | 1 / 2 igrača | 18 ručno izgrađenih staza na 3 terena: pijesak, rampe, voda, odbojnici, vjetrenjače i lutajući blokovi; kartica s parom i bonusom za hole in one |
+| **Minigolf**    | 1 / 2 igrača | 360 staza na 40 terena (18 ručnih, 342 generirane): pijesak, rampe, voda, odbojnici, vjetrenjače i lutajući blokovi; kartica s parom i bonusom za hole in one |
 | **Pinball**     | 1 / 2 igrača | Pinball automat s 3 stola: odbojnici, slingshotovi, mete, staze L-A-M-A, multiball s jackpotom, spašavanje kugle, gurkanje i tilt |
 | **Bowling**     | 1 / 2 igrača | 10 frameova sa službenim brojanjem strike/spare, pravom fizikom čunjeva, hookom i stazom u perspektivi, 3 težine |
 
@@ -8840,9 +8848,10 @@ nadogradnja oružja), efekti eksplozije, rekord.
   i valu. **F** = 2x brzina, **G** = dometi, desni klik odustaje.
 
 **Minigolf**
-- **18 ručno izgrađenih staza** na tri terena: *Classic* (9 staza, blag početak),
-  *Pro* (9 zahtjevnih staza s otočnim greenom, dvostrukom vjetrenjačom i lutajućim
-  blokovima) i *Random* (devet staza izvučenih s oba terena i nasumično zrcaljenih).
+- **360 staza na 40 terena**: *Classic* i *Pro* s po devet ručno izgrađenih
+  staza, **Tour** s 38 terena po devet generiranih staza (ukupno 342) i rastućom
+  težinom, uz to *Random* iz svega zajedno. Teren 7, staza 3 izgleda svugdje
+  jednako - ništa se ne mora spremati.
 - **Podloge i prepreke**: pijesak koči, rampe ubrzavaju, voda košta kazneni
   udarac, gumeni odbojnici vraćaju brzinu, a vjetrenjače i lutajući blokovi traže
   osjećaj za trenutak. Fizika radi u podkoracima s trenjem kao u biljaru - ništa

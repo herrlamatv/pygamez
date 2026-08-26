@@ -97,7 +97,8 @@
     "textures": "high"
   },
   "minigolf": {
-    "course": "classic",
+    "course": "tour",
+    "tour": 1,
     "guide": true
   },
   "pinball": {

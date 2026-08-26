@@ -2,13 +2,15 @@
 """
 minigolf.py
 ===========
-Minigolf - 18 handgebaute Bahnen in zwei Kursen plus ein Zufallskurs, allein
-oder zu zweit lokal.
+Minigolf - 360 Bahnen in 40 Kursen, allein oder zu zweit lokal.
 
 Kurse (im Setup wählbar, wird gespeichert):
-  - Classic : 9 freundliche Bahnen (Par 2-4), sanfter Einstieg.
-  - Pro     : 9 knifflige Bahnen mit Inselgrün, Doppelmühle und Wanderblöcken.
-  - Random  : 9 zufällig gezogene Bahnen aus beiden Kursen, zufällig gespiegelt.
+  - Classic : 9 handgebaute, freundliche Bahnen (Par 2-4), sanfter Einstieg.
+  - Pro     : 9 handgebaute Bahnen mit Inselgrün, Doppelmühle und Wanderblöcken.
+  - Tour    : 38 seed-erzeugte Kurse zu je 9 Bahnen (342 Bahnen) mit steigender
+              Schwierigkeit - Kurs 7, Bahn 3 sieht überall gleich aus, gespeichert
+              werden muss dafür nichts (siehe minigolf_gen.py).
+  - Random  : 9 zufällig gezogene Bahnen aus allen Kursen, zufällig gespiegelt.
 
 Die Physik läuft - wie beim Billard - in Teilschritten mit Reibung, damit
 nichts ruckt und schnelle Bälle nicht durch Banden tunneln. Untergründe
@@ -35,6 +37,9 @@ import ui
 from game_base import Game, InputEvent
 from i18n import t
 
+from . import minigolf_gen as gen
+from .minigolf_gen import CW, CH, BORDER, HOLES_PER_ROUND, make_hole as _hole
+
 # ------------------------------------------------- Identitätsfarben (Platz)
 COL_GREEN = (46, 132, 74)
 COL_GREEN_D = (38, 112, 62)
@@ -56,9 +61,8 @@ COL_FLAG = (226, 72, 72)
 COL_AIM = (245, 245, 210)
 
 # ------------------------------------------------------------- Platz / Physik
-CW, CH = 100.0, 160.0        # Kursmaße in Bahn-Einheiten
-BORDER = 3.0                 # Bandenbreite am Rand
-BR = 1.7                     # Ballradius
+# CW/CH/BORDER kommen aus minigolf_gen.py (dort steht die einzige Definition).
+BR = gen.BALL_R              # Ballradius
 CUP_R = 3.0                  # Lochradius
 ARM_W = 1.5                  # halbe Breite eines Mühlenflügels
 
@@ -73,28 +77,7 @@ MAX_SHOT_TIME = 14.0
 MAX_STROKES = 8              # danach wird die Bahn mit Höchstwert beendet
 
 SETUP, PLAY, HOLE_DONE, OVER = "setup", "play", "holedone", "over"
-COURSES = ["classic", "pro", "random"]
-HOLES_PER_ROUND = 9
-
-
-def _hole(par, tee, cup, walls=(), sand=(), water=(), slopes=(),
-          bumpers=(), movers=(), mills=()):
-    """Baut einen Bahn-Datensatz (alle Angaben in Bahn-Einheiten).
-
-    walls/sand/water : (x, y, w, h)
-    slopes           : (x, y, w, h, ax, ay)          ax/ay = Beschleunigung
-    bumpers          : (x, y, r)
-    movers           : (x, y, w, h, dx, dy, speed)   pendelt zwischen den Enden
-    mills            : (x, y, laenge, arme, speed)   speed in rad/s
-    """
-    return {"par": par, "tee": tee, "cup": cup,
-            "walls": [tuple(map(float, w)) for w in walls],
-            "sand": [tuple(map(float, s)) for s in sand],
-            "water": [tuple(map(float, w)) for w in water],
-            "slopes": [tuple(map(float, s)) for s in slopes],
-            "bumpers": [tuple(map(float, b)) for b in bumpers],
-            "movers": [tuple(map(float, m)) for m in movers],
-            "mills": [tuple(map(float, m)) for m in mills]}
+COURSES = ["classic", "pro", "tour", "random"]
 
 
 # --------------------------------------------------------- Kurs 1: Classic
@@ -203,6 +186,8 @@ class MiniGolfGame(Game):
         if self.course not in COURSES:
             self.course = "classic"
         self.guide = bool(gs.get("guide", True))
+        self.tour = max(1, min(gen.TOUR_COURSES, int(gs.get("tour", 1) or 1)))
+        self._tour_par = gen.course_par(self.tour)
         self.winner = None
 
         self._build_fonts()
@@ -252,10 +237,15 @@ class MiniGolfGame(Game):
                     continue
         return out
 
+    def _best_key(self):
+        """Schlüssel des Bestwerts: je Tour-Kurs ein eigener Eintrag."""
+        return "tour%d" % self.tour if self.course == "tour" else self.course
+
     def _save_best(self, strokes):
-        old = self.best.get(self.course)
+        key = self._best_key()
+        old = self.best.get(key)
         if old is None or strokes < old:
-            self.best[self.course] = strokes
+            self.best[key] = strokes
             store.save_section("minigolf", {"best": self.best})
 
     def _save_setting(self, key, value):
@@ -270,7 +260,14 @@ class MiniGolfGame(Game):
             return [dict(h) for h in HOLES_CLASSIC]
         if self.course == "pro":
             return [dict(h) for h in HOLES_PRO]
-        picked = random.sample(HOLES_CLASSIC + HOLES_PRO, HOLES_PER_ROUND)
+        if self.course == "tour":
+            return gen.course_holes(self.tour)
+        # Random: aus handgebauten UND erzeugten Bahnen ziehen
+        pool = list(HOLES_CLASSIC + HOLES_PRO)
+        for _ in range(HOLES_PER_ROUND):
+            pool.append(gen.generate(random.randint(1, gen.TOUR_COURSES),
+                                     random.randrange(HOLES_PER_ROUND)))
+        picked = random.sample(pool, HOLES_PER_ROUND)
         picked.sort(key=lambda h: h["par"])
         return [self._mirror(h, random.random() < 0.5) for h in picked]
 
@@ -335,25 +332,34 @@ class MiniGolfGame(Game):
     def _build_setup_layout(self):
         cx = self.width // 2
         bw = min(370, self.width - 50)
-        y0 = int(self.height * 0.30)
+        y0 = int(self.height * 0.26)
         gap = 8
 
-        def row(y, n):
+        def row(y, n, h=42):
             cw = (bw - gap * (n - 1)) / n
             return [pygame.Rect(int(cx - bw / 2 + i * (cw + gap)), y,
-                                int(cw), 42) for i in range(n)]
+                                int(cw), h) for i in range(n)]
 
-        self.course_rects = row(y0, 3)
-        self.guide_rects = row(y0 + 88, 2)
-        self.start_rect = pygame.Rect(cx - 95, y0 + 156, 190, 46)
+        self.course_rects = row(y0, 4)
+        # Tour-Kurs: Pfeil links, Anzeige, Pfeil rechts
+        ty = y0 + 62
+        self.tour_rects = [pygame.Rect(int(cx - bw / 2), ty, 40, 34),
+                           pygame.Rect(int(cx - bw / 2 + 46), ty, int(bw - 92), 34),
+                           pygame.Rect(int(cx + bw / 2 - 40), ty, 40, 34)]
+        self.guide_rects = row(y0 + 124, 2)
+        self.start_rect = pygame.Rect(cx - 95, y0 + 186, 190, 46)
 
     def _handle_setup(self, event):
         if event.kind == InputEvent.KEYDOWN:
             k = event.key
-            if k in ("1", "2", "3"):
+            if k in ("1", "2", "3", "4"):
                 self.course = COURSES[int(k) - 1]
                 self._save_setting("course", self.course)
                 self.play_sound("click")
+            elif k == "Left" or self.is_action(k, "left"):
+                self._step_tour(-1)
+            elif k == "Right" or self.is_action(k, "right"):
+                self._step_tour(1)
             elif k in ("g", "G"):
                 self._toggle_guide()
             elif k in ("Return", "space"):
@@ -365,6 +371,13 @@ class MiniGolfGame(Game):
                     self._save_setting("course", self.course)
                     self.play_sound("click")
                     return
+            if self.course == "tour":
+                if self.tour_rects[0].collidepoint(event.pos):
+                    self._step_tour(-1)
+                    return
+                if self.tour_rects[2].collidepoint(event.pos):
+                    self._step_tour(1)
+                    return
             for i, rc in enumerate(self.guide_rects):
                 if rc.collidepoint(event.pos):
                     if self.guide != (i == 0):
@@ -372,6 +385,15 @@ class MiniGolfGame(Game):
                     return
             if self.start_rect.collidepoint(event.pos):
                 self._start_play()
+
+    def _step_tour(self, d):
+        """Blättert durch die Tour-Kurse (nur wirksam, wenn Tour gewählt ist)."""
+        if self.course != "tour":
+            return
+        self.tour = (self.tour - 1 + d) % gen.TOUR_COURSES + 1
+        self._tour_par = gen.course_par(self.tour)
+        self._save_setting("tour", self.tour)
+        self.play_sound("move")
 
     def _toggle_guide(self):
         self.guide = not self.guide
@@ -1033,7 +1055,7 @@ class MiniGolfGame(Game):
               diff=("%+d" % d) if d else t("golf.even"), pts=self.points[0]),
             True, ui.TEXT)
         s.blit(sub, sub.get_rect(center=(cx, y + 66)))
-        best = self.best.get(self.course)
+        best = self.best.get(self._best_key())
         if best:
             b = self._tiny.render(t("golf.best", n=best), True, ui.GOLD)
             s.blit(b, b.get_rect(center=(cx, y + 88)))
@@ -1055,6 +1077,7 @@ class MiniGolfGame(Game):
         for i, rc in enumerate(self.course_rects):
             self._btn(s, rc, t("golf.course." + COURSES[i]),
                       self.course == COURSES[i])
+        self._draw_tour_row(s)
         label(self.guide_rects, t("golf.lbl_guide"))
         for i, rc in enumerate(self.guide_rects):
             self._btn(s, rc, t("common.on") if i == 0 else t("common.off"),
@@ -1063,12 +1086,33 @@ class MiniGolfGame(Game):
         pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=9)
         st = self.font.render(t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
-        best = self.best.get(self.course)
+        best = self.best.get(self._best_key())
         if best:
             b = self._tiny.render(t("golf.best", n=best), True, ui.GOLD)
             s.blit(b, b.get_rect(center=(cx, self.start_rect.bottom + 22)))
         hint = self._tiny.render(t("golf.setup_hint"), True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(cx, self.height - 14)))
+
+    def _draw_tour_row(self, s):
+        """Kurswahl der Tour: Pfeile, Kursnummer und Gesamt-Par."""
+        left, mid, right = self.tour_rects
+        on = (self.course == "tour")
+        im = self._tiny.render(t("golf.lbl_tour"), True,
+                               ui.TEXT_DIM if on else ui.TEXT_FAINT)
+        s.blit(im, im.get_rect(midbottom=(self.width // 2, left.top - 3)))
+        col = self.accent if on else ui.BORDER
+        for rc, arrow in ((left, "<"), (right, ">")):
+            pygame.draw.rect(s, ui.BTN, rc, border_radius=7)
+            pygame.draw.rect(s, col, rc, 1, border_radius=7)
+            a = self._small.render(arrow, True, ui.TEXT if on else ui.TEXT_FAINT)
+            s.blit(a, a.get_rect(center=rc.center))
+        pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, mid, border_radius=7)
+        pygame.draw.rect(s, col, mid, 2 if on else 1, border_radius=7)
+        txt = t("golf.tour", n=self.tour, total=gen.TOUR_COURSES)
+        if on:
+            txt += "  ·  " + t("golf.par", n=self._tour_par)
+        im = self._small.render(txt, True, ui.TEXT if on else ui.TEXT_FAINT)
+        s.blit(im, im.get_rect(center=mid.center))
 
     def _btn(self, s, rc, text, on):
         pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, rc, border_radius=8)

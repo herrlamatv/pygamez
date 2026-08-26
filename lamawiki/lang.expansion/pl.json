@@ -1807,13 +1807,15 @@
         "piasek",
         "rampa",
         "pole",
-        "putt"
+        "putt",
+        "tour"
       ],
       "sections": [
         {
           "h": "Jak się gra",
           "body": [
-            "Minigolf na 18 ręcznie zbudowanych dołkach. Pole Classic wprowadza łagodnie, Pro dokłada wyspowy green, podwójny wiatrak i ruchome bloki, a Random losuje dziewięć dołków z obu pól i odbija je lustrzanie.",
+            "Minigolf na 360 dołkach: 18 zbudowanych ręcznie i 342 wygenerowane. Pola Classic i Pro wprowadzają po dziewięć zbudowanych dołków, Tour oferuje 38 pól po dziewięć generowanych dołków o rosnącej trudności, a Random losuje dziewięć dołków z całości i odbija je lustrzanie.",
+            "Dołki Tour powstają z ziarna: pole 7, dołek 3 wygląda tak samo przy każdym starcie - nic nie trzeba zapisywać. Strzałki obok numeru przewijają 38 pól, a obok widnieje łączny par.",
             "Celem jest wbicie piłki w jak najmniejszej liczbie uderzeń. Po ośmiu uderzeniach piłka zostaje podniesiona, a dołek liczy się na minimum.",
             "We dwoje każdy gra ten sam dołek po kolei; karta wyników po prawej pokazuje par i oba rezultaty."
           ]

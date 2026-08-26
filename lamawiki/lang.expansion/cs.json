@@ -1807,13 +1807,15 @@
         "písek",
         "rampa",
         "hřiště",
-        "patování"
+        "patování",
+        "tour"
       ],
       "sections": [
         {
           "h": "Jak se hraje",
           "body": [
-            "Minigolf na 18 ručně postavených drahách. Hřiště Classic uvádí do hry jemně, Pro přidává ostrovní green, dvojitý mlýn a bloudící bloky a Random vylosuje devět drah z obou hřišť a náhodně je zrcadlí.",
+            "Minigolf na 360 drahách: 18 ručně postavených a 342 vytvořených. Hřiště Classic a Pro uvádějí do hry devíti postavenými drahami, Tour nabízí 38 hřišť po devíti vytvořených drahách se stoupající obtížností a Random vylosuje devět drah ze všeho dohromady a náhodně je zrcadlí.",
+            "Dráhy Tour vznikají ze semínka: hřiště 7, dráha 3 vypadá při každém spuštění stejně - nic se kvůli tomu neukládá. Šipky vedle čísla listují 38 hřišti, vedle stojí celkový par.",
             "Cílem je dostat míček do jamky na co nejméně úderů. Po osmi úderech se míček zvedá a dráha se počítá za minimum.",
             "Ve dvou hraje každý stejnou dráhu po sobě; karta vpravo ukazuje par i oba výsledky."
           ]

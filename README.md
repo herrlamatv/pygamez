@@ -85,7 +85,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Galgenmännchen** | 1 Spieler   | Wort erraten, bevor der Galgen voll ist; Bildschirmtastatur, Wortlisten je Sprache, 3 Längen-Modi, Endlos-Streak |
 | **Block Jump**  | 1 Spieler       | 3D-Jump'n'Run im Minecraft-Stil: texturierte Voxel-Welt, Steve-Figur, Leitern, Zäune & Schleimblöcke, Ego-/Verfolgerkamera, seed-generierte Parkour-Level |
 | **Tower Defense** | 1 Spieler     | Endlose Wellen auf 4 Karten abwehren: bis zu 11 Turmtypen mit Ausbau, Verkauf & A/B-Spezialisierung, Bosse, 3 Modi, Aktiv-Fähigkeiten |
-| **Minigolf**    | 1 / 2 Spieler   | 18 handgebaute Bahnen in 3 Kursen: Sand, Rampen, Wasser, Gummipuffer, Windmühlen & Wanderblöcke; Scorekarte mit Par und Hole-in-One-Bonus |
+| **Minigolf**    | 1 / 2 Spieler   | 360 Bahnen in 40 Kursen (18 handgebaut, 342 seed-erzeugt): Sand, Rampen, Wasser, Gummipuffer, Windmühlen & Wanderblöcke; Scorekarte mit Par und Hole-in-One-Bonus |
 | **Pinball**     | 1 / 2 Spieler   | Flipperautomat mit 3 Tischen: Pop-Bumper, Slingshots, Drop-Targets, L-A-M-A-Bahnen, Multiball mit Jackpot, Ball-Save, Nudge & Tilt |
 | **Bowling**     | 1 / 2 Spieler   | 10 Frames mit offizieller Strike-/Spare-Wertung, echter Pin-Physik, Hook-Effet und perspektivischer Bahnansicht, 3 Schwierigkeiten |
 
@@ -528,10 +528,10 @@ Explosions-Effekte, Highscore.
   und Welle. **F** = Tempo x2, **G** = Reichweiten, Rechtsklick bricht ab.
 
 **Minigolf**
-- **18 handgebaute Bahnen** in drei Kursen: *Classic* (9 Bahnen, sanfter
-  Einstieg), *Pro* (9 knifflige Bahnen mit Inselgrün, Doppelmühle und
-  Wanderblöcken) und *Random* (neun zufällig gezogene und zufällig gespiegelte
-  Bahnen aus beiden Kursen).
+- **360 Bahnen in 40 Kursen**: *Classic* und *Pro* mit je 9 handgebauten Bahnen,
+  die **Tour** mit 38 Kursen zu je 9 seed-erzeugten Bahnen (342 Stück) bei
+  steigender Schwierigkeit, dazu *Random* aus allem zusammen. Kurs 7, Bahn 3
+  sieht überall gleich aus - gespeichert werden muss dafür nichts.
 - **Untergründe & Hindernisse**: Sand bremst, Rampen beschleunigen, Wasser
   kostet einen Strafschlag, Gummipuffer geben Tempo zurück, Windmühlen und
   Wanderblöcke verlangen Timing. Die Physik läuft wie beim Billard in
@@ -879,7 +879,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Hangman**        | 1 player    | Guess the word before the gallows is finished; on-screen keyboard, per-language word lists, 3 length modes, endless streak |
 | **Block Jump**  | 1 player        | 3D Minecraft-style platformer: textured voxel world, Steve figure, ladders, fences & slime blocks, first/third-person camera, seed-generated parkour levels |
 | **Tower Defense** | 1 player      | Fend off endless waves on 4 maps: up to 11 tower types with upgrades, selling & A/B specialisation, bosses, 3 modes, active abilities |
-| **Minigolf**    | 1 / 2 players   | 18 hand-built holes across 3 courses: sand, ramps, water, rubber bumpers, windmills & moving blocks; scorecard with par and hole-in-one bonus |
+| **Minigolf**    | 1 / 2 players   | 360 holes across 40 courses (18 hand-built, 342 seed-generated): sand, ramps, water, rubber bumpers, windmills & moving blocks; scorecard with par and hole-in-one bonus |
 | **Pinball**     | 1 / 2 players   | Pinball machine with 3 tables: pop bumpers, slingshots, drop targets, L-A-M-A lanes, multiball with jackpot, ball save, nudge & tilt |
 | **Bowling**     | 1 / 2 players   | 10 frames with official strike/spare scoring, real pin physics, hook spin and a perspective lane view, 3 difficulties |
 
@@ -1315,10 +1315,10 @@ explosion effects, high score.
   wave. **F** = 2x speed, **G** = ranges, right-click cancels.
 
 **Minigolf**
-- **18 hand-built holes** across three courses: *Classic* (9 gentle holes),
-  *Pro* (9 tricky holes with an island green, a double windmill and moving
-  blocks) and *Random* (nine holes drawn from both courses and mirrored at
-  random).
+- **360 holes across 40 courses**: *Classic* and *Pro* with 9 hand-built holes
+  each, the **Tour** with 38 courses of 9 seed-generated holes (342 in total) at
+  rising difficulty, plus *Random* drawn from everything. Course 7, hole 3 looks
+  the same everywhere - nothing has to be stored for it.
 - **Surfaces & obstacles**: sand slows you down, ramps accelerate, water costs a
   penalty stroke, rubber bumpers give speed back, and windmills and moving
   blocks are all about timing. The physics runs in sub-steps with friction just

@@ -1807,13 +1807,15 @@
         "hiekka",
         "ramppi",
         "rata",
-        "putti"
+        "putti",
+        "tour"
       ],
       "sections": [
         {
           "h": "Näin pelataan",
           "body": [
-            "Minigolfia 18 käsin rakennetulla radalla. Classic-rata johdattaa lempeästi, Pro tuo saariviheriön, kaksoismyllyn ja vaeltavat lohkot, ja Random arpoo yhdeksän rataa molemmista ja peilaa ne sattumanvaraisesti.",
+            "Minigolfia 360 radalla: 18 käsin rakennettua ja 342 luotua. Radat Classic ja Pro johdattavat mukaan yhdeksällä rakennetulla radalla kumpikin, Tour tarjoaa 38 kierrosta, joissa on yhdeksän luotua rataa ja nouseva vaikeus, ja Random arpoo yhdeksän rataa koko joukosta ja peilaa ne satunnaisesti.",
+            "Tour-radat syntyvät siemenestä: kierros 7, rata 3 näyttää samalta joka käynnistyksellä - mitään ei tarvitse tallentaa. Numeron vieressä olevat nuolet selaavat 38 kierrosta, ja vieressä lukee kokonais-par.",
             "Tavoitteena on upottaa pallo mahdollisimman harvalla lyönnillä. Kahdeksan lyönnin jälkeen pallo nostetaan ja reikä lasketaan pienimmällä arvolla.",
             "Kaksinpelissä molemmat pelaavat saman radan vuorotellen; oikean reunan tuloskortti näyttää parin ja molemmat tulokset."
           ]

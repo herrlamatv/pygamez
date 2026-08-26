@@ -1807,13 +1807,15 @@
         "pijesak",
         "rampa",
         "teren",
-        "udarac"
+        "udarac",
+        "tour"
       ],
       "sections": [
         {
           "h": "Kako se igra",
           "body": [
-            "Minigolf na 18 ručno izgrađenih staza. Teren Classic blago uvodi u igru, Pro dodaje otočni green, dvostruku vjetrenjaču i lutajuće blokove, a Random izvlači devet staza s oba terena i nasumično ih zrcali.",
+            "Minigolf na 360 staza: 18 ručno izgrađenih i 342 generirane. Tereni Classic i Pro uvode u igru s po devet izgrađenih staza, Tour nudi 38 terena s po devet generiranih staza rastuće težine, a Random izvlači devet staza iz svega zajedno i nasumično ih zrcali.",
+            "Staze Toura nastaju iz sjemena: teren 7, staza 3 izgleda jednako pri svakom pokretanju - ništa se ne mora spremati. Strelice pokraj broja listaju kroz 38 terena, a pokraj piše ukupni par.",
             "Cilj je ubaciti lopticu u rupu s najmanje udaraca. Nakon osam udaraca loptica se podiže, a staza se broji po najmanjoj vrijednosti.",
             "U dvoje svatko igra istu stazu jedan za drugim; kartica desno pokazuje par i oba rezultata."
           ]

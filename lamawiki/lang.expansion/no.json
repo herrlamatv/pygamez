@@ -1807,13 +1807,15 @@
         "sand",
         "rampe",
         "bane",
-        "putt"
+        "putt",
+        "tour"
       ],
       "sections": [
         {
           "h": "Slik spiller du",
           "body": [
-            "Minigolf på 18 håndlagde baner. Banen Classic er en myk start, Pro gir øygreen, dobbel vindmølle og vandrende klosser, og Random trekker ni baner fra begge og speiler dem tilfeldig.",
+            "Minigolf på 360 baner: 18 håndlagde og 342 genererte. Banene Classic og Pro introduserer med ni lagde baner hver, Touren byr på 38 løyper med ni genererte baner hver og stigende vanskelighet, og Random trekker ni baner fra alt sammen og speiler dem tilfeldig.",
+            "Tour-banene kommer fra et frø: løype 7, bane 3 ser lik ut ved hver start - ingenting må lagres. Pilene ved siden av nummeret blar gjennom de 38 løypene, og ved siden av står totalt par.",
             "Målet er å få ballen i hullet på færrest mulig slag. Etter åtte slag plukkes ballen opp, og hullet teller minimum.",
             "For to spillere spiller begge den samme banen etter tur; scorekortet til høyre viser par og begge resultater."
           ]

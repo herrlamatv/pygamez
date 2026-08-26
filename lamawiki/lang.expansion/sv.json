@@ -1807,13 +1807,15 @@
         "sand",
         "ramp",
         "bana",
-        "putt"
+        "putt",
+        "tour"
       ],
       "sections": [
         {
           "h": "Så spelar du",
           "body": [
-            "Minigolf på 18 handbyggda banor. Banan Classic är en mjuk start, Pro ger ögreen, dubbel väderkvarn och vandrande block, och Random drar nio banor ur båda och speglar dem slumpvis.",
+            "Minigolf på 360 banor: 18 handbyggda och 342 genererade. Banorna Classic och Pro introducerar med nio byggda banor var, Touren bjuder på 38 slingor med nio genererade banor var och stigande svårighet, och Random drar nio banor ur alltihop och speglar dem slumpvis.",
+            "Tour-banorna kommer från ett frö: slinga 7, bana 3 ser likadan ut vid varje start - inget behöver sparas. Pilarna bredvid numret bläddrar genom de 38 slingorna, och bredvid står totalt par.",
             "Målet är att sänka bollen på så få slag som möjligt. Efter åtta slag plockas bollen upp och hålet räknas som lägst.",
             "Till två spelar båda samma bana efter varandra; scorekortet till höger visar par och båda resultaten."
           ]

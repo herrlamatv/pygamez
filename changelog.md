@@ -8,6 +8,38 @@
 
 ## 🇩🇪 Deutsch
 
+### Minigolf-Tour: 360 Bahnen – 2026-08-26
+
+Minigolf wächst vom Achtzehn-Bahnen-Platz zur **Tour**: zu den 18 handgebauten
+Bahnen kommen **342 erzeugte** dazu - zusammen **360 Bahnen in 40 Kursen**.
+
+#### Neu
+- **Bahn-Generator** `games/minigolf_gen.py`: 38 Tour-Kurse zu je 9 Bahnen,
+  vollständig aus einem Seed erzeugt. Kurs 7, Bahn 3 sieht bei jedem Start und
+  auf jedem Rechner gleich aus - gespeichert werden muss dafür nichts.
+- **Zehn Bahnfamilien** über vier Schwierigkeitsstufen: gerade Bahn, Wandreihen
+  mit versetzten Lücken, Dogleg, Gummipuffer-Feld, Wasserteiche, Rampe,
+  Chicane, Windmühlen-Korridor, Inselgrün und Wanderblock-Schleuse. Par 2 bis 5,
+  Gesamt-Par je Kurs zwischen 26 und 39.
+- **Passierbarkeit ist eingebaut, nicht erhofft**: jede Familie legt zuerst den
+  Weg vom Abschlag zum Loch fest und baut die Hindernisse darum herum -
+  Wandlücken sind nie schmaler als 12 Einheiten (Ball-Durchmesser 3,4), Wasser
+  liegt nur neben dem Weg, ein Wanderblock ist stets schmaler als seine Lücke,
+  und Mühlenflügel lassen seitlich Platz.
+- **Kurswahl im Setup**: vier Knöpfe (Classic / Pro / Tour / Random) und darunter
+  eine Zeile mit Pfeilen zum Blättern durch die 38 Tour-Kurse samt Anzeige des
+  Gesamt-Pars. Der Bestwert wird je Tour-Kurs einzeln gespeichert.
+- **Random** zieht jetzt aus allen 360 Bahnen statt nur aus den 18 gebauten.
+
+#### Geändert
+- `tests/newgames_audit.py` prüft nicht mehr nur die 18 gebauten Bahnen, sondern
+  **alle 342 erzeugten** dazu: freie Lage von Abschlag und Loch, Einlochbarkeit
+  per Solver (simuliert echte Schläge) und Reproduzierbarkeit aus dem Seed.
+  Laufzeit rund eine Minute.
+- `settings.json` merkt sich den zuletzt gewählten Tour-Kurs (`minigolf.tour`);
+  die Platzmaße stehen jetzt einmalig in `minigolf_gen.py`.
+- Sidebar-Untertitel und beide READMEs nennen die neue Zahl: 360 Bahnen.
+
 ### Minigolf, Pinball & Bowling – 2026-08-26
 
 Drei neue Sportspiele auf einen Schlag (Nr. 40-42): **Minigolf** mit 18
@@ -340,6 +372,38 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Minigolf Tour: 360 holes – 2026-08-26
+
+Minigolf grows from an eighteen-hole course into a **Tour**: on top of the 18
+hand-built holes come **342 generated** ones - **360 holes across 40 courses**.
+
+#### New
+- **Hole generator** `games/minigolf_gen.py`: 38 tour courses of 9 holes each,
+  built entirely from a seed. Course 7, hole 3 looks the same on every start and
+  on every machine - nothing has to be stored for it.
+- **Ten hole families** across four difficulty tiers: straight hole, wall rows
+  with offset gaps, dogleg, bumper field, water ponds, ramp, chicane, windmill
+  corridor, island green and moving-block gate. Par 2 to 5, total par per course
+  between 26 and 39.
+- **Passability is built in, not hoped for**: every family first fixes the path
+  from tee to cup and builds the obstacles around it - wall gaps are never
+  narrower than 12 units (ball diameter 3.4), water only sits beside the path, a
+  moving block is always narrower than its gap, and windmill arms leave room at
+  the sides.
+- **Course picker in the setup**: four buttons (Classic / Pro / Tour / Random)
+  and below them a row with arrows to page through the 38 tour courses, showing
+  the total par. The best result is stored per tour course.
+- **Random** now draws from all 360 holes instead of just the 18 built ones.
+
+#### Changed
+- `tests/newgames_audit.py` no longer checks only the 18 built holes but **all
+  342 generated** ones as well: free tee and cup positions, being sinkable
+  (verified by a solver that simulates real strokes) and reproducibility from the
+  seed. Runtime about one minute.
+- `settings.json` remembers the last tour course (`minigolf.tour`); the course
+  dimensions now live in exactly one place, `minigolf_gen.py`.
+- The subtitle and both READMEs carry the new number: 360 holes.
 
 ### Minigolf, Pinball & Bowling – 2026-08-26
 

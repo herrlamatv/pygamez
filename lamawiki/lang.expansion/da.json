@@ -1807,13 +1807,15 @@
         "sand",
         "rampe",
         "bane",
-        "putt"
+        "putt",
+        "tour"
       ],
       "sections": [
         {
           "h": "Sådan spilles der",
           "body": [
-            "Minigolf på 18 håndbyggede baner. Banen Classic er en blid start, Pro giver ø-green, dobbelt vindmølle og vandrende klodser, og Random trækker ni baner fra begge og spejlvender dem tilfældigt.",
+            "Minigolf på 360 baner: 18 håndbyggede og 342 genererede. Banerne Classic og Pro introducerer med ni byggede baner hver, Touren byder på 38 forløb med ni genererede baner hver og stigende sværhedsgrad, og Random trækker ni baner fra det hele og spejlvender dem tilfældigt.",
+            "Tour-banerne kommer fra et frø: forløb 7, bane 3 ser ens ud ved hver start - der skal ikke gemmes noget. Pilene ved siden af nummeret blader gennem de 38 forløb, og ved siden af står det samlede par.",
             "Målet er at få bolden i hul på så få slag som muligt. Efter otte slag samles bolden op, og hullet tæller minimum.",
             "Til to spiller man den samme bane efter hinanden; scorekortet til højre viser par og begge resultater."
           ]

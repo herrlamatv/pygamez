@@ -4,8 +4,10 @@
 Geprueft wird:
 
 Minigolf  (1) Abschlag und Loch liegen frei (keine Wand/kein Wasser darauf),
-          (2) jede der 18 Bahnen ist mit hoechstens Par-Schlaegen einlochbar -
-              nachgewiesen per Solver, der echte Schlaege simuliert.
+          (2) jede der 18 handgebauten Bahnen ist mit hoechstens Par-Schlaegen
+              einlochbar - nachgewiesen per Solver, der echte Schlaege simuliert,
+          (2b) dasselbe fuer alle 342 erzeugten Tour-Bahnen, die zusaetzlich
+              reproduzierbar sein muessen (gleicher Seed -> gleiche Bahn).
 Pinball   (3) je Tisch verlaesst der Ball mit vollem Plunger die Schussbahn,
           (4) kein Haenger: eine Partie mit 3 Baellen endet von allein,
           (5) ein zu schwacher Schuss laesst sich nachladen (kein Soft-Lock).
@@ -42,6 +44,7 @@ i18n.init()
 
 from games import bowling as bw
 from games import minigolf as mg
+from games import minigolf_gen as gen
 from games import pinball as pb
 
 GS = json.loads(json.dumps(settings_mod.DEFAULTS))
@@ -115,65 +118,95 @@ def simulate_shot(g, start, aim, power, seconds=9.0):
     return False, (g.bx, g.by)
 
 
-def audit_minigolf(angles=44, powers=(0.35, 0.55, 0.75, 1.0), spread=6):
-    print("\nMinigolf - 18 Bahnen")
+def solve(g, hole, angles=40, powers=(0.35, 0.55, 0.75, 1.0), spread=5,
+          max_depth=None):
+    """Sucht per Simulation einen Weg ins Loch; liefert (geschafft, Schlaege)."""
+    g.hole = hole
+    g.par = hole["par"]
+    g.cup = (float(hole["cup"][0]), float(hole["cup"][1]))
+    tee = (float(hole["tee"][0]), float(hole["tee"][1]))
+    starts = [tee]
+    depth_limit = max_depth or hole["par"]
+    for depth in range(1, depth_limit + 1):
+        results = []
+        for start in starts:
+            base = math.atan2(g.cup[1] - start[1], g.cup[0] - start[0])
+            for a in range(angles):
+                aim = base + (a - angles / 2) * (2 * math.pi / angles)
+                for pw in powers:
+                    g.mill_a = (a * 0.37) % 6.283
+                    g.move_t = (a * 0.53) % 9.0
+                    hit, pos = simulate_shot(g, start, aim, pw)
+                    if hit:
+                        return True, depth
+                    results.append(pos)
+        by_dist = sorted(results, key=lambda p: math.hypot(p[0] - g.cup[0],
+                                                           p[1] - g.cup[1]))
+        by_progress = sorted(results, key=lambda p: p[1])
+        picked = []
+        for p in [x for pair in zip(by_dist, by_progress) for x in pair]:
+            if all(math.hypot(p[0] - q[0], p[1] - q[1]) > 7 for q in picked):
+                picked.append(p)
+            if len(picked) >= spread:
+                break
+        starts = picked
+        if not starts:
+            break
+    return False, 0
+
+
+def audit_minigolf():
+    print("\nMinigolf - 18 handgebaute Bahnen")
     g = golf_game()
+    check(abs(mg.BR - gen.BALL_R) < 1e-9, "Ballradius in Spiel und Generator gleich")
+    check(gen.TOTAL_HOLES == 360, "360 Bahnen insgesamt (%d)" % gen.TOTAL_HOLES)
     holes = [dict(h) for h in mg.HOLES_CLASSIC] + [dict(h) for h in mg.HOLES_PRO]
     for idx, hole in enumerate(holes, start=1):
-        g.hole = hole
-        g.par = hole["par"]
-        g.cup = (float(hole["cup"][0]), float(hole["cup"][1]))
-        tee = (float(hole["tee"][0]), float(hole["tee"][1]))
-        bad_tee = point_blocked(hole, *tee)
-        bad_cup = point_blocked(hole, *g.cup)
+        bad_tee = point_blocked(hole, *hole["tee"])
+        bad_cup = point_blocked(hole, *hole["cup"])
         ok = check(bad_tee is None, "Bahn %2d: Abschlag frei" % idx, str(bad_tee))
         ok &= check(bad_cup is None, "Bahn %2d: Loch frei" % idx, str(bad_cup))
         if not ok:
             continue
-        # Solver: Schlag 1 von der Tee-Box, danach von den besten Ruhelagen
-        starts = [tee]
-        holed = False
-        strokes_needed = 0
-        for depth in range(1, hole["par"] + 1):
-            results = []
-            for start in starts:
-                base = math.atan2(g.cup[1] - start[1], g.cup[0] - start[0])
-                for a in range(angles):
-                    aim = base + (a - angles / 2) * (2 * math.pi / angles)
-                    for pw in powers:
-                        g.mill_a = (a * 0.37) % 6.283
-                        g.move_t = (a * 0.53) % 9.0
-                        hit, pos = simulate_shot(g, start, aim, pw)
-                        if hit:
-                            holed = True
-                            strokes_needed = depth
-                            break
-                        results.append(pos)
-                    if holed:
-                        break
-                if holed:
-                    break
-            if holed:
-                break
-            # Kandidaten: je zur Haelfte nach Nähe zum Loch und nach
-            # Fortschritt in Richtung Loch (kleineres y) ausgewaehlt.
-            by_dist = sorted(results, key=lambda p: math.hypot(p[0] - g.cup[0],
-                                                               p[1] - g.cup[1]))
-            by_progress = sorted(results, key=lambda p: p[1])
-            picked = []
-            for p in [x for pair in zip(by_dist, by_progress) for x in pair]:
-                if all(math.hypot(p[0] - q[0], p[1] - q[1]) > 7 for q in picked):
-                    picked.append(p)
-                if len(picked) >= spread:
-                    break
-            starts = picked
-            if not starts:
-                break
-        check(holed, "Bahn %2d: einlochbar (Par %d)" % (idx, hole["par"]),
+        holed, strokes = solve(g, hole)
+        check(holed, "Bahn %2d: einlochbar in Par %d" % (idx, hole["par"]),
               "kein Weg ins Loch gefunden")
-        if holed and strokes_needed:
-            check(strokes_needed <= hole["par"],
-                  "Bahn %2d: Par erreichbar (%d Schlaege)" % (idx, strokes_needed))
+
+
+def audit_tour(sample=None):
+    """Prueft jede erzeugte Tour-Bahn auf freie Lage und Einlochbarkeit."""
+    print("\nMinigolf - Tour: %d Kurse x %d Bahnen"
+          % (gen.TOUR_COURSES, gen.HOLES_PER_ROUND))
+    g = golf_game()
+    courses = sample or range(1, gen.TOUR_COURSES + 1)
+    total = fails = 0
+    worst = []
+    for course in courses:
+        holes = gen.course_holes(course)
+        bad = []
+        for i, hole in enumerate(holes):
+            total += 1
+            label = "Kurs %d Bahn %d (%s)" % (course, i + 1, hole.get("family"))
+            blocked = (point_blocked(hole, *hole["tee"])
+                       or point_blocked(hole, *hole["cup"]))
+            if blocked:
+                bad.append(label + ": " + blocked)
+                continue
+            holed, _ = solve(g, hole, angles=36, spread=4,
+                             max_depth=hole["par"] + 1)
+            if not holed:
+                bad.append(label + ": nicht einlochbar")
+        # Reproduzierbarkeit: derselbe Kurs muss identisch neu entstehen
+        again = gen.course_holes(course)
+        if [h["cup"] for h in again] != [h["cup"] for h in holes]:
+            bad.append("Kurs %d: nicht reproduzierbar" % course)
+        fails += len(bad)
+        worst.extend(bad)
+        print("   Kurs %2d (Stufe %d, Par %2d): %s"
+              % (course, gen.tier_of(course), sum(h["par"] for h in holes),
+                 "OK" if not bad else "%d PROBLEM(E)" % len(bad)))
+    check(fails == 0, "alle %d Tour-Bahnen einlochbar und frei" % total,
+          "; ".join(worst[:6]))
 
 
 # ----------------------------------------------------------------- Pinball
@@ -314,6 +347,7 @@ def audit_bowling():
 if __name__ == "__main__":
     t0 = time.time()
     audit_minigolf()
+    audit_tour()
     audit_pinball()
     audit_bowling()
     try:

@@ -1806,13 +1806,15 @@
         "arena",
         "rampa",
         "recorrido",
-        "putt"
+        "putt",
+        "tour"
       ],
       "sections": [
         {
           "h": "Cómo se juega",
           "body": [
-            "Minigolf con 18 hoyos construidos a mano. El recorrido Classic es una entrada suave, Pro añade un green isla, un molino doble y bloques móviles, y Random saca nueve hoyos de ambos recorridos y los refleja al azar.",
+            "Minigolf con 360 hoyos: 18 hechos a mano y 342 generados. Los recorridos Classic y Pro sirven de entrada con nueve hoyos cada uno, la Tour ofrece 38 recorridos de nueve hoyos generados con dificultad creciente, y Random saca nueve hoyos de todo el conjunto y los refleja al azar.",
+            "Los hoyos de la Tour nacen de una semilla: el recorrido 7, hoyo 3 se ve igual en cada arranque; no hay que guardar nada. Las flechas junto al número pasan por los 38 recorridos y al lado aparece el par total.",
             "El objetivo es embocar la bola con los menos golpes posibles. Tras ocho golpes se recoge la bola y el hoyo se puntúa al mínimo.",
             "A dos, cada jugador juega el mismo hoyo uno tras otro; la tarjeta de la derecha muestra el par y ambos resultados."
           ]
