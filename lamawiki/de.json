@@ -1827,7 +1827,8 @@
           "body": [
             "- Maus bewegen: zielen. Linke Maustaste halten lädt die Kraft, Loslassen schlägt.",
             "- Pfeile links/rechts zielen, hoch/runter stellen die Kraft ein, [Leertaste] schlägt.",
-            "- [G] blendet die Ziellinie ein und aus - im Setup lässt sie sich dauerhaft abschalten."
+            "- [G] blendet die Ziellinie ein und aus - im Setup lässt sie sich dauerhaft abschalten.",
+            "- [R] bricht einen geladenen Schlag ab: die Maustaste darf gedrückt bleiben, der Ball bleibt liegen und der Schlag zählt nicht - nach dem Loslassen lädst du einfach neu. [P] schaltet das Aufnehmen um."
           ]
         },
         {

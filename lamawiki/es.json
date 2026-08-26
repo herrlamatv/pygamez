@@ -1824,7 +1824,8 @@
           "body": [
             "- Mueve el ratón para apuntar. Mantén el botón izquierdo para cargar fuerza y suéltalo para golpear.",
             "- Las flechas izquierda/derecha apuntan, arriba/abajo ajustan la fuerza, [Espacio] golpea.",
-            "- [G] muestra u oculta la línea de tiro; también puedes apagarla en la pantalla de ajustes."
+            "- [G] muestra u oculta la línea de tiro; también puedes apagarla en la pantalla de ajustes.",
+            "- [R] cancela un golpe cargado: puedes mantener el botón pulsado, la bola no se mueve y el golpe no cuenta; al soltar simplemente cargas de nuevo. [P] cambia la recogida."
           ]
         },
         {

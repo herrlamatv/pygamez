@@ -384,6 +384,7 @@
   "frog.subtitle": "Lleva las ranas por la carretera y el río hasta las 5 bahías",
   "g2048.reached": "¡2048 conseguido!",
   "golf.best": "Récord: {n} golpes",
+  "golf.cancel": "Golpe cancelado",
   "golf.card_hole": "Hoyo",
   "golf.card_par": "P",
   "golf.card_sum": "Total",

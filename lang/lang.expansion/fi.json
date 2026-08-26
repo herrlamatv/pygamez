@@ -384,6 +384,7 @@
   "frog.subtitle": "Ohjaa sammakot tien ja joen yli viiteen poukamaan",
   "g2048.reached": "2048 saavutettu!",
   "golf.best": "Ennätys: {n} lyöntiä",
+  "golf.cancel": "Lyönti peruttu",
   "golf.card_hole": "Reikä",
   "golf.card_par": "P",
   "golf.card_sum": "Summa",

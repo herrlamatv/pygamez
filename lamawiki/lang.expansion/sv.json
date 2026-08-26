@@ -1825,7 +1825,8 @@
           "body": [
             "- Flytta musen för att sikta. Håll vänster musknapp för att ladda kraften, släpp för att slå.",
             "- Vänster/höger pil siktar, upp/ner ställer kraften, [Blanksteg] slår.",
-            "- [G] slår på och av siktlinjen - den går också att stänga av permanent i inställningarna."
+            "- [G] slår på och av siktlinjen - den går också att stänga av permanent i inställningarna.",
+            "- [R] avbryter ett laddat slag: musknappen får vara nedtryckt, bollen ligger kvar och slaget räknas inte - när du släpper laddar du bara om. [P] växlar Plocka upp."
           ]
         },
         {

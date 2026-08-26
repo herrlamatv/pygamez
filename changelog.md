@@ -35,6 +35,10 @@ Bahnen kommen **342 erzeugte** dazu - zusammen **360 Bahnen in 40 Kursen**.
   wird bis zum Einlochen weitergespielt. Der Setup-Screen hat dafür eine eigene
   AN/AUS-Zeile bekommen und passt seine Höhe jetzt an die Auflösung an, damit
   auch 480x360 alle fünf Blöcke zeigt.
+- **Schlag abbrechen mit R**: Wer die Maustaste hält, die Kraft schon geladen
+  hat und es sich anders überlegt, drückt **R** - der Ball bleibt liegen, der
+  Schlag zählt nicht, und nach dem Loslassen lässt sich ganz normal neu
+  aufladen. Ein kurzer Hinweis in der Kopfzeile bestätigt den Abbruch.
 
 #### Geändert
 - `tests/newgames_audit.py` prüft nicht mehr nur die 18 gebauten Bahnen, sondern
@@ -405,6 +409,10 @@ hand-built holes come **342 generated** ones - **360 holes across 40 courses**.
   **P**) - then you keep putting until the ball drops. The setup screen gained
   its own ON/OFF row for it and now scales its height with the resolution so
   that even 480x360 shows all five blocks.
+- **Cancel a shot with R**: hold the mouse button, load the power, change your
+  mind - press **R** and the ball stays put, the stroke does not count, and
+  after releasing you can charge again as usual. A short note in the header
+  confirms the cancellation.
 
 #### Changed
 - `tests/newgames_audit.py` no longer checks only the 18 built holes but **all

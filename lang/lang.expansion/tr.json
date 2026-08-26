@@ -384,6 +384,7 @@
   "frog.subtitle": "Kurbağaları yoldan ve nehirden geçirip 5 yuvaya ulaştır",
   "g2048.reached": "2048'e ulaşıldı!",
   "golf.best": "Rekor: {n} vuruş",
+  "golf.cancel": "Vuruş iptal edildi",
   "golf.card_hole": "Delik",
   "golf.card_par": "P",
   "golf.card_sum": "Toplam",

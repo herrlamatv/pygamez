@@ -1825,7 +1825,8 @@
           "body": [
             "- Pomicanjem miša ciljaš. Držanje lijeve tipke puni snagu, otpuštanje udara.",
             "- Strelice lijevo/desno ciljaju, gore/dolje namještaju snagu, [Razmaknica] udara.",
-            "- [G] uključuje i isključuje liniju ciljanja - trajno je možeš isključiti u postavkama."
+            "- [G] uključuje i isključuje liniju ciljanja - trajno je možeš isključiti u postavkama.",
+            "- [R] otkazuje napunjen udarac: tipka miša smije ostati pritisnuta, loptica ostaje na mjestu i udarac se ne broji - nakon otpuštanja jednostavno puniš iznova. [P] prebacuje podizanje."
           ]
         },
         {

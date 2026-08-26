@@ -9,7 +9,9 @@ Minigolf  (1) Abschlag und Loch liegen frei (keine Wand/kein Wasser darauf),
           (2b) dasselbe fuer alle 342 erzeugten Tour-Bahnen, die zusaetzlich
               reproduzierbar sein muessen (gleicher Seed -> gleiche Bahn),
           (2c) das "Aufnehmen" nach acht Schlaegen ist Standard, laesst sich
-              aber abschalten - dann wird bis zum Einlochen weitergespielt.
+              aber abschalten - dann wird bis zum Einlochen weitergespielt,
+          (2d) [R] bricht einen geladenen Schlag ab: kein Putt, Ball bleibt
+              liegen, danach ist normales Neuaufladen moeglich.
 Pinball   (3) je Tisch verlaesst der Ball mit vollem Plunger die Schussbahn,
           (4) kein Haenger: eine Partie mit 3 Baellen endet von allein,
           (5) ein zu schwacher Schuss laesst sich nachladen (kein Soft-Lock).
@@ -44,6 +46,7 @@ settings_mod.save_settings = lambda s: None
 import i18n
 i18n.init()
 
+from game_base import InputEvent
 from games import bowling as bw
 from games import minigolf as mg
 from games import minigolf_gen as gen
@@ -201,6 +204,38 @@ def audit_pickup():
               "Aufnehmen %s -> Bahn endet nach %d Schlaegen"
               % ("AN " if pickup else "AUS", want_strokes),
               "state=%s strokes=%d" % (g.state, g.strokes))
+
+
+def audit_cancel():
+    """Taste R bricht einen geladenen Schlag ab, ohne zu putten."""
+    print("\nMinigolf - Schlag abbrechen (R)")
+    g = golf_game()
+    g.state = mg.PLAY
+    g.hole_idx = 0
+    g._start_hole()
+    where = (g.bx, g.by)
+    g.handle_event(InputEvent(InputEvent.MOUSEDOWN, pos=(300, 300), button=1))
+    for _ in range(40):
+        g.update(1 / 60.0)
+    charged = g.charging and g.power > 0.4
+    g.handle_event(InputEvent(InputEvent.KEYDOWN, key="r"))
+    check(charged and not g.charging, "R beendet das Aufladen")
+    for _ in range(60):                      # weiter gedrueckt halten laedt nicht
+        g.update(1 / 60.0)
+    held = g.power
+    g.handle_event(InputEvent(InputEvent.MOUSEUP, pos=(300, 300), button=1))
+    for _ in range(30):
+        g.update(1 / 60.0)
+    check(g.strokes == 0 and g.phase == "aim" and (g.bx, g.by) == where
+          and held <= 0.36,
+          "kein Schlag, Ball bleibt liegen",
+          "strokes=%d phase=%s power=%.2f" % (g.strokes, g.phase, held))
+    g.handle_event(InputEvent(InputEvent.MOUSEDOWN, pos=(300, 300), button=1))
+    for _ in range(40):
+        g.update(1 / 60.0)
+    g.handle_event(InputEvent(InputEvent.MOUSEUP, pos=(300, 300), button=1))
+    check(g.strokes == 1, "danach laesst sich normal neu aufladen",
+          "strokes=%d" % g.strokes)
 
 
 def audit_tour(sample=None):
@@ -378,6 +413,7 @@ if __name__ == "__main__":
     t0 = time.time()
     audit_minigolf()
     audit_pickup()
+    audit_cancel()
     audit_tour()
     audit_pinball()
     audit_bowling()

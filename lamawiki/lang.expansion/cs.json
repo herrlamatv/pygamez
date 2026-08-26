@@ -1825,7 +1825,8 @@
           "body": [
             "- Pohybem myši miř. Držení levého tlačítka nabíjí sílu, puštění odpálí.",
             "- Šipky vlevo/vpravo míří, nahoru/dolů nastavují sílu, [Mezerník] odpálí.",
-            "- [G] zapíná a vypíná zaměřovací čáru - trvale ji lze vypnout v nastavení."
+            "- [G] zapíná a vypíná zaměřovací čáru - trvale ji lze vypnout v nastavení.",
+            "- [R] zruší nabitý úder: tlačítko myši může zůstat stisknuté, míček zůstane ležet a úder se nepočítá - po puštění prostě nabiješ znovu. [P] přepíná zvednutí."
           ]
         },
         {

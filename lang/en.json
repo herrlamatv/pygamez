@@ -384,6 +384,7 @@
   "frog.subtitle": "Guide the frogs across road and river into the 5 bays",
   "g2048.reached": "2048 reached!",
   "golf.best": "Best: {n} strokes",
+  "golf.cancel": "Shot cancelled",
   "golf.card_hole": "Hole",
   "golf.card_par": "P",
   "golf.card_sum": "Sum",

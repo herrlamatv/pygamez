@@ -1824,7 +1824,8 @@
           "body": [
             "- Bouge la souris pour viser. Maintiens le clic gauche pour charger la puissance, relâche pour jouer.",
             "- Les flèches gauche/droite visent, haut/bas règlent la puissance, [Espace] joue le coup.",
-            "- [G] affiche ou masque la ligne de visée - tu peux aussi la couper dans l'écran de réglages."
+            "- [G] affiche ou masque la ligne de visée - tu peux aussi la couper dans l'écran de réglages.",
+            "- [R] annule un coup chargé : tu peux garder le clic enfoncé, la balle ne bouge pas et le coup ne compte pas - après avoir relâché, tu recharges simplement. [P] bascule le ramassage."
           ]
         },
         {

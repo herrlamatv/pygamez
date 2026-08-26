@@ -477,8 +477,8 @@ fusionnent.
   mobiles demandent du timing. La physique tourne en sous-pas avec frottement
   comme au billard - rien ne saute, rien ne traverse une bande.
 - **Commandes** : la souris vise, le clic gauche maintenu charge la puissance et
-  le relâchement joue le coup (flèches + espace au choix). **G** bascule la ligne
-  de visée.
+  le relâchement joue le coup (flèches + espace au choix). **R** annule un coup
+  chargé sans jouer. **G** bascule la ligne de visée, **P** le ramassage.
 - **Carte de score** à droite avec le par et les coups par trou ; à deux, chacun
   joue le même trou à son tour. Points : 600 par trou, ±300 par coup sous/au-dessus
   du par, **500 de plus pour un trou en un**. Le nombre de coups le plus bas par
@@ -1178,7 +1178,8 @@ arma), efectos de explosión, récord.
   y bloques móviles exigen ritmo. La física corre en subpasos con rozamiento como
   en el billar: nada salta ni atraviesa la banda.
 - **Controles**: el ratón apunta, mantener el botón izquierdo carga la fuerza y
-  soltarlo golpea (también flechas + espacio). **G** cambia la línea de tiro.
+  soltarlo golpea (también flechas + espacio). **R** cancela un golpe cargado sin
+  golpear. **G** cambia la línea de tiro, **P** la recogida.
 - **Tarjeta de puntuación** a la derecha con el par y los golpes por hoyo; a dos,
   cada jugador juega el mismo hoyo por turnos. Puntos: 600 por hoyo, ±300 por
   golpe bajo/sobre par, **500 extra por un hoyo en uno**. El menor número de
@@ -1868,7 +1869,8 @@ melhoria de arma), efeitos de explosão, recorde.
   móveis exigem sentido de tempo. A física corre em subpassos com atrito como no
   bilhar - nada salta nem atravessa a tabela.
 - **Comandos**: o rato aponta, manter o botão esquerdo carrega a força e largar
-  bate (também setas + espaço). **G** alterna a linha de mira.
+  bate (também setas + espaço). **R** cancela uma tacada carregada sem bater.
+  **G** alterna a linha de mira, **P** o levantamento.
 - **Cartão de pontuação** à direita com o par e as tacadas por buraco; a dois,
   cada um joga o mesmo buraco à vez. Pontos: 600 por buraco, ±300 por tacada
   abaixo/acima do par, **500 extra por um buraco em um**. O menor número de
@@ -2672,8 +2674,8 @@ broni), efekty wybuchów, rekord.
   wymagają wyczucia czasu. Fizyka liczy się w podkrokach z tarciem jak w bilardzie
   - nic nie skacze i nie przenika przez bandę.
 - **Sterowanie**: mysz celuje, przytrzymanie lewego przycisku ładuje siłę, a
-  puszczenie uderza (można też strzałkami + spacją). **G** przełącza linię
-  celowania.
+  puszczenie uderza (można też strzałkami + spacją). **R** anuluje naładowane
+  uderzenie bez uderzania. **G** przełącza linię celowania, **P** podnoszenie.
 - **Karta wyników** po prawej z par i uderzeniami na dołek; we dwoje każdy gra ten
   sam dołek po kolei. Punkty: 600 za dołek, ±300 za uderzenie poniżej/powyżej par,
   **500 dodatkowo za hole in one**. Najmniejsza liczba uderzeń na każdym polu
@@ -3474,7 +3476,8 @@ patlama efektleri, yüksek skor.
   bloklar zamanlama ister. Fizik, bilardodaki gibi sürtünmeli alt adımlarla çalışır
   - hiçbir şey zıplamaz ya da bandın içinden geçmez.
 - **Kontroller**: fare nişan alır, sol tuşu basılı tutmak gücü doldurur, bırakmak
-  vurur (oklar + boşluk da olur). **G** nişan çizgisini açıp kapatır.
+  vurur (oklar + boşluk da olur). **R** yüklenmiş vuruşu vurmadan iptal eder.
+  **G** nişan çizgisini, **P** topu almayı açıp kapatır.
 - **Skor kartı** sağda, par ve delik başına vuruşlarla; iki kişide herkes aynı
   deliği sırayla oynar. Puanlar: delik başına 600, parın altındaki/üstündeki her
   vuruş için ±300, **hole in one için 500 ek puan**. Her parkurun en düşük vuruş
@@ -4248,8 +4251,9 @@ eksplosionseffekter, highscore.
   strafslag, gummibumpere giver fart tilbage, og vindmøller og vandrende klodser
   kræver timing. Fysikken kører i deltrin med friktion som i billard - intet
   hakker, og intet smutter gennem banden.
-- **Styring**: musen sigter, venstre museknap holdt nede lader kraften, og et slip
-  slår (pile + mellemrum virker også). **G** slår sigtelinjen til og fra.
+- **Styring**: musen sigter, venstre museknap holdt nede lader kraften, og et
+  slip slår (pile + mellemrum virker også). **R** afbryder et ladet slag uden at
+  slå. **G** slår sigtelinjen til og fra, **P** Saml op.
 - **Scorekort** til højre med par og slag pr. bane; til to spiller begge den samme
   bane efter tur. Point: 600 pr. bane, ±300 pr. slag under/over par, **500 ekstra
   for hole in one**. Det laveste antal slag pr. forløb ligger i afsnittet
@@ -5019,7 +5023,8 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   klosser krever timing. Fysikken går i deltrinn med friksjon som i biljard -
   ingenting hakker, og ingenting sklir gjennom vantet.
 - **Styring**: musa sikter, venstre museknapp holdt nede lader kraften, og et
-  slipp slår (piler + mellomrom går også). **G** slår siktelinjen av og på.
+  slipp slår (piler + mellomrom går også). **R** avbryter et ladet slag uten å
+  slå. **G** slår siktelinjen av og på, **P** Plukk opp.
 - **Scorekort** til høyre med par og slag per bane; for to spillere spiller begge
   den samme banen etter tur. Poeng: 600 per bane, ±300 per slag under/over par,
   **500 ekstra for hole in one**. Laveste slagtall per løype ligger i
@@ -5764,7 +5769,8 @@ explosionseffekter, topplista.
   kräver timing. Fysiken går i delsteg med friktion precis som i biljard -
   ingenting hackar och ingenting glider genom sargen.
 - **Styrning**: musen siktar, vänster musknapp nedtryckt laddar kraften och ett
-  släpp slår (pilar + blanksteg funkar också). **G** växlar siktlinjen.
+  släpp slår (pilar + blanksteg funkar också). **R** avbryter ett laddat slag
+  utan att slå. **G** växlar siktlinjen, **P** Plocka upp.
 - **Scorekort** till höger med par och slag per bana; till två spelar båda samma
   bana i tur och ordning. Poäng: 600 per bana, ±300 per slag under/över par,
   **500 extra för hole in one**. Lägsta slagantal per slinga ligger i avsnittet
@@ -6544,7 +6550,8 @@ räjähdystehosteet, ennätys.
   vaeltavat lohkot vaativat ajoitusta. Fysiikka lasketaan osa-askelin kitkan
   kanssa kuten biljardissa - mikään ei nyki eikä läpäise laitaa.
 - **Ohjaus**: hiiri tähtää, vasen painike pohjassa lataa voiman ja irrotus lyö
-  (nuolet + välilyönti käyvät myös). **G** vaihtaa tähtäysviivan.
+  (nuolet + välilyönti käyvät myös). **R** peruu ladatun lyönnin lyömättä.
+  **G** vaihtaa tähtäysviivan, **P** pallon noston.
 - **Tuloskortti** oikealla parin ja ratakohtaisten lyöntien kanssa; kaksinpelissä
   molemmat pelaavat saman radan vuorotellen. Pisteet: 600 radalta, ±300 jokaisesta
   parin alittavasta/ylittävästä lyönnistä, **500 lisää hole in onesta**. Pienin
@@ -7327,7 +7334,8 @@ zbraně), efekty explozí, nejlepší skóre.
   načasování. Fyzika běží v dílčích krocích s třením jako u kulečníku - nic
   neskáče a nic neprojde mantinelem.
 - **Ovládání**: myš míří, držené levé tlačítko nabíjí sílu a puštění odpálí
-  (fungují i šipky + mezerník). **G** přepíná zaměřovací čáru.
+  (fungují i šipky + mezerník). **R** zruší nabitý úder bez odpalu. **G** přepíná
+  zaměřovací čáru, **P** zvednutí.
 - **Karta skóre** vpravo s parem a údery na dráhu; ve dvou hraje každý stejnou
   dráhu po sobě. Body: 600 za dráhu, ±300 za úder pod/nad par, **500 navíc za
   hole in one**. Nejnižší počet úderů na hřiště je v sekci `minigolf` souboru
@@ -8107,7 +8115,8 @@ nadgradnja orožja), učinki eksplozij, rekord.
   občutek za čas. Fizika teče v podkorakih s trenjem kot pri biljardu - nič ne
   poskakuje in nič ne gre skozi bando.
 - **Upravljanje**: miška cilja, držana leva tipka polni moč, spust pa udari
-  (delujejo tudi puščice + preslednica). **G** preklopi ciljno črto.
+  (delujejo tudi puščice + preslednica). **R** prekliče napolnjen udarec brez
+  udarca. **G** preklopi ciljno črto, **P** pobiranje.
 - **Kartica rezultatov** desno s parom in udarci na stezo; v dvoje vsak igra isto
   stezo po vrsti. Točke: 600 na stezo, ±300 za udarec pod/nad par, **500 dodatnih
   za hole in one**. Najnižje število udarcev na igrišče je v razdelku `minigolf`
@@ -8889,8 +8898,9 @@ nadogradnja oružja), efekti eksplozije, rekord.
   udarac, gumeni odbojnici vraćaju brzinu, a vjetrenjače i lutajući blokovi traže
   osjećaj za trenutak. Fizika radi u podkoracima s trenjem kao u biljaru - ništa
   ne poskakuje i ništa ne prolazi kroz bandu.
-- **Upravljanje**: miš cilja, držanje lijeve tipke puni snagu, a otpuštanje udara
-  (rade i strelice + razmaknica). **G** prebacuje liniju ciljanja.
+- **Upravljanje**: miš cilja, držanje lijeve tipke puni snagu, a otpuštanje
+  udara (rade i strelice + razmaknica). **R** otkazuje napunjen udarac bez
+  udaranja. **G** prebacuje liniju ciljanja, **P** podizanje.
 - **Kartica rezultata** desno s parom i udarcima po stazi; u dvoje svatko igra
   istu stazu jedan za drugim. Bodovi: 600 po stazi, ±300 po udarcu ispod/iznad
   para, **500 dodatnih za hole in one**. Najmanji broj udaraca po terenu nalazi se

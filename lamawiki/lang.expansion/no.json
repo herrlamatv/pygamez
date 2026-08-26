@@ -1825,7 +1825,8 @@
           "body": [
             "- Beveg musa for å sikte. Hold venstre museknapp for å lade kraften, slipp for å slå.",
             "- Venstre/høyre pil sikter, opp/ned stiller kraften, [Mellomrom] slår.",
-            "- [G] slår siktelinjen av og på - den kan også skrus av permanent i oppsettet."
+            "- [G] slår siktelinjen av og på - den kan også skrus av permanent i oppsettet.",
+            "- [R] avbryter et ladet slag: museknappen kan bli holdt nede, ballen blir liggende og slaget teller ikke - etter at du slipper, lader du bare på nytt. [P] veksler Plukk opp."
           ]
         },
         {

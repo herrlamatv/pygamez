@@ -19,8 +19,9 @@ Strafschlag, Gummipuffer geben Tempo zurück, Windmühlen und Wanderblöcke
 verlangen Timing.
 
 Steuerung: Maus bewegt die Ziellinie, linke Maustaste gedrückt halten lädt die
-Schlagstärke, Loslassen schlägt. Alternativ Pfeile links/rechts zielen,
-hoch/runter Stärke, Leertaste schlägt. G blendet die Ziellinie um.
+Schlagstärke, Loslassen schlägt. R bricht einen geladenen Schlag ab, ohne zu
+putten. Alternativ Pfeile links/rechts zielen, hoch/runter Stärke, Leertaste
+schlägt. G blendet die Ziellinie um, P schaltet das Aufnehmen um.
 
 Punkte (Highscore) = Summe der Bahnpunkte; je Bahn gibt es mehr Punkte, je
 weiter unter Par gespielt wird (Hole-in-One extra).
@@ -484,8 +485,25 @@ class MiniGolfGame(Game):
                 self.power = min(1.0, self.power + 0.05)
             elif k == "Down" or self.is_action(k, "down"):
                 self.power = max(0.05, self.power - 0.05)
+            elif k in ("r", "R"):
+                self._cancel_shot()
             elif k in ("space", "Return"):
                 self._strike()
+
+    def _cancel_shot(self):
+        """Bricht einen geladenen Schlag ab (Taste R).
+
+        Wer die Maustaste hält und es sich anders überlegt, drückt R: der Ball
+        bleibt liegen, der Schlag zählt nicht. Nach dem Loslassen lässt sich
+        ganz normal neu aufladen.
+        """
+        if not self.charging:
+            return
+        self.charging = False
+        self.power = 0.35
+        self.msg = t("golf.cancel")
+        self.msg_t = 1.4
+        self.play_sound("click")
 
     def _strike(self):
         sp = MAX_SPEED * self.power

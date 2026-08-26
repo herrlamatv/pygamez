@@ -1825,7 +1825,8 @@
           "body": [
             "- Bevæg musen for at sigte. Hold venstre museknap for at lade kraften, slip for at slå.",
             "- Venstre/højre pil sigter, op/ned styrer kraften, [Mellemrum] slår.",
-            "- [G] slår sigtelinjen til og fra - den kan også slukkes permanent i opsætningen."
+            "- [G] slår sigtelinjen til og fra - den kan også slukkes permanent i opsætningen.",
+            "- [R] afbryder et ladet slag: museknappen må gerne blive holdt nede, bolden bliver liggende, og slaget tæller ikke - efter du slipper, lader du bare igen. [P] skifter Saml op."
           ]
         },
         {

@@ -537,7 +537,8 @@ Explosions-Effekte, Highscore.
   Wanderblöcke verlangen Timing. Die Physik läuft wie beim Billard in
   Teilschritten mit Reibung - nichts ruckt, nichts tunnelt durch die Bande.
 - **Steuerung**: Maus zielt, linke Maustaste halten lädt die Kraft, Loslassen
-  schlägt (alternativ Pfeile + Leertaste). **G** blendet die Ziellinie um.
+  schlägt (alternativ Pfeile + Leertaste). **R** bricht einen geladenen Schlag
+  ab, ohne zu putten. **G** blendet die Ziellinie um, **P** das Aufnehmen.
 - **Scorekarte** rechts mit Par und Schlägen je Bahn; zu zweit spielt jeder
   dieselbe Bahn nacheinander. Punkte: 600 je Bahn, ±300 je Schlag unter/über
   Par, **500 extra für ein Hole-in-One**. Die niedrigste Schlagzahl je Kurs
@@ -1327,7 +1328,8 @@ explosion effects, high score.
   blocks are all about timing. The physics runs in sub-steps with friction just
   like Billiards - nothing stutters, nothing tunnels through a rail.
 - **Controls**: the mouse aims, holding the left button loads the power and
-  releasing putts (arrows + space work too). **G** toggles the aim line.
+  releasing putts (arrows + space work too). **R** cancels a charged shot
+  without putting. **G** toggles the aim line, **P** the pick-up.
 - **Scorecard** on the right with par and strokes per hole; in two-player mode
   each player takes the same hole in turn. Points: 600 per hole, ±300 per stroke
   under/over par, **500 extra for a hole in one**. The lowest stroke count per

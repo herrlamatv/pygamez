@@ -1825,7 +1825,8 @@
           "body": [
             "- Ruch myszy celuje. Przytrzymanie lewego przycisku ładuje siłę, puszczenie uderza.",
             "- Strzałki lewo/prawo celują, góra/dół ustawiają siłę, [Spacja] uderza.",
-            "- [G] włącza i wyłącza linię celowania - można ją też wyłączyć na stałe w ustawieniach."
+            "- [G] włącza i wyłącza linię celowania - można ją też wyłączyć na stałe w ustawieniach.",
+            "- [R] anuluje naładowane uderzenie: przycisk myszy może pozostać wciśnięty, piłka zostaje na miejscu, a uderzenie się nie liczy - po puszczeniu ładujesz od nowa. [P] przełącza podnoszenie."
           ]
         },
         {

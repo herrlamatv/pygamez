@@ -1825,7 +1825,8 @@
           "body": [
             "- Liikuta hiirtä tähdätäksesi. Pidä vasenta painiketta pohjassa ladataksesi voimaa, päästä irti lyödäksesi.",
             "- Vasen/oikea nuoli tähtää, ylös/alas säätää voimaa, [Välilyönti] lyö.",
-            "- [G] näyttää ja piilottaa tähtäysviivan - sen voi sammuttaa pysyvästi asetusruudussa."
+            "- [G] näyttää ja piilottaa tähtäysviivan - sen voi sammuttaa pysyvästi asetusruudussa.",
+            "- [R] peruu ladatun lyönnin: hiiren painike saa jäädä pohjaan, pallo pysyy paikallaan eikä lyönti laske - kun päästät irti, lataat vain uudelleen. [P] vaihtaa pallon noston."
           ]
         },
         {

@@ -1826,7 +1826,8 @@
           "body": [
             "- Move the mouse to aim. Hold the left mouse button to load power, release to putt.",
             "- Left/right arrows aim, up/down set the power, [Space] putts.",
-            "- [G] toggles the aim line - you can also switch it off for good in the setup screen."
+            "- [G] toggles the aim line - you can also switch it off for good in the setup screen.",
+            "- [R] cancels a charged shot: you may keep the mouse button held, the ball stays put and the stroke does not count - after releasing you simply charge again. [P] toggles the pick-up."
           ]
         },
         {

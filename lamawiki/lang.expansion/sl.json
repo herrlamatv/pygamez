@@ -1825,7 +1825,8 @@
           "body": [
             "- S premikom miške ciljaš. Držanje leve tipke polni moč, spust udari.",
             "- Puščici levo/desno ciljata, gor/dol nastavljata moč, [Preslednica] udari.",
-            "- [G] vklopi in izklopi ciljno črto - trajno jo lahko izklopiš v nastavitvah."
+            "- [G] vklopi in izklopi ciljno črto - trajno jo lahko izklopiš v nastavitvah.",
+            "- [R] prekliče napolnjen udarec: tipka miške lahko ostane pritisnjena, žogica obleži in udarec ne šteje - ko spustiš, preprosto napolniš znova. [P] preklopi pobiranje."
           ]
         },
         {

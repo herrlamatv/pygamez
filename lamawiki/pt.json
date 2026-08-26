@@ -1822,7 +1822,8 @@
           "body": [
             "- Move o rato para apontar. Mantém o botão esquerdo para carregar força e larga para bater.",
             "- As setas esquerda/direita apontam, cima/baixo regulam a força, [Espaço] bate.",
-            "- [G] liga e desliga a linha de mira - também podes desativá-la nos ajustes."
+            "- [G] liga e desliga a linha de mira - também podes desativá-la nos ajustes.",
+            "- [R] cancela uma tacada carregada: podes manter o botão premido, a bola fica parada e a tacada não conta - depois de largares carregas de novo. [P] alterna o levantamento."
           ]
         },
         {

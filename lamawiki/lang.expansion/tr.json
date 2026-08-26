@@ -1825,7 +1825,8 @@
           "body": [
             "- Fareyi hareket ettirerek nişan al. Sol tuşu basılı tutmak gücü doldurur, bırakmak vurur.",
             "- Sol/sağ oklar nişan alır, yukarı/aşağı gücü ayarlar, [Boşluk] vurur.",
-            "- [G] nişan çizgisini açıp kapatır; ayar ekranından tamamen da kapatabilirsin."
+            "- [G] nişan çizgisini açıp kapatır; ayar ekranından tamamen da kapatabilirsin.",
+            "- [R] yüklenmiş bir vuruşu iptal eder: fare tuşu basılı kalabilir, top yerinde durur ve vuruş sayılmaz - bıraktıktan sonra yeniden doldurursun. [P] topu almayı açıp kapatır."
           ]
         },
         {
