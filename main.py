@@ -467,6 +467,31 @@ def _draw_icon(cv, cx, cy, name, color, bg):
         cv.create_line(cx + 6, cy - 8, cx + 6, cy - 13, fill=color, width=1)
         cv.create_polygon(cx + 6, cy - 13, cx + 11, cy - 11, cx + 6, cy - 9,
                           fill=color, outline="")
+    elif name == "MiniGolfGame":
+        # Loch mit Fahne, Ball davor
+        cv.create_oval(cx - 4, cy + 4, cx + 6, cy + 9, fill=color, outline="")
+        cv.create_line(cx + 1, cy + 6, cx + 1, cy - 9, fill=color, width=2)
+        cv.create_polygon(cx + 1, cy - 9, cx + 9, cy - 6, cx + 1, cy - 3,
+                          fill=color, outline="")
+        cv.create_oval(cx - 10, cy + 3, cx - 5, cy + 8, fill=color, outline="")
+    elif name == "PinballGame":
+        # Kugel zwischen zwei Flippern, Bumper darüber
+        cv.create_oval(cx - 4, cy - 10, cx + 4, cy - 2, outline=color, width=2)
+        cv.create_oval(cx - 2, cy, cx + 2, cy + 4, fill=color, outline="")
+        cv.create_line(cx - 9, cy + 4, cx - 2, cy + 9, fill=color, width=3,
+                       capstyle="round")
+        cv.create_line(cx + 9, cy + 4, cx + 2, cy + 9, fill=color, width=3,
+                       capstyle="round")
+    elif name == "BowlingGame":
+        # Pin und Kugel mit drei Löchern
+        cv.create_polygon(cx - 1, cy - 9, cx + 2, cy - 9, cx + 3, cy - 4,
+                          cx + 2, cy - 1, cx + 4, cy + 6, cx - 3, cy + 6,
+                          cx - 1, cy - 1, cx - 2, cy - 4,
+                          fill=color, outline="")
+        cv.create_oval(cx - 10, cy - 1, cx - 2, cy + 7, outline=color, width=2)
+        cv.create_oval(cx - 8, cy + 1, cx - 7, cy + 2, fill=color, outline="")
+        cv.create_oval(cx - 6, cy + 1, cx - 5, cy + 2, fill=color, outline="")
+        cv.create_oval(cx - 7, cy + 3, cx - 6, cy + 4, fill=color, outline="")
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))

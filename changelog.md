@@ -8,6 +8,56 @@
 
 ## 🇩🇪 Deutsch
 
+### Minigolf, Pinball & Bowling – 2026-08-26
+
+Drei neue Sportspiele auf einen Schlag (Nr. 40-42): **Minigolf** mit 18
+handgebauten Bahnen, ein vollwertiger **Pinball**-Automat mit Multiball und
+**Bowling** mit echter Pin-Physik - alle drei mit Mehrspieler-Modus, Erfolgen,
+Wiki-Seite und allen 14 Sprachen.
+
+#### Neu
+- **Minigolf**: 18 handgebaute Bahnen in drei Kursen - *Classic* (sanfter
+  Einstieg), *Pro* (Inselgrün, Doppelmühle, Wanderblöcke) und *Random* (neun
+  zufällig gezogene und gespiegelte Bahnen). Sand bremst, Rampen beschleunigen,
+  Wasser kostet einen Strafschlag, dazu Gummipuffer, Windmühlen und
+  Wanderblöcke. Gezielt wird mit der Maus, die Kraft lädt bei gedrückter
+  Maustaste (alternativ Pfeile + Leertaste), **G** blendet die Ziellinie um.
+  Scorekarte mit Par je Bahn, **500 Punkte extra für ein Hole-in-One**; zu zweit
+  spielt jeder dieselbe Bahn nacheinander. Bestwert je Kurs in `mem.json`
+  (Abschnitt `minigolf`).
+- **Pinball**: drei Tische - *Classic* (drei Pop-Bumper, eine Target-Bank),
+  *Space* (vier Bumper im Karo, zwei Banks) und *Lama* (offenes Feld, sechs
+  Targets im Bogen). Mit Slingshots, vier **L-A-M-A**-Rollover-Bahnen, Saucer
+  mit Ball-Lock und **Multiball samt Jackpot**, dazu sechs Sekunden Ball-Save,
+  Nudge über die Hoch-Taste, **TILT** bei dreimal zu hastigem Anstoßen und ein
+  Multiplikator bis x5. 3 oder 5 Bälle je Partie, zu zweit im Wechsel. Ein zu
+  schwacher Schuss ist kein Beinbruch: der Ball rollt in die Schussbahn zurück
+  und darf noch einmal. Bestwert je Tisch in `mem.json` (Abschnitt `pinball`).
+- **Bowling**: zehn Frames mit vollständiger Strike-/Spare-Wertung inklusive
+  Bonuswürfen im zehnten Frame (Maximum: die 300) und einer Scorecard mit X, /
+  und laufender Summe. Der Wurf läuft in vier Schritten - Position, Ziel, Effet
+  und Kraft - über Regler, die von allein pendeln und sich mit Links/Rechts auch
+  von Hand einstellen lassen. Zehn Pins mit echter Masse werfen sich gegenseitig
+  um; die Bahn ist vorn geölt, der **Hook** greift erst im hinteren Drittel.
+  Bestwert je Schwierigkeit in `mem.json` (Abschnitt `bowling`).
+- **9 neue Erfolge**: Punkte-Meilensteine für alle drei Spiele plus
+  Hole-in-One, Runde unter Par, Multiball, 50 000 Punkte im Pinball, Turkey
+  (drei Strikes in Folge) und ein 200er-Bowlingspiel - jetzt **83 insgesamt**.
+- **93 Übersetzungs-Keys je Sprache** und **drei neue Wiki-Seiten** in allen
+  14 Sprachen (LamaWiki: 43 Seiten); beide READMEs ergänzt.
+- **Headless-Audit** `tests/newgames_audit.py`: prüft alle 18 Minigolf-Bahnen
+  per Solver auf Einlochbarkeit (und freie Abschlag-/Lochpositionen), jeden
+  Pinball-Tisch auf gelungenen Abschuss und ein hängerfreies Partie-Ende sowie
+  die Bowling-Wertung gegen Referenzspiele (300er, lauter Spares, gemischt)
+  samt Pin-Physik und Frame-Logik.
+
+#### Geändert
+- Sidebar: drei neue Piktogramme (Fahne im Loch, Flipper mit Kugel, Pin mit
+  Kugel) mit eigenen Akzentfarben; die Sammlung zählt jetzt **42 Spiele**.
+- `settings.json` kennt die Abschnitte `minigolf`, `pinball` und `bowling`
+  (Kurs & Ziellinie, Tisch & Ballzahl, Schwierigkeit & Zielhilfe) - alle drei
+  merken sich ihre Setup-Auswahl.
+
 ### Block Jump: Minecraft-Skin – 2026-08-12
 
 Optik-Update: **Block Jump** sieht jetzt aus wie sein Vorbild - echte
@@ -290,6 +340,56 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Minigolf, Pinball & Bowling – 2026-08-26
+
+Three new sports games in one go (no. 40-42): **Minigolf** with 18 hand-built
+holes, a full **Pinball** machine with multiball and **Bowling** with real pin
+physics - all three with a multiplayer mode, achievements, a wiki page and all
+14 languages.
+
+#### New
+- **Minigolf**: 18 hand-built holes across three courses - *Classic* (a gentle
+  start), *Pro* (island green, double windmill, moving blocks) and *Random*
+  (nine holes drawn and mirrored at random). Sand slows you down, ramps
+  accelerate, water costs a penalty stroke, plus rubber bumpers, windmills and
+  moving blocks. The mouse aims, holding the left button loads the power
+  (arrows + space work too), and **G** toggles the aim line. A scorecard shows
+  par per hole, **500 bonus points for a hole in one**; in two-player mode each
+  player takes the same hole in turn. Best result per course in `mem.json`
+  (section `minigolf`).
+- **Pinball**: three tables - *Classic* (three pop bumpers, one target bank),
+  *Space* (four bumpers in a diamond, two banks) and *Lama* (open playfield, six
+  targets in an arc). With slingshots, four **L-A-M-A** rollover lanes, a saucer
+  with ball lock and **multiball including jackpot**, plus a six second ball
+  save, nudging via the up key, **TILT** after three hasty nudges and a
+  multiplier up to x5. 3 or 5 balls per game, alternating in two-player mode. A
+  weak plunge is no disaster: the ball rolls back into the shooter lane and you
+  may shoot again. Best result per table in `mem.json` (section `pinball`).
+- **Bowling**: ten frames with full strike/spare scoring including the bonus
+  balls of the tenth frame (maximum: a 300 game) and a scorecard with X, / and
+  the running total. The delivery runs in four steps - position, aim, spin and
+  power - through sliders that swing on their own and can also be set by hand
+  with left/right. Ten pins with real mass knock each other over; the lane is
+  oiled up front, so the **hook** only bites in the last third. Best result per
+  difficulty in `mem.json` (section `bowling`).
+- **9 new achievements**: score milestones for all three games plus hole in one,
+  a round under par, multiball, 50,000 points in pinball, a turkey (three
+  strikes in a row) and a 200 bowling game - now **83 in total**.
+- **93 translation keys per language** and **three new wiki pages** in all
+  14 languages (LamaWiki: 43 pages); both READMEs updated.
+- **Headless audit** `tests/newgames_audit.py`: checks all 18 minigolf holes
+  with a solver for being sinkable (and for free tee/cup positions), every
+  pinball table for a successful launch and a game that ends without hanging,
+  and the bowling scoring against reference games (a 300, all spares, mixed)
+  including pin physics and frame logic.
+
+#### Changed
+- Sidebar: three new pictograms (flag in the hole, flipper with ball, pin with
+  ball) with their own accent colours; the collection now counts **42 games**.
+- `settings.json` knows the sections `minigolf`, `pinball` and `bowling`
+  (course & aim line, table & ball count, difficulty & guide) - all three
+  remember their setup choice.
 
 ### Block Jump: Minecraft skin – 2026-08-12
 

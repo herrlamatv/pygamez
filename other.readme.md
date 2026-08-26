@@ -12,7 +12,7 @@
 
 Une collection de jeux de bureau en Python : **Tkinter** fournit la fenêtre et
 le menu, **Pygame** est intégré comme écran de jeu à l'intérieur de la fenêtre
-Tkinter. Vingt-neuf jeux avec des options partagées, des commandes entièrement
+Tkinter. Quarante-deux jeux avec des options partagées, des commandes entièrement
 réassignables, des meilleurs scores, des effets sonores procéduraux et, pour
 plusieurs titres, un mode multijoueur. L'interface est **multilingue**
 (allemand / anglais / français / espagnol / portugais) ; la langue se choisit au
@@ -78,11 +78,14 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Hangman**        | 1 joueur   | Devine le mot avant que la potence soit complète ; clavier à l'écran, listes de mots par langue, 3 modes de longueur, série sans fin |
 | **Block Jump**     | 1 joueur   | Jeu de plateforme 3D façon Minecraft : monde de blocs texturés au skin Minecraft avec figurine Steve, échelles, barrières & blocs-ressorts, caméra 1re/3e personne, flou de mouvement, niveaux générés |
 | **Tower Defense** | 1 joueur   | Repousse des vagues infinies sur 4 cartes : jusqu'à 11 types de tours avec améliorations, vente & spécialisation A/B, boss, 3 modes, capacités actives |
+| **Minigolf**    | 1 / 2 joueurs | 18 trous construits à la main sur 3 parcours : sable, rampes, eau, pare-chocs, moulins & blocs mobiles ; carte de score avec par et bonus trou en un |
+| **Pinball**     | 1 / 2 joueurs | Flipper avec 3 tables : bumpers, slingshots, cibles, couloirs L-A-M-A, multibille avec jackpot, sauvegarde de bille, secousse & tilt |
+| **Bowling**     | 1 / 2 joueurs | 10 frames avec la vraie règle strike/spare, physique des quilles, effet hook et piste en perspective, 3 difficultés |
 
 **Le multijoueur (2 joueurs en local)** est disponible pour **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duel
 coopératif)**, **Memory (duel)**, **Puissance 4**, **Duel de tanks**,
-**Reversi**, **Yams** et **Dames**.
+**Reversi**, **Yams**, **Dames**, **Minigolf**, **Pinball** et **Bowling**.
 Le mode se choisit directement sur l'écran de préparation
 (*Un joueur / Multijoueur*).
 
@@ -464,6 +467,50 @@ fusionnent.
   élimination et par vague. **F** = vitesse x2, **G** = portées, clic droit
   annule.
 
+**Minigolf**
+- **18 trous construits à la main** sur trois parcours : *Classic* (9 trous, mise
+  en jambes), *Pro* (9 trous coriaces avec green en île, double moulin et blocs
+  mobiles) et *Random* (neuf trous tirés des deux parcours et inversés au hasard).
+- **Surfaces et obstacles** : le sable freine, les rampes accélèrent, l'eau coûte
+  un coup de pénalité, les pare-chocs renvoient de la vitesse, moulins et blocs
+  mobiles demandent du timing. La physique tourne en sous-pas avec frottement
+  comme au billard - rien ne saute, rien ne traverse une bande.
+- **Commandes** : la souris vise, le clic gauche maintenu charge la puissance et
+  le relâchement joue le coup (flèches + espace au choix). **G** bascule la ligne
+  de visée.
+- **Carte de score** à droite avec le par et les coups par trou ; à deux, chacun
+  joue le même trou à son tour. Points : 600 par trou, ±300 par coup sous/au-dessus
+  du par, **500 de plus pour un trou en un**. Le nombre de coups le plus bas par
+  parcours est dans la section `minigolf` de `mem.json`.
+
+**Pinball**
+- **Trois tables** : *Classic* (trois bumpers, une série de cibles), *Space*
+  (quatre bumpers en losange, deux séries) et *Lama* (plateau ouvert, six cibles
+  en arc) ; 3 ou 5 billes par partie, à deux en alternance bille par bille.
+- **Tout ce qu'il faut à un flipper** : couloir de lancement avec jauge (tir trop
+  faible ? la bille revient et tu recommences), deux flippers, slingshots, séries
+  de cibles, quatre couloirs **L-A-M-A**, trou de verrouillage, **multibille avec
+  jackpot**, six secondes de **sauvegarde de bille**, secousse et **TILT**.
+- **Multiplicateur jusqu'à x5** grâce aux séries abattues et aux couloirs
+  complets ; bumpers 100, slingshots 50, cibles 250 - en multibille les bumpers
+  paient 2 500 en jackpot.
+- Flippers sur les touches gauche/droite assignées (et [Shift] gauche/droite) ou
+  à la souris. Le record par table est dans la section `pinball` de `mem.json`.
+
+**Bowling**
+- **Dix frames selon les règles officielles**, strikes, spares et lancers bonus
+  du dixième frame compris (maximum : 300). La **feuille de score** sous l'en-tête
+  montre chaque frame avec X, / et le total courant.
+- **Lancer en quatre étapes** : position, angle, effet et puissance. Chaque
+  curseur oscille tout seul et se fige avec la touche d'action - ou se règle à la
+  main avec gauche/droite, ce qui arrête l'oscillation.
+- **Vraie physique des quilles** : dix quilles en cercles avec masse qui se
+  renversent entre elles - un strike vient de la physique, pas de la chance. La
+  piste est huilée à l'avant, le **hook** ne mord que dans le dernier tiers.
+- Vue de piste en perspective avec dalots, flèches et pin deck ; trois difficultés
+  (*Facile/Normal/Pro*) changent la vitesse des curseurs et la dispersion. Le
+  record par difficulté est dans la section `bowling` de `mem.json`.
+
 Les meilleurs scores sont enregistrés dans la section `highscores` de
 `mem.json` (à côté du code) – avec la langue (section `mem`).
 
@@ -488,7 +535,7 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
   **flou** derrière la superposition de pause.
 - L'**écran de préparation** de chaque jeu apparaît dans sa couleur d'accent et
   affiche le record précédent sous forme de puce.
-- **Look unifié en jeu** : les 39 jeux partagent la palette et la police du
+- **Look unifié en jeu** : les 42 jeux partagent la palette et la police du
   menu - les HUD, écrans de préparation et superpositions suivent le design
   choisi dans les options (v4.1 / v4 / Classique), tandis que chaque terrain
   garde ses couleurs d'identité. Chaque jeu gère proprement un changement de
@@ -703,7 +750,7 @@ Les réglages et meilleurs scores (`settings.json`, `mem.json`,
 
 Una colección de juegos de escritorio en Python: **Tkinter** aporta la ventana y
 el menú, **Pygame** va incrustado como pantalla de juego dentro de la ventana de
-Tkinter. Veintinueve juegos con opciones compartidas, controles totalmente
+Tkinter. Cuarenta y dos juegos con opciones compartidas, controles totalmente
 reasignables, récords, efectos de sonido procedurales y, en varios títulos, modo
 multijugador. La interfaz es **multilingüe** (alemán / inglés / francés /
 español / portugués); el idioma se elige en una **pantalla de bienvenida** en el
@@ -769,11 +816,14 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Hangman**          | 1 jugador  | Adivina la palabra antes de completar la horca; teclado en pantalla, listas de palabras por idioma, 3 modos de longitud, racha sin fin |
 | **Block Jump**       | 1 jugador  | Plataformas 3D estilo Minecraft: mundo de bloques texturizados con skin de Minecraft y figura de Steve, escaleras, vallas y bloques-resorte, cámara 1ª/3ª persona, desenfoque, niveles generados |
 | **Tower Defense**    | 1 jugador  | Repele oleadas infinitas en 4 mapas: hasta 11 tipos de torres con mejoras, venta y especialización A/B, jefes, 3 modos, habilidades activas |
+| **Minigolf**    | 1 / 2 jugadores | 18 hoyos hechos a mano en 3 recorridos: arena, rampas, agua, parachoques, molinos y bloques móviles; tarjeta con par y bonus de hoyo en uno |
+| **Pinball**     | 1 / 2 jugadores | Máquina de pinball con 3 mesas: bumpers, slingshots, dianas, carriles L-A-M-A, multibola con jackpot, salvabolas, empujón y tilt |
+| **Bowling**     | 1 / 2 jugadores | 10 frames con la puntuación oficial de strike/spare, física real de bolos, efecto hook y pista en perspectiva, 3 dificultades |
 
 **El multijugador (2 jugadores en local)** está disponible en **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
 cooperativo)**, **Memory (duelo)**, **Cuatro en raya**, **Duelo de tanques**,
-**Reversi**, **Yahtzee** y **Damas**.
+**Reversi**, **Yahtzee**, **Damas**, **Minigolf**, **Pinball** y **Bowling**.
 El modo se elige directamente en la pantalla previa (*Un jugador / Multijugador*).
 
 #### Detalles por juego
@@ -1114,6 +1164,50 @@ arma), efectos de explosión, récord.
 - **Economía**: oro por baja, bono de oleada + 5% de intereses; puntos por baja
   y oleada. **F** = velocidad x2, **G** = alcances, clic derecho cancela.
 
+**Minigolf**
+- **18 hoyos hechos a mano** en tres recorridos: *Classic* (9 hoyos, entrada
+  suave), *Pro* (9 hoyos difíciles con green isla, molino doble y bloques
+  móviles) y *Random* (nueve hoyos sacados de ambos y reflejados al azar).
+- **Superficies y obstáculos**: la arena frena, las rampas aceleran, el agua
+  cuesta un golpe de penalización, los parachoques devuelven velocidad y molinos
+  y bloques móviles exigen ritmo. La física corre en subpasos con rozamiento como
+  en el billar: nada salta ni atraviesa la banda.
+- **Controles**: el ratón apunta, mantener el botón izquierdo carga la fuerza y
+  soltarlo golpea (también flechas + espacio). **G** cambia la línea de tiro.
+- **Tarjeta de puntuación** a la derecha con el par y los golpes por hoyo; a dos,
+  cada jugador juega el mismo hoyo por turnos. Puntos: 600 por hoyo, ±300 por
+  golpe bajo/sobre par, **500 extra por un hoyo en uno**. El menor número de
+  golpes por recorrido está en la sección `minigolf` de `mem.json`.
+
+**Pinball**
+- **Tres mesas**: *Classic* (tres bumpers, una serie de dianas), *Space* (cuatro
+  bumpers en rombo, dos series) y *Lama* (campo abierto, seis dianas en arco);
+  3 o 5 bolas por partida, a dos alternando bola a bola.
+- **Todo lo que necesita una máquina**: carril de lanzamiento con barra de carga
+  (¿demasiado flojo? la bola vuelve y repites), dos flippers, slingshots, series
+  de dianas, cuatro carriles **L-A-M-A**, atrapabolas, **multibola con jackpot**,
+  seis segundos de **salvabolas**, empujón y **TILT**.
+- **Multiplicador hasta x5** con series derribadas y carriles completos; bumpers
+  100, slingshots 50, dianas 250 - en multibola los bumpers pagan 2.500 de
+  jackpot.
+- Los flippers usan las teclas izquierda/derecha asignadas (y [Shift]
+  izquierdo/derecho) o el ratón. El récord por mesa está en la sección `pinball`
+  de `mem.json`.
+
+**Bowling**
+- **Diez frames con las reglas oficiales**, incluidos strikes, spares y los tiros
+  de bonificación del décimo frame (máximo: 300). La **tarjeta** bajo la cabecera
+  muestra cada frame con X, / y la suma acumulada.
+- **Lanzamiento en cuatro pasos**: posición, ángulo, efecto y fuerza. Cada
+  control oscila solo y se fija con la tecla de acción, o se ajusta a mano con
+  izquierda/derecha, lo que detiene la oscilación.
+- **Física real de bolos**: diez bolos como círculos con masa que se derriban
+  entre sí; un strike sale de la física, no de la suerte. La pista está aceitada
+  delante, así que el **hook** solo agarra en el último tercio.
+- Vista de pista en perspectiva con canaletas, flechas y pin deck; tres
+  dificultades (*Fácil/Normal/Pro*) cambian la velocidad de los controles y la
+  dispersión. El récord por dificultad está en la sección `bowling` de `mem.json`.
+
 Los récords se guardan en la sección `highscores` de `mem.json` (junto al
 código) – junto con el idioma (sección `mem`).
 
@@ -1138,7 +1232,7 @@ extra) y pulida con aspecto de lanzador moderno:
   **desenfoque real** tras la superposición de pausa.
 - La **pantalla previa** de cada juego aparece en su color de acento y muestra
   el récord anterior como chip.
-- **Aspecto unificado en el juego**: los 39 juegos comparten la paleta y la
+- **Aspecto unificado en el juego**: los 42 juegos comparten la paleta y la
   tipografía del menú - los HUD, pantallas de configuración y superposiciones
   siguen el diseño elegido en las opciones (v4.1 / v4 / Clásico), mientras cada
   campo de juego conserva sus colores de identidad. Todos los juegos gestionan
@@ -1344,7 +1438,7 @@ junto al .exe al jugar.
 
 Uma coleção de jogos de desktop em Python: o **Tkinter** fornece a janela e o
 menu, o **Pygame** é incorporado como ecrã de jogo dentro da janela do Tkinter.
-Vinte e nove jogos com opções partilhadas, controlos totalmente reatribuíveis,
+Quarenta e dois jogos com opções partilhadas, controlos totalmente reatribuíveis,
 recordes, efeitos sonoros procedurais e, em vários títulos, modo multijogador.
 A interface é **multilingue** (alemão / inglês / francês / espanhol /
 português); o idioma escolhe-se num **ecrã de boas-vindas** no primeiro arranque,
@@ -1410,11 +1504,14 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Hangman**          | 1 jogador  | Adivinha a palavra antes de a forca ficar completa; teclado no ecrã, listas de palavras por idioma, 3 modos de tamanho, série sem fim |
 | **Block Jump**       | 1 jogador  | Plataforma 3D estilo Minecraft: mundo de blocos texturizados com skin de Minecraft e figura do Steve, escadas, cercas e blocos-mola, câmera 1ª/3ª pessoa, desfoque, níveis gerados |
 | **Tower Defense**    | 1 jogador  | Repele ondas infinitas em 4 mapas: até 11 tipos de torres com melhorias, venda e especialização A/B, chefes, 3 modos, habilidades ativas |
+| **Minigolf**    | 1 / 2 jogadores | 18 buracos feitos à mão em 3 percursos: areia, rampas, água, para-choques, moinhos e blocos móveis; cartão com par e bónus de buraco em um |
+| **Pinball**     | 1 / 2 jogadores | Máquina de pinball com 3 mesas: bumpers, slingshots, alvos, corredores L-A-M-A, multibola com jackpot, salva-bolas, empurrão e tilt |
+| **Bowling**     | 1 / 2 jogadores | 10 frames com a pontuação oficial de strike/spare, física real dos pinos, efeito hook e pista em perspetiva, 3 dificuldades |
 
 **O multijogador (2 jogadores em local)** está disponível em **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
 cooperativo)**, **Memory (duelo)**, **Quatro em linha**, **Duelo de tanques**,
-**Reversi**, **Yahtzee** e **Damas**.
+**Reversi**, **Yahtzee**, **Damas**, **Minigolf**, **Pinball** e **Bowling**.
 O modo escolhe-se diretamente no ecrã de preparação (*Um jogador / Multijogador*).
 
 #### Detalhes por jogo
@@ -1753,6 +1850,50 @@ melhoria de arma), efeitos de explosão, recorde.
 - **Economia**: ouro por baixa, bónus de onda + 5% de juros; pontos por baixa e
   onda. **F** = velocidade x2, **G** = alcances, botão direito cancela.
 
+**Minigolf**
+- **18 buracos feitos à mão** em três percursos: *Classic* (9 buracos, entrada
+  suave), *Pro* (9 buracos difíceis com green em ilha, moinho duplo e blocos
+  móveis) e *Random* (nove buracos sorteados de ambos e espelhados ao acaso).
+- **Pisos e obstáculos**: a areia trava, as rampas aceleram, a água custa uma
+  tacada de penalização, os para-choques devolvem velocidade e moinhos e blocos
+  móveis exigem sentido de tempo. A física corre em subpassos com atrito como no
+  bilhar - nada salta nem atravessa a tabela.
+- **Comandos**: o rato aponta, manter o botão esquerdo carrega a força e largar
+  bate (também setas + espaço). **G** alterna a linha de mira.
+- **Cartão de pontuação** à direita com o par e as tacadas por buraco; a dois,
+  cada um joga o mesmo buraco à vez. Pontos: 600 por buraco, ±300 por tacada
+  abaixo/acima do par, **500 extra por um buraco em um**. O menor número de
+  tacadas por percurso fica na secção `minigolf` de `mem.json`.
+
+**Pinball**
+- **Três mesas**: *Classic* (três bumpers, um conjunto de alvos), *Space* (quatro
+  bumpers em losango, dois conjuntos) e *Lama* (campo aberto, seis alvos em arco);
+  3 ou 5 bolas por jogo, a dois alternando bola a bola.
+- **Tudo o que uma máquina precisa**: corredor de lançamento com barra de carga
+  (fraco demais? a bola volta e repetes), dois flippers, slingshots, conjuntos de
+  alvos, quatro corredores **L-A-M-A**, saucer com bloqueio, **multibola com
+  jackpot**, seis segundos de **salva-bolas**, empurrão e **TILT**.
+- **Multiplicador até x5** com conjuntos derrubados e corredores completos;
+  bumpers 100, slingshots 50, alvos 250 - na multibola os bumpers pagam 2.500 de
+  jackpot.
+- Os flippers usam as teclas esquerda/direita atribuídas (e [Shift]
+  esquerdo/direito) ou o rato. O recorde por mesa fica na secção `pinball` de
+  `mem.json`.
+
+**Bowling**
+- **Dez frames pelas regras oficiais**, incluindo strikes, spares e os
+  lançamentos de bónus do décimo frame (máximo: 300). O **cartão** por baixo do
+  cabeçalho mostra cada frame com X, / e a soma corrente.
+- **Lançamento em quatro passos**: posição, ângulo, efeito e força. Cada régua
+  oscila sozinha e é fixada com a tecla de ação, ou ajustada à mão com
+  esquerda/direita, o que para a oscilação.
+- **Física real dos pinos**: dez pinos como círculos com massa que se derrubam
+  uns aos outros; um strike vem da física e não da sorte. A pista está oleada à
+  frente, por isso o **hook** só agarra no último terço.
+- Vista da pista em perspetiva com canaletas, setas e pin deck; três dificuldades
+  (*Fácil/Normal/Pro*) mudam a velocidade das réguas e a dispersão. O recorde por
+  dificuldade fica na secção `bowling` de `mem.json`.
+
 Os recordes são guardados na secção `highscores` de `mem.json` (junto ao
 código) – juntamente com o idioma (secção `mem`).
 
@@ -1777,7 +1918,7 @@ e polida com aspeto de launcher moderno:
   verdadeiro** atrás da sobreposição de pausa.
 - O **ecrã de preparação** de cada jogo aparece na sua cor de destaque e mostra
   o recorde anterior como chip.
-- **Visual unificado no jogo**: os 39 jogos partilham a paleta e a tipografia do
+- **Visual unificado no jogo**: os 42 jogos partilham a paleta e a tipografia do
   menu - os HUD, ecrãs de preparação e sobreposições seguem o design escolhido
   nas opções (v4.1 / v4 / Clássico), enquanto cada campo de jogo mantém as suas
   cores de identidade. Todos os jogos lidam corretamente com uma mudança de
@@ -1979,8 +2120,8 @@ do .exe durante o jogo.
 ## 🇵🇱 Polski
 
 Kolekcja gier na komputer stworzona w Pythonie: **Tkinter** zapewnia okno i menu,
-a **Pygame** jest osadzony jako ekran gry wewnątrz okna Tkinter. Trzydzieści osiem
-gier ze wspólnymi opcjami, w pełni przypisywalnym sterowaniem, rekordami,
+a **Pygame** jest osadzony jako ekran gry wewnątrz okna Tkinter. Czterdzieści dwie
+gry ze wspólnymi opcjami, w pełni przypisywalnym sterowaniem, rekordami,
 proceduralnymi efektami dźwiękowymi oraz — w części tytułów — trybem wieloosobowym.
 Interfejs jest **wielojęzyczny** — **14 języków** (niemiecki / angielski /
 francuski / hiszpański / portugalski / polski / turecki / duński / norweski /
@@ -2053,12 +2194,15 @@ krok po kroku znajduje się na samym dole w sekcji
 | **Wisielec** | 1 gracz         | Odgadnij słowo, zanim szubienica będzie gotowa; klawiatura ekranowa, listy słów na język, 3 tryby długości, nieskończona seria |
 | **Block Jump** | 1 gracz       | Platformówka 3D w stylu Minecraft: teksturowany świat wokseli z postacią Steve'a, drabinami, płotami i blokami-sprężynami, kamera z 1./3. osoby, motion blur, generowane z ziarna poziomy parkour |
 | **Tower Defense** | 1 gracz     | Odpieraj niekończące się fale na 4 mapach: do 11 typów wież z ulepszeniami, sprzedażą i specjalizacją A/B, bossowie, 3 tryby, zdolności aktywne |
+| **Minigolf**    | 1 / 2 graczy    | 18 ręcznie zbudowanych dołków na 3 polach: piasek, rampy, woda, odbijacze, wiatraki i ruchome bloki; karta z par i bonusem hole in one |
+| **Pinball**     | 1 / 2 graczy    | Automat do flipera z 3 stołami: bumpery, slingshoty, cele, tory L-A-M-A, multiball z jackpotem, ratunek kuli, potrącenie i tilt |
+| **Bowling**     | 1 / 2 graczy    | 10 frame'ów z oficjalną punktacją strike/spare, prawdziwą fizyką kręgli, hookiem i torem w perspektywie, 3 poziomy trudności |
 
 **Tryb wieloosobowy (2 graczy lokalnie)** jest dostępny w grach **Snake**, **Pong**,
 **Air Hockey**, **Kółko i krzyżyk**, **Tetris (Versus)**, **Asteroids (pojedynek
 kooperacyjny)**, **Memory (pojedynek)**, **Cztery w rzędzie**, **Pojedynek czołgów**,
-**Reversi**, **Yahtzee**, **Warcaby**, **Szachy**, **Młynek**, **Simon (pojedynek)**
-i **Bilard**. Tryb wybiera się bezpośrednio na ekranie przygotowania do gry
+**Reversi**, **Yahtzee**, **Warcaby**, **Szachy**, **Młynek**, **Simon (pojedynek)**,
+**Bilard**, **Minigolf**, **Pinball** i **Bowling**. Tryb wybiera się bezpośrednio na ekranie przygotowania do gry
 (*Jeden gracz / Wielu graczy*).
 
 #### Szczegóły funkcji dla każdej gry
@@ -2506,6 +2650,51 @@ broni), efekty wybuchów, rekord.
   zestrzelenia i fale. **F** = tempo x2, **G** = zasięgi, prawy przycisk
   anuluje.
 
+**Minigolf**
+- **18 ręcznie zbudowanych dołków** na trzech polach: *Classic* (9 dołków, łagodne
+  wprowadzenie), *Pro* (9 trudnych dołków z wyspowym greenem, podwójnym wiatrakiem
+  i ruchomymi blokami) oraz *Random* (dziewięć dołków losowanych z obu pól i
+  losowo odbijanych lustrzanie).
+- **Nawierzchnie i przeszkody**: piasek hamuje, rampy przyspieszają, woda kosztuje
+  uderzenie karne, gumowe odbijacze oddają prędkość, a wiatraki i ruchome bloki
+  wymagają wyczucia czasu. Fizyka liczy się w podkrokach z tarciem jak w bilardzie
+  - nic nie skacze i nie przenika przez bandę.
+- **Sterowanie**: mysz celuje, przytrzymanie lewego przycisku ładuje siłę, a
+  puszczenie uderza (można też strzałkami + spacją). **G** przełącza linię
+  celowania.
+- **Karta wyników** po prawej z par i uderzeniami na dołek; we dwoje każdy gra ten
+  sam dołek po kolei. Punkty: 600 za dołek, ±300 za uderzenie poniżej/powyżej par,
+  **500 dodatkowo za hole in one**. Najmniejsza liczba uderzeń na każdym polu
+  zapisuje się w sekcji `minigolf` pliku `mem.json`.
+
+**Pinball**
+- **Trzy stoły**: *Classic* (trzy bumpery, jedna seria celów), *Space* (cztery
+  bumpery w romb, dwie serie) i *Lama* (otwarte pole, sześć celów w łuku); 3 lub 5
+  kul na partię, we dwoje na zmianę kula po kuli.
+- **Wszystko, czego potrzebuje fliper**: wyrzutnia z paskiem ładowania (za słabo?
+  kula wraca i można powtórzyć), dwa flipery, slingshoty, serie celów, cztery tory
+  **L-A-M-A**, łapacz z blokadą kuli, **multiball z jackpotem**, sześć sekund
+  **ratunku kuli**, potrącanie i **TILT**.
+- **Mnożnik do x5** dzięki zbitym seriom i pełnym torom; bumpery 100, slingshoty
+  50, cele 250 - w multiballu bumpery płacą 2500 jako jackpot.
+- Flipery działają na przypisanych klawiszach lewo/prawo (oraz lewy/prawy
+  [Shift]) albo myszą. Rekord każdego stołu leży w sekcji `pinball` pliku
+  `mem.json`.
+
+**Bowling**
+- **Dziesięć frame'ów według oficjalnych zasad** wraz ze strike'ami, spare'ami i
+  rzutami dodatkowymi w dziesiątym frame (maksimum: 300). **Karta wyników** pod
+  nagłówkiem pokazuje każdy frame z X, / i sumą bieżącą.
+- **Rzut w czterech krokach**: pozycja, kąt, rotacja i siła. Każdy suwak waha się
+  sam i zatrzymuje go klawisz akcji - albo ustawia się go ręcznie strzałkami
+  lewo/prawo, co przerywa wahanie.
+- **Prawdziwa fizyka kręgli**: dziesięć kręgli to koła z masą, które przewracają
+  się nawzajem; strike wynika z fizyki, a nie z przypadku. Tor jest z przodu
+  naoliwiony, więc **hook** łapie dopiero w ostatniej trzeciej części.
+- Widok toru w perspektywie z rynnami, strzałkami i deską kręgli; trzy poziomy
+  trudności (*Łatwy/Normalny/Pro*) zmieniają tempo suwaków i rozrzut. Rekord dla
+  każdego poziomu leży w sekcji `bowling` pliku `mem.json`.
+
 Rekordy są przechowywane w sekcji `highscores` pliku `mem.json` (obok kodu) —
 razem z językiem (sekcja `mem`).
 
@@ -2529,7 +2718,7 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
   pauzy.
 - **Ekran przygotowania** każdej gry pojawia się w jej kolorze akcentu i pokazuje
   poprzedni rekord jako chip.
-- **Jednolity wygląd w grze**: wszystkie 39 gier korzysta z tej samej palety motywu
+- **Jednolity wygląd w grze**: wszystkie 42 gry korzystają z tej samej palety motywu
   i czcionki co menu — HUD-y, ekrany konfiguracji i nakładki podążają za wyglądem
   wybranym w opcjach (v4.1 / v4 / Klasyczny), a każde pole gry zachowuje swoje
   kolory tożsamości. Każda gra poprawnie obsługuje zmianę rozdzielczości w trakcie
@@ -2734,8 +2923,8 @@ dowolnie kopiować. Ustawienia i rekordy (`settings.json`, `mem.json`,
 Python ile hazırlanmış bir masaüstü oyun koleksiyonu: pencereyi ve menüyü
 **Tkinter** sağlar, **Pygame** ise oyun ekranı olarak Tkinter penceresinin içine
 gömülüdür. Ortak seçenekler, tamamen yeniden atanabilen kontroller, yüksek
-skorlar, prosedürel ses efektleri ve bazı oyunlarda çok oyunculu mod içeren otuz
-sekiz oyun. Arayüz **çok dillidir** – **14 dil** (Almanca / İngilizce /
+skorlar, prosedürel ses efektleri ve bazı oyunlarda çok oyunculu mod içeren kırk
+iki oyun. Arayüz **çok dillidir** – **14 dil** (Almanca / İngilizce /
 Fransızca / İspanyolca / Portekizce / Lehçe / Türkçe / Danca / Norveççe /
 İsveççe / Fince / Çekçe / Slovence / Hırvatça); dil, ilk açılışta bir
 **karşılama ekranında** seçilir; bu ekran ayrıca **çözünürlüğü** ve **sesi**
@@ -2806,12 +2995,16 @@ yoksa sistemdeki Python'ı. Ayrıntılı, adım adım bir kılavuz en altta
 | **Adam Asmaca**    | 1 oyuncu  | Darağacı tamamlanmadan kelimeyi tahmin et; ekran klavyesi, dile göre kelime listeleri, 3 uzunluk modu, sonsuz seri |
 | **Block Jump**  | 1 oyuncu     | Minecraft tarzı 3D platform oyunu: dokulu voksel dünyası, Steve figürü, merdivenler, çitler ve balçık blokları, birinci/üçüncü şahıs kamera, hareket bulanıklığı, tohumla üretilen parkur bölümleri |
 | **Tower Defense** | 1 oyuncu   | 4 haritada sonsuz dalgaları püskürt: geliştirme, satış ve A/B uzmanlaşmalı 11 kule tipine kadar, bosslar, 3 mod, aktif yetenekler |
+| **Minigolf**    | 1 / 2 oyuncu | 3 parkurda elle tasarlanmış 18 delik: kum, rampalar, su, tamponlar, yel değirmenleri ve gezen bloklar; par ve hole-in-one bonuslu skor kartı |
+| **Pinball**     | 1 / 2 oyuncu | 3 masalı pinball makinesi: bumperlar, slingshotlar, hedefler, L-A-M-A şeritleri, jackpotlu multiball, top koruma, sarsma ve tilt |
+| **Bowling**     | 1 / 2 oyuncu | Resmî strike/spare puanlamasıyla 10 frame, gerçek labut fiziği, hook efekti ve perspektifli pist, 3 zorluk |
 
 **Çok oyunculu (2 oyuncu yerel)** şu oyunlarda mevcuttur: **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (ortaklaşa
 düello)**, **Memory (düello)**, **Dört Taş**, **Tank Düellosu**, **Reversi**,
 **Kniffel**, **Dama**, **Satranç**, **Dokuz Taş**, **Simon (düello)** ve
-**Bilardo**. Mod, doğrudan oyun öncesi ekranında
+**Bilardo**, **Minigolf**, **Pinball** ve **Bowling**. Mod, doğrudan oyun
+öncesi ekranında
 (*Tek oyunculu / Çok oyunculu*) seçilir.
 
 #### Oyun başına özellik ayrıntıları
@@ -3256,6 +3449,49 @@ patlama efektleri, yüksek skor.
 - **Ekonomi**: yok etme başına altın, dalga bonusu + %5 faiz; yok etme ve dalga
   başına puan. **F** = 2x hız, **G** = menziller, sağ tık iptal eder.
 
+**Minigolf**
+- **Elle tasarlanmış 18 delik**, üç parkurda: *Classic* (9 delik, yumuşak giriş),
+  *Pro* (ada green, çift değirmen ve gezen bloklarla 9 zorlu delik) ve *Random*
+  (iki parkurdan çekilip rastgele aynalanan dokuz delik).
+- **Zeminler ve engeller**: kum yavaşlatır, rampalar hızlandırır, su bir ceza
+  vuruşuna mal olur, lastik tamponlar hız geri verir, yel değirmenleri ve gezen
+  bloklar zamanlama ister. Fizik, bilardodaki gibi sürtünmeli alt adımlarla çalışır
+  - hiçbir şey zıplamaz ya da bandın içinden geçmez.
+- **Kontroller**: fare nişan alır, sol tuşu basılı tutmak gücü doldurur, bırakmak
+  vurur (oklar + boşluk da olur). **G** nişan çizgisini açıp kapatır.
+- **Skor kartı** sağda, par ve delik başına vuruşlarla; iki kişide herkes aynı
+  deliği sırayla oynar. Puanlar: delik başına 600, parın altındaki/üstündeki her
+  vuruş için ±300, **hole in one için 500 ek puan**. Her parkurun en düşük vuruş
+  sayısı `mem.json` içindeki `minigolf` bölümündedir.
+
+**Pinball**
+- **Üç masa**: *Classic* (üç bumper, bir hedef dizisi), *Space* (romb dizilmiş
+  dört bumper, iki dizi) ve *Lama* (açık alan, yay biçiminde altı hedef); oyun
+  başına 3 ya da 5 top, iki kişide top top sırayla.
+- **Bir flipperin ihtiyacı olan her şey**: doldurma göstergeli fırlatma kanalı
+  (çok zayıf mı? top geri döner ve tekrar denersin), iki flipper, slingshotlar,
+  hedef dizileri, dört **L-A-M-A** şeridi, top kilitleyen tutucu, **jackpotlu
+  multiball**, altı saniyelik **top koruma**, sarsma ve **TILT**.
+- **x5'e kadar çarpan**: düşürülen diziler ve tamamlanan şeritlerle yükselir;
+  bumperlar 100, slingshotlar 50, hedefler 250 - multiball sırasında bumperlar
+  2.500 jackpot öder.
+- Flipperler atanmış sol/sağ tuşlarla (ayrıca sol/sağ [Shift]) ya da fareyle
+  çalışır. Her masanın rekoru `mem.json` içindeki `pinball` bölümündedir.
+
+**Bowling**
+- **Resmî kurallara göre on frame**, onuncu frame'in strike, spare ve bonus
+  atışları dahil (en fazla: 300). Başlığın altındaki **skor kartı** her frame'i X,
+  / ve güncel toplamla gösterir.
+- **Dört adımda atış**: konum, açı, efekt ve güç. Her ayar kendiliğinden salınır
+  ve eylem tuşuyla sabitlenir - ya da sol/sağ ile elle ayarlanır, o zaman salınım
+  durur.
+- **Gerçek labut fiziği**: on labut, birbirini deviren gerçek kütleli dairelerdir;
+  strike şansın değil fiziğin sonucudur. Pist önde yağlıdır, bu yüzden **hook**
+  ancak son üçte birde tutar.
+- Oluklar, nişan okları ve labut alanıyla perspektifli pist görünümü; üç zorluk
+  (*Kolay/Normal/Pro*) ayarların salınım hızını ve saçılmayı değiştirir. Her
+  zorluğun rekoru `mem.json` içindeki `bowling` bölümündedir.
+
 Yüksek skorlar `mem.json` dosyasının `highscores` bölümünde (kodun yanında) - dil
 ile birlikte (`mem` bölümü) saklanır.
 
@@ -3279,7 +3515,7 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
   katmanının arkasında gerçek bir **bulanıklık**.
 - Her oyunun **oyun öncesi ekranı** o oyunun vurgu renginde belirir ve önceki
   rekoru bir çip olarak gösterir.
-- **Birleşik oyun içi görünüm**: 39 oyunun tamamı menünün tema paletini ve yazı
+- **Birleşik oyun içi görünüm**: 42 oyunun tamamı menünün tema paletini ve yazı
   tipini paylaşır - HUD'lar, setup ekranları ve katmanlar seçeneklerde belirlenen
   tasarımı (v4.1 / v4 / Klasik) izlerken her oyun alanı kendi kimlik renklerini
   korur. Artık her oyun, oyun ortasındaki çözünürlük değişikliklerini düzgün
@@ -3481,7 +3717,7 @@ paketler. Dosya, Python kurulu olmayan herhangi bir Windows bilgisayarında
 ## 🇩🇰 Dansk
 
 En skrivebords-spilsamling i Python: **Tkinter** leverer vinduet og menuen,
-**Pygame** indlejres som spildisplay inde i Tkinter-vinduet. Otteogtredive spil
+**Pygame** indlejres som spildisplay inde i Tkinter-vinduet. Toogfyrre spil
 med fælles indstillinger, frit omdefinerbare kontroller, highscores, proceduralt
 genererede lydeffekter og – for nogle titler – en multiplayer-tilstand.
 Grænsefladen er **flersproget** og fås på **14 sprog**; sproget vælges på en
@@ -3552,11 +3788,15 @@ nederst under **[Installationsguide](#installationsguide)**.
 | **Galgemand**   | 1 spiller    | Gæt ordet, før galgen er færdig; skærmtastatur, ordlister pr. sprog, 3 længdetilstande, endeløs streak |
 | **Block Jump**  | 1 spiller    | 3D-platformspil i Minecraft-stil: tekstureret voxelverden med Steve-figur, stiger, hegn og slimblokke, første-/tredjepersonskamera, motion blur, seed-genererede parkourbaner |
 | **Tower Defense** | 1 spiller   | Slå endeløse bølger tilbage på 4 kort: op til 11 tårntyper med opgraderinger, salg & A/B-specialisering, bosser, 3 tilstande, aktive evner |
+| **Minigolf**    | 1 / 2 spillere | 18 håndbyggede baner på 3 forløb: sand, ramper, vand, bumpere, vindmøller & vandrende klodser; scorekort med par og hole-in-one-bonus |
+| **Pinball**     | 1 / 2 spillere | Flippermaskine med 3 borde: bumpere, slingshots, mål, L-A-M-A-baner, multiball med jackpot, kugleredning, puf & tilt |
+| **Bowling**     | 1 / 2 spillere | 10 frames med officiel strike/spare-optælling, ægte keglefysik, hook-skrue og bane i perspektiv, 3 sværhedsgrader |
 
 **Multiplayer (2 spillere lokalt)** findes til **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op-duel)**,
 **Memory (duel)**, **Fire på stribe**, **Tankduel**, **Reversi**, **Yatzy**,
-**Dam**, **Skak**, **Mølle**, **Simon (duel)** og **Billard**. Tilstanden vælges
+**Dam**, **Skak**, **Mølle**, **Simon (duel)**, **Billard**, **Minigolf**,
+**Pinball** og **Bowling**. Tilstanden vælges
 direkte på forspils-skærmen (*Enkeltspiller / Multiplayer*).
 
 #### Funktionsdetaljer pr. spil
@@ -3980,6 +4220,48 @@ eksplosionseffekter, highscore.
   nedskydning og bølge. **F** = 2x tempo, **G** = rækkevidder, højreklik
   annullerer.
 
+**Minigolf**
+- **18 håndbyggede baner** på tre forløb: *Classic* (9 baner, blid start), *Pro*
+  (9 drilske baner med ø-green, dobbelt vindmølle og vandrende klodser) og
+  *Random* (ni baner trukket fra begge og spejlvendt tilfældigt).
+- **Underlag og forhindringer**: sand bremser, ramper accelererer, vand koster et
+  strafslag, gummibumpere giver fart tilbage, og vindmøller og vandrende klodser
+  kræver timing. Fysikken kører i deltrin med friktion som i billard - intet
+  hakker, og intet smutter gennem banden.
+- **Styring**: musen sigter, venstre museknap holdt nede lader kraften, og et slip
+  slår (pile + mellemrum virker også). **G** slår sigtelinjen til og fra.
+- **Scorekort** til højre med par og slag pr. bane; til to spiller begge den samme
+  bane efter tur. Point: 600 pr. bane, ±300 pr. slag under/over par, **500 ekstra
+  for hole in one**. Det laveste antal slag pr. forløb ligger i afsnittet
+  `minigolf` i `mem.json`.
+
+**Pinball**
+- **Tre borde**: *Classic* (tre bumpere, én målrække), *Space* (fire bumpere i
+  rombe, to rækker) og *Lama* (åbent felt, seks mål i en bue); 3 eller 5 kugler
+  pr. spil, til to skiftevis kugle for kugle.
+- **Alt hvad en flipper skal have**: udskyderbane med ladebjælke (for svagt? så
+  ruller kuglen tilbage, og du må prøve igen), to flippere, slingshots, målrækker,
+  fire **L-A-M-A**-baner, hul med kuglelås, **multiball med jackpot**, seks
+  sekunders **kugleredning**, puf og **TILT**.
+- **Multiplikator op til x5** via ryddede rækker og komplette baner; bumpere 100,
+  slingshots 50, mål 250 - under multiball betaler bumperne 2.500 i jackpot.
+- Flipperne kører på de tildelte venstre/højre-taster (samt venstre/højre [Shift])
+  eller musen. Rekorden pr. bord ligger i afsnittet `pinball` i `mem.json`.
+
+**Bowling**
+- **Ti frames efter de officielle regler** inklusive strikes, spares og tiende
+  frames bonuskast (maksimum: 300). **Scorekortet** under overskriften viser hver
+  frame med X, / og løbende sum.
+- **Kast i fire trin**: position, vinkel, skrue og kraft. Hver skyder svinger af
+  sig selv og låses med handlingstasten - eller indstilles i hånden med
+  venstre/højre, hvilket standser svingningen.
+- **Ægte keglefysik**: ti kegler som cirkler med masse, der vælter hinanden; en
+  strike kommer af fysik og ikke af held. Banen er olieret forrest, så **hooken**
+  først griber i den sidste tredjedel.
+- Baneview i perspektiv med render, sigtepile og keglefelt; tre sværhedsgrader
+  (*Let/Normal/Pro*) ændrer skydernes tempo og spredningen. Rekorden pr.
+  sværhedsgrad ligger i afsnittet `bowling` i `mem.json`.
+
 Highscores gemmes i afsnittet `highscores` i `mem.json` (ved siden af koden) –
 sammen med sproget (afsnittet `mem`).
 
@@ -4002,7 +4284,7 @@ og stylet som en moderne spil-launcher:
   pause-overlayet.
 - Hvert spils **forspils-skærm** vises i det pågældende spils accentfarve og viser
   den tidligere rekord som en chip.
-- **Ensartet look i spillet**: alle 39 spil deler menuens temapalet og skrifttype -
+- **Ensartet look i spillet**: alle 42 spil deler menuens temapalet og skrifttype -
   HUD'er, setup-skærme og overlays følger det design, der er valgt i indstillingerne
   (v4.1 / v4 / Klassisk), mens hvert spillefelt beholder sine identitetsfarver.
   Hvert spil håndterer nu en opløsningsændring midt i spillet rent, og menunavnene
@@ -4202,7 +4484,7 @@ Python og kan kopieres frit. Indstillinger og highscores (`settings.json`,
 ## 🇳🇴 Norsk
 
 En samling skrivebordsspill i Python: **Tkinter** står for vinduet og menyen,
-**Pygame** er bygget inn som spillvisning inne i Tkinter-vinduet. Trettiåtte
+**Pygame** er bygget inn som spillvisning inne i Tkinter-vinduet. Førtito
 spill med felles innstillinger, fritt omdefinerbar styring, rekorder,
 prosedyregenererte lydeffekter og – for enkelte titler – flerspillermodus.
 Grensesnittet er **flerspråklig** – **14 språk** (tysk / engelsk / fransk /
@@ -4275,12 +4557,15 @@ nederst under **[Installasjonsveiledning](#installasjonsveiledning)**.
 | **Hangman**        | 1 spiller  | Gjett ordet før galgen er ferdig; skjermtastatur, ordlister per språk, 3 lengdemoduser, endeløs streak |
 | **Block Jump**  | 1 spiller       | 3D-plattformspill i Minecraft-stil: teksturert voxelverden med Steve-figur, stiger, gjerder og slimblokker, første-/tredjepersonskamera, motion blur, seed-genererte parkour-nivåer |
 | **Tower Defense** | 1 spiller      | Slå tilbake endeløse bølger på 4 kart: opptil 11 tårntyper med oppgraderinger, salg & A/B-spesialisering, bosser, 3 moduser, aktive evner |
+| **Minigolf**    | 1 / 2 spillere | 18 håndlagde baner på 3 løyper: sand, ramper, vann, støtfangere, vindmøller & vandrende klosser; scorekort med par og hole-in-one-bonus |
+| **Pinball**     | 1 / 2 spillere | Flipperautomat med 3 bord: bumpere, slingshots, mål, L-A-M-A-baner, multiball med jackpot, kuleredning, dytt & tilt |
+| **Bowling**     | 1 / 2 spillere | 10 frames med offisiell strike/spare-telling, ekte kjeglefysikk, hook-skru og bane i perspektiv, 3 vanskelighetsgrader |
 
 **Flerspiller (2 spillere lokalt)** er tilgjengelig for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids
 (co-op-duell)**, **Memory (duell)**, **Fire på rad**, **Tankduell**, **Reversi**,
-**Yatzy**, **Dam**, **Sjakk**, **Mølle**, **Simon (duell)** og **Biljard**.
-Modusen velges rett i forspillskjermen (*Énspiller / Flerspiller*).
+**Yatzy**, **Dam**, **Sjakk**, **Mølle**, **Simon (duell)**, **Biljard**,
+**Minigolf**, **Pinball** og **Bowling**. Modusen velges rett i forspillskjermen (*Énspiller / Flerspiller*).
 
 #### Detaljer per spill
 
@@ -4701,6 +4986,48 @@ våpenoppgradering), eksplosjonseffekter, rekord.
 - **Økonomi**: gull per nedskyting, bølgebonus + 5% renter; poeng per nedskyting
   og bølge. **F** = 2x tempo, **G** = rekkevidder, høyreklikk avbryter.
 
+**Minigolf**
+- **18 håndlagde baner** på tre løyper: *Classic* (9 baner, myk start), *Pro*
+  (9 lumske baner med øygreen, dobbel vindmølle og vandrende klosser) og *Random*
+  (ni baner trukket fra begge og speilet tilfeldig).
+- **Underlag og hindringer**: sand bremser, ramper akselererer, vann koster et
+  straffeslag, gummistøtfangere gir fart tilbake, og vindmøller og vandrende
+  klosser krever timing. Fysikken går i deltrinn med friksjon som i biljard -
+  ingenting hakker, og ingenting sklir gjennom vantet.
+- **Styring**: musa sikter, venstre museknapp holdt nede lader kraften, og et
+  slipp slår (piler + mellomrom går også). **G** slår siktelinjen av og på.
+- **Scorekort** til høyre med par og slag per bane; for to spillere spiller begge
+  den samme banen etter tur. Poeng: 600 per bane, ±300 per slag under/over par,
+  **500 ekstra for hole in one**. Laveste slagtall per løype ligger i
+  `minigolf`-delen av `mem.json`.
+
+**Pinball**
+- **Tre bord**: *Classic* (tre bumpere, én målrekke), *Space* (fire bumpere i
+  rombe, to rekker) og *Lama* (åpen bane, seks mål i en bue); 3 eller 5 kuler per
+  spill, for to spillere vekselvis kule for kule.
+- **Alt en flipper trenger**: utskytingsbane med ladestolpe (for svakt? kula
+  triller tilbake, og du får prøve igjen), to flippere, slingshots, målrekker,
+  fire **L-A-M-A**-baner, fanger med kulelås, **multiball med jackpot**, seks
+  sekunders **kuleredning**, dytt og **TILT**.
+- **Multiplikator opptil x5** via ryddede rekker og fullførte baner; bumpere 100,
+  slingshots 50, mål 250 - under multiball betaler bumperne 2 500 i jackpot.
+- Flipperne styres med de tildelte venstre/høyre-tastene (samt venstre/høyre
+  [Shift]) eller musa. Rekorden per bord ligger i `pinball`-delen av `mem.json`.
+
+**Bowling**
+- **Ti frames etter de offisielle reglene**, inkludert strikes, spares og
+  bonuskastene i tiende frame (maksimum: 300). **Scorekortet** under overskriften
+  viser hver frame med X, / og løpende sum.
+- **Kast i fire trinn**: posisjon, vinkel, skru og kraft. Hver glider svinger av
+  seg selv og låses med handlingstasten - eller stilles for hånd med
+  venstre/høyre, som stopper svingingen.
+- **Ekte kjeglefysikk**: ti kjegler som sirkler med masse som velter hverandre;
+  en strike kommer av fysikk og ikke flaks. Banen er oljet fremst, så **hooken**
+  griper først i siste tredjedel.
+- Baneview i perspektiv med renner, siktepiler og kjeglefelt; tre
+  vanskelighetsgrader (*Lett/Normal/Pro*) endrer gliderfart og spredning.
+  Rekorden per grad ligger i `bowling`-delen av `mem.json`.
+
 Rekordene lagres i `highscores`-delen av `mem.json` (ved siden av koden) – sammen
 med språket (delen `mem`).
 
@@ -4723,7 +5050,7 @@ pakker) og stylet som en moderne spill-launcher:
   pause-overlegget.
 - Hvert spills **forspillskjerm** vises i spillets aksentfarge og viser forrige
   rekord som en chip.
-- **Enhetlig utseende i spillet**: alle 39 spillene deler menyens temapalett og
+- **Enhetlig utseende i spillet**: alle 42 spillene deler menyens temapalett og
   skrift – HUD-er, oppsettskjermer og overlegg følger designet valgt i
   alternativene (v4.1 / v4 / Classic), mens hver spillflate beholder sine
   identitetsfarger. Hvert spill håndterer nå oppløsningsendringer midt i spillet
@@ -4922,7 +5249,7 @@ kopieres fritt. Innstillinger og rekorder (`settings.json`, `mem.json`,
 ## 🇸🇪 Svenska
 
 En spelsamling för skrivbordet i Python: **Tkinter** står för fönstret och menyn,
-**Pygame** bäddas in som spelyta inuti Tkinter-fönstret. Trettioåtta spel med
+**Pygame** bäddas in som spelyta inuti Tkinter-fönstret. Fyrtiotvå spel med
 gemensamma inställningar, fritt ombindbara kontroller, topplistor, procedurella
 ljudeffekter och, för vissa titlar, ett flerspelarläge. Gränssnittet är
 **flerspråkigt** – **14 språk** (tyska / engelska / franska / spanska /
@@ -4995,11 +5322,15 @@ under **[Installationsguide](#installationsguide)**.
 | **Hänga gubbe**  | 1 spelare    | Gissa ordet innan galgen är färdig; skärmtangentbord, ordlistor per språk, 3 längdlägen, oändlig streak |
 | **Block Jump**   | 1 spelare    | 3D-plattformsspel i Minecraft-stil: texturerad voxelvärld med Steve-figur, stegar, staket & slime-block, första-/tredjepersonskamera, motion blur, seed-genererade parkourbanor |
 | **Tower Defense** | 1 spelare    | Slå tillbaka oändliga vågor på 4 kartor: upp till 11 torntyper med uppgraderingar, försäljning & A/B-specialisering, bossar, 3 lägen, aktiva förmågor |
+| **Minigolf**    | 1 / 2 spelare | 18 handbyggda banor på 3 slingor: sand, ramper, vatten, kuddar, väderkvarnar & vandrande block; scorekort med par och hole-in-one-bonus |
+| **Pinball**     | 1 / 2 spelare | Flipperspel med 3 bord: bumpers, slingshots, mål, L-A-M-A-banor, multiboll med jackpot, bollräddning, knuff & tilt |
+| **Bowling**     | 1 / 2 spelare | 10 frames med officiell strike/spare-räkning, äkta kägelfysik, skruv och bana i perspektiv, 3 svårighetsgrader |
 
 **Flerspelarläge (2 spelare lokalt)** finns för **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op-duell)**,
 **Memory (duell)**, **Fyra i rad**, **Tankduell**, **Reversi**, **Yatzy**,
-**Dam**, **Schack**, **Kvarn**, **Simon (duell)** och **Biljard**. Läget väljs
+**Dam**, **Schack**, **Kvarn**, **Simon (duell)**, **Biljard**, **Minigolf**,
+**Pinball** och **Bowling**. Läget väljs
 direkt på förspelsskärmen (*Enspelarläge / Flerspelarläge*).
 
 #### Funktionsdetaljer per spel
@@ -5396,6 +5727,49 @@ explosionseffekter, topplista.
   nedskjutning och våg. **F** = 2x tempo, **G** = räckvidder, högerklick
   avbryter.
 
+**Minigolf**
+- **18 handbyggda banor** på tre slingor: *Classic* (9 banor, mjuk start), *Pro*
+  (9 kluriga banor med ögreen, dubbel väderkvarn och vandrande block) och *Random*
+  (nio banor dragna ur båda och speglade slumpvis).
+- **Underlag och hinder**: sand bromsar, ramper accelererar, vatten kostar ett
+  straffslag, gummikuddar ger fart tillbaka, och väderkvarnar och vandrande block
+  kräver timing. Fysiken går i delsteg med friktion precis som i biljard -
+  ingenting hackar och ingenting glider genom sargen.
+- **Styrning**: musen siktar, vänster musknapp nedtryckt laddar kraften och ett
+  släpp slår (pilar + blanksteg funkar också). **G** växlar siktlinjen.
+- **Scorekort** till höger med par och slag per bana; till två spelar båda samma
+  bana i tur och ordning. Poäng: 600 per bana, ±300 per slag under/över par,
+  **500 extra för hole in one**. Lägsta slagantal per slinga ligger i avsnittet
+  `minigolf` i `mem.json`.
+
+**Pinball**
+- **Tre bord**: *Classic* (tre bumpers, en målrad), *Space* (fyra bumpers i romb,
+  två rader) och *Lama* (öppet fält, sex mål i en båge); 3 eller 5 bollar per
+  spel, till två växelvis boll för boll.
+- **Allt ett flipperspel behöver**: utskjutningsbana med laddstapel (för svagt?
+  bollen rullar tillbaka och du får försöka igen), två flippers, slingshots,
+  målrader, fyra **L-A-M-A**-banor, fångare med bollås, **multiboll med jackpot**,
+  sex sekunders **bollräddning**, knuff och **TILT**.
+- **Multiplikator upp till x5** via rensade rader och kompletta banor; bumpers
+  100, slingshots 50, mål 250 - under multiboll betalar bumpers 2 500 i jackpot.
+- Flipprarna körs med de tilldelade vänster/höger-tangenterna (samt
+  vänster/höger [Shift]) eller musen. Rekordet per bord ligger i avsnittet
+  `pinball` i `mem.json`.
+
+**Bowling**
+- **Tio frames enligt de officiella reglerna**, inklusive strikes, spares och
+  tionde framens bonuskast (maximum: 300). **Scorekortet** under rubriken visar
+  varje frame med X, / och löpande summa.
+- **Kast i fyra steg**: position, vinkel, skruv och kraft. Varje reglage svänger
+  av sig självt och låses med åtgärdstangenten - eller ställs för hand med
+  vänster/höger, vilket stoppar svängningen.
+- **Äkta kägelfysik**: tio käglor som cirklar med massa som välter varandra; en
+  strike kommer av fysik och inte tur. Banan är oljad framtill, så **skruven**
+  griper först i sista tredjedelen.
+- Banvy i perspektiv med rännor, siktpilar och kägelfält; tre svårighetsgrader
+  (*Lätt/Normal/Pro*) ändrar reglagens tempo och spridningen. Rekordet per grad
+  ligger i avsnittet `bowling` i `mem.json`.
+
 Topplistorna sparas i avsnittet `highscores` i `mem.json` (bredvid koden) – tillsammans med
 språket (avsnittet `mem`).
 
@@ -5416,7 +5790,7 @@ modern spel-launcher:
   vid nytt rekord** och en riktig **oskärpa** bakom pausöverlägget.
 - Varje spels **förspelsskärm** visas i det spelets accentfärg och visar det tidigare rekordet som ett
   chip.
-- **Enhetlig look i spelet**: alla 39 spel delar menyns temapalett och typsnitt - HUD:ar, setup-skärmar
+- **Enhetlig look i spelet**: alla 42 spel delar menyns temapalett och typsnitt - HUD:ar, setup-skärmar
   och överlägg följer den design som valts i alternativen (v4.1 / v4 / Classic), medan varje spelplan
   behåller sina identitetsfärger. Varje spel hanterar nu upplösningsbyten mitt i spelet snyggt, och
   menynamnen är språkanpassade (t.ex. ”Schach” → ”Schack”).
@@ -5607,7 +5981,7 @@ medan du spelar.
 ## 🇫🇮 Suomi
 
 Työpöytäpelikokoelma Pythonilla: **Tkinter** tarjoaa ikkunan ja valikon,
-**Pygame** upotetaan pelinäytöksi Tkinter-ikkunan sisään. Kolmekymmentäkahdeksan
+**Pygame** upotetaan pelinäytöksi Tkinter-ikkunan sisään. Neljäkymmentäkaksi
 peliä, joilla on yhteiset asetukset, vapaasti uudelleenmääriteltävät ohjaimet,
 ennätykset, proseduraaliset äänitehosteet ja osassa peleistä moninpeli.
 Käyttöliittymä on **monikielinen** – **14 kieltä** (saksa / englanti / ranska /
@@ -5680,12 +6054,16 @@ ohje löytyy aivan alhaalta kohdasta **[Asennusopas](#asennusopas)**.
 | **Hirsipuu**       | 1 pelaaja  | Arvaa sana ennen kuin hirsipuu valmistuu; ruutunäppäimistö, kielikohtaiset sanalistat, 3 pituustilaa, loputon putki |
 | **Block Jump**  | 1 pelaaja       | 3D-Minecraft-tyylinen tasoloikka: teksturoitu voxel-maailma, Steve-hahmo, tikkaat, aidat ja limapalikat, ensimmäisen/kolmannen persoonan kamera, motion blur, siemenpohjaiset parkour-kentät |
 | **Tower Defense** | 1 pelaaja      | Torju loputtomia aaltoja 4 kartalla: jopa 11 tornityyppiä parannuksineen, myynteineen ja A/B-erikoistumisineen, pomoja, 3 tilaa, aktiivisia kykyjä |
+| **Minigolf**    | 1 / 2 pelaajaa | 18 käsin rakennettua rataa kolmella kierroksella: hiekkaa, ramppeja, vettä, puskureita, tuulimyllyjä ja vaeltavia lohkoja; tuloskortti parilla ja hole-in-one-bonuksella |
+| **Pinball**     | 1 / 2 pelaajaa | Flipperiautomaatti kolmella pöydällä: puskurit, slingshotit, maalit, L-A-M-A-kaistat, multiball ja jackpot, pallonpelastus, töytäisy ja tilt |
+| **Bowling**     | 1 / 2 pelaajaa | 10 framea virallisella strike/spare-laskennalla, aito keilafysiikka, hook-kierre ja perspektiivinen rata, 3 vaikeustasoa |
 
 **Moninpeli (2 pelaajaa paikallisesti)** on saatavilla peleihin **Snake**,
 **Pong**, **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids
 (yhteistyökaksintaistelu)**, **Memory (kaksintaistelu)**, **Neljän suora**,
 **Tankkikaksintaistelu**, **Reversi**, **Yatzy**, **Tammi**, **Shakki**,
-**Mylly**, **Simon (kaksintaistelu)** ja **Biljardi**. Tila valitaan suoraan
+**Mylly**, **Simon (kaksintaistelu)**, **Biljardi**, **Minigolf**, **Pinball**
+ja **Bowling**. Tila valitaan suoraan
 pelin esinäytöllä (*Yksinpeli / Moninpeli*).
 
 #### Pelikohtaiset ominaisuudet
@@ -6125,6 +6503,51 @@ räjähdystehosteet, ennätys.
   tuhotuista ja aalloista. **F** = 2x nopeus, **G** = kantamat, oikea painike
   peruu.
 
+**Minigolf**
+- **18 käsin rakennettua rataa** kolmella kierroksella: *Classic* (9 rataa, lempeä
+  aloitus), *Pro* (9 kinkkistä rataa saariviheriöineen, kaksoismyllyineen ja
+  vaeltavine lohkoineen) ja *Random* (yhdeksän molemmista arvottua ja
+  satunnaisesti peilattua rataa).
+- **Alustat ja esteet**: hiekka jarruttaa, rampit kiihdyttävät, vesi maksaa
+  rangaistuslyönnin, kumipuskurit antavat vauhtia takaisin, ja tuulimyllyt ja
+  vaeltavat lohkot vaativat ajoitusta. Fysiikka lasketaan osa-askelin kitkan
+  kanssa kuten biljardissa - mikään ei nyki eikä läpäise laitaa.
+- **Ohjaus**: hiiri tähtää, vasen painike pohjassa lataa voiman ja irrotus lyö
+  (nuolet + välilyönti käyvät myös). **G** vaihtaa tähtäysviivan.
+- **Tuloskortti** oikealla parin ja ratakohtaisten lyöntien kanssa; kaksinpelissä
+  molemmat pelaavat saman radan vuorotellen. Pisteet: 600 radalta, ±300 jokaisesta
+  parin alittavasta/ylittävästä lyönnistä, **500 lisää hole in onesta**. Pienin
+  lyöntimäärä kierrosta kohti on tiedoston `mem.json` osiossa `minigolf`.
+
+**Pinball**
+- **Kolme pöytää**: *Classic* (kolme puskuria, yksi maalirivi), *Space* (neljä
+  puskuria vinoneliössä, kaksi riviä) ja *Lama* (avoin kenttä, kuusi maalia
+  kaaressa); 3 tai 5 palloa per peli, kaksinpelissä vuorotellen pallo kerrallaan.
+- **Kaikki mitä flipperi tarvitsee**: laukaisukaista latauspalkilla (liian heikko?
+  pallo palaa ja saat yrittää uudelleen), kaksi flipperiä, slingshotit, maalirivit,
+  neljä **L-A-M-A**-kaistaa, lukko pallolle, **multiball ja jackpot**, kuuden
+  sekunnin **pallonpelastus**, töytäisy ja **TILT**.
+- **Kerroin aina x5 asti** kaadetuista riveistä ja täysistä kaistoista; puskurit
+  100, slingshotit 50, maalit 250 - multiballissa puskurit maksavat 2 500 pisteen
+  jackpotin.
+- Flipperit toimivat määritetyillä vasen/oikea-näppäimillä (myös vasen/oikea
+  [Shift]) tai hiirellä. Pöytäkohtainen ennätys on tiedoston `mem.json` osiossa
+  `pinball`.
+
+**Bowling**
+- **Kymmenen framea virallisilla säännöillä**, mukaan lukien striket, sparet ja
+  kymmenennen framen bonusheitot (enintään: 300). **Tuloskortti** otsikon alla
+  näyttää jokaisen framen merkeillä X, / ja juoksevan summan.
+- **Heitto neljässä vaiheessa**: sijainti, kulma, kierre ja voima. Jokainen säädin
+  heiluu itsestään ja lukitaan toimintonäppäimellä - tai asetetaan käsin
+  vasen/oikea-näppäimillä, jolloin heilunta pysähtyy.
+- **Aito keilafysiikka**: kymmenen keilaa ympyröinä, joilla on massa ja jotka
+  kaatavat toisiaan; strike syntyy fysiikasta eikä onnesta. Rata on edestä öljytty,
+  joten **hook** puree vasta viimeisellä kolmanneksella.
+- Perspektiivinen ratanäkymä kouruineen, tähtäysnuolineen ja keila-alueineen;
+  kolme vaikeustasoa (*Helppo/Normaali/Pro*) muuttavat säätimien vauhtia ja
+  hajontaa. Tasokohtainen ennätys on tiedoston `mem.json` osiossa `bowling`.
+
 Ennätykset tallennetaan tiedoston `mem.json` osioon `highscores` (koodin vieressä)
 – yhdessä kielen kanssa (osio `mem`).
 
@@ -6147,7 +6570,7 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
   **konfettisade uudesta ennätyksestä** ja aito **sumennus** taukopeiton takana.
 - Jokaisen pelin **esinäyttö** ilmestyy kyseisen pelin korostusvärissä ja näyttää
   edellisen ennätyksen chippinä.
-- **Yhtenäinen pelin ilme**: kaikki 39 peliä jakavat valikon teemapaletin ja fontin –
+- **Yhtenäinen pelin ilme**: kaikki 42 peliä jakavat valikon teemapaletin ja fontin –
   HUDit, asetusnäytöt ja peittokerrokset noudattavat asetuksissa valittua ulkoasua
   (v4.1 / v4 / Klassinen), kun taas jokainen pelikenttä säilyttää identiteettivärinsä.
   Jokainen peli käsittelee nyt siististi resoluution vaihdon kesken pelin, ja valikon
@@ -6345,7 +6768,7 @@ Pythonia ja sen voi kopioida vapaasti. Asetukset ja ennätykset (`settings.json`
 ## 🇨🇿 Čeština
 
 Sbírka desktopových her v Pythonu: **Tkinter** tvoří okno a menu, **Pygame** je
-vložen jako herní obrazovka do okna Tkinteru. Třicet osm her se sdílenými
+vložen jako herní obrazovka do okna Tkinteru. Čtyřicet dva her se sdílenými
 nastaveními, volně přemapovatelným ovládáním, nejlepšími skóre, procedurálními
 zvukovými efekty a u některých titulů i režimem pro více hráčů. Rozhraní je
 **vícejazyčné** – **14 jazyků** (němčina / angličtina / francouzština /
@@ -6419,12 +6842,15 @@ existuje, jinak systémový Python. Podrobný návod krok za krokem je úplně d
 | **Hangman**        | 1 hráč    | Uhodni slovo, než se dokreslí šibenice; klávesnice na obrazovce, seznamy slov podle jazyka, 3 délkové režimy, nekonečná série |
 | **Block Jump**   | 1 hráč      | 3D plošinovka ve stylu Minecraftu: texturovaný voxelový svět se Stevem, žebříky, ploty a slizovými bloky, kamera z první/třetí osoby, motion blur, parkourové úrovně ze semínka |
 | **Tower Defense** | 1 hráč      | Odrážej nekonečné vlny na 4 mapách: až 11 typů věží s vylepšeními, prodejem a specializací A/B, bossové, 3 režimy, aktivní schopnosti |
+| **Minigolf**    | 1 / 2 hráči | 18 ručně postavených drah na 3 hřištích: písek, rampy, voda, odrazníky, mlýny a bloudící bloky; karta s parem a bonusem za hole in one |
+| **Pinball**     | 1 / 2 hráči | Pinballový automat se 3 stoly: bumpery, slingshoty, terče, dráhy L-A-M-A, multiball s jackpotem, záchrana koule, šťouch a tilt |
+| **Bowling**     | 1 / 2 hráči | 10 framů s oficiálním počítáním strike/spare, skutečnou fyzikou kuželek, hookem a dráhou v perspektivě, 3 obtížnosti |
 
 **Více hráčů (2 hráči lokálně)** je k dispozici pro **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (kooperativní
 duel)**, **Memory (duel)**, **Čtyři v řadě**, **Tankový duel**, **Reversi**,
-**Kniffel**, **Dáma**, **Šachy**, **Mlýn**, **Simon (duel)** a **Kulečník**.
-Režim se volí přímo na přípravné obrazovce (*Jeden hráč / Více hráčů*).
+**Kniffel**, **Dáma**, **Šachy**, **Mlýn**, **Simon (duel)**, **Kulečník**,
+**Minigolf**, **Pinball** a **Bowling**. Režim se volí přímo na přípravné obrazovce (*Jeden hráč / Více hráčů*).
 
 #### Podrobnosti k jednotlivým hrám
 
@@ -6857,6 +7283,49 @@ zbraně), efekty explozí, nejlepší skóre.
 - **Ekonomika**: zlato za sestřel, bonus za vlnu + 5% úrok; body za sestřely a
   vlny. **F** = 2x rychlost, **G** = dosahy, pravé tlačítko ruší.
 
+**Minigolf**
+- **18 ručně postavených drah** na třech hřištích: *Classic* (9 drah, jemný
+  začátek), *Pro* (9 záludných drah s ostrovním greenem, dvojitým mlýnem a
+  bloudícími bloky) a *Random* (devět drah vylosovaných z obou a náhodně
+  zrcadlených).
+- **Povrchy a překážky**: písek brzdí, rampy zrychlují, voda stojí trestný úder,
+  gumové odrazníky vracejí rychlost a mlýny s bloudícími bloky vyžadují
+  načasování. Fyzika běží v dílčích krocích s třením jako u kulečníku - nic
+  neskáče a nic neprojde mantinelem.
+- **Ovládání**: myš míří, držené levé tlačítko nabíjí sílu a puštění odpálí
+  (fungují i šipky + mezerník). **G** přepíná zaměřovací čáru.
+- **Karta skóre** vpravo s parem a údery na dráhu; ve dvou hraje každý stejnou
+  dráhu po sobě. Body: 600 za dráhu, ±300 za úder pod/nad par, **500 navíc za
+  hole in one**. Nejnižší počet úderů na hřiště je v sekci `minigolf` souboru
+  `mem.json`.
+
+**Pinball**
+- **Tři stoly**: *Classic* (tři bumpery, jedna řada terčů), *Space* (čtyři
+  bumpery v kosočtverci, dvě řady) a *Lama* (otevřené pole, šest terčů v oblouku);
+  3 nebo 5 koulí na partii, ve dvou se hráči střídají po koulích.
+- **Vše, co flipper potřebuje**: odpalovací dráha s ukazatelem síly (příliš
+  slabě? koule se vrátí a smíš znovu), dvě pálky, slingshoty, řady terčů, čtyři
+  dráhy **L-A-M-A**, past se zámkem koule, **multiball s jackpotem**, šest sekund
+  **záchrany koule**, šťouch a **TILT**.
+- **Násobitel až x5** za sražené řady a kompletní dráhy; bumpery 100, slingshoty
+  50, terče 250 - během multiballu platí bumpery jackpot 2 500.
+- Pálky jedou na přiřazených klávesách vlevo/vpravo (i levý/pravý [Shift]) nebo
+  na myši. Rekord každého stolu je v sekci `pinball` souboru `mem.json`.
+
+**Bowling**
+- **Deset framů podle oficiálních pravidel** včetně striků, sparů a bonusových
+  hodů v desátém framu (maximum: 300). **Karta skóre** pod záhlavím ukazuje každý
+  frame se značkami X, / a průběžným součtem.
+- **Hod ve čtyřech krocích**: pozice, úhel, rotace a síla. Každý posuvník se sám
+  houpe a zafixuje se akční klávesou - nebo se nastaví ručně vlevo/vpravo, čímž
+  se houpání zastaví.
+- **Skutečná fyzika kuželek**: deset kuželek jako kruhy s hmotností, které se
+  navzájem porážejí; strike vzniká z fyziky, ne ze štěstí. Dráha je vpředu
+  naolejovaná, takže **hook** zabere až v poslední třetině.
+- Pohled na dráhu v perspektivě se žlaby, šipkami a plochou kuželek; tři
+  obtížnosti (*Snadná/Normální/Pro*) mění tempo posuvníků a rozptyl. Rekord pro
+  každou obtížnost je v sekci `bowling` souboru `mem.json`.
+
 Nejlepší skóre se ukládají do sekce `highscores` souboru `mem.json` (vedle
 kódu) – spolu s jazykem (sekce `mem`).
 
@@ -6880,7 +7349,7 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
   pauzy.
 - **Přípravná obrazovka** každé hry se zobrazuje v její akcentové barvě a ukazuje
   dosavadní rekord jako čip.
-- **Jednotný vzhled ve hře**: všech 39 her sdílí paletu témat a písmo menu -
+- **Jednotný vzhled ve hře**: všech 42 her sdílí paletu témat a písmo menu -
   HUDy, obrazovky nastavení a překrytí následují design zvolený v nastavení
   (v4.1 / v4 / Klasický), zatímco každé hrací pole si ponechává své identitní
   barvy. Každá hra nyní čistě zvládne změnu rozlišení uprostřed partie a názvy
@@ -7081,7 +7550,7 @@ a lze jej volně kopírovat. Nastavení a nejlepší skóre (`settings.json`,
 ## 🇸🇮 Slovenščina
 
 Zbirka namiznih iger v Pythonu: **Tkinter** poskrbi za okno in meni, **Pygame**
-je kot prikaz igre vgrajen v okno Tkinter. Oseintrideset iger s skupnimi
+je kot prikaz igre vgrajen v okno Tkinter. Dvainštirideset iger s skupnimi
 možnostmi, prosto nastavljivim krmiljenjem, rekordi, proceduralnimi zvočnimi
 učinki in, pri nekaterih naslovih, večigralskim načinom. Vmesnik je
 **večjezičen** – **14 jezikov** (nemščina / angleščina / francoščina /
@@ -7154,12 +7623,16 @@ obstaja, sicer sistemski Python. Na dnu dokumenta je podroben vodnik po korakih:
 | **Vislice**        | 1 igralec  | Ugani besedo, preden so vislice končane; zaslonska tipkovnica, seznami besed po jeziku, 3 dolžinski načini, neskončni niz |
 | **Block Jump**  | 1 igralec       | 3D-ploščadnica v slogu Minecrafta: teksturiran voksel svet s Stevom, lestvami, ograjami in sluzastimi bloki, kamera v prvi/tretji osebi, motion blur, ravni parkourja s semenom |
 | **Tower Defense** | 1 igralec      | Odbijaj neskončne valove na 4 zemljevidih: do 11 vrst stolpov z nadgradnjami, prodajo in specializacijo A/B, bossi, 3 načini, aktivne sposobnosti |
+| **Minigolf**    | 1 / 2 igralca | 18 ročno zgrajenih stez na 3 igriščih: pesek, klančine, voda, odbijači, mlini in tavajoči bloki; kartica s parom in bonusom za hole in one |
+| **Pinball**     | 1 / 2 igralca | Pinball avtomat s 3 mizami: odbijači, slingshoti, tarče, steze L-A-M-A, multiball z jackpotom, rešitev krogle, sunek in tilt |
+| **Bowling**     | 1 / 2 igralca | 10 framov z uradnim štetjem strike/spare, pravo fiziko kegljev, hookom in stezo v perspektivi, 3 težavnosti |
 
 **Večigralski način (2 igralca lokalno)** je na voljo za igre **Snake**,
 **Pong**, **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**,
 **Asteroids (kooperativni dvoboj)**, **Memory (dvoboj)**, **Štiri v vrsto**,
 **Tankovski dvoboj**, **Reversi**, **Kniffel**, **Dama**, **Šah**, **Mlin**,
-**Simon (dvoboj)** in **Biljard**. Način se izbere kar na predigralnem zaslonu
+**Simon (dvoboj)**, **Biljard**, **Minigolf**, **Pinball** in **Bowling**.
+Način se izbere kar na predigralnem zaslonu
 (*En igralec / Več igralcev*).
 
 #### Podrobnosti po igrah
@@ -7587,6 +8060,48 @@ nadgradnja orožja), učinki eksplozij, rekord.
   sestrelitve in valove. **F** = 2x hitrost, **G** = dosegi, desni klik
   prekliče.
 
+**Minigolf**
+- **18 ročno zgrajenih stez** na treh igriščih: *Classic* (9 stez, mehak začetek),
+  *Pro* (9 zahtevnih stez z otoškim greenom, dvojnim mlinom in tavajočimi bloki)
+  in *Random* (devet stez, izžrebanih iz obeh in naključno zrcaljenih).
+- **Podlage in ovire**: pesek zavira, klančine pospešujejo, voda stane kazenski
+  udarec, gumijasti odbijači vračajo hitrost, mlini in tavajoči bloki pa zahtevajo
+  občutek za čas. Fizika teče v podkorakih s trenjem kot pri biljardu - nič ne
+  poskakuje in nič ne gre skozi bando.
+- **Upravljanje**: miška cilja, držana leva tipka polni moč, spust pa udari
+  (delujejo tudi puščice + preslednica). **G** preklopi ciljno črto.
+- **Kartica rezultatov** desno s parom in udarci na stezo; v dvoje vsak igra isto
+  stezo po vrsti. Točke: 600 na stezo, ±300 za udarec pod/nad par, **500 dodatnih
+  za hole in one**. Najnižje število udarcev na igrišče je v razdelku `minigolf`
+  datoteke `mem.json`.
+
+**Pinball**
+- **Tri mize**: *Classic* (trije odbijači, ena vrsta tarč), *Space* (štirje
+  odbijači v rombu, dve vrsti) in *Lama* (odprto polje, šest tarč v loku); 3 ali 5
+  krogel na igro, v dvoje izmenično krogla za kroglo.
+- **Vse, kar flipper potrebuje**: izstrelitveni kanal z merilnikom moči (prešibko?
+  krogla se vrne in smeš znova), dva loparja, slingshoti, vrste tarč, štiri steze
+  **L-A-M-A**, past z zaklepom krogle, **multiball z jackpotom**, šest sekund
+  **rešitve krogle**, sunek in **TILT**.
+- **Množitelj do x5** prek podrtih vrst in dokončanih stez; odbijači 100,
+  slingshoti 50, tarče 250 - med multiballom odbijači plačajo jackpot 2.500.
+- Loparja delujeta na dodeljenih tipkah levo/desno (tudi levi/desni [Shift]) ali
+  z miško. Rekord vsake mize je v razdelku `pinball` datoteke `mem.json`.
+
+**Bowling**
+- **Deset framov po uradnih pravilih**, vključno s striki, spari in bonus meti v
+  desetem framu (največ: 300). **Kartica** pod glavo prikazuje vsak frame z X, /
+  in tekočo vsoto.
+- **Met v štirih korakih**: položaj, kot, vrtenje in moč. Vsak drsnik niha sam in
+  se zaklene s tipko za dejanje - ali pa se nastavi ročno z levo/desno, kar
+  nihanje ustavi.
+- **Prava fizika kegljev**: deset kegljev kot krogi z maso, ki podirajo drug
+  drugega; strike nastane iz fizike in ne iz sreče. Steza je spredaj naoljena,
+  zato **hook** prime šele v zadnji tretjini.
+- Pogled na stezo v perspektivi z žlebovi, puščicami in poljem kegljev; tri
+  težavnosti (*Lahka/Normalna/Pro*) spremenijo hitrost drsnikov in raztros.
+  Rekord za vsako težavnost je v razdelku `bowling` datoteke `mem.json`.
+
 Rekordi se shranijo v razdelku `highscores` datoteke `mem.json` (poleg kode) –
 skupaj z jezikom (razdelek `mem`).
 
@@ -7610,7 +8125,7 @@ oblikovan kot sodoben zaganjalnik iger:
   pavze.
 - **Predigralni zaslon** vsake igre se pojavi v njeni poudarni barvi in prejšnji
   rekord prikaže kot čip.
-- **Poenoten videz v igri**: vseh 39 iger si deli barvno paleto in pisavo menija -
+- **Poenoten videz v igri**: vseh 42 iger si deli barvno paleto in pisavo menija -
   HUD-i, nastavitveni zasloni in prekrivni sloji sledijo izbranemu dizajnu v
   možnostih (v4.1 / v4 / Klasični), medtem ko vsako igrišče obdrži svoje
   identitetne barve. Vsaka igra zdaj čisto obvlada spremembo ločljivosti med igro,
@@ -7808,7 +8323,7 @@ prosto kopirati. Nastavitve in rekordi (`settings.json`, `mem.json`,
 ## 🇭🇷 Hrvatski
 
 Zbirka desktop igara u Pythonu: **Tkinter** pruža prozor i izbornik, a **Pygame**
-je ugrađen kao prikaz igre unutar Tkinter prozora. Trideset i osam igara sa
+je ugrađen kao prikaz igre unutar Tkinter prozora. Četrdeset i dvije igre sa
 zajedničkim opcijama, slobodno preslagivim upravljanjem, rekordima,
 proceduralnim zvučnim efektima i, kod nekih naslova, višeigračkim modom. Sučelje
 je **višejezično** – **14 jezika** (njemački / engleski / francuski / španjolski /
@@ -7881,12 +8396,15 @@ dnu pod **[Vodič za instalaciju](#vodič-za-instalaciju)**.
 | **Vješala**        | 1 igrač   | Pogodite riječ prije nego što se dovrši vješalo; zaslonska tipkovnica, popisi riječi po jeziku, 3 moda duljine, beskonačni niz |
 | **Block Jump**  | 1 igrač        | 3D platformer u stilu Minecrafta: teksturirani voxel svijet sa Steveom, ljestvama, ogradama i sluzavim blokovima, kamera iz prvog/trećeg lica, motion blur, parkour razine generirane sjemenom |
 | **Tower Defense** | 1 igrač        | Odbijaj beskonačne valove na 4 karte: do 11 vrsta tornjeva s nadogradnjama, prodajom i specijalizacijom A/B, bossovi, 3 načina, aktivne sposobnosti |
+| **Minigolf**    | 1 / 2 igrača | 18 ručno izgrađenih staza na 3 terena: pijesak, rampe, voda, odbojnici, vjetrenjače i lutajući blokovi; kartica s parom i bonusom za hole in one |
+| **Pinball**     | 1 / 2 igrača | Pinball automat s 3 stola: odbojnici, slingshotovi, mete, staze L-A-M-A, multiball s jackpotom, spašavanje kugle, gurkanje i tilt |
+| **Bowling**     | 1 / 2 igrača | 10 frameova sa službenim brojanjem strike/spare, pravom fizikom čunjeva, hookom i stazom u perspektivi, 3 težine |
 
 **Više igrača (2 igrača lokalno)** dostupno je za **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (kooperativni
 dvoboj)**, **Memory (dvoboj)**, **Četiri u nizu**, **Tenkovski dvoboj**,
-**Reversi**, **Yahtzee**, **Dame**, **Šah**, **Mlin**, **Simon (dvoboj)**
-i **Biljar**. Mod se bira izravno na zaslonu pripreme
+**Reversi**, **Yahtzee**, **Dame**, **Šah**, **Mlin**, **Simon (dvoboj)**,
+**Biljar**, **Minigolf**, **Pinball** i **Bowling**. Mod se bira izravno na zaslonu pripreme
 (*Jedan igrač / Više igrača*).
 
 #### Detalji značajki po igri
@@ -8321,6 +8839,49 @@ nadogradnja oružja), efekti eksplozije, rekord.
 - **Ekonomija**: zlato po obaranju, bonus za val + 5% kamata; bodovi po obaranju
   i valu. **F** = 2x brzina, **G** = dometi, desni klik odustaje.
 
+**Minigolf**
+- **18 ručno izgrađenih staza** na tri terena: *Classic* (9 staza, blag početak),
+  *Pro* (9 zahtjevnih staza s otočnim greenom, dvostrukom vjetrenjačom i lutajućim
+  blokovima) i *Random* (devet staza izvučenih s oba terena i nasumično zrcaljenih).
+- **Podloge i prepreke**: pijesak koči, rampe ubrzavaju, voda košta kazneni
+  udarac, gumeni odbojnici vraćaju brzinu, a vjetrenjače i lutajući blokovi traže
+  osjećaj za trenutak. Fizika radi u podkoracima s trenjem kao u biljaru - ništa
+  ne poskakuje i ništa ne prolazi kroz bandu.
+- **Upravljanje**: miš cilja, držanje lijeve tipke puni snagu, a otpuštanje udara
+  (rade i strelice + razmaknica). **G** prebacuje liniju ciljanja.
+- **Kartica rezultata** desno s parom i udarcima po stazi; u dvoje svatko igra
+  istu stazu jedan za drugim. Bodovi: 600 po stazi, ±300 po udarcu ispod/iznad
+  para, **500 dodatnih za hole in one**. Najmanji broj udaraca po terenu nalazi se
+  u odjeljku `minigolf` datoteke `mem.json`.
+
+**Pinball**
+- **Tri stola**: *Classic* (tri odbojnika, jedan niz meta), *Space* (četiri
+  odbojnika u rombu, dva niza) i *Lama* (otvoreno polje, šest meta u luku); 3 ili
+  5 kugli po partiji, u dvoje naizmjence kuglu po kuglu.
+- **Sve što flipper treba**: kanal za izbačaj s mjeračem snage (preslabo? kugla se
+  vraća i smiješ ponovno), dva flippera, slingshotovi, nizovi meta, četiri staze
+  **L-A-M-A**, zamka sa zaključavanjem kugle, **multiball s jackpotom**, šest
+  sekundi **spašavanja kugle**, gurkanje i **TILT**.
+- **Množitelj do x5** preko oborenih nizova i dovršenih staza; odbojnici 100,
+  slingshotovi 50, mete 250 - tijekom multiballa odbojnici plaćaju jackpot od
+  2.500.
+- Flipperi rade na dodijeljenim tipkama lijevo/desno (te lijevi/desni [Shift]) ili
+  mišem. Rekord svakog stola je u odjeljku `pinball` datoteke `mem.json`.
+
+**Bowling**
+- **Deset frameova po službenim pravilima**, uključujući strikeove, spareove i
+  bonus bacanja u desetom frameu (najviše: 300). **Kartica** ispod zaglavlja
+  prikazuje svaki frame s X, / i tekućim zbrojem.
+- **Bacanje u četiri koraka**: položaj, kut, rotacija i snaga. Svaki klizač njiše
+  se sam i fiksira ga tipka akcije - ili se namjesti ručno lijevo/desno, čime se
+  njihanje zaustavlja.
+- **Prava fizika čunjeva**: deset čunjeva kao krugovi s masom koji obaraju jedan
+  drugoga; strike nastaje iz fizike, a ne iz sreće. Staza je sprijeda nauljena, pa
+  **hook** hvata tek u zadnjoj trećini.
+- Pogled na stazu u perspektivi s kanalima, strelicama i poljem čunjeva; tri
+  težine (*Lako/Normalno/Pro*) mijenjaju brzinu klizača i rasipanje. Rekord za
+  svaku težinu je u odjeljku `bowling` datoteke `mem.json`.
+
 Rekordi se spremaju u odjeljak `highscores` datoteke `mem.json` (uz kôd) – zajedno
 s jezikom (odjeljak `mem`).
 
@@ -8343,7 +8904,7 @@ dotjerano poput modernog pokretača igara:
   **kiša konfeta pri novom rekordu** i pravi **blur** iza pauznog prekrivača.
 - **Zaslon pripreme** svake igre pojavljuje se u njezinoj naglasnoj boji i
   prikazuje prethodni rekord kao čip.
-- **Ujednačen izgled u igri**: svih 39 igara dijeli paletu teme i font izbornika -
+- **Ujednačen izgled u igri**: svih 42 igre dijele paletu teme i font izbornika -
   HUD-ovi, zasloni pripreme i prekrivači slijede dizajn odabran u opcijama
   (v4.1 / v4 / Classic), dok svako igralište zadržava svoje prepoznatljive boje.
   Svaka igra sada uredno obrađuje promjenu razlučivosti usred partije, a nazivi u

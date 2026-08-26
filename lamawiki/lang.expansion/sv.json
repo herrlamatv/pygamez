@@ -1790,6 +1790,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "hål",
+        "par",
+        "hole in one",
+        "väderkvarn",
+        "vatten",
+        "sand",
+        "ramp",
+        "bana",
+        "putt"
+      ],
+      "sections": [
+        {
+          "h": "Så spelar du",
+          "body": [
+            "Minigolf på 18 handbyggda banor. Banan Classic är en mjuk start, Pro ger ögreen, dubbel väderkvarn och vandrande block, och Random drar nio banor ur båda och speglar dem slumpvis.",
+            "Målet är att sänka bollen på så få slag som möjligt. Efter åtta slag plockas bollen upp och hålet räknas som lägst.",
+            "Till två spelar båda samma bana efter varandra; scorekortet till höger visar par och båda resultaten."
+          ]
+        },
+        {
+          "h": "Styrning",
+          "body": [
+            "- Flytta musen för att sikta. Håll vänster musknapp för att ladda kraften, släpp för att slå.",
+            "- Vänster/höger pil siktar, upp/ner ställer kraften, [Blanksteg] slår.",
+            "- [G] slår på och av siktlinjen - den går också att stänga av permanent i inställningarna."
+          ]
+        },
+        {
+          "h": "Hinder",
+          "body": [
+            "- Sand bromsar kraftigt, ramper accelererar i pilarnas riktning.",
+            "- Vatten kostar ett straffslag; bollen återvänder till sin senaste säkra plats.",
+            "- Gummikuddar ger fart tillbaka; väderkvarnar och vandrande block kräver timing."
+          ]
+        },
+        {
+          "h": "Poäng",
+          "body": [
+            "Varje bana ger 600 poäng plus 300 för varje slag under par (och 300 mindre för varje slag över, aldrig under 100).",
+            "Hole in one ger 500 poäng extra. Summan av alla banor är ditt rekord; dessutom sparas lägsta slagantal per bana."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipper",
+        "multiboll",
+        "bumper",
+        "tilt",
+        "bord",
+        "jackpot",
+        "mål",
+        "fångare",
+        "knuff"
+      ],
+      "sections": [
+        {
+          "h": "Så spelar du",
+          "body": [
+            "Ett flipperspel med tre bord: Classic med tre bumpers och en rad mål, Space med fyra bumpers i romb och två rader, Lama med öppet fält och sex mål i en båge.",
+            "Varje spel ger 3 eller 5 bollar. Efter utskjutningen löper en bollräddning i sex sekunder: förloras bollen då kommer den direkt tillbaka till utskjutningsbanan.",
+            "Till två växlar spelarna boll för boll; poängen står under varandra i infokolumnen."
+          ]
+        },
+        {
+          "h": "Styrning",
+          "body": [
+            "- Håll åtgärdstangenten ([Blanksteg] som standard) för att spänna utskjutaren och släpp för att skjuta. För svagt? Bollen rullar tillbaka och du får försöka igen.",
+            "- Vänster/höger (även vänster/höger [Shift]) sköter flipprarna. Med musen: vänstra halvan av bilden = vänster flipper.",
+            "- Upp-tangenten knuffar bordet. Tre knuffar för tätt inpå ger TILT - flipprarna är döda tills bollen försvinner."
+          ]
+        },
+        {
+          "h": "Poäng och multiboll",
+          "body": [
+            "Bumpers ger 100, slingshots 50 och mål 250 - allt gånger aktuell multiplikator (upp till x5).",
+            "En helt rensad målrad eller alla fyra L-A-M-A-banor höjer multiplikatorn med ett.",
+            "Tre bollar låsta i fångaren startar multibollen: tre bollar samtidigt, och bumpers betalar en jackpot på 2 500 poäng."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "Infokolumnen till höger visar multiplikator, låsta bollar, rensade rader och återstående bollräddning.",
+            "En knuff räddar en boll på väg ner - men var sparsam: räknaren nollställs först efter fyra lugna sekunder.",
+            "Rekordet sparas per bord och poängen i ett spel räknas som bästa resultat."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "strike",
+        "spare",
+        "käglor",
+        "frame",
+        "skruv",
+        "hook",
+        "bana",
+        "ränna",
+        "pocket"
+      ],
+      "sections": [
+        {
+          "h": "Så spelar du",
+          "body": [
+            "Tio frames enligt de officiella reglerna: två kast per frame, strike och spare ger bonuspoäng, och tionde framen ger bonuskast. Maximum är 300.",
+            "Scorekortet strax under rubriken visar alla tio frames med kast (X, /, -) och löpande summa.",
+            "Till två växlar spelarna frame för frame."
+          ]
+        },
+        {
+          "h": "Kastet i fyra steg",
+          "body": [
+            "1. Position vid fellinjen, 2. siktvinkel, 3. skruv (åt vänster eller höger), 4. kraft.",
+            "Varje reglage svänger av sig självt; åtgärdstangenten eller ett klick låser det.",
+            "Med vänster/höger kan du ställa det för hand i stället - då stannar svängningen."
+          ]
+        },
+        {
+          "h": "Skruv och olja",
+          "body": [
+            "Banan är oljad framtill: skruven griper först i sista tredjedelen och drar då klotet in i pocketen mellan kägla 1 och 3.",
+            "Går klotet ut i sidled hamnar det i rännan - det kastet räknas som noll.",
+            "På Pro svänger reglagen snabbare och banan sprider lite mer; på Lätt är allt lugnare. [G] växlar hjälplinjen."
+          ]
+        },
+        {
+          "h": "Käglor och poäng",
+          "body": [
+            "De tio käglorna är cirklar med riktig massa: klotet träffar dem och de välter varandra. En strike är alltså fysik och inte tur.",
+            "Spelets summa är ditt rekord; dessutom sparas bästa resultatet per svårighetsgrad."
+          ]
+        }
+      ]
     }
   ]
 }

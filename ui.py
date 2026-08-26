@@ -269,6 +269,8 @@ GAME_COLORS = {
     "SlidingPuzzleGame": "#5ac0e0", "MastermindGame": "#c86ad8",
     "BubbleShooterGame": "#ff7aa8", "HangmanGame": "#d89a4a",
     "BlockJumpGame": "#8fd14f", "LamaTowerDefenseGame": "#e2725b",
+    "MiniGolfGame": "#4fd17a", "PinballGame": "#7f5af0",
+    "BowlingGame": "#4a7de0",
 }
 
 # Schriftname mit Fallback-Kette (SysFont probiert der Reihe nach durch).

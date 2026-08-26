@@ -1790,6 +1790,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "dołek",
+        "par",
+        "hole in one",
+        "wiatrak",
+        "woda",
+        "piasek",
+        "rampa",
+        "pole",
+        "putt"
+      ],
+      "sections": [
+        {
+          "h": "Jak się gra",
+          "body": [
+            "Minigolf na 18 ręcznie zbudowanych dołkach. Pole Classic wprowadza łagodnie, Pro dokłada wyspowy green, podwójny wiatrak i ruchome bloki, a Random losuje dziewięć dołków z obu pól i odbija je lustrzanie.",
+            "Celem jest wbicie piłki w jak najmniejszej liczbie uderzeń. Po ośmiu uderzeniach piłka zostaje podniesiona, a dołek liczy się na minimum.",
+            "We dwoje każdy gra ten sam dołek po kolei; karta wyników po prawej pokazuje par i oba rezultaty."
+          ]
+        },
+        {
+          "h": "Sterowanie",
+          "body": [
+            "- Ruch myszy celuje. Przytrzymanie lewego przycisku ładuje siłę, puszczenie uderza.",
+            "- Strzałki lewo/prawo celują, góra/dół ustawiają siłę, [Spacja] uderza.",
+            "- [G] włącza i wyłącza linię celowania - można ją też wyłączyć na stałe w ustawieniach."
+          ]
+        },
+        {
+          "h": "Przeszkody",
+          "body": [
+            "- Piasek mocno hamuje, rampy przyspieszają zgodnie ze strzałkami.",
+            "- Woda kosztuje uderzenie karne; piłka wraca na ostatnie bezpieczne miejsce.",
+            "- Gumowe odbijacze oddają prędkość; wiatraki i ruchome bloki wymagają wyczucia czasu."
+          ]
+        },
+        {
+          "h": "Punkty",
+          "body": [
+            "Każdy dołek daje 600 punktów plus 300 za każde uderzenie poniżej par (i 300 mniej za każde powyżej, nigdy poniżej 100).",
+            "Hole in one dokłada 500 punktów. Suma wszystkich dołków to rekord; dodatkowo zapisywana jest najmniejsza liczba uderzeń na każdym polu."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "fliper",
+        "multiball",
+        "bumper",
+        "tilt",
+        "stół",
+        "jackpot",
+        "cel",
+        "łapacz",
+        "potrącenie"
+      ],
+      "sections": [
+        {
+          "h": "Jak się gra",
+          "body": [
+            "Automat do flipera z trzema stołami: Classic z trzema bumperami i jedną serią celów, Space z czterema bumperami w romb i dwiema seriami, Lama z otwartym polem i sześcioma celami w łuku.",
+            "Każda gra daje 3 lub 5 kul. Po wystrzale przez sześć sekund działa ratunek kuli: jeśli kula zginie w tym czasie, wraca do wyrzutni.",
+            "We dwoje gracze zmieniają się kula po kuli; wyniki stoją jeden pod drugim w kolumnie informacyjnej."
+          ]
+        },
+        {
+          "h": "Sterowanie",
+          "body": [
+            "- Przytrzymaj klawisz akcji (domyślnie [Spacja]), aby napiąć wyrzutnię, i puść, aby wystrzelić. Za słabo? Kula wraca i można spróbować jeszcze raz.",
+            "- Lewo/prawo (a także lewy/prawy [Shift]) obsługują flipery. Myszą: lewa połowa ekranu = lewy fliper.",
+            "- Klawisz w górę potrąca stół. Trzy potrącenia zbyt szybko po sobie dają TILT - flipery są martwe aż do straty kuli."
+          ]
+        },
+        {
+          "h": "Punkty i multiball",
+          "body": [
+            "Bumpery dają 100, slingshoty 50, a cele 250 - wszystko razy aktualny mnożnik (do x5).",
+            "Zbicie pełnej serii celów albo zebranie wszystkich czterech torów L-A-M-A podnosi mnożnik o jeden.",
+            "Trzy kule zamknięte w łapaczu uruchamiają multiball: trzy kule naraz, a bumpery płacą jackpot 2500 punktów."
+          ]
+        },
+        {
+          "h": "Wskazówki",
+          "body": [
+            "Kolumna po prawej pokazuje mnożnik, zamknięte kule, zbite serie i pozostały czas ratunku kuli.",
+            "Potrącenie ratuje kulę tuż przed stratą - ale oszczędnie: licznik zeruje się dopiero po czterech spokojnych sekundach.",
+            "Rekord zapisywany jest osobno dla każdego stołu, a wynik partii liczy się jako najlepszy wynik."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "strike",
+        "spare",
+        "kręgle",
+        "frame",
+        "rotacja",
+        "hook",
+        "tor",
+        "rynna",
+        "pocket"
+      ],
+      "sections": [
+        {
+          "h": "Jak się gra",
+          "body": [
+            "Dziesięć frame'ów według oficjalnych zasad: dwa rzuty na frame, strike i spare dają punkty bonusowe, a dziesiąty frame daje rzuty dodatkowe. Maksimum to 300.",
+            "Karta wyników tuż pod nagłówkiem pokazuje wszystkie dziesięć frame'ów z rzutami (X, /, -) i sumą bieżącą.",
+            "We dwoje gracze zmieniają się frame po frame."
+          ]
+        },
+        {
+          "h": "Rzut w czterech krokach",
+          "body": [
+            "1. Pozycja na linii, 2. kąt celowania, 3. rotacja (w lewo lub w prawo), 4. siła.",
+            "Każdy suwak waha się sam; klawisz akcji albo kliknięcie go zatrzymuje.",
+            "Lewo/prawo pozwalają ustawić suwak ręcznie - wahanie wtedy ustaje."
+          ]
+        },
+        {
+          "h": "Rotacja i olej",
+          "body": [
+            "Tor jest z przodu naoliwiony: rotacja łapie dopiero w ostatniej trzeciej części i ciągnie kulę do pocketu między kręglami 1 i 3.",
+            "Zejście z toru w bok kończy się w rynnie - taki rzut liczy zero.",
+            "Na poziomie Pro suwaki wahają się szybciej, a tor rozrzuca nieco mocniej; na Łatwym wszystko jest spokojniejsze. [G] przełącza linię pomocy."
+          ]
+        },
+        {
+          "h": "Kręgle i punkty",
+          "body": [
+            "Dziesięć kręgli to koła z prawdziwą masą: kula je uderza, a one przewracają się nawzajem. Strike jest więc wynikiem fizyki, a nie przypadku.",
+            "Suma gry to rekord; dodatkowo zapisywany jest najlepszy wynik dla każdego poziomu."
+          ]
+        }
+      ]
     }
   ]
 }

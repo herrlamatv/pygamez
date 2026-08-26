@@ -1790,6 +1790,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "delik",
+        "par",
+        "hole in one",
+        "yel değirmeni",
+        "su",
+        "kum",
+        "rampa",
+        "parkur",
+        "vuruş"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Elle tasarlanmış 18 delikte minigolf. Classic parkuru yumuşak bir giriş yapar, Pro ada green, çift değirmen ve gezen bloklar ekler, Random ise iki parkurdan dokuz delik çekip rastgele aynalar.",
+            "Amaç topu mümkün olduğunca az vuruşla deliğe sokmak. Sekiz vuruştan sonra top alınır ve delik en düşük değerle sayılır.",
+            "İki kişilik oyunda herkes aynı deliği sırayla oynar; sağdaki skor kartı parı ve iki sonucu birden gösterir."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Fareyi hareket ettirerek nişan al. Sol tuşu basılı tutmak gücü doldurur, bırakmak vurur.",
+            "- Sol/sağ oklar nişan alır, yukarı/aşağı gücü ayarlar, [Boşluk] vurur.",
+            "- [G] nişan çizgisini açıp kapatır; ayar ekranından tamamen da kapatabilirsin."
+          ]
+        },
+        {
+          "h": "Engeller",
+          "body": [
+            "- Kum sert şekilde yavaşlatır, rampalar okların yönünde hızlandırır.",
+            "- Su bir ceza vuruşuna mal olur; top son güvenli noktasına döner.",
+            "- Lastik tamponlar hız geri verir; yel değirmenleri ve gezen bloklar zamanlama ister."
+          ]
+        },
+        {
+          "h": "Puanlar",
+          "body": [
+            "Her delik 600 puan değerindedir, parın altındaki her vuruş için 300 puan daha (üstündeki her vuruş için 300 az, en az 100 kalır).",
+            "Hole in one 500 puan ekler. Tüm deliklerin toplamı rekorundur; ayrıca her parkurun en düşük vuruş sayısı da saklanır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipper",
+        "multiball",
+        "bumper",
+        "tilt",
+        "masa",
+        "jackpot",
+        "hedef",
+        "tutucu",
+        "sarsma"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Üç masalı bir pinball makinesi: Classic üç bumper ve bir hedef dizisiyle, Space dörtgen dizilmiş dört bumper ve iki diziyle, Lama açık bir alan ve yay biçiminde altı hedefle.",
+            "Her oyunda 3 ya da 5 top var. Fırlatmadan sonra altı saniyelik top koruması çalışır: top bu sürede kaybolursa doğrudan fırlatma kanalına döner.",
+            "İki kişilik oyunda oyuncular top top sırayla oynar; puanlar bilgi sütununda alt alta durur."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Eylem tuşunu (varsayılan [Boşluk]) basılı tutarak yayı ger, bırakınca fırlar. Çok zayıf mı kaldı? Top geri döner ve yeniden denenebilir.",
+            "- Sol/sağ (ayrıca sol/sağ [Shift]) flipperleri çalıştırır. Fareyle: ekranın sol yarısı = sol flipper.",
+            "- Yukarı tuşu masayı sarsar. Üst üste üç hızlı sarsma TILT verir - flipperler top düşene kadar ölü kalır."
+          ]
+        },
+        {
+          "h": "Puanlar ve multiball",
+          "body": [
+            "Bumperlar 100, slingshotlar 50, hedefler 250 puan verir - hepsi güncel çarpanla (x5'e kadar).",
+            "Bir hedef dizisini tamamen düşürmek ya da dört L-A-M-A şeridini toplamak çarpanı bir artırır.",
+            "Tutucuda kilitlenen üç top multiball'ı başlatır: aynı anda üç top ve bumperlar 2.500 puanlık jackpot öder."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "Sağdaki bilgi sütunu çarpanı, kilitli topları, düşürülen dizileri ve kalan top koruma süresini gösterir.",
+            "Bir sarsma düşmek üzere olan topu kurtarır - ama idareli kullan: sayaç ancak dört sakin saniye sonra sıfırlanır.",
+            "Rekor her masa için ayrı saklanır, bir oyunun puanı en iyi skor olarak sayılır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "strike",
+        "spare",
+        "labut",
+        "frame",
+        "efekt",
+        "hook",
+        "pist",
+        "oluk",
+        "pocket"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Resmî kurallara göre on frame: her frame'de iki atış, strike ve spare bonus puan getirir, onuncu frame'de bonus atışlar vardır. En yüksek sonuç 300'dür.",
+            "Başlığın hemen altındaki skor kartı on frame'i atışlarıyla (X, /, -) ve güncel toplamla gösterir.",
+            "İki kişilik oyunda oyuncular frame frame sırayla atar."
+          ]
+        },
+        {
+          "h": "Dört adımda atış",
+          "body": [
+            "1. Faul çizgisindeki konum, 2. nişan açısı, 3. efekt (sola ya da sağa), 4. güç.",
+            "Her ayar kendiliğinden salınır; eylem tuşu ya da bir tıklama onu sabitler.",
+            "Sol/sağ ile ayarı elle de belirleyebilirsin - salınım o anda durur."
+          ]
+        },
+        {
+          "h": "Efekt ve yağ",
+          "body": [
+            "Pist önde yağlıdır: efekt ancak son üçte birde tutar ve topu 1 ile 3 numaralı labutlar arasındaki pocket'a çeker.",
+            "Yanlardan pistten çıkan top oluğa düşer - bu atış sıfır sayılır.",
+            "Pro'da ayarlar daha hızlı salınır ve pist biraz daha saçar; Kolay'da her şey daha sakindir. [G] yardım çizgisini değiştirir."
+          ]
+        },
+        {
+          "h": "Labutlar ve puanlar",
+          "body": [
+            "On labut gerçek kütlesi olan dairelerdir: top onlara çarpar, onlar birbirini devirir. Yani strike şansın değil fiziğin sonucudur.",
+            "Oyun toplamı rekorundur; ayrıca her zorluk için en iyi sonuç saklanır."
+          ]
+        }
+      ]
     }
   ]
 }

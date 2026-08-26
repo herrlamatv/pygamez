@@ -1792,6 +1792,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "bahn",
+        "par",
+        "hole in one",
+        "windmühle",
+        "wasser",
+        "sand",
+        "rampe",
+        "kurs",
+        "putten"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Minigolf mit 18 handgebauten Bahnen. Der Kurs Classic führt sanft ein, Pro bringt Inselgrün, Doppelmühle und Wanderblöcke, und Random zieht neun Bahnen aus beiden Kursen und spiegelt sie zufällig.",
+            "Ziel ist es, den Ball mit möglichst wenigen Schlägen einzulochen. Nach acht Schlägen wird die Bahn aufgenommen und mit dem Mindestwert gewertet.",
+            "Zu zweit spielt jeder dieselbe Bahn nacheinander; die Scorekarte rechts zeigt Par und beide Ergebnisse."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Maus bewegen: zielen. Linke Maustaste halten lädt die Kraft, Loslassen schlägt.",
+            "- Pfeile links/rechts zielen, hoch/runter stellen die Kraft ein, [Leertaste] schlägt.",
+            "- [G] blendet die Ziellinie ein und aus - im Setup lässt sie sich dauerhaft abschalten."
+          ]
+        },
+        {
+          "h": "Hindernisse",
+          "body": [
+            "- Sand bremst stark, Rampen beschleunigen in Pfeilrichtung.",
+            "- Wasser kostet einen Strafschlag; der Ball kehrt an die letzte sichere Stelle zurück.",
+            "- Gummipuffer geben Tempo zurück; Windmühlen und Wanderblöcke verlangen Timing."
+          ]
+        },
+        {
+          "h": "Punkte",
+          "body": [
+            "Je Bahn gibt es 600 Punkte, dazu 300 für jeden Schlag unter Par (und 300 weniger je Schlag darüber, mindestens bleiben 100).",
+            "Ein Hole-in-One bringt 500 Punkte extra. Die Summe aller Bahnen ist der Highscore; zusätzlich wird die niedrigste Schlagzahl je Kurs gespeichert."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipper",
+        "multiball",
+        "bumper",
+        "tilt",
+        "tisch",
+        "jackpot",
+        "target",
+        "saucer",
+        "nudge"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Ein Flipperautomat mit drei Tischen: Classic mit drei Pop-Bumpern und einer Target-Bank, Space mit vier Bumpern im Karo und zwei Banks, Lama mit offenem Feld und sechs Targets im Bogen.",
+            "Je Partie gibt es 3 oder 5 Bälle. Nach dem Abschuss läuft sechs Sekunden lang der Ball-Save: geht der Ball in dieser Zeit verloren, kommt er zurück in die Schussbahn.",
+            "Zu zweit wechseln sich beide Ball für Ball ab; die Punkte stehen untereinander in der Info-Spalte."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Aktionstaste (Standard [Leertaste]) halten lädt die Schussbahn, Loslassen schießt ab. Zu schwach gezogen? Der Ball rollt zurück und darf noch einmal.",
+            "- Links/Rechts (zusätzlich [Shift] links/rechts) bedienen die Flipper. Mit der Maus: linke Bildhälfte = linker Flipper, rechte = rechter.",
+            "- Die Hoch-Taste stößt den Tisch an (Nudge). Dreimal zu schnell hintereinander gibt TILT - dann sind die Flipper bis zum Ballverlust tot."
+          ]
+        },
+        {
+          "h": "Punkte und Multiball",
+          "body": [
+            "Pop-Bumper zählen 100, Slingshots 50 und Drop-Targets 250 - alles mal aktuellem Multiplikator (bis x5).",
+            "Eine komplett geräumte Target-Bank oder alle vier L-A-M-A-Bahnen erhöhen den Multiplikator um eins.",
+            "Drei im Saucer gefangene Bälle starten den Multiball: drei Kugeln gleichzeitig, und die Bumper zahlen als Jackpot 2500 Punkte."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "Die Info-Spalte rechts zeigt Multiplikator, gefangene Bälle, geräumte Banks und die restliche Ball-Save-Zeit.",
+            "Ein Nudge rettet knappe Bälle - aber sparsam: der Zähler geht erst nach vier ruhigen Sekunden wieder auf null.",
+            "Der Bestwert wird je Tisch gespeichert, die Punktzahl einer Partie zählt als Highscore."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "strike",
+        "spare",
+        "pins",
+        "frame",
+        "hook",
+        "effet",
+        "bahn",
+        "rinne",
+        "kegeln"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Zehn Frames nach offiziellen Regeln: zwei Würfe je Frame, Strike und Spare bringen Bonuspunkte, im zehnten Frame gibt es Bonuswürfe. Das Maximum ist die 300.",
+            "Die Scorecard direkt unter der Kopfzeile zeigt alle zehn Frames mit Würfen (X, /, -) und laufender Summe.",
+            "Zu zweit wechseln sich beide Frame für Frame ab."
+          ]
+        },
+        {
+          "h": "Der Wurf in vier Schritten",
+          "body": [
+            "1. Position an der Foullinie, 2. Zielwinkel, 3. Effet (Drall nach links oder rechts), 4. Kraft.",
+            "Jeder Regler pendelt von allein; die Aktionstaste oder ein Klick legt ihn fest.",
+            "Mit Links/Rechts lässt sich der Regler stattdessen von Hand einstellen - das Pendeln hält dann an."
+          ]
+        },
+        {
+          "h": "Effet und Öl",
+          "body": [
+            "Die Bahn ist vorn geölt: der Drall greift erst im hinteren Drittel und zieht den Ball dann in die Pocket zwischen Pin 1 und 3.",
+            "Wer die Bahn seitlich verlässt, landet in der Rinne - dieser Wurf zählt null.",
+            "Auf Pro pendeln die Regler schneller und die Bahn streut etwas stärker; auf Leicht ist alles ruhiger. [G] schaltet die Ziellinie um."
+          ]
+        },
+        {
+          "h": "Pins und Punkte",
+          "body": [
+            "Die zehn Pins sind Kreise mit echter Masse: der Ball stößt sie an, sie stoßen sich gegenseitig um. Ein Strike ist damit Ergebnis der Physik und nicht des Zufalls.",
+            "Die Spielsumme ist der Highscore; zusätzlich wird der Bestwert je Schwierigkeit gespeichert."
+          ]
+        }
+      ]
     }
   ]
 }

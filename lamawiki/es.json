@@ -1789,6 +1789,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "hoyo",
+        "par",
+        "hoyo en uno",
+        "molino",
+        "agua",
+        "arena",
+        "rampa",
+        "recorrido",
+        "putt"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "Minigolf con 18 hoyos construidos a mano. El recorrido Classic es una entrada suave, Pro añade un green isla, un molino doble y bloques móviles, y Random saca nueve hoyos de ambos recorridos y los refleja al azar.",
+            "El objetivo es embocar la bola con los menos golpes posibles. Tras ocho golpes se recoge la bola y el hoyo se puntúa al mínimo.",
+            "A dos, cada jugador juega el mismo hoyo uno tras otro; la tarjeta de la derecha muestra el par y ambos resultados."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Mueve el ratón para apuntar. Mantén el botón izquierdo para cargar fuerza y suéltalo para golpear.",
+            "- Las flechas izquierda/derecha apuntan, arriba/abajo ajustan la fuerza, [Espacio] golpea.",
+            "- [G] muestra u oculta la línea de tiro; también puedes apagarla en la pantalla de ajustes."
+          ]
+        },
+        {
+          "h": "Obstáculos",
+          "body": [
+            "- La arena frena mucho, las rampas aceleran en la dirección de las flechas.",
+            "- El agua cuesta un golpe de penalización; la bola vuelve a su última posición segura.",
+            "- Los parachoques de goma devuelven velocidad; molinos y bloques móviles son cuestión de ritmo."
+          ]
+        },
+        {
+          "h": "Puntos",
+          "body": [
+            "Cada hoyo vale 600 puntos más 300 por cada golpe bajo par (y 300 menos por cada golpe sobre par, nunca por debajo de 100).",
+            "Un hoyo en uno suma 500 puntos extra. La suma de todos los hoyos es tu récord; además se guarda el menor número de golpes por recorrido."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipper",
+        "multibola",
+        "bumper",
+        "tilt",
+        "mesa",
+        "jackpot",
+        "diana",
+        "atrapabolas",
+        "empujón"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "Una máquina de pinball con tres mesas: Classic con tres bumpers y una serie de dianas, Space con cuatro bumpers en rombo y dos series, Lama con campo abierto y seis dianas en arco.",
+            "Cada partida da 3 o 5 bolas. Tras el lanzamiento corre un salvabolas de seis segundos: si pierdes la bola en ese tiempo, vuelve al carril de lanzamiento.",
+            "A dos, los jugadores se alternan bola a bola; las puntuaciones aparecen una debajo de otra en la columna de información."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Mantén la tecla de acción ([Espacio] por defecto) para cargar el lanzador y suéltala para disparar. ¿Demasiado flojo? La bola vuelve y puedes repetir.",
+            "- Izquierda/derecha (y también [Shift] izquierdo/derecho) mueven los flippers. Con el ratón: mitad izquierda de la pantalla = flipper izquierdo.",
+            "- La tecla arriba empuja la mesa. Tres empujones demasiado seguidos provocan TILT: los flippers quedan muertos hasta perder la bola."
+          ]
+        },
+        {
+          "h": "Puntos y multibola",
+          "body": [
+            "Los bumpers dan 100, los slingshots 50 y las dianas 250, todo multiplicado por el multiplicador actual (hasta x5).",
+            "Derribar una serie completa de dianas o reunir los cuatro carriles L-A-M-A sube el multiplicador en uno.",
+            "Tres bolas atrapadas inician la multibola: tres bolas a la vez, y los bumpers pagan un jackpot de 2.500 puntos."
+          ]
+        },
+        {
+          "h": "Consejos",
+          "body": [
+            "La columna de la derecha muestra el multiplicador, las bolas atrapadas, las series derribadas y el salvabolas restante.",
+            "Un empujón salva bolas perdidas, pero úsalo con cuidado: el contador solo vuelve a cero tras cuatro segundos tranquilos.",
+            "El récord se guarda por mesa y la puntuación de una partida cuenta como mejor marca."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "strike",
+        "spare",
+        "bolos",
+        "frame",
+        "efecto",
+        "hook",
+        "pista",
+        "canaleta",
+        "pocket"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "Diez frames con las reglas oficiales: dos lanzamientos por frame, los strikes y spares dan puntos extra y el décimo frame concede tiros de bonificación. El máximo es 300.",
+            "La tarjeta bajo la cabecera muestra los diez frames con sus tiros (X, /, -) y la suma acumulada.",
+            "A dos, los jugadores se alternan frame a frame."
+          ]
+        },
+        {
+          "h": "El lanzamiento en cuatro pasos",
+          "body": [
+            "1. Posición en la línea de falta, 2. ángulo de puntería, 3. efecto (a izquierda o derecha), 4. fuerza.",
+            "Cada control oscila solo; la tecla de acción o un clic lo fija.",
+            "Con izquierda/derecha puedes ajustarlo a mano: la oscilación se detiene al hacerlo."
+          ]
+        },
+        {
+          "h": "Efecto y aceite",
+          "body": [
+            "La pista está aceitada en la parte delantera: el efecto solo agarra en el último tercio y arrastra la bola al pocket entre los bolos 1 y 3.",
+            "Salirse de lado manda la bola a la canaleta: ese tiro cuenta cero.",
+            "En Pro los controles oscilan más rápido y la pista dispersa algo más; en Fácil todo es más tranquilo. [G] cambia la línea guía."
+          ]
+        },
+        {
+          "h": "Bolos y puntos",
+          "body": [
+            "Los diez bolos son círculos con masa real: la bola los golpea y ellos se derriban entre sí. Un strike es resultado de la física, no de la suerte.",
+            "La suma de la partida es tu récord; además se guarda el mejor resultado por dificultad."
+          ]
+        }
+      ]
     }
   ]
 }

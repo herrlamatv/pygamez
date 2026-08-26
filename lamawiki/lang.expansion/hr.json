@@ -1790,6 +1790,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "staza",
+        "par",
+        "hole in one",
+        "vjetrenjača",
+        "voda",
+        "pijesak",
+        "rampa",
+        "teren",
+        "udarac"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Minigolf na 18 ručno izgrađenih staza. Teren Classic blago uvodi u igru, Pro dodaje otočni green, dvostruku vjetrenjaču i lutajuće blokove, a Random izvlači devet staza s oba terena i nasumično ih zrcali.",
+            "Cilj je ubaciti lopticu u rupu s najmanje udaraca. Nakon osam udaraca loptica se podiže, a staza se broji po najmanjoj vrijednosti.",
+            "U dvoje svatko igra istu stazu jedan za drugim; kartica desno pokazuje par i oba rezultata."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Pomicanjem miša ciljaš. Držanje lijeve tipke puni snagu, otpuštanje udara.",
+            "- Strelice lijevo/desno ciljaju, gore/dolje namještaju snagu, [Razmaknica] udara.",
+            "- [G] uključuje i isključuje liniju ciljanja - trajno je možeš isključiti u postavkama."
+          ]
+        },
+        {
+          "h": "Prepreke",
+          "body": [
+            "- Pijesak jako koči, rampe ubrzavaju u smjeru strelica.",
+            "- Voda košta kazneni udarac; loptica se vraća na posljednje sigurno mjesto.",
+            "- Gumeni odbojnici vraćaju brzinu; vjetrenjače i lutajući blokovi traže osjećaj za trenutak."
+          ]
+        },
+        {
+          "h": "Bodovi",
+          "body": [
+            "Svaka staza donosi 600 bodova plus 300 za svaki udarac ispod para (i 300 manje za svaki iznad, nikad ispod 100).",
+            "Hole in one donosi dodatnih 500 bodova. Zbroj svih staza je tvoj rekord; uz to se sprema najmanji broj udaraca po terenu."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipper",
+        "multiball",
+        "odbojnik",
+        "tilt",
+        "stol",
+        "jackpot",
+        "meta",
+        "zamka",
+        "gurkanje"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Pinball automat s tri stola: Classic s tri odbojnika i jednim nizom meta, Space s četiri odbojnika u rombu i dva niza, Lama s otvorenim poljem i šest meta u luku.",
+            "Svaka igra daje 3 ili 5 kugli. Nakon izbačaja šest sekundi traje spašavanje kugle: izgubi li se kugla u tom vremenu, vraća se u kanal za izbačaj.",
+            "U dvoje igrači se izmjenjuju kuglu po kuglu; bodovi stoje jedan ispod drugog u informacijskom stupcu."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Drži tipku akcije (zadano [Razmaknica]) da napneš izbacivač, a otpuštanjem pucaš. Preslabo? Kugla se vraća i smiješ ponovno.",
+            "- Lijevo/desno (te lijevi/desni [Shift]) upravljaju flipperima. Mišem: lijeva polovica slike = lijevi flipper.",
+            "- Tipka gore gurne stol. Tri gurkanja prebrzo zaredom daju TILT - flipperi su mrtvi do gubitka kugle."
+          ]
+        },
+        {
+          "h": "Bodovi i multiball",
+          "body": [
+            "Odbojnici daju 100, slingshotovi 50 i mete 250 - sve puta trenutni množitelj (do x5).",
+            "Potpuno oboren niz meta ili sve četiri staze L-A-M-A podižu množitelj za jedan.",
+            "Tri kugle zaključane u zamci pokreću multiball: tri kugle odjednom, a odbojnici plaćaju jackpot od 2.500 bodova."
+          ]
+        },
+        {
+          "h": "Savjeti",
+          "body": [
+            "Informacijski stupac desno pokazuje množitelj, zaključane kugle, oborene nizove i preostalo spašavanje kugle.",
+            "Gurkanje spašava kuglu pred gubitkom - ali štedljivo: brojač se vraća na nulu tek nakon četiri mirne sekunde.",
+            "Rekord se sprema za svaki stol posebno, a bodovi jedne partije broje se kao najbolji rezultat."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "kuglanje",
+        "strike",
+        "spare",
+        "čunjevi",
+        "frame",
+        "rotacija",
+        "hook",
+        "staza",
+        "kanal"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Deset frameova po službenim pravilima: dva bacanja po frameu, strike i spare donose bonus bodove, a deseti frame daje dodatna bacanja. Najviše je 300.",
+            "Kartica odmah ispod zaglavlja pokazuje svih deset frameova s bacanjima (X, /, -) i tekućim zbrojem.",
+            "U dvoje igrači se izmjenjuju frame po frame."
+          ]
+        },
+        {
+          "h": "Bacanje u četiri koraka",
+          "body": [
+            "1. Položaj na crti, 2. kut ciljanja, 3. rotacija (ulijevo ili udesno), 4. snaga.",
+            "Svaki klizač njiše se sam; tipka akcije ili klik ga fiksira.",
+            "Lijevo/desno omogućuju ručno namještanje - njihanje se tada zaustavlja."
+          ]
+        },
+        {
+          "h": "Rotacija i ulje",
+          "body": [
+            "Staza je sprijeda nauljena: rotacija hvata tek u zadnjoj trećini i tada vuče kuglu u džep između čunjeva 1 i 3.",
+            "Kugla koja skrene ustranu završi u kanalu - to bacanje broji nulu.",
+            "Na Pro klizači se njišu brže, a staza malo više rasipa; na Lako je sve mirnije. [G] prebacuje pomoćnu liniju."
+          ]
+        },
+        {
+          "h": "Čunjevi i bodovi",
+          "body": [
+            "Deset čunjeva su krugovi s pravom masom: kugla ih pogađa, a oni obaraju jedan drugoga. Strike je dakle rezultat fizike, a ne sreće.",
+            "Zbroj igre je tvoj rekord; uz to se sprema najbolji rezultat za svaku težinu."
+          ]
+        }
+      ]
     }
   ]
 }

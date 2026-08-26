@@ -11,7 +11,7 @@
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Achtunddreißig
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Zweiundvierzig
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** – **14 Sprachen** (Deutsch / English / Français / Español /
@@ -85,11 +85,15 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Galgenmännchen** | 1 Spieler   | Wort erraten, bevor der Galgen voll ist; Bildschirmtastatur, Wortlisten je Sprache, 3 Längen-Modi, Endlos-Streak |
 | **Block Jump**  | 1 Spieler       | 3D-Jump'n'Run im Minecraft-Stil: texturierte Voxel-Welt, Steve-Figur, Leitern, Zäune & Schleimblöcke, Ego-/Verfolgerkamera, seed-generierte Parkour-Level |
 | **Tower Defense** | 1 Spieler     | Endlose Wellen auf 4 Karten abwehren: bis zu 11 Turmtypen mit Ausbau, Verkauf & A/B-Spezialisierung, Bosse, 3 Modi, Aktiv-Fähigkeiten |
+| **Minigolf**    | 1 / 2 Spieler   | 18 handgebaute Bahnen in 3 Kursen: Sand, Rampen, Wasser, Gummipuffer, Windmühlen & Wanderblöcke; Scorekarte mit Par und Hole-in-One-Bonus |
+| **Pinball**     | 1 / 2 Spieler   | Flipperautomat mit 3 Tischen: Pop-Bumper, Slingshots, Drop-Targets, L-A-M-A-Bahnen, Multiball mit Jackpot, Ball-Save, Nudge & Tilt |
+| **Bowling**     | 1 / 2 Spieler   | 10 Frames mit offizieller Strike-/Spare-Wertung, echter Pin-Physik, Hook-Effet und perspektivischer Bahnansicht, 3 Schwierigkeiten |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)**, **Memory (Duell)**,
 **Vier gewinnt**, **Panzer-Duell**, **Reversi**, **Kniffel**, **Dame**, **Schach**,
-**Mühle**, **Simon (Duell)** und **Billard**. Der Modus wird direkt im
+**Mühle**, **Simon (Duell)**, **Billard**, **Minigolf**, **Pinball**
+und **Bowling**. Der Modus wird direkt im
 Vorspiel-Screen (*Einzelspieler / Mehrspieler*) gewählt.
 
 #### Feature-Details je Spiel
@@ -523,6 +527,53 @@ Explosions-Effekte, Highscore.
 - **Ökonomie**: Gold je Abschuss, Wellen-Bonus + 5% Zinsen; Punkte je Abschuss
   und Welle. **F** = Tempo x2, **G** = Reichweiten, Rechtsklick bricht ab.
 
+**Minigolf**
+- **18 handgebaute Bahnen** in drei Kursen: *Classic* (9 Bahnen, sanfter
+  Einstieg), *Pro* (9 knifflige Bahnen mit Inselgrün, Doppelmühle und
+  Wanderblöcken) und *Random* (neun zufällig gezogene und zufällig gespiegelte
+  Bahnen aus beiden Kursen).
+- **Untergründe & Hindernisse**: Sand bremst, Rampen beschleunigen, Wasser
+  kostet einen Strafschlag, Gummipuffer geben Tempo zurück, Windmühlen und
+  Wanderblöcke verlangen Timing. Die Physik läuft wie beim Billard in
+  Teilschritten mit Reibung - nichts ruckt, nichts tunnelt durch die Bande.
+- **Steuerung**: Maus zielt, linke Maustaste halten lädt die Kraft, Loslassen
+  schlägt (alternativ Pfeile + Leertaste). **G** blendet die Ziellinie um.
+- **Scorekarte** rechts mit Par und Schlägen je Bahn; zu zweit spielt jeder
+  dieselbe Bahn nacheinander. Punkte: 600 je Bahn, ±300 je Schlag unter/über
+  Par, **500 extra für ein Hole-in-One**. Die niedrigste Schlagzahl je Kurs
+  steht im Abschnitt `minigolf` von `mem.json`.
+
+**Pinball**
+- **Drei Tische**: *Classic* (drei Pop-Bumper, eine Target-Bank), *Space* (vier
+  Bumper im Karo, zwei Banks) und *Lama* (offenes Feld, sechs Targets im Bogen);
+  3 oder 5 Bälle je Partie, zu zweit im Wechsel Ball für Ball.
+- **Alles, was ein Flipper braucht**: Schussbahn mit Ladebalken (zu schwach
+  gezogen? der Ball rollt zurück und darf noch einmal), zwei Flipper,
+  Slingshots, Drop-Target-Banks, vier **L-A-M-A**-Rollover-Bahnen, Saucer mit
+  Ball-Lock, **Multiball samt Jackpot**, sechs Sekunden **Ball-Save**, Nudge
+  über die Hoch-Taste und **TILT** bei dreimal zu hastigem Anstoßen.
+- **Multiplikator bis x5** über geräumte Target-Banks und komplette Bahnen;
+  Bumper zählen 100, Slingshots 50, Targets 250 - im Multiball zahlen die
+  Bumper 2500 als Jackpot.
+- Flipper links/rechts über die belegten Tasten (zusätzlich Shift links/rechts)
+  oder per Maus (linke/rechte Bildhälfte). Der Bestwert je Tisch liegt im
+  Abschnitt `pinball` von `mem.json`.
+
+**Bowling**
+- **Zehn Frames nach offiziellen Regeln** samt Strike-, Spare- und Bonuswürfen
+  im zehnten Frame (Maximum: die 300). Die **Scorecard** unter der Kopfzeile
+  zeigt alle Frames mit X, / und laufender Summe.
+- **Wurf in vier Schritten**: Position, Zielwinkel, Effet und Kraft. Jeder
+  Regler pendelt von allein und wird mit der Aktionstaste festgelegt - oder mit
+  Links/Rechts von Hand eingestellt, dann hält das Pendeln an.
+- **Echte Pin-Physik**: zehn Pins als Kreise mit Masse, die sich gegenseitig
+  umwerfen - ein Strike ist Ergebnis der Physik, nicht des Zufalls. Die Bahn ist
+  vorn geölt, der **Hook** greift erst im hinteren Drittel und zieht den Ball in
+  die Pocket.
+- Perspektivische Bahnansicht mit Rinnen, Zielpfeilen und Pin-Deck; drei
+  Schwierigkeiten (*Leicht/Normal/Pro*) verändern Pendeltempo und Streuung.
+  Der Bestwert je Stufe liegt im Abschnitt `bowling` von `mem.json`.
+
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
@@ -546,7 +597,7 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   **Weichzeichner** hinter dem Pause-Overlay.
 - Der **Vorspiel-Screen** jedes Spiels erscheint in dessen Akzentfarbe und zeigt
   den bisherigen Rekord als Chip an.
-- **Einheitlicher Spiel-Look**: alle 39 Spiele nutzen dieselbe Theme-Palette und
+- **Einheitlicher Spiel-Look**: alle 42 Spiele nutzen dieselbe Theme-Palette und
   -Schrift wie das Menü - HUDs, Setup-Screens und Overlays folgen dem in den
   Optionen gewählten Design (v4.1 / v4 / Classic), die Spielfelder behalten ihre
   Identitätsfarben. Auflösungswechsel mitten im Spiel übernimmt jedes Spiel
@@ -557,7 +608,7 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   scrollbaren Artikeln und Tastenkappen-Chips, in allen fünf Sprachen.
   Erreichbar über den Sidebar-Button **„Wiki / Hilfe"** und aus dem
   Vorspiel-Screen jedes Spiels (öffnet direkt dessen Seite).
-- **Erfolge & Statistiken**: **69 Erfolge** in drei Kategorien - sammlungsweite
+- **Erfolge & Statistiken**: **83 Erfolge** in drei Kategorien - sammlungsweite
   Ziele (Partien, Spielzeit, Rekorde, Siege …), ein **Punkte-Meilenstein je
   Spiel** und **besondere Momente** (Schachmatt gegen die KI, KNIFFEL, die
   2048er-Kachel, ein Wordle in 2 Versuchen …). Beim Freischalten erscheint ein
@@ -755,7 +806,7 @@ Spielen neben sich an.
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Thirty-eight
+**Pygame** is embedded as the game display inside the Tkinter window. Forty-two
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** – **14 languages** (German / English / French / Spanish /
@@ -828,12 +879,15 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Hangman**        | 1 player    | Guess the word before the gallows is finished; on-screen keyboard, per-language word lists, 3 length modes, endless streak |
 | **Block Jump**  | 1 player        | 3D Minecraft-style platformer: textured voxel world, Steve figure, ladders, fences & slime blocks, first/third-person camera, seed-generated parkour levels |
 | **Tower Defense** | 1 player      | Fend off endless waves on 4 maps: up to 11 tower types with upgrades, selling & A/B specialisation, bosses, 3 modes, active abilities |
+| **Minigolf**    | 1 / 2 players   | 18 hand-built holes across 3 courses: sand, ramps, water, rubber bumpers, windmills & moving blocks; scorecard with par and hole-in-one bonus |
+| **Pinball**     | 1 / 2 players   | Pinball machine with 3 tables: pop bumpers, slingshots, drop targets, L-A-M-A lanes, multiball with jackpot, ball save, nudge & tilt |
+| **Bowling**     | 1 / 2 players   | 10 frames with official strike/spare scoring, real pin physics, hook spin and a perspective lane view, 3 difficulties |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
 duel)**, **Memory (duel)**, **Connect Four**, **Tank Duel**, **Reversi**,
-**Kniffel**, **Draughts**, **Chess**, **Nine Men's Morris**, **Simon (duel)**
-and **Billiards**. The mode is
+**Kniffel**, **Draughts**, **Chess**, **Nine Men's Morris**, **Simon (duel)**,
+**Billiards**, **Minigolf**, **Pinball** and **Bowling**. The mode is
 chosen right in the pre-game screen (*Single-player / Multiplayer*).
 
 #### Feature details per game
@@ -1260,6 +1314,53 @@ explosion effects, high score.
 - **Economy**: gold per kill, wave bonus + 5% interest; points per kill and
   wave. **F** = 2x speed, **G** = ranges, right-click cancels.
 
+**Minigolf**
+- **18 hand-built holes** across three courses: *Classic* (9 gentle holes),
+  *Pro* (9 tricky holes with an island green, a double windmill and moving
+  blocks) and *Random* (nine holes drawn from both courses and mirrored at
+  random).
+- **Surfaces & obstacles**: sand slows you down, ramps accelerate, water costs a
+  penalty stroke, rubber bumpers give speed back, and windmills and moving
+  blocks are all about timing. The physics runs in sub-steps with friction just
+  like Billiards - nothing stutters, nothing tunnels through a rail.
+- **Controls**: the mouse aims, holding the left button loads the power and
+  releasing putts (arrows + space work too). **G** toggles the aim line.
+- **Scorecard** on the right with par and strokes per hole; in two-player mode
+  each player takes the same hole in turn. Points: 600 per hole, ±300 per stroke
+  under/over par, **500 extra for a hole in one**. The lowest stroke count per
+  course lives in the `minigolf` section of `mem.json`.
+
+**Pinball**
+- **Three tables**: *Classic* (three pop bumpers, one target bank), *Space*
+  (four bumpers in a diamond, two banks) and *Lama* (open playfield, six targets
+  in an arc); 3 or 5 balls per game, alternating ball by ball in two-player mode.
+- **Everything a machine needs**: a shooter lane with a power meter (pulled too
+  softly? the ball rolls back and you may shoot again), two flippers,
+  slingshots, drop target banks, four **L-A-M-A** rollover lanes, a saucer with
+  ball lock, **multiball with jackpot**, a six second **ball save**, nudging via
+  the up key and **TILT** after three hasty nudges.
+- **Multiplier up to x5** from cleared target banks and completed lanes; bumpers
+  score 100, slingshots 50, targets 250 - during multiball the bumpers pay a
+  2,500 point jackpot.
+- Flippers run on the bound left/right keys (plus left/right Shift) or the mouse
+  (left/right half of the screen). The best result per table is stored in the
+  `pinball` section of `mem.json`.
+
+**Bowling**
+- **Ten frames by the official rules** including strikes, spares and the bonus
+  balls of the tenth frame (maximum: a 300 game). The **scorecard** below the
+  header shows every frame with X, / and the running total.
+- **Four-step delivery**: position, aiming angle, spin and power. Every slider
+  swings on its own and is locked in with the action key - or set by hand with
+  left/right, which stops the swinging.
+- **Real pin physics**: ten pins as circles with mass that knock each other
+  over - a strike is the result of physics, not of luck. The lane is oiled up
+  front, so the **hook** only bites in the last third and pulls the ball into
+  the pocket.
+- Perspective lane view with gutters, aiming arrows and the pin deck; three
+  difficulties (*Easy/Normal/Pro*) change slider speed and scatter. The best
+  result per difficulty lives in the `bowling` section of `mem.json`.
+
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
 
@@ -1283,7 +1384,7 @@ packages) and styled like a modern game launcher:
   pause overlay.
 - Each game's **pre-game screen** appears in that game's accent colour and shows
   the previous record as a chip.
-- **Unified in-game look**: all 39 games share the menu's theme palette and
+- **Unified in-game look**: all 42 games share the menu's theme palette and
   font - HUDs, setup screens and overlays follow the design chosen in the
   options (v4.1 / v4 / Classic), while each playfield keeps its identity
   colours. Every game now handles mid-game resolution changes cleanly, and
@@ -1293,7 +1394,7 @@ packages) and styled like a modern game launcher:
   scrollable articles and keycap chips, in all five languages. Reachable via
   the **"Wiki / Help"** sidebar button and from every game's pre-game screen
   (opens that game's page directly).
-- **Achievements & statistics**: **69 achievements** in three categories -
+- **Achievements & statistics**: **83 achievements** in three categories -
   collection-wide goals (games played, play time, records, wins …), one
   **score milestone per game** and **special moments** (checkmating the AI, a
   YAHTZEE, the 2048 tile, a Wordle in 2 tries …). Unlocking shows a **golden

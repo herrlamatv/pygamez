@@ -1790,6 +1790,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "reikä",
+        "par",
+        "hole in one",
+        "tuulimylly",
+        "vesi",
+        "hiekka",
+        "ramppi",
+        "rata",
+        "putti"
+      ],
+      "sections": [
+        {
+          "h": "Näin pelataan",
+          "body": [
+            "Minigolfia 18 käsin rakennetulla radalla. Classic-rata johdattaa lempeästi, Pro tuo saariviheriön, kaksoismyllyn ja vaeltavat lohkot, ja Random arpoo yhdeksän rataa molemmista ja peilaa ne sattumanvaraisesti.",
+            "Tavoitteena on upottaa pallo mahdollisimman harvalla lyönnillä. Kahdeksan lyönnin jälkeen pallo nostetaan ja reikä lasketaan pienimmällä arvolla.",
+            "Kaksinpelissä molemmat pelaavat saman radan vuorotellen; oikean reunan tuloskortti näyttää parin ja molemmat tulokset."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Liikuta hiirtä tähdätäksesi. Pidä vasenta painiketta pohjassa ladataksesi voimaa, päästä irti lyödäksesi.",
+            "- Vasen/oikea nuoli tähtää, ylös/alas säätää voimaa, [Välilyönti] lyö.",
+            "- [G] näyttää ja piilottaa tähtäysviivan - sen voi sammuttaa pysyvästi asetusruudussa."
+          ]
+        },
+        {
+          "h": "Esteet",
+          "body": [
+            "- Hiekka jarruttaa voimakkaasti, rampit kiihdyttävät nuolien suuntaan.",
+            "- Vesi maksaa rangaistuslyönnin; pallo palaa viimeiseen turvalliseen kohtaan.",
+            "- Kumipuskurit antavat vauhtia takaisin; tuulimyllyt ja vaeltavat lohkot vaativat ajoitusta."
+          ]
+        },
+        {
+          "h": "Pisteet",
+          "body": [
+            "Jokaisesta radasta saa 600 pistettä ja lisäksi 300 jokaisesta parin alittavasta lyönnistä (ja 300 vähemmän jokaisesta ylittävästä, vähintään 100 jää).",
+            "Hole in one tuo 500 pistettä lisää. Kaikkien ratojen summa on ennätyksesi; lisäksi tallennetaan kunkin radan pienin lyöntimäärä."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipperi",
+        "multiball",
+        "puskuri",
+        "tilt",
+        "pöytä",
+        "jackpot",
+        "maali",
+        "lukko",
+        "töytäisy"
+      ],
+      "sections": [
+        {
+          "h": "Näin pelataan",
+          "body": [
+            "Flipperiautomaatti kolmella pöydällä: Classic kolmella puskurilla ja yhdellä maalirivillä, Space neljällä vinoneliöön asetetulla puskurilla ja kahdella rivillä, Lama avoimella kentällä ja kuudella kaareen asetetulla maalilla.",
+            "Jokaisessa pelissä on 3 tai 5 palloa. Laukaisun jälkeen kuuden sekunnin pallonpelastus on voimassa: jos pallo katoaa sinä aikana, se palaa laukaisukaistalle.",
+            "Kaksinpelissä pelaajat vuorottelevat pallo kerrallaan; pisteet ovat allekkain tietosarakkeessa."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Pidä toimintonäppäintä ([Välilyönti] oletuksena) pohjassa ladataksesi laukaisimen ja päästä irti ampuaksesi. Liian heikko? Pallo palaa ja saat yrittää uudelleen.",
+            "- Vasen/oikea (myös vasen/oikea [Shift]) käyttävät flippereitä. Hiirellä: kuvan vasen puoli = vasen flipperi.",
+            "- Ylös-näppäin töytäisee pöytää. Kolme liian nopeaa töytäisyä laukaisee TILTin - flipperit ovat kuolleita pallon menetykseen asti."
+          ]
+        },
+        {
+          "h": "Pisteet ja multiball",
+          "body": [
+            "Puskurit antavat 100, slingshotit 50 ja maalit 250 - kaikki kerrottuna nykyisellä kertoimella (aina x5 asti).",
+            "Kokonaan kaadettu maalirivi tai kaikki neljä L-A-M-A-kaistaa nostavat kerrointa yhdellä.",
+            "Kolme lukkoon jäänyttä palloa käynnistää multiballin: kolme palloa yhtä aikaa, ja puskurit maksavat 2 500 pisteen jackpotin."
+          ]
+        },
+        {
+          "h": "Vinkkejä",
+          "body": [
+            "Oikean reunan tietosarake näyttää kertoimen, lukitut pallot, kaadetut rivit ja jäljellä olevan pallonpelastuksen.",
+            "Töytäisy pelastaa putoamassa olevan pallon - mutta säästeliäästi: laskuri nollautuu vasta neljän rauhallisen sekunnin jälkeen.",
+            "Ennätys tallennetaan pöytäkohtaisesti, ja yhden pelin pistemäärä lasketaan ennätykseksi."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "keilailu",
+        "strike",
+        "spare",
+        "keilat",
+        "frame",
+        "kierre",
+        "hook",
+        "rata",
+        "kouru"
+      ],
+      "sections": [
+        {
+          "h": "Näin pelataan",
+          "body": [
+            "Kymmenen framea virallisilla säännöillä: kaksi heittoa framea kohti, strike ja spare tuovat bonuspisteitä, ja kymmenennessä framessa on bonusheittoja. Suurin mahdollinen tulos on 300.",
+            "Otsikon alla oleva tuloskortti näyttää kaikki kymmenen framea heittoineen (X, /, -) ja juoksevan summan.",
+            "Kaksinpelissä pelaajat vuorottelevat frame kerrallaan."
+          ]
+        },
+        {
+          "h": "Heitto neljässä vaiheessa",
+          "body": [
+            "1. Sijainti virherajalla, 2. tähtäyskulma, 3. kierre (vasemmalle tai oikealle), 4. voima.",
+            "Jokainen säädin heiluu itsestään; toimintonäppäin tai klikkaus lukitsee sen.",
+            "Vasen/oikea antaa säätää sen käsin - heilunta pysähtyy silloin."
+          ]
+        },
+        {
+          "h": "Kierre ja öljy",
+          "body": [
+            "Rata on edestä öljytty: kierre puree vasta viimeisellä kolmanneksella ja vetää pallon taskuun keilojen 1 ja 3 väliin.",
+            "Radalta sivuun ajautuva pallo päätyy kouruun - se heitto laskee nollan.",
+            "Pro-tasolla säätimet heiluvat nopeammin ja rata hajottaa hieman enemmän; Helpolla kaikki on rauhallisempaa. [G] vaihtaa apuviivan."
+          ]
+        },
+        {
+          "h": "Keilat ja pisteet",
+          "body": [
+            "Kymmenen keilaa ovat ympyröitä, joilla on oikea massa: pallo osuu niihin ja ne kaatavat toisiaan. Strike on siis fysiikan eikä onnen tulos.",
+            "Pelin summa on ennätyksesi; lisäksi tallennetaan paras tulos kullakin vaikeustasolla."
+          ]
+        }
+      ]
     }
   ]
 }

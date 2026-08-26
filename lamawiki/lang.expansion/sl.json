@@ -1790,6 +1790,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "steza",
+        "par",
+        "hole in one",
+        "mlin na veter",
+        "voda",
+        "pesek",
+        "klančina",
+        "igrišče",
+        "udarec"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Minigolf na 18 ročno zgrajenih stezah. Igrišče Classic te nežno uvede, Pro doda otoški green, dvojni mlin in tavajoče bloke, Random pa izžreba devet stez iz obeh igrišč in jih naključno zrcali.",
+            "Cilj je spraviti žogico v luknjo s čim manj udarci. Po osmih udarcih se žogica pobere in steza šteje najmanj.",
+            "V dvoje vsak igra isto stezo po vrsti; kartica na desni prikazuje par in oba rezultata."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- S premikom miške ciljaš. Držanje leve tipke polni moč, spust udari.",
+            "- Puščici levo/desno ciljata, gor/dol nastavljata moč, [Preslednica] udari.",
+            "- [G] vklopi in izklopi ciljno črto - trajno jo lahko izklopiš v nastavitvah."
+          ]
+        },
+        {
+          "h": "Ovire",
+          "body": [
+            "- Pesek močno zavira, klančine pospešujejo v smeri puščic.",
+            "- Voda stane kazenski udarec; žogica se vrne na zadnje varno mesto.",
+            "- Gumijasti odbijači vračajo hitrost; mlini in tavajoči bloki zahtevajo občutek za čas."
+          ]
+        },
+        {
+          "h": "Točke",
+          "body": [
+            "Vsaka steza da 600 točk in še 300 za vsak udarec pod par (ter 300 manj za vsakega nad par, nikoli manj kot 100).",
+            "Hole in one prinese dodatnih 500 točk. Vsota vseh stez je tvoj rekord; poleg tega se shrani najnižje število udarcev na vsakem igrišču."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipper",
+        "multiball",
+        "odbijač",
+        "tilt",
+        "miza",
+        "jackpot",
+        "tarča",
+        "past",
+        "sunek"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Pinball avtomat s tremi mizami: Classic s tremi odbijači in eno vrsto tarč, Space s štirimi odbijači v rombu in dvema vrstama, Lama z odprtim poljem in šestimi tarčami v loku.",
+            "Vsaka igra da 3 ali 5 krogel. Po izstrelitvi šest sekund teče rešitev krogle: če se krogla v tem času izgubi, se vrne v izstrelitveni kanal.",
+            "V dvoje se igralca menjata po kroglah; točke stojijo ena pod drugo v informacijskem stolpcu."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Drži tipko za dejanje (privzeto [Preslednica]) in napni izstrelitev, spust izstreli. Prešibko? Krogla se vrne in lahko poskusiš znova.",
+            "- Levo/desno (tudi levi/desni [Shift]) upravljata loparja. Z miško: leva polovica slike = levi lopar.",
+            "- Tipka gor sune mizo. Trije sunki prehitro zapored dajo TILT - loparja sta mrtva do izgube krogle."
+          ]
+        },
+        {
+          "h": "Točke in multiball",
+          "body": [
+            "Odbijači dajo 100, slingshoti 50 in tarče 250 - vse krat trenutni množitelj (do x5).",
+            "Popolnoma podrta vrsta tarč ali vse štiri steze L-A-M-A dvignejo množitelj za ena.",
+            "Tri krogle, ujete v past, sprožijo multiball: tri krogle hkrati, odbijači pa plačajo jackpot 2.500 točk."
+          ]
+        },
+        {
+          "h": "Namigi",
+          "body": [
+            "Informacijski stolpec na desni kaže množitelj, ujete krogle, podrte vrste in preostalo rešitev krogle.",
+            "Sunek reši kroglo tik pred izgubo - a varčno: števec se ponastavi šele po štirih mirnih sekundah.",
+            "Rekord se shrani za vsako mizo posebej, točke ene igre pa štejejo kot najboljši rezultat."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "kegljanje",
+        "strike",
+        "spare",
+        "keglji",
+        "frame",
+        "vrtenje",
+        "hook",
+        "steza",
+        "žleb"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Deset framov po uradnih pravilih: dva meta na frame, strike in spare prinašata dodatne točke, v desetem framu pa so bonus meti. Največ je 300.",
+            "Kartica tik pod glavo prikazuje vseh deset framov z meti (X, /, -) in tekočo vsoto.",
+            "V dvoje se igralca menjata po framih."
+          ]
+        },
+        {
+          "h": "Met v štirih korakih",
+          "body": [
+            "1. Položaj na črti, 2. kot merjenja, 3. vrtenje (v levo ali desno), 4. moč.",
+            "Vsak drsnik niha sam; tipka za dejanje ali klik ga zaklene.",
+            "Z levo/desno ga lahko nastaviš ročno - nihanje se takrat ustavi."
+          ]
+        },
+        {
+          "h": "Vrtenje in olje",
+          "body": [
+            "Steza je spredaj naoljena: vrtenje prime šele v zadnji tretjini in takrat potegne kroglo v žep med kegljema 1 in 3.",
+            "Krogla, ki zapelje ob stran, konča v žlebu - tak met šteje nič.",
+            "Na Pro drsniki nihajo hitreje in steza malo bolj raztresa; na Lahki je vse mirneje. [G] preklopi pomožno črto."
+          ]
+        },
+        {
+          "h": "Keglji in točke",
+          "body": [
+            "Deset kegljev so krogi s pravo maso: krogla jih zadene, oni pa podirajo drug drugega. Strike je torej rezultat fizike in ne sreče.",
+            "Vsota igre je tvoj rekord; poleg tega se shrani najboljši rezultat za vsako težavnost."
+          ]
+        }
+      ]
     }
   ]
 }

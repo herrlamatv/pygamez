@@ -1787,6 +1787,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golfe",
+        "buraco",
+        "par",
+        "buraco em um",
+        "moinho",
+        "água",
+        "areia",
+        "rampa",
+        "percurso",
+        "putt"
+      ],
+      "sections": [
+        {
+          "h": "Como se joga",
+          "body": [
+            "Minigolf em 18 buracos feitos à mão. O percurso Classic serve de entrada suave, o Pro traz um green em ilha, um moinho duplo e blocos móveis, e o Random sorteia nove buracos dos dois percursos e espelha-os ao acaso.",
+            "O objetivo é encaçapar a bola com o menor número de tacadas. Ao fim de oito tacadas a bola é levantada e o buraco conta o mínimo.",
+            "A dois, cada um joga o mesmo buraco à vez; o cartão à direita mostra o par e os dois resultados."
+          ]
+        },
+        {
+          "h": "Comandos",
+          "body": [
+            "- Move o rato para apontar. Mantém o botão esquerdo para carregar força e larga para bater.",
+            "- As setas esquerda/direita apontam, cima/baixo regulam a força, [Espaço] bate.",
+            "- [G] liga e desliga a linha de mira - também podes desativá-la nos ajustes."
+          ]
+        },
+        {
+          "h": "Obstáculos",
+          "body": [
+            "- A areia trava muito, as rampas aceleram no sentido das setas.",
+            "- A água custa uma tacada de penalização; a bola volta à última posição segura.",
+            "- Os para-choques de borracha devolvem velocidade; moinhos e blocos móveis exigem sentido de tempo."
+          ]
+        },
+        {
+          "h": "Pontos",
+          "body": [
+            "Cada buraco vale 600 pontos mais 300 por cada tacada abaixo do par (e 300 a menos por cada tacada acima, nunca abaixo de 100).",
+            "Um buraco em um dá 500 pontos extra. A soma de todos os buracos é o teu recorde; além disso guarda-se o menor número de tacadas por percurso."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipper",
+        "multibola",
+        "bumper",
+        "tilt",
+        "mesa",
+        "jackpot",
+        "alvo",
+        "saucer",
+        "empurrão"
+      ],
+      "sections": [
+        {
+          "h": "Como se joga",
+          "body": [
+            "Uma máquina de pinball com três mesas: Classic com três bumpers e um conjunto de alvos, Space com quatro bumpers em losango e dois conjuntos, Lama com campo aberto e seis alvos em arco.",
+            "Cada jogo dá 3 ou 5 bolas. Depois do lançamento corre um salva-bolas de seis segundos: se a bola se perder nesse tempo, volta ao corredor de lançamento.",
+            "A dois, os jogadores alternam bola a bola; as pontuações ficam uma debaixo da outra na coluna de informação."
+          ]
+        },
+        {
+          "h": "Comandos",
+          "body": [
+            "- Mantém a tecla de ação ([Espaço] por omissão) para carregar o lançador e larga para disparar. Fraco demais? A bola volta e podes repetir.",
+            "- Esquerda/direita (e também [Shift] esquerdo/direito) acionam os flippers. Com o rato: metade esquerda do ecrã = flipper esquerdo.",
+            "- A tecla cima empurra a mesa. Três empurrões demasiado seguidos dão TILT - os flippers ficam mortos até perder a bola."
+          ]
+        },
+        {
+          "h": "Pontos e multibola",
+          "body": [
+            "Os bumpers valem 100, os slingshots 50 e os alvos 250 - tudo vezes o multiplicador atual (até x5).",
+            "Derrubar um conjunto completo de alvos ou reunir os quatro corredores L-A-M-A sobe o multiplicador em um.",
+            "Três bolas presas no saucer iniciam a multibola: três bolas ao mesmo tempo e os bumpers pagam um jackpot de 2.500 pontos."
+          ]
+        },
+        {
+          "h": "Dicas",
+          "body": [
+            "A coluna à direita mostra o multiplicador, as bolas presas, os conjuntos derrubados e o salva-bolas restante.",
+            "Um empurrão salva bolas perdidas, mas usa-o com conta: o contador só volta a zero após quatro segundos calmos.",
+            "O recorde é guardado por mesa e a pontuação de um jogo conta como melhor marca."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "strike",
+        "spare",
+        "pinos",
+        "frame",
+        "efeito",
+        "hook",
+        "pista",
+        "canaleta",
+        "pocket"
+      ],
+      "sections": [
+        {
+          "h": "Como se joga",
+          "body": [
+            "Dez frames pelas regras oficiais: dois lançamentos por frame, strikes e spares dão pontos de bónus e o décimo frame dá lançamentos extra. O máximo é 300.",
+            "O cartão logo abaixo do cabeçalho mostra os dez frames com os lançamentos (X, /, -) e a soma corrente.",
+            "A dois, os jogadores alternam frame a frame."
+          ]
+        },
+        {
+          "h": "O lançamento em quatro passos",
+          "body": [
+            "1. Posição na linha de falta, 2. ângulo de mira, 3. efeito (para a esquerda ou direita), 4. força.",
+            "Cada régua oscila sozinha; a tecla de ação ou um clique fixa-a.",
+            "Com esquerda/direita podes ajustá-la à mão - a oscilação para nesse momento."
+          ]
+        },
+        {
+          "h": "Efeito e óleo",
+          "body": [
+            "A pista está oleada à frente: o efeito só agarra no último terço e puxa então a bola para a pocket entre os pinos 1 e 3.",
+            "Sair de lado manda a bola para a canaleta - esse lançamento conta zero.",
+            "Em Pro as réguas oscilam mais depressa e a pista dispersa um pouco mais; em Fácil tudo é mais calmo. [G] alterna a linha de ajuda."
+          ]
+        },
+        {
+          "h": "Pinos e pontos",
+          "body": [
+            "Os dez pinos são círculos com massa real: a bola atinge-os e eles derrubam-se uns aos outros. Um strike é resultado da física e não da sorte.",
+            "A soma do jogo é o teu recorde; além disso guarda-se o melhor resultado por dificuldade."
+          ]
+        }
+      ]
     }
   ]
 }

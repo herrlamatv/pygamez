@@ -147,6 +147,12 @@ DEFAULTS = {
     # Texturdetail der Minecraft-Optik (high/low/off)
     "blockjump": {"view": "first", "blur": 0.35, "sens": 1.0,
                   "mouse_invert": False, "textures": "high"},
+    # Minigolf: Kurs (classic/pro/random) und Ziellinie an/aus
+    "minigolf": {"course": "classic", "guide": True},
+    # Pinball: Tisch (classic/space/lama) und Bälle je Partie (3/5)
+    "pinball": {"table": "classic", "balls": 3},
+    # Bowling: Schwierigkeit (easy/normal/pro) und Zielhilfe an/aus
+    "bowling": {"difficulty": "normal", "guide": True},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -328,6 +334,24 @@ def _merge_defaults(data):
                 out["blockjump"]["mouse_invert"] = blj["mouse_invert"]
             if blj.get("textures") in ("high", "low", "off"):
                 out["blockjump"]["textures"] = blj["textures"]
+        mg = data.get("minigolf")
+        if isinstance(mg, dict):
+            if mg.get("course") in ("classic", "pro", "random"):
+                out["minigolf"]["course"] = mg["course"]
+            if isinstance(mg.get("guide"), bool):
+                out["minigolf"]["guide"] = mg["guide"]
+        pin = data.get("pinball")
+        if isinstance(pin, dict):
+            if pin.get("table") in ("classic", "space", "lama"):
+                out["pinball"]["table"] = pin["table"]
+            if pin.get("balls") in (3, 5):
+                out["pinball"]["balls"] = pin["balls"]
+        bow = data.get("bowling")
+        if isinstance(bow, dict):
+            if bow.get("difficulty") in ("easy", "normal", "pro"):
+                out["bowling"]["difficulty"] = bow["difficulty"]
+            if isinstance(bow.get("guide"), bool):
+                out["bowling"]["guide"] = bow["guide"]
         ctrl = data.get("controls")
         if isinstance(ctrl, dict):
             for player in ("p1", "p2"):

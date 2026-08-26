@@ -116,6 +116,9 @@ MILESTONES = {
     "hangman": 150,        # mehrere Wörter in Folge
     "blockjump": 3000,     # einige Level geschafft
     "lamatowerdef": 10000,     # ~Welle 18-20 auf der Wiese (Klassisch)
+    "minigolf": 5000,      # eine Runde deutlich unter Par gespielt
+    "pinball": 25000,      # solide Partie mit Multiplikator
+    "bowling": 120,        # ordentliches Spiel mit ein paar Spares
 }
 
 # Besondere Momente: (id, icon, highscore_key, target).
@@ -146,6 +149,12 @@ SPECIALS = [
     ("td_wave20",      "flag",  "lamatowerdef",    None),   # Welle 20 geschafft
     ("td_perfect10",   "heart", "lamatowerdef",    None),   # Welle 10 ohne Verlust
     ("td_maxed",       "gem",   "lamatowerdef",    None),   # Turm voll ausgebaut
+    ("golf_ace",       "star",  "minigolf",    None),   # Hole-in-One
+    ("golf_under_par", "check", "minigolf",    None),   # Runde unter Par
+    ("pin_multiball",  "gem",   "pinball",     None),   # Multiball gestartet
+    ("pin_high",       "crown", "pinball",     50000),  # 50.000 in einer Partie
+    ("bowl_turkey",    "flag",  "bowling",     None),   # drei Strikes in Folge
+    ("bowl_200",       "crown", "bowling",     200),    # 200er-Spiel
 ]
 
 _unlocked = None      # {id: "YYYY-MM-DD HH:MM"} (In-Memory-Kopie)

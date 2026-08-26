@@ -1790,6 +1790,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "hull",
+        "par",
+        "hole in one",
+        "vindmølle",
+        "vann",
+        "sand",
+        "rampe",
+        "bane",
+        "putt"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Minigolf på 18 håndlagde baner. Banen Classic er en myk start, Pro gir øygreen, dobbel vindmølle og vandrende klosser, og Random trekker ni baner fra begge og speiler dem tilfeldig.",
+            "Målet er å få ballen i hullet på færrest mulig slag. Etter åtte slag plukkes ballen opp, og hullet teller minimum.",
+            "For to spillere spiller begge den samme banen etter tur; scorekortet til høyre viser par og begge resultater."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Beveg musa for å sikte. Hold venstre museknapp for å lade kraften, slipp for å slå.",
+            "- Venstre/høyre pil sikter, opp/ned stiller kraften, [Mellomrom] slår.",
+            "- [G] slår siktelinjen av og på - den kan også skrus av permanent i oppsettet."
+          ]
+        },
+        {
+          "h": "Hindringer",
+          "body": [
+            "- Sand bremser kraftig, ramper akselererer i pilenes retning.",
+            "- Vann koster et straffeslag; ballen går tilbake til siste trygge sted.",
+            "- Gummistøtfangere gir fart tilbake; vindmøller og vandrende klosser krever timing."
+          ]
+        },
+        {
+          "h": "Poeng",
+          "body": [
+            "Hver bane gir 600 poeng pluss 300 for hvert slag under par (og 300 mindre for hvert slag over, aldri under 100).",
+            "Hole in one gir 500 poeng ekstra. Summen av alle baner er rekorden din; i tillegg lagres laveste slagtall per bane."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipper",
+        "multiball",
+        "bumper",
+        "tilt",
+        "bord",
+        "jackpot",
+        "mål",
+        "fanger",
+        "dytt"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "En flipperautomat med tre bord: Classic med tre bumpere og én rekke mål, Space med fire bumpere i rombe og to rekker, Lama med åpen bane og seks mål i en bue.",
+            "Hvert spill gir 3 eller 5 kuler. Etter utskytingen går en kuleredning i seks sekunder: mister du kula i det vinduet, kommer den rett tilbake til utskytingsbanen.",
+            "For to spillere veksler man kule for kule; poengene står under hverandre i infokolonnen."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Hold handlingstasten ([Mellomrom] som standard) for å spenne utskyteren, slipp for å skyte. For svakt? Kula ruller tilbake, og du får prøve igjen.",
+            "- Venstre/høyre (også venstre/høyre [Shift]) styrer flipperne. Med musa: venstre halvdel av bildet = venstre flipper.",
+            "- Opp-tasten dytter bordet. Tre dytt for raskt etter hverandre gir TILT - flipperne er døde til kula forsvinner."
+          ]
+        },
+        {
+          "h": "Poeng og multiball",
+          "body": [
+            "Bumpere gir 100, slingshots 50 og mål 250 - alt ganger gjeldende multiplikator (opptil x5).",
+            "En helt ryddet målrekke eller alle fire L-A-M-A-banene hever multiplikatoren med én.",
+            "Tre kuler låst i fangeren starter multiball: tre kuler samtidig, og bumperne betaler en jackpot på 2 500 poeng."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "Infokolonnen til høyre viser multiplikator, låste kuler, ryddede rekker og gjenstående kuleredning.",
+            "Et dytt redder en kule på vei ned - men bruk det sparsomt: telleren nullstilles først etter fire rolige sekunder.",
+            "Rekorden lagres per bord, og poengsummen i et spill teller som beste resultat."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "strike",
+        "spare",
+        "kjegler",
+        "frame",
+        "skru",
+        "hook",
+        "bane",
+        "renne",
+        "pocket"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Ti frames etter de offisielle reglene: to kast per frame, strike og spare gir bonuspoeng, og tiende frame gir bonuskast. Maksimum er 300.",
+            "Scorekortet rett under overskriften viser alle ti frames med kast (X, /, -) og løpende sum.",
+            "For to spillere veksler man frame for frame."
+          ]
+        },
+        {
+          "h": "Kastet i fire trinn",
+          "body": [
+            "1. Posisjon ved fellinjen, 2. siktevinkel, 3. skru (til venstre eller høyre), 4. kraft.",
+            "Hver glider svinger av seg selv; handlingstasten eller et klikk låser den.",
+            "Med venstre/høyre kan du i stedet stille den for hånd - da stopper svingingen."
+          ]
+        },
+        {
+          "h": "Skru og olje",
+          "body": [
+            "Banen er oljet fremst: skruen griper først i siste tredjedel og trekker da kula inn i pocketen mellom kjegle 1 og 3.",
+            "Går kula ut til siden, havner den i renna - det kastet teller null.",
+            "På Pro svinger gliderne raskere og banen sprer litt mer; på Lett er alt roligere. [G] veksler hjelpelinjen."
+          ]
+        },
+        {
+          "h": "Kjegler og poeng",
+          "body": [
+            "De ti kjeglene er sirkler med ekte masse: kula treffer dem, og de velter hverandre. En strike er altså fysikk og ikke flaks.",
+            "Summen i spillet er rekorden din; i tillegg lagres beste resultat per vanskelighetsgrad."
+          ]
+        }
+      ]
     }
   ]
 }

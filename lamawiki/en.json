@@ -1791,6 +1791,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "hole",
+        "par",
+        "hole in one",
+        "windmill",
+        "water",
+        "sand",
+        "ramp",
+        "course",
+        "putting"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Minigolf across 18 hand-built holes. The Classic course eases you in, Pro adds an island green, a double windmill and moving blocks, and Random draws nine holes from both courses and mirrors them at random.",
+            "The goal is to sink the ball in as few strokes as possible. After eight strokes the ball is picked up and the hole is scored at the minimum.",
+            "In two-player mode each player takes the same hole one after the other; the scorecard on the right shows par and both results."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Move the mouse to aim. Hold the left mouse button to load power, release to putt.",
+            "- Left/right arrows aim, up/down set the power, [Space] putts.",
+            "- [G] toggles the aim line - you can also switch it off for good in the setup screen."
+          ]
+        },
+        {
+          "h": "Obstacles",
+          "body": [
+            "- Sand slows the ball down hard, ramps accelerate in the direction of the arrows.",
+            "- Water costs a penalty stroke; the ball returns to its last safe spot.",
+            "- Rubber bumpers give speed back; windmills and moving blocks are all about timing."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Every hole is worth 600 points plus 300 for each stroke under par (and 300 less for each stroke over, never below 100).",
+            "A hole in one adds 500 points. The sum of all holes is your high score; the lowest stroke count per course is stored on top of that."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipper",
+        "multiball",
+        "bumper",
+        "tilt",
+        "table",
+        "jackpot",
+        "target",
+        "saucer",
+        "nudge"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "A pinball machine with three tables: Classic with three pop bumpers and one drop target bank, Space with four bumpers in a diamond and two banks, Lama with an open playfield and six targets in an arc.",
+            "Each game gives you 3 or 5 balls. After the launch a six second ball save runs: lose the ball in that window and it comes straight back to the shooter lane.",
+            "In two-player mode both players alternate ball by ball; the scores sit below each other in the info column."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Hold the action key ([Space] by default) to load the plunger, release to launch. Pulled too softly? The ball rolls back and you may shoot again.",
+            "- Left/right (plus left/right [Shift]) work the flippers. With the mouse: left half of the screen = left flipper, right half = right flipper.",
+            "- The up key nudges the table. Three nudges in quick succession trigger TILT - the flippers stay dead until the ball drains."
+          ]
+        },
+        {
+          "h": "Points and multiball",
+          "body": [
+            "Pop bumpers score 100, slingshots 50 and drop targets 250 - all times the current multiplier (up to x5).",
+            "Clearing a full target bank or collecting all four L-A-M-A lanes raises the multiplier by one.",
+            "Three balls locked in the saucer start multiball: three balls at once, and the bumpers pay a 2,500 point jackpot."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "The info column on the right shows the multiplier, locked balls, cleared banks and the remaining ball save time.",
+            "A nudge saves a ball that is about to drain - but use it sparingly: the counter only resets after four quiet seconds.",
+            "The best result is stored per table, and the score of a game counts as your high score."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "strike",
+        "spare",
+        "pins",
+        "frame",
+        "hook",
+        "spin",
+        "lane",
+        "gutter",
+        "pocket"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Ten frames by the official rules: two rolls per frame, strikes and spares earn bonus points, and the tenth frame grants bonus balls. The maximum is a 300 game.",
+            "The scorecard right below the header shows all ten frames with their rolls (X, /, -) and the running total.",
+            "In two-player mode both players alternate frame by frame."
+          ]
+        },
+        {
+          "h": "The four-step delivery",
+          "body": [
+            "1. Position on the foul line, 2. aiming angle, 3. spin (hook left or right), 4. power.",
+            "Every slider swings on its own; the action key or a click locks it in.",
+            "Left/right let you set a slider by hand instead - the swinging stops as soon as you do."
+          ]
+        },
+        {
+          "h": "Spin and oil",
+          "body": [
+            "The lane is oiled up front: the hook only bites in the last third and then pulls the ball into the pocket between pins 1 and 3.",
+            "Leave the lane sideways and the ball drops into the gutter - that roll counts zero.",
+            "On Pro the sliders swing faster and the lane scatters a little more; on Easy everything is calmer. [G] toggles the guide line."
+          ]
+        },
+        {
+          "h": "Pins and points",
+          "body": [
+            "The ten pins are circles with real mass: the ball hits them, they knock each other over. A strike is the result of physics, not of luck.",
+            "The game total is your high score; the best result per difficulty is stored as well."
+          ]
+        }
+      ]
     }
   ]
 }

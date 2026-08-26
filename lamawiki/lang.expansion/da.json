@@ -1790,6 +1790,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "hul",
+        "par",
+        "hole in one",
+        "vindmølle",
+        "vand",
+        "sand",
+        "rampe",
+        "bane",
+        "putt"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spilles der",
+          "body": [
+            "Minigolf på 18 håndbyggede baner. Banen Classic er en blid start, Pro giver ø-green, dobbelt vindmølle og vandrende klodser, og Random trækker ni baner fra begge og spejlvender dem tilfældigt.",
+            "Målet er at få bolden i hul på så få slag som muligt. Efter otte slag samles bolden op, og hullet tæller minimum.",
+            "Til to spiller man den samme bane efter hinanden; scorekortet til højre viser par og begge resultater."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Bevæg musen for at sigte. Hold venstre museknap for at lade kraften, slip for at slå.",
+            "- Venstre/højre pil sigter, op/ned styrer kraften, [Mellemrum] slår.",
+            "- [G] slår sigtelinjen til og fra - den kan også slukkes permanent i opsætningen."
+          ]
+        },
+        {
+          "h": "Forhindringer",
+          "body": [
+            "- Sand bremser kraftigt, ramper accelererer i pilenes retning.",
+            "- Vand koster et strafslag; bolden vender tilbage til sin sidste sikre position.",
+            "- Gummibumpere giver fart tilbage; vindmøller og vandrende klodser kræver timing."
+          ]
+        },
+        {
+          "h": "Point",
+          "body": [
+            "Hver bane giver 600 point plus 300 for hvert slag under par (og 300 mindre for hvert slag over, dog aldrig under 100).",
+            "Hole in one giver 500 point ekstra. Summen af alle baner er din rekord; derudover gemmes det laveste antal slag pr. bane."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipper",
+        "multiball",
+        "bumper",
+        "tilt",
+        "bord",
+        "jackpot",
+        "mål",
+        "fanger",
+        "puf"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spilles der",
+          "body": [
+            "En flippermaskine med tre borde: Classic med tre bumpere og én række mål, Space med fire bumpere i rombe og to rækker, Lama med åbent felt og seks mål i en bue.",
+            "Hvert spil giver 3 eller 5 kugler. Efter udskydningen kører en kugleredning i seks sekunder: mistes kuglen i det tidsrum, kommer den tilbage til udskyderbanen.",
+            "Til to skiftes spillerne kugle for kugle; pointene står under hinanden i infokolonnen."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Hold handlingstasten ([Mellemrum] som standard) for at spænde udskyderen, slip for at skyde. For svagt? Kuglen ruller tilbage, og du må prøve igen.",
+            "- Venstre/højre (også venstre/højre [Shift]) styrer flipperne. Med musen: venstre halvdel af billedet = venstre flipper.",
+            "- Op-tasten puffer til bordet. Tre puf for hurtigt efter hinanden giver TILT - flipperne er døde, indtil kuglen ryger ned."
+          ]
+        },
+        {
+          "h": "Point og multiball",
+          "body": [
+            "Bumpere giver 100, slingshots 50 og mål 250 - alt gange den aktuelle multiplikator (op til x5).",
+            "En helt ryddet målrække eller alle fire L-A-M-A-baner hæver multiplikatoren med én.",
+            "Tre kugler fanget i hullet starter multiball: tre kugler på én gang, og bumperne betaler en jackpot på 2.500 point."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "Infokolonnen til højre viser multiplikator, fangede kugler, ryddede rækker og den resterende kugleredning.",
+            "Et puf redder en kugle på vej ned - men brug det sparsomt: tælleren nulstilles først efter fire rolige sekunder.",
+            "Rekorden gemmes pr. bord, og pointene fra et spil tæller som bedste resultat."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "strike",
+        "spare",
+        "kegler",
+        "frame",
+        "skrue",
+        "hook",
+        "bane",
+        "rende",
+        "pocket"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spilles der",
+          "body": [
+            "Ti frames efter de officielle regler: to kast pr. frame, strike og spare giver bonuspoint, og tiende frame giver bonuskast. Maksimum er 300.",
+            "Scorekortet lige under overskriften viser alle ti frames med kast (X, /, -) og løbende sum.",
+            "Til to skiftes spillerne frame for frame."
+          ]
+        },
+        {
+          "h": "Kastet i fire trin",
+          "body": [
+            "1. Position ved fejllinjen, 2. sigtevinkel, 3. skrue (til venstre eller højre), 4. kraft.",
+            "Hver skyder svinger af sig selv; handlingstasten eller et klik låser den fast.",
+            "Med venstre/højre kan du i stedet indstille den i hånden - så stopper svingningen."
+          ]
+        },
+        {
+          "h": "Skrue og olie",
+          "body": [
+            "Banen er olieret forrest: skruen griber først i den sidste tredjedel og trækker så kuglen ind i pocket mellem kegle 1 og 3.",
+            "Kører kuglen ud til siden, ender den i renden - det kast tæller nul.",
+            "På Pro svinger skyderne hurtigere, og banen spreder lidt mere; på Let er alt roligere. [G] skifter hjælpelinjen."
+          ]
+        },
+        {
+          "h": "Kegler og point",
+          "body": [
+            "De ti kegler er cirkler med rigtig masse: kuglen rammer dem, og de vælter hinanden. En strike er altså fysik og ikke held.",
+            "Spillets sum er din rekord; derudover gemmes det bedste resultat pr. sværhedsgrad."
+          ]
+        }
+      ]
     }
   ]
 }

@@ -1789,6 +1789,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "trou",
+        "par",
+        "trou en un",
+        "moulin",
+        "eau",
+        "sable",
+        "rampe",
+        "parcours",
+        "putting"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Du minigolf sur 18 trous construits à la main. Le parcours Classic sert d'entrée en matière, Pro ajoute un green en île, une double éolienne et des blocs mobiles, et Random tire neuf trous des deux parcours en les inversant au hasard.",
+            "Le but est de rentrer la balle en le moins de coups possible. Après huit coups la balle est relevée et le trou est compté au minimum.",
+            "À deux, chacun joue le même trou l'un après l'autre ; la carte de score à droite montre le par et les deux résultats."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Bouge la souris pour viser. Maintiens le clic gauche pour charger la puissance, relâche pour jouer.",
+            "- Les flèches gauche/droite visent, haut/bas règlent la puissance, [Espace] joue le coup.",
+            "- [G] affiche ou masque la ligne de visée - tu peux aussi la couper dans l'écran de réglages."
+          ]
+        },
+        {
+          "h": "Obstacles",
+          "body": [
+            "- Le sable freine fortement, les rampes accélèrent dans le sens des flèches.",
+            "- L'eau coûte un coup de pénalité ; la balle revient à sa dernière position sûre.",
+            "- Les pare-chocs en caoutchouc renvoient de la vitesse ; moulins et blocs mobiles demandent du timing."
+          ]
+        },
+        {
+          "h": "Points",
+          "body": [
+            "Chaque trou vaut 600 points, plus 300 par coup sous le par (et 300 de moins par coup au-dessus, jamais moins de 100).",
+            "Un trou en un rapporte 500 points de plus. La somme de tous les trous est ton record ; le nombre de coups le plus bas par parcours est enregistré en plus."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipper",
+        "multibille",
+        "bumper",
+        "tilt",
+        "table",
+        "jackpot",
+        "cible",
+        "verrou",
+        "secousse"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Un flipper avec trois tables : Classic avec trois bumpers et une série de cibles, Space avec quatre bumpers en losange et deux séries, Lama avec un plateau ouvert et six cibles en arc.",
+            "Chaque partie donne 3 ou 5 billes. Après le lancement, une sauvegarde de six secondes tourne : si la bille se perd pendant ce temps, elle revient dans le couloir de lancement.",
+            "À deux, les joueurs alternent bille par bille ; les scores s'affichent l'un sous l'autre dans la colonne d'infos."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Maintiens la touche d'action ([Espace] par défaut) pour armer le lanceur, relâche pour tirer. Trop faible ? La bille redescend et tu peux recommencer.",
+            "- Gauche/droite (et aussi [Shift] gauche/droite) actionnent les flippers. À la souris : moitié gauche de l'écran = flipper gauche.",
+            "- La touche haut secoue la table. Trois secousses trop rapprochées déclenchent le TILT - les flippers restent morts jusqu'à la perte de la bille."
+          ]
+        },
+        {
+          "h": "Points et multibille",
+          "body": [
+            "Les bumpers valent 100, les slingshots 50 et les cibles 250 - le tout multiplié par le multiplicateur en cours (jusqu'à x5).",
+            "Abattre une série complète de cibles ou réunir les quatre couloirs L-A-M-A augmente le multiplicateur de un.",
+            "Trois billes verrouillées dans le trou lancent le multibille : trois billes à la fois, et les bumpers paient un jackpot de 2 500 points."
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "La colonne d'infos à droite montre le multiplicateur, les billes verrouillées, les séries abattues et le temps de sauvegarde restant.",
+            "Une secousse sauve une bille perdue - mais avec modération : le compteur ne revient à zéro qu'après quatre secondes de calme.",
+            "Le record est gardé par table, et le score d'une partie compte comme meilleur score."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "strike",
+        "spare",
+        "quilles",
+        "frame",
+        "effet",
+        "hook",
+        "piste",
+        "dalot",
+        "pocket"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Dix frames selon les règles officielles : deux lancers par frame, strikes et spares rapportent des points bonus, et le dixième frame donne des lancers supplémentaires. Le maximum est 300.",
+            "La feuille de score juste sous l'en-tête montre les dix frames avec leurs lancers (X, /, -) et le total courant.",
+            "À deux, les joueurs alternent frame par frame."
+          ]
+        },
+        {
+          "h": "Le lancer en quatre étapes",
+          "body": [
+            "1. Position sur la ligne de faute, 2. angle de visée, 3. effet (à gauche ou à droite), 4. puissance.",
+            "Chaque curseur oscille tout seul ; la touche d'action ou un clic le fixe.",
+            "Gauche/droite permettent de le régler à la main - l'oscillation s'arrête alors."
+          ]
+        },
+        {
+          "h": "Effet et huile",
+          "body": [
+            "La piste est huilée à l'avant : l'effet ne mord que dans le dernier tiers et tire alors la boule dans la pocket entre les quilles 1 et 3.",
+            "Sortir latéralement de la piste envoie la boule dans le dalot - ce lancer compte zéro.",
+            "En Pro les curseurs oscillent plus vite et la piste disperse un peu plus ; en Facile tout est plus calme. [G] bascule la ligne d'aide."
+          ]
+        },
+        {
+          "h": "Quilles et points",
+          "body": [
+            "Les dix quilles sont des cercles avec une vraie masse : la boule les percute, elles se renversent entre elles. Un strike est donc le résultat de la physique, pas de la chance.",
+            "Le total de la partie est ton record ; le meilleur résultat par difficulté est aussi enregistré."
+          ]
+        }
+      ]
     }
   ]
 }

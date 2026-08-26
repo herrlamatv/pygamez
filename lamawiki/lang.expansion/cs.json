@@ -1790,6 +1790,161 @@
           ]
         }
       ]
+    },
+    {
+      "id": "minigolf",
+      "category": "games",
+      "game": "MiniGolfGame",
+      "title": "Minigolf",
+      "keywords": [
+        "minigolf",
+        "golf",
+        "dráha",
+        "par",
+        "hole in one",
+        "větrný mlýn",
+        "voda",
+        "písek",
+        "rampa",
+        "hřiště",
+        "patování"
+      ],
+      "sections": [
+        {
+          "h": "Jak se hraje",
+          "body": [
+            "Minigolf na 18 ručně postavených drahách. Hřiště Classic uvádí do hry jemně, Pro přidává ostrovní green, dvojitý mlýn a bloudící bloky a Random vylosuje devět drah z obou hřišť a náhodně je zrcadlí.",
+            "Cílem je dostat míček do jamky na co nejméně úderů. Po osmi úderech se míček zvedá a dráha se počítá za minimum.",
+            "Ve dvou hraje každý stejnou dráhu po sobě; karta vpravo ukazuje par i oba výsledky."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Pohybem myši miř. Držení levého tlačítka nabíjí sílu, puštění odpálí.",
+            "- Šipky vlevo/vpravo míří, nahoru/dolů nastavují sílu, [Mezerník] odpálí.",
+            "- [G] zapíná a vypíná zaměřovací čáru - trvale ji lze vypnout v nastavení."
+          ]
+        },
+        {
+          "h": "Překážky",
+          "body": [
+            "- Písek silně brzdí, rampy zrychlují ve směru šipek.",
+            "- Voda stojí trestný úder; míček se vrací na poslední bezpečné místo.",
+            "- Gumové odrazníky vracejí rychlost; mlýny a bloudící bloky vyžadují načasování."
+          ]
+        },
+        {
+          "h": "Body",
+          "body": [
+            "Každá dráha dává 600 bodů a k tomu 300 za každý úder pod par (a 300 méně za každý nad par, nikdy méně než 100).",
+            "Hole in one přidává 500 bodů. Součet všech drah je tvůj rekord; navíc se ukládá nejnižší počet úderů na každém hřišti."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pinball",
+      "category": "games",
+      "game": "PinballGame",
+      "title": "Pinball",
+      "keywords": [
+        "pinball",
+        "flipper",
+        "multiball",
+        "bumper",
+        "tilt",
+        "stůl",
+        "jackpot",
+        "terč",
+        "past",
+        "šťouch"
+      ],
+      "sections": [
+        {
+          "h": "Jak se hraje",
+          "body": [
+            "Pinballový automat se třemi stoly: Classic se třemi bumpery a jednou řadou terčů, Space se čtyřmi bumpery v kosočtverci a dvěma řadami, Lama s otevřeným polem a šesti terči v oblouku.",
+            "Každá hra dává 3 nebo 5 koulí. Po výstřelu běží šest sekund záchrana koule: pokud se koule v té době ztratí, vrací se rovnou do odpalovací dráhy.",
+            "Ve dvou se hráči střídají po koulích; body stojí pod sebou v informačním sloupci."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Podrž akční klávesu (standardně [Mezerník]) a natáhni odpalovač, puštěním vystřelíš. Příliš slabě? Koule se vrátí a smíš to zkusit znovu.",
+            "- Vlevo/vpravo (a také levý/pravý [Shift]) ovládají pálky. Myší: levá polovina obrazu = levá pálka.",
+            "- Klávesa nahoru šťouchne do stolu. Tři šťouchy příliš rychle po sobě znamenají TILT - pálky jsou mrtvé až do ztráty koule."
+          ]
+        },
+        {
+          "h": "Body a multiball",
+          "body": [
+            "Bumpery dávají 100, slingshoty 50 a terče 250 - vše krát aktuální násobitel (až x5).",
+            "Kompletně sražená řada terčů nebo všechny čtyři dráhy L-A-M-A zvyšují násobitel o jedna.",
+            "Tři koule uzamčené v pasti spustí multiball: tři koule najednou a bumpery platí jackpot 2 500 bodů."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "Informační sloupec vpravo ukazuje násobitel, uzamčené koule, sražené řady a zbývající záchranu koule.",
+            "Šťouch zachrání padající kouli - ale s mírou: počítadlo se nuluje až po čtyřech klidných sekundách.",
+            "Rekord se ukládá pro každý stůl zvlášť a body z partie se počítají jako nejlepší výsledek."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bowling",
+      "category": "games",
+      "game": "BowlingGame",
+      "title": "Bowling",
+      "keywords": [
+        "bowling",
+        "kuželky",
+        "strike",
+        "spare",
+        "frame",
+        "rotace",
+        "hook",
+        "dráha",
+        "žlab",
+        "pocket"
+      ],
+      "sections": [
+        {
+          "h": "Jak se hraje",
+          "body": [
+            "Deset framů podle oficiálních pravidel: dva hody na frame, strike a spare přinášejí bonusové body a v desátém framu jsou hody navíc. Maximum je 300.",
+            "Karta hned pod záhlavím ukazuje všech deset framů s hody (X, /, -) a průběžným součtem.",
+            "Ve dvou se hráči střídají po framech."
+          ]
+        },
+        {
+          "h": "Hod ve čtyřech krocích",
+          "body": [
+            "1. Pozice na čáře, 2. úhel míření, 3. rotace (doleva nebo doprava), 4. síla.",
+            "Každý posuvník se sám houpe; akční klávesa nebo kliknutí ho zafixuje.",
+            "Vlevo/vpravo ho můžeš nastavit ručně - houpání se tím zastaví."
+          ]
+        },
+        {
+          "h": "Rotace a olej",
+          "body": [
+            "Dráha je vpředu naolejovaná: rotace zabere až v poslední třetině a stáhne kouli do pocketu mezi kuželky 1 a 3.",
+            "Koule, která sjede do strany, skončí ve žlabu - takový hod se počítá za nulu.",
+            "Na Pro se posuvníky houpou rychleji a dráha rozptyluje o něco víc; na Snadné je vše klidnější. [G] přepíná pomocnou čáru."
+          ]
+        },
+        {
+          "h": "Kuželky a body",
+          "body": [
+            "Deset kuželek jsou kruhy se skutečnou hmotností: koule do nich narazí a ony porážejí jedna druhou. Strike je tedy výsledek fyziky, ne náhody.",
+            "Součet hry je tvůj rekord; navíc se ukládá nejlepší výsledek pro každou obtížnost."
+          ]
+        }
+      ]
     }
   ]
 }
