@@ -32,6 +32,8 @@ install-python.bat    :: einmalig: Python 3.13 + .venv + pygame einrichten
 start.bat             :: Spielesammlung starten
 ```
 
+Oder Starte die [PyGameZ-2026-26-August.exe](https://github.com/herrlamatv/pygamez/releases/download/26.26.08-05.04/PyGameZ-2026-26-August.exe) (Latest Release)
+
 #### Linux / macOS / Git Bash
 
 ```bash
@@ -829,6 +831,9 @@ Everything can be changed later in the options.
 install-python.bat    :: one-time: set up Python 3.13 + .venv + pygame
 start.bat             :: launch the game collection
 ```
+
+or run the [PyGameZ-2026-26-August.exe](https://github.com/herrlamatv/pygamez/releases/download/26.26.08-05.04/PyGameZ-2026-26-August.exe) (Latest Release)
+
 
 #### Linux / macOS / Git Bash
 
