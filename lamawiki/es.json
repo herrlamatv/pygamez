@@ -1681,7 +1681,10 @@
         "plataformas",
         "saltar",
         "trepar",
-        "parkour"
+        "parkour",
+        "skin",
+        "steve",
+        "texturas"
       ],
       "sections": [
         {
@@ -1693,11 +1696,20 @@
           ]
         },
         {
+          "h": "Aspecto Minecraft",
+          "body": [
+            "Cada bloque lleva una textura de píxeles real: hierba con su borde verde, tierra, piedra, tablas de roble, el bloque de diamante de la meta, bloques de slime y madera para escaleras y vallas.",
+            "Además: la figura de Steve con animación de marcha en la cámara en tercera persona, la mano en primera persona, el haz de baliza sobre la meta, lingotes de oro giratorios como monedas, un sol cuadrado, nubes de píxeles y corazones en el HUD.",
+            "Con T cambias el nivel de detalle: alto, bajo o desactivado. En equipos lentos, 'bajo' o 'desactivado' va bastante más fluido; la elección se guarda."
+          ]
+        },
+        {
           "h": "Controles",
           "body": [
             "- WASD o flechas: moverte (según hacia dónde miras). Espacio: saltar. Ratón: mirar.",
             "- En una escalera, W sube y S baja. Un bloque-resorte te catapulta hacia arriba.",
-            "- V = vista (1ª/3ª persona), B = desenfoque de movimiento, C = capturar/soltar el ratón, +/- = sensibilidad. Esc pausa y libera el ratón."
+            "- V = vista (1ª/3ª persona), B = desenfoque de movimiento, C = capturar/soltar el ratón, +/- = sensibilidad. Esc pausa y libera el ratón.",
+            "- T = detalle de texturas (alto/bajo/desactivado)."
           ]
         },
         {

@@ -8,6 +8,39 @@
 
 ## 🇩🇪 Deutsch
 
+### Block Jump: Minecraft-Skin – 2026-08-12
+
+Optik-Update: **Block Jump** sieht jetzt aus wie sein Vorbild - echte
+Pixeltexturen auf allen Blöcken, eine Steve-Figur, die Hand im Ego-Modus,
+ein Beacon-Strahl am Ziel, Pixel-Wolken und ein HUD mit Herzen.
+
+#### Neu
+- **Blocktexturen** (16×16, im Code prozedural erzeugt - keine Bilddateien):
+  Gras mit grünem Überhang an den Seiten, Erde, Stein, Eichenbretter,
+  Diamantblock (Ziel), Schleimblock (der frühere Sprungblock) sowie Holz für
+  Leiter und Zaun. Der Software-Renderer zerlegt jede Fläche perspektivisch
+  korrekt in Texel-Vierecke, die Flächenhelligkeit folgt dem Vorbild
+  (oben hell, Seiten abgestuft, Unterseite dunkel).
+- **Detailstufe nach Abstand** mit **Taste T**: hoch / niedrig / aus. Gleich
+  eingefärbte Texel werden vorab zu Rechtecken zusammengefasst, dadurch kostet
+  die neue Optik statt rund 18.000 nur noch etwa 3.000 Vierecke je Bild
+  (1280×720: ~14 ms in *hoch*, ~6 ms in *niedrig*, ~3 ms mit *aus*). Die Wahl
+  wird in `settings.json` gespeichert (`blockjump.textures`).
+- **Steve als Spielfigur** in der Verfolgerkamera: Kopf mit Gesicht, Torso,
+  Arme und Beine schwingen beim Laufen, der Kopf neigt sich mit dem Blick.
+- **Hand im Ego-Modus** samt Lauf-Bob, **Beacon-Strahl** über dem Ziel und
+  rotierende **Gold-Barren** anstelle der bisherigen Kristall-Coins.
+- **Himmel**: Minecraft-Blau mit quadratischer **Sonne** und driftenden
+  **Pixel-Wolken** weit über der Karte.
+- **HUD im Spielstil**: **Herzen** für die Leben, Gold-Barren als Coin-Zähler,
+  Schattenschrift und ein Fadenkreuz wie im Vorbild.
+
+#### Geändert
+- Der Sprungblock ist jetzt optisch ein **Schleimblock**, das Ziel ein
+  **Diamantblock** mit Lichtstrahl. Spielverhalten, Level-Generierung und
+  Physik bleiben unverändert - `tests/blockjump_audit.py` läuft weiterhin
+  fehlerfrei durch alle 45 Level.
+
 ### Block Jump Bugfixes – 2026-08-12
 
 Wartungs-Update: **Block Jump** ist jetzt tatsächlich durchspielbar - der
@@ -257,6 +290,38 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Block Jump: Minecraft skin – 2026-08-12
+
+Visual update: **Block Jump** now looks like the game it is modelled on - real
+pixel textures on every block, a Steve figure, the first-person hand, a beacon
+beam at the goal, pixel clouds and a HUD with hearts.
+
+#### New
+- **Block textures** (16×16, generated procedurally in code - no image files):
+  grass with its green overhang on the sides, dirt, stone, oak planks, a
+  diamond block (the goal), a slime block (the former spring block) plus wood
+  for ladders and fences. The software renderer splits every face into
+  perspective-correct texel quads, and face brightness follows the original
+  (bright top, graded sides, dark bottom).
+- **Distance-based level of detail** on **key T**: high / low / off. Texels
+  that end up the same colour are merged into rectangles up front, so the new
+  look costs about 3,000 quads per frame instead of roughly 18,000
+  (1280×720: ~14 ms on *high*, ~6 ms on *low*, ~3 ms with *off*). The choice is
+  stored in `settings.json` (`blockjump.textures`).
+- **Steve as the player** in the chase camera: head with a face, torso, arms
+  and legs swinging while walking, the head tilting with your view.
+- **First-person hand** with walk bob, a **beacon beam** above the goal and
+  spinning **gold ingots** instead of the previous crystal coins.
+- **Sky**: Minecraft blue with a square **sun** and drifting **pixel clouds**
+  high above the map.
+- **HUD in the same style**: **hearts** for lives, a gold ingot as the coin
+  counter, drop-shadow text and a crosshair like the original.
+
+#### Changed
+- The spring block now looks like a **slime block** and the goal like a
+  **diamond block** with a light beam. Gameplay, level generation and physics
+  are unchanged - `tests/blockjump_audit.py` still passes all 45 levels.
 
 ### Block Jump bugfixes – 2026-08-12
 

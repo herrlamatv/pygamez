@@ -1684,7 +1684,10 @@
         "jump'n'run",
         "springen",
         "klettern",
-        "parkour"
+        "parkour",
+        "skin",
+        "steve",
+        "texturen"
       ],
       "sections": [
         {
@@ -1696,11 +1699,20 @@
           ]
         },
         {
+          "h": "Minecraft-Optik",
+          "body": [
+            "Alle Blöcke tragen echte Pixeltexturen: Gras mit grünem Überhang, Erde, Stein, Eichenbretter, der Diamantblock am Ziel, Schleimblöcke und Holz für Leitern und Zäune.",
+            "Dazu die Steve-Figur mit Laufanimation in der Verfolgerkamera, die Hand im Ego-Modus, der Beacon-Strahl über dem Ziel, rotierende Gold-Barren als Coins, eine quadratische Sonne, Pixel-Wolken und Herzen im HUD.",
+            "Mit T schaltest du den Texturdetailgrad um: hoch, niedrig oder aus. Auf langsamen Rechnern läuft 'niedrig' oder 'aus' deutlich flüssiger; die Einstellung wird gespeichert."
+          ]
+        },
+        {
           "h": "Steuerung",
           "body": [
             "- WASD oder Pfeiltasten: laufen (relativ zur Blickrichtung). Leertaste: springen. Maus: umsehen.",
             "- An einer Leiter klettert W hoch und S runter. Auf einem Sprungblock wirst du hoch katapultiert.",
-            "- V = Ansicht (Ego/Verfolger), B = Motion-Blur, C = Maus fangen/freigeben, +/- = Empfindlichkeit. Esc pausiert und gibt die Maus frei."
+            "- V = Ansicht (Ego/Verfolger), B = Motion-Blur, C = Maus fangen/freigeben, +/- = Empfindlichkeit. Esc pausiert und gibt die Maus frei.",
+            "- T = Texturdetail (hoch/niedrig/aus)."
           ]
         },
         {

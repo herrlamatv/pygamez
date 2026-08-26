@@ -1682,7 +1682,10 @@
         "plošinovka",
         "skok",
         "šplhání",
-        "parkour"
+        "parkour",
+        "skin",
+        "steve",
+        "textury"
       ],
       "sections": [
         {
@@ -1694,11 +1697,20 @@
           ]
         },
         {
+          "h": "Vzhled jako v Minecraftu",
+          "body": [
+            "Každý blok má skutečnou pixelovou texturu: tráva se zeleným přesahem, hlína, kámen, dubová prkna, diamantový blok u cíle, slizové bloky a dřevo na žebříky a ploty.",
+            "K tomu postava Steva s animací chůze v kameře z třetí osoby, ruka v první osobě, paprsek majáku nad cílem, rotující zlaté ingoty místo mincí, čtvercové slunce, pixelové mraky a srdíčka v HUD.",
+            "Klávesa T přepíná úroveň detailů textur: vysoké, nízké nebo vypnuté. Na pomalých počítačích běží 'nízké' nebo 'vypnuté' znatelně plynuleji; volba se ukládá."
+          ]
+        },
+        {
           "h": "Ovládání",
           "body": [
             "- WASD nebo šipky: pohyb (vzhledem ke směru pohledu). Space: skok. Myš: rozhlížení.",
             "- Na žebříku W šplhá nahoru a S šplhá dolů. Pružinový blok tě vymrští vysoko do vzduchu.",
-            "- V = pohled (první/třetí osoba), B = rozmazání pohybu, C = zachytit/uvolnit myš, +/- = citlivost. Esc pozastaví a uvolní myš."
+            "- V = pohled (první/třetí osoba), B = rozmazání pohybu, C = zachytit/uvolnit myš, +/- = citlivost. Esc pozastaví a uvolní myš.",
+            "- T = detaily textur (vysoké/nízké/vypnuté)."
           ]
         },
         {

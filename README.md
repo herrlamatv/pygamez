@@ -83,7 +83,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Mastermind**    | 1 Spieler    | Geheimen Farbcode knacken (3 Modi: 4×6, klassisch, 5×8), schwarze/weiße Rückmeldungs-Pins, Endlos-Streak als Highscore |
 | **Bubble Shooter** | 1 Spieler   | Puzzle-Bobble-Klon: gleiche Farben zu Dreiergruppen schießen, Wandreflexion, herabfallende Cluster, 3 Schwierigkeitsgrade |
 | **Galgenmännchen** | 1 Spieler   | Wort erraten, bevor der Galgen voll ist; Bildschirmtastatur, Wortlisten je Sprache, 3 Längen-Modi, Endlos-Streak |
-| **Block Jump**  | 1 Spieler       | 3D-Jump'n'Run im Minecraft-Stil: Voxel-Welt mit Leitern, Zäunen & Sprungblöcken, Ego-/Verfolgerkamera, Motion-Blur, seed-generierte Parkour-Level |
+| **Block Jump**  | 1 Spieler       | 3D-Jump'n'Run im Minecraft-Stil: texturierte Voxel-Welt, Steve-Figur, Leitern, Zäune & Schleimblöcke, Ego-/Verfolgerkamera, seed-generierte Parkour-Level |
 | **Tower Defense** | 1 Spieler     | Endlose Wellen auf 4 Karten abwehren: bis zu 11 Turmtypen mit Ausbau, Verkauf & A/B-Spezialisierung, Bosse, 3 Modi, Aktiv-Fähigkeiten |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
@@ -493,8 +493,16 @@ Explosions-Effekte, Highscore.
 **Block Jump**
 - **3D-Jump'n'Run im Minecraft-Stil** (Software-3D wie Snakes 3D-Modus): springe
   über eine schwebende **Voxel-Welt** aus Blöcken bis zum leuchtenden Ziel.
+- **Minecraft-Skin**: alle Blöcke tragen echte **Pixeltexturen** (Gras mit
+  grünem Überhang, Erde, Stein, Eichenbretter, Diamant, Schleim, Holz), die
+  perspektivisch korrekt in Texel-Flächen zerlegt werden – der Detailgrad
+  richtet sich nach dem Abstand (**T** schaltet hoch / niedrig / aus).
+- Dazu im gleichen Stil: **Steve-Figur** mit Gesicht, Armen, Beinen und
+  Laufanimation (Verfolgerkamera), die **Hand im Ego-Modus**, **Beacon-Strahl**
+  am Ziel, rotierende **Gold-Barren** als Coins, quadratische **Sonne**,
+  driftende **Pixel-Wolken** und ein HUD mit **Herzen**.
 - Blocktypen: feste Blöcke (Gras/Erde/Stein/Holz), **Leitern** (klettern),
-  **Zäune** (überspringen), **Sprungblöcke** (katapultieren) und **Coins**.
+  **Zäune** (überspringen), **Schleimblöcke** (katapultieren) und **Coins**.
 - Kamera **standardmäßig 1st-Person wie Minecraft**, **V** schaltet auf die
   Verfolgerkamera; **Maus-Look** mit Pointer-Capture, einstellbarer **Motion-Blur**
   (**B**) und Empfindlichkeit (**+/-**).
@@ -818,7 +826,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Mastermind**     | 1 player    | Crack the secret colour code (3 modes: 4×6, classic, 5×8), black/white feedback pegs, endless streak high score |
 | **Bubble Shooter** | 1 player    | Puzzle Bobble clone: shoot matching colours into groups of three, wall bounces, falling clusters, 3 difficulties |
 | **Hangman**        | 1 player    | Guess the word before the gallows is finished; on-screen keyboard, per-language word lists, 3 length modes, endless streak |
-| **Block Jump**  | 1 player        | 3D Minecraft-style platformer: voxel world with ladders, fences & spring blocks, first/third-person camera, motion blur, seed-generated parkour levels |
+| **Block Jump**  | 1 player        | 3D Minecraft-style platformer: textured voxel world, Steve figure, ladders, fences & slime blocks, first/third-person camera, seed-generated parkour levels |
 | **Tower Defense** | 1 player      | Fend off endless waves on 4 maps: up to 11 tower types with upgrades, selling & A/B specialisation, bosses, 3 modes, active abilities |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
@@ -1222,8 +1230,16 @@ explosion effects, high score.
 **Block Jump**
 - **3D Minecraft-style platformer** (software 3D like Snake's 3D mode): jump
   across a floating **voxel world** of blocks to the glowing goal.
+- **Minecraft skin**: every block carries a real **pixel texture** (grass with
+  its green overhang, dirt, stone, oak planks, diamond, slime, wood) that is
+  split into perspective-correct texel faces – the level of detail follows the
+  distance (**T** cycles high / low / off).
+- In the same style: a **Steve figure** with face, arms, legs and walk cycle
+  (chase camera), the **first-person hand**, a **beacon beam** at the goal,
+  spinning **gold ingots** as coins, a square **sun**, drifting **pixel clouds**
+  and a HUD with **hearts**.
 - Block types: solid blocks (grass/dirt/stone/wood), **ladders** (climb),
-  **fences** (jump over), **spring blocks** (launch) and **coins**.
+  **fences** (jump over), **slime blocks** (launch) and **coins**.
 - Camera **first-person like Minecraft by default**, **V** switches to a chase
   camera; **mouse look** with pointer capture, adjustable **motion blur** (**B**)
   and sensitivity (**+/-**).

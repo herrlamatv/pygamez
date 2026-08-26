@@ -1682,7 +1682,10 @@
         "platformer",
         "skok",
         "penjanje",
-        "parkour"
+        "parkour",
+        "skin",
+        "steve",
+        "teksture"
       ],
       "sections": [
         {
@@ -1694,11 +1697,20 @@
           ]
         },
         {
+          "h": "Izgled kao u Minecraftu",
+          "body": [
+            "Svaki blok ima pravu pikselsku teksturu: trava sa zelenim rubom, zemlja, kamen, hrastove daske, dijamantni blok na cilju, sluzavi blokovi i drvo za ljestve i ograde.",
+            "Uz to lik Steve s animacijom hodanja u kameri iz trećeg lica, ruka u prvom licu, zraka svjetionika iznad cilja, rotirajuće zlatne poluge umjesto novčića, kvadratno sunce, pikselni oblaci i srca u HUD-u.",
+            "Tipkom T mijenjaš razinu detalja tekstura: visoko, nisko ili isključeno. Na sporim računalima 'nisko' ili 'isključeno' radi osjetno glađe; izbor se sprema."
+          ]
+        },
+        {
           "h": "Upravljanje",
           "body": [
             "- WASD ili strelice: kretanje (relativno u odnosu na smjer gledanja). Space: skok. Miš: gledanje uokolo.",
             "- Na ljestvama, W se penje gore, a S silazi dolje. Blok opruga lansira te visoko u zrak.",
-            "- V = prikaz (prvo/treće lice), B = zamućenje pokreta, C = zarobi/otpusti miš, +/- = osjetljivost. Esc pauzira i oslobađa miš."
+            "- V = prikaz (prvo/treće lice), B = zamućenje pokreta, C = zarobi/otpusti miš, +/- = osjetljivost. Esc pauzira i oslobađa miš.",
+            "- T = detalji tekstura (visoko/nisko/isključeno)."
           ]
         },
         {

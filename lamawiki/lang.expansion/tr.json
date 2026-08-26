@@ -1682,7 +1682,10 @@
         "platform oyunu",
         "zıpla",
         "tırman",
-        "parkur"
+        "parkur",
+        "skin",
+        "steve",
+        "dokular"
       ],
       "sections": [
         {
@@ -1694,11 +1697,20 @@
           ]
         },
         {
+          "h": "Minecraft görünümü",
+          "body": [
+            "Her blokta gerçek bir piksel doku var: yeşil çıkıntılı çim, toprak, taş, meşe tahtaları, hedefteki elmas blok, balçık blokları ve merdiven ile çitler için odun.",
+            "Buna ek olarak üçüncü şahıs kamerada yürüyüş animasyonlu Steve figürü, birinci şahısta el, hedefin üzerinde işaret ışını, para yerine dönen altın külçeleri, kare bir güneş, piksel bulutlar ve HUD'da kalpler.",
+            "T tuşu doku ayrıntısını değiştirir: yüksek, düşük veya kapalı. Yavaş bilgisayarlarda 'düşük' ya da 'kapalı' belirgin şekilde akıcıdır; seçim kaydedilir."
+          ]
+        },
+        {
           "h": "Kontroller",
           "body": [
             "- WASD veya ok tuşları: hareket (baktığın yere göre). Space: zıpla. Fare: etrafa bak.",
             "- Merdivende, W yukarı ve S aşağı tırmanır. Bir yay bloğu seni havaya yükseğe fırlatır.",
-            "- V = görünüm (birinci/üçüncü şahıs), B = hareket bulanıklığı, C = fareyi yakala/serbest bırak, +/- = hassasiyet. Esc duraklatır ve fareyi serbest bırakır."
+            "- V = görünüm (birinci/üçüncü şahıs), B = hareket bulanıklığı, C = fareyi yakala/serbest bırak, +/- = hassasiyet. Esc duraklatır ve fareyi serbest bırakır.",
+            "- T = doku ayrıntısı (yüksek/düşük/kapalı)."
           ]
         },
         {

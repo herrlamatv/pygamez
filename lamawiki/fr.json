@@ -1681,7 +1681,10 @@
         "plateforme",
         "sauter",
         "grimper",
-        "parkour"
+        "parkour",
+        "skin",
+        "steve",
+        "textures"
       ],
       "sections": [
         {
@@ -1693,11 +1696,20 @@
           ]
         },
         {
+          "h": "Look Minecraft",
+          "body": [
+            "Chaque bloc porte une vraie texture en pixels : herbe avec son débord vert, terre, pierre, planches de chêne, le bloc de diamant à l'arrivée, blocs de slime et bois pour les échelles et les barrières.",
+            "S'y ajoutent la figurine Steve animée en caméra 3e personne, la main en vue subjective, le rayon de balise au-dessus de l'arrivée, des lingots d'or rotatifs en guise de pièces, un soleil carré, des nuages en pixels et des cœurs dans l'ATH.",
+            "La touche T règle le niveau de détail des textures : élevé, faible ou désactivé. Sur une machine lente, « faible » ou « désactivé » est nettement plus fluide ; le choix est enregistré."
+          ]
+        },
+        {
           "h": "Commandes",
           "body": [
             "- WASD ou flèches : se déplacer (selon le regard). Espace : sauter. Souris : regarder autour.",
             "- Sur une échelle, W monte et S descend. Un bloc-ressort te catapulte vers le haut.",
-            "- V = vue (1re/3e personne), B = flou de mouvement, C = capturer/libérer la souris, +/- = sensibilité. Échap met en pause et libère la souris."
+            "- V = vue (1re/3e personne), B = flou de mouvement, C = capturer/libérer la souris, +/- = sensibilité. Échap met en pause et libère la souris.",
+            "- T = détail des textures (élevé/faible/désactivé)."
           ]
         },
         {

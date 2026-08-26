@@ -1682,7 +1682,10 @@
         "platformer",
         "hopp",
         "klatre",
-        "parkour"
+        "parkour",
+        "skin",
+        "steve",
+        "teksturer"
       ],
       "sections": [
         {
@@ -1694,11 +1697,20 @@
           ]
         },
         {
+          "h": "Minecraft-utseende",
+          "body": [
+            "Hver blokk har en ekte pikseltextur: gress med grønn kant, jord, stein, eikeplanker, diamantblokken ved målet, slimblokker og tre til stiger og gjerder.",
+            "I tillegg Steve-figuren med ganganimasjon i tredjepersonskameraet, hånden i førsteperson, beacon-strålen over målet, roterende gullbarrer som mynter, en firkantet sol, pikselskyer og hjerter i HUD-en.",
+            "Med T bytter du detaljnivå: høy, lav eller av. På trege maskiner går 'lav' eller 'av' merkbart jevnere; valget lagres."
+          ]
+        },
+        {
           "h": "Kontroller",
           "body": [
             "- WASD eller piltaster: beveg deg (relativt til hvor du ser). Space: hopp. Mus: se deg rundt.",
             "- På en stige klatrer W opp og S ned. En fjærblokk skyter deg høyt opp i luften.",
-            "- V = visning (første-/tredjeperson), B = bevegelsesuskarphet, C = fang/slipp mus, +/- = følsomhet. Esc pauser og frigjør musen."
+            "- V = visning (første-/tredjeperson), B = bevegelsesuskarphet, C = fang/slipp mus, +/- = følsomhet. Esc pauser og frigjør musen.",
+            "- T = teksturdetaljer (høy/lav/av)."
           ]
         },
         {

@@ -1682,7 +1682,10 @@
         "platformspil",
         "hop",
         "klatr",
-        "parkour"
+        "parkour",
+        "skin",
+        "steve",
+        "teksturer"
       ],
       "sections": [
         {
@@ -1694,11 +1697,20 @@
           ]
         },
         {
+          "h": "Minecraft-look",
+          "body": [
+            "Hver blok har en ægte pixeltextur: græs med grøn kant, jord, sten, egeplanker, diamantblokken ved målet, slimblokke og træ til stiger og hegn.",
+            "Dertil Steve-figuren med ganganimation i tredjepersonskameraet, hånden i førsteperson, beacon-strålen over målet, roterende guldbarrer som mønter, en firkantet sol, pixelskyer og hjerter i HUD'et.",
+            "Med T skifter du detaljegraden: høj, lav eller fra. På langsomme maskiner kører 'lav' eller 'fra' mærkbart mere flydende; valget gemmes."
+          ]
+        },
+        {
           "h": "Styring",
           "body": [
             "- WASD eller piletaster: bevæg dig (relativt til, hvor du kigger). Space: hop. Mus: kig rundt.",
             "- På en stige klatrer W op og S ned. En fjederblok kaster dig højt op i luften.",
-            "- V = visning (første/tredje person), B = bevægelsessløring, C = fang/frigiv mus, +/- = følsomhed. Esc pauser og frigiver musen."
+            "- V = visning (første/tredje person), B = bevægelsessløring, C = fang/frigiv mus, +/- = følsomhed. Esc pauser og frigiver musen.",
+            "- T = teksturdetaljer (høj/lav/fra)."
           ]
         },
         {

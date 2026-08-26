@@ -1682,7 +1682,10 @@
         "tasohyppely",
         "hyppy",
         "kiipeä",
-        "parkour"
+        "parkour",
+        "skin",
+        "steve",
+        "tekstuurit"
       ],
       "sections": [
         {
@@ -1694,11 +1697,20 @@
           ]
         },
         {
+          "h": "Minecraft-ulkoasu",
+          "body": [
+            "Jokaisella palikalla on aito pikselitekstuuri: ruoho vihreine reunoineen, multa, kivi, tammilankut, maalin timanttipalikka, limapalikat sekä puu tikkaisiin ja aitoihin.",
+            "Lisäksi Steve-hahmo kävelyanimaatioineen kolmannen persoonan kamerassa, käsi ensimmäisessä persoonassa, majakkasäde maalin yllä, pyörivät kultaharkot kolikkoina, neliömäinen aurinko, pikselipilvet ja sydämet HUD:ssa.",
+            "T vaihtaa tekstuurien tarkkuutta: korkea, matala tai pois. Hitailla koneilla 'matala' tai 'pois' pyörii selvästi sulavammin; valinta tallennetaan."
+          ]
+        },
+        {
           "h": "Ohjaus",
           "body": [
             "- WASD tai nuolinäppäimet: liiku (suhteessa katsomissuuntaan). Space: hyppy. Hiiri: katsele ympäri.",
             "- Tikkailla W kiipeää ylös ja S alas. Jousipalikka laukaisee sinut korkealle ilmaan.",
-            "- V = näkymä (ensimmäinen/kolmas persoona), B = liike-epäterävyys, C = vangitse/vapauta hiiri, +/- = herkkyys. Esc keskeyttää ja vapauttaa hiiren."
+            "- V = näkymä (ensimmäinen/kolmas persoona), B = liike-epäterävyys, C = vangitse/vapauta hiiri, +/- = herkkyys. Esc keskeyttää ja vapauttaa hiiren.",
+            "- T = tekstuurien tarkkuus (korkea/matala/pois)."
           ]
         },
         {

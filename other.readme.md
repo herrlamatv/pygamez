@@ -76,7 +76,7 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Mastermind**     | 1 joueur   | Perce le code couleur secret (3 modes : 4×6, classique, 5×8), pions indicateurs noirs/blancs, série sans fin |
 | **Bubble Shooter** | 1 joueur   | Clone de Puzzle Bobble : tire des couleurs identiques par groupes de trois, rebonds sur les parois, grappes qui tombent, 3 difficultés |
 | **Hangman**        | 1 joueur   | Devine le mot avant que la potence soit complète ; clavier à l'écran, listes de mots par langue, 3 modes de longueur, série sans fin |
-| **Block Jump**     | 1 joueur   | Jeu de plateforme 3D façon Minecraft : monde de blocs (voxels) avec échelles, barrières & blocs-ressorts, caméra 1re/3e personne, flou de mouvement, niveaux générés |
+| **Block Jump**     | 1 joueur   | Jeu de plateforme 3D façon Minecraft : monde de blocs texturés au skin Minecraft avec figurine Steve, échelles, barrières & blocs-ressorts, caméra 1re/3e personne, flou de mouvement, niveaux générés |
 | **Tower Defense** | 1 joueur   | Repousse des vagues infinies sur 4 cartes : jusqu'à 11 types de tours avec améliorations, vente & spécialisation A/B, boss, 3 modes, capacités actives |
 
 **Le multijoueur (2 joueurs en local)** est disponible pour **Snake**, **Pong**,
@@ -767,7 +767,7 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Mastermind**       | 1 jugador  | Descifra el código de color secreto (3 modos: 4×6, clásico, 5×8), fichas de pista negras/blancas, racha sin fin |
 | **Bubble Shooter**   | 1 jugador  | Clon de Puzzle Bobble: dispara colores iguales en grupos de tres, rebotes en las paredes, racimos que caen, 3 dificultades |
 | **Hangman**          | 1 jugador  | Adivina la palabra antes de completar la horca; teclado en pantalla, listas de palabras por idioma, 3 modos de longitud, racha sin fin |
-| **Block Jump**       | 1 jugador  | Plataformas 3D estilo Minecraft: mundo de bloques (vóxeles) con escaleras, vallas y bloques-resorte, cámara 1ª/3ª persona, desenfoque, niveles generados |
+| **Block Jump**       | 1 jugador  | Plataformas 3D estilo Minecraft: mundo de bloques texturizados con skin de Minecraft y figura de Steve, escaleras, vallas y bloques-resorte, cámara 1ª/3ª persona, desenfoque, niveles generados |
 | **Tower Defense**    | 1 jugador  | Repele oleadas infinitas en 4 mapas: hasta 11 tipos de torres con mejoras, venta y especialización A/B, jefes, 3 modos, habilidades activas |
 
 **El multijugador (2 jugadores en local)** está disponible en **Snake**, **Pong**,
@@ -1408,7 +1408,7 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Mastermind**       | 1 jogador  | Decifra o código de cor secreto (3 modos: 4×6, clássico, 5×8), pinos de dica pretos/brancos, série sem fim |
 | **Bubble Shooter**   | 1 jogador  | Clone do Puzzle Bobble: atira cores iguais em grupos de três, ressaltos nas paredes, grupos que caem, 3 dificuldades |
 | **Hangman**          | 1 jogador  | Adivinha a palavra antes de a forca ficar completa; teclado no ecrã, listas de palavras por idioma, 3 modos de tamanho, série sem fim |
-| **Block Jump**       | 1 jogador  | Plataforma 3D estilo Minecraft: mundo de blocos (voxels) com escadas, cercas e blocos-mola, câmera 1ª/3ª pessoa, desfoque, níveis gerados |
+| **Block Jump**       | 1 jogador  | Plataforma 3D estilo Minecraft: mundo de blocos texturizados com skin de Minecraft e figura do Steve, escadas, cercas e blocos-mola, câmera 1ª/3ª pessoa, desfoque, níveis gerados |
 | **Tower Defense**    | 1 jogador  | Repele ondas infinitas em 4 mapas: até 11 tipos de torres com melhorias, venda e especialização A/B, chefes, 3 modos, habilidades ativas |
 
 **O multijogador (2 jogadores em local)** está disponível em **Snake**, **Pong**,
@@ -2051,7 +2051,7 @@ krok po kroku znajduje się na samym dole w sekcji
 | **Mastermind** | 1 gracz       | Złam tajny kod kolorów (3 tryby: 4×6, klasyczny, 5×8), czarne/białe kołki podpowiedzi, nieskończona seria jako rekord |
 | **Bubble Shooter** | 1 gracz   | Klon Puzzle Bobble: strzelaj pasujące kolory w grupy po trzy, odbicia od ścian, opadające grupy, 3 poziomy trudności |
 | **Wisielec** | 1 gracz         | Odgadnij słowo, zanim szubienica będzie gotowa; klawiatura ekranowa, listy słów na język, 3 tryby długości, nieskończona seria |
-| **Block Jump** | 1 gracz       | Platformówka 3D w stylu Minecraft: świat wokseli z drabinami, płotami i blokami-sprężynami, kamera z 1./3. osoby, motion blur, generowane z ziarna poziomy parkour |
+| **Block Jump** | 1 gracz       | Platformówka 3D w stylu Minecraft: teksturowany świat wokseli z postacią Steve'a, drabinami, płotami i blokami-sprężynami, kamera z 1./3. osoby, motion blur, generowane z ziarna poziomy parkour |
 | **Tower Defense** | 1 gracz     | Odpieraj niekończące się fale na 4 mapach: do 11 typów wież z ulepszeniami, sprzedażą i specjalizacją A/B, bossowie, 3 tryby, zdolności aktywne |
 
 **Tryb wieloosobowy (2 graczy lokalnie)** jest dostępny w grach **Snake**, **Pong**,
@@ -2475,6 +2475,13 @@ broni), efekty wybuchów, rekord.
 **Block Jump**
 - **Platformówka 3D w stylu Minecraft** (programowe 3D jak tryb 3D w Snake'u):
   skacz po unoszącym się **świecie wokseli** z bloków aż do świecącego celu.
+- **Skin z Minecrafta**: wszystkie bloki mają prawdziwe **tekstury pikselowe**
+  (trawa, ziemia, kamień, deski, diament, śluz, drewno); poziom szczegółów
+  zależy od odległości (**T** = wysokie/niskie/wyłączone).
+- Do tego: animowana postać **Steve'a** (kamera z 3. osoby), **ręka** w widoku
+  z 1. osoby, **promień sygnalizatora** przy celu, obracające się **sztabki
+  złota** zamiast monet, kwadratowe **słońce**, **pikselowe chmury** i HUD
+  z **sercami**.
 - Rodzaje bloków: bloki stałe (trawa/ziemia/kamień/drewno), **drabiny**
   (wspinaczka), **płoty** (przeskakiwanie), **bloki-sprężyny** (wyrzut) i
   **monety**.
@@ -2797,7 +2804,7 @@ yoksa sistemdeki Python'ı. Ayrıntılı, adım adım bir kılavuz en altta
 | **Mastermind**     | 1 oyuncu  | Gizli renk kodunu çöz (3 mod: 4×6, klasik, 5×8), siyah/beyaz geri bildirim pimleri, sonsuz seri rekoru |
 | **Bubble Shooter** | 1 oyuncu  | Puzzle Bobble klonu: eşleşen renkleri üçlü gruplar halinde ateşle, duvar sekmeleri, düşen kümeler, 3 zorluk |
 | **Adam Asmaca**    | 1 oyuncu  | Darağacı tamamlanmadan kelimeyi tahmin et; ekran klavyesi, dile göre kelime listeleri, 3 uzunluk modu, sonsuz seri |
-| **Block Jump**  | 1 oyuncu     | Minecraft tarzı 3D platform oyunu: merdivenler, çitler ve yay bloklarıyla voksel dünyası, birinci/üçüncü şahıs kamera, hareket bulanıklığı, tohumla üretilen parkur bölümleri |
+| **Block Jump**  | 1 oyuncu     | Minecraft tarzı 3D platform oyunu: dokulu voksel dünyası, Steve figürü, merdivenler, çitler ve balçık blokları, birinci/üçüncü şahıs kamera, hareket bulanıklığı, tohumla üretilen parkur bölümleri |
 | **Tower Defense** | 1 oyuncu   | 4 haritada sonsuz dalgaları püskürt: geliştirme, satış ve A/B uzmanlaşmalı 11 kule tipine kadar, bosslar, 3 mod, aktif yetenekler |
 
 **Çok oyunculu (2 oyuncu yerel)** şu oyunlarda mevcuttur: **Snake**, **Pong**,
@@ -3221,6 +3228,12 @@ patlama efektleri, yüksek skor.
 - **Minecraft tarzı 3D platform oyunu** (Snake'in 3D modu gibi yazılım 3D'si):
   parlayan hedefe ulaşmak için havada süzülen bir **voksel dünyasındaki** bloklar
   arasında zıplayın.
+- **Minecraft görünümü**: tüm bloklarda gerçek **piksel dokular** var (çim,
+  toprak, taş, tahta, elmas, balçık, odun); ayrıntı düzeyi mesafeye göre
+  değişir (**T** = yüksek/düşük/kapalı).
+- Ayrıca: yürüyüş animasyonlu **Steve** figürü (üçüncü şahıs kamera), birinci
+  şahısta **el**, hedefte **işaret ışını**, para yerine dönen **altın
+  külçeleri**, kare **güneş**, **piksel bulutlar** ve **kalpli** bir HUD.
 - Blok türleri: katı bloklar (çim/toprak/taş/tahta), **merdivenler** (tırman),
   **çitler** (üzerinden atla), **yay blokları** (fırlatır) ve **madeni paralar**.
 - Kamera **öntanımlı olarak Minecraft gibi birinci şahıs**, **V** takip
@@ -3537,7 +3550,7 @@ nederst under **[Installationsguide](#installationsguide)**.
 | **Mastermind**  | 1 spiller    | Knæk den hemmelige farvekode (3 tilstande: 4×6, klassisk, 5×8), sorte/hvide feedbackpinde, endeløs streak-highscore |
 | **Bubble Shooter** | 1 spiller | Puzzle Bobble-klon: skyd ens farver i grupper af tre, vægafspring, faldende klynger, 3 sværhedsgrader |
 | **Galgemand**   | 1 spiller    | Gæt ordet, før galgen er færdig; skærmtastatur, ordlister pr. sprog, 3 længdetilstande, endeløs streak |
-| **Block Jump**  | 1 spiller    | 3D-platformspil i Minecraft-stil: voxelverden med stiger, hegn og fjederblokke, første-/tredjepersonskamera, motion blur, seed-genererede parkourbaner |
+| **Block Jump**  | 1 spiller    | 3D-platformspil i Minecraft-stil: tekstureret voxelverden med Steve-figur, stiger, hegn og slimblokke, første-/tredjepersonskamera, motion blur, seed-genererede parkourbaner |
 | **Tower Defense** | 1 spiller   | Slå endeløse bølger tilbage på 4 kort: op til 11 tårntyper med opgraderinger, salg & A/B-specialisering, bosser, 3 tilstande, aktive evner |
 
 **Multiplayer (2 spillere lokalt)** findes til **Snake**, **Pong**,
@@ -3938,6 +3951,12 @@ eksplosionseffekter, highscore.
 **Block Jump**
 - **3D-platformspil i Minecraft-stil** (software-3D som Snakes 3D-tilstand): hop hen
   over en svævende **voxelverden** af klodser til det glødende mål.
+- **Minecraft-skin**: alle blokke har ægte **pixeltexturer** (græs, jord, sten,
+  planker, diamant, slim, træ); detaljegraden følger afstanden
+  (**T** = høj/lav/fra).
+- Desuden: **Steve**-figur med ganganimation (tredjepersonskamera), **hånd** i
+  førsteperson, **beacon-stråle** ved målet, roterende **guldbarrer** som
+  mønter, firkantet **sol**, **pixelskyer** og et HUD med **hjerter**.
 - Klodstyper: faste klodser (græs/jord/sten/træ), **stiger** (klatre), **hegn**
   (springe over), **fjederblokke** (kaste op) og **mønter**.
 - Kamera **førsteperson som Minecraft som standard**, **V** skifter til et
@@ -4254,7 +4273,7 @@ nederst under **[Installasjonsveiledning](#installasjonsveiledning)**.
 | **Mastermind**     | 1 spiller  | Knekk den hemmelige fargekoden (3 moduser: 4×6, klassisk, 5×8), svarte/hvite tilbakemeldingspinner, endeløs streak-rekord |
 | **Bubble Shooter** | 1 spiller  | Puzzle Bobble-klone: skyt like farger i grupper på tre, veggsprett, fallende klynger, 3 vanskelighetsgrader |
 | **Hangman**        | 1 spiller  | Gjett ordet før galgen er ferdig; skjermtastatur, ordlister per språk, 3 lengdemoduser, endeløs streak |
-| **Block Jump**  | 1 spiller       | 3D-plattformspill i Minecraft-stil: voxelverden med stiger, gjerder og hoppeblokker, første-/tredjepersonskamera, motion blur, seed-genererte parkour-nivåer |
+| **Block Jump**  | 1 spiller       | 3D-plattformspill i Minecraft-stil: teksturert voxelverden med Steve-figur, stiger, gjerder og slimblokker, første-/tredjepersonskamera, motion blur, seed-genererte parkour-nivåer |
 | **Tower Defense** | 1 spiller      | Slå tilbake endeløse bølger på 4 kart: opptil 11 tårntyper med oppgraderinger, salg & A/B-spesialisering, bosser, 3 moduser, aktive evner |
 
 **Flerspiller (2 spillere lokalt)** er tilgjengelig for **Snake**, **Pong**,
@@ -4654,6 +4673,12 @@ våpenoppgradering), eksplosjonseffekter, rekord.
 **Block Jump**
 - **3D-plattformspill i Minecraft-stil** (software-3D som Snakes 3D-modus): hopp
   over en svevende **voxelverden** av blokker til det glødende målet.
+- **Minecraft-skin**: alle blokker har ekte **pikseltexturer** (gress, jord,
+  stein, planker, diamant, slim, tre); detaljnivået følger avstanden
+  (**T** = høy/lav/av).
+- I tillegg: **Steve**-figur med ganganimasjon (tredjepersonskamera), **hånd**
+  i førsteperson, **beacon-stråle** ved målet, roterende **gullbarrer** som
+  mynter, firkantet **sol**, **pikselskyer** og et HUD med **hjerter**.
 - Blokktyper: faste blokker (gress/jord/stein/tre), **stiger** (klatre), **gjerder**
   (hopp over), **hoppeblokker** (kaster deg opp) og **mynter**.
 - Kamera **førsteperson som i Minecraft som standard**, **V** bytter til et
@@ -4968,7 +4993,7 @@ under **[Installationsguide](#installationsguide)**.
 | **Mastermind**   | 1 spelare    | Knäck den hemliga färgkoden (3 lägen: 4×6, klassiskt, 5×8), svarta/vita ledtrådsstift, oändlig streak som topplista |
 | **Bubble Shooter** | 1 spelare  | Puzzle Bobble-klon: skjut matchande färger i grupper om tre, väggstudsar, fallande kluster, 3 svårighetsgrader |
 | **Hänga gubbe**  | 1 spelare    | Gissa ordet innan galgen är färdig; skärmtangentbord, ordlistor per språk, 3 längdlägen, oändlig streak |
-| **Block Jump**   | 1 spelare    | 3D-plattformsspel i Minecraft-stil: voxelvärld med stegar, staket & fjäderblock, första-/tredjepersonskamera, motion blur, seed-genererade parkourbanor |
+| **Block Jump**   | 1 spelare    | 3D-plattformsspel i Minecraft-stil: texturerad voxelvärld med Steve-figur, stegar, staket & slime-block, första-/tredjepersonskamera, motion blur, seed-genererade parkourbanor |
 | **Tower Defense** | 1 spelare    | Slå tillbaka oändliga vågor på 4 kartor: upp till 11 torntyper med uppgraderingar, försäljning & A/B-specialisering, bossar, 3 lägen, aktiva förmågor |
 
 **Flerspelarläge (2 spelare lokalt)** finns för **Snake**, **Pong**,
@@ -5344,6 +5369,12 @@ explosionseffekter, topplista.
 **Block Jump**
 - **3D-plattformsspel i Minecraft-stil** (mjukvaru-3D som Snakes 3D-läge): hoppa över en svävande
   **voxelvärld** av block till det lysande målet.
+- **Minecraft-skin**: alla block har äkta **pixeltexturer** (gräs, jord, sten,
+  plankor, diamant, slime, trä); detaljnivån följer avståndet
+  (**T** = hög/låg/av).
+- Dessutom: **Steve**-figur med gånganimation (tredjepersonskamera), **hand** i
+  förstaperson, **beacon-stråle** vid målet, roterande **guldtackor** som mynt,
+  fyrkantig **sol**, **pixelmoln** och en HUD med **hjärtan**.
 - Blocktyper: fasta block (gräs/jord/sten/trä), **stegar** (klättra), **staket** (hoppa över),
   **fjäderblock** (katapult) och **mynt**.
 - Kameran är **förstaperson som i Minecraft som standard**, **V** växlar till en förföljarkamera;
@@ -5647,7 +5678,7 @@ ohje löytyy aivan alhaalta kohdasta **[Asennusopas](#asennusopas)**.
 | **Mastermind**    | 1 pelaaja   | Murra salainen värikoodi (3 tilaa: 4×6, klassinen, 5×8), mustat/valkoiset palautetapit, loputon putki -ennätys |
 | **Bubble Shooter** | 1 pelaaja  | Puzzle Bobble -klooni: ammu samat värit kolmen ryhmiksi, seinäkimmokkeet, putoavat rykelmät, 3 vaikeustasoa |
 | **Hirsipuu**       | 1 pelaaja  | Arvaa sana ennen kuin hirsipuu valmistuu; ruutunäppäimistö, kielikohtaiset sanalistat, 3 pituustilaa, loputon putki |
-| **Block Jump**  | 1 pelaaja       | 3D-Minecraft-tyylinen tasoloikka: voxel-maailma tikkailla, aidoilla ja jousiblokeilla, ensimmäisen/kolmannen persoonan kamera, motion blur, siemenpohjaiset parkour-kentät |
+| **Block Jump**  | 1 pelaaja       | 3D-Minecraft-tyylinen tasoloikka: teksturoitu voxel-maailma, Steve-hahmo, tikkaat, aidat ja limapalikat, ensimmäisen/kolmannen persoonan kamera, motion blur, siemenpohjaiset parkour-kentät |
 | **Tower Defense** | 1 pelaaja      | Torju loputtomia aaltoja 4 kartalla: jopa 11 tornityyppiä parannuksineen, myynteineen ja A/B-erikoistumisineen, pomoja, 3 tilaa, aktiivisia kykyjä |
 
 **Moninpeli (2 pelaajaa paikallisesti)** on saatavilla peleihin **Snake**,
@@ -6064,6 +6095,13 @@ räjähdystehosteet, ennätys.
 **Block Jump**
 - **3D-Minecraft-tyylinen tasoloikka** (ohjelmistopohjainen 3D kuten Snaken 3D-tila):
   loiki kelluvan **voxel-maailman** lohkojen yli hehkuvaan maaliin.
+- **Minecraft-ulkoasu**: kaikilla palikoilla on aidot **pikselitekstuurit**
+  (ruoho, multa, kivi, lankut, timantti, lima, puu); yksityiskohtien taso
+  seuraa etäisyyttä (**T** = korkea/matala/pois).
+- Lisäksi: kävelyanimoitu **Steve**-hahmo (kolmannen persoonan kamera), **käsi**
+  ensimmäisessä persoonassa, **majakkasäde** maalissa, pyörivät **kultaharkot**
+  kolikkoina, neliömäinen **aurinko**, **pikselipilvet** ja **sydämillä**
+  varustettu HUD.
 - Lohkotyypit: kiinteät lohkot (ruoho/multa/kivi/puu), **tikkaat** (kiipeä), **aidat**
   (hyppää yli), **jousiblokit** (sinkoa) ja **kolikot**.
 - Kamera **oletuksena ensimmäisessä persoonassa kuten Minecraftissa**, **V** vaihtaa
@@ -6379,7 +6417,7 @@ existuje, jinak systémový Python. Podrobný návod krok za krokem je úplně d
 | **Mastermind**     | 1 hráč    | Rozlušti tajný barevný kód (3 režimy: 4×6, klasický, 5×8), černé/bílé kolíky zpětné vazby, nejlepší skóre s nekonečnou sérií |
 | **Bubble Shooter** | 1 hráč    | Klon Puzzle Bobble: střílej stejné barvy do trojic, odrazy od stěn, padající shluky, 3 obtížnosti |
 | **Hangman**        | 1 hráč    | Uhodni slovo, než se dokreslí šibenice; klávesnice na obrazovce, seznamy slov podle jazyka, 3 délkové režimy, nekonečná série |
-| **Block Jump**   | 1 hráč      | 3D plošinovka ve stylu Minecraftu: voxelový svět se žebříky, ploty a pružinovými bloky, kamera z první/třetí osoby, motion blur, parkourové úrovně ze semínka |
+| **Block Jump**   | 1 hráč      | 3D plošinovka ve stylu Minecraftu: texturovaný voxelový svět se Stevem, žebříky, ploty a slizovými bloky, kamera z první/třetí osoby, motion blur, parkourové úrovně ze semínka |
 | **Tower Defense** | 1 hráč      | Odrážej nekonečné vlny na 4 mapách: až 11 typů věží s vylepšeními, prodejem a specializací A/B, bossové, 3 režimy, aktivní schopnosti |
 
 **Více hráčů (2 hráči lokálně)** je k dispozici pro **Snake**, **Pong**,
@@ -6792,6 +6830,12 @@ zbraně), efekty explozí, nejlepší skóre.
 **Block Jump**
 - **3D plošinovka ve stylu Minecraftu** (softwarové 3D jako 3D režim Snaku):
   skákej přes plovoucí **voxelový svět** z bloků až k zářícímu cíli.
+- **Minecraftí vzhled**: všechny bloky mají skutečné **pixelové textury**
+  (tráva, hlína, kámen, prkna, diamant, sliz, dřevo); úroveň detailů se řídí
+  vzdáleností (**T** = vysoké/nízké/vypnuté).
+- K tomu: postava **Steva** s animací chůze (kamera z třetí osoby), **ruka**
+  v první osobě, **paprsek majáku** u cíle, rotující **zlaté ingoty** místo
+  mincí, čtvercové **slunce**, **pixelové mraky** a HUD se **srdíčky**.
 - Typy bloků: pevné bloky (tráva/hlína/kámen/dřevo), **žebříky** (šplhání),
   **ploty** (přeskočení), **pružinové bloky** (vymrštění) a **mince**.
 - Kamera **ve výchozím stavu z první osoby jako v Minecraftu**, **V** přepíná na
@@ -7108,7 +7152,7 @@ obstaja, sicer sistemski Python. Na dnu dokumenta je podroben vodnik po korakih:
 | **Mastermind**     | 1 igralec  | Razbij skrivno barvno kodo (3 načini: 4×6, klasični, 5×8), črni/beli povratni zatiči, neskončni niz kot rekord |
 | **Bubble Shooter** | 1 igralec  | Klon Puzzle Bobble: streljaj enake barve v skupine po tri, odboji od sten, padajoče gruče, 3 težavnosti |
 | **Vislice**        | 1 igralec  | Ugani besedo, preden so vislice končane; zaslonska tipkovnica, seznami besed po jeziku, 3 dolžinski načini, neskončni niz |
-| **Block Jump**  | 1 igralec       | 3D-ploščadnica v slogu Minecrafta: voksel svet z lestvami, ograjami in vzmetnimi bloki, kamera v prvi/tretji osebi, motion blur, ravni parkourja s semenom |
+| **Block Jump**  | 1 igralec       | 3D-ploščadnica v slogu Minecrafta: teksturiran voksel svet s Stevom, lestvami, ograjami in sluzastimi bloki, kamera v prvi/tretji osebi, motion blur, ravni parkourja s semenom |
 | **Tower Defense** | 1 igralec      | Odbijaj neskončne valove na 4 zemljevidih: do 11 vrst stolpov z nadgradnjami, prodajo in specializacijo A/B, bossi, 3 načini, aktivne sposobnosti |
 
 **Večigralski način (2 igralca lokalno)** je na voljo za igre **Snake**,
@@ -7513,6 +7557,12 @@ nadgradnja orožja), učinki eksplozij, rekord.
 **Block Jump**
 - **3D-ploščadnica v slogu Minecrafta** (programski 3D kot 3D-način igre Snake):
   skači čez lebdeč **voksel svet** blokov do žarečega cilja.
+- **Minecraftov videz**: vsi bloki imajo prave **pikselske teksture** (trava,
+  zemlja, kamen, deske, diamant, sluz, les); raven podrobnosti sledi razdalji
+  (**T** = visoko/nizko/izklopljeno).
+- Poleg tega: lik **Steve** z animacijo hoje (kamera v tretji osebi), **roka**
+  v prvi osebi, **žarek svetilnika** pri cilju, vrteče se **zlate palice**
+  namesto kovancev, kvadratno **sonce**, **pikselni oblaki** in HUD s **srci**.
 - Vrste blokov: trdni bloki (trava/zemlja/kamen/les), **lestve** (plezanje),
   **ograje** (preskoči), **vzmetni bloki** (izstrelijo) in **kovanci**.
 - Kamera **privzeto v prvi osebi kot v Minecraftu**, **V** preklopi na kamero
@@ -7829,7 +7879,7 @@ dnu pod **[Vodič za instalaciju](#vodič-za-instalaciju)**.
 | **Mastermind**     | 1 igrač   | Razbijte tajni kôd boja (3 moda: 4×6, klasično, 5×8), crni/bijeli čavlići povratne informacije, beskonačni niz kao rekord |
 | **Bubble Shooter** | 1 igrač   | Klon Puzzle Bobblea: ispaljujte jednake boje u skupine od tri, odbijanje od zidova, padajuće skupine, 3 težine |
 | **Vješala**        | 1 igrač   | Pogodite riječ prije nego što se dovrši vješalo; zaslonska tipkovnica, popisi riječi po jeziku, 3 moda duljine, beskonačni niz |
-| **Block Jump**  | 1 igrač        | 3D platformer u stilu Minecrafta: voxel svijet s ljestvama, ogradama i odskočnim blokovima, kamera iz prvog/trećeg lica, motion blur, parkour razine generirane sjemenom |
+| **Block Jump**  | 1 igrač        | 3D platformer u stilu Minecrafta: teksturirani voxel svijet sa Steveom, ljestvama, ogradama i sluzavim blokovima, kamera iz prvog/trećeg lica, motion blur, parkour razine generirane sjemenom |
 | **Tower Defense** | 1 igrač        | Odbijaj beskonačne valove na 4 karte: do 11 vrsta tornjeva s nadogradnjama, prodajom i specijalizacijom A/B, bossovi, 3 načina, aktivne sposobnosti |
 
 **Više igrača (2 igrača lokalno)** dostupno je za **Snake**, **Pong**,
@@ -8242,6 +8292,12 @@ nadogradnja oružja), efekti eksplozije, rekord.
 **Block Jump**
 - **3D platformer u stilu Minecrafta** (softverski 3D kao Snakeov 3D mod): skačete
   preko lebdećeg **voxel svijeta** od blokova do svjetlećeg cilja.
+- **Minecraft izgled**: svi blokovi imaju prave **pikselske teksture** (trava,
+  zemlja, kamen, daske, dijamant, sluz, drvo); razina detalja ovisi
+  o udaljenosti (**T** = visoko/nisko/isključeno).
+- Uz to: lik **Steve** s animacijom hodanja (kamera iz trećeg lica), **ruka**
+  u prvom licu, **zraka svjetionika** na cilju, rotirajuće **zlatne poluge**
+  umjesto novčića, kvadratno **sunce**, **pikselni oblaci** i HUD sa **srcima**.
 - Vrste blokova: čvrsti blokovi (trava/zemlja/kamen/drvo), **ljestve** (penjanje),
   **ograde** (preskakanje), **odskočni blokovi** (katapultiranje) i **novčići**.
 - Kamera je **po zadanome iz prvog lica kao u Minecraftu**, **V** prebacuje na

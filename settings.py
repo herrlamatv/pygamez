@@ -143,9 +143,10 @@ DEFAULTS = {
     # KI-Stärke (0-2)
     "billiard": {"variant": "8ball", "view": "2d", "difficulty": 1},
     # Block Jump: Kamera (first/third), Motion-Blur (0.0-0.8),
-    # Maus-Empfindlichkeit (0.4-2.5), invertierte Maus-Richtung
+    # Maus-Empfindlichkeit (0.4-2.5), invertierte Maus-Richtung,
+    # Texturdetail der Minecraft-Optik (high/low/off)
     "blockjump": {"view": "first", "blur": 0.35, "sens": 1.0,
-                  "mouse_invert": False},
+                  "mouse_invert": False, "textures": "high"},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -325,6 +326,8 @@ def _merge_defaults(data):
                 out["blockjump"]["sens"] = max(0.4, min(2.5, float(blj["sens"])))
             if isinstance(blj.get("mouse_invert"), bool):
                 out["blockjump"]["mouse_invert"] = blj["mouse_invert"]
+            if blj.get("textures") in ("high", "low", "off"):
+                out["blockjump"]["textures"] = blj["textures"]
         ctrl = data.get("controls")
         if isinstance(ctrl, dict):
             for player in ("p1", "p2"):

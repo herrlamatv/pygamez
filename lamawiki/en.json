@@ -1683,7 +1683,10 @@
         "platformer",
         "jump",
         "climb",
-        "parkour"
+        "parkour",
+        "skin",
+        "steve",
+        "textures"
       ],
       "sections": [
         {
@@ -1695,11 +1698,20 @@
           ]
         },
         {
+          "h": "Minecraft look",
+          "body": [
+            "Every block carries a real pixel texture: grass with its green overhang, dirt, stone, oak planks, the diamond block at the goal, slime blocks and wood for ladders and fences.",
+            "On top of that: the Steve figure with a walk cycle in the chase camera, the first-person hand, the beacon beam above the goal, spinning gold ingots as coins, a square sun, pixel clouds and hearts in the HUD.",
+            "Press T to change the texture detail: high, low or off. On slower machines 'low' or 'off' runs noticeably smoother; your choice is saved."
+          ]
+        },
+        {
           "h": "Controls",
           "body": [
             "- WASD or arrow keys: move (relative to where you look). Space: jump. Mouse: look around.",
             "- On a ladder, W climbs up and S climbs down. A spring block launches you high into the air.",
-            "- V = view (first/third person), B = motion blur, C = capture/release mouse, +/- = sensitivity. Esc pauses and frees the mouse."
+            "- V = view (first/third person), B = motion blur, C = capture/release mouse, +/- = sensitivity. Esc pauses and frees the mouse.",
+            "- T = texture detail (high/low/off)."
           ]
         },
         {

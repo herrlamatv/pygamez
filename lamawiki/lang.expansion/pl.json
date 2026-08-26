@@ -1682,7 +1682,10 @@
         "platformówka",
         "skok",
         "wspinaczka",
-        "parkour"
+        "parkour",
+        "skin",
+        "steve",
+        "tekstury"
       ],
       "sections": [
         {
@@ -1694,11 +1697,20 @@
           ]
         },
         {
+          "h": "Wygląd jak w Minecrafcie",
+          "body": [
+            "Każdy blok ma prawdziwą teksturę pikselową: trawa z zielonym nawisem, ziemia, kamień, dębowe deski, blok diamentu przy celu, bloki śluzu oraz drewno na drabiny i płoty.",
+            "Do tego postać Steve'a z animacją chodzenia w kamerze z trzeciej osoby, ręka w widoku z pierwszej osoby, promień sygnalizatora nad celem, obracające się sztabki złota zamiast monet, kwadratowe słońce, pikselowe chmury i serca na HUD.",
+            "Klawisz T zmienia poziom szczegółów tekstur: wysoki, niski lub wyłączony. Na wolniejszych komputerach 'niski' albo 'wyłączony' działa zauważalnie płynniej; wybór jest zapisywany."
+          ]
+        },
+        {
           "h": "Sterowanie",
           "body": [
             "- WASD lub strzałki: ruch (względem kierunku patrzenia). Space: skok. Mysz: rozglądanie się.",
             "- Na drabinie W wspina się w górę, a S schodzi w dół. Blok sprężynowy wyrzuca cię wysoko w powietrze.",
-            "- V = widok (pierwsza/trzecia osoba), B = rozmycie ruchu, C = przechwyć/zwolnij mysz, +/- = czułość. Esc wstrzymuje i zwalnia mysz."
+            "- V = widok (pierwsza/trzecia osoba), B = rozmycie ruchu, C = przechwyć/zwolnij mysz, +/- = czułość. Esc wstrzymuje i zwalnia mysz.",
+            "- T = szczegółowość tekstur (wysoka/niska/wyłączona)."
           ]
         },
         {
