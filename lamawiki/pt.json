@@ -1813,7 +1813,7 @@
           "body": [
             "Minigolf com 360 buracos: 18 feitos à mão e 342 gerados. Os percursos Classic e Pro servem de entrada com nove buracos cada, a Tour oferece 38 percursos de nove buracos gerados com dificuldade crescente, e o Random sorteia nove buracos de todo o conjunto e espelha-os ao acaso.",
             "Os buracos da Tour nascem de uma semente: o percurso 7, buraco 3 fica igual em cada arranque - não é preciso guardar nada. As setas ao lado do número percorrem os 38 percursos e ao lado aparece o par total.",
-            "O objetivo é encaçapar a bola com o menor número de tacadas. Ao fim de oito tacadas a bola é levantada e o buraco conta o mínimo.",
+            "O objetivo é encaçapar a bola com o menor número de tacadas. Por omissão o buraco é levantado ao fim de oito tacadas e conta o mínimo - se preferires jogar até encaçapar, desliga o levantamento nos ajustes (ou com [P]).",
             "A dois, cada um joga o mesmo buraco à vez; o cartão à direita mostra o par e os dois resultados."
           ]
         },

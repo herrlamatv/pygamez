@@ -1816,7 +1816,7 @@
           "body": [
             "Minigolf på 360 banor: 18 handbyggda och 342 genererade. Banorna Classic och Pro introducerar med nio byggda banor var, Touren bjuder på 38 slingor med nio genererade banor var och stigande svårighet, och Random drar nio banor ur alltihop och speglar dem slumpvis.",
             "Tour-banorna kommer från ett frö: slinga 7, bana 3 ser likadan ut vid varje start - inget behöver sparas. Pilarna bredvid numret bläddrar genom de 38 slingorna, och bredvid står totalt par.",
-            "Målet är att sänka bollen på så få slag som möjligt. Efter åtta slag plockas bollen upp och hålet räknas som lägst.",
+            "Målet är att sänka bollen på så få slag som möjligt. Som standard plockas bollen upp efter åtta slag och hålet räknas som lägst - vill du hellre spela tills bollen går i, stäng av Plocka upp i inställningarna (eller med [P]).",
             "Till två spelar båda samma bana efter varandra; scorekortet till höger visar par och båda resultaten."
           ]
         },

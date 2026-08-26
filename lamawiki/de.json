@@ -1818,7 +1818,7 @@
           "body": [
             "Minigolf mit 360 Bahnen: 18 handgebaute und 342 erzeugte. Die Kurse Classic und Pro führen mit je neun gebauten Bahnen ein, die Tour bietet 38 Kurse zu je neun erzeugten Bahnen mit steigender Schwierigkeit, und Random zieht neun Bahnen aus allem zusammen und spiegelt sie zufällig.",
             "Die Tour-Bahnen entstehen aus einem Seed: Kurs 7, Bahn 3 sieht bei jedem Start gleich aus - gespeichert werden muss dafür nichts. Mit den Pfeilen neben der Kursnummer blätterst du durch die 38 Kurse, daneben steht das Gesamt-Par.",
-            "Ziel ist es, den Ball mit möglichst wenigen Schlägen einzulochen. Nach acht Schlägen wird die Bahn aufgenommen und mit dem Mindestwert gewertet.",
+            "Ziel ist es, den Ball mit möglichst wenigen Schlägen einzulochen. Standardmäßig wird eine Bahn nach acht Schlägen aufgenommen und mit dem Mindestwert gewertet - wer lieber bis zum Einlochen weiterspielt, schaltet das Aufnehmen im Setup ab (oder mit [P]).",
             "Zu zweit spielt jeder dieselbe Bahn nacheinander; die Scorekarte rechts zeigt Par und beide Ergebnisse."
           ]
         },

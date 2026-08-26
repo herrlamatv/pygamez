@@ -99,7 +99,8 @@
   "minigolf": {
     "course": "tour",
     "tour": 1,
-    "guide": true
+    "guide": true,
+    "pickup": false
   },
   "pinball": {
     "table": "classic",

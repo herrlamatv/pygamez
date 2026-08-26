@@ -1816,7 +1816,7 @@
           "body": [
             "Minigolf na 360 dołkach: 18 zbudowanych ręcznie i 342 wygenerowane. Pola Classic i Pro wprowadzają po dziewięć zbudowanych dołków, Tour oferuje 38 pól po dziewięć generowanych dołków o rosnącej trudności, a Random losuje dziewięć dołków z całości i odbija je lustrzanie.",
             "Dołki Tour powstają z ziarna: pole 7, dołek 3 wygląda tak samo przy każdym starcie - nic nie trzeba zapisywać. Strzałki obok numeru przewijają 38 pól, a obok widnieje łączny par.",
-            "Celem jest wbicie piłki w jak najmniejszej liczbie uderzeń. Po ośmiu uderzeniach piłka zostaje podniesiona, a dołek liczy się na minimum.",
+            "Celem jest wbicie piłki w jak najmniejszej liczbie uderzeń. Domyślnie po ośmiu uderzeniach dołek zostaje podniesiony i liczy się na minimum - kto woli grać aż do wbicia, wyłącza podnoszenie w ustawieniach (albo klawiszem [P]).",
             "We dwoje każdy gra ten sam dołek po kolei; karta wyników po prawej pokazuje par i oba rezultaty."
           ]
         },

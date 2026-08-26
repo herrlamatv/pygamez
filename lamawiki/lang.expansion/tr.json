@@ -1816,7 +1816,7 @@
           "body": [
             "360 delikli minigolf: 18 tanesi elle tasarlanmış, 342 tanesi üretilmiş. Classic ve Pro parkurları dokuzar elle yapılmış delikle giriş sağlar, Tour giderek zorlaşan dokuzar üretilmiş delikten oluşan 38 parkur sunar, Random ise tüm havuzdan dokuz delik çekip rastgele aynalar.",
             "Tour delikleri bir tohumdan doğar: parkur 7, delik 3 her açılışta aynı görünür - bunun için hiçbir şey kaydedilmez. Parkur numarasının yanındaki oklar 38 parkur arasında gezinir, yanında toplam par yazar.",
-            "Amaç topu mümkün olduğunca az vuruşla deliğe sokmak. Sekiz vuruştan sonra top alınır ve delik en düşük değerle sayılır.",
+            "Amaç topu mümkün olduğunca az vuruşla deliğe sokmak. Öntanımlı olarak sekiz vuruştan sonra top alınır ve delik en düşük değerle sayılır; deliğe girene kadar oynamayı yeğleyenler bu seçeneği ayar ekranından (ya da [P] ile) kapatabilir.",
             "İki kişilik oyunda herkes aynı deliği sırayla oynar; sağdaki skor kartı parı ve iki sonucu birden gösterir."
           ]
         },

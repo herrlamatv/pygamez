@@ -483,6 +483,9 @@ fusionnent.
   joue le même trou à son tour. Points : 600 par trou, ±300 par coup sous/au-dessus
   du par, **500 de plus pour un trou en un**. Le nombre de coups le plus bas par
   parcours est dans la section `minigolf` de `mem.json`.
+- **Le ramassage est désactivable** : par défaut, un trou s'arrête après huit
+  coups et est compté au minimum. Si tu préfères jouer jusqu'à ce que la balle
+  tombe, mets *Ramassage* sur AUS dans les réglages (ou appuie sur **P**).
 
 **Pinball**
 - **Trois tables** : *Classic* (trois bumpers, une série de cibles), *Space*
@@ -1180,6 +1183,9 @@ arma), efectos de explosión, récord.
   cada jugador juega el mismo hoyo por turnos. Puntos: 600 por hoyo, ±300 por
   golpe bajo/sobre par, **500 extra por un hoyo en uno**. El menor número de
   golpes por recorrido está en la sección `minigolf` de `mem.json`.
+- **La recogida se puede desactivar**: por defecto un hoyo termina tras ocho
+  golpes y se puntúa al mínimo. Si prefieres seguir hasta embocar, pon *Recoger
+  bola* en OFF en la pantalla de ajustes (o pulsa **P**).
 
 **Pinball**
 - **Tres mesas**: *Classic* (tres bumpers, una serie de dianas), *Space* (cuatro
@@ -1867,6 +1873,9 @@ melhoria de arma), efeitos de explosão, recorde.
   cada um joga o mesmo buraco à vez. Pontos: 600 por buraco, ±300 por tacada
   abaixo/acima do par, **500 extra por um buraco em um**. O menor número de
   tacadas por percurso fica na secção `minigolf` de `mem.json`.
+- **O levantamento pode ser desligado**: por omissão um buraco termina ao fim
+  de oito tacadas e conta o mínimo. Se preferires jogar até encaçapar, coloca
+  *Levantar bola* em OFF nos ajustes (ou carrega em **P**).
 
 **Pinball**
 - **Três mesas**: *Classic* (três bumpers, um conjunto de alvos), *Space* (quatro
@@ -2669,6 +2678,9 @@ broni), efekty wybuchów, rekord.
   sam dołek po kolei. Punkty: 600 za dołek, ±300 za uderzenie poniżej/powyżej par,
   **500 dodatkowo za hole in one**. Najmniejsza liczba uderzeń na każdym polu
   zapisuje się w sekcji `minigolf` pliku `mem.json`.
+- **Podnoszenie można wyłączyć**: domyślnie dołek kończy się po ośmiu
+  uderzeniach i liczy się na minimum. Kto woli grać aż do wbicia, ustawia
+  *Podnoszenie* na WYŁ w ustawieniach (albo naciska **P**).
 
 **Pinball**
 - **Trzy stoły**: *Classic* (trzy bumpery, jedna seria celów), *Space* (cztery
@@ -3467,6 +3479,9 @@ patlama efektleri, yüksek skor.
   deliği sırayla oynar. Puanlar: delik başına 600, parın altındaki/üstündeki her
   vuruş için ±300, **hole in one için 500 ek puan**. Her parkurun en düşük vuruş
   sayısı `mem.json` içindeki `minigolf` bölümündedir.
+- **Topu alma kapatılabilir**: öntanımlı olarak bir delik sekiz vuruştan sonra
+  biter ve en düşük değerle sayılır. Deliğe girene kadar oynamayı yeğleyenler
+  ayar ekranında *Topu alma* seçeneğini KAPALI yapar (ya da **P** tuşuna basar).
 
 **Pinball**
 - **Üç masa**: *Classic* (üç bumper, bir hedef dizisi), *Space* (romb dizilmiş
@@ -4239,6 +4254,9 @@ eksplosionseffekter, highscore.
   bane efter tur. Point: 600 pr. bane, ±300 pr. slag under/over par, **500 ekstra
   for hole in one**. Det laveste antal slag pr. forløb ligger i afsnittet
   `minigolf` i `mem.json`.
+- **Saml op kan slås fra**: som standard slutter en bane efter otte slag og
+  tæller minimum. Vil du hellere spille videre, til bolden er i hul, så sæt
+  *Saml op* på FRA i opsætningen (eller tryk **P**).
 
 **Pinball**
 - **Tre borde**: *Classic* (tre bumpere, én målrække), *Space* (fire bumpere i
@@ -5006,6 +5024,9 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   den samme banen etter tur. Poeng: 600 per bane, ±300 per slag under/over par,
   **500 ekstra for hole in one**. Laveste slagtall per løype ligger i
   `minigolf`-delen av `mem.json`.
+- **Plukk opp kan slås av**: som standard slutter en bane etter åtte slag og
+  teller minimum. Vil du heller spille til ballen går ned, sett *Plukk opp* til
+  AV i oppsettet (eller trykk **P**).
 
 **Pinball**
 - **Tre bord**: *Classic* (tre bumpere, én målrekke), *Space* (fire bumpere i
@@ -5748,6 +5769,9 @@ explosionseffekter, topplista.
   bana i tur och ordning. Poäng: 600 per bana, ±300 per slag under/över par,
   **500 extra för hole in one**. Lägsta slagantal per slinga ligger i avsnittet
   `minigolf` i `mem.json`.
+- **Plocka upp går att stänga av**: som standard slutar en bana efter åtta slag
+  och räknas som lägst. Vill du hellre spela tills bollen går i, sätt *Plocka
+  upp* på AV i inställningarna (eller tryck **P**).
 
 **Pinball**
 - **Tre bord**: *Classic* (tre bumpers, en målrad), *Space* (fyra bumpers i romb,
@@ -6525,6 +6549,9 @@ räjähdystehosteet, ennätys.
   molemmat pelaavat saman radan vuorotellen. Pisteet: 600 radalta, ±300 jokaisesta
   parin alittavasta/ylittävästä lyönnistä, **500 lisää hole in onesta**. Pienin
   lyöntimäärä kierrosta kohti on tiedoston `mem.json` osiossa `minigolf`.
+- **Noston voi kytkeä pois**: oletuksena rata päättyy kahdeksan lyönnin jälkeen
+  ja lasketaan pienimmällä arvolla. Jos haluat pelata upotukseen asti, aseta
+  *Pallon nosto* asetusruudussa POIS (tai paina **P**).
 
 **Pinball**
 - **Kolme pöytää**: *Classic* (kolme puskuria, yksi maalirivi), *Space* (neljä
@@ -7305,6 +7332,9 @@ zbraně), efekty explozí, nejlepší skóre.
   dráhu po sobě. Body: 600 za dráhu, ±300 za úder pod/nad par, **500 navíc za
   hole in one**. Nejnižší počet úderů na hřiště je v sekci `minigolf` souboru
   `mem.json`.
+- **Zvednutí lze vypnout**: ve výchozím nastavení dráha končí po osmi úderech a
+  počítá se za minimum. Kdo chce hrát až do zahrání, přepne *Zvednutí* v
+  nastavení na VYP (nebo stiskne **P**).
 
 **Pinball**
 - **Tři stoly**: *Classic* (tři bumpery, jedna řada terčů), *Space* (čtyři
@@ -8082,6 +8112,9 @@ nadgradnja orožja), učinki eksplozij, rekord.
   stezo po vrsti. Točke: 600 na stezo, ±300 za udarec pod/nad par, **500 dodatnih
   za hole in one**. Najnižje število udarcev na igrišče je v razdelku `minigolf`
   datoteke `mem.json`.
+- **Pobiranje je mogoče izklopiti**: privzeto se steza konča po osmih udarcih in
+  šteje najmanj. Kdor raje igra do zadetka, nastavi *Pobiranje* v nastavitvah na
+  IZKLOP (ali pritisne **P**).
 
 **Pinball**
 - **Tri mize**: *Classic* (trije odbijači, ena vrsta tarč), *Space* (štirje
@@ -8862,6 +8895,9 @@ nadogradnja oružja), efekti eksplozije, rekord.
   istu stazu jedan za drugim. Bodovi: 600 po stazi, ±300 po udarcu ispod/iznad
   para, **500 dodatnih za hole in one**. Najmanji broj udaraca po terenu nalazi se
   u odjeljku `minigolf` datoteke `mem.json`.
+- **Podizanje se može isključiti**: zadano staza završava nakon osam udaraca i
+  broji se po najmanjoj vrijednosti. Tko radije igra do ubacivanja, u postavkama
+  stavi *Podizanje* na ISKLJ (ili pritisne **P**).
 
 **Pinball**
 - **Tri stola**: *Classic* (tri odbojnika, jedan niz meta), *Space* (četiri

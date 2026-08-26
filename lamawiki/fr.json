@@ -1815,7 +1815,7 @@
           "body": [
             "Du minigolf sur 360 trous : 18 construits à la main et 342 générés. Les parcours Classic et Pro servent d'entrée en matière avec neuf trous chacun, la Tour propose 38 parcours de neuf trous générés à difficulté croissante, et Random tire neuf trous dans l'ensemble en les inversant au hasard.",
             "Les trous de la Tour viennent d'une graine : le parcours 7, trou 3 est identique à chaque démarrage - rien n'a besoin d'être enregistré. Les flèches à côté du numéro font défiler les 38 parcours, le par total s'affiche à côté.",
-            "Le but est de rentrer la balle en le moins de coups possible. Après huit coups la balle est relevée et le trou est compté au minimum.",
+            "Le but est de rentrer la balle en le moins de coups possible. Par défaut, un trou est relevé après huit coups et compté au minimum ; si tu préfères jouer jusqu'à ce que la balle tombe, désactive le ramassage dans les réglages (ou avec [P]).",
             "À deux, chacun joue le même trou l'un après l'autre ; la carte de score à droite montre le par et les deux résultats."
           ]
         },

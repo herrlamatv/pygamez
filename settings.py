@@ -147,9 +147,10 @@ DEFAULTS = {
     # Texturdetail der Minecraft-Optik (high/low/off)
     "blockjump": {"view": "first", "blur": 0.35, "sens": 1.0,
                   "mouse_invert": False, "textures": "high"},
-    # Minigolf: Kurs (classic/pro/tour/random), Tour-Kursnummer und
-    # Ziellinie an/aus
-    "minigolf": {"course": "classic", "tour": 1, "guide": True},
+    # Minigolf: Kurs (classic/pro/tour/random), Tour-Kursnummer, Ziellinie
+    # an/aus und "Aufnehmen" (Bahn nach 8 Schlägen beenden) an/aus
+    "minigolf": {"course": "classic", "tour": 1, "guide": True,
+                 "pickup": True},
     # Pinball: Tisch (classic/space/lama) und Bälle je Partie (3/5)
     "pinball": {"table": "classic", "balls": 3},
     # Bowling: Schwierigkeit (easy/normal/pro) und Zielhilfe an/aus
@@ -343,6 +344,8 @@ def _merge_defaults(data):
                 out["minigolf"]["tour"] = max(1, min(38, mg["tour"]))
             if isinstance(mg.get("guide"), bool):
                 out["minigolf"]["guide"] = mg["guide"]
+            if isinstance(mg.get("pickup"), bool):
+                out["minigolf"]["pickup"] = mg["pickup"]
         pin = data.get("pinball")
         if isinstance(pin, dict):
             if pin.get("table") in ("classic", "space", "lama"):

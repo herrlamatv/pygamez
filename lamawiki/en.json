@@ -1817,7 +1817,7 @@
           "body": [
             "Minigolf across 360 holes: 18 hand-built and 342 generated. The Classic and Pro courses ease you in with nine built holes each, the Tour offers 38 courses of nine generated holes with rising difficulty, and Random draws nine holes from everything and mirrors them at random.",
             "Tour holes come from a seed: course 7, hole 3 looks the same on every start - nothing has to be stored for that. The arrows beside the course number page through the 38 courses, with the total par next to them.",
-            "The goal is to sink the ball in as few strokes as possible. After eight strokes the ball is picked up and the hole is scored at the minimum.",
+            "The goal is to sink the ball in as few strokes as possible. By default a hole is picked up after eight strokes and scored at the minimum - if you would rather keep putting until the ball drops, switch the pick-up off in the setup screen (or with [P]).",
             "In two-player mode each player takes the same hole one after the other; the scorecard on the right shows par and both results."
           ]
         },

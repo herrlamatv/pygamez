@@ -1816,7 +1816,7 @@
           "body": [
             "Minigolf na 360 stezah: 18 ročno zgrajenih in 342 ustvarjenih. Igrišči Classic in Pro uvedeta z devetimi zgrajenimi stezami vsako, Tour ponuja 38 igrišč po devet ustvarjenih stez z naraščajočo težavnostjo, Random pa izžreba devet stez iz vsega skupaj in jih naključno zrcali.",
             "Steze Tour nastanejo iz semena: igrišče 7, steza 3 je ob vsakem zagonu enaka - shranjevati ni treba ničesar. Puščici ob številki listata po 38 igriščih, zraven pa piše skupni par.",
-            "Cilj je spraviti žogico v luknjo s čim manj udarci. Po osmih udarcih se žogica pobere in steza šteje najmanj.",
+            "Cilj je spraviti žogico v luknjo s čim manj udarci. Privzeto se žogica po osmih udarcih pobere in steza šteje najmanj - kdor raje igra do zadetka, pobiranje izklopi v nastavitvah (ali s tipko [P]).",
             "V dvoje vsak igra isto stezo po vrsti; kartica na desni prikazuje par in oba rezultata."
           ]
         },

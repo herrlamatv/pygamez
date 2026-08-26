@@ -542,6 +542,9 @@ Explosions-Effekte, Highscore.
   dieselbe Bahn nacheinander. Punkte: 600 je Bahn, ±300 je Schlag unter/über
   Par, **500 extra für ein Hole-in-One**. Die niedrigste Schlagzahl je Kurs
   steht im Abschnitt `minigolf` von `mem.json`.
+- **Aufnehmen ist abschaltbar**: Standardmäßig endet eine Bahn nach acht
+  Schlägen und wird mit dem Mindestwert gewertet. Wer lieber bis zum Einlochen
+  weiterspielt, stellt *Aufnehmen* im Setup auf AUS (oder drückt **P**).
 
 **Pinball**
 - **Drei Tische**: *Classic* (drei Pop-Bumper, eine Target-Bank), *Space* (vier
@@ -1329,6 +1332,9 @@ explosion effects, high score.
   each player takes the same hole in turn. Points: 600 per hole, ±300 per stroke
   under/over par, **500 extra for a hole in one**. The lowest stroke count per
   course lives in the `minigolf` section of `mem.json`.
+- **Pick-up can be switched off**: by default a hole ends after eight strokes
+  and is scored at the minimum. If you would rather keep putting until the ball
+  drops, set *Pick up* to OFF in the setup screen (or press **P**).
 
 **Pinball**
 - **Three tables**: *Classic* (three pop bumpers, one target bank), *Space*

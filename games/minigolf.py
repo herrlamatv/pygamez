@@ -186,6 +186,9 @@ class MiniGolfGame(Game):
         if self.course not in COURSES:
             self.course = "classic"
         self.guide = bool(gs.get("guide", True))
+        # Aufnehmen: nach MAX_STROKES Schlägen ist die Bahn vorbei. Standard an,
+        # im Setup abschaltbar - dann wird bis zum Einlochen weitergespielt.
+        self.pickup = bool(gs.get("pickup", True))
         self.tour = max(1, min(gen.TOUR_COURSES, int(gs.get("tour", 1) or 1)))
         self._tour_par = gen.course_par(self.tour)
         self.winner = None
@@ -330,24 +333,37 @@ class MiniGolfGame(Game):
 
     # ===================================================== Setup-Screen
     def _build_setup_layout(self):
+        """Fünf Blöcke: Kurs, Tour-Kurs, Ziellinie, Aufnehmen, Start.
+
+        Die Buttonhöhe folgt der Auflösung, damit auch 480x360 alles zeigt.
+        """
         cx = self.width // 2
         bw = min(370, self.width - 50)
-        y0 = int(self.height * 0.26)
         gap = 8
+        top = int(self.height * 0.25)
+        bottom = self.height - 24
+        bh = max(28, min(42, int((bottom - top - 88) / 5)))
+        step = bh + 20          # 20 px lassen Platz für die Beschriftung
 
-        def row(y, n, h=42):
+        def row(y, n, h=None):
+            h = bh if h is None else h
             cw = (bw - gap * (n - 1)) / n
             return [pygame.Rect(int(cx - bw / 2 + i * (cw + gap)), y,
                                 int(cw), h) for i in range(n)]
 
-        self.course_rects = row(y0, 4)
+        y = top
+        self.course_rects = row(y, 4)
+        y += step
         # Tour-Kurs: Pfeil links, Anzeige, Pfeil rechts
-        ty = y0 + 62
-        self.tour_rects = [pygame.Rect(int(cx - bw / 2), ty, 40, 34),
-                           pygame.Rect(int(cx - bw / 2 + 46), ty, int(bw - 92), 34),
-                           pygame.Rect(int(cx + bw / 2 - 40), ty, 40, 34)]
-        self.guide_rects = row(y0 + 124, 2)
-        self.start_rect = pygame.Rect(cx - 95, y0 + 186, 190, 46)
+        self.tour_rects = [pygame.Rect(int(cx - bw / 2), y, 40, bh),
+                           pygame.Rect(int(cx - bw / 2 + 46), y, int(bw - 92), bh),
+                           pygame.Rect(int(cx + bw / 2 - 40), y, 40, bh)]
+        y += step
+        self.guide_rects = row(y, 2)
+        y += step
+        self.pickup_rects = row(y, 2)
+        y += step + 4
+        self.start_rect = pygame.Rect(cx - 95, y, 190, bh + 4)
 
     def _handle_setup(self, event):
         if event.kind == InputEvent.KEYDOWN:
@@ -362,6 +378,8 @@ class MiniGolfGame(Game):
                 self._step_tour(1)
             elif k in ("g", "G"):
                 self._toggle_guide()
+            elif k in ("p", "P"):
+                self._toggle_pickup()
             elif k in ("Return", "space"):
                 self._start_play()
         elif event.kind == InputEvent.MOUSEDOWN:
@@ -383,6 +401,11 @@ class MiniGolfGame(Game):
                     if self.guide != (i == 0):
                         self._toggle_guide()
                     return
+            for i, rc in enumerate(self.pickup_rects):
+                if rc.collidepoint(event.pos):
+                    if self.pickup != (i == 0):
+                        self._toggle_pickup()
+                    return
             if self.start_rect.collidepoint(event.pos):
                 self._start_play()
 
@@ -400,6 +423,11 @@ class MiniGolfGame(Game):
         self._save_setting("guide", self.guide)
         self.play_sound("select")
 
+    def _toggle_pickup(self):
+        self.pickup = not self.pickup
+        self._save_setting("pickup", self.pickup)
+        self.play_sound("select")
+
     def _start_play(self):
         self._new_round()
         self.state = PLAY
@@ -412,6 +440,9 @@ class MiniGolfGame(Game):
             return
         if event.kind == InputEvent.KEYDOWN and event.key in ("g", "G"):
             self._toggle_guide()
+            return
+        if event.kind == InputEvent.KEYDOWN and event.key in ("p", "P"):
+            self._toggle_pickup()
             return
         if self.state == HOLE_DONE:
             if (event.kind == InputEvent.KEYDOWN
@@ -687,7 +718,7 @@ class MiniGolfGame(Game):
                 self.msg = t("golf.penalty")
                 self.msg_t = 2.0
                 self.play_sound("hit")
-                if self.strokes >= MAX_STROKES:
+                if self.pickup and self.strokes >= MAX_STROKES:
                     self._finish_hole(holed=False)
                 else:
                     self.phase = "aim"
@@ -701,7 +732,7 @@ class MiniGolfGame(Game):
         self.charging = False
 
     def _after_shot(self):
-        if self.strokes >= MAX_STROKES:
+        if self.pickup and self.strokes >= MAX_STROKES:
             self.msg = t("golf.max_strokes")
             self.msg_t = 2.4
             self._finish_hole(holed=False)
@@ -1065,9 +1096,9 @@ class MiniGolfGame(Game):
     def _draw_setup(self, s):
         cx = self.width // 2
         title = self._huge.render(t("golf.title"), True, self.accent)
-        s.blit(title, title.get_rect(center=(cx, int(self.height * 0.13))))
+        s.blit(title, title.get_rect(center=(cx, int(self.height * 0.115))))
         sub = self._small.render(t("golf.subtitle"), True, ui.TEXT_DIM)
-        s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.20))))
+        s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.18))))
 
         def label(rects, txt):
             im = self._tiny.render(txt, True, ui.TEXT_DIM)
@@ -1082,6 +1113,10 @@ class MiniGolfGame(Game):
         for i, rc in enumerate(self.guide_rects):
             self._btn(s, rc, t("common.on") if i == 0 else t("common.off"),
                       self.guide == (i == 0))
+        label(self.pickup_rects, t("golf.lbl_pickup"))
+        for i, rc in enumerate(self.pickup_rects):
+            self._btn(s, rc, t("common.on") if i == 0 else t("common.off"),
+                      self.pickup == (i == 0))
         pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=9)
         pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=9)
         st = self.font.render(t("common.start"), True, ui.TEXT)

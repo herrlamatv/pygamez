@@ -30,6 +30,11 @@ Bahnen kommen **342 erzeugte** dazu - zusammen **360 Bahnen in 40 Kursen**.
   eine Zeile mit Pfeilen zum Blättern durch die 38 Tour-Kurse samt Anzeige des
   Gesamt-Pars. Der Bestwert wird je Tour-Kurs einzeln gespeichert.
 - **Random** zieht jetzt aus allen 360 Bahnen statt nur aus den 18 gebauten.
+- **Aufnehmen abschaltbar**: Die Regel *nach acht Schlägen ist die Bahn vorbei*
+  bleibt Standard, lässt sich aber im Setup (oder mit **P**) ausschalten - dann
+  wird bis zum Einlochen weitergespielt. Der Setup-Screen hat dafür eine eigene
+  AN/AUS-Zeile bekommen und passt seine Höhe jetzt an die Auflösung an, damit
+  auch 480x360 alle fünf Blöcke zeigt.
 
 #### Geändert
 - `tests/newgames_audit.py` prüft nicht mehr nur die 18 gebauten Bahnen, sondern
@@ -395,6 +400,11 @@ hand-built holes come **342 generated** ones - **360 holes across 40 courses**.
   and below them a row with arrows to page through the 38 tour courses, showing
   the total par. The best result is stored per tour course.
 - **Random** now draws from all 360 holes instead of just the 18 built ones.
+- **Pick-up can be switched off**: the rule *after eight strokes the hole is
+  over* stays the default but can be turned off in the setup screen (or with
+  **P**) - then you keep putting until the ball drops. The setup screen gained
+  its own ON/OFF row for it and now scales its height with the resolution so
+  that even 480x360 shows all five blocks.
 
 #### Changed
 - `tests/newgames_audit.py` no longer checks only the 18 built holes but **all

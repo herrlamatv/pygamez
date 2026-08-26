@@ -7,7 +7,9 @@ Minigolf  (1) Abschlag und Loch liegen frei (keine Wand/kein Wasser darauf),
           (2) jede der 18 handgebauten Bahnen ist mit hoechstens Par-Schlaegen
               einlochbar - nachgewiesen per Solver, der echte Schlaege simuliert,
           (2b) dasselbe fuer alle 342 erzeugten Tour-Bahnen, die zusaetzlich
-              reproduzierbar sein muessen (gleicher Seed -> gleiche Bahn).
+              reproduzierbar sein muessen (gleicher Seed -> gleiche Bahn),
+          (2c) das "Aufnehmen" nach acht Schlaegen ist Standard, laesst sich
+              aber abschalten - dann wird bis zum Einlochen weitergespielt.
 Pinball   (3) je Tisch verlaesst der Ball mit vollem Plunger die Schussbahn,
           (4) kein Haenger: eine Partie mit 3 Baellen endet von allein,
           (5) ein zu schwacher Schuss laesst sich nachladen (kein Soft-Lock).
@@ -171,6 +173,34 @@ def audit_minigolf():
         holed, strokes = solve(g, hole)
         check(holed, "Bahn %2d: einlochbar in Par %d" % (idx, hole["par"]),
               "kein Weg ins Loch gefunden")
+
+
+def audit_pickup():
+    """Das Aufnehmen nach acht Schlaegen ist Standard, aber abschaltbar."""
+    print("\nMinigolf - Aufnehmen (Option)")
+    check(settings_mod.DEFAULTS["minigolf"]["pickup"] is True,
+          "Aufnehmen ist standardmaessig an")
+    for pickup, want_state, want_strokes in ((True, mg.HOLE_DONE, mg.MAX_STROKES),
+                                             (False, mg.PLAY, 12)):
+        g = golf_game()
+        g.pickup = pickup
+        g.state = mg.PLAY
+        g.hole_idx = 0
+        g._start_hole()
+        for _ in range(12):                  # zwoelf schwache Schlaege nach unten
+            if g.state != mg.PLAY:
+                break
+            g.aim = math.pi / 2
+            g.power = 0.12
+            g._strike()
+            for _ in range(700):
+                g.update(1 / 60.0)
+                if g.phase == "aim" or g.state != mg.PLAY:
+                    break
+        check(g.state == want_state and g.strokes == want_strokes,
+              "Aufnehmen %s -> Bahn endet nach %d Schlaegen"
+              % ("AN " if pickup else "AUS", want_strokes),
+              "state=%s strokes=%d" % (g.state, g.strokes))
 
 
 def audit_tour(sample=None):
@@ -347,6 +377,7 @@ def audit_bowling():
 if __name__ == "__main__":
     t0 = time.time()
     audit_minigolf()
+    audit_pickup()
     audit_tour()
     audit_pinball()
     audit_bowling()
