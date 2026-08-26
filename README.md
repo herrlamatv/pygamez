@@ -1,4 +1,4 @@
-# PyGameZ
+# PyGameZ [[Download Latest!]](https://github.com/herrlamatv/pygamez/raw/refs/heads/master/lastest-build/PyGameZ-latest.exe)
 
 **🌐 Sprache / Language:** **🇩🇪 [Deutsch](#-deutsch)** · **🇬🇧 [English](#-english)** · **🇫🇷 [Français](other.readme.md#-francais)** · **🇪🇸 [Español](other.readme.md#-espanol)** · **🇵🇹 [Português](other.readme.md#-portugues)** · **🇵🇱 [Polski](other.readme.md#-polski)** · **🇹🇷 [Türkçe](other.readme.md#-turkce)** · **🇩🇰 [Dansk](other.readme.md#-dansk)** · **🇳🇴 [Norsk](other.readme.md#-norsk)** · **🇸🇪 [Svenska](other.readme.md#-svenska)** · **🇫🇮 [Suomi](other.readme.md#-suomi)** · **🇨🇿 [Čeština](other.readme.md#-cestina)** · **🇸🇮 [Slovenščina](other.readme.md#-slovenscina)** · **🇭🇷 [Hrvatski](other.readme.md#-hrvatski)** <br> Game Available in : German, English, French, Spanish, Portuguese, Polish, Turkish, Danish, Norwegian, Swedish, Finnish, Czech, Slovenian, Croatian (14 languages)
 
