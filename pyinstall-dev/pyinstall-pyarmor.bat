@@ -14,6 +14,9 @@ REM   3. Spec-Datei mit allen PyInstaller-Optionen erzeugen
 REM   4. pyarmor gen --pack: verschluesselt die Skripte und baut die .exe
 REM   5. Ergebnis nach builds\PyGameZ.exe verschieben, aufraeumen
 REM
+REM  Das Skript liegt in pyinstall-dev\ und wechselt beim Start selbst
+REM  ins Projekt-Root (eine Ebene darueber) - einfach doppelklicken.
+REM
 REM  WICHTIG: Die kostenlose PyArmor-Trial kann keine grossen Skripte
 REM  verarbeiten. Solche Dateien - z.B. snake.py und main.py - werden
 REM  automatisch uebersprungen und bleiben unverschluesselt; das Skript
@@ -24,7 +27,11 @@ REM  Hinweis: KEIN "chcp 65001" und nur ASCII-Zeichen in dieser Datei -
 REM  siehe start.bat.
 REM ===================================================================
 setlocal enabledelayedexpansion
-cd /d "%~dp0"
+REM --- Ins Projekt-Root wechseln -------------------------------------
+REM Dieses Skript liegt in pyinstall-dev\, gebaut wird aber eine Ebene
+REM darueber (dort liegen main.py, .venv, lang\, games\ usw.).
+cd /d "%~dp0.."
+if not exist "main.py" goto no_project
 
 REM --- Python finden: lokale .venv -> sonst anlegen ------------------
 if exist ".venv\Scripts\python.exe" (
@@ -185,6 +192,15 @@ echo ===================================================================
 echo.
 pause
 exit /b 0
+
+:no_project
+echo.
+echo Projektdateien nicht gefunden (main.py fehlt in "%CD%").
+echo Dieses Skript muss im Ordner pyinstall-dev\ direkt im PyGameZ-
+echo Projektordner liegen und von dort gestartet werden.
+echo.
+pause
+exit /b 1
 
 :no_python
 echo.

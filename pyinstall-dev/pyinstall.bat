@@ -8,6 +8,9 @@ REM  - packt alle Daten mit ein: lang\ (inkl. lang.expansion\), lamawiki\*.json
 REM    + lamawiki\lang.expansion\*.json, games\levels\, logo\
 REM  - Ergebnis: builds\PyGameZ.exe  (alles in EINER Datei)
 REM
+REM  Das Skript liegt in pyinstall-dev\ und wechselt beim Start selbst
+REM  ins Projekt-Root (eine Ebene darueber) - einfach doppelklicken.
+REM
 REM  Die .exe laeuft ohne installiertes Python. Einstellungen und
 REM  Highscores (settings.json, mem.json, mem-ngb.json) legt sie beim
 REM  Spielen neben der .exe an.
@@ -16,7 +19,11 @@ REM  Hinweis: KEIN "chcp 65001" und nur ASCII-Zeichen in dieser Datei -
 REM  siehe start.bat.
 REM ===================================================================
 setlocal
-cd /d "%~dp0"
+REM --- Ins Projekt-Root wechseln -------------------------------------
+REM Dieses Skript liegt in pyinstall-dev\, gebaut wird aber eine Ebene
+REM darueber (dort liegen main.py, .venv, lang\, games\ usw.).
+cd /d "%~dp0.."
+if not exist "main.py" goto no_project
 
 REM --- Python finden: lokale .venv -> sonst anlegen ------------------
 if exist ".venv\Scripts\python.exe" (
@@ -98,6 +105,15 @@ echo ===================================================================
 echo.
 pause
 exit /b 0
+
+:no_project
+echo.
+echo Projektdateien nicht gefunden (main.py fehlt in "%CD%").
+echo Dieses Skript muss im Ordner pyinstall-dev\ direkt im PyGameZ-
+echo Projektordner liegen und von dort gestartet werden.
+echo.
+pause
+exit /b 1
 
 :no_python
 echo.
