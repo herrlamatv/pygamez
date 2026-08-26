@@ -9,7 +9,7 @@ Variable ``LOGO_NUMBER``. Der Dateiname folgt immer dem Schema
 
     pygamez{number}-{size}
 
-also z.B. ``pygamez2-512``. Die passende Datei wird pro Groesse automatisch
+also z.B. ``pygamez3-512``. Die passende Datei wird pro Groesse automatisch
 gesucht: zuerst PNG (bevorzugt), dann JPG (Alt-Format).
 
 Warum zwei Wege? (PNG vs. JPG)
@@ -33,7 +33,7 @@ import os
 
 # --- Konfiguration ---------------------------------------------------------
 # Welches Logo? Der Dateiname ergibt sich aus  pygamez{LOGO_NUMBER}-{size}.{ext}
-LOGO_NUMBER = 2
+LOGO_NUMBER = 3
 
 # Verfuegbare Kantenlaengen (px), groesste zuerst.
 LOGO_SIZES = (512, 256, 128)

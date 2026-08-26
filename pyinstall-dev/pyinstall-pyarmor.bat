@@ -80,11 +80,14 @@ if errorlevel 1 (
 if errorlevel 1 goto no_pyarmor
 
 REM --- Icon aus dem Logo erzeugen (optional, braucht Pillow) ---------
+REM Der Dateiname steht NICHT hier drin: logo.py entscheidet ueber
+REM LOGO_NUMBER, welches Logo aktuell ist (PNG bevorzugt, sonst JPG).
+REM So bleibt das Icon richtig, wenn ein neues Logo eingebaut wird.
 if not exist "build" mkdir build
 set "ICON_OPT="
 "%PYEXE%" -c "import PIL" >nul 2>&1
 if errorlevel 1 "%PYEXE%" -m pip install pillow >nul 2>&1
-"%PYEXE%" -c "from PIL import Image; Image.open(r'logo\pygamez2-512.png').save(r'build\pygamez.ico', sizes=[(256,256),(128,128),(64,64),(48,48),(32,32),(16,16)])" >nul 2>&1
+"%PYEXE%" -c "import logo; from PIL import Image; Image.open(logo.find_logo(512)[0]).convert('RGBA').save(r'build\pygamez.ico', sizes=[(256,256),(128,128),(64,64),(48,48),(32,32),(16,16)])" >nul 2>&1
 if exist "build\pygamez.ico" set "ICON_OPT=--icon "%CD%\build\pygamez.ico""
 if not defined ICON_OPT echo Kein Icon erzeugt - baue ohne eigenes Icon.
 
