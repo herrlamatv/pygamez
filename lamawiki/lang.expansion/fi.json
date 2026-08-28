@@ -57,7 +57,10 @@
         "resoluutio",
         "fps",
         "ääni",
-        "kieli"
+        "kieli",
+        "design",
+        "ulkoasu",
+        "teema"
       ],
       "sections": [
         {
@@ -81,6 +84,13 @@
             "Resoluutio määrittää sisäisen pelialueen (480x360 aina 1280x960 asti). Pienempi = kevyempi, suurempi = terävämpi kuva.",
             "Automaattiresoluutio sovittaa pelialueen ikkunan kokoon automaattisesti.",
             "FPS-asetukset (15-120) määrittävät tavoitekuvataajuuden - pienempi FPS säästää virtaa."
+          ]
+        },
+        {
+          "h": "Ulkoasu",
+          "body": [
+            "Ulkoasu-välilehdellä valitset yhden seitsemästä käyttöliittymän ulkoasusta: UI v4.1 (oletus: hillityt tähdet, Saturnus ja musta aukko), neljä kuvioversiota UI v4.1.1-v4.1.4 (kuten v4.1, mutta taustalla laatoitettu siksak-kuvio - musta/antrasiitti, sininen/tummansininen, v4:n indigo mustalla ja v4:n grafiittisävy mustalla), UI v4 (rauhallinen, litteä grafiitti-ilme) ja UI v3 (klassinen käyttöliittymä revontulineen ja hehkuineen).",
+            "Jokainen kortti näyttää pienen esikatselun. Valinta vaikuttaa heti pelialueeseen ja sivupalkkiin ja tallentuu settings.json-tiedostoon."
           ]
         },
         {

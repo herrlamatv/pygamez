@@ -57,7 +57,10 @@
         "ločljivost",
         "fps",
         "zvok",
-        "jezik"
+        "jezik",
+        "design",
+        "videz",
+        "tema"
       ],
       "sections": [
         {
@@ -81,6 +84,13 @@
             "Ločljivost določa notranje igralno območje (480x360 do 1280x960). Manjša = manjša obremenitev, večja = ostrejša slika.",
             "Samodejna ločljivost samodejno prilagodi igralno območje velikosti okna.",
             "Možnosti FPS (15 do 120) določajo ciljno hitrost sličic - manj FPS varčuje z energijo."
+          ]
+        },
+        {
+          "h": "Videz",
+          "body": [
+            "V zavihku Videz izbereš enega od sedmih dizajnov vmesnika: UI v4.1 (privzeto: nevpadljive zvezde, Saturn in črna luknja), štiri vzorčne različice UI v4.1.1 do v4.1.4 (kot v4.1, a s tlakovanim cikcak vzorcem v ozadju - črna/antracitna, modra/temno modra, indigo iz v4 na črni in grafitni ton iz v4 na črni), UI v4 (umirjen, ploski grafitni videz) in UI v3 (klasični vmesnik s polarnim sijem in žarenjem).",
+            "Vsaka kartica prikaže majhen predogled. Izbira takoj velja za igralno območje in stransko vrstico ter se shrani v settings.json."
           ]
         },
         {

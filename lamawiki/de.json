@@ -57,7 +57,10 @@
         "aufloesung",
         "fps",
         "sound",
-        "sprache"
+        "sprache",
+        "design",
+        "erscheinungsbild",
+        "theme"
       ],
       "sections": [
         {
@@ -81,6 +84,13 @@
             "Die Auflösung bestimmt die interne Spielfläche (480x360 bis 1280x960). Kleiner = weniger Rechenlast, größer = schärferes Bild.",
             "Auto-Auflösung passt die Spielfläche automatisch an die Fenstergröße an.",
             "Die FPS-Optionen (15 bis 120) legen die Ziel-Bildrate fest - weniger FPS sparen Strom."
+          ]
+        },
+        {
+          "h": "Erscheinungsbild",
+          "body": [
+            "Im Reiter Erscheinungsbild wählst du eines von sieben UI-Designs: UI v4.1 (Standard: dezente Sterne sowie Saturn und ein Schwarzes Loch), die vier Muster-Varianten UI v4.1.1 bis v4.1.4 (wie v4.1, aber mit gekacheltem Zickzack-Muster als Hintergrund - Schwarz/Anthrazit, Blau/Dunkelblau, das Indigo von v4 auf Schwarz und der Graphit-Ton von v4 auf Schwarz), UI v4 (ruhiges, flaches Graphit-Design) und UI v3 (die klassische UI mit Aurora-Lichtern und Glow).",
+            "Jede Karte zeigt eine kleine Vorschau. Die Wahl gilt sofort für Spielfläche und Sidebar und wird in settings.json gespeichert."
           ]
         },
         {

@@ -75,13 +75,16 @@ RESOLUTIONS = [
 FPS_OPTIONS = [15, 30, 45, 60, 120]
 
 # Verfügbare UI-Designs (siehe ui.py): "v41" = UI v4.1 (Standard, clean +
-# Weltraum-Deko), "modern" = UI v4 (komplett ruhig), "classic" = UI v3
-# (die alte UI mit Sternen/Aurora/Glow). Wählbar im Options-Screen unter
-# "Erscheinungsbild".
-THEMES = ("v41", "modern", "classic")
+# Weltraum-Deko), "v411".."v414" = UI v4.1.1 bis v4.1.4 (v4.1 mit Zickzack-
+# Muster als Hintergrund - schwarz/anthrazit, blau/dunkelblau, v4-Indigo auf
+# Schwarz bzw. v4-Graphit auf Schwarz), "modern" = UI v4 (komplett ruhig),
+# "classic" = UI v3 (die alte UI mit Sternen/Aurora/Glow). Wählbar im
+# Options-Screen unter "Erscheinungsbild".
+THEMES = ("v41", "v411", "v412", "v413", "v414", "modern", "classic")
 
 DEFAULTS = {
-    # UI-Design: "v41" (Standard), "modern" (UI v4) oder "classic" (UI v3).
+    # UI-Design: "v41" (Standard), "v411".."v414" (Muster-Hintergrund),
+    # "modern" (UI v4) oder "classic" (UI v3).
     "theme": "v41",
     # Standardmäßig AUS (Erststart ist leise; im Willkommens-Screen/den Optionen
     # einschaltbar). Bestehende Installationen behalten ihren gespeicherten Wert.

@@ -57,7 +57,10 @@
         "upplösning",
         "fps",
         "ljud",
-        "språk"
+        "språk",
+        "design",
+        "utseende",
+        "tema"
       ],
       "sections": [
         {
@@ -81,6 +84,13 @@
             "Upplösningen bestämmer det interna spelområdet (480x360 upp till 1280x960). Mindre = lägre belastning, större = skarpare bild.",
             "Automatisk upplösning anpassar spelområdet till fönsterstorleken automatiskt.",
             "FPS-alternativen (15 till 120) bestämmer målbildfrekvensen - färre FPS sparar ström."
+          ]
+        },
+        {
+          "h": "Utseende",
+          "body": [
+            "På fliken Utseende väljer du en av sju UI-designer: UI v4.1 (standard: diskreta stjärnor, Saturnus och ett svart hål), de fyra mönstervarianterna UI v4.1.1 till v4.1.4 (som v4.1, men med ett kaklat sicksackmönster som bakgrund - svart/antracit, blått/mörkblått, indigon från v4 på svart och grafittonen från v4 på svart), UI v4 (lugn, platt grafit-look) och UI v3 (det klassiska gränssnittet med norrsken och glöd).",
+            "Varje kort visar en liten förhandsvisning. Valet gäller omedelbart för spelytan och sidofältet och sparas i settings.json."
           ]
         },
         {

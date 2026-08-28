@@ -8,6 +8,42 @@
 
 ## 🇩🇪 Deutsch
 
+### UI v4.1.1 bis v4.1.4: Zickzack-Muster – 2026-08-28
+
+Vier neue Designs im Reiter **Erscheinungsbild** - alle sind exakt UI v4.1,
+nur der Hintergrund ist ein gekacheltes **Zickzack-Muster** statt Verlauf und
+Sternenfeld. Untereinander unterscheiden sie sich allein durch die zwei
+Musterfarben (die erste ist jeweils die dominante).
+
+#### Neu
+- **UI v4.1.1**: **Schwarz** (#000000) auf **Anthrazit** (#424242).
+- **UI v4.1.2**: das **Akzentblau** (91, 141, 239) auf dem dunkleren
+  `ACCENT_SOFT`-Blau (64, 94, 156) - beide Farben gab es schon in der Palette.
+- **UI v4.1.3**: der **Indigo-Akzent von UI v4** (#5b8def) auf Schwarz -
+  die kontrastreichste der vier Varianten.
+- **UI v4.1.4**: der **Graphit-Ton von UI v4** (#252934) auf Schwarz -
+  die dezenteste.
+- `ui.draw_zigzag()` ist ein 1:1-Nachbau der CSS-Vorlage aus drei
+  `conic-gradient`-Ebenen (Kachel 34x17 px). Für weiche Diagonalen wird die
+  Kachel 4-fach übersampelt gezeichnet, einmalig gecacht und dann zeilenweise
+  geblittet - der Hintergrund kostet damit pro Auflösung nur einen Aufbau.
+- Jede Karte im Options-Reiter zeigt ihr Muster in der Mini-Vorschau.
+
+#### Geändert
+- Der Reiter **Erscheinungsbild** ordnet die inzwischen sieben Designs in
+  einem **Raster** an: aus ein bis drei Reihen wird die Aufteilung mit der
+  größten Kartenfläche gewählt (1280x960 und 640x480 ergeben 4 + 3, ganz
+  kleine Auflösungen drei Reihen). Beschreibungen richten ihre Zeilenzahl
+  nach der Kartenhöhe, enden bei Platzmangel mit "..." und lassen der
+  "AKTIV"-Plakette Platz.
+- In den Muster-Themes entfällt das Sternenfeld (auf dem Muster wäre es nur
+  Bildrauschen); **Saturn und Schwarzes Loch bleiben**. Die Vignette ist etwas
+  kräftiger (64 statt 48), damit Reiter und Fußzeile über dem Muster lesbar
+  bleiben.
+- `settings.json` akzeptiert jetzt `"theme": "v411"` bis `"v414"`; alle
+  14 Sprachen haben die neuen Namen und Beschreibungen, das Wiki einen
+  eigenen Abschnitt **Erscheinungsbild**.
+
 ### Minigolf-Tour: 360 Bahnen – 2026-08-26
 
 Minigolf wächst vom Achtzehn-Bahnen-Platz zur **Tour**: zu den 18 handgebauten
@@ -381,6 +417,41 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### UI v4.1.1 to v4.1.4: zigzag pattern – 2026-08-28
+
+Four new designs in the **Appearance** tab - all are exactly UI v4.1, only the
+background is a tiled **zigzag pattern** instead of a gradient and starfield.
+The only difference between them is the pair of pattern colours (the first one
+is the dominant one).
+
+#### Added
+- **UI v4.1.1**: **black** (#000000) on **charcoal** (#424242).
+- **UI v4.1.2**: the **accent blue** (91, 141, 239) on the darker
+  `ACCENT_SOFT` blue (64, 94, 156) - both colours already existed in the
+  palette.
+- **UI v4.1.3**: **UI v4's indigo accent** (#5b8def) on black - the boldest
+  of the four.
+- **UI v4.1.4**: **UI v4's graphite tone** (#252934) on black - the subtlest.
+- `ui.draw_zigzag()` is a 1:1 rebuild of the CSS original made of three
+  `conic-gradient` layers (34x17 px tile). The tile is drawn 4x supersampled
+  for smooth diagonals, cached once and then blitted row by row - so the
+  background costs one build per resolution.
+- Every card in the options tab shows its pattern in the mini preview.
+
+#### Changed
+- The **Appearance** tab now lays the seven designs out in a **grid**: out of
+  one to three rows it picks the split with the largest card area (1280x960
+  and 640x480 both give 4 + 3, very small resolutions three rows).
+  Descriptions match their line count to the card height, end in "..." when
+  space runs out and leave room for the "ACTIVE" badge.
+- The pattern themes drop the starfield (on the pattern it would just be
+  noise); **Saturn and the black hole stay**. The vignette is a little
+  stronger (64 instead of 48) so tabs and footer stay readable on top of the
+  pattern.
+- `settings.json` now accepts `"theme": "v411"` through `"v414"`; all
+  14 languages have the new names and descriptions, and the wiki has its own
+  **Appearance** section.
 
 ### Minigolf Tour: 360 holes – 2026-08-26
 

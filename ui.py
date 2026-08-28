@@ -4,12 +4,20 @@ ui.py
 =====
 Gemeinsames UI-Toolkit für alle Pygame-Screens (Menüs, Overlays, Spiele).
 
-Seit dem UI-Update gibt es DREI wählbare Designs ("Themes"):
+Seit dem UI-Update gibt es SIEBEN wählbare Designs ("Themes"):
 
 - "v41"     (Standard, "UI v4.1"): wie "modern", aber lebendiger - leicht
   blau-violett getönte Palette, dezentes Sternenfeld und auf dem
   Startbildschirm ein Saturn und ein Schwarzes Loch (M87-Stil: dunkler
   Kern, glühender orangener Ring) im Hintergrund.
+- "v411"    ("UI v4.1.1"): wie v4.1, aber statt Sternenhimmel ein
+  gekacheltes Zickzack-Muster in Schwarz/Anthrazit als Hintergrund.
+- "v412"    ("UI v4.1.2"): dasselbe Muster in den Blautönen der Palette
+  (Akzentblau + dunkleres Blau).
+- "v413"    ("UI v4.1.3"): dasselbe Muster im Indigo-Akzent von UI v4
+  auf Schwarz.
+- "v414"    ("UI v4.1.4"): dasselbe Muster im Graphit-Ton von UI v4
+  auf Schwarz.
 - "modern"  ("UI v4"): ruhiges, aufgeräumtes Graphit-Design mit einem
   einzelnen Indigo-Akzent. Flache Panels mit Haarlinien-Rand, dezente
   Hover-Übergänge, keine Deko-Effekte - wirkt clean und professionell.
@@ -17,7 +25,7 @@ Seit dem UI-Update gibt es DREI wählbare Designs ("Themes"):
   "Aurora"-Lichtern, Parallax-Sternenfeld inkl. Sternschnuppen,
   Glow-Buttons, Verlaufstitel mit Leuchten, Funken und Scanlinien-Übergang.
 
-Umgeschaltet wird über set_theme("modern"/"classic") - im Spiel über den
+Umgeschaltet wird über set_theme("v41"/"v411"/...) - im Spiel über den
 Reiter "Erscheinungsbild" im Options-Screen. Da ALLE Module die Farben nur
 über ui.<NAME> (dynamisch) lesen, wirkt der Wechsel sofort überall.
 
@@ -94,6 +102,7 @@ _CLASSIC_FX = dict(
     stars=True, star_bright=1.0,              # Sternenfeld (+ Helligkeit)
     aurora=True, shooting=True,               # Aurora-Lichter/Sternschnuppen
     celestial=False,                          # Saturn + Schwarzes Loch (v4.1)
+    pattern=None,                             # Kachel-Muster (v4.1.x)
     vignette=70,                              # Vignetten-Stärke (Alpha)
     title_glow=True, title_grad=True,         # Titel: Glow + Verlaufstext
     btn_glow=True, btn_arrow=True,            # Buttons: Außen-Glow + Pfeil
@@ -108,6 +117,7 @@ _MODERN_FX = dict(
     stars=False, star_bright=0.0,
     aurora=False, shooting=False,
     celestial=False,
+    pattern=None,
     vignette=42,
     title_glow=False, title_grad=False,
     btn_glow=False, btn_arrow=False,
@@ -125,6 +135,7 @@ _V41_FX = dict(
     stars=True, star_bright=0.55,
     aurora=False, shooting=False,
     celestial=True,
+    pattern=None,
     vignette=48,
     title_glow=False, title_grad=False,
     btn_glow=False, btn_arrow=False,
@@ -157,6 +168,46 @@ _V41_COLORS = dict(
     TEXT_FAINT=(100, 106, 122),
 )
 
+# UI v4.1.1 bis v4.1.4: identisch zu v4.1 - nur der Hintergrund ist ein
+# gekacheltes Zickzack-Muster statt Verlauf + Sternenhimmel. Die Sterne
+# entfallen deshalb (auf dem Muster wären sie nur Bildrauschen), Saturn und
+# Schwarzes Loch bleiben als Erkennungszeichen der v4.1-Familie.
+#
+# Musterfarben (main, alt): "main" ist die dominante Farbe (im CSS #000000),
+# "alt" die zurückhaltendere Grundfarbe (im CSS #424242).
+_V411_PATTERN = ((0, 0, 0), (66, 66, 66))            # Schwarz + Anthrazit
+_V412_PATTERN = ((91, 141, 239), (64, 94, 156))      # ACCENT + ACCENT_SOFT
+# v4.1.3/v4.1.4 nehmen die beiden Farben, die UI v4 ausmachen - den Indigo-
+# Akzent und den neutralen Graphit-Ton - jeweils auf Schwarz.
+_V413_PATTERN = ((91, 141, 239), (0, 0, 0))          # v4-Indigo + Schwarz
+_V414_PATTERN = ((37, 41, 52), (0, 0, 0))            # v4-Graphit + Schwarz
+
+
+def _pattern_fx(pattern):
+    """v4.1-Effekte, aber mit Muster-Hintergrund statt Sternenfeld.
+
+    Die Vignette fällt etwas kräftiger aus als in v4.1: das Muster ist
+    unruhiger als ein Verlauf, und der dunklere Rahmen hält Reiter,
+    Fußzeile & Co. lesbar - die Musterfarben selbst bleiben unangetastet.
+    """
+    d = dict(_V41_FX)
+    d.update(stars=False, star_bright=0.0, vignette=64, pattern=pattern)
+    return d
+
+
+_V411_FX = _pattern_fx(_V411_PATTERN)
+_V412_FX = _pattern_fx(_V412_PATTERN)
+_V413_FX = _pattern_fx(_V413_PATTERN)
+_V414_FX = _pattern_fx(_V414_PATTERN)
+
+# Paletten: bewusst 1:1 die von v4.1 - der einzige Unterschied ist der
+# Hintergrund. So bleiben Panels, Buttons und Spiele-Screens exakt gleich.
+_V411_COLORS = dict(_V41_COLORS)
+_V412_COLORS = dict(_V41_COLORS)
+_V413_COLORS = dict(_V41_COLORS)
+_V414_COLORS = dict(_V41_COLORS)
+
+
 # Passende Farbwerte für die Tkinter-Seite (Sidebar) als Hex-Strings.
 _TK_CLASSIC = dict(
     SIDEBAR="#12151f", HEADER="#0c0f18", CARD="#1a2030",
@@ -188,12 +239,24 @@ _TK_V41 = dict(
     BORDER="#2e3342", GREEN="#58be84", GOLD="#e5c46a", RED="#e06c6c",
 )
 
+# Die Muster-Themes teilen sich die Sidebar-Farben mit v4.1 (nur der
+# Pygame-Hintergrund unterscheidet sich).
+_TK_V411 = dict(_TK_V41)
+_TK_V412 = dict(_TK_V41)
+_TK_V413 = dict(_TK_V41)
+_TK_V414 = dict(_TK_V41)
+
 THEMES = {
     "v41": (_V41_COLORS, _V41_FX, _TK_V41),
+    "v411": (_V411_COLORS, _V411_FX, _TK_V411),
+    "v412": (_V412_COLORS, _V412_FX, _TK_V412),
+    "v413": (_V413_COLORS, _V413_FX, _TK_V413),
+    "v414": (_V414_COLORS, _V414_FX, _TK_V414),
     "modern": (_MODERN_COLORS, _MODERN_FX, _TK_MODERN),
     "classic": (_CLASSIC_COLORS, _CLASSIC_FX, _TK_CLASSIC),
 }
-THEME_NAMES = ("v41", "modern", "classic")
+THEME_NAMES = ("v41", "v411", "v412", "v413", "v414",
+               "modern", "classic")
 DEFAULT_THEME = "v41"
 
 _theme = DEFAULT_THEME
@@ -206,7 +269,7 @@ globals().update(_V41_COLORS)
 
 
 def set_theme(name):
-    """Aktiviert ein Theme ("modern"/"classic") und leert alle Render-Caches."""
+    """Aktiviert ein Theme (Name aus THEME_NAMES) und leert alle Caches."""
     global _theme, _fx, _tk
     if name not in THEMES:
         name = DEFAULT_THEME
@@ -224,12 +287,12 @@ def set_theme(name):
 
 
 def theme_name():
-    """Name des aktiven Themes ('modern' oder 'classic')."""
+    """Name des aktiven Themes (z.B. 'v41', 'v411', 'modern')."""
     return _theme
 
 
 def is_modern():
-    """True in der aufgeräumten Modern-Familie (UI v4 und v4.1).
+    """True in der aufgeräumten Modern-Familie (UI v4, v4.1 und v4.1.x).
 
     Steuert die "cleanen" Zeichenpfade (flache Buttons/Titel/Panels ohne
     Glow und Puls). Was sich v4.1 zusätzlich gönnt (Sterne, Saturn,
@@ -351,12 +414,104 @@ def _gradient(w, h, top, bottom):
     return surf
 
 
+# ---------------------------------------------------------------------------
+#  Zickzack-Muster (UI v4.1.1 bis v4.1.4)
+# ---------------------------------------------------------------------------
+#  Pygame-Nachbau dieses CSS-Musters:
+#
+#      background:
+#        conic-gradient(from 135deg,MAIN 90deg,#0000 0) 17px calc(17px/2),
+#        conic-gradient(from 135deg,ALT  90deg,#0000 0),
+#        conic-gradient(from 135deg at 50% 0,MAIN 90deg,#0000 0) ALT;
+#      background-size: 34px 17px;
+#
+#  Jeder conic-gradient (von 135° über 90°) ist ein nach unten zeigendes
+#  Dreieck ab seinem Mittelpunkt; gezeichnet wird in der CSS-Reihenfolge
+#  (Grundfarbe zuerst, oberste Ebene zuletzt):
+#
+#    1. Grundfläche ALT
+#    2. großes MAIN-Dreieck   (17,0) -> (0,17) / (34,17)      [3. Ebene]
+#    3. kleines ALT-Dreieck   (17,8.5) -> (8.5,17) / (25.5,17)[2. Ebene]
+#    4. MAIN-Dreieck um 17/8.5 versetzt -> zwei Hälften an den
+#       seitlichen Rändern                                    [1. Ebene]
+
+_PATTERN_UNIT = 17          # CSS: background-size 34px 17px
+_pattern_cache = {}         # (main, alt, unit) -> Kachel-Surface
+
+
+def _zigzag_tile(main, alt, unit=_PATTERN_UNIT):
+    """Eine Kachel (2*unit x unit) des Zickzack-Musters, gecacht.
+
+    Für weiche Diagonalen wird 4-fach vergrößert gezeichnet - und zwar
+    gleich ein 3x3-Block, damit beim Verkleinern auch die Ränder korrekte
+    Nachbarpixel haben. Danach wird die mittlere Kachel herausgeschnitten.
+    """
+    key = (main, alt, unit)
+    tile = _pattern_cache.get(key)
+    if tile is not None:
+        return tile
+
+    S = 4                                  # Supersampling
+    u = unit * S                           # Kachelhöhe groß
+    hu = u // 2
+    block = pygame.Surface((6 * u, 3 * u))
+    block.fill(alt)
+    for ty in range(3):
+        for tx in range(3):
+            ox, oy = tx * 2 * u, ty * u
+            # großes MAIN-Dreieck (Spitze oben Mitte -> untere Ecken)
+            pygame.draw.polygon(block, main, [(ox + u, oy), (ox, oy + u),
+                                              (ox + 2 * u, oy + u)])
+            # kleines ALT-Dreieck ab der Kachelmitte
+            pygame.draw.polygon(block, alt, [(ox + u, oy + hu),
+                                             (ox + hu, oy + u),
+                                             (ox + u + hu, oy + u)])
+            # versetzte MAIN-Dreiecke an linkem und rechtem Rand
+            pygame.draw.polygon(block, main, [(ox, oy), (ox + hu, oy + hu),
+                                              (ox, oy + hu)])
+            pygame.draw.polygon(block, main, [(ox + 2 * u, oy),
+                                              (ox + u + hu, oy + hu),
+                                              (ox + 2 * u, oy + hu)])
+    small = pygame.transform.smoothscale(block, (6 * unit, 3 * unit))
+    tile = pygame.Surface((2 * unit, unit))
+    tile.blit(small, (0, 0), (2 * unit, unit, 2 * unit, unit))
+    if len(_pattern_cache) > 8:
+        _pattern_cache.clear()
+    _pattern_cache[key] = tile
+    return tile
+
+
+def draw_zigzag(surface, w, h, main, alt, unit=_PATTERN_UNIT):
+    """Füllt (0,0,w,h) mit dem gekachelten Zickzack-Muster.
+
+    Erst wird eine komplette Zeile zusammengesetzt, die dann nur noch
+    untereinander geblittet wird - das spart bei großen Flächen hunderte
+    Einzel-Blits.
+    """
+    tile = _zigzag_tile(main, alt, unit)
+    tw, th = tile.get_size()
+    row = pygame.Surface((w, th))
+    for x in range(0, w, tw):
+        row.blit(tile, (x, 0))
+    for y in range(0, h, th):
+        surface.blit(row, (0, y))
+
+
 def _base_background(w, h):
-    """Verlauf + Vignette, pro Größe nur einmal berechnet."""
+    """Hintergrundfläche + Vignette, pro Größe nur einmal berechnet.
+
+    Normalfall ist ein vertikaler Verlauf; Themes mit fx('pattern')
+    (UI v4.1.1 bis v4.1.4) bekommen stattdessen das Zickzack-Muster.
+    """
     key = (w, h)
     surf = _bg_cache.get(key)
     if surf is None:
-        surf = _gradient(w, h, BG_TOP, BG_BOTTOM)
+        pat = _fx.get("pattern")
+        if pat:
+            surf = pygame.Surface((w, h))
+            draw_zigzag(surf, w, h, pat[0], pat[1])
+        else:
+            surf = _gradient(w, h, BG_TOP, BG_BOTTOM)
         # Weiche Vignette: klein zeichnen und hochskalieren -> sanfter Verlauf
         # statt harter Ellipsen-Kante (smoothscale interpoliert die Ränder).
         sw, sh = max(8, w // 8), max(8, h // 8)

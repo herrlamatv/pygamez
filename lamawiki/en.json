@@ -57,7 +57,10 @@
         "resolution",
         "fps",
         "sound",
-        "language"
+        "language",
+        "design",
+        "appearance",
+        "theme"
       ],
       "sections": [
         {
@@ -81,6 +84,13 @@
             "The resolution sets the internal play area (480x360 up to 1280x960). Smaller = less load, bigger = sharper image.",
             "Auto-resolution adapts the play area to the window size automatically.",
             "The FPS options (15 to 120) set the target frame rate - fewer FPS saves power."
+          ]
+        },
+        {
+          "h": "Appearance",
+          "body": [
+            "The Appearance tab lets you pick one of seven UI designs: UI v4.1 (default: subtle stars plus Saturn and a black hole), the four pattern variants UI v4.1.1 to v4.1.4 (like v4.1, but with a tiled zigzag pattern as the background - black/charcoal, blue/dark blue, v4's indigo on black and v4's graphite tone on black), UI v4 (a calm, flat graphite look) and UI v3 (the classic UI with aurora lights and glow).",
+            "Every card shows a small preview. The choice applies instantly to the game area and the sidebar and is stored in settings.json."
           ]
         },
         {

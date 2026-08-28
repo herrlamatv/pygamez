@@ -321,16 +321,33 @@ class OptionsScreen(_Screen):
                     y += step
                 panel_for(grp, head)
 
-        else:   # appearance: eine Karte je Design (UI v4.1 / v4 / v3)
-            gap = 16
+        else:   # appearance: eine Karte je Design (v4.1 / v4.1.1 / ... / v3)
+            # Ein bis drei Reihen - gewählt wird die Aufteilung mit der
+            # größten (gedeckelten) Kartenfläche, bei Gleichstand die mit
+            # weniger Reihen. Karten unter 90 px Breite werden stark
+            # abgewertet, damit lieber eine Reihe mehr entsteht.
+            gap = 14
             names = ui.THEME_NAMES
             n = len(names)
-            cw = min(300, (W - 2 * self._left_x - (n - 1) * gap) // n)
-            ch = min(210, H - 104 - 56)
-            total = n * cw + (n - 1) * gap
-            x0 = W // 2 - total // 2
+            avail_w = W - 2 * self._left_x
+            avail_h = H - 104 - 56
+            best = None
+            for rws in (1, 2, 3):
+                cls = -(-n // rws)                   # Spalten, aufgerundet
+                w_ = min(300, (avail_w - (cls - 1) * gap) // cls)
+                h_ = min(210, (avail_h - (rws - 1) * gap) // rws)
+                score = min(w_, 260) if w_ >= 90 else w_ // 4
+                key = (score * min(h_, 200), -rws)
+                if best is None or key > best[0]:
+                    best = (key, rws, cls, w_, h_)
+            _, rows, cols, cw, ch = best
             for i, theme in enumerate(names):
-                add("theme", pygame.Rect(x0 + i * (cw + gap), 104, cw, ch),
+                row, col = divmod(i, cols)
+                in_row = min(cols, n - row * cols)   # letzte Reihe ggf. kürzer
+                total = in_row * cw + (in_row - 1) * gap
+                x0 = W // 2 - total // 2
+                add("theme", pygame.Rect(x0 + col * (cw + gap),
+                                         104 + row * (ch + gap), cw, ch),
                     theme=theme)
 
         # Schliessen-Button unten (auf jedem Reiter sichtbar).
@@ -693,7 +710,7 @@ class OptionsScreen(_Screen):
 
         # Mini-Vorschau des Designs im oberen Kartenbereich.
         pv = pygame.Rect(r.x + 12, r.y + 12, r.w - 24,
-                         max(40, int(r.h * 0.44)))
+                         max(40, int(r.h * 0.42)))
         self._draw_theme_preview(pv, theme)
 
         # Name + kurze Beschreibung darunter.
@@ -701,8 +718,23 @@ class OptionsScreen(_Screen):
                                              True, ui.TEXT)
         s.blit(name, (r.x + 14, pv.bottom + 10))
         dy = pv.bottom + 14 + name.get_height()
-        for line in self._wrap_text(t("options.theme_%s_desc" % theme),
-                                    ui.font(12), r.w - 28)[:3]:
+        # So viele Beschreibungszeilen zeigen, wie unter dem Namen Platz haben
+        # (bei zwei Kartenreihen sind die Karten flacher). Auf der aktiven
+        # Karte bleibt unten eine Zeile für die "AKTIV"-Plakette frei.
+        lh = ui.font(12).get_height() + 2
+        bottom = r.bottom - (32 if active else 10)
+        max_lines = max(1, min(4, (bottom - dy) // lh))
+        lines = self._wrap_text(t("options.theme_%s_desc" % theme),
+                                ui.font(12), r.w - 28)
+        if len(lines) > max_lines:
+            # Abgeschnittener Text bekommt Auslassungspunkte; passt die
+            # letzte Zeile damit nicht mehr, fällt ein Wort weg.
+            lines = lines[:max_lines]
+            words = lines[-1].split()
+            while words and ui.font(12).size(" ".join(words) + " ...")[0] > r.w - 28:
+                words.pop()
+            lines[-1] = " ".join(words) + " ..."
+        for line in lines:
             img = ui.font(12).render(line, True, ui.TEXT_DIM)
             s.blit(img, (r.x + 14, dy))
             dy += img.get_height() + 2
@@ -740,10 +772,16 @@ class OptionsScreen(_Screen):
         w, h = rect.w, rect.h
         pv = pygame.Surface((w, h), pygame.SRCALPHA)
 
-        # Hintergrund-Verlauf in 8 Bändern.
-        for i in range(8):
-            col = ui.mix(colors["BG_TOP"], colors["BG_BOTTOM"], i / 7)
-            pygame.draw.rect(pv, col, (0, h * i // 8, w, h // 8 + 1))
+        if fxx.get("pattern"):
+            # v4.1.1/v4.1.2: gekacheltes Zickzack-Muster (etwas feiner als im
+            # Spiel, damit in der kleinen Vorschau mehrere Reihen zu sehen sind).
+            ui.draw_zigzag(pv, w, h, fxx["pattern"][0], fxx["pattern"][1],
+                           unit=max(6, h // 6))
+        else:
+            # Hintergrund-Verlauf in 8 Bändern.
+            for i in range(8):
+                col = ui.mix(colors["BG_TOP"], colors["BG_BOTTOM"], i / 7)
+                pygame.draw.rect(pv, col, (0, h * i // 8, w, h // 8 + 1))
 
         if fxx["aurora"]:
             # Weiche "Aurora"-Lichter (additiv, nur Classic).

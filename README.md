@@ -652,11 +652,17 @@ Tab-Taste):
   Zeile wählen, Enter drücken, gewünschte Taste drücken (Esc bricht ab).
 - **Erscheinungsbild**: das **UI-Design** wählen – **UI v4.1** (Standard: wie
   UI v4, aber lebendiger – dezente Sterne sowie Saturn und ein Schwarzes Loch
-  im Hintergrund des Startbildschirms), **UI v4** (komplett ruhiges, flaches
-  Graphit-Design mit einem Indigo-Akzent) oder **UI v3** (die bisherige
-  klassische UI mit Sternenhimmel, Aurora-Lichtern und Glow-Effekten). Alle
-  Karten zeigen eine kleine Vorschau; die Wahl wirkt sofort auf die komplette
-  Oberfläche (Spielfläche **und** Sidebar) und wird gespeichert.
+  im Hintergrund des Startbildschirms), **UI v4.1.1** (wie v4.1, statt
+  Sternenhimmel aber ein gekacheltes **Zickzack-Muster** in Schwarz und
+  Anthrazit), **UI v4.1.2** (dasselbe Muster in den Blautönen der Palette –
+  Akzentblau als dominante Farbe, dunkleres Blau als Grundfläche),
+  **UI v4.1.3** (dasselbe Muster im Indigo-Akzent von UI v4 auf Schwarz),
+  **UI v4.1.4** (im Graphit-Ton von UI v4 auf Schwarz), **UI v4**
+  (komplett ruhiges, flaches Graphit-Design mit einem Indigo-Akzent) oder
+  **UI v3** (die bisherige klassische UI mit Sternenhimmel, Aurora-Lichtern
+  und Glow-Effekten). Alle Karten zeigen eine kleine Vorschau; die Wahl wirkt
+  sofort auf die komplette Oberfläche (Spielfläche **und** Sidebar) und wird
+  gespeichert.
 
 Einstellungen werden dauerhaft in `settings.json` gespeichert. Im **Einzelspieler**
 steuern beide Belegungen dieselbe Figur (Standard: WASD *und* Pfeile), im
@@ -1443,11 +1449,16 @@ from the pre-game screen. It is organized into **three tabs**
   press Enter, press the desired key (Esc cancels).
 - **Appearance**: pick the **UI design** – **UI v4.1** (default: like UI v4
   but livelier – subtle stars plus Saturn and a black hole in the start
-  screen's background), **UI v4** (a completely calm, flat graphite look with
-  a single indigo accent) or **UI v3** (the previous classic UI with
-  starfield, aurora lights and glow effects). All cards show a small preview;
-  the choice applies instantly to the whole interface (game area **and**
-  sidebar) and is saved.
+  screen's background), **UI v4.1.1** (like v4.1, but a tiled **zigzag
+  pattern** in black and charcoal instead of the starfield), **UI v4.1.2**
+  (the same pattern in the palette's blues – accent blue as the dominant
+  colour, a darker blue as the base), **UI v4.1.3** (the same pattern in
+  UI v4's indigo accent on black), **UI v4.1.4** (in UI v4's graphite tone
+  on black), **UI v4** (a completely calm, flat graphite look with a single
+  indigo accent) or **UI v3** (the previous classic UI with starfield, aurora
+  lights and glow effects). All cards show a small preview; the choice
+  applies instantly to the whole interface (game area **and** sidebar) and is
+  saved.
 
 Settings are stored permanently in `settings.json`. In **single-player** both
 bindings control the same character (default: WASD *and* arrows), in

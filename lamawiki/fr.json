@@ -57,7 +57,10 @@
         "resolution",
         "fps",
         "son",
-        "langue"
+        "langue",
+        "design",
+        "apparence",
+        "theme"
       ],
       "sections": [
         {
@@ -81,6 +84,13 @@
             "La résolution définit la surface de jeu interne (480x360 à 1280x960). Plus petit = moins de charge, plus grand = image plus nette.",
             "La résolution auto adapte automatiquement la surface de jeu à la taille de la fenêtre.",
             "Les options FPS (15 à 120) fixent la cadence cible - moins de FPS économise l'énergie."
+          ]
+        },
+        {
+          "h": "Apparence",
+          "body": [
+            "L'onglet Apparence permet de choisir l'un des sept designs : UI v4.1 (par défaut : étoiles discrètes, Saturne et un trou noir), les quatre variantes à motif UI v4.1.1 à v4.1.4 (comme v4.1, mais avec un motif zigzag en carrelage en arrière-plan - noir/anthracite, bleu/bleu foncé, l'indigo de v4 sur noir et le graphite de v4 sur noir), UI v4 (look graphite plat et calme) et UI v3 (l'interface classique avec aurores et halos).",
+            "Chaque carte affiche un petit aperçu. Le choix s'applique immédiatement à la zone de jeu et à la barre latérale, et il est enregistré dans settings.json."
           ]
         },
         {

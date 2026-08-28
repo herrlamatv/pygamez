@@ -57,7 +57,10 @@
         "çözünürlük",
         "fps",
         "ses",
-        "dil"
+        "dil",
+        "tasarim",
+        "gorunum",
+        "tema"
       ],
       "sections": [
         {
@@ -81,6 +84,13 @@
             "Çözünürlük dahili oyun alanını belirler (480x360'tan 1280x960'a kadar). Daha küçük = daha az yük, daha büyük = daha keskin görüntü.",
             "Otomatik çözünürlük oyun alanını pencere boyutuna otomatik olarak uyarlar.",
             "FPS seçenekleri (15 ila 120) hedef kare hızını belirler - daha az FPS güç tasarrufu sağlar."
+          ]
+        },
+        {
+          "h": "Görünüm",
+          "body": [
+            "Görünüm sekmesinde yedi arayüz tasarımından birini seçersin: UI v4.1 (öntanımlı: ince yıldızlar, Satürn ve bir kara delik), dört desen çeşidi UI v4.1.1 - v4.1.4 (v4.1 gibi, ancak arka planda döşenmiş zikzak deseniyle - siyah/antrasit, mavi/koyu mavi, siyah üzerine v4 çivit rengi ve siyah üzerine v4 grafit tonu), UI v4 (sakin, düz grafit görünüm) ve UI v3 (aurora ışıkları ve parıltılı klasik arayüz).",
+            "Her kart küçük bir önizleme gösterir. Seçim anında oyun alanına ve kenar çubuğuna uygulanır ve settings.json dosyasına kaydedilir."
           ]
         },
         {

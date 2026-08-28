@@ -57,7 +57,10 @@
         "resolucao",
         "fps",
         "som",
-        "idioma"
+        "idioma",
+        "design",
+        "aparencia",
+        "tema"
       ],
       "sections": [
         {
@@ -81,6 +84,13 @@
             "A resolução determina a área de jogo interna (480x360 a 1280x960). Mais pequena = menos carga, maior = imagem mais nítida.",
             "A resolução automática adapta a área de jogo ao tamanho da janela.",
             "As opções de FPS (15 a 120) definem a taxa de fotogramas alvo - menos FPS poupam energia."
+          ]
+        },
+        {
+          "h": "Aparência",
+          "body": [
+            "O separador Aparência permite escolher um de sete designs: UI v4.1 (padrão: estrelas subtis, Saturno e um buraco negro), as quatro variantes com padrão UI v4.1.1 a v4.1.4 (como a v4.1, mas com um padrão ziguezague em mosaico no fundo - preto/antracite, azul/azul-escuro, o índigo da v4 sobre preto e o grafite da v4 sobre preto), UI v4 (visual grafite plano e calmo) e UI v3 (a interface clássica com auroras e brilhos).",
+            "Cada cartão mostra uma pequena pré-visualização. A escolha aplica-se de imediato à área de jogo e à barra lateral e é guardada em settings.json."
           ]
         },
         {

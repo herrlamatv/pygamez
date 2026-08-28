@@ -57,7 +57,10 @@
         "rezolucija",
         "fps",
         "zvuk",
-        "jezik"
+        "jezik",
+        "dizajn",
+        "izgled",
+        "tema"
       ],
       "sections": [
         {
@@ -81,6 +84,13 @@
             "Rezolucija postavlja unutarnje igralište (480x360 do 1280x960). Manja = manje opterećenje, veća = oštrija slika.",
             "Automatska rezolucija sama prilagođava igralište veličini prozora.",
             "Opcije FPS-a (15 do 120) postavljaju ciljnu brzinu sličica - manje FPS-a štedi energiju."
+          ]
+        },
+        {
+          "h": "Izgled",
+          "body": [
+            "Na kartici Izgled biraš jedan od sedam dizajna sučelja: UI v4.1 (zadano: suptilne zvijezde, Saturn i crna rupa), četiri varijante s uzorkom UI v4.1.1 do v4.1.4 (kao v4.1, ali s popločanim cik-cak uzorkom u pozadini - crna/antracit, plava/tamnoplava, indigo iz v4 na crnoj i grafitni ton iz v4 na crnoj), UI v4 (smiren, plosnat grafitni izgled) i UI v3 (klasično sučelje s aurorama i sjajem).",
+            "Svaka kartica prikazuje malu pretpreglednu sličicu. Odabir odmah vrijedi za područje igre i bočnu traku te se sprema u settings.json."
           ]
         },
         {
