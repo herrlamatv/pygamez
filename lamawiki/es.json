@@ -1526,6 +1526,174 @@
       ]
     },
     {
+      "id": "chess",
+      "category": "games",
+      "game": "ChessGame",
+      "title": "Ajedrez",
+      "keywords": [
+        "ajedrez",
+        "chess",
+        "mate",
+        "enroque",
+        "al paso",
+        "ia"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "Ajedrez con el reglamento completo: todos los movimientos, enroque corto y largo, captura al paso y coronación del peón eligiendo dama, torre, alfil o caballo.",
+            "La partida termina en jaque mate o en tablas - por ahogado, la regla de las 50 jugadas, triple repetición o material insuficiente.",
+            "En un jugador eliges fuerza y color en la preparación; a dos jugáis por turnos en el mismo ordenador."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- Ratón: haz clic en una pieza tuya y luego en la casilla de destino. Las casillas válidas y la última jugada se resaltan.",
+            "- Teclado: [Flechas] o [WASD] mueven el marco, [Espacio] o [Intro] selecciona y mueve.",
+            "- Al coronar aparecen las cuatro piezas - basta con hacer clic.",
+            "- Tras la partida: [Intro] nueva partida, [S] volver a la preparación (solo un jugador)."
+          ]
+        },
+        {
+          "h": "Fuerza de la IA y puntos",
+          "body": [
+            "Seis niveles, de Principiante a Maestro: Principiante juega al azar, los niveles medios buscan de una a tres medias jugadas y fallan a propósito, Maestro busca más hondo y termina las capturas con una búsqueda de quietud.",
+            "Cada búsqueda tiene un límite de tiempo y de nodos para que la interfaz nunca se congele.",
+            "La puntuación cuenta tus victorias contra la IA en esta sesión; el modo de dos jugadores no puntúa.",
+            "Consejo: desarrolla pronto las piezas, enroca y coloca las torres en columnas abiertas."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "muehle",
+      "category": "games",
+      "game": "MuehleGame",
+      "title": "Molino",
+      "keywords": [
+        "molino",
+        "morris",
+        "doble molino",
+        "volar",
+        "fichas",
+        "ia"
+      ],
+      "sections": [
+        {
+          "h": "Las tres fases",
+          "body": [
+            "- Colocar: ambos colocan por turnos sus nueve fichas en puntos libres.",
+            "- Mover: después, una ficha se desliza por una línea hasta un punto libre vecino.",
+            "- Volar: quien se queda con tres fichas puede saltar a cualquier punto libre. Esta regla se puede desactivar en la preparación.",
+            "Pierde quien baja de tres fichas o ya no puede mover."
+          ]
+        },
+        {
+          "h": "Molinos y controles",
+          "body": [
+            "Tres fichas propias en línea forman un molino: retiras enseguida una ficha rival. Las fichas de un molino rival cerrado son intocables mientras haya otras - los objetivos permitidos se resaltan.",
+            "- Ratón: haz clic en un punto libre. Para mover, elige primero tu ficha y luego el destino; los destinos posibles se iluminan.",
+            "- [Esc] cancela una selección hecha sin querer.",
+            "- Tras la ronda: [Intro] nueva ronda, [S] volver a la preparación (solo un jugador)."
+          ]
+        },
+        {
+          "h": "IA y puntos",
+          "body": [
+            "Tres fuerzas mediante minimax con poda alfa-beta. Valora material, molinos cerrados, movilidad y dobles molinos abiertos - con distinto peso según la fase; el nivel fácil falla a propósito.",
+            "La puntuación cuenta tus victorias contra la IA en esta sesión; el modo de dos jugadores no puntúa.",
+            "Consejo: un doble molino - dos molinos que se abren y cierran alternativamente - decide casi todas las partidas."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simon",
+      "category": "games",
+      "game": "SimonGame",
+      "title": "Simon",
+      "keywords": [
+        "simon",
+        "memoria",
+        "secuencia",
+        "paneles",
+        "duelo",
+        "senso"
+      ],
+      "sections": [
+        {
+          "h": "Modos de juego",
+          "body": [
+            "- Clásico: repite la secuencia exactamente. Cada ronda añade un panel.",
+            "- Speed: como Clásico, pero la reproducción se acelera cada ronda.",
+            "- Reverse: la secuencia hay que introducirla al revés.",
+            "- Duelo: dos jugadores construyen la secuencia por turnos - repetir todo y añadir un panel. Quien se equivoca pierde.",
+            "- Mixto: el modo cambia cada ronda entre Clásico, Speed y Reverse."
+          ]
+        },
+        {
+          "h": "Sonido, paneles y controles",
+          "body": [
+            "El número de paneles - 4, 6 o 9 - ajusta la dificultad.",
+            "El sonido está apagado (solo colores), encendido (cada panel tiene su nota) o mixto, con rondas con sonido y rondas sin él. El interruptor de sonido de las opciones tiene prioridad.",
+            "- Ratón: haz clic en un panel. Teclado: las teclas [1] a [9].",
+            "- Durante la reproducción el juego ignora las pulsaciones - espera tu turno.",
+            "- Tras un fallo: [Intro] otra vez, [S] volver a la preparación."
+          ]
+        },
+        {
+          "h": "Puntos y consejos",
+          "body": [
+            "La puntuación es la secuencia más larga repetida sin fallos; el duelo no puntúa.",
+            "Consejo: repite los colores o los números mentalmente. Con sonido se memoriza mucho mejor, por eso el ajuste mixto es el ejercicio más duro."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billiard",
+      "category": "games",
+      "game": "BilliardGame",
+      "title": "Billar",
+      "keywords": [
+        "billar",
+        "pool",
+        "8-ball",
+        "9-ball",
+        "taco",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Variantes",
+          "body": [
+            "- Bola 8: mete primero todo tu grupo - lisas o rayadas - y luego la negra. El grupo se asigna con la primera bola metida legalmente.",
+            "- Bola 9: golpea siempre primero la bola más baja; quien mete la 9 legalmente gana.",
+            "- Práctica: sin reglas ni rival - mete tantas bolas como puedas. Con la mesa vacía se vuelve a armar y el conteo sigue."
+          ]
+        },
+        {
+          "h": "Golpear y vistas",
+          "body": [
+            "- Ratón: mueve la puntería, mantén el botón izquierdo para cargar fuerza y suelta para golpear.",
+            "- Teclado: [Izquierda] y [Derecha] apuntan, [Arriba] y [Abajo] regulan la fuerza, [Espacio] golpea.",
+            "- Tras una falta la blanca queda en mano: colócala en un hueco libre con el ratón y haz clic.",
+            "- [V] cambia la vista: 2D desde arriba, 3D en perspectiva fija o Libre - allí giras la cámara alrededor de la mesa con el botón derecho pulsado. La elección se guarda."
+          ]
+        },
+        {
+          "h": "IA y puntos",
+          "body": [
+            "Hay tres fuerzas de IA; a dos jugadores golpeáis por turnos en el mismo ordenador.",
+            "La puntuación cuenta las partidas ganadas contra la IA, o las bolas metidas en el modo práctica.",
+            "Tras la partida: [Intro] nueva partida, [S] volver a la preparación."
+          ]
+        }
+      ]
+    },
+    {
       "id": "slidepuzzle",
       "category": "games",
       "game": "SlidingPuzzleGame",

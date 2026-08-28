@@ -204,13 +204,18 @@ class Game:
         import achievements
         achievements.check_stats()
 
-    def ach_event(self, event_id):
+    def ach_event(self, event_id, value=None):
         """Löst ein Erfolgs-Ereignis aus (z.B. 'kniffel_five').
 
         Die bekannten Ereignisse stehen in achievements.py; unbekannte werden
         ignoriert. Bereits freigeschaltete Erfolge lösen nicht erneut aus.
+
+        'value' ist der erreichte Wert für Erfolge mit Ziel-Marke (z.B.
+        ach_event("bowl_200", 214) oder ach_event("poker_rich", chips)).
+        Ohne Wert schalten solche Erfolge nie frei - siehe
+        achievements.event().
         """
         if self.is_menu:
             return
         import achievements
-        achievements.event(event_id)
+        achievements.event(event_id, value)

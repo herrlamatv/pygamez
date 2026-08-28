@@ -1529,6 +1529,174 @@
       ]
     },
     {
+      "id": "chess",
+      "category": "games",
+      "game": "ChessGame",
+      "title": "Schach",
+      "keywords": [
+        "schach",
+        "chess",
+        "matt",
+        "rochade",
+        "en passant",
+        "ki"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Schach mit vollständigem Regelsatz: alle Figurenzüge, kurze und lange Rochade, En Passant und Bauernumwandlung mit Auswahl von Dame, Turm, Läufer oder Springer.",
+            "Die Partie endet mit Schachmatt oder Remis - durch Patt, die 50-Züge-Regel, dreifache Stellungswiederholung oder ungenügendes Material.",
+            "Im Einzelspieler wählst du im Setup Stärke und Farbe; zu zweit zieht ihr abwechselnd am selben Rechner."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Maus: eigene Figur anklicken, dann das Zielfeld. Mögliche Ziele und der letzte Zug sind farbig markiert.",
+            "- Tastatur: [Pfeile] oder [WASD] bewegen den Auswahlrahmen, [Leertaste] oder [Enter] wählt aus und zieht.",
+            "- Bei einer Umwandlung erscheint die Figurenauswahl - einfach anklicken.",
+            "- Nach der Partie: [Enter] neue Partie, [S] zurück zum Setup (nur Einzelspieler)."
+          ]
+        },
+        {
+          "h": "KI-Stärken & Punkte",
+          "body": [
+            "Sechs Stufen von Anfänger bis Meister: Anfänger zieht zufällig, die mittleren Stufen suchen ein bis drei Halbzüge tief und patzen absichtlich, Meister rechnet am tiefsten und spielt Schlagzüge in einer Ruhesuche zu Ende.",
+            "Jede Suche hat ein Zeit- und Knotenbudget, damit die Oberfläche nie einfriert.",
+            "Der Highscore zählt deine Siege gegen die KI in dieser Sitzung; der 2-Spieler-Modus wird nicht gewertet.",
+            "Tipp: Figuren früh entwickeln, rochieren und die Türme auf offene Linien stellen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "muehle",
+      "category": "games",
+      "game": "MuehleGame",
+      "title": "Mühle",
+      "keywords": [
+        "mühle",
+        "muehle",
+        "morris",
+        "zwickmühle",
+        "springen",
+        "ki"
+      ],
+      "sections": [
+        {
+          "h": "Die drei Phasen",
+          "body": [
+            "- Setzen: Beide Seiten setzen abwechselnd ihre neun Steine auf freie Punkte.",
+            "- Ziehen: Danach wandert ein eigener Stein entlang einer Linie auf einen benachbarten freien Punkt.",
+            "- Springen: Wer nur noch drei Steine hat, darf auf jeden freien Punkt springen. Diese Regel lässt sich im Setup abschalten.",
+            "Verloren hat, wer unter drei Steine fällt oder keinen Zug mehr machen kann."
+          ]
+        },
+        {
+          "h": "Mühlen & Steuerung",
+          "body": [
+            "Drei eigene Steine auf einer Linie sind eine Mühle: Du entfernst sofort einen gegnerischen Stein. Steine aus einer geschlossenen gegnerischen Mühle sind dabei tabu, solange es andere gibt - erlaubte Ziele werden markiert.",
+            "- Maus: freien Punkt anklicken. Zum Ziehen erst den eigenen Stein wählen, dann das Ziel; mögliche Ziele leuchten auf.",
+            "- [Esc] hebt eine versehentliche Auswahl wieder auf.",
+            "- Nach der Runde: [Enter] neue Runde, [S] zurück zum Setup (nur Einzelspieler)."
+          ]
+        },
+        {
+          "h": "KI & Punkte",
+          "body": [
+            "Drei Stärken über Minimax mit Alpha-Beta-Schnitt. Bewertet werden Material, geschlossene Mühlen, Beweglichkeit und offene Zwickmühlen - je nach Spielphase unterschiedlich gewichtet; die leichte Stufe patzt absichtlich.",
+            "Der Highscore zählt deine Siege gegen die KI in dieser Sitzung; Mehrspieler wird nicht gewertet.",
+            "Tipp: Eine Zwickmühle - zwei Mühlen, die sich abwechselnd öffnen und schließen - entscheidet fast jede Partie."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simon",
+      "category": "games",
+      "game": "SimonGame",
+      "title": "Simon",
+      "keywords": [
+        "simon",
+        "senso",
+        "merken",
+        "folge",
+        "gedächtnis",
+        "duell"
+      ],
+      "sections": [
+        {
+          "h": "Spielmodi",
+          "body": [
+            "- Klassisch: die Folge exakt nachtippen. Jede Runde kommt ein Feld dazu.",
+            "- Speed: wie Klassisch, die Wiedergabe wird aber von Runde zu Runde schneller.",
+            "- Reverse: die Folge muss rückwärts eingegeben werden.",
+            "- Duell: zwei Spieler bauen die Folge abwechselnd auf - erst alles nachtippen, dann ein Feld anhängen. Wer sich vertippt, verliert.",
+            "- Gemischt: der Modus wechselt jede Runde zwischen Klassisch, Speed und Reverse."
+          ]
+        },
+        {
+          "h": "Ton, Felder & Steuerung",
+          "body": [
+            "Die Feldanzahl 4, 6 oder 9 stellt die Schwierigkeit ein.",
+            "Der Ton ist wahlweise aus (nur Farben), an (jedes Feld hat einen eigenen Klang) oder gemischt - dann klingt mal die eine, mal die andere Runde. Der Sound-Schalter in den Optionen hat Vorrang.",
+            "- Maus: Feld anklicken. Tastatur: die Zifferntasten [1] bis [9].",
+            "- Während der Wiedergabe nimmt das Spiel keine Eingaben an - erst wenn du an der Reihe bist.",
+            "- Nach einem Fehler: [Enter] nochmal, [S] zurück zum Setup."
+          ]
+        },
+        {
+          "h": "Punkte & Tipps",
+          "body": [
+            "Der Highscore ist die längste fehlerfrei wiederholte Folge; das Duell wird nicht gewertet.",
+            "Tipp: Sprich die Farben oder Zahlen innerlich mit. Mit Ton merkt es sich deutlich leichter - deshalb ist die gemischte Einstellung die härteste Übung."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billiard",
+      "category": "games",
+      "game": "BilliardGame",
+      "title": "Billard",
+      "keywords": [
+        "billard",
+        "pool",
+        "8-ball",
+        "9-ball",
+        "queue",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Varianten",
+          "body": [
+            "- 8-Ball: erst die eigene Gruppe komplett versenken - Volle oder Halbe -, dann die Schwarze. Die Gruppe wird mit dem ersten regulären Treffer zugeteilt.",
+            "- 9-Ball: immer zuerst die niedrigste Kugel treffen; wer die 9 regulär versenkt, gewinnt.",
+            "- Übung: keine Regeln, kein Gegner - versenke so viele Kugeln wie möglich. Ist der Tisch leer, wird neu aufgebaut und weitergezählt."
+          ]
+        },
+        {
+          "h": "Stoßen & Ansichten",
+          "body": [
+            "- Maus: bewegt das Ziel, linke Taste gedrückt halten lädt die Stärke, Loslassen stößt.",
+            "- Tastatur: [Links] und [Rechts] zielen, [Hoch] und [Runter] regeln die Stärke, [Leertaste] stößt.",
+            "- Nach einem Foul liegt die Weiße in der Hand: mit der Maus an eine freie Stelle setzen und klicken.",
+            "- [V] wechselt die Ansicht: 2D von oben, 3D als feste Schrägansicht oder Frei - dort drehst du die Kamera mit gedrückter rechter Maustaste um den Tisch. Die Wahl wird gespeichert."
+          ]
+        },
+        {
+          "h": "KI & Punkte",
+          "body": [
+            "Gegen die KI gibt es drei Stärken; zu zweit stoßt ihr abwechselnd am selben Rechner.",
+            "Der Highscore zählt die gewonnenen Partien gegen die KI, im Übungsmodus die versenkten Kugeln.",
+            "Nach der Partie: [Enter] neue Partie, [S] zurück zum Setup."
+          ]
+        }
+      ]
+    },
+    {
       "id": "slidepuzzle",
       "category": "games",
       "game": "SlidingPuzzleGame",

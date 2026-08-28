@@ -1528,6 +1528,174 @@
       ]
     },
     {
+      "id": "chess",
+      "category": "games",
+      "game": "ChessGame",
+      "title": "Satranç (Chess)",
+      "keywords": [
+        "satranç",
+        "chess",
+        "mat",
+        "rok",
+        "geçerken alma",
+        "yapay zeka"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Tam kurallı satranç: bütün taş hamleleri, kısa ve uzun rok, geçerken alma ve piyon terfisinde vezir, kale, fil veya at seçimi.",
+            "Oyun şah mat ya da beraberlikle biter - pat, 50 hamle kuralı, üç kez tekrar veya yetersiz materyal.",
+            "Tek kişilikte hazırlık ekranında güç ve renk seçersin; iki kişilikte aynı bilgisayarda sırayla oynarsınız."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Fare: önce kendi taşına, sonra hedef kareye tıkla. Geçerli kareler ve son hamle renkli gösterilir.",
+            "- Klavye: [Yön tuşları] veya [WASD] seçim çerçevesini taşır, [Boşluk] ya da [Enter] seçer ve oynar.",
+            "- Terfide dört taş belirir - tıklaman yeter.",
+            "- Oyun bitince: [Enter] yeni oyun, [S] hazırlığa dön (yalnız tek kişilik)."
+          ]
+        },
+        {
+          "h": "Yapay zeka gücü ve puan",
+          "body": [
+            "Acemiden Ustaya altı kademe: Acemi rastgele oynar, orta kademeler bir ila üç yarım hamle derinliğinde arar ve bilerek hata yapar, Usta en derin arar ve alma dizilerini sakinlik aramasıyla bitirir.",
+            "Her aramanın süre ve düğüm bütçesi vardır, böylece arayüz asla donmaz.",
+            "Yüksek puan bu oturumda yapay zekaya karşı kazandığın oyunları sayar; iki kişilik mod puanlanmaz.",
+            "İpucu: taşları erken geliştir, rok yap ve kaleleri açık sütunlara koy."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "muehle",
+      "category": "games",
+      "game": "MuehleGame",
+      "title": "Dokuz Taş (Nine Men's Morris)",
+      "keywords": [
+        "dokuz taş",
+        "değirmen",
+        "morris",
+        "çifte değirmen",
+        "uçma",
+        "yapay zeka"
+      ],
+      "sections": [
+        {
+          "h": "Üç aşama",
+          "body": [
+            "- Yerleştirme: iki taraf sırayla dokuz taşını boş noktalara koyar.",
+            "- Kaydırma: sonra bir taş çizgi boyunca komşu boş bir noktaya kayar.",
+            "- Uçma: yalnızca üç taşı kalan oyuncu istediği boş noktaya atlayabilir. Bu kural hazırlık ekranından kapatılabilir.",
+            "Üç taşın altına düşen ya da hamlesi kalmayan kaybeder."
+          ]
+        },
+        {
+          "h": "Değirmenler ve kontroller",
+          "body": [
+            "Bir çizgide üç kendi taşın bir değirmendir: hemen bir rakip taşı çıkarırsın. Kapalı bir rakip değirmenindeki taşlar, başka taş varken dokunulmazdır - izin verilen hedefler işaretlenir.",
+            "- Fare: boş bir noktaya tıkla. Kaydırmak için önce kendi taşını, sonra hedefi seç; olası hedefler yanar.",
+            "- [Esc] yanlışlıkla yapılan seçimi geri alır.",
+            "- El bitince: [Enter] yeni el, [S] hazırlığa dön (yalnız tek kişilik)."
+          ]
+        },
+        {
+          "h": "Yapay zeka ve puan",
+          "body": [
+            "Alfa-beta budamalı minimax ile üç güç kademesi. Materyal, kapalı değirmenler, hareket serbestliği ve açık çifte değirmenler değerlendirilir - her aşamada farklı ağırlıkla; kolay kademe bilerek hata yapar.",
+            "Yüksek puan bu oturumda yapay zekaya karşı kazandığın elleri sayar; çok oyunculu mod puanlanmaz.",
+            "İpucu: çifte değirmen - dönüşümlü açılıp kapanan iki değirmen - neredeyse her oyunu belirler."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simon",
+      "category": "games",
+      "game": "SimonGame",
+      "title": "Simon",
+      "keywords": [
+        "simon",
+        "hafıza",
+        "dizi",
+        "alanlar",
+        "düello",
+        "senso"
+      ],
+      "sections": [
+        {
+          "h": "Oyun modları",
+          "body": [
+            "- Klasik: diziyi birebir tekrarla. Her turda bir alan eklenir.",
+            "- Speed: Klasik gibi, ama gösterim her turda hızlanır.",
+            "- Reverse: dizi tersten girilmelidir.",
+            "- Düello: iki oyuncu diziyi sırayla kurar - önce hepsini tekrarla, sonra bir alan ekle. Yanılan kaybeder.",
+            "- Karışık: mod her turda Klasik, Speed ve Reverse arasında değişir."
+          ]
+        },
+        {
+          "h": "Ses, alanlar ve kontroller",
+          "body": [
+            "Alan sayısı - 4, 6 veya 9 - zorluğu belirler.",
+            "Ses kapalı (yalnız renkler), açık (her alanın kendi tonu var) ya da karışık olabilir; karışıkta bazı turlar sesli, bazıları sessizdir. Seçeneklerdeki ses anahtarı önceliklidir.",
+            "- Fare: bir alana tıkla. Klavye: [1] ile [9] arası rakam tuşları.",
+            "- Gösterim sürerken oyun giriş almaz - sıranı bekle.",
+            "- Hatadan sonra: [Enter] tekrar, [S] hazırlığa dön."
+          ]
+        },
+        {
+          "h": "Puan ve ipuçları",
+          "body": [
+            "Yüksek puan, hatasız tekrarladığın en uzun dizidir; düello puanlanmaz.",
+            "İpucu: renkleri ya da sayıları içinden söyle. Sesle ezberlemek çok daha kolaydır - bu yüzden karışık ayar en zorudur."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billiard",
+      "category": "games",
+      "game": "BilliardGame",
+      "title": "Bilardo (Billiards)",
+      "keywords": [
+        "bilardo",
+        "pool",
+        "8-ball",
+        "9-ball",
+        "isteka",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Çeşitler",
+          "body": [
+            "- 8-ball: önce kendi grubunu bitir - düz ya da çizgili - sonra siyahı. Grup, ilk kurallı deliğe atışta belirlenir.",
+            "- 9-ball: her zaman önce en küçük numaralı topa vur; 9'u kurallı deliğe atan kazanır.",
+            "- Alıştırma: kural ve rakip yok - olabildiğince çok top delikle. Masa boşalınca yeniden dizilir ve sayım sürer."
+          ]
+        },
+        {
+          "h": "Vuruş ve görünümler",
+          "body": [
+            "- Fare: nişanı gezdirir, sol tuşu basılı tutmak gücü doldurur, bırakmak vurur.",
+            "- Klavye: [Sol] ve [Sağ] nişan alır, [Yukarı] ve [Aşağı] gücü ayarlar, [Boşluk] vurur.",
+            "- Fauldan sonra beyaz eldedir: fareyle boş bir yere koy ve tıkla.",
+            "- [V] görünümü değiştirir: yukarıdan 2D, sabit açılı 3D veya Serbest - orada kamerayı sağ tuş basılıyken masanın çevresinde döndürürsün. Seçim kaydedilir."
+          ]
+        },
+        {
+          "h": "Yapay zeka ve puan",
+          "body": [
+            "Üç yapay zeka kademesi vardır; iki kişide aynı bilgisayarda sırayla vurursunuz.",
+            "Yüksek puan yapay zekaya karşı kazanılan partileri, alıştırma modunda ise deliklenen topları sayar.",
+            "Parti bitince: [Enter] yeni parti, [S] hazırlığa dön."
+          ]
+        }
+      ]
+    },
+    {
       "id": "slidepuzzle",
       "category": "games",
       "game": "SlidingPuzzleGame",

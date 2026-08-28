@@ -1528,6 +1528,174 @@
       ]
     },
     {
+      "id": "chess",
+      "category": "games",
+      "game": "ChessGame",
+      "title": "Shakki (Chess)",
+      "keywords": [
+        "shakki",
+        "chess",
+        "matti",
+        "linnoitus",
+        "ohestalyönti",
+        "tekoäly"
+      ],
+      "sections": [
+        {
+          "h": "Näin pelataan",
+          "body": [
+            "Shakki täysillä säännöillä: kaikki nappuloiden siirrot, lyhyt ja pitkä linnoitus, ohestalyönti sekä sotilaan korotus kuningattareksi, torniksi, lähetiksi tai ratsuksi.",
+            "Peli päättyy shakkimattiin tai tasapeliin - patti, 50 siirron sääntö, kolminkertainen toisto tai riittämätön materiaali.",
+            "Yksinpelissä valitset vahvuuden ja värin asetusnäkymässä; kaksinpelissä vuorotellaan samalla koneella."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Hiiri: napsauta omaa nappulaa ja sitten kohderuutua. Mahdolliset ruudut ja viimeisin siirto on korostettu.",
+            "- Näppäimistö: [Nuolet] tai [WASD] siirtävät valintakehystä, [Väli] tai [Enter] valitsee ja siirtää.",
+            "- Korotuksessa neljä nappulaa tulee näkyviin - napsauta haluamaasi.",
+            "- Pelin jälkeen: [Enter] uusi peli, [S] takaisin asetuksiin (vain yksinpeli)."
+          ]
+        },
+        {
+          "h": "Tekoälyn vahvuudet ja pisteet",
+          "body": [
+            "Kuusi tasoa Aloittelijasta Mestariin: Aloittelija siirtää sattumanvaraisesti, keskitasot laskevat yhdestä kolmeen puolisiirtoa ja mokaavat tahallaan, Mestari laskee syvimmälle ja vie lyöntisarjat loppuun rauhoittumishaulla.",
+            "Jokaisella haulla on aika- ja solmubudjetti, joten käyttöliittymä ei koskaan jumitu.",
+            "Ennätys laskee voitot tekoälyä vastaan tässä istunnossa; kaksinpeliä ei pisteytetä.",
+            "Vinkki: kehitä nappulat ajoissa, linnoita ja aseta tornit avoimille linjoille."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "muehle",
+      "category": "games",
+      "game": "MuehleGame",
+      "title": "Mylly (Nine Men's Morris)",
+      "keywords": [
+        "mylly",
+        "morris",
+        "kaksoismylly",
+        "lentäminen",
+        "nappulat",
+        "tekoäly"
+      ],
+      "sections": [
+        {
+          "h": "Kolme vaihetta",
+          "body": [
+            "- Asettelu: molemmat asettavat vuorotellen yhdeksän nappulaansa vapaisiin pisteisiin.",
+            "- Siirtely: sen jälkeen nappula liukuu viivaa pitkin viereiseen vapaaseen pisteeseen.",
+            "- Lentäminen: se, jolla on enää kolme nappulaa, saa hypätä mihin tahansa vapaaseen pisteeseen. Säännön voi kytkeä pois asetusnäkymässä.",
+            "Häviää se, jonka nappulat vähenevät alle kolmeen tai jolla ei ole enää siirtoa."
+          ]
+        },
+        {
+          "h": "Myllyt ja ohjaus",
+          "body": [
+            "Kolme omaa nappulaa samalla viivalla on mylly: poistat heti yhden vastustajan nappulan. Suljetun vastustajan myllyn nappuloihin ei saa koskea niin kauan kuin muita on - sallitut kohteet korostetaan.",
+            "- Hiiri: napsauta vapaata pistettä. Siirtäessäsi valitse ensin oma nappula ja sitten kohde; mahdolliset kohteet syttyvät.",
+            "- [Esc] peruu vahingossa tehdyn valinnan.",
+            "- Kierroksen jälkeen: [Enter] uusi kierros, [S] takaisin asetuksiin (vain yksinpeli)."
+          ]
+        },
+        {
+          "h": "Tekoäly ja pisteet",
+          "body": [
+            "Kolme vahvuutta minimaxilla ja alfa-beeta-karsinnalla. Arviointi ottaa huomioon materiaalin, suljetut myllyt, liikkuvuuden ja avoimet kaksoismyllyt - eri painoin kussakin vaiheessa; helpoin taso mokaa tahallaan.",
+            "Ennätys laskee voitot tekoälyä vastaan tässä istunnossa; moninpeliä ei pisteytetä.",
+            "Vinkki: kaksoismylly - kaksi myllyä, jotka aukeavat ja sulkeutuvat vuorotellen - ratkaisee lähes jokaisen pelin."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simon",
+      "category": "games",
+      "game": "SimonGame",
+      "title": "Simon",
+      "keywords": [
+        "simon",
+        "muisti",
+        "sarja",
+        "ruudut",
+        "kaksintaistelu",
+        "senso"
+      ],
+      "sections": [
+        {
+          "h": "Pelitilat",
+          "body": [
+            "- Klassinen: toista sarja täsmälleen. Joka kierros lisää yhden ruudun.",
+            "- Speed: kuten Klassinen, mutta toisto nopeutuu kierros kierrokselta.",
+            "- Reverse: sarja on syötettävä takaperin.",
+            "- Kaksintaistelu: kaksi pelaajaa rakentaa sarjaa vuorotellen - toista kaikki ja lisää sitten yksi ruutu. Se, joka näppäilee väärin, häviää.",
+            "- Sekoitettu: tila vaihtuu joka kierros Klassisen, Speedin ja Reversen välillä."
+          ]
+        },
+        {
+          "h": "Ääni, ruudut ja ohjaus",
+          "body": [
+            "Ruutujen määrä - 4, 6 tai 9 - määrää vaikeustason.",
+            "Ääni on pois (pelkät värit), päällä (jokaisella ruudulla on oma sävelensä) tai sekoitettu, jolloin osa kierroksista soi ja osa ei. Asetusten äänikytkin menee edelle.",
+            "- Hiiri: napsauta ruutua. Näppäimistö: numeronäppäimet [1]-[9].",
+            "- Toiston aikana peli ei ota vastaan syötteitä - odota vuoroasi.",
+            "- Virheen jälkeen: [Enter] uudelleen, [S] takaisin asetuksiin."
+          ]
+        },
+        {
+          "h": "Pisteet ja vinkit",
+          "body": [
+            "Ennätys on pisin virheettömästi toistettu sarja; kaksintaistelua ei pisteytetä.",
+            "Vinkki: toista värit tai numerot mielessäsi. Äänen kanssa muistaminen on paljon helpompaa - siksi sekoitettu asetus on kovin harjoitus."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billiard",
+      "category": "games",
+      "game": "BilliardGame",
+      "title": "Biljardi (Billiards)",
+      "keywords": [
+        "biljardi",
+        "pool",
+        "8-ball",
+        "9-ball",
+        "maila",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Muunnelmat",
+          "body": [
+            "- 8-ball: pussita ensin koko oma ryhmäsi - täydet tai raidalliset - ja vasta sitten musta. Ryhmä määräytyy ensimmäisestä sääntöjen mukaan pussitetusta pallosta.",
+            "- 9-ball: osu aina ensin pienimpään palloon; se, joka pussittaa ysin sääntöjen mukaan, voittaa.",
+            "- Harjoitus: ei sääntöjä eikä vastustajaa - pussita niin monta palloa kuin pystyt. Kun pöytä on tyhjä, pallot ladotaan uudelleen ja laskenta jatkuu."
+          ]
+        },
+        {
+          "h": "Lyönti ja näkymät",
+          "body": [
+            "- Hiiri: ohjaa tähtäystä, vasen painike pohjassa lataa voimaa, irrottaminen lyö.",
+            "- Näppäimistö: [Vasen] ja [Oikea] tähtäävät, [Ylös] ja [Alas] säätävät voimaa, [Väli] lyö.",
+            "- Virheen jälkeen valkoinen on kädessä: aseta se hiirellä vapaaseen kohtaan ja napsauta.",
+            "- [V] vaihtaa näkymää: 2D ylhäältä, 3D kiinteänä viistonäkymänä tai Vapaa - siinä pyörität kameraa pöydän ympäri hiiren oikea painike pohjassa. Valinta tallentuu."
+          ]
+        },
+        {
+          "h": "Tekoäly ja pisteet",
+          "body": [
+            "Tekoälylle on kolme vahvuutta; kaksinpelissä lyötte vuorotellen samalla koneella.",
+            "Ennätys laskee tekoälyä vastaan voitetut erät, harjoitustilassa pussitetut pallot.",
+            "Erän jälkeen: [Enter] uusi erä, [S] takaisin asetuksiin."
+          ]
+        }
+      ]
+    },
+    {
       "id": "slidepuzzle",
       "category": "games",
       "game": "SlidingPuzzleGame",

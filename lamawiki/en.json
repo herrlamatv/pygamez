@@ -1529,6 +1529,174 @@
       ]
     },
     {
+      "id": "chess",
+      "category": "games",
+      "game": "ChessGame",
+      "title": "Chess",
+      "keywords": [
+        "chess",
+        "mate",
+        "castling",
+        "en passant",
+        "promotion",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "How it works",
+          "body": [
+            "Chess with the complete rule set: every piece move, short and long castling, en passant and pawn promotion with a choice of queen, rook, bishop or knight.",
+            "A game ends in checkmate or a draw - by stalemate, the fifty-move rule, threefold repetition or insufficient material.",
+            "In single player you pick strength and colour in the setup; two players take turns on the same computer."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Mouse: click one of your pieces, then the target square. Legal targets and the last move are highlighted.",
+            "- Keyboard: [Arrows] or [WASD] move the selection frame, [Space] or [Enter] picks the piece and moves it.",
+            "- On promotion the four pieces appear for you to click.",
+            "- After the game: [Enter] for a new game, [S] back to the setup (single player only)."
+          ]
+        },
+        {
+          "h": "AI strengths & score",
+          "body": [
+            "Six levels from Beginner to Master: Beginner moves at random, the middle levels search one to three plies deep and blunder on purpose, Master searches deepest and finishes capture sequences in a quiescence search.",
+            "Every search has a time and node budget so the interface never freezes.",
+            "The high score counts your wins against the AI in this session; two-player games are not scored.",
+            "Tip: develop your pieces early, castle, and put the rooks on open files."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "muehle",
+      "category": "games",
+      "game": "MuehleGame",
+      "title": "Nine Men's Morris",
+      "keywords": [
+        "morris",
+        "mills",
+        "muehle",
+        "double mill",
+        "flying",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "The three phases",
+          "body": [
+            "- Placing: both sides take turns placing their nine pieces on free points.",
+            "- Moving: after that a piece slides along a line to a neighbouring free point.",
+            "- Flying: whoever is down to three pieces may jump to any free point. This rule can be switched off in the setup.",
+            "You lose when you drop below three pieces or cannot move any more."
+          ]
+        },
+        {
+          "h": "Mills & controls",
+          "body": [
+            "Three of your pieces on one line form a mill: you immediately remove one enemy piece. Pieces inside a closed enemy mill are off limits as long as others are available - the legal targets are highlighted.",
+            "- Mouse: click a free point. To move, pick your own piece first, then the target; possible targets light up.",
+            "- [Esc] cancels a selection you did not mean.",
+            "- After the round: [Enter] for a new round, [S] back to the setup (single player only)."
+          ]
+        },
+        {
+          "h": "AI & score",
+          "body": [
+            "Three strengths using minimax with alpha-beta pruning. It weighs material, closed mills, mobility and open double mills - differently in each phase; the easy level blunders on purpose.",
+            "The high score counts your wins against the AI in this session; multiplayer is not scored.",
+            "Tip: a double mill - two mills that open and close alternately - decides almost every game."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simon",
+      "category": "games",
+      "game": "SimonGame",
+      "title": "Simon",
+      "keywords": [
+        "simon",
+        "memory",
+        "sequence",
+        "pads",
+        "duel",
+        "senso"
+      ],
+      "sections": [
+        {
+          "h": "Game modes",
+          "body": [
+            "- Classic: repeat the sequence exactly. Every round adds one pad.",
+            "- Speed: like Classic, but the playback gets faster every round.",
+            "- Reverse: the sequence has to be entered backwards.",
+            "- Duel: two players build the sequence together - repeat everything, then add one pad. Whoever slips loses.",
+            "- Mixed: the mode changes every round between Classic, Speed and Reverse."
+          ]
+        },
+        {
+          "h": "Sound, pads & controls",
+          "body": [
+            "The number of pads - 4, 6 or 9 - sets the difficulty.",
+            "Sound is off (colours only), on (every pad has its own tone) or mixed, where some rounds play tones and others do not. The sound switch in the options takes precedence.",
+            "- Mouse: click a pad. Keyboard: the number keys [1] to [9].",
+            "- While the sequence plays back the game ignores input - wait until it is your turn.",
+            "- After a mistake: [Enter] to try again, [S] back to the setup."
+          ]
+        },
+        {
+          "h": "Score & tips",
+          "body": [
+            "The high score is the longest sequence you repeated without a mistake; the duel is not scored.",
+            "Tip: say the colours or numbers in your head. Tones make it much easier to remember - which is why the mixed setting is the hardest exercise."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billiard",
+      "category": "games",
+      "game": "BilliardGame",
+      "title": "Billiards",
+      "keywords": [
+        "billiards",
+        "pool",
+        "8-ball",
+        "9-ball",
+        "cue",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Variants",
+          "body": [
+            "- 8-ball: pot your whole group first - solids or stripes - then the black. The group is assigned on the first legal pot.",
+            "- 9-ball: always hit the lowest ball first; whoever legally pots the 9 wins.",
+            "- Practice: no rules, no opponent - pot as many balls as you can. When the table is empty it is re-racked and counting continues."
+          ]
+        },
+        {
+          "h": "Shooting & views",
+          "body": [
+            "- Mouse: moves the aim, hold the left button to charge power, release to shoot.",
+            "- Keyboard: [Left] and [Right] aim, [Up] and [Down] set the power, [Space] shoots.",
+            "- After a foul the cue ball is in hand: place it on a free spot with the mouse and click.",
+            "- [V] switches the view: 2D from above, 3D as a fixed angled view, or Free - there you swing the camera around the table with the right mouse button held down. The choice is saved."
+          ]
+        },
+        {
+          "h": "AI & score",
+          "body": [
+            "There are three AI strengths; with two players you take turns on the same computer.",
+            "The high score counts frames won against the AI, or the balls potted in practice mode.",
+            "After the game: [Enter] for a new game, [S] back to the setup."
+          ]
+        }
+      ]
+    },
+    {
       "id": "slidepuzzle",
       "category": "games",
       "game": "SlidingPuzzleGame",

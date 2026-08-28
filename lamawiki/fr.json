@@ -1526,6 +1526,174 @@
       ]
     },
     {
+      "id": "chess",
+      "category": "games",
+      "game": "ChessGame",
+      "title": "Échecs",
+      "keywords": [
+        "échecs",
+        "chess",
+        "mat",
+        "roque",
+        "en passant",
+        "ia"
+      ],
+      "sections": [
+        {
+          "h": "Comment ça marche",
+          "body": [
+            "Des échecs complets : tous les coups des pièces, le petit et le grand roque, la prise en passant et la promotion du pion au choix en dame, tour, fou ou cavalier.",
+            "La partie se termine par un échec et mat ou une nulle - pat, règle des 50 coups, triple répétition ou matériel insuffisant.",
+            "En solo, tu choisis la force et la couleur dans le menu de préparation ; à deux, vous jouez à tour de rôle sur le même ordinateur."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Souris : clique sur une de tes pièces, puis sur la case d'arrivée. Les cases possibles et le dernier coup sont mis en couleur.",
+            "- Clavier : [Flèches] ou [WASD] déplacent le cadre, [Espace] ou [Entrée] sélectionne et joue.",
+            "- Lors d'une promotion, les quatre pièces s'affichent - il suffit de cliquer.",
+            "- Après la partie : [Entrée] nouvelle partie, [S] retour au menu (solo uniquement)."
+          ]
+        },
+        {
+          "h": "Force de l'IA & score",
+          "body": [
+            "Six niveaux, de Débutant à Maître : Débutant joue au hasard, les niveaux intermédiaires cherchent un à trois demi-coups et se trompent volontairement, Maître cherche le plus profond et termine les prises par une recherche de quiescence.",
+            "Chaque recherche est limitée en temps et en nombre de nœuds, pour que l'interface ne se fige jamais.",
+            "Le score compte tes victoires contre l'IA pendant la session ; le mode deux joueurs n'est pas compté.",
+            "Astuce : développe tes pièces tôt, roque et place les tours sur les colonnes ouvertes."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "muehle",
+      "category": "games",
+      "game": "MuehleGame",
+      "title": "Moulin",
+      "keywords": [
+        "moulin",
+        "morris",
+        "double moulin",
+        "vol",
+        "pions",
+        "ia"
+      ],
+      "sections": [
+        {
+          "h": "Les trois phases",
+          "body": [
+            "- Pose : chacun place tour à tour ses neuf pions sur les points libres.",
+            "- Déplacement : ensuite, un pion glisse le long d'une ligne vers un point libre voisin.",
+            "- Vol : celui qui n'a plus que trois pions peut sauter sur n'importe quel point libre. Cette règle se désactive dans le menu.",
+            "Perd celui qui descend sous trois pions ou ne peut plus jouer."
+          ]
+        },
+        {
+          "h": "Moulins & commandes",
+          "body": [
+            "Trois pions alignés forment un moulin : tu retires aussitôt un pion adverse. Les pions d'un moulin adverse fermé sont intouchables tant qu'il en reste d'autres - les cibles autorisées sont mises en évidence.",
+            "- Souris : clique sur un point libre. Pour déplacer, choisis d'abord ton pion, puis la destination ; les cibles possibles s'allument.",
+            "- [Esc] annule une sélection faite par erreur.",
+            "- Après la manche : [Entrée] nouvelle manche, [S] retour au menu (solo uniquement)."
+          ]
+        },
+        {
+          "h": "IA & score",
+          "body": [
+            "Trois forces, via minimax et élagage alpha-bêta. L'évaluation tient compte du matériel, des moulins fermés, de la mobilité et des doubles moulins ouverts - avec un poids différent selon la phase ; le niveau facile se trompe volontairement.",
+            "Le score compte tes victoires contre l'IA pendant la session ; le mode deux joueurs n'est pas compté.",
+            "Astuce : un double moulin - deux moulins qui s'ouvrent et se ferment alternativement - décide presque toutes les parties."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simon",
+      "category": "games",
+      "game": "SimonGame",
+      "title": "Simon",
+      "keywords": [
+        "simon",
+        "mémoire",
+        "séquence",
+        "cases",
+        "duel",
+        "senso"
+      ],
+      "sections": [
+        {
+          "h": "Modes de jeu",
+          "body": [
+            "- Classique : reproduire la séquence à l'identique. Chaque manche ajoute une case.",
+            "- Speed : comme Classique, mais la lecture accélère à chaque manche.",
+            "- Reverse : la séquence doit être saisie à l'envers.",
+            "- Duel : deux joueurs construisent la séquence à tour de rôle - tout reproduire, puis ajouter une case. Celui qui se trompe perd.",
+            "- Mixte : le mode change à chaque manche entre Classique, Speed et Reverse."
+          ]
+        },
+        {
+          "h": "Son, cases & commandes",
+          "body": [
+            "Le nombre de cases - 4, 6 ou 9 - règle la difficulté.",
+            "Le son est coupé (couleurs seules), activé (chaque case a sa note) ou mixte, où certaines manches sonnent et d'autres non. L'interrupteur de son des options est prioritaire.",
+            "- Souris : clique sur une case. Clavier : les touches [1] à [9].",
+            "- Pendant la lecture, le jeu ignore les entrées - attends ton tour.",
+            "- Après une erreur : [Entrée] pour recommencer, [S] retour au menu."
+          ]
+        },
+        {
+          "h": "Score & astuces",
+          "body": [
+            "Le score est la plus longue séquence répétée sans faute ; le duel n'est pas compté.",
+            "Astuce : répète les couleurs ou les chiffres dans ta tête. Avec le son, c'est bien plus facile - le réglage mixte est donc l'exercice le plus dur."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billiard",
+      "category": "games",
+      "game": "BilliardGame",
+      "title": "Billard",
+      "keywords": [
+        "billard",
+        "pool",
+        "8-ball",
+        "9-ball",
+        "queue",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Variantes",
+          "body": [
+            "- 8-ball : empoche d'abord tout ton groupe - pleines ou rayées -, puis la noire. Le groupe est attribué à la première bille empochée régulièrement.",
+            "- 9-ball : touche toujours la bille la plus basse en premier ; celui qui empoche régulièrement la 9 gagne.",
+            "- Entraînement : aucune règle, aucun adversaire - empoche le plus de billes possible. Table vide, on refait le triangle et le compte continue."
+          ]
+        },
+        {
+          "h": "Frapper & vues",
+          "body": [
+            "- Souris : déplace la visée, maintiens le bouton gauche pour charger la puissance, relâche pour frapper.",
+            "- Clavier : [Gauche] et [Droite] visent, [Haut] et [Bas] règlent la puissance, [Espace] frappe.",
+            "- Après une faute, la blanche est en main : place-la sur un espace libre à la souris et clique.",
+            "- [V] change la vue : 2D vue de dessus, 3D en perspective fixe, ou Libre - là, tu fais tourner la caméra autour de la table avec le bouton droit maintenu. Le choix est enregistré."
+          ]
+        },
+        {
+          "h": "IA & score",
+          "body": [
+            "Trois forces d'IA ; à deux, vous jouez à tour de rôle sur le même ordinateur.",
+            "Le score compte les manches gagnées contre l'IA, ou les billes empochées en mode entraînement.",
+            "Après la partie : [Entrée] nouvelle partie, [S] retour au menu."
+          ]
+        }
+      ]
+    },
+    {
       "id": "slidepuzzle",
       "category": "games",
       "game": "SlidingPuzzleGame",

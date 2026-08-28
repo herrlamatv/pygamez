@@ -1528,6 +1528,174 @@
       ]
     },
     {
+      "id": "chess",
+      "category": "games",
+      "game": "ChessGame",
+      "title": "Šah (Chess)",
+      "keywords": [
+        "šah",
+        "chess",
+        "mat",
+        "rokada",
+        "en passant",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Šah s celotnimi pravili: vse poteze figur, kratka in dolga rokada, jemanje mimogrede in promocija kmeta v damo, trdnjavo, lovca ali skakača.",
+            "Partija se konča z matom ali remijem - s patom, pravilom 50 potez, trikratno ponovitvijo položaja ali nezadostnim materialom.",
+            "V igri za enega izbereš moč in barvo v pripravi; v dvoje se izmenjujeta za istim računalnikom."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Miška: klikni svojo figuro in nato ciljno polje. Mogoča polja in zadnja poteza so označeni.",
+            "- Tipkovnica: [Puščice] ali [WASD] premikajo okvir, [Preslednica] ali [Enter] izbere in povleče.",
+            "- Ob promociji se prikažejo štiri figure - samo klikni.",
+            "- Po partiji: [Enter] nova partija, [S] nazaj v pripravo (samo za enega igralca)."
+          ]
+        },
+        {
+          "h": "Moči UI in točke",
+          "body": [
+            "Šest stopenj od Začetnika do Mojstra: Začetnik vleče naključno, srednje stopnje računajo eno do tri polpoteze naprej in namenoma zgrešijo, Mojster računa najgloblje in odigra jemanja do konca z iskanjem mirnih položajev.",
+            "Vsako iskanje ima časovni in vozliščni proračun, da se vmesnik nikoli ne zatakne.",
+            "Rekord šteje tvoje zmage proti UI v tej seji; način za dva igralca se ne točkuje.",
+            "Nasvet: figure razvij zgodaj, naredi rokado in trdnjavi postavi na odprte linije."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "muehle",
+      "category": "games",
+      "game": "MuehleGame",
+      "title": "Mlin (Nine Men's Morris)",
+      "keywords": [
+        "mlin",
+        "morris",
+        "dvojni mlin",
+        "letenje",
+        "figure",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "Tri faze",
+          "body": [
+            "- Postavljanje: obe strani izmenično postavita svojih devet figur na proste točke.",
+            "- Premikanje: nato figura zdrsne po črti na sosednjo prosto točko.",
+            "- Letenje: kdor ima le še tri figure, lahko skoči na katero koli prosto točko. Pravilo se da v pripravi izklopiti.",
+            "Izgubi tisti, ki pade pod tri figure ali nima več poteze."
+          ]
+        },
+        {
+          "h": "Mlini in upravljanje",
+          "body": [
+            "Tri lastne figure v vrsti so mlin: takoj odstraniš eno nasprotnikovo figuro. Figur iz sklenjenega nasprotnikovega mlina se ne sme dotakniti, dokler so na voljo druge - dovoljeni cilji so označeni.",
+            "- Miška: klikni prosto točko. Za premik izberi najprej svojo figuro, nato cilj; mogoči cilji zasvetijo.",
+            "- [Esc] razveljavi pomotoma narejeno izbiro.",
+            "- Po rundi: [Enter] nova runda, [S] nazaj v pripravo (samo za enega igralca)."
+          ]
+        },
+        {
+          "h": "UI in točke",
+          "body": [
+            "Tri moči z minimaksom in rezanjem alfa-beta. Ocenjujejo se material, sklenjeni mlini, gibljivost in odprti dvojni mlini - v vsaki fazi z drugačno težo; lahka stopnja namenoma zgreši.",
+            "Rekord šteje tvoje zmage proti UI v tej seji; igra za več igralcev se ne točkuje.",
+            "Nasvet: dvojni mlin - dva mlina, ki se izmenično odpirata in zapirata - odloči skoraj vsako partijo."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simon",
+      "category": "games",
+      "game": "SimonGame",
+      "title": "Simon",
+      "keywords": [
+        "simon",
+        "spomin",
+        "zaporedje",
+        "polja",
+        "dvoboj",
+        "senso"
+      ],
+      "sections": [
+        {
+          "h": "Načini igre",
+          "body": [
+            "- Klasično: zaporedje ponovi natančno. Vsaka runda doda eno polje.",
+            "- Speed: kot Klasično, a predvajanje je iz runde v rundo hitrejše.",
+            "- Reverse: zaporedje je treba vnesti v obratnem vrstnem redu.",
+            "- Dvoboj: dva igralca gradita zaporedje izmenično - najprej ponovi vse, nato dodaj eno polje. Kdor se zmoti, izgubi.",
+            "- Mešano: način se vsako rundo menja med Klasičnim, Speed in Reverse."
+          ]
+        },
+        {
+          "h": "Zvok, polja in upravljanje",
+          "body": [
+            "Število polj - 4, 6 ali 9 - določa težavnost.",
+            "Zvok je izklopljen (samo barve), vklopljen (vsako polje ima svoj ton) ali mešan, kjer nekatere runde zvenijo, druge pa ne. Stikalo za zvok v možnostih ima prednost.",
+            "- Miška: klikni polje. Tipkovnica: številke [1] do [9].",
+            "- Med predvajanjem igra ne sprejema vnosa - počakaj, da prideš na vrsto.",
+            "- Po napaki: [Enter] še enkrat, [S] nazaj v pripravo."
+          ]
+        },
+        {
+          "h": "Točke in nasveti",
+          "body": [
+            "Rekord je najdaljše brezhibno ponovljeno zaporedje; dvoboj se ne točkuje.",
+            "Nasvet: barve ali številke ponavljaj v mislih. Z zvokom si je precej lažje zapomniti - zato je mešana nastavitev najtežja vaja."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billiard",
+      "category": "games",
+      "game": "BilliardGame",
+      "title": "Biljard (Billiards)",
+      "keywords": [
+        "biljard",
+        "pool",
+        "8-ball",
+        "9-ball",
+        "tac",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Različice",
+          "body": [
+            "- 8-ball: najprej zabij vso svojo skupino - polne ali črtaste - in šele nato črno. Skupina se dodeli ob prvi pravilno zabiti krogli.",
+            "- 9-ball: vedno najprej zadeni najnižjo kroglo; kdor pravilno zabije devetko, zmaga.",
+            "- Vaja: brez pravil in brez nasprotnika - zabij toliko krogel, kolikor jih zmoreš. Ko je miza prazna, se krogle znova postavijo in štetje se nadaljuje."
+          ]
+        },
+        {
+          "h": "Udarec in pogledi",
+          "body": [
+            "- Miška: vodi merjenje, držani levi gumb polni moč, spust udari.",
+            "- Tipkovnica: [Levo] in [Desno] merita, [Gor] in [Dol] uravnavata moč, [Preslednica] udari.",
+            "- Po prekršku je bela v roki: z miško jo postavi na prosto mesto in klikni.",
+            "- [V] preklaplja pogled: 2D od zgoraj, 3D kot stalni poševni pogled ali Prosto - tam kamero zavrtiš okoli mize z držanim desnim gumbom miške. Izbira se shrani."
+          ]
+        },
+        {
+          "h": "UI in točke",
+          "body": [
+            "Na voljo so tri moči UI; v dvoje udarjata izmenično za istim računalnikom.",
+            "Rekord šteje partije, dobljene proti UI, v načinu vaje pa zabite krogle.",
+            "Po partiji: [Enter] nova partija, [S] nazaj v pripravo."
+          ]
+        }
+      ]
+    },
+    {
       "id": "slidepuzzle",
       "category": "games",
       "game": "SlidingPuzzleGame",

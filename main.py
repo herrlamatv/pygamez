@@ -1430,12 +1430,26 @@ class App:
     # ----- Zentrale Game-Loop -------------------------------------------
 
     def _loop(self):
+        """Zeichnet ein Frame und plant das nächste ein.
+
+        Das nächste Frame wird in JEDEM Fall geplant (finally). Sonst würde
+        eine einzelne Ausnahme in einem Spiel die Schleife für immer
+        beenden - das Bild bliebe stehen, obwohl das Fenster noch reagiert.
+        So läuft die Schleife weiter, und Tkinter meldet den Fehler.
+        """
         if self._closing:
             return
+        try:
+            self._frame()
+        finally:
+            if not self._closing:
+                self.root.after(max(1, int(1000 / self.fps)), self._loop)
 
+    def _frame(self):
+        """Ein einzelnes Frame: Zeit messen, aktualisieren, zeichnen, anzeigen."""
         pygame = self.pygame
         # Nur die vergangene Zeit MESSEN (kein Blockieren): das Timing/Pacing
-        # macht bereits root.after(...) am Ende der Schleife. Ein blockierendes
+        # macht bereits das root.after(...) in _loop(). Ein blockierendes
         # clock.tick(fps) würde die Tkinter-Schleife jeden Frame anhalten und die
         # Oberfläche zäh/ruckelig machen. dt wird gedeckelt, damit die Spiele nach
         # einem kurzen Hänger nicht "springen".
@@ -1530,9 +1544,6 @@ class App:
 
         # Logische Fläche skaliert (mit Letterbox) auf das echte Display bringen
         self._present()
-
-        # nächstes Frame über Tkinter planen -> Tkinter bleibt reaktiv
-        self.root.after(max(1, int(1000 / self.fps)), self._loop)
 
     def _present(self):
         """Baut das Anzeigebild (Letterbox) und zeigt es im Label."""

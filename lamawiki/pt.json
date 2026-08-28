@@ -1525,6 +1525,174 @@
       ]
     },
     {
+      "id": "chess",
+      "category": "games",
+      "game": "ChessGame",
+      "title": "Xadrez",
+      "keywords": [
+        "xadrez",
+        "chess",
+        "mate",
+        "roque",
+        "en passant",
+        "ia"
+      ],
+      "sections": [
+        {
+          "h": "Como se joga",
+          "body": [
+            "Xadrez com as regras completas: todos os movimentos, roque pequeno e grande, captura en passant e promoção do peão à escolha entre dama, torre, bispo ou cavalo.",
+            "A partida acaba em xeque-mate ou empate - por afogamento, regra dos 50 lances, tripla repetição ou material insuficiente.",
+            "A um jogador escolhes força e cor na preparação; a dois jogam à vez no mesmo computador."
+          ]
+        },
+        {
+          "h": "Controlos",
+          "body": [
+            "- Rato: clica numa peça tua e depois na casa de destino. As casas possíveis e o último lance ficam realçados.",
+            "- Teclado: [Setas] ou [WASD] movem a moldura, [Espaço] ou [Enter] escolhe e joga.",
+            "- Na promoção aparecem as quatro peças - basta clicar.",
+            "- Depois da partida: [Enter] nova partida, [S] voltar à preparação (só um jogador)."
+          ]
+        },
+        {
+          "h": "Força da IA e pontos",
+          "body": [
+            "Seis níveis, de Principiante a Mestre: Principiante joga ao acaso, os níveis intermédios procuram um a três meios-lances e erram de propósito, Mestre procura mais fundo e termina as capturas com uma pesquisa de quietude.",
+            "Cada pesquisa tem limite de tempo e de nós, para a interface nunca bloquear.",
+            "A pontuação conta as tuas vitórias contra a IA nesta sessão; o modo de dois jogadores não conta.",
+            "Dica: desenvolve as peças cedo, faz o roque e põe as torres em colunas abertas."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "muehle",
+      "category": "games",
+      "game": "MuehleGame",
+      "title": "Trilha",
+      "keywords": [
+        "trilha",
+        "moinho",
+        "morris",
+        "voar",
+        "peças",
+        "ia"
+      ],
+      "sections": [
+        {
+          "h": "As três fases",
+          "body": [
+            "- Colocar: cada um coloca à vez as suas nove peças em pontos livres.",
+            "- Mover: depois, uma peça desliza ao longo de uma linha até um ponto livre vizinho.",
+            "- Voar: quem fica com três peças pode saltar para qualquer ponto livre. Esta regra pode ser desligada na preparação.",
+            "Perde quem desce abaixo de três peças ou já não consegue mover."
+          ]
+        },
+        {
+          "h": "Moinhos e controlos",
+          "body": [
+            "Três peças tuas em linha formam um moinho: retiras logo uma peça adversária. As peças de um moinho adversário fechado são intocáveis enquanto houver outras - os alvos permitidos ficam realçados.",
+            "- Rato: clica num ponto livre. Para mover, escolhe primeiro a tua peça e depois o destino; os destinos possíveis acendem.",
+            "- [Esc] anula uma seleção feita sem querer.",
+            "- Depois da ronda: [Enter] nova ronda, [S] voltar à preparação (só um jogador)."
+          ]
+        },
+        {
+          "h": "IA e pontos",
+          "body": [
+            "Três forças com minimax e corte alfa-beta. Avalia material, moinhos fechados, mobilidade e moinhos duplos abertos - com pesos diferentes conforme a fase; o nível fácil erra de propósito.",
+            "A pontuação conta as tuas vitórias contra a IA nesta sessão; o multijogador não conta.",
+            "Dica: um moinho duplo - dois moinhos que abrem e fecham alternadamente - decide quase todas as partidas."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simon",
+      "category": "games",
+      "game": "SimonGame",
+      "title": "Simon",
+      "keywords": [
+        "simon",
+        "memória",
+        "sequência",
+        "painéis",
+        "duelo",
+        "senso"
+      ],
+      "sections": [
+        {
+          "h": "Modos de jogo",
+          "body": [
+            "- Clássico: repete a sequência exatamente. Cada ronda acrescenta um painel.",
+            "- Speed: como o Clássico, mas a reprodução acelera a cada ronda.",
+            "- Reverse: a sequência tem de ser introduzida ao contrário.",
+            "- Duelo: dois jogadores constroem a sequência à vez - repetir tudo e acrescentar um painel. Quem falha perde.",
+            "- Misto: o modo muda a cada ronda entre Clássico, Speed e Reverse."
+          ]
+        },
+        {
+          "h": "Som, painéis e controlos",
+          "body": [
+            "O número de painéis - 4, 6 ou 9 - define a dificuldade.",
+            "O som está desligado (só cores), ligado (cada painel tem o seu tom) ou misto, com rondas com e sem som. O interruptor de som nas opções tem prioridade.",
+            "- Rato: clica num painel. Teclado: as teclas [1] a [9].",
+            "- Durante a reprodução o jogo ignora as teclas - espera pela tua vez.",
+            "- Depois de um erro: [Enter] outra vez, [S] voltar à preparação."
+          ]
+        },
+        {
+          "h": "Pontos e dicas",
+          "body": [
+            "A pontuação é a sequência mais longa repetida sem erros; o duelo não conta.",
+            "Dica: repete as cores ou os números mentalmente. Com som memoriza-se muito melhor - por isso a definição mista é o exercício mais difícil."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billiard",
+      "category": "games",
+      "game": "BilliardGame",
+      "title": "Bilhar",
+      "keywords": [
+        "bilhar",
+        "pool",
+        "8-ball",
+        "9-ball",
+        "taco",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Variantes",
+          "body": [
+            "- 8-ball: encaçapa primeiro todo o teu grupo - inteiras ou meias - e depois a preta. O grupo é atribuído na primeira bola encaçapada de forma válida.",
+            "- 9-ball: acerta sempre primeiro na bola mais baixa; quem encaçapar a 9 de forma válida ganha.",
+            "- Treino: sem regras nem adversário - encaçapa o máximo de bolas. Com a mesa vazia tudo é montado de novo e a contagem continua."
+          ]
+        },
+        {
+          "h": "Tacada e vistas",
+          "body": [
+            "- Rato: move a mira, mantém o botão esquerdo para carregar força e solta para dar a tacada.",
+            "- Teclado: [Esquerda] e [Direita] apontam, [Cima] e [Baixo] regulam a força, [Espaço] dá a tacada.",
+            "- Depois de uma falta a branca fica na mão: coloca-a num espaço livre com o rato e clica.",
+            "- [V] muda a vista: 2D de cima, 3D em perspetiva fixa ou Livre - aí rodas a câmara à volta da mesa com o botão direito premido. A escolha é guardada."
+          ]
+        },
+        {
+          "h": "IA e pontos",
+          "body": [
+            "Há três forças de IA; a dois jogadores jogam à vez no mesmo computador.",
+            "A pontuação conta as partidas ganhas contra a IA, ou as bolas encaçapadas no modo treino.",
+            "Depois da partida: [Enter] nova partida, [S] voltar à preparação."
+          ]
+        }
+      ]
+    },
+    {
       "id": "slidepuzzle",
       "category": "games",
       "game": "SlidingPuzzleGame",

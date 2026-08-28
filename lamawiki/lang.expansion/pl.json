@@ -1528,6 +1528,174 @@
       ]
     },
     {
+      "id": "chess",
+      "category": "games",
+      "game": "ChessGame",
+      "title": "Szachy (Chess)",
+      "keywords": [
+        "szachy",
+        "chess",
+        "mat",
+        "roszada",
+        "en passant",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "Jak się gra",
+          "body": [
+            "Szachy z pełnym zestawem zasad: wszystkie ruchy bierek, roszada krótka i długa, bicie w przelocie oraz promocja pionka na hetmana, wieżę, gońca lub skoczka.",
+            "Partia kończy się matem albo remisem - przez pat, regułę 50 posunięć, trzykrotne powtórzenie pozycji lub niewystarczający materiał.",
+            "W trybie jednoosobowym wybierasz siłę i kolor w ustawieniach; we dwoje gracie na zmianę przy jednym komputerze."
+          ]
+        },
+        {
+          "h": "Sterowanie",
+          "body": [
+            "- Mysz: kliknij swoją bierkę, a potem pole docelowe. Możliwe pola i ostatni ruch są podświetlone.",
+            "- Klawiatura: [Strzałki] lub [WASD] przesuwają ramkę, [Spacja] albo [Enter] wybiera i wykonuje ruch.",
+            "- Przy promocji pojawiają się cztery bierki - wystarczy kliknąć.",
+            "- Po partii: [Enter] nowa partia, [S] powrót do ustawień (tylko jeden gracz)."
+          ]
+        },
+        {
+          "h": "Siła AI i punkty",
+          "body": [
+            "Sześć poziomów, od Początkującego do Mistrza: Początkujący gra losowo, poziomy średnie liczą jeden do trzech półruchów i celowo się mylą, Mistrz szuka najgłębiej i dolicza bicia w przeszukiwaniu spokojnych pozycji.",
+            "Każde przeszukiwanie ma limit czasu i węzłów, żeby interfejs nigdy się nie zaciął.",
+            "Wynik liczy zwycięstwa nad AI w tej sesji; tryb dwuosobowy nie jest punktowany.",
+            "Wskazówka: rozwijaj bierki wcześnie, wykonaj roszadę i ustaw wieże na otwartych liniach."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "muehle",
+      "category": "games",
+      "game": "MuehleGame",
+      "title": "Młynek (Nine Men's Morris)",
+      "keywords": [
+        "młynek",
+        "mlynek",
+        "morris",
+        "podwójny młynek",
+        "latanie",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "Trzy fazy",
+          "body": [
+            "- Ustawianie: obaj gracze kładą na zmianę swoje dziewięć pionów na wolnych punktach.",
+            "- Ruch: potem pion przesuwa się wzdłuż linii na sąsiedni wolny punkt.",
+            "- Latanie: kto ma już tylko trzy piony, może skoczyć na dowolny wolny punkt. Tę zasadę można wyłączyć w ustawieniach.",
+            "Przegrywa ten, komu zostanie mniej niż trzy piony albo nie ma już ruchu."
+          ]
+        },
+        {
+          "h": "Młynki i sterowanie",
+          "body": [
+            "Trzy własne piony w linii tworzą młynek: natychmiast zdejmujesz jeden pion przeciwnika. Piony z zamkniętego młynka przeciwnika są nietykalne, dopóki są inne - dozwolone cele są podświetlone.",
+            "- Mysz: kliknij wolny punkt. Przy ruchu wybierz najpierw swój pion, potem cel; możliwe cele się zapalają.",
+            "- [Esc] cofa przypadkowy wybór.",
+            "- Po rundzie: [Enter] nowa runda, [S] powrót do ustawień (tylko jeden gracz)."
+          ]
+        },
+        {
+          "h": "AI i punkty",
+          "body": [
+            "Trzy poziomy siły w oparciu o minimax z odcięciem alfa-beta. Oceniane są materiał, zamknięte młynki, ruchliwość i otwarte podwójne młynki - z inną wagą w każdej fazie; poziom łatwy myli się celowo.",
+            "Wynik liczy zwycięstwa nad AI w tej sesji; tryb wieloosobowy nie jest punktowany.",
+            "Wskazówka: podwójny młynek - dwa młynki otwierające się i zamykające na zmianę - rozstrzyga prawie każdą partię."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simon",
+      "category": "games",
+      "game": "SimonGame",
+      "title": "Simon",
+      "keywords": [
+        "simon",
+        "pamięć",
+        "sekwencja",
+        "pola",
+        "pojedynek",
+        "senso"
+      ],
+      "sections": [
+        {
+          "h": "Tryby gry",
+          "body": [
+            "- Klasyczny: powtórz sekwencję dokładnie. Każda runda dokłada jedno pole.",
+            "- Speed: jak klasyczny, ale odtwarzanie z rundy na rundę przyspiesza.",
+            "- Reverse: sekwencję trzeba wprowadzić od tyłu.",
+            "- Pojedynek: dwaj gracze budują sekwencję na zmianę - najpierw powtórzyć wszystko, potem dołożyć jedno pole. Kto się pomyli, przegrywa.",
+            "- Mieszany: tryb zmienia się co rundę między klasycznym, Speed i Reverse."
+          ]
+        },
+        {
+          "h": "Dźwięk, pola i sterowanie",
+          "body": [
+            "Liczba pól - 4, 6 albo 9 - ustala trudność.",
+            "Dźwięk jest wyłączony (same kolory), włączony (każde pole ma swój ton) albo mieszany, gdzie jedne rundy brzmią, a inne nie. Przełącznik dźwięku w opcjach ma pierwszeństwo.",
+            "- Mysz: kliknij pole. Klawiatura: klawisze [1] do [9].",
+            "- W trakcie odtwarzania gra nie przyjmuje wejścia - poczekaj na swoją kolej.",
+            "- Po błędzie: [Enter] jeszcze raz, [S] powrót do ustawień."
+          ]
+        },
+        {
+          "h": "Punkty i wskazówki",
+          "body": [
+            "Wynikiem jest najdłuższa bezbłędnie powtórzona sekwencja; pojedynek nie jest punktowany.",
+            "Wskazówka: powtarzaj kolory albo liczby w myślach. Z dźwiękiem zapamiętuje się dużo łatwiej - dlatego ustawienie mieszane jest najtrudniejsze."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billiard",
+      "category": "games",
+      "game": "BilliardGame",
+      "title": "Bilard (Billiards)",
+      "keywords": [
+        "bilard",
+        "pool",
+        "8-ball",
+        "9-ball",
+        "kij",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Warianty",
+          "body": [
+            "- 8-ball: najpierw wbij całą swoją grupę - pełne albo połówki - a potem czarną. Grupa zostaje przydzielona przy pierwszej prawidłowo wbitej bili.",
+            "- 9-ball: zawsze najpierw uderz najniższą bilę; kto prawidłowo wbije dziewiątkę, wygrywa.",
+            "- Trening: bez zasad i bez przeciwnika - wbij tyle bil, ile zdołasz. Przy pustym stole następuje nowe rozbicie, a licznik idzie dalej."
+          ]
+        },
+        {
+          "h": "Uderzenie i widoki",
+          "body": [
+            "- Mysz: prowadzi celowanie, przytrzymany lewy przycisk ładuje siłę, puszczenie uderza.",
+            "- Klawiatura: [Lewo] i [Prawo] celują, [Góra] i [Dół] regulują siłę, [Spacja] uderza.",
+            "- Po faulu biała jest w ręce: ustaw ją myszą na wolnym miejscu i kliknij.",
+            "- [V] zmienia widok: 2D z góry, 3D jako stały widok skośny albo Swobodny - tam obracasz kamerę wokół stołu przytrzymanym prawym przyciskiem myszy. Wybór jest zapisywany."
+          ]
+        },
+        {
+          "h": "AI i punkty",
+          "body": [
+            "Do wyboru są trzy poziomy AI; we dwoje uderzacie na zmianę przy jednym komputerze.",
+            "Wynik liczy partie wygrane z AI, a w trybie treningu wbite bile.",
+            "Po partii: [Enter] nowa partia, [S] powrót do ustawień."
+          ]
+        }
+      ]
+    },
+    {
       "id": "slidepuzzle",
       "category": "games",
       "game": "SlidingPuzzleGame",

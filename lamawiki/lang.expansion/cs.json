@@ -1528,6 +1528,174 @@
       ]
     },
     {
+      "id": "chess",
+      "category": "games",
+      "game": "ChessGame",
+      "title": "Šachy (Chess)",
+      "keywords": [
+        "šachy",
+        "chess",
+        "mat",
+        "rošáda",
+        "en passant",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "Jak se hraje",
+          "body": [
+            "Šachy s kompletními pravidly: všechny tahy figur, malá i velká rošáda, braní mimochodem a proměna pěšce na dámu, věž, střelce nebo jezdce.",
+            "Partie končí matem nebo remízou - patem, pravidlem 50 tahů, trojím opakováním pozice nebo nedostatečným materiálem.",
+            "V jednom hráči si v přípravě vybereš sílu a barvu; ve dvou se střídáte u jednoho počítače."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Myš: klikni na svou figuru a pak na cílové pole. Možná pole i poslední tah jsou zvýrazněné.",
+            "- Klávesnice: [Šipky] nebo [WASD] posouvají rámeček, [Mezerník] nebo [Enter] vybere a táhne.",
+            "- Při proměně se objeví čtyři figury - stačí kliknout.",
+            "- Po partii: [Enter] nová partie, [S] zpět do přípravy (jen jeden hráč)."
+          ]
+        },
+        {
+          "h": "Síla AI a body",
+          "body": [
+            "Šest úrovní od Začátečníka po Mistra: Začátečník táhne náhodně, střední úrovně počítají jeden až tři půltahy dopředu a schválně chybují, Mistr počítá nejhlouběji a dohrává braní v klidovém prohledávání.",
+            "Každé hledání má časový a uzlový limit, aby rozhraní nikdy nezamrzlo.",
+            "Skóre počítá tvá vítězství nad AI v této relaci; režim dvou hráčů se nepočítá.",
+            "Tip: rozvíjej figury brzy, rošuj a postav věže na otevřené sloupce."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "muehle",
+      "category": "games",
+      "game": "MuehleGame",
+      "title": "Mlýn (Nine Men's Morris)",
+      "keywords": [
+        "mlýn",
+        "mlyn",
+        "morris",
+        "dvojitý mlýn",
+        "létání",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "Tři fáze",
+          "body": [
+            "- Pokládání: obě strany střídavě pokládají svých devět kamenů na volné body.",
+            "- Tahání: potom se kámen posouvá po čáře na sousední volný bod.",
+            "- Létání: kdo má už jen tři kameny, smí skočit na kterýkoli volný bod. Pravidlo lze v přípravě vypnout.",
+            "Prohrává ten, komu klesne počet kamenů pod tři nebo kdo už nemá tah."
+          ]
+        },
+        {
+          "h": "Mlýny a ovládání",
+          "body": [
+            "Tři vlastní kameny na jedné čáře tvoří mlýn: hned odebereš jeden soupeřův kámen. Kameny v uzavřeném soupeřově mlýně jsou nedotknutelné, dokud jsou jiné - povolené cíle se zvýrazní.",
+            "- Myš: klikni na volný bod. Při tahu vyber nejdřív svůj kámen a pak cíl; možné cíle se rozsvítí.",
+            "- [Esc] zruší omylem provedený výběr.",
+            "- Po kole: [Enter] nové kolo, [S] zpět do přípravy (jen jeden hráč)."
+          ]
+        },
+        {
+          "h": "AI a body",
+          "body": [
+            "Tři síly pomocí minimaxu s alfa-beta ořezáváním. Hodnotí se materiál, uzavřené mlýny, pohyblivost a otevřené dvojité mlýny - v každé fázi s jinou vahou; lehká úroveň chybuje schválně.",
+            "Skóre počítá tvá vítězství nad AI v této relaci; hra více hráčů se nepočítá.",
+            "Tip: dvojitý mlýn - dva mlýny, které se střídavě otevírají a zavírají - rozhodne skoro každou partii."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simon",
+      "category": "games",
+      "game": "SimonGame",
+      "title": "Simon",
+      "keywords": [
+        "simon",
+        "paměť",
+        "sekvence",
+        "pole",
+        "souboj",
+        "senso"
+      ],
+      "sections": [
+        {
+          "h": "Herní režimy",
+          "body": [
+            "- Klasický: zopakuj sekvenci přesně. Každé kolo přidá jedno pole.",
+            "- Speed: jako Klasický, ale přehrávání se každé kolo zrychluje.",
+            "- Reverse: sekvenci je třeba zadat pozpátku.",
+            "- Souboj: dva hráči budují sekvenci střídavě - nejdřív vše zopakovat, pak přidat jedno pole. Kdo se splete, prohrává.",
+            "- Smíšený: režim se každé kolo mění mezi Klasickým, Speed a Reverse."
+          ]
+        },
+        {
+          "h": "Zvuk, pole a ovládání",
+          "body": [
+            "Počet polí - 4, 6 nebo 9 - nastavuje obtížnost.",
+            "Zvuk je vypnutý (jen barvy), zapnutý (každé pole má vlastní tón) nebo smíšený, kdy některá kola zní a jiná ne. Přepínač zvuku v možnostech má přednost.",
+            "- Myš: klikni na pole. Klávesnice: číslice [1] až [9].",
+            "- Během přehrávání hra vstupy nepřijímá - počkej, až jsi na řadě.",
+            "- Po chybě: [Enter] znovu, [S] zpět do přípravy."
+          ]
+        },
+        {
+          "h": "Body a tipy",
+          "body": [
+            "Skóre je nejdelší bezchybně zopakovaná sekvence; souboj se nepočítá.",
+            "Tip: opakuj si barvy nebo čísla v duchu. Se zvukem se pamatuje mnohem líp - proto je smíšené nastavení nejtěžší cvičení."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billiard",
+      "category": "games",
+      "game": "BilliardGame",
+      "title": "Kulečník (Billiards)",
+      "keywords": [
+        "kulečník",
+        "kulecnik",
+        "pool",
+        "8-ball",
+        "9-ball",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Varianty",
+          "body": [
+            "- 8-ball: nejdřív sraz celou svou skupinu - plné nebo půlené - a teprve pak černou. Skupina se přidělí při první řádně sražené kouli.",
+            "- 9-ball: vždy zasáhni nejdřív nejnižší kouli; kdo řádně srazí devítku, vyhrává.",
+            "- Trénink: žádná pravidla, žádný soupeř - sraz co nejvíc koulí. Když je stůl prázdný, koule se znovu naskládají a počítání pokračuje."
+          ]
+        },
+        {
+          "h": "Úder a pohledy",
+          "body": [
+            "- Myš: vede míření, držené levé tlačítko nabíjí sílu, puštění udeří.",
+            "- Klávesnice: [Vlevo] a [Vpravo] míří, [Nahoru] a [Dolů] regulují sílu, [Mezerník] udeří.",
+            "- Po faulu je bílá v ruce: umísti ji myší na volné místo a klikni.",
+            "- [V] přepíná pohled: 2D shora, 3D jako pevný šikmý pohled nebo Volný - v něm otáčíš kameru kolem stolu se stisknutým pravým tlačítkem myši. Volba se ukládá."
+          ]
+        },
+        {
+          "h": "AI a body",
+          "body": [
+            "K dispozici jsou tři síly AI; ve dvou hrajete střídavě u jednoho počítače.",
+            "Skóre počítá partie vyhrané nad AI, v tréninkovém režimu sražené koule.",
+            "Po partii: [Enter] nová partie, [S] zpět do přípravy."
+          ]
+        }
+      ]
+    },
+    {
       "id": "slidepuzzle",
       "category": "games",
       "game": "SlidingPuzzleGame",

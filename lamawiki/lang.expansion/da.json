@@ -1528,6 +1528,174 @@
       ]
     },
     {
+      "id": "chess",
+      "category": "games",
+      "game": "ChessGame",
+      "title": "Skak (Chess)",
+      "keywords": [
+        "skak",
+        "chess",
+        "mat",
+        "rokade",
+        "en passant",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spilles der",
+          "body": [
+            "Skak med hele regelsættet: alle brikkers træk, kort og lang rokade, en passant og bondeforvandling med valg af dronning, tårn, løber eller springer.",
+            "Partiet slutter med skakmat eller remis - ved pat, 50-træksreglen, trefoldig gentagelse eller utilstrækkeligt materiale.",
+            "I enkeltspiller vælger du styrke og farve i opsætningen; to spillere skiftes ved samme computer."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Mus: klik på en af dine brikker og derefter på målfeltet. Mulige felter og sidste træk er fremhævet.",
+            "- Tastatur: [Piletaster] eller [WASD] flytter markeringen, [Mellemrum] eller [Enter] vælger og trækker.",
+            "- Ved forvandling vises de fire brikker - bare klik.",
+            "- Efter partiet: [Enter] nyt parti, [S] tilbage til opsætningen (kun enkeltspiller)."
+          ]
+        },
+        {
+          "h": "AI-styrker & point",
+          "body": [
+            "Seks niveauer fra Begynder til Mester: Begynder trækker tilfældigt, mellemniveauerne søger et til tre halvtræk dybt og laver bevidste fejl, Mester søger dybest og spiller slag færdige i en roligheds-søgning.",
+            "Hver søgning har et tids- og knudebudget, så brugerfladen aldrig fryser.",
+            "Highscoren tæller dine sejre over AI'en i denne session; to-spiller-tilstanden tæller ikke med.",
+            "Tip: udvikl brikkerne tidligt, rokér og stil tårnene på åbne linjer."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "muehle",
+      "category": "games",
+      "game": "MuehleGame",
+      "title": "Mølle (Nine Men's Morris)",
+      "keywords": [
+        "mølle",
+        "morris",
+        "dobbeltmølle",
+        "flyve",
+        "brikker",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "De tre faser",
+          "body": [
+            "- Placering: begge sider skiftes til at lægge deres ni brikker på frie punkter.",
+            "- Flytning: derefter glider en brik langs en linje til et nabopunkt, der er frit.",
+            "- Flyvning: den, der kun har tre brikker tilbage, må hoppe til et hvilket som helst frit punkt. Reglen kan slås fra i opsætningen.",
+            "Man taber ved at komme under tre brikker eller ikke kunne trække mere."
+          ]
+        },
+        {
+          "h": "Møller & styring",
+          "body": [
+            "Tre egne brikker på en linje er en mølle: du fjerner straks en modstanderbrik. Brikker i en lukket modstandermølle er fredet, så længe der findes andre - de tilladte mål fremhæves.",
+            "- Mus: klik på et frit punkt. Når du vil flytte, vælg først din egen brik og så målet; mulige mål lyser op.",
+            "- [Esc] fortryder et valg, du ikke mente.",
+            "- Efter runden: [Enter] ny runde, [S] tilbage til opsætningen (kun enkeltspiller)."
+          ]
+        },
+        {
+          "h": "AI & point",
+          "body": [
+            "Tre styrker med minimax og alfa-beta-beskæring. Der vurderes materiale, lukkede møller, bevægelighed og åbne dobbeltmøller - vægtet forskelligt i hver fase; det lette niveau laver bevidste fejl.",
+            "Highscoren tæller dine sejre over AI'en i denne session; flerspiller tæller ikke med.",
+            "Tip: en dobbeltmølle - to møller, der skiftevis åbner og lukker - afgør næsten alle partier."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simon",
+      "category": "games",
+      "game": "SimonGame",
+      "title": "Simon",
+      "keywords": [
+        "simon",
+        "hukommelse",
+        "sekvens",
+        "felter",
+        "duel",
+        "senso"
+      ],
+      "sections": [
+        {
+          "h": "Spiltilstande",
+          "body": [
+            "- Klassisk: gentag sekvensen præcist. Hver runde lægger et felt til.",
+            "- Speed: som Klassisk, men afspilningen bliver hurtigere runde for runde.",
+            "- Reverse: sekvensen skal indtastes baglæns.",
+            "- Duel: to spillere bygger sekvensen skiftevis - gentag det hele, og læg så et felt til. Den, der taster forkert, taber.",
+            "- Blandet: tilstanden skifter hver runde mellem Klassisk, Speed og Reverse."
+          ]
+        },
+        {
+          "h": "Lyd, felter & styring",
+          "body": [
+            "Antallet af felter - 4, 6 eller 9 - bestemmer sværhedsgraden.",
+            "Lyden er slået fra (kun farver), til (hvert felt har sin egen tone) eller blandet, hvor nogle runder lyder og andre ikke. Lydkontakten i indstillingerne har forrang.",
+            "- Mus: klik på et felt. Tastatur: taltasterne [1] til [9].",
+            "- Under afspilningen tager spillet ikke imod input - vent, til det er din tur.",
+            "- Efter en fejl: [Enter] igen, [S] tilbage til opsætningen."
+          ]
+        },
+        {
+          "h": "Point & tips",
+          "body": [
+            "Highscoren er den længste sekvens, du har gentaget fejlfrit; duellen tæller ikke med.",
+            "Tip: sig farverne eller tallene inde i hovedet. Med lyd husker man langt lettere - derfor er den blandede indstilling den hårdeste øvelse."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billiard",
+      "category": "games",
+      "game": "BilliardGame",
+      "title": "Billard (Billiards)",
+      "keywords": [
+        "billard",
+        "pool",
+        "8-ball",
+        "9-ball",
+        "kø",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Varianter",
+          "body": [
+            "- 8-ball: put først hele din gruppe - hele eller stribede - og derefter den sorte. Gruppen tildeles ved den første lovlige nedstukne kugle.",
+            "- 9-ball: ram altid den laveste kugle først; den, der lovligt putter 9'eren, vinder.",
+            "- Træning: ingen regler, ingen modstander - put så mange kugler som muligt. Når bordet er tomt, sættes der op igen, og tællingen fortsætter."
+          ]
+        },
+        {
+          "h": "Stød & visninger",
+          "body": [
+            "- Mus: styrer sigtet, hold venstre knap for at lade styrken op, slip for at støde.",
+            "- Tastatur: [Venstre] og [Højre] sigter, [Op] og [Ned] regulerer styrken, [Mellemrum] støder.",
+            "- Efter en fejl er den hvide i hånden: placér den på en fri plads med musen og klik.",
+            "- [V] skifter visning: 2D oppefra, 3D som fast skrå visning eller Fri - der drejer du kameraet rundt om bordet med højre museknap holdt nede. Valget gemmes."
+          ]
+        },
+        {
+          "h": "AI & point",
+          "body": [
+            "Der er tre AI-styrker; som to spillere støder I skiftevis ved samme computer.",
+            "Highscoren tæller vundne partier mod AI'en, i træningstilstand de nedstukne kugler.",
+            "Efter partiet: [Enter] nyt parti, [S] tilbage til opsætningen."
+          ]
+        }
+      ]
+    },
+    {
       "id": "slidepuzzle",
       "category": "games",
       "game": "SlidingPuzzleGame",

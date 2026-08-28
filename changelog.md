@@ -8,6 +8,27 @@
 
 ## 🇩🇪 Deutsch
 
+### Fehlerbehebungen & vier neue Wiki-Seiten – 2026-08-28
+
+#### Behoben
+- **`Game.ach_event()` nahm keinen Wert entgegen**, obwohl vier Spiele einen
+  übergeben: Poker (`_sync_chips`, praktisch jede Hand), Snake im Modus
+  *Competitive* (jeder Level-Aufstieg), Bowling (ab 200 Punkten) und Pinball
+  (ab 50.000). Der `TypeError` riss die Game-Loop mit, das Bild fror ein.
+  Nebenbei waren die vier wertgebundenen Erfolge *poker_rich*, *snake_comp5*,
+  *bowl_200* und *pin_high* dadurch überhaupt nicht erreichbar.
+- **Die Game-Loop überlebt jetzt eine Ausnahme**: `App._loop()` plante das
+  nächste Frame als letzte Anweisung - warf ein Frame einen Fehler, wurde nie
+  wieder gezeichnet, obwohl das Fenster noch reagierte. Der Rumpf steckt jetzt
+  in `_frame()`, geplant wird in einem `finally`.
+
+#### Neu
+- **Wiki-Seiten für Schach, Mühle, Simon und Billard** in allen 14 Sprachen.
+  Diese vier Spiele hatten als einzige keine Seite - der Wiki-Knopf in ihrem
+  Vorspiel-Screen landete auf der Startseite statt beim Spiel. Jede Seite hat
+  drei Abschnitte (Regeln bzw. Varianten, Steuerung, KI & Punkte); damit hat
+  jedes der 42 Spiele seine eigene Wiki-Seite.
+
 ### UI v4.1.1 bis v4.1.4: Zickzack-Muster – 2026-08-28
 
 Vier neue Designs im Reiter **Erscheinungsbild** - alle sind exakt UI v4.1,
@@ -417,6 +438,27 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Bug fixes & four new wiki pages – 2026-08-28
+
+#### Fixed
+- **`Game.ach_event()` did not accept a value**, although four games pass one:
+  Poker (`_sync_chips`, on practically every hand), Snake in *Competitive*
+  mode (every level-up), Bowling (from 200 points) and Pinball (from 50,000).
+  The `TypeError` took the game loop down with it and the picture froze. On top
+  of that the four value-gated achievements *poker_rich*, *snake_comp5*,
+  *bowl_200* and *pin_high* were unreachable.
+- **The game loop now survives an exception**: `App._loop()` scheduled the next
+  frame as its last statement - if a frame threw, nothing was ever drawn again
+  even though the window still responded. The body now lives in `_frame()` and
+  the next frame is scheduled in a `finally`.
+
+#### Added
+- **Wiki pages for Chess, Nine Men's Morris, Simon and Billiards** in all 14
+  languages. These four were the only games without a page - the wiki button on
+  their pre-game screen opened the start page instead of the game. Every page
+  has three sections (rules or variants, controls, AI & score), so each of the
+  42 games now has its own wiki page.
 
 ### UI v4.1.1 to v4.1.4: zigzag pattern – 2026-08-28
 

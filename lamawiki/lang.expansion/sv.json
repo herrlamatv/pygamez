@@ -1528,6 +1528,174 @@
       ]
     },
     {
+      "id": "chess",
+      "category": "games",
+      "game": "ChessGame",
+      "title": "Schack (Chess)",
+      "keywords": [
+        "schack",
+        "chess",
+        "matt",
+        "rockad",
+        "en passant",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "Så spelar du",
+          "body": [
+            "Schack med hela regeluppsättningen: alla pjäsers drag, kort och lång rockad, en passant och bondeförvandling med val av dam, torn, löpare eller springare.",
+            "Partiet slutar med schackmatt eller remi - genom patt, 50-dragsregeln, trefaldig upprepning eller otillräckligt material.",
+            "I enspelarläget väljer du styrka och färg i inställningsvyn; två spelare turas om vid samma dator."
+          ]
+        },
+        {
+          "h": "Styrning",
+          "body": [
+            "- Mus: klicka på en av dina pjäser och sedan på målrutan. Möjliga rutor och senaste draget är markerade.",
+            "- Tangentbord: [Piltangenter] eller [WASD] flyttar ramen, [Mellanslag] eller [Enter] väljer och drar.",
+            "- Vid förvandling visas de fyra pjäserna - klicka bara.",
+            "- Efter partiet: [Enter] nytt parti, [S] tillbaka till inställningarna (endast enspelare)."
+          ]
+        },
+        {
+          "h": "AI-styrkor och poäng",
+          "body": [
+            "Sex nivåer från Nybörjare till Mästare: Nybörjare drar slumpmässigt, mellannivåerna söker ett till tre halvdrag djupt och missar med flit, Mästare söker djupast och spelar slag färdigt i en lugnhetssökning.",
+            "Varje sökning har en tids- och nodbudget så att gränssnittet aldrig fryser.",
+            "Poängen räknar dina vinster mot AI:n under sessionen; tvåspelarläget räknas inte.",
+            "Tips: utveckla pjäserna tidigt, rockera och ställ tornen på öppna linjer."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "muehle",
+      "category": "games",
+      "game": "MuehleGame",
+      "title": "Kvarn (Nine Men's Morris)",
+      "keywords": [
+        "kvarn",
+        "morris",
+        "dubbelkvarn",
+        "flyga",
+        "pjäser",
+        "ai"
+      ],
+      "sections": [
+        {
+          "h": "De tre faserna",
+          "body": [
+            "- Utplacering: båda sidor lägger i tur och ordning ut sina nio brickor på lediga punkter.",
+            "- Förflyttning: därefter glider en bricka längs en linje till en ledig grannpunkt.",
+            "- Flygning: den som bara har tre brickor kvar får hoppa till vilken ledig punkt som helst. Regeln kan stängas av i inställningsvyn.",
+            "Den som hamnar under tre brickor eller inte kan dra mer har förlorat."
+          ]
+        },
+        {
+          "h": "Kvarnar och styrning",
+          "body": [
+            "Tre egna brickor på en linje är en kvarn: du plockar genast bort en motståndarbricka. Brickor i en sluten motståndarkvarn är fredade så länge det finns andra - de tillåtna målen markeras.",
+            "- Mus: klicka på en ledig punkt. För att flytta väljer du först din egen bricka och sedan målet; möjliga mål lyser upp.",
+            "- [Esc] ångrar ett val du inte menade.",
+            "- Efter ronden: [Enter] ny rond, [S] tillbaka till inställningarna (endast enspelare)."
+          ]
+        },
+        {
+          "h": "AI och poäng",
+          "body": [
+            "Tre styrkor med minimax och alfa-beta-beskärning. Den väger material, slutna kvarnar, rörlighet och öppna dubbelkvarnar - olika tungt i varje fas; den lätta nivån missar med flit.",
+            "Poängen räknar dina vinster mot AI:n under sessionen; flerspelarläget räknas inte.",
+            "Tips: en dubbelkvarn - två kvarnar som öppnas och stängs växelvis - avgör nästan varje parti."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simon",
+      "category": "games",
+      "game": "SimonGame",
+      "title": "Simon",
+      "keywords": [
+        "simon",
+        "minne",
+        "sekvens",
+        "rutor",
+        "duell",
+        "senso"
+      ],
+      "sections": [
+        {
+          "h": "Spellägen",
+          "body": [
+            "- Klassiskt: upprepa sekvensen exakt. Varje rond lägger till en ruta.",
+            "- Speed: som Klassiskt, men uppspelningen blir snabbare för varje rond.",
+            "- Reverse: sekvensen ska matas in baklänges.",
+            "- Duell: två spelare bygger sekvensen växelvis - upprepa allt och lägg sedan till en ruta. Den som trycker fel förlorar.",
+            "- Blandat: läget växlar varje rond mellan Klassiskt, Speed och Reverse."
+          ]
+        },
+        {
+          "h": "Ljud, rutor och styrning",
+          "body": [
+            "Antalet rutor - 4, 6 eller 9 - ställer in svårighetsgraden.",
+            "Ljudet är av (bara färger), på (varje ruta har sin egen ton) eller blandat, där vissa ronder låter och andra inte. Ljudreglaget i inställningarna har företräde.",
+            "- Mus: klicka på en ruta. Tangentbord: sifferknapparna [1] till [9].",
+            "- Under uppspelningen tar spelet inte emot inmatning - vänta tills det är din tur.",
+            "- Efter ett fel: [Enter] igen, [S] tillbaka till inställningarna."
+          ]
+        },
+        {
+          "h": "Poäng och tips",
+          "body": [
+            "Poängen är den längsta sekvens du upprepat felfritt; duellen räknas inte.",
+            "Tips: säg färgerna eller siffrorna för dig själv. Med ljud minns man mycket lättare - därför är den blandade inställningen den tuffaste övningen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billiard",
+      "category": "games",
+      "game": "BilliardGame",
+      "title": "Biljard (Billiards)",
+      "keywords": [
+        "biljard",
+        "pool",
+        "8-ball",
+        "9-ball",
+        "kö",
+        "3d"
+      ],
+      "sections": [
+        {
+          "h": "Varianter",
+          "body": [
+            "- 8-ball: sänk först hela din grupp - hela eller randiga - och sedan den svarta. Gruppen delas ut vid den första regelrätt sänkta bollen.",
+            "- 9-ball: träffa alltid den lägsta bollen först; den som regelrätt sänker nian vinner.",
+            "- Träning: inga regler, ingen motståndare - sänk så många bollar du kan. När bordet är tomt byggs det upp igen och räkningen fortsätter."
+          ]
+        },
+        {
+          "h": "Stöt och vyer",
+          "body": [
+            "- Mus: styr siktet, håll vänster knapp för att ladda styrkan, släpp för att stöta.",
+            "- Tangentbord: [Vänster] och [Höger] siktar, [Upp] och [Ner] reglerar styrkan, [Mellanslag] stöter.",
+            "- Efter en foul ligger vitan i handen: placera den på en ledig plats med musen och klicka.",
+            "- [V] byter vy: 2D uppifrån, 3D som fast snedvy eller Fri - där svänger du kameran runt bordet med höger musknapp nedtryckt. Valet sparas."
+          ]
+        },
+        {
+          "h": "AI och poäng",
+          "body": [
+            "Det finns tre AI-styrkor; som två spelare stöter ni växelvis vid samma dator.",
+            "Poängen räknar vunna partier mot AI:n, eller bollarna du sänker i träningsläget.",
+            "Efter partiet: [Enter] nytt parti, [S] tillbaka till inställningarna."
+          ]
+        }
+      ]
+    },
+    {
       "id": "slidepuzzle",
       "category": "games",
       "game": "SlidingPuzzleGame",
