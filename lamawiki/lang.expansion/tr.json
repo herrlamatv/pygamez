@@ -1995,7 +1995,8 @@
             "360 delikli minigolf: 18 tanesi elle tasarlanmış, 342 tanesi üretilmiş. Classic ve Pro parkurları dokuzar elle yapılmış delikle giriş sağlar, Tour giderek zorlaşan dokuzar üretilmiş delikten oluşan 38 parkur sunar, Random ise tüm havuzdan dokuz delik çekip rastgele aynalar.",
             "Tour delikleri bir tohumdan doğar: parkur 7, delik 3 her açılışta aynı görünür - bunun için hiçbir şey kaydedilmez. Parkur numarasının yanındaki oklar 38 parkur arasında gezinir, yanında toplam par yazar.",
             "Amaç topu mümkün olduğunca az vuruşla deliğe sokmak. Öntanımlı olarak sekiz vuruştan sonra top alınır ve delik en düşük değerle sayılır; deliğe girene kadar oynamayı yeğleyenler bu seçeneği ayar ekranından (ya da [P] ile) kapatabilir.",
-            "İki kişilik oyunda herkes aynı deliği sırayla oynar; sağdaki skor kartı parı ve iki sonucu birden gösterir."
+            "İki kişilik oyunda herkes aynı deliği sırayla oynar; sağdaki skor kartı parı ve iki sonucu birden gösterir.",
+            "Tur bitince Devam düğmesi doğrudan bir sonraki sahaya götürür (Classic -> Pro -> Tour 1 -> Tour 2 ...), böylece aynı dokuz delik bir daha tekrarlanmaz. Tekrar aynı sahayı yeniden oynatır, Ayarlar seçime döner."
           ]
         },
         {
@@ -2004,7 +2005,8 @@
             "- Fareyi hareket ettirerek nişan al. Sol tuşu basılı tutmak gücü doldurur, bırakmak vurur.",
             "- Sol/sağ oklar nişan alır, yukarı/aşağı gücü ayarlar, [Boşluk] vurur.",
             "- [G] nişan çizgisini açıp kapatır; ayar ekranından tamamen da kapatabilirsin.",
-            "- [R] yüklenmiş bir vuruşu iptal eder: fare tuşu basılı kalabilir, top yerinde durur ve vuruş sayılmaz - bıraktıktan sonra yeniden doldurursun. [P] topu almayı açıp kapatır."
+            "- [R] yüklenmiş bir vuruşu iptal eder: fare tuşu basılı kalabilir, top yerinde durur ve vuruş sayılmaz - bıraktıktan sonra yeniden doldurursun. [P] topu almayı açıp kapatır.",
+            "- [F] o anki deliği sıfırlar: vuruşlar tekrar 0, top yeniden başlangıçta - aynı delik, aynı saha. Bitirdiğin delikler skor kartında kalır."
           ]
         },
         {

@@ -1995,7 +1995,8 @@
             "Minigolf na 360 dołkach: 18 zbudowanych ręcznie i 342 wygenerowane. Pola Classic i Pro wprowadzają po dziewięć zbudowanych dołków, Tour oferuje 38 pól po dziewięć generowanych dołków o rosnącej trudności, a Random losuje dziewięć dołków z całości i odbija je lustrzanie.",
             "Dołki Tour powstają z ziarna: pole 7, dołek 3 wygląda tak samo przy każdym starcie - nic nie trzeba zapisywać. Strzałki obok numeru przewijają 38 pól, a obok widnieje łączny par.",
             "Celem jest wbicie piłki w jak najmniejszej liczbie uderzeń. Domyślnie po ośmiu uderzeniach dołek zostaje podniesiony i liczy się na minimum - kto woli grać aż do wbicia, wyłącza podnoszenie w ustawieniach (albo klawiszem [P]).",
-            "We dwoje każdy gra ten sam dołek po kolei; karta wyników po prawej pokazuje par i oba rezultaty."
+            "We dwoje każdy gra ten sam dołek po kolei; karta wyników po prawej pokazuje par i oba rezultaty.",
+            "Na koniec rundy przycisk Dalej prowadzi wprost do kolejnego kursu (Classic -> Pro -> Tour 1 -> Tour 2 ...), więc ten sam zestaw dziewięciu dołków nigdy się nie powtarza. Jeszcze raz gra ten sam kurs, Ustawienia wracają do wyboru."
           ]
         },
         {
@@ -2004,7 +2005,8 @@
             "- Ruch myszy celuje. Przytrzymanie lewego przycisku ładuje siłę, puszczenie uderza.",
             "- Strzałki lewo/prawo celują, góra/dół ustawiają siłę, [Spacja] uderza.",
             "- [G] włącza i wyłącza linię celowania - można ją też wyłączyć na stałe w ustawieniach.",
-            "- [R] anuluje naładowane uderzenie: przycisk myszy może pozostać wciśnięty, piłka zostaje na miejscu, a uderzenie się nie liczy - po puszczeniu ładujesz od nowa. [P] przełącza podnoszenie."
+            "- [R] anuluje naładowane uderzenie: przycisk myszy może pozostać wciśnięty, piłka zostaje na miejscu, a uderzenie się nie liczy - po puszczeniu ładujesz od nowa. [P] przełącza podnoszenie.",
+            "- [F] resetuje bieżący dołek: uderzenia z powrotem na 0, piłka na tee - ten sam dołek, ten sam kurs. Rozegrane dołki zostają na karcie wyników."
           ]
         },
         {

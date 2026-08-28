@@ -1992,7 +1992,8 @@
             "Minigolf com 360 buracos: 18 feitos à mão e 342 gerados. Os percursos Classic e Pro servem de entrada com nove buracos cada, a Tour oferece 38 percursos de nove buracos gerados com dificuldade crescente, e o Random sorteia nove buracos de todo o conjunto e espelha-os ao acaso.",
             "Os buracos da Tour nascem de uma semente: o percurso 7, buraco 3 fica igual em cada arranque - não é preciso guardar nada. As setas ao lado do número percorrem os 38 percursos e ao lado aparece o par total.",
             "O objetivo é encaçapar a bola com o menor número de tacadas. Por omissão o buraco é levantado ao fim de oito tacadas e conta o mínimo - se preferires jogar até encaçapar, desliga o levantamento nos ajustes (ou com [P]).",
-            "A dois, cada um joga o mesmo buraco à vez; o cartão à direita mostra o par e os dois resultados."
+            "A dois, cada um joga o mesmo buraco à vez; o cartão à direita mostra o par e os dois resultados.",
+            "No fim da volta, o botão Seguinte leva diretamente ao percurso seguinte (Classic -> Pro -> Tour 1 -> Tour 2 ...), para nunca repetir os mesmos nove buracos. Outra vez repete o mesmo percurso e Ajustes volta à seleção."
           ]
         },
         {
@@ -2001,7 +2002,8 @@
             "- Move o rato para apontar. Mantém o botão esquerdo para carregar força e larga para bater.",
             "- As setas esquerda/direita apontam, cima/baixo regulam a força, [Espaço] bate.",
             "- [G] liga e desliga a linha de mira - também podes desativá-la nos ajustes.",
-            "- [R] cancela uma tacada carregada: podes manter o botão premido, a bola fica parada e a tacada não conta - depois de largares carregas de novo. [P] alterna o levantamento."
+            "- [R] cancela uma tacada carregada: podes manter o botão premido, a bola fica parada e a tacada não conta - depois de largares carregas de novo. [P] alterna o levantamento.",
+            "- [F] reinicia o buraco atual: tacadas a 0 e bola de volta ao tee - mesmo buraco, mesmo percurso. Os buracos já jogados ficam no cartão."
           ]
         },
         {

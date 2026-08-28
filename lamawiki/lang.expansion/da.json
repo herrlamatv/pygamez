@@ -1995,7 +1995,8 @@
             "Minigolf på 360 baner: 18 håndbyggede og 342 genererede. Banerne Classic og Pro introducerer med ni byggede baner hver, Touren byder på 38 forløb med ni genererede baner hver og stigende sværhedsgrad, og Random trækker ni baner fra det hele og spejlvender dem tilfældigt.",
             "Tour-banerne kommer fra et frø: forløb 7, bane 3 ser ens ud ved hver start - der skal ikke gemmes noget. Pilene ved siden af nummeret blader gennem de 38 forløb, og ved siden af står det samlede par.",
             "Målet er at få bolden i hul på så få slag som muligt. Som standard samles bolden op efter otte slag, og hullet tæller minimum - vil du hellere spille videre, til bolden er i hul, så slå Saml op fra i opsætningen (eller med [P]).",
-            "Til to spiller man den samme bane efter hinanden; scorekortet til højre viser par og begge resultater."
+            "Til to spiller man den samme bane efter hinanden; scorekortet til højre viser par og begge resultater.",
+            "Når runden er slut, fører knappen Videre direkte til den næste bane (Classic -> Pro -> Tour 1 -> Tour 2 ...), så det samme sæt på ni huller aldrig gentages. Igen spiller den samme bane om, og Opsætning går tilbage til valget."
           ]
         },
         {
@@ -2004,7 +2005,8 @@
             "- Bevæg musen for at sigte. Hold venstre museknap for at lade kraften, slip for at slå.",
             "- Venstre/højre pil sigter, op/ned styrer kraften, [Mellemrum] slår.",
             "- [G] slår sigtelinjen til og fra - den kan også slukkes permanent i opsætningen.",
-            "- [R] afbryder et ladet slag: museknappen må gerne blive holdt nede, bolden bliver liggende, og slaget tæller ikke - efter du slipper, lader du bare igen. [P] skifter Saml op."
+            "- [R] afbryder et ladet slag: museknappen må gerne blive holdt nede, bolden bliver liggende, og slaget tæller ikke - efter du slipper, lader du bare igen. [P] skifter Saml op.",
+            "- [F] nulstiller det igangværende hul: slag tilbage på 0, bolden tilbage på teestedet - samme hul, samme bane. Allerede spillede huller bliver stående på scorekortet."
           ]
         },
         {

@@ -1994,7 +1994,8 @@
             "Minigolf con 360 hoyos: 18 hechos a mano y 342 generados. Los recorridos Classic y Pro sirven de entrada con nueve hoyos cada uno, la Tour ofrece 38 recorridos de nueve hoyos generados con dificultad creciente, y Random saca nueve hoyos de todo el conjunto y los refleja al azar.",
             "Los hoyos de la Tour nacen de una semilla: el recorrido 7, hoyo 3 se ve igual en cada arranque; no hay que guardar nada. Las flechas junto al número pasan por los 38 recorridos y al lado aparece el par total.",
             "El objetivo es embocar la bola con los menos golpes posibles. Por defecto el hoyo se recoge tras ocho golpes y se puntúa al mínimo; si prefieres seguir hasta embocar, desactiva la recogida en la pantalla de ajustes (o con [P]).",
-            "A dos, cada jugador juega el mismo hoyo uno tras otro; la tarjeta de la derecha muestra el par y ambos resultados."
+            "A dos, cada jugador juega el mismo hoyo uno tras otro; la tarjeta de la derecha muestra el par y ambos resultados.",
+            "Al terminar la ronda, el botón Siguiente lleva directamente al siguiente recorrido (Classic -> Pro -> Tour 1 -> Tour 2 ...), así nunca se repiten los mismos nueve hoyos. Otra vez repite el mismo recorrido y Ajustes vuelve a la selección."
           ]
         },
         {
@@ -2003,7 +2004,8 @@
             "- Mueve el ratón para apuntar. Mantén el botón izquierdo para cargar fuerza y suéltalo para golpear.",
             "- Las flechas izquierda/derecha apuntan, arriba/abajo ajustan la fuerza, [Espacio] golpea.",
             "- [G] muestra u oculta la línea de tiro; también puedes apagarla en la pantalla de ajustes.",
-            "- [R] cancela un golpe cargado: puedes mantener el botón pulsado, la bola no se mueve y el golpe no cuenta; al soltar simplemente cargas de nuevo. [P] cambia la recogida."
+            "- [R] cancela un golpe cargado: puedes mantener el botón pulsado, la bola no se mueve y el golpe no cuenta; al soltar simplemente cargas de nuevo. [P] cambia la recogida.",
+            "- [F] reinicia el hoyo actual: golpes a 0 y bola de vuelta en la salida - mismo hoyo, mismo recorrido. Los hoyos ya jugados siguen en la tarjeta."
           ]
         },
         {

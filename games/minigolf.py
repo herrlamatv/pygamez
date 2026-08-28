@@ -21,7 +21,12 @@ verlangen Timing.
 Steuerung: Maus bewegt die Ziellinie, linke Maustaste gedrückt halten lädt die
 Schlagstärke, Loslassen schlägt. R bricht einen geladenen Schlag ab, ohne zu
 putten. Alternativ Pfeile links/rechts zielen, hoch/runter Stärke, Leertaste
-schlägt. G blendet die Ziellinie um, P schaltet das Aufnehmen um.
+schlägt. G blendet die Ziellinie um, P schaltet das Aufnehmen um, F setzt die
+laufende Bahn zurück (Schläge auf 0, gleiche Bahn).
+
+Am Rundenende führt der Weiter-Knopf zum NÄCHSTEN Kurs (Classic -> Pro ->
+Tour 1 -> Tour 2 -> ...), damit sich nicht immer derselbe Neuner-Satz
+wiederholt; daneben stehen Nochmal (gleicher Kurs) und Setup.
 
 Punkte (Highscore) = Summe der Bahnpunkte; je Bahn gibt es mehr Punkte, je
 weiter unter Par gespielt wird (Hole-in-One extra).
@@ -78,6 +83,8 @@ MAX_SHOT_TIME = 14.0
 MAX_STROKES = 8              # danach wird die Bahn mit Höchstwert beendet
 
 SETUP, PLAY, HOLE_DONE, OVER = "setup", "play", "holedone", "over"
+# Rand über der Überschrift und unter der Tastenzeile im Rundenende-Banner.
+OVER_PAD = 14
 COURSES = ["classic", "pro", "tour", "random"]
 
 
@@ -226,6 +233,7 @@ class MiniGolfGame(Game):
         self.oy = self.hud_h + (avail_h - CH * self.scale) / 2.0 + 6
         self.card_x = self.width - card_w - 6
         self.card_w = card_w
+        self._build_over_layout()
 
     # ------------------------------------------------------- Speicherstand
     def _load_best(self):
@@ -445,6 +453,9 @@ class MiniGolfGame(Game):
         if event.kind == InputEvent.KEYDOWN and event.key in ("p", "P"):
             self._toggle_pickup()
             return
+        if event.kind == InputEvent.KEYDOWN and event.key in ("f", "F"):
+            self._reset_hole()
+            return
         if self.state == HOLE_DONE:
             if (event.kind == InputEvent.KEYDOWN
                     and event.key in ("Return", "space")) \
@@ -452,15 +463,19 @@ class MiniGolfGame(Game):
                 self._advance()
             return
         if self.state == OVER:
+            # Knöpfe: Weiter (nächster Kurs) · Nochmal · Setup.
             if event.kind == InputEvent.KEYDOWN:
                 if event.key in ("Return", "space"):
-                    self._restart()
+                    self._over_action("next" if self._next_course() else "again")
+                elif event.key in ("r", "R"):
+                    self._over_action("again")
                 elif event.key in ("s", "S"):
-                    self.state = SETUP
-                    self.game_over = False
-                    self.play_sound("click")
+                    self._over_action("setup")
             elif event.kind == InputEvent.MOUSEDOWN and event.button == 1:
-                self._restart()
+                for key, rc in self.over_rects:
+                    if rc.collidepoint(event.pos):
+                        self._over_action(key)
+                        break
             return
         if self.state != PLAY or self.phase != "aim":
             return
@@ -818,6 +833,114 @@ class MiniGolfGame(Game):
             return
         self._end_round()
 
+    # ------------------------------------------------- Rundenende / Weiter
+    def _next_course(self):
+        """(Kurs, Tour-Nummer) des nächsten Kurses - oder None.
+
+        Reihenfolge: Classic -> Pro -> Tour 1 -> Tour 2 -> ... -> Tour 38.
+        So bekommt man am Rundenende nie wieder denselben Neuner-Satz
+        vorgesetzt. Random zieht ohnehin jedes Mal neue Bahnen und hat
+        deshalb kein Ziel (dort ist "Nochmal" bereits eine neue Runde).
+        """
+        if self.course == "classic":
+            return ("pro", self.tour)
+        if self.course == "pro":
+            return ("tour", 1)
+        if self.course == "tour" and self.tour < gen.TOUR_COURSES:
+            return ("tour", self.tour + 1)
+        return None
+
+    def _next_course_label(self):
+        """Name des nächsten Kurses für die Knopfbeschriftung."""
+        nxt = self._next_course()
+        if nxt is None:
+            return ""
+        course, num = nxt
+        name = t("golf.course." + course)
+        return "%s %d" % (name, num) if course == "tour" else name
+
+    def _over_keys(self):
+        """Knöpfe des Rundenende-Bildschirms (nur die Schlüssel)."""
+        keys = ["again", "setup"]
+        if self._next_course() is not None:
+            keys.insert(0, "next")
+        return keys
+
+    def _build_over_layout(self):
+        """Banner-Höhe, Zeilen-Positionen und Knopfreihe des Rundenendes.
+
+        Alles wächst mit den Schriftgrößen mit, damit der Titel bei 1280x960
+        genauso sauber sitzt wie bei 480x360. Gespeichert werden die
+        Mitten-Abstände ab Banner-Oberkante (self.over_y) und die Knöpfe
+        als (Schlüssel, Rect)-Paare.
+        """
+        keys = self._over_keys()
+        head_h = self._huge.get_height()
+        line_h = self._small.get_height()
+        tiny_h = self._tiny.get_height()
+        bh = max(26, min(38, line_h + 10))
+
+        y = OVER_PAD
+        self.over_y = {}
+        for name, h, gap in (("head", head_h, 6), ("sub", line_h, 4),
+                             ("best", tiny_h, 10)):
+            self.over_y[name] = y + h // 2
+            y += h + gap
+        btn_top = y
+        y += bh + 8
+        self.over_y["hint"] = y + tiny_h // 2
+        self.over_h = y + tiny_h + OVER_PAD
+
+        gap = 8
+        bw = min(int(self.width * 0.74), 660)
+        cw = (bw - gap * (len(keys) - 1)) / len(keys)
+        cx = self.width // 2
+        top = self.height // 2 - self.over_h // 2 + btn_top
+        self.over_rects = [
+            (key, pygame.Rect(int(cx - bw / 2 + i * (cw + gap)), top,
+                              int(cw), bh))
+            for i, key in enumerate(keys)]
+
+    def _continue_next(self):
+        """Weiter-Knopf: nächsten Kurs laden und sofort abschlagen."""
+        nxt = self._next_course()
+        if nxt is None:
+            self._restart()
+            return
+        self.course, self.tour = nxt
+        self._tour_par = gen.course_par(self.tour)
+        self._save_setting("course", self.course)
+        self._save_setting("tour", self.tour)
+        self._build_over_layout()
+        self._new_round()
+        self.state = PLAY
+        self.play_sound("click")
+
+    def _over_action(self, key):
+        """Führt einen Knopf des Rundenende-Bildschirms aus."""
+        if key == "next" and self._next_course() is not None:
+            self._continue_next()
+        elif key == "setup":
+            self.state = SETUP
+            self.game_over = False
+            self.play_sound("click")
+        else:
+            self._restart()
+
+    def _reset_hole(self):
+        """Taste F: die laufende Bahn von vorn.
+
+        Schläge zurück auf 0, Ball zurück aufs Tee - gleiche Bahn, gleicher
+        Spieler, gleicher Kurs. Bereits abgeschlossene Bahnen der Runde
+        bleiben in der Scorekarte stehen.
+        """
+        if self.state != PLAY:
+            return
+        self._start_hole()
+        self.msg = t("golf.reset")
+        self.msg_t = 1.4
+        self.play_sound("click")
+
     def _end_round(self):
         total = sum(self.cards[0])
         par_total = sum(h["par"] for h in self.holes)
@@ -831,6 +954,7 @@ class MiniGolfGame(Game):
             self.winner = None
             self.report_result(total <= par_total)
         self.score = self.points[0]
+        self._build_over_layout()
         self.state = OVER
         self.game_over = True
         self.play_sound("win")
@@ -1087,7 +1211,7 @@ class MiniGolfGame(Game):
         s.blit(hint, hint.get_rect(center=(cx, y + 90)))
 
     def _draw_over(self, s):
-        y = self._banner(s, 118)
+        y = self._banner(s, self.over_h)
         cx = self.width // 2
         total = sum(self.cards[0])
         par_total = sum(h["par"] for h in self.holes)
@@ -1097,19 +1221,27 @@ class MiniGolfGame(Game):
                 else t("common.player_wins", n=self.winner + 1), True, self.accent)
         else:
             head = self._huge.render(t("golf.round_done"), True, self.accent)
-        s.blit(head, head.get_rect(center=(cx, y + 32)))
+        s.blit(head, head.get_rect(center=(cx, y + self.over_y["head"])))
         d = total - par_total
         sub = self._small.render(
             t("golf.final", strokes=total,
               diff=("%+d" % d) if d else t("golf.even"), pts=self.points[0]),
             True, ui.TEXT)
-        s.blit(sub, sub.get_rect(center=(cx, y + 66)))
+        s.blit(sub, sub.get_rect(center=(cx, y + self.over_y["sub"])))
         best = self.best.get(self._best_key())
         if best:
             b = self._tiny.render(t("golf.best", n=best), True, ui.GOLD)
-            s.blit(b, b.get_rect(center=(cx, y + 88)))
-        hint = self._tiny.render(t("golf.new_round"), True, ui.TEXT_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, y + 106)))
+            s.blit(b, b.get_rect(center=(cx, y + self.over_y["best"])))
+        # Knopfreihe: Weiter ist der hervorgehobene Standardweg.
+        labels = {"next": t("golf.btn_next", course=self._next_course_label()),
+                  "again": t("golf.btn_again"), "setup": t("golf.btn_setup")}
+        for key, rc in self.over_rects:
+            self._btn(s, rc, labels[key], key == self.over_rects[0][0])
+        # Tastenzeile passend zu den vorhandenen Knöpfen.
+        hint_key = ("golf.continue_hint" if self._next_course()
+                    else "golf.new_round")
+        hint = self._tiny.render(t(hint_key), True, ui.TEXT_DIM)
+        s.blit(hint, hint.get_rect(center=(cx, y + self.over_y["hint"])))
 
     def _draw_setup(self, s):
         cx = self.width // 2
@@ -1171,5 +1303,8 @@ class MiniGolfGame(Game):
         pygame.draw.rect(s, ui.BTN_SEL if on else ui.BTN, rc, border_radius=8)
         pygame.draw.rect(s, self.accent if on else ui.BORDER, rc,
                          2 if on else 1, border_radius=8)
-        im = self._small.render(text, True, ui.TEXT if on else ui.TEXT_DIM)
+        col = ui.TEXT if on else ui.TEXT_DIM
+        im = self._small.render(text, True, col)
+        if im.get_width() > rc.w - 12:     # z.B. "Weiter: Tour 12"
+            im = self._tiny.render(text, True, col)
         s.blit(im, im.get_rect(center=rc.center))

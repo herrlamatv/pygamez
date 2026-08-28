@@ -541,6 +541,12 @@ Explosions-Effekte, Highscore.
 - **Steuerung**: Maus zielt, linke Maustaste halten lädt die Kraft, Loslassen
   schlägt (alternativ Pfeile + Leertaste). **R** bricht einen geladenen Schlag
   ab, ohne zu putten. **G** blendet die Ziellinie um, **P** das Aufnehmen.
+  **F** setzt die laufende Bahn zurück: Schläge auf 0, Ball zurück aufs Tee -
+  gleiche Bahn, gleicher Kurs.
+- **Weiter statt Wiederholung**: Am Rundenende führt der Knopf **Weiter** zum
+  nächsten Kurs (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), sodass nie wieder
+  derselbe Neuner-Satz kommt; daneben stehen **Nochmal** (gleicher Kurs) und
+  **Setup**. Tasten: Enter = weiter, R = nochmal, S = Setup.
 - **Scorekarte** rechts mit Par und Schlägen je Bahn; zu zweit spielt jeder
   dieselbe Bahn nacheinander. Punkte: 600 je Bahn, ±300 je Schlag unter/über
   Par, **500 extra für ein Hole-in-One**. Die niedrigste Schlagzahl je Kurs
@@ -1340,7 +1346,13 @@ explosion effects, high score.
   like Billiards - nothing stutters, nothing tunnels through a rail.
 - **Controls**: the mouse aims, holding the left button loads the power and
   releasing putts (arrows + space work too). **R** cancels a charged shot
-  without putting. **G** toggles the aim line, **P** the pick-up.
+  without putting. **G** toggles the aim line, **P** the pick-up. **F** resets
+  the current hole: strokes back to 0, ball back on the tee - same hole, same
+  course.
+- **Continue instead of repeat**: at the end of a round the **Next** button
+  moves on to the following course (*Classic* → *Pro* → *Tour 1* → *Tour 2* …),
+  so the same set of nine holes never comes back; next to it are **Again**
+  (same course) and **Setup**. Keys: Enter = continue, R = again, S = setup.
 - **Scorecard** on the right with par and strokes per hole; in two-player mode
   each player takes the same hole in turn. Points: 600 per hole, ±300 per stroke
   under/over par, **500 extra for a hole in one**. The lowest stroke count per

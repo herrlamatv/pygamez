@@ -8,6 +8,25 @@
 
 ## 🇩🇪 Deutsch
 
+### Minigolf: Weiter statt Wiederholung, Bahn-Reset mit F – 2026-08-28
+
+#### Neu
+- **Weiter-Knopf am Rundenende**: Statt immer wieder denselben Neuner-Satz zu
+  spielen, führt **Weiter** zum nächsten Kurs - *Classic* → *Pro* → *Tour 1* →
+  *Tour 2* → … bis Tour 38. Der Knopf nennt sein Ziel (z.B. „Weiter: Tour 12"),
+  daneben stehen **Nochmal** (gleicher Kurs) und **Setup**. Tasten: Enter =
+  weiter, R = nochmal, S = Setup. Bei *Random* und nach dem letzten Tour-Kurs
+  entfällt der Knopf - dort gibt es ohnehin jedes Mal neue Bahnen.
+- **Taste F setzt die laufende Bahn zurück**: Schläge zurück auf 0, Ball zurück
+  aufs Tee - gleiche Bahn, gleicher Spieler, gleicher Kurs. Bereits gespielte
+  Bahnen bleiben in der Scorekarte stehen. Wirkt auch, während der Ball rollt
+  oder ein Schlag geladen ist.
+
+#### Geändert
+- Das Rundenende-Banner wächst jetzt mit den Schriftgrößen mit (Überschrift,
+  Ergebnis, Bestwert, Knopfreihe, Tastenzeile) - bei 1280x960 saß der Titel
+  vorher auf der Ergebniszeile.
+
 ### Fehlerbehebungen & vier neue Wiki-Seiten – 2026-08-28
 
 #### Behoben
@@ -438,6 +457,23 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Minigolf: continue instead of repeat, hole reset with F – 2026-08-28
+
+#### Added
+- **Next button at the end of a round**: instead of replaying the same set of
+  nine holes, **Next** moves on to the following course - *Classic* → *Pro* →
+  *Tour 1* → *Tour 2* → … up to Tour 38. The button names its target (e.g.
+  "Next: Tour 12"), next to it are **Again** (same course) and **Setup**. Keys:
+  Enter = continue, R = again, S = setup. With *Random* and after the last tour
+  course the button is left out - those hand you new holes anyway.
+- **The F key resets the current hole**: strokes back to 0, ball back on the tee
+  - same hole, same player, same course. Holes you already finished stay on the
+  scorecard. It also works while the ball is rolling or a shot is charged.
+
+#### Changed
+- The round-end banner now scales with the font sizes (heading, result, best,
+  button row, key line) - at 1280x960 the title used to sit on the result line.
 
 ### Bug fixes & four new wiki pages – 2026-08-28
 

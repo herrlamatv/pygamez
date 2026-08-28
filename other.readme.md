@@ -486,6 +486,12 @@ fusionnent.
 - **Le ramassage est désactivable** : par défaut, un trou s'arrête après huit
   coups et est compté au minimum. Si tu préfères jouer jusqu'à ce que la balle
   tombe, mets *Ramassage* sur AUS dans les réglages (ou appuie sur **P**).
+- **F** réinitialise le trou en cours : coups à 0, balle au départ - même trou,
+  même parcours.
+- **Suite au lieu de répétition** : à la fin d'une manche, le bouton **Suite** mène
+  au parcours suivant (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), donc jamais les
+  mêmes neuf trous ; à côté : **Rejouer** (même parcours) et **Réglages**.
+  Touches : Entrée = suite, R = rejouer, S = réglages.
 
 **Pinball**
 - **Trois tables** : *Classic* (trois bumpers, une série de cibles), *Space*
@@ -1191,6 +1197,12 @@ arma), efectos de explosión, récord.
 - **La recogida se puede desactivar**: por defecto un hoyo termina tras ocho
   golpes y se puntúa al mínimo. Si prefieres seguir hasta embocar, pon *Recoger
   bola* en OFF en la pantalla de ajustes (o pulsa **P**).
+- **F** reinicia el hoyo actual: golpes a 0, bola en la salida - mismo hoyo,
+  mismo recorrido.
+- **Seguir en vez de repetir**: al terminar la ronda, el botón **Siguiente**
+  lleva al recorrido siguiente (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), así
+  nunca se repiten los mismos nueve hoyos; junto a él: **Otra vez** (mismo
+  recorrido) y **Ajustes**. Teclas: Intro = seguir, R = otra vez, S = ajustes.
 
 **Pinball**
 - **Tres mesas**: *Classic* (tres bumpers, una serie de dianas), *Space* (cuatro
@@ -1887,6 +1899,12 @@ melhoria de arma), efeitos de explosão, recorde.
 - **O levantamento pode ser desligado**: por omissão um buraco termina ao fim
   de oito tacadas e conta o mínimo. Se preferires jogar até encaçapar, coloca
   *Levantar bola* em OFF nos ajustes (ou carrega em **P**).
+- **F** reinicia o buraco atual: tacadas a 0, bola no tee - mesmo buraco, mesmo
+  percurso.
+- **Seguir em vez de repetir**: no fim da volta, o botão **Seguinte** leva ao
+  percurso seguinte (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), nunca repetindo
+  os mesmos nove buracos; ao lado: **Outra vez** (mesmo percurso) e **Ajustes**.
+  Teclas: Enter = seguir, R = outra vez, S = ajustes.
 
 **Pinball**
 - **Três mesas**: *Classic* (três bumpers, um conjunto de alvos), *Space* (quatro
@@ -2697,6 +2715,12 @@ broni), efekty wybuchów, rekord.
 - **Podnoszenie można wyłączyć**: domyślnie dołek kończy się po ośmiu
   uderzeniach i liczy się na minimum. Kto woli grać aż do wbicia, ustawia
   *Podnoszenie* na WYŁ w ustawieniach (albo naciska **P**).
+- **F** resetuje bieżący dołek: uderzenia na 0, piłka na tee - ten sam dołek, ten
+  sam kurs.
+- **Dalej zamiast powtórki**: na koniec rundy przycisk **Dalej** prowadzi do
+  kolejnego kursu (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), więc te same
+  dziewięć dołków się nie powtarza; obok: **Jeszcze raz** (ten sam kurs) i
+  **Ustawienia**. Klawisze: Enter = dalej, R = jeszcze raz, S = ustawienia.
 
 **Pinball**
 - **Trzy stoły**: *Classic* (trzy bumpery, jedna seria celów), *Space* (cztery
@@ -3504,6 +3528,12 @@ patlama efektleri, yüksek skor.
 - **Topu alma kapatılabilir**: öntanımlı olarak bir delik sekiz vuruştan sonra
   biter ve en düşük değerle sayılır. Deliğe girene kadar oynamayı yeğleyenler
   ayar ekranında *Topu alma* seçeneğini KAPALI yapar (ya da **P** tuşuna basar).
+- **F** o anki deliği sıfırlar: vuruşlar 0, top başlangıçta - aynı delik, aynı
+  saha.
+- **Tekrar yerine devam**: tur bitince **Devam** düğmesi bir sonraki sahaya götürür
+  (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), böylece aynı dokuz delik
+  tekrarlanmaz; yanında **Tekrar** (aynı saha) ve **Ayarlar**. Tuşlar: Enter =
+  devam, R = tekrar, S = ayarlar.
 
 **Pinball**
 - **Üç masa**: *Classic* (üç bumper, bir hedef dizisi), *Space* (romb dizilmiş
@@ -4284,6 +4314,12 @@ eksplosionseffekter, highscore.
 - **Saml op kan slås fra**: som standard slutter en bane efter otte slag og
   tæller minimum. Vil du hellere spille videre, til bolden er i hul, så sæt
   *Saml op* på FRA i opsætningen (eller tryk **P**).
+- **F** nulstiller det igangværende hul: slag på 0, bolden på teestedet - samme
+  hul, samme bane.
+- **Videre i stedet for gentagelse**: når runden er slut, fører knappen **Videre**
+  til den næste bane (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), så de samme ni
+  huller aldrig gentages; ved siden af: **Igen** (samme bane) og **Opsætning**.
+  Taster: Enter = videre, R = igen, S = opsætning.
 
 **Pinball**
 - **Tre borde**: *Classic* (tre bumpere, én målrække), *Space* (fire bumpere i
@@ -5059,6 +5095,12 @@ våpenoppgradering), eksplosjonseffekter, rekord.
 - **Plukk opp kan slås av**: som standard slutter en bane etter åtte slag og
   teller minimum. Vil du heller spille til ballen går ned, sett *Plukk opp* til
   AV i oppsettet (eller trykk **P**).
+- **F** nullstiller hullet du spiller: slag på 0, ballen på utslaget - samme
+  hull, samme bane.
+- **Videre i stedet for gjentakelse**: når runden er ferdig, tar knappen
+  **Videre** deg til neste bane (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), så
+  de samme ni hullene aldri gjentas; ved siden av: **Om igjen** (samme bane) og
+  **Oppsett**. Taster: Enter = videre, R = om igjen, S = oppsett.
 
 **Pinball**
 - **Tre bord**: *Classic* (tre bumpere, én målrekke), *Space* (fire bumpere i
@@ -5810,6 +5852,12 @@ explosionseffekter, topplista.
 - **Plocka upp går att stänga av**: som standard slutar en bana efter åtta slag
   och räknas som lägst. Vill du hellre spela tills bollen går i, sätt *Plocka
   upp* på AV i inställningarna (eller tryck **P**).
+- **F** återställer det pågående hålet: slag till 0, bollen på utslaget - samma
+  hål, samma bana.
+- **Vidare i stället för upprepning**: när ronden är slut leder knappen
+  **Vidare** till nästa bana (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), så att
+  samma nio hål aldrig upprepas; bredvid: **Igen** (samma bana) och
+  **Inställningar**. Tangenter: Enter = vidare, R = igen, S = inställningar.
 
 **Pinball**
 - **Tre bord**: *Classic* (tre bumpers, en målrad), *Space* (fyra bumpers i romb,
@@ -6595,6 +6643,12 @@ räjähdystehosteet, ennätys.
 - **Noston voi kytkeä pois**: oletuksena rata päättyy kahdeksan lyönnin jälkeen
   ja lasketaan pienimmällä arvolla. Jos haluat pelata upotukseen asti, aseta
   *Pallon nosto* asetusruudussa POIS (tai paina **P**).
+- **F** nollaa käynnissä olevan reiän: lyönnit nollaan, pallo avauspaikalle - sama
+  reikä, sama rata.
+- **Jatka toiston sijaan**: kierroksen lopussa **Seuraava**-painike vie
+  seuraavalle radalle (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), joten sama
+  yhdeksän reiän sarja ei toistu; vieressä **Uudelleen** (sama rata) ja
+  **Asetukset**. Näppäimet: Enter = jatka, R = uudelleen, S = asetukset.
 
 **Pinball**
 - **Kolme pöytää**: *Classic* (kolme puskuria, yksi maalirivi), *Space* (neljä
@@ -7383,6 +7437,12 @@ zbraně), efekty explozí, nejlepší skóre.
 - **Zvednutí lze vypnout**: ve výchozím nastavení dráha končí po osmi úderech a
   počítá se za minimum. Kdo chce hrát až do zahrání, přepne *Zvednutí* v
   nastavení na VYP (nebo stiskne **P**).
+- **F** vynuluje rozehranou dráhu: rány na 0, míček na odpaliště - stejná dráha,
+  stejné hřiště.
+- **Dále místo opakování**: na konci kola vede tlačítko **Dále** na další hřiště
+  (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), takže se stejná devítka drah
+  neopakuje; vedle **Znovu** (stejné hřiště) a **Nastavení**. Klávesy: Enter =
+  dále, R = znovu, S = nastavení.
 
 **Pinball**
 - **Tři stoly**: *Classic* (tři bumpery, jedna řada terčů), *Space* (čtyři
@@ -8168,6 +8228,12 @@ nadgradnja orožja), učinki eksplozij, rekord.
 - **Pobiranje je mogoče izklopiti**: privzeto se steza konča po osmih udarcih in
   šteje najmanj. Kdor raje igra do zadetka, nastavi *Pobiranje* v nastavitvah na
   IZKLOP (ali pritisne **P**).
+- **F** ponastavi stezo v igri: udarci na 0, žogica na začetek - ista steza, isto
+  igrišče.
+- **Naprej namesto ponavljanja**: ob koncu kroga gumb **Naprej** vodi na naslednje
+  igrišče (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), tako da se ista deveterica
+  stez ne ponavlja; poleg **Še enkrat** (isto igrišče) in **Nastavitve**. Tipke:
+  Enter = naprej, R = še enkrat, S = nastavitve.
 
 **Pinball**
 - **Tri mize**: *Classic* (trije odbijači, ena vrsta tarč), *Space* (štirje
@@ -8957,6 +9023,12 @@ nadogradnja oružja), efekti eksplozije, rekord.
 - **Podizanje se može isključiti**: zadano staza završava nakon osam udaraca i
   broji se po najmanjoj vrijednosti. Tko radije igra do ubacivanja, u postavkama
   stavi *Podizanje* na ISKLJ (ili pritisne **P**).
+- **F** poništava stazu u igri: udarci na 0, loptica na početak - ista staza, isti
+  teren.
+- **Dalje umjesto ponavljanja**: na kraju runde gumb **Dalje** vodi na sljedeći
+  teren (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), pa se isti komplet od devet
+  staza ne ponavlja; pokraj njega **Ponovno** (isti teren) i **Postavke**. Tipke:
+  Enter = dalje, R = ponovno, S = postavke.
 
 **Pinball**
 - **Tri stola**: *Classic* (tri odbojnika, jedan niz meta), *Space* (četiri
