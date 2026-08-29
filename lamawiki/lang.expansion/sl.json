@@ -2041,6 +2041,7 @@
             "Minigolf na 360 stezah: 18 ročno zgrajenih in 342 ustvarjenih. Igrišči Classic in Pro uvedeta z devetimi zgrajenimi stezami vsako, Tour ponuja 38 igrišč po devet ustvarjenih stez z naraščajočo težavnostjo, Random pa izžreba devet stez iz vsega skupaj in jih naključno zrcali.",
             "Steze Tour nastanejo iz semena: igrišče 7, steza 3 je ob vsakem zagonu enaka - shranjevati ni treba ničesar. Puščici ob številki listata po 38 igriščih, zraven pa piše skupni par.",
             "Cilj je spraviti žogico v luknjo s čim manj udarci. Privzeto se žogica po osmih udarcih pobere in steza šteje najmanj - kdor raje igra do zadetka, pobiranje izklopi v nastavitvah (ali s tipko [P]).",
+            "Prav tako lahko izklopiš samodejno merjenje: običajno palica pred vsakim udarcem kaže proti luknji - brez njega meriš na vsaki stezi povsem sam.",
             "V dvoje vsak igra isto stezo po vrsti; kartica na desni prikazuje par in oba rezultata.",
             "Ob koncu kroga te gumb Naprej popelje naravnost na naslednje igrišče (Classic -> Pro -> Tour 1 -> Tour 2 ...), tako da se ista deveterica stez nikoli ne ponovi. Še enkrat znova odigra isto igrišče, Nastavitve pa se vrnejo k izbiri."
           ]
@@ -2051,6 +2052,7 @@
             "- S premikom miške ciljaš. Držanje leve tipke polni moč, spust udari.",
             "- Puščici levo/desno ciljata, gor/dol nastavljata moč, [Preslednica] udari.",
             "- [G] vklopi in izklopi ciljno črto - trajno jo lahko izklopiš v nastavitvah.",
+            "- [Z] preklopi samodejno merjenje: vklopljeno (privzeto) se palica pred vsakim udarcem sama obrne proti luknji, izklopljeno ostane nazadnje izbrana smer - takrat meriš povsem sam. Na začetku nove steze palica kaže nevtralno navzgor.",
             "- [R] prekliče napolnjen udarec: tipka miške lahko ostane pritisnjena, žogica obleži in udarec ne šteje - ko spustiš, preprosto napolniš znova. [P] preklopi pobiranje.",
             "- [F] ponastavi stezo, ki jo igraš: udarci nazaj na 0, žogica nazaj na začetek - ista steza, isto igrišče. Že odigrane steze ostanejo na točkovni kartici."
           ]

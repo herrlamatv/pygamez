@@ -407,6 +407,7 @@
   "golf.final": "{strokes} uderzeń ({diff}) · {pts} pkt",
   "golf.hole": "Dołek {n}/{total}",
   "golf.hole_result": "{strokes} uderzeń (par {par}) · +{pts} pkt",
+  "golf.lbl_autoaim": "Auto-celowanie",
   "golf.lbl_course": "Pole",
   "golf.lbl_guide": "Linia celowania",
   "golf.lbl_pickup": "Podnoszenie",

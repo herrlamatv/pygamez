@@ -8,6 +8,35 @@
 
 ## 🇩🇪 Deutsch
 
+### Minigolf: Autoziel abschaltbar – 2026-08-29
+
+#### Neu
+- **Autoziel im Setup** (Standard AN): Bisher drehte sich der Schläger vor jedem
+  Schlag von selbst zum Loch - am Abschlag, nach jedem Stopp und nach jedem
+  Wasser-Strafschlag. Steht *Autoziel* auf AUS, bleibt die zuletzt gewählte
+  Richtung stehen und gezielt wird von da an komplett selbst. Nur am Tee einer
+  neuen Bahn gibt es keine „letzte" Richtung - dort zeigt der Schläger neutral
+  bahnaufwärts, damit niemand mit dem Rücken zur Bahn startet. Die Einstellung
+  liegt im Abschnitt `minigolf` von `settings.json` und gilt auch beim nächsten
+  Start.
+- **Taste Z** schaltet das Autoziel jederzeit um - im Setup genauso wie mitten
+  in der Runde, wie man es von **G** (Ziellinie) und **P** (Aufnehmen) kennt.
+- Neuer Schlüssel `golf.lbl_autoaim` in allen **14 Sprachen**, dazu die
+  Minigolf-Seite im LamaWiki und beide READMEs.
+
+#### Geändert
+- **Setup-Screen aufgeräumt**: Ziellinie, Autoziel und Aufnehmen stehen jetzt
+  als drei AN/AUS-Paare nebeneinander in einer Zeile statt in drei
+  Einzelzeilen. So passt die neue Option auch auf 480x360 - dort sind die
+  Knöpfe sogar höher als vorher (40 statt 31 px).
+- **Der Optionsblock wächst mit der Auflösung**: Die Schriften taten das
+  schon immer, der 370-px-Block nicht - lange Beschriftungen wie
+  „Ligne de visée" hätten ab 800x600 nicht mehr über ihre Schaltergruppe
+  gepasst. Was an Höhe übrig bleibt, verteilt sich außerdem auf die Abstände,
+  statt unten leer zu stehen.
+- Das Headless-Audit (`tests/newgames_audit.py`) prüft das Autoziel jetzt mit -
+  samt Setup-Screen in fünf Auflösungen und allen 14 Sprachen.
+
 ### Replays für Minigolf & Bowling – 2026-08-29
 
 #### Neu
@@ -505,6 +534,34 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Minigolf: auto-aim can be switched off – 2026-08-29
+
+#### New
+- **Auto-aim in the setup screen** (ON by default): until now the putter turned
+  towards the cup by itself before every stroke - on the tee, after every stop
+  and after every water penalty. With *Auto-aim* set to OFF the direction you
+  last picked stays put, and from then on you aim entirely yourself. Only on the
+  tee of a new hole there is no "last" direction - there the putter points
+  neutrally up the course so nobody starts with their back to the hole. The
+  setting lives in the `minigolf` section of `settings.json` and survives a
+  restart.
+- **Key Z** toggles the auto-aim at any time - in the setup screen just as much
+  as mid-round, the way **G** (aim line) and **P** (pick-up) already work.
+- New key `golf.lbl_autoaim` in all **14 languages**, plus the Minigolf page in
+  the LamaWiki and both READMEs.
+
+#### Changed
+- **Tidier setup screen**: aim line, auto-aim and pick-up now sit next to each
+  other as three ON/OFF pairs in a single row instead of three separate rows.
+  That way the new option also fits on 480x360 - where the buttons are even
+  taller than before (40 instead of 31 px).
+- **The option block grows with the resolution**: the fonts always did, the
+  370 px block did not - long labels such as "Ligne de visée" would no longer
+  have fit above their switch group from 800x600 up. Whatever height is left
+  over is spread across the gaps instead of sitting empty at the bottom.
+- The headless audit (`tests/newgames_audit.py`) now covers the auto-aim as
+  well - including the setup screen in five resolutions and all 14 languages.
 
 ### Replays for Minigolf & Bowling – 2026-08-29
 

@@ -407,6 +407,7 @@
   "golf.final": "{strokes} golpes ({diff}) · {pts} puntos",
   "golf.hole": "Hoyo {n}/{total}",
   "golf.hole_result": "{strokes} golpes (par {par}) · +{pts} puntos",
+  "golf.lbl_autoaim": "Auto-puntería",
   "golf.lbl_course": "Recorrido",
   "golf.lbl_guide": "Línea de tiro",
   "golf.lbl_pickup": "Recoger bola",

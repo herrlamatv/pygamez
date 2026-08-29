@@ -407,6 +407,7 @@
   "golf.final": "{strokes} lyöntiä ({diff}) · {pts} pistettä",
   "golf.hole": "Reikä {n}/{total}",
   "golf.hole_result": "{strokes} lyöntiä (par {par}) · +{pts} pistettä",
+  "golf.lbl_autoaim": "Autotähtäys",
   "golf.lbl_course": "Rata",
   "golf.lbl_guide": "Tähtäysviiva",
   "golf.lbl_pickup": "Pallon nosto",

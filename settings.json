@@ -97,10 +97,11 @@
     "textures": "high"
   },
   "minigolf": {
-    "course": "classic",
+    "course": "pro",
     "tour": 1,
-    "guide": true,
-    "pickup": true
+    "guide": false,
+    "autoaim": false,
+    "pickup": false
   },
   "pinball": {
     "table": "classic",

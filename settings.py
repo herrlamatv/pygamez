@@ -151,9 +151,10 @@ DEFAULTS = {
     "blockjump": {"view": "first", "blur": 0.35, "sens": 1.0,
                   "mouse_invert": False, "textures": "high"},
     # Minigolf: Kurs (classic/pro/tour/random), Tour-Kursnummer, Ziellinie
+    # an/aus, "Autoziel" (Schläger zeigt vor jedem Schlag von selbst zum Loch)
     # an/aus und "Aufnehmen" (Bahn nach 8 Schlägen beenden) an/aus
     "minigolf": {"course": "classic", "tour": 1, "guide": True,
-                 "pickup": True},
+                 "autoaim": True, "pickup": True},
     # Pinball: Tisch (classic/space/lama) und Bälle je Partie (3/5)
     "pinball": {"table": "classic", "balls": 3},
     # Bowling: Schwierigkeit (easy/normal/pro) und Zielhilfe an/aus
@@ -350,6 +351,8 @@ def _merge_defaults(data):
                 out["minigolf"]["tour"] = max(1, min(38, mg["tour"]))
             if isinstance(mg.get("guide"), bool):
                 out["minigolf"]["guide"] = mg["guide"]
+            if isinstance(mg.get("autoaim"), bool):
+                out["minigolf"]["autoaim"] = mg["autoaim"]
             if isinstance(mg.get("pickup"), bool):
                 out["minigolf"]["pickup"] = mg["pickup"]
         pin = data.get("pinball")

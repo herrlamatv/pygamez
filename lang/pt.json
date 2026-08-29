@@ -407,6 +407,7 @@
   "golf.final": "{strokes} tacadas ({diff}) · {pts} pontos",
   "golf.hole": "Buraco {n}/{total}",
   "golf.hole_result": "{strokes} tacadas (par {par}) · +{pts} pontos",
+  "golf.lbl_autoaim": "Mira automática",
   "golf.lbl_course": "Percurso",
   "golf.lbl_guide": "Linha de mira",
   "golf.lbl_pickup": "Levantar bola",

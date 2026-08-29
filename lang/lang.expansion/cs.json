@@ -407,6 +407,7 @@
   "golf.final": "{strokes} úderů ({diff}) · {pts} bodů",
   "golf.hole": "Dráha {n}/{total}",
   "golf.hole_result": "{strokes} úderů (par {par}) · +{pts} bodů",
+  "golf.lbl_autoaim": "Automíření",
   "golf.lbl_course": "Hřiště",
   "golf.lbl_guide": "Zaměřovací čára",
   "golf.lbl_pickup": "Zvednutí",

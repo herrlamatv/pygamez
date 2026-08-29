@@ -2040,6 +2040,7 @@
             "Du minigolf sur 360 trous : 18 construits à la main et 342 générés. Les parcours Classic et Pro servent d'entrée en matière avec neuf trous chacun, la Tour propose 38 parcours de neuf trous générés à difficulté croissante, et Random tire neuf trous dans l'ensemble en les inversant au hasard.",
             "Les trous de la Tour viennent d'une graine : le parcours 7, trou 3 est identique à chaque démarrage - rien n'a besoin d'être enregistré. Les flèches à côté du numéro font défiler les 38 parcours, le par total s'affiche à côté.",
             "Le but est de rentrer la balle en le moins de coups possible. Par défaut, un trou est relevé après huit coups et compté au minimum ; si tu préfères jouer jusqu'à ce que la balle tombe, désactive le ramassage dans les réglages (ou avec [P]).",
+            "La visée auto se désactive tout aussi facilement : normalement le club pointe vers le trou avant chaque coup - sans elle, tu vises chaque trou entièrement toi-même.",
             "À deux, chacun joue le même trou l'un après l'autre ; la carte de score à droite montre le par et les deux résultats.",
             "À la fin d'une manche, le bouton Suite mène directement au parcours suivant (Classic -> Pro -> Tour 1 -> Tour 2 ...), pour ne jamais rejouer les mêmes neuf trous. Rejouer relance le même parcours, Réglages revient à la sélection."
           ]
@@ -2050,6 +2051,7 @@
             "- Bouge la souris pour viser. Maintiens le clic gauche pour charger la puissance, relâche pour jouer.",
             "- Les flèches gauche/droite visent, haut/bas règlent la puissance, [Espace] joue le coup.",
             "- [G] affiche ou masque la ligne de visée - tu peux aussi la couper dans l'écran de réglages.",
+            "- [Z] bascule la visée auto : activée (par défaut), le club se tourne vers le trou avant chaque coup ; désactivée, la direction choisie reste en place - tu vises alors entièrement toi-même. Au départ d'un nouveau trou, le club pointe neutrement vers le haut.",
             "- [R] annule un coup chargé : tu peux garder le clic enfoncé, la balle ne bouge pas et le coup ne compte pas - après avoir relâché, tu recharges simplement. [P] bascule le ramassage.",
             "- [F] réinitialise le trou en cours : coups remis à 0, balle de retour au départ - même trou, même parcours. Les trous déjà joués restent sur la carte de score."
           ]

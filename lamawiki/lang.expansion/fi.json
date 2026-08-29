@@ -2041,6 +2041,7 @@
             "Minigolfia 360 radalla: 18 käsin rakennettua ja 342 luotua. Radat Classic ja Pro johdattavat mukaan yhdeksällä rakennetulla radalla kumpikin, Tour tarjoaa 38 kierrosta, joissa on yhdeksän luotua rataa ja nouseva vaikeus, ja Random arpoo yhdeksän rataa koko joukosta ja peilaa ne satunnaisesti.",
             "Tour-radat syntyvät siemenestä: kierros 7, rata 3 näyttää samalta joka käynnistyksellä - mitään ei tarvitse tallentaa. Numeron vieressä olevat nuolet selaavat 38 kierrosta, ja vieressä lukee kokonais-par.",
             "Tavoitteena on upottaa pallo mahdollisimman harvalla lyönnillä. Oletuksena pallo nostetaan kahdeksan lyönnin jälkeen ja reikä lasketaan pienimmällä arvolla - jos haluat pelata upotukseen asti, kytke noston pois asetusruudussa (tai [P]-näppäimellä).",
+            "Autotähtäyksen voi sammuttaa yhtä helposti: tavallisesti maila osoittaa reikää kohti ennen jokaista lyöntiä - ilman sitä tähtäät joka reiällä itse.",
             "Kaksinpelissä molemmat pelaavat saman radan vuorotellen; oikean reunan tuloskortti näyttää parin ja molemmat tulokset.",
             "Kierroksen lopussa Seuraava-painike vie suoraan seuraavalle radalle (Classic -> Pro -> Tour 1 -> Tour 2 ...), joten sama yhdeksän reiän sarja ei toistu koskaan. Uudelleen pelaa saman radan uusiksi ja Asetukset palaa valintaan."
           ]
@@ -2051,6 +2052,7 @@
             "- Liikuta hiirtä tähdätäksesi. Pidä vasenta painiketta pohjassa ladataksesi voimaa, päästä irti lyödäksesi.",
             "- Vasen/oikea nuoli tähtää, ylös/alas säätää voimaa, [Välilyönti] lyö.",
             "- [G] näyttää ja piilottaa tähtäysviivan - sen voi sammuttaa pysyvästi asetusruudussa.",
+            "- [Z] kytkee autotähtäyksen: päällä (oletus) maila kääntyy ennen jokaista lyöntiä itsestään reikää kohti, pois viimeksi valittu suunta jää voimaan - tähtäät kokonaan itse. Uuden reiän avauspaikalla maila osoittaa neutraalisti ylös.",
             "- [R] peruu ladatun lyönnin: hiiren painike saa jäädä pohjaan, pallo pysyy paikallaan eikä lyönti laske - kun päästät irti, lataat vain uudelleen. [P] vaihtaa pallon noston.",
             "- [F] nollaa käynnissä olevan reiän: lyönnit takaisin nollaan, pallo takaisin avauspaikalle - sama reikä, sama rata. Jo pelatut reiät jäävät tuloskorttiin."
           ]

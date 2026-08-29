@@ -407,6 +407,7 @@
   "golf.final": "{strokes} Schläge ({diff}) · {pts} Punkte",
   "golf.hole": "Bahn {n}/{total}",
   "golf.hole_result": "{strokes} Schläge (Par {par}) · +{pts} Punkte",
+  "golf.lbl_autoaim": "Autoziel",
   "golf.lbl_course": "Kurs",
   "golf.lbl_guide": "Ziellinie",
   "golf.lbl_pickup": "Aufnehmen",

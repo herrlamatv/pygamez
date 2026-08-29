@@ -407,6 +407,7 @@
   "golf.final": "{strokes} strokes ({diff}) · {pts} points",
   "golf.hole": "Hole {n}/{total}",
   "golf.hole_result": "{strokes} strokes (par {par}) · +{pts} points",
+  "golf.lbl_autoaim": "Auto-aim",
   "golf.lbl_course": "Course",
   "golf.lbl_guide": "Aim line",
   "golf.lbl_pickup": "Pick up",

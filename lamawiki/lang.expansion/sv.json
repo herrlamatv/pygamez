@@ -2041,6 +2041,7 @@
             "Minigolf på 360 banor: 18 handbyggda och 342 genererade. Banorna Classic och Pro introducerar med nio byggda banor var, Touren bjuder på 38 slingor med nio genererade banor var och stigande svårighet, och Random drar nio banor ur alltihop och speglar dem slumpvis.",
             "Tour-banorna kommer från ett frö: slinga 7, bana 3 ser likadan ut vid varje start - inget behöver sparas. Pilarna bredvid numret bläddrar genom de 38 slingorna, och bredvid står totalt par.",
             "Målet är att sänka bollen på så få slag som möjligt. Som standard plockas bollen upp efter åtta slag och hålet räknas som lägst - vill du hellre spela tills bollen går i, stäng av Plocka upp i inställningarna (eller med [P]).",
+            "Auto-siktet går att stänga av lika enkelt: normalt pekar klubban mot hålet före varje slag - utan det siktar du helt själv på varje hål.",
             "Till två spelar båda samma bana efter varandra; scorekortet till höger visar par och båda resultaten.",
             "När ronden är slut leder knappen Vidare direkt till nästa bana (Classic -> Pro -> Tour 1 -> Tour 2 ...), så att samma uppsättning på nio hål aldrig upprepas. Igen spelar samma bana på nytt och Inställningar går tillbaka till valet."
           ]
@@ -2051,6 +2052,7 @@
             "- Flytta musen för att sikta. Håll vänster musknapp för att ladda kraften, släpp för att slå.",
             "- Vänster/höger pil siktar, upp/ner ställer kraften, [Blanksteg] slår.",
             "- [G] slår på och av siktlinjen - den går också att stänga av permanent i inställningarna.",
+            "- [Z] slår på och av auto-siktet: på (standard) vrider sig klubban mot hålet före varje slag, av står den senast valda riktningen kvar - då siktar du helt själv. På ett nytt håls tee pekar klubban neutralt uppåt.",
             "- [R] avbryter ett laddat slag: musknappen får vara nedtryckt, bollen ligger kvar och slaget räknas inte - när du släpper laddar du bara om. [P] växlar Plocka upp.",
             "- [F] återställer det pågående hålet: slagen tillbaka till 0, bollen tillbaka på utslaget - samma hål, samma bana. Hål du redan spelat står kvar på scorekortet."
           ]

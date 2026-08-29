@@ -476,9 +476,10 @@ fusionnent.
   un coup de pénalité, les pare-chocs renvoient de la vitesse, moulins et blocs
   mobiles demandent du timing. La physique tourne en sous-pas avec frottement
   comme au billard - rien ne saute, rien ne traverse une bande.
-- **Commandes** : la souris vise, le clic gauche maintenu charge la puissance et
-  le relâchement joue le coup (flèches + espace au choix). **R** annule un coup
-  chargé sans jouer. **G** bascule la ligne de visée, **P** le ramassage.
+- **Commandes** : la souris vise, le clic gauche maintenu charge la puissance
+  et le relâchement joue le coup (flèches + espace au choix). **R** annule un
+  coup chargé sans jouer. **G** bascule la ligne de visée, **Z** la visée auto,
+  **P** le ramassage.
 - **Carte de score** à droite avec le par et les coups par trou ; à deux, chacun
   joue le même trou à son tour. Points : 600 par trou, ±300 par coup sous/au-dessus
   du par, **500 de plus pour un trou en un**. Le nombre de coups le plus bas par
@@ -486,6 +487,11 @@ fusionnent.
 - **Le ramassage est désactivable** : par défaut, un trou s'arrête après huit
   coups et est compté au minimum. Si tu préfères jouer jusqu'à ce que la balle
   tombe, mets *Ramassage* sur AUS dans les réglages (ou appuie sur **P**).
+- **La visée auto est désactivable** : par défaut, le club se tourne vers le
+  trou avant chaque coup. Si tu préfères viser chaque trou toi-même, mets
+  *Visée auto* sur NON dans les réglages (ou appuie sur **Z**) - la dernière
+  direction choisie reste alors en place, et au départ d'un nouveau trou le
+  club pointe neutrement vers le haut.
 - **F** réinitialise le trou en cours : coups à 0, balle au départ - même trou,
   même parcours.
 - **Suite au lieu de répétition** : à la fin d'une manche, le bouton **Suite** mène
@@ -1200,8 +1206,9 @@ arma), efectos de explosión, récord.
   y bloques móviles exigen ritmo. La física corre en subpasos con rozamiento como
   en el billar: nada salta ni atraviesa la banda.
 - **Controles**: el ratón apunta, mantener el botón izquierdo carga la fuerza y
-  soltarlo golpea (también flechas + espacio). **R** cancela un golpe cargado sin
-  golpear. **G** cambia la línea de tiro, **P** la recogida.
+  soltarlo golpea (también flechas + espacio). **R** cancela un golpe cargado
+  sin golpear. **G** cambia la línea de tiro, **Z** la puntería automática,
+  **P** la recogida.
 - **Tarjeta de puntuación** a la derecha con el par y los golpes por hoyo; a dos,
   cada jugador juega el mismo hoyo por turnos. Puntos: 600 por hoyo, ±300 por
   golpe bajo/sobre par, **500 extra por un hoyo en uno**. El menor número de
@@ -1209,6 +1216,11 @@ arma), efectos de explosión, récord.
 - **La recogida se puede desactivar**: por defecto un hoyo termina tras ocho
   golpes y se puntúa al mínimo. Si prefieres seguir hasta embocar, pon *Recoger
   bola* en OFF en la pantalla de ajustes (o pulsa **P**).
+- **La puntería automática se puede desactivar**: por defecto el palo apunta al
+  hoyo antes de cada golpe. Si prefieres apuntar tú en cada hoyo, pon
+  *Auto-puntería* en NO en la pantalla de ajustes (o pulsa **Z**) - así se
+  mantiene la última dirección elegida, y en la salida de un hoyo nuevo el palo
+  apunta neutro hacia arriba.
 - **F** reinicia el hoyo actual: golpes a 0, bola en la salida - mismo hoyo,
   mismo recorrido.
 - **Seguir en vez de repetir**: al terminar la ronda, el botón **Siguiente**
@@ -1915,7 +1927,7 @@ melhoria de arma), efeitos de explosão, recorde.
   bilhar - nada salta nem atravessa a tabela.
 - **Comandos**: o rato aponta, manter o botão esquerdo carrega a força e largar
   bate (também setas + espaço). **R** cancela uma tacada carregada sem bater.
-  **G** alterna a linha de mira, **P** o levantamento.
+  **G** alterna a linha de mira, **Z** a mira automática, **P** o levantamento.
 - **Cartão de pontuação** à direita com o par e as tacadas por buraco; a dois,
   cada um joga o mesmo buraco à vez. Pontos: 600 por buraco, ±300 por tacada
   abaixo/acima do par, **500 extra por um buraco em um**. O menor número de
@@ -1923,6 +1935,11 @@ melhoria de arma), efeitos de explosão, recorde.
 - **O levantamento pode ser desligado**: por omissão um buraco termina ao fim
   de oito tacadas e conta o mínimo. Se preferires jogar até encaçapar, coloca
   *Levantar bola* em OFF nos ajustes (ou carrega em **P**).
+- **A mira automática pode ser desligada**: por omissão o taco vira-se para o
+  buraco antes de cada tacada. Se preferires apontar tu em cada buraco, coloca
+  *Mira automática* em NÃO nos ajustes (ou carrega em **Z**) - a última direção
+  escolhida mantém-se, e na saída de um buraco novo o taco aponta neutro para
+  cima.
 - **F** reinicia o buraco atual: tacadas a 0, bola no tee - mesmo buraco, mesmo
   percurso.
 - **Seguir em vez de repetir**: no fim da volta, o botão **Seguinte** leva ao
@@ -2742,7 +2759,8 @@ broni), efekty wybuchów, rekord.
   - nic nie skacze i nie przenika przez bandę.
 - **Sterowanie**: mysz celuje, przytrzymanie lewego przycisku ładuje siłę, a
   puszczenie uderza (można też strzałkami + spacją). **R** anuluje naładowane
-  uderzenie bez uderzania. **G** przełącza linię celowania, **P** podnoszenie.
+  uderzenie bez uderzania. **G** przełącza linię celowania, **Z**
+  auto-celowanie, **P** podnoszenie.
 - **Karta wyników** po prawej z par i uderzeniami na dołek; we dwoje każdy gra ten
   sam dołek po kolei. Punkty: 600 za dołek, ±300 za uderzenie poniżej/powyżej par,
   **500 dodatkowo za hole in one**. Najmniejsza liczba uderzeń na każdym polu
@@ -2750,6 +2768,11 @@ broni), efekty wybuchów, rekord.
 - **Podnoszenie można wyłączyć**: domyślnie dołek kończy się po ośmiu
   uderzeniach i liczy się na minimum. Kto woli grać aż do wbicia, ustawia
   *Podnoszenie* na WYŁ w ustawieniach (albo naciska **P**).
+- **Auto-celowanie można wyłączyć**: domyślnie kij przed każdym uderzeniem sam
+  obraca się w stronę dołka. Kto woli celować sam na każdym dołku, ustawia
+  *Auto-celowanie* na WYŁ. w ustawieniach (albo naciska **Z**) - wtedy zostaje
+  ostatnio wybrany kierunek, a na tee nowego dołka kij wskazuje neutralnie w
+  górę.
 - **F** resetuje bieżący dołek: uderzenia na 0, piłka na tee - ten sam dołek, ten
   sam kurs.
 - **Dalej zamiast powtórki**: na koniec rundy przycisk **Dalej** prowadzi do
@@ -3565,9 +3588,10 @@ patlama efektleri, yüksek skor.
   vuruşuna mal olur, lastik tamponlar hız geri verir, yel değirmenleri ve gezen
   bloklar zamanlama ister. Fizik, bilardodaki gibi sürtünmeli alt adımlarla çalışır
   - hiçbir şey zıplamaz ya da bandın içinden geçmez.
-- **Kontroller**: fare nişan alır, sol tuşu basılı tutmak gücü doldurur, bırakmak
-  vurur (oklar + boşluk da olur). **R** yüklenmiş vuruşu vurmadan iptal eder.
-  **G** nişan çizgisini, **P** topu almayı açıp kapatır.
+- **Kontroller**: fare nişan alır, sol tuşu basılı tutmak gücü doldurur,
+  bırakmak vurur (oklar + boşluk da olur). **R** yüklenmiş vuruşu vurmadan
+  iptal eder. **G** nişan çizgisini, **Z** otomatik nişanı, **P** topu almayı
+  açıp kapatır.
 - **Skor kartı** sağda, par ve delik başına vuruşlarla; iki kişide herkes aynı
   deliği sırayla oynar. Puanlar: delik başına 600, parın altındaki/üstündeki her
   vuruş için ±300, **hole in one için 500 ek puan**. Her parkurun en düşük vuruş
@@ -3575,6 +3599,11 @@ patlama efektleri, yüksek skor.
 - **Topu alma kapatılabilir**: öntanımlı olarak bir delik sekiz vuruştan sonra
   biter ve en düşük değerle sayılır. Deliğe girene kadar oynamayı yeğleyenler
   ayar ekranında *Topu alma* seçeneğini KAPALI yapar (ya da **P** tuşuna basar).
+- **Otomatik nişan kapatılabilir**: öntanımlı olarak sopa her vuruştan önce
+  kendiliğinden deliğe döner. Her deliği kendisi nişanlamayı yeğleyenler ayar
+  ekranında *Otomatik nişan* seçeneğini KAPALI yapar (ya da **Z** tuşuna basar)
+  - o zaman son seçilen yön korunur ve yeni bir deliğin başında sopa nötr
+  olarak yukarıyı gösterir.
 - **F** o anki deliği sıfırlar: vuruşlar 0, top başlangıçta - aynı delik, aynı
   saha.
 - **Tekrar yerine devam**: tur bitince **Devam** düğmesi bir sonraki sahaya götürür
@@ -4363,8 +4392,8 @@ eksplosionseffekter, highscore.
   kræver timing. Fysikken kører i deltrin med friktion som i billard - intet
   hakker, og intet smutter gennem banden.
 - **Styring**: musen sigter, venstre museknap holdt nede lader kraften, og et
-  slip slår (pile + mellemrum virker også). **R** afbryder et ladet slag uden at
-  slå. **G** slår sigtelinjen til og fra, **P** Saml op.
+  slip slår (pile + mellemrum virker også). **R** afbryder et ladet slag uden
+  at slå. **G** slår sigtelinjen til og fra, **Z** auto-sigtet, **P** Saml op.
 - **Scorekort** til højre med par og slag pr. bane; til to spiller begge den samme
   bane efter tur. Point: 600 pr. bane, ±300 pr. slag under/over par, **500 ekstra
   for hole in one**. Det laveste antal slag pr. forløb ligger i afsnittet
@@ -4372,6 +4401,10 @@ eksplosionseffekter, highscore.
 - **Saml op kan slås fra**: som standard slutter en bane efter otte slag og
   tæller minimum. Vil du hellere spille videre, til bolden er i hul, så sæt
   *Saml op* på FRA i opsætningen (eller tryk **P**).
+- **Auto-sigte kan slås fra**: som standard drejer køllen af sig selv mod
+  hullet før hvert slag. Vil du hellere sigte selv på hver bane, så sæt
+  *Auto-sigte* på FRA i opsætningen (eller tryk **Z**) - så bliver den senest
+  valgte retning stående, og på en ny banes tee peger køllen neutralt opad.
 - **F** nulstiller det igangværende hul: slag på 0, bolden på teestedet - samme
   hul, samme bane.
 - **Videre i stedet for gentagelse**: når runden er slut, fører knappen **Videre**
@@ -5156,7 +5189,7 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   ingenting hakker, og ingenting sklir gjennom vantet.
 - **Styring**: musa sikter, venstre museknapp holdt nede lader kraften, og et
   slipp slår (piler + mellomrom går også). **R** avbryter et ladet slag uten å
-  slå. **G** slår siktelinjen av og på, **P** Plukk opp.
+  slå. **G** slår siktelinjen av og på, **Z** auto-siktet, **P** Plukk opp.
 - **Scorekort** til høyre med par og slag per bane; for to spillere spiller begge
   den samme banen etter tur. Poeng: 600 per bane, ±300 per slag under/over par,
   **500 ekstra for hole in one**. Laveste slagtall per løype ligger i
@@ -5164,6 +5197,10 @@ våpenoppgradering), eksplosjonseffekter, rekord.
 - **Plukk opp kan slås av**: som standard slutter en bane etter åtte slag og
   teller minimum. Vil du heller spille til ballen går ned, sett *Plukk opp* til
   AV i oppsettet (eller trykk **P**).
+- **Auto-sikte kan slås av**: som standard snur køllen seg selv mot hullet før
+  hvert slag. Vil du heller sikte selv på hvert hull, sett *Auto-sikte* til AV
+  i oppsettet (eller trykk **Z**) - da blir den sist valgte retningen stående,
+  og på tee-en til et nytt hull peker køllen nøytralt oppover.
 - **F** nullstiller hullet du spiller: slag på 0, ballen på utslaget - samme
   hull, samme bane.
 - **Videre i stedet for gjentakelse**: når runden er ferdig, tar knappen
@@ -5924,7 +5961,7 @@ explosionseffekter, topplista.
   ingenting hackar och ingenting glider genom sargen.
 - **Styrning**: musen siktar, vänster musknapp nedtryckt laddar kraften och ett
   släpp slår (pilar + blanksteg funkar också). **R** avbryter ett laddat slag
-  utan att slå. **G** växlar siktlinjen, **P** Plocka upp.
+  utan att slå. **G** växlar siktlinjen, **Z** auto-siktet, **P** Plocka upp.
 - **Scorekort** till höger med par och slag per bana; till två spelar båda samma
   bana i tur och ordning. Poäng: 600 per bana, ±300 per slag under/över par,
   **500 extra för hole in one**. Lägsta slagantal per slinga ligger i avsnittet
@@ -5932,6 +5969,10 @@ explosionseffekter, topplista.
 - **Plocka upp går att stänga av**: som standard slutar en bana efter åtta slag
   och räknas som lägst. Vill du hellre spela tills bollen går i, sätt *Plocka
   upp* på AV i inställningarna (eller tryck **P**).
+- **Auto-sikte går att stänga av**: som standard vrider sig klubban mot hålet
+  före varje slag. Vill du hellre sikta själv på varje hål, sätt *Auto-sikte*
+  på AV i inställningarna (eller tryck **Z**) - då står den senast valda
+  riktningen kvar, och på ett nytt håls tee pekar klubban neutralt uppåt.
 - **F** återställer det pågående hålet: slag till 0, bollen på utslaget - samma
   hål, samma bana.
 - **Vidare i stället för upprepning**: när ronden är slut leder knappen
@@ -6726,7 +6767,7 @@ räjähdystehosteet, ennätys.
   kanssa kuten biljardissa - mikään ei nyki eikä läpäise laitaa.
 - **Ohjaus**: hiiri tähtää, vasen painike pohjassa lataa voiman ja irrotus lyö
   (nuolet + välilyönti käyvät myös). **R** peruu ladatun lyönnin lyömättä.
-  **G** vaihtaa tähtäysviivan, **P** pallon noston.
+  **G** vaihtaa tähtäysviivan, **Z** autotähtäyksen, **P** pallon noston.
 - **Tuloskortti** oikealla parin ja ratakohtaisten lyöntien kanssa; kaksinpelissä
   molemmat pelaavat saman radan vuorotellen. Pisteet: 600 radalta, ±300 jokaisesta
   parin alittavasta/ylittävästä lyönnistä, **500 lisää hole in onesta**. Pienin
@@ -6734,6 +6775,11 @@ räjähdystehosteet, ennätys.
 - **Noston voi kytkeä pois**: oletuksena rata päättyy kahdeksan lyönnin jälkeen
   ja lasketaan pienimmällä arvolla. Jos haluat pelata upotukseen asti, aseta
   *Pallon nosto* asetusruudussa POIS (tai paina **P**).
+- **Autotähtäyksen voi kytkeä pois**: oletuksena maila kääntyy ennen jokaista
+  lyöntiä itsestään reikää kohti. Jos haluat tähdätä joka reiällä itse, aseta
+  *Autotähtäys* asetusruudussa POIS (tai paina **Z**) - silloin viimeksi
+  valittu suunta jää voimaan, ja uuden reiän avauspaikalla maila osoittaa
+  neutraalisti ylös.
 - **F** nollaa käynnissä olevan reiän: lyönnit nollaan, pallo avauspaikalle - sama
   reikä, sama rata.
 - **Jatka toiston sijaan**: kierroksen lopussa **Seuraava**-painike vie
@@ -7530,8 +7576,8 @@ zbraně), efekty explozí, nejlepší skóre.
   načasování. Fyzika běží v dílčích krocích s třením jako u kulečníku - nic
   neskáče a nic neprojde mantinelem.
 - **Ovládání**: myš míří, držené levé tlačítko nabíjí sílu a puštění odpálí
-  (fungují i šipky + mezerník). **R** zruší nabitý úder bez odpalu. **G** přepíná
-  zaměřovací čáru, **P** zvednutí.
+  (fungují i šipky + mezerník). **R** zruší nabitý úder bez odpalu. **G**
+  přepíná zaměřovací čáru, **Z** automíření, **P** zvednutí.
 - **Karta skóre** vpravo s parem a údery na dráhu; ve dvou hraje každý stejnou
   dráhu po sobě. Body: 600 za dráhu, ±300 za úder pod/nad par, **500 navíc za
   hole in one**. Nejnižší počet úderů na hřiště je v sekci `minigolf` souboru
@@ -7539,6 +7585,10 @@ zbraně), efekty explozí, nejlepší skóre.
 - **Zvednutí lze vypnout**: ve výchozím nastavení dráha končí po osmi úderech a
   počítá se za minimum. Kdo chce hrát až do zahrání, přepne *Zvednutí* v
   nastavení na VYP (nebo stiskne **P**).
+- **Automíření lze vypnout**: ve výchozím nastavení se hůl před každým úderem
+  sama natočí k jamce. Kdo si chce zamířit každou dráhu sám, přepne
+  *Automíření* v nastavení na VYP (nebo stiskne **Z**) - pak zůstane naposledy
+  zvolený směr a na odpališti nové dráhy míří hůl neutrálně nahoru.
 - **F** vynuluje rozehranou dráhu: rány na 0, míček na odpaliště - stejná dráha,
   stejné hřiště.
 - **Dále místo opakování**: na konci kola vede tlačítko **Dále** na další hřiště
@@ -8333,7 +8383,8 @@ nadgradnja orožja), učinki eksplozij, rekord.
   poskakuje in nič ne gre skozi bando.
 - **Upravljanje**: miška cilja, držana leva tipka polni moč, spust pa udari
   (delujejo tudi puščice + preslednica). **R** prekliče napolnjen udarec brez
-  udarca. **G** preklopi ciljno črto, **P** pobiranje.
+  udarca. **G** preklopi ciljno črto, **Z** samodejno merjenje, **P**
+  pobiranje.
 - **Kartica rezultatov** desno s parom in udarci na stezo; v dvoje vsak igra isto
   stezo po vrsti. Točke: 600 na stezo, ±300 za udarec pod/nad par, **500 dodatnih
   za hole in one**. Najnižje število udarcev na igrišče je v razdelku `minigolf`
@@ -8341,6 +8392,11 @@ nadgradnja orožja), učinki eksplozij, rekord.
 - **Pobiranje je mogoče izklopiti**: privzeto se steza konča po osmih udarcih in
   šteje najmanj. Kdor raje igra do zadetka, nastavi *Pobiranje* v nastavitvah na
   IZKLOP (ali pritisne **P**).
+- **Samodejni cilj je mogoče izklopiti**: privzeto se palica pred vsakim
+  udarcem sama obrne proti luknji. Kdor raje meri sam na vsaki stezi, nastavi
+  *Samodejni cilj* v nastavitvah na IZKLOP (ali pritisne **Z**) - takrat ostane
+  nazadnje izbrana smer, na začetku nove steze pa palica kaže nevtralno
+  navzgor.
 - **F** ponastavi stezo v igri: udarci na 0, žogica na začetek - ista steza, isto
   igrišče.
 - **Naprej namesto ponavljanja**: ob koncu kroga gumb **Naprej** vodi na naslednje
@@ -9139,7 +9195,8 @@ nadogradnja oružja), efekti eksplozije, rekord.
   ne poskakuje i ništa ne prolazi kroz bandu.
 - **Upravljanje**: miš cilja, držanje lijeve tipke puni snagu, a otpuštanje
   udara (rade i strelice + razmaknica). **R** otkazuje napunjen udarac bez
-  udaranja. **G** prebacuje liniju ciljanja, **P** podizanje.
+  udaranja. **G** prebacuje liniju ciljanja, **Z** auto-ciljanje, **P**
+  podizanje.
 - **Kartica rezultata** desno s parom i udarcima po stazi; u dvoje svatko igra
   istu stazu jedan za drugim. Bodovi: 600 po stazi, ±300 po udarcu ispod/iznad
   para, **500 dodatnih za hole in one**. Najmanji broj udaraca po terenu nalazi se
@@ -9147,6 +9204,10 @@ nadogradnja oružja), efekti eksplozije, rekord.
 - **Podizanje se može isključiti**: zadano staza završava nakon osam udaraca i
   broji se po najmanjoj vrijednosti. Tko radije igra do ubacivanja, u postavkama
   stavi *Podizanje* na ISKLJ (ili pritisne **P**).
+- **Auto-ciljanje se može isključiti**: zadano se palica prije svakog udarca
+  sama okrene prema rupi. Tko radije cilja sam na svakoj stazi, u postavkama
+  stavi *Auto-ciljanje* na ISKLJ. (ali pritisne **Z**) - tada ostaje zadnji
+  odabrani smjer, a na početku nove staze palica pokazuje neutralno prema gore.
 - **F** poništava stazu u igri: udarci na 0, loptica na početak - ista staza, isti
   teren.
 - **Dalje umjesto ponavljanja**: na kraju runde gumb **Dalje** vodi na sljedeći

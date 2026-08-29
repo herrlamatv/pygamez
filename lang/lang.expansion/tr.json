@@ -407,6 +407,7 @@
   "golf.final": "{strokes} vuruş ({diff}) · {pts} puan",
   "golf.hole": "Delik {n}/{total}",
   "golf.hole_result": "{strokes} vuruş (par {par}) · +{pts} puan",
+  "golf.lbl_autoaim": "Otomatik nişan",
   "golf.lbl_course": "Parkur",
   "golf.lbl_guide": "Nişan çizgisi",
   "golf.lbl_pickup": "Topu alma",

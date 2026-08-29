@@ -540,9 +540,9 @@ Explosions-Effekte, Highscore.
   Teilschritten mit Reibung - nichts ruckt, nichts tunnelt durch die Bande.
 - **Steuerung**: Maus zielt, linke Maustaste halten lädt die Kraft, Loslassen
   schlägt (alternativ Pfeile + Leertaste). **R** bricht einen geladenen Schlag
-  ab, ohne zu putten. **G** blendet die Ziellinie um, **P** das Aufnehmen.
-  **F** setzt die laufende Bahn zurück: Schläge auf 0, Ball zurück aufs Tee -
-  gleiche Bahn, gleicher Kurs.
+  ab, ohne zu putten. **G** blendet die Ziellinie um, **Z** das Autoziel, **P**
+  das Aufnehmen. **F** setzt die laufende Bahn zurück: Schläge auf 0, Ball
+  zurück aufs Tee - gleiche Bahn, gleicher Kurs.
 - **Weiter statt Wiederholung**: Am Rundenende führt der Knopf **Weiter** zum
   nächsten Kurs (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), sodass nie wieder
   derselbe Neuner-Satz kommt; daneben stehen **Nochmal** (gleicher Kurs) und
@@ -554,6 +554,11 @@ Explosions-Effekte, Highscore.
 - **Aufnehmen ist abschaltbar**: Standardmäßig endet eine Bahn nach acht
   Schlägen und wird mit dem Mindestwert gewertet. Wer lieber bis zum Einlochen
   weiterspielt, stellt *Aufnehmen* im Setup auf AUS (oder drückt **P**).
+- **Autoziel ist abschaltbar**: Standardmäßig dreht sich der Schläger vor jedem
+  Schlag von selbst zum Loch. Wer lieber jede Bahn selbst anvisiert, stellt
+  *Autoziel* im Setup auf AUS (oder drückt **Z**) - dann bleibt die zuletzt
+  gewählte Richtung stehen, und am Tee einer neuen Bahn zeigt der Schläger
+  neutral bahnaufwärts.
 - **Replay der Runde**: Am Rundenende zeigt **P** (oder der Knopf **Replay**)
   die komplette Runde noch einmal - Schlag für Schlag, mit Bahn, HUD und
   Scorekarte. Mit **S** wandert sie ins Archiv (Sidebar-Knopf **Replays**).
@@ -1362,9 +1367,9 @@ explosion effects, high score.
   like Billiards - nothing stutters, nothing tunnels through a rail.
 - **Controls**: the mouse aims, holding the left button loads the power and
   releasing putts (arrows + space work too). **R** cancels a charged shot
-  without putting. **G** toggles the aim line, **P** the pick-up. **F** resets
-  the current hole: strokes back to 0, ball back on the tee - same hole, same
-  course.
+  without putting. **G** toggles the aim line, **Z** the auto-aim, **P** the
+  pick-up. **F** resets the current hole: strokes back to 0, ball back on the
+  tee - same hole, same course.
 - **Continue instead of repeat**: at the end of a round the **Next** button
   moves on to the following course (*Classic* → *Pro* → *Tour 1* → *Tour 2* …),
   so the same set of nine holes never comes back; next to it are **Again**
@@ -1376,6 +1381,11 @@ explosion effects, high score.
 - **Pick-up can be switched off**: by default a hole ends after eight strokes
   and is scored at the minimum. If you would rather keep putting until the ball
   drops, set *Pick up* to OFF in the setup screen (or press **P**).
+- **Auto-aim can be switched off**: by default the putter turns towards the cup
+  before every stroke. If you would rather line up every hole yourself, set
+  *Auto-aim* to OFF in the setup screen (or press **Z**) - the direction you
+  last picked then stays put, and on the tee of a new hole the putter points
+  neutrally up the course.
 - **Replay of the round**: at the end of a round **P** (or the **Replay**
   button) shows the whole round again - shot by shot, with course, HUD and
   scorecard. **S** puts it into the archive (sidebar button **Replays**).

@@ -2043,6 +2043,7 @@
             "Minigolf mit 360 Bahnen: 18 handgebaute und 342 erzeugte. Die Kurse Classic und Pro führen mit je neun gebauten Bahnen ein, die Tour bietet 38 Kurse zu je neun erzeugten Bahnen mit steigender Schwierigkeit, und Random zieht neun Bahnen aus allem zusammen und spiegelt sie zufällig.",
             "Die Tour-Bahnen entstehen aus einem Seed: Kurs 7, Bahn 3 sieht bei jedem Start gleich aus - gespeichert werden muss dafür nichts. Mit den Pfeilen neben der Kursnummer blätterst du durch die 38 Kurse, daneben steht das Gesamt-Par.",
             "Ziel ist es, den Ball mit möglichst wenigen Schlägen einzulochen. Standardmäßig wird eine Bahn nach acht Schlägen aufgenommen und mit dem Mindestwert gewertet - wer lieber bis zum Einlochen weiterspielt, schaltet das Aufnehmen im Setup ab (oder mit [P]).",
+            "Genauso abschaltbar ist das Autoziel: normalerweise zeigt der Schläger vor jedem Schlag von selbst zum Loch - ohne Autoziel zielst du jede Bahn komplett selbst.",
             "Zu zweit spielt jeder dieselbe Bahn nacheinander; die Scorekarte rechts zeigt Par und beide Ergebnisse.",
             "Am Rundenende führt der Knopf Weiter direkt zum nächsten Kurs (Classic -> Pro -> Tour 1 -> Tour 2 ...), damit sich nie wieder derselbe Neuner-Satz wiederholt. Nochmal spielt denselben Kurs erneut, Setup geht zurück zur Auswahl."
           ]
@@ -2053,6 +2054,7 @@
             "- Maus bewegen: zielen. Linke Maustaste halten lädt die Kraft, Loslassen schlägt.",
             "- Pfeile links/rechts zielen, hoch/runter stellen die Kraft ein, [Leertaste] schlägt.",
             "- [G] blendet die Ziellinie ein und aus - im Setup lässt sie sich dauerhaft abschalten.",
+            "- [Z] schaltet das Autoziel um: an (Standard) dreht sich der Schläger vor jedem Schlag von selbst zum Loch, aus bleibt die zuletzt gewählte Richtung stehen - dann zielst du komplett selbst. Am Tee einer neuen Bahn zeigt der Schläger dann neutral bahnaufwärts.",
             "- [R] bricht einen geladenen Schlag ab: die Maustaste darf gedrückt bleiben, der Ball bleibt liegen und der Schlag zählt nicht - nach dem Loslassen lädst du einfach neu. [P] schaltet das Aufnehmen um.",
             "- [F] setzt die laufende Bahn zurück: Schläge wieder auf 0, Ball zurück aufs Tee - gleiche Bahn, gleicher Kurs. Bereits gespielte Bahnen bleiben in der Scorekarte stehen."
           ]

@@ -407,6 +407,7 @@
   "golf.final": "{strokes} udarcev ({diff}) · {pts} točk",
   "golf.hole": "Steza {n}/{total}",
   "golf.hole_result": "{strokes} udarcev (par {par}) · +{pts} točk",
+  "golf.lbl_autoaim": "Samodejni cilj",
   "golf.lbl_course": "Igrišče",
   "golf.lbl_guide": "Ciljna črta",
   "golf.lbl_pickup": "Pobiranje",

@@ -21,8 +21,13 @@ verlangen Timing.
 Steuerung: Maus bewegt die Ziellinie, linke Maustaste gedrückt halten lädt die
 Schlagstärke, Loslassen schlägt. R bricht einen geladenen Schlag ab, ohne zu
 putten. Alternativ Pfeile links/rechts zielen, hoch/runter Stärke, Leertaste
-schlägt. G blendet die Ziellinie um, P schaltet das Aufnehmen um, F setzt die
-laufende Bahn zurück (Schläge auf 0, gleiche Bahn).
+schlägt. G blendet die Ziellinie um, Z das Autoziel, P das Aufnehmen, F setzt
+die laufende Bahn zurück (Schläge auf 0, gleiche Bahn).
+
+Autoziel (Setup, Standard AN): vor jedem Schlag dreht sich der Schläger von
+selbst zum Loch. AUS heißt, dass die zuletzt gewählte Richtung stehen bleibt -
+gezielt wird dann komplett selbst; nur ganz zu Beginn einer Bahn zeigt der
+Schläger neutral bahnaufwärts.
 
 Am Rundenende führt der Weiter-Knopf zum NÄCHSTEN Kurs (Classic -> Pro ->
 Tour 1 -> Tour 2 -> ...), damit sich nicht immer derselbe Neuner-Satz
@@ -195,6 +200,10 @@ class MiniGolfGame(Game):
         if self.course not in COURSES:
             self.course = "classic"
         self.guide = bool(gs.get("guide", True))
+        # Autoziel: der Schläger dreht sich vor jedem Schlag von selbst zum
+        # Loch. Standard an, im Setup (oder mit Z) abschaltbar - dann bleibt
+        # die zuletzt gewählte Richtung stehen und gezielt wird selbst.
+        self.autoaim = bool(gs.get("autoaim", True))
         # Aufnehmen: nach MAX_STROKES Schlägen ist die Bahn vorbei. Standard an,
         # im Setup abschaltbar - dann wird bis zum Einlochen weitergespielt.
         self.pickup = bool(gs.get("pickup", True))
@@ -347,27 +356,41 @@ class MiniGolfGame(Game):
         self.result_key = None
         self.result_pts = 0
         self._layout_id = self.rec.layout(h) if self.rec else 0
-        self._aim_at_cup()
+        self._reset_aim(new_hole=True)
 
     # ===================================================== Setup-Screen
     def _build_setup_layout(self):
-        """Fünf Blöcke: Kurs, Tour-Kurs, Ziellinie, Aufnehmen, Start.
+        """Vier Blöcke: Kurs, Tour-Kurs, Schalterzeile, Start.
 
-        Die Buttonhöhe folgt der Auflösung, damit auch 480x360 alles zeigt.
+        Die drei Schalter (Ziellinie, Autoziel, Aufnehmen) teilen sich eine
+        Zeile - so bleiben auch bei 480x360 alle Optionen sichtbar, und die
+        Knöpfe dürfen sogar höher ausfallen als in der alten Fünferliste.
+        Was an Höhe übrig bleibt, geht in die Beschriftungsabstände.
         """
         cx = self.width // 2
-        bw = min(370, self.width - 50)
+        # Die Schriften wachsen mit der Höhe - der Block muss mitwachsen,
+        # sonst passen lange Beschriftungen ("Ligne de visée") ab 800x600
+        # nicht mehr über ihre Schaltergruppe. Bei 480x360 und 640x480 bleibt
+        # es bei den bisherigen 370 px.
+        bw = min(max(370, int(self.width * 0.58)), self.width - 50)
         gap = 8
         top = int(self.height * 0.25)
-        bottom = self.height - 24
-        bh = max(28, min(42, int((bottom - top - 88) / 5)))
-        step = bh + 20          # 20 px lassen Platz für die Beschriftung
+        bottom = self.height - 42       # Platz für Bestwert- und Tastenzeile
+        bh = max(26, min(42, int((bottom - top - 68) / 4)))
+        # Was an Höhe übrig ist, kommt zur Hälfte auf die drei
+        # Beschriftungsabstände - sonst klebt die Zeile bei 1280x960 in der
+        # oberen Ecke, während darunter alles leer bleibt.
+        lab = 20 + max(0, min(40, (bottom - top - 8 - 4 * bh - 60) // 6))
+        step = bh + lab                 # lab px Platz für die Beschriftung
 
-        def row(y, n, h=None):
+        def row(y, n, w=None, x0=None, h=None):
+            """n gleich breite Felder nebeneinander (Standard: volle Breite)."""
+            w = bw if w is None else w
+            x0 = cx - bw / 2 if x0 is None else x0
             h = bh if h is None else h
-            cw = (bw - gap * (n - 1)) / n
-            return [pygame.Rect(int(cx - bw / 2 + i * (cw + gap)), y,
-                                int(cw), h) for i in range(n)]
+            cw = (w - gap * (n - 1)) / n
+            return [pygame.Rect(int(x0 + i * (cw + gap)), y, int(cw), h)
+                    for i in range(n)]
 
         y = top
         self.course_rects = row(y, 4)
@@ -377,11 +400,16 @@ class MiniGolfGame(Game):
                            pygame.Rect(int(cx - bw / 2 + 46), y, int(bw - 92), bh),
                            pygame.Rect(int(cx + bw / 2 - 40), y, 40, bh)]
         y += step
-        self.guide_rects = row(y, 2)
-        y += step
-        self.pickup_rects = row(y, 2)
+        # Schalterzeile: drei AN/AUS-Paare nebeneinander. Die 18 px Luft
+        # zwischen den Gruppen trennen deutlicher als die 8 px innerhalb einer.
+        grp = (bw - 2 * 18) / 3.0
+        self.opt_w = int(grp)
+        self.guide_rects = row(y, 2, w=grp)
+        self.autoaim_rects = row(y, 2, w=grp, x0=cx - grp / 2)
+        self.pickup_rects = row(y, 2, w=grp, x0=cx + bw / 2 - grp)
         y += step + 4
-        self.start_rect = pygame.Rect(cx - 95, y, 190, bh + 4)
+        sw = max(190, int(bw * 0.42))
+        self.start_rect = pygame.Rect(cx - sw // 2, y, sw, bh + 4)
 
     def _handle_setup(self, event):
         if event.kind == InputEvent.KEYDOWN:
@@ -396,6 +424,8 @@ class MiniGolfGame(Game):
                 self._step_tour(1)
             elif k in ("g", "G"):
                 self._toggle_guide()
+            elif k in ("z", "Z"):
+                self._toggle_autoaim()
             elif k in ("p", "P"):
                 self._toggle_pickup()
             elif k in ("Return", "space"):
@@ -414,16 +444,15 @@ class MiniGolfGame(Game):
                 if self.tour_rects[2].collidepoint(event.pos):
                     self._step_tour(1)
                     return
-            for i, rc in enumerate(self.guide_rects):
-                if rc.collidepoint(event.pos):
-                    if self.guide != (i == 0):
-                        self._toggle_guide()
-                    return
-            for i, rc in enumerate(self.pickup_rects):
-                if rc.collidepoint(event.pos):
-                    if self.pickup != (i == 0):
-                        self._toggle_pickup()
-                    return
+            for rects, val, toggle in (
+                    (self.guide_rects, self.guide, self._toggle_guide),
+                    (self.autoaim_rects, self.autoaim, self._toggle_autoaim),
+                    (self.pickup_rects, self.pickup, self._toggle_pickup)):
+                for i, rc in enumerate(rects):
+                    if rc.collidepoint(event.pos):
+                        if val != (i == 0):
+                            toggle()
+                        return
             if self.start_rect.collidepoint(event.pos):
                 self._start_play()
 
@@ -439,6 +468,11 @@ class MiniGolfGame(Game):
     def _toggle_guide(self):
         self.guide = not self.guide
         self._save_setting("guide", self.guide)
+        self.play_sound("select")
+
+    def _toggle_autoaim(self):
+        self.autoaim = not self.autoaim
+        self._save_setting("autoaim", self.autoaim)
         self.play_sound("select")
 
     def _toggle_pickup(self):
@@ -458,6 +492,9 @@ class MiniGolfGame(Game):
             return
         if event.kind == InputEvent.KEYDOWN and event.key in ("g", "G"):
             self._toggle_guide()
+            return
+        if event.kind == InputEvent.KEYDOWN and event.key in ("z", "Z"):
+            self._toggle_autoaim()
             return
         if event.kind == InputEvent.KEYDOWN and event.key in ("p", "P"):
             if self.state == OVER and self.replay is not None:
@@ -777,12 +814,23 @@ class MiniGolfGame(Game):
                     self._finish_hole(holed=False)
                 else:
                     self.phase = "aim"
-                    self._aim_at_cup()
+                    self._reset_aim()
                 return True
         return False
 
-    def _aim_at_cup(self):
-        self.aim = math.atan2(self.cup[1] - self.by, self.cup[0] - self.bx)
+    def _reset_aim(self, new_hole=False):
+        """Zielrichtung und Kraft für den nächsten Schlag setzen.
+
+        Mit Autoziel (Standard) zeigt der Schläger vor jedem Schlag zum Loch.
+        Ohne Autoziel bleibt die zuletzt gewählte Richtung stehen - gezielt
+        wird selbst. Nur am Tee einer neuen Bahn gibt es keine "letzte"
+        Richtung; dort zeigt der Schläger neutral bahnaufwärts (nach oben),
+        damit niemand mit dem Rücken zur Bahn startet.
+        """
+        if self.autoaim:
+            self.aim = math.atan2(self.cup[1] - self.by, self.cup[0] - self.bx)
+        elif new_hole:
+            self.aim = -math.pi / 2
         self.power = 0.35
         self.charging = False
 
@@ -794,7 +842,7 @@ class MiniGolfGame(Game):
             self._finish_hole(holed=False)
             return
         self.phase = "aim"
-        self._aim_at_cup()
+        self._reset_aim()
 
     # ===================================================== Bahn abschließen
     def _holed(self):
@@ -1439,23 +1487,31 @@ class MiniGolfGame(Game):
         sub = self._small.render(t("golf.subtitle"), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.18))))
 
-        def label(rects, txt):
+        def label(rects, txt, w=None):
+            """Beschriftung mittig über die Gruppe (zu lange wird gekürzt)."""
             im = self._tiny.render(txt, True, ui.TEXT_DIM)
-            s.blit(im, im.get_rect(midbottom=(cx, rects[0].top - 4)))
+            if w and im.get_width() > w:
+                kurz = txt
+                while len(kurz) > 2 and self._tiny.size(kurz + "...")[0] > w:
+                    kurz = kurz[:-1]
+                im = self._tiny.render(kurz + "...", True, ui.TEXT_DIM)
+            mid = (rects[0].left + rects[-1].right) // 2
+            s.blit(im, im.get_rect(midbottom=(mid, rects[0].top - 4)))
 
         label(self.course_rects, t("golf.lbl_course"))
         for i, rc in enumerate(self.course_rects):
             self._btn(s, rc, t("golf.course." + COURSES[i]),
                       self.course == COURSES[i])
         self._draw_tour_row(s)
-        label(self.guide_rects, t("golf.lbl_guide"))
-        for i, rc in enumerate(self.guide_rects):
-            self._btn(s, rc, t("common.on") if i == 0 else t("common.off"),
-                      self.guide == (i == 0))
-        label(self.pickup_rects, t("golf.lbl_pickup"))
-        for i, rc in enumerate(self.pickup_rects):
-            self._btn(s, rc, t("common.on") if i == 0 else t("common.off"),
-                      self.pickup == (i == 0))
+        # Schalterzeile: Ziellinie · Autoziel · Aufnehmen
+        for rects, key, on in (
+                (self.guide_rects, "golf.lbl_guide", self.guide),
+                (self.autoaim_rects, "golf.lbl_autoaim", self.autoaim),
+                (self.pickup_rects, "golf.lbl_pickup", self.pickup)):
+            label(rects, t(key), self.opt_w)
+            for i, rc in enumerate(rects):
+                self._btn(s, rc, t("common.on") if i == 0 else t("common.off"),
+                          on == (i == 0))
         pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=9)
         pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=9)
         st = self.font.render(t("common.start"), True, ui.TEXT)
@@ -1463,9 +1519,9 @@ class MiniGolfGame(Game):
         best = self.best.get(self._best_key())
         if best:
             b = self._tiny.render(t("golf.best", n=best), True, ui.GOLD)
-            s.blit(b, b.get_rect(center=(cx, self.start_rect.bottom + 22)))
+            s.blit(b, b.get_rect(center=(cx, self.start_rect.bottom + 14)))
         hint = self._tiny.render(t("golf.setup_hint"), True, ui.TEXT_DIM)
-        s.blit(hint, hint.get_rect(center=(cx, self.height - 14)))
+        s.blit(hint, hint.get_rect(center=(cx, self.height - 12)))
 
     def _draw_tour_row(self, s):
         """Kurswahl der Tour: Pfeile, Kursnummer und Gesamt-Par."""

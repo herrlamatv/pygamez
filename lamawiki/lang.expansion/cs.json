@@ -2041,6 +2041,7 @@
             "Minigolf na 360 drahách: 18 ručně postavených a 342 vytvořených. Hřiště Classic a Pro uvádějí do hry devíti postavenými drahami, Tour nabízí 38 hřišť po devíti vytvořených drahách se stoupající obtížností a Random vylosuje devět drah ze všeho dohromady a náhodně je zrcadlí.",
             "Dráhy Tour vznikají ze semínka: hřiště 7, dráha 3 vypadá při každém spuštění stejně - nic se kvůli tomu neukládá. Šipky vedle čísla listují 38 hřišti, vedle stojí celkový par.",
             "Cílem je dostat míček do jamky na co nejméně úderů. Ve výchozím nastavení se míček po osmi úderech zvedá a dráha se počítá za minimum - kdo chce hrát až do zahrání, zvednutí v nastavení vypne (nebo klávesou [P]).",
+            "Stejně tak lze vypnout automíření: obvykle hůl před každým úderem míří k jamce - bez něj si každou dráhu zamíříš úplně sám.",
             "Ve dvou hraje každý stejnou dráhu po sobě; karta vpravo ukazuje par i oba výsledky.",
             "Na konci kola vede tlačítko Dále rovnou na další hřiště (Classic -> Pro -> Tour 1 -> Tour 2 ...), takže se stejná devítka drah už nikdy neopakuje. Znovu zahraje stejné hřiště a Nastavení se vrátí k výběru."
           ]
@@ -2051,6 +2052,7 @@
             "- Pohybem myši miř. Držení levého tlačítka nabíjí sílu, puštění odpálí.",
             "- Šipky vlevo/vpravo míří, nahoru/dolů nastavují sílu, [Mezerník] odpálí.",
             "- [G] zapíná a vypíná zaměřovací čáru - trvale ji lze vypnout v nastavení.",
+            "- [Z] přepíná automíření: zapnuté (výchozí) se hůl před každým úderem sama natočí k jamce, vypnuté zůstane naposledy zvolený směr - pak míříš úplně sám. Na odpališti nové dráhy míří hůl neutrálně nahoru.",
             "- [R] zruší nabitý úder: tlačítko myši může zůstat stisknuté, míček zůstane ležet a úder se nepočítá - po puštění prostě nabiješ znovu. [P] přepíná zvednutí.",
             "- [F] vynuluje rozehranou dráhu: rány zpět na 0, míček zpět na odpaliště - stejná dráha, stejné hřiště. Dohrané dráhy zůstávají ve výsledkové kartě."
           ]

@@ -2041,6 +2041,7 @@
             "Minigolf på 360 baner: 18 håndlagde og 342 genererte. Banene Classic og Pro introduserer med ni lagde baner hver, Touren byr på 38 løyper med ni genererte baner hver og stigende vanskelighet, og Random trekker ni baner fra alt sammen og speiler dem tilfeldig.",
             "Tour-banene kommer fra et frø: løype 7, bane 3 ser lik ut ved hver start - ingenting må lagres. Pilene ved siden av nummeret blar gjennom de 38 løypene, og ved siden av står totalt par.",
             "Målet er å få ballen i hullet på færrest mulig slag. Som standard plukkes ballen opp etter åtte slag, og hullet teller minimum - vil du heller spille til ballen går ned, slår du av Plukk opp i oppsettet (eller med [P]).",
+            "Auto-siktet kan slås av like enkelt: normalt peker køllen mot hullet før hvert slag - uten det sikter du helt selv på hvert hull.",
             "For to spillere spiller begge den samme banen etter tur; scorekortet til høyre viser par og begge resultater.",
             "Når runden er ferdig, tar knappen Videre deg rett til neste bane (Classic -> Pro -> Tour 1 -> Tour 2 ...), slik at det samme settet med ni hull aldri gjentas. Om igjen spiller samme bane på nytt, og Oppsett går tilbake til valget."
           ]
@@ -2051,6 +2052,7 @@
             "- Beveg musa for å sikte. Hold venstre museknapp for å lade kraften, slipp for å slå.",
             "- Venstre/høyre pil sikter, opp/ned stiller kraften, [Mellomrom] slår.",
             "- [G] slår siktelinjen av og på - den kan også skrus av permanent i oppsettet.",
+            "- [Z] slår auto-sikte av og på: på (standard) snur køllen seg selv mot hullet før hvert slag, av blir den sist valgte retningen stående - da sikter du helt selv. På tee-en til et nytt hull peker køllen nøytralt oppover.",
             "- [R] avbryter et ladet slag: museknappen kan bli holdt nede, ballen blir liggende og slaget teller ikke - etter at du slipper, lader du bare på nytt. [P] veksler Plukk opp.",
             "- [F] nullstiller hullet du holder på med: slag tilbake til 0, ballen tilbake på utslaget - samme hull, samme bane. Hull du allerede har spilt, blir stående på scorekortet."
           ]

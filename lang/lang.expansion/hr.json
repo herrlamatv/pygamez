@@ -407,6 +407,7 @@
   "golf.final": "{strokes} udaraca ({diff}) · {pts} bodova",
   "golf.hole": "Staza {n}/{total}",
   "golf.hole_result": "{strokes} udaraca (par {par}) · +{pts} bodova",
+  "golf.lbl_autoaim": "Auto-ciljanje",
   "golf.lbl_course": "Teren",
   "golf.lbl_guide": "Linija ciljanja",
   "golf.lbl_pickup": "Podizanje",

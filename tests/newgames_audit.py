@@ -11,7 +11,12 @@ Minigolf  (1) Abschlag und Loch liegen frei (keine Wand/kein Wasser darauf),
           (2c) das "Aufnehmen" nach acht Schlaegen ist Standard, laesst sich
               aber abschalten - dann wird bis zum Einlochen weitergespielt,
           (2d) [R] bricht einen geladenen Schlag ab: kein Putt, Ball bleibt
-              liegen, danach ist normales Neuaufladen moeglich.
+              liegen, danach ist normales Neuaufladen moeglich,
+          (2e) "Autoziel" ist Standard (Schlaeger zeigt vor jedem Schlag zum
+              Loch), laesst sich abschalten - dann bleibt die zuletzt
+              gewaehlte Richtung stehen,
+          (2f) der Setup-Screen bleibt in allen Aufloesungen und allen 14
+              Sprachen ueberschneidungsfrei im Bild.
 Pinball   (3) je Tisch verlaesst der Ball mit vollem Plunger die Schussbahn,
           (4) kein Haenger: eine Partie mit 3 Baellen endet von allein,
           (5) ein zu schwacher Schuss laesst sich nachladen (kein Soft-Lock).
@@ -238,6 +243,94 @@ def audit_cancel():
           "strokes=%d" % g.strokes)
 
 
+def audit_autoaim():
+    """Autoziel: Standard an, abschaltbar - dann zielt man selbst."""
+    print("\nMinigolf - Autoziel (Option)")
+    check(settings_mod.DEFAULTS["minigolf"]["autoaim"] is True,
+          "Autoziel ist standardmaessig an")
+    shot = math.pi * 0.4                     # bewusst weg vom Loch
+    for auto in (True, False):
+        name = "AN " if auto else "AUS"
+        g = golf_game()
+        g.autoaim = auto
+        g.state = mg.PLAY
+        g.hole_idx = 0
+        g._start_hole()
+        to_cup = math.atan2(g.cup[1] - g.by, g.cup[0] - g.bx)
+        if auto:
+            check(abs(g.aim - to_cup) < 1e-9,
+                  "%s: am Tee zeigt der Schlaeger zum Loch" % name)
+        else:
+            check(abs(g.aim + math.pi / 2) < 1e-9,
+                  "%s: am Tee zeigt der Schlaeger neutral bahnaufwaerts" % name,
+                  "aim=%.3f" % g.aim)
+        g.aim = shot
+        g.power = 0.12
+        g._strike()
+        for _ in range(1200):
+            g.update(1 / 60.0)
+            if g.phase == "aim" or g.state != mg.PLAY:
+                break
+        to_cup = math.atan2(g.cup[1] - g.by, g.cup[0] - g.bx)
+        rolled = g.state == mg.PLAY and g.phase == "aim"
+        if auto:
+            check(rolled and abs(g.aim - to_cup) < 1e-9,
+                  "%s: nach dem Schlag zeigt der Schlaeger wieder zum Loch"
+                  % name, "aim=%.3f soll=%.3f" % (g.aim, to_cup))
+        else:
+            check(rolled and abs(g.aim - shot) < 1e-9
+                  and abs(g.aim - to_cup) > 1e-2,
+                  "%s: nach dem Schlag bleibt die Richtung stehen" % name,
+                  "aim=%.3f geschlagen=%.3f" % (g.aim, shot))
+    # Schalter im Setup: Klick auf AUS/AN wechselt und wird gespeichert.
+    g = golf_game()
+    g.state = mg.SETUP
+    g.handle_event(InputEvent(InputEvent.MOUSEDOWN,
+                              pos=g.autoaim_rects[1].center, button=1))
+    off = not g.autoaim
+    g.handle_event(InputEvent(InputEvent.KEYDOWN, key="z"))
+    check(off and g.autoaim, "Setup: Klick auf AUS und Taste [Z] schalten um",
+          "autoaim=%s" % g.autoaim)
+    # Gespeichert wird nur, was _merge_defaults auch wieder durchlaesst.
+    kept = settings_mod._merge_defaults({"minigolf": {"autoaim": False}})
+    check(kept["minigolf"]["autoaim"] is False,
+          "AUS ueberlebt das Laden von settings.json")
+
+
+def audit_setup_layout():
+    """Setup-Screen: nichts ueberlappt, nichts rutscht aus dem Bild."""
+    print("\nMinigolf - Setup-Layout")
+    lang_before = i18n.get_language()
+    for w, h in ((480, 360), (640, 480), (800, 600), (960, 720), (1280, 960)):
+        g = quiet(mg.MiniGolfGame(pygame.Surface((w, h)), w, h, mode="single",
+                                  game_settings=GS))
+        rects = [r for grp in (g.course_rects, g.tour_rects, g.guide_rects,
+                               g.autoaim_rects, g.pickup_rects,
+                               [g.start_rect]) for r in grp]
+        inside = all(r.left >= 0 and r.right <= w and r.top >= 0
+                     and r.bottom <= h - 26 for r in rects)
+        overlap = next((("%s/%s" % (a, b)) for i, a in enumerate(rects)
+                        for b in rects[i + 1:] if a.colliderect(b)), None)
+        gap = g.guide_rects[0].top - g.tour_rects[0].bottom
+        check(inside and overlap is None and gap >= g._tiny.get_height() + 2,
+              "%4dx%d: Knoepfe im Bild, ohne Ueberlappung" % (w, h),
+              "inside=%s overlap=%s beschriftungsluecke=%d"
+              % (inside, overlap, gap))
+        # Die drei Schalter-Beschriftungen muessen in ihre Gruppe passen -
+        # sonst laufen lange Uebersetzungen in den Nachbarn.
+        zu_lang = []
+        for code, _ in i18n.AVAILABLE:
+            i18n.set_language(code, persist=False)
+            for key in ("golf.lbl_guide", "golf.lbl_autoaim",
+                        "golf.lbl_pickup"):
+                if g._tiny.size(i18n.t(key))[0] > g.opt_w:
+                    zu_lang.append("%s/%s" % (code, key.split(".")[-1]))
+        i18n.set_language(lang_before, persist=False)
+        check(not zu_lang, "%4dx%d: Schalter-Beschriftungen passen (14 Sprachen)"
+              % (w, h), ", ".join(zu_lang))
+        g.draw()                             # zeichnet der Screen fehlerfrei?
+
+
 def audit_tour(sample=None):
     """Prueft jede erzeugte Tour-Bahn auf freie Lage und Einlochbarkeit."""
     print("\nMinigolf - Tour: %d Kurse x %d Bahnen"
@@ -414,6 +507,8 @@ if __name__ == "__main__":
     audit_minigolf()
     audit_pickup()
     audit_cancel()
+    audit_autoaim()
+    audit_setup_layout()
     audit_tour()
     audit_pinball()
     audit_bowling()

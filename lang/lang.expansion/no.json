@@ -407,6 +407,7 @@
   "golf.final": "{strokes} slag ({diff}) · {pts} poeng",
   "golf.hole": "Hull {n}/{total}",
   "golf.hole_result": "{strokes} slag (par {par}) · +{pts} poeng",
+  "golf.lbl_autoaim": "Auto-sikte",
   "golf.lbl_course": "Bane",
   "golf.lbl_guide": "Siktelinje",
   "golf.lbl_pickup": "Plukk opp",

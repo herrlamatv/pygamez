@@ -407,6 +407,7 @@
   "golf.final": "{strokes} coups ({diff}) · {pts} points",
   "golf.hole": "Trou {n}/{total}",
   "golf.hole_result": "{strokes} coups (par {par}) · +{pts} points",
+  "golf.lbl_autoaim": "Visée auto",
   "golf.lbl_course": "Parcours",
   "golf.lbl_guide": "Ligne de visée",
   "golf.lbl_pickup": "Ramassage",

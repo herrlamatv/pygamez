@@ -2042,6 +2042,7 @@
             "Minigolf across 360 holes: 18 hand-built and 342 generated. The Classic and Pro courses ease you in with nine built holes each, the Tour offers 38 courses of nine generated holes with rising difficulty, and Random draws nine holes from everything and mirrors them at random.",
             "Tour holes come from a seed: course 7, hole 3 looks the same on every start - nothing has to be stored for that. The arrows beside the course number page through the 38 courses, with the total par next to them.",
             "The goal is to sink the ball in as few strokes as possible. By default a hole is picked up after eight strokes and scored at the minimum - if you would rather keep putting until the ball drops, switch the pick-up off in the setup screen (or with [P]).",
+            "The auto-aim can be switched off just as easily: normally the putter points at the cup before every stroke - without it you aim every hole entirely yourself.",
             "In two-player mode each player takes the same hole one after the other; the scorecard on the right shows par and both results.",
             "At the end of a round the Next button takes you straight to the following course (Classic -> Pro -> Tour 1 -> Tour 2 ...), so the same set of nine holes never repeats. Again replays the same course, Setup returns to the selection."
           ]
@@ -2052,6 +2053,7 @@
             "- Move the mouse to aim. Hold the left mouse button to load power, release to putt.",
             "- Left/right arrows aim, up/down set the power, [Space] putts.",
             "- [G] toggles the aim line - you can also switch it off for good in the setup screen.",
+            "- [Z] toggles the auto-aim: on (default) the putter turns towards the cup before every stroke, off it keeps the direction you last picked - then you aim entirely yourself. On the tee of a new hole it points neutrally up the course.",
             "- [R] cancels a charged shot: you may keep the mouse button held, the ball stays put and the stroke does not count - after releasing you simply charge again. [P] toggles the pick-up.",
             "- [F] resets the current hole: strokes back to 0, ball back on the tee - same hole, same course. Holes you already finished stay on the scorecard."
           ]

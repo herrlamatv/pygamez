@@ -2041,6 +2041,7 @@
             "Minigolf na 360 staza: 18 ručno izgrađenih i 342 generirane. Tereni Classic i Pro uvode u igru s po devet izgrađenih staza, Tour nudi 38 terena s po devet generiranih staza rastuće težine, a Random izvlači devet staza iz svega zajedno i nasumično ih zrcali.",
             "Staze Toura nastaju iz sjemena: teren 7, staza 3 izgleda jednako pri svakom pokretanju - ništa se ne mora spremati. Strelice pokraj broja listaju kroz 38 terena, a pokraj piše ukupni par.",
             "Cilj je ubaciti lopticu u rupu s najmanje udaraca. Zadano se loptica nakon osam udaraca podiže i staza se broji po najmanjoj vrijednosti - tko radije igra do ubacivanja, podizanje isključi u postavkama (ili tipkom [P]).",
+            "Jednako se tako može isključiti auto-ciljanje: obično palica prije svakog udarca pokazuje prema rupi - bez njega na svakoj stazi ciljaš potpuno sam.",
             "U dvoje svatko igra istu stazu jedan za drugim; kartica desno pokazuje par i oba rezultata.",
             "Na kraju runde gumb Dalje vodi ravno na sljedeći teren (Classic -> Pro -> Tour 1 -> Tour 2 ...), pa se isti komplet od devet staza nikad ne ponavlja. Ponovno igra isti teren iznova, a Postavke vraćaju na odabir."
           ]
@@ -2051,6 +2052,7 @@
             "- Pomicanjem miša ciljaš. Držanje lijeve tipke puni snagu, otpuštanje udara.",
             "- Strelice lijevo/desno ciljaju, gore/dolje namještaju snagu, [Razmaknica] udara.",
             "- [G] uključuje i isključuje liniju ciljanja - trajno je možeš isključiti u postavkama.",
+            "- [Z] prebacuje auto-ciljanje: uključeno (zadano) se palica prije svakog udarca sama okrene prema rupi, isključeno ostaje zadnji odabrani smjer - tada ciljaš potpuno sam. Na početku nove staze palica pokazuje neutralno prema gore.",
             "- [R] otkazuje napunjen udarac: tipka miša smije ostati pritisnuta, loptica ostaje na mjestu i udarac se ne broji - nakon otpuštanja jednostavno puniš iznova. [P] prebacuje podizanje.",
             "- [F] poništava stazu koju igraš: udarci natrag na 0, loptica natrag na početak - ista staza, isti teren. Već odigrane staze ostaju na bodovnoj kartici."
           ]
