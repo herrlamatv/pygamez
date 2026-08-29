@@ -32,8 +32,7 @@ install-python.bat    :: einmalig: Python 3.13 + .venv + pygame einrichten
 start.bat             :: Spielesammlung starten
 ```
 
-Latest BUILD: [PyGameZ-latest.exe](https://github.com/herrlamatv/pygamez/raw/refs/heads/master/lastest-build/PyGameZ-latest.exe)
-Oder Starte die [PyGameZ-2026-26-August.exe](https://github.com/herrlamatv/pygamez/releases/download/26.26.08-05.04/PyGameZ-2026-26-August.exe) (Latest Release)
+**Latest BUILD:** [PyGameZ-latest.exe](https://github.com/herrlamatv/pygamez/raw/refs/heads/master/lastest-build/PyGameZ-latest.exe)<br>Oder Starte die [PyGameZ-2026-26-August.exe](https://github.com/herrlamatv/pygamez/releases/download/26.26.08-05.04/PyGameZ-2026-26-August.exe) (Latest Release)
 
 #### Linux / macOS / Git Bash
 
