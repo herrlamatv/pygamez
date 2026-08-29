@@ -412,6 +412,7 @@
   "golf.lbl_guide": "Linia celowania",
   "golf.lbl_pickup": "Podnoszenie",
   "golf.lbl_tour": "Pole Tour",
+  "golf.lock": "Siła zablokowana: {n}%",
   "golf.max_strokes": "Osiągnięto maksimum uderzeń",
   "golf.new_round": "Enter = nowa runda · S = ustawienia",
   "golf.next": "Klik / Enter = następny dołek",

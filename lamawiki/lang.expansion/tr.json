@@ -2032,7 +2032,9 @@
         "rampa",
         "parkur",
         "vuruş",
-        "tour"
+        "tour",
+        "kilit",
+        "güç"
       ],
       "sections": [
         {
@@ -2050,6 +2052,7 @@
           "h": "Kontroller",
           "body": [
             "- Fareyi hareket ettirerek nişan al. Sol tuşu basılı tutmak gücü doldurur, bırakmak vurur.",
+            "- Sağ fare tuşunu basılı tutmak gücü kilitler: çubuk olduğu yerde durur, altın rengine döner ve yüzdeyi gösterir - vuruş hazırken değirmendeki boşluğu böyle beklersin. Bıraktığında yeniden dolar; kilitli güç vuruştan sonra da kalır, bir sonraki sol tık tam o değerle vurur.",
             "- Sol/sağ oklar nişan alır, yukarı/aşağı gücü ayarlar, [Boşluk] vurur.",
             "- [G] nişan çizgisini açıp kapatır; ayar ekranından tamamen da kapatabilirsin.",
             "- [Z] otomatik nişanı açıp kapatır: açıkken (öntanımlı) sopa her vuruştan önce kendiliğinden deliğe döner, kapalıyken son seçtiğin yön korunur - nişanı tamamen sen alırsın. Yeni bir deliğin başında sopa nötr olarak yukarıyı gösterir.",
@@ -2062,7 +2065,7 @@
           "body": [
             "- Kum sert şekilde yavaşlatır, rampalar okların yönünde hızlandırır.",
             "- Su bir ceza vuruşuna mal olur; top son güvenli noktasına döner.",
-            "- Lastik tamponlar hız geri verir; yel değirmenleri ve gezen bloklar zamanlama ister."
+            "- Lastik tamponlar hız geri verir; yel değirmenleri ve gezen bloklar zamanlama ister. Sağ tuştaki güç kilidi, boşluk denk gelene kadar vuruşu dolu tutar."
           ]
         },
         {

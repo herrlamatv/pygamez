@@ -412,6 +412,7 @@
   "golf.lbl_guide": "Aim line",
   "golf.lbl_pickup": "Pick up",
   "golf.lbl_tour": "Tour course",
+  "golf.lock": "Power locked: {n}%",
   "golf.max_strokes": "Maximum strokes reached",
   "golf.new_round": "Enter = new round · S = setup",
   "golf.next": "Click / Enter = next hole",

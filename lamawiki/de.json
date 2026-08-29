@@ -2034,7 +2034,9 @@
         "rampe",
         "kurs",
         "putten",
-        "tour"
+        "tour",
+        "sperre",
+        "kraft"
       ],
       "sections": [
         {
@@ -2052,6 +2054,7 @@
           "h": "Steuerung",
           "body": [
             "- Maus bewegen: zielen. Linke Maustaste halten lädt die Kraft, Loslassen schlägt.",
+            "- Rechte Maustaste halten sperrt die Kraft: der Ladebalken bleibt stehen, wird golden und zeigt die Prozentzahl - so wartest du mit fertig geladenem Schlag auf die Lücke in der Mühle. Loslassen lädt weiter; gesperrt bleibt die Kraft sogar über den Schlag hinaus, der nächste Linksklick schlägt dann exakt mit diesem Wert.",
             "- Pfeile links/rechts zielen, hoch/runter stellen die Kraft ein, [Leertaste] schlägt.",
             "- [G] blendet die Ziellinie ein und aus - im Setup lässt sie sich dauerhaft abschalten.",
             "- [Z] schaltet das Autoziel um: an (Standard) dreht sich der Schläger vor jedem Schlag von selbst zum Loch, aus bleibt die zuletzt gewählte Richtung stehen - dann zielst du komplett selbst. Am Tee einer neuen Bahn zeigt der Schläger dann neutral bahnaufwärts.",
@@ -2064,7 +2067,7 @@
           "body": [
             "- Sand bremst stark, Rampen beschleunigen in Pfeilrichtung.",
             "- Wasser kostet einen Strafschlag; der Ball kehrt an die letzte sichere Stelle zurück.",
-            "- Gummipuffer geben Tempo zurück; Windmühlen und Wanderblöcke verlangen Timing."
+            "- Gummipuffer geben Tempo zurück; Windmühlen und Wanderblöcke verlangen Timing. Die Stärke-Sperre auf der rechten Maustaste hält den Schlag so lange geladen, bis die Lücke passt."
           ]
         },
         {

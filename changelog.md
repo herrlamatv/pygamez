@@ -8,6 +8,40 @@
 
 ## 🇩🇪 Deutsch
 
+### Minigolf: Stärke-Sperre auf der rechten Maustaste – 2026-08-29
+
+#### Neu
+- **Stärke-Sperre**: Die **rechte Maustaste** hält die Schlagstärke fest,
+  solange sie gedrückt bleibt. Der Ladebalken bleibt genau da stehen, wo er
+  beim Drücken war - mit fertig geladenem Schlag wartet man auf die Lücke in
+  der Windmühle oder auf den Wanderblock und puttet erst im richtigen Moment.
+  Loslassen lädt ganz normal weiter.
+- **Die Sperre überlebt den Schlag**: Gehalten bleibt die Kraft über Putt,
+  Bahnwechsel und **R** hinweg - der nächste Linksklick lädt dann nicht bei 5%
+  neu, sondern schlägt exakt mit dem gemerkten Wert. Zwei gleich starke Schläge
+  hintereinander sind damit zum ersten Mal möglich. Auch eine mit Pfeil
+  hoch/runter eingestellte Stärke lässt sich so festnageln; die Pfeiltasten
+  selbst ändern währenddessen nichts mehr.
+- **Anzeige**: Der Ladebalken wird golden, bekommt ein Vorhängeschloss, eine
+  helle Haltemarke am eingefrorenen Wert und einen ruhigen Puls; im HUD steht
+  „Kraft gesperrt: 62%". Ziellinie, Schlägerkopf und ein pulsender Ring um den
+  Ball färben sich mit - der Blick kann auf der Bahn bleiben.
+- **Prozentzahl am Ladebalken**: Die Schlagstärke steht jetzt immer als Zahl
+  neben dem Balken, gesperrt oder nicht - so lässt sich ein Wert von eben
+  bewusst wiederholen.
+- Neuer Schlüssel `golf.lock` in allen **14 Sprachen**, dazu die Minigolf-Seite
+  im LamaWiki (Steuerung + Hindernisse) und beide READMEs.
+
+#### Geändert
+- Minigolf bekommt Rechtsklicks jetzt überhaupt gemeldet
+  (`wants_right_click`); im Setup und am Rundenende bleiben sie wirkungslos,
+  statt als Linksklick durchzurutschen.
+- Eine **Pause hebt die Sperre selbst auf**: Pausiert kommt kein Loslassen der
+  rechten Maustaste mehr an - sonst bliebe die Kraft eingefroren hängen.
+- Das Headless-Audit (`tests/newgames_audit.py`) prüft die Sperre mit:
+  Einfrieren, Schlag, Bahnwechsel, Pause, Setup-Klicks und den HUD-Text in drei
+  Auflösungen und allen 14 Sprachen.
+
 ### Minigolf: Autoziel abschaltbar – 2026-08-29
 
 #### Neu
@@ -534,6 +568,39 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Minigolf: power lock on the right mouse button – 2026-08-29
+
+#### New
+- **Power lock**: the **right mouse button** holds the shot power for as long
+  as you keep it pressed. The charge bar freezes exactly where it stood when
+  you pressed - with the shot fully charged you can wait for the gap in the
+  windmill or for the moving block and putt at the right moment. Releasing
+  charges on as usual.
+- **The lock survives the stroke**: the power is held across the putt, the
+  change of hole and **R** - the next left click does not restart the charge at
+  5%, it putts with exactly the value you kept. Two equally strong strokes in a
+  row are possible for the first time. A power dialled in with the up/down
+  arrows can be pinned down the same way; the arrow keys themselves change
+  nothing while the lock is held.
+- **Display**: the charge bar turns gold, gains a padlock, a bright marker at
+  the frozen value and a calm pulse; the HUD reads "Power locked: 62%". The aim
+  line, the putter head and a pulsing ring around the ball turn gold as well -
+  so your eyes can stay on the hole.
+- **Percentage next to the charge bar**: the shot power is now always shown as
+  a number, locked or not - which makes it easy to repeat a value on purpose.
+- New key `golf.lock` in all **14 languages**, plus the Minigolf page in the
+  LamaWiki (controls + obstacles) and both READMEs.
+
+#### Changed
+- Minigolf is now told about right clicks at all (`wants_right_click`); in the
+  setup screen and at the end of a round they stay without effect instead of
+  slipping through as a left click.
+- **A pause releases the lock by itself**: while paused no release of the right
+  mouse button arrives any more - otherwise the power would stay frozen.
+- The headless audit (`tests/newgames_audit.py`) covers the lock as well:
+  freezing, stroke, change of hole, pause, setup clicks and the HUD text in
+  three resolutions and all 14 languages.
 
 ### Minigolf: auto-aim can be switched off – 2026-08-29
 

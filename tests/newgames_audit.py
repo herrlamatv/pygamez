@@ -16,7 +16,10 @@ Minigolf  (1) Abschlag und Loch liegen frei (keine Wand/kein Wasser darauf),
               Loch), laesst sich abschalten - dann bleibt die zuletzt
               gewaehlte Richtung stehen,
           (2f) der Setup-Screen bleibt in allen Aufloesungen und allen 14
-              Sprachen ueberschneidungsfrei im Bild.
+              Sprachen ueberschneidungsfrei im Bild,
+          (2g) die Staerke-Sperre (rechte Maustaste halten) friert die Kraft
+              ein, ueberlebt den Schlag, bleibt im Setup wirkungslos und
+              loest sich in der Pause von selbst.
 Pinball   (3) je Tisch verlaesst der Ball mit vollem Plunger die Schussbahn,
           (4) kein Haenger: eine Partie mit 3 Baellen endet von allein,
           (5) ein zu schwacher Schuss laesst sich nachladen (kein Soft-Lock).
@@ -297,6 +300,93 @@ def audit_autoaim():
           "AUS ueberlebt das Laden von settings.json")
 
 
+def audit_power_lock():
+    """Staerke-Sperre: die rechte Maustaste haelt die Kraft fest."""
+    print("\nMinigolf - Staerke-Sperre (rechte Maustaste)")
+    check(mg.MiniGolfGame.wants_right_click is True,
+          "Minigolf bekommt Rechtsklicks ueberhaupt gemeldet")
+    g = golf_game()
+    g.state = mg.PLAY
+    g.hole_idx = 0
+    g._start_hole()
+    g.handle_event(InputEvent(InputEvent.MOUSEDOWN, pos=(300, 300), button=1))
+    for _ in range(30):
+        g.update(1 / 60.0)
+    fest = g.power
+    g.handle_event(InputEvent(InputEvent.MOUSEDOWN, pos=(300, 300), button=3))
+    for _ in range(120):                     # weiter halten laedt nicht nach
+        g.update(1 / 60.0)
+    g.handle_event(InputEvent(InputEvent.KEYDOWN, key="Up"))
+    g.handle_event(InputEvent(InputEvent.KEYDOWN, key="Down"))
+    check(g.power_lock and fest > 0.3 and g.power == fest,
+          "gesperrt: Ladebalken und Pfeiltasten stehen still",
+          "power=%.3f gesperrt_bei=%.3f" % (g.power, fest))
+    aim0 = g.aim
+    g.handle_event(InputEvent(InputEvent.KEYDOWN, key="Left"))
+    check(abs(g.aim - aim0) > 1e-6, "gesperrt wird die Kraft, nicht das Zielen")
+    g.draw()                                 # goldene Anzeige zeichnet fehlerfrei
+    g.handle_event(InputEvent(InputEvent.MOUSEUP, pos=(300, 300), button=1))
+    check(g.strokes == 1 and g.power == fest,
+          "der Schlag nimmt genau die gesperrte Kraft", "power=%.3f" % g.power)
+    for _ in range(1500):
+        g.update(1 / 60.0)
+        if g.phase == "aim" or g.state != mg.PLAY:
+            break
+    weiter = (g.state == mg.PLAY and g.phase == "aim")
+    check(weiter and g.power_lock and g.power == fest,
+          "Sperre ueberlebt den Schlag", "power=%.3f phase=%s"
+          % (g.power, g.phase))
+    g.handle_event(InputEvent(InputEvent.MOUSEDOWN, pos=(300, 300), button=1))
+    for _ in range(30):
+        g.update(1 / 60.0)
+    check(g.power == fest, "gesperrt: Linksklick laedt nicht bei 5% neu",
+          "power=%.3f" % g.power)
+    g.handle_event(InputEvent(InputEvent.MOUSEUP, pos=(300, 300), button=3))
+    for _ in range(20):
+        g.update(1 / 60.0)
+    check(not g.power_lock and g.power > fest,
+          "Loslassen gibt frei und laedt weiter", "power=%.3f" % g.power)
+    # Die Pause frisst das Loslassen der rechten Taste - dann loest die
+    # Sperre sich selbst, statt haengen zu bleiben.
+    g.handle_event(InputEvent(InputEvent.MOUSEDOWN, pos=(300, 300), button=3))
+    gesetzt = g.power_lock
+    g.paused = True
+    g.draw()
+    g.paused = False
+    check(gesetzt and not g.power_lock, "Pause hebt die Sperre auf")
+    # Im Setup darf ein Rechtsklick weder sperren noch einen Knopf druecken.
+    g2 = golf_game()
+    g2.state = mg.SETUP
+    vorher = (g2.course, g2.guide, g2.autoaim, g2.pickup, g2.state)
+    for rc in (g2.course_rects[2], g2.guide_rects[1], g2.autoaim_rects[1],
+               g2.pickup_rects[1], g2.start_rect):
+        g2.handle_event(InputEvent(InputEvent.MOUSEDOWN, pos=rc.center,
+                                   button=3))
+    check((g2.course, g2.guide, g2.autoaim, g2.pickup, g2.state) == vorher
+          and not g2.power_lock, "Setup: Rechtsklick schaltet nichts",
+          "%s" % (vorher,))
+    # Der HUD-Text muss zwischen Bahn-Anzeige und Ladebalken passen - in
+    # allen 14 Sprachen und bei ein- wie dreistelliger Prozentzahl.
+    lang_before = i18n.get_language()
+    for w, h in ((480, 360), (640, 480), (1280, 960)):
+        g3 = quiet(mg.MiniGolfGame(pygame.Surface((w, h)), w, h,
+                                   mode="single", game_settings=GS))
+        links = 12 + g3._tiny.size(i18n.t("golf.hole", n=9, total=9)
+                                   + "  \u00b7  " + i18n.t("golf.par", n=5))[0]
+        eng = []
+        for code, _ in i18n.AVAILABLE:
+            i18n.set_language(code, persist=False)
+            for n in (5, 100):
+                tw = g3._small.size(i18n.t("golf.lock", n=n))[0]
+                pct = g3._tiny.size("%d%%" % n)[0]
+                if (w // 2 - tw // 2 < links
+                        or w // 2 + tw // 2 > w - 98 - 21 - pct):
+                    eng.append("%s/%d%%" % (code, n))
+        i18n.set_language(lang_before, persist=False)
+        check(not eng, "%4dx%d: HUD-Text der Sperre passt (14 Sprachen)"
+              % (w, h), ", ".join(eng))
+
+
 def audit_setup_layout():
     """Setup-Screen: nichts ueberlappt, nichts rutscht aus dem Bild."""
     print("\nMinigolf - Setup-Layout")
@@ -508,6 +598,7 @@ if __name__ == "__main__":
     audit_pickup()
     audit_cancel()
     audit_autoaim()
+    audit_power_lock()
     audit_setup_layout()
     audit_tour()
     audit_pinball()

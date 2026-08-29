@@ -2032,7 +2032,9 @@
         "rampe",
         "bane",
         "putt",
-        "tour"
+        "tour",
+        "lås",
+        "kraft"
       ],
       "sections": [
         {
@@ -2050,6 +2052,7 @@
           "h": "Styring",
           "body": [
             "- Bevæg musen for at sigte. Hold venstre museknap for at lade kraften, slip for at slå.",
+            "- Hold højre museknap nede for at låse kraften: bjælken står stille, bliver gylden og viser procenten - så venter du på hullet i møllen med slaget klar. Slipper du, lades der videre; en låst kraft overlever endda slaget, så næste venstreklik slår med præcis den værdi.",
             "- Venstre/højre pil sigter, op/ned styrer kraften, [Mellemrum] slår.",
             "- [G] slår sigtelinjen til og fra - den kan også slukkes permanent i opsætningen.",
             "- [Z] slår auto-sigte til og fra: til (standard) drejer køllen af sig selv mod hullet før hvert slag, fra bliver den senest valgte retning stående - så sigter du helt selv. På en ny banes tee peger køllen neutralt opad.",
@@ -2062,7 +2065,7 @@
           "body": [
             "- Sand bremser kraftigt, ramper accelererer i pilenes retning.",
             "- Vand koster et strafslag; bolden vender tilbage til sin sidste sikre position.",
-            "- Gummibumpere giver fart tilbage; vindmøller og vandrende klodser kræver timing."
+            "- Gummibumpere giver fart tilbage; vindmøller og vandrende klodser kræver timing. Kraftlåsen på højre museknap holder slaget ladet, indtil hullet passer."
           ]
         },
         {

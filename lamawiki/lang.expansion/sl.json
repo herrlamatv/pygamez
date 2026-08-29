@@ -2032,7 +2032,9 @@
         "klančina",
         "igrišče",
         "udarec",
-        "tour"
+        "tour",
+        "zaklep",
+        "moč"
       ],
       "sections": [
         {
@@ -2050,6 +2052,7 @@
           "h": "Upravljanje",
           "body": [
             "- S premikom miške ciljaš. Držanje leve tipke polni moč, spust udari.",
+            "- Držanje desne tipke miške zaklene moč: črta se ustavi, postane zlata in kaže odstotke - tako z napolnjenim udarcem počakaš na vrzel v mlinu. Ko spustiš, se polni naprej; zaklenjena moč preživi tudi udarec, zato naslednji levi klik udari točno s to vrednostjo.",
             "- Puščici levo/desno ciljata, gor/dol nastavljata moč, [Preslednica] udari.",
             "- [G] vklopi in izklopi ciljno črto - trajno jo lahko izklopiš v nastavitvah.",
             "- [Z] preklopi samodejno merjenje: vklopljeno (privzeto) se palica pred vsakim udarcem sama obrne proti luknji, izklopljeno ostane nazadnje izbrana smer - takrat meriš povsem sam. Na začetku nove steze palica kaže nevtralno navzgor.",
@@ -2062,7 +2065,7 @@
           "body": [
             "- Pesek močno zavira, klančine pospešujejo v smeri puščic.",
             "- Voda stane kazenski udarec; žogica se vrne na zadnje varno mesto.",
-            "- Gumijasti odbijači vračajo hitrost; mlini in tavajoči bloki zahtevajo občutek za čas."
+            "- Gumijasti odbijači vračajo hitrost; mlini in tavajoči bloki zahtevajo občutek za čas. Zaklep moči na desni tipki drži udarec napolnjen, dokler vrzel ne ustreza."
           ]
         },
         {

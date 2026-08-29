@@ -412,6 +412,7 @@
   "golf.lbl_guide": "Siktelinje",
   "golf.lbl_pickup": "Plukk opp",
   "golf.lbl_tour": "Tour-bane",
+  "golf.lock": "Kraft låst: {n}%",
   "golf.max_strokes": "Maksimalt antall slag nådd",
   "golf.new_round": "Enter = ny runde · S = oppsett",
   "golf.next": "Klikk / Enter = neste hull",

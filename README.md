@@ -539,10 +539,18 @@ Explosions-Effekte, Highscore.
   Wanderblöcke verlangen Timing. Die Physik läuft wie beim Billard in
   Teilschritten mit Reibung - nichts ruckt, nichts tunnelt durch die Bande.
 - **Steuerung**: Maus zielt, linke Maustaste halten lädt die Kraft, Loslassen
-  schlägt (alternativ Pfeile + Leertaste). **R** bricht einen geladenen Schlag
-  ab, ohne zu putten. **G** blendet die Ziellinie um, **Z** das Autoziel, **P**
-  das Aufnehmen. **F** setzt die laufende Bahn zurück: Schläge auf 0, Ball
-  zurück aufs Tee - gleiche Bahn, gleicher Kurs.
+  schlägt, rechte Maustaste halten sperrt die Kraft (alternativ Pfeile +
+  Leertaste). **R** bricht einen geladenen Schlag ab, ohne zu putten. **G**
+  blendet die Ziellinie um, **Z** das Autoziel, **P** das Aufnehmen. **F**
+  setzt die laufende Bahn zurück: Schläge auf 0, Ball zurück aufs Tee -
+  gleiche Bahn, gleicher Kurs.
+- **Stärke-Sperre (rechte Maustaste halten)**: friert den Ladebalken genau da
+  ein, wo er beim Drücken stand - golden, mit Prozentzahl, Schloss und ruhig
+  pulsendem Ring um den Ball. So wartet man mit fertig geladenem Schlag auf die
+  Lücke in der Windmühle oder auf den Wanderblock und puttet im richtigen
+  Moment. Loslassen lädt weiter; die gesperrte Kraft übersteht sogar den
+  Schlag, der nächste Linksklick puttet exakt mit diesem Wert - auch eine mit
+  Pfeil hoch/runter eingestellte Stärke lässt sich so festnageln.
 - **Weiter statt Wiederholung**: Am Rundenende führt der Knopf **Weiter** zum
   nächsten Kurs (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), sodass nie wieder
   derselbe Neuner-Satz kommt; daneben stehen **Nochmal** (gleicher Kurs) und
@@ -1365,11 +1373,18 @@ explosion effects, high score.
   penalty stroke, rubber bumpers give speed back, and windmills and moving
   blocks are all about timing. The physics runs in sub-steps with friction just
   like Billiards - nothing stutters, nothing tunnels through a rail.
-- **Controls**: the mouse aims, holding the left button loads the power and
-  releasing putts (arrows + space work too). **R** cancels a charged shot
-  without putting. **G** toggles the aim line, **Z** the auto-aim, **P** the
-  pick-up. **F** resets the current hole: strokes back to 0, ball back on the
-  tee - same hole, same course.
+- **Controls**: the mouse aims, holding the left button loads the power,
+  releasing putts, holding the right button locks the power (arrows + space
+  work too). **R** cancels a charged shot without putting. **G** toggles the
+  aim line, **Z** the auto-aim, **P** the pick-up. **F** resets the current
+  hole: strokes back to 0, ball back on the tee - same hole, same course.
+- **Power lock (hold the right mouse button)**: freezes the charge bar exactly
+  where it stood when you pressed - gold, with the percentage, a padlock and a
+  calmly pulsing ring around the ball. That way you can wait for the gap in the
+  windmill or for the moving block with the shot fully charged and putt at the
+  right moment. Releasing charges on; a locked power even survives the stroke,
+  so the next left click putts with exactly that value - a power dialled in
+  with up/down arrows can be pinned down the same way.
 - **Continue instead of repeat**: at the end of a round the **Next** button
   moves on to the following course (*Classic* → *Pro* → *Tour 1* → *Tour 2* …),
   so the same set of nine holes never comes back; next to it are **Again**

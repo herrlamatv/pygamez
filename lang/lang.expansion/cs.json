@@ -412,6 +412,7 @@
   "golf.lbl_guide": "Zaměřovací čára",
   "golf.lbl_pickup": "Zvednutí",
   "golf.lbl_tour": "Tour hřiště",
+  "golf.lock": "Síla uzamčena: {n}%",
   "golf.max_strokes": "Dosažen maximální počet úderů",
   "golf.new_round": "Enter = nové kolo · S = nastavení",
   "golf.next": "Klik / Enter = další dráha",

@@ -412,6 +412,7 @@
   "golf.lbl_guide": "Ligne de visée",
   "golf.lbl_pickup": "Ramassage",
   "golf.lbl_tour": "Parcours Tour",
+  "golf.lock": "Puissance bloquée : {n} %",
   "golf.max_strokes": "Nombre maximal de coups atteint",
   "golf.new_round": "Entrée = nouvelle partie · S = réglages",
   "golf.next": "Clic / Entrée = trou suivant",

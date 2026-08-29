@@ -2032,7 +2032,9 @@
         "ramp",
         "bana",
         "putt",
-        "tour"
+        "tour",
+        "lås",
+        "kraft"
       ],
       "sections": [
         {
@@ -2050,6 +2052,7 @@
           "h": "Styrning",
           "body": [
             "- Flytta musen för att sikta. Håll vänster musknapp för att ladda kraften, släpp för att slå.",
+            "- Håll höger musknapp för att låsa kraften: mätaren står stilla, blir gyllene och visar procenten - så väntar du på luckan i kvarnen med slaget färdigladdat. Släpper du laddas det vidare; en låst kraft överlever till och med slaget, så nästa vänsterklick slår med exakt det värdet.",
             "- Vänster/höger pil siktar, upp/ner ställer kraften, [Blanksteg] slår.",
             "- [G] slår på och av siktlinjen - den går också att stänga av permanent i inställningarna.",
             "- [Z] slår på och av auto-siktet: på (standard) vrider sig klubban mot hålet före varje slag, av står den senast valda riktningen kvar - då siktar du helt själv. På ett nytt håls tee pekar klubban neutralt uppåt.",
@@ -2062,7 +2065,7 @@
           "body": [
             "- Sand bromsar kraftigt, ramper accelererar i pilarnas riktning.",
             "- Vatten kostar ett straffslag; bollen återvänder till sin senaste säkra plats.",
-            "- Gummikuddar ger fart tillbaka; väderkvarnar och vandrande block kräver timing."
+            "- Gummikuddar ger fart tillbaka; väderkvarnar och vandrande block kräver timing. Kraftlåset på höger musknapp håller slaget laddat tills luckan passar."
           ]
         },
         {

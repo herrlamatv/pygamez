@@ -2031,7 +2031,9 @@
         "rampe",
         "parcours",
         "putting",
-        "tour"
+        "tour",
+        "blocage",
+        "puissance"
       ],
       "sections": [
         {
@@ -2049,6 +2051,7 @@
           "h": "Commandes",
           "body": [
             "- Bouge la souris pour viser. Maintiens le clic gauche pour charger la puissance, relâche pour jouer.",
+            "- Maintiens le clic droit pour bloquer la puissance : la barre se fige, devient dorée et affiche le pourcentage - tu attends ainsi l'ouverture du moulin avec le coup déjà chargé. En relâchant, la charge reprend ; la puissance bloquée survit même au coup, et le prochain clic gauche joue exactement cette valeur.",
             "- Les flèches gauche/droite visent, haut/bas règlent la puissance, [Espace] joue le coup.",
             "- [G] affiche ou masque la ligne de visée - tu peux aussi la couper dans l'écran de réglages.",
             "- [Z] bascule la visée auto : activée (par défaut), le club se tourne vers le trou avant chaque coup ; désactivée, la direction choisie reste en place - tu vises alors entièrement toi-même. Au départ d'un nouveau trou, le club pointe neutrement vers le haut.",
@@ -2061,7 +2064,7 @@
           "body": [
             "- Le sable freine fortement, les rampes accélèrent dans le sens des flèches.",
             "- L'eau coûte un coup de pénalité ; la balle revient à sa dernière position sûre.",
-            "- Les pare-chocs en caoutchouc renvoient de la vitesse ; moulins et blocs mobiles demandent du timing."
+            "- Les pare-chocs en caoutchouc renvoient de la vitesse ; moulins et blocs mobiles demandent du timing. Le blocage de puissance au clic droit garde le coup chargé jusqu'à ce que l'ouverture arrive."
           ]
         },
         {

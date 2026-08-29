@@ -412,6 +412,7 @@
   "golf.lbl_guide": "Ciljna črta",
   "golf.lbl_pickup": "Pobiranje",
   "golf.lbl_tour": "Tour igrišče",
+  "golf.lock": "Moč zaklenjena: {n}%",
   "golf.max_strokes": "Doseženo največje število udarcev",
   "golf.new_round": "Enter = nov krog · S = nastavitve",
   "golf.next": "Klik / Enter = naslednja steza",

@@ -412,6 +412,7 @@
   "golf.lbl_guide": "Siktlinje",
   "golf.lbl_pickup": "Plocka upp",
   "golf.lbl_tour": "Tour-bana",
+  "golf.lock": "Kraft låst: {n}%",
   "golf.max_strokes": "Högsta antal slag uppnått",
   "golf.new_round": "Enter = ny runda · S = inställningar",
   "golf.next": "Klick / Enter = nästa hål",

@@ -19,7 +19,8 @@ Strafschlag, Gummipuffer geben Tempo zurück, Windmühlen und Wanderblöcke
 verlangen Timing.
 
 Steuerung: Maus bewegt die Ziellinie, linke Maustaste gedrückt halten lädt die
-Schlagstärke, Loslassen schlägt. R bricht einen geladenen Schlag ab, ohne zu
+Schlagstärke, Loslassen schlägt. Die rechte Maustaste hält die Stärke fest,
+solange sie gedrückt bleibt. R bricht einen geladenen Schlag ab, ohne zu
 putten. Alternativ Pfeile links/rechts zielen, hoch/runter Stärke, Leertaste
 schlägt. G blendet die Ziellinie um, Z das Autoziel, P das Aufnehmen, F setzt
 die laufende Bahn zurück (Schläge auf 0, gleiche Bahn).
@@ -28,6 +29,14 @@ Autoziel (Setup, Standard AN): vor jedem Schlag dreht sich der Schläger von
 selbst zum Loch. AUS heißt, dass die zuletzt gewählte Richtung stehen bleibt -
 gezielt wird dann komplett selbst; nur ganz zu Beginn einer Bahn zeigt der
 Schläger neutral bahnaufwärts.
+
+Stärke-Sperre (rechte Maustaste halten): friert den Ladebalken genau da ein, wo
+er gerade steht. Der Balken wird golden, zeigt die Prozentzahl und pulst - so
+wartet man mit fertig geladenem Schlag auf die Lücke in der Windmühle oder auf
+den Wanderblock und puttet im richtigen Moment. Loslassen lädt weiter. Gesperrt
+bleibt die Stärke auch über den Schlag hinaus: der nächste Linksklick setzt sie
+dann nicht auf 5% zurück, sondern schlägt exakt mit dem gehaltenen Wert - auch
+eine mit Pfeil hoch/runter eingestellte Stärke lässt sich so festnageln.
 
 Am Rundenende führt der Weiter-Knopf zum NÄCHSTEN Kurs (Classic -> Pro ->
 Tour 1 -> Tour 2 -> ...), damit sich nicht immer derselbe Neuner-Satz
@@ -71,6 +80,7 @@ COL_BALL = (248, 248, 244)
 COL_CUP = (16, 22, 18)
 COL_FLAG = (226, 72, 72)
 COL_AIM = (245, 245, 210)
+COL_LOCK = (248, 208, 96)    # Stärke-Sperre (Balken, Ring, Ziellinie)
 
 # ------------------------------------------------------------- Platz / Physik
 # CW/CH/BORDER kommen aus minigolf_gen.py (dort steht die einzige Definition).
@@ -190,6 +200,8 @@ class MiniGolfGame(Game):
     name = "Minigolf"
     highscore_key = "minigolf"
     supports_multiplayer = True
+    # Rechte Maustaste = Stärke-Sperre (siehe _lock_power).
+    wants_right_click = True
 
     # ===================================================== Aufbau / Reset
     def reset(self):
@@ -207,6 +219,10 @@ class MiniGolfGame(Game):
         # Aufnehmen: nach MAX_STROKES Schlägen ist die Bahn vorbei. Standard an,
         # im Setup abschaltbar - dann wird bis zum Einlochen weitergespielt.
         self.pickup = bool(gs.get("pickup", True))
+        # Stärke-Sperre: solange die rechte Maustaste gehalten wird, bleibt die
+        # Schlagstärke stehen (lock_t treibt den Puls der Anzeige).
+        self.power_lock = False
+        self.lock_t = 0.0
         self.tour = max(1, min(gen.TOUR_COURSES, int(gs.get("tour", 1) or 1)))
         self._tour_par = gen.course_par(self.tour)
         self.winner = None
@@ -345,7 +361,8 @@ class MiniGolfGame(Game):
         self.vx = self.vy = 0.0
         self.safe = (self.bx, self.by)
         self.phase = "aim"
-        self.power = 0.35
+        if not self.power_lock:
+            self.power = 0.35
         self.charging = False
         self.shot_time = 0.0
         self.mill_a = 0.0
@@ -487,6 +504,13 @@ class MiniGolfGame(Game):
 
     # ===================================================== Eingabe
     def handle_event(self, event):
+        # Die rechte Maustaste ist die Stärke-Sperre - und zwar in jedem
+        # Zustand zuerst, damit sie nirgends als Linksklick durchrutscht
+        # (der Setup-Screen fragt die Maustaste selbst nicht ab).
+        if event.kind in (InputEvent.MOUSEDOWN, InputEvent.MOUSEUP) \
+                and event.button == 3:
+            self._lock_power(event.kind == InputEvent.MOUSEDOWN)
+            return
         if self.state == SETUP:
             self._handle_setup(event)
             return
@@ -534,7 +558,8 @@ class MiniGolfGame(Game):
                 self.aim = math.atan2(my - self.by, mx - self.bx)
         elif event.kind == InputEvent.MOUSEDOWN and event.button == 1:
             self.charging = True
-            self.power = 0.05
+            if not self.power_lock:      # gesperrt = mit dem Wert schlagen
+                self.power = 0.05
         elif event.kind == InputEvent.MOUSEUP and event.button == 1:
             if self.charging:
                 self.charging = False
@@ -546,25 +571,51 @@ class MiniGolfGame(Game):
             elif k == "Right" or self.is_action(k, "right"):
                 self.aim += math.radians(2.5)
             elif k == "Up" or self.is_action(k, "up"):
-                self.power = min(1.0, self.power + 0.05)
+                if not self.power_lock:
+                    self.power = min(1.0, self.power + 0.05)
             elif k == "Down" or self.is_action(k, "down"):
-                self.power = max(0.05, self.power - 0.05)
+                if not self.power_lock:
+                    self.power = max(0.05, self.power - 0.05)
             elif k in ("r", "R"):
                 self._cancel_shot()
             elif k in ("space", "Return"):
                 self._strike()
+
+    def _lock_power(self, on):
+        """Stärke-Sperre: die rechte Maustaste hält die Schlagstärke fest.
+
+        Gedrückt halten friert den Ladebalken genau da ein, wo er beim Drücken
+        stand - Loslassen lädt weiter. So lässt sich ein fertig geladener
+        Schlag beliebig lange halten und genau dann putten, wenn die Lücke in
+        der Windmühle passt oder der Wanderblock aus dem Weg ist.
+
+        Gesperrt bleibt die Stärke, bis die Taste losgelassen wird: sie
+        übersteht Schlag, Bahnwechsel und [R], und ein Linksklick lädt dann
+        nicht bei 5% neu, sondern schlägt exakt mit dem gehaltenen Wert. Auch
+        Pfeil hoch/runter ändern währenddessen nichts. Gesperrt wird nur beim
+        Zielen; freigegeben immer, damit die Sperre nie hängen bleibt.
+        """
+        if on and (self.state != PLAY or self.phase != "aim"):
+            return
+        if on == self.power_lock:
+            return
+        self.power_lock = on
+        self.lock_t = 0.0
+        self.play_sound("select" if on else "click")
 
     def _cancel_shot(self):
         """Bricht einen geladenen Schlag ab (Taste R).
 
         Wer die Maustaste hält und es sich anders überlegt, drückt R: der Ball
         bleibt liegen, der Schlag zählt nicht. Nach dem Loslassen lässt sich
-        ganz normal neu aufladen.
+        ganz normal neu aufladen. Eine gehaltene Stärke-Sperre bleibt dabei
+        stehen - abgebrochen wird der Schlag, nicht der gemerkte Wert.
         """
         if not self.charging:
             return
         self.charging = False
-        self.power = 0.35
+        if not self.power_lock:
+            self.power = 0.35
         self.msg = t("golf.cancel")
         self.msg_t = 1.4
         self.play_sound("click")
@@ -611,7 +662,9 @@ class MiniGolfGame(Game):
         self.mill_a += dt
         self.move_t += dt
         if self.phase == "aim":
-            if self.charging:
+            if self.power_lock:
+                self.lock_t += dt            # Puls der goldenen Anzeige
+            elif self.charging:
                 self.power = min(1.0, self.power + dt * 0.80)
         elif self.phase == "rolling":
             self._physics(dt)
@@ -826,12 +879,16 @@ class MiniGolfGame(Game):
         wird selbst. Nur am Tee einer neuen Bahn gibt es keine "letzte"
         Richtung; dort zeigt der Schläger neutral bahnaufwärts (nach oben),
         damit niemand mit dem Rücken zur Bahn startet.
+
+        Eine gehaltene Stärke-Sperre überlebt den Schlag: dann bleibt auch die
+        Kraft stehen, statt auf den Standardwert zurückzufallen.
         """
         if self.autoaim:
             self.aim = math.atan2(self.cup[1] - self.by, self.cup[0] - self.bx)
         elif new_hole:
             self.aim = -math.pi / 2
-        self.power = 0.35
+        if not self.power_lock:
+            self.power = 0.35
         self.charging = False
 
     def _after_shot(self):
@@ -1200,6 +1257,11 @@ class MiniGolfGame(Game):
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
+        # Sicherheitsnetz: In der Pause kommt kein Loslassen der rechten
+        # Maustaste mehr an - eine Pause hebt die Stärke-Sperre deshalb selbst
+        # auf, statt sie hängen zu lassen.
+        if self.power_lock and self.paused:
+            self.power_lock = False
         ui.draw_background(s, self.width, self.height)
         if self.state == SETUP:
             self._draw_setup(s)
@@ -1333,19 +1395,27 @@ class MiniGolfGame(Game):
     def _draw_aim(self, s):
         px, py = self._project(self.bx, self.by)
         ox, oy = math.cos(self.aim), math.sin(self.aim)
+        lock = self.power_lock
+        col = COL_LOCK if lock else COL_AIM
         if self.guide:
             steps = max(6, int((30 + 60 * self.power) * self.scale / 9))
             for i in range(0, steps, 2):
-                pygame.draw.line(s, COL_AIM,
+                pygame.draw.line(s, col,
                                  (px + ox * (i * 9 + 6), py + oy * (i * 9 + 6)),
                                  (px + ox * (i * 9 + 12), py + oy * (i * 9 + 12)),
                                  2)
+        # Stärke-Sperre: ruhig pulsender Ring um den Ball - auch ohne Blick
+        # aufs HUD ist klar, dass der Schlag geladen wartet.
+        if lock:
+            puls = 0.5 + 0.5 * math.sin(self.lock_t * 5.0)
+            rr = int(max(6.0, BR * self.scale) + 5 + puls * 4)
+            pygame.draw.circle(s, COL_LOCK, (int(px), int(py)), rr, 2)
         # Schläger hinter dem Ball
         bx1 = px - ox * (10 + self.power * 26)
         by1 = py - oy * (10 + self.power * 26)
         pygame.draw.line(s, (228, 228, 222), (bx1, by1),
                          (bx1 - ox * 26, by1 - oy * 26), 3)
-        pygame.draw.line(s, (150, 154, 160), (bx1, by1),
+        pygame.draw.line(s, COL_LOCK if lock else (150, 154, 160), (bx1, by1),
                          (bx1 - oy * 7, by1 + ox * 7), 5)
 
     def _draw_hud(self, s):
@@ -1356,21 +1426,68 @@ class MiniGolfGame(Game):
             t("golf.hole", n=self.hole_idx + 1, total=len(self.holes))
             + "  ·  " + t("golf.par", n=self.par), True, ui.TEXT_DIM)
         s.blit(left, left.get_rect(midleft=(12, cy)))
-        if self.msg:
+        col = self.accent
+        if self.power_lock and self.phase == "aim":
+            # Die Sperre ist ein Dauerzustand - sie steht über der Kurzmeldung.
+            mid = t("golf.lock", n=self._power_pct())
+            col = COL_LOCK
+        elif self.msg:
             mid = self.msg
         elif self.multiplayer:
             mid = t("golf.turn",
                     name=t("common.player1" if self.player == 0 else "common.player2"))
         else:
             mid = t("golf.strokes", n=self.strokes)
-        img = self._small.render(mid, True, self.accent)
+        img = self._small.render(mid, True, col)
         s.blit(img, img.get_rect(center=(self.width // 2, cy)))
+        self._draw_power(s, cy)
+
+    def _power_pct(self):
+        """Schlagstärke in ganzen Prozent (Anzeige im HUD)."""
+        return int(round(self.power * 100))
+
+    def _draw_power(self, s, cy):
+        """Ladebalken rechts im HUD, mit Prozentzahl davor.
+
+        Frei lädt er in der Akzentfarbe. Gesperrt (rechte Maustaste) wird er
+        golden, bekommt ein Schloss, eine helle Haltemarke am eingefrorenen
+        Wert und einen ruhigen Puls um den Rahmen.
+        """
         mw, mh = 84, 10
         mx = self.width - mw - 14
-        pygame.draw.rect(s, ui.BTN, (mx, cy - mh // 2, mw, mh), border_radius=4)
-        pygame.draw.rect(s, self.accent,
-                         (mx, cy - mh // 2, int(mw * self.power), mh),
-                         border_radius=4)
+        top = cy - mh // 2
+        lock = self.power_lock
+        col = COL_LOCK if lock else self.accent
+        pygame.draw.rect(s, ui.BTN, (mx, top, mw, mh), border_radius=4)
+        fill = int(mw * self.power)
+        if fill > 0:
+            pygame.draw.rect(s, col, (mx, top, fill, mh), border_radius=4)
+        pct = self._tiny.render("%d%%" % self._power_pct(), True,
+                                col if lock else ui.TEXT_DIM)
+        s.blit(pct, pct.get_rect(midright=(mx - (21 if lock else 6), cy)))
+        if not lock:
+            return
+        self._draw_lock_icon(s, mx - 12, cy, col)
+        tick = mx + max(1, min(mw - 1, fill))
+        pygame.draw.line(s, (255, 250, 232), (tick, top - 3),
+                         (tick, top + mh + 2), 2)
+        puls = 0.5 + 0.5 * math.sin(self.lock_t * 5.0)
+        pygame.draw.rect(s, ui.mix(col, (255, 255, 255), 0.10 + 0.35 * puls),
+                         (mx - 2, top - 2, mw + 4, mh + 4), 1, border_radius=6)
+
+    @staticmethod
+    def _draw_lock_icon(s, x, cy, col):
+        """Winziges Vorhängeschloss (11x15 px), um (x, cy) zentriert.
+
+        Bügel als Halbkreis mit zwei Beinen, darunter der Körper mit
+        Schlüsselloch - so ist das Schloss auch bei 11 px noch als solches
+        zu erkennen.
+        """
+        pygame.draw.arc(s, col, (x - 3, cy - 8, 7, 8), 0.0, math.pi, 2)
+        pygame.draw.line(s, col, (x - 3, cy - 5), (x - 3, cy - 1))
+        pygame.draw.line(s, col, (x + 3, cy - 5), (x + 3, cy - 1))
+        pygame.draw.rect(s, col, (x - 5, cy - 1, 11, 8), border_radius=2)
+        pygame.draw.rect(s, ui.PANEL, (x - 1, cy + 2, 2, 3))
 
     def _draw_card(self, s):
         """Scorekarte rechts: Bahn, Par und Schläge je Spieler."""

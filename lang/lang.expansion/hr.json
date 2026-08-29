@@ -412,6 +412,7 @@
   "golf.lbl_guide": "Linija ciljanja",
   "golf.lbl_pickup": "Podizanje",
   "golf.lbl_tour": "Tour teren",
+  "golf.lock": "Snaga zaključana: {n}%",
   "golf.max_strokes": "Dosegnut najveći broj udaraca",
   "golf.new_round": "Enter = novi krug · S = postavke",
   "golf.next": "Klik / Enter = sljedeća staza",

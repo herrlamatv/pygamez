@@ -480,6 +480,11 @@ fusionnent.
   et le relâchement joue le coup (flèches + espace au choix). **R** annule un
   coup chargé sans jouer. **G** bascule la ligne de visée, **Z** la visée auto,
   **P** le ramassage.
+- **Blocage de puissance (maintenir le clic droit)** : fige la barre de charge
+  là où elle est - dorée, avec le pourcentage, un cadenas et un anneau qui pulse
+  autour de la balle. Tu attends ainsi l'ouverture du moulin avec le coup déjà
+  chargé. En relâchant, la charge reprend ; la puissance bloquée survit même au
+  coup, et le prochain clic gauche joue exactement cette valeur.
 - **Carte de score** à droite avec le par et les coups par trou ; à deux, chacun
   joue le même trou à son tour. Points : 600 par trou, ±300 par coup sous/au-dessus
   du par, **500 de plus pour un trou en un**. Le nombre de coups le plus bas par
@@ -1209,6 +1214,11 @@ arma), efectos de explosión, récord.
   soltarlo golpea (también flechas + espacio). **R** cancela un golpe cargado
   sin golpear. **G** cambia la línea de tiro, **Z** la puntería automática,
   **P** la recogida.
+- **Bloqueo de fuerza (mantener el botón derecho)**: congela la barra de carga
+  donde esté: dorada, con el porcentaje, un candado y un anillo que late
+  alrededor de la bola. Así esperas el hueco del molino con el golpe ya cargado.
+  Al soltar sigue cargando; la fuerza bloqueada sobrevive incluso al golpe y el
+  siguiente clic izquierdo golpea justo con ese valor.
 - **Tarjeta de puntuación** a la derecha con el par y los golpes por hoyo; a dos,
   cada jugador juega el mismo hoyo por turnos. Puntos: 600 por hoyo, ±300 por
   golpe bajo/sobre par, **500 extra por un hoyo en uno**. El menor número de
@@ -1928,6 +1938,11 @@ melhoria de arma), efeitos de explosão, recorde.
 - **Comandos**: o rato aponta, manter o botão esquerdo carrega a força e largar
   bate (também setas + espaço). **R** cancela uma tacada carregada sem bater.
   **G** alterna a linha de mira, **Z** a mira automática, **P** o levantamento.
+- **Bloqueio de força (manter o botão direito)**: congela a barra de carga onde
+  ela está - dourada, com a percentagem, um cadeado e um anel a pulsar à volta
+  da bola. Assim esperas pela abertura do moinho com a tacada já carregada. Ao
+  largares volta a carregar; a força bloqueada sobrevive à tacada e o clique
+  esquerdo seguinte bate exatamente com esse valor.
 - **Cartão de pontuação** à direita com o par e as tacadas por buraco; a dois,
   cada um joga o mesmo buraco à vez. Pontos: 600 por buraco, ±300 por tacada
   abaixo/acima do par, **500 extra por um buraco em um**. O menor número de
@@ -2761,6 +2776,11 @@ broni), efekty wybuchów, rekord.
   puszczenie uderza (można też strzałkami + spacją). **R** anuluje naładowane
   uderzenie bez uderzania. **G** przełącza linię celowania, **Z**
   auto-celowanie, **P** podnoszenie.
+- **Blokada siły (przytrzymany prawy przycisk)**: zatrzymuje pasek ładowania
+  dokładnie tam, gdzie jest - złoty, z procentami, kłódką i pulsującym
+  pierścieniem wokół piłki. Tak czekasz na przerwę w wiatraku z naładowanym
+  uderzeniem. Puszczenie ładuje dalej; zablokowana siła przetrwa nawet
+  uderzenie, a kolejne lewe kliknięcie uderza dokładnie tą wartością.
 - **Karta wyników** po prawej z par i uderzeniami na dołek; we dwoje każdy gra ten
   sam dołek po kolei. Punkty: 600 za dołek, ±300 za uderzenie poniżej/powyżej par,
   **500 dodatkowo za hole in one**. Najmniejsza liczba uderzeń na każdym polu
@@ -3592,6 +3612,11 @@ patlama efektleri, yüksek skor.
   bırakmak vurur (oklar + boşluk da olur). **R** yüklenmiş vuruşu vurmadan
   iptal eder. **G** nişan çizgisini, **Z** otomatik nişanı, **P** topu almayı
   açıp kapatır.
+- **Güç kilidi (sağ tuşu basılı tut)**: doldurma çubuğunu olduğu yerde
+  dondurur - altın rengi, yüzde, kilit simgesi ve topun çevresinde nabız gibi
+  atan bir halka. Vuruş hazırken değirmendeki boşluğu böyle beklersin.
+  Bıraktığında yeniden dolar; kilitli güç vuruştan sonra da kalır ve bir sonraki
+  sol tık tam o değerle vurur.
 - **Skor kartı** sağda, par ve delik başına vuruşlarla; iki kişide herkes aynı
   deliği sırayla oynar. Puanlar: delik başına 600, parın altındaki/üstündeki her
   vuruş için ±300, **hole in one için 500 ek puan**. Her parkurun en düşük vuruş
@@ -4394,6 +4419,11 @@ eksplosionseffekter, highscore.
 - **Styring**: musen sigter, venstre museknap holdt nede lader kraften, og et
   slip slår (pile + mellemrum virker også). **R** afbryder et ladet slag uden
   at slå. **G** slår sigtelinjen til og fra, **Z** auto-sigtet, **P** Saml op.
+- **Kraftlås (hold højre museknap)**: fryser ladebjælken præcis der, hvor den
+  er - gylden, med procenten, en hængelås og en pulserende ring om bolden. Så
+  venter du på hullet i møllen med slaget færdigladet. Slipper du, lades der
+  videre; en låst kraft overlever endda slaget, og næste venstreklik slår med
+  præcis den værdi.
 - **Scorekort** til højre med par og slag pr. bane; til to spiller begge den samme
   bane efter tur. Point: 600 pr. bane, ±300 pr. slag under/over par, **500 ekstra
   for hole in one**. Det laveste antal slag pr. forløb ligger i afsnittet
@@ -5190,6 +5220,11 @@ våpenoppgradering), eksplosjonseffekter, rekord.
 - **Styring**: musa sikter, venstre museknapp holdt nede lader kraften, og et
   slipp slår (piler + mellomrom går også). **R** avbryter et ladet slag uten å
   slå. **G** slår siktelinjen av og på, **Z** auto-siktet, **P** Plukk opp.
+- **Kraftlås (hold høyre museknapp)**: fryser ladebjelken nøyaktig der den er -
+  gyllen, med prosenten, en hengelås og en pulserende ring rundt ballen. Slik
+  venter du på åpningen i mølla med slaget ferdig ladet. Slipper du, lades det
+  videre; en låst kraft overlever til og med slaget, og neste venstreklikk slår
+  med nøyaktig den verdien.
 - **Scorekort** til høyre med par og slag per bane; for to spillere spiller begge
   den samme banen etter tur. Poeng: 600 per bane, ±300 per slag under/over par,
   **500 ekstra for hole in one**. Laveste slagtall per løype ligger i
@@ -5962,6 +5997,11 @@ explosionseffekter, topplista.
 - **Styrning**: musen siktar, vänster musknapp nedtryckt laddar kraften och ett
   släpp slår (pilar + blanksteg funkar också). **R** avbryter ett laddat slag
   utan att slå. **G** växlar siktlinjen, **Z** auto-siktet, **P** Plocka upp.
+- **Kraftlås (håll höger musknapp)**: fryser laddmätaren exakt där den står -
+  gyllene, med procenten, ett hänglås och en pulserande ring runt bollen. Så
+  väntar du på luckan i kvarnen med slaget färdigladdat. Släpper du laddas det
+  vidare; en låst kraft överlever till och med slaget, och nästa vänsterklick
+  slår med exakt det värdet.
 - **Scorekort** till höger med par och slag per bana; till två spelar båda samma
   bana i tur och ordning. Poäng: 600 per bana, ±300 per slag under/över par,
   **500 extra för hole in one**. Lägsta slagantal per slinga ligger i avsnittet
@@ -6768,6 +6808,11 @@ räjähdystehosteet, ennätys.
 - **Ohjaus**: hiiri tähtää, vasen painike pohjassa lataa voiman ja irrotus lyö
   (nuolet + välilyönti käyvät myös). **R** peruu ladatun lyönnin lyömättä.
   **G** vaihtaa tähtäysviivan, **Z** autotähtäyksen, **P** pallon noston.
+- **Voimalukko (pidä oikeaa painiketta pohjassa)**: jäädyttää latauspalkin
+  täsmälleen siihen, missä se on - kullanvärisenä, prosentteineen, lukkokuvake
+  ja sykkivä rengas pallon ympärillä. Näin odotat myllyn aukkoa lyönti valmiina.
+  Kun päästät irti, lataus jatkuu; lukittu voima säilyy myös lyönnin yli, ja
+  seuraava vasen napsautus lyö juuri sillä arvolla.
 - **Tuloskortti** oikealla parin ja ratakohtaisten lyöntien kanssa; kaksinpelissä
   molemmat pelaavat saman radan vuorotellen. Pisteet: 600 radalta, ±300 jokaisesta
   parin alittavasta/ylittävästä lyönnistä, **500 lisää hole in onesta**. Pienin
@@ -7578,6 +7623,11 @@ zbraně), efekty explozí, nejlepší skóre.
 - **Ovládání**: myš míří, držené levé tlačítko nabíjí sílu a puštění odpálí
   (fungují i šipky + mezerník). **R** zruší nabitý úder bez odpalu. **G**
   přepíná zaměřovací čáru, **Z** automíření, **P** zvednutí.
+- **Zámek síly (držené pravé tlačítko)**: zmrazí ukazatel nabíjení přesně tam,
+  kde je - zlatý, s procenty, visacím zámkem a pulzujícím kroužkem kolem míčku.
+  Tak počkáš s nabitým úderem na mezeru ve mlýně. Puštění nabíjí dál; uzamčená
+  síla přežije i úder a další kliknutí levým tlačítkem odpálí přesně touto
+  hodnotou.
 - **Karta skóre** vpravo s parem a údery na dráhu; ve dvou hraje každý stejnou
   dráhu po sobě. Body: 600 za dráhu, ±300 za úder pod/nad par, **500 navíc za
   hole in one**. Nejnižší počet úderů na hřiště je v sekci `minigolf` souboru
@@ -8385,6 +8435,11 @@ nadgradnja orožja), učinki eksplozij, rekord.
   (delujejo tudi puščice + preslednica). **R** prekliče napolnjen udarec brez
   udarca. **G** preklopi ciljno črto, **Z** samodejno merjenje, **P**
   pobiranje.
+- **Zaklep moči (držana desna tipka)**: zamrzne polnilno črto točno tam, kjer
+  je - zlata, z odstotki, ključavnico in utripajočim obročem okoli žogice. Tako
+  z napolnjenim udarcem počakaš na vrzel v mlinu. Ko spustiš, se polni naprej;
+  zaklenjena moč preživi tudi udarec, naslednji levi klik pa udari točno s to
+  vrednostjo.
 - **Kartica rezultatov** desno s parom in udarci na stezo; v dvoje vsak igra isto
   stezo po vrsti. Točke: 600 na stezo, ±300 za udarec pod/nad par, **500 dodatnih
   za hole in one**. Najnižje število udarcev na igrišče je v razdelku `minigolf`
@@ -9197,6 +9252,11 @@ nadogradnja oružja), efekti eksplozije, rekord.
   udara (rade i strelice + razmaknica). **R** otkazuje napunjen udarac bez
   udaranja. **G** prebacuje liniju ciljanja, **Z** auto-ciljanje, **P**
   podizanje.
+- **Zaključavanje snage (držana desna tipka)**: zamrzava traku punjenja točno
+  ondje gdje jest - zlatna, s postotkom, lokotom i pulsirajućim prstenom oko
+  loptice. Tako s napunjenim udarcem čekaš prolaz kroz mlin. Otpuštanje puni
+  dalje; zaključana snaga preživi i udarac, a sljedeći lijevi klik udara točno
+  tom vrijednošću.
 - **Kartica rezultata** desno s parom i udarcima po stazi; u dvoje svatko igra
   istu stazu jedan za drugim. Bodovi: 600 po stazi, ±300 po udarcu ispod/iznad
   para, **500 dodatnih za hole in one**. Najmanji broj udaraca po terenu nalazi se

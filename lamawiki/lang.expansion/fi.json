@@ -2032,7 +2032,9 @@
         "ramppi",
         "rata",
         "putti",
-        "tour"
+        "tour",
+        "lukko",
+        "voima"
       ],
       "sections": [
         {
@@ -2050,6 +2052,7 @@
           "h": "Ohjaus",
           "body": [
             "- Liikuta hiirtä tähdätäksesi. Pidä vasenta painiketta pohjassa ladataksesi voimaa, päästä irti lyödäksesi.",
+            "- Pidä hiiren oikeaa painiketta pohjassa lukitaksesi voiman: palkki pysähtyy, muuttuu kullanväriseksi ja näyttää prosentit - näin odotat myllyn aukkoa lyönti valmiina. Kun päästät irti, lataus jatkuu; lukittu voima säilyy myös lyönnin yli, jolloin seuraava vasen napsautus lyö juuri sillä arvolla.",
             "- Vasen/oikea nuoli tähtää, ylös/alas säätää voimaa, [Välilyönti] lyö.",
             "- [G] näyttää ja piilottaa tähtäysviivan - sen voi sammuttaa pysyvästi asetusruudussa.",
             "- [Z] kytkee autotähtäyksen: päällä (oletus) maila kääntyy ennen jokaista lyöntiä itsestään reikää kohti, pois viimeksi valittu suunta jää voimaan - tähtäät kokonaan itse. Uuden reiän avauspaikalla maila osoittaa neutraalisti ylös.",
@@ -2062,7 +2065,7 @@
           "body": [
             "- Hiekka jarruttaa voimakkaasti, rampit kiihdyttävät nuolien suuntaan.",
             "- Vesi maksaa rangaistuslyönnin; pallo palaa viimeiseen turvalliseen kohtaan.",
-            "- Kumipuskurit antavat vauhtia takaisin; tuulimyllyt ja vaeltavat lohkot vaativat ajoitusta."
+            "- Kumipuskurit antavat vauhtia takaisin; tuulimyllyt ja vaeltavat lohkot vaativat ajoitusta. Oikean painikkeen voimalukko pitää lyönnin ladattuna, kunnes aukko osuu kohdalleen."
           ]
         },
         {

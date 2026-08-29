@@ -412,6 +412,7 @@
   "golf.lbl_guide": "Linha de mira",
   "golf.lbl_pickup": "Levantar bola",
   "golf.lbl_tour": "Percurso Tour",
+  "golf.lock": "Força bloqueada: {n}%",
   "golf.max_strokes": "Número máximo de tacadas atingido",
   "golf.new_round": "Enter = nova volta · S = ajustes",
   "golf.next": "Clique / Enter = buraco seguinte",

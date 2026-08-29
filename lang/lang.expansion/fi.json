@@ -412,6 +412,7 @@
   "golf.lbl_guide": "Tähtäysviiva",
   "golf.lbl_pickup": "Pallon nosto",
   "golf.lbl_tour": "Tour-rata",
+  "golf.lock": "Voima lukittu: {n}%",
   "golf.max_strokes": "Lyöntien enimmäismäärä täynnä",
   "golf.new_round": "Enter = uusi kierros · S = asetukset",
   "golf.next": "Klikkaus / Enter = seuraava reikä",

@@ -412,6 +412,7 @@
   "golf.lbl_guide": "Ziellinie",
   "golf.lbl_pickup": "Aufnehmen",
   "golf.lbl_tour": "Tour-Kurs",
+  "golf.lock": "Kraft gesperrt: {n}%",
   "golf.max_strokes": "Höchstzahl an Schlägen erreicht",
   "golf.new_round": "Enter = neue Runde · S = Setup",
   "golf.next": "Klick / Enter = nächste Bahn",

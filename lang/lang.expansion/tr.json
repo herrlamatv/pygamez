@@ -412,6 +412,7 @@
   "golf.lbl_guide": "Nişan çizgisi",
   "golf.lbl_pickup": "Topu alma",
   "golf.lbl_tour": "Tour parkuru",
+  "golf.lock": "Güç kilitli: %{n}",
   "golf.max_strokes": "Azami vuruş sayısına ulaşıldı",
   "golf.new_round": "Enter = yeni tur · S = ayarlar",
   "golf.next": "Tıkla / Enter = sonraki delik",

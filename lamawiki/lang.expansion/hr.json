@@ -2032,7 +2032,9 @@
         "rampa",
         "teren",
         "udarac",
-        "tour"
+        "tour",
+        "zaključavanje",
+        "snaga"
       ],
       "sections": [
         {
@@ -2050,6 +2052,7 @@
           "h": "Upravljanje",
           "body": [
             "- Pomicanjem miša ciljaš. Držanje lijeve tipke puni snagu, otpuštanje udara.",
+            "- Držanje desne tipke miša zaključava snagu: traka se zaustavi, postane zlatna i pokazuje postotak - tako s napunjenim udarcem čekaš prolaz kroz mlin. Otpuštanje puni dalje; zaključana snaga preživi i udarac, pa sljedeći lijevi klik udara točno tom vrijednošću.",
             "- Strelice lijevo/desno ciljaju, gore/dolje namještaju snagu, [Razmaknica] udara.",
             "- [G] uključuje i isključuje liniju ciljanja - trajno je možeš isključiti u postavkama.",
             "- [Z] prebacuje auto-ciljanje: uključeno (zadano) se palica prije svakog udarca sama okrene prema rupi, isključeno ostaje zadnji odabrani smjer - tada ciljaš potpuno sam. Na početku nove staze palica pokazuje neutralno prema gore.",
@@ -2062,7 +2065,7 @@
           "body": [
             "- Pijesak jako koči, rampe ubrzavaju u smjeru strelica.",
             "- Voda košta kazneni udarac; loptica se vraća na posljednje sigurno mjesto.",
-            "- Gumeni odbojnici vraćaju brzinu; vjetrenjače i lutajući blokovi traže osjećaj za trenutak."
+            "- Gumeni odbojnici vraćaju brzinu; vjetrenjače i lutajući blokovi traže osjećaj za trenutak. Zaključavanje snage na desnoj tipki drži udarac napunjen sve dok prolaz ne bude slobodan."
           ]
         },
         {

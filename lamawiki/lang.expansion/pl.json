@@ -2032,7 +2032,9 @@
         "rampa",
         "pole",
         "putt",
-        "tour"
+        "tour",
+        "blokada",
+        "siła"
       ],
       "sections": [
         {
@@ -2050,6 +2052,7 @@
           "h": "Sterowanie",
           "body": [
             "- Ruch myszy celuje. Przytrzymanie lewego przycisku ładuje siłę, puszczenie uderza.",
+            "- Przytrzymanie prawego przycisku myszy blokuje siłę: pasek staje w miejscu, złocieje i pokazuje procenty - z naładowanym uderzeniem czekasz na przerwę w wiatraku. Puszczenie ładuje dalej; zablokowana siła przetrwa nawet uderzenie, więc kolejne lewe kliknięcie uderza dokładnie tą wartością.",
             "- Strzałki lewo/prawo celują, góra/dół ustawiają siłę, [Spacja] uderza.",
             "- [G] włącza i wyłącza linię celowania - można ją też wyłączyć na stałe w ustawieniach.",
             "- [Z] przełącza auto-celowanie: włączone (domyślnie) kij przed każdym uderzeniem sam obraca się w stronę dołka, wyłączone zostawia ostatnio wybrany kierunek - wtedy celujesz całkiem sam. Na tee nowego dołka kij wskazuje neutralnie w górę.",
@@ -2062,7 +2065,7 @@
           "body": [
             "- Piasek mocno hamuje, rampy przyspieszają zgodnie ze strzałkami.",
             "- Woda kosztuje uderzenie karne; piłka wraca na ostatnie bezpieczne miejsce.",
-            "- Gumowe odbijacze oddają prędkość; wiatraki i ruchome bloki wymagają wyczucia czasu."
+            "- Gumowe odbijacze oddają prędkość; wiatraki i ruchome bloki wymagają wyczucia czasu. Blokada siły na prawym przycisku trzyma uderzenie naładowane, aż przerwa będzie w sam raz."
           ]
         },
         {

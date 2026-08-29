@@ -2033,7 +2033,9 @@
         "ramp",
         "course",
         "putting",
-        "tour"
+        "tour",
+        "lock",
+        "power"
       ],
       "sections": [
         {
@@ -2051,6 +2053,7 @@
           "h": "Controls",
           "body": [
             "- Move the mouse to aim. Hold the left mouse button to load power, release to putt.",
+            "- Hold the right mouse button to lock the power: the bar freezes, turns gold and shows the percentage - so you can wait for the gap in the windmill with the shot fully charged. Releasing charges on; a locked power even survives the stroke, so the next left click putts with exactly that value.",
             "- Left/right arrows aim, up/down set the power, [Space] putts.",
             "- [G] toggles the aim line - you can also switch it off for good in the setup screen.",
             "- [Z] toggles the auto-aim: on (default) the putter turns towards the cup before every stroke, off it keeps the direction you last picked - then you aim entirely yourself. On the tee of a new hole it points neutrally up the course.",
@@ -2063,7 +2066,7 @@
           "body": [
             "- Sand slows the ball down hard, ramps accelerate in the direction of the arrows.",
             "- Water costs a penalty stroke; the ball returns to its last safe spot.",
-            "- Rubber bumpers give speed back; windmills and moving blocks are all about timing."
+            "- Rubber bumpers give speed back; windmills and moving blocks are all about timing. The power lock on the right mouse button keeps the shot charged until the gap lines up."
           ]
         },
         {

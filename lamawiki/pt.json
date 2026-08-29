@@ -2029,7 +2029,9 @@
         "rampa",
         "percurso",
         "putt",
-        "tour"
+        "tour",
+        "bloqueio",
+        "força"
       ],
       "sections": [
         {
@@ -2047,6 +2049,7 @@
           "h": "Comandos",
           "body": [
             "- Move o rato para apontar. Mantém o botão esquerdo para carregar força e larga para bater.",
+            "- Mantém o botão direito para bloquear a força: a barra fica parada, dourada e mostra a percentagem - assim esperas pela abertura do moinho com a tacada já carregada. Ao largares volta a carregar; a força bloqueada sobrevive à tacada e o clique esquerdo seguinte bate exatamente com esse valor.",
             "- As setas esquerda/direita apontam, cima/baixo regulam a força, [Espaço] bate.",
             "- [G] liga e desliga a linha de mira - também podes desativá-la nos ajustes.",
             "- [Z] alterna a mira automática: ligada (por omissão) o taco vira-se para o buraco antes de cada tacada; desligada mantém-se a última direção escolhida e apontas tu. Na saída de um buraco novo o taco aponta neutro para cima.",
@@ -2059,7 +2062,7 @@
           "body": [
             "- A areia trava muito, as rampas aceleram no sentido das setas.",
             "- A água custa uma tacada de penalização; a bola volta à última posição segura.",
-            "- Os para-choques de borracha devolvem velocidade; moinhos e blocos móveis exigem sentido de tempo."
+            "- Os para-choques de borracha devolvem velocidade; moinhos e blocos móveis exigem sentido de tempo. O bloqueio de força no botão direito mantém a tacada carregada até a abertura aparecer."
           ]
         },
         {

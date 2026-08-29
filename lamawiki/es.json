@@ -2031,7 +2031,9 @@
         "rampa",
         "recorrido",
         "putt",
-        "tour"
+        "tour",
+        "bloqueo",
+        "fuerza"
       ],
       "sections": [
         {
@@ -2049,6 +2051,7 @@
           "h": "Controles",
           "body": [
             "- Mueve el ratón para apuntar. Mantén el botón izquierdo para cargar fuerza y suéltalo para golpear.",
+            "- Mantén el botón derecho para bloquear la fuerza: la barra se detiene, se vuelve dorada y muestra el porcentaje, así esperas el hueco del molino con el golpe ya cargado. Al soltar sigue cargando; la fuerza bloqueada sobrevive incluso al golpe y el siguiente clic izquierdo golpea justo con ese valor.",
             "- Las flechas izquierda/derecha apuntan, arriba/abajo ajustan la fuerza, [Espacio] golpea.",
             "- [G] muestra u oculta la línea de tiro; también puedes apagarla en la pantalla de ajustes.",
             "- [Z] cambia la puntería automática: activada (por defecto) el palo apunta al hoyo antes de cada golpe; desactivada se mantiene la última dirección elegida y apuntas tú por completo. En la salida de un hoyo nuevo el palo apunta neutro hacia arriba.",
@@ -2061,7 +2064,7 @@
           "body": [
             "- La arena frena mucho, las rampas aceleran en la dirección de las flechas.",
             "- El agua cuesta un golpe de penalización; la bola vuelve a su última posición segura.",
-            "- Los parachoques de goma devuelven velocidad; molinos y bloques móviles son cuestión de ritmo."
+            "- Los parachoques de goma devuelven velocidad; molinos y bloques móviles son cuestión de ritmo. El bloqueo de fuerza con el botón derecho mantiene el golpe cargado hasta que llega el hueco."
           ]
         },
         {

@@ -2032,7 +2032,9 @@
         "rampa",
         "hřiště",
         "patování",
-        "tour"
+        "tour",
+        "zámek",
+        "síla"
       ],
       "sections": [
         {
@@ -2050,6 +2052,7 @@
           "h": "Ovládání",
           "body": [
             "- Pohybem myši miř. Držení levého tlačítka nabíjí sílu, puštění odpálí.",
+            "- Držení pravého tlačítka myši uzamkne sílu: ukazatel se zastaví, zezlátne a ukazuje procenta - s nabitým úderem tak počkáš na mezeru ve mlýně. Puštění nabíjí dál; uzamčená síla přežije i úder, další kliknutí levým tlačítkem pak odpálí přesně touto hodnotou.",
             "- Šipky vlevo/vpravo míří, nahoru/dolů nastavují sílu, [Mezerník] odpálí.",
             "- [G] zapíná a vypíná zaměřovací čáru - trvale ji lze vypnout v nastavení.",
             "- [Z] přepíná automíření: zapnuté (výchozí) se hůl před každým úderem sama natočí k jamce, vypnuté zůstane naposledy zvolený směr - pak míříš úplně sám. Na odpališti nové dráhy míří hůl neutrálně nahoru.",
@@ -2062,7 +2065,7 @@
           "body": [
             "- Písek silně brzdí, rampy zrychlují ve směru šipek.",
             "- Voda stojí trestný úder; míček se vrací na poslední bezpečné místo.",
-            "- Gumové odrazníky vracejí rychlost; mlýny a bloudící bloky vyžadují načasování."
+            "- Gumové odrazníky vracejí rychlost; mlýny a bloudící bloky vyžadují načasování. Zámek síly na pravém tlačítku podrží úder nabitý, dokud mezera nesedne."
           ]
         },
         {
