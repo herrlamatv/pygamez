@@ -127,13 +127,59 @@
             "- settings.json: ses, ses seviyesi, tuş atamaları, çözünürlük, FPS ve oyun seçenekleri (ör. Snake modu, Sudoku ayarları).",
             "- mem.json: en yüksek skorlar, seçilen dil ve Sudoku seviye ilerlemesi.",
             "- mem-ngb.json: Snake'in görsel modları (kafa rengi, ızgara, afiş).",
-            "Her iki dosya da doğrudan oyun klasöründe bulunur ve sıfırlamak için basitçe silinebilir."
+            "- replay.json: minigolf ve bowlingin kaydedilmiş tekrarları.",
+            "Bu dosyalar doğrudan oyun klasöründe durur ve sıfırlamak için silmen yeterlidir."
           ]
         },
         {
           "h": "İpucu",
           "body": [
             "Puanlar yalnızca Menüye dön ile çıktığında veya tur normal şekilde bittiğinde kaydedilir - oyunun ortasında pencere sertçe kapatıldığında değil."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Tekrarlar",
+      "keywords": [
+        "tekrar",
+        "kayit",
+        "minigolf",
+        "bowling",
+        "arsiv",
+        "izle"
+      ],
+      "sections": [
+        {
+          "h": "Tekrar nedir?",
+          "body": [
+            "Minigolf ve bowling her turu kaydeder: topun ve lobutların gerçek yolu kare kare saklanır. Bu yüzden tekrar tıpkı oynadığın tur gibi görünür - parkur, HUD ve skor kartıyla birlikte.",
+            "Yalnızca oynanan tur kaydedilir. Yeniden başlarsan kayıt da baştan başlar."
+          ]
+        },
+        {
+          "h": "Kaydetme",
+          "body": [
+            "Tur iyi geçtiyse tur sonunda [P] tuşuna bas - tekrar hemen başlar. [S] onu arşive koyar, [Esc] tur sonu ekranına döner.",
+            "Kaydedilmeyen çekimler bir sonraki turda kaybolur; arşive oyun başına 20 tekrar sığar."
+          ]
+        },
+        {
+          "h": "Arşiv ve oynatma",
+          "body": [
+            "Kenar çubuğundaki Tekrarlar düğmesi arşivi açar: her oyun için bir sekme, her kaydın sonucu, tarihi ve süresi.",
+            "- [Enter] oynatır, [Del] siler (iki kez bas), [Tab] oyunu değiştirir.",
+            "- Oynatma sırasında [Boşluk] duraklatır, Sol/Sağ bir sonraki vuruşa veya atışa atlar, Yukarı/Aşağı hızı değiştirir (0,5x - 4x).",
+            "İlerleme çubuğuna tıklamak istediğin yere atlar."
+          ]
+        },
+        {
+          "h": "Kapatma",
+          "body": [
+            "İlk açılışta ve seçeneklerde Kayıt altında Tekrarları kaydet kapatılabilir - o zaman hiçbir şey kaydedilmez.",
+            "Kayıtlar oyun klasöründeki replay.json dosyasında, oyunlara göre sıralı durur. Bu dosyayı istediğin zaman silebilirsin."
           ]
         }
       ]

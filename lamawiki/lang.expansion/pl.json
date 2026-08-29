@@ -127,13 +127,59 @@
             "- settings.json: dźwięk, głośność, przypisania klawiszy, rozdzielczość, FPS i opcje gier (np. tryb Snake, ustawienia Sudoku).",
             "- mem.json: najlepsze wyniki, wybrany język oraz postęp poziomów Sudoku.",
             "- mem-ngb.json: wizualne mody Snake (kolor głowy, siatka, baner).",
-            "Pliki te znajdują się bezpośrednio w folderze gry i można je po prostu usunąć, aby zresetować."
+            "- replay.json: zapisane powtórki z minigolfa i bowlingu.",
+            "Te pliki leżą bezpośrednio w folderze gry i wystarczy je skasować, aby wszystko zresetować."
           ]
         },
         {
           "h": "Wskazówka",
           "body": [
             "Punkty są zapisywane tylko wtedy, gdy wyjdziesz przez Powrót do menu lub gdy runda zakończy się normalnie - nie po gwałtownym zamknięciu okna w trakcie gry."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Powtórki",
+      "keywords": [
+        "powtorka",
+        "nagranie",
+        "minigolf",
+        "bowling",
+        "archiwum",
+        "zapis"
+      ],
+      "sections": [
+        {
+          "h": "Czym jest powtórka?",
+          "body": [
+            "Minigolf i bowling nagrywają każdą rundę: zapisywany jest rzeczywisty tor piłki i kręgli, klatka po klatce. Dlatego powtórka wygląda dokładnie tak jak twoja runda - z torem, HUD-em i kartą wyników.",
+            "Nagrywana jest tylko bieżąca runda. Gdy zaczniesz od nowa, nagranie też rusza od początku."
+          ]
+        },
+        {
+          "h": "Zapisywanie",
+          "body": [
+            "Jeśli runda była udana, naciśnij na końcu [P] - powtórka od razu ruszy. Klawisz [S] zapisuje ją w archiwum, [Esc] wraca do ekranu końcowego.",
+            "Niezapisane nagrania znikają wraz z kolejną rundą; w archiwum mieści się 20 powtórek na grę."
+          ]
+        },
+        {
+          "h": "Archiwum i odtwarzanie",
+          "body": [
+            "Przycisk Powtórki na pasku bocznym otwiera archiwum: jedna zakładka na grę, a w niej wynik, data i czas trwania każdego nagrania.",
+            "- [Enter] odtwarza, [Del] usuwa (naciśnij dwa razy), [Tab] zmienia grę.",
+            "- Podczas odtwarzania [Spacja] pauzuje, Lewo/Prawo przeskakuje do kolejnego uderzenia lub rzutu, Góra/Dół zmienia tempo (0,5x do 4x).",
+            "Kliknięcie na pasku postępu przenosi w dowolne miejsce."
+          ]
+        },
+        {
+          "h": "Wyłączanie",
+          "body": [
+            "Przy pierwszym uruchomieniu i w opcjach w sekcji Nagrywanie można wyłączyć Nagrywaj powtórki - wtedy nic nie jest zapisywane.",
+            "Nagrania leżą w pliku replay.json w folderze gry, posortowane według gier. Możesz go skasować w dowolnej chwili."
           ]
         }
       ]

@@ -127,13 +127,59 @@
             "- settings.json: zvuk, hlasitost, přiřazení kláves, rozlišení, FPS a možnosti her (např. režim Snake, nastavení Sudoku).",
             "- mem.json: nejlepší skóre, zvolený jazyk a postup úrovněmi Sudoku.",
             "- mem-ngb.json: vizuální úpravy Snake (barva hlavy, mřížka, banner).",
-            "Oba soubory jsou přímo ve složce hry a pro reset je stačí prostě smazat."
+            "- replay.json: uložené záznamy z minigolfu a bowlingu.",
+            "Tyto soubory leží přímo ve složce hry a pro vynulování je stačí smazat."
           ]
         },
         {
           "h": "Tip",
           "body": [
             "Body se uloží jen tehdy, když odejdeš přes Zpět do menu nebo když kolo normálně skončí - ne když natvrdo zavřeš okno uprostřed hry."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Záznamy",
+      "keywords": [
+        "zaznam",
+        "nahravka",
+        "minigolf",
+        "bowling",
+        "archiv",
+        "ulozit"
+      ],
+      "sections": [
+        {
+          "h": "Co je záznam?",
+          "body": [
+            "Minigolf a bowling nahrávají každé kolo: ukládá se skutečná dráha míčku a kuželek, snímek po snímku. Záznam proto vypadá přesně jako tvoje kolo - i s dráhou, HUD a výsledkovou kartou.",
+            "Nahrává se vždy jen probíhající kolo. Když začneš znovu, začíná i nahrávka od začátku."
+          ]
+        },
+        {
+          "h": "Ukládání",
+          "body": [
+            "Pokud se kolo povedlo, stiskni na konci [P] - záznam se hned rozjede. Klávesa [S] ho uloží do archivu, [Esc] se vrátí na závěrečnou obrazovku.",
+            "Neuložené nahrávky zmizí s dalším kolem; do archivu se vejde 20 záznamů na hru."
+          ]
+        },
+        {
+          "h": "Archiv a přehrávání",
+          "body": [
+            "Tlačítko Záznamy v postranním panelu otevře archiv: jedna karta na hru, u každé nahrávky výsledek, datum a délka.",
+            "- [Enter] přehraje, [Del] smaže (stiskni dvakrát), [Tab] přepne hru.",
+            "- Při přehrávání [Mezerník] pauzuje, Vlevo/Vpravo skočí na další úder nebo hod, Nahoru/Dolů mění rychlost (0,5x až 4x).",
+            "Kliknutí do ukazatele průběhu skočí na libovolné místo."
+          ]
+        },
+        {
+          "h": "Vypnutí",
+          "body": [
+            "Při prvním spuštění a v možnostech pod položkou Nahrávání lze Nahrávat záznamy vypnout - pak se nenahrává nic.",
+            "Nahrávky leží v souboru replay.json ve složce hry, seřazené podle her. Soubor můžeš kdykoli smazat."
           ]
         }
       ]

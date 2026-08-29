@@ -158,6 +158,9 @@ DEFAULTS = {
     "pinball": {"table": "classic", "balls": 3},
     # Bowling: Schwierigkeit (easy/normal/pro) und Zielhilfe an/aus
     "bowling": {"difficulty": "normal", "guide": True},
+    # Replays: Aufzeichnung von Minigolf- und Bowling-Runden an/aus (die
+    # Aufnahmen selbst liegen in replay.json, siehe replay.py)
+    "replay": {"enabled": True},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -361,6 +364,9 @@ def _merge_defaults(data):
                 out["bowling"]["difficulty"] = bow["difficulty"]
             if isinstance(bow.get("guide"), bool):
                 out["bowling"]["guide"] = bow["guide"]
+        rpl = data.get("replay")
+        if isinstance(rpl, dict) and isinstance(rpl.get("enabled"), bool):
+            out["replay"]["enabled"] = rpl["enabled"]
         ctrl = data.get("controls")
         if isinstance(ctrl, dict):
             for player in ("p1", "p2"):

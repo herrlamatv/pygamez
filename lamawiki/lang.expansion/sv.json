@@ -127,13 +127,59 @@
             "- settings.json: ljud, volym, tangentbindningar, upplösning, FPS och spelalternativ (t.ex. Snake-läge, Sudoku-inställningar).",
             "- mem.json: rekord, det valda språket och Sudoku-nivåframstegen.",
             "- mem-ngb.json: Snakes visuella mods (huvudfärg, rutnät, banner).",
-            "Filerna ligger direkt i spelmappen och kan helt enkelt raderas för att återställa allt."
+            "- replay.json: de sparade replayerna från minigolf och bowling.",
+            "De här filerna ligger direkt i spelmappen och kan bara raderas för att nollställa."
           ]
         },
         {
           "h": "Tips",
           "body": [
             "Poäng sparas bara när du lämnar via Tillbaka till menyn eller när omgången slutar normalt - inte när fönstret stängs hårt mitt i spelet."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Replays",
+      "keywords": [
+        "replay",
+        "inspelning",
+        "minigolf",
+        "bowling",
+        "arkiv",
+        "spara"
+      ],
+      "sections": [
+        {
+          "h": "Vad är en replay?",
+          "body": [
+            "Minigolf och bowling spelar in varje runda: det som sparas är bollens och käglornas faktiska bana, bild för bild. Därför ser repriser ut precis som din runda - med bana, HUD och poängkort.",
+            "Bara den pågående rundan spelas in. Börjar du om startar även inspelningen om."
+          ]
+        },
+        {
+          "h": "Spara",
+          "body": [
+            "Var rundan bra trycker du på [P] i slutet - replayen startar direkt. Med [S] lägger du den i arkivet, med [Esc] kommer du tillbaka till slutskärmen.",
+            "Osparade inspelningar försvinner med nästa runda; arkivet rymmer 20 replays per spel."
+          ]
+        },
+        {
+          "h": "Arkiv och uppspelning",
+          "body": [
+            "Knappen Replays i sidofältet öppnar arkivet: en flik per spel med resultat, datum och speltid för varje inspelning.",
+            "- [Enter] spelar upp, [Del] raderar (tryck två gånger), [Tab] byter spel.",
+            "- Under uppspelning pausar [Mellanslag], Vänster/Höger hoppar till nästa slag eller kast, Upp/Ner ändrar tempot (0,5x till 4x).",
+            "Ett klick på förloppsraden hoppar till valfritt ställe."
+          ]
+        },
+        {
+          "h": "Stänga av",
+          "body": [
+            "Vid första starten och i inställningarna under Inspelning kan du stänga av Spela in replays - då spelas ingenting in.",
+            "Inspelningarna ligger i replay.json i spelmappen, sorterade efter spel. Filen får du radera när du vill."
           ]
         }
       ]

@@ -127,13 +127,59 @@
             "- settings.json: sound, volume, key bindings, resolution, FPS and game options (e.g. Snake mode, Sudoku settings).",
             "- mem.json: high scores, the chosen language and the Sudoku level progress.",
             "- mem-ngb.json: Snake's visual mods (head color, grid, banner).",
-            "Both files live right in the game folder and can simply be deleted to reset."
+            "- replay.json: the saved replays of Minigolf and Bowling.",
+            "These files live right in the game folder and can simply be deleted to reset."
           ]
         },
         {
           "h": "Tip",
           "body": [
             "Points are only saved when you leave via Back to menu or the round ends normally - not when the window is closed hard mid-game."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Replays",
+      "keywords": [
+        "replay",
+        "recording",
+        "minigolf",
+        "bowling",
+        "archive",
+        "watch"
+      ],
+      "sections": [
+        {
+          "h": "What is a replay?",
+          "body": [
+            "Minigolf and Bowling record every round: what is stored is the actual path of ball and pins, frame by frame. The replay therefore looks exactly like your round - with course, HUD and scorecard.",
+            "Only the current round is recorded. Start a new one and the recording starts over as well."
+          ]
+        },
+        {
+          "h": "Saving",
+          "body": [
+            "If the round was a good one, press [P] on the round-end screen - the replay starts right away. [S] puts it into the archive, [Esc] returns to the round-end screen.",
+            "Unsaved recordings are gone with the next round; the archive holds 20 replays per game."
+          ]
+        },
+        {
+          "h": "Archive & playback",
+          "body": [
+            "The Replays button in the sidebar opens the archive: one tab per game, with result, date and running time of every recording.",
+            "- [Enter] plays, [Del] deletes (press twice), [Tab] switches the game.",
+            "- During playback [Space] pauses, Left/Right jumps to the next shot or roll, Up/Down changes the speed (0.5x to 4x).",
+            "A click on the progress bar jumps to any position."
+          ]
+        },
+        {
+          "h": "Switching it off",
+          "body": [
+            "On the first start and in the options under Recording you can turn Record replays off - then nothing is captured at all.",
+            "The recordings live in replay.json in the game folder, sorted by game. You may delete that file at any time."
           ]
         }
       ]

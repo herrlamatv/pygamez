@@ -8,6 +8,54 @@
 
 ## 🇩🇪 Deutsch
 
+### Replays für Minigolf & Bowling – 2026-08-29
+
+#### Neu
+- **Replays**: Minigolf und Bowling zeichnen jede Runde mit. Aufgenommen wird
+  nicht die Eingabe, sondern die **tatsächliche Bahn von Ball und Pins** - Bild
+  für Bild in einem festen 30-Hz-Raster. Die Wiederholung sieht deshalb exakt
+  aus wie die gespielte Runde und bleibt auch dann gültig, wenn sich die Physik
+  später ändert. Gezeichnet wird sie vom Spiel selbst: der Replay-Screen baut
+  eine normale Spielinstanz und fährt sie über `replay_begin` /`replay_seek` /
+  `replay_draw` durch die Aufnahme - samt HUD, Scorekarte und Bahn-Kulisse.
+- **Speichern mit P**: Am Rundenende (Minigolf) bzw. Partie-Ende (Bowling)
+  startet **P** die Wiederholung sofort; **S** legt sie ins Archiv, **Esc**
+  führt zurück zum Rundenende - Weiter/Nochmal funktionieren danach wie
+  gewohnt. Bei Minigolf gibt es dafür zusätzlich den Knopf **Replay** in der
+  Knopfreihe.
+- **Replay-Archiv** über den neuen Sidebar-Knopf **Replays**: ein Reiter je
+  Spiel, je Eintrag Kurs bzw. Schwierigkeit, Ergebnis, Datum und Laufzeit.
+  Enter spielt ab, Entf löscht (zur Sicherheit zweimal drücken), Tab wechselt
+  das Spiel. Platz ist für 20 Aufnahmen je Spiel.
+- **Wiedergabe wie ein Videoplayer**: Leertaste pausiert, Links/Rechts springt
+  zur vorigen/nächsten Sequenz (Schlag bzw. Wurf), Hoch/Runter regelt das Tempo
+  (0,5x / 1x / 2x / 4x), ein Klick in die Fortschrittsleiste springt an eine
+  beliebige Stelle. Jede Sequenz bekommt einen kurzen Vorlauf mit Ziellinie und
+  einen Nachlauf mit dem Ergebnis; Einlochen, Strike und Spare sind zu hören.
+  Die Bedienleiste blendet sich nach drei Sekunden aus.
+- **Abschaltbar**: Der Willkommens-Screen beim ersten Start und die Optionen
+  (Reiter *Allgemein*, Gruppe **Aufnahme**) haben den Schalter **Replays
+  aufzeichnen**. Aus bedeutet: es wird gar nichts mitgeschnitten.
+- **Zwei neue Erfolge**: *Regisseur* (erstes Replay gespeichert) und *Archivar*
+  (fünf Replays im Archiv) - damit sind es 85.
+- **Neue Wiki-Seite „Replays"** in allen 14 Sprachen, dazu `replay.json` auf der
+  Seite *Speichern & Highscores*.
+
+#### Geändert
+- Die Aufnahmen liegen in einer **eigenen Datei `replay.json`** neben `mem.json`
+  (Unterkategorie je Spiel, kompakt geschrieben). Eine Minigolf-Runde kostet je
+  nach Schlagzahl 30-80 KB, eine Bowling-Partie rund 90 KB - Pins stehen nur
+  dann in einem Bild, wenn sie sich bewegt haben.
+- Ein Bahn-Neustart mit **F** wirft die Schläge dieser Bahn auch aus der
+  laufenden Aufnahme, damit Scorekarte und Wiederholung zusammenpassen.
+
+#### Behoben
+- **Bowling stürzte am Ende einer Partie ab**: nach dem letzten Wurf stand der
+  Schritt-Zähler auf 4 und damit außerhalb von `STEPS` - HUD und Reglerzeile
+  liefen beim Zeichnen in einen `IndexError`, der die Game-Loop mitriss. Der
+  Wert wird jetzt gedeckelt, und die Reglerzeile erscheint nur noch im
+  laufenden Spiel.
+
 ### Minigolf: Weiter statt Wiederholung, Bahn-Reset mit F – 2026-08-28
 
 #### Neu
@@ -457,6 +505,51 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Replays for Minigolf & Bowling – 2026-08-29
+
+#### New
+- **Replays**: Minigolf and Bowling record every round. What is captured is not
+  the input but the **actual path of ball and pins** - frame by frame in a fixed
+  30 Hz grid. The replay therefore looks exactly like the round you played and
+  stays valid even if the physics changes later. It is drawn by the game itself:
+  the replay screen builds a normal game instance and steps it through the
+  recording via `replay_begin` / `replay_seek` / `replay_draw` - including HUD,
+  scorecard and the course as scenery.
+- **Save with P**: at the end of a round (Minigolf) or game (Bowling), **P**
+  starts the replay right away; **S** puts it into the archive and **Esc**
+  returns to the round-end screen - Next/Again keep working as before. Minigolf
+  also gets a **Replay** button in its button row.
+- **Replay archive** via the new sidebar button **Replays**: one tab per game,
+  each entry showing course or difficulty, result, date and running time. Enter
+  plays, Del deletes (press twice to be safe), Tab switches the game. There is
+  room for 20 recordings per game.
+- **Playback like a video player**: Space pauses, Left/Right jumps to the
+  previous/next sequence (shot or roll), Up/Down sets the speed (0.5x / 1x / 2x
+  / 4x), and a click on the progress bar jumps anywhere. Every sequence gets a
+  short run-up with the aim line and a run-out with the result; holing out,
+  strikes and spares are audible. The control bar fades out after three seconds.
+- **Can be switched off**: the welcome screen on the first start and the options
+  (tab *General*, group **Recording**) carry the **Record replays** switch. Off
+  means nothing is captured at all.
+- **Two new achievements**: *Director* (first replay saved) and *Archivist*
+  (five replays in the archive) - 85 in total now.
+- **New wiki page "Replays"** in all 14 languages, plus `replay.json` on the
+  *Saving & high scores* page.
+
+#### Changed
+- The recordings live in their **own file `replay.json`** next to `mem.json`
+  (one subsection per game, written compactly). A Minigolf round costs 30-80 KB
+  depending on the stroke count, a Bowling game about 90 KB - pins only appear
+  in a frame when they actually moved.
+- Restarting a hole with **F** now also drops that hole's strokes from the
+  running recording, so scorecard and replay match.
+
+#### Fixed
+- **Bowling crashed at the end of a game**: after the final delivery the step
+  counter sat at 4 and thus outside `STEPS` - the HUD and the slider row ran
+  into an `IndexError` while drawing, taking the game loop down with them. The
+  value is capped now, and the slider row is only drawn during play.
 
 ### Minigolf: continue instead of repeat, hole reset with F – 2026-08-28
 

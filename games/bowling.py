@@ -30,6 +30,7 @@ import random
 
 import pygame
 
+import replay
 import settings as settings_mod
 import store
 import ui
@@ -159,6 +160,13 @@ class BowlingGame(Game):
         if self.diff not in DIFFS:
             self.diff = "normal"
         self.guide = bool(gs.get("guide", True))
+        # Replay: Aufnahme der laufenden Partie (rec) und die fertige
+        # Wiederholung der letzten Partie (replay, siehe replay.py).
+        self.rec = None
+        self.replay = None
+        self.replay_request = None
+        self._rep = None
+        self._rec_pins = {}
 
         self._build_fonts()
         self._layout()
@@ -233,6 +241,7 @@ class BowlingGame(Game):
         self.game_over = False
         self.msg = None
         self.msg_t = 0.0
+        self._rec_new()
         self._rack(full=True)
         self._new_delivery()
 
@@ -327,6 +336,8 @@ class BowlingGame(Game):
                     self.state = SETUP
                     self.game_over = False
                     self.play_sound("click")
+                elif event.key in ("p", "P") and self.replay is not None:
+                    self._open_replay()
             elif event.kind == InputEvent.MOUSEDOWN and event.button == 1:
                 self._restart()
             return
@@ -371,6 +382,13 @@ class BowlingGame(Game):
                      "spin": self.spin + random.uniform(-scatter, scatter) * 0.10,
                      "gutter": False, "roll": 0.0}
         self.roll_t = 0.0
+        if self.rec:
+            pins = [[p.num, round(p.x, 1), round(p.y, 1)] for p in self.pins]
+            self._rec_pins = {i: (pn[1], pn[2], 0) for i, pn in enumerate(pins)}
+            self.rec.scene(player=self.player, frame=self.frame[self.player],
+                           pins=pins, pos=round(self.pos, 3),
+                           aim=round(self.aim, 3), spin=round(self.spin, 3),
+                           power=round(self.power, 3))
         self.play_sound("shoot")
         self.rumble(80)
 
@@ -392,6 +410,8 @@ class BowlingGame(Game):
         self.roll_t += dt
         self._step_ball(dt)
         self._step_pins(dt)
+        if self.rec:
+            self.rec.tick(dt, self._rec_sample)
         if self._roll_done():
             self._finish_roll()
 
@@ -520,6 +540,9 @@ class BowlingGame(Game):
             self.result_key = "bowl.pins" if knocked else "bowl.miss"
             self.play_sound("point" if knocked else "hit")
         self._say(t(self.result_key, n=knocked), 1.8)
+        if self.rec:
+            self.rec.close(self._rec_sample, knocked=knocked,
+                           result=self.result_key)
 
         done, refill = self._frame_state(frame, rolls, strike, spare)
         self.ball = None
@@ -603,6 +626,7 @@ class BowlingGame(Game):
             self.winner = 0 if s0 > s1 else (1 if s1 > s0 else None)
         else:
             self.report_result(final >= 100)
+        self._rec_finish(final)
         self.state = OVER
         self.game_over = True
         self.play_sound("gameover")
@@ -611,6 +635,15 @@ class BowlingGame(Game):
         self._new_game()
         self.state = PLAY
         self.play_sound("click")
+
+    def _step_name(self):
+        """Name des aktiven Reglers.
+
+        Nach dem letzten Wurf einer Partie steht ``step`` auf len(STEPS)
+        (der Wurf ist gefallen, ein neuer Anlauf kommt nicht mehr) - der
+        Wert wird deshalb gedeckelt.
+        """
+        return STEPS[min(self.step, len(STEPS) - 1)]
 
     def _sync_score(self):
         self.score = total_score(self.rolls[0])
@@ -625,6 +658,146 @@ class BowlingGame(Game):
         s = self.kx * inv
         return (self.cx + x * s, self.hor + self.ky * inv - z * s, s)
 
+    # ===================================================== Replay-Aufnahme
+    # Aufgezeichnet wird je Wurf die tatsaechliche Bahn von Ball und Pins
+    # (siehe replay.py). Pins stehen nur dann in einem Sample, wenn sie sich
+    # bewegt haben - die ersten zwei Sekunden eines Wurfs kosten so nur drei
+    # Zahlen je Bild.
+
+    def _rec_new(self):
+        """Startet die Aufzeichnung der Partie (falls Replays an sind)."""
+        self.replay = None
+        self._rec_pins = {}
+        self.rec = replay.recorder("bowling", self.settings, meta={
+            "diff": self.diff, "players": self.players})
+
+    def _rec_sample(self):
+        """Ein Sample: Ball (x, y, Drehung) + die bewegten Pins als Deltas."""
+        b = self.ball
+        if b is None:
+            return None
+        out = [round(b["x"], 1), round(b["y"], 1), round(b["roll"], 2)]
+        for i, p in enumerate(self.pins):
+            state = (round(p.x, 1), round(p.y, 1), 1 if p.down else 0)
+            if self._rec_pins.get(i) != state:
+                self._rec_pins[i] = state
+                out.append(i)
+                out.extend(state)
+        return out
+
+    def _rec_finish(self, final):
+        """Partie-Ende: die Aufnahme als self.replay bereitlegen."""
+        if not self.rec:
+            return
+        self.replay = self.rec.result(
+            title=t("bowl.diff." + self.diff),
+            sub=t("bowl.final", n=final), score=final)
+        self.rec = None
+
+    def _open_replay(self):
+        """Partie-Ende: die Wiederholung ansehen (Taste P).
+
+        Den Screen oeffnet main.py - das Spiel legt nur den Wunsch ab.
+        """
+        if self.replay is not None:
+            self.replay_request = self.replay
+            self.play_sound("click")
+
+    # ===================================================== Replay-Wiedergabe
+    # Der Replay-Screen (replayview.py) baut eine ganz normale Spielinstanz
+    # und faehrt sie ueber diese drei Methoden durch die Aufnahme - so
+    # zeichnet die Wiederholung mit demselben Code wie das Spiel selbst.
+
+    def replay_begin(self, rep):
+        """Schaltet diese Instanz auf reine Wiedergabe um."""
+        self.rec = None
+        self.replay = None
+        self.replay_request = None
+        self._rep = rep
+        self._rep_at = None
+        meta = rep.get("meta") or {}
+        if meta.get("diff") in DIFFS:
+            self.diff = meta["diff"]
+        self.players = max(1, min(2, int(meta.get("players", 1) or 1)))
+        self.multiplayer = self.players > 1
+        self.state = PLAY
+        self.game_over = False
+        self.msg = None
+        self.msg_t = 0.0
+        self.manual = True
+        self.step = len(STEPS) - 1
+        self.replay_seek(0, 0)
+
+    def replay_seek(self, index, frame):
+        """Setzt Pins, Ball und Scorecard auf Szene 'index', Sample 'frame'."""
+        scenes = self._rep.get("scenes", [])
+        if not scenes:
+            return
+        index = max(0, min(len(scenes) - 1, index))
+        sc = scenes[index]
+        frames = sc.get("f") or []
+        n = max(1, len(frames))
+        frame = max(0, min(n - 1, frame))
+        last = (frame >= n - 1)
+
+        # Scorecard: alle abgeschlossenen Wuerfe bis hierher.
+        self.rolls = [[] for _ in range(self.players)]
+        self.frame = [0] * self.players
+        for prev in scenes[:index] + ([sc] if last else []):
+            p = min(self.players - 1, max(0, prev.get("player", 0)))
+            if prev.get("knocked") is not None:
+                self.rolls[p].append(int(prev["knocked"]))
+        for prev in scenes[:index + 1]:
+            p = min(self.players - 1, max(0, prev.get("player", 0)))
+            self.frame[p] = int(prev.get("frame", 0))
+        self.player = min(self.players - 1, max(0, sc.get("player", 0)))
+        self.pos = float(sc.get("pos", 0.0))
+        self.aim = float(sc.get("aim", 0.0))
+        self.spin = float(sc.get("spin", 0.0))
+        self.power = float(sc.get("power", 0.5))
+        self.result_key = sc.get("result")
+
+        # Pins: bei einem Sprung neu aufstellen, sonst die Deltas fortschreiben.
+        if (self._rep_at is None or self._rep_at[0] != index
+                or frame < self._rep_at[1]):
+            self.pins = [_Pin(int(p[0]), float(p[1]), float(p[2]))
+                         for p in sc.get("pins", [])]
+            start = 0
+        else:
+            start = self._rep_at[1] + 1
+        for k in range(start, frame + 1):
+            fr = frames[k]
+            for j in range(3, len(fr) - 3, 4):
+                i = int(fr[j])
+                if 0 <= i < len(self.pins):
+                    p = self.pins[i]
+                    p.x, p.y = float(fr[j + 1]), float(fr[j + 2])
+                    p.down = bool(fr[j + 3])
+        fr = frames[frame]
+        self.ball = {"x": float(fr[0]), "y": float(fr[1]), "vx": 0.0, "vy": 0.0,
+                     "spin": 0.0, "gutter": False, "roll": float(fr[2])}
+        self.msg = (t(sc["result"], n=sc.get("knocked", 0))
+                    if (last and sc.get("result")) else None)
+        self._rep_at = (index, frame)
+
+    def replay_draw(self, aiming=False, banner=False):
+        """Zeichnet den aktuellen Replay-Stand (ohne Menue-Overlay)."""
+        s = self.surface
+        ui.draw_background(s, self.width, self.height)
+        ball = self.ball
+        if aiming:
+            # Vorlauf: Standpunkt, Ziellinie und Kraft wie beim Wurf selbst.
+            self.ball = None
+        self._draw_lane(s)
+        self._draw_pins(s)
+        if self.ball is not None:
+            self._draw_ball(s)
+        else:
+            self._draw_controls(s)
+        self._draw_hud(s)
+        self.ball = ball
+        self._draw_card(s)
+
     # ===================================================== Zeichnen
     def draw(self):
         s = self.surface
@@ -636,7 +809,7 @@ class BowlingGame(Game):
         self._draw_pins(s)
         if self.ball is not None:
             self._draw_ball(s)
-        else:
+        elif self.state == PLAY:
             self._draw_controls(s)
         self._draw_hud(s)
         self._draw_card(s)
@@ -760,7 +933,7 @@ class BowlingGame(Game):
             for i in range(0, len(pts) - 1, 2):
                 pygame.draw.line(s, COL_MARK, pts[i], pts[i + 1], 2)
         # Reglerbalken
-        name = STEPS[self.step]
+        name = self._step_name()
         val = getattr(self, name)
         bw = min(240, self.width - 60)
         bx = self.width // 2 - bw // 2
@@ -794,7 +967,7 @@ class BowlingGame(Game):
             mid = t("common.player1" if self.player == 0 else "common.player2")
             col = self.accent
         else:
-            mid, col = t("bowl.step." + STEPS[self.step]) if self.ball is None \
+            mid, col = t("bowl.step." + self._step_name()) if self.ball is None \
                 else t("bowl.rolling"), ui.TEXT_DIM
         m = self._small.render(mid, True, col)
         s.blit(m, m.get_rect(center=(self.width // 2, cy)))
@@ -885,7 +1058,10 @@ class BowlingGame(Game):
         if best:
             b = self._tiny.render(t("bowl.best", n=best), True, ui.GOLD)
             s.blit(b, b.get_rect(center=(cx, y + 88)))
-        hint = self._tiny.render(t("bowl.new_round"), True, ui.TEXT_DIM)
+        hint_txt = t("bowl.new_round")
+        if self.replay is not None:
+            hint_txt += "  ·  " + t("bowl.replay_hint")
+        hint = self._tiny.render(hint_txt, True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(cx, y + 106)))
 
     def _draw_setup(self, s):

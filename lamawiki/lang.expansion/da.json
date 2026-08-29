@@ -127,13 +127,59 @@
             "- settings.json: lyd, lydstyrke, tastebindinger, opløsning, FPS og spilindstillinger (f.eks. Snake-tilstand, Sudoku-indstillinger).",
             "- mem.json: highscores, det valgte sprog og Sudoku-niveaufremskridtet.",
             "- mem-ngb.json: Snakes visuelle mods (hovedfarve, gitter, banner).",
-            "Filerne ligger direkte i spilmappen og kan simpelthen slettes for at nulstille alt."
+            "- replay.json: de gemte replays fra minigolf og bowling.",
+            "Disse filer ligger direkte i spilmappen og kan bare slettes for at nulstille."
           ]
         },
         {
           "h": "Tip",
           "body": [
             "Point gemmes kun, når du forlader via Tilbage til menu, eller når runden slutter normalt - ikke når vinduet lukkes hårdt midt i spillet."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Replays",
+      "keywords": [
+        "replay",
+        "optagelse",
+        "minigolf",
+        "bowling",
+        "arkiv",
+        "gem"
+      ],
+      "sections": [
+        {
+          "h": "Hvad er et replay?",
+          "body": [
+            "Minigolf og bowling optager hver runde: det er boldens og keglernes faktiske bane, der gemmes - billede for billede. Derfor ser gengivelsen præcis ud som din runde - med bane, HUD og scorekort.",
+            "Kun den igangværende runde optages. Starter du forfra, begynder optagelsen også forfra."
+          ]
+        },
+        {
+          "h": "Gem",
+          "body": [
+            "Var runden god, så tryk på [P] til sidst - replayet starter med det samme. Med [S] lægger du det i arkivet, med [Esc] kommer du tilbage til slutskærmen.",
+            "Ugemte optagelser forsvinder med næste runde; arkivet rummer 20 replays pr. spil."
+          ]
+        },
+        {
+          "h": "Arkiv og afspilning",
+          "body": [
+            "Knappen Replays i sidebjælken åbner arkivet: en fane pr. spil med resultat, dato og spilletid for hver optagelse.",
+            "- [Enter] afspiller, [Del] sletter (tryk to gange), [Tab] skifter spil.",
+            "- Under afspilning sætter [Mellemrum] på pause, Venstre/Højre springer til næste slag eller kast, Op/Ned ændrer tempoet (0,5x til 4x).",
+            "Et klik på statuslinjen springer til et vilkårligt sted."
+          ]
+        },
+        {
+          "h": "Slå fra",
+          "body": [
+            "Ved første start og i indstillingerne under Optagelse kan du slå Optag replays fra - så optages der intet.",
+            "Optagelserne ligger i replay.json i spilmappen, sorteret efter spil. Filen må du slette når som helst."
           ]
         }
       ]

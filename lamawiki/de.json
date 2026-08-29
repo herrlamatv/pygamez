@@ -127,13 +127,59 @@
             "- settings.json: Sound, Lautstärke, Tastenbelegung, Auflösung, FPS und Spiel-Optionen (z.B. Snake-Modus, Sudoku-Einstellungen).",
             "- mem.json: Highscores, die gewählte Sprache und der Sudoku-Level-Fortschritt.",
             "- mem-ngb.json: die Optik-Mods von Snake (Kopffarbe, Raster, Banner).",
-            "Beide Dateien liegen direkt im Spielordner und lassen sich zum Zurücksetzen einfach löschen."
+            "- replay.json: die gespeicherten Wiederholungen von Minigolf und Bowling.",
+            "Diese Dateien liegen direkt im Spielordner und lassen sich zum Zurücksetzen einfach löschen."
           ]
         },
         {
           "h": "Tipp",
           "body": [
             "Punkte werden nur gespeichert, wenn du das Spiel über Zurück zum Menü verlässt oder die Partie regulär endet - nicht beim harten Schließen des Fensters mitten im Spiel."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Replays",
+      "keywords": [
+        "replay",
+        "wiederholung",
+        "aufnahme",
+        "minigolf",
+        "bowling",
+        "archiv"
+      ],
+      "sections": [
+        {
+          "h": "Was ist ein Replay?",
+          "body": [
+            "Minigolf und Bowling zeichnen jede Runde mit: gespeichert wird die tatsächliche Bahn von Ball und Pins, Bild für Bild. Die Wiederholung sieht deshalb genau so aus wie deine Runde - mit Bahn, HUD und Scorekarte.",
+            "Mitgeschnitten wird immer nur die laufende Runde. Startest du neu, beginnt auch die Aufnahme von vorn."
+          ]
+        },
+        {
+          "h": "Speichern",
+          "body": [
+            "War die Runde gut, drückst du am Rundenende [P] - die Wiederholung läuft sofort los. Mit [S] legst du sie ins Archiv, mit [Esc] geht es zurück zum Rundenende.",
+            "Ungespeicherte Aufnahmen verschwinden mit der nächsten Runde; ins Archiv passen 20 Replays je Spiel."
+          ]
+        },
+        {
+          "h": "Archiv & Wiedergabe",
+          "body": [
+            "Der Knopf Replays in der Sidebar öffnet das Archiv: ein Reiter je Spiel, dazu Ergebnis, Datum und Laufzeit jeder Aufnahme.",
+            "- [Enter] spielt ab, [Entf] löscht (zweimal drücken), [Tab] wechselt das Spiel.",
+            "- In der Wiedergabe pausiert die [Leertaste], Links/Rechts springt zum nächsten Schlag bzw. Wurf, Hoch/Runter ändert das Tempo (0,5x bis 4x).",
+            "Ein Klick in die Fortschrittsleiste springt an eine beliebige Stelle."
+          ]
+        },
+        {
+          "h": "Aus- und Einschalten",
+          "body": [
+            "Beim ersten Start und in den Optionen unter Aufnahme lässt sich Replays aufzeichnen abschalten - dann wird gar nichts mitgeschnitten.",
+            "Die Aufnahmen liegen in replay.json im Spielordner, nach Spiel sortiert. Die Datei darfst du jederzeit löschen."
           ]
         }
       ]

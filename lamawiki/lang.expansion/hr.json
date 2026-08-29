@@ -127,13 +127,59 @@
             "- settings.json: zvuk, glasnoća, raspored tipki, rezolucija, FPS i opcije igara (npr. način Snakea, postavke Sudokua).",
             "- mem.json: rekordi, odabrani jezik i napredak razina Sudokua.",
             "- mem-ngb.json: vizualne modifikacije Snakea (boja glave, mreža, banner).",
-            "Obje datoteke nalaze se izravno u mapi igre i mogu se jednostavno izbrisati za vraćanje na početno."
+            "- replay.json: spremljene snimke minigolfa i kuglanja.",
+            "Te se datoteke nalaze izravno u mapi igre i za poništavanje ih je dovoljno obrisati."
           ]
         },
         {
           "h": "Savjet",
           "body": [
             "Bodovi se spremaju samo kad izađeš preko Natrag na izbornik ili kad runda normalno završi - ne kada se prozor naglo zatvori usred igre."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Snimke",
+      "keywords": [
+        "snimka",
+        "snimanje",
+        "minigolf",
+        "kuglanje",
+        "arhiva",
+        "spremi"
+      ],
+      "sections": [
+        {
+          "h": "Što je snimka?",
+          "body": [
+            "Minigolf i kuglanje snimaju svaku rundu: sprema se stvarna putanja loptice i čunjeva, sličicu po sličicu. Zato reprodukcija izgleda točno kao tvoja runda - sa stazom, HUD-om i bodovnom karticom.",
+            "Snima se samo runda koja je u tijeku. Kad kreneš iznova, i snimka počinje ispočetka."
+          ]
+        },
+        {
+          "h": "Spremanje",
+          "body": [
+            "Ako je runda bila dobra, na kraju pritisni [P] - snimka odmah kreće. Tipkom [S] je spremaš u arhivu, s [Esc] se vraćaš na završni zaslon.",
+            "Nespremljene snimke nestaju sa sljedećom rundom; u arhivu stane 20 snimaka po igri."
+          ]
+        },
+        {
+          "h": "Arhiva i reprodukcija",
+          "body": [
+            "Gumb Snimke u bočnoj traci otvara arhivu: jedna kartica po igri, uz rezultat, datum i trajanje svake snimke.",
+            "- [Enter] pokreće, [Del] briše (pritisni dvaput), [Tab] mijenja igru.",
+            "- Tijekom reprodukcije [Razmaknica] pauzira, Lijevo/Desno skače na sljedeći udarac ili bacanje, Gore/Dolje mijenja brzinu (0,5x do 4x).",
+            "Klik na traku napretka skače na bilo koje mjesto."
+          ]
+        },
+        {
+          "h": "Isključivanje",
+          "body": [
+            "Pri prvom pokretanju i u opcijama pod Snimanje možeš isključiti Snimaj snimke - tada se ništa ne snima.",
+            "Snimke se nalaze u datoteci replay.json u mapi igre, razvrstane po igrama. Datoteku smiješ obrisati kad god želiš."
           ]
         }
       ]

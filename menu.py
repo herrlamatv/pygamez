@@ -18,6 +18,7 @@ import pygame
 
 import audio
 import i18n
+import replay
 import settings as settings_mod
 import ui
 from game_base import Game, InputEvent
@@ -287,6 +288,16 @@ class OptionsScreen(_Screen):
                 grp.append(add(kind, pygame.Rect(self._left_x, y, col_w, 30), **kw))
                 y += 38
             panel_for(grp, t("options.audio"))
+            # Replay-Aufzeichnung (eigene kleine Gruppe unter dem Ton-Block).
+            y += 18 if compact else 30
+            # Bei schmaler Spalte die Kurzform ("Replays") nehmen, sonst
+            # ueberlappt die Beschriftung den AN/AUS-Wert.
+            lbl = t("options.replays")
+            if self.font.size(lbl)[0] > col_w - 76:
+                lbl = t("app.replays")
+            grp = [add("toggle", pygame.Rect(self._left_x, y, col_w, 30),
+                       key="enabled", sect="replay", default=True, label=lbl)]
+            panel_for(grp, None if compact else t("options.recording"))
 
             ry = 116
             grp = []
@@ -458,7 +469,7 @@ class OptionsScreen(_Screen):
                 self.sel = idxs[0]
             self.play_sound("move")
         elif it["kind"] == "toggle":
-            self.settings[it["key"]] = not self.settings.get(it["key"], False)
+            self._toggle_set(it, not self._toggle_get(it))
             if it["key"] == "auto_resolution":
                 # Sofort anwenden (an Fenster anpassen bzw. feste Auflösung zurück).
                 self.app.set_auto_resolution(self.settings["auto_resolution"])
@@ -515,6 +526,22 @@ class OptionsScreen(_Screen):
             self.play_sound("select")
         else:
             self._adjust(it, +1)
+
+    def _toggle_get(self, it):
+        """Wert eines Umschalters (optional aus einem Unterabschnitt)."""
+        sect = it.get("sect")
+        data = self.settings.get(sect) if sect else self.settings
+        if not isinstance(data, dict):
+            data = {}
+        return bool(data.get(it["key"], it.get("default", False)))
+
+    def _toggle_set(self, it, value):
+        """Setzt einen Umschalter (auch in einem Unterabschnitt)."""
+        sect = it.get("sect")
+        if sect:
+            self.settings.setdefault(sect, {})[it["key"]] = bool(value)
+        else:
+            self.settings[it["key"]] = bool(value)
 
     def _save_and_beep(self):
         settings_mod.save_settings(self.settings)
@@ -625,7 +652,7 @@ class OptionsScreen(_Screen):
         kind = it["kind"]
 
         if kind == "toggle":
-            an = self.settings.get(it["key"], False)
+            an = self._toggle_get(it)
             wert = t("common.on") if an else t("common.off")
             self._draw_arrow_value(it, farbe, wert, ui.GREEN if an else ui.TEXT_DIM)
 
@@ -895,7 +922,7 @@ class WelcomeScreen(_Screen):
     # Englisch links, Deutsch mittig (= Standard), Französisch rechts.
     PRIMARY_ORDER = ("en", "de", "fr")
     # Fokussierbare Reihen von oben nach unten (Auf/Ab bewegt sich hier durch).
-    ROWS = ("auto", "resolution", "sound", "lang", "start")
+    ROWS = ("auto", "resolution", "sound", "replay", "lang", "start")
 
     def __init__(self, surface, width, height, app, on_done):
         self.on_done = on_done
@@ -942,8 +969,10 @@ class WelcomeScreen(_Screen):
         self.rect_auto = pygame.Rect(self.ctrl_x, head1_y + 24, ctrl_w, 26)
         self.rect_res = pygame.Rect(self.ctrl_x, self.rect_auto.y + gap, ctrl_w, 26)
         self.rect_sound = pygame.Rect(self.ctrl_x, self.rect_res.y + gap, ctrl_w, 26)
+        self.rect_replay = pygame.Rect(self.ctrl_x, self.rect_sound.y + gap,
+                                       ctrl_w, 26)
         self.panel1 = pygame.Rect(px, head1_y - 6, self.panel_w,
-                                  (self.rect_sound.bottom + 12) - (head1_y - 6))
+                                  (self.rect_replay.bottom + 12) - (head1_y - 6))
 
         # Sprach-Überschrift nur bei genug Höhe (spart Platz auf 360px-Screens).
         self.show_lang_head = not compact
@@ -1052,6 +1081,8 @@ class WelcomeScreen(_Screen):
             self._set_auto(d > 0)
         elif kind == "sound":
             self._set_sound(d > 0)
+        elif kind == "replay":
+            self._set_replay(d > 0)
         elif kind == "resolution":
             self._change_res(d)
         elif kind == "lang":
@@ -1064,6 +1095,8 @@ class WelcomeScreen(_Screen):
             self._set_auto(not self.settings.get("auto_resolution", False))
         elif kind == "sound":
             self._set_sound(not self.settings.get("sound", False))
+        elif kind == "replay":
+            self._set_replay(not replay.is_enabled(self.settings))
         elif kind == "resolution":
             self._change_res(+1)
         elif kind == "lang":
@@ -1079,6 +1112,8 @@ class WelcomeScreen(_Screen):
             self.row = self.ROWS.index("resolution")
         elif self.rect_sound.collidepoint(pos):
             self.row = self.ROWS.index("sound")
+        elif self.rect_replay.collidepoint(pos):
+            self.row = self.ROWS.index("replay")
         elif self.rect_start.collidepoint(pos):
             self.row = self.ROWS.index("start")
         else:
@@ -1096,6 +1131,8 @@ class WelcomeScreen(_Screen):
             self._set_auto(not self.settings.get("auto_resolution", False))
         elif self.rect_sound.collidepoint(pos):
             self._set_sound(not self.settings.get("sound", False))
+        elif self.rect_replay.collidepoint(pos):
+            self._set_replay(not replay.is_enabled(self.settings))
         elif self.rect_res.collidepoint(pos):
             dec, inc = getattr(self, "_res_dec", None), getattr(self, "_res_inc", None)
             if dec and dec.collidepoint(pos):
@@ -1135,6 +1172,15 @@ class WelcomeScreen(_Screen):
         self.settings["sound"] = on
         self._save()
         self.play_sound("select")          # nur hörbar, wenn Sound nun an ist
+
+    def _set_replay(self, on):
+        """Replay-Aufzeichnung ein-/ausschalten (gilt für Minigolf und Bowling)."""
+        on = bool(on)
+        if replay.is_enabled(self.settings) == on:
+            return
+        self.settings.setdefault("replay", {})["enabled"] = on
+        self._save()
+        self.play_sound("select")
 
     def _change_res(self, d):
         if self.settings.get("auto_resolution"):
@@ -1202,6 +1248,9 @@ class WelcomeScreen(_Screen):
         self._draw_toggle(self.rect_sound, t("options.sound"),
                           self.settings.get("sound", False),
                           self.row == self.ROWS.index("sound"))
+        self._draw_toggle(self.rect_replay, t("options.replays"),
+                          replay.is_enabled(self.settings),
+                          self.row == self.ROWS.index("replay"))
 
         # Sprach-Überschrift + Sprach-Buttons.
         if self.show_lang_head:

@@ -127,13 +127,59 @@
             "- settings.json: zvok, glasnost, razporeditev tipk, ločljivost, FPS in možnosti iger (npr. način Snake, nastavitve Sudokuja).",
             "- mem.json: najboljši rezultati, izbrani jezik in napredek po stopnjah Sudokuja.",
             "- mem-ngb.json: vizualni modi Snake (barva glave, mreža, trak).",
-            "Obe datoteki sta neposredno v mapi igre in ju lahko preprosto izbrišeš za ponastavitev."
+            "- replay.json: shranjeni posnetki minigolfa in bowlinga.",
+            "Te datoteke so neposredno v mapi igre in jih je za ponastavitev dovolj izbrisati."
           ]
         },
         {
           "h": "Namig",
           "body": [
             "Točke se shranijo le, ko izstopiš prek Nazaj v meni ali ko se runda normalno konča - ne pa, ko med igro na silo zapreš okno."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Posnetki",
+      "keywords": [
+        "posnetek",
+        "snemanje",
+        "minigolf",
+        "bowling",
+        "arhiv",
+        "shrani"
+      ],
+      "sections": [
+        {
+          "h": "Kaj je posnetek?",
+          "body": [
+            "Minigolf in bowling snemata vsak krog: shrani se dejanska pot žogice in kegljev, sličico za sličico. Zato je ponovitev videti natanko tako kot tvoj krog - s progo, HUD in rezultatsko kartico.",
+            "Snema se samo tekoči krog. Če začneš znova, se tudi snemanje začne od začetka."
+          ]
+        },
+        {
+          "h": "Shranjevanje",
+          "body": [
+            "Če je bil krog dober, na koncu pritisni [P] - posnetek se takoj zažene. S tipko [S] ga shraniš v arhiv, z [Esc] se vrneš na zaključni zaslon.",
+            "Neshranjeni posnetki izginejo z naslednjim krogom; v arhiv gre 20 posnetkov na igro."
+          ]
+        },
+        {
+          "h": "Arhiv in predvajanje",
+          "body": [
+            "Gumb Posnetki v stranski vrstici odpre arhiv: en zavihek na igro, z rezultatom, datumom in trajanjem vsakega posnetka.",
+            "- [Enter] predvaja, [Del] izbriše (pritisni dvakrat), [Tab] zamenja igro.",
+            "- Med predvajanjem [Preslednica] zaustavi, Levo/Desno skoči na naslednji udarec ali met, Gor/Dol spremeni hitrost (0,5x do 4x).",
+            "Klik na vrstico napredka skoči na poljubno mesto."
+          ]
+        },
+        {
+          "h": "Izklop",
+          "body": [
+            "Ob prvem zagonu in v možnostih pod Snemanje lahko izklopiš Snemaj posnetke - takrat se ne posname nič.",
+            "Posnetki so v datoteki replay.json v mapi igre, razvrščeni po igrah. Datoteko lahko kadar koli izbrišeš."
           ]
         }
       ]

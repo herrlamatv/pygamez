@@ -66,6 +66,8 @@ GENERAL = [
     ("polyglot",    "heart",  None,       None),
     ("wiki_reader", "heart",  None,       None),
     ("painter",     "heart",  None,       None),
+    ("replay_first", "star",  None,       None),
+    ("replay_5",    "gem",    None,       5),
 ]
 
 # Beschreibungs-Vorlagen der zählbaren Erfolge: stat -> i18n-Schlüssel

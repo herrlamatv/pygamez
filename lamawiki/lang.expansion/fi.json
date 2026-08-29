@@ -127,13 +127,59 @@
             "- settings.json: ääni, äänenvoimakkuus, näppäinasettelut, resoluutio, FPS ja peliasetukset (esim. Snaken tila, Sudokun asetukset).",
             "- mem.json: ennätykset, valittu kieli ja Sudokun tasoedistyminen.",
             "- mem-ngb.json: Snaken visuaaliset modit (pään väri, ruudukko, banneri).",
-            "Molemmat tiedostot sijaitsevat suoraan pelin kansiossa, ja ne voi yksinkertaisesti poistaa nollataksesi kaiken."
+            "- replay.json: minigolfin ja keilailun tallennetut uusinnat.",
+            "Nämä tiedostot ovat suoraan pelikansiossa, ja ne voi yksinkertaisesti poistaa nollaamista varten."
           ]
         },
         {
           "h": "Vinkki",
           "body": [
             "Pisteet tallennetaan vain, kun poistut Takaisin valikkoon -painikkeella tai kierros päättyy normaalisti - ei silloin, kun ikkuna suljetaan väkisin kesken pelin."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Uusinnat",
+      "keywords": [
+        "uusinta",
+        "tallenne",
+        "minigolf",
+        "keilailu",
+        "arkisto",
+        "tallenna"
+      ],
+      "sections": [
+        {
+          "h": "Mikä on uusinta?",
+          "body": [
+            "Minigolf ja keilailu tallentavat jokaisen kierroksen: talteen menee pallon ja keilojen todellinen rata, ruutu ruudulta. Siksi uusinta näyttää täsmälleen samalta kuin kierroksesi - ratoineen, HUD-tietoineen ja tuloskortteineen.",
+            "Vain käynnissä oleva kierros tallentuu. Jos aloitat alusta, myös tallennus alkaa alusta."
+          ]
+        },
+        {
+          "h": "Tallentaminen",
+          "body": [
+            "Jos kierros oli hyvä, paina lopuksi [P] - uusinta käynnistyy heti. Näppäin [S] vie sen arkistoon, [Esc] palaa loppuruutuun.",
+            "Tallentamattomat otokset katoavat seuraavan kierroksen myötä; arkistoon mahtuu 20 uusintaa per peli."
+          ]
+        },
+        {
+          "h": "Arkisto ja toisto",
+          "body": [
+            "Sivupalkin Uusinnat-painike avaa arkiston: yksi välilehti per peli, mukana jokaisen tallenteen tulos, päiväys ja kesto.",
+            "- [Enter] toistaa, [Del] poistaa (paina kahdesti), [Tab] vaihtaa pelin.",
+            "- Toiston aikana [Välilyönti] pysäyttää, Vasen/Oikea hyppää seuraavaan lyöntiin tai heittoon, Ylös/Alas muuttaa nopeutta (0,5x - 4x).",
+            "Edistymispalkin napsautus hyppää mihin tahansa kohtaan."
+          ]
+        },
+        {
+          "h": "Käytöstä poisto",
+          "body": [
+            "Ensikäynnistyksessä ja asetuksissa kohdassa Tallennus voi kytkeä Tallenna uusinnat pois - silloin mitään ei tallenneta.",
+            "Tallenteet ovat pelikansion replay.json-tiedostossa peleittäin lajiteltuina. Tiedoston saa poistaa milloin tahansa."
           ]
         }
       ]

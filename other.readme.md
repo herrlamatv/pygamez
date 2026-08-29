@@ -492,6 +492,9 @@ fusionnent.
   au parcours suivant (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), donc jamais les
   mêmes neuf trous ; à côté : **Rejouer** (même parcours) et **Réglages**.
   Touches : Entrée = suite, R = rejouer, S = réglages.
+- **Replay de la manche** : à la fin, **P** (ou le bouton **Replay**) rejoue
+  toute la manche coup par coup. **S** la range dans l'archive (bouton
+  **Replays** de la barre latérale).
 
 **Pinball**
 - **Trois tables** : *Classic* (trois bumpers, une série de cibles), *Space*
@@ -520,6 +523,8 @@ fusionnent.
 - Vue de piste en perspective avec dalots, flèches et pin deck ; trois difficultés
   (*Facile/Normal/Pro*) changent la vitesse des curseurs et la dispersion. Le
   record par difficulté est dans la section `bowling` de `mem.json`.
+- **Replay de la partie** : à la fin, **P** rejoue tous les lancers, **S** les
+  enregistre dans l'archive (bouton **Replays** de la barre latérale).
 
 Les meilleurs scores sont enregistrés dans la section `highscores` de
 `mem.json` (à côté du code) – avec la langue (section `mem`).
@@ -565,6 +570,11 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
   parties, victoires, records, jeu préféré et tableau par jeu trié par temps
   de jeu. Accessible via le bouton **« Succès & statistiques »** de la barre
   latérale.
+- **Replays** : le minigolf et le bowling enregistrent chaque manche. À la fin,
+  **P** montre la rediffusion et **S** la range dans l'archive - accessible par
+  le bouton **Replays** de la barre latérale (un onglet par jeu, pause, saut de
+  séquence, vitesse 0,5x à 4x). Désactivable au premier démarrage et dans les
+  options.
 
 ### Prise en main
 
@@ -628,6 +638,8 @@ store.py             Fichier de sauvegarde central mem.json (sections : mem, hig
 stats.py             Statistiques du joueur (parties, temps de jeu, victoires, records) par jeu
 achievements.py      Succès : définitions, logique de déblocage, notification (toast)
 progress.py          Écran Succès & statistiques (deux onglets, défilable)
+replay.py            Enregistrement et archive des rediffusions (replay.json)
+replayview.py        Écran Replay : liste de l'archive et lecture
 prestige.py          Système de prestige de Snake
 competitive.py       Paramètres du mode Compétitif de Snake (niveaux, machine à sous, pommes de pari)
 ngb.py               Personnalisation visuelle (« mods ») : couleur de tête + grille + menu (mem-ngb.json)
@@ -1203,6 +1215,9 @@ arma), efectos de explosión, récord.
   lleva al recorrido siguiente (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), así
   nunca se repiten los mismos nueve hoyos; junto a él: **Otra vez** (mismo
   recorrido) y **Ajustes**. Teclas: Intro = seguir, R = otra vez, S = ajustes.
+- **Repetición de la ronda**: al final, **P** (o el botón **Repetición**) vuelve
+  a mostrar toda la ronda golpe a golpe. Con **S** pasa al archivo (botón
+  **Repeticiones** de la barra lateral).
 
 **Pinball**
 - **Tres mesas**: *Classic* (tres bumpers, una serie de dianas), *Space* (cuatro
@@ -1232,6 +1247,8 @@ arma), efectos de explosión, récord.
 - Vista de pista en perspectiva con canaletas, flechas y pin deck; tres
   dificultades (*Fácil/Normal/Pro*) cambian la velocidad de los controles y la
   dispersión. El récord por dificultad está en la sección `bowling` de `mem.json`.
+- **Repetición de la partida**: al final, **P** muestra otra vez todas las
+  tiradas y **S** las guarda en el archivo (botón **Repeticiones**).
 
 Los récords se guardan en la sección `highscores` de `mem.json` (junto al
 código) – junto con el idioma (sección `mem`).
@@ -1275,6 +1292,11 @@ extra) y pulida con aspecto de lanzador moderno:
   Además, una pestaña de **estadísticas**: tiempo total, partidas, victorias,
   récords, juego favorito y tabla por juego ordenada por tiempo. Accesible por
   el botón **«Logros y estadísticas»** de la barra lateral.
+- **Repeticiones**: el minigolf y los bolos graban cada ronda. Al final, **P**
+  muestra la repetición y **S** la guarda en el archivo, accesible con el botón
+  **Repeticiones** de la barra lateral (una pestaña por juego, pausa, saltos de
+  secuencia, velocidad 0,5x a 4x). Se puede desactivar en el primer inicio y en
+  las opciones.
 
 ### Manejo
 
@@ -1338,6 +1360,8 @@ store.py             Archivo central mem.json (secciones: mem, highscores, stats
 stats.py             Estadísticas del jugador (partidas, tiempo, victorias, récords) por juego
 achievements.py      Logros: definiciones, lógica de desbloqueo, aviso (toast)
 progress.py          Pantalla de logros y estadísticas (dos pestañas, desplazable)
+replay.py            Grabación y archivo de las repeticiones (replay.json)
+replayview.py        Pantalla de repeticiones: lista del archivo y reproducción
 prestige.py          Sistema de prestigio de Snake
 competitive.py       Parámetros del modo Competitivo de Snake (niveles, tragaperras, manzanas de apuesta)
 ngb.py               Personalización visual ("mods"): color de cabeza + rejilla + menú (mem-ngb.json)
@@ -1905,6 +1929,9 @@ melhoria de arma), efeitos de explosão, recorde.
   percurso seguinte (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), nunca repetindo
   os mesmos nove buracos; ao lado: **Outra vez** (mesmo percurso) e **Ajustes**.
   Teclas: Enter = seguir, R = outra vez, S = ajustes.
+- **Replay da ronda**: no fim, **P** (ou o botão **Replay**) mostra a ronda
+  inteira, tacada a tacada. Com **S** vai para o arquivo (botão **Replays** na
+  barra lateral).
 
 **Pinball**
 - **Três mesas**: *Classic* (três bumpers, um conjunto de alvos), *Space* (quatro
@@ -1934,6 +1961,8 @@ melhoria de arma), efeitos de explosão, recorde.
 - Vista da pista em perspetiva com canaletas, setas e pin deck; três dificuldades
   (*Fácil/Normal/Pro*) mudam a velocidade das réguas e a dispersão. O recorde por
   dificuldade fica na secção `bowling` de `mem.json`.
+- **Replay da partida**: no fim, **P** mostra todos os lançamentos outra vez e
+  **S** guarda-os no arquivo (botão **Replays**).
 
 Os recordes são guardados na secção `highscores` de `mem.json` (junto ao
 código) – juntamente com o idioma (secção `mem`).
@@ -1978,6 +2007,10 @@ e polida com aspeto de launcher moderno:
   partidas, vitórias, recordes, jogo favorito e tabela por jogo ordenada por
   tempo. Acessível pelo botão **«Conquistas e estatísticas»** da barra
   lateral.
+- **Replays**: o minigolfe e o bowling gravam cada ronda. No fim, **P** mostra a
+  repetição e **S** guarda-a no arquivo - acessível pelo botão **Replays** na
+  barra lateral (um separador por jogo, pausa, saltos de sequência, velocidade
+  0,5x a 4x). Pode ser desligado no primeiro arranque e nas opções.
 
 ### Utilização
 
@@ -2039,6 +2072,8 @@ store.py             Ficheiro central mem.json (secções: mem, highscores, stat
 stats.py             Estatísticas do jogador (partidas, tempo, vitórias, recordes) por jogo
 achievements.py      Conquistas: definições, lógica de desbloqueio, aviso (toast)
 progress.py          Ecrã de conquistas e estatísticas (dois separadores, deslocável)
+replay.py            Gravação e arquivo das repetições (replay.json)
+replayview.py        Ecrã de replays: lista do arquivo e reprodução
 prestige.py          Sistema de prestígio do Snake
 competitive.py       Parâmetros do modo Competitivo do Snake (níveis, slot machine, maçãs de aposta)
 ngb.py               Personalização visual ("mods"): cor da cabeça + grelha + menu (mem-ngb.json)
@@ -2721,6 +2756,9 @@ broni), efekty wybuchów, rekord.
   kolejnego kursu (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), więc te same
   dziewięć dołków się nie powtarza; obok: **Jeszcze raz** (ten sam kurs) i
   **Ustawienia**. Klawisze: Enter = dalej, R = jeszcze raz, S = ustawienia.
+- **Powtórka rundy**: na końcu **P** (albo przycisk **Powtórka**) pokazuje całą
+  rundę uderzenie po uderzeniu. Klawisz **S** przenosi ją do archiwum (przycisk
+  **Powtórki** na pasku bocznym).
 
 **Pinball**
 - **Trzy stoły**: *Classic* (trzy bumpery, jedna seria celów), *Space* (cztery
@@ -2749,6 +2787,8 @@ broni), efekty wybuchów, rekord.
 - Widok toru w perspektywie z rynnami, strzałkami i deską kręgli; trzy poziomy
   trudności (*Łatwy/Normalny/Pro*) zmieniają tempo suwaków i rozrzut. Rekord dla
   każdego poziomu leży w sekcji `bowling` pliku `mem.json`.
+- **Powtórka partii**: na końcu **P** pokazuje wszystkie rzuty jeszcze raz, a
+  **S** zapisuje je w archiwum (przycisk **Powtórki**).
 
 Rekordy są przechowywane w sekcji `highscores` pliku `mem.json` (obok kodu) —
 razem z językiem (sekcja `mem`).
@@ -2790,6 +2830,11 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
   zakładka **statystyk**: łączny czas gry, rozgrywki, zwycięstwa, rekordy,
   ulubiona gra i tabela gier posortowana według czasu. Dostępne przez przycisk
   **„Osiągnięcia i statystyki"** na pasku bocznym.
+- **Powtórki**: minigolf i bowling nagrywają każdą rundę. Na końcu **P**
+  pokazuje powtórkę, a **S** zapisuje ją w archiwum - dostępnym pod przyciskiem
+  **Powtórki** na pasku bocznym (zakładka na grę, pauza, skoki między
+  sekwencjami, tempo 0,5x do 4x). Można to wyłączyć przy pierwszym starcie i w
+  opcjach.
 
 ### Obsługa
 
@@ -2850,6 +2895,8 @@ store.py             Centralny plik zapisu mem.json (sekcje: mem, highscores, st
 stats.py             Statystyki gracza (rozgrywki, czas, zwycięstwa, rekordy) na grę
 achievements.py      Osiągnięcia: definicje, logika odblokowań, powiadomienie (toast)
 progress.py          Ekran osiągnięć i statystyk (dwie zakładki, przewijany)
+replay.py            Nagrywanie i archiwum powtórek (replay.json)
+replayview.py        Ekran powtórek: lista archiwum i odtwarzanie
 prestige.py          System prestiżu dla Snake
 competitive.py       Strojenie trybu Competitive w Snake (poziomy, slot machine, jabłka zakładów)
 ngb.py               Personalizacja wizualna („mody"): kolor głowy + siatka współrzędnych + menu (mem-ngb.json)
@@ -3534,6 +3581,9 @@ patlama efektleri, yüksek skor.
   (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), böylece aynı dokuz delik
   tekrarlanmaz; yanında **Tekrar** (aynı saha) ve **Ayarlar**. Tuşlar: Enter =
   devam, R = tekrar, S = ayarlar.
+- **Turun tekrarı**: turun sonunda **P** (ya da **Tekrar** düğmesi) tüm turu
+  vuruş vuruş yeniden gösterir. **S** onu arşive koyar (kenar çubuğundaki
+  **Tekrarlar** düğmesi).
 
 **Pinball**
 - **Üç masa**: *Classic* (üç bumper, bir hedef dizisi), *Space* (romb dizilmiş
@@ -3562,6 +3612,8 @@ patlama efektleri, yüksek skor.
 - Oluklar, nişan okları ve labut alanıyla perspektifli pist görünümü; üç zorluk
   (*Kolay/Normal/Pro*) ayarların salınım hızını ve saçılmayı değiştirir. Her
   zorluğun rekoru `mem.json` içindeki `bowling` bölümündedir.
+- **Partinin tekrarı**: sonunda **P** tüm atışları yeniden gösterir, **S** onları
+  arşive kaydeder (**Tekrarlar** düğmesi).
 
 Yüksek skorlar `mem.json` dosyasının `highscores` bölümünde (kodun yanında) - dil
 ile birlikte (`mem` bölümü) saklanır.
@@ -3604,6 +3656,10 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
   sekmesi: toplam süre, oyunlar, galibiyetler, rekorlar, favori oyun ve süreye
   göre sıralı oyun tablosu. Kenar çubuğundaki **"Başarımlar ve
   istatistikler"** düğmesinden ulaşılır.
+- **Tekrarlar**: minigolf ve bowling her turu kaydeder. Tur sonunda **P**
+  tekrarı gösterir, **S** onu arşive koyar - kenar çubuğundaki **Tekrarlar**
+  düğmesinden ulaşılır (oyun başına bir sekme, duraklatma, sekans atlama, hız
+  0,5x - 4x). İlk açılışta ve seçeneklerde kapatılabilir.
 
 ### Kullanım
 
@@ -3663,6 +3719,8 @@ store.py            Merkezî kayıt dosyası mem.json (bölümler: mem, highscor
 stats.py             Oyuncu istatistikleri (oyun, süre, galibiyet, rekor) oyun başına
 achievements.py      Başarımlar: tanımlar, açma mantığı, bildirim (toast)
 progress.py          Başarımlar ve istatistikler ekranı (iki sekme, kaydırılabilir)
+replay.py            Tekrarların kaydı ve arşivi (replay.json)
+replayview.py        Tekrar ekranı: arşiv listesi ve oynatma
 prestige.py         Snake için prestij sistemi
 competitive.py      Snake'in Rekabetçi modu için ince ayar (seviyeler, slot makinesi, kumar elmaları)
 ngb.py              Görsel kişiselleştirme ("mods"): baş rengi + koordinat ızgarası + menü (mem-ngb.json)
@@ -4320,6 +4378,9 @@ eksplosionseffekter, highscore.
   til den næste bane (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), så de samme ni
   huller aldrig gentages; ved siden af: **Igen** (samme bane) og **Opsætning**.
   Taster: Enter = videre, R = igen, S = opsætning.
+- **Replay af runden**: til sidst viser **P** (eller knappen **Replay**) hele
+  runden slag for slag. Med **S** ryger den i arkivet (sidebjælkeknappen
+  **Replays**).
 
 **Pinball**
 - **Tre borde**: *Classic* (tre bumpere, én målrække), *Space* (fire bumpere i
@@ -4347,6 +4408,8 @@ eksplosionseffekter, highscore.
 - Baneview i perspektiv med render, sigtepile og keglefelt; tre sværhedsgrader
   (*Let/Normal/Pro*) ændrer skydernes tempo og spredningen. Rekorden pr.
   sværhedsgrad ligger i afsnittet `bowling` i `mem.json`.
+- **Replay af partiet**: til sidst viser **P** alle kast igen, og **S** gemmer
+  dem i arkivet (knappen **Replays**).
 
 Highscores gemmes i afsnittet `highscores` i `mem.json` (ved siden af koden) –
 sammen med sproget (afsnittet `mem`).
@@ -4387,6 +4450,10 @@ og stylet som en moderne spil-launcher:
   Dertil en **statistik**-fane: samlet spilletid, partier, sejre, rekorder,
   yndlingsspil og en tabel pr. spil sorteret efter spilletid. Nås via knappen
   **"Præstationer & statistik"** i sidepanelet.
+- **Replays**: minigolf og bowling optager hver runde. Til sidst viser **P**
+  gengivelsen, og **S** lægger den i arkivet - tilgængeligt via sidebjælkens
+  knap **Replays** (en fane pr. spil, pause, spring mellem sekvenser, tempo
+  0,5x til 4x). Kan slås fra ved første start og i indstillingerne.
 
 ### Betjening
 
@@ -4447,6 +4514,8 @@ store.py             Central gemmefil mem.json (afsnit: mem, highscores, stats, 
 stats.py             Spillerstatistik (partier, spilletid, sejre, rekorder) pr. spil
 achievements.py      Præstationer: definitioner, oplåsning, notifikation (toast)
 progress.py          Skærm for præstationer & statistik (to faner, rulbar)
+replay.py            Optagelse og arkiv over replays (replay.json)
+replayview.py        Replay-skærm: arkivliste og afspilning
 prestige.py          Prestige-system til Snake
 competitive.py       Finindstilling til Snakes Competitive-tilstand (niveauer, enarmet tyveknægt, gamble-æbler)
 ngb.py               Visuel tilpasning ("mods"): hovedfarve + koordinatgitter + menu (mem-ngb.json)
@@ -5101,6 +5170,9 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   **Videre** deg til neste bane (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), så
   de samme ni hullene aldri gjentas; ved siden av: **Om igjen** (samme bane) og
   **Oppsett**. Taster: Enter = videre, R = om igjen, S = oppsett.
+- **Replay av runden**: til slutt viser **P** (eller knappen **Replay**) hele
+  runden slag for slag. Med **S** havner den i arkivet (sidefeltknappen
+  **Replays**).
 
 **Pinball**
 - **Tre bord**: *Classic* (tre bumpere, én målrekke), *Space* (fire bumpere i
@@ -5128,6 +5200,8 @@ våpenoppgradering), eksplosjonseffekter, rekord.
 - Baneview i perspektiv med renner, siktepiler og kjeglefelt; tre
   vanskelighetsgrader (*Lett/Normal/Pro*) endrer gliderfart og spredning.
   Rekorden per grad ligger i `bowling`-delen av `mem.json`.
+- **Replay av partiet**: til slutt viser **P** alle kastene på nytt, og **S**
+  lagrer dem i arkivet (knappen **Replays**).
 
 Rekordene lagres i `highscores`-delen av `mem.json` (ved siden av koden) – sammen
 med språket (delen `mem`).
@@ -5168,6 +5242,10 @@ pakker) og stylet som en moderne spill-launcher:
   I tillegg en **statistikk**-fane: total spilletid, partier, seire, rekorder,
   favorittspill og en tabell per spill sortert etter spilletid. Nås via
   knappen **«Prestasjoner & statistikk»** i sidefeltet.
+- **Replays**: minigolf og bowling tar opp hver runde. Til slutt viser **P**
+  opptaket, og **S** legger det i arkivet - tilgjengelig via sidefeltknappen
+  **Replays** (en fane per spill, pause, hopp mellom sekvenser, tempo 0,5x til
+  4x). Kan slås av ved første oppstart og i innstillingene.
 
 ### Betjening
 
@@ -5227,6 +5305,8 @@ store.py             Sentral lagringsfil mem.json (deler: mem, highscores, stats
 stats.py             Spillerstatistikk (partier, spilletid, seire, rekorder) per spill
 achievements.py      Prestasjoner: definisjoner, opplåsing, varsel (toast)
 progress.py          Skjerm for prestasjoner & statistikk (to faner, rullbar)
+replay.py            Opptak og arkiv over replays (replay.json)
+replayview.py        Replay-skjerm: arkivliste og avspilling
 prestige.py          Prestige-system for Snake
 competitive.py       Finjustering av Snakes Competitive-modus (nivåer, enarmet banditt, gambleepler)
 ngb.py               Visuell tilpasning («mods»): hodefarge + koordinatrutenett + meny (mem-ngb.json)
@@ -5858,6 +5938,9 @@ explosionseffekter, topplista.
   **Vidare** till nästa bana (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), så att
   samma nio hål aldrig upprepas; bredvid: **Igen** (samma bana) och
   **Inställningar**. Tangenter: Enter = vidare, R = igen, S = inställningar.
+- **Replay av rundan**: i slutet visar **P** (eller knappen **Replay**) hela
+  rundan slag för slag. Med **S** hamnar den i arkivet (sidofältsknappen
+  **Replays**).
 
 **Pinball**
 - **Tre bord**: *Classic* (tre bumpers, en målrad), *Space* (fyra bumpers i romb,
@@ -5886,6 +5969,8 @@ explosionseffekter, topplista.
 - Banvy i perspektiv med rännor, siktpilar och kägelfält; tre svårighetsgrader
   (*Lätt/Normal/Pro*) ändrar reglagens tempo och spridningen. Rekordet per grad
   ligger i avsnittet `bowling` i `mem.json`.
+- **Replay av partiet**: i slutet visar **P** alla kast igen och **S** sparar dem
+  i arkivet (knappen **Replays**).
 
 Topplistorna sparas i avsnittet `highscores` i `mem.json` (bredvid koden) – tillsammans med
 språket (avsnittet `mem`).
@@ -5922,6 +6007,10 @@ modern spel-launcher:
   automatiskt. Dessutom en **statistik**-flik: total speltid, partier, segrar,
   rekord, favoritspel och en tabell per spel sorterad efter speltid. Nås via
   knappen **”Prestationer & statistik”** i sidofältet.
+- **Replays**: minigolf och bowling spelar in varje runda. I slutet visar **P**
+  repriser och **S** lägger dem i arkivet - nås via sidofältsknappen **Replays**
+  (en flik per spel, paus, hopp mellan sekvenser, tempo 0,5x till 4x). Kan
+  stängas av vid första starten och i inställningarna.
 
 ### Användning
 
@@ -5977,6 +6066,8 @@ store.py             Central sparfil mem.json (avsnitt: mem, highscores, stats, 
 stats.py             Spelarstatistik (partier, speltid, segrar, rekord) per spel
 achievements.py      Prestationer: definitioner, upplåsning, avisering (toast)
 progress.py          Skärm för prestationer & statistik (två flikar, rullbar)
+replay.py            Inspelning och arkiv för replays (replay.json)
+replayview.py        Replay-skärm: arkivlista och uppspelning
 prestige.py          Prestige-system för Snake
 competitive.py       Finjustering av Snakes Competitive-läge (nivåer, enarmad bandit, speläpplen)
 ngb.py               Visuell personalisering ("mods"): huvudfärg + koordinatrutnät + meny (mem-ngb.json)
@@ -6649,6 +6740,9 @@ räjähdystehosteet, ennätys.
   seuraavalle radalle (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), joten sama
   yhdeksän reiän sarja ei toistu; vieressä **Uudelleen** (sama rata) ja
   **Asetukset**. Näppäimet: Enter = jatka, R = uudelleen, S = asetukset.
+- **Kierroksen uusinta**: lopuksi **P** (tai painike **Uusinta**) näyttää koko
+  kierroksen lyönti lyönniltä. **S** vie sen arkistoon (sivupalkin painike
+  **Uusinnat**).
 
 **Pinball**
 - **Kolme pöytää**: *Classic* (kolme puskuria, yksi maalirivi), *Space* (neljä
@@ -6678,6 +6772,8 @@ räjähdystehosteet, ennätys.
 - Perspektiivinen ratanäkymä kouruineen, tähtäysnuolineen ja keila-alueineen;
   kolme vaikeustasoa (*Helppo/Normaali/Pro*) muuttavat säätimien vauhtia ja
   hajontaa. Tasokohtainen ennätys on tiedoston `mem.json` osiossa `bowling`.
+- **Pelin uusinta**: lopuksi **P** näyttää kaikki heitot uudelleen ja **S**
+  tallentaa ne arkistoon (painike **Uusinnat**).
 
 Ennätykset tallennetaan tiedoston `mem.json` osioon `highscores` (koodin vieressä)
 – yhdessä kielen kanssa (osio `mem`).
@@ -6718,6 +6814,10 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
   automaattisesti. Lisäksi **tilastot**-välilehti: kokonaispeliaika,
   pelikerrat, voitot, ennätykset, lempipeli ja peliajan mukaan järjestetty
   pelitaulukko. Avautuu sivupalkin painikkeesta **"Saavutukset ja tilastot"**.
+- **Uusinnat**: minigolf ja keilailu tallentavat jokaisen kierroksen. Lopuksi
+  **P** näyttää uusinnan ja **S** vie sen arkistoon, joka avautuu sivupalkin
+  painikkeesta **Uusinnat** (välilehti per peli, tauko, hypyt jaksojen välillä,
+  nopeus 0,5x - 4x). Voidaan kytkeä pois ensikäynnistyksessä ja asetuksissa.
 
 ### Käyttö
 
@@ -6777,6 +6877,8 @@ store.py             Keskitetty tallennustiedosto mem.json (osiot: mem, highscor
 stats.py             Pelaajatilastot (pelikerrat, peliaika, voitot, ennätykset) peliä kohden
 achievements.py      Saavutukset: määritykset, avaaminen, ilmoitus (toast)
 progress.py          Saavutukset ja tilastot -näyttö (kaksi välilehteä, vieritettävä)
+replay.py            Uusintojen tallennus ja arkisto (replay.json)
+replayview.py        Uusintanäyttö: arkistolista ja toisto
 prestige.py          Snaken prestige-järjestelmä
 competitive.py       Snaken Competitive-tilan hienosäätö (tasot, kolikkopeli, veto-omenat)
 ngb.py               Visuaalinen mukauttaminen ("modit"): pään väri + koordinaattiruudukko + valikko (mem-ngb.json)
@@ -7443,6 +7545,9 @@ zbraně), efekty explozí, nejlepší skóre.
   (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), takže se stejná devítka drah
   neopakuje; vedle **Znovu** (stejné hřiště) a **Nastavení**. Klávesy: Enter =
   dále, R = znovu, S = nastavení.
+- **Záznam kola**: na konci **P** (nebo tlačítko **Záznam**) přehraje celé kolo
+  úder po úderu. Klávesa **S** ho uloží do archivu (tlačítko **Záznamy** v
+  postranním panelu).
 
 **Pinball**
 - **Tři stoly**: *Classic* (tři bumpery, jedna řada terčů), *Space* (čtyři
@@ -7470,6 +7575,8 @@ zbraně), efekty explozí, nejlepší skóre.
 - Pohled na dráhu v perspektivě se žlaby, šipkami a plochou kuželek; tři
   obtížnosti (*Snadná/Normální/Pro*) mění tempo posuvníků a rozptyl. Rekord pro
   každou obtížnost je v sekci `bowling` souboru `mem.json`.
+- **Záznam partie**: na konci **P** přehraje všechny hody znovu a **S** je uloží
+  do archivu (tlačítko **Záznamy**).
 
 Nejlepší skóre se ukládají do sekce `highscores` souboru `mem.json` (vedle
 kódu) – spolu s jazykem (sekce `mem`).
@@ -7511,6 +7618,10 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
   **statistik**: celkový herní čas, partie, výhry, rekordy, oblíbená hra a
   tabulka her seřazená podle času. Dostupné tlačítkem **„Úspěchy a
   statistiky"** v postranním panelu.
+- **Záznamy**: minigolf a bowling nahrávají každé kolo. Na konci **P** ukáže
+  záznam a **S** ho uloží do archivu - dostupného tlačítkem **Záznamy** v
+  postranním panelu (karta na hru, pauza, skoky mezi sekvencemi, rychlost 0,5x
+  až 4x). Lze vypnout při prvním spuštění i v možnostech.
 
 ### Ovládání
 
@@ -7570,6 +7681,8 @@ store.py             Centrální soubor mem.json (sekce: mem, highscores, stats,
 stats.py             Statistiky hráče (partie, herní čas, výhry, rekordy) na hru
 achievements.py      Úspěchy: definice, odemykání, oznámení (toast)
 progress.py          Obrazovka úspěchů a statistik (dvě záložky, posuvná)
+replay.py            Nahrávání a archiv záznamů (replay.json)
+replayview.py        Obrazovka záznamů: seznam archivu a přehrávání
 prestige.py          Systém prestiže pro Snake
 competitive.py       Parametry Kompetitivního režimu Snaku (úrovně, automat, sázková jablka)
 ngb.py               Vizuální přizpůsobení („mody"): barva hlavy + souřadnicová mřížka + menu (mem-ngb.json)
@@ -8234,6 +8347,9 @@ nadgradnja orožja), učinki eksplozij, rekord.
   igrišče (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), tako da se ista deveterica
   stez ne ponavlja; poleg **Še enkrat** (isto igrišče) in **Nastavitve**. Tipke:
   Enter = naprej, R = še enkrat, S = nastavitve.
+- **Posnetek kroga**: na koncu **P** (ali gumb **Posnetek**) predvaja cel krog
+  udarec za udarcem. S tipko **S** gre v arhiv (gumb **Posnetki** v stranski
+  vrstici).
 
 **Pinball**
 - **Tri mize**: *Classic* (trije odbijači, ena vrsta tarč), *Space* (štirje
@@ -8261,6 +8377,8 @@ nadgradnja orožja), učinki eksplozij, rekord.
 - Pogled na stezo v perspektivi z žlebovi, puščicami in poljem kegljev; tri
   težavnosti (*Lahka/Normalna/Pro*) spremenijo hitrost drsnikov in raztros.
   Rekord za vsako težavnost je v razdelku `bowling` datoteke `mem.json`.
+- **Posnetek partije**: na koncu **P** znova pokaže vse mete, **S** pa jih
+  shrani v arhiv (gumb **Posnetki**).
 
 Rekordi se shranijo v razdelku `highscores` datoteke `mem.json` (poleg kode) –
 skupaj z jezikom (razdelek `mem`).
@@ -8302,6 +8420,10 @@ oblikovan kot sodoben zaganjalnik iger:
   tega zavihek **statistike**: skupni čas igranja, partije, zmage, rekordi,
   najljubša igra in tabela iger, razvrščena po času. Na voljo prek gumba
   **»Dosežki in statistika«** v stranski vrstici.
+- **Posnetki**: minigolf in bowling snemata vsak krog. Na koncu **P** pokaže
+  ponovitev, **S** pa jo shrani v arhiv - dosegljiv z gumbom **Posnetki** v
+  stranski vrstici (zavihek na igro, pavza, skoki med sekvencami, hitrost 0,5x
+  do 4x). Izklopljivo ob prvem zagonu in v možnostih.
 
 ### Upravljanje
 
@@ -8362,6 +8484,8 @@ store.py             Osrednja datoteka za shranjevanje mem.json (razdelka: mem, 
 stats.py             Statistika igralca (partije, čas igranja, zmage, rekordi) na igro
 achievements.py      Dosežki: definicije, odklepanje, obvestilo (toast)
 progress.py          Zaslon dosežkov in statistike (dva zavihka, drsni)
+replay.py            Snemanje in arhiv posnetkov (replay.json)
+replayview.py        Zaslon posnetkov: seznam arhiva in predvajanje
 prestige.py          Sistem prestiža za Snake
 competitive.py       Nastavitve za Tekmovalni način igre Snake (ravni, igralni avtomat, jabolka za stave)
 ngb.py               Vizualna prilagoditev (»modi«): barva glave + koordinatna mreža + meni (mem-ngb.json)
@@ -9029,6 +9153,8 @@ nadogradnja oružja), efekti eksplozije, rekord.
   teren (*Classic* → *Pro* → *Tour 1* → *Tour 2* …), pa se isti komplet od devet
   staza ne ponavlja; pokraj njega **Ponovno** (isti teren) i **Postavke**. Tipke:
   Enter = dalje, R = ponovno, S = postavke.
+- **Snimka runde**: na kraju **P** (ili gumb **Snimka**) prikazuje cijelu rundu
+  udarac po udarac. Tipkom **S** ide u arhivu (gumb **Snimke** u bočnoj traci).
 
 **Pinball**
 - **Tri stola**: *Classic* (tri odbojnika, jedan niz meta), *Space* (četiri
@@ -9057,6 +9183,8 @@ nadogradnja oružja), efekti eksplozije, rekord.
 - Pogled na stazu u perspektivi s kanalima, strelicama i poljem čunjeva; tri
   težine (*Lako/Normalno/Pro*) mijenjaju brzinu klizača i rasipanje. Rekord za
   svaku težinu je u odjeljku `bowling` datoteke `mem.json`.
+- **Snimka partije**: na kraju **P** ponovno prikazuje sva bacanja, a **S** ih
+  sprema u arhivu (gumb **Snimke**).
 
 Rekordi se spremaju u odjeljak `highscores` datoteke `mem.json` (uz kôd) – zajedno
 s jezikom (odjeljak `mem`).
@@ -9097,6 +9225,10 @@ dotjerano poput modernog pokretača igara:
   to kartica **statistike**: ukupno vrijeme igranja, partije, pobjede,
   rekordi, najdraža igra i tablica igara poredana po vremenu. Dostupno preko
   gumba **„Postignuća i statistika"** u bočnoj traci.
+- **Snimke**: minigolf i kuglanje snimaju svaku rundu. Na kraju **P** prikazuje
+  snimku, a **S** je sprema u arhivu - dostupnu gumbom **Snimke** u bočnoj traci
+  (kartica po igri, pauza, skokovi među sekvencama, brzina 0,5x do 4x). Može se
+  isključiti pri prvom pokretanju i u opcijama.
 
 ### Upravljanje
 
@@ -9156,6 +9288,8 @@ store.py             Središnja datoteka mem.json (odjeljci: mem, highscores, st
 stats.py             Statistika igrača (partije, vrijeme, pobjede, rekordi) po igri
 achievements.py      Postignuća: definicije, otključavanje, obavijest (toast)
 progress.py          Zaslon postignuća i statistike (dvije kartice, pomični)
+replay.py            Snimanje i arhiva snimaka (replay.json)
+replayview.py        Zaslon snimaka: popis arhive i reprodukcija
 prestige.py          Prestiž-sustav za Snake
 competitive.py       Ugađanje Competitive moda za Snake (razine, slot machine, kockarske jabuke)
 ngb.py               Vizualna personalizacija ("mods"): boja glave + koordinatna mreža + izbornik (mem-ngb.json)

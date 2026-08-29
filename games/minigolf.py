@@ -37,6 +37,7 @@ import random
 
 import pygame
 
+import replay
 import settings as settings_mod
 import store
 import ui
@@ -200,6 +201,12 @@ class MiniGolfGame(Game):
         self.tour = max(1, min(gen.TOUR_COURSES, int(gs.get("tour", 1) or 1)))
         self._tour_par = gen.course_par(self.tour)
         self.winner = None
+        # Replay: Aufnahme der laufenden Runde (rec) und die fertige
+        # Wiederholung der letzten Runde (replay, siehe replay.py).
+        self.rec = None
+        self.replay = None
+        self.replay_request = None
+        self._rep = None
 
         self._build_fonts()
         self._layout()
@@ -316,6 +323,7 @@ class MiniGolfGame(Game):
         self.winner = None
         self.score = 0
         self.game_over = False
+        self._rec_new()
         self._start_hole()
 
     def _start_hole(self):
@@ -338,6 +346,7 @@ class MiniGolfGame(Game):
         self.msg_t = 0.0
         self.result_key = None
         self.result_pts = 0
+        self._layout_id = self.rec.layout(h) if self.rec else 0
         self._aim_at_cup()
 
     # ===================================================== Setup-Screen
@@ -451,7 +460,10 @@ class MiniGolfGame(Game):
             self._toggle_guide()
             return
         if event.kind == InputEvent.KEYDOWN and event.key in ("p", "P"):
-            self._toggle_pickup()
+            if self.state == OVER and self.replay is not None:
+                self._open_replay()
+            else:
+                self._toggle_pickup()
             return
         if event.kind == InputEvent.KEYDOWN and event.key in ("f", "F"):
             self._reset_hole()
@@ -529,6 +541,13 @@ class MiniGolfGame(Game):
         self.shot_time = 0.0
         self.safe = (self.bx, self.by)
         self.trail = []
+        if self.rec:
+            self.rec.scene(flat=True, layout=self._layout_id,
+                           hole=self.hole_idx, player=self.player,
+                           n=self.strokes, aim=round(self.aim, 4),
+                           power=round(self.power, 3),
+                           mill=round(self.mill_a, 3),
+                           move=round(self.move_t, 3))
         self.play_sound("shoot")
         self.rumble(50)
 
@@ -559,6 +578,8 @@ class MiniGolfGame(Game):
                 self.power = min(1.0, self.power + dt * 0.80)
         elif self.phase == "rolling":
             self._physics(dt)
+            if self.rec:
+                self.rec.tick(dt, self._rec_sample)
             self.shot_time += dt
             if self.shot_time > MAX_SHOT_TIME:
                 self.vx = self.vy = 0.0
@@ -746,8 +767,9 @@ class MiniGolfGame(Game):
         for (x, y, w, h) in self.hole["water"]:
             if x <= self.bx <= x + w and y <= self.by <= y + h:
                 self.vx = self.vy = 0.0
-                self.bx, self.by = self.safe
                 self.strokes += 1
+                self._rec_end("water")
+                self.bx, self.by = self.safe
                 self.msg = t("golf.penalty")
                 self.msg_t = 2.0
                 self.play_sound("hit")
@@ -765,6 +787,7 @@ class MiniGolfGame(Game):
         self.charging = False
 
     def _after_shot(self):
+        self._rec_end("stop")
         if self.pickup and self.strokes >= MAX_STROKES:
             self.msg = t("golf.max_strokes")
             self.msg_t = 2.4
@@ -775,6 +798,7 @@ class MiniGolfGame(Game):
 
     # ===================================================== Bahn abschließen
     def _holed(self):
+        self._rec_end("cup")
         self.play_sound("win" if self.strokes == 1 else "point")
         self.rumble(90)
         px, py = self._project(*self.cup)
@@ -793,6 +817,9 @@ class MiniGolfGame(Game):
         self.points[self.player] += pts
         self.result_pts = pts
         self.result_key = self._result_key(self.strokes, self.par, holed)
+        if self.rec:
+            self.rec.set_last(final=self.strokes, result=self.result_key,
+                              pts=pts, holed=bool(holed))
         if self.player == 0:
             self.score = self.points[0]
         self.phase = "done"
@@ -862,6 +889,8 @@ class MiniGolfGame(Game):
     def _over_keys(self):
         """Knöpfe des Rundenende-Bildschirms (nur die Schlüssel)."""
         keys = ["again", "setup"]
+        if getattr(self, "replay", None) is not None:
+            keys.insert(0, "replay")
         if self._next_course() is not None:
             keys.insert(0, "next")
         return keys
@@ -918,7 +947,9 @@ class MiniGolfGame(Game):
 
     def _over_action(self, key):
         """Führt einen Knopf des Rundenende-Bildschirms aus."""
-        if key == "next" and self._next_course() is not None:
+        if key == "replay":
+            self._open_replay()
+        elif key == "next" and self._next_course() is not None:
             self._continue_next()
         elif key == "setup":
             self.state = SETUP
@@ -936,6 +967,8 @@ class MiniGolfGame(Game):
         """
         if self.state != PLAY:
             return
+        if self.rec:
+            self.rec.drop_where(hole=self.hole_idx, player=self.player)
         self._start_hole()
         self.msg = t("golf.reset")
         self.msg_t = 1.4
@@ -954,6 +987,7 @@ class MiniGolfGame(Game):
             self.winner = None
             self.report_result(total <= par_total)
         self.score = self.points[0]
+        self._rec_finish(total, par_total)
         self._build_over_layout()
         self.state = OVER
         self.game_over = True
@@ -963,6 +997,157 @@ class MiniGolfGame(Game):
         self._new_round()
         self.state = PLAY
         self.play_sound("click")
+
+    # ===================================================== Replay-Aufnahme
+    # Aufgezeichnet wird je Schlag die tatsaechlich gerollte Ballbahn (siehe
+    # replay.py). Der Rest der Bahn - Banden, Sand, Wasser, Muehlen - liegt
+    # als Kulisse im Replay, damit die Wiederholung auch dann noch stimmt,
+    # wenn spaetere Versionen die Bahnen aendern.
+
+    def _rec_new(self):
+        """Startet die Aufzeichnung der Runde (falls Replays an sind)."""
+        self.replay = None
+        self.rec = replay.recorder("minigolf", self.settings, meta={
+            "course": self.course, "tour": self.tour,
+            "players": self.players})
+
+    def _rec_sample(self):
+        """Ein Sample = die Ballposition (auf 1/100 Feldeinheit gerundet)."""
+        return (round(self.bx, 2), round(self.by, 2))
+
+    def _rec_end(self, end):
+        """Beendet die laufende Schlag-Sequenz ("cup"/"water"/"stop")."""
+        if self.rec:
+            self.rec.close(self._rec_sample, end=end, after=self.strokes)
+
+    def _rec_finish(self, total, par_total):
+        """Rundenende: die Aufnahme als self.replay bereitlegen."""
+        if not self.rec:
+            return
+        d = total - par_total
+        name = t("golf.course." + self.course)
+        if self.course == "tour":
+            name = "%s %d" % (name, self.tour)
+        self.replay = self.rec.result(
+            title=name,
+            sub=t("golf.final", strokes=total,
+                  diff=("%+d" % d) if d else t("golf.even"),
+                  pts=self.points[0]),
+            total=total, par=par_total, points=self.points[0])
+        self.rec = None
+
+    def _open_replay(self):
+        """Rundenende: die Wiederholung ansehen (Taste P bzw. Knopf).
+
+        Den Screen oeffnet main.py - das Spiel legt nur den Wunsch ab.
+        """
+        if self.replay is not None:
+            self.replay_request = self.replay
+            self.play_sound("click")
+
+    # ===================================================== Replay-Wiedergabe
+    # Der Replay-Screen (replayview.py) baut eine ganz normale Spielinstanz
+    # und faehrt sie ueber diese drei Methoden Bild fuer Bild durch die
+    # Aufnahme - so zeichnet die Wiederholung mit demselben Code wie das
+    # Spiel selbst.
+
+    def replay_begin(self, rep):
+        """Schaltet diese Instanz auf reine Wiedergabe um."""
+        self.rec = None
+        self.replay = None
+        self.replay_request = None
+        self._rep = rep
+        self._rep_layouts = rep.get("layouts") or []
+        self._rep_at = None
+        meta = rep.get("meta") or {}
+        self.course = meta.get("course", self.course)
+        try:
+            self.tour = max(1, min(gen.TOUR_COURSES, int(meta.get("tour", 1))))
+        except (TypeError, ValueError):
+            self.tour = 1
+        self.players = max(1, min(2, int(meta.get("players", 1) or 1)))
+        self.multiplayer = self.players > 1
+        # Bahnen der Runde aus den Szenen ableiten (Reihenfolge = Spielverlauf).
+        holes, order = {}, []
+        for sc in rep.get("scenes", []):
+            h = sc.get("hole", 0)
+            if h not in holes:
+                idx = sc.get("layout", 0)
+                if 0 <= idx < len(self._rep_layouts):
+                    holes[h] = self._rep_layouts[idx]
+                    order.append(h)
+        self.holes = [holes[h] for h in order]
+        self._rep_pos = {h: i for i, h in enumerate(order)}
+        self.cards = [[0] * len(self.holes) for _ in range(self.players)]
+        self.points = [0] * self.players
+        self.state = PLAY
+        self.phase = "aim"
+        self.game_over = False
+        self.msg = None
+        self.msg_t = 0.0
+        self.charging = False
+        self.hole_idx = 0
+        self.player = 0
+        self.strokes = 0
+        self.trail = []
+        self.replay_seek(0, 0)
+
+    def replay_seek(self, index, frame):
+        """Setzt Bahn, Ball und Scorekarte auf Szene 'index', Sample 'frame'."""
+        scenes = self._rep.get("scenes", [])
+        if not scenes:
+            return
+        index = max(0, min(len(scenes) - 1, index))
+        sc = scenes[index]
+        lay = sc.get("layout", 0)
+        self.hole = (self._rep_layouts[lay]
+                     if 0 <= lay < len(self._rep_layouts) else self.hole)
+        self.hole_idx = self._rep_pos.get(sc.get("hole", 0), 0)
+        self.par = self.hole.get("par", 3)
+        self.cup = (float(self.hole["cup"][0]), float(self.hole["cup"][1]))
+        self.player = min(self.players - 1, max(0, sc.get("player", 0)))
+        self.aim = float(sc.get("aim", 0.0))
+        self.power = float(sc.get("power", 0.35))
+        self.result_key = sc.get("result")
+        self.result_pts = sc.get("pts", 0)
+
+        pts = sc.get("f") or []
+        n = max(1, len(pts) // 2)
+        frame = max(0, min(n - 1, frame))
+        self.bx, self.by = float(pts[2 * frame]), float(pts[2 * frame + 1])
+        self.trail = [(float(pts[2 * k]), float(pts[2 * k + 1]))
+                      for k in range(max(0, frame - 26), frame)]
+        rate = float(self._rep.get("rate") or replay.RATE)
+        self.mill_a = float(sc.get("mill", 0.0)) + frame / rate
+        self.move_t = float(sc.get("move", 0.0)) + frame / rate
+        # Schlagzahl + Scorekarte aus dem bisherigen Verlauf aufbauen.
+        last = (frame >= n - 1)
+        self.strokes = sc.get("after", sc.get("n", 1)) if last else sc.get("n", 1)
+        self.cards = [[0] * len(self.holes) for _ in range(self.players)]
+        self.points = [0] * self.players
+        for prev in scenes[:index] + ([sc] if last else []):
+            fin = prev.get("final")
+            p = min(self.players - 1, max(0, prev.get("player", 0)))
+            pos = self._rep_pos.get(prev.get("hole", 0))
+            if fin and pos is not None:
+                self.cards[p][pos] = fin
+                self.points[p] += prev.get("pts", 0)
+        self.msg = (t("golf.penalty") if (last and sc.get("end") == "water")
+                    else None)
+        self._rep_at = (index, frame)
+
+    def replay_draw(self, aiming=False, banner=False):
+        """Zeichnet den aktuellen Replay-Stand (ohne Menue-Overlay)."""
+        s = self.surface
+        ui.draw_background(s, self.width, self.height)
+        self._draw_course(s)
+        self._draw_ball(s)
+        if aiming:
+            self._draw_aim(s)
+        self._draw_hud(s)
+        self._draw_card(s)
+        if banner and self.result_key:
+            self._draw_hole_done(s)
 
     # ===================================================== Zeichnen
     def draw(self):
@@ -1234,13 +1419,17 @@ class MiniGolfGame(Game):
             s.blit(b, b.get_rect(center=(cx, y + self.over_y["best"])))
         # Knopfreihe: Weiter ist der hervorgehobene Standardweg.
         labels = {"next": t("golf.btn_next", course=self._next_course_label()),
-                  "again": t("golf.btn_again"), "setup": t("golf.btn_setup")}
+                  "again": t("golf.btn_again"), "setup": t("golf.btn_setup"),
+                  "replay": t("golf.btn_replay")}
         for key, rc in self.over_rects:
             self._btn(s, rc, labels[key], key == self.over_rects[0][0])
         # Tastenzeile passend zu den vorhandenen Knöpfen.
         hint_key = ("golf.continue_hint" if self._next_course()
                     else "golf.new_round")
-        hint = self._tiny.render(t(hint_key), True, ui.TEXT_DIM)
+        hint_txt = t(hint_key)
+        if self.replay is not None:
+            hint_txt += "  ·  " + t("golf.replay_hint")
+        hint = self._tiny.render(hint_txt, True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(cx, y + self.over_y["hint"])))
 
     def _draw_setup(self, s):
@@ -1307,4 +1496,9 @@ class MiniGolfGame(Game):
         im = self._small.render(text, True, col)
         if im.get_width() > rc.w - 12:     # z.B. "Weiter: Tour 12"
             im = self._tiny.render(text, True, col)
+        if im.get_width() > rc.w - 8:      # vier Knöpfe auf 480 px: kürzen
+            kurz = text
+            while len(kurz) > 2 and self._tiny.size(kurz + "...")[0] > rc.w - 8:
+                kurz = kurz[:-1]
+            im = self._tiny.render(kurz + "...", True, col)
         s.blit(im, im.get_rect(center=rc.center))

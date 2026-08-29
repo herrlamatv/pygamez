@@ -126,13 +126,59 @@
             "- settings.json: sonido, volumen, asignación de teclas, resolución, FPS y opciones de juego (p. ej. modo de Snake, ajustes de Sudoku).",
             "- mem.json: récords, el idioma elegido y el progreso de niveles de Sudoku.",
             "- mem-ngb.json: los mods visuales de Snake (color de cabeza, rejilla, banner).",
-            "Los archivos están directamente en la carpeta del juego y se pueden borrar sin más para restablecer todo."
+            "- replay.json: las repeticiones guardadas de minigolf y bolos.",
+            "Estos archivos están directamente en la carpeta del juego y basta con borrarlos para reiniciar."
           ]
         },
         {
           "h": "Consejo",
           "body": [
             "Los puntos solo se guardan si sales del juego con Volver al menú o si la partida termina normalmente - no al cerrar la ventana de golpe en plena partida."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Repeticiones",
+      "keywords": [
+        "repeticion",
+        "replay",
+        "grabacion",
+        "minigolf",
+        "bolos",
+        "archivo"
+      ],
+      "sections": [
+        {
+          "h": "¿Qué es una repetición?",
+          "body": [
+            "El minigolf y los bolos graban cada ronda: se guarda la trayectoria real de la bola y de los bolos, imagen a imagen. Por eso la repetición se ve igual que tu ronda: con el recorrido, el HUD y la tarjeta de puntos.",
+            "Solo se graba la ronda en curso. Si empiezas de nuevo, la grabación también vuelve a empezar."
+          ]
+        },
+        {
+          "h": "Guardar",
+          "body": [
+            "Si la ronda ha salido bien, pulsa [P] al final: la repetición empieza enseguida. Con [S] la guardas en el archivo y con [Esc] vuelves a la pantalla final.",
+            "Las grabaciones sin guardar desaparecen con la siguiente ronda; en el archivo caben 20 repeticiones por juego."
+          ]
+        },
+        {
+          "h": "Archivo y reproducción",
+          "body": [
+            "El botón Repeticiones de la barra lateral abre el archivo: una pestaña por juego, con resultado, fecha y duración de cada grabación.",
+            "- [Intro] reproduce, [Supr] borra (pulsa dos veces), [Tab] cambia de juego.",
+            "- Durante la reproducción, [Espacio] pausa, Izq./Der. salta al siguiente golpe o tirada y Arriba/Abajo cambia la velocidad (0,5x a 4x).",
+            "Un clic en la barra de progreso salta a cualquier punto."
+          ]
+        },
+        {
+          "h": "Desactivar",
+          "body": [
+            "En el primer inicio y en las opciones, bajo Grabación, puedes desactivar Grabar repeticiones: entonces no se graba nada.",
+            "Las grabaciones están en replay.json, en la carpeta del juego, ordenadas por juego. Puedes borrar ese archivo cuando quieras."
           ]
         }
       ]

@@ -554,6 +554,9 @@ Explosions-Effekte, Highscore.
 - **Aufnehmen ist abschaltbar**: Standardmäßig endet eine Bahn nach acht
   Schlägen und wird mit dem Mindestwert gewertet. Wer lieber bis zum Einlochen
   weiterspielt, stellt *Aufnehmen* im Setup auf AUS (oder drückt **P**).
+- **Replay der Runde**: Am Rundenende zeigt **P** (oder der Knopf **Replay**)
+  die komplette Runde noch einmal - Schlag für Schlag, mit Bahn, HUD und
+  Scorekarte. Mit **S** wandert sie ins Archiv (Sidebar-Knopf **Replays**).
 
 **Pinball**
 - **Drei Tische**: *Classic* (drei Pop-Bumper, eine Target-Bank), *Space* (vier
@@ -585,6 +588,9 @@ Explosions-Effekte, Highscore.
 - Perspektivische Bahnansicht mit Rinnen, Zielpfeilen und Pin-Deck; drei
   Schwierigkeiten (*Leicht/Normal/Pro*) verändern Pendeltempo und Streuung.
   Der Bestwert je Stufe liegt im Abschnitt `bowling` von `mem.json`.
+- **Replay der Partie**: Am Ende zeigt **P** alle Würfe noch einmal - Ball und
+  Pins genau wie geworfen; **S** legt die Aufnahme ins Archiv (Sidebar-Knopf
+  **Replays**).
 
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
@@ -620,7 +626,7 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   scrollbaren Artikeln und Tastenkappen-Chips, in allen fünf Sprachen.
   Erreichbar über den Sidebar-Button **„Wiki / Hilfe"** und aus dem
   Vorspiel-Screen jedes Spiels (öffnet direkt dessen Seite).
-- **Erfolge & Statistiken**: **83 Erfolge** in drei Kategorien - sammlungsweite
+- **Erfolge & Statistiken**: **85 Erfolge** in drei Kategorien - sammlungsweite
   Ziele (Partien, Spielzeit, Rekorde, Siege …), ein **Punkte-Meilenstein je
   Spiel** und **besondere Momente** (Schachmatt gegen die KI, KNIFFEL, die
   2048er-Kachel, ein Wordle in 2 Versuchen …). Beim Freischalten erscheint ein
@@ -629,6 +635,13 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   Gesamtspielzeit, Partien, Siegen, Rekorden, Lieblingsspiel und einer nach
   Spielzeit sortierten **Pro-Spiel-Tabelle** (Klick auf eine Zeile öffnet das
   Spiel). Erreichbar über den Sidebar-Button **„Erfolge & Statistik"**.
+- **Replays**: Minigolf und Bowling zeichnen jede Runde auf - gespeichert wird
+  die tatsächliche Bahn von Ball und Pins, Bild für Bild, nicht die Eingabe.
+  Am Rundenende zeigt **P** die Wiederholung, **S** legt sie ins Archiv; der
+  Sidebar-Button **„Replays"** öffnet es jederzeit wieder (ein Reiter je Spiel,
+  Pause, Sprung zum nächsten Schlag bzw. Wurf, Tempo 0,5x bis 4x, klickbare
+  Fortschrittsleiste, Löschen per Entf). Je Spiel passen 20 Aufnahmen ins
+  Archiv; abschaltbar beim ersten Start und in den Optionen.
 
 ### Bedienung
 
@@ -652,7 +665,8 @@ Tab-Taste):
 - **Allgemein**: **Sound** an/aus, **Lautstärke** und **Haptik**
   (Gamepad-Vibration, nur mit angeschlossenem Controller wirksam) sowie
   **Auto-Auflösung**, **Auflösung**, **FPS** und **Sprache** – jeweils per
-  Links/Rechts umschalten.
+  Links/Rechts umschalten. Unter **Aufnahme** steht **Replays aufzeichnen**:
+  aus bedeutet, dass Minigolf und Bowling nichts mitschneiden.
 - **Steuerung**: **Vorlagen** (*WASD + Pfeile*, *WASD + IJKL*, *Pfeile + WASD*)
   und **jede einzelne Taste** für Spieler 1 und Spieler 2 frei belegen:
   Zeile wählen, Enter drücken, gewünschte Taste drücken (Esc bricht ab).
@@ -692,6 +706,8 @@ store.py             Zentrale Speicherdatei mem.json (Abschnitte: mem, highscore
 stats.py             Spielerstatistiken (Partien, Spielzeit, Siege, Rekorde) je Spiel
 achievements.py      Erfolge: Definitionen, Freischalt-Logik, Toast-Einblendung
 progress.py          Erfolge-&-Statistik-Screen (zwei Reiter, scrollbar)
+replay.py            Aufzeichnung & Archiv der Wiederholungen (replay.json)
+replayview.py        Replay-Screen: Archiv-Liste und Wiedergabe
 prestige.py          Prestige-System für Snake
 competitive.py       Kennzahlen für den Competitive-Modus von Snake (Level, Slot, Wett-Äpfel)
 ngb.py               Visuelle Personalisierung ("Mods"): Kopffarbe + Koordinaten-Raster + Menü (mem-ngb.json)
@@ -1360,6 +1376,9 @@ explosion effects, high score.
 - **Pick-up can be switched off**: by default a hole ends after eight strokes
   and is scored at the minimum. If you would rather keep putting until the ball
   drops, set *Pick up* to OFF in the setup screen (or press **P**).
+- **Replay of the round**: at the end of a round **P** (or the **Replay**
+  button) shows the whole round again - shot by shot, with course, HUD and
+  scorecard. **S** puts it into the archive (sidebar button **Replays**).
 
 **Pinball**
 - **Three tables**: *Classic* (three pop bumpers, one target bank), *Space*
@@ -1391,6 +1410,9 @@ explosion effects, high score.
 - Perspective lane view with gutters, aiming arrows and the pin deck; three
   difficulties (*Easy/Normal/Pro*) change slider speed and scatter. The best
   result per difficulty lives in the `bowling` section of `mem.json`.
+- **Replay of the game**: at the end **P** shows every delivery again - ball and
+  pins exactly as they were thrown; **S** stores the recording in the archive
+  (sidebar button **Replays**).
 
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
@@ -1425,7 +1447,7 @@ packages) and styled like a modern game launcher:
   scrollable articles and keycap chips, in all five languages. Reachable via
   the **"Wiki / Help"** sidebar button and from every game's pre-game screen
   (opens that game's page directly).
-- **Achievements & statistics**: **83 achievements** in three categories -
+- **Achievements & statistics**: **85 achievements** in three categories -
   collection-wide goals (games played, play time, records, wins …), one
   **score milestone per game** and **special moments** (checkmating the AI, a
   YAHTZEE, the 2048 tile, a Wordle in 2 tries …). Unlocking shows a **golden
@@ -1434,6 +1456,13 @@ packages) and styled like a modern game launcher:
   time, games, wins, records, favourite game and a **per-game table** sorted
   by play time (clicking a row opens that game). Reachable via the
   **"Achievements & Stats"** sidebar button.
+- **Replays**: Minigolf and Bowling record every round - what is stored is the
+  actual path of ball and pins, frame by frame, not the input. At the end of a
+  round **P** shows the replay and **S** puts it into the archive; the sidebar
+  button **"Replays"** opens it again at any time (one tab per game, pause, jump
+  to the next shot or roll, speed 0.5x to 4x, clickable progress bar, delete
+  with Del). The archive holds 20 recordings per game; it can be switched off on
+  the first start and in the options.
 
 ### Controls
 
@@ -1456,6 +1485,8 @@ from the pre-game screen. It is organized into **three tabs**
 - **General**: **sound** on/off, **volume** and **haptics** (gamepad vibration,
   only effective with a connected controller) plus **auto resolution**,
   **resolution**, **FPS** and **language** – each toggled with Left/Right.
+  Under **Recording** sits **Record replays**: off means that Minigolf and
+  Bowling capture nothing.
 - **Controls**: **presets** (*WASD + Arrows*, *WASD + IJKL*, *Arrows + WASD*)
   and **rebind every single key** for player 1 and player 2: select a row,
   press Enter, press the desired key (Esc cancels).
@@ -1494,6 +1525,8 @@ store.py             Central save file mem.json (sections: mem, highscores, stat
 stats.py             Player statistics (plays, play time, wins, records) per game
 achievements.py      Achievements: definitions, unlock logic, toast overlay
 progress.py          Achievements & statistics screen (two tabs, scrollable)
+replay.py            Recording & archive of the replays (replay.json)
+replayview.py        Replay screen: archive list and playback
 prestige.py          Prestige system for Snake
 competitive.py       Tuning for Snake's Competitive mode (levels, slot machine, gamble apples)
 ngb.py               Visual personalization ("mods"): head color + coordinate grid + menu (mem-ngb.json)

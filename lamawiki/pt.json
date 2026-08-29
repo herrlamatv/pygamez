@@ -126,13 +126,59 @@
             "- settings.json: som, volume, atribuição de teclas, resolução, FPS e opções de jogo (p. ex. modo do Snake, definições do Sudoku).",
             "- mem.json: recordes, o idioma escolhido e o progresso de níveis do Sudoku.",
             "- mem-ngb.json: os mods visuais do Snake (cor da cabeça, grelha, banner).",
-            "Os ficheiros estão diretamente na pasta do jogo e podem simplesmente ser apagados para repor tudo."
+            "- replay.json: as repetições guardadas do minigolfe e do bowling.",
+            "Estes ficheiros estão diretamente na pasta do jogo e podem simplesmente ser apagados para repor tudo."
           ]
         },
         {
           "h": "Dica",
           "body": [
             "Os pontos só são guardados se saíres do jogo por Voltar ao menu ou se a partida terminar normalmente - não ao fechar a janela à força a meio do jogo."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Replays",
+      "keywords": [
+        "replay",
+        "repeticao",
+        "gravacao",
+        "minigolfe",
+        "bowling",
+        "arquivo"
+      ],
+      "sections": [
+        {
+          "h": "O que é um replay?",
+          "body": [
+            "O minigolfe e o bowling gravam cada ronda: é guardada a trajetória real da bola e dos pinos, imagem a imagem. Por isso a repetição fica exatamente como a tua ronda - com o campo, o HUD e o cartão de pontos.",
+            "Só a ronda atual é gravada. Se recomeçares, a gravação também recomeça."
+          ]
+        },
+        {
+          "h": "Guardar",
+          "body": [
+            "Se a ronda foi boa, carrega em [P] no fim - a repetição começa logo. Com [S] guardas no arquivo e com [Esc] voltas ao ecrã final.",
+            "As gravações não guardadas desaparecem na ronda seguinte; no arquivo cabem 20 replays por jogo."
+          ]
+        },
+        {
+          "h": "Arquivo e reprodução",
+          "body": [
+            "O botão Replays na barra lateral abre o arquivo: um separador por jogo, com resultado, data e duração de cada gravação.",
+            "- [Enter] reproduz, [Del] apaga (carrega duas vezes), [Tab] muda de jogo.",
+            "- Na reprodução, [Espaço] faz pausa, Esquerda/Direita salta para a tacada ou lançamento seguinte e Cima/Baixo muda a velocidade (0,5x a 4x).",
+            "Um clique na barra de progresso salta para qualquer ponto."
+          ]
+        },
+        {
+          "h": "Desligar",
+          "body": [
+            "No primeiro arranque e nas opções, em Gravação, podes desligar Gravar replays - assim nada é gravado.",
+            "As gravações ficam em replay.json na pasta do jogo, ordenadas por jogo. Podes apagar esse ficheiro quando quiseres."
           ]
         }
       ]

@@ -126,13 +126,59 @@
             "- settings.json : son, volume, touches, résolution, FPS et options de jeu (par ex. mode Snake, réglages Sudoku).",
             "- mem.json : records, langue choisie et progression des niveaux Sudoku.",
             "- mem-ngb.json : les mods visuels de Snake (couleur de tête, grille, bannière).",
-            "Les deux fichiers sont directement dans le dossier du jeu et peuvent simplement être supprimés pour tout réinitialiser."
+            "- replay.json : les rediffusions enregistrées du minigolf et du bowling.",
+            "Ces fichiers se trouvent directement dans le dossier du jeu et peuvent simplement être supprimés pour tout réinitialiser."
           ]
         },
         {
           "h": "Astuce",
           "body": [
             "Les points ne sont enregistrés que si tu quittes via Retour au menu ou si la partie se termine normalement - pas en fermant brutalement la fenêtre en pleine partie."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replays",
+      "category": "general",
+      "title": "Replays",
+      "keywords": [
+        "replay",
+        "rediffusion",
+        "enregistrement",
+        "minigolf",
+        "bowling",
+        "archive"
+      ],
+      "sections": [
+        {
+          "h": "Qu'est-ce qu'un replay ?",
+          "body": [
+            "Le minigolf et le bowling enregistrent chaque partie : ce qui est stocké, c'est la trajectoire réelle de la balle et des quilles, image par image. La rediffusion ressemble donc exactement à ta partie - avec le parcours, l'ATH et la carte de score.",
+            "Seule la partie en cours est enregistrée. Si tu recommences, l'enregistrement repart de zéro."
+          ]
+        },
+        {
+          "h": "Enregistrer",
+          "body": [
+            "Si la partie était bonne, appuie sur [P] à la fin - la rediffusion démarre aussitôt. [S] la place dans l'archive, [Échap] ramène à l'écran de fin.",
+            "Les enregistrements non sauvegardés disparaissent à la partie suivante ; l'archive contient 20 replays par jeu."
+          ]
+        },
+        {
+          "h": "Archive et lecture",
+          "body": [
+            "Le bouton Replays de la barre latérale ouvre l'archive : un onglet par jeu, avec résultat, date et durée de chaque enregistrement.",
+            "- [Entrée] lit, [Suppr] supprime (appuyer deux fois), [Tab] change de jeu.",
+            "- Pendant la lecture, [Espace] met en pause, Gauche/Droite saute au coup ou au lancer suivant, Haut/Bas change la vitesse (0,5x à 4x).",
+            "Un clic sur la barre de progression permet d'aller n'importe où."
+          ]
+        },
+        {
+          "h": "Désactiver",
+          "body": [
+            "Au premier démarrage et dans les options, sous Enregistrement, tu peux désactiver Enregistrer les replays - plus rien n'est alors capturé.",
+            "Les enregistrements se trouvent dans replay.json, dans le dossier du jeu, triés par jeu. Tu peux supprimer ce fichier quand tu veux."
           ]
         }
       ]

@@ -934,7 +934,8 @@ class App:
                                ("language", self.open_language, "🌐"),
                                ("options", self.open_options, "⚙"),
                                ("progress", self.open_progress, "🏆"),
-                               ("lamawiki", self.open_lamawiki, "📖")):
+                               ("lamawiki", self.open_lamawiki, "📖"),
+                               ("replays", self.open_replays, "🎬")):
             btn = NeoButton(menu, t("app." + key), self._with_click(cmd),
                             icon=icon, fill=C_BTN, hover=C_BTN_HOVER,
                             fg=C_TEXT, bg=C_SIDEBAR, height=28)
@@ -1273,6 +1274,31 @@ class App:
         self.show_screen(ProgressScreen(self.canvas, self.game_w, self.game_h,
                                         self, on_close=self.back_to_menu))
 
+    def open_replays(self):
+        """Öffnet das Replay-Archiv im Spielbereich (Sidebar-Knopf)."""
+        from replayview import ReplayScreen
+        self.show_screen(ReplayScreen(self.canvas, self.game_w, self.game_h,
+                                      self, on_close=self.back_to_menu))
+
+    def open_replay(self, rep, back_to=None):
+        """Zeigt eine frisch aufgenommene Wiederholung (Taste P im Spiel).
+
+        'back_to' ist das Spiel, in das der Zurück-Weg führt - es bleibt
+        dabei im Speicher stehen (Rundenende-Bildschirm), sodass Weiter/
+        Nochmal danach ganz normal funktionieren.
+        """
+        from replayview import ReplayScreen
+
+        def zurueck():
+            if back_to is not None:
+                self.show_screen(back_to)
+            else:
+                self.back_to_menu()
+
+        self.show_screen(ReplayScreen(self.canvas, self.game_w, self.game_h,
+                                      self, on_close=zurueck, pending=rep,
+                                      game=rep.get("game")))
+
     def refresh_language(self):
         """Beschriftet das Tkinter-Menü nach einem Sprachwechsel neu."""
         self.root.title(t("app.title"))
@@ -1495,6 +1521,13 @@ class App:
             self._draw_menu_screen()
         else:
             game = self.current
+            # Minigolf/Bowling können am Rundenende die Wiederholung anfordern
+            # (Taste P); der Replay-Screen wird dann zum aktiven Screen.
+            wunsch = getattr(game, "replay_request", None)
+            if wunsch:
+                game.replay_request = None
+                self.open_replay(wunsch, back_to=game)
+                game = self.current
             is_menu_screen = getattr(game, "is_menu", False)
             if not game.paused and not game.game_over:
                 game.update(dt)
