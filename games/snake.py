@@ -1455,7 +1455,7 @@ class SnakeGame(Game):
 
         Das Raster-Overlay (Schachbrett aus einer Farbreihenfolge) markiert die
         horizontalen und vertikalen Linien, damit man Reihen/Spalten auch auf
-        grossen Feldern von Weitem erkennt. Es ist statisch und wird gecacht.
+        großen Feldern von Weitem erkennt. Es ist statisch und wird gecacht.
         """
         s.fill(COL_BG)
         seq = ngb.grid_sequence()
@@ -1950,7 +1950,7 @@ class SnakeGame(Game):
                 fcy = (a[1] + b[1] + c[1]) / 3
                 fcz = (a[2] + b[2] + c[2]) / 3
                 if nx * (fcx - cx) + ny * (fcy - y) + nz * (fcz - cz) < 0:
-                    nx, ny, nz = -nx, -ny, -nz       # Normale nach aussen
+                    nx, ny, nz = -nx, -ny, -nz       # Normale nach außen
                 if nx * (fcx - px) + ny * (fcy - py) + nz * (fcz - pz) >= 0:
                     continue                         # Rückseite
                 nl = math.sqrt(nx * nx + ny * ny + nz * nz) or 1.0
@@ -1976,7 +1976,7 @@ class SnakeGame(Game):
                            COL_BORDER, sh)
 
     def _add_snake3d(self, items, sn, idx):
-        """Die Schlange als Kette aus Quadern (Kopf grösser und heller)."""
+        """Die Schlange als Kette aus Quadern (Kopf größer und heller)."""
         col_body, col_head = SNAKE_COLORS[idx % len(SNAKE_COLORS)]
         col_head = self._head_color(idx)
         if not sn.alive:
@@ -2049,7 +2049,7 @@ class SnakeGame(Game):
         for gz in range(self.rows):
             for gx in range(self.cols):
                 c00 = corner(gx, gz)
-                # grobes Cull: zu weit weg, hinter der Kamera oder seitlich draussen
+                # grobes Cull: zu weit weg, hinter der Kamera oder seitlich draußen
                 if c00[2] > lim or c00[2] < -1.8:
                     continue
                 if abs(c00[0]) > c00[2] * 1.7 + 2.5:
@@ -2197,8 +2197,8 @@ class SnakeGame(Game):
                    mult=competitive.score_multiplier(lvl)), True, COL_FOOD)
         s.blit(line, (10, 34))
         # Größe als Kommazahl (fürs Gambling weiter nutzbar), oben links.
-        groesse = self._snake_size(self.snakes[0])
-        gtxt = f"{groesse:.2f}".rstrip("0").rstrip(".")
+        größe = self._snake_size(self.snakes[0])
+        gtxt = f"{größe:.2f}".rstrip("0").rstrip(".")
         gimg = self._small.render(i18n.t("snake.comp.size", size=gtxt), True, ui.GOLD)
         s.blit(gimg, (10, 54))
         if self.spawn_bonus_t > 0 and self.spawn_bonus > 0:

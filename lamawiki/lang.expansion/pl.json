@@ -2034,7 +2034,17 @@
         "putt",
         "tour",
         "blokada",
-        "siła"
+        "siła",
+        "editor",
+        "maps",
+        "ugc",
+        "tunnel",
+        "ice",
+        "magnet",
+        "booster",
+        "share",
+        "import",
+        "export"
       ],
       "sections": [
         {
@@ -2065,7 +2075,13 @@
           "body": [
             "- Piasek mocno hamuje, rampy przyspieszają zgodnie ze strzałkami.",
             "- Woda kosztuje uderzenie karne; piłka wraca na ostatnie bezpieczne miejsce.",
-            "- Gumowe odbijacze oddają prędkość; wiatraki i ruchome bloki wymagają wyczucia czasu. Blokada siły na prawym przycisku trzyma uderzenie naładowane, aż przerwa będzie w sam raz."
+            "- Gumowe odbijacze oddają prędkość; wiatraki i ruchome bloki wymagają wyczucia czasu. Blokada siły na prawym przycisku trzyma uderzenie naładowane, aż przerwa będzie w sam raz.",
+            "- Rura: piłka znika w jednym wylocie i wychodzi drugim - kierunek i prędkość zostają zachowane.",
+            "- Lód pozwala piłce toczyć się niemal bez końca, lepkie pole zatrzymuje ją od razu.",
+            "- Przyspieszacze dają stałego kopniaka przy przejeździe, magnesy przyciągają lub odpychają.",
+            "- Bramka jednokierunkowa przepuszcza tylko zgodnie ze strzałką; z drugiej strony to ściana.",
+            "- Obrotnica porywa piłkę i wynosi ją na zewnątrz, skocznia posyła ją ponad przeszkodami.",
+            "Te osiem przeszkód dochodzi do klasycznych i można je dowolnie stawiać w edytorze dołków - patrz strona \"Własne dołki\"."
           ]
         },
         {
@@ -2073,6 +2089,62 @@
           "body": [
             "Każdy dołek daje 600 punktów plus 300 za każde uderzenie poniżej par (i 300 mniej za każde powyżej, nigdy poniżej 100).",
             "Hole in one dokłada 500 punktów. Suma wszystkich dołków to rekord; dodatkowo zapisywana jest najmniejsza liczba uderzeń na każdym polu."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minigolf-maps",
+      "category": "games",
+      "title": "Własne dołki (Minigolf)",
+      "keywords": [
+        "wlasne dolki",
+        "edytor",
+        "maps",
+        "ugc",
+        "budowanie",
+        "udostepnianie",
+        "import",
+        "eksport",
+        "szablon",
+        "minigolf"
+      ],
+      "sections": [
+        {
+          "h": "Budowanie dołka",
+          "body": [
+            "Na ekranie przygotowania minigolfa zakładka MAPS prowadzi do własnej kolekcji. \"Nowy\" otwiera edytor, \"Edytuj\" wraca do istniejącego dołka.",
+            "Każdy dołek potrzebuje nazwy i id. Id jest kluczem: małe litery, bez spacji, tylko a-z, 0-9, - i _. Jest też proponowaną nazwą pliku przy udostępnianiu.",
+            "Po lewej leży dołek, po prawej paleta z czterema narzędziami i piętnastoma typami przeszkód. Prostokąty się rozciąga, okrągłe rzeczy stawia jedno kliknięcie, rura wymaga dwóch - najpierw wejście, potem wyjście.",
+            "Narzędziem zaznaczania klik wybiera obiekt, przeciąganie go przesuwa, [Del] usuwa. Na dole pojawiają się wtedy wartości wybranego obiektu: szerokość, wysokość, promień, kierunek, prędkość i tak dalej.",
+            "U góry ustawiasz par oraz szerokość i wysokość dołka - od 60x80 do 160x240 jednostek. To, co przy zmniejszaniu wystawałoby, wsuwa się automatycznie do środka.",
+            "[G] przełącza przyciąganie do siatki, [U] cofa, [Y] ponawia, [S] zapisuje, a [Enter] od razu wypróbowuje dołek. [Esc] wraca - przy niezapisanych zmianach dopiero po potwierdzeniu."
+          ]
+        },
+        {
+          "h": "Szablony",
+          "body": [
+            "\"Szablon\" zastępuje bieżący dołek jednym z dwunastu gotowych: Pusty, Rura, Wyspa, Wiatrak, Zygzak, Woda, Odbijaki, Rampa, Lód, Labirynt, Magnes i Skok.",
+            "Każdy szablon zawsze zostawia obok swojej sztuczki normalną drogę - dołek do przejścia wyłącznie sztuczką byłby pułapką, a nie szablonem. Wszystkie dwanaście są dowiedzione jako grywalne w par.",
+            "Szablon to punkt wyjścia, a nie wynik: dostaw własne przeszkody, przesuń start i dołek, zmień rozmiar."
+          ]
+        },
+        {
+          "h": "Granie",
+          "body": [
+            "W zakładce MAPS \"Graj\" uruchamia dokładnie wybrany dołek - z własnym rekordem dla każdego dołka.",
+            "W zakładce GRA jest piąty wybór trasy, \"Własne\": wtedy cała kolekcja leci po kolei jako runda, najwyżej dziewięć dołków.",
+            "Wszystko zapisuje się w ugc.json obok gry (obok .exe w wersji skompilowanej) - w tym samym miejscu co mem.json i replay.json."
+          ]
+        },
+        {
+          "h": "Udostępnianie i import",
+          "body": [
+            "\"Udostępnij\" pyta najpierw o twoją nazwę jako twórcy, a potem o nazwę pliku; ta jest już wypełniona id dołka.",
+            "\"Eksportuj jako\" otwiera zwykłe okno zapisu, \"Do Pobranych\" odkłada plik prosto w folderze Pobrane i podaje ścieżkę. Za każdym razem eksportowany jest dokładnie jeden dołek.",
+            "Plik ma rozszerzenie .lamapgzmap i zawiera JSON - możesz go wysłać jak każdy inny plik. \"Importuj\" wczytuje go z powrotem; przy imporcie przyjmowane są też pliki .json.",
+            "Jeśli id jest już zajęte, import automatycznie dokleja -2, -3 i tak dalej, zamiast nadpisać istniejący dołek.",
+            "Nazwa dołka, id i nazwa twórcy przechodzą przez filtr słów przy zapisie, eksporcie ORAZ imporcie, a sprawdza on wszystkie 14 języków. Obraźliwe treści są odrzucane - niezależnie od ustawionego języka."
           ]
         }
       ]

@@ -2,14 +2,14 @@
 """
 hangman.py
 ==========
-Galgenmaennchen - errate das Wort, bevor der Galgen fertig ist.
+Galgenmännchen - errate das Wort, bevor der Galgen fertig ist.
 
-- Jeder falsche Buchstabe zeichnet ein weiteres Koerperteil (Kopf, Rumpf, zwei
+- Jeder falsche Buchstabe zeichnet ein weiteres Körperteil (Kopf, Rumpf, zwei
   Arme, zwei Beine); nach 6 Fehlern ist die Partie verloren.
-- Drei Modi ueber die Wortlaenge: Kurze Woerter (3-5), Gemischt (3-12) und
-  Lange Woerter (7-12).
+- Drei Modi über die Wortlänge: Kurze Wörter (3-5), Gemischt (3-12) und
+  Lange Wörter (7-12).
 - Endlos-Streak wie bei Wordle: jedes erratene Wort bringt Punkte (mehr
-  Restleben + laengeres Wort = mehr), danach kommt sofort ein neues Wort. Der
+  Restleben + längeres Wort = mehr), danach kommt sofort ein neues Wort. Der
   erste Verlust beendet die Partie - die Summe ist der Highscore.
 
 Steuerung: Buchstaben A-Z tippen oder die Bildschirmtastatur anklicken.
@@ -88,7 +88,7 @@ class HangmanGame(Game):
         kb_h = 3 * self.key_h + 4 * self.key_gap
         self.kb_top = self.height - kb_h - 6
         self._build_keyboard()
-        # Wortzeile knapp ueber der Tastatur
+        # Wortzeile knapp über der Tastatur
         self.word_y = self.kb_top - 46
         # Galgen-Bereich zwischen HUD und Wortzeile
         self.draw_top = 64

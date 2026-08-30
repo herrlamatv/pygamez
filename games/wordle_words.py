@@ -2,17 +2,17 @@
 """
 wordle_words.py
 ===============
-Kuratierte Loesungswoerter fuer das Wordle-Spiel, je Sprache.
+Kuratierte Lösungswörter für das Wordle-Spiel, je Sprache.
 
-- Alle Woerter sind genau 5 Buchstaben lang und verwenden nur A-Z (keine
+- Alle Wörter sind genau 5 Buchstaben lang und verwenden nur A-Z (keine
   Umlaute/Akzente), damit sie mit einer schlichten A-Z-Bildschirmtastatur
-  eingegeben werden koennen.
+  eingegeben werden können.
 - Als reines Python-Modul (keine externe Datei), damit die Listen auch in einem
-  mit PyInstaller gebauten .exe sicher mitgebuendelt sind - genauso wie
+  mit PyInstaller gebauten .exe sicher mitgebündelt sind - genauso wie
   maze_gen.py / sudoku_gen.py.
-- ``words_for(lang)`` liefert eine gefilterte, gross geschriebene Liste; ein
-  robuster Filter wirft stray Eintraege (falsche Laenge/Zeichen) heraus, statt
-  das Spiel zu stoeren. Fehlt eine Sprache, wird auf Englisch zurueckgegriffen.
+- ``words_for(lang)`` liefert eine gefilterte, groß geschriebene Liste; ein
+  robuster Filter wirft stray Einträge (falsche Länge/Zeichen) heraus, statt
+  das Spiel zu stören. Fehlt eine Sprache, wird auf Englisch zurückgegriffen.
 """
 
 WORDS = {
@@ -95,7 +95,7 @@ WORDS = {
 
 
 def words_for(lang):
-    """Gross geschriebene, auf gueltige 5-Buchstaben-A-Z-Woerter gefilterte Liste."""
+    """Groß geschriebene, auf gültige 5-Buchstaben-A-Z-Wörter gefilterte Liste."""
     raw = WORDS.get(lang) or WORDS.get("en", [])
     out = []
     seen = set()

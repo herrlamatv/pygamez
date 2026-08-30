@@ -2034,7 +2034,17 @@
         "udarac",
         "tour",
         "zaključavanje",
-        "snaga"
+        "snaga",
+        "editor",
+        "maps",
+        "ugc",
+        "tunnel",
+        "ice",
+        "magnet",
+        "booster",
+        "share",
+        "import",
+        "export"
       ],
       "sections": [
         {
@@ -2065,7 +2075,13 @@
           "body": [
             "- Pijesak jako koči, rampe ubrzavaju u smjeru strelica.",
             "- Voda košta kazneni udarac; loptica se vraća na posljednje sigurno mjesto.",
-            "- Gumeni odbojnici vraćaju brzinu; vjetrenjače i lutajući blokovi traže osjećaj za trenutak. Zaključavanje snage na desnoj tipki drži udarac napunjen sve dok prolaz ne bude slobodan."
+            "- Gumeni odbojnici vraćaju brzinu; vjetrenjače i lutajući blokovi traže osjećaj za trenutak. Zaključavanje snage na desnoj tipki drži udarac napunjen sve dok prolaz ne bude slobodan.",
+            "- Cijev: loptica nestane u jednom otvoru i izađe iz drugog - smjer i brzina ostaju.",
+            "- Led pušta lopticu da se kotrlja gotovo beskonačno, ljepljivo polje je odmah zaustavi.",
+            "- Ubrzivači pri prelasku daju stalan potisak, magneti privlače ili odbijaju.",
+            "- Jednosmjerna vrata propuštaju samo u smjeru strelice; s druge strane su zid.",
+            "- Okretna ploča odnosi lopticu prema van, skakaonica je šalje preko prepreka.",
+            "Ovih osam prepreka dolazi uz klasične i mogu se slobodno postavljati u uređivaču staza - vidi stranicu \"Vlastite staze\"."
           ]
         },
         {
@@ -2073,6 +2089,62 @@
           "body": [
             "Svaka staza donosi 600 bodova plus 300 za svaki udarac ispod para (i 300 manje za svaki iznad, nikad ispod 100).",
             "Hole in one donosi dodatnih 500 bodova. Zbroj svih staza je tvoj rekord; uz to se sprema najmanji broj udaraca po terenu."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minigolf-maps",
+      "category": "games",
+      "title": "Vlastite staze (Minigolf)",
+      "keywords": [
+        "vlastite staze",
+        "uredivac",
+        "maps",
+        "ugc",
+        "gradnja",
+        "dijeljenje",
+        "uvoz",
+        "izvoz",
+        "predlozak",
+        "minigolf"
+      ],
+      "sections": [
+        {
+          "h": "Gradnja staze",
+          "body": [
+            "Na pripremnom zaslonu minigolfa kartica MAPS vodi do tvoje zbirke. \"Nova\" otvara uređivač staza, \"Uredi\" ponovno uzima postojeću stazu.",
+            "Svaka staza treba naziv i id. id je ključ: mala slova, bez razmaka, samo a-z, 0-9, - i _. Ujedno je to i predloženi naziv datoteke pri dijeljenju.",
+            "Lijevo je staza, desno paleta s četiri alata i petnaest vrsta prepreka. Pravokutnici se povlače, okrugle stvari postavlja jedan klik, cijev traži dva klika - prvo ulaz, zatim izlaz.",
+            "Alatom za odabir klik bira objekt, povlačenje ga pomiče, [Del] ga briše. Dolje se tada pojavljuju vrijednosti odabranog objekta: širina, visina, polumjer, smjer, brzina i tako dalje.",
+            "Gore postavljaš par te širinu i visinu staze - od 60x80 do 160x240 jedinica. Ono što bi pri smanjenju stršilo van, automatski se pomiče unutra.",
+            "[G] uključuje i isključuje lijepljenje na mrežu, [U] poništava, [Y] ponavlja, [S] sprema, a [Enter] odmah isprobava stazu. [Esc] vraća natrag - kod nespremljenih promjena tek nakon potvrde."
+          ]
+        },
+        {
+          "h": "Predlošci",
+          "body": [
+            "\"Predložak\" zamjenjuje trenutnu stazu jednim od dvanaest gotovih: Prazna, Cijev, Otok, Vjetrenjača, Cik-cak, Voda, Odbojnici, Rampa, Led, Labirint, Magnet i Skok.",
+            "Svaki predložak uz svoj trik uvijek ostavlja i običan put - staza rješiva samo trikom bila bi zamka, a ne predložak. Svih dvanaest dokazano je igrivo u paru.",
+            "Predložak je polazište, a ne rezultat: dodaj vlastite prepreke, pomakni početak i rupu, promijeni veličinu."
+          ]
+        },
+        {
+          "h": "Igranje",
+          "body": [
+            "U kartici MAPS \"Igraj\" pokreće točno odabranu stazu - s vlastitim rekordom po stazi.",
+            "U kartici IGRA postoji peti izbor terena, \"Vlastite\": tada se cijela tvoja zbirka igra jedna za drugom kao runda, najviše devet staza.",
+            "Sve se sprema u ugc.json pored igre (kod izgrađene verzije pored .exe) - na isto mjesto kao mem.json i replay.json."
+          ]
+        },
+        {
+          "h": "Dijeljenje i uvoz",
+          "body": [
+            "\"Podijeli\" prvo pita za tvoje ime kao autora, a zatim za naziv datoteke; on je već popunjen id-om staze.",
+            "\"Izvezi kao\" otvara uobičajeni dijalog za spremanje, \"U Preuzimanja\" stavlja datoteku ravno u mapu Preuzimanja i kaže ti putanju. Svaki put se izvozi točno jedna staza.",
+            "Datoteka ima nastavak .lamapgzmap i sadrži JSON - možeš je poslati kao bilo koju drugu datoteku. \"Uvezi\" je učitava natrag; pri uvozu se prihvaćaju i .json datoteke.",
+            "Ako je id već zauzet, uvoz automatski dodaje -2, -3 i tako dalje, umjesto da prebriše tvoju postojeću stazu.",
+            "Naziv staze, id i ime autora prolaze kroz filtar riječi pri spremanju, izvozu I uvozu, a on provjerava svih 14 jezika. Uvredljiv tekst se odbija - bez obzira na trenutno postavljeni jezik."
           ]
         }
       ]

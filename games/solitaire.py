@@ -825,14 +825,14 @@ class SolitaireGame(Game):
             settings_mod.save_settings(self.settings)
 
     def _make_fonts(self):
-        """Theme-Schriften; _mono fuer die HUD-Mitte (Zeit/Zahlen ruhig)."""
+        """Theme-Schriften; _mono für die HUD-Mitte (Zeit/Zahlen ruhig)."""
         self._small = ui.font(16)
         self._tiny = ui.font(13)
         self._mono = ui.font(15, mono=True)
         self._huge = ui.font(max(26, self.height // 11), bold=True)
 
     def _rebuild_static(self):
-        """Groessenabhaengige, gecachte Flaechen (Filz, HUD, Overlay)."""
+        """Größenabhängige, gecachte Flächen (Filz, HUD, Overlay)."""
         self._felt = C.make_felt(self.width, self.height,
                                  COL_FELT, COL_FELT_EDGE)
         self._hud_bg = pygame.Surface((self.width, self.hud_h),
@@ -1224,7 +1224,7 @@ class SolitaireGame(Game):
         name = self._small.render(t("sol.mode." + self.variant.key), True,
                                   self.accent)
         s.blit(name, name.get_rect(midleft=(12, cy)))
-        # Monospace: Zeit/Zahlen aendern sich, ohne dass die Zeile "springt".
+        # Monospace: Zeit/Zahlen ändern sich, ohne dass die Zeile "springt".
         mid = self._mono.render(
             t("common.points", score=max(0, self.score)) + "   ·   "
             + t("sol.moves", n=self.moves) + "   ·   " + self._fmt_time(),

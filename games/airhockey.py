@@ -322,13 +322,13 @@ class AirHockeyGame(Game):
         if event.kind != InputEvent.KEYDOWN:
             return
 
-        gedrueckt = False
+        gedrückt = False
         for scheme in ("p1", "p2"):
             for act in ("up", "down", "left", "right"):
                 if self.is_action(event.key, act, scheme):
                     self._pressed[scheme].add(act)
-                    gedrueckt = True
-        if gedrueckt:
+                    gedrückt = True
+        if gedrückt:
             self._mouse_mode = False    # Taste gedrückt -> zurück zu Tasten
 
     def _key_dir(self, scheme):

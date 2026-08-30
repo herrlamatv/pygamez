@@ -2,14 +2,14 @@
 """
 bubbleshooter.py
 ================
-Bubble Shooter (Puzzle Bobble) - schiesse Kugeln nach oben und bilde Gruppen aus
+Bubble Shooter (Puzzle Bobble) - schieße Kugeln nach oben und bilde Gruppen aus
 mindestens drei gleichen Farben, damit sie platzen.
 
 - Das Feld ist ein versetztes Wabenraster (gerade Reihen bündig links, ungerade
   um einen halben Kugelradius nach rechts versetzt). Jede Kugel hat sechs
   Nachbarn.
 - Die Kanone unten zielt zur Maus (oder mit Pfeil links/rechts); Klick bzw.
-  Leertaste schiesst. Die Kugel prallt an den Seitenwänden ab und rastet beim
+  Leertaste schießt. Die Kugel prallt an den Seitenwänden ab und rastet beim
   Treffer in die nächste freie Wabe ein.
 - Nach dem Einrasten platzt eine gleichfarbige Gruppe ab drei Kugeln; danach
   fallen alle Kugeln, die dadurch den Halt zur Decke verlieren (Bonuspunkte).

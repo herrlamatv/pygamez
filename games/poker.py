@@ -2,7 +2,7 @@
 """
 poker.py
 ========
-Poker - drei waehlbare Varianten (Modusauswahl im Vorspiel):
+Poker - drei wählbare Varianten (Modusauswahl im Vorspiel):
 
 - Texas Hold'em: gegen 1-3 KI-Gegner, mit Dealer-Button, Small/Big Blind und
   vier Setzrunden (Preflop, Flop, Turn, River). Aktionen: Fold, Check, Call,
@@ -10,14 +10,14 @@ Poker - drei waehlbare Varianten (Modusauswahl im Vorspiel):
 - 5 Card Draw: Heads-up gegen die KI. Ante, eine Setzrunde, Karten tauschen,
   zweite Setzrunde, Showdown.
 - Video Poker (Jacks or Better): Solo gegen die Auszahlungstabelle. Einsatz,
-  fuenf Karten, Halten waehlen, ziehen, Auszahlung nach Tabelle.
+  fünf Karten, Halten wählen, ziehen, Auszahlung nach Tabelle.
 
-Chips: Start 1000, bleiben ueber Sitzungen erhalten (mem.json, Abschnitt
-"poker"). Der Highscore ist der hoechste je erreichte Chipstand (game_over wird
-nie gesetzt; die Sicherung erfolgt beim Menue-Rueckweg). Pleite = Neustart.
+Chips: Start 1000, bleiben über Sitzungen erhalten (mem.json, Abschnitt
+"poker"). Der Highscore ist der höchste je erreichte Chipstand (game_over wird
+nie gesetzt; die Sicherung erfolgt beim Menü-Rückweg). Pleite = Neustart.
 
-Vereinfachung: Bei All-In wird EIN gemeinsamer Haupt-Pot gefuehrt (keine
-Side-Pots) - fuer ein lockeres Spiel gegen die KI voellig ausreichend.
+Vereinfachung: Bei All-In wird EIN gemeinsamer Haupt-Pot geführt (keine
+Side-Pots) - für ein lockeres Spiel gegen die KI völlig ausreichend.
 
 Steuerung: Buttons anklicken oder F = Fold, C = Check/Call, R = Raise,
 A = All-In, Enter/Leertaste = Geben/Weiter, 1-5 = Karte halten/tauschen.
@@ -36,7 +36,7 @@ from i18n import t
 
 from . import cards as C
 
-# ---- Tisch-Identität (gruener Filz, leicht entsaettigt).
+# ---- Tisch-Identität (grüner Filz, leicht entsättigt).
 #      Alle generischen UI-Farben kommen zur Zeichenzeit aus ui.* (Theme),
 #      die Akzentfarbe (Gold) aus self.accent (= Sidebar-Farbe).
 COL_FELT = (20, 50, 39)
@@ -48,7 +48,7 @@ BIG_BLIND = 20
 ANTE = 10
 VIDEO_BETS = (10, 25, 50)
 
-# Kategorien (hoeher = besser)
+# Kategorien (höher = besser)
 HIGH, PAIR, TWO_PAIR, TRIPS, STRAIGHT, FLUSH, FULL_HOUSE, QUADS, STR_FLUSH = range(9)
 CAT_KEY = {
     HIGH: "high_card", PAIR: "pair", TWO_PAIR: "two_pair", TRIPS: "trips",
@@ -58,7 +58,7 @@ CAT_KEY = {
 
 # Video-Poker-Auszahlung (Jacks or Better), Multiplikator auf den Einsatz.
 VIDEO_PAYOUT = [
-    (STR_FLUSH, "royal", 250),          # Sonderfall Royal Flush (unten geprueft)
+    (STR_FLUSH, "royal", 250),          # Sonderfall Royal Flush (unten geprüft)
     (STR_FLUSH, None, 50),
     (QUADS, None, 25),
     (FULL_HOUSE, None, 9),
@@ -75,7 +75,7 @@ def _val(card):
 
 
 def eval5(cards):
-    """Bewertet genau 5 Karten -> vergleichbares Tupel (hoeher = besser)."""
+    """Bewertet genau 5 Karten -> vergleichbares Tupel (höher = besser)."""
     vals = sorted((_val(c) for c in cards), reverse=True)
     suits = [c.suit for c in cards]
     counts = Counter(vals)
@@ -140,7 +140,7 @@ def category_key(rank_tuple):
 
 
 def hand_strength(cards):
-    """Grober Staerke-Score 0..1 fuer die KI (Kategorie + hoechste Karte)."""
+    """Grober Stärke-Score 0..1 für die KI (Kategorie + höchste Karte)."""
     rt, _ = best_hand(cards)
     top = rt[1] if len(rt) > 1 and isinstance(rt[1], int) else 10
     if isinstance(rt[1], tuple):
@@ -149,7 +149,7 @@ def hand_strength(cards):
 
 
 def preflop_strength(hole):
-    """Hole-Card-Staerke 0..1 fuer Texas Hold'em (Chen-artig, normiert)."""
+    """Hole-Card-Stärke 0..1 für Texas Hold'em (Chen-artig, normiert)."""
     a, b = hole
     va, vb = _val(a), _val(b)
     hi, lo = max(va, vb), min(va, vb)
@@ -253,7 +253,7 @@ class PokerGame(Game):
             self.phase = BROKE
 
     def _make_fonts(self):
-        """Theme-Schriften (ui.font cached selbst); _huge haengt an height."""
+        """Theme-Schriften (ui.font cached selbst); _huge hängt an height."""
         self._small = ui.font(15)
         self._tiny = ui.font(13)
         self._big = ui.font(22, bold=True)
@@ -268,7 +268,7 @@ class PokerGame(Game):
         self.ch = int(self.height * 0.19)
         self.cw = int(self.ch * 0.72)
         self.strip = pygame.Rect(0, self.height - 66, self.width, 66)
-        # Gecachte Flaechen (Software-Rendering: nicht pro Frame neu bauen)
+        # Gecachte Flächen (Software-Rendering: nicht pro Frame neu bauen)
         self._felt = C.make_felt(self.width, self.height,
                                  COL_FELT, COL_FELT_EDGE)
         self._strip_bg = pygame.Surface(self.strip.size, pygame.SRCALPHA)
@@ -295,7 +295,7 @@ class PokerGame(Game):
         store.save_section("poker", {"chips": self.chips, "best": self.best})
 
     def _sync_chips(self):
-        """Uebernimmt den Table-Stack des Menschen zurueck in die Bank."""
+        """Übernimmt den Table-Stack des Menschen zurück in die Bank."""
         me = self.players[0] if self.players else None
         if me is not None:
             self.chips = me.stack
@@ -393,7 +393,7 @@ class PokerGame(Game):
 
     # ===================================================== Setzrunde
     def _begin_turn(self):
-        """Setzt act_delay fuer die KI oder wartet auf den Menschen."""
+        """Setzt act_delay für die KI oder wartet auf den Menschen."""
         contenders = [p for p in self.players if not p.folded]
         if len(contenders) <= 1:
             self._end_hand()
@@ -444,7 +444,7 @@ class PokerGame(Game):
             self._post(p, target - p.round_bet)
             self.min_raise = max(self.min_raise, target - self.current_bet)
             self.current_bet = max(self.current_bet, p.round_bet)
-            # alle anderen aktiven muessen erneut handeln
+            # alle anderen aktiven müssen erneut handeln
             self.to_act_set = {i for i, q in enumerate(self.players)
                                if not q.folded and not q.all_in and i != self.turn}
             self.play_sound("point")
@@ -479,7 +479,7 @@ class PokerGame(Game):
 
     def _next_street(self):
         actionable = [p for p in self.players if not p.folded and not p.all_in]
-        # Wenn <=1 handlungsfaehig: restliche Karten aufdecken, Showdown.
+        # Wenn <=1 handlungsfähig: restliche Karten aufdecken, Showdown.
         fast = len(actionable) <= 1
         if self.street == "preflop":
             self.community = [self._draw() for _ in range(3)]
@@ -541,7 +541,7 @@ class PokerGame(Game):
         self._begin_turn()
 
     def _ai_draw(self, p):
-        """KI entscheidet, welche Karten sie behaelt (einfache Heuristik)."""
+        """KI entscheidet, welche Karten sie behält (einfache Heuristik)."""
         vals = [_val(c) for c in p.hole]
         counts = Counter(vals)
         suits = Counter(c.suit for c in p.hole)
@@ -574,7 +574,7 @@ class PokerGame(Game):
                 strength = hand_strength(p.hole + self.community)
         else:
             strength = hand_strength(p.hole)
-        # Schwierigkeit steuert Aggressivitaet / Bluff.
+        # Schwierigkeit steuert Aggressivität / Bluff.
         aggro = (0.05, 0.14, 0.22)[self.ai_level]
         bluff = (0.03, 0.06, 0.10)[self.ai_level]
         r = random.random()
@@ -629,7 +629,7 @@ class PokerGame(Game):
         self.phase = SHOWDOWN
 
     def _end_hand(self):
-        """Nur noch ein Spieler uebrig (alle anderen gefoldet)."""
+        """Nur noch ein Spieler übrig (alle anderen gefoldet)."""
         contenders = [p for p in self.players if not p.folded]
         self._award(contenders, None)
         self.phase = SHOWDOWN
@@ -801,8 +801,8 @@ class PokerGame(Game):
                 on_confirm()
         elif event.kind == InputEvent.MOUSEDOWN:
             # WICHTIG: dieselben Rechtecke wie beim Zeichnen verwenden
-            # (center=True verschob die Klickflaechen im Draw-Modus nach
-            # unten und liess Klicks auf die Karten ins Leere gehen).
+            # (center=True verschob die Klickflächen im Draw-Modus nach
+            # unten und ließ Klicks auf die Karten ins Leere gehen).
             for i, rect in enumerate(self._hole_rects(me)):
                 if rect.collidepoint(event.pos):
                     self.holds.symmetric_difference_update({i})

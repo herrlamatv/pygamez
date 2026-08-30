@@ -184,7 +184,7 @@ def totals():
         total["wins"] += entry.get("wins", 0)
         total["losses"] += entry.get("losses", 0)
         total["records"] += entry.get("records", 0)
-        # "Ausprobiert" heisst: mindestens eine Partie gestartet/gespielt.
+        # "Ausprobiert" heißt: mindestens eine Partie gestartet/gespielt.
         if plays > 0 or entry.get("time", 0.0) > 0:
             total["distinct"] += 1
         if entry.get("wins", 0) > 0:

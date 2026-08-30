@@ -291,7 +291,7 @@ class OptionsScreen(_Screen):
             # Replay-Aufzeichnung (eigene kleine Gruppe unter dem Ton-Block).
             y += 18 if compact else 30
             # Bei schmaler Spalte die Kurzform ("Replays") nehmen, sonst
-            # ueberlappt die Beschriftung den AN/AUS-Wert.
+            # überlappt die Beschriftung den AN/AUS-Wert.
             lbl = t("options.replays")
             if self.font.size(lbl)[0] > col_w - 76:
                 lbl = t("app.replays")
@@ -361,7 +361,7 @@ class OptionsScreen(_Screen):
                                          104 + row * (ch + gap), cw, ch),
                     theme=theme)
 
-        # Schliessen-Button unten (auf jedem Reiter sichtbar).
+        # Schließen-Button unten (auf jedem Reiter sichtbar).
         add("button", pygame.Rect(W // 2 - 190, H - 44, 380, 34),
             label=t("options.save_back"), on_activate=self._close)
 

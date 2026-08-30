@@ -5,7 +5,7 @@ game2048.py
 2048 - das Zahlen-Schiebespiel.
 
 - Steuerung: Pfeiltasten (oder WASD) schieben alle Kacheln in eine Richtung.
-  Gleiche Zahlen, die zusammenstossen, verschmelzen zur Summe (gibt Punkte).
+  Gleiche Zahlen, die zusammenstoßen, verschmelzen zur Summe (gibt Punkte).
 - Nach jedem gültigen Zug erscheint eine neue Kachel (2 oder 4).
 - Ziel: die 2048er-Kachel erreichen. Man kann danach weiterspielen.
 - Kein Zug mehr möglich -> Game Over.
@@ -214,7 +214,7 @@ class Game2048(Game):
                 pygame.draw.rect(s, farbe, (x, y, self.cell, self.cell),
                                  border_radius=6)
                 if wert:
-                    # dunkler Text für kleine Zahlen, heller für grosse.
+                    # dunkler Text für kleine Zahlen, heller für große.
                     tcol = COL_TILE_TEXT_DARK if wert <= 4 else COL_TILE_TEXT
                     f = self._tile_fonts[0 if wert < 100 else (1 if wert < 1000 else 2)]
                     img = f.render(str(wert), True, tcol)

@@ -1,0 +1,79 @@
+# Wortfilter - English (en)
+# ===========================================================================
+# Je Eintrag zwei Zeilen: zuerst das Regex-Muster (- ...), darunter das
+# gemeinte Wort als Kommentar (# ...). Geprüft wird ohne Rücksicht auf
+# Groß-/Kleinschreibung; ungültige Muster werden still übersprungen.
+#
+# Die Muster halten eingestreute Sonderzeichen und Ziffern aus
+# ([^\sa-zA-Z]* - bewusst OHNE Leerzeichen, sonst liefe ein Muster über
+# Wortgrenzen hinweg; nur zwischen zwei Wörtern sind Leerzeichen erlaubt),
+# erlauben Buchstabenwiederholung (f+) und die üblichen Leetspeak-Ersetzungen
+# ([a4@], [e3], [i1!|], [o0], [s5$] ...). Vor dem Vergleich entfernt
+# swear._norm Akzente und macht aus "-" und "_" Leerzeichen - deshalb stehen
+# die Wörter hier in ASCII-Schreibweise.
+#
+# Geprüft werden Map-Name, Map-ID und Creator-Name (siehe swear.py, ugc.py).
+# Bearbeitet wird die Liste einfach hier: eine Regex-Zeile, darunter das Wort.
+
+- \b(f+[^\sa-zA-Z]*u+[^\sa-zA-Z]*c+[^\sa-zA-Z]*k+)(?=[^\s]*\b)
+# fuck
+- \b([s5$]+[^\sa-zA-Z]*h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+)(?=[^\s]*\b)
+# shit
+- \b([b8]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*h+)(?=[^\s]*\b)
+# bitch
+- \b(c+[^\sa-zA-Z]*u+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[t7+]+)(?=[^\s]*\b)
+# cunt
+- \b([a4@]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*h+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+)(?=[^\s]*\b)
+# asshole
+- \b([a4@]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*h+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+)(?=[^\s]*\b)
+# arsehole
+- \b(d+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*k+)\b
+# dick
+- \b(d+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*k+[^\sa-zA-Z]*h+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*d+)(?=[^\s]*\b)
+# dickhead
+- \b(c+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*k+)\b
+# cock
+- \b(p+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*y+)(?=[^\s]*\b)
+# pussy
+- \b(w+[^\sa-zA-Z]*h+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[e3]+)(?=[^\s]*\b)
+# whore
+- \b([b8]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*d+)(?=[^\s]*\b)
+# bastard
+- \b(n+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# nigger
+- \b(n+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*[a4@]+)\b
+# nigga
+- \b(f+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[t7+]+)(?=[^\s]*\b)
+# faggot
+- \b(f+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[g9]+)\b
+# fag
+- \b(r+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*d+)(?=[^\s]*\b)
+# retard
+- \b(w+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# wanker
+- \b([t7+]+[^\sa-zA-Z]*w+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[t7+]+)\b
+# twat
+- \b(m+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*h+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*f+[^\sa-zA-Z]*u+[^\sa-zA-Z]*c+[^\sa-zA-Z]*k+)(?=[^\s]*\b)
+# motherfuck
+- \b([b8]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[s5$]+)(?=[^\s]*\b)
+# bollocks
+- \b(p+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[s5$]+)\b
+# piss
+- \b(r+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[e3]+)\b
+# rape
+- \b(r+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[t7+]+)(?=[^\s]*\b)
+# rapist
+- \b(n+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*[i1!|]+)\b
+# nazi
+- \b(h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# hitler
+- \b(p+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+)(?=[^\s]*\b)
+# pedophile
+- \b(p+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[o0]+)\b
+# pedo
+- \b(j+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*k+[\W\d_]*[o0]+[^\sa-zA-Z]*f+[^\sa-zA-Z]*f+)\b
+# jerk off
+- \b(c+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*c+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# cocksucker
+- \b(d+[^\sa-zA-Z]*u+[^\sa-zA-Z]*m+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[s5$]+)(?=[^\s]*\b)
+# dumbass

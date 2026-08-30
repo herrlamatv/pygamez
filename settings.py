@@ -150,11 +150,13 @@ DEFAULTS = {
     # Texturdetail der Minecraft-Optik (high/low/off)
     "blockjump": {"view": "first", "blur": 0.35, "sens": 1.0,
                   "mouse_invert": False, "textures": "high"},
-    # Minigolf: Kurs (classic/pro/tour/random), Tour-Kursnummer, Ziellinie
+    # Minigolf: Kurs (classic/pro/tour/random/ugc), Tour-Kursnummer, Ziellinie
     # an/aus, "Autoziel" (Schläger zeigt vor jedem Schlag von selbst zum Loch)
-    # an/aus und "Aufnehmen" (Bahn nach 8 Schlägen beenden) an/aus
+    # an/aus und "Aufnehmen" (Bahn nach 8 Schlägen beenden) an/aus.
+    # ugc_map = id der zuletzt einzeln gespielten eigenen Bahn (siehe ugc.py),
+    # grid = Rasterfang im Bahn-Editor.
     "minigolf": {"course": "classic", "tour": 1, "guide": True,
-                 "autoaim": True, "pickup": True},
+                 "autoaim": True, "pickup": True, "ugc_map": "", "grid": True},
     # Pinball: Tisch (classic/space/lama) und Bälle je Partie (3/5)
     "pinball": {"table": "classic", "balls": 3},
     # Bowling: Schwierigkeit (easy/normal/pro) und Zielhilfe an/aus
@@ -345,7 +347,7 @@ def _merge_defaults(data):
                 out["blockjump"]["textures"] = blj["textures"]
         mg = data.get("minigolf")
         if isinstance(mg, dict):
-            if mg.get("course") in ("classic", "pro", "tour", "random"):
+            if mg.get("course") in ("classic", "pro", "tour", "random", "ugc"):
                 out["minigolf"]["course"] = mg["course"]
             if isinstance(mg.get("tour"), int):
                 out["minigolf"]["tour"] = max(1, min(38, mg["tour"]))
@@ -355,6 +357,12 @@ def _merge_defaults(data):
                 out["minigolf"]["autoaim"] = mg["autoaim"]
             if isinstance(mg.get("pickup"), bool):
                 out["minigolf"]["pickup"] = mg["pickup"]
+            # Eigene Bahnen: zuletzt gespielte/bearbeitete id und der
+            # Rasterfang des Editors.
+            if isinstance(mg.get("ugc_map"), str):
+                out["minigolf"]["ugc_map"] = mg["ugc_map"][:32]
+            if isinstance(mg.get("grid"), bool):
+                out["minigolf"]["grid"] = mg["grid"]
         pin = data.get("pinball")
         if isinstance(pin, dict):
             if pin.get("table") in ("classic", "space", "lama"):

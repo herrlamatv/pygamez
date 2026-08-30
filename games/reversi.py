@@ -6,13 +6,13 @@ Reversi (Othello) - 1 Spieler gegen KI oder 2 Spieler lokal.
 
 - Klassisches 8x8-Brett mit der Standard-Startstellung (vier Steine im Zentrum).
 - Ein Zug ist nur erlaubt, wenn er mindestens eine gegnerische Kette in gerader
-  Linie einschliesst; alle eingeschlossenen Steine werden umgedreht.
-- Hat ein Spieler keinen gueltigen Zug, wird automatisch gepasst; hat KEIN
+  Linie einschließt; alle eingeschlossenen Steine werden umgedreht.
+- Hat ein Spieler keinen gültigen Zug, wird automatisch gepasst; hat KEIN
   Spieler einen Zug, endet die Partie. Sieger = mehr Steine auf dem Brett.
-- Einzelspieler: KI mit drei Staerken (easy/medium/hard) ueber Negamax mit
+- Einzelspieler: KI mit drei Stärken (easy/medium/hard) über Negamax mit
   Alpha-Beta-Schnitt und positionsgewichteter Bewertung (Ecken hoch, X-/C-Felder
-  negativ) plus Mobilitaet; easy patzt absichtlich.
-- Mehrspieler: Schwarz gegen Weiss abwechselnd am selben Rechner.
+  negativ) plus Mobilität; easy patzt absichtlich.
+- Mehrspieler: Schwarz gegen Weiß abwechselnd am selben Rechner.
 - Punkte (Highscore) = kumulierte Siege gegen die KI in einer Sitzung
   (connect4-Konvention); Mehrspieler wird nicht gewertet.
 
@@ -30,15 +30,15 @@ import ui
 from game_base import Game, InputEvent
 from i18n import t
 
-# Identitaetsfarben des Spiels (bewusst fest, unabhaengig vom Theme):
-# das gruene Brett und die Schwarz/Weiss-Steine SIND Reversi.
+# Identitätsfarben des Spiels (bewusst fest, unabhängig vom Theme):
+# das grüne Brett und die Schwarz/Weiß-Steine SIND Reversi.
 COL_BOARD = (28, 92, 58)
 COL_BOARD_DARK = (22, 74, 46)
 COL_GRID = (16, 54, 34)
 COL_PLATE = (18, 40, 28)
 COL_P1 = (30, 33, 42)         # Schwarz (Spieler 0)
 COL_P1_HI = (78, 84, 100)
-COL_P2 = (238, 240, 246)      # Weiss (Spieler 1)
+COL_P2 = (238, 240, 246)      # Weiß (Spieler 1)
 COL_P2_HI = (255, 255, 255)
 COL_HINT = (90, 200, 150)
 
@@ -48,8 +48,8 @@ DEPTHS = [1, 3, 4]
 N = 8
 DIRS = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
 
-# Positionsgewichte fuer die KI-Bewertung (Ecken sehr wertvoll, Nachbarfelder
-# der Ecken gefaehrlich). Symmetrisches 8x8-Raster.
+# Positionsgewichte für die KI-Bewertung (Ecken sehr wertvoll, Nachbarfelder
+# der Ecken gefährlich). Symmetrisches 8x8-Raster.
 WEIGHTS = [
     [120, -20, 20,  5,  5, 20, -20, 120],
     [-20, -40, -5, -5, -5, -5, -40, -20],
@@ -70,7 +70,7 @@ def _rgba(color, alpha):
 
 
 def _flips_for(board, r, c, pv):
-    """Liste der Steine, die ein Zug (r,c) fuer Spielerwert pv umdreht (leer=illegal)."""
+    """Liste der Steine, die ein Zug (r,c) für Spielerwert pv umdreht (leer=illegal)."""
     if board[r][c] != 0:
         return []
     opp = 3 - pv
@@ -88,7 +88,7 @@ def _flips_for(board, r, c, pv):
 
 
 def _legal_moves(board, pv):
-    """dict {(r,c): [flips]} aller gueltigen Zuege fuer Spielerwert pv."""
+    """dict {(r,c): [flips]} aller gültigen Züge für Spielerwert pv."""
     moves = {}
     for r in range(N):
         for c in range(N):
@@ -139,7 +139,7 @@ class ReversiGame(Game):
         self.state = PLAY if self.multiplayer else SETUP
 
     def _make_fonts(self):
-        """Theme-Schriften, Groessen aus der Fensterhoehe abgeleitet."""
+        """Theme-Schriften, Größen aus der Fensterhöhe abgeleitet."""
         self._small = ui.font(max(13, min(22, self.height // 30)))
         self._tiny = ui.font(max(11, min(18, self.height // 38)))
         self._huge = ui.font(max(26, self.height // 11), bold=True)
@@ -302,7 +302,7 @@ class ReversiGame(Game):
             self.moves = other_moves
             self.ai_delay = 0.35
             return
-        # Gegner muss passen - hat der aktuelle Spieler noch Zuege?
+        # Gegner muss passen - hat der aktuelle Spieler noch Züge?
         self_moves = _legal_moves(self.board, self.player + 1)
         if self_moves:
             self.moves = self_moves
@@ -365,11 +365,11 @@ class ReversiGame(Game):
         self._advance_turn()
 
     def _ai_move(self):
-        """Waehlt den KI-Zug (Spielerwert 2) je nach Staerke."""
+        """Wählt den KI-Zug (Spielerwert 2) je nach Stärke."""
         moves = list(self.moves.keys())
         if not moves:
             return None
-        # easy: meist zufaellig, gelegentlich gierig.
+        # easy: meist zufällig, gelegentlich gierig.
         if self.diff == 0:
             if random.random() < 0.6:
                 return random.choice(moves)
@@ -435,7 +435,7 @@ class ReversiGame(Game):
         return 0
 
     def _evaluate(self, board):
-        """Positionsgewichtung + Mobilitaet, aus Sicht der KI (Wert 2)."""
+        """Positionsgewichtung + Mobilität, aus Sicht der KI (Wert 2)."""
         score = 0
         for r in range(N):
             for c in range(N):
@@ -475,7 +475,7 @@ class ReversiGame(Game):
         plate = pygame.Rect(self.bx - 8, self.by - 8, self.bw + 16, self.bh + 16)
         pygame.draw.rect(s, COL_PLATE, plate, border_radius=10)
 
-        # Felder (Schachbrett-Gruen) + Rasterlinien
+        # Felder (Schachbrett-Grün) + Rasterlinien
         for r in range(N):
             for c in range(N):
                 x = self.bx + c * self.cell
@@ -490,7 +490,7 @@ class ReversiGame(Game):
 
         human_turn = self.state == PLAY and (self.multiplayer or self.player == 0)
 
-        # Zughinweise (kleine Punkte) fuer den steuerbaren Spieler
+        # Zughinweise (kleine Punkte) für den steuerbaren Spieler
         if human_turn:
             for (r, c) in self.moves:
                 cx = self.bx + c * self.cell + self.cell // 2
@@ -532,7 +532,7 @@ class ReversiGame(Game):
         pygame.draw.line(s, ui.BORDER, (0, self.hud_h), (self.width, self.hud_h))
         cy = self.hud_h // 2
         a, b = _count(self.board)
-        # Stein-Zaehler links (Schwarz) und rechts (Weiss)
+        # Stein-Zähler links (Schwarz) und rechts (Weiß)
         pygame.draw.circle(s, COL_P1, (18, cy), 9)
         pygame.draw.circle(s, COL_P1_HI, (15, cy - 3), 3)
         pygame.draw.circle(s, ui.BORDER_LIGHT, (18, cy), 9, 1)

@@ -22,26 +22,26 @@ Willkommens-Screen beim ersten Start und jederzeit in den Optionen.
 
 Wie ein Replay aussieht
 -----------------------
-Aufgezeichnet wird NICHT die Eingabe (Physik mit Zufall liesse sich nicht
-exakt nachrechnen), sondern die tatsaechliche BAHN der Objekte - Bild fuer
+Aufgezeichnet wird NICHT die Eingabe (Physik mit Zufall ließe sich nicht
+exakt nachrechnen), sondern die tatsächliche BAHN der Objekte - Bild für
 Bild in einem festen Zeitraster (``RATE`` Samples je Sekunde). Damit sieht
 die Wiederholung immer genau so aus wie die gespielte Runde, auch wenn sich
-die Physik in einer spaeteren Version aendert.
+die Physik in einer späteren Version ändert.
 
 Ein Replay ist ein dict::
 
     {"v": 1,                       # Format-Version
-     "id": "minigolf-2026...",     # eindeutig (zum Speichern/Loeschen)
+     "id": "minigolf-2026...",     # eindeutig (zum Speichern/Löschen)
      "game": "minigolf",           # Spiel (= Unterkategorie)
      "date": "2026-08-29 14:12",   # Aufnahmezeitpunkt
-     "title": "Tour 3",            # Kurzname fuer die Liste
+     "title": "Tour 3",            # Kurzname für die Liste
      "sub":   "29 (-2)",           # Zweitzeile (fertiger Text)
      "rate": 30,                   # Samples je Sekunde
-     "meta": {...},                # spielabhaengige Kopfdaten
+     "meta": {...},                # spielabhängige Kopfdaten
      "layouts": [...],             # optionale Kulissen (Minigolf: Bahnen)
      "scenes": [ {...}, ... ]}     # die Sequenzen (Schlag bzw. Wurf)
 
-Jede Szene enthaelt ihre Kopfdaten (welche Bahn, welcher Spieler, welches
+Jede Szene enthält ihre Kopfdaten (welche Bahn, welcher Spieler, welches
 Ergebnis) und unter "f" die Samples: bei Minigolf eine flache Zahlenliste
 (x, y, x, y, ...), bei Bowling je Sample eine Liste
 [ball_x, ball_y, drehung, pin_i, x, y, gefallen, ...] - Pins stehen nur
@@ -65,7 +65,7 @@ import sys
 import time
 
 # Zeitraster der Aufnahme: 30 Samples je Sekunde. Feiner lohnt nicht (das
-# Auge sieht es nicht), groeber ruckelt bei schnellen Baellen.
+# Auge sieht es nicht), gröber ruckelt bei schnellen Bällen.
 RATE = 30
 STEP = 1.0 / RATE
 
@@ -75,15 +75,15 @@ VERSION = 1
 # Spiele mit Aufzeichnung = die Unterkategorien in replay.json.
 GAMES = ("minigolf", "bowling")
 
-# Je Spiel hoechstens so viele gespeicherte Replays (danach meldet
-# save_replay() "voll" - geloescht wird nur auf Wunsch im Replay-Screen).
+# Je Spiel höchstens so viele gespeicherte Replays (danach meldet
+# save_replay() "voll" - gelöscht wird nur auf Wunsch im Replay-Screen).
 MAX_PER_GAME = 20
 
 # Sicherheitsnetz gegen Endlos-Partien: mehr Samples werden nicht
 # aufgezeichnet, die Aufnahme wird dann still verworfen.
 MAX_SAMPLES = 60000
 
-# In einer PyInstaller-.exe (sys.frozen) zeigt __file__ in den temporaeren
+# In einer PyInstaller-.exe (sys.frozen) zeigt __file__ in den temporären
 # Entpack-Ordner, der beim Beenden verschwindet - dann neben der .exe.
 if getattr(sys, "frozen", False):
     _DIR = os.path.dirname(sys.executable)
@@ -121,11 +121,11 @@ def _read_raw():
 
 
 def _write_raw(data):
-    """Schreibt die ganze Datei zurueck (Fehler werden bewusst ignoriert).
+    """Schreibt die ganze Datei zurück (Fehler werden bewusst ignoriert).
 
     "_generated" (Anlege-Datum) steht immer als erster Eintrag; ein bereits
     vorhandener Stempel bleibt erhalten. Gespeichert wird kompakt (ohne
-    Einrueckung) - Replays sind Rohdaten, keine Datei zum Handbearbeiten.
+    Einrückung) - Replays sind Rohdaten, keine Datei zum Handbearbeiten.
     """
     stamp = data.get("_generated")
     if not (isinstance(stamp, str) and stamp):
@@ -141,12 +141,12 @@ def _write_raw(data):
             json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
         return True
     except OSError:
-        # Ohne Schreibrechte laeuft alles weiter - nur eben ohne Archiv.
+        # Ohne Schreibrechte läuft alles weiter - nur eben ohne Archiv.
         return False
 
 
 def _valid(rep):
-    """Grobpruefung eines geladenen Replays (beschaedigte werden uebersprungen)."""
+    """Grobprüfung eines geladenen Replays (beschädigte werden übersprungen)."""
     return (isinstance(rep, dict) and isinstance(rep.get("scenes"), list)
             and rep["scenes"] and isinstance(rep.get("id"), str)
             and rep.get("game") in GAMES)
@@ -161,7 +161,7 @@ def load_game(game):
 
 
 def load_all():
-    """{spiel: [replay, ...]} fuer alle Spiele mit Aufzeichnung."""
+    """{spiel: [replay, ...]} für alle Spiele mit Aufzeichnung."""
     raw = _read_raw()
     out = {}
     for game in GAMES:
@@ -181,7 +181,7 @@ def is_full(game):
 
 
 def save_replay(rep):
-    """Speichert ein Replay dauerhaft. Gibt (ok, grund) zurueck.
+    """Speichert ein Replay dauerhaft. Gibt (ok, grund) zurück.
 
     grund ist "" bei Erfolg, sonst "full" (Archiv voll), "invalid" oder
     "io" (Datei nicht schreibbar).
@@ -202,7 +202,7 @@ def save_replay(rep):
 
 
 def delete_replay(game, rep_id):
-    """Loescht ein gespeichertes Replay. True, wenn etwas entfernt wurde."""
+    """Löscht ein gespeichertes Replay. True, wenn etwas entfernt wurde."""
     data = _read_raw()
     items = data.get(game)
     if not isinstance(items, list):
@@ -220,7 +220,7 @@ def is_saved(game, rep_id):
 
 
 def scene_len(scene):
-    """Anzahl Samples einer Szene (flach gespeicherte zaehlen paarweise)."""
+    """Anzahl Samples einer Szene (flach gespeicherte zählen paarweise)."""
     f = scene.get("f")
     if not isinstance(f, list):
         return 0
@@ -237,7 +237,7 @@ def duration(rep):
 
 
 def format_duration(seconds):
-    """Sekunden -> "1:05" (sprachneutral, fuer Listen und die Leiste)."""
+    """Sekunden -> "1:05" (sprachneutral, für Listen und die Leiste)."""
     seconds = max(0, int(seconds + 0.5))
     return "%d:%02d" % divmod(seconds, 60)
 
@@ -251,9 +251,9 @@ class Recorder:
 
     Die Spiele rufen nur vier Methoden: ``scene()`` beginnt eine Sequenz,
     ``tick()`` nimmt im festen Raster Samples, ``close()`` beendet sie und
-    ``result()`` gibt am Rundenende das fertige Replay-dict zurueck.
+    ``result()`` gibt am Rundenende das fertige Replay-dict zurück.
 
-    Waechst eine Aufnahme ueber MAX_SAMPLES, schaltet sich der Recorder
+    Wächst eine Aufnahme über MAX_SAMPLES, schaltet sich der Recorder
     still ab (``self.dead``) - lieber kein Replay als eine 20-MB-Datei.
     """
 
@@ -270,7 +270,7 @@ class Recorder:
     # ----- Kulissen (Minigolf: die Bahn) --------------------------------
 
     def layout(self, data):
-        """Legt eine Kulisse ab und gibt ihren Index zurueck (ohne Dubletten)."""
+        """Legt eine Kulisse ab und gibt ihren Index zurück (ohne Dubletten)."""
         if self.dead:
             return 0
         for i, known in enumerate(self.layouts):
@@ -292,12 +292,12 @@ class Recorder:
         self._acc = STEP          # das erste Sample sofort nehmen
 
     def set(self, **info):
-        """Traegt Kopfdaten in die laufende Sequenz nach (z.B. das Ergebnis)."""
+        """Trägt Kopfdaten in die laufende Sequenz nach (z.B. das Ergebnis)."""
         if self._scene is not None:
             self._scene.update(info)
 
     def set_last(self, **info):
-        """Traegt Kopfdaten in die zuletzt begonnene Sequenz nach.
+        """Trägt Kopfdaten in die zuletzt begonnene Sequenz nach.
 
         Anders als ``set()`` funktioniert das auch, wenn die Sequenz bereits
         geschlossen ist - Minigolf schreibt so das Bahn-Ergebnis noch an den
@@ -310,8 +310,8 @@ class Recorder:
         """Nimmt im Raster RATE Samples auf (je Frame einmal aufrufen).
 
         ``sample_fn`` liefert eine Liste/Tupel von Zahlen. Bei einer flachen
-        Sequenz werden sie angehaengt, sonst als eigenes Sample abgelegt.
-        Laeuft die Anzeige langsamer als RATE, entstehen mehrere gleiche
+        Sequenz werden sie angehängt, sonst als eigenes Sample abgelegt.
+        Läuft die Anzeige langsamer als RATE, entstehen mehrere gleiche
         Samples - die Wiedergabe hat dann dasselbe Timing wie das Original.
         """
         if self.dead or self._scene is None:
@@ -347,9 +347,9 @@ class Recorder:
         self._scene = None
 
     def drop_where(self, **match):
-        """Wirft Sequenzen weg, deren Kopfdaten alle Vorgaben erfuellen.
+        """Wirft Sequenzen weg, deren Kopfdaten alle Vorgaben erfüllen.
 
-        Gebraucht beim Bahn-Neustart in Minigolf (Taste F): die Schlaege der
+        Gebraucht beim Bahn-Neustart in Minigolf (Taste F): die Schläge der
         abgebrochenen Bahn sollen nicht im Replay landen.
         """
         if self.dead:

@@ -3,14 +3,14 @@
 ngb.py
 ======
 NGB - die **visuelle Personalisierung** der Spielesammlung (Skins/"Mods", die
-ausschliesslich die Optik verändern, niemals die Spiellogik).
+ausschließlich die Optik verändern, niemals die Spiellogik).
 
 Hier laufen alle rein optischen Einstellungen zusammen:
 
 - Die aktive **Kopffarbe** der Snake-Schlange (Vorlagen + eigene Farbe).
 - Das **Raster-Overlay**: ein Schachbrett-Muster, das die horizontalen und
   vertikalen Gitterlinien in einer wählbaren Farbreihenfolge markiert. So sieht
-  man auch auf grossen Feldern von Weitem, welche Reihe/Spalte wo liegt (5
+  man auch auf großen Feldern von Weitem, welche Reihe/Spalte wo liegt (5
   Vorlagen + eigene A/B-Farben).
 - Das **Personalisierungs-Menü** (:class:`PersonalizeMenu`) mit zwei Tabs
   (Kopf / Raster), das über den Pinsel-Knopf im Snake-Setup geöffnet wird.

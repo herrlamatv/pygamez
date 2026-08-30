@@ -2034,7 +2034,17 @@
         "putt",
         "tour",
         "lås",
-        "kraft"
+        "kraft",
+        "editor",
+        "maps",
+        "ugc",
+        "tunnel",
+        "ice",
+        "magnet",
+        "booster",
+        "share",
+        "import",
+        "export"
       ],
       "sections": [
         {
@@ -2065,7 +2075,13 @@
           "body": [
             "- Sand bremser kraftigt, ramper accelererer i pilenes retning.",
             "- Vand koster et strafslag; bolden vender tilbage til sin sidste sikre position.",
-            "- Gummibumpere giver fart tilbage; vindmøller og vandrende klodser kræver timing. Kraftlåsen på højre museknap holder slaget ladet, indtil hullet passer."
+            "- Gummibumpere giver fart tilbage; vindmøller og vandrende klodser kræver timing. Kraftlåsen på højre museknap holder slaget ladet, indtil hullet passer.",
+            "- Rør: bolden forsvinder i den ene munding og kommer ud af den anden - retning og fart bevares.",
+            "- Is lader bolden trille næsten uendeligt, klæbefeltet stopper den med det samme.",
+            "- Boostere giver et fast skub, når man kører over dem, magneter trækker til eller skubber fra.",
+            "- En ensrettet port lukker kun igennem i pilens retning; fra den anden side er den en mur.",
+            "- Drejeskiven tager bolden med udad, springrampen sender den flyvende over forhindringer.",
+            "Disse otte forhindringer kommer oven i de klassiske og kan placeres frit i huleditoren - se siden \"Egne huller\"."
           ]
         },
         {
@@ -2073,6 +2089,62 @@
           "body": [
             "Hver bane giver 600 point plus 300 for hvert slag under par (og 300 mindre for hvert slag over, dog aldrig under 100).",
             "Hole in one giver 500 point ekstra. Summen af alle baner er din rekord; derudover gemmes det laveste antal slag pr. bane."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minigolf-maps",
+      "category": "games",
+      "title": "Egne huller (Minigolf)",
+      "keywords": [
+        "egne huller",
+        "editor",
+        "maps",
+        "ugc",
+        "bygge",
+        "dele",
+        "importere",
+        "eksportere",
+        "skabelon",
+        "minigolf"
+      ],
+      "sections": [
+        {
+          "h": "Byg et hul",
+          "body": [
+            "På minigolfens opsætningsskærm fører fanen MAPS til din egen samling. \"Ny\" åbner huleditoren, \"Rediger\" tager fat i et eksisterende hul igen.",
+            "Hvert hul skal have et navn og et id. id'et er nøglen: små bogstaver, ingen mellemrum, kun a-z, 0-9, - og _. Det er også det filnavn, der foreslås ved deling.",
+            "Hullet ligger til venstre, paletten med fire værktøjer og femten forhindringstyper til højre. Rektangler trækkes op, runde ting sættes med et enkelt klik, et rør kræver to klik - først indgang, så udgang.",
+            "Med markeringsværktøjet vælger et klik et objekt, træk flytter det, [Del] sletter det. Nederst vises så værdierne for det valgte objekt: bredde, højde, radius, retning, fart og så videre.",
+            "Foroven indstiller du par samt hullets bredde og højde - fra 60x80 til 160x240 enheder. Det, der ville stikke ud ved formindskelse, rykker automatisk med indenfor.",
+            "[G] slår gitterfastgørelsen til og fra, [U] fortryder, [Y] gendanner, [S] gemmer, og [Enter] prøver hullet med det samme. [Esc] går tilbage - ved ugemte ændringer først efter en bekræftelse."
+          ]
+        },
+        {
+          "h": "Skabeloner",
+          "body": [
+            "\"Skabelon\" erstatter det aktuelle hul med en af tolv færdige: Tom, Rør, Ø, Vindmølle, Siksak, Vand, Bumpere, Rampe, Is, Labyrint, Magnet og Spring.",
+            "Hver skabelon lader altid en almindelig vej stå åben ved siden af sit trick - et hul, der kun kan løses med et trick, ville være en fælde, ikke en skabelon. Alle tolv er påviseligt spilbare i par.",
+            "En skabelon er et udgangspunkt, ikke et resultat: sæt dine egne forhindringer til, flyt udslag og hul, skift størrelsen."
+          ]
+        },
+        {
+          "h": "Spil",
+          "body": [
+            "I fanen MAPS starter \"Spil\" præcis det valgte hul - med sin egen rekord pr. hul.",
+            "I fanen SPIL findes et femte banevalg, \"Egne\": så spilles hele din samling efter hinanden som en runde, højst ni huller.",
+            "Alt gemmes i ugc.json ved siden af spillet (ved siden af .exe'en i den byggede version) - samme sted som mem.json og replay.json."
+          ]
+        },
+        {
+          "h": "Del og importér",
+          "body": [
+            "\"Del\" spørger først om dit navn som skaber og derefter om filnavnet; det er allerede udfyldt med hullets id.",
+            "\"Eksportér som\" åbner den velkendte gemme-dialog, \"Til Overførsler\" lægger filen direkte i Overførsler-mappen og fortæller dig stien. Der eksporteres altid præcis ét hul.",
+            "Filen har endelsen .lamapgzmap og indeholder JSON - du kan sende den som enhver anden fil. \"Importér\" læser den ind igen; ved import accepteres også .json-filer.",
+            "Er id'et allerede optaget, hænger importen automatisk -2, -3 og så videre på i stedet for at overskrive dit eksisterende hul.",
+            "Hulnavn, id og skabernavn løber gennem et ordfilter ved gemning, eksport OG import, og det tjekker alle 14 sprog. Fornærmende tekst afvises - uanset hvilket sprog der er indstillet."
           ]
         }
       ]

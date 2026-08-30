@@ -8,6 +8,78 @@
 
 ## 🇩🇪 Deutsch
 
+### Minigolf: eigene Bahnen bauen, spielen und teilen – 2026-08-30
+
+#### Neu
+- **Bahn-Editor**: Der neue Reiter **MAPS** im Minigolf-Vorbereitungsbildschirm
+  führt zur eigenen Sammlung. **Neu** öffnet den Editor: links die Bahn, rechts
+  eine Palette mit vier Werkzeugen und **15 Hindernis-Typen**. Rechtecke zieht
+  man auf, runde Dinge setzt ein Klick, ein Rohr braucht zwei (Eingang,
+  Ausgang). Auswählen, Verschieben, Löschen, **Undo/Redo** (Tasten **U**/**Y**)
+  und Rasterfang (**G**) gehören dazu.
+- **Acht neue Hindernisse** - und zwar in der Engine, nicht nur im Editor:
+  **Rohr** (versetzt den Ball ans andere Ende, Richtung und Tempo bleiben),
+  **Eis** (fast reibungsfrei), **Klebefeld** (bremst extrem), **Booster**
+  (einmaliger Schub beim Betreten), **Magnet** (zieht an oder stößt ab),
+  **Einbahn-Tor** (nur in Pfeilrichtung durchlässig), **Drehscheibe** (nimmt
+  den Ball mit nach außen) und **Sprungrampe** (der Ball fliegt über
+  Hindernisse hinweg).
+- **Freie Bahngröße**: von 60x80 bis 160x240 Einheiten, in Zehnerschritten.
+  Der Platz passt sich je Bahn neu ein; was beim Verkleinern herausragen würde,
+  rückt automatisch mit hinein.
+- **12 Vorlagen** als Startpunkt: Leer, Rohr, Insel, Windmühle, Zickzack,
+  Wasser, Puffer, Rampe, Eis, Labyrinth, Magnet und Schanze. Jede lässt neben
+  ihrem Kunststück immer einen normalen Weg offen - alle zwölf sind vom Solver
+  nachweislich in Par spielbar.
+- **Teilen**: Der Knopf fragt nach deinem Namen als Ersteller und nach dem
+  Dateinamen - der ist schon mit der **id** der Bahn vorbelegt. Von dort geht
+  es entweder in den gewohnten **Speichern-Dialog** oder **direkt in den
+  Downloads-Ordner**. Exportiert wird immer genau eine Bahn, als
+  `.lamapgzmap`-Datei (JSON darin).
+- **Importieren** liest so eine Datei wieder ein (`.json` wird auch
+  angenommen). Ist die **id** schon vergeben, hängt der Import automatisch
+  `-2`, `-3` … an, statt eine vorhandene Bahn zu überschreiben.
+- **Wortfilter**: Map-Name, id und Ersteller-Name laufen beim Speichern,
+  Exportieren **und** Importieren durch eine Prüfung gegen **alle 14
+  Sprachen** - Sprache umstellen hilft also nicht. Die Listen stehen als
+  Regex-Muster in `lang/swear/<code>.yml` bzw.
+  `lang/lang.expansion/swear/<code>.yml`, je Eintrag das Muster und darunter
+  das gemeinte Wort als Kommentar. Sie halten eingestreute Sonderzeichen,
+  Leetspeak und gesperrt geschriebene Wörter aus.
+- **Spielen**: Im MAPS-Reiter startet **Spielen** genau die gewählte Bahn (mit
+  eigenem Bestwert je Bahn); im Reiter **SPIEL** gibt es als fünfte Kurswahl
+  **Eigene**, die die ganze Sammlung als Runde spielt.
+- **Test** im Editor probiert die Bahn sofort aus und kehrt danach ans Bauen
+  zurück - ohne Bestwert, ohne Aufzeichnung.
+- **96 neue Schlüssel** in allen **14 Sprachen**, dazu eine neue LamaWiki-Seite
+  „Eigene Bahnen" (ebenfalls 14x), die erweiterte Hindernis-Liste auf der
+  Minigolf-Seite und beide READMEs.
+
+#### Geändert
+- Das Zeichnen des Platzes liegt jetzt in `games/minigolf_draw.py` - Spiel und
+  Editor malen dieselben 15 Typen mit demselben Code, statt getrennt
+  auseinanderzulaufen.
+- `InputEvent` transportiert zusätzlich das getippte **Zeichen**
+  (`event.char`). Ohne das ließen sich in den neuen Textfeldern weder Umlaute
+  noch Großbuchstaben eingeben - der Tkinter-keysym allein reicht dafür nicht.
+- Neu in `ui.py`: **`ui.TextInput`**, das erste Eingabefeld des Projekts
+  (Schreibmarke, Zeichenfilter, Platzhalter) - im Editor für Name und id, im
+  Teilen-Dialog für Ersteller und Dateiname.
+- Spiele können über `wants_escape` melden, dass sie **ESC** gerade selbst
+  brauchen. Im Editor, im MAPS-Reiter und beim Test-Spielen heißt ESC deshalb
+  „Abbrechen" statt „Pause"; überall sonst bleibt es wie bisher.
+- Ältere Aufnahmen in `replay.json` laufen beim Laden durch
+  `minigolf_gen.normalize` - sie kennen die neuen Hindernisse und die
+  Bahngröße noch nicht und werden dabei ergänzt.
+- Der Vorbereitungsbildschirm hat jetzt eine Reiterzeile; der Kurs-Block rückt
+  entsprechend nach unten und hat mit **Eigene** einen fünften Knopf.
+- Das Headless-Audit (`tests/newgames_audit.py`) prüft die eigenen Bahnen mit:
+  Speicher-Rundlauf, id-Regeln, Wortfilter (inkl. Selbsttest der Listen und
+  Fehlalarm-Prüfung gegen alle vorhandenen Oberflächen-Texte), je einem
+  Physik-Test für die acht neuen Hindernisse, abweichenden Bahngrößen,
+  Export/Import samt abgewiesener Fremddateien, allen zwölf Vorlagen per Solver
+  und der Bildschirmaufteilung in fünf Auflösungen und allen 14 Sprachen.
+
 ### Minigolf: Stärke-Sperre auf der rechten Maustaste – 2026-08-29
 
 #### Neu
@@ -568,6 +640,75 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Minigolf: build, play and share your own holes – 2026-08-30
+
+#### Added
+- **Hole editor**: the new **MAPS** tab on the minigolf setup screen leads to
+  your own collection. **New** opens the editor: the hole on the left, a
+  palette with four tools and **15 obstacle types** on the right. Rectangles
+  are dragged out, round things take a single click, a pipe needs two (entrance,
+  exit). Selecting, moving, deleting, **undo/redo** (keys **U**/**Y**) and grid
+  snap (**G**) are all part of it.
+- **Eight new obstacles** - in the engine, not just in the editor: **pipe**
+  (moves the ball to the other end, keeping direction and speed), **ice**
+  (almost frictionless), **sticky patch** (brakes hard), **booster** (a one-off
+  shove when entered), **magnet** (pulls in or pushes away), **one-way gate**
+  (only passable in the arrow's direction), **turntable** (takes the ball along
+  and outwards) and **jump ramp** (the ball flies over obstacles).
+- **Free hole size**: from 60x80 up to 160x240 units, in steps of ten. The
+  course is re-fitted per hole; anything that would stick out when you shrink
+  it moves back inside automatically.
+- **12 templates** as a starting point: Empty, Pipe, Island, Windmill, Zigzag,
+  Water, Bumpers, Ramp, Ice, Maze, Magnet and Jump. Each one always leaves a
+  normal route open next to its trick - all twelve are provably playable within
+  par according to the solver.
+- **Sharing**: the button asks for your name as the creator and for the file
+  name - the latter is already filled in with the **id** of the hole. From
+  there it is either the usual **save dialog** or **straight into the Downloads
+  folder**. Exactly one hole is exported each time, as a `.lamapgzmap` file
+  (JSON inside).
+- **Import** reads such a file back in (`.json` is accepted too). If the **id**
+  is already taken, the import automatically appends `-2`, `-3` … instead of
+  overwriting an existing hole.
+- **Word filter**: hole name, id and creator name are checked when saving,
+  exporting **and** importing, against **all 14 languages** - switching your
+  language does not help. The lists live as regex patterns in
+  `lang/swear/<code>.yml` and `lang/lang.expansion/swear/<code>.yml`, each entry
+  the pattern with the word it means as a comment below it. They cope with
+  injected symbols, leetspeak and s p a c e d out words.
+- **Playing**: in the MAPS tab **Play** starts exactly the selected hole (with
+  its own best score per hole); in the **PLAY** tab there is a fifth course
+  option, **Custom**, which plays the whole collection as a round.
+- **Test** in the editor tries the hole out right away and returns to building
+  afterwards - no best score, no recording.
+- **96 new keys** in all **14 languages**, plus a new LamaWiki page "Custom
+  holes" (also 14x), the extended obstacle list on the minigolf page and both
+  READMEs.
+
+#### Changed
+- Drawing the course now lives in `games/minigolf_draw.py` - game and editor
+  paint the same 15 types with the same code instead of drifting apart.
+- `InputEvent` now also carries the typed **character** (`event.char`).
+  Without it the new text fields could take neither umlauts nor capitals - the
+  Tkinter keysym alone is not enough for that.
+- New in `ui.py`: **`ui.TextInput`**, the project's first text field (caret,
+  character filter, placeholder) - used for name and id in the editor and for
+  creator and file name in the share dialog.
+- Games can now signal via `wants_escape` that they need **ESC** themselves. In
+  the editor, in the MAPS tab and while test-playing, ESC therefore means
+  "cancel" instead of "pause"; everywhere else it stays as before.
+- Older recordings in `replay.json` run through `minigolf_gen.normalize` when
+  loaded - they do not know the new obstacles and the hole size yet and get
+  them filled in.
+- The setup screen now has a tab row; the course block moves down accordingly
+  and has a fifth button, **Custom**.
+- The headless audit (`tests/newgames_audit.py`) covers custom holes with: a
+  storage round trip, id rules, the word filter (including a self-test of the
+  lists and a false-positive check against every existing interface text), one
+  physics test per new obstacle, differing hole sizes, export/import including
+  rejected foreign files, all twelve templates via the solver, and the screen
+  layout in five resolutions and all 14 languages.
 
 ### Minigolf: power lock on the right mouse button – 2026-08-29
 

@@ -74,7 +74,7 @@ class TicTacToeGame(Game):
     # ===== Layout / Theme ===============================================
 
     def _make_fonts(self):
-        """Themen-Schriften, Grössen aus der Fensterhöhe abgeleitet."""
+        """Themen-Schriften, Größen aus der Fensterhöhe abgeleitet."""
         h = self.height
         self.font = ui.font(max(16, h // 24))
         self.big_font = ui.font(max(30, h // 11), bold=True)

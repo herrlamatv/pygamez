@@ -231,7 +231,7 @@ class MuehleGame(Game):
         self.state = PLAY if self.multiplayer else SETUP
 
     def _make_fonts(self):
-        """Theme-Schriften, Grösse abhängig von der Fensterhöhe."""
+        """Theme-Schriften, Größe abhängig von der Fensterhöhe."""
         self._small = ui.font(max(14, self.height // 34))
         self._tiny = ui.font(max(12, self.height // 44))
         self._huge = ui.font(max(26, self.height // 12), bold=True)

@@ -136,7 +136,7 @@ ENEMIES = {
                      col=(255, 90, 110)),
 }
 
-# Karten: Wegpunkte in Zell-Koordinaten (ausserhalb 0..17/0..11 = Feldrand),
+# Karten: Wegpunkte in Zell-Koordinaten (außerhalb 0..17/0..11 = Feldrand),
 # diff = Gegner-HP-Faktor (bewusst NICHT das Budget: mehr Gegner brächten
 # mehr Gold und machten lange Karten leichter), unlock = beste Welle
 # (kartenübergreifend), ab der die Karte spielbar ist.
@@ -355,7 +355,7 @@ class LamaTowerDefenseGame(Game):
             self.build_cells = {(c, r) for c, r in ring - self.path_cells
                                 if 0 <= c < GRID_W and 0 <= r < GRID_H}
         else:
-            self.build_cells = None    # None = überall ausser Pfad
+            self.build_cells = None    # None = überall außer Pfad
 
     def _pos_at(self, d, fly=False):
         """Position (Zell-Koordinaten) bei Pfad-Distanz d."""
@@ -450,7 +450,7 @@ class LamaTowerDefenseGame(Game):
             spent += _unit_cost(d) * group
             units += group
 
-        # Restbudget (Einheiten-Deckel erreicht) fliesst in Bonus-HP.
+        # Restbudget (Einheiten-Deckel erreicht) fließt in Bonus-HP.
         hp_bonus = 1.0 + max(0.0, (budget - spent) / max(1.0, budget))
         return queue, hp_bonus
 

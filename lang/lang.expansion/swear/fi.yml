@@ -1,0 +1,75 @@
+# Wortfilter - Suomi (fi)
+# ===========================================================================
+# Je Eintrag zwei Zeilen: zuerst das Regex-Muster (- ...), darunter das
+# gemeinte Wort als Kommentar (# ...). Geprüft wird ohne Rücksicht auf
+# Groß-/Kleinschreibung; ungültige Muster werden still übersprungen.
+#
+# Die Muster halten eingestreute Sonderzeichen und Ziffern aus
+# ([^\sa-zA-Z]* - bewusst OHNE Leerzeichen, sonst liefe ein Muster über
+# Wortgrenzen hinweg; nur zwischen zwei Wörtern sind Leerzeichen erlaubt),
+# erlauben Buchstabenwiederholung (f+) und die üblichen Leetspeak-Ersetzungen
+# ([a4@], [e3], [i1!|], [o0], [s5$] ...). Vor dem Vergleich entfernt
+# swear._norm Akzente und macht aus "-" und "_" Leerzeichen - deshalb stehen
+# die Wörter hier in ASCII-Schreibweise.
+#
+# Geprüft werden Map-Name, Map-ID und Creator-Name (siehe swear.py, ugc.py).
+# Bearbeitet wird die Liste einfach hier: eine Regex-Zeile, darunter das Wort.
+
+- \b(v+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*u+)\b
+# vittu
+- \b(p+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+)(?=[^\s]*\b)
+# perkele
+- \b([s5$]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# saatana
+- \b(p+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[a4@]+)\b
+# paska
+- \b(k+[^\sa-zA-Z]*y+[^\sa-zA-Z]*r+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# kyrpa
+- \b(h+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[a4@]+)\b
+# huora
+- \b(m+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*k+[^\sa-zA-Z]*u+)(?=[^\s]*\b)
+# mulkku
+- \b(p+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*u+)\b
+# pillu
+- \b(h+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*m+[^\sa-zA-Z]*[o0]+)\b
+# homo
+- \b(n+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[i1!|]+)(?=[^\s]*\b)
+# neekeri
+- \b(n+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[i1!|]+)\b
+# natsi
+- \b(h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# hitler
+- \b(r+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[s5$]+)(?=[^\s]*\b)
+# raiskaus
+- \b(v+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*n+)\b
+# vitun
+- \b(j+[^\sa-zA-Z]*u+[^\sa-zA-Z]*m+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# jumalauta
+- \b(k+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# kusipaa
+- \b(r+[^\sa-zA-Z]*u+[^\sa-zA-Z]*n+[^\sa-zA-Z]*k+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[i1!|]+)(?=[^\s]*\b)
+# runkkari
+- \b(h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[i1!|]+)\b
+# hintti
+- \b(m+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*m+[^\sa-zA-Z]*u+)\b
+# mamu
+- \b([i1!|]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[i1!|]+)(?=[^\s]*\b)
+# idiootti
+- \b(k+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*y+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*m+[^\sa-zA-Z]*m+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*n+)(?=[^\s]*\b)
+# kehitysvammainen
+- \b(p+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# persreika
+- \b(k+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[i1!|]+)\b
+# kusi
+- \b(p+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*n+)\b
+# paskiainen
+- \b(v+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[a4@]+)\b
+# vittupaa
+- \b([l1|]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[a4@]+)\b
+# lutka
+- \b(n+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[a4@]+)\b
+# nussia
+- \b(m+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[o0]+)\b
+# mulkero
+- \b(k+[^\sa-zA-Z]*y+[^\sa-zA-Z]*r+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[t7+]+)\b
+# kyrvat

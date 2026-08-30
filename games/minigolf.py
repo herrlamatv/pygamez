@@ -58,38 +58,26 @@ import ui
 from game_base import Game, InputEvent
 from i18n import t
 
+from . import minigolf_draw as draw
 from . import minigolf_gen as gen
 from .minigolf_gen import CW, CH, BORDER, HOLES_PER_ROUND, make_hole as _hole
-
-# ------------------------------------------------- Identitätsfarben (Platz)
-COL_GREEN = (46, 132, 74)
-COL_GREEN_D = (38, 112, 62)
-COL_FRINGE = (62, 152, 88)
-COL_WALL = (122, 84, 52)
-COL_WALL_HI = (156, 112, 72)
-COL_SAND = (214, 190, 132)
-COL_SAND_D = (190, 164, 108)
-COL_WATER = (52, 122, 196)
-COL_WATER_D = (36, 92, 158)
-COL_SLOPE = (60, 150, 92)
-COL_BUMPER = (222, 84, 108)
-COL_BUMPER_HI = (246, 140, 160)
-COL_MILL = (186, 190, 198)
-COL_MILL_D = (128, 134, 146)
-COL_BALL = (248, 248, 244)
-COL_CUP = (16, 22, 18)
-COL_FLAG = (226, 72, 72)
-COL_AIM = (245, 245, 210)
-COL_LOCK = (248, 208, 96)    # Stärke-Sperre (Balken, Ring, Ziellinie)
+# Die Farben des Platzes stehen in minigolf_draw.py - dort wird gezeichnet,
+# und zwar für Spiel UND Bahn-Editor. Hier stehen nur die Namen, die auch
+# außerhalb des Platzes gebraucht werden (Ball, Ziellinie, Stärke-Sperre).
+from .minigolf_draw import COL_AIM, COL_BALL, COL_GREEN, COL_LOCK
 
 # ------------------------------------------------------------- Platz / Physik
 # CW/CH/BORDER kommen aus minigolf_gen.py (dort steht die einzige Definition).
+# CW/CH sind nur noch die STANDARD-Maße: eigene Bahnen aus dem Editor bringen
+# ihre eigene Größe mit (hole["w"]/hole["h"], siehe self.cw/self.ch).
 BR = gen.BALL_R              # Ballradius
 CUP_R = 3.0                  # Lochradius
 ARM_W = 1.5                  # halbe Breite eines Mühlenflügels
 
 FRIC_GREEN = 1.15            # Rollreibung je Sekunde
 FRIC_SAND = 4.60
+FRIC_ICE = 0.25              # Eis: der Ball läuft fast ewig
+FRIC_STICKY = 12.0           # Klebefeld: bleibt sofort liegen
 WALL_E = 0.72                # Bandenrestitution
 BUMP_E = 1.18                # Gummipuffer geben Tempo zurück
 STOP_EPS = 2.2               # darunter gilt der Ball als still
@@ -98,10 +86,21 @@ CAPTURE_SPEED = 74.0         # darüber springt der Ball über das Loch
 MAX_SHOT_TIME = 14.0
 MAX_STROKES = 8              # danach wird die Bahn mit Höchstwert beendet
 
-SETUP, PLAY, HOLE_DONE, OVER = "setup", "play", "holedone", "over"
+# --- Kennwerte der acht Editor-Hindernisse ---------------------------------
+TUNNEL_KEEP = 0.95           # Tempo, das ein Rohr durchlässt
+TUNNEL_COOLDOWN = 0.35       # Sekunden Sperre, damit es nicht zurückspringt
+BOOST_COOLDOWN = 0.25        # ein Schubfeld feuert nicht in jedem Teilschritt
+SPIN_PUSH = 0.55             # wie stark eine Drehscheibe mitnimmt
+JUMP_MIN_SPEED = 30.0        # darunter ist der Ball zu langsam zum Abheben
+
+SETUP, PLAY, HOLE_DONE, OVER, EDIT = ("setup", "play", "holedone", "over",
+                                      "edit")
 # Rand über der Überschrift und unter der Tastenzeile im Rundenende-Banner.
 OVER_PAD = 14
-COURSES = ["classic", "pro", "tour", "random"]
+# Die fünfte Wahl "ugc" spielt die selbst gebauten Bahnen (siehe MAPS-Reiter).
+COURSES = ["classic", "pro", "tour", "random", "ugc"]
+# Reiter des Vorbereitungs-Screens.
+TABS = ("play", "maps")
 
 
 # --------------------------------------------------------- Kurs 1: Classic
@@ -226,6 +225,24 @@ class MiniGolfGame(Game):
         self.tour = max(1, min(gen.TOUR_COURSES, int(gs.get("tour", 1) or 1)))
         self._tour_par = gen.course_par(self.tour)
         self.winner = None
+        # Größe der LAUFENDEN Bahn. Eingebaute und erzeugte Bahnen sind immer
+        # CW x CH; eigene Bahnen aus dem Editor bringen ihre eigene mit.
+        self.cw, self.ch = float(CW), float(CH)
+        # Reiter des Vorbereitungs-Screens und der Bahn-Editor (siehe
+        # minigolf_edit.py). Der Editor wird erst angelegt, wenn er gebraucht
+        # wird - wer nie eigene Bahnen baut, zahlt dafür nichts.
+        self.setup_tab = "play"
+        self.maps = None
+        self.editor = None
+        # id der einzeln gespielten eigenen Bahn (leer = alle nacheinander).
+        self.single_map = str(gs.get("ugc_map", "") or "")
+        # Beim Test-Spielen aus dem Editor: hierhin geht es danach zurück.
+        self._test_return = False
+        # Rohr-Sperre und Schub-Sperre (siehe _physics).
+        self._tun_cd = 0.0
+        self._boost_cd = 0.0
+        self.air = 0.0          # verbleibende Flugstrecke einer Sprungrampe
+        self.air_dir = (0.0, 0.0)
         # Replay: Aufnahme der laufenden Runde (rec) und die fertige
         # Wiederholung der letzten Runde (replay, siehe replay.py).
         self.rec = None
@@ -253,23 +270,35 @@ class MiniGolfGame(Game):
         self._layout()
         self._build_setup_layout()
         self._over_cache = None
+        # MAPS-Reiter und Editor rechnen ihr Layout selbst aus - sie müssen
+        # nach einem Auflösungswechsel mitziehen.
+        if self.maps is not None:
+            self.maps.layout()
+        if self.editor is not None:
+            self.editor.layout()
 
     def _layout(self):
-        """Maßstab und Nullpunkt des Platzes aus der Spielfläche ableiten."""
+        """Maßstab und Nullpunkt des Platzes aus der Spielfläche ableiten.
+
+        Gerechnet wird mit self.cw/self.ch, nicht mit CW/CH: eigene Bahnen
+        aus dem Editor dürfen von 100x160 abweichen, und dann muss der Platz
+        neu eingepasst werden (_start_hole ruft das deshalb je Bahn auf).
+        """
+        cw, ch = self.cw, self.ch
         self.hud_h = 44
         avail_h = self.height - self.hud_h - 12
         card_w = 132 if self.width >= 560 else 108
-        self.scale = max(1.2, min((self.width - card_w - 40) / CW,
-                                  avail_h / CH))
-        self.ox = (self.width - card_w - 12) / 2.0 - CW * self.scale / 2.0
-        self.oy = self.hud_h + (avail_h - CH * self.scale) / 2.0 + 6
+        self.scale = max(1.2, min((self.width - card_w - 40) / cw,
+                                  avail_h / ch))
+        self.ox = (self.width - card_w - 12) / 2.0 - cw * self.scale / 2.0
+        self.oy = self.hud_h + (avail_h - ch * self.scale) / 2.0 + 6
         self.card_x = self.width - card_w - 6
         self.card_w = card_w
         self._build_over_layout()
 
     # ------------------------------------------------------- Speicherstand
     def _load_best(self):
-        """Bestwerte je Kurs: {"classic": schlaege, ...} (kleiner = besser)."""
+        """Bestwerte je Kurs: {"classic": schläge, ...} (kleiner = besser)."""
         data = store.load_section("minigolf")
         best = data.get("best") if isinstance(data, dict) else None
         out = {}
@@ -282,8 +311,12 @@ class MiniGolfGame(Game):
         return out
 
     def _best_key(self):
-        """Schlüssel des Bestwerts: je Tour-Kurs ein eigener Eintrag."""
-        return "tour%d" % self.tour if self.course == "tour" else self.course
+        """Schlüssel des Bestwerts: je Tour-Kurs und je eigener Bahn einer."""
+        if self.course == "tour":
+            return "tour%d" % self.tour
+        if self.course == "ugc" and self.single_map:
+            return "ugc:" + self.single_map
+        return self.course
 
     def _save_best(self, strokes):
         key = self._best_key()
@@ -306,6 +339,8 @@ class MiniGolfGame(Game):
             return [dict(h) for h in HOLES_PRO]
         if self.course == "tour":
             return gen.course_holes(self.tour)
+        if self.course == "ugc":
+            return self._ugc_holes()
         # Random: aus handgebauten UND erzeugten Bahnen ziehen
         pool = list(HOLES_CLASSIC + HOLES_PRO)
         for _ in range(HOLES_PER_ROUND):
@@ -315,19 +350,44 @@ class MiniGolfGame(Game):
         picked.sort(key=lambda h: h["par"])
         return [self._mirror(h, random.random() < 0.5) for h in picked]
 
+    def _ugc_holes(self):
+        """Die eigenen Bahnen als Runde.
+
+        Eine einzelne Bahn wird gespielt, wenn sie aus dem MAPS-Reiter heraus
+        gestartet wurde (self.single_map). Sonst laufen alle eigenen Bahnen
+        der Reihe nach - die Runde ist dann so lang wie die Sammlung, aber
+        höchstens neun Bahnen wie überall sonst.
+        """
+        import ugc
+        if self.single_map:
+            m = ugc.get(self.single_map)
+            if m:
+                return [ugc.to_hole(m)]
+        maps = ugc.load_maps()
+        if not maps:
+            return [dict(HOLES_CLASSIC[0])]      # Notnagel: nie ohne Bahn
+        return [ugc.to_hole(m) for m in maps[:HOLES_PER_ROUND]]
+
     @staticmethod
     def _mirror(hole, flip):
-        """Spiegelt eine Bahn an der Mittelachse (für den Zufallskurs)."""
+        """Spiegelt eine Bahn an der Mittelachse (für den Zufallskurs).
+
+        Alles, was eine Richtung hat, dreht dabei sein x-Vorzeichen um -
+        Rampen, Wanderblöcke, Schub, Tore und Sprungrampen. Mühlen und
+        Drehscheiben laufen andersherum.
+        """
+        hole = gen.normalize(hole)
         if not flip:
             return dict(hole)
+        cw = hole["w"]
 
         def mx(x, w=0.0):
-            return CW - x - w
+            return cw - x - w
 
         out = dict(hole)
         out["tee"] = (mx(hole["tee"][0]), hole["tee"][1])
         out["cup"] = (mx(hole["cup"][0]), hole["cup"][1])
-        for key in ("walls", "sand", "water"):
+        for key in ("walls", "sand", "water", "ice", "sticky"):
             out[key] = [(mx(x, w), y, w, h) for (x, y, w, h) in hole[key]]
         out["slopes"] = [(mx(x, w), y, w, h, -ax, ay)
                          for (x, y, w, h, ax, ay) in hole["slopes"]]
@@ -336,6 +396,17 @@ class MiniGolfGame(Game):
                          for (x, y, w, h, dx, dy, sp) in hole["movers"]]
         out["mills"] = [(mx(x), y, ln, arms, -sp)
                         for (x, y, ln, arms, sp) in hole["mills"]]
+        out["tunnels"] = [(mx(x1), y1, mx(x2), y2, r)
+                          for (x1, y1, x2, y2, r) in hole["tunnels"]]
+        out["boosters"] = [(mx(x, w), y, w, h, -dx, dy, b)
+                           for (x, y, w, h, dx, dy, b) in hole["boosters"]]
+        out["magnets"] = [(mx(x), y, r, f) for (x, y, r, f) in hole["magnets"]]
+        out["gates"] = [(mx(x, w), y, w, h, -dx, dy)
+                        for (x, y, w, h, dx, dy) in hole["gates"]]
+        out["spinners"] = [(mx(x), y, r, -sp)
+                           for (x, y, r, sp) in hole["spinners"]]
+        out["jumps"] = [(mx(x, w), y, w, h, -dx, dy, d)
+                        for (x, y, w, h, dx, dy, d) in hole["jumps"]]
         return out
 
     def _new_round(self):
@@ -352,8 +423,13 @@ class MiniGolfGame(Game):
         self._start_hole()
 
     def _start_hole(self):
-        h = self.holes[self.hole_idx]
+        h = gen.normalize(self.holes[self.hole_idx])
         self.hole = h
+        # Bahngröße übernehmen und den Platz neu einpassen - eigene Bahnen
+        # dürfen kleiner oder größer als 100x160 sein.
+        if (h["w"], h["h"]) != (self.cw, self.ch):
+            self.cw, self.ch = h["w"], h["h"]
+            self._layout()
         self.par = h["par"]
         self.strokes = 0
         self.cup = (float(h["cup"][0]), float(h["cup"][1]))
@@ -367,6 +443,9 @@ class MiniGolfGame(Game):
         self.shot_time = 0.0
         self.mill_a = 0.0
         self.move_t = 0.0
+        self._tun_cd = 0.0
+        self._boost_cd = 0.0
+        self.air = 0.0
         self.trail = []
         self.msg = None
         self.msg_t = 0.0
@@ -391,7 +470,20 @@ class MiniGolfGame(Game):
         # es bei den bisherigen 370 px.
         bw = min(max(370, int(self.width * 0.58)), self.width - 50)
         gap = 8
-        top = int(self.height * 0.25)
+        # Reiterzeile SPIEL | MAPS unter der Unterzeile. Darunter beginnt
+        # beides: der gewohnte Kurs-Block und die Liste der eigenen Bahnen.
+        # Der Kurs-Block rückt dafür um die Reiterhöhe nach unten; die 22 px
+        # Abstand sind der Platz für die Beschriftung über der Kurszeile.
+        tab_h = max(22, min(30, self.height // 15))
+        tab_w = min(150, (self.width - 40) // 2)
+        tab_y = int(self.height * 0.215)
+        self.tab_rects = [
+            pygame.Rect(cx - tab_w - 4, tab_y, tab_w, tab_h),
+            pygame.Rect(cx + 4, tab_y, tab_w, tab_h)]
+        self.tab_bottom = tab_y + tab_h
+        # Der Abstand muss mit der Schrift wachsen: bei 1280x960 ist _tiny
+        # 22 px hoch, dann reichen feste 22 px für die Beschriftung nicht mehr.
+        top = self.tab_bottom + max(22, self._tiny.get_height() + 6)
         bottom = self.height - 42       # Platz für Bestwert- und Tastenzeile
         bh = max(26, min(42, int((bottom - top - 68) / 4)))
         # Was an Höhe übrig ist, kommt zur Hälfte auf die drei
@@ -410,7 +502,7 @@ class MiniGolfGame(Game):
                     for i in range(n)]
 
         y = top
-        self.course_rects = row(y, 4)
+        self.course_rects = row(y, len(COURSES))
         y += step
         # Tour-Kurs: Pfeil links, Anzeige, Pfeil rechts
         self.tour_rects = [pygame.Rect(int(cx - bw / 2), y, 40, bh),
@@ -429,9 +521,25 @@ class MiniGolfGame(Game):
         self.start_rect = pygame.Rect(cx - sw // 2, y, sw, bh + 4)
 
     def _handle_setup(self, event):
+        # Reiterwechsel geht in beiden Reitern zuerst.
+        if event.kind == InputEvent.MOUSEDOWN:
+            for i, rc in enumerate(self.tab_rects):
+                if rc.collidepoint(event.pos):
+                    self._set_tab(TABS[i])
+                    return
+        elif event.kind == InputEvent.KEYDOWN and event.key in ("Tab",
+                                                                "ISO_Left_Tab"):
+            self._set_tab("maps" if self.setup_tab == "play" else "play")
+            return
+        if self.setup_tab == "maps":
+            if event.kind == InputEvent.KEYDOWN and event.key == "Escape":
+                self._set_tab("play")
+                return
+            self.maps.handle(event)
+            return
         if event.kind == InputEvent.KEYDOWN:
             k = event.key
-            if k in ("1", "2", "3", "4"):
+            if k in ("1", "2", "3", "4", "5"):
                 self.course = COURSES[int(k) - 1]
                 self._save_setting("course", self.course)
                 self.play_sound("click")
@@ -497,10 +605,109 @@ class MiniGolfGame(Game):
         self._save_setting("pickup", self.pickup)
         self.play_sound("select")
 
-    def _start_play(self):
+    def _start_play(self, single=None):
+        """Runde starten.
+
+        'single' ist die id genau einer eigenen Bahn (aus dem MAPS-Reiter).
+        Ohne sie spielt "Eigene" die ganze Sammlung nacheinander - der
+        START-Knopf im Setup ruft deshalb ohne Argument auf.
+        """
+        if self.course == "ugc":
+            self.single_map = single or ""
         self._new_round()
         self.state = PLAY
         self.play_sound("click")
+
+    # ===================================================== Eigene Bahnen
+    # Der MAPS-Reiter und der Editor stecken in minigolf_edit.py; hier stehen
+    # nur die Übergänge, die beide brauchen.
+
+    @property
+    def wants_escape(self):
+        """ESC heißt im Editor und im MAPS-Reiter "Abbrechen", nicht "Pause".
+
+        Auch beim Test-Spielen aus dem Editor: dort bricht ESC den Versuch ab
+        und führt zurück ans Bauen.
+        """
+        return (self.state == EDIT or self._test_return
+                or (self.state == SETUP and self.setup_tab == "maps"))
+
+    @property
+    def grid_snap(self):
+        gs = self.settings.get("minigolf", {}) if isinstance(self.settings,
+                                                             dict) else {}
+        return bool(gs.get("grid", True))
+
+    def set_grid_snap(self, on):
+        self._save_setting("grid", bool(on))
+
+    def _set_tab(self, tab):
+        if tab not in TABS or tab == self.setup_tab:
+            return
+        self.setup_tab = tab
+        if tab == "maps":
+            from . import minigolf_edit as edit
+            if self.maps is None:
+                self.maps = edit.MapList(self)
+            else:
+                self.maps.layout()
+                self.maps.reload()
+        self.play_sound("click")
+
+    def ugc_new_map(self):
+        """Neue eigene Bahn anlegen und gleich in den Editor springen."""
+        import ugc
+        self.ugc_edit(ugc.new_map(author=ugc.last_author()))
+
+    def ugc_edit(self, m):
+        from . import minigolf_edit as edit
+        self.editor = edit.MapEditor(self, m)
+        self.state = EDIT
+        self.play_sound("click")
+
+    def ugc_close_editor(self):
+        """Zurück aus dem Editor in den MAPS-Reiter."""
+        self.editor = None
+        self.state = SETUP
+        self.setup_tab = "maps"
+        if self.maps is not None:
+            self.maps.reload()
+        self.play_sound("click")
+
+    def ugc_play(self, map_id):
+        """Genau eine eigene Bahn spielen (aus dem MAPS-Reiter)."""
+        self.course = "ugc"
+        self._save_setting("course", "ugc")
+        self._save_setting("ugc_map", map_id)
+        self.best = self._load_best()
+        self._start_play(single=map_id)
+
+    def ugc_test(self, hole):
+        """Bahn aus dem Editor sofort ausprobieren (danach zurück in den Editor)."""
+        self._test_return = True
+        self.course = "ugc"
+        self.holes = [gen.normalize(hole)]
+        self.players = 1
+        self.cards = [[0] * len(self.holes)]
+        self.points = [0]
+        self.hole_idx = 0
+        self.player = 0
+        self.winner = None
+        self.score = 0
+        self.game_over = False
+        self.rec = None                 # Testläufe werden nicht aufgezeichnet
+        self.replay = None
+        self._start_hole()
+        self.state = PLAY
+        self.play_sound("click")
+
+    def _back_to_editor(self):
+        """Nach dem Test-Spielen zurück in den Editor."""
+        self._test_return = False
+        self.state = EDIT
+        self.game_over = False
+        if self.editor is None:
+            self.ugc_close_editor()
 
     # ===================================================== Eingabe
     def handle_event(self, event):
@@ -510,6 +717,17 @@ class MiniGolfGame(Game):
         if event.kind in (InputEvent.MOUSEDOWN, InputEvent.MOUSEUP) \
                 and event.button == 3:
             self._lock_power(event.kind == InputEvent.MOUSEDOWN)
+            return
+        # Der Bahn-Editor hat eine eigene, vollständige Bedienung - solange er
+        # offen ist, bekommt er alles (auch G/Z/P/F, die dort andere Bedeutung
+        # haben, und ESC zum Abbrechen statt Pause, siehe wants_escape).
+        if self.state == EDIT and self.editor is not None:
+            self.editor.handle(event)
+            return
+        # Test-Spielen: ESC bricht ab und führt zurück in den Editor.
+        if (self._test_return and event.kind == InputEvent.KEYDOWN
+                and event.key == "Escape"):
+            self._back_to_editor()
             return
         if self.state == SETUP:
             self._handle_setup(event)
@@ -640,6 +858,10 @@ class MiniGolfGame(Game):
         self.rumble(50)
 
     # ===================================================== Projektion
+    def _view(self):
+        """Nullpunkt + Maßstab als View für minigolf_draw."""
+        return draw.View(self.ox, self.oy, self.scale)
+
     def _project(self, x, y):
         return (self.ox + x * self.scale, self.oy + y * self.scale)
 
@@ -657,6 +879,13 @@ class MiniGolfGame(Game):
             self.msg_t -= dt
             if self.msg_t <= 0:
                 self.msg = None
+        if self.state == EDIT:
+            if self.editor is not None:
+                self.editor.update(dt)
+            return
+        if self.state == SETUP and self.setup_tab == "maps" and self.maps:
+            self.maps.update(dt)
+            return
         if self.state != PLAY:
             return
         self.mill_a += dt
@@ -673,33 +902,44 @@ class MiniGolfGame(Game):
             self.shot_time += dt
             if self.shot_time > MAX_SHOT_TIME:
                 self.vx = self.vy = 0.0
+                self.air = 0.0        # notfalls auch aus dem Flug holen
             if self.phase == "rolling" and self.vx == 0.0 and self.vy == 0.0:
                 self._after_shot()
 
     def _mover_rect(self, m):
         """Aktuelles Rechteck eines Wanderblocks (pendelt zwischen den Enden)."""
-        x, y, w, h, dx, dy, speed = m
-        if speed <= 0 or (dx == 0 and dy == 0):
-            return (x, y, w, h), (0.0, 0.0)
-        span = math.hypot(dx, dy)
-        period = 2 * span / speed
-        ph = (self.move_t % period) / period
-        f = ph * 2 if ph < 0.5 else (1 - ph) * 2
-        sign = 1.0 if ph < 0.5 else -1.0
-        return ((x + dx * f, y + dy * f, w, h),
-                (dx / span * speed * sign, dy / span * speed * sign))
+        return draw.mover_rect(m, self.move_t)
 
     def _physics(self, dt):
         speed = math.hypot(self.vx, self.vy)
         steps = max(2, min(24, int(speed * dt / BR) + 2))
         h = dt / steps
         for _ in range(steps):
-            fr = FRIC_SAND if self._terrain() == "sand" else FRIC_GREEN
+            self._tun_cd = max(0.0, self._tun_cd - h)
+            self._boost_cd = max(0.0, self._boost_cd - h)
+            # --- Sprungrampe: solange der Ball fliegt, gibt es nur die Bande.
+            # Hindernisse, Loch und Wasser werden überflogen - genau dafür ist
+            # die Schanze da.
+            if self.air > 0.0:
+                move = math.hypot(self.vx, self.vy) * h
+                self.air -= move
+                self.bx += self.vx * h
+                self.by += self.vy * h
+                self._collide_bounds()
+                # Ohne Tempo gibt es keinen Flug mehr - sonst bliebe der Ball
+                # ewig in der Luft und die Bahn liefe nie zu Ende.
+                if self.air <= 0.0 or move <= 0.0:
+                    self.air = 0.0
+                    self.play_sound("hit")
+                continue
+            fr = {"sand": FRIC_SAND, "ice": FRIC_ICE,
+                  "sticky": FRIC_STICKY}.get(self._terrain(), FRIC_GREEN)
             # Rampen beschleunigen, solange der Ball darauf liegt
             for (x, y, w, hh, ax, ay) in self.hole["slopes"]:
                 if x <= self.bx <= x + w and y <= self.by <= y + hh:
                     self.vx += ax * h
                     self.vy += ay * h
+            self._apply_magnets(h)
             f = max(0.0, 1.0 - fr * h)
             self.vx *= f
             self.vy *= f
@@ -708,6 +948,8 @@ class MiniGolfGame(Game):
             self._collide_bounds()
             for r in self.hole["walls"]:
                 self._collide_rect(r)
+            for g in self.hole["gates"]:
+                self._collide_gate(g)
             for m in self.hole["movers"]:
                 rect, vel = self._mover_rect(m)
                 self._collide_rect(rect, vel)
@@ -715,6 +957,11 @@ class MiniGolfGame(Game):
                 self._collide_bumper(b)
             for mill in self.hole["mills"]:
                 self._collide_mill(mill)
+            for sp in self.hole["spinners"]:
+                self._collide_spinner(sp, h)
+            self._apply_boosters()
+            if self._check_jumps() or self._check_tunnels():
+                continue
             if self._check_cup() or self._check_water():
                 return
             if self.vx * self.vx + self.vy * self.vy < STOP_EPS * STOP_EPS:
@@ -725,14 +972,115 @@ class MiniGolfGame(Game):
             del self.trail[0]
 
     def _terrain(self):
-        for (x, y, w, h) in self.hole["sand"]:
-            if x <= self.bx <= x + w and y <= self.by <= y + h:
-                return "sand"
+        """Untergrund unter dem Ball: green, sand, ice oder sticky.
+
+        Bei Überlappung gewinnt der bremsendste - so bleibt eine Sandinsel
+        auf einer Eisfläche auch wirklich Sand.
+        """
+        for key in ("sticky", "sand", "ice"):
+            for (x, y, w, h) in self.hole[key]:
+                if x <= self.bx <= x + w and y <= self.by <= y + h:
+                    return key
         return "green"
+
+    # ----- Die acht Editor-Hindernisse ---------------------------------
+    def _apply_magnets(self, h):
+        """Magnet: zieht den Ball an (force > 0) oder stößt ihn ab."""
+        for (x, y, r, force) in self.hole["magnets"]:
+            dx, dy = x - self.bx, y - self.by
+            d = math.hypot(dx, dy)
+            if d >= r or d < 0.4:
+                continue
+            # Nah an der Mitte stärker, am Rand des Feldes gar nicht.
+            pull = force * (1.0 - d / r) * h / d
+            self.vx += dx * pull
+            self.vy += dy * pull
+
+    def _collide_gate(self, g):
+        """Einbahn-Tor: in Richtung (dx, dy) offen, dagegen eine Wand."""
+        x, y, w, h, dx, dy = g
+        if self.vx * dx + self.vy * dy > 0:
+            return                     # richtige Richtung -> freie Fahrt
+        self._collide_rect((x, y, w, h))
+
+    def _collide_spinner(self, sp, h):
+        """Drehscheibe: nimmt den Ball mit und trägt ihn nach außen."""
+        x, y, r, speed = sp
+        dx, dy = self.bx - x, self.by - y
+        d = math.hypot(dx, dy)
+        if d >= r:
+            return
+        # Umfangsgeschwindigkeit am Ort des Balls + leichte Fliehkraft
+        self.vx += (-dy * speed - self.vx) * SPIN_PUSH * h
+        self.vy += (dx * speed - self.vy) * SPIN_PUSH * h
+        if d > 0.4:
+            self.vx += dx / d * abs(speed) * 4.0 * h
+            self.vy += dy / d * abs(speed) * 4.0 * h
+
+    def _apply_boosters(self):
+        """Schub-Feld: einmaliger Stoß beim Betreten (nicht je Teilschritt)."""
+        if self._boost_cd > 0.0:
+            return
+        for (x, y, w, h, dx, dy, boost) in self.hole["boosters"]:
+            if not (x <= self.bx <= x + w and y <= self.by <= y + h):
+                continue
+            n = math.hypot(dx, dy)
+            if n < 1e-6 or boost <= 0:
+                continue
+            ux, uy = dx / n, dy / n
+            # Auf mindestens 'boost' beschleunigen - schneller wird nie gebremst.
+            along = self.vx * ux + self.vy * uy
+            if along < boost:
+                self.vx += ux * (boost - along)
+                self.vy += uy * (boost - along)
+                self._boost_cd = BOOST_COOLDOWN
+                self.play_sound("bounce")
+            return
+
+    def _check_jumps(self):
+        """Sprungrampe: hebt den Ball ab, wenn er schnell genug drüberrollt."""
+        if self.air > 0.0:
+            return False
+        for (x, y, w, h, dx, dy, dist) in self.hole["jumps"]:
+            if not (x <= self.bx <= x + w and y <= self.by <= y + h):
+                continue
+            sp = math.hypot(self.vx, self.vy)
+            if sp < JUMP_MIN_SPEED:
+                return False           # zu langsam: die Schanze tut nichts
+            n = math.hypot(dx, dy)
+            if n > 1e-6:               # in Sprungrichtung ausrichten
+                self.vx, self.vy = dx / n * sp, dy / n * sp
+            self.air = max(1.0, float(dist))
+            self.play_sound("bounce")
+            return True
+        return False
+
+    def _check_tunnels(self):
+        """Rohr: versetzt den Ball ans andere Ende, Richtung bleibt erhalten."""
+        if self._tun_cd > 0.0:
+            return False
+        for (x1, y1, x2, y2, r) in self.hole["tunnels"]:
+            for (ex, ey, ox, oy) in ((x1, y1, x2, y2), (x2, y2, x1, y1)):
+                if math.hypot(self.bx - ex, self.by - ey) > r:
+                    continue
+                sp = math.hypot(self.vx, self.vy) * TUNNEL_KEEP
+                if sp < 1e-6:
+                    return False       # liegen geblieben: kein Transport
+                ux, uy = self.vx / math.hypot(self.vx, self.vy), \
+                    self.vy / math.hypot(self.vx, self.vy)
+                # Direkt hinter der Mündung wieder ausspucken, sonst fängt
+                # das Ziel-Ende den Ball sofort wieder ein.
+                self.bx = ox + ux * (r + BR + 0.5)
+                self.by = oy + uy * (r + BR + 0.5)
+                self.vx, self.vy = ux * sp, uy * sp
+                self._tun_cd = TUNNEL_COOLDOWN
+                self.play_sound("hit")
+                return True
+        return False
 
     def _collide_bounds(self):
         lo = BORDER + BR
-        hix, hiy = CW - BORDER - BR, CH - BORDER - BR
+        hix, hiy = self.cw - BORDER - BR, self.ch - BORDER - BR
         if self.bx < lo:
             self.bx, self.vx = lo, abs(self.vx) * WALL_E
             self._thud()
@@ -1080,6 +1428,11 @@ class MiniGolfGame(Game):
         self.play_sound("click")
 
     def _end_round(self):
+        # Test-Spielen aus dem Editor: kein Bestwert, kein Erfolg, keine
+        # Statistik - es geht direkt zurück ans Bauen.
+        if self._test_return:
+            self._back_to_editor()
+            return
         total = sum(self.cards[0])
         par_total = sum(h["par"] for h in self.holes)
         self._save_best(total)
@@ -1104,10 +1457,10 @@ class MiniGolfGame(Game):
         self.play_sound("click")
 
     # ===================================================== Replay-Aufnahme
-    # Aufgezeichnet wird je Schlag die tatsaechlich gerollte Ballbahn (siehe
-    # replay.py). Der Rest der Bahn - Banden, Sand, Wasser, Muehlen - liegt
+    # Aufgezeichnet wird je Schlag die tatsächlich gerollte Ballbahn (siehe
+    # replay.py). Der Rest der Bahn - Banden, Sand, Wasser, Mühlen - liegt
     # als Kulisse im Replay, damit die Wiederholung auch dann noch stimmt,
-    # wenn spaetere Versionen die Bahnen aendern.
+    # wenn spätere Versionen die Bahnen ändern.
 
     def _rec_new(self):
         """Startet die Aufzeichnung der Runde (falls Replays an sind)."""
@@ -1144,7 +1497,7 @@ class MiniGolfGame(Game):
     def _open_replay(self):
         """Rundenende: die Wiederholung ansehen (Taste P bzw. Knopf).
 
-        Den Screen oeffnet main.py - das Spiel legt nur den Wunsch ab.
+        Den Screen öffnet main.py - das Spiel legt nur den Wunsch ab.
         """
         if self.replay is not None:
             self.replay_request = self.replay
@@ -1152,7 +1505,7 @@ class MiniGolfGame(Game):
 
     # ===================================================== Replay-Wiedergabe
     # Der Replay-Screen (replayview.py) baut eine ganz normale Spielinstanz
-    # und faehrt sie ueber diese drei Methoden Bild fuer Bild durch die
+    # und fährt sie über diese drei Methoden Bild für Bild durch die
     # Aufnahme - so zeichnet die Wiederholung mit demselben Code wie das
     # Spiel selbst.
 
@@ -1162,7 +1515,11 @@ class MiniGolfGame(Game):
         self.replay = None
         self.replay_request = None
         self._rep = rep
-        self._rep_layouts = rep.get("layouts") or []
+        # Aufnahmen aus älteren Versionen kennen weder die Bahngröße noch die
+        # neuen Hindernis-Typen - normalize() ergänzt beides, damit dieselbe
+        # Zeichen- und Physikroutine sie abspielen kann.
+        self._rep_layouts = [gen.normalize(lay)
+                             for lay in (rep.get("layouts") or [])]
         self._rep_at = None
         meta = rep.get("meta") or {}
         self.course = meta.get("course", self.course)
@@ -1207,6 +1564,9 @@ class MiniGolfGame(Game):
         lay = sc.get("layout", 0)
         self.hole = (self._rep_layouts[lay]
                      if 0 <= lay < len(self._rep_layouts) else self.hole)
+        if (self.hole["w"], self.hole["h"]) != (self.cw, self.ch):
+            self.cw, self.ch = self.hole["w"], self.hole["h"]
+            self._layout()
         self.hole_idx = self._rep_pos.get(sc.get("hole", 0), 0)
         self.par = self.hole.get("par", 3)
         self.cup = (float(self.hole["cup"][0]), float(self.hole["cup"][1]))
@@ -1242,7 +1602,7 @@ class MiniGolfGame(Game):
         self._rep_at = (index, frame)
 
     def replay_draw(self, aiming=False, banner=False):
-        """Zeichnet den aktuellen Replay-Stand (ohne Menue-Overlay)."""
+        """Zeichnet den aktuellen Replay-Stand (ohne Menü-Overlay)."""
         s = self.surface
         ui.draw_background(s, self.width, self.height)
         self._draw_course(s)
@@ -1263,6 +1623,9 @@ class MiniGolfGame(Game):
         if self.power_lock and self.paused:
             self.power_lock = False
         ui.draw_background(s, self.width, self.height)
+        if self.state == EDIT and self.editor is not None:
+            self.editor.draw(s)
+            return
         if self.state == SETUP:
             self._draw_setup(s)
             return
@@ -1278,103 +1641,9 @@ class MiniGolfGame(Game):
             self._draw_over(s)
 
     def _draw_course(self, s):
-        board = pygame.Rect(int(self.ox), int(self.oy),
-                            int(CW * self.scale), int(CH * self.scale))
-        pygame.draw.rect(s, COL_FRINGE, board.inflate(10, 10), border_radius=10)
-        pygame.draw.rect(s, COL_GREEN, board, border_radius=6)
-        # Mähstreifen
-        stripe = max(6, int(10 * self.scale))
-        for i in range(0, board.h, stripe * 2):
-            pygame.draw.rect(s, COL_GREEN_D,
-                             (board.x, board.y + i, board.w,
-                              min(stripe, board.h - i)))
-        # Banden
-        b = max(2, int(BORDER * self.scale))
-        for r in (pygame.Rect(board.x, board.y, board.w, b),
-                  pygame.Rect(board.x, board.bottom - b, board.w, b),
-                  pygame.Rect(board.x, board.y, b, board.h),
-                  pygame.Rect(board.right - b, board.y, b, board.h)):
-            pygame.draw.rect(s, COL_WALL, r)
-            pygame.draw.rect(s, COL_WALL_HI, r, 1)
-        for (x, y, w, h, ax, ay) in self.hole["slopes"]:
-            self._draw_slope(s, (x, y, w, h), ax, ay)
-        for r in self.hole["sand"]:
-            rc = self._rect_px(r)
-            pygame.draw.rect(s, COL_SAND, rc, border_radius=6)
-            pygame.draw.rect(s, COL_SAND_D, rc, 2, border_radius=6)
-        for r in self.hole["water"]:
-            self._draw_water(s, r)
-        self._draw_cup(s)
-        for r in self.hole["walls"]:
-            self._draw_wall(s, self._rect_px(r))
-        for m in self.hole["movers"]:
-            rect, _ = self._mover_rect(m)
-            self._draw_wall(s, self._rect_px(rect), mover=True)
-        for (x, y, r) in self.hole["bumpers"]:
-            px, py = self._project(x, y)
-            rr = max(3, int(r * self.scale))
-            pygame.draw.circle(s, COL_BUMPER, (int(px), int(py)), rr)
-            pygame.draw.circle(s, COL_BUMPER_HI, (int(px), int(py)),
-                               max(2, rr - 3), 2)
-        for mill in self.hole["mills"]:
-            self._draw_mill(s, mill)
-
-    def _draw_slope(self, s, r, ax, ay):
-        rc = self._rect_px(r)
-        pygame.draw.rect(s, COL_SLOPE, rc, border_radius=5)
-        ang = math.atan2(ay, ax)
-        step = max(16, int(14 * self.scale))
-        col = ui.mix(COL_SLOPE, (255, 255, 255), 0.22)
-        dx, dy = math.cos(ang) * 6, math.sin(ang) * 6
-        for yy in range(rc.y + step // 2, rc.bottom - 2, step):
-            for xx in range(rc.x + step // 2, rc.right - 2, step):
-                pygame.draw.line(s, col, (xx - dx, yy - dy), (xx + dx, yy + dy), 2)
-                pygame.draw.circle(s, col, (int(xx + dx), int(yy + dy)), 2)
-
-    def _draw_water(self, s, r):
-        rc = self._rect_px(r)
-        pygame.draw.rect(s, COL_WATER, rc, border_radius=7)
-        tsec = pygame.time.get_ticks() / 1000.0
-        for i in range(3):
-            yy = rc.y + int(rc.h * (0.25 + 0.25 * i)) + int(
-                math.sin(tsec * 1.4 + i) * 3)
-            if rc.y < yy < rc.bottom:
-                pygame.draw.line(s, COL_WATER_D, (rc.x + 6, yy),
-                                 (rc.right - 6, yy), 2)
-        pygame.draw.rect(s, COL_WATER_D, rc, 2, border_radius=7)
-
-    @staticmethod
-    def _draw_wall(s, rc, mover=False):
-        pygame.draw.rect(s, COL_WALL, rc, border_radius=3)
-        pygame.draw.rect(s, COL_WALL_HI, rc, 2, border_radius=3)
-        if mover:
-            pygame.draw.line(s, COL_WALL_HI, (rc.x + 4, rc.centery),
-                             (rc.right - 4, rc.centery), 1)
-
-    def _draw_mill(self, s, mill):
-        x, y, length, arms, speed = mill
-        px, py = self._project(x, y)
-        base = self.mill_a * speed
-        w = max(3, int(ARM_W * 2 * self.scale))
-        for i in range(int(arms)):
-            a = base + i * (2 * math.pi / int(arms))
-            ex, ey = self._project(x + math.cos(a) * length,
-                                   y + math.sin(a) * length)
-            pygame.draw.line(s, COL_MILL, (px, py), (ex, ey), w)
-            pygame.draw.line(s, COL_MILL_D, (px, py), (ex, ey), 1)
-        pygame.draw.circle(s, COL_MILL_D, (int(px), int(py)),
-                           max(3, int(2.4 * self.scale)))
-
-    def _draw_cup(self, s):
-        px, py = self._project(*self.cup)
-        r = max(3, int(CUP_R * self.scale))
-        pygame.draw.circle(s, (24, 60, 36), (int(px), int(py)), r + 2)
-        pygame.draw.circle(s, COL_CUP, (int(px), int(py)), r)
-        top = py - max(16, int(18 * self.scale))
-        pygame.draw.line(s, (238, 238, 232), (px, py), (px, top), 2)
-        wave = math.sin(pygame.time.get_ticks() / 260.0) * 2
-        pygame.draw.polygon(s, COL_FLAG, [(px, top), (px + 14, top + 5 + wave),
-                                          (px, top + 11)])
+        """Platz zeichnen - die Arbeit macht minigolf_draw (auch für den Editor)."""
+        draw.draw_course(s, self.hole, self._view(), self.mill_a, self.move_t,
+                         cup_r=CUP_R)
 
     def _draw_ball(self, s):
         px, py = self._project(self.bx, self.by)
@@ -1601,8 +1870,19 @@ class MiniGolfGame(Game):
         cx = self.width // 2
         title = self._huge.render(t("golf.title"), True, self.accent)
         s.blit(title, title.get_rect(center=(cx, int(self.height * 0.115))))
-        sub = self._small.render(t("golf.subtitle"), True, ui.TEXT_DIM)
+        sub_key = ("golf.subtitle" if self.setup_tab == "play"
+                   else "golf.ugc.subtitle")
+        sub = self._small.render(t(sub_key), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, int(self.height * 0.18))))
+        for i, rc in enumerate(self.tab_rects):
+            self._btn(s, rc, t("golf.tab_" + TABS[i]),
+                      self.setup_tab == TABS[i])
+        if self.setup_tab == "maps":
+            if self.maps is None:
+                from . import minigolf_edit as edit
+                self.maps = edit.MapList(self)
+            self.maps.draw(s)
+            return
 
         def label(rects, txt, w=None):
             """Beschriftung mittig über die Gruppe (zu lange wird gekürzt)."""

@@ -2031,7 +2031,17 @@
         "putt",
         "tour",
         "bloqueio",
-        "força"
+        "força",
+        "editor",
+        "maps",
+        "ugc",
+        "tunnel",
+        "ice",
+        "magnet",
+        "booster",
+        "share",
+        "import",
+        "export"
       ],
       "sections": [
         {
@@ -2062,7 +2072,13 @@
           "body": [
             "- A areia trava muito, as rampas aceleram no sentido das setas.",
             "- A água custa uma tacada de penalização; a bola volta à última posição segura.",
-            "- Os para-choques de borracha devolvem velocidade; moinhos e blocos móveis exigem sentido de tempo. O bloqueio de força no botão direito mantém a tacada carregada até a abertura aparecer."
+            "- Os para-choques de borracha devolvem velocidade; moinhos e blocos móveis exigem sentido de tempo. O bloqueio de força no botão direito mantém a tacada carregada até a abertura aparecer.",
+            "- Tubo: a bola desaparece numa boca e sai pela outra - direção e velocidade mantêm-se.",
+            "- O gelo deixa a bola correr quase sem fim, a zona pegajosa trava-a de imediato.",
+            "- Os impulsores dão um empurrão fixo ao passar, os ímanes atraem ou repelem.",
+            "- Uma porta de sentido único só deixa passar na direção da seta; do outro lado é uma parede.",
+            "- O prato giratório leva a bola para fora, o trampolim faz-lhe voar por cima dos obstáculos.",
+            "Estes oito obstáculos juntam-se aos clássicos e colocam-se livremente no editor de buracos - ver a página \"Buracos próprios\"."
           ]
         },
         {
@@ -2070,6 +2086,62 @@
           "body": [
             "Cada buraco vale 600 pontos mais 300 por cada tacada abaixo do par (e 300 a menos por cada tacada acima, nunca abaixo de 100).",
             "Um buraco em um dá 500 pontos extra. A soma de todos os buracos é o teu recorde; além disso guarda-se o menor número de tacadas por percurso."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minigolf-maps",
+      "category": "games",
+      "title": "Buracos próprios (Minigolf)",
+      "keywords": [
+        "buracos proprios",
+        "editor",
+        "maps",
+        "ugc",
+        "criar",
+        "partilhar",
+        "importar",
+        "exportar",
+        "modelo",
+        "minigolf"
+      ],
+      "sections": [
+        {
+          "h": "Criar um buraco",
+          "body": [
+            "No ecrã de preparação do minigolfe, o separador MAPS leva à tua coleção. \"Novo\" abre o editor, \"Editar\" retoma um buraco existente.",
+            "Cada buraco precisa de um nome e de um id. O id é a chave: em minúsculas, sem espaços, apenas a-z, 0-9, - e _. É também o nome de ficheiro sugerido ao partilhar.",
+            "O buraco fica à esquerda e a paleta com quatro ferramentas e quinze tipos de obstáculos à direita. Os retângulos arrastam-se, o que é redondo põe-se com um clique, um tubo precisa de dois cliques: primeiro a entrada, depois a saída.",
+            "Com a ferramenta de seleção, um clique escolhe um objeto, arrastar move-o e [Del] apaga-o. Em baixo aparecem então os valores do objeto escolhido: largura, altura, raio, direção, velocidade e por aí adiante.",
+            "Em cima defines o par e ainda a largura e a altura do buraco - de 60x80 até 160x240 unidades. O que ficaria de fora ao reduzir volta automaticamente para dentro.",
+            "[G] alterna o ajuste à grelha, [U] anula, [Y] refaz, [S] guarda e [Enter] experimenta o buraco de imediato. [Esc] volta atrás - com alterações por guardar, só depois de uma confirmação."
+          ]
+        },
+        {
+          "h": "Modelos",
+          "body": [
+            "\"Modelo\" substitui o buraco atual por um de doze já prontos: Vazio, Tubo, Ilha, Moinho, Ziguezague, Água, Amortecedores, Rampa, Gelo, Labirinto, Íman e Salto.",
+            "Cada modelo deixa sempre um caminho normal ao lado do seu truque - um buraco que só se resolve com um truque seria uma armadilha, não um modelo. Os doze são comprovadamente jogáveis em par.",
+            "Um modelo é um ponto de partida, não um resultado: acrescenta os teus obstáculos, muda a partida e o buraco de sítio, altera o tamanho."
+          ]
+        },
+        {
+          "h": "Jogar",
+          "body": [
+            "No separador MAPS, \"Jogar\" começa exatamente o buraco selecionado - com o seu próprio recorde por buraco.",
+            "No separador JOGO há uma quinta escolha de percurso, \"Próprios\": assim toda a tua coleção é jogada de seguida como uma ronda, até nove buracos.",
+            "Tudo fica guardado em ugc.json ao lado do jogo (ao lado do .exe na versão compilada) - no mesmo sítio que mem.json e replay.json."
+          ]
+        },
+        {
+          "h": "Partilhar e importar",
+          "body": [
+            "\"Partilhar\" pergunta primeiro o teu nome como criador e depois o nome do ficheiro; esse já vem preenchido com o id do buraco.",
+            "\"Exportar como\" abre a janela de gravação habitual, \"Para Transferências\" põe o ficheiro diretamente na pasta Transferências e diz-te o caminho. É sempre exportado exatamente um buraco.",
+            "O ficheiro tem a extensão .lamapgzmap e contém JSON - podes enviá-lo como qualquer outro ficheiro. \"Importar\" volta a lê-lo; na importação também são aceites ficheiros .json.",
+            "Se o id já estiver ocupado, a importação acrescenta automaticamente -2, -3 e assim por diante, em vez de substituir o teu buraco existente.",
+            "O nome do buraco, o id e o nome do criador passam por um filtro de palavras ao guardar, ao exportar E ao importar, e verifica os 14 idiomas. O que for ofensivo é recusado - seja qual for o idioma definido."
           ]
         }
       ]

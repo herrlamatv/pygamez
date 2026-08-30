@@ -2034,7 +2034,17 @@
         "putt",
         "tour",
         "lås",
-        "kraft"
+        "kraft",
+        "editor",
+        "maps",
+        "ugc",
+        "tunnel",
+        "ice",
+        "magnet",
+        "booster",
+        "share",
+        "import",
+        "export"
       ],
       "sections": [
         {
@@ -2065,7 +2075,13 @@
           "body": [
             "- Sand bromsar kraftigt, ramper accelererar i pilarnas riktning.",
             "- Vatten kostar ett straffslag; bollen återvänder till sin senaste säkra plats.",
-            "- Gummikuddar ger fart tillbaka; väderkvarnar och vandrande block kräver timing. Kraftlåset på höger musknapp håller slaget laddat tills luckan passar."
+            "- Gummikuddar ger fart tillbaka; väderkvarnar och vandrande block kräver timing. Kraftlåset på höger musknapp håller slaget laddat tills luckan passar.",
+            "- Rör: bollen försvinner i den ena mynningen och kommer ut ur den andra - riktning och fart behålls.",
+            "- Is låter bollen rulla nästan i evighet, klibbfältet stoppar den direkt.",
+            "- Boosters ger en fast knuff när man kör över dem, magneter drar till sig eller stöter bort.",
+            "- En enkelriktad grind släpper bara igenom i pilens riktning; från andra hållet är den en vägg.",
+            "- Vridskivan tar med bollen utåt, hoprampen skickar den flygande över hinder.",
+            "Dessa åtta hinder tillkommer utöver de klassiska och kan placeras fritt i hålredigeraren - se sidan \"Egna hål\"."
           ]
         },
         {
@@ -2073,6 +2089,62 @@
           "body": [
             "Varje bana ger 600 poäng plus 300 för varje slag under par (och 300 mindre för varje slag över, aldrig under 100).",
             "Hole in one ger 500 poäng extra. Summan av alla banor är ditt rekord; dessutom sparas lägsta slagantal per bana."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minigolf-maps",
+      "category": "games",
+      "title": "Egna hål (Minigolf)",
+      "keywords": [
+        "egna hal",
+        "redigerare",
+        "maps",
+        "ugc",
+        "bygga",
+        "dela",
+        "importera",
+        "exportera",
+        "mall",
+        "minigolf"
+      ],
+      "sections": [
+        {
+          "h": "Bygg ett hål",
+          "body": [
+            "På minigolfens förberedelseskärm leder fliken MAPS till din egen samling. \"Ny\" öppnar hålredigeraren, \"Redigera\" tar upp ett befintligt hål igen.",
+            "Varje hål behöver ett namn och ett id. id:t är nyckeln: små bokstäver, inga mellanslag, bara a-z, 0-9, - och _. Det är också filnamnet som föreslås vid delning.",
+            "Hålet ligger till vänster, paletten med fyra verktyg och femton hindertyper till höger. Rektanglar dras upp, runda saker sätts med ett klick, ett rör kräver två klick - först ingång, sedan utgång.",
+            "Med markeringsverktyget väljer ett klick ett objekt, dra flyttar det, [Del] tar bort det. Längst ned visas då värdena för det valda objektet: bredd, höjd, radie, riktning, fart och så vidare.",
+            "Överst ställer du in par samt hålets bredd och höjd - från 60x80 till 160x240 enheter. Det som skulle sticka ut vid förminskning flyttas automatiskt in.",
+            "[G] växlar rutfästet, [U] ångrar, [Y] gör om, [S] sparar och [Enter] provar hålet direkt. [Esc] går tillbaka - vid osparade ändringar först efter en bekräftelse."
+          ]
+        },
+        {
+          "h": "Mallar",
+          "body": [
+            "\"Mall\" ersätter det aktuella hålet med en av tolv färdiga: Tom, Rör, Ö, Väderkvarn, Sicksack, Vatten, Studsare, Ramp, Is, Labyrint, Magnet och Hopp.",
+            "Varje mall lämnar alltid en vanlig väg öppen vid sidan av sitt trick - ett hål som bara går att lösa med ett trick vore en fälla, inte en mall. Alla tolv är bevisligen spelbara på par.",
+            "En mall är en utgångspunkt, inte ett resultat: lägg till egna hinder, flytta utslag och hål, ändra storleken."
+          ]
+        },
+        {
+          "h": "Spela",
+          "body": [
+            "I fliken MAPS startar \"Spela\" exakt det valda hålet - med eget rekord per hål.",
+            "I fliken SPEL finns ett femte banval, \"Egna\": då spelas hela din samling efter varandra som en runda, högst nio hål.",
+            "Allt sparas i ugc.json bredvid spelet (bredvid .exe-filen i den byggda versionen) - samma ställe som mem.json och replay.json."
+          ]
+        },
+        {
+          "h": "Dela och importera",
+          "body": [
+            "\"Dela\" frågar först efter ditt namn som skapare och sedan efter filnamnet; det är redan ifyllt med hålets id.",
+            "\"Exportera som\" öppnar den vanliga spara-dialogen, \"Till Hämtade filer\" lägger filen direkt i mappen Hämtade filer och talar om sökvägen. Exakt ett hål exporteras varje gång.",
+            "Filen har ändelsen .lamapgzmap och innehåller JSON - du kan skicka den som vilken fil som helst. \"Importera\" läser in den igen; vid import godtas även .json-filer.",
+            "Är id:t redan taget lägger importen automatiskt på -2, -3 och så vidare i stället för att skriva över ditt befintliga hål.",
+            "Hålnamn, id och skaparnamn går genom ett ordfilter vid sparande, export OCH import, och det kontrollerar alla 14 språk. Kränkande text avvisas - oavsett vilket språk som är inställt."
           ]
         }
       ]

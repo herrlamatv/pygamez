@@ -100,14 +100,14 @@ class BlackjackGame(Game):
         self.dealer = []
         self.hole_hidden = True
         self.results = []        # Texte je Hand im PAYOUT
-        self.tweens = []         # Karten-Fluege (card, dealer, idx, t, delay)
+        self.tweens = []         # Karten-Flüge (card, dealer, idx, t, delay)
         self._fly = {}
         self.dealer_wait = 0.0
         self.flip_t = 0.0
         self.state = BET if self.chips >= BETS[0] else BROKE
 
     def _make_fonts(self):
-        """Theme-Schriften (ui.font cached selbst); _huge haengt an height."""
+        """Theme-Schriften (ui.font cached selbst); _huge hängt an height."""
         self._small = ui.font(16)
         self._tiny = ui.font(13)
         self._big = ui.font(22, bold=True)
@@ -125,7 +125,7 @@ class BlackjackGame(Game):
         self.dealer_y = int(self.height * 0.20)
         self.player_y = int(self.height * 0.58)
         self.strip = pygame.Rect(0, self.height - 72, self.width, 72)
-        # Gecachte Flaechen (Software-Rendering: nicht pro Frame neu bauen)
+        # Gecachte Flächen (Software-Rendering: nicht pro Frame neu bauen)
         self._felt = C.make_felt(self.width, self.height,
                                  COL_FELT, COL_FELT_EDGE)
         self._strip_bg = pygame.Surface(self.strip.size, pygame.SRCALPHA)
@@ -305,7 +305,7 @@ class BlackjackGame(Game):
 
     def _start_dealer(self):
         self.state = DEALER
-        # Hole-Card JETZT aufdecken, damit der Flip sichtbar ablaeuft
+        # Hole-Card JETZT aufdecken, damit der Flip sichtbar abläuft
         # (vorher blieb hole_hidden True und die Animation war toter Code).
         self.hole_hidden = False
         self.flip_t = FLIP_T
@@ -502,7 +502,7 @@ class BlackjackGame(Game):
         return self.renderer.get(card, w or self.cw, h or self.ch)
 
     def _flying_cards(self):
-        """{id(card): True} fuer Karten, die noch nicht gelandet sind."""
+        """{id(card): True} für Karten, die noch nicht gelandet sind."""
         return {id(tw["card"]): True for tw in self.tweens
                 if tw["t"] < tw["delay"] + DEAL_T}
 

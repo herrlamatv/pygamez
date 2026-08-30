@@ -1,0 +1,75 @@
+# Wortfilter - Slovenscina (sl)
+# ===========================================================================
+# Je Eintrag zwei Zeilen: zuerst das Regex-Muster (- ...), darunter das
+# gemeinte Wort als Kommentar (# ...). Geprüft wird ohne Rücksicht auf
+# Groß-/Kleinschreibung; ungültige Muster werden still übersprungen.
+#
+# Die Muster halten eingestreute Sonderzeichen und Ziffern aus
+# ([^\sa-zA-Z]* - bewusst OHNE Leerzeichen, sonst liefe ein Muster über
+# Wortgrenzen hinweg; nur zwischen zwei Wörtern sind Leerzeichen erlaubt),
+# erlauben Buchstabenwiederholung (f+) und die üblichen Leetspeak-Ersetzungen
+# ([a4@], [e3], [i1!|], [o0], [s5$] ...). Vor dem Vergleich entfernt
+# swear._norm Akzente und macht aus "-" und "_" Leerzeichen - deshalb stehen
+# die Wörter hier in ASCII-Schreibweise.
+#
+# Geprüft werden Map-Name, Map-ID und Creator-Name (siehe swear.py, ugc.py).
+# Bearbeitet wird die Liste einfach hier: eine Regex-Zeile, darunter das Wort.
+
+- \b(p+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[a4@]+)\b
+# pizda
+- \b(k+[^\sa-zA-Z]*u+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*c+)\b
+# kurac
+- \b(j+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[i1!|]+)\b
+# jebi
+- \b(j+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*m+)\b
+# jebem
+- \b(d+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*k+)\b
+# drek
+- \b(p+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*c+)(?=[^\s]*\b)
+# prasec
+- \b(k+[^\sa-zA-Z]*u+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[a4@]+)\b
+# kurba
+- \b(p+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*f+[^\sa-zA-Z]*u+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*n+)(?=[^\s]*\b)
+# pofukan
+- \b([b8]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*k+)\b
+# bedak
+- \b([i1!|]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[t7+]+)\b
+# idiot
+- \b(d+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[l1|]+)\b
+# debil
+- \b(c+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*n+)\b
+# cigan
+- \b(n+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[t7+]+)(?=[^\s]*\b)
+# nacist
+- \b(h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# hitler
+- \b(p+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[o0]+)(?=[^\s]*\b)
+# posilstvo
+- \b(p+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)\b
+# peder
+- \b([s5$]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*j+[^\sa-zA-Z]*[e3]+)(?=[^\s]*\b)
+# sranje
+- \b([g9]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[o0]+)\b
+# govno
+- \b(k+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*n+)\b
+# kreten
+- \b([b8]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*j+)\b
+# butelj
+- \b(p+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[a4@]+)\b
+# picka
+- \b(j+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[i1!|]+)(?=[^\s]*\b)
+# jebenti
+- \b(m+[^\sa-zA-Z]*r+[^\sa-zA-Z]*h+[^\sa-zA-Z]*[a4@]+)\b
+# mrha
+- \b(m+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*m+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*n+[\W\d_]*[s5$]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*n+)\b
+# mamin sin
+- \b([z2]+[^\sa-zA-Z]*m+[^\sa-zA-Z]*r+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*k+)\b
+# zmrdek
+- \b(k+[^\sa-zA-Z]*u+[^\sa-zA-Z]*r+[^\sa-zA-Z]*c+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*v+)\b
+# kurcev
+- \b(p+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[o0]+)\b
+# prekleto
+- \b([s5$]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*j+[^\sa-zA-Z]*[a4@]+)\b
+# svinja
+- \b([t7+]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*c+)\b
+# tepec

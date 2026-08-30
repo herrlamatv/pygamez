@@ -2033,7 +2033,17 @@
         "putt",
         "tour",
         "bloqueo",
-        "fuerza"
+        "fuerza",
+        "editor",
+        "maps",
+        "ugc",
+        "tunnel",
+        "ice",
+        "magnet",
+        "booster",
+        "share",
+        "import",
+        "export"
       ],
       "sections": [
         {
@@ -2064,7 +2074,13 @@
           "body": [
             "- La arena frena mucho, las rampas aceleran en la dirección de las flechas.",
             "- El agua cuesta un golpe de penalización; la bola vuelve a su última posición segura.",
-            "- Los parachoques de goma devuelven velocidad; molinos y bloques móviles son cuestión de ritmo. El bloqueo de fuerza con el botón derecho mantiene el golpe cargado hasta que llega el hueco."
+            "- Los parachoques de goma devuelven velocidad; molinos y bloques móviles son cuestión de ritmo. El bloqueo de fuerza con el botón derecho mantiene el golpe cargado hasta que llega el hueco.",
+            "- Tubo: la bola desaparece por una boca y sale por la otra - se conservan dirección y velocidad.",
+            "- El hielo deja rodar la bola casi sin fin, la zona pegajosa la frena de golpe.",
+            "- Los impulsores dan un empujón fijo al pasar, los imanes atraen o repelen.",
+            "- Una puerta de un sentido solo deja pasar en la dirección de la flecha; por el otro lado es un muro.",
+            "- El plato giratorio arrastra la bola hacia fuera, el trampolín la hace volar sobre los obstáculos.",
+            "Estos ocho obstáculos se suman a los clásicos y se colocan libremente en el editor de hoyos - véase la página \"Hoyos propios\"."
           ]
         },
         {
@@ -2072,6 +2088,62 @@
           "body": [
             "Cada hoyo vale 600 puntos más 300 por cada golpe bajo par (y 300 menos por cada golpe sobre par, nunca por debajo de 100).",
             "Un hoyo en uno suma 500 puntos extra. La suma de todos los hoyos es tu récord; además se guarda el menor número de golpes por recorrido."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minigolf-maps",
+      "category": "games",
+      "title": "Hoyos propios (Minigolf)",
+      "keywords": [
+        "hoyos propios",
+        "editor",
+        "maps",
+        "ugc",
+        "crear",
+        "compartir",
+        "importar",
+        "exportar",
+        "plantilla",
+        "minigolf"
+      ],
+      "sections": [
+        {
+          "h": "Crear un hoyo",
+          "body": [
+            "En la pantalla de preparación del minigolf, la pestaña MAPS lleva a tu colección. \"Nuevo\" abre el editor, \"Editar\" retoma un hoyo existente.",
+            "Cada hoyo necesita un nombre y un id. El id es la clave: en minúsculas, sin espacios, solo a-z, 0-9, - y _. También es el nombre de archivo propuesto al compartir.",
+            "El hoyo queda a la izquierda y la paleta con cuatro herramientas y quince tipos de obstáculos a la derecha. Los rectángulos se arrastran, lo redondo se pone con un clic, un tubo necesita dos clics: primero la entrada, luego la salida.",
+            "Con la herramienta de selección, un clic elige un objeto, arrastrar lo mueve y [Supr] lo borra. Abajo aparecen entonces los valores del objeto elegido: ancho, alto, radio, dirección, velocidad y demás.",
+            "Arriba ajustas el par y también el ancho y el alto del hoyo - de 60x80 hasta 160x240 unidades. Lo que sobresaldría al reducir se mete dentro automáticamente.",
+            "[G] cambia el ajuste a la rejilla, [U] deshace, [Y] rehace, [S] guarda y [Enter] prueba el hoyo enseguida. [Esc] vuelve atrás - con cambios sin guardar, solo tras una confirmación."
+          ]
+        },
+        {
+          "h": "Plantillas",
+          "body": [
+            "\"Plantilla\" sustituye el hoyo actual por una de las doce listas: Vacío, Tubo, Isla, Molino, Zigzag, Agua, Parachoques, Rampa, Hielo, Laberinto, Imán y Salto.",
+            "Cada plantilla deja siempre un camino normal junto a su truco: un hoyo que solo se resuelve con un truco sería una trampa, no una plantilla. Las doce son jugables en par de forma comprobada.",
+            "Una plantilla es un punto de partida, no un resultado: añade tus obstáculos, mueve la salida y el hoyo, cambia el tamaño."
+          ]
+        },
+        {
+          "h": "Jugar",
+          "body": [
+            "En la pestaña MAPS, \"Jugar\" inicia justo el hoyo seleccionado, con su propio récord por hoyo.",
+            "En la pestaña JUEGO hay una quinta opción de recorrido, \"Propios\": así se juega toda tu colección seguida como una ronda, hasta nueve hoyos.",
+            "Todo se guarda en ugc.json junto al juego (junto al .exe en la versión compilada), en el mismo sitio que mem.json y replay.json."
+          ]
+        },
+        {
+          "h": "Compartir e importar",
+          "body": [
+            "\"Compartir\" pregunta primero tu nombre como creador y luego el nombre del archivo; este ya viene relleno con el id del hoyo.",
+            "\"Exportar como\" abre el diálogo de guardado habitual, \"A Descargas\" deja el archivo directamente en la carpeta Descargas y te dice la ruta. Siempre se exporta exactamente un hoyo.",
+            "El archivo lleva la extensión .lamapgzmap y contiene JSON: puedes enviarlo como cualquier otro archivo. \"Importar\" lo vuelve a leer; al importar también se aceptan archivos .json.",
+            "Si el id ya está ocupado, la importación añade automáticamente -2, -3 y así, en vez de sobrescribir tu hoyo existente.",
+            "El nombre del hoyo, el id y el nombre del creador pasan por un filtro de palabras al guardar, al exportar Y al importar, y comprueba los 14 idiomas. Lo ofensivo se rechaza, sea cual sea el idioma configurado."
           ]
         }
       ]

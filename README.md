@@ -87,7 +87,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Galgenmännchen** | 1 Spieler   | Wort erraten, bevor der Galgen voll ist; Bildschirmtastatur, Wortlisten je Sprache, 3 Längen-Modi, Endlos-Streak |
 | **Block Jump**  | 1 Spieler       | 3D-Jump'n'Run im Minecraft-Stil: texturierte Voxel-Welt, Steve-Figur, Leitern, Zäune & Schleimblöcke, Ego-/Verfolgerkamera, seed-generierte Parkour-Level |
 | **Tower Defense** | 1 Spieler     | Endlose Wellen auf 4 Karten abwehren: bis zu 11 Turmtypen mit Ausbau, Verkauf & A/B-Spezialisierung, Bosse, 3 Modi, Aktiv-Fähigkeiten |
-| **Minigolf**    | 1 / 2 Spieler   | 360 Bahnen in 40 Kursen (18 handgebaut, 342 seed-erzeugt): Sand, Rampen, Wasser, Gummipuffer, Windmühlen & Wanderblöcke; Scorekarte mit Par und Hole-in-One-Bonus |
+| **Minigolf**    | 1 / 2 Spieler   | 360 Bahnen in 40 Kursen (18 handgebaut, 342 seed-erzeugt): Sand, Rampen, Wasser, Gummipuffer, Windmühlen & Wanderblöcke; Scorekarte mit Par und Hole-in-One-Bonus; **eigener Bahn-Editor** mit 15 Objekttypen, 12 Vorlagen und Teilen als `.lamapgzmap` |
 | **Pinball**     | 1 / 2 Spieler   | Flipperautomat mit 3 Tischen: Pop-Bumper, Slingshots, Drop-Targets, L-A-M-A-Bahnen, Multiball mit Jackpot, Ball-Save, Nudge & Tilt |
 | **Bowling**     | 1 / 2 Spieler   | 10 Frames mit offizieller Strike-/Spare-Wertung, echter Pin-Physik, Hook-Effet und perspektivischer Bahnansicht, 3 Schwierigkeiten |
 
@@ -570,6 +570,21 @@ Explosions-Effekte, Highscore.
 - **Replay der Runde**: Am Rundenende zeigt **P** (oder der Knopf **Replay**)
   die komplette Runde noch einmal - Schlag für Schlag, mit Bahn, HUD und
   Scorekarte. Mit **S** wandert sie ins Archiv (Sidebar-Knopf **Replays**).
+- **Eigene Bahnen bauen und teilen**: Der Reiter **MAPS** im
+  Vorbereitungsbildschirm führt zur eigenen Sammlung - **Neu** öffnet den
+  Bahn-Editor. Jede Bahn bekommt einen Namen und eine **id** (klein, ohne
+  Leerzeichen); die id ist zugleich der vorgeschlagene Dateiname beim Teilen.
+  Zu den sieben klassischen Hindernissen kommen **acht neue**: Rohr (versetzt
+  den Ball ans andere Ende), Eis, Klebefeld, Booster, Magnet, Einbahn-Tor,
+  Drehscheibe und Sprungrampe. Die Bahngröße lässt sich frei einstellen
+  (60x80 bis 160x240), **12 Vorlagen** geben einen Startpunkt, Undo/Redo und
+  **Test** gehören dazu. **Teilen** schreibt genau eine Bahn als
+  `.lamapgzmap`-Datei - per Speichern-Dialog oder direkt in den
+  Downloads-Ordner, mit deinem Namen als Ersteller. **Import** liest sie wieder
+  ein und weicht bei belegter id automatisch auf `-2` aus. Map-Name, id und
+  Ersteller-Name laufen dabei immer durch einen **Wortfilter über alle 14
+  Sprachen**. Gespielt wird eine Bahn einzeln über **Spielen** oder die ganze
+  Sammlung über die fünfte Kurswahl **Eigene**.
 
 **Pinball**
 - **Drei Tische**: *Classic* (drei Pop-Bumper, eine Target-Bank), *Space* (vier
@@ -721,15 +736,21 @@ achievements.py      Erfolge: Definitionen, Freischalt-Logik, Toast-Einblendung
 progress.py          Erfolge-&-Statistik-Screen (zwei Reiter, scrollbar)
 replay.py            Aufzeichnung & Archiv der Wiederholungen (replay.json)
 replayview.py        Replay-Screen: Archiv-Liste und Wiedergabe
+ugc.py               Eigene Minigolf-Bahnen: Speicher, Prüfung, Export/Import (ugc.json)
+swear.py             Wortfilter für Namen und ids (lang/swear/*.yml, alle 14 Sprachen)
+filepick.py          Datei-Dialoge ("Exportieren als ...", "Importieren") und Downloads-Ordner
 prestige.py          Prestige-System für Snake
 competitive.py       Kennzahlen für den Competitive-Modus von Snake (Level, Slot, Wett-Äpfel)
 ngb.py               Visuelle Personalisierung ("Mods"): Kopffarbe + Koordinaten-Raster + Menü (mem-ngb.json)
 i18n.py              Übersetzungs-Engine (lädt lang/*.json, t("schlüssel"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
+  lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+  swear/                                    Wortfilter-Listen je Sprache (Regex, .yml)
 lamawiki/
   lamawiki.py          In-Game-Wiki (Suche, Kategorien, Artikel-Renderer)
   de.json  en.json  fr.json  es.json  pt.json   Wiki-Inhalte (eine Seite je Spiel + Allgemeines)
+  lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -740,6 +761,9 @@ games/
   trexrunner.py  dame.py  poker.py  chess.py  muehle.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
+  lamatowerdefense.py  minigolf.py  minigolf_gen.py
+  minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
+  levels/
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -929,7 +953,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Hangman**        | 1 player    | Guess the word before the gallows is finished; on-screen keyboard, per-language word lists, 3 length modes, endless streak |
 | **Block Jump**  | 1 player        | 3D Minecraft-style platformer: textured voxel world, Steve figure, ladders, fences & slime blocks, first/third-person camera, seed-generated parkour levels |
 | **Tower Defense** | 1 player      | Fend off endless waves on 4 maps: up to 11 tower types with upgrades, selling & A/B specialisation, bosses, 3 modes, active abilities |
-| **Minigolf**    | 1 / 2 players   | 360 holes across 40 courses (18 hand-built, 342 seed-generated): sand, ramps, water, rubber bumpers, windmills & moving blocks; scorecard with par and hole-in-one bonus |
+| **Minigolf**    | 1 / 2 players   | 360 holes across 40 courses (18 hand-built, 342 seed-generated): sand, ramps, water, rubber bumpers, windmills & moving blocks; scorecard with par and hole-in-one bonus; **built-in hole editor** with 15 object types, 12 templates and sharing as `.lamapgzmap` |
 | **Pinball**     | 1 / 2 players   | Pinball machine with 3 tables: pop bumpers, slingshots, drop targets, L-A-M-A lanes, multiball with jackpot, ball save, nudge & tilt |
 | **Bowling**     | 1 / 2 players   | 10 frames with official strike/spare scoring, real pin physics, hook spin and a perspective lane view, 3 difficulties |
 
@@ -1404,6 +1428,20 @@ explosion effects, high score.
 - **Replay of the round**: at the end of a round **P** (or the **Replay**
   button) shows the whole round again - shot by shot, with course, HUD and
   scorecard. **S** puts it into the archive (sidebar button **Replays**).
+- **Build and share your own holes**: the **MAPS** tab on the setup screen
+  leads to your own collection - **New** opens the hole editor. Every hole gets
+  a name and an **id** (lower case, no spaces); the id is also the file name
+  suggested when you share it. On top of the seven classic obstacles come
+  **eight new ones**: pipe (moves the ball to the other end), ice, sticky
+  patch, booster, magnet, one-way gate, turntable and jump ramp. The hole size
+  is freely adjustable (60x80 up to 160x240), **12 templates** give you a
+  starting point, and undo/redo plus **Test** are part of it. **Share** writes
+  exactly one hole as a `.lamapgzmap` file - via the save dialog or straight
+  into the Downloads folder, with your name as the creator. **Import** reads it
+  back in and falls back to `-2` automatically if the id is taken. Hole name,
+  id and creator name always run through a **word filter covering all 14
+  languages**. A hole is played on its own via **Play**, or the whole
+  collection via the fifth course option **Custom**.
 
 **Pinball**
 - **Three tables**: *Classic* (three pop bumpers, one target bank), *Space*
@@ -1552,15 +1590,21 @@ achievements.py      Achievements: definitions, unlock logic, toast overlay
 progress.py          Achievements & statistics screen (two tabs, scrollable)
 replay.py            Recording & archive of the replays (replay.json)
 replayview.py        Replay screen: archive list and playback
+ugc.py               Custom minigolf holes: storage, checks, export/import (ugc.json)
+swear.py             Word filter for names and ids (lang/swear/*.yml, all 14 languages)
+filepick.py          File dialogs ("Export as ...", "Import") and the Downloads folder
 prestige.py          Prestige system for Snake
 competitive.py       Tuning for Snake's Competitive mode (levels, slot machine, gamble apples)
 ngb.py               Visual personalization ("mods"): head color + coordinate grid + menu (mem-ngb.json)
 i18n.py              Translation engine (loads lang/*.json, t("key"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Language strings (one placeholder key per text)
+  lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+  swear/                                    Word-filter lists per language (regex, .yml)
 lamawiki/
   lamawiki.py          In-game wiki (search, categories, article renderer)
   de.json  en.json  fr.json  es.json  pt.json   Wiki content (one page per game + general pages)
+  lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -1571,6 +1615,9 @@ games/
   trexrunner.py  dame.py  poker.py  chess.py  muehle.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
+  lamatowerdefense.py  minigolf.py  minigolf_gen.py
+  minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
+  levels/
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the

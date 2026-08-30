@@ -2033,7 +2033,17 @@
         "putting",
         "tour",
         "blocage",
-        "puissance"
+        "puissance",
+        "editor",
+        "maps",
+        "ugc",
+        "tunnel",
+        "ice",
+        "magnet",
+        "booster",
+        "share",
+        "import",
+        "export"
       ],
       "sections": [
         {
@@ -2064,7 +2074,13 @@
           "body": [
             "- Le sable freine fortement, les rampes accélèrent dans le sens des flèches.",
             "- L'eau coûte un coup de pénalité ; la balle revient à sa dernière position sûre.",
-            "- Les pare-chocs en caoutchouc renvoient de la vitesse ; moulins et blocs mobiles demandent du timing. Le blocage de puissance au clic droit garde le coup chargé jusqu'à ce que l'ouverture arrive."
+            "- Les pare-chocs en caoutchouc renvoient de la vitesse ; moulins et blocs mobiles demandent du timing. Le blocage de puissance au clic droit garde le coup chargé jusqu'à ce que l'ouverture arrive.",
+            "- Tuyau : la balle disparaît dans une bouche et ressort par l'autre - direction et vitesse sont conservées.",
+            "- La glace laisse rouler la balle presque sans fin, la zone collante l'arrête net.",
+            "- Les boosters donnent une poussée fixe au passage, les aimants attirent ou repoussent.",
+            "- Une porte à sens unique ne laisse passer que dans le sens de la flèche ; de l'autre côté, c'est un mur.",
+            "- Le plateau tournant emporte la balle vers l'extérieur, le tremplin la fait voler par-dessus les obstacles.",
+            "Ces huit obstacles s'ajoutent aux classiques et se placent librement dans l'éditeur de trous - voir la page \"Trous personnels\"."
           ]
         },
         {
@@ -2072,6 +2088,62 @@
           "body": [
             "Chaque trou vaut 600 points, plus 300 par coup sous le par (et 300 de moins par coup au-dessus, jamais moins de 100).",
             "Un trou en un rapporte 500 points de plus. La somme de tous les trous est ton record ; le nombre de coups le plus bas par parcours est enregistré en plus."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minigolf-maps",
+      "category": "games",
+      "title": "Trous personnels (Minigolf)",
+      "keywords": [
+        "trous personnels",
+        "editeur",
+        "maps",
+        "ugc",
+        "creer",
+        "partager",
+        "importer",
+        "exporter",
+        "modele",
+        "minigolf"
+      ],
+      "sections": [
+        {
+          "h": "Créer un trou",
+          "body": [
+            "Dans l'écran de préparation du minigolf, l'onglet MAPS mène à votre collection. \"Nouveau\" ouvre l'éditeur, \"Modifier\" reprend un trou existant.",
+            "Chaque trou a besoin d'un nom et d'un id. L'id est la clé : en minuscules, sans espaces, uniquement a-z, 0-9, - et _. C'est aussi le nom de fichier proposé au partage.",
+            "Le trou est à gauche, la palette avec quatre outils et quinze types d'obstacles à droite. Les rectangles se tracent en glissant, les objets ronds se posent d'un clic, un tuyau demande deux clics - d'abord l'entrée, puis la sortie.",
+            "Avec l'outil de sélection, un clic choisit un objet, glisser le déplace, [Suppr] l'efface. Les valeurs de l'objet choisi apparaissent alors en bas : largeur, hauteur, rayon, direction, vitesse, etc.",
+            "En haut, vous réglez le par ainsi que la largeur et la hauteur du trou - de 60x80 à 160x240 unités. Ce qui dépasserait après réduction est ramené automatiquement à l'intérieur.",
+            "[G] bascule l'aimantation à la grille, [U] annule, [Y] rétablit, [S] enregistre et [Entrée] essaie le trou tout de suite. [Échap] revient en arrière - avec des modifications non enregistrées, seulement après confirmation."
+          ]
+        },
+        {
+          "h": "Modèles",
+          "body": [
+            "\"Modèle\" remplace le trou actuel par l'un des douze modèles : Vide, Tuyau, Île, Moulin, Zigzag, Eau, Bumpers, Rampe, Glace, Labyrinthe, Aimant et Tremplin.",
+            "Chaque modèle laisse toujours un chemin normal à côté de son astuce - un trou qui ne se résout qu'avec une astuce serait un piège, pas un modèle. Les douze sont prouvés jouables en par.",
+            "Un modèle est un point de départ, pas un résultat : ajoutez vos obstacles, déplacez le départ et le trou, changez la taille."
+          ]
+        },
+        {
+          "h": "Jouer",
+          "body": [
+            "Dans l'onglet MAPS, \"Jouer\" lance exactement le trou sélectionné - avec son propre record par trou.",
+            "Dans l'onglet JEU, un cinquième choix de parcours apparaît, \"Perso\" : toute votre collection s'enchaîne alors en une partie, jusqu'à neuf trous.",
+            "Tout est enregistré dans ugc.json à côté du jeu (à côté du .exe pour la version compilée) - au même endroit que mem.json et replay.json."
+          ]
+        },
+        {
+          "h": "Partager et importer",
+          "body": [
+            "\"Partager\" demande d'abord votre nom de créateur puis le nom du fichier ; celui-ci est déjà rempli avec l'id du trou.",
+            "\"Exporter sous\" ouvre la boîte de dialogue habituelle, \"Vers Téléchargements\" dépose le fichier directement dans le dossier Téléchargements et vous en donne le chemin. Un seul trou est exporté à la fois.",
+            "Le fichier porte l'extension .lamapgzmap et contient du JSON - vous pouvez l'envoyer comme n'importe quel fichier. \"Importer\" le relit ; les fichiers .json sont également acceptés à l'import.",
+            "Si l'id est déjà pris, l'import ajoute automatiquement -2, -3 et ainsi de suite au lieu d'écraser votre trou existant.",
+            "Le nom du trou, l'id et le nom du créateur passent par un filtre de mots à l'enregistrement, à l'export ET à l'import, et il vérifie les 14 langues. Tout texte injurieux est refusé - quelle que soit la langue réglée."
           ]
         }
       ]

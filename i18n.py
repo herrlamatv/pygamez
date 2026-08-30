@@ -35,7 +35,7 @@ _LANG_DIR = os.path.join(_DIR, "lang")
 # fr/es/pt) direkt in lang/, die Erweiterungen in lang/lang.expansion/.
 _EXPANSION_DIR = os.path.join(_LANG_DIR, "lang.expansion")
 
-# Name des Abschnitts in mem.json, in dem Oberflaechen-Einstellungen (Sprache)
+# Name des Abschnitts in mem.json, in dem Oberflächen-Einstellungen (Sprache)
 # liegen. Die Highscores stehen im Abschnitt "highscores" derselben Datei.
 _MEM_SECTION = "mem"
 

@@ -717,7 +717,7 @@ class App:
         # Skalierung/Versatz für die Darstellung der logischen Fläche
         self._scale = 1.0
         self._off = (0, 0)
-        # Referenz auf das aktuell angezeigte Bild (sonst raeumt Tk es weg).
+        # Referenz auf das aktuell angezeigte Bild (sonst räumt Tk es weg).
         self._photo = None
         # Live-FPS-Messung für die Status-Karte.
         self._fps_n = 0
@@ -1041,7 +1041,7 @@ class App:
         """Setzt das Fenster-/Taskleisten-Icon aus dem Logo (siehe logo.py).
 
         Welche Datei genau (Nummer/Format) genommen wird, entscheidet das
-        Modul ``logo``: PNG wird direkt von Tk geladen, JPG ueber den alten
+        Modul ``logo``: PNG wird direkt von Tk geladen, JPG über den alten
         PPM-Umweg umgewandelt. Fehlt jedes Logo, startet das Programm einfach
         mit dem Standard-Icon.
         """
@@ -1105,15 +1105,21 @@ class App:
             return
 
         # ESC: bei Menü-Screens als "Zurück" durchreichen, sonst Pause umschalten.
+        # Spiele mit eigenen Unter-Screens (Minigolf-Bahneditor) melden über
+        # wants_escape, dass sie ESC gerade selbst brauchen - dort heißt es
+        # "Abbrechen" und nicht "Pause".
         if event.keysym == "Escape":
-            if self.current and getattr(self.current, "is_menu", False):
+            if self.current and (getattr(self.current, "is_menu", False)
+                                 or getattr(self.current, "wants_escape", False)):
                 self.current.handle_event(InputEvent(InputEvent.KEYDOWN, key="Escape"))
             elif self.current and not self.current.game_over:
                 self.current.paused = not self.current.paused
             return
 
         if self.current and not self.current.paused:
-            self.current.handle_event(InputEvent(InputEvent.KEYDOWN, key=event.keysym))
+            self.current.handle_event(InputEvent(InputEvent.KEYDOWN,
+                                                 key=event.keysym,
+                                                 char=event.char))
 
     def _on_key_up(self, event):
         from game_base import InputEvent
@@ -1289,14 +1295,14 @@ class App:
         """
         from replayview import ReplayScreen
 
-        def zurueck():
+        def zurück():
             if back_to is not None:
                 self.show_screen(back_to)
             else:
                 self.back_to_menu()
 
         self.show_screen(ReplayScreen(self.canvas, self.game_w, self.game_h,
-                                      self, on_close=zurueck, pending=rep,
+                                      self, on_close=zurück, pending=rep,
                                       game=rep.get("game")))
 
     def refresh_language(self):
@@ -1942,7 +1948,7 @@ class App:
     # ----- Sauberes Beenden ---------------------------------------------
 
     def beenden(self):
-        """Schliesst Pygame und Tkinter sauber."""
+        """Schließt Pygame und Tkinter sauber."""
         if self._closing:
             return
         self._closing = True
@@ -1967,12 +1973,12 @@ class App:
 
 
 def _check_dependencies():
-    """Prueft vor dem Start, ob pygame verfuegbar ist.
+    """Prüft vor dem Start, ob pygame verfügbar ist.
 
-    Ohne diese Pruefung wuerde das Tkinter-Fenster kurz erscheinen und beim
-    spaeteren 'import pygame' sofort wieder verschwinden - genau das passiert
+    Ohne diese Prüfung würde das Tkinter-Fenster kurz erscheinen und beim
+    späteren 'import pygame' sofort wieder verschwinden - genau das passiert
     auf einem PC ohne installiertes pygame (z. B. ohne .venv). Stattdessen
-    zeigen wir eine verstaendliche Meldung.
+    zeigen wir eine verständliche Meldung.
     """
     try:
         import pygame  # noqa: F401
@@ -1981,7 +1987,7 @@ def _check_dependencies():
         msg = (
             "Das Modul 'pygame' ist nicht installiert.\n\n"
             "So behebst du das:\n"
-            "  - Unter Windows einfach start.bat ausfuehren\n"
+            "  - Unter Windows einfach start.bat ausführen\n"
             "    (installiert pygame automatisch), ODER\n"
             "  - im Terminal:  python -m pip install pygame\n\n"
             "In PyCharm: pygame im Interpreter des Projekts installieren."

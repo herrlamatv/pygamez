@@ -55,13 +55,19 @@ class InputEvent:
     MOUSEREL = "mouserel"    # RELATIVE Mausbewegung (Pointer-Capture, FPS-Look)
     WHEEL = "wheel"          # Mausrad gedreht (delta in Rasten, + = hoch)
 
-    def __init__(self, kind, key=None, pos=None, button=1, delta=0, rel=None):
+    def __init__(self, kind, key=None, pos=None, button=1, delta=0, rel=None,
+                 char=None):
         self.kind = kind      # einer der obigen Strings
         self.key = key        # z.B. "Up", "Left", "space", "w" (Tkinter-keysym)
         self.pos = pos        # (x, y) relativ zur Spielfläche, bei Maus-Events
         self.button = button  # Maustaste: 1 = links, 3 = rechts (bei MOUSEDOWN)
         self.delta = delta    # Mausrad-Rasten (bei WHEEL), positiv = nach oben
         self.rel = rel        # (dx, dy) in Fenster-Pixeln (bei MOUSEREL)
+        # Das TATSÄCHLICH getippte Zeichen (Tkinter-event.char), z.B. "A",
+        # "ä" oder "-". Der keysym allein reicht für Textfelder nicht: er
+        # unterscheidet weder Groß-/Kleinschreibung noch kennt er Umlaute
+        # ("adiaeresis"). Leer bei Steuertasten - siehe ui.TextInput.
+        self.char = char
 
 
 class Game:
@@ -69,7 +75,7 @@ class Game:
     Basisklasse für alle Spiele.
 
     Jedes Spiel zeichnet auf 'surface' (das eingebettete pygame-Display).
-    Die Spielfläche ist 'width' x 'height' Pixel gross.
+    Die Spielfläche ist 'width' x 'height' Pixel groß.
 
     Optionale Erweiterungen (werden vom Shell-Code per getattr/hasattr
     abgefragt, ein Spiel definiert sie nur bei Bedarf):
@@ -95,6 +101,12 @@ class Game:
     # Möchte das Spiel Rechtsklicks erhalten? (MOUSEDOWN mit button=3).
     # Standard False, damit sich das Verhalten bestehender Spiele nicht ändert.
     wants_right_click = False
+    # Möchte das Spiel ESC selbst behandeln? Normalerweise schaltet ESC die
+    # Pause um (main.py fängt es vorher ab). Ein Spiel mit eigenen Unter-
+    # Screens - z.B. der Bahn-Editor von Minigolf - setzt das auf True,
+    # solange dort "Abbrechen" die richtige Bedeutung von ESC ist. Darf eine
+    # property sein, die je nach Zustand True/False liefert.
+    wants_escape = False
     # Pointer-Capture: True = Cursor einfangen, Spiel bekommt MOUSEREL-Events.
     capture_mouse = False
 
@@ -149,7 +161,7 @@ class Game:
         """Wird nach einem Auflösungswechsel aufgerufen.
 
         self.surface/width/height sind dann bereits aktualisiert; Spiele
-        überschreiben das, um Layout und Schriftgrössen neu zu berechnen.
+        überschreiben das, um Layout und Schriftgrößen neu zu berechnen.
         """
         pass
 

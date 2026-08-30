@@ -573,8 +573,8 @@ class BowlingGame(Game):
         if in_frame == 2:
             first, second = rolls[-2], rolls[-1]
             if first == 10:
-                # Nach dem Strike gibt es zwei Bonuswuerfe; neu aufgestellt
-                # wird nur, wenn auch der zweite Ball alle Pins geraeumt hat.
+                # Nach dem Strike gibt es zwei Bonuswürfe; neu aufgestellt
+                # wird nur, wenn auch der zweite Ball alle Pins geräumt hat.
                 return False, second == 10
             if first + second == 10:
                 return False, True
@@ -659,7 +659,7 @@ class BowlingGame(Game):
         return (self.cx + x * s, self.hor + self.ky * inv - z * s, s)
 
     # ===================================================== Replay-Aufnahme
-    # Aufgezeichnet wird je Wurf die tatsaechliche Bahn von Ball und Pins
+    # Aufgezeichnet wird je Wurf die tatsächliche Bahn von Ball und Pins
     # (siehe replay.py). Pins stehen nur dann in einem Sample, wenn sie sich
     # bewegt haben - die ersten zwei Sekunden eines Wurfs kosten so nur drei
     # Zahlen je Bild.
@@ -697,7 +697,7 @@ class BowlingGame(Game):
     def _open_replay(self):
         """Partie-Ende: die Wiederholung ansehen (Taste P).
 
-        Den Screen oeffnet main.py - das Spiel legt nur den Wunsch ab.
+        Den Screen öffnet main.py - das Spiel legt nur den Wunsch ab.
         """
         if self.replay is not None:
             self.replay_request = self.replay
@@ -705,7 +705,7 @@ class BowlingGame(Game):
 
     # ===================================================== Replay-Wiedergabe
     # Der Replay-Screen (replayview.py) baut eine ganz normale Spielinstanz
-    # und faehrt sie ueber diese drei Methoden durch die Aufnahme - so
+    # und fährt sie über diese drei Methoden durch die Aufnahme - so
     # zeichnet die Wiederholung mit demselben Code wie das Spiel selbst.
 
     def replay_begin(self, rep):
@@ -740,7 +740,7 @@ class BowlingGame(Game):
         frame = max(0, min(n - 1, frame))
         last = (frame >= n - 1)
 
-        # Scorecard: alle abgeschlossenen Wuerfe bis hierher.
+        # Scorecard: alle abgeschlossenen Würfe bis hierher.
         self.rolls = [[] for _ in range(self.players)]
         self.frame = [0] * self.players
         for prev in scenes[:index] + ([sc] if last else []):
@@ -781,7 +781,7 @@ class BowlingGame(Game):
         self._rep_at = (index, frame)
 
     def replay_draw(self, aiming=False, banner=False):
-        """Zeichnet den aktuellen Replay-Stand (ohne Menue-Overlay)."""
+        """Zeichnet den aktuellen Replay-Stand (ohne Menü-Overlay)."""
         s = self.surface
         ui.draw_background(s, self.width, self.height)
         ball = self.ball

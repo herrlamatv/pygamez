@@ -802,7 +802,7 @@ class AimTrainerGame(Game):
         rr.center = (ring.get_width() // 2, ring.get_height() // 2)
         pygame.draw.ellipse(ring, (255, 244, 224, 255), rr, max(2, R // 22))
         ring = pygame.transform.rotozoom(ring, 18, 1.0)
-        # Schimmer-Sprite: NUR der Ring + Photonenring (fuer additives Pulsen)
+        # Schimmer-Sprite: NUR der Ring + Photonenring (für additives Pulsen)
         shimmer = pygame.Surface((w, h), pygame.SRCALPHA)
         shimmer.blit(ring, ring.get_rect(center=(cx, cy)))
         pygame.draw.circle(shimmer, (255, 244, 224, 220), (cx, cy),

@@ -2035,7 +2035,17 @@
         "putting",
         "tour",
         "lock",
-        "power"
+        "power",
+        "editor",
+        "maps",
+        "ugc",
+        "tunnel",
+        "ice",
+        "magnet",
+        "booster",
+        "share",
+        "import",
+        "export"
       ],
       "sections": [
         {
@@ -2066,7 +2076,13 @@
           "body": [
             "- Sand slows the ball down hard, ramps accelerate in the direction of the arrows.",
             "- Water costs a penalty stroke; the ball returns to its last safe spot.",
-            "- Rubber bumpers give speed back; windmills and moving blocks are all about timing. The power lock on the right mouse button keeps the shot charged until the gap lines up."
+            "- Rubber bumpers give speed back; windmills and moving blocks are all about timing. The power lock on the right mouse button keeps the shot charged until the gap lines up.",
+            "- Pipe: the ball disappears into one mouth and comes out of the other - direction and speed are kept.",
+            "- Ice lets the ball run almost forever, a sticky patch stops it dead.",
+            "- Boosters give a fixed shove when crossed, magnets pull the ball in or push it away.",
+            "- A one-way gate only lets you through in the arrow's direction; from the other side it is a wall.",
+            "- The turntable takes the ball along and carries it outwards, the jump ramp sends it flying over obstacles.",
+            "These eight obstacles come on top of the classic ones and can be placed freely in the hole editor - see the page \"Custom holes\"."
           ]
         },
         {
@@ -2074,6 +2090,62 @@
           "body": [
             "Every hole is worth 600 points plus 300 for each stroke under par (and 300 less for each stroke over, never below 100).",
             "A hole in one adds 500 points. The sum of all holes is your high score; the lowest stroke count per course is stored on top of that."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minigolf-maps",
+      "category": "games",
+      "title": "Custom holes (Minigolf)",
+      "keywords": [
+        "custom holes",
+        "editor",
+        "maps",
+        "ugc",
+        "build",
+        "share",
+        "import",
+        "export",
+        "template",
+        "minigolf"
+      ],
+      "sections": [
+        {
+          "h": "Building a hole",
+          "body": [
+            "On the minigolf setup screen the MAPS tab leads to your own collection. \"New\" opens the hole editor, \"Edit\" picks up an existing hole again.",
+            "Every hole needs a name and an id. The id is the key: lower case, no spaces, only a-z, 0-9, - and _. It is also the file name suggested when you share the hole.",
+            "The hole sits on the left, the palette with four tools and fifteen obstacle types on the right. Rectangles are dragged out, round things take a single click, a pipe needs two clicks - entrance first, then exit.",
+            "With the select tool a click picks an object, dragging moves it, [Del] removes it. The values of the selected object then appear at the bottom: width, height, radius, direction, speed and so on.",
+            "At the top you set par as well as the width and height of the hole - from 60x80 up to 160x240 units. Anything that would stick out when you shrink it moves back in automatically.",
+            "[G] toggles the grid snap, [U] undoes, [Y] redoes, [S] saves and [Enter] tries the hole out right away. [Esc] goes back - with unsaved changes only after a confirmation."
+          ]
+        },
+        {
+          "h": "Templates",
+          "body": [
+            "\"Template\" replaces the current hole with one of twelve ready-made ones: Empty, Pipe, Island, Windmill, Zigzag, Water, Bumpers, Ramp, Ice, Maze, Magnet and Jump.",
+            "Every template always leaves a normal route open next to its trick - a hole that can only be solved with a trick would not be a template but a trap. All twelve are provably playable within par.",
+            "A template is a starting point, not a finished result: add your own obstacles, move the tee and the cup, change the size."
+          ]
+        },
+        {
+          "h": "Playing",
+          "body": [
+            "In the MAPS tab \"Play\" starts exactly the selected hole - with its own best score per hole.",
+            "In the PLAY tab there is a fifth course option, \"Custom\": that runs your whole collection one after another as a round, up to nine holes.",
+            "Everything is stored in ugc.json next to the game (next to the .exe for the built version) - the same place as mem.json and replay.json."
+          ]
+        },
+        {
+          "h": "Sharing and importing",
+          "body": [
+            "\"Share\" first asks for your name as the creator and for the file name; that one is already filled in with the id of the hole.",
+            "\"Export as\" opens the usual save dialog, \"To Downloads\" drops the file straight into the Downloads folder and tells you the path. Exactly one hole is exported each time.",
+            "The file carries the extension .lamapgzmap and contains JSON - you can send it like any other file. \"Import\" reads it back in; .json files are accepted on import as well.",
+            "If the id is already taken, the import automatically appends -2, -3 and so on instead of overwriting your existing hole.",
+            "Hole name, id and creator name all run through a word filter when saving, exporting AND importing, and it checks all 14 languages. Offensive text is rejected - no matter which language is currently set."
           ]
         }
       ]

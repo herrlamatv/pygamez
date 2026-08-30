@@ -2,20 +2,20 @@
 """
 trexrunner.py
 =============
-T-Rex Runner - der endlose Wuestenlauf (Hommage an das Chrome-Dino-Spiel).
+T-Rex Runner - der endlose Wüstenlauf (Hommage an das Chrome-Dino-Spiel).
 
-- Ein T-Rex laeuft von links, du springst ueber Kakteen und duckst dich unter
+- Ein T-Rex läuft von links, du springst über Kakteen und duckst dich unter
   Flugsauriern hindurch. Das Tempo steigt kontinuierlich mit der Strecke.
-- Variable Sprunghoehe: je laenger du die Sprungtaste haeltst, desto hoeher
-  springt der Dino (kuerzer Antippen = kleiner Hopser). In der Luft nach unten
+- Variable Sprunghöhe: je länger du die Sprungtaste hältst, desto höher
+  springt der Dino (kürzer Antippen = kleiner Hopser). In der Luft nach unten
   = schneller Fall.
-- Flugsaurier tauchen auf drei Hoehen auf: hoch = ducken, tief/mittig = springen.
+- Flugsaurier tauchen auf drei Höhen auf: hoch = ducken, tief/mittig = springen.
 - Tag/Nacht-Wechsel mit Sternenhimmel und Mond, Parallax-Wolken, scrollender
   Boden mit Bodenwellen. Alle 100 Punkte ein kurzer Ton + Blinken.
 - Optionen (bleiben erhalten, settings["trex"]): Schwierigkeit (chill/normal/
   hardcore), Figur/Skin und Tag/Nacht an/aus - im Startbildschirm umschaltbar.
 
-Steuerung: Leertaste/Pfeil-hoch/Aktion = Springen (halten fuer hoeher),
+Steuerung: Leertaste/Pfeil-hoch/Aktion = Springen (halten für höher),
 Pfeil-runter = Ducken/schneller fallen. Nach Game Over: Enter/Leertaste = neu.
 """
 
@@ -28,7 +28,7 @@ import ui
 from game_base import Game, InputEvent
 from i18n import t
 
-# ---- Farbpaletten (Tag / Nacht) - werden fuer weiche Uebergaenge interpoliert.
+# ---- Farbpaletten (Tag / Nacht) - werden für weiche Übergänge interpoliert.
 DAY = dict(sky=(244, 246, 250), ground=(84, 84, 92), line=(120, 120, 130),
            obj=(74, 78, 90), cloud=(210, 214, 224), star=(244, 246, 250),
            text=(60, 64, 78), dim=(120, 126, 140))
@@ -36,7 +36,7 @@ NIGHT = dict(sky=(24, 26, 42), ground=(150, 154, 168), line=(110, 116, 140),
              obj=(198, 202, 216), cloud=(70, 76, 104), star=(250, 250, 210),
              text=(226, 230, 242), dim=(150, 156, 178))
 
-# Skins = Koerperfarbe des Dinos (Tag / Nacht wird davon leicht abgeleitet).
+# Skins = Körperfarbe des Dinos (Tag / Nacht wird davon leicht abgeleitet).
 SKINS = [(94, 106, 122), (86, 200, 130), (240, 150, 70), (110, 160, 240)]
 
 DIFFS = ["chill", "normal", "hardcore"]
@@ -49,7 +49,7 @@ DIFF_PARAMS = {
 
 READY, RUN, OVER = "ready", "run", "over"
 
-# Hindernis-Typen: (Kennung, ist_vogel, Hoehen-Offset-Faktor)
+# Hindernis-Typen: (Kennung, ist_vogel, Höhen-Offset-Faktor)
 BIRD_HIGH, BIRD_MID, BIRD_LOW = "bird_high", "bird_mid", "bird_low"
 
 
@@ -80,7 +80,7 @@ class TRexRunnerGame(Game):
         self.state = READY
 
     def _make_fonts(self):
-        """Schriftgroessen aus der Fensterhoehe ableiten (Theme-Schriftart).
+        """Schriftgrößen aus der Fensterhöhe ableiten (Theme-Schriftart).
 
         Der Punktestand nutzt eine Monospace-Schrift, damit die Ziffern im
         Chrome-Stil ("HI 00512  00047") nicht wackeln.
@@ -95,8 +95,8 @@ class TRexRunnerGame(Game):
     def on_surface_changed(self):
         self._make_fonts()
         self._layout()
-        # Sterne ueber die neue Flaeche verteilen (sonst decken sie nach einem
-        # Wechsel auf eine groessere Aufloesung nur den alten Bereich ab).
+        # Sterne über die neue Fläche verteilen (sonst decken sie nach einem
+        # Wechsel auf eine größere Auflösung nur den alten Bereich ab).
         self.stars = [(random.uniform(0, self.width),
                        random.uniform(0, self.gy * 0.7),
                        random.choice((1, 1, 2))) for _ in range(46)]
@@ -121,7 +121,7 @@ class TRexRunnerGame(Game):
         self.next_milestone = 100
 
         # Dino-Zustand
-        self.dy = 0.0            # vertikaler Versatz ueber dem Boden (positiv = oben)
+        self.dy = 0.0            # vertikaler Versatz über dem Boden (positiv = oben)
         self.vy = 0.0
         self.on_ground = True
         self.ducking = False
@@ -149,7 +149,7 @@ class TRexRunnerGame(Game):
         self._next_flip = 300
 
     def _rand_gap(self):
-        """Zufaelliger horizontaler Abstand zum naechsten Hindernis (px)."""
+        """Zufälliger horizontaler Abstand zum nächsten Hindernis (px)."""
         # Mindestabstand skaliert mit dem Tempo (schnell = mehr Platz zum Reagieren).
         base = random.uniform(320, 560) * self.scale
         return base * (self.speed / self.base_speed) ** 0.5
@@ -186,8 +186,8 @@ class TRexRunnerGame(Game):
             elif k in ("Down", "s", "S") or self.is_action(k, "down"):
                 self.duck_held = True
         elif event.kind == InputEvent.KEYUP:
-            # WICHTIG: dieselben Tasten pruefen wie beim KEYDOWN (inkl. der frei
-            # belegbaren Aktionstasten) - sonst bleibt der Sprung "haengen".
+            # WICHTIG: dieselben Tasten prüfen wie beim KEYDOWN (inkl. der frei
+            # belegbaren Aktionstasten) - sonst bleibt der Sprung "hängen".
             k = event.key
             if k in ("space", "Up", "w", "W") or self.is_action(k, "action") \
                     or self.is_action(k, "up"):
@@ -274,7 +274,7 @@ class TRexRunnerGame(Game):
         if self.on_ground:
             self.ducking = self.duck_held
         else:
-            # Schwerkraft; beim Halten der Sprungtaste im Aufstieg schwaecher
+            # Schwerkraft; beim Halten der Sprungtaste im Aufstieg schwächer
             g = 1800 * self.scale
             if self.jump_held and self.vy < 0:
                 g = 1150 * self.scale
@@ -432,7 +432,7 @@ class TRexRunnerGame(Game):
         dark = tuple(int(c * 0.6) for c in body)
         u = self.scale
         if self.ducking and self.on_ground:
-            # Geduckt: langgestreckter Koerper
+            # Geduckt: langgestreckter Körper
             pygame.draw.rect(s, body, r, border_radius=int(6 * u))
             eye = (r.right - int(8 * u), r.y + int(7 * u))
             pygame.draw.circle(s, (250, 250, 250), eye, max(2, int(3 * u)))
@@ -445,7 +445,7 @@ class TRexRunnerGame(Game):
                 dh = int((6 if (i + f) % 2 else 3) * u)
                 pygame.draw.rect(s, dark, (lx, ly, int(5 * u), dh))
             return
-        # Stehend/Springend: Koerper + Kopf + Schwanz
+        # Stehend/Springend: Körper + Kopf + Schwanz
         head = pygame.Rect(r.right - int(20 * u), r.y, int(20 * u), int(18 * u))
         pygame.draw.rect(s, body, (r.x + int(6 * u), r.y + int(10 * u),
                                    r.w - int(10 * u), r.h - int(18 * u)),
@@ -485,7 +485,7 @@ class TRexRunnerGame(Game):
                 pygame.draw.polygon(s, col, [
                     (x + w, cy - int(2 * u)), (x + w + int(8 * u), cy),
                     (x + w, cy + int(2 * u))])
-                # Fluegel: auf/ab
+                # Flügel: auf/ab
                 up = (o["flap"] % 2) < 1
                 if up:
                     pygame.draw.polygon(s, col, [

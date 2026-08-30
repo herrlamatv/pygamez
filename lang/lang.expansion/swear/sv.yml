@@ -1,0 +1,71 @@
+# Wortfilter - Svenska (sv)
+# ===========================================================================
+# Je Eintrag zwei Zeilen: zuerst das Regex-Muster (- ...), darunter das
+# gemeinte Wort als Kommentar (# ...). Geprüft wird ohne Rücksicht auf
+# Groß-/Kleinschreibung; ungültige Muster werden still übersprungen.
+#
+# Die Muster halten eingestreute Sonderzeichen und Ziffern aus
+# ([^\sa-zA-Z]* - bewusst OHNE Leerzeichen, sonst liefe ein Muster über
+# Wortgrenzen hinweg; nur zwischen zwei Wörtern sind Leerzeichen erlaubt),
+# erlauben Buchstabenwiederholung (f+) und die üblichen Leetspeak-Ersetzungen
+# ([a4@], [e3], [i1!|], [o0], [s5$] ...). Vor dem Vergleich entfernt
+# swear._norm Akzente und macht aus "-" und "_" Leerzeichen - deshalb stehen
+# die Wörter hier in ASCII-Schreibweise.
+#
+# Geprüft werden Map-Name, Map-ID und Creator-Name (siehe swear.py, ugc.py).
+# Bearbeitet wird die Liste einfach hier: eine Regex-Zeile, darunter das Wort.
+
+- \b(h+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[e3]+)(?=[^\s]*\b)
+# helvete
+- \b([s5$]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+)\b
+# skit
+- \b(k+[^\sa-zA-Z]*u+[^\sa-zA-Z]*k+)\b
+# kuk
+- \b(f+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# fitta
+- \b(h+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[a4@]+)\b
+# hora
+- \b([s5$]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*y+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[a4@]+)\b
+# slyna
+- \b(j+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# javla
+- \b([a4@]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+)\b
+# arsle
+- \b([i1!|]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[t7+]+)\b
+# idiot
+- \b([e3]+[^\sa-zA-Z]*f+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*n+)(?=[^\s]*\b)
+# efterbliven
+- \b(m+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*[o0]+)\b
+# mongo
+- \b(n+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)\b
+# neger
+- \b(n+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[t7+]+)(?=[^\s]*\b)
+# nazist
+- \b(h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# hitler
+- \b(v+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[t7+]+)(?=[^\s]*\b)
+# valdtakt
+- \b(k+[^\sa-zA-Z]*n+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# knulla
+- \b([b8]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[e3]+)\b
+# blatte
+- \b(p+[^\sa-zA-Z]*u+[^\sa-zA-Z]*c+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[o0]+)\b
+# pucko
+- \b(k+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[g9]+)(?=[^\s]*\b)
+# karring
+- \b([s5$]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[l1|]+)(?=[^\s]*\b)
+# skitstovel
+- \b(j+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[l1|]+)\b
+# javel
+- \b([s5$]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[a4@]+)\b
+# subba
+- \b([t7+]+[^\sa-zA-Z]*j+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*f+[^\sa-zA-Z]*[s5$]+)\b
+# tjafs
+- \b(k+[^\sa-zA-Z]*u+[^\sa-zA-Z]*k+[^\sa-zA-Z]*h+[^\sa-zA-Z]*u+[^\sa-zA-Z]*v+[^\sa-zA-Z]*u+[^\sa-zA-Z]*d+)(?=[^\s]*\b)
+# kukhuvud
+- \b([s5$]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*u+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*[e3]+)\b
+# snorunge
+- \b(d+[^\sa-zA-Z]*u+[^\sa-zA-Z]*m+[^\sa-zA-Z]*h+[^\sa-zA-Z]*u+[^\sa-zA-Z]*v+[^\sa-zA-Z]*u+[^\sa-zA-Z]*d+)\b
+# dumhuvud
+- \b(f+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[g9]+)\b
+# fittig

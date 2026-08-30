@@ -4,26 +4,26 @@ dame.py
 =======
 Dame / Checkers - drei Regelwerke, 1 Spieler gegen KI oder 2 Spieler lokal.
 
-Waehlbare Varianten (im Setup-Screen):
-- Deutsche Dame (8x8): 12 Steine je Seite; Maenner ziehen 1 diagonal vorwaerts,
-  SCHLAGEN aber vor- UND rueckwaerts; die Dame FLIEGT beliebig weit diagonal.
+Wählbare Varianten (im Setup-Screen):
+- Deutsche Dame (8x8): 12 Steine je Seite; Männer ziehen 1 diagonal vorwärts,
+  SCHLAGEN aber vor- UND rückwärts; die Dame FLIEGT beliebig weit diagonal.
   Schlagzwang, Mehrfachschlag - das Maximum muss aber NICHT genommen werden.
-- Internationale Dame (10x10): 20 Steine je Seite; Maenner schlagen vor/rueckwaerts,
-  fliegende Damen. Schlagzwang MIT Maximum-Regel (laengste Schlagfolge ist Pflicht).
-- Checkers 8x8 (englisch): Maenner schlagen NUR vorwaerts, die Dame (King) zieht
+- Internationale Dame (10x10): 20 Steine je Seite; Männer schlagen vor/rückwärts,
+  fliegende Damen. Schlagzwang MIT Maximum-Regel (längste Schlagfolge ist Pflicht).
+- Checkers 8x8 (englisch): Männer schlagen NUR vorwärts, die Dame (King) zieht
   nur EIN Feld (nicht fliegend). Schlagzwang, kein Maximum.
 
 Gemeinsam: Steine stehen auf den dunklen Feldern. Wer keinen Zug mehr hat (kein
-Stein oder eingeschlossen), verliert. Der Mehrfachschlag muss vollstaendig
-ausgefuehrt werden (Schlagzwang). Ein Mann, der beim Schlagen die letzte Reihe
+Stein oder eingeschlossen), verliert. Der Mehrfachschlag muss vollständig
+ausgeführt werden (Schlagzwang). Ein Mann, der beim Schlagen die letzte Reihe
 erreicht, wird zur Dame und die Schlagfolge endet dort.
 
-Einzelspieler: KI mit Minimax + Alpha-Beta (Material + Vormarsch), drei Staerken.
+Einzelspieler: KI mit Minimax + Alpha-Beta (Material + Vormarsch), drei Stärken.
 Punkte (Highscore) = Siege gegen die KI in dieser Sitzung; Mehrspieler wird nicht
 gewertet.
 
-Steuerung: Stein anklicken, dann Zielfeld(er). Mehrfachsprung Schritt fuer Schritt
-anklicken. Tastatur: Pfeile/WASD bewegen den Rahmen, Leertaste/Enter waehlt.
+Steuerung: Stein anklicken, dann Zielfeld(er). Mehrfachsprung Schritt für Schritt
+anklicken. Tastatur: Pfeile/WASD bewegen den Rahmen, Leertaste/Enter wählt.
 Nach Rundenende: Enter = neue Runde, S = Setup (Variantenwahl, beide Modi).
 """
 
@@ -115,7 +115,7 @@ def _back_rank(row, side, size):
 # ---------------------------------------------------------------------------
 
 def _single_jumps(b, r, c, side, king, captured, flags):
-    """Ein-Schritt-Schlaege von (r,c) auf Brett b. Liefert [(cap_pos, land_pos)]."""
+    """Ein-Schritt-Schläge von (r,c) auf Brett b. Liefert [(cap_pos, land_pos)]."""
     size = flags["size"]
     opp = 1 - side
     out = []
@@ -150,7 +150,7 @@ def _single_jumps(b, r, c, side, king, captured, flags):
 
 
 def _capture_sequences(board, r, c, flags):
-    """Alle vollstaendigen Schlagfolgen des Steins auf (r,c)."""
+    """Alle vollständigen Schlagfolgen des Steins auf (r,c)."""
     code = board[r][c]
     side = owner(code)
     king0 = is_king(code)
@@ -208,7 +208,7 @@ def _simple_moves(board, r, c, flags):
 
 
 def legal_moves(board, side, flags):
-    """(Liste Zuege, forced) - bei Schlagzwang nur Schlagzuege.
+    """(Liste Züge, forced) - bei Schlagzwang nur Schlagzüge.
 
     Ein Zug: dict(path=[(r,c),...], caps=frozenset(), start, end)."""
     caps = []
@@ -287,7 +287,7 @@ class DameGame(Game):
         self.state = SETUP
 
     def _make_fonts(self):
-        """Theme-Schriften, Grösse abhängig von der Fensterhöhe."""
+        """Theme-Schriften, Größe abhängig von der Fensterhöhe."""
         self._small = ui.font(max(14, self.height // 32))
         self._tiny = ui.font(max(12, self.height // 40))
         self._huge = ui.font(max(26, self.height // 11), bold=True)
@@ -450,7 +450,7 @@ class DameGame(Game):
         return {m["start"] for m in self.moves}
 
     def _choose(self, rc):
-        """Zentraler Auswahl-Handler fuer Maus und Tastatur (Mehrfachsprung)."""
+        """Zentraler Auswahl-Handler für Maus und Tastatur (Mehrfachsprung)."""
         if self.sel is None:
             if rc in self._start_squares():
                 self.sel = rc
@@ -460,7 +460,7 @@ class DameGame(Game):
             else:
                 self.play_sound("click")
             return
-        # Es ist ein Stein gewaehlt -> naechster Schritt?
+        # Es ist ein Stein gewählt -> nächster Schritt?
         pmoves = [m for m in self.moves if m["start"] == self.sel]
         depth = len(self.partial)
         cand = [m for m in pmoves if len(m["path"]) > depth
@@ -691,7 +691,7 @@ class DameGame(Game):
                 y = self.by + pos[0] * self.cell
                 pygame.draw.rect(s, last_col, (x, y, self.cell, self.cell), 2)
 
-        # waehlbare Steine (Schlagzwang: nur diese) hervorheben
+        # wählbare Steine (Schlagzwang: nur diese) hervorheben
         if human_turn and self.sel is None:
             for (sr, sc) in self._start_squares():
                 cx = self.bx + sc * self.cell + self.cell // 2
@@ -699,7 +699,7 @@ class DameGame(Game):
                 col = COL_CAP if self.forced else COL_HINT
                 pygame.draw.circle(s, col, (cx, cy), self.pr + 3, 2)
 
-        # gewaehlter Stein + moegliche Schritte
+        # gewählter Stein + mögliche Schritte
         if human_turn and self.sel is not None:
             cur = self.partial[-1]
             x = self.bx + cur[1] * self.cell

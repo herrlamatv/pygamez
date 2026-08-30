@@ -2034,7 +2034,17 @@
         "putti",
         "tour",
         "lukko",
-        "voima"
+        "voima",
+        "editor",
+        "maps",
+        "ugc",
+        "tunnel",
+        "ice",
+        "magnet",
+        "booster",
+        "share",
+        "import",
+        "export"
       ],
       "sections": [
         {
@@ -2065,7 +2075,13 @@
           "body": [
             "- Hiekka jarruttaa voimakkaasti, rampit kiihdyttävät nuolien suuntaan.",
             "- Vesi maksaa rangaistuslyönnin; pallo palaa viimeiseen turvalliseen kohtaan.",
-            "- Kumipuskurit antavat vauhtia takaisin; tuulimyllyt ja vaeltavat lohkot vaativat ajoitusta. Oikean painikkeen voimalukko pitää lyönnin ladattuna, kunnes aukko osuu kohdalleen."
+            "- Kumipuskurit antavat vauhtia takaisin; tuulimyllyt ja vaeltavat lohkot vaativat ajoitusta. Oikean painikkeen voimalukko pitää lyönnin ladattuna, kunnes aukko osuu kohdalleen.",
+            "- Putki: pallo katoaa toisesta suusta ja tulee ulos toisesta - suunta ja vauhti säilyvät.",
+            "- Jäällä pallo vierii lähes ikuisesti, tahmea alue pysäyttää sen heti.",
+            "- Kiihdyttimet antavat kiinteän töytäisyn ylitettäessä, magneetit vetävät puoleensa tai työntävät pois.",
+            "- Yksisuuntainen portti päästää läpi vain nuolen suuntaan; toiselta puolelta se on seinä.",
+            "- Pyörölevy vie pallon mukanaan ulospäin, hyppyri lennättää sen esteiden yli.",
+            "Nämä kahdeksan estettä tulevat klassisten lisäksi ja niitä voi sijoittaa vapaasti reikäeditorissa - katso sivu \"Omat reiät\"."
           ]
         },
         {
@@ -2073,6 +2089,62 @@
           "body": [
             "Jokaisesta radasta saa 600 pistettä ja lisäksi 300 jokaisesta parin alittavasta lyönnistä (ja 300 vähemmän jokaisesta ylittävästä, vähintään 100 jää).",
             "Hole in one tuo 500 pistettä lisää. Kaikkien ratojen summa on ennätyksesi; lisäksi tallennetaan kunkin radan pienin lyöntimäärä."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minigolf-maps",
+      "category": "games",
+      "title": "Omat reiät (Minigolf)",
+      "keywords": [
+        "omat reiat",
+        "editori",
+        "maps",
+        "ugc",
+        "rakentaminen",
+        "jakaminen",
+        "tuonti",
+        "vienti",
+        "pohja",
+        "minigolf"
+      ],
+      "sections": [
+        {
+          "h": "Reiän rakentaminen",
+          "body": [
+            "Minigolfin valmistelunäytöllä MAPS-välilehti vie omaan kokoelmaasi. \"Uusi\" avaa reikäeditorin, \"Muokkaa\" ottaa olemassa olevan reiän uudelleen työn alle.",
+            "Jokainen reikä tarvitsee nimen ja id:n. id on avain: pienillä kirjaimilla, ilman välilyöntejä, vain a-z, 0-9, - ja _. Se on myös jaettaessa ehdotettu tiedostonimi.",
+            "Vasemmalla on reikä, oikealla paletti neljällä työkalulla ja viidellätoista estetyypillä. Suorakulmiot vedetään, pyöreät asetetaan yhdellä klikkauksella, putki vaatii kaksi klikkausta - ensin sisäänmeno, sitten ulostulo.",
+            "Valintatyökalulla klikkaus valitsee kohteen, raahaus siirtää sitä, [Del] poistaa sen. Alhaalle ilmestyvät silloin valitun kohteen arvot: leveys, korkeus, säde, suunta, nopeus ja niin edelleen.",
+            "Ylhäällä säädät parin sekä reiän leveyden ja korkeuden - 60x80:stä 160x240 yksikköön. Se, mikä pienennettäessä jäisi ulkopuolelle, siirtyy automaattisesti sisään.",
+            "[G] vaihtaa ruudukkoon tarttumisen, [U] kumoaa, [Y] tekee uudelleen, [S] tallentaa ja [Enter] kokeilee reikää heti. [Esc] palaa - tallentamattomien muutosten kanssa vasta vahvistuksen jälkeen."
+          ]
+        },
+        {
+          "h": "Pohjat",
+          "body": [
+            "\"Pohja\" korvaa nykyisen reiän yhdellä kahdestatoista valmiista: Tyhjä, Putki, Saari, Tuulimylly, Siksak, Vesi, Puskurit, Ramppi, Jää, Sokkelo, Magneetti ja Hyppy.",
+            "Jokainen pohja jättää temppunsa viereen aina tavallisen reitin - reikä, jonka voi ratkaista vain tempulla, olisi ansa eikä pohja. Kaikki kaksitoista ovat todistetusti pelattavissa parissa.",
+            "Pohja on lähtökohta, ei lopputulos: lisää omia esteitä, siirrä aloitusta ja reikää, muuta kokoa."
+          ]
+        },
+        {
+          "h": "Pelaaminen",
+          "body": [
+            "MAPS-välilehdellä \"Pelaa\" käynnistää juuri valitun reiän - omalla ennätyksellään reikää kohti.",
+            "PELI-välilehdellä on viides ratavalinta, \"Omat\": silloin koko kokoelmasi pelataan peräkkäin kierroksena, enintään yhdeksän reikää.",
+            "Kaikki tallennetaan tiedostoon ugc.json pelin viereen (käännetyssä versiossa .exe:n viereen) - samaan paikkaan kuin mem.json ja replay.json."
+          ]
+        },
+        {
+          "h": "Jakaminen ja tuonti",
+          "body": [
+            "\"Jaa\" kysyy ensin nimeäsi tekijänä ja sitten tiedostonimeä; se on jo täytetty reiän id:llä.",
+            "\"Vie nimellä\" avaa tutun tallennusikkunan, \"Lataukset-kansioon\" panee tiedoston suoraan Lataukset-kansioon ja kertoo polun. Kerrallaan viedään aina täsmälleen yksi reikä.",
+            "Tiedoston pääte on .lamapgzmap ja se sisältää JSONia - voit lähettää sen kuin minkä tahansa tiedoston. \"Tuo\" lukee sen takaisin; tuonnissa hyväksytään myös .json-tiedostot.",
+            "Jos id on jo varattu, tuonti lisää automaattisesti -2, -3 ja niin edelleen sen sijaan että korvaisi olemassa olevan reikäsi.",
+            "Reiän nimi, id ja tekijän nimi kulkevat sanasuodattimen läpi tallennettaessa, vietäessä JA tuotaessa, ja se tarkistaa kaikki 14 kieltä. Loukkaava teksti hylätään - riippumatta siitä, mikä kieli on valittuna."
           ]
         }
       ]

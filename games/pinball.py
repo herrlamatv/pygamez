@@ -442,7 +442,7 @@ class PinballGame(Game):
             self._ball_lost()
         elif self._back_in_lane():
             # Zu schwach abgeschossen: der Ball rollt in die Schussbahn
-            # zurueck - dann darf noch einmal geladen werden (wie am Automaten).
+            # zurück - dann darf noch einmal geladen werden (wie am Automaten).
             b = self.balls[0]
             b.x, b.y, b.vx, b.vy = LANE_X, 146.0, 0.0, 0.0
             self.phase = "launch"
@@ -454,7 +454,7 @@ class PinballGame(Game):
 
         Auf einer Wandspitze oder in einer engen Ecke kann eine Kugel
         theoretisch balancieren. Bewegt sie sich drei Sekunden lang kaum,
-        stupst der Automat sie an - so haengt keine Partie fest.
+        stupst der Automat sie an - so hängt keine Partie fest.
         """
         if math.hypot(b.x - b.sx, b.y - b.sy) > 1.0:
             b.sx, b.sy, b.st = b.x, b.y, 0.0
@@ -865,7 +865,7 @@ class PinballGame(Game):
         pygame.draw.line(s, ui.BORDER, (0, self.hud_h), (self.width, self.hud_h))
         cy = self.hud_h // 2
         # Punktzahl ohne Tausendertrennung - die schreibt sich je nach Sprache
-        # anders (1.200 / 1,200 / 1 200); die uebrigen Spiele zeigen sie ebenso.
+        # anders (1.200 / 1,200 / 1 200); die übrigen Spiele zeigen sie ebenso.
         img = self._num.render(str(self.scores[self.player]), True, self.accent)
         s.blit(img, img.get_rect(midleft=(12, cy)))
         if self.msg:

@@ -5,22 +5,22 @@ kniffel.py
 Kniffel (Yahtzee) - Einzelspieler (Highscore-Jagd) oder lokaler 2-Spieler-Hotseat.
 
 Regeln:
-- 5 Wuerfel, bis zu 3 Wuerfe pro Zug. Zwischen den Wuerfen duerfen beliebig
-  viele Wuerfel "gehalten" werden (Klick/Taste); nur die uebrigen werden neu
+- 5 Würfel, bis zu 3 Würfe pro Zug. Zwischen den Würfen dürfen beliebig
+  viele Würfel "gehalten" werden (Klick/Taste); nur die übrigen werden neu
   geworfen.
 - Danach wird genau EINE der 13 Kategorien gebucht (auch mit 0 = Streichen).
   Nach 13 Buchungen ist der Block voll.
 - Oberer Block (Einser..Sechser): bei >= 63 Punkten gibt es 35 Bonuspunkte.
 - Unterer Block: Dreier-/Vierer-Pasch (Augensumme), Full House (25), kleine
-  Strasse (30), grosse Strasse (40), Kniffel (50), Chance (Augensumme).
+  Straße (30), große Straße (40), Kniffel (50), Chance (Augensumme).
 
 - Einzelspieler: Endsumme = Highscore (main.py speichert den Bestwert).
-- Mehrspieler: zwei Blocks nebeneinander, abwechselnd; hoehere Endsumme gewinnt
+- Mehrspieler: zwei Blocks nebeneinander, abwechselnd; höhere Endsumme gewinnt
   (nicht gewertet).
 
-Steuerung: Maus - "Wuerfeln" klicken, Wuerfel anklicken = halten, Kategorie in
-der Liste anklicken = buchen. Tasten: Leertaste = wuerfeln, 1-5 = Wuerfel halten/
-loesen, Pfeile = Kategorie waehlen, Enter = buchen. Nach Ende: Enter = neu.
+Steuerung: Maus - "Würfeln" klicken, Würfel anklicken = halten, Kategorie in
+der Liste anklicken = buchen. Tasten: Leertaste = würfeln, 1-5 = Würfel halten/
+lösen, Pfeile = Kategorie wählen, Enter = buchen. Nach Ende: Enter = neu.
 """
 
 import random
@@ -64,7 +64,7 @@ READY, ROLL_ANIM, ROLLED, OVER = "ready", "roll_anim", "rolled", "over"
 
 
 def score_category(key, dice):
-    """Punktwert der Kategorie 'key' fuer die 5 Wuerfel 'dice' (Liste 1..6)."""
+    """Punktwert der Kategorie 'key' für die 5 Würfel 'dice' (Liste 1..6)."""
     counts = [dice.count(v) for v in range(1, 7)]
     total = sum(dice)
     if key in UPPER_KEYS:
@@ -146,7 +146,7 @@ class KniffelGame(Game):
         self.hud_h = 42
         self.dice_h = 92
         self.dice_y = self.height - self.dice_h
-        # Kartenbereich zwischen HUD und Wuerfelleiste
+        # Kartenbereich zwischen HUD und Würfelleiste
         top = self.hud_h + 6
         bottom = self.dice_y - 6
         self.n_rows = len(CATS) + 2      # + Oberer-Bonus-Zeile + Gesamt
@@ -161,14 +161,14 @@ class KniffelGame(Game):
             self.val_x = [self.width - 20 - 2 * col_w - 10,
                           self.width - 20 - col_w]
         self.col_w = col_w
-        # Zeilen-Trefferflaechen (nur die 13 Kategorien)
+        # Zeilen-Trefferflächen (nur die 13 Kategorien)
         self.row_rects = []
         for i in range(len(CATS)):
             y = self.card_top + i * self.row_h
             self.row_rects.append(pygame.Rect(self.name_x - 6, y,
                                               self.width - self.name_x - 8,
                                               self.row_h))
-        # Wuerfel + Wuerfeln-Button
+        # Würfel + Würfeln-Button
         self.die = int(min(self.dice_h - 40, (self.width - 200) / 5))
         self.die = max(34, self.die)
         gap = 12
@@ -324,7 +324,7 @@ class KniffelGame(Game):
             img = self._big.render(t("kn.total_now", n=_grand_total(self.cards[0])),
                                    True, COL_ACCENT)
         s.blit(img, img.get_rect(midleft=(14, cy)))
-        # Wuerfe-Anzeige rechts
+        # Würfe-Anzeige rechts
         if self.state != OVER:
             rt = t("kn.rolls_left", n=max(0, self.rolls_left))
             img = self._small.render(rt, True, COL_DIM)
@@ -332,7 +332,7 @@ class KniffelGame(Game):
 
     def _draw_card(self, s):
         card = self.cards[self.player]
-        # Spaltenkoepfe bei Mehrspieler
+        # Spaltenköpfe bei Mehrspieler
         if self.multiplayer:
             for p in range(2):
                 lbl = self._tiny.render(t("common.player%d" % (p + 1)), True,
@@ -356,7 +356,7 @@ class KniffelGame(Game):
                     img = self._row.render(str(pc[key]), True, COL_TEXT)
                     s.blit(img, img.get_rect(center=(cx, y + self.row_h // 2)))
                 elif p == self.player and self.rolled_once and self.state != OVER:
-                    # Vorschau des moeglichen Werts (gedimmt)
+                    # Vorschau des möglichen Werts (gedimmt)
                     val = score_category(key, self.dice)
                     col = COL_GOOD if val > 0 else COL_FAINT
                     img = self._row.render(str(val), True, col)
@@ -405,7 +405,7 @@ class KniffelGame(Game):
             held = self.held[i] and self.rolled_once
             self._draw_die(s, rc, val, held, i)
 
-        # Wuerfeln-Button
+        # Würfeln-Button
         can_roll = self.rolls_left > 0 and self.state in (READY, ROLLED)
         pygame.draw.rect(s, COL_BTN_ON if can_roll else COL_BTN, self.roll_rect,
                          border_radius=10)
@@ -424,7 +424,7 @@ class KniffelGame(Game):
             pygame.draw.rect(s, COL_ACCENT, rc, 3, border_radius=8)
         else:
             pygame.draw.rect(s, (200, 202, 210), rc, 1, border_radius=8)
-        # Wuerfel-Nummer klein oben links (Halt-Taste)
+        # Würfel-Nummer klein oben links (Halt-Taste)
         num = self._tiny.render(str(idx + 1), True, (170, 172, 180))
         s.blit(num, (rc.x + 4, rc.y + 2))
         if val < 1:

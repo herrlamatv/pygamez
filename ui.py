@@ -1195,3 +1195,144 @@ def draw_fx(surface, w, h, dt):
     """Zeichnet alle globalen Effekte (Partikel + Übergang). 1x pro Frame."""
     _draw_particles(surface, dt)
     _draw_transition(surface, w, h)
+
+
+# ---------------------------------------------------------------------------
+#  Texteingabe
+# ---------------------------------------------------------------------------
+#
+# Das erste echte Eingabefeld des Projekts - gebraucht für Namen und ids der
+# eigenen Minigolf-Bahnen (siehe games/minigolf_edit.py).
+#
+# Besonderheit dieser Oberfläche: Tastendrücke kommen NICHT aus pygame,
+# sondern als Tkinter-Ereignisse (siehe Kopf von main.py). Deshalb wird
+# vorrangig InputEvent.char ausgewertet - das ist das tatsächlich getippte
+# Zeichen inklusive Umlauten und Groß-/Kleinschreibung. Fehlt es (ältere
+# Aufrufer, Gamepad), springt der keysym-Notnagel ein.
+
+class TextInput:
+    """Einzeiliges Eingabefeld mit Schreibmarke.
+
+    Verwendung::
+
+        self.feld = ui.TextInput(maxlen=28, placeholder=t("golf.ugc.name"))
+        ...
+        if self.feld.handle(event):      # True = Ereignis verbraucht
+            return
+        self.feld.draw(surface, rect, font, focused=True)
+        name = self.feld.text
+
+    'charset' begrenzt die erlaubten Zeichen (z.B. ``TextInput.ID_CHARS``
+    für Bahn-ids, die keine Leerzeichen enthalten dürfen).
+    """
+
+    # Erlaubte Zeichen einer Bahn-id - klein und ohne Leerzeichen.
+    ID_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789-_"
+
+    # Tasten, die ein Textfeld nicht selbst verarbeitet (der Aufrufer soll
+    # sie sehen: Tab wechselt das Feld, Return/Escape schließen den Dialog).
+    PASS_THROUGH = ("Tab", "ISO_Left_Tab", "Return", "KP_Enter", "Escape",
+                    "Up", "Down")
+
+    def __init__(self, text="", maxlen=28, charset=None, placeholder=""):
+        self.maxlen = int(maxlen)
+        self.charset = charset
+        self.placeholder = placeholder
+        self.caret = 0
+        self.text = ""
+        self.set_text(text)
+
+    # ----- Inhalt -------------------------------------------------------
+    def set_text(self, text):
+        """Setzt den Inhalt (filtert und kürzt wie bei der Eingabe)."""
+        text = "" if text is None else str(text)
+        self.text = "".join(c for c in text if self._ok(c))[:self.maxlen]
+        self.caret = len(self.text)
+
+    def _ok(self, ch):
+        """Darf 'ch' ins Feld?"""
+        if not ch or ord(ch) < 32 or ch == "\x7f":
+            return False
+        return self.charset is None or ch.lower() in self.charset
+
+    def insert(self, ch):
+        if len(self.text) >= self.maxlen or not self._ok(ch):
+            return False
+        if self.charset is not None:
+            ch = ch.lower()
+        self.text = self.text[:self.caret] + ch + self.text[self.caret:]
+        self.caret += 1
+        return True
+
+    # ----- Eingabe ------------------------------------------------------
+    def handle(self, event):
+        """Verarbeitet ein KEYDOWN-InputEvent. True = verbraucht."""
+        from game_base import InputEvent
+        if event.kind != InputEvent.KEYDOWN:
+            return False
+        key = event.key
+        if key in self.PASS_THROUGH:
+            return False
+        if key == "BackSpace":
+            if self.caret > 0:
+                self.text = self.text[:self.caret - 1] + self.text[self.caret:]
+                self.caret -= 1
+            return True
+        if key == "Delete":
+            self.text = self.text[:self.caret] + self.text[self.caret + 1:]
+            return True
+        if key == "Left":
+            self.caret = max(0, self.caret - 1)
+            return True
+        if key == "Right":
+            self.caret = min(len(self.text), self.caret + 1)
+            return True
+        if key in ("Home", "KP_Home"):
+            self.caret = 0
+            return True
+        if key in ("End", "KP_End"):
+            self.caret = len(self.text)
+            return True
+        # Der Normalfall: das getippte Zeichen einfügen.
+        ch = getattr(event, "char", None)
+        if ch:
+            return self.insert(ch)
+        # Notnagel ohne char-Kanal: einzelne keysyms sind das Zeichen selbst,
+        # "space" ist ausgeschrieben (wie in lamawiki.py).
+        if key == "space":
+            return self.insert(" ")
+        if isinstance(key, str) and len(key) == 1 and key.isprintable():
+            return self.insert(key)
+        return False
+
+    # ----- Zeichnen -----------------------------------------------------
+    def draw(self, surface, rect, fnt, focused=False, invalid=False):
+        """Zeichnet das Feld. 'invalid' färbt den Rand rot."""
+        r = pygame.Rect(rect)
+        border = RED if invalid else (ACCENT if focused else BORDER)
+        pygame.draw.rect(surface, PANEL_LIGHT if focused else PANEL, r,
+                         border_radius=7)
+        pygame.draw.rect(surface, border, r, 2 if (focused or invalid) else 1,
+                         border_radius=7)
+        pad = 8
+        inner = r.w - 2 * pad
+        show = self.text if self.text else self.placeholder
+        col = TEXT if self.text else TEXT_FAINT
+        # Bei langem Text nach links schieben, damit die Schreibmarke im Bild
+        # bleibt - das Feld ist schmal, Namen dürfen trotzdem lang sein.
+        off = 0
+        if self.text:
+            upto = fnt.size(self.text[:self.caret])[0]
+            if upto > inner:
+                off = upto - inner
+        img = fnt.render(show, True, col)
+        clip = surface.get_clip()
+        surface.set_clip(r.inflate(-4, -4))
+        surface.blit(img, (r.x + pad - off, r.centery - img.get_height() // 2))
+        if focused:
+            cx = r.x + pad - off + fnt.size(self.text[:self.caret])[0]
+            if int(pulse(3.0, 0.0, 1.99)) == 0:      # blinkt ~1.5x je Sekunde
+                pygame.draw.rect(surface, ACCENT,
+                                 (cx, r.y + 5, 2, r.h - 10))
+        surface.set_clip(clip)
+        return r

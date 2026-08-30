@@ -52,24 +52,78 @@ _SEED = 0x9E3779B1           # Basis-Seed der Tour
 GAPS = (24.0, 21.0, 18.0, 15.0)
 
 
+# Alle Listen-Schlüssel einer Bahn, in der Reihenfolge von make_hole. Wer
+# über "alle Hindernisse" laufen will (Editor, Spiegeln, Speichern), nimmt
+# diese Liste - dann wird beim nächsten neuen Typ nichts vergessen.
+HOLE_LISTS = ("walls", "sand", "water", "slopes", "bumpers", "movers", "mills",
+              "tunnels", "ice", "boosters", "magnets", "gates", "sticky",
+              "spinners", "jumps")
+
+
 def make_hole(par, tee, cup, walls=(), sand=(), water=(), slopes=(),
-              bumpers=(), movers=(), mills=()):
+              bumpers=(), movers=(), mills=(), tunnels=(), ice=(), boosters=(),
+              magnets=(), gates=(), sticky=(), spinners=(), jumps=(),
+              w=None, h=None):
     """Baut einen Bahn-Datensatz (gleiche Struktur wie die handgebauten Bahnen).
+
+    Die sieben klassischen Typen:
 
     walls/sand/water : (x, y, w, h)
     slopes           : (x, y, w, h, ax, ay)          ax/ay = Beschleunigung
     bumpers          : (x, y, r)
     movers           : (x, y, w, h, dx, dy, speed)   pendelt zwischen den Enden
-    mills            : (x, y, laenge, arme, speed)   speed in rad/s
+    mills            : (x, y, länge, arme, speed)   speed in rad/s
+
+    Dazu die acht Typen, die es im Bahn-Editor gibt (siehe minigolf.py):
+
+    tunnels  : (x1, y1, x2, y2, r)          Rohr-Paar, versetzt in beide Richtungen
+    ice      : (x, y, w, h)                 fast reibungsfrei
+    boosters : (x, y, w, h, dx, dy, boost)  Einmal-Schub beim Betreten
+    magnets  : (x, y, r, force)             zieht an (force > 0) / stößt ab
+    gates    : (x, y, w, h, dx, dy)         Einbahn-Tor, nur Richtung (dx, dy)
+    sticky   : (x, y, w, h)                 bremst extrem
+    spinners : (x, y, r, speed)             Drehscheibe, speed in rad/s
+    jumps    : (x, y, w, h, dx, dy, dist)   Sprungrampe, fliegt dist Einheiten
+
+    w/h legen die Bahngröße fest (Standard: CW x CH). Eigene Bahnen aus dem
+    Editor dürfen davon abweichen, die eingebauten tun es nie.
     """
-    return {"par": int(par), "tee": tee, "cup": cup,
-            "walls": [tuple(map(float, w)) for w in walls],
-            "sand": [tuple(map(float, s)) for s in sand],
-            "water": [tuple(map(float, w)) for w in water],
-            "slopes": [tuple(map(float, s)) for s in slopes],
-            "bumpers": [tuple(map(float, b)) for b in bumpers],
-            "movers": [tuple(map(float, m)) for m in movers],
-            "mills": [tuple(map(float, m)) for m in mills]}
+    hole = {"par": int(par), "tee": tee, "cup": cup,
+            "w": float(CW if w is None else w),
+            "h": float(CH if h is None else h)}
+    for key, items in (("walls", walls), ("sand", sand), ("water", water),
+                       ("slopes", slopes), ("bumpers", bumpers),
+                       ("movers", movers), ("mills", mills),
+                       ("tunnels", tunnels), ("ice", ice),
+                       ("boosters", boosters), ("magnets", magnets),
+                       ("gates", gates), ("sticky", sticky),
+                       ("spinners", spinners), ("jumps", jumps)):
+        hole[key] = [tuple(map(float, it)) for it in items]
+    return hole
+
+
+def normalize(hole):
+    """Ergänzt fehlende Schlüssel einer Bahn (immer dasselbe dict zurück).
+
+    Der Verträglichkeits-Riegel: ältere Replays (replay.json) und ältere
+    eigene Bahnen (ugc.json) kennen die neuen Hindernis-Typen und die
+    Bahngröße noch nicht. Statt überall mit ``hole.get(...)`` zu hantieren,
+    läuft jede Bahn einmal hier durch - danach sind alle Schlüssel da.
+    """
+    if not isinstance(hole, dict):
+        return make_hole(3, (CW / 2, CH - 18), (CW / 2, 22))
+    hole.setdefault("par", 3)
+    hole.setdefault("tee", (CW / 2, CH - 18))
+    hole.setdefault("cup", (CW / 2, 22))
+    for key in ("w", "h"):
+        try:
+            hole[key] = float(hole[key])
+        except (KeyError, TypeError, ValueError):
+            hole[key] = CW if key == "w" else CH
+    for key in HOLE_LISTS:
+        items = hole.get(key)
+        hole[key] = list(items) if isinstance(items, (list, tuple)) else []
+    return hole
 
 
 # ---------------------------------------------------------------- Helfer
@@ -108,16 +162,33 @@ def _scatter_sand(rng, hole, spots):
             hole["sand"].append(_sand_patch(rng, x, y))
 
 
+# Hindernisse, die den Ball wirklich aufhalten oder bestrafen - nur diese
+# dürfen nicht auf Abschlag oder Loch liegen. Sand, Eis, Kleber und Schub
+# stören dort niemanden und bleiben deshalb draußen vor.
+_BLOCKING_RECTS = ("walls", "water", "gates", "jumps")
+
+
 def _sanitize(hole):
     """Entfernt Hindernisse auf Abschlag/Loch und klemmt beides ins Feld.
 
     Es wird ausschließlich entfernt, nie hinzugefügt - der Weg kann dadurch
     nur breiter werden, niemals enger.
+
+    Rechnet mit der Bahngröße aus dem Datensatz, damit auch die im Editor
+    gebauten Bahnen abweichender Größe sauber geprüft werden.
     """
-    hole["tee"] = (_clampx(hole["tee"][0], BALL_R + 3),
-                   _clampy(hole["tee"][1], BALL_R + 3))
-    hole["cup"] = (_clampx(hole["cup"][0], BALL_R + 5),
-                   _clampy(hole["cup"][1], BALL_R + 5))
+    normalize(hole)
+    cw, ch = hole["w"], hole["h"]
+    x0, x1 = BORDER, cw - BORDER
+    y0, y1 = BORDER, ch - BORDER
+
+    def clamp(v, lo, hi, margin):
+        return max(lo + margin, min(hi - margin, v))
+
+    hole["tee"] = (clamp(hole["tee"][0], x0, x1, BALL_R + 3),
+                   clamp(hole["tee"][1], y0, y1, BALL_R + 3))
+    hole["cup"] = (clamp(hole["cup"][0], x0, x1, BALL_R + 5),
+                   clamp(hole["cup"][1], y0, y1, BALL_R + 5))
     pts = (hole["tee"], hole["cup"])
     clear = BALL_R + 3.0
 
@@ -129,10 +200,17 @@ def _sanitize(hole):
     def circle_free(cx, cy, r):
         return all(math.hypot(cx - px, cy - py) > r + clear for (px, py) in pts)
 
-    hole["walls"] = [r for r in hole["walls"] if rect_free(r)]
-    hole["water"] = [r for r in hole["water"] if rect_free(r)]
+    for key in _BLOCKING_RECTS:
+        hole[key] = [r for r in hole[key] if rect_free(r)]
     hole["bumpers"] = [b for b in hole["bumpers"] if circle_free(b[0], b[1], b[2])]
     hole["mills"] = [m for m in hole["mills"] if circle_free(m[0], m[1], m[2])]
+    hole["spinners"] = [s for s in hole["spinners"]
+                        if circle_free(s[0], s[1], s[2])]
+    # Rohre dürfen nicht am Loch enden (sonst saugt der Tunnel den Ball
+    # heraus) und nicht auf dem Abschlag liegen.
+    hole["tunnels"] = [t for t in hole["tunnels"]
+                       if circle_free(t[0], t[1], t[4])
+                       and circle_free(t[2], t[3], t[4])]
     kept = []
     for m in hole["movers"]:
         x, y, w, h, dx, dy, _sp = m

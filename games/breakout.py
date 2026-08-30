@@ -9,7 +9,7 @@ Neu in dieser Version
 - Neue Steinsorten:
     * Normal   (1-3 Treffer, Farbe = Resthärte)
     * Stahl    (unzerstörbar, prallt nur ab - zählt NICHT zum Levelziel)
-    * Bombe    (explodiert und reisst Nachbarn mit)
+    * Bombe    (explodiert und reißt Nachbarn mit)
     * Gold     (viele Extrapunkte)
 - Viele neue Power-ups zusätzlich zu den alten:
     Laser (Kanonen am Schläger), Feuerball (durchschlägt Steine),
@@ -51,7 +51,7 @@ STR_COLORS = {1: (120, 205, 120), 2: (235, 185, 80), 3: (230, 95, 95)}
 # Auswählbare Ballfarben (Name, RGB)
 BALL_COLORS = [
     ("Gelb",   (255, 230, 120)),
-    ("Weiss",  (240, 240, 240)),
+    ("Weiß",  (240, 240, 240)),
     ("Cyan",   (110, 230, 230)),
     ("Pink",   (255, 120, 200)),
     ("Grün",  (120, 240, 140)),
@@ -68,7 +68,9 @@ DIFFICULTIES = {
 DIFF_ORDER = ["Easy", "Medium", "Hard"]
 
 # Level-Definitionen.
-#   tag  : "Normal" | "Schwer" | "Spass"  (Anzeige + Charakter des Levels)
+#   tag  : "Normal" | "Schwer" | "Spaß" (Anzeige + Charakter des Levels).
+#          Bleibt bewusst ohne Umlaut: der Wert wird zum i18n-Schlüssel
+#          zusammengesetzt ("bo.tag." + tag), und Schlüssel sind ASCII.
 #   pat  : Muster (siehe _brick_da)
 #   rows : Anzahl Steinreihen
 #   cols : Anzahl Steinspalten
@@ -224,7 +226,7 @@ class BreakoutGame(Game):
         self._build_setup_layout()
 
     def _make_fonts(self):
-        """Schriftgrössen aus der Fensterhöhe ableiten (Theme-Schriftart)."""
+        """Schriftgrößen aus der Fensterhöhe ableiten (Theme-Schriftart)."""
         h = self.height
         self._tiny = ui.font(max(11, h // 36))
         self._small = ui.font(max(13, h // 30))
@@ -759,7 +761,7 @@ class BreakoutGame(Game):
             self._explode(brick.rect.center, radius=70)
 
     def _explode(self, center, radius):
-        """Reisst alle Steine im Umkreis mit (Bomben-Kettenreaktion)."""
+        """Reißt alle Steine im Umkreis mit (Bomben-Kettenreaktion)."""
         cx, cy = center
         self._spawn_particles(cx, cy, (255, 150, 60), 22, spread=260)
         opfer = [b for b in self.bricks

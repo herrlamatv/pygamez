@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Headless-Audit fuer Block Jump: Level 1-15 x easy/normal/hard.
+"""Headless-Audit für Block Jump: Level 1-15 x easy/normal/hard.
 
-Prueft je Level:
+Prüft je Level:
   (1) kein Leiterschacht versiegelt + Ausstiegs-Block vorhanden,
   (2) Leiter-Coins in der Kletterspalte,
-  (3) jede Luecke per Sprungphysik schaffbar,
+  (3) jede Lücke per Sprungphysik schaffbar,
   (4) simulierter Leiter-Aufstieg (W halten) erreicht das Folge-Pad.
 
 Aufruf aus dem Repo-Root:  python tests/blockjump_audit.py
-Exit-Code 0 = alle Pruefungen bestanden.
+Exit-Code 0 = alle Prüfungen bestanden.
 """
 import json
 import math
@@ -16,6 +16,12 @@ import os
 import sys
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+# Die Berichte enthalten Umlaute - Ausgabe fest auf UTF-8 stellen,
+# sonst zeigt eine Konsole mit anderer Codepage Kraut und Rüben.
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except (AttributeError, OSError):
+    pass
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pygame
@@ -25,7 +31,7 @@ pygame.display.set_mode((640, 480))
 import settings as settings_mod
 from games import blockjump as bj
 
-# Testlaeufe duerfen nie die echte settings.json ueberschreiben
+# Testläufe dürfen nie die echte settings.json überschreiben
 settings_mod.save_settings = lambda s: None
 
 GS = json.loads(json.dumps(settings_mod.DEFAULTS))
@@ -55,7 +61,7 @@ def ladder_columns(world):
 
 
 def max_jump(dy):
-    """Maximale horizontale Sprungweite bei Hoehenversatz dy (Bloecke)."""
+    """Maximale horizontale Sprungweite bei Höhenversatz dy (Blöcke)."""
     disc = bj.JUMP_VEL ** 2 - 2 * bj.GRAVITY * dy
     if disc <= 0:
         return 0.0
@@ -68,27 +74,27 @@ def audit(g):
     for (x, z), (y0, y1) in lads.items():
         for yy in range(y0, y1 + 1):                       # Sprossen intakt?
             if world.get((x, yy, z)) != bj.LADDER:
-                errs.append(f"Sprosse ueberschrieben bei {(x, yy, z)}")
+                errs.append(f"Sprosse überschrieben bei {(x, yy, z)}")
         for yy in (y1 + 1, y1 + 2, y1 + 3):                # Schacht offen?
             if world.get((x, yy, z), bj.EMPTY) in bj.SOLID:
-                errs.append(f"Schacht versiegelt ueber {(x, z)} bei y={yy}")
+                errs.append(f"Schacht versiegelt über {(x, z)} bei y={yy}")
         if world.get((x, y1, z + 1), bj.EMPTY) not in bj.SOLID:
             errs.append(f"Kein Ausstiegs-Block hinter Leiter {(x, z)}")
         for yy in (y1 + 1, y1 + 2):                        # Kopffreiheit Ausstieg
             if world.get((x, yy, z + 1), bj.EMPTY) in bj.SOLID:
-                errs.append(f"Ausstieg blockiert ueber {(x, z + 1)} y={yy}")
+                errs.append(f"Ausstieg blockiert über {(x, z + 1)} y={yy}")
         if not any(abs(c[0] - (x + 0.5)) < 0.4 and abs(c[2] - (z + 0.5)) < 0.4
                    for c in g.coins):                      # Coin in der Spalte?
             errs.append(f"Kein Coin in Leiter-Spalte {(x, z)}")
-    for p, q in zip(g.pads, g.pads[1:]):                   # Luecken-Audit
+    for p, q in zip(g.pads, g.pads[1:]):                   # Lücken-Audit
         (x0, z0, y0, w0, d0), (x1, z1, y1_, w1, d1) = p, q
         if any(lx == x0 and z0 < lz <= z1 for (lx, lz) in lads):
-            continue                                       # Leiter-Uebergang
+            continue                                       # Leiter-Übergang
         if world.get((x0, y0 + 1, z0)) == bj.SPRING:
-            continue                                       # Katapult-Uebergang
+            continue                                       # Katapult-Übergang
         need = (z1 - d1 - 0.3) - (z0 + d0 + 1 + 0.3)
         if need > max_jump(y1_ - y0) * 0.9:
-            errs.append(f"Unschaffbare Luecke {p} -> {q}: brauche {need:.2f}, "
+            errs.append(f"Unschaffbare Lücke {p} -> {q}: brauche {need:.2f}, "
                         f"max {max_jump(y1_ - y0):.2f} (dy={y1_ - y0})")
     return errs
 
@@ -105,14 +111,14 @@ def climb_sim(g):
         for _ in range(720):                               # max 12 s Simulation
             g._physics(1 / 60.0)
             # Erfolg: steht auf dem Folge-Pad ODER wurde dort von einem
-            # Sprungblock katapultiert (der Bounce loescht on_ground im
+            # Sprungblock katapultiert (der Bounce löscht on_ground im
             # selben Tick wieder, beweist aber, dass der Ausstieg klappt)
             bounced = g.vy >= bj.SPRING_VEL - 1e-6
             if (g.on_ground or bounced) and g.py > y1 + 0.9 and g.pz > z + 0.8:
                 ok = True
                 break
         if not ok:
-            fails.append(f"Leiter {(x, z)}: haengt bei y={g.py:.2f} "
+            fails.append(f"Leiter {(x, z)}: hängt bei y={g.py:.2f} "
                          f"z={g.pz:.2f} (Ziel: y>{y1 + 0.9:.1f}, z>{z + 0.8:.1f})")
     return fails
 
@@ -129,7 +135,7 @@ def main():
             for e in errs:
                 print(f"[FAIL] {mode} L{level}: {e}")
             bad += len(errs)
-    print("OK: alle Pruefungen bestanden" if bad == 0 else f"{bad} Fehler")
+    print("OK: alle Prüfungen bestanden" if bad == 0 else f"{bad} Fehler")
     sys.exit(0 if bad == 0 else 1)
 
 

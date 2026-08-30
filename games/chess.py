@@ -41,7 +41,7 @@ COL_SEL = (246, 214, 92)
 COL_MOVE = (110, 200, 130)
 COL_LAST = (120, 160, 240)
 COL_CHECK = (224, 84, 84)
-COL_WHITE = (244, 244, 248)      # weisse Figuren
+COL_WHITE = (244, 244, 248)      # weiße Figuren
 COL_BLACK = (34, 32, 38)         # schwarze Figuren
 COL_OUTLINE = (16, 14, 18)
 
@@ -66,7 +66,7 @@ ROOK_DIR = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
 VALUES = {"P": 100, "N": 320, "B": 330, "R": 500, "Q": 900, "K": 20000}
 
-# Feldwert-Tabellen (aus Sicht von Weiss, Index 0 = a8 = Zeile r0). Fuer
+# Feldwert-Tabellen (aus Sicht von Weiß, Index 0 = a8 = Zeile r0). Für
 # schwarze Figuren wird vertikal gespiegelt (Zeile 7-r).
 _PST = {
     "P": [0, 0, 0, 0, 0, 0, 0, 0,
@@ -125,7 +125,7 @@ GLYPH = {"K": "♚", "Q": "♛", "R": "♜",
 
 # =================================================================== Regel-Helfer
 def _start_board():
-    """Standard-Grundstellung. r0 = Zeile 8 (Schwarz), r7 = Zeile 1 (Weiss)."""
+    """Standard-Grundstellung. r0 = Zeile 8 (Schwarz), r7 = Zeile 1 (Weiß)."""
     back = "RNBQKBNR"
     board = [[None] * 8 for _ in range(8)]
     for c in range(8):
@@ -340,7 +340,7 @@ def _legal_moves(board, color, castling, ep):
 
 
 def _evaluate(board):
-    """Material + Feldwerte, positiv = gut für Weiss (Zentipawns)."""
+    """Material + Feldwerte, positiv = gut für Weiß (Zentipawns)."""
     score = 0
     for r in range(8):
         row = board[r]
@@ -391,14 +391,14 @@ class ChessGame(Game):
         self.human_color = "b" if cs.get("color") == "black" else "w"
 
         self._make_fonts()
-        self.wins = [0, 0]           # [Mensch, KI] bzw. [Weiss, Schwarz]
+        self.wins = [0, 0]           # [Mensch, KI] bzw. [Weiß, Schwarz]
         self._make_piece_font()
         self._build_setup_layout()
         self._new_round()
         self.state = PLAY if self.multiplayer else SETUP
 
     def _make_fonts(self):
-        """Theme-Schriften, Grösse abhängig von der Fensterhöhe."""
+        """Theme-Schriften, Größe abhängig von der Fensterhöhe."""
         self._small = ui.font(max(14, self.height // 34))
         self._tiny = ui.font(max(12, self.height // 44))
         self._huge = ui.font(max(26, self.height // 12), bold=True)
@@ -434,7 +434,7 @@ class ChessGame(Game):
         self.targets = {}
         self.cursor = [6, 4]
         self.last_move = None
-        self.winner = None            # 0=Weiss,1=Schwarz,None=Remis/laufend
+        self.winner = None            # 0=Weiß,1=Schwarz,None=Remis/laufend
         self.result_key = None
         self.promo_move = None
         self.msg = None
@@ -914,7 +914,7 @@ class ChessGame(Game):
         panel = pygame.Rect(8, 6, self.width - 16, self.hud_h - 10)
         ui.draw_panel(s, panel, shadow=False, accent_top=self.accent)
         cy = panel.centery
-        # Siegzähler mit Farbpunkt (links Weiss, rechts Schwarz)
+        # Siegzähler mit Farbpunkt (links Weiß, rechts Schwarz)
         pygame.draw.circle(s, COL_WHITE, (panel.x + 16, cy), 7)
         pygame.draw.circle(s, ui.BORDER_LIGHT, (panel.x + 16, cy), 7, 1)
         left = self._small.render(f"{self.wins[0]}", True, ui.TEXT)

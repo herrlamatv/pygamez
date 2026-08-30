@@ -2,21 +2,21 @@
 """
 wordle.py
 =========
-Wordle - errate das 5-Buchstaben-Wort in hoechstens 6 Versuchen.
+Wordle - errate das 5-Buchstaben-Wort in höchstens 6 Versuchen.
 
-- Nach jedem Rateversuch faerben sich die Buchstaben: gruen = richtig (Position
+- Nach jedem Rateversuch färben sich die Buchstaben: grün = richtig (Position
   stimmt), gelb = im Wort (falsche Position), grau = nicht enthalten. Doppelte
-  Buchstaben werden korrekt gezaehlt (Standard-Wordle-Algorithmus).
-- Endlos-Streak als Highscore: fuer jedes geloeste Wort gibt es Punkte (weniger
-  Versuche = mehr), danach kommt sofort ein neues Wort. Das erste NICHT geloeste
+  Buchstaben werden korrekt gezählt (Standard-Wordle-Algorithmus).
+- Endlos-Streak als Highscore: für jedes gelöste Wort gibt es Punkte (weniger
+  Versuche = mehr), danach kommt sofort ein neues Wort. Das erste NICHT gelöste
   Wort beendet die Partie; die gesammelten Punkte sind der Highscore.
-- Die Loesungswoerter stammen aus einer kuratierten Liste je Sprache
+- Die Lösungswörter stammen aus einer kuratierten Liste je Sprache
   (games/wordle_words.py, nur A-Z). Rateversuche werden NICHT gegen ein
-  Woerterbuch geprueft - jede 5-Buchstaben-Eingabe ist erlaubt.
+  Wörterbuch geprüft - jede 5-Buchstaben-Eingabe ist erlaubt.
 
 Steuerung: Buchstabentasten A-Z tippen, Enter = raten (bei 5 Buchstaben),
-Backspace = loeschen. Die Bildschirmtastatur unten ist auch anklickbar.
-Nach Ende bzw. geloestem Wort: Enter/Klick geht weiter.
+Backspace = löschen. Die Bildschirmtastatur unten ist auch anklickbar.
+Nach Ende bzw. gelöstem Wort: Enter/Klick geht weiter.
 """
 
 import random
@@ -33,7 +33,7 @@ from .wordle_words import words_for
 COL_TILE_EMPTY = (30, 30, 38)
 COL_TILE_BORDER = (58, 58, 70)
 COL_TILE_ACTIVE = (90, 90, 108)
-COL_CORRECT = (106, 170, 100)     # gruen (= Sidebar-Farbe #6aaa64)
+COL_CORRECT = (106, 170, 100)     # grün (= Sidebar-Farbe #6aaa64)
 COL_PRESENT = (201, 180, 88)      # gelb
 COL_ABSENT = (58, 58, 62)         # grau
 COL_TEXT = (235, 236, 240)
@@ -50,12 +50,12 @@ PLAY, REVEAL, SOLVED, OVER = "play", "reveal", "solved", "over"
 _QWERTY = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"]
 _QWERTZ = ["QWERTZUIOP", "ASDFGHJKL", "YXCVBNM"]
 
-# Rangordnung der Buchstaben-Zustaende (hoeher gewinnt in der Tastatur-Faerbung)
+# Rangordnung der Buchstaben-Zustände (höher gewinnt in der Tastatur-Färbung)
 _RANK = {None: 0, "absent": 1, "present": 2, "correct": 3}
 
 
 def evaluate(guess, answer):
-    """Standard-Wordle-Bewertung mit korrekter Doppelbuchstaben-Zaehlung."""
+    """Standard-Wordle-Bewertung mit korrekter Doppelbuchstaben-Zählung."""
     result = ["absent"] * 5
     rest = list(answer)
     for i in range(5):
@@ -304,7 +304,7 @@ class WordleGame(Game):
                     revealed = True
                 elif self.reveal is not None and r == self.reveal["row"]:
                     ch = self.reveal["guess"][c]
-                    # Kachel deckt sich nacheinander (Spalte fuer Spalte) auf
+                    # Kachel deckt sich nacheinander (Spalte für Spalte) auf
                     if self.reveal["t"] >= (c + 1) * REVEAL_STEP:
                         fill = self._tile_color(self.reveal["result"][c])
                         border = fill

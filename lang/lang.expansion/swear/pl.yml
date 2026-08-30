@@ -1,0 +1,81 @@
+# Wortfilter - Polski (pl)
+# ===========================================================================
+# Je Eintrag zwei Zeilen: zuerst das Regex-Muster (- ...), darunter das
+# gemeinte Wort als Kommentar (# ...). Geprüft wird ohne Rücksicht auf
+# Groß-/Kleinschreibung; ungültige Muster werden still übersprungen.
+#
+# Die Muster halten eingestreute Sonderzeichen und Ziffern aus
+# ([^\sa-zA-Z]* - bewusst OHNE Leerzeichen, sonst liefe ein Muster über
+# Wortgrenzen hinweg; nur zwischen zwei Wörtern sind Leerzeichen erlaubt),
+# erlauben Buchstabenwiederholung (f+) und die üblichen Leetspeak-Ersetzungen
+# ([a4@], [e3], [i1!|], [o0], [s5$] ...). Vor dem Vergleich entfernt
+# swear._norm Akzente und macht aus "-" und "_" Leerzeichen - deshalb stehen
+# die Wörter hier in ASCII-Schreibweise.
+#
+# Geprüft werden Map-Name, Map-ID und Creator-Name (siehe swear.py, ugc.py).
+# Bearbeitet wird die Liste einfach hier: eine Regex-Zeile, darunter das Wort.
+
+- \b(k+[^\sa-zA-Z]*u+[^\sa-zA-Z]*r+[^\sa-zA-Z]*w+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# kurwa
+- \b(c+[^\sa-zA-Z]*h+[^\sa-zA-Z]*u+[^\sa-zA-Z]*j+)\b
+# chuj
+- \b(p+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[l1|]+)(?=[^\s]*\b)
+# pierdol
+- \b(j+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*c+)(?=[^\s]*\b)
+# jebac
+- \b(j+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*y+)(?=[^\s]*\b)
+# jebany
+- \b([s5$]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*u+[^\sa-zA-Z]*r+[^\sa-zA-Z]*w+[^\sa-zA-Z]*y+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*y+[^\sa-zA-Z]*n+)(?=[^\s]*\b)
+# skurwysyn
+- \b(c+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[a4@]+)\b
+# cipa
+- \b(d+[^\sa-zA-Z]*u+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[a4@]+)\b
+# dupa
+- \b(p+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[a4@]+)\b
+# pizda
+- \b([s5$]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*j+)(?=[^\s]*\b)
+# spierdalaj
+- \b(k+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[s5$]+)(?=[^\s]*\b)
+# kutas
+- \b(h+[^\sa-zA-Z]*u+[^\sa-zA-Z]*j+)\b
+# huj
+- \b([z2]+[^\sa-zA-Z]*j+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[b8]+)\b
+# zjeb
+- \b(d+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[l1|]+)\b
+# debil
+- \b([g9]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*w+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[o0]+)(?=[^\s]*\b)
+# gowno
+- \b([s5$]+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*m+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# szmata
+- \b(d+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*w+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# dziwka
+- \b(c+[^\sa-zA-Z]*w+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[l1|]+)\b
+# cwel
+- \b(p+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+)(?=[^\s]*\b)
+# pedal
+- \b(m+[^\sa-zA-Z]*u+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*y+[^\sa-zA-Z]*n+)(?=[^\s]*\b)
+# murzyn
+- \b(c+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*y+)(?=[^\s]*\b)
+# ciapaty
+- \b(n+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# nazista
+- \b(h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# hitler
+- \b([g9]+[^\sa-zA-Z]*w+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[t7+]+)(?=[^\s]*\b)
+# gwalt
+- \b([s5$]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*y+[^\sa-zA-Z]*n+)(?=[^\s]*\b)
+# sukinsyn
+- \b(p+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*j+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[b8]+)\b
+# pojeb
+- \b(w+[^\sa-zA-Z]*y+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*j+)(?=[^\s]*\b)
+# wypierdalaj
+- \b(j+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# jebana
+- \b(k+[^\sa-zA-Z]*u+[^\sa-zA-Z]*r+[^\sa-zA-Z]*w+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*n+)(?=[^\s]*\b)
+# kurwiszon
+- \b(p+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*y+)(?=[^\s]*\b)
+# pierdolony
+- \b(r+[^\sa-zA-Z]*u+[^\sa-zA-Z]*c+[^\sa-zA-Z]*h+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*c+)\b
+# ruchac
+- \b([z2]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*j+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[s5$]+)\b
+# zajebis

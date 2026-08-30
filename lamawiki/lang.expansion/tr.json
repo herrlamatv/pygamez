@@ -2034,7 +2034,17 @@
         "vuruş",
         "tour",
         "kilit",
-        "güç"
+        "güç",
+        "editor",
+        "maps",
+        "ugc",
+        "tunnel",
+        "ice",
+        "magnet",
+        "booster",
+        "share",
+        "import",
+        "export"
       ],
       "sections": [
         {
@@ -2065,7 +2075,13 @@
           "body": [
             "- Kum sert şekilde yavaşlatır, rampalar okların yönünde hızlandırır.",
             "- Su bir ceza vuruşuna mal olur; top son güvenli noktasına döner.",
-            "- Lastik tamponlar hız geri verir; yel değirmenleri ve gezen bloklar zamanlama ister. Sağ tuştaki güç kilidi, boşluk denk gelene kadar vuruşu dolu tutar."
+            "- Lastik tamponlar hız geri verir; yel değirmenleri ve gezen bloklar zamanlama ister. Sağ tuştaki güç kilidi, boşluk denk gelene kadar vuruşu dolu tutar.",
+            "- Boru: top bir ağızdan kaybolur ve diğerinden çıkar - yön ve hız korunur.",
+            "- Buz topun neredeyse sonsuza dek yuvarlanmasını sağlar, yapışkan alan onu anında durdurur.",
+            "- Hızlandırıcılar üzerinden geçerken sabit bir itme verir, mıknatıslar çeker ya da iter.",
+            "- Tek yön kapısı yalnızca ok yönünde geçirir; diğer taraftan bir duvardır.",
+            "- Döner tabla topu alıp dışarı taşır, atlama rampası onu engellerin üzerinden uçurur.",
+            "Bu sekiz engel klasiklerin yanına gelir ve delik düzenleyicide serbestçe yerleştirilebilir - \"Kendi delikleri\" sayfasına bakın."
           ]
         },
         {
@@ -2073,6 +2089,62 @@
           "body": [
             "Her delik 600 puan değerindedir, parın altındaki her vuruş için 300 puan daha (üstündeki her vuruş için 300 az, en az 100 kalır).",
             "Hole in one 500 puan ekler. Tüm deliklerin toplamı rekorundur; ayrıca her parkurun en düşük vuruş sayısı da saklanır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minigolf-maps",
+      "category": "games",
+      "title": "Kendi delikleri (Minigolf)",
+      "keywords": [
+        "kendi delikleri",
+        "duzenleyici",
+        "maps",
+        "ugc",
+        "kurmak",
+        "paylasmak",
+        "ice aktar",
+        "disa aktar",
+        "sablon",
+        "minigolf"
+      ],
+      "sections": [
+        {
+          "h": "Delik kurmak",
+          "body": [
+            "Minigolf hazırlık ekranında MAPS sekmesi kendi koleksiyonuna götürür. \"Yeni\" düzenleyiciyi açar, \"Düzenle\" var olan bir deliği yeniden ele alır.",
+            "Her deliğin bir ada ve bir id'ye ihtiyacı var. id anahtardır: küçük harf, boşluksuz, sadece a-z, 0-9, - ve _. Paylaşırken önerilen dosya adı da odur.",
+            "Solda delik, sağda dört araç ve on beş engel türü içeren palet bulunur. Dikdörtgenler sürüklenerek çizilir, yuvarlak şeyler tek tıklamayla konur, boru iki tıklama ister - önce giriş, sonra çıkış.",
+            "Seçme aracıyla tıklama bir nesneyi seçer, sürükleme onu taşır, [Del] siler. Aşağıda seçilen nesnenin değerleri belirir: genişlik, yükseklik, yarıçap, yön, hız vesaire.",
+            "Yukarıda par ile deliğin genişlik ve yüksekliğini ayarlarsınız - 60x80'den 160x240 birime kadar. Küçültünce dışarı taşacak olan kendiliğinden içeri kayar.",
+            "[G] ızgaraya yapışmayı değiştirir, [U] geri alır, [Y] yineler, [S] kaydeder ve [Enter] deliği hemen dener. [Esc] geri döner - kaydedilmemiş değişiklik varsa ancak bir onaydan sonra."
+          ]
+        },
+        {
+          "h": "Şablonlar",
+          "body": [
+            "\"Şablon\" mevcut deliği on iki hazır şablondan biriyle değiştirir: Boş, Boru, Ada, Değirmen, Zikzak, Su, Tamponlar, Rampa, Buz, Labirent, Mıknatıs ve Atlama.",
+            "Her şablon numarasının yanında her zaman normal bir yol da bırakır - yalnızca hileyle çözülen bir delik şablon değil, tuzak olurdu. On ikisinin de par ile oynanabilir olduğu kanıtlanmıştır.",
+            "Şablon bir başlangıç noktasıdır, sonuç değil: kendi engellerini ekle, başlangıcı ve deliği kaydır, boyutu değiştir."
+          ]
+        },
+        {
+          "h": "Oynamak",
+          "body": [
+            "MAPS sekmesinde \"Oyna\" tam olarak seçili deliği başlatır - her delik için kendi rekoruyla.",
+            "OYUN sekmesinde beşinci bir parkur seçeneği var, \"Kendi\": böylece tüm koleksiyonun sırayla bir tur olarak oynanır, en fazla dokuz delik.",
+            "Her şey oyunun yanındaki ugc.json dosyasına kaydedilir (derlenmiş sürümde .exe'nin yanına) - mem.json ve replay.json ile aynı yere."
+          ]
+        },
+        {
+          "h": "Paylaşmak ve içe aktarmak",
+          "body": [
+            "\"Paylaş\" önce yapımcı adını, sonra dosya adını sorar; dosya adı zaten deliğin id'siyle doldurulmuştur.",
+            "\"Farklı dışa aktar\" alışılmış kaydetme penceresini açar, \"İndirilenler'e\" dosyayı doğrudan İndirilenler klasörüne koyar ve yolunu söyler. Her seferinde tam olarak bir delik dışa aktarılır.",
+            "Dosyanın uzantısı .lamapgzmap'tir ve JSON içerir - onu başka her dosya gibi gönderebilirsin. \"İçe aktar\" onu geri okur; içe aktarırken .json dosyaları da kabul edilir.",
+            "id zaten alınmışsa, içe aktarma mevcut deliğinin üzerine yazmak yerine kendiliğinden -2, -3 ve devamını ekler.",
+            "Delik adı, id ve yapımcı adı kaydederken, dışa aktarırken VE içe aktarırken bir kelime filtresinden geçer; filtre 14 dilin hepsini denetler. Hakaret içerenler reddedilir - o an hangi dil ayarlı olursa olsun."
           ]
         }
       ]

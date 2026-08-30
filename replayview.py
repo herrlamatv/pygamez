@@ -525,7 +525,7 @@ class ReplayScreen(_Screen):
         self.inst.replay_draw(aiming=aiming, banner=banner)
         self._draw_chip()
         # Der Speichern-Hinweis bleibt, bis gespeichert wurde (danach kurz
-        # noch als Bestaetigung, solange die Rueckmeldung sichtbar ist).
+        # noch als Bestätigung, solange die Rückmeldung sichtbar ist).
         if self.pending is not None and (not self.saved or self.toast_t > 0):
             self._draw_save_chip()
         if self.bar_t > 0 or not self.playing:

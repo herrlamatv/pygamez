@@ -2034,7 +2034,17 @@
         "udarec",
         "tour",
         "zaklep",
-        "moč"
+        "moč",
+        "editor",
+        "maps",
+        "ugc",
+        "tunnel",
+        "ice",
+        "magnet",
+        "booster",
+        "share",
+        "import",
+        "export"
       ],
       "sections": [
         {
@@ -2065,7 +2075,13 @@
           "body": [
             "- Pesek močno zavira, klančine pospešujejo v smeri puščic.",
             "- Voda stane kazenski udarec; žogica se vrne na zadnje varno mesto.",
-            "- Gumijasti odbijači vračajo hitrost; mlini in tavajoči bloki zahtevajo občutek za čas. Zaklep moči na desni tipki drži udarec napolnjen, dokler vrzel ne ustreza."
+            "- Gumijasti odbijači vračajo hitrost; mlini in tavajoči bloki zahtevajo občutek za čas. Zaklep moči na desni tipki drži udarec napolnjen, dokler vrzel ne ustreza.",
+            "- Cev: žogica izgine v eni odprtini in pride ven iz druge - smer in hitrost se ohranita.",
+            "- Led pusti žogico teči skoraj v neskončnost, lepljivo polje jo takoj ustavi.",
+            "- Pospeševalniki ob prevozu dajo stalen sunek, magneti privlačijo ali odbijajo.",
+            "- Enosmerna vrata spustijo le v smeri puščice; z druge strani so zid.",
+            "- Vrtljiva plošča odnese žogico navzven, skakalnica pa jo pošlje čez ovire.",
+            "Teh osem ovir pride poleg klasičnih in jih je mogoče prosto postavljati v urejevalniku stez - glej stran \"Lastne steze\"."
           ]
         },
         {
@@ -2073,6 +2089,62 @@
           "body": [
             "Vsaka steza da 600 točk in še 300 za vsak udarec pod par (ter 300 manj za vsakega nad par, nikoli manj kot 100).",
             "Hole in one prinese dodatnih 500 točk. Vsota vseh stez je tvoj rekord; poleg tega se shrani najnižje število udarcev na vsakem igrišču."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minigolf-maps",
+      "category": "games",
+      "title": "Lastne steze (Minigolf)",
+      "keywords": [
+        "lastne steze",
+        "urejevalnik",
+        "maps",
+        "ugc",
+        "gradnja",
+        "deljenje",
+        "uvoz",
+        "izvoz",
+        "predloga",
+        "minigolf"
+      ],
+      "sections": [
+        {
+          "h": "Gradnja steze",
+          "body": [
+            "Na pripravljalnem zaslonu minigolfa zavihek MAPS vodi do tvoje zbirke. \"Nova\" odpre urejevalnik stez, \"Uredi\" znova prevzame obstoječo stezo.",
+            "Vsaka steza potrebuje ime in id. id je ključ: male črke, brez presledkov, samo a-z, 0-9, - in _. Hkrati je to predlagano ime datoteke pri deljenju.",
+            "Levo leži steza, desno paleta s štirimi orodji in petnajstimi vrstami ovir. Pravokotnike povlečeš, okrogle stvari postavi en klik, cev potrebuje dva klika - najprej vhod, nato izhod.",
+            "Z orodjem za izbiro klik izbere predmet, vlečenje ga premakne, [Del] ga izbriše. Spodaj se nato pokažejo vrednosti izbranega predmeta: širina, višina, polmer, smer, hitrost in tako naprej.",
+            "Zgoraj nastaviš par ter širino in višino steze - od 60x80 do 160x240 enot. Kar bi pri pomanjšanju gledalo ven, se samodejno premakne noter.",
+            "[G] preklopi pripenjanje na mrežo, [U] razveljavi, [Y] uveljavi, [S] shrani, [Enter] pa stezo takoj preizkusi. [Esc] se vrne - pri neshranjenih spremembah šele po potrditvi."
+          ]
+        },
+        {
+          "h": "Predloge",
+          "body": [
+            "\"Predloga\" zamenja trenutno stezo z eno od dvanajstih pripravljenih: Prazna, Cev, Otok, Mlin, Cikcak, Voda, Odbojniki, Klančina, Led, Labirint, Magnet in Skok.",
+            "Vsaka predloga poleg svojega trika vedno pusti odprto tudi običajno pot - steza, ki jo je mogoče rešiti samo s trikom, bi bila past, ne predloga. Vseh dvanajst je dokazano igrljivih v par.",
+            "Predloga je izhodišče, ne rezultat: dodaj svoje ovire, premakni začetek in luknjo, spremeni velikost."
+          ]
+        },
+        {
+          "h": "Igranje",
+          "body": [
+            "V zavihku MAPS \"Igraj\" zažene točno izbrano stezo - z lastnim rekordom za vsako stezo.",
+            "V zavihku IGRA je peta izbira igrišča, \"Lastne\": takrat se vsa tvoja zbirka odigra zaporedoma kot krog, največ devet stez.",
+            "Vse se shrani v ugc.json poleg igre (pri zgrajeni različici poleg .exe) - na isto mesto kot mem.json in replay.json."
+          ]
+        },
+        {
+          "h": "Deljenje in uvoz",
+          "body": [
+            "\"Deli\" najprej vpraša za tvoje ime kot ustvarjalca in nato za ime datoteke; to je že izpolnjeno z id steze.",
+            "\"Izvozi kot\" odpre običajno okno za shranjevanje, \"V Prenose\" pa datoteko odloži naravnost v mapo Prenosi in ti pove pot. Vsakič se izvozi natanko ena steza.",
+            "Datoteka ima končnico .lamapgzmap in vsebuje JSON - pošlješ jo lahko kot vsako drugo datoteko. \"Uvozi\" jo prebere nazaj; pri uvozu so sprejete tudi datoteke .json.",
+            "Če je id že zaseden, uvoz samodejno doda -2, -3 in tako naprej, namesto da bi prepisal tvojo obstoječo stezo.",
+            "Ime steze, id in ime ustvarjalca gredo pri shranjevanju, izvozu IN uvozu skozi besedni filter, ki preveri vseh 14 jezikov. Žaljivo besedilo je zavrnjeno - ne glede na trenutno nastavljen jezik."
           ]
         }
       ]

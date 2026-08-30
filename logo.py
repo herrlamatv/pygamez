@@ -2,31 +2,31 @@
 """
 logo.py
 =======
-Zentrale Logo-Verwaltung fuer PyGameZ.
+Zentrale Logo-Verwaltung für PyGameZ.
 
-Hier wird an EINER Stelle festgelegt, welches Logo verwendet wird - ueber die
+Hier wird an EINER Stelle festgelegt, welches Logo verwendet wird - über die
 Variable ``LOGO_NUMBER``. Der Dateiname folgt immer dem Schema
 
     pygamez{number}-{size}
 
-also z.B. ``pygamez3-512``. Die passende Datei wird pro Groesse automatisch
+also z.B. ``pygamez3-512``. Die passende Datei wird pro Größe automatisch
 gesucht: zuerst PNG (bevorzugt), dann JPG (Alt-Format).
 
 Warum zwei Wege? (PNG vs. JPG)
 ------------------------------
-Fuer das Fenster-/Taskleisten-Icon braucht Tkinter ein ``tk.PhotoImage``:
+Für das Fenster-/Taskleisten-Icon braucht Tkinter ein ``tk.PhotoImage``:
 
 * **PNG** kann Tk direkt laden - das ist der "richtige" Weg, ganz ohne Umweg,
   inklusive Transparenz.
-* **JPG** kann Tk NICHT laden. Dafuer greift der alte Umweg: pygame laedt das
+* **JPG** kann Tk NICHT laden. Dafür greift der alte Umweg: pygame lädt das
   Bild, wir wandeln es in rohe PPM-Daten (P6) um und geben das an
   ``tk.PhotoImage``.
 
-Fuer die Menue-Anzeige (eine ``pygame.Surface``) ist die Unterscheidung egal -
-pygame laedt PNG UND JPG direkt.
+Für die Menü-Anzeige (eine ``pygame.Surface``) ist die Unterscheidung egal -
+pygame lädt PNG UND JPG direkt.
 
-Dadurch kann man Schritt fuer Schritt auf reine PNG-Logos umsteigen, ohne dass
-noch vorhandene JPG-Dateien ploetzlich nicht mehr funktionieren.
+Dadurch kann man Schritt für Schritt auf reine PNG-Logos umsteigen, ohne dass
+noch vorhandene JPG-Dateien plötzlich nicht mehr funktionieren.
 """
 
 import os
@@ -35,7 +35,7 @@ import os
 # Welches Logo? Der Dateiname ergibt sich aus  pygamez{LOGO_NUMBER}-{size}.{ext}
 LOGO_NUMBER = 3
 
-# Verfuegbare Kantenlaengen (px), groesste zuerst.
+# Verfügbare Kantenlängen (px), größte zuerst.
 LOGO_SIZES = (512, 256, 128)
 
 # Ordner (relativ zu diesem Modul), in dem die Logo-Dateien liegen.
@@ -53,14 +53,14 @@ def logo_basename(size):
 
 
 def logo_path(size, ext):
-    """Vollstaendiger Pfad fuer eine Groesse + Endung (muss nicht existieren)."""
+    """Vollständiger Pfad für eine Größe + Endung (muss nicht existieren)."""
     return os.path.join(_BASE, LOGO_DIR, f"{logo_basename(size)}.{ext}")
 
 
 def find_logo(size):
-    """Sucht die beste vorhandene Datei fuer eine Groesse.
+    """Sucht die beste vorhandene Datei für eine Größe.
 
-    Rueckgabe: ``(pfad, ext)`` oder ``(None, None)``, wenn nichts gefunden wird.
+    Rückgabe: ``(pfad, ext)`` oder ``(None, None)``, wenn nichts gefunden wird.
     PNG wird JPG vorgezogen.
     """
     for ext in LOGO_FORMATS:
@@ -71,16 +71,16 @@ def find_logo(size):
 
 
 def icon_photos(pygame, tk):
-    """Erzeugt ``tk.PhotoImage``-Objekte fuer alle verfuegbaren Logo-Groessen.
+    """Erzeugt ``tk.PhotoImage``-Objekte für alle verfügbaren Logo-Größen.
 
     * PNG: direkt von Tk geladen (der richtige Weg, mit Transparenz).
-    * JPG: ueber pygame nach PPM (P6) umgewandelt, weil Tk kein JPG kann.
+    * JPG: über pygame nach PPM (P6) umgewandelt, weil Tk kein JPG kann.
 
-    Es werden alle Groessen uebergeben - Tk/Windows waehlt die passende fuer
+    Es werden alle Größen übergeben - Tk/Windows wählt die passende für
     Titelleiste, Taskleiste und Alt+Tab selbst aus.
 
-    Rueckgabe: Liste von ``tk.PhotoImage`` (evtl. leer). Der Aufrufer MUSS die
-    Referenzen halten, sonst raeumt Tk die Bilder weg.
+    Rückgabe: Liste von ``tk.PhotoImage`` (evtl. leer). Der Aufrufer MUSS die
+    Referenzen halten, sonst räumt Tk die Bilder weg.
     """
     photos = []
     for size in LOGO_SIZES:
@@ -89,28 +89,28 @@ def icon_photos(pygame, tk):
             continue
         try:
             if ext == "png":
-                # Richtiger Weg: Tk laedt PNG direkt.
+                # Richtiger Weg: Tk lädt PNG direkt.
                 photos.append(tk.PhotoImage(file=pfad))
             else:
-                # Alter Weg: JPG ueber pygame -> rohe PPM-Daten -> Tk.
+                # Alter Weg: JPG über pygame -> rohe PPM-Daten -> Tk.
                 img = pygame.image.load(pfad)
                 w, h = img.get_size()
                 data = b"P6 %d %d 255 " % (w, h) + pygame.image.tobytes(img, "RGB")
                 photos.append(tk.PhotoImage(data=data, format="ppm"))
         except Exception:
-            # Fehlt/beschaedigt eine Groesse, wird sie einfach uebersprungen.
+            # Fehlt/beschädigt eine Größe, wird sie einfach übersprungen.
             pass
     return photos
 
 
 def load_surface(pygame, prefer_sizes=None):
-    """Laedt das Logo als ``pygame.Surface`` (fuer die Menue-Anzeige).
+    """Lädt das Logo als ``pygame.Surface`` (für die Menü-Anzeige).
 
     pygame kann PNG UND JPG direkt laden, daher hier keine PPM-Umwandlung.
-    Es wird die erste vorhandene Groesse aus ``prefer_sizes`` genommen (fuer die
-    Menue-Anzeige lohnt sich z.B. eine mittlere Groesse zum Herunterskalieren).
+    Es wird die erste vorhandene Größe aus ``prefer_sizes`` genommen (für die
+    Menü-Anzeige lohnt sich z.B. eine mittlere Größe zum Herunterskalieren).
 
-    Rueckgabe: ``pygame.Surface`` oder ``None``.
+    Rückgabe: ``pygame.Surface`` oder ``None``.
     """
     for size in (prefer_sizes or LOGO_SIZES):
         pfad, _ext = find_logo(size)

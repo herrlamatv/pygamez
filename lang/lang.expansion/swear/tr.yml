@@ -1,0 +1,77 @@
+# Wortfilter - Turkce (tr)
+# ===========================================================================
+# Je Eintrag zwei Zeilen: zuerst das Regex-Muster (- ...), darunter das
+# gemeinte Wort als Kommentar (# ...). Geprüft wird ohne Rücksicht auf
+# Groß-/Kleinschreibung; ungültige Muster werden still übersprungen.
+#
+# Die Muster halten eingestreute Sonderzeichen und Ziffern aus
+# ([^\sa-zA-Z]* - bewusst OHNE Leerzeichen, sonst liefe ein Muster über
+# Wortgrenzen hinweg; nur zwischen zwei Wörtern sind Leerzeichen erlaubt),
+# erlauben Buchstabenwiederholung (f+) und die üblichen Leetspeak-Ersetzungen
+# ([a4@], [e3], [i1!|], [o0], [s5$] ...). Vor dem Vergleich entfernt
+# swear._norm Akzente und macht aus "-" und "_" Leerzeichen - deshalb stehen
+# die Wörter hier in ASCII-Schreibweise.
+#
+# Geprüft werden Map-Name, Map-ID und Creator-Name (siehe swear.py, ugc.py).
+# Bearbeitet wird die Liste einfach hier: eine Regex-Zeile, darunter das Wort.
+
+- \b([o0]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*u+)(?=[^\s]*\b)
+# orospu
+- \b([a4@]+[^\sa-zA-Z]*m+[^\sa-zA-Z]*k+)\b
+# amk
+- \b([a4@]+[^\sa-zA-Z]*m+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# amina
+- \b([s5$]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*k+)\b
+# sik
+- \b([s5$]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*y+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*m+)(?=[^\s]*\b)
+# sikeyim
+- \b([s5$]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# siktir
+- \b(p+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*c+)\b
+# pic
+- \b(y+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*k+)(?=[^\s]*\b)
+# yarrak
+- \b(k+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*h+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[e3]+)(?=[^\s]*\b)
+# kahpe
+- \b([g9]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[t7+]+)(?=[^\s]*\b)
+# gavat
+- \b([i1!|]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[e3]+)\b
+# ibne
+- \b([s5$]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*k+)(?=[^\s]*\b)
+# salak
+- \b([g9]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[i1!|]+)(?=[^\s]*\b)
+# gerizekali
+- \b([a4@]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+)\b
+# aptal
+- \b(n+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*[i1!|]+)\b
+# nazi
+- \b(h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# hitler
+- \b([t7+]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[z2]+)(?=[^\s]*\b)
+# tecavuz
+- \b(p+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[t7+]+)\b
+# pust
+- \b(k+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*k+)(?=[^\s]*\b)
+# kaltak
+- \b([s5$]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*k+)(?=[^\s]*\b)
+# surtuk
+- \b([t7+]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*k+)(?=[^\s]*\b)
+# tasak
+- \b(p+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*k+)(?=[^\s]*\b)
+# pezevenk
+- \b([s5$]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*k+)(?=[^\s]*\b)
+# sikik
+- \b([a4@]+[^\sa-zA-Z]*m+[^\sa-zA-Z]*c+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*k+)(?=[^\s]*\b)
+# amcik
+- \b([g9]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*n+)(?=[^\s]*\b)
+# gotveren
+- \b(y+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*v+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*k+)(?=[^\s]*\b)
+# yavsak
+- \b([s5$]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*f+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[z2]+)\b
+# serefsiz
+- \b(m+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+[\W\d_]*h+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*f+)\b
+# mal herif
+- \b([a4@]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*k+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*y+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*m+)(?=[^\s]*\b)
+# ananisikeyim
+- \b([o0]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*u+[^\sa-zA-Z]*c+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*u+)(?=[^\s]*\b)
+# orospucocugu

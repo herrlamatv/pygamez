@@ -17,7 +17,7 @@ Pong - Einzelspieler (gegen KI) oder Mehrspieler (2 Spieler).
   Die Einstellung wird dauerhaft in settings.json ("pong") gespeichert.
 - Ball-Physik mit Beschleunigung und Winkel je nach Treffpunkt.
 - Es wird bis 5 Punkte gespielt. Als Highscore zählen die Punkte links (P1).
-- Optik: Themen-Hintergrund und dynamische ui.*-Palette; Schriftgrössen und
+- Optik: Themen-Hintergrund und dynamische ui.*-Palette; Schriftgrößen und
   Positionen passen sich der Auflösung an (on_surface_changed).
 """
 
@@ -83,7 +83,7 @@ class PongGame(Game):
     # ----- Layout / Theme ------------------------------------------------
 
     def _make_fonts(self):
-        """Themen-Schriften, Grössen aus der Fensterhöhe abgeleitet."""
+        """Themen-Schriften, Größen aus der Fensterhöhe abgeleitet."""
         h = self.height
         self.font = ui.font(max(16, h // 26))
         self.big_font = ui.font(max(36, h // 10), bold=True)

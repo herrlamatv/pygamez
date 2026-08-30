@@ -5,20 +5,20 @@ blockjump.py
 Block Jump - ein 3D-Jump'n'Run im Minecraft-Stil.
 
 - Voll in 3D (Software-Renderer, gleiche Pipeline wie Snakes 3D-Modus): eine
-  Welt aus Wuerfel-Bloecken, auf die man springt. Distanz-Nebel, Himmels-Verlauf
-  und optionaler Motion-Blur sorgen fuer den "hochwertigen" Look.
-- **Minecraft-Skin**: alle Bloecke tragen echte 16x16-Pixeltexturen (Gras, Erde,
+  Welt aus Würfel-Blöcken, auf die man springt. Distanz-Nebel, Himmels-Verlauf
+  und optionaler Motion-Blur sorgen für den "hochwertigen" Look.
+- **Minecraft-Skin**: alle Blöcke tragen echte 16x16-Pixeltexturen (Gras, Erde,
   Stein, Eichenbretter, Diamant, Schleim, Holz), die perspektivisch korrekt in
-  Texel-Vierecke zerlegt werden. Der Detailgrad haengt vom Abstand ab
+  Texel-Vierecke zerlegt werden. Der Detailgrad hängt vom Abstand ab
   (Taste **T**: hoch / niedrig / aus), damit der Software-Renderer schnell bleibt.
 - Dazu im gleichen Stil: **Steve-Spielfigur** mit Kopf/Gesicht, Armen, Beinen und
   Laufanimation (3rd Person), die **Hand im Ego-Modus**, ein **Beacon-Strahl** am
   Ziel, rotierende **Gold-Barren** als Coins, quadratische **Sonne**, driftende
   **Pixel-Wolken** und ein HUD mit **Herzen** und Schattenschrift.
 - Blocktypen: Gras/Erde/Stein/Holz (fest, zum Draufspringen), **Leitern**
-  (kletterbar), **Zaeune** (kleine Bloecke - blockieren, aber ueberspringbar),
-  **Schleimbloecke** (katapultieren nach oben), ein **Ziel** und schwebende **Coins**.
-- Kamera **standardmaessig 1st-Person wie Minecraft** (Mouselook mit Pointer-
+  (kletterbar), **Zäune** (kleine Blöcke - blockieren, aber überspringbar),
+  **Schleimblöcke** (katapultieren nach oben), ein **Ziel** und schwebende **Coins**.
+- Kamera **standardmäßig 1st-Person wie Minecraft** (Mouselook mit Pointer-
   Capture); **V** schaltet auf eine 3rd-Person-Verfolgerkamera um.
 - Steuerung: **WASD/Pfeile** laufen (relativ zur Blickrichtung), **Leertaste**
   springen, **Maus** umsehen. An Leitern klettert **W/S** hoch/runter.
@@ -40,7 +40,7 @@ from game_base import Game, InputEvent
 from i18n import t
 
 # ---------------------------------------------------------------------------
-#  Renderer-Konstanten (aus dem 3D-Modus von snake.py uebernommen)
+#  Renderer-Konstanten (aus dem 3D-Modus von snake.py übernommen)
 # ---------------------------------------------------------------------------
 NEAR = 0.12
 FOV_MUL = 1.0
@@ -49,7 +49,7 @@ FOG_END = 46.0
 DEG_PER_PX = 0.12                 # Grad Drehung je Maus-Pixel bei sens = 1.0
 PITCH_CLAMP = math.radians(84)
 
-# Minecraft-Himmel: kraeftiges Blau oben, heller Dunst am Horizont.
+# Minecraft-Himmel: kräftiges Blau oben, heller Dunst am Horizont.
 COL_SKY_TOP = (110, 160, 250)
 COL_SKY_HOR = (178, 209, 252)
 COL_FOG = (198, 222, 252)
@@ -73,9 +73,9 @@ EPS = 1e-4
 #  Blocktypen
 # ---------------------------------------------------------------------------
 EMPTY, GRASS, DIRT, STONE, PLANK, LADDER, FENCE, SPRING, GOAL = range(9)
-SOLID = {GRASS, DIRT, STONE, PLANK, GOAL}   # volle 1x1x1-Bloecke
-FENCE_H = 0.8    # Zaun: niedriges Hindernis, per Sprung ueberwindbar
-SPRING_H = 0.78  # Schleimblock: nur Landeflaeche (blockiert nie seitlich)
+SOLID = {GRASS, DIRT, STONE, PLANK, GOAL}   # volle 1x1x1-Blöcke
+FENCE_H = 0.8    # Zaun: niedriges Hindernis, per Sprung überwindbar
+SPRING_H = 0.78  # Schleimblock: nur Landefläche (blockiert nie seitlich)
 
 READY, PLAY, CLEAR, GAMEOVER = "ready", "play", "clear", "gameover"
 
@@ -87,10 +87,10 @@ TEX_MODES = ["off", "low", "high"]          # Index = self.tex_mode
 # ===========================================================================
 #  Pixel-Texturen im Minecraft-Stil
 #  ------------------------------------------------------------------------
-#  Jede Textur ist ein quadratisches Raster aus RGB-Tupeln (oder None fuer
+#  Jede Textur ist ein quadratisches Raster aus RGB-Tupeln (oder None für
 #  "durchsichtig", z.B. beim Gold-Barren). Erzeugt wird alles prozedural mit
-#  festen Seeds - so bleibt das Bild ueber alle Frames/Starts identisch, ohne
-#  dass Bilddateien mitgeliefert werden muessen.
+#  festen Seeds - so bleibt das Bild über alle Frames/Starts identisch, ohne
+#  dass Bilddateien mitgeliefert werden müssen.
 # ===========================================================================
 
 def _mul(c, k):
@@ -100,11 +100,11 @@ def _mul(c, k):
 
 
 def _blocks(size, seed, cols, weights, spec=(), spec_p=0.05, var=0.05, cell=4):
-    """Texturen im Minecraft-Stil: grosse Farbfelder + wenige Einzel-Sprenkel.
+    """Texturen im Minecraft-Stil: große Farbfelder + wenige Einzel-Sprenkel.
 
-    Echte MC-Texturen sind palettenbasiert und flaechig - genau das brauchen
-    wir auch fuer die Geschwindigkeit: gleichfarbige Nachbarn fasst der
-    Renderer spaeter zu einem einzigen Viereck zusammen (siehe ``_rects``).
+    Echte MC-Texturen sind palettenbasiert und flächig - genau das brauchen
+    wir auch für die Geschwindigkeit: gleichfarbige Nachbarn fasst der
+    Renderer später zu einem einzigen Viereck zusammen (siehe ``_rects``).
     """
     rng = random.Random(seed)
     rows = [[None] * size for _ in range(size)]
@@ -136,7 +136,7 @@ def _t_dirt():
 
 
 def _t_grass_side():
-    """Erde mit gruenem Ueberhang oben - das MC-Erkennungsmerkmal schlechthin."""
+    """Erde mit grünem Überhang oben - das MC-Erkennungsmerkmal schlechthin."""
     dirt = _t_dirt()
     green, gdark = (116, 172, 78), (97, 150, 62)
     edge = (4, 4, 3, 3, 4, 4, 3, 3, 2, 2, 4, 4, 3, 3, 4, 4)
@@ -174,7 +174,7 @@ def _t_planks():
             if y in (5, 11):                      # waagrechte Brettfuge
                 c = seam
             elif (y < 5 and x == 9) or (5 < y < 11 and x == 3) or (y > 11 and x == 12):
-                c = seam                          # senkrechte Stossfuge
+                c = seam                          # senkrechte Stoßfuge
             elif rng.random() < 0.06:
                 c = grain
             else:
@@ -185,7 +185,7 @@ def _t_planks():
 
 
 def _t_wood():
-    """Stamm-/Balkenholz fuer Leiter und Zaun (senkrechte Maserung)."""
+    """Stamm-/Balkenholz für Leiter und Zaun (senkrechte Maserung)."""
     base, dark, light = (150, 116, 66), (120, 90, 50), (168, 132, 80)
     cols = tuple(dark if x in (0, 7, 8, 15) else (light if x in (3, 11) else base)
                  for x in range(16))
@@ -198,7 +198,7 @@ def _t_wood():
 
 
 def _t_diamond():
-    """Diamantblock als Ziel: tuerkise Kristalle auf hellem Grund."""
+    """Diamantblock als Ziel: türkise Kristalle auf hellem Grund."""
     base, cry, hi, dk = (110, 222, 216), (78, 200, 198), (196, 248, 244), (58, 168, 168)
     spots = ((3, 3), (11, 4), (6, 10), (13, 12))
     rows = []
@@ -220,7 +220,7 @@ def _t_diamond():
 
 
 def _t_slime():
-    """Schleimblock: gruen, mit dunklem Rahmen und hellem Kern."""
+    """Schleimblock: grün, mit dunklem Rahmen und hellem Kern."""
     base, edge, core, hi = (114, 196, 94), (86, 158, 70), (146, 224, 126), (176, 240, 158)
     rows = []
     for y in range(16):
@@ -241,7 +241,7 @@ def _t_slime():
 
 
 def _t_beacon():
-    """Lichtstrahl des Ziels - fast weiss mit tuerkisem Schimmer."""
+    """Lichtstrahl des Ziels - fast weiß mit türkisem Schimmer."""
     a, b = (226, 255, 246), (186, 246, 232)
     return tuple(tuple(a if (x + y) % 3 else b for x in range(8)) for y in range(8))
 
@@ -268,7 +268,7 @@ SKIN = {
     "h": (60, 38, 23),      # Haare dunkel
     "S": (233, 189, 148),   # Haut
     "s": (204, 160, 122),   # Haut Schatten
-    "W": (245, 245, 245),   # Augenweiss
+    "W": (245, 245, 245),   # Augenweiß
     "I": (62, 92, 190),     # Iris
     "M": (150, 96, 78),     # Mund
     "C": (0, 172, 172),     # Shirt
@@ -276,7 +276,7 @@ SKIN = {
     "B": (58, 63, 138),     # Hose
     "b": (46, 50, 116),     # Hose dunkel
     "G": (88, 76, 64),      # Schuh
-    "K": (52, 44, 36),      # Guertel/Kragen
+    "K": (52, 44, 36),      # Gürtel/Kragen
 }
 
 _FACE = ("HHHHHHHH",
@@ -412,11 +412,11 @@ BLOCK_TEX = {
 
 _MIP = {}      # (name, n) -> n x n Raster (Grundfarben)
 _RECTS = {}    # (name, n) -> zusammengefasste Farbrechtecke
-_GRID = {}     # (name, n, shade_i, fog_i) -> eingefaerbte Rechtecke
-_AVG = {}      # name -> Durchschnittsfarbe (fuer den Modus "Texturen aus")
+_GRID = {}     # (name, n, shade_i, fog_i) -> eingefärbte Rechtecke
+_AVG = {}      # name -> Durchschnittsfarbe (für den Modus "Texturen aus")
 _OPAQUE = {}   # name -> Textur ohne durchsichtige Texel?
 
-_QUANT = 12    # Farbraster: gleiche Nachbartoene lassen sich zusammenfassen
+_QUANT = 12    # Farbraster: gleiche Nachbartöne lassen sich zusammenfassen
 
 
 def _mip(name, n):
@@ -441,11 +441,11 @@ def _mip(name, n):
                         continue
                     r += c[0]; g += c[1]; b += c[2]; cnt += 1
             if cnt * 2 < step * step:
-                row.append(None)                       # ueberwiegend durchsichtig
+                row.append(None)                       # überwiegend durchsichtig
             else:
                 row.append((r // cnt, g // cnt, b // cnt))
         rows.append(row)
-    if n < size:                                       # Kontrast nachschaerfen
+    if n < size:                                       # Kontrast nachschärfen
         vals = [c for row in rows for c in row if c]
         if vals:
             mr = sum(c[0] for c in vals) / len(vals)
@@ -470,8 +470,8 @@ def _mip(name, n):
 def _rects(name, n):
     """Fasst gleichfarbige Texel zu Rechtecken zusammen (spart Polygone).
 
-    Die Zerlegung haengt nur von der Textur ab, nicht von Licht/Nebel - sie
-    wird also einmal berechnet und fuer alle Flaechen wiederverwendet. Weil
+    Die Zerlegung hängt nur von der Textur ab, nicht von Licht/Nebel - sie
+    wird also einmal berechnet und für alle Flächen wiederverwendet. Weil
     die Rechteckkanten im Weltraum Geraden sind, bleibt die Perspektive exakt.
     """
     key = (name, n)
@@ -544,7 +544,7 @@ def _tex_grid(name, n, shade, ft):
     """Farbrechtecke (i0, j0, i1, j1, col) inklusive Licht und Nebel.
 
     Shade/Nebel werden quantisiert, damit der Cache klein bleibt und die
-    Farbrechnung pro Flaeche entfaellt.
+    Farbrechnung pro Fläche entfällt.
     """
     si = int(shade * 24 + 0.5)
     fi = int(ft * 12 + 0.5)
@@ -558,13 +558,13 @@ def _tex_grid(name, n, shade, ft):
     return g
 
 
-# Einfarbige Ersatzfarben fuer die feine Holz-/Schleimgeometrie (und den
+# Einfarbige Ersatzfarben für die feine Holz-/Schleimgeometrie (und den
 # Modus "Texturen aus"); die Blockfarben liefert _avg_col() direkt.
 COL_LADDER = _avg_col("wood")
 COL_FENCE = _avg_col("wood")
 COL_SLIME = _avg_col("slime")
 
-# Pixel-Wolken (0/1-Maske, in Kacheln zu je 8 Bloecken)
+# Pixel-Wolken (0/1-Maske, in Kacheln zu je 8 Blöcken)
 _CLOUD_MAP = ("01111000",
               "01111100",
               "00111000",
@@ -619,8 +619,8 @@ class BlockJumpGame(Game):
         # Maus-Richtung: Standard normal (Maus rechts -> Blick rechts). Wer die
         # frühere/klassische Belegung will, kann invertiert einstellen (Taste I).
         self.invert = bool(cfg.get("mouse_invert", False))
-        # Texturdetail: 2 = hoch (bis 8x8 Texel je Flaeche), 1 = niedrig (4x4),
-        # 0 = aus (einfarbige Flaechen wie im alten Look).
+        # Texturdetail: 2 = hoch (bis 8x8 Texel je Fläche), 1 = niedrig (4x4),
+        # 0 = aus (einfarbige Flächen wie im alten Look).
         tex = cfg.get("textures", "high")
         self.tex_mode = TEX_MODES.index(tex) if tex in TEX_MODES else 2
         self._make_fonts()
@@ -685,7 +685,7 @@ class BlockJumpGame(Game):
 
             if feat == "ladder":
                 climb = rng.choice([3, 4] if easy else [3, 4, 5])
-                # Leiter-Saeule mit Stuetzwand dahinter
+                # Leiter-Säule mit Stützwand dahinter
                 lad_z = cz + 1
                 for yy in range(cy + 1, cy + climb + 1):
                     self.world[(cx, yy, lad_z)] = LADDER
@@ -693,15 +693,15 @@ class BlockJumpGame(Game):
                 # Coin mittig in der Kletterspalte
                 self.coins.append((cx + 0.5, cy + climb / 2.0 + 1.4, lad_z + 0.5))
                 cy = cy + climb
-                # Pad beginnt HINTER der Stuetzwand, damit der Leiterschacht
+                # Pad beginnt HINTER der Stützwand, damit der Leiterschacht
                 # (z = lad_z) nach oben offen bleibt
                 cz = cz + 2 + hd
                 self._pad(cx, cz, cy, hw, hd, top_type)
 
             elif feat == "spring":
-                # erhoehter Schleimblock auf dem aktuellen Pad ...
+                # erhöhter Schleimblock auf dem aktuellen Pad ...
                 self.world[(cx, cy + 1, cz)] = SPRING
-                # ... naechstes Pad deutlich hoeher (per Katapult erreichbar)
+                # ... nächstes Pad deutlich höher (per Katapult erreichbar)
                 lift = rng.choice([3, 4])
                 dz = rng.choice([2, 3])
                 cy = cy + lift
@@ -716,8 +716,8 @@ class BlockJumpGame(Game):
                 dyr = [-1, 0] if easy else [-2, -1, 0, 1]
                 dy = rng.choice(dyr)
                 if hard and dz >= 4:
-                    # Max-Luecke entschaerfen: nie bergauf und immer ein
-                    # tiefes Lande-Pad (max. Sprungweite ~3.6 Bloecke flach,
+                    # Max-Lücke entschärfen: nie bergauf und immer ein
+                    # tiefes Lande-Pad (max. Sprungweite ~3.6 Blöcke flach,
                     # nur ~2.8 bei dy = +1)
                     dy = min(dy, 0)
                     hd = 1
@@ -726,7 +726,7 @@ class BlockJumpGame(Game):
                 cy = max(self._min_y - 3, cy + dy)
                 cz = cz + dz
                 self._pad(cx, cz, cy, hw, hd, top_type)
-                # Coin ueber der Luecke
+                # Coin über der Lücke
                 self.coins.append(((mx + cx) / 2.0 + 0.5,
                                    (my + cy) / 2.0 + 1.7,
                                    (mz + cz) / 2.0 + 0.5))
@@ -738,7 +738,7 @@ class BlockJumpGame(Game):
         self.world[(cx, cy + 1, cz)] = GOAL
         self.goal = (cx + 0.5, cy + 1.0, cz + 0.5)
         self.death_y = self._min_y - 7.0
-        # Wolkendecke weit ueber dem hoechsten Block (wie in Minecraft)
+        # Wolkendecke weit über dem höchsten Block (wie in Minecraft)
         self._cloud_y = max(p[1] for p in self.world) + 46.0
 
         # Spieler setzen
@@ -763,7 +763,7 @@ class BlockJumpGame(Game):
         return self.world.get((int(x), int(y), int(z)), EMPTY) in SOLID
 
     def _col_h(self, x, y, z, axis, delta):
-        """Kollisionshoehe der Zelle fuer diese Bewegung (None = frei)."""
+        """Kollisionshöhe der Zelle für diese Bewegung (None = frei)."""
         typ = self.world.get((int(x), int(y), int(z)), EMPTY)
         if typ in SOLID:
             return 1.0
@@ -780,7 +780,7 @@ class BlockJumpGame(Game):
     _ARROWS = {"Up": "up", "Down": "down", "Left": "left", "Right": "right"}
 
     def _move_acts(self, key):
-        """Bewegungs-Aktionen, die 'key' laut Belegung ausloest."""
+        """Bewegungs-Aktionen, die 'key' laut Belegung auslöst."""
         k = key.lower() if len(key) == 1 else key   # "W" (Shift) == "w"
         acts = {a for a in ("up", "down", "left", "right") if self.is_action(k, a)}
         if key in self._ARROWS:                     # Pfeiltasten-Fallback
@@ -929,7 +929,7 @@ class BlockJumpGame(Game):
             self.vy -= GRAVITY * dt
         self.vy = max(VY_MIN, min(VY_MAX, self.vy))
 
-        # Schrittzaehler fuer die Lauf-/Handanimation
+        # Schrittzähler für die Lauf-/Handanimation
         self.walk += dt * 9.0 * min(1.0, math.hypot(self.vx, self.vz) / MOVE_SPEED)
 
         self.on_ground = False
@@ -994,7 +994,7 @@ class BlockJumpGame(Game):
                 self.pz = max(h[2] for h in hits) + 1 + HALF_W + EPS
             self.vz = 0.0
         else:
-            if delta > 0:                        # Kopf stoesst an die Decke
+            if delta > 0:                        # Kopf stößt an die Decke
                 self.py = min(h[1] for h in hits) - PLAYER_H - EPS
                 self.vy = 0.0
             elif delta < 0:                      # Landung auf dem Boden
@@ -1141,7 +1141,7 @@ class BlockJumpGame(Game):
 
     def _add_poly(self, items, world_pts, color, shade=1.0, outline=None,
                   fog=True):
-        """Einfarbige Flaeche in die Zeichenliste legen."""
+        """Einfarbige Fläche in die Zeichenliste legen."""
         cs = [self._to_cam(p) for p in world_pts]
         if all(c[2] < NEAR for c in cs):
             return
@@ -1166,7 +1166,7 @@ class BlockJumpGame(Game):
         """Texturiertes Viereck.
 
         ``quad`` = (p00, p10, p11, p01) im Weltraum; p00 ist die linke obere
-        Texturecke, p00->p10 die u-Achse, p00->p01 die v-Achse. Die Flaeche
+        Texturecke, p00->p10 die u-Achse, p00->p01 die v-Achse. Die Fläche
         wird je nach Abstand in n x n Texel-Vierecke zerlegt (LOD).
         """
         if self.tex_mode == 0:
@@ -1220,7 +1220,7 @@ class BlockJumpGame(Game):
             for i0, j0, i1, j1, col in rects:
                 r0, r1 = pr[j0], pr[j1]
                 quads.append(((r0[i0], r0[i1], r1[i1], r1[i0]), col))
-        else:                                   # Flaeche schneidet die Nahebene
+        else:                                   # Fläche schneidet die Nahebene
             left = [_lerp3(ca, cd, j / n) for j in range(n + 1)]
             right = [_lerp3(cb, cc, j / n) for j in range(n + 1)]
             rows = [[_lerp3(left[j], right[j], i / n) for i in range(n + 1)]
@@ -1241,7 +1241,7 @@ class BlockJumpGame(Game):
                 if outline else None))
 
     def _cull(self, cx, cy, cz):
-        """Grobes Frustum-Cull anhand des Wuerfelzentrums (spart Flaechen-Arbeit)."""
+        """Grobes Frustum-Cull anhand des Würfelzentrums (spart Flächen-Arbeit)."""
         c = self._to_cam((cx, cy, cz))
         if c[2] < -1.7 or c[2] > FOG_END + 2:
             return True
@@ -1254,7 +1254,7 @@ class BlockJumpGame(Game):
                    tex=None, fine=True, lit=None):
         """Achsenparalleler Quader; ``tex`` = (oben, Seite, unten) oder None.
 
-        ``lit`` ueberschreibt die Flaechenhelligkeit (fuer selbstleuchtende
+        ``lit`` überschreibt die Flächenhelligkeit (für selbstleuchtende
         Dinge wie den Beacon-Strahl).
         """
         px, py, pz = self._cam_pos
@@ -1298,7 +1298,7 @@ class BlockJumpGame(Game):
                 self._add_poly(items, q, side, sh(0.80), outline)
 
     def _add_cube(self, items, bx, by, bz, tex, outline):
-        """Voxel bei (bx,by,bz); nur sichtbare Flaechen, deren Nachbar leer ist."""
+        """Voxel bei (bx,by,bz); nur sichtbare Flächen, deren Nachbar leer ist."""
         px, py, pz = self._cam_pos
         x0, x1 = bx, bx + 1
         y0, y1 = by, by + 1
@@ -1329,7 +1329,7 @@ class BlockJumpGame(Game):
 
         ``lo``/``hi`` sind die lokalen Grenzen (x = rechts, y = hoch, z = vorne)
         relativ zum Drehpunkt ``base``; damit schwingen Arme und Beine sauber
-        um Schulter bzw. Huefte.
+        um Schulter bzw. Hüfte.
         """
         cs, sn = math.cos(swing), math.sin(swing)
         fx, fz = math.sin(yaw), math.cos(yaw)
@@ -1369,7 +1369,7 @@ class BlockJumpGame(Game):
                 nx, ny, nz = -nx, -ny, -nz
             if (nx * (cam[0] - mid[0]) + ny * (cam[1] - mid[1])
                     + nz * (cam[2] - mid[2])) <= 0:
-                return                                   # Rueckseite
+                return                                   # Rückseite
             self._add_face(items, quad, tex, shade, None, max(x1 - x0, y1 - y0), True)
 
         face((p[(0, 1, 1)], p[(1, 1, 1)], p[(1, 0, 1)], p[(0, 0, 1)]), tex_front, 0.94)
@@ -1428,7 +1428,7 @@ class BlockJumpGame(Game):
                             _shade_col(COL_SLIME, 0.85), line, slime, fine=False)
 
     def _add_goal_beam(self, items):
-        """Beacon-Strahl ueber dem Ziel."""
+        """Beacon-Strahl über dem Ziel."""
         gx, gy, gz = self.goal
         p = 0.5 + 0.5 * math.sin(self.anim * 3.0)
         w = 0.24 + 0.03 * p
@@ -1438,9 +1438,9 @@ class BlockJumpGame(Game):
                         None, beam, fine=False, lit=1.0)
 
     def _add_player(self, items):
-        """Steve: Kopf, Koerper, Arme, Beine - mit Laufanimation."""
+        """Steve: Kopf, Körper, Arme, Beine - mit Laufanimation."""
         px, py, pz = self.px, self.py, self.pz
-        u = PLAYER_H / 32.0                  # ein Skin-Pixel in Weltmass
+        u = PLAYER_H / 32.0                  # ein Skin-Pixel in Weltmaß
         sp = min(1.0, math.hypot(self.vx, self.vz) / MOVE_SPEED)
         if self.on_ground:
             swing = math.sin(self.walk) * 0.85 * sp
@@ -1561,7 +1561,7 @@ class BlockJumpGame(Game):
                       for sx, sy in ((-1, 1), (1, 1), (1, -1), (-1, -1)))
             self._add_poly(sky, q, col, 1.0, None, fog=False)
 
-        # Wolkenfeld: 8x8-Maske, Kacheln zu 8 Bloecken, driftet langsam in x
+        # Wolkenfeld: 8x8-Maske, Kacheln zu 8 Blöcken, driftet langsam in x
         cyl = getattr(self, "_cloud_y", 50.0)
         if cy < cyl - 1.0:
             T = 7.0
@@ -1579,8 +1579,8 @@ class BlockJumpGame(Game):
                     dist = math.hypot(mx - cx, mz - cz)
                     if dist > span * T:
                         continue
-                    # eigenes Cull: die Wolken liegen weit ausserhalb der
-                    # Nebelgrenze, _cull() wuerde sie alle verwerfen
+                    # eigenes Cull: die Wolken liegen weit außerhalb der
+                    # Nebelgrenze, _cull() würde sie alle verwerfen
                     c = self._to_cam((mx, cyl, mz))
                     if c[2] < 0.5 or abs(c[0]) > c[2] * 2.0 + T:
                         continue
@@ -1614,7 +1614,7 @@ class BlockJumpGame(Game):
         by = abs(math.cos(self.walk)) * 0.030 * h * sp
         if not self.on_ground:
             by -= 0.02 * h
-        ax, ay = w * 0.97 + bx, h * 1.16 + by      # Schulter (ausserhalb)
+        ax, ay = w * 0.97 + bx, h * 1.16 + by      # Schulter (außerhalb)
         fx, fy = w * 0.79 + bx, h * 0.78 + by      # Faust
         dx, dy = fx - ax, fy - ay
         ln = math.hypot(dx, dy) or 1.0
@@ -1633,13 +1633,13 @@ class BlockJumpGame(Game):
             self._blit_tex_quad(s, quad, tex, shade)
 
         seg(0.0, 1.0, "arm", 0.98)
-        # schmale Schattenkante fuer die Tiefe
+        # schmale Schattenkante für die Tiefe
         edge = ((fx - nx * hw, fy - ny * hw),
                 (fx - nx * hw - dx * h * 0.02, fy - ny * hw - dy * h * 0.02),
                 (ax - nx * hw - dx * h * 0.02, ay - ny * hw - dy * h * 0.02),
                 (ax - nx * hw, ay - ny * hw))
         self._blit_tex_quad(s, edge, "arm", 0.62)
-        # Handruecken (Stirnflaeche der Faust)
+        # Handrücken (Stirnfläche der Faust)
         cap = ((top[0] + nx * hw, top[1] + ny * hw),
                (top[0] - nx * hw, top[1] - ny * hw),
                (top[0] - nx * hw + dx * -h * 0.035, top[1] - ny * hw + dy * -h * 0.035),
@@ -1702,7 +1702,7 @@ class BlockJumpGame(Game):
             self._blit_art(s, _HEART_ART,
                            _HEART_PAL if i < self.lives else _HEART_EMPTY_PAL,
                            14 + i * (hw + px * 2), y, px)
-        # Gold-Barren + Zaehler unten rechts
+        # Gold-Barren + Zähler unten rechts
         ing = _mip("ingot", 8)
         ix = self.width - 14 - 8 * px
         for j, row in enumerate(ing):

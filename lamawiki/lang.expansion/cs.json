@@ -2034,7 +2034,17 @@
         "patování",
         "tour",
         "zámek",
-        "síla"
+        "síla",
+        "editor",
+        "maps",
+        "ugc",
+        "tunnel",
+        "ice",
+        "magnet",
+        "booster",
+        "share",
+        "import",
+        "export"
       ],
       "sections": [
         {
@@ -2065,7 +2075,13 @@
           "body": [
             "- Písek silně brzdí, rampy zrychlují ve směru šipek.",
             "- Voda stojí trestný úder; míček se vrací na poslední bezpečné místo.",
-            "- Gumové odrazníky vracejí rychlost; mlýny a bloudící bloky vyžadují načasování. Zámek síly na pravém tlačítku podrží úder nabitý, dokud mezera nesedne."
+            "- Gumové odrazníky vracejí rychlost; mlýny a bloudící bloky vyžadují načasování. Zámek síly na pravém tlačítku podrží úder nabitý, dokud mezera nesedne.",
+            "- Roura: míček zmizí v jednom ústí a vyjede z druhého - směr i rychlost zůstávají.",
+            "- Led nechá míček jet skoro donekonečna, lepivé pole ho okamžitě zastaví.",
+            "- Urychlovače dají při přejetí pevný impuls, magnety přitahují nebo odpuzují.",
+            "- Jednosměrná brána pustí jen ve směru šipky; z druhé strany je to zeď.",
+            "- Otočný talíř vezme míček s sebou ven, skokanský můstek ho pošle přes překážky.",
+            "Těchto osm překážek přibývá ke klasickým a v editoru drah je lze volně umisťovat - viz stránka \"Vlastní dráhy\"."
           ]
         },
         {
@@ -2073,6 +2089,62 @@
           "body": [
             "Každá dráha dává 600 bodů a k tomu 300 za každý úder pod par (a 300 méně za každý nad par, nikdy méně než 100).",
             "Hole in one přidává 500 bodů. Součet všech drah je tvůj rekord; navíc se ukládá nejnižší počet úderů na každém hřišti."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minigolf-maps",
+      "category": "games",
+      "title": "Vlastní dráhy (Minigolf)",
+      "keywords": [
+        "vlastni drahy",
+        "editor",
+        "maps",
+        "ugc",
+        "stavba",
+        "sdileni",
+        "import",
+        "export",
+        "sablona",
+        "minigolf"
+      ],
+      "sections": [
+        {
+          "h": "Stavba dráhy",
+          "body": [
+            "Na přípravné obrazovce minigolfu vede záložka MAPS k tvé vlastní sbírce. \"Nová\" otevře editor drah, \"Upravit\" znovu vezme existující dráhu.",
+            "Každá dráha potřebuje název a id. id je klíč: malými písmeny, bez mezer, jen a-z, 0-9, - a _. Je to zároveň navržený název souboru při sdílení.",
+            "Vlevo leží dráha, vpravo paleta se čtyřmi nástroji a patnácti typy překážek. Obdélníky se tahají, kulaté věci položí jeden klik, roura potřebuje dva kliky - nejdřív vstup, pak výstup.",
+            "Nástrojem výběru klik zvolí objekt, tažení jej posune, [Del] jej smaže. Dole se pak objeví hodnoty zvoleného objektu: šířka, výška, poloměr, směr, rychlost a tak dále.",
+            "Nahoře nastavíš par i šířku a výšku dráhy - od 60x80 do 160x240 jednotek. Co by při zmenšení přečnívalo, se automaticky posune dovnitř.",
+            "[G] přepíná přichytávání k mřížce, [U] vrací zpět, [Y] znovu provede, [S] uloží a [Enter] dráhu hned vyzkouší. [Esc] se vrátí - s neuloženými změnami až po potvrzení."
+          ]
+        },
+        {
+          "h": "Šablony",
+          "body": [
+            "\"Šablona\" nahradí aktuální dráhu jednou z dvanácti hotových: Prázdná, Roura, Ostrov, Mlýn, Cikcak, Voda, Odrazníky, Rampa, Led, Bludiště, Magnet a Skok.",
+            "Každá šablona vedle svého triku vždy nechá otevřenou i normální cestu - dráha řešitelná jen trikem by byla past, ne šablona. Všech dvanáct je prokazatelně hratelných na par.",
+            "Šablona je výchozí bod, ne výsledek: přidej vlastní překážky, posuň odpal a jamku, změň velikost."
+          ]
+        },
+        {
+          "h": "Hraní",
+          "body": [
+            "V záložce MAPS spustí \"Hrát\" přesně vybranou dráhu - s vlastním rekordem pro každou dráhu.",
+            "V záložce HRA je pátá volba hřiště, \"Vlastní\": tehdy se celá tvá sbírka odehraje po sobě jako kolo, nejvýše devět drah.",
+            "Vše se ukládá do ugc.json vedle hry (u sestavené verze vedle .exe) - na stejné místo jako mem.json a replay.json."
+          ]
+        },
+        {
+          "h": "Sdílení a import",
+          "body": [
+            "\"Sdílet\" se nejdřív zeptá na tvé jméno jako autora a pak na název souboru; ten je už předvyplněný id dráhy.",
+            "\"Exportovat jako\" otevře obvyklé okno pro uložení, \"Do Stažených\" položí soubor rovnou do složky Stažené a řekne ti cestu. Vždy se exportuje právě jedna dráha.",
+            "Soubor má příponu .lamapgzmap a obsahuje JSON - můžeš ho poslat jako každý jiný soubor. \"Importovat\" ho načte zpět; při importu se přijímají i soubory .json.",
+            "Pokud je id už obsazené, import automaticky připojí -2, -3 a tak dál, místo aby přepsal tvou stávající dráhu.",
+            "Název dráhy, id i jméno autora projdou při ukládání, exportu I importu filtrem slov, který kontroluje všech 14 jazyků. Urážlivé texty se odmítnou - bez ohledu na právě nastavený jazyk."
           ]
         }
       ]

@@ -1,0 +1,83 @@
+# Wortfilter - Espanol (es)
+# ===========================================================================
+# Je Eintrag zwei Zeilen: zuerst das Regex-Muster (- ...), darunter das
+# gemeinte Wort als Kommentar (# ...). Geprüft wird ohne Rücksicht auf
+# Groß-/Kleinschreibung; ungültige Muster werden still übersprungen.
+#
+# Die Muster halten eingestreute Sonderzeichen und Ziffern aus
+# ([^\sa-zA-Z]* - bewusst OHNE Leerzeichen, sonst liefe ein Muster über
+# Wortgrenzen hinweg; nur zwischen zwei Wörtern sind Leerzeichen erlaubt),
+# erlauben Buchstabenwiederholung (f+) und die üblichen Leetspeak-Ersetzungen
+# ([a4@], [e3], [i1!|], [o0], [s5$] ...). Vor dem Vergleich entfernt
+# swear._norm Akzente und macht aus "-" und "_" Leerzeichen - deshalb stehen
+# die Wörter hier in ASCII-Schreibweise.
+#
+# Geprüft werden Map-Name, Map-ID und Creator-Name (siehe swear.py, ugc.py).
+# Bearbeitet wird die Liste einfach hier: eine Regex-Zeile, darunter das Wort.
+
+- \b(m+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# mierda
+- \b(j+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# joder
+- \b(p+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+)\b
+# puta
+- \b(p+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[o0]+)\b
+# puto
+- \b(c+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*n+)(?=[^\s]*\b)
+# cabron
+- \b([g9]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[s5$]+)(?=[^\s]*\b)
+# gilipollas
+- \b(p+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[a4@]+)\b
+# polla
+- \b(p+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*j+[^\sa-zA-Z]*[o0]+)(?=[^\s]*\b)
+# pendejo
+- \b(c+[^\sa-zA-Z]*h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# chingar
+- \b(c+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[o0]+)(?=[^\s]*\b)
+# culero
+- \b(m+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*n+)(?=[^\s]*\b)
+# maricon
+- \b(m+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*[a4@]+)\b
+# marica
+- \b([z2]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[a4@]+)\b
+# zorra
+- \b(h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*j+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# hijoputa
+- \b(h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*j+[^\sa-zA-Z]*[o0]+[\W\d_]*d+[^\sa-zA-Z]*[e3]+[\W\d_]*p+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# hijo de puta
+- \b(p+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[o0]+)(?=[^\s]*\b)
+# pelotudo
+- \b([b8]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[o0]+)(?=[^\s]*\b)
+# boludo
+- \b(v+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*[a4@]+)\b
+# verga
+- \b(f+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# follar
+- \b(p+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*c+[^\sa-zA-Z]*h+[^\sa-zA-Z]*[e3]+)\b
+# pinche
+- \b(c+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*j+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[s5$]+)(?=[^\s]*\b)
+# cojones
+- \b(c+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[o0]+)(?=[^\s]*\b)
+# capullo
+- \b([s5$]+[^\sa-zA-Z]*u+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*m+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+)(?=[^\s]*\b)
+# subnormal
+- \b(r+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[s5$]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[o0]+)(?=[^\s]*\b)
+# retrasado
+- \b(n+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*[g9]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# negrata
+- \b(n+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[z2]+[^\sa-zA-Z]*[i1!|]+)\b
+# nazi
+- \b(h+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[t7+]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+)(?=[^\s]*\b)
+# hitler
+- \b(v+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*c+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*n+)(?=[^\s]*\b)
+# violacion
+- \b(m+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*m+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*n+)\b
+# mamon
+- \b(c+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[b8]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*n+[^\sa-zA-Z]*[a4@]+)(?=[^\s]*\b)
+# cabrona
+- \b(m+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[o0]+)(?=[^\s]*\b)
+# malparido
+- \b(c+[^\sa-zA-Z]*h+[^\sa-zA-Z]*u+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*p+[^\sa-zA-Z]*[o0]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[l1|]+[^\sa-zA-Z]*[a4@]+[^\sa-zA-Z]*[s5$]+)(?=[^\s]*\b)
+# chupapollas
+- \b(m+[^\sa-zA-Z]*[i1!|]+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*d+[^\sa-zA-Z]*[e3]+[^\sa-zA-Z]*r+[^\sa-zA-Z]*[o0]+)\b
+# mierdero

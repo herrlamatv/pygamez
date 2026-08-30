@@ -2,16 +2,16 @@
 """
 hangman_words.py
 ================
-Ratewoerter fuer das Galgenmaennchen, je Sprache.
+Ratewörter für das Galgenmännchen, je Sprache.
 
-- Anders als bei Wordle sind die Woerter unterschiedlich lang (3-12 Buchstaben).
+- Anders als bei Wordle sind die Wörter unterschiedlich lang (3-12 Buchstaben).
 - Nur A-Z (keine Umlaute/Akzente), damit sie mit der A-Z-Bildschirmtastatur
   ratbar sind; deutsche Umlaute/Eszett und Akzente werden dabei bewusst als
   ASCII geschrieben (z.B. STRASSE, MACA).
 - Als reines Python-Modul (keine externe Datei), damit die Listen auch in einer
-  mit PyInstaller gebauten .exe sicher mitgebuendelt sind - wie wordle_words.py.
-- ``words_for(lang, mode)`` liefert eine gefilterte, gross geschriebene Liste;
-  ``mode`` waehlt die Laenge: "short" (3-5), "long" (7-12) oder "mixed" (3-12).
+  mit PyInstaller gebauten .exe sicher mitgebündelt sind - wie wordle_words.py.
+- ``words_for(lang, mode)`` liefert eine gefilterte, groß geschriebene Liste;
+  ``mode`` wählt die Länge: "short" (3-5), "long" (7-12) oder "mixed" (3-12).
 """
 
 WORDS = {
@@ -84,12 +84,12 @@ WORDS = {
     ],
 }
 
-# Laengen-Grenzen je Modus.
+# Längen-Grenzen je Modus.
 _RANGES = {"short": (3, 5), "long": (7, 12), "mixed": (3, 12)}
 
 
 def words_for(lang, mode="mixed"):
-    """Gross geschriebene, auf A-Z und Modus-Laenge gefilterte Wortliste."""
+    """Groß geschriebene, auf A-Z und Modus-Länge gefilterte Wortliste."""
     lo, hi = _RANGES.get(mode, _RANGES["mixed"])
     raw = WORDS.get(lang) or WORDS.get("en", [])
     out, seen = [], set()
@@ -98,6 +98,6 @@ def words_for(lang, mode="mixed"):
         if lo <= len(u) <= hi and u.isascii() and u.isalpha() and u not in seen:
             seen.add(u)
             out.append(u)
-    if not out:                          # Notnagel: englische Liste, Laenge egal
+    if not out:                          # Notnagel: englische Liste, Länge egal
         out = [w for w in WORDS["en"] if lo <= len(w) <= hi] or list(WORDS["en"])
     return out
