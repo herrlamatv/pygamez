@@ -223,7 +223,10 @@
           card.faceUp = true;
           waste.cards.push(card);
         }
-        rec.ops.push([0, 1, n]);
+        // Je Karte ein eigener 1er-Op: Das Ziehen dreht die Reihenfolge um - ein
+        // gemeinsamer n-Op legte die Karten beim Undo verkehrt herum in den
+        // Stock zurück (3er-Zug: danach kamen andere Karten).
+        for (let i = 0; i < n; i++) rec.ops.push([0, 1, 1]);
         rec.flips = [];
         for (let i = 0; i < n; i++) rec.flips.push([1, waste.cards.length - 1 - i]);
         return rec;
@@ -401,7 +404,10 @@
 
     undoExtra(extra) {
       if (extra.sequence) this.sequences -= 1;
-      // extra.deal: ops decken das Zurücklegen ab
+      // extra.deal: ops decken das Zurücklegen ab. Hat der Nachschub eine Folge
+      // vervollständigt, passt der Flip-Index der ausgeteilten Karte nicht mehr
+      // und sie käme offen in den Stock zurück -> Stock immer verdeckt.
+      if (extra.deal) for (const c of this.g.piles[0].cards) c.faceUp = false;
       if (extra.move) this.moves -= 1;
     }
 

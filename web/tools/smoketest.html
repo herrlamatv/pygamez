@@ -33,6 +33,9 @@
   const frames = Number(q.get("frames") || 900);
   const idle = q.get("idle") === "1";
   const script = q.get("keys");
+  // Zeitschritt je Frame (Standard 1/60 wie die App). Mit dt=0.00694 (144 Hz)
+  // lassen sich Spiele prüfen, deren Logik vom Frame-Takt abhängt.
+  const DT = Number(q.get("dt")) > 0 ? Number(q.get("dt")) : 1 / 60;
   if (q.get("lang")) PG.lang = q.get("lang");
   const canvas = document.getElementById("c");
   const ctx = canvas.getContext("2d");
@@ -126,7 +129,7 @@
     const chunk = () => {
       const end = Math.min(frames, info.frames + 30);
       for (; info.frames < end; info.frames++) {
-        const dt = 1 / 60;
+        const dt = DT;
         if (steps) {
           if (waitLeft > 0) waitLeft--;
           else if (stepIdx < steps.length) {

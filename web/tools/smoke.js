@@ -74,6 +74,7 @@ function pageUrl(id) {
   if (flags.keys) q.set("keys", flags.keys);
   if (flags.lang) q.set("lang", flags.lang);
   if (flags.seed) q.set("seed", flags.seed);
+  if (flags.dt) q.set("dt", flags.dt);
   const file = path.join(WEB, "tools", "smoketest.html").replace(/\\/g, "/");
   return "file:///" + file.replace(/^\/+/, "") + "?" + q.toString();
 }

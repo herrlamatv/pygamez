@@ -209,6 +209,8 @@
     }
 
     rack(full = true) {
+      // Frisch aufgestellt? Nur dann kann der nächste Ball ein Strike sein.
+      this.rackFresh = full;
       if (full) {
         this.pins = PIN_SETUP.map(([n, x, y]) => makePin(n, x, y));
       } else {
@@ -470,7 +472,10 @@
       this.rolls.push(knocked);
       const rolls = this.rolls;
       const frame = this.frame;
-      const strike = knocked === 10 && this.pinsBefore === 10;
+      // Strike nur mit dem ersten Ball auf eine frische Aufstellung - wer erst
+      // nichts trifft und dann alle 10 abräumt, hat einen Spare (war auch im
+      // Python-Original als Strike gezählt, inkl. Turkey-Erfolg).
+      const strike = knocked === 10 && this.pinsBefore === 10 && this.rackFresh;
       const spare = !strike && standing === 0;
 
       if (strike) {
@@ -846,13 +851,22 @@
           i += 1;
         }
       } else {
-        let prev = null;
+        // 10. Frame: "X" nur auf frisch aufgestellte Pins, "/" nur für den
+        // zweiten Ball auf dieselbe Aufstellung (vorher wurde z.B. 5,5,5 als
+        // "5 / /" und 0,10 als "- X" angezeigt).
+        let prev = null; // erster Ball auf die aktuelle, angeworfene Aufstellung
         while (i < rolls.length && cells[f].length < 3) {
           const v = rolls[i];
-          if (v === 10) cells[f].push("X");
-          else if (prev !== null && prev + v === 10 && prev !== 10) cells[f].push("/");
-          else cells[f].push(v === 0 ? "-" : String(v));
-          prev = v;
+          if (prev === null) {
+            if (v === 10) cells[f].push("X");
+            else {
+              cells[f].push(v === 0 ? "-" : String(v));
+              prev = v;
+            }
+          } else {
+            cells[f].push(prev + v === 10 ? "/" : v === 0 ? "-" : String(v));
+            prev = null;
+          }
           i += 1;
         }
       }

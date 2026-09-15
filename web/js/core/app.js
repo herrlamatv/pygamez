@@ -17,6 +17,8 @@
   const draw = PG.draw;
   const t = PG.t;
   const W = PG.W, H = PG.H;
+  // Ziel-Bildrate wie settings.json "fps" der Desktop-Version (Standard 60).
+  const FPS = 60;
 
   // ------------------------------------------------------------ Tastennamen
   // Browser-KeyboardEvent.key -> Tkinter-keysym (die Spiele kennen diese Namen).
@@ -321,8 +323,15 @@
       this.current = null;
       this.entry = null; // aktives Spiel (Manifest-Eintrag)
       this.entries = [];
-      this.pressed = new Set();
+      this.pressed = new Map(); // e.code -> keysym der gedrückten Tasten
       this.lastTs = 0;
+      this.lastSlot = 0; // Soll-Zeitpunkt des letzten Frames (60-FPS-Raster)
+      this.skipped = 0; // seitdem ausgelassene rAF-Aufrufe
+      this.dtDebt = 0; // noch nachzutragende Zeit (s), siehe frame()
+      this.mouseDown = 0; // Maustasten, die das Spiel gedrückt kennt (Bit 1 links, 2 rechts)
+      this.mouseIgnore = 0; // abgewiesene Tasten, bis zum Loslassen stumm
+      this.lockFailed = false; // letzte Pointer-Lock-Anforderung abgelehnt
+      this.lockLostAt = -Infinity; // Zeitpunkt der letzten Lock-Freigabe mit Pause
       this.pauseRects = [];
       this.pauseSel = 0;
       this.errorMsg = null;
@@ -492,8 +501,44 @@
     // ----- Loop ------------------------------------------------------------
     frame(ts) {
       requestAnimationFrame((t2) => this.frame(t2));
-      const dt = this.lastTs ? Math.min(0.1, Math.max(0, (ts - this.lastTs) / 1000)) : 1 / 60;
+      // Fester 60-FPS-Takt wie in main.py (root.after(1000 / fps)). Viele Spiele
+      // rechnen - genau wie im Python-Original - Teile ihrer Logik pro Frame
+      // bzw. pro Physik-Teilschritt (z.B. der Lochsog beim Minigolf). Auf
+      // 120/144/240-Hz-Monitoren liefe das sonst 2-4x so oft und verhielte sich
+      // anders (Ball schießt über das Loch, Partikel/KI zu schnell, ...).
+      const interval = 1000 / FPS;
+      if (this.nextTs !== undefined && ts < this.nextTs - 1) {
+        this.skipped++; // Monitor schneller als 60 Hz: dieses Frame auslassen
+        return;
+      }
+      // Nächster Termin: Kommt ein Frame (innerhalb der Toleranz) etwas zu früh,
+      // wird ab ts weitergerechnet - sonst sammelt sich der "Vorsprung" an und
+      // auf 60,1-Hz-Monitoren bzw. mit gerundeten Zeitstempeln (Firefox) fiele
+      // regelmäßig ein ganzes Frame aus (Ruckler). Verspätete Frames bleiben im
+      // Raster (holen auf), nach langer Pause (Tab-Wechsel) neu synchronisieren.
+      const resync = this.nextTs === undefined || ts - this.nextTs > interval;
+      const slot = resync ? ts : Math.min(this.nextTs, ts); // Soll-Zeitpunkt dieses Frames
+      this.nextTs = slot + interval;
+      // dt: Die gedrosselten Frames liegen auf >60-Hz-Monitoren unregelmäßig
+      // (144 Hz: abwechselnd 13,9 / 20,8 ms). Solange die Drossel im Plan läuft,
+      // kommt dt aus dem Soll-Raster (16,7 ms); die Abweichung zur echten Zeit
+      // wird in kleinen Raten nachgetragen -> glatt, aber langfristig exakt.
+      // Bis 60 Hz (nichts ausgelassen) und nach Hängern: gemessen, max. 0,1 s.
+      const measured = this.lastTs ? Math.max(0, (ts - this.lastTs) / 1000) : 1 / FPS;
+      let dt;
+      if (!this.lastTs || measured > 0.1) {
+        dt = Math.min(0.1, measured);
+        this.dtDebt = 0;
+      } else {
+        const base = this.skipped > 0 && !resync ? (slot - this.lastSlot) / 1000 : measured;
+        this.dtDebt += measured - base;
+        const pay = this.dtDebt * 0.1;
+        dt = PG.clamp(base + pay, 0, 0.1);
+        this.dtDebt -= pay;
+      }
+      this.skipped = 0;
       this.lastTs = ts;
+      this.lastSlot = slot;
       const ctx = this.ctx;
       this.resetTransform(ctx);
       ctx.globalAlpha = 1;
@@ -706,7 +751,7 @@
 
     releaseKeys() {
       const cur = this.current;
-      for (const key of this.pressed) {
+      for (const key of new Set(this.pressed.values())) {
         try {
           if (cur && !cur.paused) cur.handleEvent(ev("keyup", { key }));
         } catch (err) {}
@@ -728,9 +773,17 @@
           return;
         }
         if (isFormTarget(e.target) && e.target.tagName !== "BUTTON") return;
-        if (e.ctrlKey || e.metaKey) return; // Browser-Kürzel (Strg+R, ...) nicht blockieren
+        // Browser-Kürzel (Strg+R, ...) nicht blockieren. AltGr meldet Windows als
+        // Strg+Alt - diese Zeichen (@ € { [ \ ~ | ...) gehören aber dem Spiel,
+        // ebenso Strg/Super allein (Tk liefert Control_L/Super_L).
+        const altGr = !!(e.getModifierState && e.getModifierState("AltGraph"));
+        if ((e.ctrlKey && !altGr && e.key !== "Control") || (e.metaKey && e.key !== "Meta")) return;
         if (e.key === "F5" || e.key === "F12") return;
-        const key = toKeysym(e);
+        // Wiederholungen und keyup liefern dieselbe keysym wie der erste Druck
+        // (Taste "d" gedrückt, Shift dazu -> weiterhin "d", nicht "D"). Sonst
+        // passt der keyup nicht zum keydown und die Taste klemmt im Spiel.
+        const id = e.code || e.key;
+        const key = (e.repeat && this.pressed.get(id)) || toKeysym(e);
         if (e.key === "F11") {
           e.preventDefault();
           this.toggleFullscreen();
@@ -745,20 +798,28 @@
           try {
             wantsEsc = !!cur.isMenu || !!cur.wantsEscape;
           } catch (err) {}
-          if (cur.paused) this.togglePause();
-          else if (wantsEsc) this.dispatch(ev("keydown", { key: "Escape" }));
+          if (cur.paused) {
+            // Beim Pointer-Lock gibt der Browser die Maus bei ESC selbst frei (-> Pause).
+            // Stellt er den ESC-keydown zusätzlich zu, nicht gleich wieder fortsetzen.
+            if (performance.now() - this.lockLostAt < 500) return;
+            this.togglePause();
+          } else if (wantsEsc) this.dispatch(ev("keydown", { key: "Escape" }));
           else if (!cur.gameOver) this.togglePause();
           return;
         }
-        if (!e.repeat) this.pressed.add(key);
+        if (!e.repeat) this.pressed.set(id, key);
         this.dispatch(ev("keydown", { key, char: e.key.length === 1 ? e.key : "", repeat: e.repeat }));
         if (!e.repeat) this.maybeLock();
       });
 
       window.addEventListener("keyup", (e) => {
-        if (this.wikiOpen() || (isFormTarget(e.target) && e.target.tagName !== "BUTTON")) return;
-        const key = toKeysym(e);
-        this.pressed.delete(key);
+        const id = e.code || e.key;
+        const held = this.pressed.get(id);
+        // Hat das Spiel den keydown bekommen, auch den keyup zustellen - selbst
+        // wenn der Fokus inzwischen im Suchfeld o.ä. liegt (sonst klemmt die Taste).
+        if (held === undefined && (this.wikiOpen() || (isFormTarget(e.target) && e.target.tagName !== "BUTTON"))) return;
+        const key = held || toKeysym(e);
+        this.pressed.delete(id);
         if (key === "Escape") return;
         const cur = this.current;
         if (cur && !cur.paused) {
@@ -787,76 +848,116 @@
       const c = this.canvas;
       c.addEventListener("contextmenu", (e) => e.preventDefault());
 
+      // Rechtsklick nur für Spiele mit wantsRightClick - nie in Menü-Screens und
+      // nie im Pause-Menü (main.py reicht ihn dort ebenfalls nicht weiter).
+      const rightAllowed = (cur) => {
+        if (!cur || cur.isMenu || cur.paused) return false;
+        try {
+          return !!cur.wantsRightClick;
+        } catch (err) {
+          return false;
+        }
+      };
+      const wantsCapture = (g) => {
+        try {
+          return !!g.captureMouse;
+        } catch (err) {
+          return false;
+        }
+      };
+      const posOf = (e) => (document.pointerLockElement === c ? [W / 2, H / 2] : this.toLogical(e.clientX, e.clientY));
+
+      /**
+       * Gleicht e.buttons (Bit 1 = links, Bit 2 = rechts) mit den Tasten ab, die
+       * das Spiel als gedrückt kennt, und schickt je Taste genau ein
+       * mousedown/mouseup. Nötig für "chorded" Klicks: Eine zweite Taste, während
+       * die erste gehalten wird (und deren Loslassen), meldet der Browser NICHT
+       * per pointerdown/pointerup, sondern nur per pointermove mit e.button.
+       * Abgewiesene Tasten (Rechtsklick ohne wantsRightClick, Klick zum
+       * Maus-Einfangen, Klick ins Pause-Menü) bleiben bis zum Loslassen stumm.
+       * only: nur dieses Bit prüfen.
+       */
+      const syncButtons = (buttons, pos, only) => {
+        for (const [bit, button] of [[1, 1], [2, 3]]) {
+          if (only && only !== bit) continue;
+          const isDown = (buttons & bit) !== 0;
+          if (this.mouseIgnore & bit) {
+            if (!isDown) this.mouseIgnore &= ~bit;
+            continue;
+          }
+          if (isDown === ((this.mouseDown & bit) !== 0)) continue;
+          const cur = this.current;
+          if (isDown) {
+            if (!cur || (button === 3 && !rightAllowed(cur))) {
+              this.mouseIgnore |= bit;
+            } else if (cur.paused) {
+              this.mouseIgnore |= bit; // Pause-Menü-Klick: Loslassen nicht ans Spiel
+              this.dispatch(ev("mousedown", { pos, button }));
+            } else {
+              this.mouseDown |= bit;
+              this.dispatch(ev("mousedown", { pos, button }));
+            }
+          } else {
+            this.mouseDown &= ~bit;
+            if (cur && !cur.paused) this.dispatch(ev("mouseup", { pos, button }));
+          }
+        }
+      };
+
       c.addEventListener("pointerdown", (e) => {
         PG.audio.unlock();
         c.focus();
         const cur = this.current;
         if (!cur) return;
-        let button = e.button === 0 ? 1 : e.button === 2 ? 3 : 2;
-        if (button === 2) return;
-        const g = this.game;
-        let rightOk = true;
-        if (cur.isMenu) rightOk = false;
-        else {
-          try {
-            rightOk = !!cur.wantsRightClick;
-          } catch (err) {
-            rightOk = false;
-          }
+        if (e.button !== 0 && e.button !== 2) return; // Mitteltaste o.ä.
+        const bit = e.button === 2 ? 2 : 1;
+        // pointerdown heißt: diese Taste war vorher oben. Hängengebliebenen
+        // Zustand (Loslassen außerhalb des Fensters) erst auflösen.
+        this.mouseIgnore &= ~bit;
+        const pos = posOf(e);
+        if (this.mouseDown & bit) syncButtons(this.mouseDown & ~bit, pos, bit);
+        if (bit === 2 && !rightAllowed(cur)) {
+          this.mouseIgnore |= 2;
+          return;
         }
-        if (button === 3 && !rightOk && !cur.paused) return;
         e.preventDefault();
-        // Pointer-Capture anfordern (FPS-Look): dieser Klick fängt nur die Maus ein
-        if (g && !g.paused && !g.gameOver && document.pointerLockElement !== c) {
-          let want = false;
-          try {
-            want = !!g.captureMouse;
-          } catch (err) {}
-          if (want) {
-            try {
-              const p = c.requestPointerLock();
-              if (p && p.catch) p.catch(() => {});
-            } catch (err) {}
+        // Pointer-Lock anfordern (FPS-Look): dieser Klick fängt nur die Maus ein.
+        // Ist die letzte Anforderung gescheitert (Chrome verweigert den Lock z.B.
+        // kurz nach ESC), geht der Klick trotzdem ans Spiel - sonst käme nie einer an.
+        const g = this.game;
+        if (g && !g.paused && !g.gameOver && document.pointerLockElement !== c && wantsCapture(g)) {
+          const failed = this.lockFailed;
+          this.requestLock();
+          if (!failed) {
+            this.mouseIgnore |= e.buttons & 3;
             return;
           }
         }
         try {
           c.setPointerCapture(e.pointerId);
         } catch (err) {}
-        const pos = document.pointerLockElement === c ? [W / 2, H / 2] : this.toLogical(e.clientX, e.clientY);
         if (e.pointerType !== "mouse") this.dispatch(ev("mousemove", { pos }));
-        this.dispatch(ev("mousedown", { pos, button }));
+        syncButtons(e.buttons, pos);
         this.maybeLock();
       });
 
       c.addEventListener("pointermove", (e) => {
-        if (document.pointerLockElement === c) {
+        const locked = document.pointerLockElement === c;
+        if (locked) {
           const g = this.game;
           if (g && !g.paused) {
             const dx = PG.clamp(e.movementX || 0, -150, 150);
             const dy = PG.clamp(e.movementY || 0, -150, 150);
             if (dx || dy) this.dispatch(ev("mouserel", { rel: [dx, dy] }));
           }
-          return;
+        } else {
+          this.dispatch(ev("mousemove", { pos: this.toLogical(e.clientX, e.clientY) }));
         }
-        this.dispatch(ev("mousemove", { pos: this.toLogical(e.clientX, e.clientY) }));
+        // e.button >= 0 nur bei gedrückter/losgelassener Zusatztaste (chorded)
+        if (e.button === 0 || e.button === 2) syncButtons(e.buttons, posOf(e), e.button === 2 ? 2 : 1);
       });
 
-      const up = (e) => {
-        const button = e.button === 0 ? 1 : e.button === 2 ? 3 : 2;
-        if (button === 2) return;
-        const cur = this.current;
-        if (!cur || cur.paused) return;
-        if (button === 3) {
-          let ok = false;
-          try {
-            ok = !cur.isMenu && !!cur.wantsRightClick;
-          } catch (err) {}
-          if (!ok) return;
-        }
-        const pos = document.pointerLockElement === c ? [W / 2, H / 2] : this.toLogical(e.clientX, e.clientY);
-        this.dispatch(ev("mouseup", { pos, button }));
-      };
+      const up = (e) => syncButtons(e.buttons, posOf(e));
       c.addEventListener("pointerup", up);
       c.addEventListener("pointercancel", up);
 
@@ -875,16 +976,31 @@
       document.addEventListener("pointerlockchange", () => {
         const locked = document.pointerLockElement === c;
         const g = this.game;
+        if (locked) this.lockFailed = false;
         // Der Browser gibt die Maus bei ESC selbst frei -> wie in Python: Pause
-        if (this.locked && !locked && g && !g.paused && !g.gameOver) {
-          let want = false;
-          try {
-            want = !!g.captureMouse;
-          } catch (err) {}
-          if (want) this.togglePause();
+        if (this.locked && !locked && g && !g.paused && !g.gameOver && wantsCapture(g)) {
+          this.togglePause();
+          this.lockLostAt = performance.now();
         }
         this.locked = locked;
       });
+      // Lock verweigert (z.B. kurz nach einem ESC-Exit): der nächste Klick geht ans Spiel
+      document.addEventListener("pointerlockerror", () => {
+        this.lockFailed = true;
+      });
+    }
+
+    /** Pointer-Lock anfordern; merkt sich, wenn der Browser ablehnt. */
+    requestLock() {
+      try {
+        const p = this.canvas.requestPointerLock();
+        if (p && p.catch)
+          p.catch(() => {
+            this.lockFailed = true;
+          });
+      } catch (err) {
+        this.lockFailed = true;
+      }
     }
 
     /**
@@ -901,11 +1017,7 @@
       try {
         want = !!g.captureMouse;
       } catch (err) {}
-      if (!want) return;
-      try {
-        const p = c.requestPointerLock();
-        if (p && p.catch) p.catch(() => {});
-      } catch (err) {}
+      if (want) this.requestLock();
     }
 
     toggleFullscreen() {

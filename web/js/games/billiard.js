@@ -53,6 +53,11 @@
   const STOP_EPS = 2.0; // darunter gilt eine Kugel als still
   const MAX_SPEED = 470.0; // maximale Stoßgeschwindigkeit
   const MAX_SHOT_TIME = 12.0;
+  // Fester Physik-Takt wie die Desktop-Version (60 FPS): Teilschritt-Länge und
+  // damit der Kontaktpunkt beim Kugel-Kugel-Stoß hängen von der Frame-Zeit ab.
+  // Mit festem Schritt laufen Schnitt-Stöße bei jeder Bildrate (und bei
+  // schwankenden Frame-Zeiten) genauso in die Tasche wie im Original.
+  const PHYS_DT = 1 / 60;
 
   const POCKETS = [[-HW, -HH], [0, -HH], [HW, -HH], [-HW, HH], [0, HH], [HW, HH]];
 
@@ -208,6 +213,8 @@
       this.cuePotted = false;
       this.pottedShot = [];
       this.pottedAll = [];
+      this.rackBase = 0; // Übung: Kugeln aus früheren Racks (Punkte)
+      this.physAcc = 0.0;
       this.msg = null;
       this.msgT = 0.0;
       this.aiDelay = 0.8;
@@ -417,6 +424,7 @@
       this.cue.vy = Math.sin(this.aim) * sp;
       this.phase = "rolling";
       this.shotTime = 0.0;
+      this.physAcc = 0.0;
       this.firstHit = null;
       this.cuePotted = false;
       this.pottedShot = [];
@@ -434,9 +442,15 @@
       if (this.view !== "2d") this.basis = this.camBasis();
       if (this.state !== PLAY) return;
       if (this.phase === "rolling") {
-        this.physics(dt);
-        this.shotTime += dt;
-        if (this.allStopped() || this.shotTime > MAX_SHOT_TIME) this.resolveShot();
+        // Physik in festen 1/60-s-Schritten (siehe PHYS_DT); der Rest darf um
+        // einen halben Schritt ins Minus laufen (bei 60 Hz genau 1 Schritt/Frame).
+        this.physAcc += dt;
+        while (this.physAcc > PHYS_DT * 0.5 && this.phase === "rolling" && this.state === PLAY) {
+          this.physAcc -= PHYS_DT;
+          this.physics(PHYS_DT);
+          this.shotTime += PHYS_DT;
+          if (this.allStopped() || this.shotTime > MAX_SHOT_TIME) this.resolveShot();
+        }
       } else if (this.phase === "aim") {
         if (this.charging) this.power = Math.min(1.0, this.power + dt * 0.85);
         if (this.current === 1) {
@@ -605,7 +619,10 @@
     }
 
     resolvePractice() {
-      this.score = this.pottedAll.length;
+      // Punkte = alle versenkten Kugeln, auch aus früheren Racks. (Das Original
+      // zählte nur das aktuelle Rack - nach dem Neuaufbau fiel die Punktzahl
+      // z.B. von 15 auf 1 zurück und der Highscore beim Verlassen ging verloren.)
+      this.score = this.rackBase + this.pottedAll.length;
       if (this.cuePotted) this.ballInHand = false; // automatisch neu einsetzen
       if (!this.objectBallsLeft().length) this.newRackKeepScore();
     }
@@ -615,6 +632,7 @@
       this.newRack();
       this.state = PLAY;
       this.score = sc;
+      this.rackBase = sc;
       this.msg = t("bil.reracked");
       this.msgT = 2.0;
     }

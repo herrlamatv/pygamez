@@ -116,6 +116,13 @@
   const rgb = (c) => "rgb(" + (c[0] | 0) + "," + (c[1] | 0) + "," + (c[2] | 0) + ")";
   const key = (x, y) => x + "," + y;
   const round2 = (v) => Math.round(v * 100) / 100;
+  /** Python-round() auf ganze Zahlen (Banker's Rounding: 0.5 -> 0, 1.5 -> 2, 2.5 -> 2, -1.5 -> -2). */
+  const pyRound = (v) => {
+    const f = Math.floor(v);
+    const d = v - f;
+    if (d !== 0.5) return Math.round(v);
+    return f % 2 === 0 ? f : f + 1;
+  };
 
   /** Dreht einen Gitter-Richtungsvektor um 90 Grad ("L" oder "R"). */
   function rotateDir(dir, turn) {
@@ -1669,7 +1676,8 @@
     /** Verrechnet das Slot-Ergebnis: Längeneinsatz + zeitweise mehr Äpfel. */
     applySlot(sl) {
       const sn = sl.snake;
-      const netto = Math.round(sl.stake * (sl.mult - 1));
+      // int(round(...)) wie in Python: bei x.5 zur geraden Zahl (Math.round rundet immer auf)
+      const netto = pyRound(sl.stake * (sl.mult - 1));
       if (netto > 0) sn.grow += netto;
       else if (netto < 0) {
         const schnitt = Math.min(-netto, sn.body.length - MIN_LENGTH);
@@ -1679,7 +1687,8 @@
         }
       }
       // Der Multiplikator lässt für kurze Zeit zusätzliche Äpfel spawnen.
-      this.spawnBonus = Math.max(this.spawnBonus, Math.round(sl.mult));
+      // (x0.5 -> 0 Bonus-Äpfel, x2.5 -> 2 - wie Python)
+      this.spawnBonus = Math.max(this.spawnBonus, pyRound(sl.mult));
       this.spawnBonusT = SPAWN_BONUS_TIME;
       this.placeFood();
       if (sl.result === "jackpot") {

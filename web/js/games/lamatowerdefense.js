@@ -883,6 +883,7 @@
           slow: st.slow, slow_t: st.slow_t,
           dot: st.dot, dot_t: st.dot_t, stun: st.stun,
           acid: st.acid, splits_dot: st.splits_dot,
+          air: st.air_only, // reine Luftabwehr: Explosion in der Luft
           col: base.col,
         });
       }
@@ -908,7 +909,7 @@
         const step = s.spd * h;
         if (dist <= Math.max(step, 0.22)) {
           if (e !== null) this.impact(s, e);
-          else if (s.splash) this.explode([s.lx, s.ly], s.dmg, s.splash, s.stun);
+          else if (s.splash) this.explode([s.lx, s.ly], s.dmg, s.splash, s.stun, s);
           continue;
         }
         s.x += (dx / dist) * step;
@@ -920,7 +921,7 @@
 
     impact(s, e) {
       if (s.splash) {
-        this.explode([s.lx, s.ly], s.dmg, s.splash, s.stun);
+        this.explode([s.lx, s.ly], s.dmg, s.splash, s.stun, s);
       } else {
         if (s.acid) e.armor = 0;
         if (s.slow) {
@@ -937,13 +938,26 @@
       }
     }
 
-    explode(pos, dmg, radius, stun = 0) {
+    /**
+     * Flächenschaden. shot (optional) = auslösendes Projektil:
+     * - shot.air (Sprengflak, Flak A): zerplatzt in der Luft und trifft nur
+     *   Flieger - sonst treffen Explosionen nur Bodengegner. Im Python-Original
+     *   übersprang die Explosion Flieger immer, "Sprengflak" traf also nie.
+     * - shot.dot (Brandladung, Kanone B): Dauerschaden auf alle Getroffenen -
+     *   im Original ging er bei Flächenschüssen verloren.
+     */
+    explode(pos, dmg, radius, stun = 0, shot = null) {
       const [px, py] = pos;
+      const air = !!(shot && shot.air);
       for (const e of this.enemies.slice()) {
-        if (e.hp <= 0 || e.fly) continue;
+        if (e.hp <= 0 || e.fly !== air) continue;
         const [ex, ey] = this.posAt(e.d, e.fly);
         if ((ex - px) ** 2 + (ey - py) ** 2 <= radius * radius) {
           if (stun) e.stun_t = Math.max(e.stun_t, stun);
+          if (shot && shot.dot) {
+            e.dot = Math.max(e.dot, shot.dot);
+            e.dot_t = Math.max(e.dot_t, shot.dot_t);
+          }
           this.damage(e, dmg);
         }
       }

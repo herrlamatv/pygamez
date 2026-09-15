@@ -493,6 +493,10 @@
           this.state = PAUSE;
           this.playSound("click");
         } else if (ev.key === "space") this.launchOrFire();
+      } else if (ev.kind === "keyup") {
+        // Taste losgelassen -> Schläger stoppt (sonst rutscht er bis an den Rand)
+        if ((ev.key === "Left" || ev.key === "a") && this.moveDir === -1) this.moveDir = 0;
+        else if ((ev.key === "Right" || ev.key === "d") && this.moveDir === 1) this.moveDir = 0;
       } else if (ev.kind === "mousemove") {
         this.paddleX = ev.pos[0] - this.paddleW / 2;
         this.moveDir = 0;
@@ -658,7 +662,7 @@
 
         // Stahl: immer abprallen (auch beim Feuerball), nie zerstören
         if (brick.kind === STEEL) {
-          BreakoutGame.bounce(b, ballRect, rect);
+          if (!BreakoutGame.bounce(b, ballRect, rect)) continue; // fliegt schon hinaus
           this.playSound("bounce");
           return;
         }
@@ -669,17 +673,53 @@
           continue;
         }
 
-        BreakoutGame.bounce(b, ballRect, rect);
+        // Überlappung vom letzten Treffer (Ball fliegt schon weg) = kein neuer Treffer
+        if (!BreakoutGame.bounce(b, ballRect, rect)) continue;
         this.hitBrick(brick, false);
         return;
       }
     }
 
+    /**
+     * Abprall am Stein. Das Original kehrt nur die Richtung um (vx = -vx) und
+     * wählt die Achse allein nach der kleineren Eindringtiefe. Streift der Ball
+     * eine Kante, kippt die Richtung so Frame für Frame hin und her: er tunnelt
+     * durch Stahl, trifft harte Steine mehrfach oder bleibt dauerhaft in einem
+     * Stahlstein hängen. Deshalb: Achse und Richtung nach der Seite wählen, von
+     * der der Ball kam (Position vor diesem Frame = letzter Spur-Punkt), und die
+     * Geschwindigkeit immer VOM Stein WEG zeigen lassen.
+     * Rückgabe: true, wenn der Ball wirklich abgeprallt ist (false = er verlässt
+     * den Stein ohnehin schon, die Überlappung stammt noch vom letzten Frame).
+     */
     static bounce(b, ballRect, rect) {
-      const ux = Math.min(ballRect.right - rect.left, rect.right - ballRect.left);
-      const uy = Math.min(ballRect.bottom - rect.top, rect.bottom - ballRect.top);
-      if (ux < uy) b.vx = -b.vx;
-      else b.vy = -b.vy;
+      const penL = ballRect.right - rect.left, penR = rect.right - ballRect.left;
+      const penT = ballRect.bottom - rect.top, penB = rect.bottom - ballRect.top;
+      let axisX = Math.min(penL, penR) < Math.min(penT, penB);
+      let dirX = penL < penR ? -1 : 1;
+      let dirY = penT < penB ? -1 : 1;
+      const prev = b.trail.length ? b.trail[b.trail.length - 1] : null;
+      if (prev) {
+        const pr = irect(prev[0] - BALL_R, prev[1] - BALL_R, BALL_R * 2, BALL_R * 2);
+        const overX = pr.x < rect.right && rect.x < pr.right;
+        const overY = pr.y < rect.bottom && rect.y < pr.bottom;
+        if (!overX) dirX = pr.x < rect.x ? -1 : 1;
+        if (!overY) dirY = pr.y < rect.y ? -1 : 1;
+        if (overX && !overY) axisX = false; // kam von oben/unten
+        else if (overY && !overX) axisX = true; // kam von der Seite
+      }
+      // nie entlang einer Achse ohne Tempo "abprallen"
+      if (axisX && b.vx === 0) axisX = false;
+      else if (!axisX && b.vy === 0) axisX = true;
+      if (axisX) {
+        const vx = dirX * Math.abs(b.vx);
+        const hit = vx !== b.vx;
+        b.vx = vx;
+        return hit;
+      }
+      const vy = dirY * Math.abs(b.vy);
+      const hit = vy !== b.vy;
+      b.vy = vy;
+      return hit;
     }
 
     /** Fügt einem Stein Schaden zu; zerstört ihn ggf. inkl. Effekten. */

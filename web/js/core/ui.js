@@ -189,7 +189,9 @@
       this.bold = !!bold;
       this.mono = !!mono;
       this.css = (bold ? "700 " : "") + px + "px " + (mono ? ui.FONT_MONO : ui.FONT_UI);
-      this.height = Math.ceil(px * 1.22);
+      // Zeilenhöhe wie pygame (Font.size()[1] / render().get_height()), gemessen
+      // mit pygame-ce 2.5.7: Bahnschrift ~1.1975 x px, Consolas ~1.1675 x px.
+      this.height = Math.ceil(px * (mono ? 1.1675 : 1.1975));
       this._cache = new Map();
     }
     width(text) {
@@ -370,9 +372,17 @@
       }
     },
     line(ctx, color, p1, p2, width = 1) {
+      // pygame füllt Pixel (x, y) = Fläche [x, x+1): Strich auf die Pixelmitte
+      // legen (sonst 1-px-Linien halb versetzt und verwaschen). Gerade Breiten
+      // wachsen in pygame zur positiven Seite (x-k+1 .. x+k).
+      let ox = 0.5, oy = 0.5;
+      if (width > 1 && width % 2 === 0) {
+        if (Math.abs(p1[0] - p2[0]) <= Math.abs(p1[1] - p2[1])) ox = 1;
+        else oy = 1;
+      }
       ctx.beginPath();
-      ctx.moveTo(p1[0], p1[1]);
-      ctx.lineTo(p2[0], p2[1]);
+      ctx.moveTo(p1[0] + ox, p1[1] + oy);
+      ctx.lineTo(p2[0] + ox, p2[1] + oy);
       ctx.strokeStyle = ui.col(color);
       ctx.lineWidth = width;
       ctx.lineCap = "butt";
@@ -380,13 +390,15 @@
     },
     lines(ctx, color, closed, points, width = 1) {
       if (!points.length) return;
+      const o = width > 1 && width % 2 === 0 ? 1 : 0.5; // Pixelmitte wie bei line()
       ctx.beginPath();
-      ctx.moveTo(points[0][0], points[0][1]);
-      for (let i = 1; i < points.length; i++) ctx.lineTo(points[i][0], points[i][1]);
+      ctx.moveTo(points[0][0] + o, points[0][1] + o);
+      for (let i = 1; i < points.length; i++) ctx.lineTo(points[i][0] + o, points[i][1] + o);
       if (closed) ctx.closePath();
       ctx.strokeStyle = ui.col(color);
       ctx.lineWidth = width;
       ctx.lineJoin = "round";
+      ctx.lineCap = "butt";
       ctx.stroke();
     },
     polygon(ctx, color, points, width = 0) {
@@ -408,8 +420,11 @@
     /** Bogen wie pygame.draw.arc (Winkel in Radiant, mathematisch positiv = gegen Uhrzeiger) */
     arc(ctx, color, rect, start, stop, width = 1) {
       const r = rect instanceof PG.Rect ? rect : new PG.Rect(rect);
+      if (r.w <= 0 || r.h <= 0 || width <= 0) return;
+      // wie pygame: die Linienstärke wächst vom Rand nach innen
+      const hw = width / 2;
       ctx.beginPath();
-      ctx.ellipse(r.centerx, r.centery, r.w / 2, r.h / 2, 0, -stop, -start);
+      ctx.ellipse(r.centerx, r.centery, Math.max(0.1, r.w / 2 - hw), Math.max(0.1, r.h / 2 - hw), 0, -stop, -start);
       ctx.strokeStyle = ui.col(color);
       ctx.lineWidth = width;
       ctx.stroke();

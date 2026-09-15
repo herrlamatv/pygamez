@@ -18,6 +18,25 @@
   const Rect = PG.Rect;
   const fl = Math.floor;
 
+  // Web: "mem.subtitle" spricht noch vom Duell (gibt es im Web nicht) -
+  // Untertitel ohne diesen Teil in allen Sprachen.
+  PG.addStrings({
+    de: { "web.memory.subtitle": "Finde alle Paare" },
+    en: { "web.memory.subtitle": "Find all pairs" },
+    fr: { "web.memory.subtitle": "Trouve toutes les paires" },
+    es: { "web.memory.subtitle": "Encuentra todas las parejas" },
+    pt: { "web.memory.subtitle": "Encontra todos os pares" },
+    pl: { "web.memory.subtitle": "Znajdź wszystkie pary" },
+    tr: { "web.memory.subtitle": "Tüm çiftleri bul" },
+    da: { "web.memory.subtitle": "Find alle par" },
+    no: { "web.memory.subtitle": "Finn alle par" },
+    sv: { "web.memory.subtitle": "Hitta alla par" },
+    fi: { "web.memory.subtitle": "Löydä kaikki parit" },
+    cs: { "web.memory.subtitle": "Najdi všechny páry" },
+    sl: { "web.memory.subtitle": "Poišči vse pare" },
+    hr: { "web.memory.subtitle": "Pronađi sve parove" },
+  });
+
   // Identitätsfarben der Karten - bleiben bewusst fest, alle generischen
   // UI-Farben kommen zur Laufzeit dynamisch aus der ui-Palette.
   const COL_CARD_BACK = [56, 64, 92];
@@ -435,7 +454,7 @@
       ui.drawBackground(ctx, this.width, this.height);
       const cx = fl(this.width / 2);
       ui.text(ctx, "MEMORY", cx, Math.trunc(this.height * 0.14), this.huge, this.accent, "center");
-      ui.text(ctx, t("mem.subtitle"), cx, Math.trunc(this.height * 0.21), this.small, ui.TEXT_DIM, "center");
+      ui.text(ctx, t("web.memory.subtitle"), cx, Math.trunc(this.height * 0.21), this.small, ui.TEXT_DIM, "center");
       this.sizeRects.forEach((r, i) => {
         const on = i === this.sizeIdx;
         draw.rect(ctx, on ? ui.BTN_SEL : ui.BTN, r, 0, 10);

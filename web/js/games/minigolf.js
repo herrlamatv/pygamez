@@ -65,6 +65,10 @@
   const CAPTURE_SPEED = 74.0; // darüber springt der Ball über das Loch
   const MAX_SHOT_TIME = 14.0;
   const MAX_STROKES = 8; // danach wird die Bahn mit Höchstwert beendet
+  // Fester Physik-Takt: die Desktop-Version läuft mit 60 FPS, und Lochsog sowie
+  // Teilschritt-Zahl hängen vom Takt ab. Mit festem Schritt locht der Ball im
+  // Browser genauso ein - egal ob 60-, 144- oder 240-Hz-Monitor.
+  const PHYS_DT = 1 / 60;
 
   // --- Kennwerte der acht Editor-Hindernisse ---------------------------------
   const TUNNEL_KEEP = 0.95; // Tempo, das ein Rohr durchlässt
@@ -713,6 +717,7 @@
       this.strokes += 1;
       this.phase = "rolling";
       this.shotTime = 0.0;
+      this.physAcc = 0.0;
       this.safe = [this.bx, this.by];
       this.trail = [];
       this.playSound("shoot");
@@ -753,7 +758,15 @@
         if (this.powerLock) this.lockT += dt; // Puls der goldenen Anzeige
         else if (this.charging) this.power = Math.min(1.0, this.power + dt * 0.8);
       } else if (this.phase === "rolling") {
-        this.physics(dt);
+        // Physik in festen 1/60-s-Schritten (siehe PHYS_DT). Der Rest darf um
+        // einen halben Schritt ins Minus laufen - so gibt es bei 60 Hz genau
+        // einen Schritt je Frame und kein Ruckeln durch Takt-Schwankungen.
+        this.physAcc = (this.physAcc || 0) + dt;
+        while (this.physAcc > PHYS_DT * 0.5 && this.phase === "rolling" && this.state === PLAY) {
+          this.physics(PHYS_DT);
+          this.physAcc -= PHYS_DT;
+          if (this.vx === 0.0 && this.vy === 0.0) break;
+        }
         this.shotTime += dt;
         if (this.shotTime > MAX_SHOT_TIME) {
           this.vx = this.vy = 0.0;

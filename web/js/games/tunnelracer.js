@@ -102,7 +102,11 @@
     }
 
     get captureMouse() {
-      return this._capture;
+      // Maussteuerung: schon im READY-Countdown fangen. Der Browser gewährt den
+      // Pointer-Lock nur direkt nach einer Nutzereingabe (Enter/Klick zum Start);
+      // erst beim Übergang READY -> PLAY wäre ein zusätzlicher Klick mitten im
+      // Flug nötig. Mausbewegungen wirken trotzdem erst in PLAY (wie in Python).
+      return this._capture || (this.state === READY && this.control === "mouse");
     }
 
     makeFonts() {
@@ -393,7 +397,7 @@
       } else if (ev.kind === "keyup") {
         const k = ev.key;
         for (const act of ACTS) if (this.isAction(k, act) || k === CAP[act]) this.keys.delete(act);
-      } else if (ev.kind === "mouserel" && this.control === "mouse") {
+      } else if (ev.kind === "mouserel" && this.control === "mouse" && this.state === PLAY) {
         // normal: Maus rechts = Schiff rechts, Maus hoch = Schiff hoch.
         const hx = this.invert ? -1.0 : 1.0;
         const hy = this.invert ? 1.0 : -1.0;

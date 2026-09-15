@@ -179,6 +179,7 @@
     get center() { return [this.centerx, this.centery]; }
     set center(p) { this.centerx = p[0]; this.centery = p[1]; }
     get size() { return [this.w, this.h]; }
+    set size(p) { this.w = p[0]; this.h = p[1]; }
     get topleft() { return [this.x, this.y]; }
     set topleft(p) { this.x = p[0]; this.y = p[1]; }
     get topright() { return [this.right, this.y]; }
@@ -204,6 +205,8 @@
       return px >= this.x && px < this.x + this.w && py >= this.y && py < this.y + this.h;
     }
     colliderect(r) {
+      // wie pygame 2: Rechtecke ohne Fläche kollidieren mit nichts
+      if (!this.w || !this.h || !r.w || !r.h) return false;
       return this.x < r.x + r.w && r.x < this.x + this.w && this.y < r.y + r.h && r.y < this.y + this.h;
     }
     contains(r) {
@@ -311,33 +314,69 @@
       .replace(/\}\}/g, "")
       .replace(/\{([A-Za-z_0-9]+)(?::([^}]*))?\}/g, (m, key, spec) => {
         if (!(key in params)) return m;
-        let v = params[key];
-        if (spec) {
-          const fm = /^([<>^])?(\d+)?(,)?(?:\.(\d+))?([fd%])?$/.exec(spec);
-          if (fm) {
-            const [, align, width, comma, prec, type] = fm;
-            if (type === "%") v = (Number(v) * 100).toFixed(prec ? +prec : 6) + "%";
-            else if (prec !== undefined) v = Number(v).toFixed(+prec);
-            else if (type === "d") v = String(Math.trunc(Number(v)));
-            if (comma) {
-              const parts = String(v).split(".");
-              parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-              v = parts.join(".");
-            }
-            v = String(v);
-            if (width && v.length < +width) {
-              const pad = " ".repeat(+width - v.length);
-              const numeric = typeof params[key] === "number";
-              const a = align || (numeric ? ">" : "<");
-              v = a === ">" ? pad + v : a === "^" ? pad.slice(0, pad.length >> 1) + v + pad.slice(pad.length >> 1) : v + pad;
-            }
-          }
-        }
-        return String(v);
+        return spec ? formatSpec(params[key], spec) : String(params[key]);
       })
       .replace(//g, "{")
       .replace(//g, "}");
   };
+
+  // Format-Spezifikation wie Python: [[fill]align][sign][#][0][width][,|_][.precision][type]
+  const SPEC_RE = /^(?:(.)?([<>^=]))?([+\- ])?(#)?(0)?(\d+)?([,_])?(?:\.(\d+))?([sdfF%])?$/;
+
+  /**
+   * toFixed für Zahlen >= 0 mit Python-Rundung: bei exaktem Gleichstand
+   * (z.B. 2.5 -> "2", 0.125 -> "0.12") auf die gerade Ziffer statt aufrunden.
+   */
+  function fixedAbs(a, prec) {
+    const s = a.toFixed(prec);
+    if (!isFinite(a) || a >= 1e21 || prec > 70) return s;
+    const long = a.toFixed(prec + 25);
+    if (!/50{24}$/.test(long)) return s;
+    const cut = long.slice(0, -25).replace(/\.$/, "");
+    return Number(cut[cut.length - 1]) % 2 === 0 ? cut : s;
+  }
+
+  /** Ein Platzhalter mit Format-Spezifikation (Teilmenge von format(v, spec)). */
+  function formatSpec(v, spec) {
+    const m = SPEC_RE.exec(spec);
+    if (!m) return String(v);
+    let [, fill, align, sign, , zero, width, group, prec, type] = m;
+    const numType = type && type !== "s";
+    if (numType && typeof v !== "number" && v !== "" && v != null && !isNaN(Number(v))) v = Number(v);
+    const isNum = typeof v === "number";
+    let body, signStr = "";
+    if (isNum && type !== "s") {
+      const a = Math.abs(v);
+      if (type === "%") body = fixedAbs(a * 100, prec != null ? +prec : 6);
+      else if (type === "f" || type === "F") body = fixedAbs(a, prec != null ? +prec : 6);
+      else if (type === "d") body = String(Math.trunc(a));
+      else if (prec != null) body = fixedAbs(a, +prec);
+      else body = String(a);
+      if (group) {
+        const parts = body.split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
+        body = parts.join(".");
+      }
+      if (type === "%") body += "%";
+      signStr = v < 0 || Object.is(v, -0) ? "-" : sign === "+" ? "+" : sign === " " ? " " : "";
+      if (body === "0" && signStr === "-" && type === "d") signStr = "";
+    } else {
+      body = String(v);
+      if (prec != null) body = body.slice(0, +prec);
+    }
+    if (zero && !align) {
+      fill = "0";
+      align = isNum ? "=" : "<";
+    }
+    fill = fill || " ";
+    align = align || (isNum ? ">" : "<");
+    const pad = (width ? +width : 0) - signStr.length - body.length;
+    if (pad <= 0) return signStr + body;
+    if (align === "=") return signStr + fill.repeat(pad) + body;
+    if (align === ">") return fill.repeat(pad) + signStr + body;
+    if (align === "^") return fill.repeat(pad >> 1) + signStr + body + fill.repeat(pad - (pad >> 1));
+    return signStr + body + fill.repeat(pad);
+  }
 
   /** Übersetzt 'key' in die aktive Sprache (Fallback Deutsch, sonst der Key). */
   PG.t = function (key, params) {

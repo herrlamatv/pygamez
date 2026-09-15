@@ -538,9 +538,13 @@
         a.vx = Math.cos(ang) * spd;
         a.vy = Math.sin(ang) * spd;
       } else if (kind === "drifter") {
-        // gerade Bahn, an den Rändern abprallen
-        if (a.cx < 12 || a.cx > this.width - 12) a.vx *= -1;
-        if (a.cy < 34 || a.cy > this.height - 12) a.vy *= -1;
+        // gerade Bahn, an den Rändern abprallen - nur wenn der Drifter nach
+        // außen fliegt. Arena-Gegner erscheinen 20 px AUSSERHALB des Feldes;
+        // mit der reinen Positionsprüfung (wie in invaders.py) kippte vx/vy
+        // dort jedes Frame hin und her, der Drifter blieb unsichtbar am Rand
+        // hängen und die Welle ließ sich nicht beenden.
+        if ((a.cx < 12 && a.vx < 0) || (a.cx > this.width - 12 && a.vx > 0)) a.vx *= -1;
+        if ((a.cy < 34 && a.vy < 0) || (a.cy > this.height - 12 && a.vy > 0)) a.vy *= -1;
       } else if (kind === "shooter") {
         // Abstand halten und den Spieler beschießen
         const dist = Math.hypot(this.px - a.cx, this.py - a.cy) || 1;

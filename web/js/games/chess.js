@@ -452,6 +452,7 @@
 
       this.makeFonts();
       this.wins = [0, 0]; // [Weiß, Schwarz]
+      this.humanWins = 0; // Siege des Menschen gegen die KI (= Punkte)
       this.buildSetupLayout();
       this.newRound();
       this.state = SETUP;
@@ -787,7 +788,12 @@
         this.wins[this.winner] += 1;
         const humanIdx = this.humanColor === "w" ? 0 : 1;
         if (this.winner === humanIdx) {
-          this.score = this.wins[humanIdx];
+          // Punkte = Siege gegen die KI. wins[] zählt je FARBE (HUD), die Farben
+          // wechseln aber jede Runde - wins[humanIdx] würde also auch KI-Siege
+          // mit dieser Farbe mitzählen bzw. eigene Siege mit der anderen Farbe
+          // unterschlagen (Fehler aus chess.py). Daher ein eigener Zähler.
+          this.humanWins += 1;
+          this.score = this.humanWins;
           this.playSound("win");
           this.reportResult(true);
           this.achEvent("chess_win");

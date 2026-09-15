@@ -315,8 +315,16 @@
 
     updateBullets(dt) {
       const alive = [];
-      for (const b of this.bullets) {
-        if (this.state !== PLAY) break; // Runde ist gerade zu Ende gegangen
+      const list = this.bullets;
+      for (let n = 0; n < list.length; n++) {
+        const b = list[n];
+        if (this.state !== PLAY) {
+          // Runde ist gerade zu Ende gegangen: übrige Schüsse unverändert
+          // behalten - die treffende Kugel fehlt in 'alive' und verschwindet
+          // (sonst stand sie während des Banners über dem zerstörten Panzer).
+          for (; n < list.length; n++) alive.push(list[n]);
+          break;
+        }
         b.age += dt;
         if (b.age > BULLET_LIFE) continue;
         b.x += b.vx * dt;
@@ -376,7 +384,7 @@
         }
         if (!hit) alive.push(b);
       }
-      if (this.state === PLAY) this.bullets = alive;
+      this.bullets = alive;
     }
 
     updatePowerups(dt) {

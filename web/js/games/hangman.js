@@ -35,9 +35,10 @@
 
   /** Getippten Buchstaben (A-Z) aus dem Ereignis holen, sonst null. */
   function letterOf(ev) {
-    let ch = ev.char && ev.char.length === 1 ? ev.char : ev.key && ev.key.length === 1 ? ev.key : "";
-    ch = ch.toUpperCase();
-    return /^[A-Z]$/.test(ch) ? ch : null;
+    const ch = ev.char && ev.char.length === 1 ? ev.char : ev.key && ev.key.length === 1 ? ev.key : "";
+    // Erst auf ASCII-Buchstaben prüfen, dann groß schreiben (wie isascii()/isalpha()
+    // im Original) - sonst würde z.B. "ı".toUpperCase() zu "I".
+    return /^[A-Za-z]$/.test(ch) ? ch.toUpperCase() : null;
   }
 
   class HangmanGame extends PG.Game {
@@ -218,7 +219,10 @@
     drawWord(ctx) {
       const letters = this.word.split("");
       const n = letters.length;
-      const slot = Math.min(Math.floor(this.wordFont.height * 0.9), Math.floor((this.width - 40) / n));
+      // Python: _word_font.get_height() == Pixelgröße. Die Web-Schrift meldet als
+      // height ~1.22 * px - damit wurden die Felder zu groß und die Wortzeile
+      // rutschte in die Bildschirmtastatur. Deshalb wie im Original px verwenden.
+      const slot = Math.min(Math.floor(this.wordFont.px * 0.9), Math.floor((this.width - 40) / n));
       const gap = Math.max(6, Math.floor(slot / 5));
       const total = n * slot + (n - 1) * gap;
       let x = Math.floor((this.width - total) / 2);

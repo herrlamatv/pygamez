@@ -501,6 +501,8 @@
       }
       this.drawHud(ctx);
       this.drawBoard(ctx);
+      // Hinweis (Passen / ungültiger Zug) erst NACH dem Brett - sonst verdeckt ihn die Brettplatte
+      if (this.msg) this.drawNote(ctx, this.msg, ui.GOLD);
       if (this.state === OVER) this.drawOver(ctx);
     }
 
@@ -589,9 +591,19 @@
         const mid = this.player === 1 ? t("rev.ai_thinks") : t("rev.your_turn");
         ui.text(ctx, mid, this.width / 2, cy, this.small, this.accent, "center");
       }
-      if (this.msg) {
-        ui.text(ctx, this.msg, this.width / 2, this.hudH + 12, this.tiny, ui.GOLD, "center");
-      }
+    }
+
+    /**
+     * Hinweiszeile direkt unter dem HUD. Liegt über dem oberen Brettrand, daher
+     * nach dem Brett zeichnen und mit kleinem Hintergrund lesbar halten (in
+     * Python wurde sie vor dem Brett gezeichnet und war praktisch unsichtbar).
+     */
+    drawNote(ctx, text, color) {
+      const w = this.tiny.width(text) + 16;
+      const h = this.tiny.height + 4;
+      const cx = this.width / 2, cy = this.hudH + 12;
+      draw.rect(ctx, [ui.PANEL[0], ui.PANEL[1], ui.PANEL[2], 225], [Math.floor(cx - w / 2), Math.floor(cy - h / 2), w, h], 0, 6);
+      ui.text(ctx, text, cx, cy, this.tiny, color, "center");
     }
 
     drawOver(ctx) {

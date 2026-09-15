@@ -61,6 +61,12 @@
   const BALL_SAVE = 6.0; // Sekunden Ball-Save nach dem Abschuss
   const TILT_LIMIT = 3; // so viele Nudges in Folge -> TILT
   const LANE_LETTERS = "LAMA";
+  // Fester Logik-Takt wie die Desktop-Version (60 FPS): Flipper fahren je
+  // Schritt ein Stück weiter, die Kugel prallt gegen die neue Stellung. Bei
+  // größeren Frame-Zeiten (z.B. 30 FPS oder Ruckler) sprang der Flipper sonst
+  // über die Kugel hinweg (Durchtunneln) und ein voller Abschuss rollte in die
+  // Schussbahn zurück. So verhält sich der Tisch bei jeder Bildrate gleich.
+  const PHYS_DT = 1 / 60;
 
   const SETUP = "setup", PLAY = "play", OVER = "over";
   const TABLES = ["classic", "space", "lama"];
@@ -171,6 +177,7 @@
       this.layout();
       this.buildSetupLayout();
       this.tableCache = null;
+      this.physAcc = 0.0;
       this.best = this.loadBest();
       this.newGame();
       this.state = SETUP;
@@ -404,6 +411,22 @@
 
     // ===================================================== Update / Physik
     update(dt) {
+      // Logik in festen 1/60-s-Schritten (siehe PHYS_DT). Der Rest darf um
+      // einen halben Schritt ins Minus laufen - bei 60 Hz gibt es so genau
+      // einen Schritt je Frame und kein Ruckeln durch Takt-Schwankungen.
+      this.physAcc += dt;
+      while (this.physAcc > PHYS_DT * 0.5) {
+        this.physAcc -= PHYS_DT;
+        this.step(PHYS_DT);
+        if (this.gameOver) {
+          this.physAcc = 0.0;
+          break;
+        }
+      }
+    }
+
+    /** Ein Logik-Schritt (entspricht update() des Python-Originals). */
+    step(dt) {
       if (this.msgT > 0) {
         this.msgT -= dt;
         if (this.msgT <= 0) this.msg = null;

@@ -689,6 +689,8 @@
       }
       this.drawHud(ctx);
       this.drawBoard(ctx);
+      // "Schlagzwang!" erst NACH dem Brett - sonst verdeckt ihn die Brettplatte
+      if (this.state === PLAY && this.forced) this.drawNote(ctx, t("dame.must_capture"), ui.RED);
       if (this.state === OVER) this.drawOver(ctx);
     }
 
@@ -796,10 +798,20 @@
       if (this.state === PLAY) {
         const mid = this.player === 1 ? t("dame.ai_thinks") : t("dame.your_turn");
         ui.text(ctx, mid, this.width / 2, cy, this.small, this.accent, "center");
-        if (this.forced) {
-          ui.text(ctx, t("dame.must_capture"), this.width / 2, this.hudH + 11, this.tiny, ui.RED, "center");
-        }
       }
+    }
+
+    /**
+     * Hinweiszeile direkt unter dem HUD. Liegt über dem oberen Brettrand, daher
+     * nach dem Brett zeichnen und mit kleinem Hintergrund lesbar halten (in
+     * Python wurde sie vor dem Brett gezeichnet und war praktisch unsichtbar).
+     */
+    drawNote(ctx, text, color) {
+      const w = this.tiny.width(text) + 16;
+      const h = this.tiny.height + 4;
+      const cx = Math.floor(this.width / 2), cy = this.hudH + 11;
+      draw.rect(ctx, [ui.PANEL[0], ui.PANEL[1], ui.PANEL[2], 225], [Math.floor(cx - w / 2), Math.floor(cy - h / 2), w, h], 0, 6);
+      ui.text(ctx, text, cx, cy, this.tiny, color, "center");
     }
 
     drawOver(ctx) {

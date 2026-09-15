@@ -418,6 +418,8 @@
       }
       this.drawHud(ctx);
       this.drawBoard(ctx);
+      // Hinweis ("Spalte ist voll") erst NACH dem Brett - sonst verdeckt ihn der Hover-Stein
+      if (this.msg) this.drawNote(ctx, this.msg, ui.GOLD);
       if (this.state === OVER) this.drawOver(ctx);
     }
 
@@ -486,7 +488,15 @@
         const mid = this.player === 1 ? t("c4.ai_thinks") : t("c4.turn", { name: t("common.player1") });
         ui.text(ctx, mid, this.width / 2, cy, this.small, this.discColor(this.player), "center");
       }
-      if (this.msg) ui.text(ctx, this.msg, this.width / 2, this.hudH + 12, this.tiny, ui.GOLD, "center");
+    }
+
+    /** Hinweiszeile unter dem HUD (über dem Hover-Stein, mit kleinem Hintergrund). */
+    drawNote(ctx, text, color) {
+      const w = this.tiny.width(text) + 16;
+      const h = this.tiny.height + 4;
+      const cx = this.width / 2, cy = this.hudH + 12;
+      draw.rect(ctx, [ui.PANEL[0], ui.PANEL[1], ui.PANEL[2], 225], [Math.floor(cx - w / 2), Math.floor(cy - h / 2), w, h], 0, 6);
+      ui.text(ctx, text, cx, cy, this.tiny, color, "center");
     }
 
     drawOver(ctx) {

@@ -527,7 +527,11 @@
     }
 
     get captureMouse() {
-      return this._wantCapture && this.state === PLAY && !this.paused;
+      // Auch während der kurzen "Level geschafft"-Einblendung (CLEAR) gefangen
+      // halten: Python fängt die Maus danach automatisch wieder ein, im Browser
+      // bräuchte ein erneuter Pointer-Lock aber einen Klick - nach jedem Level.
+      // (Mausbewegungen wirken ohnehin nur in PLAY, siehe handleEvent.)
+      return this._wantCapture && (this.state === PLAY || this.state === CLEAR) && !this.paused;
     }
 
     makeFonts() {

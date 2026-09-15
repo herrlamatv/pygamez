@@ -70,9 +70,10 @@
 
   /** Getippten Buchstaben (A-Z) aus dem Ereignis holen, sonst null. */
   function letterOf(ev) {
-    let ch = ev.char && ev.char.length === 1 ? ev.char : ev.key && ev.key.length === 1 ? ev.key : "";
-    ch = ch.toUpperCase();
-    return /^[A-Z]$/.test(ch) ? ch : null;
+    const ch = ev.char && ev.char.length === 1 ? ev.char : ev.key && ev.key.length === 1 ? ev.key : "";
+    // Erst auf ASCII-Buchstaben prüfen, dann groß schreiben (wie isascii()/isalpha()
+    // im Original) - sonst würde z.B. "ı".toUpperCase() zu "I".
+    return /^[A-Za-z]$/.test(ch) ? ch.toUpperCase() : null;
   }
 
   class WordleGame extends PG.Game {
