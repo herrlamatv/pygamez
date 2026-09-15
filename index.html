@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PyGameZ Web</title>
+<link rel="icon" type="image/png" href="img/logo-128.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <header class="brand">
+      <img src="img/logo-128.png" alt="" class="brand-logo">
+      <div class="brand-text">
+        <div class="brand-title">PyGameZ <span class="badge">WEB</span></div>
+        <div class="brand-sub" data-i18n="app.menu_title">Spielesammlung</div>
+      </div>
+    </header>
+
+    <div class="status-card">
+      <div class="status-row">
+        <span id="state-dot" class="dot"></span>
+        <span id="status-name">-</span>
+      </div>
+      <div id="status-detail" class="status-detail"></div>
+    </div>
+
+    <div class="toolbar">
+      <button id="btn-menu" class="tbtn back" data-i18n="pregame.back">Zurück zum Menü</button>
+      <div class="tb-row">
+        <button id="btn-pause" class="tbtn" data-i18n="web.pause">Pause</button>
+        <button id="btn-wiki" class="tbtn" data-i18n="app.lamawiki">Wiki / Hilfe</button>
+        <button id="btn-full" class="tbtn" data-i18n="web.fullscreen">Vollbild</button>
+      </div>
+    </div>
+
+    <div class="list-head">
+      <span data-i18n="app.games">SPIELE</span>
+      <input id="search" type="search" autocomplete="off" spellcheck="false">
+    </div>
+    <nav id="gamelist"></nav>
+
+    <details id="settings-card" class="settings">
+      <summary data-i18n="web.settings">Einstellungen</summary>
+      <label><span data-i18n="web.language">Sprache</span>
+        <select id="set-lang"></select></label>
+      <label><span data-i18n="web.theme">Design</span>
+        <select id="set-theme"></select></label>
+      <label class="row"><span data-i18n="web.sound">Sound</span>
+        <input id="set-sound" type="checkbox"></label>
+      <label><span data-i18n="web.volume">Lautstärke</span>
+        <input id="set-volume" type="range" min="0" max="100" step="1"></label>
+      <button id="btn-reset" class="tbtn danger" data-i18n="web.reset_scores">Highscores löschen</button>
+    </details>
+  </aside>
+
+  <main id="stage">
+    <div id="canvas-wrap">
+      <canvas id="screen" tabindex="0"></canvas>
+      <div id="loading" class="loading"><div class="spinner"></div><span>Loading…</span></div>
+    </div>
+  </main>
+</div>
+
+<div id="wiki-modal" class="modal" hidden>
+  <div class="modal-card">
+    <div class="modal-head">
+      <input id="wiki-search" type="search" autocomplete="off">
+      <button id="wiki-close" class="tbtn" aria-label="close">✕</button>
+    </div>
+    <div class="modal-body">
+      <nav id="wiki-nav"></nav>
+      <article id="wiki-page"></article>
+    </div>
+  </div>
+</div>
+
+<!-- Sprachen + Wiki (aus lang/*.json und lamawiki/*.json erzeugt) -->
+<script src="js/lang/de.js"></script>
+<script src="js/lang/en.js"></script>
+<script src="js/lang/fr.js"></script>
+<script src="js/lang/es.js"></script>
+<script src="js/lang/pt.js"></script>
+<script src="js/lang/pl.js"></script>
+<script src="js/lang/tr.js"></script>
+<script src="js/lang/da.js"></script>
+<script src="js/lang/no.js"></script>
+<script src="js/lang/sv.js"></script>
+<script src="js/lang/fi.js"></script>
+<script src="js/lang/cs.js"></script>
+<script src="js/lang/sl.js"></script>
+<script src="js/lang/hr.js"></script>
+<script src="js/wiki/de.js"></script>
+<script src="js/wiki/en.js"></script>
+<script src="js/wiki/fr.js"></script>
+<script src="js/wiki/es.js"></script>
+<script src="js/wiki/pt.js"></script>
+<script src="js/wiki/pl.js"></script>
+<script src="js/wiki/tr.js"></script>
+<script src="js/wiki/da.js"></script>
+<script src="js/wiki/no.js"></script>
+<script src="js/wiki/sv.js"></script>
+<script src="js/wiki/fi.js"></script>
+<script src="js/wiki/cs.js"></script>
+<script src="js/wiki/sl.js"></script>
+<script src="js/wiki/hr.js"></script>
+
+<!-- Engine -->
+<script src="js/core/util.js"></script>
+<script src="js/core/ui.js"></script>
+<script src="js/core/audio.js"></script>
+<script src="js/core/game.js"></script>
+<script src="js/manifest.js"></script>
+<script src="js/core/app.js"></script>
+<!-- Die Spiele selbst lädt app.js nacheinander laut js/manifest.js -->
+</body>
+</html>
