@@ -731,6 +731,8 @@ window.PG_LANG["pl"] = {
  "options.theme_hint": "Wygląd jest stosowany i zapisywany od razu.",
  "options.theme_modern": "UI v4",
  "options.theme_modern_desc": "Czysty i spokojny: płaskie panele, wyraźna typografia, jeden akcent.",
+ "options.theme_v1": "UI v1",
+ "options.theme_v1_desc": "Wygląd sprzed przebudowy interfejsu: jednolite ciemne tło, płaskie przyciski, bez efektów.",
  "options.theme_v2": "UI v2",
  "options.theme_v2_desc": "Pierwsza przebudowa interfejsu: granatowy gradient, gwiazdy i świecące przyciski – bez animacji.",
  "options.theme_v41": "UI v4.1",

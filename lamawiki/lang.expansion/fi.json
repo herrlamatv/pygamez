@@ -89,7 +89,7 @@
         {
           "h": "Ulkoasu",
           "body": [
-            "Ulkoasu-välilehdellä valitset yhden kahdeksasta käyttöliittymän ulkoasusta: UI v4.1 (oletus: hillityt tähdet, Saturnus ja musta aukko), neljä kuvioversiota UI v4.1.1-v4.1.4 (kuten v4.1, mutta taustalla laatoitettu siksak-kuvio - musta/antrasiitti, sininen/tummansininen, v4:n indigo mustalla ja v4:n grafiittisävy mustalla), UI v4 (rauhallinen, litteä grafiitti-ilme), UI v3 (klassinen käyttöliittymä revontulineen ja hehkuineen) ja UI v2 (ensimmäinen käyttöliittymän uudistus: laivastonsininen liukuväri, tähtikenttä ja hehkuvat painikkeet, ilman animaatioita).",
+            "Ulkoasu-välilehdellä valitset yhden yhdeksästä käyttöliittymän ulkoasusta: UI v4.1 (oletus: hillityt tähdet, Saturnus ja musta aukko), neljä kuvioversiota UI v4.1.1-v4.1.4 (kuten v4.1, mutta taustalla laatoitettu siksak-kuvio - musta/antrasiitti, sininen/tummansininen, v4:n indigo mustalla ja v4:n grafiittisävy mustalla), UI v4 (rauhallinen, litteä grafiitti-ilme), UI v3 (klassinen käyttöliittymä revontulineen ja hehkuineen), UI v2 (ensimmäinen käyttöliittymän uudistus: laivastonsininen liukuväri, tähtikenttä ja hehkuvat painikkeet, ilman animaatioita) ja UI v1 (ulkoasu ennen uudistusta: yksivärinen tausta, litteät painikkeet, ei tehosteita).",
             "Jokainen kortti näyttää pienen esikatselun. Valinta vaikuttaa heti pelialueeseen ja sivupalkkiin ja tallentuu settings.json-tiedostoon."
           ]
         },

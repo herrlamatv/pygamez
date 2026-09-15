@@ -8,7 +8,7 @@
 
 ## 🇩🇪 Deutsch
 
-### UI v2 ist zurück – 2026-09-15
+### UI v1 & UI v2 sind zurück – 2026-09-15
 
 #### Neu
 - **UI v2** als achtes Design im Reiter **Erscheinungsbild**: der Look der
@@ -18,12 +18,17 @@
   Sidebar-Farben samt durchgehender Akzentlinie unter dem Kopf. Bewusst so
   schlicht wie damals: keine Aurora, keine Funken, keine Screen-Übergänge,
   kein kreisender Logo-Schmuck.
-- Auch in der **Web-Version** wählbar (Einstellungen → Design).
+- **UI v1** als neuntes Design: der Stand vor dem „UI Rework“ (Commit
+  `cb71142`) – einfarbiger dunkler Hintergrund, flache Buttons, die sich nur
+  über die Farbe als ausgewählt zeigen, schlichte Titel ohne Linie und die
+  alten Sidebar-Farben. Keine Sterne, keine Rahmen, keine Schatten, keine
+  Übergänge; die Pause ist wieder die einfache Abdunklung mit Text.
+- Beide auch in der **Web-Version** wählbar (Einstellungen → Design).
 
 #### Geändert
-- `settings.json` akzeptiert jetzt `"theme": "v2"`. Name und Beschreibung der
+- `settings.json` akzeptiert jetzt `"theme": "v1"` und `"v2"`. Name und Beschreibung der
   Designkarte gibt es in allen 14 Sprachen; LamaWiki (Optionen) und alle
-  READMEs nennen jetzt acht Designs.
+  READMEs nennen jetzt neun Designs.
 - `ui.fx()` nimmt einen Standardwert an, damit Themes eigene Schalter haben
   können (`logo_glow`, `menu_orbit`, `style`), ohne alle anderen anzufassen.
 
@@ -660,7 +665,7 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 
 ## 🇬🇧 English
 
-### UI v2 is back – 2026-09-15
+### UI v1 & UI v2 are back – 2026-09-15
 
 #### Added
 - **UI v2** as the eighth design on the **Appearance** tab: the look of the
@@ -670,12 +675,17 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
   colours including the solid accent line under the header. Deliberately as
   plain as it was back then: no aurora, no sparks, no screen transitions, no
   orbiting logo decoration.
-- Also selectable in the **web version** (Settings → Design).
+- **UI v1** as the ninth design: the state before the "UI Rework" (commit
+  `cb71142`) – a plain dark background, flat buttons that show selection only
+  by colour, simple titles without a line and the old sidebar colours. No
+  stars, borders, shadows or transitions; pause is the simple dimmed screen
+  with text again.
+- Both also selectable in the **web version** (Settings → Design).
 
 #### Changed
-- `settings.json` now accepts `"theme": "v2"`. The design card's name and
+- `settings.json` now accepts `"theme": "v1"` and `"v2"`. The design card's name and
   description exist in all 14 languages; the LamaWiki (Options) and all
-  READMEs now list eight designs.
+  READMEs now list nine designs.
 - `ui.fx()` accepts a default value, so themes can have their own switches
   (`logo_glow`, `menu_orbit`, `style`) without touching all the others.
 

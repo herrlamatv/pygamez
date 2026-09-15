@@ -89,7 +89,7 @@
         {
           "h": "Izgled",
           "body": [
-            "Na kartici Izgled biraš jedan od osam dizajna sučelja: UI v4.1 (zadano: suptilne zvijezde, Saturn i crna rupa), četiri varijante s uzorkom UI v4.1.1 do v4.1.4 (kao v4.1, ali s popločanim cik-cak uzorkom u pozadini - crna/antracit, plava/tamnoplava, indigo iz v4 na crnoj i grafitni ton iz v4 na crnoj), UI v4 (smiren, plosnat grafitni izgled), UI v3 (klasično sučelje s aurorama i sjajem) i UI v2 (prva preradba sučelja: tamnoplavi prijelaz, zvjezdano polje i svijetleći gumbi, bez animacija).",
+            "Na kartici Izgled biraš jedan od devet dizajna sučelja: UI v4.1 (zadano: suptilne zvijezde, Saturn i crna rupa), četiri varijante s uzorkom UI v4.1.1 do v4.1.4 (kao v4.1, ali s popločanim cik-cak uzorkom u pozadini - crna/antracit, plava/tamnoplava, indigo iz v4 na crnoj i grafitni ton iz v4 na crnoj), UI v4 (smiren, plosnat grafitni izgled), UI v3 (klasično sučelje s aurorama i sjajem), UI v2 (prva preradba sučelja: tamnoplavi prijelaz, zvjezdano polje i svijetleći gumbi, bez animacija) i UI v1 (izgled prije preradbe: jednobojna pozadina, ravni gumbi, bez efekata).",
             "Svaka kartica prikazuje malu pretpreglednu sličicu. Odabir odmah vrijedi za područje igre i bočnu traku te se sprema u settings.json."
           ]
         },

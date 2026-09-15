@@ -89,7 +89,7 @@
         {
           "h": "Utseende",
           "body": [
-            "I fanen Utseende velger du ett av åtte UI-design: UI v4.1 (standard: diskré stjerner, Saturn og et svart hull), de fire mønstervariantene UI v4.1.1 til v4.1.4 (som v4.1, men med et flislagt sikksakkmønster som bakgrunn - svart/antrasitt, blå/mørkeblå, indigoen fra v4 på svart og grafittonen fra v4 på svart), UI v4 (rolig, flatt grafittutseende), UI v3 (det klassiske grensesnittet med nordlys og glød) og UI v2 (den aller første UI-fornyelsen: marineblå gradient, stjernehimmel og glødende knapper, uten animasjoner).",
+            "I fanen Utseende velger du ett av ni UI-design: UI v4.1 (standard: diskré stjerner, Saturn og et svart hull), de fire mønstervariantene UI v4.1.1 til v4.1.4 (som v4.1, men med et flislagt sikksakkmønster som bakgrunn - svart/antrasitt, blå/mørkeblå, indigoen fra v4 på svart og grafittonen fra v4 på svart), UI v4 (rolig, flatt grafittutseende), UI v3 (det klassiske grensesnittet med nordlys og glød), UI v2 (den aller første UI-fornyelsen: marineblå gradient, stjernehimmel og glødende knapper, uten animasjoner) og UI v1 (utseendet før UI-fornyelsen: ensfarget bakgrunn, flate knapper, ingen effekter).",
             "Hvert kort viser en liten forhåndsvisning. Valget gjelder umiddelbart for spillområdet og sidefeltet og lagres i settings.json."
           ]
         },

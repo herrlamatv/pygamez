@@ -111,7 +111,8 @@
       const centerY = Math.max(size / 2 + 14, centerY0 - shift) + bob;
       const logo = this.app.logo;
       let baseY, lineW;
-      if (logo && logo.complete && logo.naturalWidth) {
+      const v1 = ui.fx("style") === "v1"; // UI v1: kein Logo, nur Schrift
+      if (logo && logo.complete && logo.naturalWidth && !v1) {
         const lr = new PG.Rect(0, 0, size, size);
         lr.center = [cx, centerY];
         const rad = Math.max(12, size / 8);
@@ -126,7 +127,7 @@
         baseY = lr.bottom - bob;
         lineW = lr.w;
       } else {
-        const lf = ui.font(64, true);
+        const lf = ui.font(64, true, v1);
         ui.text(ctx, "PyGameZ", cx, centerY, lf, ui.TEXT, "center");
         baseY = centerY - bob + lf.height / 2;
         lineW = lf.width("PyGameZ") + 30;
@@ -143,7 +144,7 @@
       if (modern) {
         const lw2 = Math.max(72, Math.min(lineW, 180));
         draw.rect(ctx, ui.ACCENT, [cx - lw2 / 2, baseY + 12, lw2, 2], 0, 2);
-      } else {
+      } else if (!v1) {
         draw.rect(ctx, ui.ACCENT, [cx - lineW / 2, baseY + 12, lineW, 3], 0, 2);
       }
       ui.text(ctx, t("app.menu_title"), cx, baseY + 36, ui.font(18), ui.TEXT_DIM, "center");
@@ -163,7 +164,7 @@
           const accent = ui.gameColor(entry.id);
           const rr = lay.rowH / 2;
           if (idx === this.hover) {
-            if (!modern) draw.rect(ctx, [...accent, 55], rect.inflate(14, 14), 0, rr + 7);
+            if (!modern && !v1) draw.rect(ctx, [...accent, 55], rect.inflate(14, 14), 0, rr + 7);
             draw.rect(ctx, ui.PANEL_LIGHT, rect, 0, rr);
             draw.rect(ctx, accent, rect, 1, rr);
           } else {
@@ -575,6 +576,12 @@
     }
 
     drawHighscoreBanner(ctx, g) {
+      if (ui.fx("style") === "v1") {
+        // UI v1: nur der Text unten - Gold bei Rekord, sonst Grau
+        const s1 = g._hsRecord ? t("app.new_highscore", { score: g.score }) : t("app.highscore", { hs: g._hsValue || 0 });
+        ui.text(ctx, s1, W / 2, H - 16, ui.font(20, true, true), g._hsRecord ? [255, 215, 90] : [200, 205, 220], "center");
+        return;
+      }
       const fnt = ui.font(18, true);
       const record = g._hsRecord;
       const str = record ? t("app.new_highscore", { score: g.score }) : t("app.highscore", { hs: g._hsValue || 0 });
@@ -592,6 +599,18 @@
     }
 
     drawPause(ctx) {
+      if (ui.fx("style") === "v1") {
+        // UI v1: schlichte Abdunklung mit Text (plus die Web-Buttons, flach)
+        ctx.fillStyle = "rgba(0,0,0,0.59)";
+        ctx.fillRect(0, 0, W, H);
+        ui.text(ctx, t("app.pause"), W / 2, H / 2 - 40, ui.font(48, true, true), [240, 240, 240], "center");
+        ui.text(ctx, t("app.pause_resume"), W / 2, H / 2, ui.font(16, false, true), [200, 200, 200], "center");
+        const bf1 = ui.font(16);
+        this.pauseRects = [new PG.Rect(W / 2 - 150, H / 2 + 30, 300, 36), new PG.Rect(W / 2 - 150, H / 2 + 74, 300, 36)];
+        ui.drawButton(ctx, this.pauseRects[0], t("web.resume"), bf1, this.pauseSel === 0);
+        ui.drawButton(ctx, this.pauseRects[1], t("pregame.back"), bf1, this.pauseSel === 1);
+        return;
+      }
       // Weichgezeichnetes Spielbild (wo ctx.filter unterstützt wird)
       ctx.save();
       ctx.setTransform(1, 0, 0, 1, 0, 0);

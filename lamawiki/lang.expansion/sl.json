@@ -89,7 +89,7 @@
         {
           "h": "Videz",
           "body": [
-            "V zavihku Videz izbereš enega od osmih dizajnov vmesnika: UI v4.1 (privzeto: nevpadljive zvezde, Saturn in črna luknja), štiri vzorčne različice UI v4.1.1 do v4.1.4 (kot v4.1, a s tlakovanim cikcak vzorcem v ozadju - črna/antracitna, modra/temno modra, indigo iz v4 na črni in grafitni ton iz v4 na črni), UI v4 (umirjen, ploski grafitni videz), UI v3 (klasični vmesnik s polarnim sijem in žarenjem) in UI v2 (prva prenova vmesnika: mornarsko moder preliv, zvezdno polje in žareči gumbi, brez animacij).",
+            "V zavihku Videz izbereš enega od devetih dizajnov vmesnika: UI v4.1 (privzeto: nevpadljive zvezde, Saturn in črna luknja), štiri vzorčne različice UI v4.1.1 do v4.1.4 (kot v4.1, a s tlakovanim cikcak vzorcem v ozadju - črna/antracitna, modra/temno modra, indigo iz v4 na črni in grafitni ton iz v4 na črni), UI v4 (umirjen, ploski grafitni videz), UI v3 (klasični vmesnik s polarnim sijem in žarenjem), UI v2 (prva prenova vmesnika: mornarsko moder preliv, zvezdno polje in žareči gumbi, brez animacij) in UI v1 (videz pred prenovo: enobarvno ozadje, ploski gumbi, brez učinkov).",
             "Vsaka kartica prikaže majhen predogled. Izbira takoj velja za igralno območje in stransko vrstico ter se shrani v settings.json."
           ]
         },

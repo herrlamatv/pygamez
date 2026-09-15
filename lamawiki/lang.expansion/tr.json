@@ -89,7 +89,7 @@
         {
           "h": "Görünüm",
           "body": [
-            "Görünüm sekmesinde sekiz arayüz tasarımından birini seçersin: UI v4.1 (öntanımlı: ince yıldızlar, Satürn ve bir kara delik), dört desen çeşidi UI v4.1.1 - v4.1.4 (v4.1 gibi, ancak arka planda döşenmiş zikzak deseniyle - siyah/antrasit, mavi/koyu mavi, siyah üzerine v4 çivit rengi ve siyah üzerine v4 grafit tonu), UI v4 (sakin, düz grafit görünüm), UI v3 (aurora ışıkları ve parıltılı klasik arayüz) ve UI v2 (ilk arayüz yenilemesi: lacivert geçiş, yıldız alanı ve parlayan düğmeler, animasyonsuz).",
+            "Görünüm sekmesinde dokuz arayüz tasarımından birini seçersin: UI v4.1 (öntanımlı: ince yıldızlar, Satürn ve bir kara delik), dört desen çeşidi UI v4.1.1 - v4.1.4 (v4.1 gibi, ancak arka planda döşenmiş zikzak deseniyle - siyah/antrasit, mavi/koyu mavi, siyah üzerine v4 çivit rengi ve siyah üzerine v4 grafit tonu), UI v4 (sakin, düz grafit görünüm), UI v3 (aurora ışıkları ve parıltılı klasik arayüz), UI v2 (ilk arayüz yenilemesi: lacivert geçiş, yıldız alanı ve parlayan düğmeler, animasyonsuz) ve UI v1 (yenilemeden önceki görünüm: düz arka plan, düz düğmeler, efekt yok).",
             "Her kart küçük bir önizleme gösterir. Seçim anında oyun alanına ve kenar çubuğuna uygulanır ve settings.json dosyasına kaydedilir."
           ]
         },

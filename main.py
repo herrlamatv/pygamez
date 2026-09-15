@@ -821,6 +821,8 @@ class App:
             tk.Frame(parent, bg=_mix_hex(C_BORDER, C_ACCENT, 0.35),
                      height=1).pack(fill="x")
             return
+        if ui.fx("style") == "v1":
+            return          # UI v1: kein Strich unter dem Kopf (Commit cb71142)
         if ui.fx("style") == "v2":
             # UI v2: durchgehende 2px-Akzentlinie (wie in Commit 08739d3).
             tk.Frame(parent, bg=C_ACCENT, height=2).pack(fill="x")
@@ -1441,6 +1443,16 @@ class App:
         ui = self.ui
         hs = getattr(game, "_hs_value", 0)
         record = getattr(game, "_hs_record", False)
+        if ui.fx("style") == "v1":
+            # UI v1: nur der Text unten - Gold bei Rekord, sonst Grau.
+            if record:
+                text, farbe = t("app.new_highscore", score=game.score), (255, 215, 90)
+            else:
+                text, farbe = t("app.highscore", hs=hs), (200, 205, 220)
+            img = ui.font(20, bold=True, mono=True).render(text, True, farbe)
+            self.canvas.blit(img, img.get_rect(
+                center=(self.game_w // 2, self.game_h - 16)))
+            return
         fnt = ui.font(18, bold=True)
         if record:
             # Rekord: goldener Verlaufstext
@@ -1704,6 +1716,9 @@ class App:
         # darunter sonst nicht mehr passt, rückt alles gerade so weit hoch.
         size = min(176, max(96, h // 4))
         logo = self._menu_logo(size)
+        v1 = ui.fx("style") == "v1"
+        if v1:
+            logo = None     # UI v1: kein Logo, nur Schrift (Consolas)
         center_y0 = h // 2 - 46
         avail0 = (h - 72) - (center_y0 + size // 2 + 80)
         rows, fnt, pad_x, row_h, gap, tiles_h = \
@@ -1731,7 +1746,7 @@ class App:
                                       border_radius=rad + 2)
             base_y, line_w = lrect.bottom - bob, lrect.w
         else:
-            logo_font = ui.font(min(64, max(40, w // 11)), bold=True)
+            logo_font = ui.font(min(64, max(40, w // 11)), bold=True, mono=v1)
             if modern or not ui.fx("title_grad", True):
                 img = logo_font.render("PyGameZ", True, ui.TEXT)
             else:
@@ -1762,7 +1777,7 @@ class App:
             self.pygame.draw.rect(s, ui.ACCENT,
                                   (cx - lw2 // 2, base_y + 12, lw2, 2),
                                   border_radius=2)
-        else:
+        elif not v1:        # UI v1: keine Linie unter dem Schriftzug
             self.pygame.draw.rect(s, ui.ACCENT,
                                   (cx - line_w // 2, base_y + 12, line_w, 3),
                                   border_radius=2)
@@ -1849,7 +1864,7 @@ class App:
                 idx = len(self._menu_tiles)
                 accent = ui.game_color(cls.__name__)
                 if idx == hover:
-                    if not ui.is_modern():
+                    if not ui.is_modern() and ui.fx("style") != "v1":
                         glow = self.pygame.Surface((tw + 14, row_h + 14),
                                                    self.pygame.SRCALPHA)
                         self.pygame.draw.rect(glow, (*accent, 55),
@@ -1902,6 +1917,19 @@ class App:
         ui = self.ui
         pygame = self.pygame
         w, h, s = self.game_w, self.game_h, self.canvas
+
+        if ui.fx("style") == "v1":
+            # UI v1: schlichte Abdunklung mit Text - keine Karte, kein Blur.
+            overlay = pygame.Surface((w, h), pygame.SRCALPHA)
+            overlay.fill((0, 0, 0, 150))
+            s.blit(overlay, (0, 0))
+            img = ui.font(48, bold=True, mono=True).render(t("app.pause"), True,
+                                                           (240, 240, 240))
+            s.blit(img, img.get_rect(center=(w // 2, h // 2)))
+            img2 = ui.font(16, mono=True).render(t("app.pause_resume"), True,
+                                                 (200, 200, 200))
+            s.blit(img2, img2.get_rect(center=(w // 2, h // 2 + 40)))
+            return
 
         # Günstiger Blur: stark herunter- und wieder hochskalieren.
         small = pygame.transform.smoothscale(s, (max(1, w // 10), max(1, h // 10)))

@@ -79,13 +79,15 @@ FPS_OPTIONS = [15, 30, 45, 60, 120]
 # Muster als Hintergrund - schwarz/anthrazit, blau/dunkelblau, v4-Indigo auf
 # Schwarz bzw. v4-Graphit auf Schwarz), "modern" = UI v4 (komplett ruhig),
 # "classic" = UI v3 (die alte UI mit Sternen/Aurora/Glow), "v2" = UI v2 (die
-# allererste ui.py: Navy-Verlauf, Sternenfeld, statische Glow-Buttons). Wählbar
-# im Options-Screen unter "Erscheinungsbild".
-THEMES = ("v41", "v411", "v412", "v413", "v414", "modern", "classic", "v2")
+# allererste ui.py: Navy-Verlauf, Sternenfeld, statische Glow-Buttons), "v1" =
+# UI v1 (der flache Look vor dem UI Rework). Wählbar im Options-Screen unter
+# "Erscheinungsbild".
+THEMES = ("v41", "v411", "v412", "v413", "v414", "modern", "classic", "v2",
+          "v1")
 
 DEFAULTS = {
     # UI-Design: "v41" (Standard), "v411".."v414" (Muster-Hintergrund),
-    # "modern" (UI v4), "classic" (UI v3) oder "v2" (UI v2).
+    # "modern" (UI v4), "classic" (UI v3), "v2" (UI v2) oder "v1" (UI v1).
     "theme": "v41",
     # Standardmäßig AUS (Erststart ist leise; im Willkommens-Screen/den Optionen
     # einschaltbar). Bestehende Installationen behalten ihren gespeicherten Wert.

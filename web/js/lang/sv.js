@@ -731,6 +731,8 @@ window.PG_LANG["sv"] = {
  "options.theme_hint": "Utseendet tillämpas och sparas direkt.",
  "options.theme_modern": "UI v4",
  "options.theme_modern_desc": "Rent och lugnt: platta paneler, tydlig typografi, en enda accentfärg.",
+ "options.theme_v1": "UI v1",
+ "options.theme_v1_desc": "Utseendet före UI-omarbetningen: enfärgad mörk bakgrund, platta knappar, inga effekter.",
  "options.theme_v2": "UI v2",
  "options.theme_v2_desc": "Den allra första UI-omarbetningen: marinblå gradient, stjärnhimmel och glödande knappar – utan animationer.",
  "options.theme_v41": "UI v4.1",

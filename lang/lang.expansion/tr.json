@@ -729,6 +729,8 @@
   "options.theme_hint": "Görünüm anında uygulanır ve kaydedilir.",
   "options.theme_modern": "UI v4",
   "options.theme_modern_desc": "Sade ve dingin: düz paneller, net tipografi, tek vurgu.",
+  "options.theme_v1": "UI v1",
+  "options.theme_v1_desc": "Arayüz yenilemesinden önceki görünüm: düz koyu arka plan, düz düğmeler, efekt yok.",
   "options.theme_v2": "UI v2",
   "options.theme_v2_desc": "İlk arayüz yenilemesi: lacivert geçiş, yıldız alanı ve parlayan düğmeler – animasyonsuz.",
   "options.theme_v41": "UI v4.1",

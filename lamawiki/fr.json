@@ -89,7 +89,7 @@
         {
           "h": "Apparence",
           "body": [
-            "L'onglet Apparence permet de choisir l'un des huit designs : UI v4.1 (par défaut : étoiles discrètes, Saturne et un trou noir), les quatre variantes à motif UI v4.1.1 à v4.1.4 (comme v4.1, mais avec un motif zigzag en carrelage en arrière-plan - noir/anthracite, bleu/bleu foncé, l'indigo de v4 sur noir et le graphite de v4 sur noir), UI v4 (look graphite plat et calme), UI v3 (l'interface classique avec aurores et halos) et UI v2 (la toute première refonte : dégradé marine, champ d'étoiles et boutons lumineux, sans animations).",
+            "L'onglet Apparence permet de choisir l'un des neuf designs : UI v4.1 (par défaut : étoiles discrètes, Saturne et un trou noir), les quatre variantes à motif UI v4.1.1 à v4.1.4 (comme v4.1, mais avec un motif zigzag en carrelage en arrière-plan - noir/anthracite, bleu/bleu foncé, l'indigo de v4 sur noir et le graphite de v4 sur noir), UI v4 (look graphite plat et calme), UI v3 (l'interface classique avec aurores et halos), UI v2 (la toute première refonte : dégradé marine, champ d'étoiles et boutons lumineux, sans animations) et UI v1 (le look d'avant la refonte : fond uni, boutons plats, aucun effet).",
             "Chaque carte affiche un petit aperçu. Le choix s'applique immédiatement à la zone de jeu et à la barre latérale, et il est enregistré dans settings.json."
           ]
         },

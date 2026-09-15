@@ -4,7 +4,7 @@ ui.py
 =====
 Gemeinsames UI-Toolkit für alle Pygame-Screens (Menüs, Overlays, Spiele).
 
-Seit dem UI-Update gibt es ACHT wählbare Designs ("Themes"):
+Seit dem UI-Update gibt es NEUN wählbare Designs ("Themes"):
 
 - "v41"     (Standard, "UI v4.1"): wie "modern", aber lebendiger - leicht
   blau-violett getönte Palette, dezentes Sternenfeld und auf dem
@@ -28,6 +28,10 @@ Seit dem UI-Update gibt es ACHT wählbare Designs ("Themes"):
   Navy-Verlauf mit Sternenfeld, Buttons mit statischem Glow, Akzentbalken
   und Pfeil, Titel mit Schatten und doppelter Akzentlinie. Keine
   Animationen, keine Aurora, keine Funken, keine Übergänge.
+- "v1"      ("UI v1"): der Stand VOR dem UI Rework (Commit cb71142), als es
+  noch gar keine ui.py gab - einfarbiger dunkler Hintergrund, flache Buttons
+  ohne Rand (Auswahl nur über die Farbe), schlichte Titel ohne Linie,
+  Hinweistext ohne Trennlinie. Keine Sterne, Schatten oder Übergänge.
 
 Umgeschaltet wird über set_theme("v41"/"v411"/...) - im Spiel über den
 Reiter "Erscheinungsbild" im Options-Screen. Da ALLE Module die Farben nur
@@ -155,6 +159,36 @@ _V2_FX = dict(
     logo_glow=False, menu_orbit=False,        # Startbildschirm ohne Deko
 )
 
+# UI v1: die Farben aus menu.py VOR dem UI Rework (Commit cb71142):
+# COL_BG (18,20,28), COL_PANEL, COL_BTN, COL_SEL (blau), COL_TEXT, COL_MUTE,
+# COL_ACCENT (grün) und COL_KEY (gold). Einfarbig - oben = unten.
+_V1_COLORS = dict(
+    BG_TOP=(18, 20, 28), BG_BOTTOM=(18, 20, 28),
+    PANEL=(30, 34, 46), PANEL_LIGHT=(44, 50, 66),
+    BORDER=(44, 50, 66), BORDER_LIGHT=(62, 70, 92),
+    BTN=(44, 50, 66), BTN_SEL=(70, 96, 150),
+    ACCENT=(120, 200, 140), ACCENT2=(90, 160, 240), ACCENT_SOFT=(70, 96, 150),
+    GREEN=(120, 200, 140), GOLD=(240, 210, 120), RED=(220, 90, 90),
+    TEXT=(232, 234, 240), TEXT_DIM=(150, 158, 176), TEXT_FAINT=(105, 112, 130),
+)
+
+_V1_FX = dict(
+    stars=False, star_bright=0.0,
+    aurora=False, shooting=False,
+    celestial=False,
+    pattern=None,
+    vignette=0,                               # flach, keine Vignette
+    title_glow=False, title_grad=False,
+    btn_glow=False, btn_arrow=False,
+    sparks=False,
+    scanline=False, trans_dur=0.0,
+    panel_radius=8, btn_radius=8,             # border_radius=8 wie damals
+    shadow_alpha=0,
+    menu_bob=0,
+    style="v1",                               # eigene, flache Zeichenpfade
+    logo_glow=False, menu_orbit=False,
+)
+
 # UI v4.1: die cleane Modern-Optik, aber mit etwas Leben im Hintergrund -
 # dezente Sterne, sanftes Logo-Schweben und Saturn + Schwarzes Loch auf dem
 # Startbildschirm. Alle Bedien-Elemente bleiben wie im Modern-Theme.
@@ -266,6 +300,18 @@ _TK_V41 = dict(
     BORDER="#2e3342", GREEN="#58be84", GOLD="#e5c46a", RED="#e06c6c",
 )
 
+# UI v1: die Sidebar von Commit cb71142 - durchgehend #1c1f29, Spiele-Buttons
+# #3a4357 (Hover #4a566f), Optionen #2f3645, Beenden #a23b3b, weiße Schrift.
+_TK_V1 = dict(
+    SIDEBAR="#1c1f29", HEADER="#1c1f29", CARD="#252a37",
+    BTN="#3a4357", BTN_HOVER="#4a566f",
+    ACCENT="#78c88c", ACCENT2="#5aa0f0",
+    DANGER="#a23b3b", DANGER_HOVER="#b84848",
+    BACK="#2f3645", BACK_HOVER="#3d4659",
+    TEXT="#ffffff", TEXT_DIM="#c8d0e0", TEXT_FAINT="#8a93a8",
+    BORDER="#2f3645", GREEN="#78c88c", GOLD="#f0d278", RED="#dc5a5a",
+)
+
 # UI v2: die Sidebar-Farben aus main.py von Commit 08739d3 (C_SIDEBAR, ...);
 # Werte, die es damals noch nicht gab, sind aus der v3-Palette ergänzt.
 _TK_V2 = dict(
@@ -294,9 +340,10 @@ THEMES = {
     "modern": (_MODERN_COLORS, _MODERN_FX, _TK_MODERN),
     "classic": (_CLASSIC_COLORS, _CLASSIC_FX, _TK_CLASSIC),
     "v2": (_V2_COLORS, _V2_FX, _TK_V2),
+    "v1": (_V1_COLORS, _V1_FX, _TK_V1),
 }
 THEME_NAMES = ("v41", "v411", "v412", "v413", "v414",
-               "modern", "classic", "v2")
+               "modern", "classic", "v2", "v1")
 DEFAULT_THEME = "v41"
 
 _theme = DEFAULT_THEME
@@ -338,9 +385,9 @@ def is_modern():
     Glow und Puls). Was sich v4.1 zusätzlich gönnt (Sterne, Saturn,
     Schwarzes Loch), regeln die fx-Schalter des Themes.
     """
-    # UI v3 und UI v2 zeichnen über die klassischen Pfade (v2 mit eigenen
+    # UI v3, v2 und v1 zeichnen über die klassischen Pfade (v2/v1 mit eigenen
     # Zweigen, siehe fx("style")).
-    return _theme not in ("classic", "v2")
+    return _theme not in ("classic", "v2", "v1")
 
 
 def fx(key, default=None):
@@ -897,6 +944,13 @@ def draw_panel(surface, rect, color=None, border=None, radius=None,
     border = border if border is not None else BORDER
     radius = radius if radius is not None else _fx["panel_radius"]
     r = pygame.Rect(rect)
+    if _fx.get("style") == "v1":
+        # UI v1: flache, abgerundete Fläche - ohne Rand und ohne Schatten.
+        pygame.draw.rect(surface, color, r, border_radius=radius)
+        if accent_top:
+            pygame.draw.rect(surface, accent_top,
+                             (r.x + radius, r.y, r.w - 2 * radius, 2))
+        return r
     if shadow:
         sh = pygame.Surface((r.w + 12, r.h + 12), pygame.SRCALPHA)
         pygame.draw.rect(sh, (0, 0, 0, _fx["shadow_alpha"]), (4, 6, r.w, r.h),
@@ -966,6 +1020,14 @@ def draw_button(surface, rect, label, fnt, selected=False, icon=None,
                              border_radius=2)
         _blit_button_label(surface, r, label, fnt, mix(TEXT_DIM, TEXT, v),
                            sub, sub_font, mix(TEXT_FAINT, TEXT_DIM, v))
+        return r
+
+    if _fx.get("style") == "v1":
+        # UI v1: flacher Button ohne Rand - die Auswahl zeigt sich nur über die
+        # Farbe (COL_SEL statt COL_BTN), der Text bleibt immer voll hell.
+        pygame.draw.rect(surface, BTN_SEL if selected else BTN, r,
+                         border_radius=radius)
+        _blit_button_label(surface, r, label, fnt, TEXT, sub, sub_font, TEXT_DIM)
         return r
 
     if _fx.get("style") == "v2":
@@ -1095,6 +1157,16 @@ def draw_title(surface, width, title, subtitle=None, y=52, big=None,
             surface.blit(sub, sub.get_rect(center=(cx, ly + 24)))
         return ly
 
+    if _fx.get("style") == "v1":
+        # UI v1: schlichter Titel, Untertitel 42px darunter, keine Linie.
+        img = big.render(title, True, TEXT)
+        surface.blit(img, img.get_rect(center=(cx, y)))
+        if subtitle:
+            small = small or font(17)
+            sub = small.render(subtitle, True, TEXT_DIM)
+            surface.blit(sub, sub.get_rect(center=(cx, y + 42)))
+        return y + img.get_height() // 2 + 8
+
     if _fx.get("style") == "v2":
         # UI v2: Schatten + Titel in Textfarbe, Akzentlinie + weicher Zweitstrich.
         sh = big.render(title, True, (0, 0, 0))
@@ -1139,6 +1211,11 @@ def draw_title(surface, width, title, subtitle=None, y=52, big=None,
 def draw_footer(surface, width, height, text, fnt=None):
     """Fußzeile: dezente Trennlinie + Hinweistext unten."""
     fnt = fnt or font(14)
+    if _fx.get("style") == "v1":
+        # UI v1: nur der Hinweistext, ohne Trennlinie.
+        img = fnt.render(text, True, TEXT_DIM)
+        surface.blit(img, img.get_rect(center=(width // 2, height - 24)))
+        return
     img = fnt.render(text, True, TEXT_FAINT)
     y = height - 22
     pygame.draw.line(surface, BORDER, (width // 6, y - 12),

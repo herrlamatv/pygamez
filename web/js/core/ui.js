@@ -59,6 +59,18 @@
     aurora: false, shooting: false, sparks: false, scanline: false, trans_dur: 0,
     title_glow: false, title_grad: false, menu_bob: 0, style: "v2", logo_glow: false, menu_orbit: false,
   });
+  // UI v1: der flache Look VOR dem UI Rework (Commit cb71142) - einfarbiger
+  // Hintergrund, Buttons ohne Rand (Auswahl nur über die Farbe), keine Deko.
+  const V1 = {
+    BG_TOP: [18, 20, 28], BG_BOTTOM: [18, 20, 28], PANEL: [30, 34, 46], PANEL_LIGHT: [44, 50, 66],
+    BORDER: [44, 50, 66], BORDER_LIGHT: [62, 70, 92], BTN: [44, 50, 66], BTN_SEL: [70, 96, 150],
+    ACCENT: [120, 200, 140], ACCENT2: [90, 160, 240], ACCENT_SOFT: [70, 96, 150],
+    GREEN: [120, 200, 140], GOLD: [240, 210, 120], RED: [220, 90, 90],
+    TEXT: [232, 234, 240], TEXT_DIM: [150, 158, 176], TEXT_FAINT: [105, 112, 130],
+  };
+  const FX_V1 = Object.assign({}, FX_MODERN, {
+    vignette: 0, panel_radius: 8, btn_radius: 8, shadow_alpha: 0, trans_dur: 0, style: "v1", logo_glow: false, menu_orbit: false,
+  });
 
   // Sidebar-Farben (CSS-Variablen) je Theme.
   const CSS_V41 = { sidebar: "#13161f", header: "#0f1219", card: "#1a1e2a", btn: "#1f2431", "btn-hover": "#293040", accent: "#5b8def", accent2: "#819bff", border: "#2e3342", text: "#e9ebf1", "text-dim": "#969dac", "text-faint": "#646a7a", gold: "#e5c46a" };
@@ -74,6 +86,7 @@
     modern: [MODERN, FX_MODERN, CSS_MODERN],
     classic: [CLASSIC, FX_CLASSIC, CSS_CLASSIC],
     v2: [V2, FX_V2, { sidebar: "#141824", header: "#0f1320", card: "#1d2333", btn: "#232a3d", "btn-hover": "#2e3852", accent: "#589cff", accent2: "#4270b4", border: "#2a3147", text: "#e9edf5", "text-dim": "#98a2b8", "text-faint": "#5f667c", gold: "#f5cd64" }],
+    v1: [V1, FX_V1, { sidebar: "#1c1f29", header: "#1c1f29", card: "#252a37", btn: "#3a4357", "btn-hover": "#4a566f", accent: "#78c88c", accent2: "#5aa0f0", border: "#2f3645", text: "#ffffff", "text-dim": "#c8d0e0", "text-faint": "#8a93a8", gold: "#f0d278" }],
   };
 
   let _theme = "v41";
@@ -92,7 +105,7 @@
     btnAnim.clear();
   };
   ui.themeName = () => _theme;
-  ui.isModern = () => _theme !== "classic" && _theme !== "v2";
+  ui.isModern = () => _theme !== "classic" && _theme !== "v2" && _theme !== "v1";
   ui.fx = (key) => _fx[key];
 
   // Akzentfarbe je Spiel (identisch zu ui.GAME_COLORS).
@@ -712,6 +725,12 @@
     const color = opts.color != null ? opts.color : ui.PANEL;
     const border = opts.border != null ? opts.border : ui.BORDER;
     const radius = opts.radius != null ? opts.radius : _fx.panel_radius;
+    if (_fx.style === "v1") {
+      // UI v1: flache, abgerundete Fläche ohne Rand und Schatten
+      draw.rect(ctx, color, r, 0, radius);
+      if (opts.accentTop) draw.rect(ctx, opts.accentTop, [r.x + radius, r.y, r.w - 2 * radius, 2]);
+      return r;
+    }
     if (opts.shadow !== false) {
       draw.rect(ctx, [0, 0, 0, _fx.shadow_alpha], [r.x + 2, r.y + 4, r.w, r.h], 0, radius + 2);
     }
@@ -762,6 +781,12 @@
         draw.rect(ctx, ac, [r.x + 7, r.centery - bh / 2, 3, bh], 0, 2);
       }
       buttonLabel(ctx, r, label, fnt, ui.mix(ui.TEXT_DIM, ui.TEXT, v), opts.sub, opts.subFont, ui.mix(ui.TEXT_FAINT, ui.TEXT_DIM, v));
+      return r;
+    }
+    if (_fx.style === "v1") {
+      // UI v1: flacher Button, Auswahl nur über die Farbe, Text immer hell
+      draw.rect(ctx, selected ? ui.BTN_SEL : ui.BTN, r, 0, radius);
+      buttonLabel(ctx, r, label, fnt, ui.TEXT, opts.sub, opts.subFont, ui.TEXT_DIM);
       return r;
     }
     if (_fx.style === "v2") {
@@ -819,6 +844,12 @@
       if (opts.subtitle) ui.text(ctx, opts.subtitle, cx, ly + 24, opts.small || ui.font(17), ui.TEXT_DIM, "center");
       return ly;
     }
+    if (_fx.style === "v1") {
+      // UI v1: schlichter Titel, Untertitel 42px darunter, keine Linie
+      ui.text(ctx, title, cx, y, big, ui.TEXT, "center");
+      if (opts.subtitle) ui.text(ctx, opts.subtitle, cx, y + 42, opts.small || ui.font(17), ui.TEXT_DIM, "center");
+      return y + th / 2 + 8;
+    }
     if (_fx.style === "v2") {
       // UI v2: Schatten + Titel in Textfarbe, Akzentlinie + weicher Zweitstrich
       ui.text(ctx, title, cx + 2, y + 3, big, [0, 0, 0, 140], "center");
@@ -847,6 +878,11 @@
   /** Fußzeile: dezente Trennlinie + Hinweistext unten. */
   ui.drawFooter = function (ctx, width, height, str, fnt) {
     fnt = fnt || ui.font(14);
+    if (_fx.style === "v1") {
+      // UI v1: nur der Hinweistext, ohne Trennlinie
+      ui.text(ctx, str, width / 2, height - 24, fnt, ui.TEXT_DIM, "center");
+      return;
+    }
     const y = height - 22;
     draw.line(ctx, ui.BORDER, [width / 6, y - 12], [width - width / 6, y - 12]);
     ui.text(ctx, str, width / 2, y, fnt, ui.TEXT_FAINT, "center");

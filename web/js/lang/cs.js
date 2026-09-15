@@ -731,6 +731,8 @@ window.PG_LANG["cs"] = {
  "options.theme_hint": "Vzhled se použije a uloží okamžitě.",
  "options.theme_modern": "UI v4",
  "options.theme_modern_desc": "Čisté a klidné: ploché panely, jasná typografie, jediný akcent.",
+ "options.theme_v1": "UI v1",
+ "options.theme_v1_desc": "Vzhled před přepracováním UI: jednobarevné tmavé pozadí, plochá tlačítka, žádné efekty.",
  "options.theme_v2": "UI v2",
  "options.theme_v2_desc": "Úplně první přepracování UI: námořnicky modrý přechod, hvězdné pole a zářící tlačítka – bez animací.",
  "options.theme_v41": "UI v4.1",
