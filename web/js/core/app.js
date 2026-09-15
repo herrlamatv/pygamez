@@ -115,13 +115,14 @@
         const lr = new PG.Rect(0, 0, size, size);
         lr.center = [cx, centerY];
         const rad = Math.max(12, size / 8);
-        if (!modern) draw.rect(ctx, [...ui.ACCENT, 55 + 35 * ui.pulse(1.4)], lr.inflate(26, 26), 0, rad + 8);
+        const logoGlow = !modern && ui.fx("logo_glow") !== false;
+        if (logoGlow) draw.rect(ctx, [...ui.ACCENT, 55 + 35 * ui.pulse(1.4)], lr.inflate(26, 26), 0, rad + 8);
         ctx.save();
         ui.roundPath(ctx, lr.x, lr.y, lr.w, lr.h, rad);
         ctx.clip();
         ctx.drawImage(logo, lr.x, lr.y, lr.w, lr.h);
         ctx.restore();
-        draw.rect(ctx, modern ? ui.BORDER_LIGHT : ui.ACCENT, lr.inflate(4, 4), modern ? 1 : 2, rad + 2);
+        draw.rect(ctx, logoGlow ? ui.ACCENT : ui.BORDER_LIGHT, lr.inflate(4, 4), logoGlow ? 2 : 1, rad + 2);
         baseY = lr.bottom - bob;
         lineW = lr.w;
       } else {
@@ -130,7 +131,7 @@
         baseY = centerY - bob + lf.height / 2;
         lineW = lf.width("PyGameZ") + 30;
       }
-      if (!modern) {
+      if (!modern && ui.fx("menu_orbit") !== false) {
         [ui.ACCENT, ui.ACCENT2, ui.GOLD].forEach((col, k) => {
           const ang = ts * (0.6 + 0.17 * k) + k * 2.09;
           const ox = cx + Math.cos(ang) * (size / 2 + 34);
@@ -608,7 +609,7 @@
       draw.rect(ctx, ui.ACCENT, [card.x, card.y, card.w, 4], 0, [14, 14, 0, 0]);
       if (!ui.isModern()) draw.rect(ctx, ui.mix(ui.BORDER, ui.ACCENT, ui.pulse(2.0)), card.inflate(8, 8), 1, 16);
       const big = ui.font(42, true);
-      if (ui.isModern()) ui.text(ctx, t("app.pause"), card.centerx, card.y + 46, big, ui.TEXT, "center");
+      if (ui.isModern() || ui.fx("title_grad") === false) ui.text(ctx, t("app.pause"), card.centerx, card.y + 46, big, ui.TEXT, "center");
       else ui.gradText(ctx, t("app.pause"), card.centerx, card.y + 46, big, null, null, "center");
       ui.text(ctx, t("app.pause_resume"), card.centerx, card.y + 84, ui.font(15), ui.TEXT_DIM, "center");
       const bf = ui.font(16);

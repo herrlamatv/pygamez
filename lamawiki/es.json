@@ -89,7 +89,7 @@
         {
           "h": "Apariencia",
           "body": [
-            "La pestaña Apariencia permite elegir uno de los siete diseños: UI v4.1 (predeterminado: estrellas sutiles, Saturno y un agujero negro), las cuatro variantes con patrón UI v4.1.1 a v4.1.4 (como v4.1, pero con un patrón de zigzag en mosaico de fondo: negro/antracita, azul/azul oscuro, el índigo de v4 sobre negro y el grafito de v4 sobre negro), UI v4 (aspecto grafito plano y tranquilo) y UI v3 (la interfaz clásica con auroras y brillos).",
+            "La pestaña Apariencia permite elegir uno de los ocho diseños: UI v4.1 (predeterminado: estrellas sutiles, Saturno y un agujero negro), las cuatro variantes con patrón UI v4.1.1 a v4.1.4 (como v4.1, pero con un patrón de zigzag en mosaico de fondo: negro/antracita, azul/azul oscuro, el índigo de v4 sobre negro y el grafito de v4 sobre negro), UI v4 (aspecto grafito plano y tranquilo), UI v3 (la interfaz clásica con auroras y brillos) y UI v2 (el primer rediseño: degradado azul marino, campo de estrellas y botones con brillo, sin animaciones).",
             "Cada tarjeta muestra una pequeña vista previa. La elección se aplica al instante al área de juego y a la barra lateral, y se guarda en settings.json."
           ]
         },

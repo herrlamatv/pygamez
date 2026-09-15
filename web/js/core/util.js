@@ -376,7 +376,7 @@
 
   PG.THEME_NAMES = [
     ["v41", "UI v4.1"], ["v411", "UI v4.1.1"], ["v412", "UI v4.1.2"], ["v413", "UI v4.1.3"],
-    ["v414", "UI v4.1.4"], ["modern", "UI v4"], ["classic", "UI v3 (Classic)"],
+    ["v414", "UI v4.1.4"], ["modern", "UI v4"], ["classic", "UI v3 (Classic)"], ["v2", "UI v2"],
   ];
 
   const GLOBAL_DEFAULTS = { theme: "v41", sound: true, volume: 0.6, haptik: false };

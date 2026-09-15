@@ -821,6 +821,10 @@ class App:
             tk.Frame(parent, bg=_mix_hex(C_BORDER, C_ACCENT, 0.35),
                      height=1).pack(fill="x")
             return
+        if ui.fx("style") == "v2":
+            # UI v2: durchgehende 2px-Akzentlinie (wie in Commit 08739d3).
+            tk.Frame(parent, bg=C_ACCENT, height=2).pack(fill="x")
+            return
         grad = tk.Canvas(parent, height=2, bg=C_HEADER, bd=0,
                          highlightthickness=0)
         grad.pack(fill="x")
@@ -1709,8 +1713,9 @@ class App:
         if logo is not None:
             lrect = logo.get_rect(center=(cx, center_y))
             rad = max(12, size // 8)
-            if modern:
-                # Ruhige Darstellung: nur eine feine Rahmenlinie, kein Glow.
+            if modern or not ui.fx("logo_glow", True):
+                # Ruhige Darstellung: nur eine feine Rahmenlinie, kein Glow
+                # (Modern-Familie und UI v2).
                 s.blit(logo, lrect)
                 self.pygame.draw.rect(s, ui.BORDER_LIGHT, lrect.inflate(4, 4),
                                       1, border_radius=rad + 2)
@@ -1727,7 +1732,7 @@ class App:
             base_y, line_w = lrect.bottom - bob, lrect.w
         else:
             logo_font = ui.font(min(64, max(40, w // 11)), bold=True)
-            if modern:
+            if modern or not ui.fx("title_grad", True):
                 img = logo_font.render("PyGameZ", True, ui.TEXT)
             else:
                 glow = logo_font.render("PyGameZ", True, ui.ACCENT)
@@ -1739,7 +1744,7 @@ class App:
             base_y = center_y - bob + img.get_height() // 2
             line_w = img.get_width() + 30
 
-        if not modern:
+        if not modern and ui.fx("menu_orbit", True):
             # Drei kleine Funken kreisen ums Logo (je eigene Bahn/Tempo/Farbe).
             for k, col in enumerate((ui.ACCENT, ui.ACCENT2, ui.GOLD)):
                 ang = ticks * (0.6 + 0.17 * k) + k * 2.09
@@ -1912,7 +1917,7 @@ class App:
         pygame.draw.rect(s, ui.ACCENT, (card.x, card.y, card.w, 4),
                          border_top_left_radius=14,
                          border_top_right_radius=14)
-        if ui.is_modern():
+        if ui.is_modern() or not ui.fx("title_grad", True):
             img = ui.font(42, bold=True).render(t("app.pause"), True, ui.TEXT)
         else:
             pygame.draw.rect(s, ui.mix(ui.BORDER, ui.ACCENT, ui.pulse(2.0)),

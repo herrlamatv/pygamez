@@ -706,11 +706,13 @@ Tab-Taste):
   Akzentblau als dominante Farbe, dunkleres Blau als Grundfläche),
   **UI v4.1.3** (dasselbe Muster im Indigo-Akzent von UI v4 auf Schwarz),
   **UI v4.1.4** (im Graphit-Ton von UI v4 auf Schwarz), **UI v4**
-  (komplett ruhiges, flaches Graphit-Design mit einem Indigo-Akzent) oder
+  (komplett ruhiges, flaches Graphit-Design mit einem Indigo-Akzent),
   **UI v3** (die bisherige klassische UI mit Sternenhimmel, Aurora-Lichtern
-  und Glow-Effekten). Alle Karten zeigen eine kleine Vorschau; die Wahl wirkt
-  sofort auf die komplette Oberfläche (Spielfläche **und** Sidebar) und wird
-  gespeichert.
+  und Glow-Effekten) oder **UI v2** (die allererste überarbeitete UI:
+  Navy-Verlauf mit Sternenfeld, Buttons mit statischem Glow und Pfeil, Titel
+  mit Schatten – ganz ohne Animationen). Alle Karten zeigen eine kleine
+  Vorschau; die Wahl wirkt sofort auf die komplette Oberfläche (Spielfläche
+  **und** Sidebar) und wird gespeichert.
 
 Einstellungen werden dauerhaft in `settings.json` gespeichert. Im **Einzelspieler**
 steuern beide Belegungen dieselbe Figur (Standard: WASD *und* Pfeile), im
@@ -1561,8 +1563,10 @@ from the pre-game screen. It is organized into **three tabs**
   colour, a darker blue as the base), **UI v4.1.3** (the same pattern in
   UI v4's indigo accent on black), **UI v4.1.4** (in UI v4's graphite tone
   on black), **UI v4** (a completely calm, flat graphite look with a single
-  indigo accent) or **UI v3** (the previous classic UI with starfield, aurora
-  lights and glow effects). All cards show a small preview; the choice
+  indigo accent), **UI v3** (the previous classic UI with starfield, aurora
+  lights and glow effects) or **UI v2** (the very first UI rework: navy
+  gradient with starfield, buttons with a static glow and arrow, titles with
+  a drop shadow – no animations at all). All cards show a small preview; the choice
   applies instantly to the whole interface (game area **and** sidebar) and is
   saved.
 

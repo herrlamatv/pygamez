@@ -8,6 +8,25 @@
 
 ## 🇩🇪 Deutsch
 
+### UI v2 ist zurück – 2026-09-15
+
+#### Neu
+- **UI v2** als achtes Design im Reiter **Erscheinungsbild**: der Look der
+  allerersten `ui.py` aus dem „UI Rework“ (Commit `08739d3`) – dunkler
+  Navy-Verlauf mit Sternenfeld, Buttons mit statischem Glow, Akzentbalken und
+  Pfeil, Titel mit Schatten und doppelter Akzentlinie, dazu die damaligen
+  Sidebar-Farben samt durchgehender Akzentlinie unter dem Kopf. Bewusst so
+  schlicht wie damals: keine Aurora, keine Funken, keine Screen-Übergänge,
+  kein kreisender Logo-Schmuck.
+- Auch in der **Web-Version** wählbar (Einstellungen → Design).
+
+#### Geändert
+- `settings.json` akzeptiert jetzt `"theme": "v2"`. Name und Beschreibung der
+  Designkarte gibt es in allen 14 Sprachen; LamaWiki (Optionen) und alle
+  READMEs nennen jetzt acht Designs.
+- `ui.fx()` nimmt einen Standardwert an, damit Themes eigene Schalter haben
+  können (`logo_glow`, `menu_orbit`, `style`), ohne alle anderen anzufassen.
+
 ### Minigolf: eigene Bahnen bauen, spielen und teilen – 2026-08-30
 
 #### Neu
@@ -640,6 +659,25 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### UI v2 is back – 2026-09-15
+
+#### Added
+- **UI v2** as the eighth design on the **Appearance** tab: the look of the
+  very first `ui.py` from the "UI Rework" (commit `08739d3`) – a dark navy
+  gradient with a starfield, buttons with a static glow, accent bar and arrow,
+  titles with a drop shadow and a double accent line, plus that era's sidebar
+  colours including the solid accent line under the header. Deliberately as
+  plain as it was back then: no aurora, no sparks, no screen transitions, no
+  orbiting logo decoration.
+- Also selectable in the **web version** (Settings → Design).
+
+#### Changed
+- `settings.json` now accepts `"theme": "v2"`. The design card's name and
+  description exist in all 14 languages; the LamaWiki (Options) and all
+  READMEs now list eight designs.
+- `ui.fx()` accepts a default value, so themes can have their own switches
+  (`logo_glow`, `menu_orbit`, `style`) without touching all the others.
 
 ### Minigolf: build, play and share your own holes – 2026-08-30
 

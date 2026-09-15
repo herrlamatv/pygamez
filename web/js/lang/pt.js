@@ -731,6 +731,8 @@ window.PG_LANG["pt"] = {
  "options.theme_hint": "O visual é aplicado e guardado de imediato.",
  "options.theme_modern": "UI v4",
  "options.theme_modern_desc": "Limpo e calmo: painéis planos, tipografia clara, um único acento.",
+ "options.theme_v2": "UI v2",
+ "options.theme_v2_desc": "A primeira remodelação da UI: gradiente azul-marinho, campo de estrelas e botões com brilho – sem animações.",
  "options.theme_v41": "UI v4.1",
  "options.theme_v411": "UI v4.1.1",
  "options.theme_v411_desc": "Como a UI v4.1, com padrão ziguezague preto e antracite.",

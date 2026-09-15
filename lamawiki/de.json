@@ -89,7 +89,7 @@
         {
           "h": "Erscheinungsbild",
           "body": [
-            "Im Reiter Erscheinungsbild wählst du eines von sieben UI-Designs: UI v4.1 (Standard: dezente Sterne sowie Saturn und ein Schwarzes Loch), die vier Muster-Varianten UI v4.1.1 bis v4.1.4 (wie v4.1, aber mit gekacheltem Zickzack-Muster als Hintergrund - Schwarz/Anthrazit, Blau/Dunkelblau, das Indigo von v4 auf Schwarz und der Graphit-Ton von v4 auf Schwarz), UI v4 (ruhiges, flaches Graphit-Design) und UI v3 (die klassische UI mit Aurora-Lichtern und Glow).",
+            "Im Reiter Erscheinungsbild wählst du eines von acht UI-Designs: UI v4.1 (Standard: dezente Sterne sowie Saturn und ein Schwarzes Loch), die vier Muster-Varianten UI v4.1.1 bis v4.1.4 (wie v4.1, aber mit gekacheltem Zickzack-Muster als Hintergrund - Schwarz/Anthrazit, Blau/Dunkelblau, das Indigo von v4 auf Schwarz und der Graphit-Ton von v4 auf Schwarz), UI v4 (ruhiges, flaches Graphit-Design), UI v3 (die klassische UI mit Aurora-Lichtern und Glow) und UI v2 (die allererste überarbeitete UI: Navy-Verlauf, Sternenfeld und Glow-Buttons, ganz ohne Animationen).",
             "Jede Karte zeigt eine kleine Vorschau. Die Wahl gilt sofort für Spielfläche und Sidebar und wird in settings.json gespeichert."
           ]
         },

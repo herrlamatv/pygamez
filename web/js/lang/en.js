@@ -731,6 +731,8 @@ window.PG_LANG["en"] = {
  "options.theme_hint": "The look is applied and saved immediately.",
  "options.theme_modern": "UI v4",
  "options.theme_modern_desc": "Clean and calm: flat panels, clear typography, a single accent.",
+ "options.theme_v2": "UI v2",
+ "options.theme_v2_desc": "The very first UI rework: navy gradient, starfield and glowing buttons – no animations at all.",
  "options.theme_v41": "UI v4.1",
  "options.theme_v411": "UI v4.1.1",
  "options.theme_v411_desc": "Like UI v4.1, but a zigzag pattern in black & charcoal.",

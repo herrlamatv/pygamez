@@ -731,6 +731,8 @@ window.PG_LANG["sl"] = {
  "options.theme_hint": "Videz se uporabi in shrani takoj.",
  "options.theme_modern": "UI v4",
  "options.theme_modern_desc": "Čisto in umirjeno: ravni paneli, jasna tipografija, en sam poudarek.",
+ "options.theme_v2": "UI v2",
+ "options.theme_v2_desc": "Prva prenova vmesnika: mornarsko moder preliv, zvezdno polje in žareči gumbi – brez animacij.",
  "options.theme_v41": "UI v4.1",
  "options.theme_v411": "UI v4.1.1",
  "options.theme_v411_desc": "Kot UI v4.1, a cikcak vzorec v črni in antracitni.",

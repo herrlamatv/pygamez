@@ -89,7 +89,7 @@
         {
           "h": "Wygląd",
           "body": [
-            "W zakładce Wygląd wybierasz jeden z siedmiu projektów interfejsu: UI v4.1 (domyślny: subtelne gwiazdy, Saturn i czarna dziura), cztery warianty ze wzorem UI v4.1.1 do v4.1.4 (jak v4.1, ale z kafelkowym wzorem zygzak w tle - czarny/antracytowy, niebieski/ciemnoniebieski, indygo z v4 na czerni i grafit z v4 na czerni), UI v4 (spokojny, płaski grafit) i UI v3 (klasyczny interfejs ze zorzą i poświatą).",
+            "W zakładce Wygląd wybierasz jeden z ośmiu projektów interfejsu: UI v4.1 (domyślny: subtelne gwiazdy, Saturn i czarna dziura), cztery warianty ze wzorem UI v4.1.1 do v4.1.4 (jak v4.1, ale z kafelkowym wzorem zygzak w tle - czarny/antracytowy, niebieski/ciemnoniebieski, indygo z v4 na czerni i grafit z v4 na czerni), UI v4 (spokojny, płaski grafit), UI v3 (klasyczny interfejs ze zorzą i poświatą) i UI v2 (pierwsza przebudowa interfejsu: granatowy gradient, gwiazdy i świecące przyciski, bez animacji).",
             "Każda karta pokazuje mały podgląd. Wybór działa natychmiast na obszar gry i pasek boczny oraz jest zapisywany w settings.json."
           ]
         },

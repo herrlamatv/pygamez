@@ -52,6 +52,13 @@
   };
   const FX_V41 = Object.assign({}, FX_MODERN, { stars: true, star_bright: 0.55, celestial: true, vignette: 48, menu_bob: 3 });
   const patternFx = (pat) => Object.assign({}, FX_V41, { stars: false, star_bright: 0, vignette: 64, pattern: pat });
+  // UI v2: die allererste ui.py (Commit 08739d3) - Palette fast wie v3,
+  // Sternenfeld, statische Glow-Buttons, Titel mit Schatten, keine Animationen.
+  const V2 = Object.assign({}, CLASSIC, { BG_TOP: [16, 19, 32], ACCENT2: [66, 110, 180] });
+  const FX_V2 = Object.assign({}, FX_CLASSIC, {
+    aurora: false, shooting: false, sparks: false, scanline: false, trans_dur: 0,
+    title_glow: false, title_grad: false, menu_bob: 0, style: "v2", logo_glow: false, menu_orbit: false,
+  });
 
   // Sidebar-Farben (CSS-Variablen) je Theme.
   const CSS_V41 = { sidebar: "#13161f", header: "#0f1219", card: "#1a1e2a", btn: "#1f2431", "btn-hover": "#293040", accent: "#5b8def", accent2: "#819bff", border: "#2e3342", text: "#e9ebf1", "text-dim": "#969dac", "text-faint": "#646a7a", gold: "#e5c46a" };
@@ -66,6 +73,7 @@
     v414: [V41, patternFx([[37, 41, 52], [0, 0, 0]]), CSS_V41],
     modern: [MODERN, FX_MODERN, CSS_MODERN],
     classic: [CLASSIC, FX_CLASSIC, CSS_CLASSIC],
+    v2: [V2, FX_V2, { sidebar: "#141824", header: "#0f1320", card: "#1d2333", btn: "#232a3d", "btn-hover": "#2e3852", accent: "#589cff", accent2: "#4270b4", border: "#2a3147", text: "#e9edf5", "text-dim": "#98a2b8", "text-faint": "#5f667c", gold: "#f5cd64" }],
   };
 
   let _theme = "v41";
@@ -84,7 +92,7 @@
     btnAnim.clear();
   };
   ui.themeName = () => _theme;
-  ui.isModern = () => _theme !== "classic";
+  ui.isModern = () => _theme !== "classic" && _theme !== "v2";
   ui.fx = (key) => _fx[key];
 
   // Akzentfarbe je Spiel (identisch zu ui.GAME_COLORS).
@@ -756,6 +764,22 @@
       buttonLabel(ctx, r, label, fnt, ui.mix(ui.TEXT_DIM, ui.TEXT, v), opts.sub, opts.subFont, ui.mix(ui.TEXT_FAINT, ui.TEXT_DIM, v));
       return r;
     }
+    if (_fx.style === "v2") {
+      // UI v2: harter Wechsel ohne Animation (Glow, Akzentrahmen, Balken, Pfeil)
+      if (selected) {
+        draw.rect(ctx, [ac[0], ac[1], ac[2], 45], [r.x - 10, r.y - 10, r.w + 20, r.h + 20], 0, 16);
+        draw.rect(ctx, ui.BTN_SEL, r, 0, radius);
+        draw.rect(ctx, ac, r, 2, radius);
+        draw.rect(ctx, ac, [r.x + 6, r.y + 8, 4, r.h - 16], 0, 2);
+        const cx = r.right - 18, cy = r.centery;
+        draw.polygon(ctx, ui.TEXT, [[cx - 4, cy - 6], [cx + 4, cy], [cx - 4, cy + 6]]);
+      } else {
+        draw.rect(ctx, ui.BTN, r, 0, radius);
+        draw.rect(ctx, ui.BORDER, r, 1, radius);
+      }
+      buttonLabel(ctx, r, label, fnt, selected ? ui.TEXT : ui.TEXT_DIM, opts.sub, opts.subFont, selected ? ui.TEXT_DIM : ui.TEXT_FAINT);
+      return r;
+    }
     if (v > 0.02 && _fx.btn_glow) {
       const a = 52 * v * (0.7 + 0.3 * ui.pulse(2.2));
       draw.rect(ctx, [ac[0], ac[1], ac[2], a], [r.x - 11, r.y - 11, r.w + 22, r.h + 22], 0, 16);
@@ -793,6 +817,17 @@
       const ly = y + th / 2 + 10;
       draw.rect(ctx, ac, [cx - lw / 2, ly, lw, 3], 0, 2);
       if (opts.subtitle) ui.text(ctx, opts.subtitle, cx, ly + 24, opts.small || ui.font(17), ui.TEXT_DIM, "center");
+      return ly;
+    }
+    if (_fx.style === "v2") {
+      // UI v2: Schatten + Titel in Textfarbe, Akzentlinie + weicher Zweitstrich
+      ui.text(ctx, title, cx + 2, y + 3, big, [0, 0, 0, 140], "center");
+      ui.text(ctx, title, cx, y, big, ui.TEXT, "center");
+      const lw = Math.min(tw + 20, width - 80);
+      const ly = y + th / 2 + 8;
+      draw.rect(ctx, ac, [cx - lw / 2, ly, lw, 3], 0, 2);
+      draw.rect(ctx, ui.ACCENT_SOFT, [cx - lw / 6, ly + 5, lw / 3, 2], 0, 2);
+      if (opts.subtitle) ui.text(ctx, opts.subtitle, cx, ly + 26, opts.small || ui.font(17), ui.TEXT_DIM, "center");
       return ly;
     }
     ctx.save();
@@ -890,8 +925,9 @@
 
   const trans = { start: null, dur: 0.35 };
   ui.beginTransition = function (dur) {
-    trans.start = ui.ticks();
     trans.dur = dur != null ? dur : _fx.trans_dur;
+    // UI v2 kennt keine Screen-Übergänge (trans_dur 0)
+    trans.start = trans.dur > 0 ? ui.ticks() : null;
   };
   function drawTransition(ctx, w, h) {
     if (trans.start == null) return;

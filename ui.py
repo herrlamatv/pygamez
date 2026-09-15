@@ -4,7 +4,7 @@ ui.py
 =====
 Gemeinsames UI-Toolkit für alle Pygame-Screens (Menüs, Overlays, Spiele).
 
-Seit dem UI-Update gibt es SIEBEN wählbare Designs ("Themes"):
+Seit dem UI-Update gibt es ACHT wählbare Designs ("Themes"):
 
 - "v41"     (Standard, "UI v4.1"): wie "modern", aber lebendiger - leicht
   blau-violett getönte Palette, dezentes Sternenfeld und auf dem
@@ -24,6 +24,10 @@ Seit dem UI-Update gibt es SIEBEN wählbare Designs ("Themes"):
 - "classic" ("UI v3"): der bisherige Look - dunkler Farbverlauf mit
   "Aurora"-Lichtern, Parallax-Sternenfeld inkl. Sternschnuppen,
   Glow-Buttons, Verlaufstitel mit Leuchten, Funken und Scanlinien-Übergang.
+- "v2"      ("UI v2"): die allererste ui.py (Commit 08739d3, "UI Rework") -
+  Navy-Verlauf mit Sternenfeld, Buttons mit statischem Glow, Akzentbalken
+  und Pfeil, Titel mit Schatten und doppelter Akzentlinie. Keine
+  Animationen, keine Aurora, keine Funken, keine Übergänge.
 
 Umgeschaltet wird über set_theme("v41"/"v411"/...) - im Spiel über den
 Reiter "Erscheinungsbild" im Options-Screen. Da ALLE Module die Farben nur
@@ -126,6 +130,29 @@ _MODERN_FX = dict(
     panel_radius=10, btn_radius=8,
     shadow_alpha=55,
     menu_bob=0,
+)
+
+# UI v2: der Look der allerersten ui.py (Commit 08739d3). Die Palette ist
+# fast die von UI v3 (die daraus entstand) - nur der Verlauf beginnt etwas
+# heller, und statt eines violetten Zweit-Akzents gab es nur ACCENT_SOFT.
+_V2_COLORS = dict(_CLASSIC_COLORS)
+_V2_COLORS.update(BG_TOP=(16, 19, 32), ACCENT2=(66, 110, 180))
+
+_V2_FX = dict(
+    stars=True, star_bright=1.0,              # Sternenfeld wie damals
+    aurora=False, shooting=False,
+    celestial=False,
+    pattern=None,
+    vignette=70,
+    title_glow=False, title_grad=False,       # Titel: nur Schatten
+    btn_glow=True, btn_arrow=True,            # statischer Glow + Pfeil
+    sparks=False,
+    scanline=False, trans_dur=0.0,            # 0 = kein Screen-Übergang
+    panel_radius=12, btn_radius=10,
+    shadow_alpha=90,
+    menu_bob=0,
+    style="v2",                               # eigene Button-/Titel-Zweige
+    logo_glow=False, menu_orbit=False,        # Startbildschirm ohne Deko
 )
 
 # UI v4.1: die cleane Modern-Optik, aber mit etwas Leben im Hintergrund -
@@ -239,6 +266,18 @@ _TK_V41 = dict(
     BORDER="#2e3342", GREEN="#58be84", GOLD="#e5c46a", RED="#e06c6c",
 )
 
+# UI v2: die Sidebar-Farben aus main.py von Commit 08739d3 (C_SIDEBAR, ...);
+# Werte, die es damals noch nicht gab, sind aus der v3-Palette ergänzt.
+_TK_V2 = dict(
+    SIDEBAR="#141824", HEADER="#0f1320", CARD="#1d2333",
+    BTN="#232a3d", BTN_HOVER="#2e3852",
+    ACCENT="#589cff", ACCENT2="#4270b4",
+    DANGER="#8e3540", DANGER_HOVER="#ab414e",
+    BACK="#4b6b5a", BACK_HOVER="#5f8a73",
+    TEXT="#e9edf5", TEXT_DIM="#98a2b8", TEXT_FAINT="#5f667c",
+    BORDER="#2a3147", GREEN="#6ecd8c", GOLD="#f5cd64", RED="#e15f5f",
+)
+
 # Die Muster-Themes teilen sich die Sidebar-Farben mit v4.1 (nur der
 # Pygame-Hintergrund unterscheidet sich).
 _TK_V411 = dict(_TK_V41)
@@ -254,9 +293,10 @@ THEMES = {
     "v414": (_V414_COLORS, _V414_FX, _TK_V414),
     "modern": (_MODERN_COLORS, _MODERN_FX, _TK_MODERN),
     "classic": (_CLASSIC_COLORS, _CLASSIC_FX, _TK_CLASSIC),
+    "v2": (_V2_COLORS, _V2_FX, _TK_V2),
 }
 THEME_NAMES = ("v41", "v411", "v412", "v413", "v414",
-               "modern", "classic")
+               "modern", "classic", "v2")
 DEFAULT_THEME = "v41"
 
 _theme = DEFAULT_THEME
@@ -298,12 +338,18 @@ def is_modern():
     Glow und Puls). Was sich v4.1 zusätzlich gönnt (Sterne, Saturn,
     Schwarzes Loch), regeln die fx-Schalter des Themes.
     """
-    return _theme != "classic"
+    # UI v3 und UI v2 zeichnen über die klassischen Pfade (v2 mit eigenen
+    # Zweigen, siehe fx("style")).
+    return _theme not in ("classic", "v2")
 
 
-def fx(key):
-    """Effekt-Schalter/-Wert des aktiven Themes (z.B. fx('stars'))."""
-    return _fx[key]
+def fx(key, default=None):
+    """Effekt-Schalter/-Wert des aktiven Themes (z.B. fx('stars')).
+
+    Nicht jedes Theme kennt jeden Schalter (z.B. 'logo_glow' nur v2) -
+    dann gilt 'default'.
+    """
+    return _fx.get(key, default)
 
 
 def tk_colors():
@@ -922,6 +968,29 @@ def draw_button(surface, rect, label, fnt, selected=False, icon=None,
                            sub, sub_font, mix(TEXT_FAINT, TEXT_DIM, v))
         return r
 
+    if _fx.get("style") == "v2":
+        # UI v2: harter Wechsel ohne Animation - ausgewählt mit Außen-Glow,
+        # Akzentrahmen, Akzentbalken links und Pfeil rechts.
+        if selected:
+            glow = pygame.Surface((r.w + 20, r.h + 20), pygame.SRCALPHA)
+            pygame.draw.rect(glow, (*ac, 45), (0, 0, r.w + 20, r.h + 20),
+                             border_radius=16)
+            surface.blit(glow, (r.x - 10, r.y - 10))
+            pygame.draw.rect(surface, BTN_SEL, r, border_radius=radius)
+            pygame.draw.rect(surface, ac, r, width=2, border_radius=radius)
+            pygame.draw.rect(surface, ac, (r.x + 6, r.y + 8, 4, r.h - 16),
+                             border_radius=2)
+            cx, cy = r.right - 18, r.centery
+            pygame.draw.polygon(surface, TEXT,
+                                [(cx - 4, cy - 6), (cx + 4, cy), (cx - 4, cy + 6)])
+        else:
+            pygame.draw.rect(surface, BTN, r, border_radius=radius)
+            pygame.draw.rect(surface, BORDER, r, width=1, border_radius=radius)
+        _blit_button_label(surface, r, label, fnt,
+                           TEXT if selected else TEXT_DIM, sub, sub_font,
+                           TEXT_DIM if selected else TEXT_FAINT)
+        return r
+
     if v > 0.02 and _fx["btn_glow"]:
         # Weicher Außen-Glow, pulsiert leicht
         glow_a = int(52 * v * (0.7 + 0.3 * pulse(2.2)))
@@ -1024,6 +1093,24 @@ def draw_title(surface, width, title, subtitle=None, y=52, big=None,
             small = small or font(17)
             sub = small.render(subtitle, True, TEXT_DIM)
             surface.blit(sub, sub.get_rect(center=(cx, ly + 24)))
+        return ly
+
+    if _fx.get("style") == "v2":
+        # UI v2: Schatten + Titel in Textfarbe, Akzentlinie + weicher Zweitstrich.
+        sh = big.render(title, True, (0, 0, 0))
+        sh.set_alpha(140)
+        img = big.render(title, True, TEXT)
+        surface.blit(sh, sh.get_rect(center=(cx + 2, y + 3)))
+        surface.blit(img, img.get_rect(center=(cx, y)))
+        lw = min(img.get_width() + 20, width - 80)
+        ly = y + img.get_height() // 2 + 8
+        pygame.draw.rect(surface, ac, (cx - lw // 2, ly, lw, 3), border_radius=2)
+        pygame.draw.rect(surface, ACCENT_SOFT,
+                         (cx - lw // 6, ly + 5, lw // 3, 2), border_radius=2)
+        if subtitle:
+            small = small or font(17)
+            sub = small.render(subtitle, True, TEXT_DIM)
+            surface.blit(sub, sub.get_rect(center=(cx, ly + 26)))
         return ly
 
     glow = _text_glow(big, title, tuple(int(c * 0.55) for c in ac))
@@ -1152,8 +1239,12 @@ _fade_cache = {}
 
 def begin_transition(dur=None):
     """Startet den Übergangs-Effekt (beim nächsten draw_fx sichtbar)."""
+    dur = dur if dur is not None else _fx["trans_dur"]
+    if dur <= 0:            # UI v2 kennt keine Screen-Übergänge
+        _trans["start"] = None
+        return
     _trans["start"] = pygame.time.get_ticks()
-    _trans["dur"] = dur if dur is not None else _fx["trans_dur"]
+    _trans["dur"] = dur
 
 
 def _fade_surface(w, h):

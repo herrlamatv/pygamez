@@ -731,6 +731,8 @@ window.PG_LANG["fr"] = {
  "options.theme_hint": "Le style est appliqué et enregistré immédiatement.",
  "options.theme_modern": "UI v4",
  "options.theme_modern_desc": "Épuré et calme : panneaux plats, typographie claire, un seul accent.",
+ "options.theme_v2": "UI v2",
+ "options.theme_v2_desc": "La toute première refonte de l'UI : dégradé marine, champ d'étoiles et boutons lumineux – sans animations.",
  "options.theme_v41": "UI v4.1",
  "options.theme_v411": "UI v4.1.1",
  "options.theme_v411_desc": "Comme UI v4.1, motif zigzag noir & anthracite.",
