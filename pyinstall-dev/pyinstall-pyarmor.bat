@@ -117,6 +117,7 @@ REM dafuer, dass der Wrapper main.py und alle Module im Projekt findet.
     --add-data "%CD%\lamawiki\*.json;lamawiki" ^
     --add-data "%CD%\lamawiki\lang.expansion\*.json;lamawiki\lang.expansion" ^
     --add-data "%CD%\games\levels;games\levels" ^
+    --add-data "%CD%\woordlistz;woordlistz" ^
     --add-data "%CD%\logo;logo" ^
     "%CD%\build\pygamez_boot.py"
 if not exist "build\PyGameZ.spec" goto spec_failed

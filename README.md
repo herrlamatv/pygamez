@@ -76,7 +76,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **3D-Labyrinth** | 1 Spieler    | Ego-Raycaster (Wolfenstein-Stil) mit 50 Seed-Leveln, Orbs, Minimap - oder 2D-Draufsicht |
 | **Reversi**      | 1 / 2 Spieler | Othello auf 8x8: Steine einschließen und umdrehen, 3 KI-Stärken (Minimax) oder lokales Duell |
 | **Kniffel**      | 1 / 2 Spieler | Würfelklassiker mit 13 Kategorien, oberem Bonus und Kniffel; Highscore-Jagd oder 2-Spieler-Hotseat |
-| **Wordle**       | 1 Spieler    | Errate das 5-Buchstaben-Wort in 6 Versuchen, Endlos-Streak, farbige Hinweise, 5 Sprachen |
+| **Wordle**       | 1 Spieler    | Errate das 5-Buchstaben-Wort in 6 Versuchen, Endlos-Streak, farbige Hinweise, echte Wortlisten in 14 Sprachen, harter Modus |
 | **T-Rex Runner** | 1 Spieler    | Endloser Wüstenlauf: variabler Sprung, Ducken, Kakteen & Flugsaurier, Tag/Nacht-Wechsel, steigendes Tempo, 3 Schwierigkeitsgrade |
 | **Dame**         | 1 / 2 Spieler | 3 Regelwerke wählbar (Deutsche 8×8, Internationale 10×10, Checkers), Schlagzwang & fliegende Dame, 3 KI-Stärken (Minimax) oder lokales Duell |
 | **Poker**        | 1 Spieler    | 3 Varianten wählbar: Texas Hold'em gegen KI, 5 Card Draw und Video Poker; Setzrunden, Blinds, dauerhaftes Chip-Konto |
@@ -422,8 +422,14 @@ Explosions-Effekte, Highscore.
   Bildschirmtastatur.
 - **Endlos-Streak**: jedes gelöste Wort bringt Punkte (weniger Versuche = mehr),
   das erste ungelöste Wort beendet die Partie - Summe = Highscore.
-- **Wortlisten je Sprache** (nur A-Z); Rateversuche werden nicht gegen ein
-  Wörterbuch geprüft. Eingabe per Tastatur oder anklickbarer Bildschirmtastatur.
+- **Echte Wortlisten in allen 14 Sprachen** (Ordner `woordlistz/`, nur A-Z):
+  zusammen **34.442 Lösungswörter** und **213.400 erlaubte Rateworte**, je
+  Sprache aus Wörterbuch und Häufigkeitsliste gebaut (Englisch mit den
+  Originallisten des Vorbilds). Jeder Rateversuch wird gegen die Liste geprüft -
+  was nicht darin steht, wird abgelehnt und die Zeile wackelt kurz.
+- **Zwei Modi**: *Normal* und *Hart* - im harten Modus müssen gefundene Hinweise
+  weiterverwendet werden (grüne Buchstaben bleiben an ihrem Platz, gelbe müssen
+  wieder vorkommen). Eingabe per Tastatur oder anklickbarer Bildschirmtastatur.
 
 **Schach**
 - **Vollständiges Schach**: alle Figurenzüge inkl. **Rochade**, **En Passant**
@@ -760,6 +766,9 @@ lamawiki/
   lamawiki.py          In-Game-Wiki (Suche, Kategorien, Artikel-Renderer)
   de.json  en.json  fr.json  es.json  pt.json   Wiki-Inhalte (eine Seite je Spiel + Allgemeines)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Baut die Wordle-Wortlisten aus Wörterbüchern + Häufigkeitslisten neu
+  de/ en/ fr/ ... hr/  answers.txt (Lösungswörter) + allowed.txt (erlaubte Rateworte), 14 Sprachen
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -948,7 +957,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **3D Maze**      | 1 player     | First-person raycaster (Wolfenstein style) with 50 seeded levels, orbs, minimap - or a 2D top-down view |
 | **Reversi**      | 1 / 2 players | Othello on 8x8: trap and flip discs, 3 AI strengths (minimax) or a local duel |
 | **Kniffel (Yahtzee)** | 1 / 2 players | Dice classic with 13 categories, upper bonus and Yahtzee; high-score chase or 2-player hotseat |
-| **Wordle**       | 1 player     | Guess the 5-letter word in 6 tries, endless streak, colour hints, 5 languages |
+| **Wordle**       | 1 player     | Guess the 5-letter word in 6 tries, endless streak, colour hints, real word lists in 14 languages, hard mode |
 | **T-Rex Runner** | 1 player     | Endless desert run: variable jump, duck, cacti & pterodactyls, day/night cycle, rising speed, 3 difficulties |
 | **Draughts (Dame)** | 1 / 2 players | 3 rule sets (German 8×8, International 10×10, Checkers), forced captures & flying kings, 3 AI strengths (minimax) or a local duel |
 | **Poker**        | 1 player     | 3 selectable variants: Texas Hold'em vs AI, 5 Card Draw and Video Poker; betting rounds, blinds, persistent chip bankroll |
@@ -1289,8 +1298,14 @@ explosion effects, high score.
   colours in.
 - **Endless streak**: each solved word scores points (fewer guesses = more), the
   first unsolved word ends the run - total = high score.
-- **Per-language word lists** (A-Z only); guesses are not checked against a
-  dictionary. Type on the keyboard or click the on-screen keys.
+- **Real word lists in all 14 languages** (folder `woordlistz/`, A-Z only):
+  **34,442 answers** and **213,400 accepted guesses** in total, built per
+  language from a dictionary and a frequency list (English uses the original
+  lists). Every guess is checked against the list - anything else is rejected
+  and the row shakes briefly.
+- **Two modes**: *Normal* and *Hard* - in hard mode revealed hints must be
+  reused (green letters stay in place, yellow ones have to appear again). Type
+  on the keyboard or click the on-screen keys.
 
 **Chess**
 - **Full chess**: every piece move including **castling**, **en passant** and
@@ -1620,6 +1635,9 @@ lamawiki/
   lamawiki.py          In-game wiki (search, categories, article renderer)
   de.json  en.json  fr.json  es.json  pt.json   Wiki content (one page per game + general pages)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Rebuilds the Wordle word lists from dictionaries + frequency lists
+  de/ en/ fr/ ... hr/  answers.txt (answers) + allowed.txt (accepted guesses), 14 languages
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py

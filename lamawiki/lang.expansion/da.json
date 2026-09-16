@@ -1416,7 +1416,8 @@
         "gæt",
         "bogstaver",
         "grøn",
-        "gul"
+        "gul",
+        "ordbog"
       ],
       "sections": [
         {
@@ -1424,7 +1425,14 @@
           "body": [
             "Gæt det skjulte 5-bogstavsord inden for 6 forsøg. Efter hvert gæt skifter fliserne farve: grøn = rigtigt bogstav på rette plads, gul = bogstavet forekommer, men et andet sted, grå = bogstavet er ikke i ordet.",
             "Gentagne bogstaver håndteres korrekt: et bogstav markeres kun gult eller grønt så mange gange, som det faktisk forekommer i svaret.",
-            "Hvert gæt skal være på 5 bogstaver, men behøver ikke være et 'rigtigt' ord - det tjekkes ikke mod en ordbog. Svarene passer til det valgte sprog."
+            "Hvert gæt skal være et rigtigt ord: det tjekkes mod ordlisten for det valgte sprog (10.000 til 19.000 tilladte gæt afhængigt af sproget). Alt andet afvises: rækken ryster kort, og gættet tæller ikke. Løsningerne er altid almindelige ord på samme sprog."
+          ]
+        },
+        {
+          "h": "Tilstande",
+          "body": [
+            "Normal: du må gætte alle tilladte ord - sporene er kun forslag.",
+            "Svær: fundne spor skal bruges igen - grønne bogstaver bliver stående, gule skal optræde igen. Tilstanden vælges før start."
           ]
         },
         {

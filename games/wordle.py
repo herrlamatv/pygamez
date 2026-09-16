@@ -10,15 +10,20 @@ Wordle - errate das 5-Buchstaben-Wort in höchstens 6 Versuchen.
 - Endlos-Streak als Highscore: für jedes gelöste Wort gibt es Punkte (weniger
   Versuche = mehr), danach kommt sofort ein neues Wort. Das erste NICHT gelöste
   Wort beendet die Partie; die gesammelten Punkte sind der Highscore.
-- Die Lösungswörter stammen aus einer kuratierten Liste je Sprache
-  (games/wordle_words.py, nur A-Z). Rateversuche werden NICHT gegen ein
-  Wörterbuch geprüft - jede 5-Buchstaben-Eingabe ist erlaubt.
+- Die Lösungswörter stammen aus den Wortlisten in ``woordlistz/`` (je Sprache
+  ein paar tausend geläufige Wörter, nur A-Z). Rateversuche müssen echte
+  Wörter sein - geprüft wird gegen die deutlich längere Liste der erlaubten
+  Rateworte derselben Sprache, genau wie beim Original.
+- Zwei Modi: "Normal" und "Hart". Im harten Modus müssen alle gefundenen
+  Hinweise weiterverwendet werden (grüne Buchstaben bleiben auf ihrem Platz,
+  gelbe müssen wieder vorkommen).
 
 Steuerung: Buchstabentasten A-Z tippen, Enter = raten (bei 5 Buchstaben),
 Backspace = löschen. Die Bildschirmtastatur unten ist auch anklickbar.
 Nach Ende bzw. gelöstem Wort: Enter/Klick geht weiter.
 """
 
+import math
 import random
 
 import pygame
@@ -28,7 +33,7 @@ import i18n
 from game_base import Game, InputEvent
 from i18n import t
 
-from .wordle_words import words_for
+from .wordle_words import allowed_for, words_for
 
 COL_TILE_EMPTY = (30, 30, 38)
 COL_TILE_BORDER = (58, 58, 70)
@@ -46,6 +51,10 @@ ROWS, COLS = 6, 5
 REVEAL_STEP = 0.14                # Sekunden je Kachel bei der Aufdeckung
 
 PLAY, REVEAL, SOLVED, OVER = "play", "reveal", "solved", "over"
+
+MESSAGE_TIME = 1.6                # Sekunden, die eine Meldung stehen bleibt
+SHAKE_TIME = 0.35                 # Sekunden, die die Zeile wackelt
+MSG_LANE = 30                     # freier Streifen über dem Raster für Meldungen
 
 _QWERTY = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"]
 _QWERTZ = ["QWERTZUIOP", "ASDFGHJKL", "YXCVBNM"]
@@ -75,6 +84,7 @@ class WordleGame(Game):
     name = "Wordle"
     highscore_key = "wordle"
     supports_multiplayer = False
+    MODES = [("normal", "wd.mode.normal"), ("hard", "wd.mode.hard")]
 
     # ===================================================== Aufbau / Reset
     def reset(self):
@@ -83,6 +93,9 @@ class WordleGame(Game):
         self.solved_count = 0
         self.lang = i18n.get_language()
         self.words = words_for(self.lang)
+        self.allowed = allowed_for(self.lang)
+        # Harter Modus: gefundene Hinweise müssen weiterverwendet werden.
+        self.hard = self.mode == "hard"
         self._make_fonts()
         self._new_word()
         self._layout()
@@ -107,6 +120,9 @@ class WordleGame(Game):
         self.keystate = {}             # Buchstabe -> zustand
         self.reveal = None             # dict(row, guess, result, t)
         self.last_points = 0
+        self.message = ""              # kurze Meldung über dem Raster
+        self.message_t = 0.0
+        self.shake = 0.0               # Restzeit des Wackelns der Eingabezeile
         self.state = PLAY
 
     def _layout(self):
@@ -117,8 +133,9 @@ class WordleGame(Game):
         kb_h = 3 * self.key_h + 4 * self.key_gap
         self.kb_top = self.height - kb_h - 6
         self._build_keyboard()
-        # Rasterbereich zwischen HUD und Tastatur
-        top = self.hud_h + 8
+        # Rasterbereich zwischen HUD und Tastatur; oben bleibt ein schmaler
+        # Streifen für Meldungen frei, damit sie nie auf den Kacheln liegen.
+        top = self.hud_h + MSG_LANE
         bottom = self.kb_top - 8
         gap = max(4, self.width // 120)
         self.tile = int(min((self.width - 40 - (COLS - 1) * gap) / COLS,
@@ -211,12 +228,42 @@ class WordleGame(Game):
 
     def _submit(self):
         if len(self.current) != COLS:
-            self.play_sound("click")
+            self._reject(t("wd.too_short"))
             return
+        if self.current not in self.allowed:
+            self._reject(t("wd.not_a_word"))
+            return
+        if self.hard:
+            problem = self._hard_problem(self.current)
+            if problem:
+                self._reject(problem)
+                return
         result = evaluate(self.current, self.answer)
         self.reveal = dict(row=self.row, guess=self.current, result=result, t=0.0)
         self.state = REVEAL
         self.play_sound("move")
+
+    def _reject(self, text):
+        """Rateversuch abgelehnt: Meldung zeigen und die Zeile wackeln lassen."""
+        self.message = text
+        self.message_t = MESSAGE_TIME
+        self.shake = SHAKE_TIME
+        self.play_sound("click")
+
+    def _hard_problem(self, guess):
+        """Meldung, wenn 'guess' im harten Modus einen Hinweis ignoriert."""
+        for word, result in self.guesses:
+            for i, state in enumerate(result):
+                if state == "correct" and guess[i] != word[i]:
+                    return t("wd.hard_green", n=i + 1, c=word[i])
+            # Gelbe Buchstaben müssen mindestens so oft wieder vorkommen, wie
+            # sie im Hinweis grün/gelb waren (Standard-Regel des Originals).
+            for ch in {word[i] for i, st in enumerate(result) if st != "absent"}:
+                need = sum(1 for i, st in enumerate(result)
+                           if st != "absent" and word[i] == ch)
+                if guess.count(ch) < need:
+                    return t("wd.hard_yellow", c=ch)
+        return ""
 
     def _finish_reveal(self):
         rv = self.reveal
@@ -249,6 +296,12 @@ class WordleGame(Game):
 
     # ===================================================== Update
     def update(self, dt):
+        if self.message_t > 0:
+            self.message_t = max(0.0, self.message_t - dt)
+            if self.message_t == 0:
+                self.message = ""
+        if self.shake > 0:
+            self.shake = max(0.0, self.shake - dt)
         if self.state == REVEAL and self.reveal is not None:
             self.reveal["t"] += dt
             if self.reveal["t"] >= COLS * REVEAL_STEP + 0.1:
@@ -262,6 +315,8 @@ class WordleGame(Game):
         self._draw_hud(s)
         self._draw_grid(s)
         self._draw_keyboard(s)
+        if self.message and self.state in (PLAY, REVEAL):
+            self._draw_message(s)
         if self.state == SOLVED:
             self._draw_banner(s, t("wd.solved", n=self.last_points), COL_ACCENT,
                               t("wd.next"))
@@ -291,6 +346,9 @@ class WordleGame(Game):
             for c in range(COLS):
                 x = self.grid_x + c * (self.tile + self.tile_gap)
                 y = self.grid_y + r * (self.tile + self.tile_gap)
+                # Abgelehnter Rateversuch: die Eingabezeile wackelt kurz.
+                if r == self.row and self.shake > 0:
+                    x += int(7 * math.sin(self.shake * 46))
                 rc = pygame.Rect(x, y, self.tile, self.tile)
                 ch = ""
                 fill = COL_TILE_EMPTY
@@ -336,6 +394,21 @@ class WordleGame(Game):
             pygame.draw.rect(s, COL_KEY, rc, border_radius=5)
             img = self._tiny.render(label, True, COL_KEY_TEXT)
             s.blit(img, img.get_rect(center=rc.center))
+
+    def _draw_message(self, s):
+        """Kurze Meldung ("Kein Wort in der Liste") über dem Raster."""
+        img = self._small.render(self.message, True, COL_TEXT)
+        cy = max(self.hud_h + MSG_LANE // 2, self.grid_y - MSG_LANE // 2)
+        rc = img.get_rect(center=(self.width // 2, cy))
+        box = rc.inflate(22, 12)
+        panel = pygame.Surface(box.size, pygame.SRCALPHA)
+        # Am Ende sanft ausblenden, damit die Meldung nicht wegspringt.
+        alpha = int(235 * min(1.0, self.message_t / 0.35))
+        panel.fill((20, 22, 30, alpha))
+        s.blit(panel, box.topleft)
+        pygame.draw.rect(s, COL_TILE_ACTIVE, box, 1, border_radius=8)
+        img.set_alpha(alpha)
+        s.blit(img, rc)
 
     def _draw_banner(self, s, title, color, sub):
         w = min(self.width - 40, 460)

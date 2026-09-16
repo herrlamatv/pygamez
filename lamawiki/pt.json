@@ -1414,7 +1414,8 @@
         "adivinhar",
         "letras",
         "verde",
-        "amarelo"
+        "amarelo",
+        "dicionario"
       ],
       "sections": [
         {
@@ -1422,7 +1423,14 @@
           "body": [
             "Adivinha a palavra escondida de 5 letras em 6 tentativas no máximo. Depois de cada tentativa as casas mudam de cor: verde = letra certa no sítio certo, amarelo = a letra existe mas noutro sítio, cinzento = a letra não está na palavra.",
             "As letras repetidas são tratadas corretamente: uma letra só é marcada a amarelo ou verde tantas vezes quantas aparece mesmo na solução.",
-            "Cada tentativa tem de ter 5 letras, mas não precisa de ser uma palavra 'a sério' - não é verificada num dicionário. As soluções correspondem ao idioma escolhido."
+            "Cada tentativa tem de ser uma palavra a sério: é verificada na lista de palavras do idioma escolhido (entre 10.000 e 19.000 tentativas aceites, conforme o idioma). O resto é recusado: a linha abana por instantes e a tentativa não conta. As soluções são sempre palavras comuns do mesmo idioma."
+          ]
+        },
+        {
+          "h": "Modos",
+          "body": [
+            "Normal: podes tentar qualquer palavra aceite - as pistas são apenas sugestões.",
+            "Difícil: as pistas encontradas têm de ser reaproveitadas - as letras verdes ficam no lugar e as amarelas têm de voltar a aparecer. O modo escolhe-se antes de começar."
           ]
         },
         {

@@ -9,9 +9,13 @@
  * - Endlos-Streak als Highscore: für jedes gelöste Wort gibt es Punkte (weniger
  *   Versuche = mehr), danach kommt sofort ein neues Wort. Das erste NICHT gelöste
  *   Wort beendet die Partie; die gesammelten Punkte sind der Highscore.
- * - Die Lösungswörter stammen aus einer kuratierten Liste je Sprache
- *   (wordle_words.js, nur A-Z). Rateversuche werden NICHT gegen ein
- *   Wörterbuch geprüft - jede 5-Buchstaben-Eingabe ist erlaubt.
+ * - Die Lösungswörter stammen aus den Wortlisten je Sprache (wordle_words.js
+ *   lädt js/games/wordle_words/<code>.js nach, nur A-Z). Rateversuche müssen
+ *   echte Wörter sein - geprüft wird gegen die längere Liste der erlaubten
+ *   Rateworte derselben Sprache, genau wie beim Original.
+ * - Zwei Modi: "Normal" und "Hart". Im harten Modus müssen alle gefundenen
+ *   Hinweise weiterverwendet werden (grüne Buchstaben bleiben auf ihrem Platz,
+ *   gelbe müssen wieder vorkommen).
  *
  * Steuerung: Buchstabentasten A-Z tippen (über ev.char, damit auch QWERTZ/
  * AZERTY stimmen; Umlaute/Akzente werden wie im Original ignoriert),
@@ -38,6 +42,9 @@
 
   const ROWS = 6, COLS = 5;
   const REVEAL_STEP = 0.14; // Sekunden je Kachel bei der Aufdeckung
+  const MESSAGE_TIME = 1.6; // Sekunden, die eine Meldung stehen bleibt
+  const SHAKE_TIME = 0.35; // Sekunden, die die Zeile wackelt
+  const MSG_LANE = 30; // freier Streifen über dem Raster für Meldungen
 
   const PLAY = "play", REVEAL = "reveal", SOLVED = "solved", OVER = "over";
 
@@ -83,10 +90,28 @@
       this.gameOver = false;
       this.solvedCount = 0;
       this.lang = PG.lang;
-      this.words = PG.wordleWords.wordsFor(this.lang);
+      // Harter Modus: gefundene Hinweise müssen weiterverwendet werden.
+      this.hard = this.mode === "hard";
+      this.useWords();
+      // Die Wortliste der Sprache ist eine eigene Datei (alle 14 auf einmal
+      // wären mehrere Megabyte) - sie wird beim ersten Spiel nachgeladen.
+      this.loading = !PG.wordleWords.isLoaded(this.lang);
+      if (this.loading) {
+        PG.wordleWords.load(this.lang, () => {
+          this.loading = false;
+          this.useWords();
+          this.newWord();
+        });
+      }
       this.makeFonts();
       this.newWord();
       this.layout();
+    }
+
+    /** Übernimmt Lösungswörter und erlaubte Rateworte der aktuellen Sprache. */
+    useWords() {
+      this.words = PG.wordleWords.wordsFor(this.lang);
+      this.allowed = PG.wordleWords.allowedFor(this.lang);
     }
 
     makeFonts() {
@@ -106,6 +131,9 @@
       this.keystate = {}; // Buchstabe -> zustand
       this.reveal = null; // {row, guess, result, t}
       this.lastPoints = 0;
+      this.message = ""; // kurze Meldung über dem Raster
+      this.messageT = 0;
+      this.shake = 0; // Restzeit des Wackelns der Eingabezeile
       this.state = PLAY;
     }
 
@@ -117,8 +145,9 @@
       const kbH = 3 * this.keyH + 4 * this.keyGap;
       this.kbTop = this.height - kbH - 6;
       this.buildKeyboard();
-      // Rasterbereich zwischen HUD und Tastatur
-      const top = this.hudH + 8;
+      // Rasterbereich zwischen HUD und Tastatur; oben bleibt ein schmaler
+      // Streifen für Meldungen frei, damit sie nie auf den Kacheln liegen.
+      const top = this.hudH + MSG_LANE;
       const bottom = this.kbTop - 8;
       const gap = Math.max(4, Math.floor(this.width / 120));
       this.tile = Math.floor(Math.min((this.width - 40 - (COLS - 1) * gap) / COLS, (bottom - top - (ROWS - 1) * gap) / ROWS));
@@ -175,7 +204,7 @@
         }
         return;
       }
-      if (this.state === REVEAL) return;
+      if (this.state === REVEAL || this.loading) return;
       // PLAY
       if (ev.kind === "keydown") {
         const k = ev.key;
@@ -228,13 +257,54 @@
 
     submit() {
       if (this.current.length !== COLS) {
-        this.playSound("click");
+        this.reject(t("wd.too_short"));
         return;
+      }
+      if (!this.allowed.has(this.current)) {
+        this.reject(t("wd.not_a_word"));
+        return;
+      }
+      if (this.hard) {
+        const problem = this.hardProblem(this.current);
+        if (problem) {
+          this.reject(problem);
+          return;
+        }
       }
       const result = evaluate(this.current, this.answer);
       this.reveal = { row: this.row, guess: this.current, result, t: 0 };
       this.state = REVEAL;
       this.playSound("move");
+    }
+
+    /** Rateversuch abgelehnt: Meldung zeigen und die Zeile wackeln lassen. */
+    reject(text) {
+      this.message = text;
+      this.messageT = MESSAGE_TIME;
+      this.shake = SHAKE_TIME;
+      this.playSound("click");
+    }
+
+    /** Meldung, wenn 'guess' im harten Modus einen Hinweis ignoriert. */
+    hardProblem(guess) {
+      for (const [word, result] of this.guesses) {
+        for (let i = 0; i < COLS; i++) {
+          if (result[i] === "correct" && guess[i] !== word[i]) {
+            return t("wd.hard_green", { n: i + 1, c: word[i] });
+          }
+        }
+        // Gelbe Buchstaben müssen mindestens so oft wieder vorkommen, wie sie
+        // im Hinweis grün/gelb waren (Standard-Regel des Originals).
+        const need = {};
+        for (let i = 0; i < COLS; i++) {
+          if (result[i] !== "absent") need[word[i]] = (need[word[i]] || 0) + 1;
+        }
+        for (const ch in need) {
+          const have = guess.split("").filter((x) => x === ch).length;
+          if (have < need[ch]) return t("wd.hard_yellow", { c: ch });
+        }
+      }
+      return "";
     }
 
     finishReveal() {
@@ -269,6 +339,11 @@
 
     // ===================================================== Update
     update(dt) {
+      if (this.messageT > 0) {
+        this.messageT = Math.max(0, this.messageT - dt);
+        if (this.messageT === 0) this.message = "";
+      }
+      if (this.shake > 0) this.shake = Math.max(0, this.shake - dt);
       if (this.state === REVEAL && this.reveal) {
         this.reveal.t += dt;
         if (this.reveal.t >= COLS * REVEAL_STEP + 0.1) this.finishReveal();
@@ -282,6 +357,10 @@
       this.drawHud(ctx);
       this.drawGrid(ctx);
       this.drawKeyboard(ctx);
+      if (this.loading) this.drawMessage(ctx, t("web.wordle.loading"), 1);
+      else if (this.message && (this.state === PLAY || this.state === REVEAL)) {
+        this.drawMessage(ctx, this.message, Math.min(1, this.messageT / 0.35));
+      }
       if (this.state === SOLVED) {
         this.drawBanner(ctx, t("wd.solved", { n: this.lastPoints }), COL_ACCENT, t("wd.next"));
       } else if (this.state === OVER) {
@@ -305,8 +384,10 @@
     drawGrid(ctx) {
       for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
-          const x = this.gridX + c * (this.tile + this.tileGap);
+          let x = this.gridX + c * (this.tile + this.tileGap);
           const y = this.gridY + r * (this.tile + this.tileGap);
+          // Abgelehnter Rateversuch: die Eingabezeile wackelt kurz.
+          if (r === this.row && this.shake > 0) x += Math.round(7 * Math.sin(this.shake * 46));
           const rc = new PG.Rect(x, y, this.tile, this.tile);
           let ch = "";
           let fill = COL_TILE_EMPTY;
@@ -352,6 +433,16 @@
       }
     }
 
+    /** Kurze Meldung ("Kein Wort in der Liste") über dem Raster. */
+    drawMessage(ctx, text, alpha) {
+      const w = this.small.width(text) + 22;
+      const cy = Math.max(this.hudH + MSG_LANE / 2, this.gridY - MSG_LANE / 2);
+      const rc = new PG.Rect(Math.round((this.width - w) / 2), Math.round(cy - 13), w, 26);
+      draw.rect(ctx, [20, 22, 30, Math.round(235 * alpha)], rc, 0, 8);
+      draw.rect(ctx, COL_TILE_ACTIVE, rc, 1, 8);
+      ui.text(ctx, text, rc.centerx, rc.centery, this.small, COL_TEXT, "center", alpha);
+    }
+
     drawBanner(ctx, title, color, sub) {
       const w = Math.min(this.width - 40, 460);
       const h = 92;
@@ -363,9 +454,29 @@
     }
   }
 
+  // Nur in der Web-Version nötig: dort wird die Wortliste der Sprache erst
+  // beim Spielstart nachgeladen.
+  PG.addStrings({
+    de: { "web.wordle.loading": "Wortliste wird geladen …" },
+    en: { "web.wordle.loading": "Loading word list …" },
+    fr: { "web.wordle.loading": "Chargement de la liste de mots …" },
+    es: { "web.wordle.loading": "Cargando la lista de palabras …" },
+    pt: { "web.wordle.loading": "A carregar a lista de palavras …" },
+    pl: { "web.wordle.loading": "Wczytywanie listy słów …" },
+    tr: { "web.wordle.loading": "Kelime listesi yükleniyor …" },
+    da: { "web.wordle.loading": "Indlæser ordlisten …" },
+    no: { "web.wordle.loading": "Laster ordlisten …" },
+    sv: { "web.wordle.loading": "Laddar ordlistan …" },
+    fi: { "web.wordle.loading": "Ladataan sanalistaa …" },
+    cs: { "web.wordle.loading": "Načítání seznamu slov …" },
+    sl: { "web.wordle.loading": "Nalaganje seznama besed …" },
+    hr: { "web.wordle.loading": "Učitavanje popisa riječi …" },
+  });
+
   PG.register(WordleGame, {
     id: "WordleGame",
     key: "wordle",
     name: "Wordle",
+    modes: [["normal", "wd.mode.normal"], ["hard", "wd.mode.hard"]],
   });
 })();

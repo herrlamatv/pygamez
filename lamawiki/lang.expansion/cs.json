@@ -1416,7 +1416,8 @@
         "hádání",
         "písmena",
         "zelená",
-        "žlutá"
+        "žlutá",
+        "slovnik"
       ],
       "sections": [
         {
@@ -1424,7 +1425,14 @@
           "body": [
             "Uhodni skryté pětipísmenné slovo do 6 pokusů. Po každém hádání dlaždice změní barvu: zelená = správné písmeno na správném místě, žlutá = písmeno se vyskytuje, ale jinde, šedá = písmeno ve slově není.",
             "Opakující se písmena se řeší správně: písmeno se označí žlutě nebo zeleně jen tolikrát, kolikrát se skutečně vyskytuje v odpovědi.",
-            "Každé hádání musí mít 5 písmen, ale nemusí být 'skutečné' slovo - nekontroluje se proti slovníku. Odpovědi odpovídají zvolenému jazyku."
+            "Každý pokus musí být skutečné slovo: ověřuje se proti seznamu slov zvoleného jazyka (podle jazyka 10 000 až 19 000 povolených slov). Ostatní se odmítne: řádek se krátce zatřese a pokus se nepočítá. Řešením jsou vždy běžná slova téhož jazyka."
+          ]
+        },
+        {
+          "h": "Režimy",
+          "body": [
+            "Normální: můžeš hádat jakékoli povolené slovo - nápovědy jsou jen doporučení.",
+            "Těžký: nalezené nápovědy musíš dál používat - zelená písmena zůstávají na místě, žlutá se musí znovu objevit. Režim vybíráš před startem."
           ]
         },
         {

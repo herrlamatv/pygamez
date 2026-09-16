@@ -55,3 +55,10 @@ erzeugt. Nach Änderungen dort neu erzeugen:
 ```
 node web/tools/build-i18n.js
 ```
+
+Die Wordle-Wortlisten (`js/games/wordle_words/<code>.js`) entstehen genauso aus dem Ordner
+`woordlistz/` der Desktop-Version. Nach Änderungen dort neu erzeugen:
+
+```
+node web/tools/build-wordlists.js
+```

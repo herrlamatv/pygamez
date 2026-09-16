@@ -1417,7 +1417,8 @@
         "raten",
         "buchstaben",
         "grün",
-        "gelb"
+        "gelb",
+        "wörterbuch"
       ],
       "sections": [
         {
@@ -1425,7 +1426,14 @@
           "body": [
             "Errate das gesuchte 5-Buchstaben-Wort in höchstens 6 Versuchen. Nach jedem Rateversuch färben sich die Kacheln: Grün = richtiger Buchstabe an richtiger Stelle, Gelb = Buchstabe kommt vor, steht aber woanders, Grau = Buchstabe kommt nicht vor.",
             "Doppelte Buchstaben werden korrekt behandelt: Ein Buchstabe wird nur so oft gelb oder grün, wie er im Lösungswort tatsächlich vorkommt.",
-            "Jeder Versuch muss 5 Buchstaben haben, aber kein 'echtes' Wort sein - es wird nicht gegen ein Wörterbuch geprüft. Die Lösungswörter passen zur eingestellten Sprache."
+            "Jeder Versuch muss ein echtes Wort sein - geprüft wird gegen die Wortliste der eingestellten Sprache (je nach Sprache 10.000 bis 19.000 erlaubte Rateworte). Was nicht darin steht, wird abgelehnt: Die Zeile wackelt kurz und der Versuch zählt nicht. Gesucht sind immer geläufige Wörter derselben Sprache."
+          ]
+        },
+        {
+          "h": "Modi",
+          "body": [
+            "Normal: Du darfst jedes erlaubte Wort raten - die Hinweise sind nur Empfehlungen.",
+            "Hart: Gefundene Hinweise musst du weiterverwenden - grüne Buchstaben bleiben auf ihrem Platz, gelbe müssen wieder vorkommen. Den Modus wählst du vor dem Start."
           ]
         },
         {

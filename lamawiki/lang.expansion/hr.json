@@ -1416,7 +1416,8 @@
         "pogadanje",
         "slova",
         "zeleno",
-        "zuto"
+        "zuto",
+        "rjecnik"
       ],
       "sections": [
         {
@@ -1424,7 +1425,14 @@
           "body": [
             "Pogodi skrivenu riječ od 5 slova u 6 pokušaja. Nakon svakog pokušaja pločice mijenjaju boju: zeleno = točno slovo na točnom mjestu, žuto = slovo se pojavljuje ali negdje drugdje, sivo = slova nema u riječi.",
             "Ponovljena slova obrađuju se ispravno: slovo se označava žuto ili zeleno samo onoliko puta koliko se stvarno pojavljuje u odgovoru.",
-            "Svaki pokušaj mora imati 5 slova, ali ne mora biti 'prava' riječ - ne provjerava se prema rječniku. Odgovori odgovaraju odabranom jeziku."
+            "Svaki pokušaj mora biti prava riječ: provjerava se prema popisu riječi odabranog jezika (ovisno o jeziku 10.000 do 19.000 dopuštenih riječi). Ostalo se odbija: redak se nakratko trese i pokušaj se ne broji. Rješenja su uvijek česte riječi istog jezika."
+          ]
+        },
+        {
+          "h": "Načini",
+          "body": [
+            "Normalno: možeš pogađati bilo koju dopuštenu riječ - savjeti su samo preporuka.",
+            "Teško: pronađene savjete moraš dalje koristiti - zelena slova ostaju na mjestu, žuta se moraju ponoviti. Način biraš prije početka."
           ]
         },
         {

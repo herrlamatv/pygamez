@@ -1416,7 +1416,8 @@
         "zgadywanie",
         "litery",
         "zielony",
-        "żółty"
+        "żółty",
+        "slownik"
       ],
       "sections": [
         {
@@ -1424,7 +1425,14 @@
           "body": [
             "Odgadnij ukryte 5-literowe słowo w 6 próbach. Po każdej próbie kafelki zmieniają kolor: zielony = właściwa litera na właściwym miejscu, żółty = litera występuje, ale gdzie indziej, szary = litery nie ma w słowie.",
             "Powtarzające się litery są obsługiwane poprawnie: litera jest oznaczana na żółto lub zielono tylko tyle razy, ile faktycznie występuje w odpowiedzi.",
-            "Każda próba musi mieć 5 liter, ale nie musi być 'prawdziwym' słowem - nie jest sprawdzana w słowniku. Odpowiedzi odpowiadają wybranemu językowi."
+            "Każda próba musi być prawdziwym słowem - jest sprawdzana z listą słów wybranego języka (od 10 000 do 19 000 dozwolonych słów, zależnie od języka). Reszta jest odrzucana: wiersz chwilę się trzęsie, a próba się nie liczy. Hasła to zawsze popularne słowa tego samego języka."
+          ]
+        },
+        {
+          "h": "Tryby",
+          "body": [
+            "Normalny: możesz zgadywać dowolne dozwolone słowo - podpowiedzi są tylko sugestią.",
+            "Trudny: znalezione podpowiedzi trzeba wykorzystać - zielone litery zostają na miejscu, żółte muszą wystąpić ponownie. Tryb wybierasz przed startem."
           ]
         },
         {

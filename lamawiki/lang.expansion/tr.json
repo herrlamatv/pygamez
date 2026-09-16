@@ -1416,7 +1416,8 @@
         "tahmin",
         "harfler",
         "yeşil",
-        "sarı"
+        "sarı",
+        "sozluk"
       ],
       "sections": [
         {
@@ -1424,7 +1425,14 @@
           "body": [
             "Gizli 5 harfli kelimeyi 6 denemede tahmin et. Her tahminden sonra kutucuklar renk değiştirir: yeşil = doğru yerde doğru harf, sarı = harf var ama başka yerde, gri = harf kelimede yok.",
             "Tekrarlanan harfler doğru şekilde işlenir: bir harf yalnızca cevapta gerçekten geçtiği sayıda sarı veya yeşil işaretlenir.",
-            "Her tahmin 5 harf olmalıdır, ancak 'gerçek' bir kelime olması gerekmez - bir sözlüğe göre kontrol edilmez. Cevaplar seçilen dile uyar."
+            "Her tahmin gerçek bir kelime olmalı: seçili dilin kelime listesiyle karşılaştırılır (dile göre 10.000 ile 19.000 arası geçerli kelime). Listede olmayan tahmin reddedilir: satır kısaca titrer ve tahmin sayılmaz. Çözümler her zaman aynı dilin yaygın kelimeleridir."
+          ]
+        },
+        {
+          "h": "Modlar",
+          "body": [
+            "Normal: geçerli olan her kelimeyi tahmin edebilirsin - ipuçları yalnızca öneridir.",
+            "Zor: bulunan ipuçları yeniden kullanılmalı - yeşil harfler yerinde kalır, sarı harfler tekrar geçmelidir. Modu başlamadan önce seçersin."
           ]
         },
         {

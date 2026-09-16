@@ -1415,7 +1415,8 @@
         "adivinar",
         "letras",
         "verde",
-        "amarillo"
+        "amarillo",
+        "diccionario"
       ],
       "sections": [
         {
@@ -1423,7 +1424,14 @@
           "body": [
             "Adivina la palabra oculta de 5 letras en 6 intentos como máximo. Tras cada intento las casillas cambian de color: verde = letra correcta en el sitio correcto, amarillo = la letra está pero en otro sitio, gris = la letra no está en la palabra.",
             "Las letras repetidas se tratan bien: una letra solo se marca en amarillo o verde tantas veces como aparece realmente en la solución.",
-            "Cada intento debe tener 5 letras, pero no tiene que ser una palabra 'real': no se comprueba con un diccionario. Las soluciones corresponden al idioma elegido."
+            "Cada intento tiene que ser una palabra real: se comprueba con la lista de palabras del idioma elegido (entre 10.000 y 19.000 intentos válidos según el idioma). Lo demás se rechaza: la fila tiembla un momento y el intento no cuenta. Las soluciones son siempre palabras comunes del mismo idioma."
+          ]
+        },
+        {
+          "h": "Modos",
+          "body": [
+            "Normal: puedes probar cualquier palabra válida; las pistas son solo sugerencias.",
+            "Difícil: hay que reutilizar las pistas encontradas - las letras verdes se quedan en su sitio y las amarillas tienen que volver a aparecer. El modo se elige antes de empezar."
           ]
         },
         {

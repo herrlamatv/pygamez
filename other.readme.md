@@ -68,7 +68,7 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Labyrinthe 3D** | 1 joueur   | Raycaster à la première personne (style Wolfenstein) avec 50 niveaux à graine, orbes, minicarte - ou vue 2D de dessus |
 | **Reversi**      | 1 / 2 joueurs | Othello 8x8 : encercler et retourner les pions, 3 forces d'IA (minimax) ou un duel local |
 | **Yams**         | 1 / 2 joueurs | Classique de dés à 13 catégories, bonus supérieur et Yams ; course au score ou hotseat à 2 |
-| **Wordle**       | 1 joueur   | Devine le mot de 5 lettres en 6 essais, série sans fin, indices colorés, 5 langues |
+| **Wordle**       | 1 joueur   | Devine le mot de 5 lettres en 6 essais, série sans fin, indices colorés, vraies listes de mots en 14 langues |
 | **T-Rex Runner** | 1 joueur   | Course infinie dans le désert : saut variable, s'accroupir, cactus & ptérodactyles, cycle jour/nuit, vitesse croissante, 3 difficultés |
 | **Dames**        | 1 / 2 joueurs | 3 règles au choix (allemandes 8×8, internationales 10×10, checkers), prise obligatoire & dame volante, 3 niveaux d'IA (minimax) ou duel local |
 | **Poker**        | 1 joueur   | 3 variantes au choix : Texas Hold'em contre l'IA, 5 Card Draw et Vidéo Poker ; tours d'enchères, blinds, compte de jetons persistant |
@@ -450,8 +450,13 @@ fusionnent.
   colore.
 - **Série sans fin** : chaque mot résolu rapporte des points (moins d'essais =
   plus), le premier mot non trouvé met fin à la partie - total = meilleur score.
-- **Listes de mots par langue** (A-Z uniquement) ; les essais ne sont pas
-  vérifiés dans un dictionnaire. Tape au clavier ou clique les touches à l'écran.
+- **Vraies listes de mots dans les 14 langues** (dossier `woordlistz/`, A-Z
+  uniquement) : plus de **34 000 solutions** et **213 000 mots acceptés** au
+  total. Chaque essai est vérifié dans la liste - sinon il est refusé et la
+  ligne tremble brièvement.
+- **Deux modes** : *Normal* et *Difficile* - en mode difficile, les indices
+  trouvés doivent être réutilisés. Tape au clavier ou clique les touches à
+  l'écran.
 
 **Tower Defense**
 - **Défense de vagues sans fin** sur **4 cartes** (Prairie, Canyon, Croisement,
@@ -686,6 +691,9 @@ lamawiki/
   lamawiki.py          Wiki intégré (recherche, catégories, rendu d'articles)
   de.json  en.json  fr.json  es.json  pt.json   Contenu du wiki (une page par jeu + pages générales)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Reconstruit les listes de mots de Wordle (dictionnaires + fréquences)
+  de/ en/ fr/ ... hr/  answers.txt (solutions) + allowed.txt (mots acceptés), 14 langues
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -874,7 +882,7 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Laberinto 3D** | 1 jugador    | Raycaster en primera persona (estilo Wolfenstein) con 50 niveles con semilla, orbes, minimapa - o vista cenital 2D |
 | **Reversi**      | 1 / 2 jugadores | Othello en 8x8: atrapar y voltear fichas, 3 fuerzas de IA (minimax) o un duelo local |
 | **Yahtzee**      | 1 / 2 jugadores | Clásico de dados con 13 categorías, bono superior y Yahtzee; carrera por el récord o hotseat a 2 |
-| **Wordle**       | 1 jugador    | Adivina la palabra de 5 letras en 6 intentos, racha sin fin, pistas de color, 5 idiomas |
+| **Wordle**       | 1 jugador    | Adivina la palabra de 5 letras en 6 intentos, racha sin fin, pistas de color, listas de palabras reales en 14 idiomas |
 | **T-Rex Runner** | 1 jugador    | Carrera infinita por el desierto: salto variable, agacharse, cactus y pterodáctilos, ciclo día/noche, velocidad creciente, 3 dificultades |
 | **Damas**        | 1 / 2 jugadores | 3 reglamentos a elegir (alemanas 8×8, internacionales 10×10, checkers), captura obligatoria y dama voladora, 3 fuerzas de IA (minimax) o duelo local |
 | **Póker**        | 1 jugador    | 3 variantes a elegir: Texas Hold'em contra la IA, 5 Card Draw y Video Poker; rondas de apuestas, ciegas, cuenta de fichas persistente |
@@ -1215,8 +1223,12 @@ arma), efectos de explosión, récord.
   en pantalla que se colorea.
 - **Racha sin fin**: cada palabra resuelta da puntos (menos intentos = más), la
   primera palabra no resuelta termina la partida - total = récord.
-- **Listas de palabras por idioma** (solo A-Z); los intentos no se comprueban
-  con un diccionario. Escribe con el teclado o pulsa las teclas en pantalla.
+- **Listas de palabras reales en los 14 idiomas** (carpeta `woordlistz/`, solo
+  A-Z): más de **34.000 soluciones** y **213.000 intentos válidos** en total.
+  Cada intento se comprueba con la lista; lo demás se rechaza y la fila tiembla
+  un momento.
+- **Dos modos**: *Normal* y *Difícil* - en el modo difícil hay que reutilizar
+  las pistas encontradas. Escribe con el teclado o pulsa las teclas en pantalla.
 
 **Tower Defense**
 - **Defensa de oleadas sin fin** en **4 mapas** (Pradera, Cañón, Cruce,
@@ -1450,6 +1462,9 @@ lamawiki/
   lamawiki.py          Wiki integrado (búsqueda, categorías, renderizador)
   de.json  en.json  fr.json  es.json  pt.json   Contenido del wiki (una página por juego + generales)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Reconstruye las listas de palabras de Wordle (diccionarios + frecuencias)
+  de/ en/ fr/ ... hr/  answers.txt (soluciones) + allowed.txt (intentos válidos), 14 idiomas
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -1632,7 +1647,7 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Labirinto 3D** | 1 jogador    | Raycaster na primeira pessoa (estilo Wolfenstein) com 50 níveis com semente, orbes, minimapa - ou vista de cima 2D |
 | **Reversi**      | 1 / 2 jogadores | Othello em 8x8: cercar e virar peças, 3 forças de IA (minimax) ou um duelo local |
 | **Yahtzee**      | 1 / 2 jogadores | Clássico de dados com 13 categorias, bónus superior e Yahtzee; caça ao recorde ou hotseat a 2 |
-| **Wordle**       | 1 jogador    | Adivinha a palavra de 5 letras em 6 tentativas, série sem fim, pistas coloridas, 5 idiomas |
+| **Wordle**       | 1 jogador    | Adivinha a palavra de 5 letras em 6 tentativas, série sem fim, pistas coloridas, listas de palavras reais em 14 idiomas |
 | **T-Rex Runner** | 1 jogador    | Corrida infinita pelo deserto: salto variável, agachar, cactos e pterodáctilos, ciclo dia/noite, velocidade crescente, 3 dificuldades |
 | **Damas**        | 1 / 2 jogadores | 3 regulamentos à escolha (alemãs 8×8, internacionais 10×10, checkers), captura obrigatória e dama voadora, 3 forças de IA (minimax) ou duelo local |
 | **Póquer**       | 1 jogador    | 3 variantes à escolha: Texas Hold'em contra a IA, 5 Card Draw e Video Poker; rondas de apostas, blinds, saldo de fichas persistente |
@@ -1971,8 +1986,12 @@ melhoria de arma), efeitos de explosão, recorde.
   teclado no ecrã que se colore.
 - **Série sem fim**: cada palavra resolvida dá pontos (menos tentativas = mais),
   a primeira palavra não resolvida termina a partida - total = recorde.
-- **Listas de palavras por idioma** (só A-Z); as tentativas não são verificadas
-  num dicionário. Escreve no teclado ou clica as teclas no ecrã.
+- **Listas de palavras a sério nos 14 idiomas** (pasta `woordlistz/`, só A-Z):
+  mais de **34.000 soluções** e **213.000 tentativas aceites** no total. Cada
+  tentativa é verificada na lista; o resto é recusado e a linha abana por
+  instantes.
+- **Dois modos**: *Normal* e *Difícil* - no modo difícil as pistas encontradas
+  têm de ser reaproveitadas. Escreve no teclado ou clica as teclas no ecrã.
 
 **Tower Defense**
 - **Defesa de ondas sem fim** em **4 mapas** (Campina, Desfiladeiro, Cruzamento,
@@ -2203,6 +2222,9 @@ lamawiki/
   lamawiki.py          Wiki integrado (pesquisa, categorias, renderizador)
   de.json  en.json  fr.json  es.json  pt.json   Conteúdo do wiki (uma página por jogo + gerais)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Reconstrói as listas de palavras do Wordle (dicionários + frequências)
+  de/ en/ fr/ ... hr/  answers.txt (soluções) + allowed.txt (tentativas aceites), 14 idiomas
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -2386,7 +2408,7 @@ krok po kroku znajduje się na samym dole w sekcji
 | **Labirynt 3D** | 1 gracz      | Raycaster z perspektywy pierwszej osoby (styl Wolfenstein) z 50 poziomami z ziarna, orbami, minimapą — lub widok 2D z góry |
 | **Reversi**  | 1 / 2 graczy    | Othello na 8x8: osaczaj i odwracaj pionki, 3 poziomy SI (minimax) lub lokalny pojedynek |
 | **Yahtzee**  | 1 / 2 graczy    | Klasyk w kości z 13 kategoriami, górnym bonusem i Yahtzee; pogoń za rekordem lub hotseat dla 2 graczy |
-| **Wordle**   | 1 gracz         | Odgadnij 5-literowe słowo w 6 próbach, nieskończona seria, kolorowe podpowiedzi, 5 języków |
+| **Wordle**   | 1 gracz         | Odgadnij 5-literowe słowo w 6 próbach, nieskończona seria, kolorowe podpowiedzi, prawdziwe listy słów w 14 językach |
 | **T-Rex Runner** | 1 gracz     | Nieskończony bieg przez pustynię: zmienny skok, kucanie, kaktusy i pterodaktyle, cykl dzień/noc, rosnące tempo, 3 poziomy trudności |
 | **Warcaby**  | 1 / 2 graczy    | 3 zestawy zasad (niemieckie 8×8, międzynarodowe 10×10, checkers), bicie obowiązkowe i latająca damka, 3 poziomy SI (minimax) lub lokalny pojedynek |
 | **Poker**    | 1 gracz         | 3 warianty do wyboru: Texas Hold'em przeciw SI, 5 Card Draw i Video Poker; rundy licytacji, blindy, trwałe konto żetonów |
@@ -2744,8 +2766,11 @@ broni), efekty wybuchów, rekord.
   koloruje.
 - **Nieskończona seria**: każde odgadnięte słowo daje punkty (mniej prób = więcej),
   pierwsze nieodgadnięte słowo kończy rozgrywkę — suma = rekord.
-- **Listy słów na język** (tylko A-Z); próby nie są sprawdzane w słowniku. Pisz na
-  klawiaturze lub klikaj klawisze na ekranie.
+- **Prawdziwe listy słów w 14 językach** (katalog `woordlistz/`, tylko A-Z): razem
+  ponad **34 000 haseł** i **213 000 dozwolonych słów**. Każda próba jest sprawdzana
+  z listą - reszta jest odrzucana, a wiersz chwilę się trzęsie.
+- **Dwa tryby**: *Normalny* i *Trudny* - w trudnym trzeba wykorzystywać znalezione
+  podpowiedzi. Pisz na klawiaturze lub klikaj klawisze na ekranie.
 
 **Szachy**
 - **Pełne szachy**: wszystkie ruchy bierek, w tym **roszada**, **en passant** i
@@ -3068,6 +3093,9 @@ lamawiki/
   lamawiki.py          Wbudowana wiki (wyszukiwanie, kategorie, renderer artykułów)
   de.json  en.json  fr.json  es.json  pt.json   Treść wiki (jedna strona na grę + strony ogólne)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Buduje listy słów Wordle na nowo (słowniki + listy częstości)
+  de/ en/ fr/ ... hr/  answers.txt (hasła) + allowed.txt (dozwolone słowa), 14 języków
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -3253,7 +3281,7 @@ yoksa sistemdeki Python'ı. Ayrıntılı, adım adım bir kılavuz en altta
 | **3D Labirent**  | 1 oyuncu    | Birinci şahıs raycaster (Wolfenstein tarzı), 50 tohumlu bölüm, orblar, mini harita - ya da 2D kuşbakışı görünüm |
 | **Reversi**      | 1 / 2 oyuncu | 8x8 Othello: taşları kıstırıp çevir, 3 yapay zekâ seviyesi (minimax) ya da yerel düello |
 | **Kniffel (Yahtzee)** | 1 / 2 oyuncu | 13 kategori, üst bonus ve Yahtzee içeren klasik zar oyunu; rekor avı ya da 2 oyunculu hotseat |
-| **Wordle**       | 1 oyuncu    | 5 harfli kelimeyi 6 denemede tahmin et, sonsuz seri, renkli ipuçları, 5 dil |
+| **Wordle**       | 1 oyuncu    | 5 harfli kelimeyi 6 denemede tahmin et, sonsuz seri, renkli ipuçları, 14 dilde gerçek kelime listeleri |
 | **T-Rex Runner** | 1 oyuncu    | Sonsuz çöl koşusu: değişken zıplama, eğilme, kaktüsler ve pterodaktiller, gündüz/gece döngüsü, artan hız, 3 zorluk |
 | **Dama**         | 1 / 2 oyuncu | 3 kural seti (Alman 8×8, Uluslararası 10×10, Checkers), zorunlu yeme ve uçan dama, 3 yapay zekâ seviyesi (minimax) ya da yerel düello |
 | **Poker**        | 1 oyuncu    | Seçilebilir 3 çeşit: yapay zekâya karşı Texas Hold'em, 5 Card Draw ve Video Poker; bahis turları, blindler, kalıcı fiş bakiyesi |
@@ -3611,8 +3639,11 @@ patlama efektleri, yüksek skor.
   klavyesi.
 - **Sonsuz seri**: çözülen her kelime puan kazandırır (daha az deneme = daha
   çok), çözülemeyen ilk kelime seriyi bitirir - toplam = yüksek skor.
-- **Dile göre kelime listeleri** (yalnızca A-Z); tahminler bir sözlükle
-  karşılaştırılmaz. Klavyeyle yazın ya da ekran tuşlarına tıklayın.
+- **14 dilde gerçek kelime listeleri** (`woordlistz/` klasörü, yalnızca A-Z):
+  toplam **34.000'den fazla çözüm** ve **213.000 geçerli kelime**. Her tahmin
+  listeyle karşılaştırılır; listede yoksa reddedilir ve satır kısaca titrer.
+- **İki mod**: *Normal* ve *Zor* - zor modda bulunan ipuçları yeniden
+  kullanılmalı. Klavyeyle yazın ya da ekran tuşlarına tıklayın.
 
 **Satranç**
 - **Eksiksiz satranç**: **rok**, **geçerken alma** ve **piyon terfisi** (taş
@@ -3931,6 +3962,9 @@ lamawiki/
   lamawiki.py          Oyun içi wiki (arama, kategoriler, makale işleyici)
   de.json  en.json  fr.json  es.json  pt.json   Wiki içeriği (oyun başına bir sayfa + genel sayfalar)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Wordle kelime listelerini yeniden üretir (sözlükler + sıklık listeleri)
+  de/ en/ fr/ ... hr/  answers.txt (çözümler) + allowed.txt (geçerli kelimeler), 14 dil
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -4111,7 +4145,7 @@ nederst under **[Installationsguide](#installationsguide)**.
 | **3D-labyrint** | 1 spiller    | Førstepersons-raycaster (Wolfenstein-stil) med 50 seed-genererede baner, orbs, minikort - eller 2D-fugleperspektiv |
 | **Reversi**     | 1 / 2 spillere | Othello på 8x8: indfang og vend brikker, 3 AI-styrker (minimax) eller lokal duel |
 | **Yatzy**       | 1 / 2 spillere | Terningklassiker med 13 kategorier, øvre bonus og Yatzy; highscore-jagt eller 2-spiller-hotseat |
-| **Wordle**      | 1 spiller    | Gæt ordet på 5 bogstaver på 6 forsøg, endeløs streak, farvede spor, 5 sprog |
+| **Wordle**      | 1 spiller    | Gæt ordet på 5 bogstaver på 6 forsøg, endeløs streak, farvede spor, rigtige ordlister på 14 sprog |
 | **T-Rex Runner** | 1 spiller   | Endeløst ørkenløb: variabelt hop, dukke, kaktusser og pterodaktyler, dag/nat-cyklus, stigende tempo, 3 sværhedsgrader |
 | **Dam**         | 1 / 2 spillere | 3 regelsæt (tysk 8×8, international 10×10, checkers), slagtvang og flyvende dam, 3 AI-styrker (minimax) eller lokal duel |
 | **Poker**       | 1 spiller    | 3 valgbare varianter: Texas Hold'em mod AI, 5 Card Draw og Video Poker; budrunder, blinds, vedvarende chipsaldo |
@@ -4450,8 +4484,11 @@ eksplosionseffekter, highscore.
   korrekt **optælling af dobbeltbogstaver** og et skærmtastatur, der farves.
 - **Endeløs streak**: hvert løst ord giver point (færre forsøg = flere), det første
   uløste ord afslutter forsøget - sum = highscore.
-- **Ordlister pr. sprog** (kun A-Z); gæt tjekkes ikke mod en ordbog. Skriv på
-  tastaturet eller klik på tasterne på skærmen.
+- **Rigtige ordlister på alle 14 sprog** (mappen `woordlistz/`, kun A-Z): i alt
+  over **34.000 løsninger** og **213.000 tilladte gæt**. Hvert gæt tjekkes mod
+  listen - alt andet afvises, og rækken ryster kort.
+- **To tilstande**: *Normal* og *Svær* - i svær tilstand skal fundne spor bruges
+  igen. Skriv på tastaturet eller klik på tasterne på skærmen.
 
 **Skak**
 - **Fuldstændigt skak**: alle brikkers træk inkl. **rokade**, **en passant** og
@@ -4763,6 +4800,9 @@ lamawiki/
   lamawiki.py          Indbygget wiki (søgning, kategorier, artikel-renderer)
   de.json  en.json  fr.json  es.json  pt.json   Wiki-indhold (én side pr. spil + generelle sider)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Bygger Wordles ordlister igen (ordbøger + frekvenslister)
+  de/ en/ fr/ ... hr/  answers.txt (løsninger) + allowed.txt (tilladte gæt), 14 sprog
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -4943,7 +4983,7 @@ nederst under **[Installasjonsveiledning](#installasjonsveiledning)**.
 | **3D-labyrint**  | 1 spiller    | Førstepersons raycaster (Wolfenstein-stil) med 50 seed-genererte nivåer, orber, minikart – eller 2D-ovenfravisning |
 | **Reversi**      | 1 / 2 spillere | Othello på 8x8: fang og snu brikker, 3 KI-nivåer (minimax) eller lokal duell |
 | **Yatzy**        | 1 / 2 spillere | Terningklassiker med 13 kategorier, øvre bonus og Yatzy; rekordjakt eller 2-spiller-hotseat |
-| **Wordle**       | 1 spiller    | Gjett det 5-bokstavers ordet på 6 forsøk, endeløs streak, fargehint, 5 språk |
+| **Wordle**       | 1 spiller    | Gjett det 5-bokstavers ordet på 6 forsøk, endeløs streak, fargehint, ekte ordlister på 14 språk |
 | **T-Rex Runner** | 1 spiller    | Endeløst ørkenløp: variabelt hopp, dukking, kaktus og pterodaktyler, dag/natt-syklus, økende fart, 3 vanskelighetsgrader |
 | **Dam**          | 1 / 2 spillere | 3 regelsett (tysk 8×8, internasjonal 10×10, checkers), slåtvang og flygende dame, 3 KI-nivåer (minimax) eller lokal duell |
 | **Poker**        | 1 spiller    | 3 valgbare varianter: Texas Hold'em mot KI, 5 Card Draw og Video Poker; innsatsrunder, blinds, varig sjetongbeholdning |
@@ -5280,8 +5320,11 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   som farges.
 - **Endeløs streak**: hvert løste ord gir poeng (færre forsøk = mer), det første
   uløste ordet avslutter runden – total = rekord.
-- **Ordlister per språk** (kun A-Z); gjettene sjekkes ikke mot en ordbok. Skriv på
-  tastaturet eller klikk tastene på skjermen.
+- **Ekte ordlister på alle 14 språk** (mappen `woordlistz/`, kun A-Z): til sammen
+  over **34 000 løsninger** og **213 000 tillatte gjett**. Hvert gjett sjekkes mot
+  listen - alt annet avvises, og raden rister kort.
+- **To moduser**: *Normal* og *Vanskelig* - i vanskelig modus må hint du har
+  funnet brukes videre. Skriv på tastaturet eller klikk tastene på skjermen.
 
 **Sjakk**
 - **Fullstendig sjakk**: alle brikketrekk inkludert **rokade**, **en passant** og
@@ -5590,6 +5633,9 @@ lamawiki/
   lamawiki.py          Innebygd wiki (søk, kategorier, artikkelgjengiver)
   de.json  en.json  fr.json  es.json  pt.json   Wiki-innhold (én side per spill + generelle sider)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Bygger ordlistene til Wordle på nytt (ordbøker + frekvenslister)
+  de/ en/ fr/ ... hr/  answers.txt (løsninger) + allowed.txt (tillatte gjett), 14 språk
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -5771,7 +5817,7 @@ under **[Installationsguide](#installationsguide)**.
 | **3D-labyrint**  | 1 spelare    | Förstapersons-raycaster (Wolfenstein-stil) med 50 seed-genererade banor, orbs, minikarta - eller en 2D-vy uppifrån |
 | **Reversi**      | 1 / 2 spelare | Othello på 8x8: fånga och vänd brickor, 3 AI-nivåer (minimax) eller en lokal duell |
 | **Yatzy**        | 1 / 2 spelare | Tärningsklassiker med 13 kategorier, övre bonus och yatzy; jakt på topplistan eller hotseat för 2 |
-| **Wordle**       | 1 spelare    | Gissa det 5 bokstäver långa ordet på 6 försök, oändlig streak, färgade ledtrådar, 5 språk |
+| **Wordle**       | 1 spelare    | Gissa det 5 bokstäver långa ordet på 6 försök, oändlig streak, färgade ledtrådar, riktiga ordlistor på 14 språk |
 | **T-Rex Runner** | 1 spelare    | Oändlig ökenlöpning: variabelt hopp, ducka, kaktusar & pterodaktyler, dag/natt-cykel, stigande tempo, 3 svårighetsgrader |
 | **Dam**          | 1 / 2 spelare | 3 regeluppsättningar (tysk 8×8, internationell 10×10, checkers), slagtvång & flygande dam, 3 AI-nivåer (minimax) eller en lokal duell |
 | **Poker**        | 1 spelare    | 3 valbara varianter: Texas Hold'em mot AI, 5 Card Draw och Video Poker; satsningsrundor, blinds, bestående markerkassa |
@@ -6092,8 +6138,11 @@ explosionseffekter, topplista.
   **räkning av dubbla bokstäver** och ett skärmtangentbord som färgas.
 - **Oändlig streak**: varje löst ord ger poäng (färre gissningar = mer), det första olösta ordet
   avslutar omgången - totalen = topplista.
-- **Ordlistor per språk** (endast A-Z); gissningar kontrolleras inte mot en ordbok. Skriv på
-  tangentbordet eller klicka på tangenterna på skärmen.
+- **Riktiga ordlistor på alla 14 språk** (mappen `woordlistz/`, endast A-Z): totalt över
+  **34 000 lösningar** och **213 000 tillåtna gissningar**. Varje gissning kontrolleras mot
+  listan - annat avvisas och raden skakar till.
+- **Två lägen**: *Normalt* och *Svårt* - i svårt läge måste hittade ledtrådar användas
+  vidare. Skriv på tangentbordet eller klicka på tangenterna på skärmen.
 
 **Schack**
 - **Fullständigt schack**: alla pjäsdrag inklusive **rockad**, **en passant** och
@@ -6386,6 +6435,9 @@ lamawiki/
   lamawiki.py          Inbyggt wiki (sökning, kategorier, artikelrenderare)
   de.json  en.json  fr.json  es.json  pt.json   Wiki-innehåll (en sida per spel + allmänna sidor)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Bygger om Wordles ordlistor (ordböcker + frekvenslistor)
+  de/ en/ fr/ ... hr/  answers.txt (lösningar) + allowed.txt (tillåtna gissningar), 14 språk
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -6564,7 +6616,7 @@ ohje löytyy aivan alhaalta kohdasta **[Asennusopas](#asennusopas)**.
 | **3D-labyrintti** | 1 pelaaja   | Ensimmäisen persoonan raycaster (Wolfenstein-tyyli) 50 siemenpohjaisella kentällä, orbit, minikartta – tai 2D-yläkuva |
 | **Reversi**      | 1 / 2 pelaajaa | Othello 8x8:ssa: saarrata ja käännä kiekot, 3 tekoälyn tasoa (minimax) tai paikallinen kaksintaistelu |
 | **Yatzy**        | 1 / 2 pelaajaa | Noppaklassikko 13 kategorialla, yläbonus ja Yatzy; ennätysjahti tai 2 pelaajan hotseat |
-| **Wordle**       | 1 pelaaja    | Arvaa 5-kirjaiminen sana 6 yrityksellä, loputon putki, väriviheet, 5 kieltä |
+| **Wordle**       | 1 pelaaja    | Arvaa 5-kirjaiminen sana 6 yrityksellä, loputon putki, väriviheet, aidot sanalistat 14 kielellä |
 | **T-Rex Runner** | 1 pelaaja    | Loputon aavikkojuoksu: vaihteleva hyppy, kyykistys, kaktukset ja pterodaktyylit, päivä/yö-sykli, kasvava vauhti, 3 vaikeustasoa |
 | **Tammi**        | 1 / 2 pelaajaa | 3 sääntökokoelmaa (saksalainen 8×8, kansainvälinen 10×10, checkers), pakkolyönti ja lentävä kuningatar, 3 tekoälyn tasoa (minimax) tai paikallinen kaksintaistelu |
 | **Pokeri**       | 1 pelaaja    | 3 valittavaa muunnelmaa: Texas Hold'em tekoälyä vastaan, 5 Card Draw ja Video Poker; panostuskierrokset, blindit, pysyvä pelimerkkisaldo |
@@ -6915,8 +6967,11 @@ räjähdystehosteet, ennätys.
   värittyvällä ruutunäppäimistöllä.
 - **Loputon putki**: jokainen ratkaistu sana antaa pisteitä (vähemmän arvauksia =
   enemmän), ensimmäinen ratkaisematon sana päättää pelin – summa = ennätys.
-- **Kielikohtaiset sanalistat** (vain A-Z); arvauksia ei tarkisteta sanakirjaa
-  vasten. Kirjoita näppäimistöllä tai klikkaa ruutunäppäimiä.
+- **Aidot sanalistat kaikilla 14 kielellä** (kansio `woordlistz/`, vain A-Z):
+  yhteensä yli **34 000 ratkaisua** ja **213 000 sallittua sanaa**. Jokainen
+  arvaus tarkistetaan listasta - muut hylätään ja rivi tärähtää hetken.
+- **Kaksi pelitilaa**: *Normaali* ja *Vaikea* - vaikeassa löydetyt vihjeet on
+  käytettävä uudelleen. Kirjoita näppäimistöllä tai klikkaa ruutunäppäimiä.
 
 **Shakki**
 - **Täysi shakki**: kaikki nappuloiden siirrot mukaan lukien **linnoitus**,
@@ -7236,6 +7291,9 @@ lamawiki/
   lamawiki.py          Pelin sisäinen wiki (haku, kategoriat, artikkelirenderöijä)
   de.json  en.json  fr.json  es.json  pt.json   Wiki-sisältö (yksi sivu per peli + yleiset sivut)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Rakentaa Wordlen sanalistat uudelleen (sanakirjat + taajuuslistat)
+  de/ en/ fr/ ... hr/  answers.txt (ratkaisut) + allowed.txt (sallitut sanat), 14 kieltä
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -7416,7 +7474,7 @@ existuje, jinak systémový Python. Podrobný návod krok za krokem je úplně d
 | **3D bludiště**  | 1 hráč      | Raycaster z první osoby (styl Wolfenstein) s 50 úrovněmi ze semínka, orby, minimapa - nebo 2D pohled shora |
 | **Reversi**      | 1 / 2 hráči | Othello na 8x8: sevři a otoč kameny, 3 úrovně AI (minimax) nebo lokální duel |
 | **Kniffel (Yahtzee)** | 1 / 2 hráči | Kostková klasika se 13 kategoriemi, horním bonusem a Yahtzee; hon za rekordem nebo hotseat pro 2 |
-| **Wordle**       | 1 hráč      | Uhodni pětipísmenné slovo na 6 pokusů, nekonečná série, barevné nápovědy, 5 jazyků |
+| **Wordle**       | 1 hráč      | Uhodni pětipísmenné slovo na 6 pokusů, nekonečná série, barevné nápovědy, skutečné seznamy slov ve 14 jazycích |
 | **T-Rex Runner** | 1 hráč      | Nekonečný běh pouští: variabilní skok, krčení, kaktusy a pterodaktylové, cyklus den/noc, rostoucí rychlost, 3 obtížnosti |
 | **Dáma**         | 1 / 2 hráči | 3 sady pravidel (německá 8×8, mezinárodní 10×10, checkers), povinné braní a létající dámy, 3 úrovně AI (minimax) nebo lokální duel |
 | **Poker**        | 1 hráč      | 3 volitelné varianty: Texas Hold'em proti AI, 5 Card Draw a Video Poker; sázková kola, blindy, trvalý bankroll žetonů |
@@ -7767,8 +7825,11 @@ zbraně), efekty explozí, nejlepší skóre.
   obrazovce, která se obarvuje.
 - **Nekonečná série**: každé vyřešené slovo dává body (méně pokusů = víc), první
   nevyřešené slovo ukončí hru - součet = nejlepší skóre.
-- **Seznamy slov podle jazyka** (jen A-Z); pokusy se neověřují proti slovníku.
-  Piš na klávesnici nebo klikej na klávesy na obrazovce.
+- **Skutečné seznamy slov ve všech 14 jazycích** (složka `woordlistz/`, jen A-Z):
+  dohromady přes **34 000 řešení** a **213 000 povolených slov**. Každý pokus se
+  ověřuje proti seznamu - ostatní se odmítne a řádek se krátce zatřese.
+- **Dva režimy**: *Normální* a *Těžký* - v těžkém musíš nalezené nápovědy dál
+  používat. Piš na klávesnici nebo klikej na klávesy na obrazovce.
 
 **Šachy**
 - **Kompletní šachy**: všechny tahy figur včetně **rošády**, **braní mimochodem**
@@ -8077,6 +8138,9 @@ lamawiki/
   lamawiki.py          Vestavěná wiki (vyhledávání, kategorie, renderer článků)
   de.json  en.json  fr.json  es.json  pt.json   Obsah wiki (jedna stránka na hru + obecné stránky)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Znovu sestaví seznamy slov pro Wordle (slovníky + frekvenční seznamy)
+  de/ en/ fr/ ... hr/  answers.txt (řešení) + allowed.txt (povolená slova), 14 jazyků
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -8259,7 +8323,7 @@ obstaja, sicer sistemski Python. Na dnu dokumenta je podroben vodnik po korakih:
 | **3D-labirint**  | 1 igralec    | Raycaster v prvi osebi (slog Wolfenstein) s 50 ravnmi s semenom, orbi, minimapo - ali 2D-pogled od zgoraj |
 | **Reversi**      | 1 / 2 igralca | Othello na 8x8: ujemi in obrni ploščke, 3 jakosti UI (minimax) ali lokalni dvoboj |
 | **Kniffel (Yahtzee)** | 1 / 2 igralca | Klasika s kockami s 13 kategorijami, zgornjim bonusom in Yahtzeejem; lov na rekord ali dvoigralski hotseat |
-| **Wordle**       | 1 igralec    | Ugani 5-črkovno besedo v 6 poskusih, neskončni niz, barvni namigi, 5 jezikov |
+| **Wordle**       | 1 igralec    | Ugani 5-črkovno besedo v 6 poskusih, neskončni niz, barvni namigi, pravi seznami besed v 14 jezikih |
 | **T-Rex Runner** | 1 igralec    | Neskončni tek po puščavi: spremenljiv skok, priklek, kaktusi in pterodaktili, cikel dan/noč, naraščajoča hitrost, 3 težavnosti |
 | **Dama**         | 1 / 2 igralca | 3 pravila (nemška 8×8, mednarodna 10×10, checkers), obvezno jemanje in leteča dama, 3 jakosti UI (minimax) ali lokalni dvoboj |
 | **Poker**        | 1 igralec    | 3 izbirne različice: Texas Hold'em proti UI, 5 Card Draw in Video Poker; krogi stav, blindi, trajno stanje žetonov |
@@ -8603,8 +8667,11 @@ nadgradnja orožja), učinki eksplozij, rekord.
   tipkovnico, ki se obarva.
 - **Neskončni niz**: vsaka rešena beseda prinese točke (manj poskusov = več), prva
   nerešena beseda konča niz - vsota = rekord.
-- **Seznami besed po jeziku** (samo A-Z); poskusi se ne preverjajo s slovarjem.
-  Tipkaj na tipkovnici ali klikaj zaslonske tipke.
+- **Pravi seznami besed v vseh 14 jezikih** (mapa `woordlistz/`, samo A-Z): skupaj
+  več kot **34.000 rešitev** in **213.000 dovoljenih besed**. Vsak poskus se preveri
+  s seznamom - drugo je zavrnjeno in vrstica se na kratko strese.
+- **Dva načina**: *Normalno* in *Težko* - v težkem je treba najdene namige
+  uporabiti naprej. Tipkaj na tipkovnici ali klikaj zaslonske tipke.
 
 **Šah**
 - **Popolni šah**: vse poteze figur, vključno z **rošado**, **en passant** in
@@ -8918,6 +8985,9 @@ lamawiki/
   lamawiki.py          Vgrajeni wiki (iskanje, kategorije, izrisovalnik člankov)
   de.json  en.json  fr.json  es.json  pt.json   Vsebina wikija (ena stran na igro + splošne strani)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Znova zgradi sezname besed za Wordle (slovarji + seznami pogostosti)
+  de/ en/ fr/ ... hr/  answers.txt (rešitve) + allowed.txt (dovoljene besede), 14 jezikov
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
@@ -9097,7 +9167,7 @@ dnu pod **[Vodič za instalaciju](#vodič-za-instalaciju)**.
 | **3D labirint**  | 1 igrač     | Raycaster iz prvog lica (stil Wolfensteina) s 50 razina sa sjemenom, orbovi, minimapa - ili 2D pogled odozgo |
 | **Reversi**      | 1 / 2 igrača | Othello na 8x8: zarobite i okrenite žetone, 3 razine AI-ja (minimax) ili lokalni dvoboj |
 | **Yahtzee**      | 1 / 2 igrača | Klasik s kockicama s 13 kategorija, gornji bonus i Yahtzee; lov na rekord ili hotseat za 2 igrača |
-| **Wordle**       | 1 igrač     | Pogodite riječ od 5 slova u 6 pokušaja, beskonačni niz, obojeni savjeti, 5 jezika |
+| **Wordle**       | 1 igrač     | Pogodite riječ od 5 slova u 6 pokušaja, beskonačni niz, obojeni savjeti, pravi popisi riječi na 14 jezika |
 | **T-Rex Runner** | 1 igrač     | Beskonačna pustinjska trka: promjenjiv skok, saginjanje, kaktusi i pterodaktili, izmjena dan/noć, rastuća brzina, 3 težine |
 | **Dame**         | 1 / 2 igrača | 3 skupa pravila (njemačke 8×8, međunarodne 10×10, checkers), obavezno uzimanje i leteća dama, 3 razine AI-ja (minimax) ili lokalni dvoboj |
 | **Poker**        | 1 igrač     | 3 varijante po izboru: Texas Hold'em protiv AI-ja, 5 Card Draw i Video Poker; runde klađenja, blindovi, trajni saldo žetona |
@@ -9447,8 +9517,11 @@ nadogradnja oružja), efekti eksplozije, rekord.
   tipkovnicu koja se boji.
 - **Beskonačni niz**: svaka riješena riječ donosi bodove (manje pokušaja = više),
   prva neriješena riječ završava niz - ukupno = rekord.
-- **Popisi riječi po jeziku** (samo A-Z); pokušaji se ne provjeravaju u rječniku.
-  Tipkajte na tipkovnici ili klikajte tipke na zaslonu.
+- **Pravi popisi riječi na svih 14 jezika** (mapa `woordlistz/`, samo A-Z): ukupno
+  više od **34.000 rješenja** i **213.000 dopuštenih riječi**. Svaki pokušaj se
+  provjerava prema popisu - ostalo se odbija i redak se nakratko trese.
+- **Dva načina**: *Normalno* i *Teško* - u teškom se pronađeni savjeti moraju
+  dalje koristiti. Tipkajte na tipkovnici ili klikajte tipke na zaslonu.
 
 **Šah**
 - **Potpuni šah**: svi potezi figura uključujući **rokadu**, **en passant** i
@@ -9760,6 +9833,9 @@ lamawiki/
   lamawiki.py          Ugrađeni wiki (pretraga, kategorije, prikaz članaka)
   de.json  en.json  fr.json  es.json  pt.json   Sadržaj wikija (jedna stranica po igri + opće stranice)
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
+woordlistz/
+  build_wordlists.py   Ponovno gradi popise riječi za Wordle (rječnici + popisi učestalosti)
+  de/ en/ fr/ ... hr/  answers.txt (rješenja) + allowed.txt (dopuštene riječi), 14 jezika
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py

@@ -36,7 +36,11 @@ web/
   js/core/app.js        Shell: Startbildschirm, Vorspiel-Screen, Loop, Eingabe, Pause, Highscore, Wiki
   js/manifest.js        Reihenfolge der Spiele + Skriptdateien je Spiel
   js/games/*.js         die Spiele
-  tools/                Smoke-Test (headless Chrome)
+  js/games/wordle_words/<code>.js
+                        Wordle-Wortlisten je Sprache, aus woordlistz/ erzeugt;
+                        wird erst beim Spielstart nachgeladen (nicht im Manifest)
+  tools/                Smoke-Test (headless Chrome) + die Erzeuger für
+                        js/lang, js/wiki und js/games/wordle_words
 ```
 
 ## Logische Fläche

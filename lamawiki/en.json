@@ -1417,7 +1417,8 @@
         "guess",
         "letters",
         "green",
-        "yellow"
+        "yellow",
+        "dictionary"
       ],
       "sections": [
         {
@@ -1425,7 +1426,14 @@
           "body": [
             "Guess the hidden 5-letter word within 6 attempts. After each guess the tiles change colour: green = right letter in the right spot, yellow = the letter appears but somewhere else, grey = the letter is not in the word.",
             "Repeated letters are handled correctly: a letter is only marked yellow or green as often as it actually occurs in the answer.",
-            "Every guess must be 5 letters, but need not be a 'real' word - it is not checked against a dictionary. The answers match the selected language."
+            "Every guess has to be a real word - it is checked against the word list of the selected language (10,000 to 19,000 accepted guesses, depending on the language). Anything else is rejected: the row shakes briefly and the guess does not count. The answers are always common words of the same language."
+          ]
+        },
+        {
+          "h": "Modes",
+          "body": [
+            "Normal: guess any accepted word - the hints are only suggestions.",
+            "Hard: revealed hints must be reused - green letters stay in place, yellow ones have to appear again. Pick the mode before you start."
           ]
         },
         {

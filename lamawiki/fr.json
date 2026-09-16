@@ -1415,7 +1415,8 @@
         "deviner",
         "lettres",
         "vert",
-        "jaune"
+        "jaune",
+        "dictionnaire"
       ],
       "sections": [
         {
@@ -1423,7 +1424,14 @@
           "body": [
             "Devine le mot caché de 5 lettres en 6 essais maximum. Après chaque essai, les cases changent de couleur : vert = bonne lettre au bon endroit, jaune = la lettre existe mais ailleurs, gris = la lettre n'est pas dans le mot.",
             "Les lettres en double sont gérées correctement : une lettre n'est marquée en jaune ou vert que le nombre de fois où elle apparaît vraiment dans la solution.",
-            "Chaque essai doit faire 5 lettres, mais pas forcément un 'vrai' mot - il n'est pas vérifié dans un dictionnaire. Les solutions correspondent à la langue choisie."
+            "Chaque essai doit être un vrai mot : il est vérifié dans la liste de mots de la langue choisie (de 10 000 à 19 000 mots acceptés selon la langue). Sinon l'essai est refusé : la ligne tremble brièvement et l'essai ne compte pas. Les solutions sont toujours des mots courants de la même langue."
+          ]
+        },
+        {
+          "h": "Modes",
+          "body": [
+            "Normal : tu peux proposer n'importe quel mot accepté - les indices ne sont que des conseils.",
+            "Difficile : les indices trouvés doivent être réutilisés - les lettres vertes restent à leur place, les jaunes doivent réapparaître. Le mode se choisit avant de commencer."
           ]
         },
         {

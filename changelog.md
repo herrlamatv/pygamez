@@ -8,6 +8,40 @@
 
 ## 🇩🇪 Deutsch
 
+### Wordle: echte Wortlisten in 14 Sprachen – 2026-09-16
+
+#### Neu
+- **Echte Wortlisten für alle 14 Sprachen** im neuen Ordner `woordlistz/`:
+  zusammen **34.442 Lösungswörter** und **213.400 erlaubte Rateworte** (je
+  Sprache 10.000 bis 19.000). Gebaut aus den Hunspell-Wörterbüchern der
+  jeweiligen Sprachgemeinschaft und aus Häufigkeitslisten echter Texte;
+  Englisch übernimmt die Originallisten des Vorbilds, Finnisch das Vokabular
+  des Voikko-Projekts. Vorher waren es rund 100 handverlesene Wörter in nur
+  5 Sprachen.
+- **Rateversuche werden geprüft** – wie beim Original muss jedes eingetippte
+  Wort in der Liste stehen. Was nicht darin steht, wird abgelehnt: Die Zeile
+  wackelt kurz, eine Meldung erscheint und der Versuch zählt nicht.
+- **Harter Modus** als zweiter Modus im Vorspiel-Bildschirm: Gefundene Hinweise
+  müssen weiterverwendet werden – grüne Buchstaben bleiben an ihrem Platz,
+  gelbe müssen wieder vorkommen. Die Meldung sagt, welcher Hinweis fehlt
+  („1. Buchstabe muss B sein“).
+- Dieselben Listen in der **Web-Version**: Dort wird immer nur die Datei der
+  eingestellten Sprache nachgeladen (59–111 KB), damit der Start schnell bleibt.
+- `woordlistz/build_wordlists.py` baut die Listen jederzeit neu;
+  `woordlistz/README.md` nennt alle Quellen und ihre Lizenzen.
+
+#### Geändert
+- Umlaute und Akzente stehen so in den Listen, wie man sie ohne Sonderzeichen
+  tippt: deutsch `Ä→AE` und `ß→SS`, dänisch/norwegisch `Å→AA`,
+  schwedisch/finnisch `Ä→A`, sonst fällt der Akzent weg.
+- In den Lösungswörtern stecken keine Eigennamen mehr: Im Deutschen entscheiden
+  die Deklinations-Flags des Wörterbuchs, ob ein großgeschriebenes Wort ein
+  Substantiv (`Blume` → Lösungswort) oder ein Name (`Petra` → keins) ist.
+- Alle Listen laufen durch den Schimpfwortfilter des Projekts (alle 14 Sprachen
+  gleichzeitig).
+- LamaWiki, beide READMEs und die Spieleübersicht nennen die neuen Zahlen und
+  den harten Modus; `pyinstall*.bat` packt `woordlistz/` mit in die `.exe`.
+
 ### UI v4.2 „Midnight Glass“ – neues Standard-Design – 2026-09-16
 
 #### Neu
@@ -690,6 +724,38 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Wordle: real word lists in 14 languages – 2026-09-16
+
+#### Added
+- **Real word lists for all 14 languages** in the new `woordlistz/` folder:
+  **34,442 answers** and **213,400 accepted guesses** in total (10,000 to
+  19,000 per language). Built from the Hunspell dictionaries of each language
+  community and from frequency lists of real text; English uses the original
+  lists of the game it is modelled on, Finnish the vocabulary of the Voikko
+  project. Before there were about 100 hand-picked words in just 5 languages.
+- **Guesses are checked** – as in the original, every word typed has to be in
+  the list. Anything else is rejected: the row shakes briefly, a message
+  appears and the guess does not count.
+- **Hard mode** as a second mode on the pre-game screen: revealed hints must be
+  reused – green letters stay in place, yellow ones have to appear again. The
+  message says which hint is missing ("Letter 1 must be B").
+- The same lists in the **web version**: only the file for the selected
+  language is loaded (59–111 KB), so startup stays fast.
+- `woordlistz/build_wordlists.py` rebuilds the lists at any time;
+  `woordlistz/README.md` lists every source and its licence.
+
+#### Changed
+- Umlauts and accents are stored the way you would type them without special
+  characters: German `Ä→AE` and `ß→SS`, Danish/Norwegian `Å→AA`,
+  Swedish/Finnish `Ä→A`, otherwise the accent is dropped.
+- The answers no longer contain proper nouns: in German the declension flags of
+  the dictionary decide whether a capitalised word is a noun (`Blume` → answer)
+  or a name (`Petra` → not).
+- All lists run through the project's swear-word filter (all 14 languages at
+  once).
+- LamaWiki, both READMEs and the game overview mention the new numbers and hard
+  mode; `pyinstall*.bat` bundles `woordlistz/` into the `.exe`.
 
 ### UI v4.2 "Midnight Glass" – new default design – 2026-09-16
 

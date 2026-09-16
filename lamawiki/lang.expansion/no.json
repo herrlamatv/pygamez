@@ -1416,7 +1416,8 @@
         "gjett",
         "bokstaver",
         "grønn",
-        "gul"
+        "gul",
+        "ordbok"
       ],
       "sections": [
         {
@@ -1424,7 +1425,14 @@
           "body": [
             "Gjett det skjulte 5-bokstavsordet innen 6 forsøk. Etter hver gjetning skifter rutene farge: grønn = riktig bokstav på riktig plass, gul = bokstaven finnes men et annet sted, grå = bokstaven er ikke i ordet.",
             "Gjentatte bokstaver håndteres riktig: en bokstav markeres gul eller grønn bare så mange ganger som den faktisk forekommer i svaret.",
-            "Hver gjetning må være 5 bokstaver, men trenger ikke være et 'ekte' ord - det kontrolleres ikke mot en ordbok. Svarene matcher det valgte språket."
+            "Hvert gjett må være et ekte ord: det sjekkes mot ordlisten for det valgte språket (10 000 til 19 000 tillatte gjett, avhengig av språket). Alt annet avvises: raden rister kort, og gjettet teller ikke. Løsningene er alltid vanlige ord på samme språk."
+          ]
+        },
+        {
+          "h": "Moduser",
+          "body": [
+            "Normal: du kan gjette hvilket som helst tillatt ord - hintene er bare forslag.",
+            "Vanskelig: hint du har funnet må brukes videre - grønne bokstaver blir stående, gule må komme igjen. Modusen velges før start."
           ]
         },
         {

@@ -1416,7 +1416,8 @@
         "arvaa",
         "kirjaimet",
         "vihreä",
-        "keltainen"
+        "keltainen",
+        "sanakirja"
       ],
       "sections": [
         {
@@ -1424,7 +1425,14 @@
           "body": [
             "Arvaa piilotettu 5-kirjaiminen sana 6 yrityksellä. Jokaisen arvauksen jälkeen laatat vaihtavat väriä: vihreä = oikea kirjain oikeassa paikassa, keltainen = kirjain esiintyy mutta muualla, harmaa = kirjainta ei ole sanassa.",
             "Toistuvat kirjaimet käsitellään oikein: kirjain merkitään keltaiseksi tai vihreäksi vain niin monta kertaa kuin se todella esiintyy vastauksessa.",
-            "Jokaisen arvauksen on oltava 5 kirjainta, mutta sen ei tarvitse olla 'oikea' sana - sitä ei tarkisteta sanakirjasta vastaan. Vastaukset vastaavat valittua kieltä."
+            "Jokaisen arvauksen on oltava oikea sana: se tarkistetaan valitun kielen sanalistasta (kielestä riippuen 10 000-19 000 sallittua sanaa). Muut hylätään: rivi tärähtää hetken eikä arvaus kulu. Ratkaisut ovat aina saman kielen yleisiä sanoja."
+          ]
+        },
+        {
+          "h": "Pelitilat",
+          "body": [
+            "Normaali: voit arvata minkä tahansa sallitun sanan - vihjeet ovat vain suosituksia.",
+            "Vaikea: löydetyt vihjeet on käytettävä uudelleen - vihreät kirjaimet pysyvät paikallaan ja keltaisten on esiinnyttävä uudestaan. Tila valitaan ennen aloitusta."
           ]
         },
         {

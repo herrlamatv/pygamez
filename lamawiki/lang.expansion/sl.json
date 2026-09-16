@@ -1416,7 +1416,8 @@
         "ugibanje",
         "črke",
         "zelena",
-        "rumena"
+        "rumena",
+        "slovar"
       ],
       "sections": [
         {
@@ -1424,7 +1425,14 @@
           "body": [
             "Ugani skrito 5-črkovno besedo v 6 poskusih. Po vsakem ugibanju ploščice spremenijo barvo: zelena = prava črka na pravem mestu, rumena = črka se pojavi, a nekje drugje, siva = črke v besedi ni.",
             "Ponovljene črke so pravilno obravnavane: črka je označena rumeno ali zeleno le tolikokrat, kolikor se dejansko pojavi v odgovoru.",
-            "Vsako ugibanje mora imeti 5 črk, ni pa nujno 'prava' beseda - ne preverja se v slovarju. Odgovori ustrezajo izbranemu jeziku."
+            "Vsak poskus mora biti prava beseda: preveri se s seznamom besed izbranega jezika (glede na jezik 10.000 do 19.000 dovoljenih besed). Drugo je zavrnjeno: vrstica se na kratko strese in poskus se ne šteje. Rešitve so vedno pogoste besede istega jezika."
+          ]
+        },
+        {
+          "h": "Načini",
+          "body": [
+            "Normalno: ugibaš lahko katero koli dovoljeno besedo - namigi so samo priporočilo.",
+            "Težko: najdene namige moraš uporabiti naprej - zelene črke ostanejo na svojem mestu, rumene se morajo spet pojaviti. Način izbereš pred začetkom."
           ]
         },
         {

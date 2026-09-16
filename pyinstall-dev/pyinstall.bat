@@ -90,6 +90,7 @@ echo Baue PyGameZ.exe - das kann einige Minuten dauern...
     --add-data "%CD%\lamawiki\*.json;lamawiki" ^
     --add-data "%CD%\lamawiki\lang.expansion\*.json;lamawiki\lang.expansion" ^
     --add-data "%CD%\games\levels;games\levels" ^
+    --add-data "%CD%\woordlistz;woordlistz" ^
     --add-data "%CD%\logo;logo" ^
     "%CD%\main.py"
 if errorlevel 1 goto build_failed

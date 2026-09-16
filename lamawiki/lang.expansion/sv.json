@@ -1416,7 +1416,8 @@
         "gissa",
         "bokstäver",
         "grön",
-        "gul"
+        "gul",
+        "ordlista"
       ],
       "sections": [
         {
@@ -1424,7 +1425,14 @@
           "body": [
             "Gissa det dolda 5-bokstavsordet inom 6 försök. Efter varje gissning ändrar rutorna färg: grönt = rätt bokstav på rätt plats, gult = bokstaven finns men någon annanstans, grått = bokstaven finns inte i ordet.",
             "Upprepade bokstäver hanteras korrekt: en bokstav markeras gul eller grön bara så många gånger som den faktiskt förekommer i svaret.",
-            "Varje gissning måste ha 5 bokstäver, men behöver inte vara ett 'riktigt' ord - det kontrolleras inte mot en ordbok. Svaren matchar det valda språket."
+            "Varje gissning måste vara ett riktigt ord: den kontrolleras mot ordlistan för det valda språket (10 000 till 19 000 tillåtna gissningar beroende på språk). Annat avvisas: raden skakar till och gissningen räknas inte. Lösningarna är alltid vanliga ord på samma språk."
+          ]
+        },
+        {
+          "h": "Lägen",
+          "body": [
+            "Normalt: du får gissa vilket tillåtet ord som helst - ledtrådarna är bara förslag.",
+            "Svårt: hittade ledtrådar måste användas vidare - gröna bokstäver stannar kvar, gula måste dyka upp igen. Läget väljs före start."
           ]
         },
         {
