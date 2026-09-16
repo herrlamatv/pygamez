@@ -497,6 +497,39 @@ def _draw_icon(cv, cx, cy, name, color, bg):
         cv.create_oval(cx - 8, cy + 1, cx - 7, cy + 2, fill=color, outline="")
         cv.create_oval(cx - 6, cy + 1, cx - 5, cy + 2, fill=color, outline="")
         cv.create_oval(cx - 7, cy + 3, cx - 6, cy + 4, fill=color, outline="")
+    elif name == "CrossyRoadGame":
+        # Klötzchen-Huhn: Körper, Kamm, Schnabel, Auge, Straßenstreifen
+        cv.create_rectangle(cx - 6, cy - 6, cx + 5, cy + 5, fill=color, outline="")
+        cv.create_rectangle(cx - 2, cy - 9, cx + 2, cy - 6, fill="#e0503c", outline="")
+        cv.create_rectangle(cx + 5, cy - 3, cx + 9, cy, fill="#f0a030", outline="")
+        cv.create_rectangle(cx + 1, cy - 4, cx + 3, cy - 2, fill=bg, outline="")
+        cv.create_line(cx - 10, cy + 9, cx - 4, cy + 9, fill=color, width=2)
+        cv.create_line(cx + 1, cy + 9, cx + 7, cy + 9, fill=color, width=2)
+    elif name == "GeometryDashGame":
+        # Würfel mit Gesicht, davor ein Stachel
+        cv.create_rectangle(cx - 9, cy - 8, cx + 3, cy + 4, outline=color, width=2)
+        cv.create_rectangle(cx - 6, cy - 5, cx - 4, cy - 3, fill=color, outline="")
+        cv.create_rectangle(cx - 2, cy - 5, cx, cy - 3, fill=color, outline="")
+        cv.create_line(cx - 6, cy, cx, cy, fill=color, width=2)
+        cv.create_polygon(cx + 4, cy + 9, cx + 7, cy + 2, cx + 10, cy + 9,
+                          fill=color, outline="")
+        cv.create_line(cx - 10, cy + 9, cx + 10, cy + 9, fill=color, width=1)
+    elif name == "BattleshipGame":
+        # Schiffsrumpf mit Aufbau und Mast über Wellen
+        cv.create_polygon(cx - 10, cy + 1, cx + 10, cy + 1, cx + 7, cy + 6,
+                          cx - 7, cy + 6, fill=color, outline="")
+        cv.create_rectangle(cx - 4, cy - 4, cx + 3, cy + 1, fill=color, outline="")
+        cv.create_line(cx, cy - 10, cx, cy - 4, fill=color, width=2)
+        cv.create_line(cx - 10, cy + 9, cx - 5, cy + 8, cx, cy + 9, cx + 5, cy + 8,
+                       cx + 10, cy + 9, fill=color, width=1, smooth=True)
+    elif name == "CasinoGame":
+        # Roulette-Kessel: Ring, Speichen, Kugel
+        cv.create_oval(cx - 9, cy - 9, cx + 9, cy + 9, outline=color, width=2)
+        cv.create_oval(cx - 4, cy - 4, cx + 4, cy + 4, outline=color, width=1)
+        for dx, dy in ((0, -1), (1, 0), (0, 1), (-1, 0)):
+            cv.create_line(cx + dx * 4, cy + dy * 4, cx + dx * 8, cy + dy * 8,
+                           fill=color, width=1)
+        cv.create_oval(cx + 3, cy - 8, cx + 7, cy - 4, fill=color, outline="")
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))
@@ -718,6 +751,14 @@ class App:
         self._closing = False
         self._fullscreen = False
         self._mouse_captured = False  # Pointer-Capture (FPS-Spiele) aktiv?
+        # Gehaltene Tasten: keycode -> keysym des ERSTEN Drucks. Daran erkennt
+        # _on_key die automatische Tastenwiederholung des Betriebssystems.
+        self._held_keys = {}
+        # Zurückgehaltene KeyReleases (keycode -> keysym): X11 meldet eine
+        # gehaltene Taste als Release+Press-Paare. Ein Release wird deshalb erst
+        # zu Beginn des nächsten Frames zugestellt - kommt vorher derselbe
+        # Press, war es nur Wiederholung und beide Hälften entfallen.
+        self._pending_keyups = {}
         self.current = None          # aktuell laufendes Spiel (Game-Objekt)
         # Skalierung/Versatz für die Darstellung der logischen Fläche
         self._scale = 1.0
@@ -1085,6 +1126,9 @@ class App:
         # Tastatur global am Hauptfenster abfangen
         self.root.bind("<KeyPress>", self._on_key)
         self.root.bind("<KeyRelease>", self._on_key_up)
+        # Fenster verliert den Fokus (Alt-Tab ...): gehaltene Tasten loslassen,
+        # sonst "klemmt" z.B. die Sprungtaste, weil der KeyRelease woanders landet.
+        self.root.bind("<FocusOut>", self._on_focus_out, add="+")
         # Maus auf der Spielfläche
         self.embed.bind("<Button-1>", self._on_click)
         self.embed.bind("<ButtonRelease-1>", self._on_release)
@@ -1124,32 +1168,129 @@ class App:
     def _on_key(self, event):
         from game_base import InputEvent
 
+        # Wiederholung erkennen: dieselbe Taste ist noch gedrückt (Windows:
+        # nur weitere Presses) oder ihr Release steht noch aus (X11: Paare).
+        code = event.keycode
+        if code in self._pending_keyups:
+            key = self._pending_keyups.pop(code)
+            repeat = True
+        elif code in self._held_keys:
+            key = self._held_keys[code]
+            repeat = True
+        else:
+            key = event.keysym
+            repeat = False
+            self._held_keys[code] = key
+
         # F11 schaltet den Vollbildmodus um (Spiel bleibt eingebettet)
-        if event.keysym == "F11":
-            self.toggle_fullscreen()
+        if key == "F11":
+            if not repeat:
+                self.toggle_fullscreen()
             return
 
         # ESC: bei Menü-Screens als "Zurück" durchreichen, sonst Pause umschalten.
         # Spiele mit eigenen Unter-Screens (Minigolf-Bahneditor) melden über
         # wants_escape, dass sie ESC gerade selbst brauchen - dort heißt es
-        # "Abbrechen" und nicht "Pause".
-        if event.keysym == "Escape":
+        # "Abbrechen" und nicht "Pause". Gehaltenes ESC wiederholt nichts.
+        if key == "Escape":
+            if repeat:
+                return
             if self.current and (getattr(self.current, "is_menu", False)
                                  or getattr(self.current, "wants_escape", False)):
-                self.current.handle_event(InputEvent(InputEvent.KEYDOWN, key="Escape"))
+                self.current.handle_event(InputEvent(InputEvent.KEYDOWN, key="Escape",
+                                                     code=code))
             elif self.current and not self.current.game_over:
+                if not self.current.paused:
+                    # Vor der Pause alles loslassen, sonst läuft/springt die
+                    # Figur nach dem Fortsetzen mit einer "gehaltenen" Taste.
+                    self._release_keys(keep_escape=True)
                 self.current.paused = not self.current.paused
             return
 
         if self.current and not self.current.paused:
             self.current.handle_event(InputEvent(InputEvent.KEYDOWN,
-                                                 key=event.keysym,
-                                                 char=event.char))
+                                                 key=key,
+                                                 char=event.char,
+                                                 repeat=repeat, code=code))
 
     def _on_key_up(self, event):
+        # Nicht sofort zustellen - siehe _pending_keyups/_flush_keyups.
+        code = event.keycode
+        key = self._held_keys.get(code, event.keysym)
+        self._pending_keyups[code] = key
+
+    def _flush_keyups(self):
+        """Stellt die zurückgehaltenen KeyReleases zu (zu Beginn jedes Frames)."""
+        if not self._pending_keyups:
+            return
         from game_base import InputEvent
-        if self.current and not self.current.paused:
-            self.current.handle_event(InputEvent(InputEvent.KEYUP, key=event.keysym))
+        pending, self._pending_keyups = self._pending_keyups, {}
+        for code, key in pending.items():
+            self._held_keys.pop(code, None)
+            if key in ("Escape", "F11"):
+                continue
+            cur = self.current
+            if cur and not cur.paused:
+                cur.handle_event(InputEvent(InputEvent.KEYUP, key=key, code=code))
+
+    def _release_keys(self, keep_escape=False):
+        """Lässt alle gehaltenen Tasten los (Pause, Fokusverlust, Screen-Wechsel).
+
+        Das aktive Spiel bekommt für jede noch gedrückte Taste ein KEYUP.
+        """
+        from game_base import InputEvent
+        held = dict(self._held_keys)
+        held.update(self._pending_keyups)
+        self._held_keys = {}
+        self._pending_keyups = {}
+        cur = self.current
+        for code, key in held.items():
+            if key in ("Escape", "F11"):
+                if keep_escape:
+                    self._held_keys[code] = key
+                continue
+            if cur and not cur.paused:
+                try:
+                    cur.handle_event(InputEvent(InputEvent.KEYUP, key=key, code=code))
+                except Exception:
+                    pass
+
+    def _on_focus_out(self, _event=None):
+        # FocusOut kommt auch, wenn der Fokus nur zwischen eigenen Widgets
+        # wandert - erst nach dem Wechsel prüfen, ob die App ihn wirklich los ist.
+        def check():
+            try:
+                if self.root.focus_get() is None:
+                    self._release_keys()
+            except (KeyError, tk.TclError):
+                self._release_keys()
+        try:
+            self.root.after_idle(check)
+        except tk.TclError:
+            pass
+
+    def _switch_current(self, new, exit_old=True):
+        """Macht 'new' zum aktiven Screen/Spiel (None = Startbildschirm).
+
+        Lässt gehaltene Tasten los und meldet dem bisherigen Spiel sein Ende
+        (on_exit), wenn es verworfen wird: Musik aus, KI-Suche abbrechen.
+        exit_old=False für den Replay-Screen, nach dem das Spiel zurückkehrt.
+        """
+        old = self.current
+        if old is new:
+            return
+        self._release_keys()
+        if old is not None and exit_old:
+            hook = getattr(old, "on_exit", None)
+            if hook is not None:
+                try:
+                    hook()
+                except Exception:
+                    import traceback
+                    traceback.print_exc()
+        self.current = new
+        import audio
+        audio.music_tick(new)
 
     def _on_click(self, event):
         from game_base import InputEvent
@@ -1244,9 +1385,13 @@ class App:
 
     def launch_game(self, game_cls, mode):
         """Startet das eigentliche Spiel im gewählten Modus mit den Einstellungen."""
-        self.current = game_cls(self.canvas, self.game_w, self.game_h,
-                                mode=mode, game_settings=self.settings)
-        self.current.paused = False
+        # Erst das alte Spiel/den Vorspiel-Screen verabschieden, dann das neue
+        # bauen (sein reset() darf z.B. schon Musik starten).
+        self._switch_current(None)
+        game = game_cls(self.canvas, self.game_w, self.game_h,
+                        mode=mode, game_settings=self.settings)
+        game.paused = False
+        self._switch_current(game)
         self.game_list.set_active(game_cls)
         # Statistik: neue Partie zählen (+ ggf. daran hängende Erfolge).
         import stats
@@ -1256,9 +1401,15 @@ class App:
         self.ui.begin_transition()
         self.embed.focus_set()
 
-    def show_screen(self, screen):
+    def show_screen(self, screen, exit_old=True):
         """Macht einen Menü-Screen (Vorspiel/Optionen) zum aktiven 'current'."""
-        self.current = screen
+        old = self.current
+        # Wechsel mitten aus einem laufenden Spiel (z.B. anderes Spiel in der
+        # Sidebar gewählt): Highscore wie bei "Zurück zum Menü" sichern.
+        if (exit_old and old is not None and not getattr(old, "is_menu", False)
+                and not getattr(old, "_hs_saved", False)):
+            self._highscore_speichern(old)
+        self._switch_current(screen, exit_old=exit_old)
         # Hover-Zustand des Startbildschirm-Rasters zurücksetzen.
         self._menu_hover = None
         self.embed.configure(cursor="")
@@ -1267,7 +1418,7 @@ class App:
 
     def back_to_menu(self):
         """Zurück zum leeren Startbildschirm (ohne Highscore-Effekte)."""
-        self.current = None
+        self._switch_current(None)
         self.status_var.set(t("app.no_game"))
         self._set_state_dot(C_TEXT_DIM)
         self.game_list.set_active(None)
@@ -1326,9 +1477,11 @@ class App:
             else:
                 self.back_to_menu()
 
+        # Das Spiel bleibt im Speicher und kehrt danach zurück -> kein on_exit.
         self.show_screen(ReplayScreen(self.canvas, self.game_w, self.game_h,
                                       self, on_close=zurück, pending=rep,
-                                      game=rep.get("game")))
+                                      game=rep.get("game")),
+                         exit_old=back_to is None)
 
     def refresh_language(self):
         """Beschriftet das Tkinter-Menü nach einem Sprachwechsel neu."""
@@ -1431,7 +1584,7 @@ class App:
         # Gesammelte Spielzeit sofort sichern (sonst erst beim nächsten Flush).
         import stats
         stats.flush()
-        self.current = None
+        self._switch_current(None)
         self.status_var.set(t("app.no_game"))
         self._set_state_dot(C_TEXT_DIM)
         self.game_list.set_active(None)
@@ -1525,6 +1678,9 @@ class App:
         # pygame-interne Ereignisse leeren (hält SDL "lebendig")
         pygame.event.pump()
 
+        # Zurückgehaltene KeyReleases zustellen (Autorepeat-Erkennung).
+        self._flush_keyups()
+
         # Live-FPS für die Status-Karte (alle 500 ms aktualisiert).
         self._fps_n += 1
         now_ms = pygame.time.get_ticks()
@@ -1596,15 +1752,25 @@ class App:
                 # Übergang Game Over -> läuft wieder: das Spiel wurde intern
                 # neu gestartet (Enter/Leertaste) -> als neue Partie zählen
                 # und den Sieg/Niederlage-Riegel (report_result) freigeben.
-                if getattr(game, "_was_over", False) and not is_menu_screen:
+                if getattr(game, "_resume_same_game", False):
+                    # Dieselbe Partie geht weiter (Rückgängig nach Game Over).
+                    game._resume_same_game = False
+                    game._was_over = False
+                elif getattr(game, "_was_over", False) and not is_menu_screen:
                     game._was_over = False
                     game._result_reported = False
                     stats.game_started(game.highscore_key)
                     achievements.on_game_started(game.highscore_key)
 
-            # Highscore bei Game Over für jedes Spiel einblenden.
-            if game.game_over and not is_menu_screen:
+            # Highscore bei Game Over für jedes Spiel einblenden (außer das
+            # Spiel ist in einem Modus, der nicht in den Highscore zählt).
+            if (game.game_over and not is_menu_screen
+                    and getattr(game, "show_highscore_banner", True)):
                 self._draw_highscore_overlay(game)
+
+        # Musik gehört immer dem aktiven Spiel: pausiert mit ihm, endet mit ihm.
+        import audio
+        audio.music_tick(self.current)
 
         # Gesammelte Statistik gedrosselt auf die Platte schreiben.
         stats.maybe_flush()
@@ -2027,6 +2193,10 @@ class App:
         self._closing = True
         if self.current:
             self._highscore_speichern(self.current)
+            try:
+                self._switch_current(None)
+            except Exception:
+                pass
         try:
             import stats
             stats.flush()

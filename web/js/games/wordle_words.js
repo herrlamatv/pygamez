@@ -1,24 +1,32 @@
 /*
- * wordle_words.js - Wortlisten für Wordle, je Sprache
+ * wordle_words.js - Wortlisten für Wordle, je Sprache und Wortlänge
  * (Port von games/wordle_words.py)
- * ===================================================
- * - Die eigentlichen Listen liegen in js/games/wordle_words/<code>.js und
- *   werden aus woordlistz/ der Desktop-Version erzeugt
+ * =================================================================
+ * - Die eigentlichen Listen liegen in js/games/wordle_words/<code><n>.js
+ *   (5 Buchstaben ohne Zahl: de.js, sonst de4.js, de6.js, de7.js) und werden
+ *   aus woordlistz/ der Desktop-Version erzeugt
  *   (node web/tools/build-wordlists.js). Zusammen sind das mehrere Megabyte,
- *   deshalb wird immer nur die Datei der gerade gespielten Sprache
+ *   deshalb wird immer nur die Datei der gerade gespielten Sprache/Länge
  *   nachgeladen - per <script>-Tag, damit es auch über file:// läuft.
- * - Jede dieser Dateien meldet sich mit PG.wordleWords.add(code, ...) an. Die
- *   Wörter stehen dort ohne Trennzeichen hintereinander (je 5 Zeichen).
- * - Bis eine Liste da ist (oder wenn die Datei fehlt), greift die kurze
- *   eingebaute Notfallliste FALLBACK - so ist das Spiel nie ohne Wörter.
+ * - Jede dieser Dateien meldet sich mit PG.wordleWords.add(code, lösungen,
+ *   weitere, länge) an. Die Wörter stehen dort ohne Trennzeichen
+ *   hintereinander; "weitere" sind die erlaubten Rateworte, die KEINE
+ *   Lösungswörter sind (die Lösungen werden beim Anmelden ergänzt).
+ * - Bis eine Liste da ist (oder wenn die Datei fehlt), greift für 5 Buchstaben
+ *   die kurze eingebaute Notfallliste FALLBACK - so ist das Spiel nie ohne
+ *   Wörter. Für 4/6/7 gibt es keine Notfallliste (hasLength() sagt es).
  *
- *   PG.wordleWords.load(code, fertig)   Liste der Sprache nachladen
- *   PG.wordleWords.isLoaded(code)       liegt sie schon bereit?
- *   PG.wordleWords.wordsFor(code)       Lösungswörter (Array)
- *   PG.wordleWords.allowedFor(code)     erlaubte Rateworte (Set)
+ *   PG.wordleWords.load(code, n, fertig)   Liste nachladen
+ *   PG.wordleWords.isLoaded(code, n)       liegt sie schon bereit?
+ *   PG.wordleWords.wordsFor(code, n)       Lösungswörter (Array, alphabetisch)
+ *   PG.wordleWords.allowedFor(code, n)     erlaubte Rateworte (Set)
+ *   PG.wordleWords.hasLength(code, n)      gibt es Lösungswörter?
  */
 (function () {
   "use strict";
+
+  const LENGTHS = [4, 5, 6, 7];
+  const DEFAULT_LENGTH = 5;
 
   // Notfall-Lösungswörter, falls die Sprachdatei fehlt (gleiche Liste wie
   // FALLBACK in games/wordle_words.py).
@@ -94,70 +102,85 @@
     ],
   };
 
-  const DATA = {};      // code -> {answers: [...], allowed: Set}
-  const WAITING = {};   // code -> [callback, ...] (Ladevorgang läuft)
+  const DATA = {}; // "code:n" -> {answers: [...], allowed: Set}
+  const WAITING = {}; // "code:n" -> [callback, ...] (Ladevorgang läuft)
+  const FAILED = {}; // "code:n" -> true (Datei fehlt)
 
   // Ordner der Sprachdateien - aus dem Pfad DIESER Datei abgeleitet, damit es
   // sowohl aus index.html als auch aus tools/smoketest.html stimmt.
   const BASE = (function () {
     const src = (document.currentScript && document.currentScript.src) || "";
-    return src ? src.replace(/wordle_words\.js(\?.*)?$/, "wordle_words/")
-               : "js/games/wordle_words/";
+    return src ? src.replace(/wordle_words\.js(\?.*)?$/, "wordle_words/") : "js/games/wordle_words/";
   })();
 
-  /** Zerlegt "ABCDEFGHIJ" in ["ABCDE", "FGHIJ"]. */
-  function split5(packed) {
+  function slot(code, n) {
+    return code + ":" + (n || DEFAULT_LENGTH);
+  }
+
+  /** Zerlegt "ABCDEFGHIJ" in ["ABCDE", "FGHIJ"] (n Zeichen je Wort). */
+  function split(packed, n) {
     const out = [];
-    for (let i = 0; i + 5 <= packed.length; i += 5) out.push(packed.slice(i, i + 5));
+    for (let i = 0; i + n <= packed.length; i += n) out.push(packed.slice(i, i + n));
     return out;
   }
 
-  /** Wird von js/games/wordle_words/<code>.js aufgerufen. */
-  function add(code, answers, allowed) {
-    const list = split5(String(answers || ""));
-    const set = new Set(split5(String(allowed || "")));
+  /** Wird von js/games/wordle_words/<code><n>.js aufgerufen. */
+  function add(code, answers, extra, n) {
+    n = n || DEFAULT_LENGTH;
+    const list = split(String(answers || ""), n).sort();
+    const set = new Set(split(String(extra || ""), n));
     for (const w of list) set.add(w);
-    DATA[code] = { answers: list, allowed: set };
+    DATA[slot(code, n)] = { answers: list, allowed: set };
   }
 
-  function isLoaded(code) {
-    return !!DATA[code];
+  function isLoaded(code, n) {
+    return !!DATA[slot(code, n)];
   }
 
-  /** Lädt die Wortliste einer Sprache nach und ruft danach 'done' auf. */
-  function load(code, done) {
-    if (DATA[code]) return done && done();
-    if (WAITING[code]) {
-      if (done) WAITING[code].push(done);
+  /** Lädt die Wortliste einer Sprache/Länge nach und ruft danach 'done' auf. */
+  function load(code, n, done) {
+    const key = slot(code, n);
+    if (DATA[key] || FAILED[key]) return done && done();
+    if (WAITING[key]) {
+      if (done) WAITING[key].push(done);
       return;
     }
-    WAITING[code] = done ? [done] : [];
+    WAITING[key] = done ? [done] : [];
     const finish = () => {
-      const waiting = WAITING[code];
-      delete WAITING[code];
+      const waiting = WAITING[key];
+      delete WAITING[key];
       for (const cb of waiting) cb();
     };
     const s = document.createElement("script");
-    s.src = BASE + code + ".js";
+    s.src = BASE + code + (n === DEFAULT_LENGTH ? "" : String(n)) + ".js";
     s.onload = finish;
     s.onerror = () => {
       console.warn("[PyGameZ] Wordle-Wortliste fehlt:", s.src);
+      FAILED[key] = true;
       finish();
     };
     document.head.appendChild(s);
   }
 
-  /** Lösungswörter der Sprache (Notfallliste, solange nichts geladen ist). */
-  function wordsFor(code) {
-    if (DATA[code]) return DATA[code].answers;
-    return (FALLBACK[code] || FALLBACK.en).filter((w) => /^[A-Z]{5}$/.test(w));
+  /** Lösungswörter (Notfallliste für 5 Buchstaben, solange nichts geladen ist). */
+  function wordsFor(code, n) {
+    n = n || DEFAULT_LENGTH;
+    const d = DATA[slot(code, n)];
+    if (d) return d.answers;
+    if (n !== DEFAULT_LENGTH) return [];
+    return (FALLBACK[code] || FALLBACK.en).filter((w) => /^[A-Z]{5}$/.test(w)).sort();
   }
 
-  /** Erlaubte Rateworte der Sprache als Set. */
-  function allowedFor(code) {
-    if (DATA[code]) return DATA[code].allowed;
-    return new Set(wordsFor(code));
+  /** Erlaubte Rateworte der Sprache/Länge als Set. */
+  function allowedFor(code, n) {
+    const d = DATA[slot(code, n)];
+    if (d) return d.allowed;
+    return new Set(wordsFor(code, n));
   }
 
-  PG.wordleWords = { add, load, isLoaded, wordsFor, allowedFor, FALLBACK };
+  function hasLength(code, n) {
+    return wordsFor(code, n).length > 0;
+  }
+
+  PG.wordleWords = { add, load, isLoaded, wordsFor, allowedFor, hasLength, FALLBACK, LENGTHS, DEFAULT_LENGTH };
 })();

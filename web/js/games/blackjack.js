@@ -13,10 +13,12 @@
  * - Split: genau EINMAL, bei gleichem Kartenwert (K+10 geht); Split-Asse
  *   bekommen je genau eine Karte; 21 nach Split zählt als 21, nicht Blackjack.
  *
- * Chips: Start 500, Einsätze 10/25/50/100 (stapelbar). Der Chipstand bleibt
- * über Sitzungen erhalten (PG.store, Abschnitt "mem.blackjack"). Der Highscore
- * ist der höchste jemals erreichte Chipstand; er wird beim Menü-Rückweg
- * gespeichert (gameOver wird nie gesetzt). Pleite = Neustart mit 500.
+ * Lama-Chips: Blackjack, Poker und Casino teilen sich ein Konto bei der
+ * Lama-Bank (casino_bank.js, PG.store "mem.casino"). Einsätze 10/25/50/100
+ * (stapelbar) werden beim Geben sofort abgebucht - wer die Hand verlässt,
+ * verliert den Einsatz. Der Highscore ist der Höchststand von 1000 +
+ * Blackjack-Bilanz; er wird beim Menü-Rückweg gespeichert (gameOver wird nie
+ * gesetzt). Pleite (unter 10 Chips) = Bank-Kredit, Konto wieder 1000.
  *
  * Steuerung: Buttons anklicken oder H = Hit, S = Stand, D = Double, X = Split,
  * 1-4 = Chips setzen, Backspace = Einsatz löschen, Enter = Geben/Weiter.
@@ -26,6 +28,7 @@
 
   const { ui, draw, t } = PG;
   const C = PG.cards;
+  const bank = PG.lamabank;
 
   // Tisch-Identität (Filz + Chip-Farben). Generische UI-Farben kommen zur
   // Zeichenzeit aus ui.* (Theme), die Akzentfarbe aus this.accent.
@@ -33,8 +36,6 @@
   const COL_FELT_EDGE = [15, 33, 26];
   const CHIP_COLS = { 10: [110, 160, 235], 25: [110, 205, 140], 50: [230, 120, 90], 100: [40, 40, 48] };
 
-  const STORE_KEY = "mem.blackjack";
-  const START_CHIPS = 500;
   const BETS = [10, 25, 50, 100];
   const DEAL_T = 0.22; // Tween-Dauer je Karte
   const FLIP_T = 0.25; // Hole-Card-Flip
@@ -60,19 +61,12 @@
     return [total, aces > 0];
   }
 
-  function toInt(v, def) {
-    const n = parseInt(v, 10);
-    return Number.isFinite(n) ? n : def;
-  }
-
   class BlackjackGame extends PG.Game {
     // ===================================================== Aufbau / Reset
     reset() {
       this.gameOver = false;
-      const data = PG.store.get(STORE_KEY, {}) || {};
-      this.chips = Math.max(0, toInt(data.chips, START_CHIPS));
-      this.best = Math.max(this.chips, toInt(data.best, START_CHIPS));
-      this.score = this.best;
+      bank.load();
+      this._syncChips();
 
       this._makeFonts();
       this.renderer = new C.CardRenderer(this.accent);
@@ -92,7 +86,7 @@
       this._fly = new Set();
       this.dealerWait = 0;
       this.flipT = 0;
-      this.state = this.chips >= BETS[0] ? BET : BROKE;
+      this.state = bank.isBroke("blackjack") ? BROKE : BET;
     }
 
     /** Theme-Schriften (ui.font cached selbst); _huge hängt an height. */
@@ -125,8 +119,11 @@
       });
     }
 
-    _save() {
-      PG.store.set(STORE_KEY, { chips: this.chips, best: this.best });
+    /** Kontostand + Highscore aus der Lama-Bank übernehmen. */
+    _syncChips() {
+      this.chips = bank.balance();
+      this.best = bank.scoreFor("blackjack");
+      this.score = this.best;
     }
 
     // ===================================================== Schuh / Hände
@@ -163,9 +160,9 @@
 
     // ===================================================== Runden-Ablauf
     _startDeal() {
-      if (this.bet < BETS[0] || this.bet > this.chips) return;
+      if (this.bet < BETS[0] || !bank.debit(this.bet, "blackjack")) return;
+      this._syncChips();
       this._ensureShoe();
-      this.chips -= this.bet;
       this.hands = [[]];
       this.handBets = [this.bet];
       this.handDone = [false];
@@ -239,8 +236,8 @@
     }
 
     _double() {
-      if (!this._canDouble()) return;
-      this.chips -= this.handBets[this.active];
+      if (!this._canDouble() || !bank.debit(this.handBets[this.active], "blackjack")) return;
+      this._syncChips();
       this.handBets[this.active] *= 2;
       this.hands[this.active].push(this._drawCard());
       this.playSound("move");
@@ -248,10 +245,10 @@
     }
 
     _split() {
-      if (!this._canSplit()) return;
+      if (!this._canSplit() || !bank.debit(this.handBets[0], "blackjack")) return;
+      this._syncChips();
       const h = this.hands[0];
       this.splitAces = h[0].rank === 1;
-      this.chips -= this.handBets[0];
       this.hands = [[h[0]], [h[1]]];
       this.handBets = [this.handBets[0], this.handBets[0]];
       this.handDone = [false, false];
@@ -339,10 +336,8 @@
         else if (res === "push") delta += bet;
         this.results.push(res);
       });
-      this.chips += delta;
-      if (this.chips > this.best) this.best = this.chips;
-      this.score = this.best;
-      this._save();
+      bank.credit(delta, "blackjack");
+      this._syncChips();
       this.state = PAYOUT;
       if (this.results.some((r) => r === "blackjack")) this.playSound("win");
       else if (this.results.some((r) => r === "win" || r === "dealer_bust")) this.playSound("point");
@@ -352,7 +347,8 @@
 
     _toBet() {
       this.bet = 0;
-      if (this.chips < BETS[0]) {
+      this._syncChips();
+      if (bank.isBroke("blackjack")) {
         this.state = BROKE;
         this.playSound("gameover");
       } else {
@@ -368,8 +364,7 @@
     handleEvent(ev) {
       if (this.state === BROKE) {
         if (this._isConfirm(ev)) {
-          this.chips = START_CHIPS;
-          this._save();
+          bank.refillIfBroke("blackjack");
           this._toBet();
           this.playSound("click");
         }
@@ -388,7 +383,7 @@
         if (["1", "2", "3", "4"].includes(k)) {
           this._addChip(BETS[Number(k) - 1]);
         } else if (k === "BackSpace") {
-          // Einsatz zurücknehmen (wird erst beim Geben abgezogen)
+          // Einsatz zurücknehmen (wird erst beim Geben abgebucht)
           this.bet = 0;
           this.playSound("move");
         } else if (k === "Return" || k === "space") {
@@ -621,7 +616,7 @@
       ui.drawPanel(ctx, new PG.Rect(cx - pw / 2, cy - 92, pw, 184), { accentTop: ui.RED });
       ui.text(ctx, t("bj.broke"), cx, cy - 42, this._huge, ui.RED, "center");
       ui.text(ctx, t("bj.best") + ": " + this.best, cx, cy + 2, this._small, ui.TEXT_DIM, "center");
-      ui.text(ctx, t("bj.broke_restart", { n: START_CHIPS }), cx, cy + 34, this._small, ui.TEXT, "center");
+      ui.text(ctx, t("bj.broke_restart", { n: bank.START_CHIPS }), cx, cy + 34, this._small, ui.TEXT, "center");
     }
   }
 

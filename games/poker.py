@@ -12,9 +12,14 @@ Poker - drei wählbare Varianten (Modusauswahl im Vorspiel):
 - Video Poker (Jacks or Better): Solo gegen die Auszahlungstabelle. Einsatz,
   fünf Karten, Halten wählen, ziehen, Auszahlung nach Tabelle.
 
-Chips: Start 1000, bleiben über Sitzungen erhalten (mem.json, Abschnitt
-"poker"). Der Highscore ist der höchste je erreichte Chipstand (game_over wird
-nie gesetzt; die Sicherung erfolgt beim Menü-Rückweg). Pleite = Neustart.
+Lama-Chips: Blackjack, Poker und Casino teilen sich ein Konto bei der
+Lama-Bank (lamabank.py, mem.json-Abschnitt "casino"). Zu Beginn einer Hand
+wandert der ganze Kontostand als Tischstapel ins "escrow"; was in den Pot geht,
+ist sofort abgebucht. Wer den Tisch mitten in der Hand verlässt, verliert
+seinen Pot-Anteil, der Reststapel wird beim nächsten Start erstattet. Der
+Highscore ist der Höchststand von 1000 + Poker-Bilanz (game_over wird nie
+gesetzt; die Sicherung erfolgt beim Menü-Rückweg). Pleite (unter dem
+Big Blind bzw. dem kleinsten Video-Poker-Einsatz) = Bank-Kredit auf 1000.
 
 Vereinfachung: Bei All-In wird EIN gemeinsamer Haupt-Pot geführt (keine
 Side-Pots) - für ein lockeres Spiel gegen die KI völlig ausreichend.
@@ -29,7 +34,7 @@ from collections import Counter
 
 import pygame
 
-import store
+import lamabank
 import ui
 from game_base import Game, InputEvent
 from i18n import t
@@ -42,7 +47,6 @@ from . import cards as C
 COL_FELT = (20, 50, 39)
 COL_FELT_EDGE = (13, 35, 27)
 
-START_CHIPS = 1000
 SMALL_BLIND = 10
 BIG_BLIND = 20
 ANTE = 10
@@ -204,15 +208,10 @@ class PokerGame(Game):
         if self.mode not in ("holdem", "draw", "video"):
             self.mode = "holdem"
 
-        data = store.load_section("poker")
-        try:
-            self.chips = max(0, int(data.get("chips", START_CHIPS)))
-        except (TypeError, ValueError):
-            self.chips = START_CHIPS
-        try:
-            self.best = max(self.chips, int(data.get("best", START_CHIPS)))
-        except (TypeError, ValueError):
-            self.best = max(self.chips, START_CHIPS)
+        # load() erstattet auch den Tischstapel einer abgebrochenen Hand.
+        lamabank.load()
+        self.chips = lamabank.balance()
+        self.best = lamabank.score_for("poker")
         self.score = self.best
 
         pk = self.settings.get("poker", {}) if isinstance(self.settings, dict) else {}
@@ -247,9 +246,7 @@ class PokerGame(Game):
         self._layout()
 
         self.phase = BET_VIDEO if self.mode == "video" else PREHAND
-        if self.chips < BIG_BLIND and self.mode != "video":
-            self.phase = BROKE
-        if self.mode == "video" and self.chips < VIDEO_BETS[0]:
+        if lamabank.is_broke("poker", self.mode):
             self.phase = BROKE
 
     def _make_fonts(self):
@@ -291,19 +288,19 @@ class PokerGame(Game):
         self.chip_rects = [pygame.Rect(24 + i * 54, self.strip.y + 12, 42, 42)
                            for i in range(len(VIDEO_BETS))]
 
-    def _save(self):
-        store.save_section("poker", {"chips": self.chips, "best": self.best})
+    def on_exit(self):
+        """Tisch verlassen: Reststapel sofort zurück aufs Konto (der Pot-Anteil
+        ist schon abgebucht und bleibt weg)."""
+        lamabank.clear_escrow()
 
     def _sync_chips(self):
-        """Übernimmt den Table-Stack des Menschen zurück in die Bank."""
-        me = self.players[0] if self.players else None
-        if me is not None:
-            self.chips = me.stack
-        if self.chips > self.best:
-            self.best = self.chips
+        """Kontostand, Highscore und Chipleader-Erfolg aus der Lama-Bank."""
+        self.chips = lamabank.balance()
+        self.best = lamabank.score_for("poker")
         self.score = self.best
-        self.ach_event("poker_rich", self.chips)
-        self._save()
+        # poker_rich zählt die Poker-Bilanz (1000 + Gewinne - Einsätze), nicht
+        # den gemeinsamen Kontostand - ein Slot-Gewinn soll hier nicht helfen.
+        self.ach_event("poker_rich", lamabank.value_for("poker"))
 
     # ===================================================== Deck
     def _fresh_deck(self):
@@ -317,7 +314,9 @@ class PokerGame(Game):
 
     # ===================================================== Hand-Start
     def _start_hand(self):
-        if self.chips < BIG_BLIND:
+        lamabank.clear_escrow()
+        self.chips = lamabank.balance()
+        if lamabank.is_broke("poker", self.mode):
             self.phase = BROKE
             self.play_sound("gameover")
             return
@@ -334,6 +333,8 @@ class PokerGame(Game):
                                  for _ in range(self.n_opponents)]
         self.players = [Player(names[i], stacks[i], is_human=(i == 0))
                         for i in range(1 + self.n_opponents)]
+        # Der ganze Kontostand liegt jetzt als Tischstapel auf dem Tisch.
+        lamabank.set_escrow(self.chips, "poker")
 
         if self.mode == "holdem":
             self._start_holdem()
@@ -367,6 +368,9 @@ class PokerGame(Game):
 
     def _post(self, player, amount):
         amount = min(amount, player.stack)
+        if player.is_human and amount > 0:
+            # Einsatz sofort abbuchen (aus dem Tischstapel) + speichern.
+            lamabank.pay_from_escrow(amount, "poker")
         player.stack -= amount
         player.round_bet += amount
         self.pot += amount
@@ -637,8 +641,13 @@ class PokerGame(Game):
     def _award(self, winners, rank_tuple):
         share = self.pot // len(winners)
         rem = self.pot - share * len(winners)
+        won = 0
         for i, w in enumerate(winners):
             w.stack += share + (rem if i == 0 else 0)
+            if w.is_human:
+                won = share + (rem if i == 0 else 0)
+        # Tischstapel zurück aufs Konto + Pot-Anteil gutschreiben
+        lamabank.settle_escrow(won, "poker")
         me = self.players[0]
         self.win_amount = (self.pot if me in winners else 0)
         if me in winners:
@@ -659,12 +668,12 @@ class PokerGame(Game):
 
     # ----- Video Poker --------------------------------------------------
     def _video_deal(self):
-        if self.chips < self.video_bet:
-            self.phase = BROKE
-            self.play_sound("gameover")
+        if not lamabank.debit(self.video_bet, "poker"):
+            if lamabank.is_broke("poker", "video"):
+                self.phase = BROKE
+                self.play_sound("gameover")
             return
-        self.chips -= self.video_bet
-        self._save()
+        self.chips = lamabank.balance()
         self._fresh_deck()
         self.players = [Player(t("poker.you"), self.chips, is_human=True)]
         self.players[0].hole = [self._draw(face_up=True) for _ in range(5)]
@@ -683,11 +692,8 @@ class PokerGame(Game):
         rt, _ = best_hand(me.hole)
         mult = self._video_payout(rt)
         self.win_amount = self.video_bet * mult
-        self.chips += self.win_amount
-        if self.chips > self.best:
-            self.best = self.chips
-        self.score = self.best
-        self._save()
+        lamabank.credit(self.win_amount, "poker")
+        self._sync_chips()
         if mult > 0:
             self.msg = t("poker.video_win",
                          hand=t("poker.hand." + category_key(rt)),
@@ -727,8 +733,8 @@ class PokerGame(Game):
     def handle_event(self, event):
         if self.phase == BROKE:
             if self._is_confirm(event):
-                self.chips = START_CHIPS
-                self._save()
+                lamabank.refill_if_broke("poker", self.mode)
+                self.chips = lamabank.balance()
                 self.phase = BET_VIDEO if self.mode == "video" else PREHAND
                 self.play_sound("click")
             return
@@ -764,10 +770,11 @@ class PokerGame(Game):
             p.all_in = False
             p.round_bet = 0
             p.result = None
-        if self.mode == "video":
-            self.phase = BET_VIDEO if self.chips >= VIDEO_BETS[0] else BROKE
+        self.chips = lamabank.balance()
+        if lamabank.is_broke("poker", self.mode):
+            self.phase = BROKE
         else:
-            self.phase = PREHAND if self.chips >= BIG_BLIND else BROKE
+            self.phase = BET_VIDEO if self.mode == "video" else PREHAND
         if self.phase == BROKE:
             self.play_sound("gameover")
 
@@ -864,9 +871,19 @@ class PokerGame(Game):
         else:
             self._draw_table(s)
 
+    def _hud_chips(self):
+        """Mitten in einer Hand liegt das Konto als Tischstapel auf dem Tisch."""
+        if self.mode != "video" and self.players and \
+                self.phase in (ACTING, DRAW_SELECT):
+            return self.players[0].stack
+        return self.chips
+
     def _draw_topbar(self, s):
-        img = self._big.render(f"{t('poker.chips')}: {self.chips}", True,
-                               ui.GOLD)
+        label = f"{t('poker.chips')}: {self._hud_chips()}"
+        img = self._big.render(label, True, ui.GOLD)
+        if img.get_width() > self.width // 2 - 90:
+            # "Lama-Chips" ist in manchen Sprachen lang - Pot-Anzeige freihalten
+            img = self._small.render(label, True, ui.GOLD)
         s.blit(img, (16, 12))
         img = self._small.render(f"{t('poker.best')}: {self.best}", True,
                                  ui.TEXT_DIM)
@@ -1074,7 +1091,8 @@ class PokerGame(Game):
         best = self._small.render(f"{t('poker.best')}: {self.best}", True,
                                   ui.TEXT_DIM)
         s.blit(best, best.get_rect(center=(cx, cy + 2)))
-        sub = self._small.render(t("poker.broke_restart", n=START_CHIPS), True,
+        sub = self._small.render(t("poker.broke_restart",
+                                   n=lamabank.START_CHIPS), True,
                                  ui.TEXT)
         s.blit(sub, sub.get_rect(center=(cx, cy + 32)))
         hint = self._tiny.render(t("common.enter_restart"), True, ui.TEXT_FAINT)

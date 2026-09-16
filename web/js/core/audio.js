@@ -37,6 +37,8 @@
   let master = null;
   const cache = new Map();
   const toneCache = new Map();
+  const noteCache = new Map();
+  let music = null;
 
   function ensure() {
     if (ctx) return ctx;
@@ -131,5 +133,141 @@
       }
     },
     SPECS,
+
+    // ----- Musik-Schleifen (Gegenstück zu music_play/music_tick in audio.py) ---
+    // Eine Stimme ist eine Float32Array (mono, Abtastrate = musicRate()), aus
+    // Noten zusammengesetzt (noteSamples + renderVoice). Alle Stimmen laufen als
+    // AudioBufferSource mit loop=true synchron. Die Musik gehört einem Spiel:
+    // app.js ruft jedes Frame musicTick(current) auf.
+    musicRate() {
+      return ensure() ? ctx.sampleRate : 44100;
+    },
+    /** Samples einer Note (gecacht), Parameter wie note_bytes() in audio.py. */
+    noteSamples(freq, dur, wave = "square", vol = 0.3, decay = 0) {
+      const rate = this.musicRate();
+      const n = Math.max(1, Math.floor(rate * dur));
+      const key = [Math.round(freq * 100), n, wave, Math.round(vol * 1000), Math.round(decay * 100), rate].join("|");
+      let data = noteCache.get(key);
+      if (data) return data;
+      data = new Float32Array(n);
+      const att = Math.max(1, Math.floor(rate * 0.004));
+      const rel = Math.max(1, Math.min(Math.floor(n / 3), Math.floor(rate * 0.03)));
+      let phase = 0;
+      let seed = (Math.floor(freq * 100) + n) >>> 0;
+      const noise = () => {
+        seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+        return (seed / 4294967296) * 2 - 1;
+      };
+      for (let i = 0; i < n; i++) {
+        const tt = i / rate;
+        let v, env;
+        if (wave === "kick") {
+          phase += (150 * Math.exp(-tt * 28) + 45) / rate;
+          v = Math.sin(PG.TAU * phase);
+          env = Math.exp(-tt * 9);
+        } else if (wave === "snare") {
+          phase += 190 / rate;
+          v = 0.65 * noise() + 0.35 * Math.sin(PG.TAU * phase);
+          env = Math.exp(-tt * 18);
+        } else if (wave === "hat") {
+          v = noise();
+          env = Math.exp(-tt * 45);
+        } else {
+          phase += freq / rate;
+          const p = phase % 1;
+          if (wave === "sine") v = Math.sin(PG.TAU * p);
+          else if (wave === "saw") v = 2 * p - 1;
+          else if (wave === "triangle") v = p < 0.5 ? 4 * p - 1 : 3 - 4 * p;
+          else if (wave === "noise") v = noise();
+          else v = p < 0.5 ? 1 : -1;
+          env = decay > 0 ? Math.exp(-tt * decay) : 1;
+        }
+        env *= Math.min(1, i / att, (n - i) / rel);
+        data[i] = Math.max(-1, Math.min(1, v)) * vol * env;
+      }
+      if (noteCache.size > 400) noteCache.clear();
+      noteCache.set(key, data);
+      return data;
+    },
+    /** Stimme aus [[startSekunde, Float32Array], ...] mit Gesamtlänge in Sekunden. */
+    renderVoice(notes, length) {
+      const rate = this.musicRate();
+      const total = Math.floor(rate * length);
+      const out = new Float32Array(total);
+      for (const [start, data] of notes) {
+        const pos = Math.floor(rate * start);
+        if (pos < 0 || pos >= total) continue;
+        out.set(total - pos < data.length ? data.subarray(0, total - pos) : data, pos);
+      }
+      return out;
+    },
+    /** Startet Musik: voices = [[Float32Array, relVol], ...], owner = Spiel-Objekt. */
+    music(voices, owner, volume = 1) {
+      this.stopMusic();
+      if (!ensure()) return false;
+      const rate = ctx.sampleRate;
+      const gain = ctx.createGain();
+      gain.connect(master);
+      const nodes = [];
+      const start = ctx.currentTime + 0.05;
+      for (const [data, vol] of voices) {
+        try {
+          const buf = ctx.createBuffer(1, data.length, rate);
+          buf.getChannelData(0).set(data);
+          const src = ctx.createBufferSource();
+          src.buffer = buf;
+          src.loop = true;
+          const g = ctx.createGain();
+          g.gain.value = vol;
+          src.connect(g);
+          g.connect(gain);
+          src.start(start);
+          nodes.push(src);
+        } catch (e) {}
+      }
+      music = { owner, gain, nodes, volume, paused: false };
+      this.applyMusicVolume();
+      return nodes.length > 0;
+    },
+    stopMusic(owner) {
+      if (!music || (owner && music.owner !== owner)) return;
+      for (const n of music.nodes) {
+        try {
+          n.stop();
+        } catch (e) {}
+      }
+      try {
+        music.gain.disconnect();
+      } catch (e) {}
+      music = null;
+    },
+    setMusicVolume(v) {
+      if (!music) return;
+      music.volume = Math.max(0, Math.min(1, v));
+      this.applyMusicVolume();
+    },
+    musicPlaying(owner) {
+      return !!music && (!owner || music.owner === owner);
+    },
+    applyMusicVolume() {
+      if (!music) return;
+      const base = enabled() ? Number(PG.settings.data.volume) : 0;
+      const target = music.paused ? 0 : base * music.volume;
+      try {
+        music.gain.gain.setTargetAtTime(target, ctx.currentTime, 0.02);
+      } catch (e) {
+        music.gain.gain.value = target;
+      }
+    },
+    /** Jedes Frame aus app.js: Musik endet mit ihrem Spiel und pausiert mit ihm. */
+    musicTick(current) {
+      if (!music) return;
+      if (current !== music.owner) {
+        this.stopMusic();
+        return;
+      }
+      music.paused = !!current.paused;
+      this.applyMusicVolume();
+    },
   };
 })();

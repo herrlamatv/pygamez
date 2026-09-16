@@ -11,14 +11,16 @@
         "menue",
         "pause",
         "vollbild",
-        "sidebar"
+        "sidebar",
+        "mehrspieler"
       ],
       "sections": [
         {
           "h": "Spiel starten",
           "body": [
             "Ein Spiel startest du auf drei Wegen: über die Spieleliste links in der Sidebar, über das Spiele-Raster auf dem Startbildschirm oder direkt aus diesem Wiki heraus über den Vorspiel-Screen.",
-            "Vor jedem Spiel erscheint der Vorspiel-Screen: dort wählst du den Modus (z.B. Einzel- oder Mehrspieler), erreichst die Optionen und dieses Wiki."
+            "Vor jedem Spiel erscheint der Vorspiel-Screen: dort wählst du den Modus (z.B. Einzel- oder Mehrspieler), erreichst die Optionen und dieses Wiki.",
+            "Hat ein Spiel viele Modi oder ist das Fenster klein, rücken Optionen, Wiki und Zurück im Vorspiel-Screen in eine gemeinsame Reihe - so bleibt alles sichtbar."
           ]
         },
         {
@@ -26,7 +28,7 @@
           "body": [
             "- [Esc] pausiert das laufende Spiel und setzt es fort - in Menüs geht es damit zurück.",
             "- [F11] schaltet den Vollbildmodus an und aus.",
-            "- Der grüne Button Zurück zum Menü beendet das Spiel und speichert den Highscore."
+            "- Der grüne Button Zurück zum Menü beendet das Spiel und speichert den Highscore - ebenso ein Wechsel in ein anderes Spiel über die Sidebar."
           ]
         },
         {
@@ -39,8 +41,9 @@
         {
           "h": "Mehrspieler",
           "body": [
-            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) und Asteroids (Koop-Duell) haben einen lokalen 2-Spieler-Modus - wählbar im Vorspiel-Screen.",
-            "Im Einzelspieler steuern beide Tastenbelegungen dieselbe Figur, im Mehrspieler je eine (Standard: P1 = WASD, P2 = Pfeile bzw. IJKL - siehe Optionen)."
+            "Einen lokalen 2-Spieler-Modus haben 20 Spiele: Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus), Asteroids (Koop-Duell), Memory, Vier gewinnt, Panzer-Duell, Reversi, Kniffel, Dame, Schach, Mühle, Simon, Billard, Minigolf, Pinball, Bowling und Schiffe versenken - wählbar im Vorspiel-Screen.",
+            "Im Einzelspieler steuern beide Tastenbelegungen dieselbe Figur, im Mehrspieler je eine (Standard: P1 = WASD, P2 = Pfeile bzw. IJKL - siehe Optionen).",
+            "Tetris bietet außerdem Versus gegen die KI; bei Schiffe versenken zu zweit verdeckt ein Übergabe-Bildschirm die Flotten. Die Web-Version ist reiner Einzelspieler."
           ]
         }
       ]
@@ -60,7 +63,8 @@
         "sprache",
         "design",
         "erscheinungsbild",
-        "theme"
+        "theme",
+        "zusatztasten"
       ],
       "sections": [
         {
@@ -75,7 +79,8 @@
           "body": [
             "Drei Vorlagen stehen bereit: WASD + Pfeile, WASD + IJKL und Pfeile + WASD.",
             "Jede einzelne Taste ist frei belegbar: Zeile anklicken oder mit Enter bestätigen, dann die gewünschte Taste drücken. [Esc] bricht ab.",
-            "Die Belegung gilt für Spieler 1 und Spieler 2 getrennt und wird dauerhaft gespeichert."
+            "Die Belegung gilt für Spieler 1 und Spieler 2 getrennt und wird dauerhaft gespeichert.",
+            "Frei belegbar sind je Spieler fünf Aktionen: hoch, runter, links, rechts und Aktion. Manche Spiele haben zusätzlich feste Tasten - etwa Halten [C] und Links-Drehen [Z] in Tetris oder Rückgängig [U] in 2048, Schach und Sudoku. Sie greifen nur, wenn die Taste keiner Aktion zugeordnet ist; welche es gibt, steht im Setup-Hinweis und auf der Wiki-Seite des Spiels."
           ]
         },
         {
@@ -96,7 +101,7 @@
         {
           "h": "Sprache",
           "body": [
-            "Die Oberfläche gibt es auf Deutsch, Englisch, Französisch, Spanisch und Portugiesisch. Umschalten im Options-Screen oder über Sprache / Language in der Sidebar - auch dieses Wiki wechselt die Sprache."
+            "Die Oberfläche gibt es in 14 Sprachen: Deutsch, Englisch, Französisch, Spanisch, Portugiesisch, Polnisch, Türkisch, Dänisch, Norwegisch, Schwedisch, Finnisch, Tschechisch, Slowenisch und Kroatisch. Umschalten im Options-Screen oder über Sprache / Language in der Sidebar - auch dieses Wiki wechselt die Sprache."
           ]
         }
       ]
@@ -111,30 +116,59 @@
         "rekord",
         "punkte",
         "fortschritt",
-        "dateien"
+        "dateien",
+        "sicherung",
+        "backup",
+        "spielstand",
+        "lama-chips",
+        "ugc"
       ],
       "sections": [
         {
           "h": "Highscores",
           "body": [
             "Jedes Spiel speichert seinen besten Wert automatisch, sobald eine Partie endet. Bei einem neuen Rekord erscheint ein goldenes Banner - plus Konfetti-Regen.",
-            "Die Bestwerte siehst du überall: als Stern in der Sidebar-Liste, im Laufband auf dem Startbildschirm und in der Status-Karte."
+            "Die Bestwerte siehst du überall: als Stern in der Sidebar-Liste, im Laufband auf dem Startbildschirm und in der Status-Karte.",
+            "Modi ohne Highscore-Wertung - etwa Sprint und Ultra in Tetris, die Tagesstrecke von Crossy Road oder 2048 mit Rückgängig - zeigen kein Banner; ihre Bestzeiten und Tagesbestwerte speichert das Spiel selbst."
           ]
         },
         {
           "h": "Was wird wo gespeichert?",
           "body": [
-            "- settings.json: Sound, Lautstärke, Tastenbelegung, Auflösung, FPS und Spiel-Optionen (z.B. Snake-Modus, Sudoku-Einstellungen).",
-            "- mem.json: Highscores, die gewählte Sprache und der Sudoku-Level-Fortschritt.",
+            "- settings.json: Sound, Lautstärke, Tastenbelegung, Auflösung, FPS, Design und die Spiel-Optionen (z.B. Snake-Modus, DAS/ARR in Tetris, Sudoku-Variante, Regeln von Schiffe versenken).",
+            "- mem.json: Highscores, die gewählte Sprache, Erfolge und Statistik - dazu die Spielstände vieler Spiele in eigenen Abschnitten (siehe unten).",
             "- mem-ngb.json: die Optik-Mods von Snake (Kopffarbe, Raster, Banner).",
             "- replay.json: die gespeicherten Wiederholungen von Minigolf und Bowling.",
+            "- ugc.json: deine eigenen Minigolf-Bahnen und Geometry-Dash-Level (geteilt als .lamapgzmap bzw. .lamapgzlevel).",
             "Diese Dateien liegen direkt im Spielordner und lassen sich zum Zurücksetzen einfach löschen."
+          ]
+        },
+        {
+          "h": "Spielstände in mem.json",
+          "body": [
+            "Jedes Spiel mit Fortschritt hat in mem.json einen eigenen Abschnitt, zum Beispiel:",
+            "- sudoku: gelöste Level mit Sternen und Bestzeit, angefangene Rätsel und das Tages-Sudoku samt Serie.",
+            "- casino: das Konto der Lama-Bank - die Lama-Chips für Blackjack, Poker und Casino mit der Bilanz jedes Spiels.",
+            "- crossy: gesammelte Münzen, gekaufte Figuren und der Tagesbestwert von Crossy Road.",
+            "- tetris: Bestzeit im Sprint, Bestwert im Ultra und die Versus-Bilanz gegen die KI.",
+            "- g2048: gespeicherte Partien und Bestwerte von 2048 je Brettgröße und Modus.",
+            "- chess: der Fortschritt im Rätsel-Modus von Schach.",
+            "- geodash: Bestwerte je Level in Prozent (Normal und Übung), gefundene Münzen, Versuche und Sprünge in Geometry Dash.",
+            "- wordle: die Statistik je Modus, Sprache und Wortlänge, der Stand des Tagesworts und die Bestwerte.",
+            "Dazu kommen u.a. minigolf, pinball, bowling und lamatowerdef mit ihren Bestwerten."
+          ]
+        },
+        {
+          "h": "Automatische Sicherung",
+          "body": [
+            "mem.json und settings.json werden absturzsicher geschrieben: erst in eine Temp-Datei, dann in einem Schritt ausgetauscht. Die vorherige Fassung bleibt als mem.json.bak bzw. settings.json.bak liegen.",
+            "Ist mem.json einmal beschädigt, liest das Spiel automatisch die Sicherung - Highscores, Erfolge und Lama-Chips gehen so nicht verloren."
           ]
         },
         {
           "h": "Tipp",
           "body": [
-            "Punkte werden nur gespeichert, wenn du das Spiel über Zurück zum Menü verlässt oder die Partie regulär endet - nicht beim harten Schließen des Fensters mitten im Spiel."
+            "Punkte werden gespeichert, sobald eine Partie endet, wenn du über Zurück zum Menü gehst, mitten im Spiel über die Sidebar ein anderes Spiel wählst oder die Sammlung beendest. Nur bei einem Absturz oder wenn das Programm hart abgewürgt wird, geht die laufende Partie verloren."
           ]
         }
       ]
@@ -202,19 +236,20 @@
         {
           "h": "Überblick",
           "body": [
-            "Die Sammlung zählt deinen Fortschritt: 69 Erfolge und ausführliche Statistiken über alle 38 Spiele. Beides erreichst du über den Knopf Erfolge & Statistik in der Sidebar; die zwei Reiter wechselst du mit [Tab] oder per Klick."
+            "Die Sammlung zählt deinen Fortschritt: 107 Erfolge und ausführliche Statistiken über alle 46 Spiele. Beides erreichst du über den Knopf Erfolge & Statistik in der Sidebar; die zwei Reiter wechselst du mit [Tab] oder per Klick."
           ]
         },
         {
           "h": "Erfolge",
           "body": [
             "Es gibt drei Kategorien:",
-            "- Allgemein: sammlungsweite Ziele wie gestartete Partien, ausprobierte Spiele, Gesamtspielzeit, gebrochene Rekorde und Siege - dazu kleine Extras wie die Nachteule (nach Mitternacht spielen).",
-            "- Punkte-Meilensteine: eine faire Ziel-Punktzahl je Spiel, abgestimmt auf dessen Punkteskala.",
-            "- Besondere Momente: Schachmatt gegen die KI, KNIFFEL, die 2048er-Kachel, ein Wordle in 2 Versuchen und mehr.",
+            "- Allgemein (23): sammlungsweite Ziele wie gestartete Partien, ausprobierte Spiele, Gesamtspielzeit, gebrochene Rekorde und Siege - dazu kleine Extras wie die Nachteule (nach Mitternacht spielen).",
+            "- Punkte-Meilensteine (37): eine faire Ziel-Punktzahl je Spiel, abgestimmt auf dessen Punkteskala.",
+            "- Besondere Momente (47): Schachmatt gegen die KI, KNIFFEL, die 2048er- und 4096er-Kachel, ein T-Spin Double und ein Perfect Clear in Tetris, 25 gelöste Schachrätsel, das erste Killer-Sudoku, ein Roulette-Volltreffer, der Lama-Jackpot am Slot, ein Sieg bei Schiffe versenken ohne verlorenes Schiff und mehr.",
             "Beim Freischalten erscheint oben rechts eine goldene Einblendung mit kleiner Fanfare - auch mitten im Spiel.",
             "Bestandsdaten zählen: Beim ersten Start nach dem Update werden vorhandene Highscores automatisch angerechnet (ohne Einblendungs-Feuerwerk).",
-            "Noch gesperrte Erfolge zeigen einen Fortschrittsbalken, freigeschaltete ihr Datum."
+            "Noch gesperrte Erfolge zeigen einen Fortschrittsbalken, freigeschaltete ihr Datum.",
+            "In 2048 und Schach zählen Partien mit Rückgängig bzw. Hinweis nicht für Highscore und Erfolge - ausprobieren ist erlaubt, gewertet wird nur ohne Hilfe."
           ]
         },
         {
@@ -496,30 +531,82 @@
       "title": "Tetris",
       "keywords": [
         "steine",
-        "reihen",
+        "zeilen",
         "drehen",
+        "halten",
+        "t-spin",
+        "sprint",
+        "ultra",
+        "marathon",
         "versus",
-        "stapel"
+        "müll"
       ],
       "sections": [
         {
+          "h": "Modi",
+          "body": [
+            "Solo: Im Setup wählst du die Variante. Marathon läuft endlos, alle 10 Zeilen steigt das Level (Startlevel 1-15) - nur Marathon zählt für den Highscore.",
+            "- Sprint 40: 40 Zeilen so schnell wie möglich, die Bestzeit wird gespeichert.",
+            "- Ultra 2:00: zwei Minuten lang so viele Punkte wie möglich, der Bestwert wird gespeichert.",
+            "Versus KI: Du spielst gegen eine KI in drei Stärken (Leicht, Mittel, Schwer). Wer Zeilen abräumt, schickt Müllzeilen hinüber; wer zuerst oben anstößt, ist K.O. Die Bilanz je Stärke wird gespeichert.",
+            "2 Spieler (nur PC-Version): dasselbe zu zweit an einer Tastatur. Beide Felder bekommen immer dieselbe Steinfolge."
+          ]
+        },
+        {
           "h": "Steuerung",
           "body": [
-            "Links/Rechts verschiebt den Stein, Hoch dreht ihn, Runter ist der Soft-Drop und die Aktionstaste (Standard: [Leertaste] ) der Hard-Drop."
+            "[Links] [Rechts] schieben den Stein - gehalten rutscht er nach dem DAS los und dann im ARR-Takt weiter. [Hoch] dreht nach rechts, [Runter] ist der Soft Drop, die Aktionstaste (Standard: [Leertaste] ) lässt ihn sofort fallen (Hard Drop).",
+            "- [C] oder [Shift] legt den Stein in den Halten-Speicher (einmal pro Stein), [Z] oder [Y] dreht nach links, [X] nach rechts.",
+            "- 2 Spieler: Spieler 1 hält mit [Q] und dreht links mit [E], Spieler 2 hält mit [Shift] rechts und dreht links mit [Strg] rechts.",
+            "- Diese festen Tasten wirken nur, wenn du sie nicht selbst einer Aktion zugeordnet hast.",
+            "Sprint und Ultra startest du mit [R] sofort neu. Nach dem Spielende: [R] = nochmal, [S] = Setup - die Hard-Drop-Tasten starten bewusst nichts neu.",
+            "Im Setup stellst du DAS (Verzögerung bis zur Dauerbewegung), ARR (Tempo danach, 0 ms = sofort an den Rand) und den Landeschatten ein."
           ]
         },
         {
-          "h": "Modi & Punkte",
+          "h": "Moderne Regeln",
           "body": [
-            "Volle Reihen geben Punkte - mehrere auf einmal deutlich mehr. Alle 10 Reihen steigt das Level und damit das Tempo.",
-            "Versus (Mehrspieler): zwei Felder nebeneinander, wessen Stapel zuerst oben anstößt, verliert."
+            "Die Steine kommen im 7er-Beutel: Jeder der sieben Steine erscheint genau einmal pro Siebenergruppe. Die Vorschau zeigt die nächsten 5.",
+            "Gedreht wird nach SRS: Klemmt ein Stein, probiert das Spiel bis zu vier Ausweichlagen (Wall Kicks) - so lassen sich Steine auch um Kanten drehen.",
+            "Am Boden bleiben 0,5 Sekunden, bevor ein Stein einrastet. Jede Bewegung oder Drehung setzt die Zeit zurück, höchstens 15-mal pro Tiefe.",
+            "Game Over: Der neue Stein findet keinen Platz, ein Stein rastet komplett über dem Feld ein oder Müll schiebt den Stapel oben hinaus."
           ]
         },
         {
-          "h": "Tipps",
+          "h": "Punkte",
           "body": [
-            "- Halte eine Spalte für das lange I-Teil frei und räume mit Vierfach-Reihen ab.",
-            "- Baue flach: Hohe Türme kippen bei steigendem Tempo schnell weg."
+            "Alle Werte mal Level: Single 100 · Double 300 · Triple 500 · Tetris 800.",
+            "T-Spin: ohne Zeile 400 · Single 800 · Double 1200 · Triple 1600. T-Spin Mini: 100 · 200 · 400.",
+            "- Back-to-Back: Ein Tetris oder T-Spin direkt nach einem solchen zählt x1,5.",
+            "- Combo: Jede weitere Zeilenräumung in Folge bringt 50 x Combo x Level extra.",
+            "- Perfect Clear (Feld komplett leer): +800 / 1200 / 1800 / 2000, als Back-to-Back-Tetris +3200.",
+            "- Soft Drop bringt 1 Punkt, Hard Drop 2 Punkte je Zeile."
+          ]
+        },
+        {
+          "h": "T-Spins",
+          "body": [
+            "Ein T-Spin zählt, wenn der T-Stein mit einer Drehung einrastet und mindestens drei der vier Ecken um seine Mitte belegt sind (Wände und Boden zählen mit).",
+            "Sind beide Ecken auf der Seite belegt, in die seine Nase zeigt, ist es ein voller T-Spin, sonst ein Mini. Dreht sich der T mit dem großen Kick (eine Spalte zur Seite, zwei Zeilen tief) in die Lücke, zählt er immer voll - so entsteht der T-Spin Triple.",
+            "Einblendungen über dem Feld zeigen T-SPIN, TETRIS, BACK-TO-BACK, COMBO und PERFECT CLEAR."
+          ]
+        },
+        {
+          "h": "Versus & Müllzeilen",
+          "body": [
+            "Angriff: Double 1 · Triple 2 · Tetris 4 · T-Spin Single 2 · T-Spin Double 4 · T-Spin Triple 6 · Mini Double 1. Dazu +1 für Back-to-Back, +1 bis +5 für lange Combos und +10 für ein Perfect Clear.",
+            "Eingehender Müll erscheint im Warnbalken links neben dem Feld: Gelb wartet er noch, rot steigt er beim nächsten Stein ohne Zeilenräumung auf - höchstens 8 Zeilen pro Stein, jede Ladung mit einem gemeinsamen Loch.",
+            "Räumst du selbst Zeilen ab, wird dein Angriff zuerst mit dem wartenden Müll verrechnet; nur der Rest geht zum Gegner.",
+            "Alle 40 Sekunden fallen die Steine schneller (bis Level 12)."
+          ]
+        },
+        {
+          "h": "Tipps & Erfolge",
+          "body": [
+            "- Baue flach und halte eine Spalte am Rand für das I frei - vier Zeilen auf einmal bringen Punkte und Angriff.",
+            "- Nutze Halten, um ein I für den Tetris aufzusparen oder einen unpassenden Stein zu parken.",
+            "- Im Versus lohnt sich Back-to-Back: Zwei Tetris hintereinander schicken 4 + 5 Zeilen.",
+            "- Erfolge: Tetris! (4 Zeilen auf einmal), Dreh dich rein (T-Spin Double), Blitzblank (Perfect Clear), Sprinter (Sprint 40 unter 2:00). Zu zweit gibt es keine Erfolge."
           ]
         }
       ]
@@ -720,27 +807,76 @@
         "kacheln",
         "schieben",
         "verschmelzen",
-        "zahlen"
+        "zahlen",
+        "wischen",
+        "rückgängig",
+        "zeitangriff",
+        "endlos",
+        "brettgröße",
+        "fortsetzen",
+        "4096"
       ],
       "sections": [
         {
-          "h": "Steuerung & Regeln",
+          "h": "Steuerung",
           "body": [
-            "Pfeile oder [W] [A] [S] [D] schieben alle Kacheln gleichzeitig in eine Richtung. Gleiche Zahlen verschmelzen zu ihrer Summe, nach jedem Zug erscheint eine neue Kachel.",
-            "Ziel ist die 2048er-Kachel - danach geht es endlos weiter. Verloren ist, wenn kein Zug mehr möglich ist."
+            "Pfeile oder [W] [A] [S] [D] schieben alle Kacheln gleichzeitig in eine Richtung. Mit Maus oder Touchpad geht es auch per Wischen: drücken, in die gewünschte Richtung ziehen, loslassen.",
+            "Gehaltene Tasten wiederholen nicht - jeder Zug ist ein eigener Tastendruck. Eingaben während einer Animation werden gemerkt und gleich danach ausgeführt.",
+            "[U] oder [Rücktaste] = Rückgängig, [R] oder [N] = neue Partie, [Tab] = zurück zum Setup. Diese Zusatztasten greifen nur, wenn du sie nicht selbst einer Aktion zugeordnet hast."
           ]
         },
         {
-          "h": "Punkte",
+          "h": "Regeln",
           "body": [
-            "Jede Verschmelzung zählt die Summe der neuen Kachel auf dein Konto."
+            "Gleiche Zahlen, die zusammenstoßen, verschmelzen zu ihrer Summe. Jede Kachel verschmilzt pro Zug höchstens einmal: 2, 2, 4, 4 nach links ergibt 4, 8.",
+            "Nach jedem gültigen Zug erscheint eine neue Kachel - meist eine 2, in einem von zehn Fällen eine 4. Ist kein Zug mehr möglich, ist die Partie vorbei.",
+            "Ab 4096 bekommen die Kacheln eigene Farben von Grün über Blau und Violett bis Karmin (131072); noch größere Kacheln sind dunkel mit goldenen Ziffern."
+          ]
+        },
+        {
+          "h": "Setup: Größe & Modus",
+          "body": [
+            "Brettgröße von 3x3 bis 8x8 - kleine Bretter sind knifflig, große lassen viel Platz für lange Ketten.",
+            "- Klassisch: Ziel ist die 2048. Danach fragt das Spiel, ob du weiterspielen willst - [Enter] spielt weiter, [N] startet eine neue Partie.",
+            "- Zeitangriff: 3 Minuten, so viele Punkte wie möglich. Die Uhr startet mit dem ersten Zug, der Balken unter dem Brett zeigt die Restzeit.",
+            "- Endlos: ohne Ziel und ohne Unterbrechung, bis kein Zug mehr geht."
+          ]
+        },
+        {
+          "h": "Rückgängig",
+          "body": [
+            "Im Setup wählbar: Aus, 3 pro Partie oder Unbegrenzt. Rückgängig nimmt den letzten Zug samt Punkten zurück - auch direkt nach dem Game Over.",
+            "Sobald du es benutzt, gilt die Partie als \"mit Rückgängig\": Sie zählt weder für den Highscore noch für die Kachel-Erfolge, ihr Bestwert wird getrennt geführt."
+          ]
+        },
+        {
+          "h": "Speichern & Fortsetzen",
+          "body": [
+            "Die laufende Partie wird je Größe und Modus automatisch gesichert - nach deinen Zügen und beim Verlassen des Spiels.",
+            "Im Setup erscheint dann Fortsetzen mit Punkten und Zügen der gespeicherten Partie. Neue Partie verwirft diesen Spielstand."
+          ]
+        },
+        {
+          "h": "Punkte, Bestwerte & Highscore",
+          "body": [
+            "Jede Verschmelzung bringt den Wert der neuen Kachel. Die Info-Spalte zeigt Punkte, Bestwert, Züge, größte Kachel, übrige Rückgängig-Züge und die Zeit.",
+            "Bestwerte und größte Kachel werden je Größe und Modus gespeichert. Der Highscore von 2048 zählt nur bei 4x4 Klassisch ohne Rückgängig."
+          ]
+        },
+        {
+          "h": "Erfolge",
+          "body": [
+            "- 2048!: Erspiele die 2048er-Kachel.",
+            "- 4096!: Erspiele die 4096er-Kachel.",
+            "Beide zählen auf Brettern bis 4x4 und nur ohne Rückgängig - in jedem Modus."
           ]
         },
         {
           "h": "Tipps",
           "body": [
             "- Parke deine größte Kachel in einer Ecke und rühre diese Ecke nie an.",
-            "- Schiebe hauptsächlich in zwei Richtungen - so bleibt das Brett sortiert."
+            "- Schiebe hauptsächlich in zwei Richtungen - so bleibt das Brett sortiert.",
+            "- Im Zeitangriff zählt Tempo: verschmilz früh und halte die Kacheln in einer Ecke zusammen."
           ]
         }
       ]
@@ -792,43 +928,68 @@
         "notizen",
         "level",
         "tipps",
-        "logik"
+        "logik",
+        "killer",
+        "x-sudoku",
+        "tages-sudoku",
+        "sterne",
+        "rueckgaengig",
+        "kandidaten"
       ],
       "sections": [
         {
+          "h": "Varianten",
+          "body": [
+            "Im Setup wählst du oben die Variante, darunter die Stufe. Jede Variante hat 4 Stufen mal 100 feste Level, jedes eindeutig lösbar.",
+            "- Klassisch: das bekannte 9x9. Die 400 Level sind dieselben wie vor dem Update - abgehakte Level bleiben erhalten.",
+            "- X-Sudoku: Zusätzlich enthalten beide Diagonalen jede Ziffer genau einmal (dezent markiert).",
+            "- Killer: kaum Vorgaben, dafür gestrichelte Käfige. Die Ziffern eines Käfigs ergeben die kleine Summe in seiner Ecke und wiederholen sich nicht. Leicht hat kleine Käfige und mehr Vorgaben, Experte große Käfige.",
+            "- Mini 6x6: 2x3-Blöcke und nur die Ziffern 1 bis 6, mit extra großen Feldern.",
+            "- Tages-Sudoku ([T] oder die Karte rechts): ein klassisches Rätsel pro Tag, für alle gleich - auch im Browser. Die Stufe hängt vom Wochentag ab (Montag Leicht, Dienstag und Mittwoch Normal, Donnerstag, Freitag und Sonntag Schwer, Samstag Experte). Wer täglich löst, baut eine Serie auf."
+          ]
+        },
+        {
           "h": "Steuerung",
           "body": [
-            "Zelle wählen mit den Pfeiltasten, [W] [A] [S] [D] oder per Mausklick - das Ziffernfeld rechts funktioniert komplett mit der Maus.",
-            "- [1] bis [9] trägt eine Zahl ein (auch am Ziffernblock).",
-            "- [0], Backspace oder Rechtsklick radiert.",
-            "- [N] schaltet den Notiz-Modus um, [H] gibt einen Tipp, [R] startet das Level neu, [Q] öffnet die Levelauswahl.",
-            "- Nach dem Spielende blendet [A] den Banner aus und zeigt die komplette Lösung."
+            "Zelle wählen mit den Pfeiltasten, [W] [A] [S] [D] oder per Mausklick. Das Ziffernfeld rechts funktioniert komplett mit der Maus und zeigt unter jeder Ziffer, wie oft sie noch fehlt.",
+            "- [1] bis [9] trägt eine Zahl ein, [0], Entf oder Rechtsklick radiert.",
+            "- [U] oder [Z] macht rückgängig, [Y] stellt wieder her.",
+            "- [N] schaltet Notizen um, [C] trägt alle Kandidaten automatisch ein, [H] gibt einen Tipp.",
+            "- [M] färbt die Zelle mit einem Farbmarker (Schalter \"Farbmarker\" im Setup).",
+            "- [R] beginnt das Rätsel neu, [Q] öffnet die Levelauswahl, [A] zeigt nach dem Ende die Lösung.",
+            "Eingabe \"Ziffer zuerst\" (Setup, Taste [I]): erst eine Ziffer wählen, dann beliebig viele Zellen anklicken oder mit der Leertaste setzen.",
+            "Im Setup: [1] bis [4] Stufe, [V] Variante, [T] Tages-Sudoku, [F] Fehler-Limit, Pfeile + Enter startet ein Level. Die Buchstaben greifen nur, wenn sie in den Optionen keiner Aktion zugeordnet sind."
           ]
         },
         {
-          "h": "Level & Modi",
+          "h": "Modi & Punkte",
           "body": [
-            "400 feste Level: 4 Schwierigkeitsgrade (Leicht/Normal/Schwer/Experte) mal 100 Level. Jedes Level ist überall dasselbe Puzzle und eindeutig lösbar; gelöste Level werden abgehakt.",
             "Der Spielmodus bestimmt die Hilfen und den Punkte-Multiplikator:",
             "- Klassisch x2.0: keine Hilfen, pur wie auf Papier.",
-            "- Notizen x1.5: plus Bleistift-Notizen.",
-            "- Komfort x1.0: Fehler sofort rot, Konflikt-Hervorhebung, korrekte Eingaben rasten ein.",
-            "- Assistent x0.7: zusätzlich bis zu 3 Tipps."
+            "- Notizen x1.5: plus Bleistift-Notizen und Kandidaten-Automatik.",
+            "- Komfort x1.0: Fehler sofort rot, Konflikte und falsche Käfigsummen markiert, korrekte Eingaben rasten ein.",
+            "- Assistent x0.7: zusätzlich bis zu 3 Tipps.",
+            "Jede Eingabe wird sofort gegen die Lösung geprüft. Mit 3-Fehler-Limit ist beim dritten Fehler Schluss - Rückgängig macht einen Fehler nicht ungeschehen.",
+            "Punkte = (Basis von Variante und Stufe minus Zeit, Fehler und Tipps) mal Multiplikator. Alle Varianten und das Tages-Sudoku zählen für den Highscore."
           ]
         },
         {
-          "h": "Fehler & Punkte",
+          "h": "Sterne & Spielstand",
           "body": [
-            "Jede Eingabe wird sofort gegen die Lösung geprüft. Mit aktivem 3-Fehler-Limit (Setup, Taste [F] ) ist beim dritten Fehler Schluss.",
-            "Punkte = (Basis der Stufe minus Zeit, Fehler und Tipps) mal Modus-Multiplikator."
+            "Jedes Level vergibt bis zu 3 Sterne: 1 fürs Lösen, 2 ohne Fehler und ohne Tipps, 3 zusätzlich unter der Zielzeit der Stufe (steht in der Level-Info).",
+            "Die Levelauswahl zeigt Sterne, Bestzeit und gelöste Level; ein Eselsohr markiert angefangene Rätsel.",
+            "Angefangene Rätsel werden automatisch gespeichert - beim Verlassen, bei der Rückkehr zur Levelauswahl und regelmäßig beim Spielen - und beim nächsten Start fortgesetzt. Wechselst du dabei den Modus, zählt der kleinere Multiplikator.",
+            "Erfolge: \"Käfigkämpfer\" für das erste Killer-Sudoku, \"Sternensammler\" für 30 Level mit 3 Sternen."
           ]
         },
         {
           "h": "Tipps",
           "body": [
-            "- Starte mit Reihen, Spalten und Boxen, in denen schon viele Zahlen stehen.",
-            "- Notiere Kandidaten in Ecken-Paaren: Wenn zwei Zellen dieselben zwei Kandidaten haben, fallen sie überall sonst weg.",
-            "- Im Klassisch-Modus lohnt Ruhe: Jeder Fehler zählt sofort, auch ohne rote Anzeige."
+            "- Starte mit Reihen, Spalten und Blöcken, in denen schon viele Zahlen stehen.",
+            "- Notiere Kandidaten in Paaren: Haben zwei Zellen einer Einheit dieselben zwei Kandidaten, fallen diese überall sonst in der Einheit weg.",
+            "- Killer: Jede Zeile, Spalte und jeder Block ergibt 45. Liegen Käfige fast ganz darin, verrät der Rest die übrige Zelle.",
+            "- Killer: Manche Summen haben nur eine Kombination - 3 in zwei Zellen ist immer 1+2, 17 immer 8+9.",
+            "- X-Sudoku: Die Diagonalen sind zwei zusätzliche Einheiten - prüfe sie früh, dort steckt oft die erste Ziffer."
           ]
         }
       ]
@@ -1157,7 +1318,8 @@
         "21",
         "chips",
         "dealer",
-        "einsatz"
+        "einsatz",
+        "lama-bank"
       ],
       "sections": [
         {
@@ -1186,11 +1348,12 @@
           ]
         },
         {
-          "h": "Chips",
+          "h": "Lama-Chips",
           "body": [
-            "Du startest mit 500 Chips; Stand und Rekord werden dauerhaft gespeichert und überstehen jeden Neustart.",
-            "Der Highscore ist der höchste Chip-Stand, den du je erreicht hast.",
-            "Unter 10 Chips bist du pleite: [Enter] startet mit 500 frischen Chips neu - der Rekord bleibt."
+            "Blackjack, Poker und Casino teilen sich ein Konto bei der Lama-Bank: Du startest mit 1000 Lama-Chips, der Stand bleibt dauerhaft gespeichert.",
+            "Der Einsatz wird beim Geben sofort abgebucht - wer eine laufende Hand verlässt, verliert ihn.",
+            "Der Highscore ist der Höchststand deiner Blackjack-Bilanz: 1000 plus alles, was du beim Blackjack gewonnen und verloren hast. Gewinne am Roulette, am Slot oder beim Poker zählen hier nicht.",
+            "Unter 10 Chips bist du pleite: [Enter] nimmt einen Bank-Kredit und füllt das Konto wieder auf 1000 auf. Kredite zählen nicht zur Bilanz."
           ]
         },
         {
@@ -1418,43 +1581,80 @@
         "buchstaben",
         "grün",
         "gelb",
-        "wörterbuch"
+        "wörterbuch",
+        "tageswort",
+        "dordle",
+        "quordle",
+        "statistik",
+        "teilen",
+        "farbenblind",
+        "wortlänge"
       ],
       "sections": [
         {
           "h": "So wird gespielt",
           "body": [
-            "Errate das gesuchte 5-Buchstaben-Wort in höchstens 6 Versuchen. Nach jedem Rateversuch färben sich die Kacheln: Grün = richtiger Buchstabe an richtiger Stelle, Gelb = Buchstabe kommt vor, steht aber woanders, Grau = Buchstabe kommt nicht vor.",
+            "Errate das gesuchte Wort. Nach jedem Rateversuch färben sich die Kacheln: Grün = richtiger Buchstabe an richtiger Stelle, Gelb = Buchstabe kommt vor, steht aber woanders, Grau = Buchstabe kommt nicht vor.",
             "Doppelte Buchstaben werden korrekt behandelt: Ein Buchstabe wird nur so oft gelb oder grün, wie er im Lösungswort tatsächlich vorkommt.",
-            "Jeder Versuch muss ein echtes Wort sein - geprüft wird gegen die Wortliste der eingestellten Sprache (je nach Sprache 10.000 bis 19.000 erlaubte Rateworte). Was nicht darin steht, wird abgelehnt: Die Zeile wackelt kurz und der Versuch zählt nicht. Gesucht sind immer geläufige Wörter derselben Sprache."
+            "Jeder Versuch muss ein echtes Wort sein - geprüft wird gegen die Wortliste der eingestellten Sprache und Länge (je nach Sprache und Länge 4.000 bis 19.000 erlaubte Rateworte). Was nicht darin steht, wird abgelehnt: Die Zeile wackelt kurz und der Versuch zählt nicht. Gesucht sind immer geläufige Wörter derselben Sprache - ohne Namen und ohne anstößige Wörter."
           ]
         },
         {
           "h": "Modi",
           "body": [
-            "Normal: Du darfst jedes erlaubte Wort raten - die Hinweise sind nur Empfehlungen.",
-            "Hart: Gefundene Hinweise musst du weiterverwenden - grüne Buchstaben bleiben auf ihrem Platz, gelbe müssen wieder vorkommen. Den Modus wählst du vor dem Start."
+            "Endlos: Ein Wort nach dem anderen mit je 6 Versuchen. Das erste Wort, das du nicht knackst, beendet die Partie.",
+            "Tageswort: Ein Wort pro Tag mit 6 Versuchen - für jede Sprache und Länge am PC und im Browser für alle gleich. Ein angefangenes Tageswort wird gespeichert; danach zeigt das Spiel Ergebnis, Statistik und den Countdown bis zum nächsten Wort. Die Serie wächst nur, wenn du jeden Tag spielst.",
+            "Dordle: Zwei Wörter gleichzeitig in 7 Versuchen - jeder Versuch gilt für beide Bretter. Die Tasten der Bildschirmtastatur sind geteilt: links Brett 1, rechts Brett 2.",
+            "Quordle: Vier Wörter gleichzeitig in 9 Versuchen. Die Tasten sind geviertelt und zeigen die Farben aller vier Bretter."
+          ]
+        },
+        {
+          "h": "Einstellungen vor dem Start",
+          "body": [
+            "Vor jeder Partie erscheint das Setup - rechts daneben steht deine Statistik für den gewählten Modus und die gewählte Länge.",
+            "- Wortlänge: 4, 5, 6 oder 7 Buchstaben, jede Länge mit eigenen Wortlisten.",
+            "- Harter Modus: Gefundene Hinweise musst du weiterverwenden - grüne Buchstaben bleiben auf ihrem Platz, gelbe müssen wieder vorkommen. Bei Dordle und Quordle muss ein Versuch zu den Hinweisen mindestens eines offenen Bretts passen.",
+            "- Farbenblind-Modus: Orange statt Grün und Blau statt Gelb - auch im geteilten Ergebnis.",
+            "Alle Einstellungen werden sofort gespeichert."
           ]
         },
         {
           "h": "Steuerung",
           "body": [
-            "- Buchstaben A-Z tippen, [Rücktaste] löscht den letzten, [Enter] wertet die Zeile aus (nur bei 5 Buchstaben).",
-            "- Die Bildschirmtastatur unten funktioniert auch mit der Maus; ihre Buchstaben färben sich nach deinem bisherigen Wissen ein."
+            "- Buchstaben A-Z tippen, [Rücktaste] löscht den letzten, [Enter] wertet die Zeile aus.",
+            "- Die Bildschirmtastatur unten funktioniert auch mit der Maus: QWERTZ für Deutsch, Tschechisch, Slowenisch und Kroatisch, AZERTY für Französisch, sonst QWERTY. Ihre Tasten färben sich nach deinem bisherigen Wissen ein.",
+            "- Das Regler-Symbol oben rechts führt zurück ins Setup.",
+            "- Im Setup: [4] bis [7] oder [Links] / [Rechts] = Wortlänge, [H] = harter Modus, [F] = Farbenblind-Modus, [Enter] = Start.",
+            "- Nach der Partie: [Enter] = nochmal, [C] = Ergebnis teilen, [S] = Setup. [Leertaste] blendet das Ergebnis aus, damit du dir die Bretter ansehen kannst."
           ]
         },
         {
-          "h": "Punkte",
+          "h": "Punkte und Statistik",
           "body": [
-            "Es geht endlos weiter: Für jedes gelöste Wort gibt es Punkte - je weniger Versuche, desto mehr (10 bis 60). Danach kommt sofort ein neues Wort.",
-            "Das erste Wort, das du NICHT knackst, beendet die Partie; die gesammelten Punkte sind dein Highscore."
+            "Endlos: Für jedes gelöste Wort gibt es Punkte - je weniger Versuche, desto mehr (10 bis 60). Nur Endlos mit 5 Buchstaben zählt für den Highscore; die anderen Längen haben eigene Bestwerte.",
+            "Die Statistik wird je Sprache, Länge und Modus gespeichert: gespielte Partien, Gewinnquote, aktuelle und beste Serie sowie die Versuchsverteilung als Balkendiagramm - der Balken deiner letzten Lösung leuchtet auf."
+          ]
+        },
+        {
+          "h": "Ergebnis teilen",
+          "body": [
+            "[C] oder der Knopf Teilen legt dein Ergebnis als Emoji-Raster in die Zwischenablage - ohne die Lösung zu verraten. So kannst du es in jeden Chat einfügen. Ein * hinter dem Ergebnis steht für den harten Modus."
+          ]
+        },
+        {
+          "h": "Erfolge",
+          "body": [
+            "- Hellseher: ein Wort in höchstens 2 Versuchen erraten.",
+            "- Wortgewohnheit: 7 Tageswörter in Folge lösen.",
+            "- Vierfach-Genie: alle vier Wörter in Quordle lösen."
           ]
         },
         {
           "h": "Tipps",
           "body": [
             "- Starte mit einem Wort, das viele verschiedene, häufige Buchstaben enthält.",
-            "- Nutze graue Buchstaben zum Ausschließen und verschiebe gelbe an eine neue Position."
+            "- Nutze graue Buchstaben zum Ausschließen und verschiebe gelbe an eine neue Position.",
+            "- Bei Dordle und Quordle lohnen sich zuerst Wörter, die für mehrere Bretter gleichzeitig Hinweise liefern."
           ]
         }
       ]
@@ -1553,7 +1753,8 @@
         "video poker",
         "draw",
         "chips",
-        "blinds"
+        "blinds",
+        "lama-bank"
       ],
       "sections": [
         {
@@ -1574,9 +1775,17 @@
           ]
         },
         {
-          "h": "Chips & Blätter",
+          "h": "Lama-Chips",
           "body": [
-            "Chips (Start 1000) bleiben erhalten (mem.json). Der Highscore ist dein höchster Chipstand. Pleite = Neustart per Klick.",
+            "Gespielt wird mit den Lama-Chips der Lama-Bank - ein gemeinsames Konto mit Blackjack und Casino (Start 1000, dauerhaft gespeichert).",
+            "Zu Beginn einer Hand liegt dein Konto als Stapel am Tisch; was in den Pot geht, ist sofort abgebucht. Verlässt du den Tisch mitten in der Hand, ist dein Pot-Anteil weg - der Rest kommt zurück aufs Konto.",
+            "Der Highscore ist der Höchststand deiner Poker-Bilanz: 1000 plus alles, was du beim Poker gewonnen und verloren hast. Gewinne in anderen Spielen zählen hier nicht.",
+            "Pleite (weniger als der Big Blind von 20, im Video Poker weniger als 10) = Bank-Kredit per Klick, das Konto steht wieder bei 1000."
+          ]
+        },
+        {
+          "h": "Blätter",
+          "body": [
             "Blatt-Rangfolge: Höchste Karte < Paar < Zwei Paare < Drilling < Straße < Flush < Full House < Vierling < Straight Flush < Royal Flush."
           ]
         }
@@ -1593,33 +1802,72 @@
         "matt",
         "rochade",
         "en passant",
-        "ki"
+        "ki",
+        "chess960",
+        "rätsel",
+        "schachuhr",
+        "pgn"
       ],
       "sections": [
         {
           "h": "So wird gespielt",
           "body": [
-            "Schach mit vollständigem Regelsatz: alle Figurenzüge, kurze und lange Rochade, En Passant und Bauernumwandlung mit Auswahl von Dame, Turm, Läufer oder Springer.",
-            "Die Partie endet mit Schachmatt oder Remis - durch Patt, die 50-Züge-Regel, dreifache Stellungswiederholung oder ungenügendes Material.",
-            "Im Einzelspieler wählst du im Setup Stärke und Farbe; zu zweit zieht ihr abwechselnd am selben Rechner."
+            "Schach mit vollständigem Regelsatz: alle Figurenzüge, kurze und lange Rochade, En passant und Bauernumwandlung mit Auswahl von Dame, Turm, Läufer oder Springer.",
+            "Die Partie endet mit Schachmatt, Aufgabe, Zeitüberschreitung oder Remis - durch Patt, 50-Züge-Regel, dreifache Stellungswiederholung, ungenügendes Material oder Einigung.",
+            "Drei Modi: Partie gegen die KI, 2 Spieler am selben Rechner (nur Desktop) und Rätsel.",
+            "Neben dem Brett stehen die Spieler mit Uhr, geschlagenen Figuren und Materialbilanz (z. B. +2), darunter die Zugliste in Standardnotation - mit dem Mausrad scrollbar."
           ]
         },
         {
           "h": "Steuerung",
           "body": [
-            "- Maus: eigene Figur anklicken, dann das Zielfeld. Mögliche Ziele und der letzte Zug sind farbig markiert.",
+            "- Maus: eigene Figur anklicken oder direkt aufs Zielfeld ziehen. Mögliche Ziele, der letzte Zug und ein König im Schach sind markiert.",
             "- Tastatur: [Pfeile] oder [WASD] bewegen den Auswahlrahmen, [Leertaste] oder [Enter] wählt aus und zieht.",
-            "- Bei einer Umwandlung erscheint die Figurenauswahl - einfach anklicken.",
-            "- Nach der Partie: [Enter] neue Partie, [S] zurück zum Setup (nur Einzelspieler)."
+            "- Rochade: König aufs Zielfeld oder auf den eigenen Turm ziehen. Bei einer Umwandlung erscheint die Figurenwahl.",
+            "- Knöpfe: [U] oder [Backspace] Rückgängig, [H] Hinweis, [F] Brett drehen, [O] Remis anbieten, [X] Aufgeben.",
+            "- Nach der Partie: [Enter] neue Partie (die Farben wechseln), [S] Setup, [P] Partie als PGN speichern."
           ]
         },
         {
-          "h": "KI-Stärken & Punkte",
+          "h": "Setup: Stärke, Uhr & Chess960",
           "body": [
-            "Sechs Stufen von Anfänger bis Meister: Anfänger zieht zufällig, die mittleren Stufen suchen ein bis drei Halbzüge tief und patzen absichtlich, Meister rechnet am tiefsten und spielt Schlagzüge in einer Ruhesuche zu Ende.",
-            "Jede Suche hat ein Zeit- und Knotenbudget, damit die Oberfläche nie einfriert.",
-            "Der Highscore zählt deine Siege gegen die KI in dieser Sitzung; der 2-Spieler-Modus wird nicht gewertet.",
-            "Tipp: Figuren früh entwickeln, rochieren und die Türme auf offene Linien stellen."
+            "Sechs KI-Stufen von Anfänger bis Meister: Anfänger zieht zufällig, die mittleren Stufen streuen absichtlich, Schwer und Meister rechnen mit iterativer Vertiefung, Transpositionstabelle und Ruhesuche und kennen gängige Eröffnungen. Die KI denkt in kleinen Häppchen pro Bild - das Spiel ruckelt nie.",
+            "Schachuhr: ohne, 1+0, 3+2, 5+0 oder 10+5 (Minuten + Sekunden Zuschlag je Zug). Sie läuft ab dem ersten Zug. Wer keine Zeit mehr hat, verliert - außer der Gegner kann gar nicht mehr mattsetzen, dann ist es remis.",
+            "Chess960: eine von 960 zufälligen Grundstellungen, die Nummer steht über der Zugliste. Bei der Rochade landet der König wie gewohnt auf g bzw. c und der Turm auf f bzw. d; die Felder dazwischen müssen frei sein und der König darf nicht durch Schach ziehen."
+          ]
+        },
+        {
+          "h": "Hilfen, Remis & Punkte",
+          "body": [
+            "Rückgängig nimmt gegen die KI zwei Halbzüge zurück, der Hinweis zeigt den besten Zug als blauen Pfeil. Beides macht die Partie \"unterstützt\": ein Sieg zählt dann nicht für Highscore, Statistik und Erfolge.",
+            "Remis anbieten: Die KI nimmt nur an, wenn sie ihre Stellung höchstens ausgeglichen sieht - sonst lehnt sie ab, und ein neues Angebot geht erst ein paar Züge später.",
+            "Der Highscore zählt deine Siege gegen die KI ohne Hilfe in dieser Sitzung. Ein Sieg gegen den Meister (Stufe 6) schaltet den Erfolg \"Großmeister\" frei.",
+            "Nach der Partie lässt sie sich als PGN-Datei speichern (im Browser: Download und Zwischenablage) und in jedem Schachprogramm nachspielen."
+          ]
+        },
+        {
+          "h": "Zu zweit",
+          "body": [
+            "Weiß und Schwarz ziehen abwechselnd am selben Rechner; Uhr und Chess960 wie gegen die KI. Mit \"Brett nach jedem Zug drehen\" im Setup dreht sich das Brett nach jedem Zug zur Seite am Zug.",
+            "Remis anbieten öffnet eine Rückfrage an den Gegner, Aufgeben gilt für die Seite am Zug. Zu zweit gibt es keine Highscore-Wertung; die Browser-Version bietet diesen Modus nicht."
+          ]
+        },
+        {
+          "h": "Rätsel",
+          "body": [
+            "200 Aufgaben in fünf Stufen: Matt in 1, Matt in 2, Matt in 3, Taktik I und Taktik II - je 40 Rätsel von leicht bis schwer. Gelöste Rätsel bekommen einen Haken, der Fortschritt wird gespeichert.",
+            "Zuerst spielt der Gegner seinen letzten Zug, dann bist du dran. Ein falscher Zug wird nach kurzem Hinweis zurückgenommen, die Antwort des Gegners kommt automatisch. Bei Matt-Aufgaben zählt jeder Zug, der sofort mattsetzt.",
+            "- [H] Lösung zeigen (das Rätsel gilt dann nicht als gelöst), [U] nochmal, [N] nächstes Rätsel, [M] zurück zur Auswahl.",
+            "Für 25 gelöste Rätsel gibt es den Erfolg \"Rätselknacker\".",
+            "Quelle: Die Rätsel stammen aus der frei nutzbaren Rätseldatenbank von lichess.org (CC0) und wurden mit der eigenen Engine geprüft - danke, Lichess!"
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Figuren früh entwickeln, rochieren und die Türme auf offene Linien stellen.",
+            "- In Rätseln zuerst nach Schachs, Schlagzügen und Drohungen suchen.",
+            "- Mit Uhr nicht zu lange grübeln - der Zuschlag bei 3+2 und 10+5 rettet so manches Endspiel."
           ]
         }
       ]
@@ -2258,6 +2506,381 @@
           "body": [
             "Die zehn Pins sind Kreise mit echter Masse: der Ball stößt sie an, sie stoßen sich gegenseitig um. Ein Strike ist damit Ergebnis der Physik und nicht des Zufalls.",
             "Die Spielsumme ist der Highscore; zusätzlich wird der Bestwert je Schwierigkeit gespeichert."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crossyroad",
+      "category": "games",
+      "game": "CrossyRoadGame",
+      "title": "Crossy Road",
+      "keywords": [
+        "huhn",
+        "strasse",
+        "fluss",
+        "gleise",
+        "zug",
+        "adler",
+        "münzen",
+        "figuren",
+        "tagesstrecke",
+        "voxel"
+      ],
+      "sections": [
+        {
+          "h": "Steuerung",
+          "body": [
+            "Hüpfe Feld für Feld mit den Pfeiltasten oder [W] [A] [S] [D]. [Leertaste], [Enter] oder ein Mausklick hüpfen nach vorn.",
+            "- Drückst du schon während eines Sprungs die nächste Richtung, geht es direkt danach weiter. Gedrückt halten hüpft nicht dauerhaft.",
+            "Nach dem Game Over: [Enter] = nochmal, [F] = Figuren, [S] = Setup."
+          ]
+        },
+        {
+          "h": "Wiese, Straße, Fluss & Gleise",
+          "body": [
+            "Die Strecke entsteht endlos Reihe für Reihe - es gibt immer einen begehbaren Weg.",
+            "- Wiese: sicher, aber Bäume und Steine versperren den Weg.",
+            "- Straße: Autos und Laster machen dich platt. Je weiter du kommst, desto schneller und dichter der Verkehr.",
+            "- Fluss: Stehen kannst du nur auf Stämmen und Seerosen. Stämme tragen dich mit - wer über den Bildrand getragen wird, ist raus.",
+            "- Gleise: Blinkt das rote Warnlicht und klingelt die Glocke, rast etwa eine Sekunde später ein Zug heran. Später warten ganze Bahnhöfe mit bis zu 5 Gleisen hintereinander."
+          ]
+        },
+        {
+          "h": "Adler & Punkte",
+          "body": [
+            "Die Kamera kriecht langsam vorwärts. Wer zu lange trödelt oder mehr als drei Reihen zurückgeht, wird vom Adler geholt - ein roter Rand unten im Bild warnt vorher.",
+            "Punkte = weiteste erreichte Reihe. Im Modus Endlos ist das dein Highscore (Meilenstein: 150 Reihen).",
+            "Ab Reihe 50 wechseln Tag und Nacht: nachts leuchten Scheinwerfer, Züge und Münzen."
+          ]
+        },
+        {
+          "h": "Münzen & Figuren",
+          "body": [
+            "Münzen liegen verstreut auf der Strecke, die Riesenmünze zählt 5. Gesammelte Münzen bleiben gespeichert.",
+            "Im Reiter FIGUREN kaufst du damit neue Figuren: Frosch, Schwein, Pinguin, Katze, Fuchs, Lama, Roboter, Geist und Einhorn (25 bis 250 Münzen). Das Huhn gehört dir von Anfang an.",
+            "- Erfolge: \"Neuer Look\" für die erste gekaufte Figur, \"Gleisakrobat\" für 5 Gleise direkt hintereinander."
+          ]
+        },
+        {
+          "h": "Modi & Optionen",
+          "body": [
+            "- Endlos: jede Runde eine neue Strecke, zählt für den Highscore.",
+            "- Tagesstrecke: heute für alle gleich (auch in der Web-Version), mit eigenem Tagesbestwert - zählt nicht für den Highscore.",
+            "Im Setup schaltest du Schatten [H] und den Tag/Nacht-Wechsel [N] um; Links/Rechts wechselt zwischen deinen Figuren."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash",
+      "category": "games",
+      "game": "GeometryDashGame",
+      "title": "Geometry Dash",
+      "keywords": [
+        "geometry dash",
+        "rhythmus",
+        "würfel",
+        "schiff",
+        "ball",
+        "ufo",
+        "welle",
+        "portal",
+        "orb",
+        "pad",
+        "münzen",
+        "sterne",
+        "übung",
+        "checkpoint",
+        "dämon",
+        "musik",
+        "level"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Deine Figur rast von selbst nach rechts - du entscheidest nur, wann gesprungen oder geflogen wird. Ein Stachel, eine Grube oder frontal gegen einen Block: Explosion, und nach einem kurzen Moment startet schon der nächste Versuch.",
+            "Geschafft ist ein Level, wenn du das Ziel erreichst. Der Balken oben zeigt den Fortschritt in Prozent, oben rechts siehst du die Münzen dieses Versuchs, und am Start schwebt der Versuchszähler im Level.",
+            "Jedes Level hat einen eigenen Soundtrack; Hintergrund, Boden und Orbs pulsieren im Takt. Musik, Fortschrittsbalken und automatische Checkpoints schaltest du in der Levelauswahl unter der Level-Karte an und aus."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- [Leertaste], [Hoch], [W], [Enter] oder linke Maustaste: springen bzw. fliegen. Halten zählt als Dauerdrücken - der Würfel springt dann bei jeder Landung sofort wieder ab.",
+            "- [R] startet sofort neu, [Q] oder [Rücktaste] führt zurück zur Levelauswahl, [Esc] pausiert.",
+            "- [P] schaltet den Übungsmodus um; darin setzt [Z] einen Checkpoint und [X] löscht den letzten.",
+            "- Levelauswahl: [Links]/[Rechts] blättern, [1] bis [8] springen direkt zu einem Level, [Enter] startet, [P] wählt Normal oder Übung, [M] schaltet die Musik, [Tab] wechselt zum Reiter LEVELS.",
+            "Jeder Druck bekommt einen Zeitstempel und wirkt genau in dem Physik-Schritt (1/240 Sekunde), in dem er passiert ist - der Absprung sitzt also auch dann, wenn der Rechner kurz ruckelt."
+          ]
+        },
+        {
+          "h": "Die fünf Formen",
+          "body": [
+            "Portale verwandeln deine Figur - jede Form fliegt anders:",
+            "- Würfel: Druck = Sprung. Er landet auf Blöcken; prallt er frontal dagegen, ist der Versuch vorbei.",
+            "- Schiff: halten = steigen, loslassen = sinken.",
+            "- Ball: Tippen dreht am Boden die Schwerkraft um - dann rollt er an der Decke weiter.",
+            "- UFO: Jedes Tippen ist ein kleiner Flügelschlag, auch mitten in der Luft.",
+            "- Welle: halten = schräg nach oben, loslassen = schräg nach unten. Sie ist winzig, aber jede Berührung mit einem Block zerlegt sie.",
+            "Schiff, Ball, UFO und Welle fliegen in einem Korridor zwischen Boden und Decke - wie hoch er ist, bestimmt das Portal."
+          ]
+        },
+        {
+          "h": "Pads, Orbs & Portale",
+          "body": [
+            "- Pads liegen am Boden und wirken bei Berührung: gelb = hoher Sprung, pink = kleiner Sprung, blau = Schwerkraft umdrehen.",
+            "- Orbs schweben in der Luft und wirken nur, wenn du drückst, während du sie berührst - mit denselben Farben. Ein kurzer Puffer verzeiht einen Tick zu frühes Drücken.",
+            "- Schwerkraft-Portale: gelb stellt die Welt auf den Kopf, blau dreht sie zurück. Tempo-Portale schalten auf 0,5x, 1x, 2x oder 3x.",
+            "- Dazu kommen Halbblöcke, kleine Stacheln, Gruben ohne Boden und Farb-Trigger, die Hintergrund und Boden umfärben."
+          ]
+        },
+        {
+          "h": "Die 8 Level",
+          "body": [
+            "- Lama Launch (Leicht, 1 Stern) und Neon Steps (Leicht, 2 Sterne): Sprünge, Pads, Orbs und das erste Schiff.",
+            "- Orbit Garden (Normal, 3 Sterne): Orb-Ketten, kopfüber an der Decke, Schiff mit doppeltem Tempo.",
+            "- Gravity Tide (Schwer, 4 Sterne) und Skyline Rush (Schwer, 5 Sterne): Schwerkraft-Portale, Ball, UFO, Gruben und dreifaches Tempo.",
+            "- Crystal Caves (Schwerer, 7 Sterne) und Wave Reactor (Wahnsinnig, 9 Sterne): alle fünf Formen, enge Tore und Wellen-Tunnel.",
+            "- Lama Inferno (Dämon, 10 Sterne): dreifaches Tempo und alles auf einmal.",
+            "Jedes Level ist nachweislich schaffbar, samt allen drei Münzen: Beim Bauen hat ein Solver es mit dem echten Spiel-Code gelöst - und seine Lösung klappt sogar mit 1/240 Sekunde Versatz."
+          ]
+        },
+        {
+          "h": "Übungsmodus",
+          "body": [
+            "Im Übungsmodus geht es nach einem Crash am letzten Checkpoint weiter statt am Start - grüne Rauten markieren die Checkpoints im Level, und die Musik läuft einfach weiter.",
+            "Automatische Checkpoints entstehen etwa alle zwei Sekunden (abschaltbar), mit [Z] setzt du eigene, [X] löscht den letzten.",
+            "Übung hat einen eigenen Bestwert und bringt keine Sterne und keine Münzen."
+          ]
+        },
+        {
+          "h": "Sterne, Münzen & Erfolge",
+          "body": [
+            "Wer ein Level im Normalmodus schafft, bekommt seine Sterne. Außerdem sind in jedem Level drei geheime Münzen versteckt, oft abseits des einfachsten Wegs. Sie zählen, sobald du das Level mit ihnen beendest - und jede ist einen weiteren Stern wert.",
+            "Dein Highscore sind die Sterne gesamt (höchstens 65), er kann nur wachsen. Je Level merkt sich das Spiel die Bestwerte in Prozent für Normal und Übung, die gefundenen Münzen und die Versuche.",
+            "- Erfolge: \"Im Takt\" für das erste geschaffte Level, \"Münzjäger\" für alle drei Münzen eines Levels, \"Dämonenbezwinger\" für Lama Inferno - und ein Meilenstein bei 20 Sternen.",
+            "Im Reiter LEVELS baust, spielst und teilst du eigene Level - mehr dazu auf der Seite \"Eigene Level (Geometry Dash)\"."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash-levels",
+      "category": "games",
+      "title": "Eigene Level (Geometry Dash)",
+      "keywords": [
+        "eigene level",
+        "editor",
+        "levels",
+        "ugc",
+        "bauen",
+        "teilen",
+        "importieren",
+        "exportieren",
+        "verifiziert",
+        "lamapgzlevel",
+        "geometry dash"
+      ],
+      "sections": [
+        {
+          "h": "Level bauen",
+          "body": [
+            "Im Reiter LEVELS der Geometry-Dash-Levelauswahl liegt deine eigene Sammlung (bis zu 60 Level). \"Neu\" öffnet den Level-Editor, \"Bearbeiten\" nimmt ein vorhandenes Level wieder auf.",
+            "Links liegt die Leinwand mit Raster, rechts die Palette: oben Auswählen und Radierer, darunter sechs Gruppen - Blöcke, Gefahren, Pads & Orbs, Portale, Tempo und Extras (geheime Münzen, Farb-Trigger). [1] bis [6] wählen die Gruppen direkt.",
+            "- Klicken oder Ziehen setzt das gewählte Objekt, [R] dreht es: Stacheln und Halbblöcke in vier Richtungen, Pads nach oben oder unten.",
+            "- Mit Auswählen verschiebt Ziehen ein Objekt, [Entf] löscht es. Ein Rechtsklick löscht immer; Rechts-Ziehen, das Mausrad, die Pfeiltasten oder [A]/[D] scrollen.",
+            "- Unten stehen die Werte des gewählten Objekts: bei Form-Portalen die Korridorhöhe, beim Farb-Trigger Ziel (Hintergrund oder Boden), Farbe und Überblend-Dauer.",
+            "- Die Leiste ganz unten zeigt das ganze Level im Überblick - ein Klick springt an die Stelle.",
+            "[U] macht rückgängig, [Y] stellt wieder her, [G] blendet das Raster ein und aus, [S] speichert. [Esc] führt zurück - mit ungespeicherten Änderungen erst nach einer Bestätigung.",
+            "Höchstens drei Münzen je Level. Das Ziel liegt automatisch ein Stück hinter dem letzten Objekt."
+          ]
+        },
+        {
+          "h": "Level-Einstellungen",
+          "body": [
+            "Das Zahnrad öffnet die Level-Einstellungen: Starttempo (0,5x bis 3x), Startform, Musikstil (Treibend, Chiptune, Verträumt, Düster oder keine Musik), Tempo in BPM sowie Hintergrund- und Bodenfarbe.",
+            "Name und id stehen oben in der Kopfzeile. Die id ist der Schlüssel: klein geschrieben, ohne Leerzeichen, nur a-z, 0-9, - und _ - und zugleich der vorgeschlagene Dateiname beim Teilen."
+          ]
+        },
+        {
+          "h": "Testen und verifizieren",
+          "body": [
+            "\"Test\" ([Enter]) spielt das Level vom Start, \"Ab hier\" ([T]) ab der aktuellen Stelle - Portale davor gelten dann als durchflogen. [Esc] führt zurück an die Leinwand.",
+            "Schaffst du dein Level im Test vom Start weg und ohne Übungsmodus, bekommt es das grüne Häkchen \"verifiziert\". Jede spätere Änderung an Objekten, Starttempo oder Startform nimmt es wieder weg - Farben, Name und Musik nicht.",
+            "Im Reiter LEVELS startet \"Spielen\" das gewählte Level ganz normal, mit eigenem Bestwert und Versuchszähler."
+          ]
+        },
+        {
+          "h": "Teilen und importieren",
+          "body": [
+            "\"Teilen\" fragt nach deinem Namen als Ersteller und dem Dateinamen. \"Exportieren als\" öffnet den Speichern-Dialog, \"In Downloads\" legt die Datei direkt im Downloads-Ordner ab.",
+            "Die Datei hat die Endung .lamapgzlevel und enthält JSON. \"Import\" liest sie wieder ein (auch .json); ist die id schon vergeben, wird automatisch -2, -3 ... angehängt. Das Verifiziert-Häkchen reist mit.",
+            "Name, id und Ersteller laufen beim Speichern, Exportieren UND Importieren durch den Wortfilter aller 14 Sprachen.",
+            "Gespeichert wird in ugc.json neben dem Spiel - in derselben Datei wie die eigenen Minigolf-Bahnen. In der Browser-Version bleiben die Level im Browser-Speicher, und Teilen lädt die Datei herunter."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "battleship",
+      "category": "games",
+      "game": "BattleshipGame",
+      "title": "Schiffe versenken",
+      "keywords": [
+        "battleship",
+        "schiffe",
+        "flotte",
+        "salve",
+        "radar",
+        "ki",
+        "aufstellen",
+        "versenken"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Zwei Flotten auf je einem 10x10-Meer: Flugzeugträger (5 Felder), Schlachtschiff (4), Kreuzer (3), U-Boot (3) und Zerstörer (2). Abwechselnd wird auf ein Feld des gegnerischen Bretts geschossen.",
+            "Links liegt das große Zielbrett mit dem Radar, rechts liegen deine eigenen Gewässer und die Flottenübersicht beider Seiten. Ein weißer Ring heißt Wasser, Flammen heißen Treffer. Ist ein Schiff auf allen Feldern getroffen, sinkt es und sein Umriss wird enthüllt.",
+            "Wer zuerst alle fünf gegnerischen Schiffe versenkt, gewinnt. Die Auswertung zeigt danach Schüsse, Treffer, Trefferquote, Züge und übrige Schiffe beider Seiten."
+          ]
+        },
+        {
+          "h": "Flotte aufstellen",
+          "body": [
+            "- Schiffe mit der Maus aus dem Dock rechts aufs Brett ziehen - oder anklicken, hinbewegen und nochmal klicken. Liegende Schiffe lassen sich genauso umsetzen.",
+            "- [R] oder ein Rechtsklick dreht das gehaltene Schiff (bzw. das Schiff unter der Maus).",
+            "- Die Vorschau leuchtet grün, wenn die Lage erlaubt ist, und rot, wenn nicht.",
+            "- Tastatur: Pfeile bewegen den Rahmen, [Leertaste] nimmt ein Schiff auf und legt es ab, [Enter] holt das nächste fehlende Schiff.",
+            "- [X] stellt zufällig auf, [C] entfernt alle Schiffe. Mit voller Flotte startet [Enter] bzw. \"Los geht's!\" das Gefecht.",
+            "Die letzte Aufstellung wird in der nächsten Runde wieder vorgeschlagen."
+          ]
+        },
+        {
+          "h": "Regeln im Setup",
+          "body": [
+            "Alle drei Schalter werden sofort gespeichert und gelten für beide Seiten:",
+            "- Schiffe dürfen sich berühren: AUS verlangt mindestens ein freies Feld rund um jedes Schiff, auch über Eck. Die Sperrzone ist beim Aufstellen hell markiert.",
+            "- Salve: Pro Zug gibt es so viele Schüsse, wie eigene Schiffe noch schwimmen - wer Schiffe verliert, schießt weniger.",
+            "- Nach einem Treffer nochmal schießen: Jeder Treffer gibt den Schuss zurück, du feuerst also weiter, solange du triffst."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Maus: Feld auf dem Zielbrett anklicken.",
+            "- Tastatur: Pfeile bzw. deine Bewegungstasten zielen, [Leertaste] oder [Enter] feuert.",
+            "- Nach Rundenende: [Enter] = neue Runde, [S] = zurück zum Setup. [Esc] pausiert."
+          ]
+        },
+        {
+          "h": "KI-Stärken",
+          "body": [
+            "- Leicht schießt zufällig und setzt nach einem Treffer nur manchmal nach.",
+            "- Mittel sucht zufällig, klopft nach einem Treffer die Nachbarfelder ab und verlängert Trefferlinien bis zum Schiffsende.",
+            "- Schwer rechnet für jedes Feld aus, in wie vielen noch möglichen Lagen die übrigen Schiffe dort liegen könnten (samt Berühr-Regel), und schießt auf das wahrscheinlichste. Beim Suchen nutzt sie ein Schachbrettmuster passend zum kleinsten Restschiff.",
+            "Im Schnitt braucht die KI etwa 70 (Leicht), 60 (Mittel) und 45 Schüsse (Schwer) für eine ganze Flotte - und sie weiß dabei nur, was du auch siehst."
+          ]
+        },
+        {
+          "h": "2 Spieler",
+          "body": [
+            "Im Mehrspieler-Modus spielt ihr abwechselnd am selben Rechner. Vor dem Aufstellen und vor jedem Zug verdeckt ein Übergabe-Bildschirm beide Flotten, bis der nächste Spieler mit [Enter] oder einem Klick bestätigt.",
+            "Er meldet auch, wie viele Schüsse und Treffer der letzte Angriff auf deine Flotte hatte. Die Web-Version spielt nur gegen die KI."
+          ]
+        },
+        {
+          "h": "Punkte & Erfolge",
+          "body": [
+            "Jeder Sieg gegen die KI zählt einen Punkt; der Highscore ist die höchste Siegzahl einer Sitzung. Der 2-Spieler-Modus wird nicht gewertet.",
+            "- Unversehrt: Besiege die KI, ohne ein einziges Schiff zu verlieren.",
+            "- Großadmiral: Versenke die Flotte der schweren KI."
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Verteile deine Schiffe über das ganze Brett und reihe nicht alle am Rand auf.",
+            "- Beim Suchen reicht jedes zweite Feld (Schachbrett) - sind nur noch lange Schiffe übrig, sogar jedes dritte.",
+            "- Ohne Berühr-Regel ist jedes Feld rund um ein versenktes Schiff garantiert Wasser."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "casino",
+      "category": "games",
+      "game": "CasinoGame",
+      "title": "Casino",
+      "keywords": [
+        "casino",
+        "roulette",
+        "slot",
+        "spielautomat",
+        "lama",
+        "jackpot",
+        "freispiele",
+        "chips",
+        "wetten",
+        "kessel"
+      ],
+      "sections": [
+        {
+          "h": "Die Lama-Bank",
+          "body": [
+            "Casino, Blackjack und Poker spielen mit demselben Konto: den Lama-Chips (Start 1000). Einsätze werden sofort abgebucht, Gewinne gutgeschrieben - alles bleibt dauerhaft gespeichert.",
+            "Jedes Spiel führt seine eigene Bilanz. Der Casino-Highscore ist der Höchststand von 1000 + Casino-Bilanz; Gewinne beim Blackjack oder Poker zählen hier nicht.",
+            "Pleite (weniger als der Mindesteinsatz) gibt einen Bank-Kredit: Das Konto wird wieder auf 1000 aufgefüllt. Kredite zählen nicht zur Bilanz, ihre Anzahl steht oben rechts."
+          ]
+        },
+        {
+          "h": "Roulette - Setzen",
+          "body": [
+            "Europäischer Kessel mit 37 Fächern (0 bis 36). Den Chipwert wählst du unten: 1, 5, 25, 100 oder 500 (Tasten [1] bis [5] oder Mausrad).",
+            "Linksklick setzt einen Chip, Rechtsklick nimmt ihn wieder weg. Wohin du klickst, bestimmt die Wette:",
+            "- Mitte einer Zahl: Plein, zahlt 35:1",
+            "- Kante zwischen zwei Zahlen: Cheval, 17:1",
+            "- Außenlinie einer Zahlenspalte: Transversale mit 3 Zahlen, 11:1 (an der Null auch 0-1-2 und 0-2-3)",
+            "- Ecke zwischen vier Zahlen: Carré, 8:1 (außen an der Null: 0-1-2-3)",
+            "- Ecke auf der Außenlinie zwischen zwei Spalten: Sixain mit 6 Zahlen, 5:1",
+            "- Kolonne (2:1) und Dutzend (2:1), Rot/Schwarz, Gerade/Ungerade sowie Manque 1-18 / Passe 19-36 (je 1:1)",
+            "Neben dem Kessel steht, welche Wette gerade unter der Maus liegt und wie sie zahlt."
+          ]
+        },
+        {
+          "h": "Roulette - Drehen",
+          "body": [
+            "[Enter] oder DREHEN startet die Runde: Der Einsatz wird abgebucht und die Gewinnzahl gezogen. Die Kugel läuft spiralförmig ein und fällt genau in dieses Fach - [Leertaste] oder ein Klick spult vor.",
+            "Wiederholen [R] legt die Einsätze der letzten Runde neu, Verdoppeln [D] verdoppelt alle Einsätze, Löschen [Backspace] räumt den Tisch.",
+            "Oben stehen die letzten 12 Zahlen; getroffene Einsätze zeigen ihre Auszahlung."
+          ]
+        },
+        {
+          "h": "Lama-Slot",
+          "body": [
+            "5 Walzen, 3 Reihen, 10 Gewinnlinien. Linien zahlen ab 3 gleichen Symbolen von links nach rechts; die Nummern am Rand zeigen, wo jede Linie verläuft (Maus darüber = Linie anzeigen).",
+            "Einsatz je Linie: 1, 2, 5 oder 10 ([+]/[-] oder Mausrad) - gespielt wird immer auf allen 10 Linien.",
+            "- Lama = Wild: ersetzt jedes Symbol außer der Goldmünze. 5 Lamas auf einer Linie sind der Lama-Jackpot.",
+            "- Goldmünze = Scatter: 3, 4 oder 5 Münzen irgendwo zahlen das 2-, 10- oder 50-fache des Gesamteinsatzes und bringen 10 Freispiele, in denen alle Gewinne doppelt zählen. Freispiele lassen sich erneut auslösen.",
+            "Die Gewinntabelle zeigt alle Auszahlungen für deinen aktuellen Einsatz. Die Auszahlungsquote liegt bei 96,1 % - exakt aus den Walzenstreifen berechnet."
+          ]
+        },
+        {
+          "h": "Lama-Slot - Bedienung",
+          "body": [
+            "[Leertaste], [Enter] oder ein Klick auf die Walzen dreht; während des Drehens spult ein weiterer Druck vor.",
+            "Auto-Spin: [A] startet 10 Runden, [Shift]+[A] 25 Runden (oder der Auto-Knopf), erneut drücken stoppt. [T] schaltet Turbo, [I] öffnet die Gewinntabelle.",
+            "Gewonnene Freispiele werden sofort gespeichert und laufen beim nächsten Start weiter."
+          ]
+        },
+        {
+          "h": "Erfolge",
+          "body": [
+            "- Casino-Meilenstein: Highscore 5000",
+            "- Volltreffer: beim Roulette mit einem Plein gewinnen",
+            "- Lama-Jackpot: 5 Lamas auf einer Gewinnlinie"
           ]
         }
       ]

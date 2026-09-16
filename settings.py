@@ -113,7 +113,11 @@ DEFAULTS = {
     #   difficulty : gewählter Schwierigkeitsgrad (0=Leicht .. 3=Experte)
     #   fail_limit : True -> beim 3. Fehler ist die Partie verloren
     #   last_level : zuletzt gewähltes Level je Stufe, z.B. {"0": 12}
-    "sudoku": {"difficulty": 0, "fail_limit": True, "last_level": {}},
+    #   variant    : classic / x (Diagonalen) / killer (Käfige) / mini (6x6)
+    #   input      : cell (erst Zelle, dann Ziffer) / digit (erst Ziffer, dann Zellen)
+    #   colors     : Farbmarker-Leiste im Spiel anzeigen (Zellen einfärben)
+    "sudoku": {"difficulty": 0, "fail_limit": True, "last_level": {},
+               "variant": "classic", "input": "cell", "colors": False},
     # Frogger: Schwierigkeitsgrad (easy/normal/hard)
     "frogger": {"difficulty": "normal"},
     # Memory: Brettgröße (4x4/6x6/8x6)
@@ -140,8 +144,11 @@ DEFAULTS = {
     "dame": {"variant": "german", "difficulty": 1},
     # Poker: Anzahl KI-Gegner (1-3, nur Texas Hold'em), KI-Stärke (0-2)
     "poker": {"opponents": 2, "difficulty": 1},
-    # Schach: KI-Stärke (0=Anfänger .. 5=Meister), Spielerfarbe (white/black)
-    "chess": {"difficulty": 2, "color": "white"},
+    # Schach: KI-Stärke (0=Anfänger .. 5=Meister), Spielerfarbe (white/black),
+    # Schachuhr (none/1+0/3+2/5+0/10+5), Chess960-Startaufstellung an/aus,
+    # Brett im 2-Spieler-Modus nach jedem Zug drehen an/aus
+    "chess": {"difficulty": 2, "color": "white", "clock": "none",
+              "chess960": False, "flip": False},
     # Mühle: KI-Stärke (0-2), Fliegen-Regel bei nur noch 3 Steinen an/aus
     "muehle": {"difficulty": 1, "flying": True},
     # Simon: Modus (classic/speed/reverse/duel/mixed), Ton (off/on/mixed),
@@ -169,8 +176,103 @@ DEFAULTS = {
     # Replays: Aufzeichnung von Minigolf- und Bowling-Runden an/aus (die
     # Aufnahmen selbst liegen in replay.json, siehe replay.py)
     "replay": {"enabled": True},
+    # Tetris: DAS (Verzögerung bis zur Dauerbewegung, ms), ARR (Abstand der
+    # Wiederholschritte, ms; 0 = sofort an den Rand), Ghost-Stein an/aus,
+    # Solo-Variante (marathon/sprint/ultra), KI-Stärke im Versus (0-2),
+    # Startlevel im Marathon (1-15)
+    "tetris": {"das": 170, "arr": 50, "ghost": True, "solo": "marathon",
+               "ai_level": 1, "start_level": 1},
+    # 2048: Brettgröße (3-8), Modus (classic/time/endless),
+    # Rückgängig (off/limited = 3 pro Partie/unlimited)
+    "g2048": {"size": 4, "mode": "classic", "undo": "limited"},
+    # Wordle: Wortlänge (4-7), harter Modus, Farbenblind-Palette
+    "wordle": {"length": 5, "hard": False, "colorblind": False},
+    # Crossy Road: Schatten an/aus, Tag/Nacht-Wechsel an/aus
+    # (Figur/Münzen liegen als Fortschritt in mem.json)
+    "crossy": {"shadows": True, "daynight": True},
+    # Geometry Dash: Level-Musik an/aus, automatische Checkpoints im
+    # Übungsmodus an/aus, Fortschrittsbalken an/aus, Rasterfang im Editor,
+    # zuletzt gewähltes eingebautes Level (0-7)
+    "geodash": {"music": True, "auto_checkpoints": True, "progress_bar": True,
+                "grid": True, "last_level": 0},
+    # Battleship / Schiffe versenken: KI-Stärke (0-2), Schiffe dürfen sich
+    # berühren, Salven-Modus, nach Treffer nochmal schießen
+    "battleship": {"difficulty": 1, "touch": True, "salvo": False,
+                   "extra_shot": False},
+    # Casino: Chipwert am Roulette-Tisch, Einsatz je Gewinnlinie am
+    # Spielautomaten, Turbo-Walzen an/aus
+    "casino": {"roulette_chip": 5, "line_bet": 1, "turbo": False},
     "controls": DEFAULT_CONTROLS,
 }
+
+
+# Prüfregeln für Spiel-Optionen: {section: {key: regel}}. Statt für jede neue
+# Option einen eigenen if-Block in _merge_defaults zu schreiben, genügt hier
+# ein Eintrag (plus der Standardwert in DEFAULTS). Nur hier gelistete Schlüssel
+# überleben das Laden - alles andere fällt wie bisher still weg.
+#   bool                  -> nur True/False
+#   (int, lo, hi)         -> Ganzzahl, auf [lo, hi] begrenzt
+#   (float, lo, hi)       -> Zahl, auf [lo, hi] begrenzt
+#   ("choice", (a, b, …)) -> genau einer der erlaubten Werte
+#   (str, maxlen)         -> Text, auf maxlen Zeichen gekürzt
+SCHEMAS = {
+    "sudoku": {"variant": ("choice", ("classic", "x", "killer", "mini")),
+               "input": ("choice", ("cell", "digit")), "colors": bool},
+    "chess": {"clock": ("choice", ("none", "1+0", "3+2", "5+0", "10+5")),
+              "chess960": bool, "flip": bool},
+    "tetris": {"das": (int, 50, 400), "arr": (int, 0, 200), "ghost": bool,
+               "solo": ("choice", ("marathon", "sprint", "ultra")),
+               "ai_level": (int, 0, 2), "start_level": (int, 1, 15)},
+    "g2048": {"size": (int, 3, 8), "mode": ("choice", ("classic", "time", "endless")),
+              "undo": ("choice", ("off", "limited", "unlimited"))},
+    "wordle": {"length": (int, 4, 7), "hard": bool, "colorblind": bool},
+    "crossy": {"shadows": bool, "daynight": bool},
+    "geodash": {"music": bool, "auto_checkpoints": bool, "progress_bar": bool,
+                "grid": bool, "last_level": (int, 0, 7)},
+    "battleship": {"difficulty": (int, 0, 2), "touch": bool, "salvo": bool,
+                   "extra_shot": bool},
+    "casino": {"roulette_chip": ("choice", (1, 5, 25, 100, 500)),
+               "line_bet": ("choice", (1, 2, 5, 10)), "turbo": bool},
+}
+
+_INVALID = object()
+
+
+def _check_rule(rule, value):
+    """Prüft 'value' gegen eine Regel aus SCHEMAS (sonst _INVALID)."""
+    if rule is bool:
+        return value if isinstance(value, bool) else _INVALID
+    kind = rule[0]
+    if kind is int:
+        if isinstance(value, bool) or not isinstance(value, int):
+            return _INVALID
+        return max(rule[1], min(rule[2], value))
+    if kind is float:
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            return _INVALID
+        return max(rule[1], min(rule[2], float(value)))
+    if kind == "choice":
+        # Typ muss passen: bool ist in Python ein int - True darf nicht als 1
+        # durchgehen, und "5" nicht als 5.
+        ok = any(type(c) is type(value) and c == value for c in rule[1])
+        return value if ok else _INVALID
+    if kind is str:
+        return value[:rule[1]] if isinstance(value, str) else _INVALID
+    return _INVALID
+
+
+def _apply_schemas(out, data):
+    """Übernimmt alle in SCHEMAS beschriebenen Optionen aus 'data' nach 'out'."""
+    for section, rules in SCHEMAS.items():
+        src = data.get(section)
+        if not isinstance(src, dict):
+            continue
+        dst = out.setdefault(section, {})
+        for key, rule in rules.items():
+            if key in src:
+                value = _check_rule(rule, src[key])
+                if value is not _INVALID:
+                    dst[key] = value
 
 
 def resolution_index(res):
@@ -383,6 +485,8 @@ def _merge_defaults(data):
         rpl = data.get("replay")
         if isinstance(rpl, dict) and isinstance(rpl.get("enabled"), bool):
             out["replay"]["enabled"] = rpl["enabled"]
+        # Alle Optionen mit Prüfregel in SCHEMAS (neuere Spiele + Erweiterungen).
+        _apply_schemas(out, data)
         ctrl = data.get("controls")
         if isinstance(ctrl, dict):
             for player in ("p1", "p2"):
@@ -429,11 +533,8 @@ def save_settings(data):
     """
     out = {"_generated": _generated_stamp()}
     out.update((k, v) for k, v in data.items() if k != "_generated")
-    try:
-        with open(_PATH, "w", encoding="utf-8") as f:
-            json.dump(out, f, indent=2, ensure_ascii=False)
-    except OSError:
-        pass
+    import store
+    store.write_json_atomic(_PATH, out)
 
 
 def apply_preset(settings, index):

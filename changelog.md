@@ -8,6 +8,232 @@
 
 ## 🇩🇪 Deutsch
 
+### Arcade & Casino: 4 neue Spiele + 6 Ausbauten – 2026-09-16
+
+Das bisher größte Spiele-Update: Mit **Crossy Road**, **Geometry Dash**,
+**Schiffe versenken** und **Casino** wächst die Sammlung auf **46 Spiele**;
+**Tetris**, **2048**, **Schach**, **Wordle** und **Sudoku** werden groß
+ausgebaut, **Blackjack** und **Poker** spielen jetzt mit einem gemeinsamen
+Lama-Chip-Konto. Dazu kommt ein neues technisches Fundament (Tasteneingabe,
+absturzsicheres Speichern, Musik-Schleifen, ein gemeinsamer Zufallsgenerator für
+PC und Browser) und **22 neue Erfolge** – jetzt **107** insgesamt. Alles in 14
+Sprachen, mit LamaWiki-Seiten, in beiden READMEs und in der Web-Version.
+
+#### Neu
+
+**Crossy Road** (Spiel Nr. 43)
+- Endlos über **Wiesen, Straßen, Flüsse und Gleise** hüpfen – im
+  **isometrischen Voxel-Look** mit Squash & Stretch, Wassersplash,
+  Plattdrück-Animation und Partikeln. Figuren und Bodenstreifen werden je
+  Kachelgröße vorgerendert, das Zeichnen bleibt auch bei 1280x960 bei wenigen
+  Millisekunden pro Bild.
+- **Züge** mit Warnlicht und Klingel (später ganze Bahnhöfe mit bis zu 5
+  Gleisen), Stämme und Seerosen, Autos und Laster, die mit der Strecke schneller
+  werden; der **Adler** holt Trödler. Der Generator garantiert immer einen
+  begehbaren Weg.
+- **Tag/Nacht-Wechsel** ab Reihe 50 mit Scheinwerfern, Zuglichtern und Lichthof.
+- **10 freischaltbare Figuren** (Huhn, Frosch, Schwein, Pinguin, Katze, Fuchs,
+  Lama, Roboter, Geist, Einhorn), gekauft mit gesammelten Münzen im Reiter
+  **Figuren**.
+- Modi **Endlos** (Highscore) und **Tagesstrecke** – für alle gleich, auch in
+  der Web-Version – mit eigenem Tagesbestwert (Abschnitt `crossy` in `mem.json`).
+- Neue Erfolge **Neuer Look** und **Gleisakrobat** sowie ein Meilenstein von 150
+  Reihen.
+
+**Geometry Dash** (Spiel Nr. 44)
+- Rhythmus-Plattformer mit **Würfel, Schiff, Ball, UFO und Welle**, Form-,
+  Schwerkraft- und Tempo-Portalen, gelben/pinken/blauen Pads und Orbs, Gruben,
+  Farb-Triggern und je **3 geheimen Münzen**.
+- **8 eingebaute Level** von Leicht bis Dämon („Lama Inferno"). Jedes ist per
+  Solver nachweislich schaffbar, samt allen Münzen.
+- **Übungsmodus** mit automatischen und eigenen Checkpoints (Z/X),
+  Versuchszähler, Fortschrittsbalken, Bestwerten je Level, Explosionen und
+  sofortigem Neustart.
+- Eigener **Soundtrack je Level** mit Beat-Puls in der Grafik (abschaltbar).
+- **Präzise Eingabe**: Die Physik rechnet in Festkomma mit festem 240-Hz-Schritt,
+  jeder Druck wirkt auf 1/240 s genau – bei jeder Bildrate gleich.
+- **Level-Editor** im Reiter LEVELS: Palette mit 6 Gruppen, Undo/Redo, Test ab
+  Start oder ab hier, Level-Einstellungen, **Teilen als `.lamapgzlevel`**, Import
+  und „Verifiziert"-Abzeichen erst nach eigenem Durchlauf.
+- Highscore = **Sterne gesamt** (max. 65); Bestwerte, Münzen, Versuche und
+  Sprünge im Abschnitt `geodash` von `mem.json`. Neue Erfolge **Im Takt**,
+  **Münzjäger** und **Dämonenbezwinger** sowie ein Meilenstein von 20 Sternen.
+- Browser-Version mit identischer Physik und Editor.
+
+**Schiffe versenken** (Spiel Nr. 45, in allen anderen Sprachen „Battleship")
+- **10x10-Seeschlacht** gegen die KI – *Leicht* (zufällig), *Mittel*
+  (Jagen/Zielen) und *Schwer* (Wahrscheinlichkeitskarte mit Parität) – oder
+  **zu zweit** mit verdecktem Übergabe-Bildschirm.
+- **Flotte per Drag & Drop** aufstellen: drehen mit R/Rechtsklick, zufällig,
+  grüne/rote Vorschau mit Sperrzone; die letzte Aufstellung wird vorgeschlagen.
+- **Regeln wählbar** und gespeichert: Schiffe dürfen sich berühren,
+  Salven-Modus, Nochmal schießen nach Treffer.
+- Radar-Sweep, animierte Wellen, Granaten im Bogen, Einschlag-Splash,
+  Explosionen mit Rauch, brennende Felder, „VERSENKT!"-Enthüllung und
+  Treffer-Statistik am Rundenende.
+- Neue Erfolge **Unversehrt** (Sieg ohne verlorenes Schiff) und **Großadmiral**
+  (Sieg gegen die schwere KI); in der Web-Version gegen die KI.
+
+**Casino** (Spiel Nr. 46)
+- **Europäisches Roulette** mit allen klassischen Wetten (Plein bis
+  Manque/Passe – Klick auf Zahl, Kante oder Ecke), Chipwerten 1 bis 500,
+  Wiederholen/Verdoppeln/Löschen, animiertem Kessel mit einlaufender Kugel und
+  Verlauf der letzten 12 Zahlen.
+- **Lama-Slot**: 5 Walzen, 10 Gewinnlinien, Lama = Wild, Goldmünzen = 10
+  Freispiele mit doppelten Gewinnen, Auto-Spin, Turbo und Gewinntabelle;
+  **Auszahlungsquote 96,1 %**, exakt aus den Walzenstreifen berechnet.
+- **Lama-Bank** (`lamabank.py`): Blackjack, Poker und Casino teilen sich ein
+  Konto mit Lama-Chips (Abschnitt `casino` in `mem.json`). Jedes Spiel führt
+  seine eigene Bilanz für den Highscore; bei Pleite gibt es einen Bank-Kredit.
+  Alte Chipstände werden automatisch übernommen.
+- Neue Erfolge **Volltreffer** (Plein beim Roulette) und **Lama-Jackpot**
+  (5 Lamas auf einer Linie) sowie ein Meilenstein von 5000.
+
+**Tetris** – komplett überarbeitet
+- Moderne **Guideline-Regeln**: SRS-Drehsystem mit Wall Kicks, Drehen in beide
+  Richtungen, **Halten**, **5er-Vorschau**, **Lock Delay** und eigenes
+  **DAS/ARR** (im Setup einstellbar).
+- **Solo** mit drei Varianten: **Marathon** (Highscore, Startlevel 1–15),
+  **Sprint 40 Zeilen** (Bestzeit) und **Ultra 2 Minuten** (Bestwert).
+- Wertung nach Guideline: **T-Spins** (voll/Mini), **Back-to-Back**, **Combos**
+  und **Perfect Clear** – mit Einblendungen, Lösch-Animation, Partikeln und
+  Level-Up-Effekt.
+- **Versus gegen die KI** (3 Stärken) und **Versus zu zweit** mit Müllzeilen,
+  Aufrechnen, Warnbalken, gleicher Steinfolge und K.O.-Animation.
+- 3 neue Erfolge: **Dreh dich rein** (T-Spin Double), **Blitzblank** (Perfect
+  Clear) und **Sprinter** (Sprint 40 unter 2:00).
+- Web-Version: alles außer „2 Spieler", gleiche Regeln und Steinfolge wie am PC.
+
+**2048** – groß ausgebaut
+- Eigener **Setup-Screen** mit Brettgrößen **3x3 bis 8x8** und den Modi
+  Klassisch, Zeitangriff (3 Minuten) und Endlos.
+- Flüssige **Animationen**: Kacheln gleiten, verschmelzen mit Pop und wachsen
+  hinein; Punkte-Popups, Funken und neue Farben bis 131072.
+- **Rückgängig** (aus / 3 pro Partie / unbegrenzt) mit Animation – wer es nutzt,
+  spielt ohne Highscore.
+- **Wischen** mit Maus/Touchpad; gehaltene Tasten wiederholen nicht mehr,
+  Eingaben während Animationen werden gepuffert.
+- Partien werden je Größe und Modus automatisch **gespeichert** und lassen sich
+  fortsetzen; Bestwerte und größte Kachel je Größe/Modus (Abschnitt `g2048`).
+- „Weiterspielen?" nach 2048 im Klassik-Modus, neues Endstand-Panel und der neue
+  Erfolg **4096!**.
+
+**Schach** – groß ausgebaut
+- Neuer Modus **Rätsel**: 200 Aufgaben aus der freien **Lichess-Rätseldatenbank
+  (CC0)** in 5 Stufen (Matt in 1/2/3, Taktik I/II) mit Fortschritt.
+- **Chess960** (alle 960 Grundstellungen) und **Schachuhr** (1+0, 3+2, 5+0,
+  10+5) im Setup.
+- Deutlich **stärkere, ruckelfreie KI**: iterative Vertiefung,
+  Transpositionstabelle, Eröffnungsbuch und neue Bewertung; sie rechnet in
+  kleinen Häppchen pro Bild.
+- Neue **Seitenleiste** mit Zugliste (SAN), Uhr, geschlagenen Figuren und
+  Materialbilanz; Rückgängig, Hinweis-Pfeil, Remis anbieten, Aufgeben, Brett
+  drehen, Drag & Drop, gleitende Figuren und Koordinaten.
+- **PGN-Export** nach der Partie (Web: Download und Zwischenablage).
+- Neue Erfolge **Rätselknacker** (25 Rätsel) und **Großmeister** (Sieg gegen
+  Stufe 6 ohne Hilfe).
+
+**Wordle** – groß ausgebaut
+- Neue Modi **Tageswort**, **Dordle** (2 Wörter, 7 Versuche) und **Quordle**
+  (4 Wörter, 9 Versuche) neben Endlos.
+- Neuer **Setup-Screen**: Wortlänge **4 bis 7**, harter Modus (jetzt eine
+  Einstellung statt eines eigenen Modus) und **Farbenblind-Palette**
+  (Orange/Blau).
+- **Tageswort** je Sprache und Länge – am PC und im Browser dasselbe – mit
+  Countdown und Serie; angefangene Tageswörter werden gespeichert.
+- **Statistik** je Sprache, Länge und Modus: Partien, Gewinnquote, Serien und
+  Versuchsverteilung als Balkendiagramm (Abschnitt `wordle` in `mem.json`).
+- **Ergebnis teilen** als Emoji-Raster in die Zwischenablage; AZERTY-Tastatur für
+  Französisch, QWERTZ für Deutsch, Tschechisch, Slowenisch und Kroatisch.
+- Neue Wortlisten mit **4, 6 und 7 Buchstaben** für alle 14 Sprachen (über alle
+  Längen rund 134.000 Lösungswörter); bessere Lösungswörter ohne englische
+  Einsprengsel, Namen und anstößige Wörter.
+- Neue Erfolge **Wortgewohnheit** (7 Tageswörter in Folge) und
+  **Vierfach-Genie** (Quordle gelöst).
+
+**Sudoku** – neue Varianten
+- Neue Varianten **X-Sudoku**, **Killer** (400 vorab erzeugte, eindeutig lösbare
+  Level) und **Mini 6x6** – jeweils 4 Stufen × 100 Level.
+- **Tages-Sudoku**: ein Rätsel pro Tag für alle (am PC und im Browser gleich),
+  Stufe je Wochentag und Tagesserie.
+- **Rückgängig/Wiederholen** (U/Z, Y), **Kandidaten automatisch eintragen** (C),
+  Eingabe „Ziffer zuerst", **Farbmarker** (M) und ein Restziffer-Zähler in allen
+  Modi.
+- **Angefangene Rätsel** werden automatisch gespeichert und fortgesetzt.
+- Bis zu **3 Sterne** und Bestzeit je Level, neuer Setup-Screen mit Level-Info.
+- Neue Erfolge **Käfigkämpfer** und **Sternensammler** (30 Level mit 3 Sternen).
+
+#### Geändert
+
+**Blackjack & Poker**
+- Beide spielen mit den **Lama-Chips** der Lama-Bank (Start 1000) und teilen
+  sich das Konto mit dem Casino; der Highscore ist jeweils der Höchststand der
+  eigenen Bilanz, Bank-Kredite zählen nicht mit.
+- Einsätze werden **sofort abgebucht** – wer eine laufende Hand verlässt,
+  verliert den Einsatz. Beim Poker kommt der nicht gesetzte Tischstapel beim
+  nächsten Start zurück aufs Konto.
+- Der Blackjack-Meilenstein liegt jetzt bei 1600 (Startkonto 1000 plus 600),
+  **Chipleader** zählt die Poker-Bilanz.
+
+**Fundament & Technik**
+- **Tastatur**: Gehaltene Tasten werden sauber erkannt – Spiele mit eigener
+  Tastenwiederholung (Tetris) oder Halten-Steuerung (Geometry Dash) reagieren
+  präzise, und Tasten „klemmen" nicht mehr nach Pause, Alt-Tab oder einem
+  Screen-Wechsel.
+- **Absturzsicheres Speichern**: `mem.json` und `settings.json` werden atomar
+  geschrieben, mit automatischer Sicherung (`.bak`); eine beschädigte `mem.json`
+  wird aus der Sicherung gelesen, statt beim nächsten Speichern Highscores,
+  Erfolge und Chips zu verlieren.
+- Wer mitten im Spiel über die **Sidebar** ein anderes Spiel wählt, behält jetzt
+  seinen Highscore.
+- **Vorspiel-Screen**: Bei vielen Modi und kleiner Auflösung rücken Optionen,
+  Wiki und Zurück in eine Reihe, die Schrift passt sich an – nichts läuft mehr
+  aus dem Bild.
+- Neuer gemeinsamer **Zufallsgenerator** (`seedrand.py` / `seedrand.js`):
+  Tagesmodi und neue Rätsel sind am PC und im Browser bitgenau identisch.
+- **Musik-Schleifen** für Spiele (`audio.py`): mehrstimmig und prozedural
+  erzeugt, pausieren und enden automatisch mit ihrem Spiel – erstmals genutzt für
+  die Level-Soundtracks von Geometry Dash.
+- **Eigene Inhalte** (`ugc.py`, `ugc.json`) verwalten jetzt Minigolf-Bahnen und
+  Geometry-Dash-Level; Minigolf bleibt voll kompatibel.
+- Neue Spiel-Hooks in `game_base.py`: `on_exit()` (Spiel wird verlassen),
+  `show_highscore_banner` (Modi ohne Highscore-Wertung zeigen kein Banner) und
+  `key_is_free()` (feste Zusatztasten greifen nur, wenn sie keiner Aktion
+  zugeordnet sind); neue Spiel-Optionen prüft `settings.SCHEMAS`, eine eigene
+  Whitelist ist nicht mehr nötig.
+- Werkzeuge in `devtools/` (nicht in der `.exe`): `merge_staging.py` spielt
+  Übersetzungen und Wiki-Seiten in alle 14 Sprachdateien ein, dazu Build-Skripte
+  für Schachrätsel, Killer-Sudokus, die Crossy-Road-Modelle und die
+  Geometry-Dash-Level samt Solver.
+- Tests: `tests/arcade_casino_audit.py` prüft Eingabe, Zufallsgenerator
+  (Python = JS), Speichern, Musik, Sprachdateien und alle Vorspiel-Screens in
+  14 Sprachen × 5 Auflösungen und startet die neuen Audits je Spiel
+  (`tests/audit_*.py`).
+
+**Dokumentation**
+- LamaWiki: neue Seiten für Crossy Road, Geometry Dash (plus *Eigene Level*),
+  Schiffe versenken und Casino,
+  überarbeitete Seiten für Tetris, 2048, Schach, Wordle, Sudoku, Blackjack und
+  Poker
+  sowie die allgemeinen Seiten *Erste Schritte* (alle 20 Spiele mit
+  2-Spieler-Modus), *Optionen & Steuerung* (14 Sprachen, feste Zusatztasten),
+  *Speichern & Highscores* (neue Abschnitte in `mem.json`, `ugc.json`,
+  automatische Sicherung) und *Erfolge & Statistiken* (107 Erfolge, 46 Spiele).
+- Beide READMEs: 46 Spiele, neue Tabellenzeilen und Feature-Abschnitte,
+  Mehrspieler-Liste, Bedienung, Projektstruktur und Quellenhinweis zur
+  Lichess-Rätseldatenbank.
+
+#### Behoben
+- **Blackjack**: Die verdeckte Dealer-Karte wird beim Aufdecken jetzt wirklich
+  umgedreht.
+- **Tetris**: Ein Stein, der komplett über dem Feld einrastet, beendet jetzt das
+  Spiel; Enter/Leertaste starten nach dem Game Over nicht mehr versehentlich neu.
+- **Schach**: Der Siegzähler zählt jetzt deine Siege statt der Siege einer Farbe.
+- **Vorspiel-Screen**: Bei 480x360 liefen Sudoku und Solitär aus dem Bild, und
+  der Untertitel wurde überdeckt.
+- **Tastatur**: Gehaltenes ESC schaltete die Pause flackernd um, gehaltenes F11
+  den Vollbildmodus.
+
 ### Wordle: echte Wortlisten in 14 Sprachen – 2026-09-16
 
 #### Neu
@@ -724,6 +950,222 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Arcade & Casino: 4 new games + 6 expansions – 2026-09-16
+
+The biggest game update so far: **Crossy Road**, **Geometry Dash**,
+**Battleship** and **Casino** bring the collection to **46 games**; **Tetris**,
+**2048**, **Chess**, **Wordle** and **Sudoku** are greatly expanded, and
+**Blackjack** and **Poker** now play with one shared llama-chip account. On top
+of that comes a new technical foundation (keyboard input, crash-safe saving,
+music loops, a random generator shared by PC and browser) and **22 new
+achievements** – **107** in total. Everything in 14 languages, with LamaWiki
+pages, in both READMEs and in the web version.
+
+#### Added
+
+**Crossy Road** (game no. 43)
+- Hop endlessly across **grass, roads, rivers and railway tracks** – in an
+  **isometric voxel look** with squash & stretch, splashes, a flattening
+  animation and particles. Characters and ground strips are pre-rendered per
+  tile size, so drawing stays at a few milliseconds per frame even at 1280x960.
+- **Trains** with warning lights and bells (later whole stations with up to 5
+  tracks), logs and lily pads, cars and trucks that speed up along the route;
+  the **eagle** grabs dawdlers. The generator always guarantees a walkable path.
+- **Day/night cycle** from row 50 with headlights, train lights and glow.
+- **10 unlockable characters** (chicken, frog, pig, penguin, cat, fox, llama,
+  robot, ghost, unicorn), bought with collected coins in the **Characters** tab.
+- Modes **Endless** (high score) and **Daily Route** – the same for everyone,
+  web version included – with its own daily best (section `crossy` in
+  `mem.json`).
+- New achievements **New Look** and **Track Jumper**, plus a 150-row milestone.
+
+**Geometry Dash** (game no. 44)
+- Rhythm platformer with **cube, ship, ball, UFO and wave**, form, gravity and
+  speed portals, yellow/pink/blue pads and orbs, pits, color triggers and **3
+  secret coins** per level.
+- **8 built-in levels** from Easy to Demon ("Lama Inferno"). Each is proven
+  beatable by a solver, including all coins.
+- **Practice mode** with automatic and manual checkpoints (Z/X), attempt counter,
+  progress bar, per-level bests, explosions and instant restart.
+- Procedural **soundtrack per level** with a beat pulse in the visuals (can be
+  turned off).
+- **Precise input**: the physics runs in fixed-point math at a fixed 240 Hz step,
+  and every press lands on the exact 1/240 s step – at any frame rate.
+- **Level editor** in the LEVELS tab: 6-group palette, undo/redo, test from the
+  start or from here, level settings, **sharing as `.lamapgzlevel`**, import and
+  a "verified" badge only after beating your own level.
+- High score = **total stars** (max. 65); bests, coins, attempts and jumps in the
+  `geodash` section of `mem.json`. New achievements **On the Beat**, **Coin
+  Hunter** and **Demon Slayer**, plus a 20-star milestone.
+- Browser version with identical physics and editor.
+
+**Battleship** (game no. 45, called "Schiffe versenken" in German)
+- **10x10 naval battle** against the AI – *Easy* (random), *Medium*
+  (hunt/target) and *Hard* (probability map with parity) – or **two players**
+  with a hidden handover screen.
+- **Drag & drop fleet deployment**: rotate with R/right click, random placement,
+  green/red preview with no-go zone; your last layout is suggested again.
+- **Optional rules**, saved: ships may touch, salvo mode, fire again after a hit.
+- Radar sweep, animated waves, shells flying in an arc, splashes, explosions
+  with smoke, burning cells, a "SUNK!" reveal and accuracy stats at the end of
+  each round.
+- New achievements **Flawless Fleet** (win without losing a ship) and **Fleet
+  Admiral** (beat the hard AI); in the web version against the AI.
+
+**Casino** (game no. 46)
+- **European roulette** with all classic bets (straight up to low/high – click a
+  number, edge or corner), chip values 1 to 500, rebet/double/clear, an animated
+  wheel with a ball spiralling in and the last 12 numbers.
+- **Llama Slot**: 5 reels, 10 paylines, llama = wild, gold coins = 10 free spins
+  with double wins, auto spin, turbo and a paytable; **96.1% return to player**,
+  calculated exactly from the reel strips.
+- **Llama Bank** (`lamabank.py`): Blackjack, Poker and Casino share one account
+  of llama chips (section `casino` in `mem.json`). Each game keeps its own
+  balance for its high score; going broke gives you a bank loan. Old chip counts
+  carry over automatically.
+- New achievements **Bullseye** (straight-up win at roulette) and **Llama
+  Jackpot** (5 llamas on one line), plus a 5000 milestone.
+
+**Tetris** – completely rebuilt
+- Modern **Guideline rules**: the SRS rotation system with wall kicks, rotation
+  in both directions, **hold**, a **5-piece preview**, **lock delay** and custom
+  **DAS/ARR** (adjustable in the setup).
+- **Solo** with three variants: **Marathon** (high score, start level 1–15),
+  **Sprint 40 lines** (best time) and **Ultra 2 minutes** (best score).
+- Guideline scoring: **T-Spins** (full/mini), **Back-to-Back**, **combos** and
+  **Perfect Clears** – with callouts, line-clear animation, particles and a
+  level-up effect.
+- **Versus against the AI** (3 strengths) and **2-player versus** with garbage
+  lines, cancelling, a warning bar, identical piece sequence and a K.O.
+  animation.
+- 3 new achievements: **Spin to Win** (T-Spin Double), **Squeaky Clean** (Perfect
+  Clear) and **Sprinter** (Sprint 40 under 2:00).
+- Web version: everything except "2 Players", same rules and piece sequence as
+  on PC.
+
+**2048** – greatly expanded
+- Its own **setup screen** with board sizes from **3x3 to 8x8** and the modes
+  Classic, Time attack (3 minutes) and Endless.
+- Smooth **animations**: tiles slide, merge with a pop and grow in; score
+  pop-ups, sparks and new colours up to 131072.
+- **Undo** (off / 3 per game / unlimited) with animation – using it takes the
+  game out of the high score.
+- **Swipe** with mouse/touchpad; held keys no longer repeat, and input during
+  animations is buffered.
+- Games are **saved** automatically per size and mode and can be resumed; best
+  scores and biggest tile per size/mode (section `g2048`).
+- "Keep playing?" after 2048 in Classic, a new game-over panel and the new
+  achievement **4096!**.
+
+**Chess** – greatly expanded
+- New **Puzzles** mode: 200 puzzles from the free **Lichess puzzle database
+  (CC0)** in 5 stages (mate in 1/2/3, tactics I/II) with progress tracking.
+- **Chess960** (all 960 starting positions) and a **chess clock** (1+0, 3+2, 5+0,
+  10+5) in the setup.
+- A much **stronger, stutter-free AI**: iterative deepening, transposition
+  table, opening book and a new evaluation; it thinks in small slices per frame.
+- New **sidebar** with move list (SAN), clocks, captured pieces and material
+  balance; undo, hint arrow, offer draw, resign, flip board, drag & drop,
+  sliding pieces and coordinates.
+- **PGN export** after the game (web: download and clipboard).
+- New achievements **Puzzle Cracker** (25 puzzles) and **Grandmaster** (beat
+  level 6 without assistance).
+
+**Wordle** – greatly expanded
+- New **Daily word**, **Dordle** (2 words, 7 guesses) and **Quordle** (4 words,
+  9 guesses) modes alongside Endless.
+- New **setup screen**: word length **4 to 7**, hard mode (now a setting instead
+  of a separate mode) and a **colour-blind palette** (orange/blue).
+- **Daily word** per language and length – identical on PC and in the browser –
+  with countdown and streak; started daily words are saved.
+- **Statistics** per language, length and mode: games, win rate, streaks and a
+  guess-distribution bar chart (`wordle` section in `mem.json`).
+- **Share your result** as an emoji grid via the clipboard; AZERTY keyboard for
+  French, QWERTZ for German, Czech, Slovenian and Croatian.
+- New **4-, 6- and 7-letter** word lists for all 14 languages (about 134,000
+  answers across all lengths); cleaner answers without English leftovers, names
+  or offensive words.
+- New achievements **Word Habit** (7 daily words in a row) and **Quad Genius**
+  (solve Quordle).
+
+**Sudoku** – new variants
+- New variants **X-Sudoku**, **Killer** (400 pre-generated, uniquely solvable
+  levels) and **Mini 6x6** – 4 difficulties × 100 levels each.
+- **Daily Sudoku**: one puzzle per day for everyone (identical on desktop and in
+  the browser), difficulty by weekday and a daily streak.
+- **Undo/redo** (U/Z, Y), **automatic candidates** (C), "digit first" input,
+  **colour markers** (M) and a remaining-digit counter in all modes.
+- **Puzzles in progress** are saved and resumed automatically.
+- Up to **3 stars** and a best time per level, a redesigned setup screen with
+  level info.
+- New achievements **Cage Fighter** and **Star Collector** (30 levels with 3
+  stars).
+
+#### Changed
+
+**Blackjack & Poker**
+- Both play with the **llama chips** of the Llama Bank (start 1000) and share
+  the account with the Casino; each high score is the peak of that game's own
+  balance, and bank loans don't count.
+- Bets are **taken immediately** – leaving a hand in progress loses the bet. In
+  Poker, the table stack you haven't bet returns to your account on the next
+  launch.
+- The Blackjack milestone is now 1600 (starting account 1000 plus 600), and
+  **Chip Leader** counts your poker balance.
+
+**Foundation & tech**
+- **Keyboard**: held keys are detected cleanly – games with their own key
+  repeat (Tetris) or hold controls (Geometry Dash) respond precisely, and keys
+  no longer get stuck after pausing, Alt-Tab or a screen change.
+- **Crash-safe saving**: `mem.json` and `settings.json` are written atomically
+  with an automatic backup (`.bak`); a damaged `mem.json` is read from the
+  backup instead of losing high scores, achievements and chips on the next save.
+- Switching to another game from the **sidebar** mid-game now keeps your high
+  score.
+- **Pre-game screen**: with many modes at small resolutions, Options, Wiki and
+  Back move into one row and the font adapts – nothing runs off-screen any more.
+- New shared **random generator** (`seedrand.py` / `seedrand.js`): daily modes
+  and new puzzles are bit-identical on PC and in the browser.
+- **Music loops** for games (`audio.py`): multi-voice and procedurally
+  generated, pausing and stopping automatically with their game – first used for
+  the level soundtracks in Geometry Dash.
+- **Custom content** (`ugc.py`, `ugc.json`) now holds minigolf holes and Geometry
+  Dash levels; minigolf stays fully compatible.
+- New game hooks in `game_base.py`: `on_exit()` (the game is being left),
+  `show_highscore_banner` (modes without a high score show no banner) and
+  `key_is_free()` (fixed extra keys only work when not bound to an action); new
+  game options are validated by `settings.SCHEMAS`, so no separate whitelist is
+  needed any more.
+- Tools in `devtools/` (not bundled into the `.exe`): `merge_staging.py` merges
+  translations and wiki pages into all 14 language files, plus build scripts for
+  the chess puzzles, Killer Sudokus, the Crossy Road models and the Geometry
+  Dash levels with their solver.
+- Tests: `tests/arcade_casino_audit.py` checks input, the random generator
+  (Python = JS), saving, music, language files and every pre-game screen in 14
+  languages × 5 resolutions, and runs the new per-game audits
+  (`tests/audit_*.py`).
+
+**Documentation**
+- LamaWiki: new pages for Crossy Road, Geometry Dash (plus *Custom levels*),
+  Battleship and Casino,
+  reworked pages for Tetris, 2048, Chess, Wordle, Sudoku, Blackjack and Poker
+  plus the general pages *Getting started* (all 20 games with a 2-player mode),
+  *Options & controls* (14 languages, fixed extra keys), *Saving & high scores*
+  (new sections in `mem.json`, `ugc.json`, automatic backup) and *Achievements &
+  Statistics* (107 achievements, 46 games).
+- Both READMEs: 46 games, new table rows and feature sections, multiplayer list,
+  controls, project structure and a source note for the Lichess puzzle database.
+
+#### Fixed
+- **Blackjack**: the dealer's hole card now actually flips over when revealed.
+- **Tetris**: a piece that locks entirely above the playfield now ends the game;
+  Enter/Space no longer accidentally restart after game over.
+- **Chess**: the win counter now counts your wins instead of wins per colour.
+- **Pre-game screen**: at 480x360, Sudoku and Solitaire ran off-screen and the
+  subtitle was covered.
+- **Keyboard**: holding ESC toggled pause back and forth, and holding F11 did
+  the same with fullscreen.
 
 ### Wordle: real word lists in 14 languages – 2026-09-16
 

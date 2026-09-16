@@ -110,23 +110,66 @@ class PreGameScreen(_Screen):
         self.buttons.append((t("pregame.lamawiki"), self._open_lamawiki))
         self.buttons.append((t("pregame.back"), self.app.back_to_menu))
 
-        # Rechtecke für Maus/Anzeige berechnen (zentriert, gestapelt).
-        # Kleinere Buttons + Start unterhalb des Untertitels ("Modus wählen"),
-        # damit dieser immer sichtbar bleibt (auch bei mehreren Modi).
+        self._layout_buttons()
+
+    # Anzahl der Knöpfe unter den Modi (Optionen, Wiki, Zurück).
+    _UTIL = 3
+
+    def _layout_buttons(self):
+        """Rechtecke für Maus/Anzeige berechnen (zentriert unter dem Untertitel).
+
+        Der Untertitel ("Modus wählen") bleibt immer sichtbar, und nichts läuft
+        unten in die Fußzeile. Reicht der Platz nicht für einen Stapel aller
+        Knöpfe (viele Modi wie bei Solitär/Sudoku, kleine Auflösung), rücken
+        Optionen, Wiki und Zurück nebeneinander in eine Reihe, und die
+        Modus-Knöpfe werden flacher.
+        """
         self.rects = []
-        bw, bh, gap = 300, 40, 10
-        total = len(self.buttons) * (bh + gap) - gap
-        y0 = max(132, self.height // 2 - total // 2 + 6)
-        # Viele Buttons (z.B. Solitär mit 5 Varianten) + kleine Auflösung:
-        # kompakter stapeln, damit nichts unten herausläuft.
-        if y0 + total > self.height - 40:
-            bh, gap = 32, 6
-            total = len(self.buttons) * (bh + gap) - gap
-            y0 = max(120, self.height // 2 - total // 2 + 6)
-        for i in range(len(self.buttons)):
-            x = self.width // 2 - bw // 2
-            y = y0 + i * (bh + gap)
-            self.rects.append(pygame.Rect(x, y, bw, bh))
+        self.row_start = len(self.buttons)      # ab hier: Knöpfe in einer Reihe
+        n = len(self.buttons)
+        n_modes = n - self._UTIL
+        top, bottom = 132, self.height - 34
+        avail = bottom - top
+        bw = min(300, self.width - 40)
+        x = self.width // 2 - bw // 2
+
+        for bh, gap in ((40, 10), (32, 6)):
+            total = n * (bh + gap) - gap
+            if total <= avail:
+                y0 = max(top, self.height // 2 - total // 2 + 6)
+                y0 = min(y0, bottom - total)
+                for i in range(n):
+                    self.rects.append(pygame.Rect(x, y0 + i * (bh + gap), bw, bh))
+                return
+
+        # Kompakt: etwas breiter, damit die drei Knöpfe der Reihe ihre Texte
+        # (z.B. "Optionen / Steuerung") noch lesbar tragen.
+        bw = min(420, self.width - 40)
+        x = self.width // 2 - bw // 2
+        for bh, gap in ((32, 6), (28, 5), (24, 4)):
+            total = n_modes * (bh + gap) + bh
+            if total <= avail or bh == 24:
+                break
+        y0 = max(top, min(self.height // 2 - total // 2 + 6, bottom - total))
+        for i in range(n_modes):
+            self.rects.append(pygame.Rect(x, y0 + i * (bh + gap), bw, bh))
+        row_y = y0 + n_modes * (bh + gap)
+        cell = (bw - gap * (self._UTIL - 1)) // self._UTIL
+        for j in range(self._UTIL):
+            self.rects.append(pygame.Rect(x + j * (cell + gap), row_y, cell, bh))
+        self.row_start = n_modes
+
+    def _button_font(self, i):
+        """Schrift je Knopf: in der schmalen Reihe so klein wie nötig."""
+        if i < self.row_start:
+            return ui.font(19)
+        label = self.buttons[i][0]
+        room = self.rects[i].w - 18
+        for size in (17, 15, 14, 13, 12, 11):
+            fnt = ui.font(size)
+            if fnt.size(label)[0] <= room:
+                return fnt
+        return ui.font(11)
 
     def _open_options(self):
         opts = OptionsScreen(self.surface, self.width, self.height, self.app,
@@ -150,10 +193,21 @@ class PreGameScreen(_Screen):
             if event.key == "Escape":
                 self.app.back_to_menu()
             elif self.is_action(event.key, "up") or event.key == "Up":
-                self.sel = (self.sel - 1) % len(self.buttons)
+                if self.sel >= self.row_start > 0:
+                    self.sel = self.row_start - 1       # aus der Reihe nach oben
+                else:
+                    self.sel = (self.sel - 1) % len(self.buttons)
                 self.play_sound("move")
             elif self.is_action(event.key, "down") or event.key == "Down":
                 self.sel = (self.sel + 1) % len(self.buttons)
+                self.play_sound("move")
+            elif (self.row_start < len(self.buttons) and self.sel >= self.row_start
+                  and (self.is_action(event.key, "left") or event.key == "Left"
+                       or self.is_action(event.key, "right") or event.key == "Right")):
+                # Knöpfe nebeneinander: links/rechts wechselt innerhalb der Reihe.
+                step = -1 if (self.is_action(event.key, "left") or event.key == "Left") else 1
+                k = (self.sel - self.row_start + step) % self._UTIL
+                self.sel = self.row_start + k
                 self.play_sound("move")
             elif event.key in ("Return", "space"):
                 self._activate(self.sel)
@@ -180,9 +234,8 @@ class PreGameScreen(_Screen):
         ui.draw_title(s, self.width, self.game_cls.name,
                       subtitle=t("pregame.mode"), y=64, accent=self.accent)
 
-        btn_font = ui.font(19)
         for i, (label, _) in enumerate(self.buttons):
-            ui.draw_button(s, self.rects[i], label, btn_font,
+            ui.draw_button(s, self.rects[i], label, self._button_font(i),
                            selected=(i == self.sel), accent=self.accent)
 
         # Bisheriger Highscore als kleiner Chip über der Fußzeile

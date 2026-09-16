@@ -11,14 +11,16 @@
         "menu",
         "pause",
         "fullscreen",
-        "sidebar"
+        "sidebar",
+        "multiplayer"
       ],
       "sections": [
         {
           "h": "Starting a game",
           "body": [
             "You can start a game three ways: from the game list in the left sidebar, from the game grid on the start screen, or straight from this wiki via the pre-game screen.",
-            "Before every game the pre-game screen appears: pick the mode there (e.g. single or multiplayer) and reach the options and this wiki."
+            "Before every game the pre-game screen appears: pick the mode there (e.g. single or multiplayer) and reach the options and this wiki.",
+            "If a game has many modes or the window is small, Options, Wiki and Back move into a single row on the pre-game screen - so everything stays visible."
           ]
         },
         {
@@ -26,7 +28,7 @@
           "body": [
             "- [Esc] pauses and resumes the running game - in menus it goes back.",
             "- [F11] toggles fullscreen on and off.",
-            "- The green Back to menu button ends the game and saves the high score."
+            "- The green Back to menu button ends the game and saves the high score - so does switching to another game from the sidebar."
           ]
         },
         {
@@ -39,8 +41,9 @@
         {
           "h": "Multiplayer",
           "body": [
-            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) and Asteroids (co-op duel) have a local 2-player mode - selectable on the pre-game screen.",
-            "In single player both key bindings control the same character; in multiplayer one each (default: P1 = WASD, P2 = arrows or IJKL - see options)."
+            "20 games have a local 2-player mode: Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus), Asteroids (co-op duel), Memory, Connect Four, Tank Duel, Reversi, Yahtzee, Draughts, Chess, Nine Men's Morris, Simon, Billiards, Minigolf, Pinball, Bowling and Battleship - selectable on the pre-game screen.",
+            "In single player both key bindings control the same character; in multiplayer one each (default: P1 = WASD, P2 = arrows or IJKL - see options).",
+            "Tetris also offers Versus against the AI; in two-player Battleship a handover screen hides the fleets. The web version is single-player only."
           ]
         }
       ]
@@ -60,7 +63,8 @@
         "language",
         "design",
         "appearance",
-        "theme"
+        "theme",
+        "extra keys"
       ],
       "sections": [
         {
@@ -75,7 +79,8 @@
           "body": [
             "Three presets are available: WASD + arrows, WASD + IJKL and arrows + WASD.",
             "Every single key can be rebound: click a row or confirm with Enter, then press the desired key. [Esc] cancels.",
-            "Bindings are separate for player 1 and player 2 and are saved permanently."
+            "Bindings are separate for player 1 and player 2 and are saved permanently.",
+            "Five actions per player can be rebound: up, down, left, right and action. Some games add fixed keys on top - such as hold [C] and rotate left [Z] in Tetris, or undo [U] in 2048, Chess and Sudoku. They only work if that key isn't bound to an action; the game's setup hint and wiki page list them."
           ]
         },
         {
@@ -96,7 +101,7 @@
         {
           "h": "Language",
           "body": [
-            "The interface is available in German, English, French, Spanish and Portuguese. Switch in the options screen or via Language in the sidebar - this wiki switches language too."
+            "The interface is available in 14 languages: German, English, French, Spanish, Portuguese, Polish, Turkish, Danish, Norwegian, Swedish, Finnish, Czech, Slovenian and Croatian. Switch in the options screen or via Language in the sidebar - this wiki switches language too."
           ]
         }
       ]
@@ -111,30 +116,58 @@
         "record",
         "points",
         "progress",
-        "files"
+        "files",
+        "backup",
+        "save file",
+        "llama chips",
+        "ugc"
       ],
       "sections": [
         {
           "h": "High scores",
           "body": [
             "Every game saves its best value automatically when a round ends. A new record shows a golden banner - plus confetti rain.",
-            "You can see the best values everywhere: as a star in the sidebar list, in the ticker on the start screen and in the status card."
+            "You can see the best values everywhere: as a star in the sidebar list, in the ticker on the start screen and in the status card.",
+            "Modes without a high score - such as Sprint and Ultra in Tetris, the Crossy Road daily route or 2048 with undo - show no banner; the game keeps their best times and daily bests itself."
           ]
         },
         {
           "h": "What is stored where?",
           "body": [
-            "- settings.json: sound, volume, key bindings, resolution, FPS and game options (e.g. Snake mode, Sudoku settings).",
-            "- mem.json: high scores, the chosen language and the Sudoku level progress.",
+            "- settings.json: sound, volume, key bindings, resolution, FPS, design and game options (e.g. Snake mode, Tetris DAS/ARR, Sudoku variant, Battleship rules).",
+            "- mem.json: high scores, the chosen language, achievements and statistics - plus the progress of many games in their own sections (see below).",
             "- mem-ngb.json: Snake's visual mods (head color, grid, banner).",
             "- replay.json: the saved replays of Minigolf and Bowling.",
+            "- ugc.json: your own Minigolf holes and Geometry Dash levels (shared as .lamapgzmap or .lamapgzlevel).",
             "These files live right in the game folder and can simply be deleted to reset."
+          ]
+        },
+        {
+          "h": "Game progress in mem.json",
+          "body": [
+            "Every game with progress has its own section in mem.json, for example:",
+            "- sudoku: solved levels with stars and best times, puzzles in progress and the Daily Sudoku with its streak.",
+            "- casino: the Llama Bank account - the llama chips for Blackjack, Poker and Casino with each game's balance.",
+            "- crossy: collected coins, bought characters and the Crossy Road daily best.",
+            "- tetris: best Sprint time, best Ultra score and the Versus record against the AI.",
+            "- g2048: saved 2048 games and best scores per board size and mode.",
+            "- chess: your progress in Chess puzzle mode.",
+            "- geodash: best percentage per level (Normal and Practice), coins found, attempts and jumps in Geometry Dash.",
+            "- wordle: statistics per mode, language and word length, the state of the daily word and the best scores.",
+            "Plus minigolf, pinball, bowling, lamatowerdef and others with their best results."
+          ]
+        },
+        {
+          "h": "Automatic backup",
+          "body": [
+            "mem.json and settings.json are written crash-safe: first to a temporary file, then swapped in a single step. The previous version stays behind as mem.json.bak or settings.json.bak.",
+            "If mem.json is ever damaged, the game automatically reads the backup - so high scores, achievements and llama chips are not lost."
           ]
         },
         {
           "h": "Tip",
           "body": [
-            "Points are only saved when you leave via Back to menu or the round ends normally - not when the window is closed hard mid-game."
+            "Points are saved when a round ends, when you leave via Back to menu, when you pick another game from the sidebar mid-game or when you quit the collection. Only a crash or a hard kill of the program loses the round in progress."
           ]
         }
       ]
@@ -202,19 +235,20 @@
         {
           "h": "Overview",
           "body": [
-            "The collection now tracks your progress: 69 achievements and detailed statistics across all 38 games. Both live behind the Achievements & Stats button in the sidebar; switch between the two tabs with [Tab] or a click."
+            "The collection tracks your progress: 107 achievements and detailed statistics across all 46 games. Both live behind the Achievements & Stats button in the sidebar; switch between the two tabs with [Tab] or a click."
           ]
         },
         {
           "h": "Achievements",
           "body": [
             "There are three categories:",
-            "- General: collection-wide goals such as games started, games tried, total play time, records broken and wins - plus little extras like the Night Owl (play after midnight).",
-            "- Score milestones: one fair target score per game, tuned to its scoring scale.",
-            "- Special moments: checkmating the AI, a YAHTZEE, the 2048 tile, a Wordle in 2 tries and more.",
+            "- General (23): collection-wide goals such as games started, games tried, total play time, records broken and wins - plus little extras like the Night Owl (play after midnight).",
+            "- Score milestones (37): one fair target score per game, tuned to its scoring scale.",
+            "- Special moments (47): checkmating the AI, a YAHTZEE, the 2048 and 4096 tiles, a T-Spin Double and a Perfect Clear in Tetris, 25 solved chess puzzles, your first Killer Sudoku, a straight-up hit in roulette, the llama jackpot on the slot machine, a Battleship win without losing a ship and more.",
             "Unlocking shows a golden toast in the top-right corner with a little fanfare - even mid-game.",
             "Existing data counts: on the first launch after the update, your old high scores are credited automatically (without the toast fireworks).",
-            "Locked achievements show a progress bar, unlocked ones their date."
+            "Locked achievements show a progress bar, unlocked ones their date.",
+            "In 2048 and Chess, games using undo or hints don't count toward high scores and achievements - trying things out is fine, only unassisted games are scored."
           ]
         },
         {
@@ -496,30 +530,82 @@
       "title": "Tetris",
       "keywords": [
         "pieces",
-        "rows",
+        "lines",
         "rotate",
+        "hold",
+        "t-spin",
+        "sprint",
+        "ultra",
+        "marathon",
         "versus",
-        "stack"
+        "garbage"
       ],
       "sections": [
         {
+          "h": "Modes",
+          "body": [
+            "Solo: pick the variant in the setup. Marathon is endless and the level rises every 10 lines (start level 1-15) - only Marathon counts for the high score.",
+            "- Sprint 40: clear 40 lines as fast as you can; your best time is saved.",
+            "- Ultra 2:00: score as many points as possible in two minutes; your best score is saved.",
+            "Versus AI: play against an AI with three strengths (Easy, Medium, Hard). Clearing lines sends garbage to the other side; whoever tops out first is K.O. Your record against each strength is saved.",
+            "2 Players (PC version only): the same for two people on one keyboard. Both fields always get the same piece sequence."
+          ]
+        },
+        {
           "h": "Controls",
           "body": [
-            "Left/right moves the piece, up rotates it, down is the soft drop and the action key (default: [Space] ) the hard drop."
+            "[Left] [Right] move the piece - hold them and it starts sliding after the DAS, then keeps going at the ARR rate. [Up] rotates right, [Down] is the soft drop, and the action key (default: [Space] ) drops the piece instantly (hard drop).",
+            "- [C] or [Shift] puts the piece into hold (once per piece), [Z] or [Y] rotates left, [X] rotates right.",
+            "- 2 Players: player 1 holds with [Q] and rotates left with [E], player 2 holds with right [Shift] and rotates left with right [Ctrl].",
+            "- These fixed keys only work if you haven't assigned them to an action yourself.",
+            "In Sprint and Ultra, [R] restarts instantly. After a game: [R] = play again, [S] = setup - the hard drop keys deliberately don't restart anything.",
+            "In the setup you adjust DAS (delay before auto-shift), ARR (speed after that, 0 ms = straight to the wall) and the ghost piece."
           ]
         },
         {
-          "h": "Modes & scoring",
+          "h": "Modern rules",
           "body": [
-            "Full rows score points - several at once score much more. Every 10 rows the level and speed increase.",
-            "Versus (multiplayer): two boards side by side, whoever's stack hits the top first loses."
+            "Pieces come in a 7-bag: each of the seven pieces appears exactly once per group of seven. The preview shows the next 5.",
+            "Rotation follows SRS: if a piece is blocked, the game tries up to four alternative positions (wall kicks) - so pieces can even be spun around edges.",
+            "On the ground a piece waits 0.5 seconds before it locks. Every move or rotation resets that time, at most 15 times per depth.",
+            "Game over: the new piece has no room, a piece locks entirely above the playfield, or garbage pushes the stack out of the top."
           ]
         },
         {
-          "h": "Tips",
+          "h": "Scoring",
           "body": [
-            "- Keep one column free for the long I-piece and clear with quadruple rows.",
-            "- Build flat: tall towers tip over quickly as the speed rises."
+            "All values times level: Single 100 · Double 300 · Triple 500 · Tetris 800.",
+            "T-Spin: no lines 400 · Single 800 · Double 1200 · Triple 1600. T-Spin Mini: 100 · 200 · 400.",
+            "- Back-to-Back: a Tetris or T-Spin right after another one counts x1.5.",
+            "- Combo: every further line clear in a row adds 50 x combo x level.",
+            "- Perfect Clear (empty playfield): +800 / 1200 / 1800 / 2000, as a Back-to-Back Tetris +3200.",
+            "- Soft drop gives 1 point, hard drop 2 points per row."
+          ]
+        },
+        {
+          "h": "T-Spins",
+          "body": [
+            "A T-Spin counts when the T piece locks after a rotation and at least three of the four corners around its center are filled (walls and floor count too).",
+            "If both corners on the side its nose points to are filled, it's a full T-Spin, otherwise a Mini. If the T rotates into the gap with the big kick (one column sideways, two rows down), it always counts as full - that's how the T-Spin Triple works.",
+            "Callouts above the field show T-SPIN, TETRIS, BACK-TO-BACK, COMBO and PERFECT CLEAR."
+          ]
+        },
+        {
+          "h": "Versus & garbage",
+          "body": [
+            "Attack: Double 1 · Triple 2 · Tetris 4 · T-Spin Single 2 · T-Spin Double 4 · T-Spin Triple 6 · Mini Double 1. Plus +1 for Back-to-Back, +1 to +5 for long combos and +10 for a Perfect Clear.",
+            "Incoming garbage appears in the warning bar left of the field: yellow means it's still waiting, red means it rises with your next piece that clears no lines - at most 8 rows per piece, each batch sharing one hole.",
+            "When you clear lines yourself, your attack first cancels the waiting garbage; only the rest goes to your opponent.",
+            "Every 40 seconds the pieces fall faster (up to level 12)."
+          ]
+        },
+        {
+          "h": "Tips & achievements",
+          "body": [
+            "- Build flat and keep one edge column free for the I - four lines at once bring points and attack.",
+            "- Use hold to save an I for a Tetris or to park a piece that doesn't fit.",
+            "- In Versus, Back-to-Back pays off: two Tetrises in a row send 4 + 5 lines.",
+            "- Achievements: Tetris! (4 lines at once), Spin to Win (T-Spin Double), Squeaky Clean (Perfect Clear), Sprinter (Sprint 40 under 2:00). There are no achievements in 2-player mode."
           ]
         }
       ]
@@ -720,27 +806,76 @@
         "tiles",
         "slide",
         "merge",
-        "numbers"
+        "numbers",
+        "swipe",
+        "undo",
+        "time attack",
+        "endless",
+        "board size",
+        "resume",
+        "4096"
       ],
       "sections": [
         {
-          "h": "Controls & rules",
+          "h": "Controls",
           "body": [
-            "Arrows or [W] [A] [S] [D] slide all tiles in one direction at once. Equal numbers merge into their sum; after every move a new tile appears.",
-            "The goal is the 2048 tile - after that it continues endlessly. You lose when no move is possible."
+            "Arrows or [W] [A] [S] [D] slide all tiles in one direction at once. With a mouse or touchpad you can also swipe: press, drag in the direction you want, release.",
+            "Held keys don't repeat - every move is its own key press. Input during an animation is remembered and carried out right after.",
+            "[U] or [Backspace] = undo, [R] or [N] = new game, [Tab] = back to the setup. These extra keys only work if you haven't assigned them to an action yourself."
           ]
         },
         {
-          "h": "Scoring",
+          "h": "Rules",
           "body": [
-            "Every merge adds the value of the new tile to your score."
+            "Equal numbers that collide merge into their sum. Each tile merges at most once per move: 2, 2, 4, 4 slid left becomes 4, 8.",
+            "After every valid move a new tile appears - usually a 2, one time in ten a 4. When no move is possible, the game is over.",
+            "From 4096 on, tiles get their own colours from green through blue and violet to crimson (131072); even bigger tiles are dark with golden digits."
+          ]
+        },
+        {
+          "h": "Setup: size & mode",
+          "body": [
+            "Board size from 3x3 to 8x8 - small boards are tricky, big ones leave lots of room for long chains.",
+            "- Classic: the goal is 2048. Then the game asks whether you want to keep playing - [Enter] continues, [N] starts a new game.",
+            "- Time attack: 3 minutes, as many points as possible. The clock starts with your first move; the bar below the board shows the time left.",
+            "- Endless: no goal and no interruptions until no move is left."
+          ]
+        },
+        {
+          "h": "Undo",
+          "body": [
+            "Choose in the setup: off, 3 per game or unlimited. Undo takes back the last move including its points - even right after game over.",
+            "Once you use it, the game counts as played \"with undo\": it counts neither for the highscore nor for the tile achievements, and its best score is kept separately."
+          ]
+        },
+        {
+          "h": "Saving & resuming",
+          "body": [
+            "The running game is saved automatically for each size and mode - after your moves and when you leave the game.",
+            "The setup then offers Resume with the points and moves of the saved game. New game discards that save."
+          ]
+        },
+        {
+          "h": "Score, bests & highscore",
+          "body": [
+            "Every merge scores the value of the new tile. The info column shows score, best, moves, biggest tile, undos left and time.",
+            "Best scores and the biggest tile are stored per size and mode. The 2048 highscore only counts in 4x4 Classic without undo."
+          ]
+        },
+        {
+          "h": "Achievements",
+          "body": [
+            "- 2048!: create the 2048 tile.",
+            "- 4096!: create the 4096 tile.",
+            "Both count on boards up to 4x4 and only without undo - in any mode."
           ]
         },
         {
           "h": "Tips",
           "body": [
             "- Park your biggest tile in a corner and never disturb that corner.",
-            "- Slide mainly in two directions - it keeps the board sorted."
+            "- Slide mainly in two directions - it keeps the board sorted.",
+            "- In time attack speed matters: merge early and keep your tiles together in one corner."
           ]
         }
       ]
@@ -792,43 +927,68 @@
         "notes",
         "levels",
         "hints",
-        "logic"
+        "logic",
+        "killer",
+        "x-sudoku",
+        "daily",
+        "stars",
+        "undo",
+        "candidates"
       ],
       "sections": [
         {
+          "h": "Variants",
+          "body": [
+            "In the setup you pick the variant at the top and the difficulty below it. Every variant has 4 difficulties times 100 fixed levels, each uniquely solvable.",
+            "- Classic: the familiar 9x9. The 400 levels are the same as before the update - ticked-off levels stay ticked off.",
+            "- X-Sudoku: both diagonals also contain every digit exactly once (subtly marked).",
+            "- Killer: hardly any givens, but dashed cages instead. The digits of a cage add up to the small sum in its corner and never repeat. Easy has small cages and more givens, Expert has big cages.",
+            "- Mini 6x6: 2x3 boxes and only the digits 1 to 6, with extra-large cells.",
+            "- Daily Sudoku ([T] or the card on the right): one classic puzzle per day, the same for everyone - in the browser too. The difficulty depends on the weekday (Monday easy, Tuesday and Wednesday normal, Thursday, Friday and Sunday hard, Saturday expert). Solve it every day to build a streak."
+          ]
+        },
+        {
           "h": "Controls",
           "body": [
-            "Select a cell with the arrow keys, [W] [A] [S] [D] or a mouse click - the number pad on the right works entirely with the mouse.",
-            "- [1] to [9] enters a digit (numpad works too).",
-            "- [0], Backspace or right click erases.",
-            "- [N] toggles note mode, [H] gives a hint, [R] restarts the level, [Q] opens the level select.",
-            "- After the game ends, [A] hides the banner and reveals the full solution."
+            "Select a cell with the arrow keys, [W] [A] [S] [D] or a mouse click. The number pad on the right works entirely with the mouse and shows under each digit how many are still missing.",
+            "- [1] to [9] enters a digit, [0], Delete or right click erases.",
+            "- [U] or [Z] undoes, [Y] redoes.",
+            "- [N] toggles notes, [C] fills in all candidates automatically, [H] gives a hint.",
+            "- [M] tints the cell with a color marker (\"Color markers\" switch in the setup).",
+            "- [R] restarts the puzzle, [Q] opens the level select, [A] shows the solution after the game ends.",
+            "\"Digit first\" input (setup, key [I]): pick a digit first, then click as many cells as you like or place it with Space.",
+            "In the setup: [1] to [4] difficulty, [V] variant, [T] daily sudoku, [F] error limit, arrows + Enter start a level. The letter keys only work if they are not assigned to an action in the options."
           ]
         },
         {
-          "h": "Levels & modes",
+          "h": "Modes & scoring",
           "body": [
-            "400 fixed levels: 4 difficulties (easy/normal/hard/expert) times 100 levels. Every level is the same puzzle everywhere and uniquely solvable; solved levels get ticked off.",
             "The game mode sets the assists and the score multiplier:",
             "- Classic x2.0: no assists, pure like on paper.",
-            "- Notes x1.5: plus pencil notes.",
-            "- Comfort x1.0: errors red instantly, conflict highlighting, correct entries lock in.",
-            "- Assist x0.7: additionally up to 3 hints."
+            "- Notes x1.5: plus pencil notes and automatic candidates.",
+            "- Comfort x1.0: errors red instantly, conflicts and wrong cage sums highlighted, correct entries lock in.",
+            "- Assist x0.7: additionally up to 3 hints.",
+            "Every entry is checked against the solution immediately. With the 3-error limit the third mistake ends the game - undo does not erase a mistake.",
+            "Points = (base of variant and difficulty minus time, errors and hints) times the multiplier. All variants and the daily sudoku count for the high score."
           ]
         },
         {
-          "h": "Errors & scoring",
+          "h": "Stars & saved games",
           "body": [
-            "Every entry is checked against the solution immediately. With the 3-error limit active (setup, key [F] ) the third mistake ends the game.",
-            "Points = (difficulty base minus time, errors and hints) times the mode multiplier."
+            "Every level awards up to 3 stars: 1 for solving, 2 without mistakes and hints, 3 additionally under the target time of the difficulty (shown in the level info).",
+            "The level select shows stars, best time and solved levels; a dog-ear marks puzzles in progress.",
+            "Puzzles in progress are saved automatically - when leaving, when returning to the level select and regularly while playing - and resume next time. If you switch modes, the lower multiplier counts.",
+            "Achievements: \"Cage Fighter\" for your first Killer Sudoku, \"Star Collector\" for 30 levels with 3 stars."
           ]
         },
         {
           "h": "Tips",
           "body": [
             "- Start with rows, columns and boxes that already hold many digits.",
-            "- Note candidates in pairs: if two cells share the same two candidates, they drop out everywhere else.",
-            "- In classic mode take your time: every mistake counts immediately, even without a red mark."
+            "- Note candidates in pairs: if two cells of a unit share the same two candidates, those drop out everywhere else in the unit.",
+            "- Killer: every row, column and box adds up to 45. If cages lie almost entirely inside, the rest gives away the remaining cell.",
+            "- Killer: some sums have only one combination - 3 in two cells is always 1+2, 17 is always 8+9.",
+            "- X-Sudoku: the diagonals are two extra units - check them early, the first digit often hides there."
           ]
         }
       ]
@@ -1157,7 +1317,8 @@
         "21",
         "chips",
         "dealer",
-        "bet"
+        "bet",
+        "llama bank"
       ],
       "sections": [
         {
@@ -1186,11 +1347,12 @@
           ]
         },
         {
-          "h": "Chips",
+          "h": "Llama chips",
           "body": [
-            "You start with 500 chips; your balance and record are saved permanently and survive every restart.",
-            "The highscore is the highest chip balance you have ever reached.",
-            "Below 10 chips you are broke: [Enter] restarts with 500 fresh chips - the record stays."
+            "Blackjack, Poker and Casino share one account at the Llama Bank: you start with 1000 llama chips and your balance is saved permanently.",
+            "Your bet is taken as soon as the cards are dealt - leaving a hand in progress loses it.",
+            "The highscore is the peak of your blackjack balance: 1000 plus everything you have won and lost at blackjack. Wins at roulette, the slot or poker don't count here.",
+            "Below 10 chips you are broke: [Enter] takes a bank loan and fills your account back up to 1000. Loans don't count towards the balance."
           ]
         },
         {
@@ -1418,43 +1580,80 @@
         "letters",
         "green",
         "yellow",
-        "dictionary"
+        "dictionary",
+        "daily",
+        "dordle",
+        "quordle",
+        "statistics",
+        "share",
+        "colour-blind",
+        "length"
       ],
       "sections": [
         {
           "h": "How to play",
           "body": [
-            "Guess the hidden 5-letter word within 6 attempts. After each guess the tiles change colour: green = right letter in the right spot, yellow = the letter appears but somewhere else, grey = the letter is not in the word.",
+            "Guess the hidden word. After each guess the tiles change colour: green = right letter in the right spot, yellow = the letter appears but somewhere else, grey = the letter is not in the word.",
             "Repeated letters are handled correctly: a letter is only marked yellow or green as often as it actually occurs in the answer.",
-            "Every guess has to be a real word - it is checked against the word list of the selected language (10,000 to 19,000 accepted guesses, depending on the language). Anything else is rejected: the row shakes briefly and the guess does not count. The answers are always common words of the same language."
+            "Every guess has to be a real word - it is checked against the word list of the selected language and length (4,000 to 19,000 accepted guesses, depending on language and length). Anything else is rejected: the row shakes briefly and the guess does not count. The answers are always common words of the same language - no names and nothing offensive."
           ]
         },
         {
           "h": "Modes",
           "body": [
-            "Normal: guess any accepted word - the hints are only suggestions.",
-            "Hard: revealed hints must be reused - green letters stay in place, yellow ones have to appear again. Pick the mode before you start."
+            "Endless: one word after another with 6 guesses each. The first word you fail to crack ends the game.",
+            "Daily word: one word a day with 6 guesses - the same for everyone in each language and length, on the PC and in the browser. A daily word you have started is saved; afterwards the game shows your result, statistics and the countdown to the next word. Your streak only grows if you play every day.",
+            "Dordle: two words at once in 7 guesses - every guess counts for both boards. The keys of the on-screen keyboard are split: left half board 1, right half board 2.",
+            "Quordle: four words at once in 9 guesses. The keys are split into quarters and show the colours of all four boards."
+          ]
+        },
+        {
+          "h": "Settings before you start",
+          "body": [
+            "Before each game the setup screen appears - next to it you see your statistics for the selected mode and length.",
+            "- Word length: 4, 5, 6 or 7 letters, each length with its own word lists.",
+            "- Hard mode: revealed hints must be reused - green letters stay in place, yellow ones have to appear again. In Dordle and Quordle a guess has to fit the hints of at least one unsolved board.",
+            "- Colour-blind mode: orange instead of green and blue instead of yellow - in the shared result too.",
+            "All settings are saved right away."
           ]
         },
         {
           "h": "Controls",
           "body": [
-            "- Type letters A-Z, [Backspace] deletes the last one, [Enter] checks the row (only with 5 letters).",
-            "- You can also use the on-screen keyboard with the mouse; its letters colour in based on what you have learned so far."
+            "- Type letters A-Z, [Backspace] deletes the last one, [Enter] checks the row.",
+            "- You can also use the on-screen keyboard with the mouse: QWERTZ for German, Czech, Slovenian and Croatian, AZERTY for French, QWERTY otherwise. Its keys colour in based on what you have learned so far.",
+            "- The slider icon in the top right corner takes you back to the setup.",
+            "- In the setup: [4] to [7] or [Left] / [Right] = word length, [H] = hard mode, [F] = colour-blind mode, [Enter] = start.",
+            "- After a game: [Enter] = play again, [C] = share result, [S] = setup. [Space] hides the result so you can look at the boards."
           ]
         },
         {
-          "h": "Score",
+          "h": "Score and statistics",
           "body": [
-            "It goes on endlessly: each solved word scores points - fewer guesses means more (10 to 60). A new word appears right after.",
-            "The first word you FAIL to crack ends the game; the points you gathered are your high score."
+            "Endless: each solved word scores points - fewer guesses means more (10 to 60). Only Endless with 5 letters counts for the high score; the other lengths keep their own best scores.",
+            "Statistics are kept per language, length and mode: games played, win rate, current and best streak and the guess distribution as a bar chart - the bar of your latest solve lights up."
+          ]
+        },
+        {
+          "h": "Sharing your result",
+          "body": [
+            "[C] or the Share button copies your result to the clipboard as an emoji grid - without giving away the answer - so you can paste it into any chat. A * after the score means hard mode."
+          ]
+        },
+        {
+          "h": "Achievements",
+          "body": [
+            "- Mind Reader: guess a word in 2 tries or fewer.",
+            "- Word Habit: solve 7 daily words in a row.",
+            "- Quad Genius: solve all four words in Quordle."
           ]
         },
         {
           "h": "Tips",
           "body": [
             "- Open with a word that has many different, common letters.",
-            "- Use grey letters to rule things out and move yellow letters to a new position."
+            "- Use grey letters to rule things out and move yellow letters to a new position.",
+            "- In Dordle and Quordle, first guess words that give hints for several boards at once."
           ]
         }
       ]
@@ -1553,7 +1752,8 @@
         "video poker",
         "draw",
         "chips",
-        "blinds"
+        "blinds",
+        "llama bank"
       ],
       "sections": [
         {
@@ -1574,9 +1774,17 @@
           ]
         },
         {
-          "h": "Chips & hands",
+          "h": "Llama chips",
           "body": [
-            "Chips (start 1000) persist (mem.json). The high score is your highest chip count. Broke = restart with a click.",
+            "You play with the llama chips of the Llama Bank - one account shared with Blackjack and Casino (start 1000, saved permanently).",
+            "At the start of a hand your account sits on the table as your stack; whatever goes into the pot is taken immediately. If you leave the table mid-hand, your share of the pot is gone - the rest goes back to your account.",
+            "The highscore is the peak of your poker balance: 1000 plus everything you have won and lost at poker. Wins in other games don't count here.",
+            "Broke (less than the big blind of 20, in Video Poker less than 10) = bank loan with a click, your account is back at 1000."
+          ]
+        },
+        {
+          "h": "Hands",
+          "body": [
             "Hand ranking: High Card < Pair < Two Pair < Three of a Kind < Straight < Flush < Full House < Four of a Kind < Straight Flush < Royal Flush."
           ]
         }
@@ -1593,33 +1801,72 @@
         "castling",
         "en passant",
         "promotion",
-        "ai"
+        "ai",
+        "chess960",
+        "puzzles",
+        "clock",
+        "pgn"
       ],
       "sections": [
         {
           "h": "How it works",
           "body": [
             "Chess with the complete rule set: every piece move, short and long castling, en passant and pawn promotion with a choice of queen, rook, bishop or knight.",
-            "A game ends in checkmate or a draw - by stalemate, the fifty-move rule, threefold repetition or insufficient material.",
-            "In single player you pick strength and colour in the setup; two players take turns on the same computer."
+            "A game ends in checkmate, resignation, a lost clock or a draw - by stalemate, the fifty-move rule, threefold repetition, insufficient material or agreement.",
+            "Three modes: a game against the AI, 2 players on one computer (desktop only) and puzzles.",
+            "Next to the board you see both players with clock, captured pieces and material balance (e.g. +2), and below them the move list in standard notation - scroll it with the mouse wheel."
           ]
         },
         {
           "h": "Controls",
           "body": [
-            "- Mouse: click one of your pieces, then the target square. Legal targets and the last move are highlighted.",
+            "- Mouse: click one of your pieces or drag it straight to the target square. Legal targets, the last move and a king in check are highlighted.",
             "- Keyboard: [Arrows] or [WASD] move the selection frame, [Space] or [Enter] picks the piece and moves it.",
-            "- On promotion the four pieces appear for you to click.",
-            "- After the game: [Enter] for a new game, [S] back to the setup (single player only)."
+            "- Castling: move the king to its target square or onto your own rook. On promotion the piece choice appears.",
+            "- Buttons: [U] or [Backspace] undo, [H] hint, [F] flip board, [O] offer a draw, [X] resign.",
+            "- After the game: [Enter] new game (colours swap), [S] setup, [P] save the game as PGN."
           ]
         },
         {
-          "h": "AI strengths & score",
+          "h": "Setup: strength, clock & Chess960",
           "body": [
-            "Six levels from Beginner to Master: Beginner moves at random, the middle levels search one to three plies deep and blunder on purpose, Master searches deepest and finishes capture sequences in a quiescence search.",
-            "Every search has a time and node budget so the interface never freezes.",
-            "The high score counts your wins against the AI in this session; two-player games are not scored.",
-            "Tip: develop your pieces early, castle, and put the rooks on open files."
+            "Six AI levels from Beginner to Master: Beginner moves at random, the middle levels deliberately vary their play, Hard and Master search with iterative deepening, a transposition table and quiescence search and know common openings. The AI thinks in small slices per frame - the game never stutters.",
+            "Clock: none, 1+0, 3+2, 5+0 or 10+5 (minutes + seconds added per move). It starts after the first move. Running out of time loses - unless the opponent can no longer checkmate at all, then it is a draw.",
+            "Chess960: one of 960 random starting positions, its number is shown above the move list. When castling, the king still lands on g or c and the rook on f or d; the squares in between must be empty and the king may not pass through check."
+          ]
+        },
+        {
+          "h": "Help, draws & score",
+          "body": [
+            "Undo takes back two half-moves against the AI, the hint shows the best move as a blue arrow. Both make the game \"assisted\": a win then does not count for high score, statistics or achievements.",
+            "Offer a draw: the AI only accepts if it considers its position equal or worse - otherwise it declines and you can only offer again a few moves later.",
+            "The high score counts your unassisted wins against the AI in this session. Beating the Master (level 6) unlocks the \"Grandmaster\" achievement.",
+            "After the game you can save it as a PGN file (in the browser: download and clipboard) and replay it in any chess program."
+          ]
+        },
+        {
+          "h": "Two players",
+          "body": [
+            "White and Black take turns on the same computer; clock and Chess960 work as against the AI. With \"Turn the board after every move\" in the setup the board rotates to the side to move after every move.",
+            "Offering a draw asks the opponent, resigning applies to the side to move. Two-player games are not scored, and the browser version does not offer this mode."
+          ]
+        },
+        {
+          "h": "Puzzles",
+          "body": [
+            "200 puzzles in five stages: Mate in 1, Mate in 2, Mate in 3, Tactics I and Tactics II - 40 each, from easy to hard. Solved puzzles get a tick and your progress is saved.",
+            "First the opponent plays their last move, then it is your turn. A wrong move is taken back after a short note, the opponent's reply comes automatically. In mate puzzles every move that mates immediately counts.",
+            "- [H] show the solution (the puzzle then does not count as solved), [U] retry, [N] next puzzle, [M] back to the list.",
+            "Solving 25 puzzles unlocks the \"Puzzle Cracker\" achievement.",
+            "Source: the puzzles come from the freely usable puzzle database of lichess.org (CC0) and were verified with our own engine - thank you, Lichess!"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Develop your pieces early, castle, and put the rooks on open files.",
+            "- In puzzles look for checks, captures and threats first.",
+            "- With a clock, don't think too long - the increment in 3+2 and 10+5 saves many endgames."
           ]
         }
       ]
@@ -2257,6 +2504,381 @@
           "body": [
             "The ten pins are circles with real mass: the ball hits them, they knock each other over. A strike is the result of physics, not of luck.",
             "The game total is your high score; the best result per difficulty is stored as well."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crossyroad",
+      "category": "games",
+      "game": "CrossyRoadGame",
+      "title": "Crossy Road",
+      "keywords": [
+        "chicken",
+        "road",
+        "river",
+        "tracks",
+        "train",
+        "eagle",
+        "coins",
+        "characters",
+        "daily",
+        "voxel"
+      ],
+      "sections": [
+        {
+          "h": "Controls",
+          "body": [
+            "Hop cell by cell with the arrow keys or [W] [A] [S] [D]. [Space], [Enter] or a mouse click hop forward.",
+            "- Press the next direction while still in the air and you hop again right after landing. Holding a key does not keep hopping.",
+            "After the game over: [Enter] = again, [F] = characters, [S] = setup."
+          ]
+        },
+        {
+          "h": "Grass, roads, rivers & tracks",
+          "body": [
+            "The route is generated endlessly row by row - there is always a walkable path.",
+            "- Grass: safe, but trees and rocks block the way.",
+            "- Roads: cars and trucks flatten you. The further you get, the faster and denser the traffic.",
+            "- Rivers: you can only stand on logs and lily pads. Logs carry you along - drift off the edge of the screen and you are out.",
+            "- Tracks: when the red warning light flashes and the bell rings, a train rushes in about a second later. Further on, whole stations with up to 5 tracks in a row await."
+          ]
+        },
+        {
+          "h": "Eagle & score",
+          "body": [
+            "The camera slowly creeps forward. Dawdle too long or go back more than three rows and the eagle snatches you - a red edge at the bottom of the screen warns you first.",
+            "Score = furthest row reached. In Endless mode this is your high score (milestone: 150 rows).",
+            "From row 50 on, day and night alternate: at night headlights, trains and coins light up."
+          ]
+        },
+        {
+          "h": "Coins & characters",
+          "body": [
+            "Coins are scattered along the route, the giant coin is worth 5. Collected coins are saved permanently.",
+            "In the CHARACTERS tab you spend them on new characters: frog, pig, penguin, cat, fox, llama, robot, ghost and unicorn (25 to 250 coins). The chicken is yours from the start.",
+            "- Achievements: \"New Look\" for your first purchased character, \"Track Jumper\" for 5 tracks in a row."
+          ]
+        },
+        {
+          "h": "Modes & options",
+          "body": [
+            "- Endless: a new route every run, counts for the high score.",
+            "- Daily Route: the same for everyone today (web version included), with its own daily best - does not count for the high score.",
+            "In the setup you toggle shadows [H] and the day/night cycle [N]; Left/Right switches between your characters."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash",
+      "category": "games",
+      "game": "GeometryDashGame",
+      "title": "Geometry Dash",
+      "keywords": [
+        "geometry dash",
+        "rhythm",
+        "cube",
+        "ship",
+        "ball",
+        "ufo",
+        "wave",
+        "portal",
+        "orb",
+        "pad",
+        "coins",
+        "stars",
+        "practice",
+        "checkpoint",
+        "demon",
+        "music",
+        "level"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Your icon races to the right on its own - all you decide is when to jump or fly. Hit a spike, fall into a pit or crash head-on into a block: boom, and a moment later the next attempt is already running.",
+            "A level is complete once you reach the finish. The bar at the top shows your progress in percent, the top right corner shows the coins of this attempt, and the attempt counter floats in the level at the start.",
+            "Every level has its own soundtrack; background, ground and orbs pulse to the beat. Music, progress bar and automatic checkpoints are toggled on the level select screen below the level card."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- [Space], [Up], [W], [Enter] or the left mouse button: jump or fly. Holding counts as pressing continuously - the cube then jumps again right after every landing.",
+            "- [R] restarts instantly, [Q] or [Backspace] returns to the level select, [Esc] pauses.",
+            "- [P] toggles practice mode; there [Z] places a checkpoint and [X] removes the last one.",
+            "- Level select: [Left]/[Right] browse, [1] to [8] jump straight to a level, [Enter] starts, [P] picks Normal or Practice, [M] toggles the music, [Tab] switches to the LEVELS tab.",
+            "Every press gets a timestamp and takes effect in exactly the physics step (1/240 second) in which it happened - so your jump lands right even when the computer stutters for a moment."
+          ]
+        },
+        {
+          "h": "The five forms",
+          "body": [
+            "Portals transform your icon - every form flies differently:",
+            "- Cube: press = jump. It lands on blocks; crash into their side and the attempt is over.",
+            "- Ship: hold = rise, release = sink.",
+            "- Ball: a tap on the ground flips gravity - it then keeps rolling along the ceiling.",
+            "- UFO: every tap is a small flap, even in mid-air.",
+            "- Wave: hold = diagonally up, release = diagonally down. It is tiny, but any contact with a block shatters it.",
+            "Ship, ball, UFO and wave fly in a corridor between ground and ceiling - the portal decides how high it is."
+          ]
+        },
+        {
+          "h": "Pads, orbs & portals",
+          "body": [
+            "- Pads sit on the ground and trigger on contact: yellow = high jump, pink = small jump, blue = flip gravity.",
+            "- Orbs float in the air and only trigger when you press while touching them - with the same colors. A short buffer forgives pressing a tick too early.",
+            "- Gravity portals: yellow turns the world upside down, blue turns it back. Speed portals switch to 0.5x, 1x, 2x or 3x.",
+            "- On top of that there are half blocks, small spikes, pits without ground and color triggers that recolor background and ground."
+          ]
+        },
+        {
+          "h": "The 8 levels",
+          "body": [
+            "- Lama Launch (Easy, 1 star) and Neon Steps (Easy, 2 stars): jumps, pads, orbs and the first ship.",
+            "- Orbit Garden (Normal, 3 stars): orb chains, upside down on the ceiling, a ship at double speed.",
+            "- Gravity Tide (Hard, 4 stars) and Skyline Rush (Hard, 5 stars): gravity portals, ball, UFO, pits and triple speed.",
+            "- Crystal Caves (Harder, 7 stars) and Wave Reactor (Insane, 9 stars): all five forms, narrow gates and wave tunnels.",
+            "- Lama Inferno (Demon, 10 stars): triple speed and everything at once.",
+            "Every level is provably beatable, including all three coins: while building them a solver beat each one with the real game code - and its solution even works when shifted by 1/240 second."
+          ]
+        },
+        {
+          "h": "Practice mode",
+          "body": [
+            "In practice mode a crash sends you back to the last checkpoint instead of the start - green diamonds mark the checkpoints in the level, and the music simply keeps playing.",
+            "Automatic checkpoints appear about every two seconds (can be switched off), [Z] places your own and [X] removes the last one.",
+            "Practice has its own best score and earns neither stars nor coins."
+          ]
+        },
+        {
+          "h": "Stars, coins & achievements",
+          "body": [
+            "Beat a level in normal mode and you earn its stars. Each level also hides three secret coins, often off the easiest path. They count once you finish the level with them - and each one is worth another star.",
+            "Your high score is your total number of stars (65 at most), and it can only grow. For every level the game remembers the best percentage in Normal and Practice, the coins found and the attempts.",
+            "- Achievements: \"On the Beat\" for your first completed level, \"Coin Hunter\" for all three coins of a level, \"Demon Slayer\" for Lama Inferno - plus a milestone at 20 stars.",
+            "In the LEVELS tab you build, play and share your own levels - see the page \"Custom levels (Geometry Dash)\"."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash-levels",
+      "category": "games",
+      "title": "Custom levels (Geometry Dash)",
+      "keywords": [
+        "custom levels",
+        "editor",
+        "levels",
+        "ugc",
+        "build",
+        "share",
+        "import",
+        "export",
+        "verified",
+        "lamapgzlevel",
+        "geometry dash"
+      ],
+      "sections": [
+        {
+          "h": "Building a level",
+          "body": [
+            "The LEVELS tab on the Geometry Dash level select holds your own collection (up to 60 levels). \"New\" opens the level editor, \"Edit\" picks up an existing level again.",
+            "The canvas with its grid sits on the left, the palette on the right: Select and Eraser at the top, below them six groups - Blocks, Hazards, Pads & orbs, Portals, Speed and Extras (secret coins, color trigger). [1] to [6] pick the groups directly.",
+            "- Clicking or dragging places the chosen object, [R] rotates it: spikes and half blocks in four directions, pads up or down.",
+            "- With Select, dragging moves an object and [Del] removes it. A right-click always erases; right-dragging, the mouse wheel, the arrow keys or [A]/[D] scroll.",
+            "- The values of the selected object appear at the bottom: the corridor height for form portals, and target (background or ground), color and fade duration for the color trigger.",
+            "- The strip at the very bottom shows the whole level at a glance - a click jumps to that spot.",
+            "[U] undoes, [Y] redoes, [G] shows or hides the grid, [S] saves. [Esc] goes back - with unsaved changes only after a confirmation.",
+            "At most three coins per level. The finish is placed automatically a little behind the last object."
+          ]
+        },
+        {
+          "h": "Level settings",
+          "body": [
+            "The gear opens the level settings: start speed (0.5x to 3x), start mode, music style (Driving, Chiptune, Dreamy, Dark or no music), tempo in BPM plus background and ground color.",
+            "Name and id sit in the header at the top. The id is the key: lower case, no spaces, only a-z, 0-9, - and _ - and also the file name suggested when you share the level."
+          ]
+        },
+        {
+          "h": "Testing and verifying",
+          "body": [
+            "\"Test\" ([Enter]) plays the level from the start, \"From here\" ([T]) from the current spot - portals before it count as passed. [Esc] takes you back to the canvas.",
+            "Beat your level in a test from the very start and without practice mode, and it earns the green \"verified\" check mark. Any later change to objects, start speed or start mode removes it again - colors, name and music do not.",
+            "In the LEVELS tab \"Play\" starts the selected level normally, with its own best score and attempt counter."
+          ]
+        },
+        {
+          "h": "Sharing and importing",
+          "body": [
+            "\"Share\" asks for your name as the creator and for the file name. \"Export as\" opens the save dialog, \"To Downloads\" drops the file straight into the Downloads folder.",
+            "The file has the extension .lamapgzlevel and contains JSON. \"Import\" reads it back in (.json works too); if the id is already taken, -2, -3 ... is appended automatically. The verified check mark travels along.",
+            "Name, id and creator run through the word filter of all 14 languages when saving, exporting AND importing.",
+            "Everything is stored in ugc.json next to the game - the same file as your custom minigolf holes. In the browser version the levels stay in the browser's storage, and sharing downloads the file."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "battleship",
+      "category": "games",
+      "game": "BattleshipGame",
+      "title": "Battleship",
+      "keywords": [
+        "battleship",
+        "ships",
+        "fleet",
+        "salvo",
+        "radar",
+        "ai",
+        "deploy",
+        "sink"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Two fleets, each on its own 10x10 sea: carrier (5 squares), battleship (4), cruiser (3), submarine (3) and destroyer (2). Players take turns firing at a square on the opponent's board.",
+            "On the left is the large target board with the radar, on the right your own waters and the fleet overview of both sides. A white ring means a miss, flames mean a hit. Once every square of a ship is hit, it sinks and its outline is revealed.",
+            "Whoever sinks all five enemy ships first wins. The summary then shows shots, hits, accuracy, turns and ships left for both sides."
+          ]
+        },
+        {
+          "h": "Deploying your fleet",
+          "body": [
+            "- Drag ships from the dock on the right onto the board with the mouse - or click one, move it and click again. Placed ships can be moved the same way.",
+            "- [R] or a right-click rotates the held ship (or the ship under the mouse).",
+            "- The preview glows green when the position is allowed and red when it is not.",
+            "- Keyboard: the arrows move the frame, [Space] picks a ship up and puts it down, [Enter] takes the next missing ship.",
+            "- [X] deploys at random, [C] removes all ships. With a full fleet, [Enter] or \"Ready!\" starts the battle.",
+            "Your last layout is suggested again in the next round."
+          ]
+        },
+        {
+          "h": "Rules in the setup",
+          "body": [
+            "All three switches are saved instantly and apply to both sides:",
+            "- Ships may touch: OFF requires at least one free square around every ship, diagonals included. The blocked zone is highlighted while deploying.",
+            "- Salvo: each turn you get as many shots as you have ships afloat - lose ships and you fire fewer.",
+            "- Fire again after a hit: every hit gives the shot back, so you keep firing as long as you hit."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Mouse: click a square on the target board.",
+            "- Keyboard: the arrows or your movement keys aim, [Space] or [Enter] fires.",
+            "- After a round: [Enter] = new round, [S] = back to setup. [Esc] pauses."
+          ]
+        },
+        {
+          "h": "AI strengths",
+          "body": [
+            "- Easy fires at random and only sometimes follows up on a hit.",
+            "- Medium searches at random, probes the neighbouring squares after a hit and extends lines of hits to the end of the ship.",
+            "- Hard works out for every square how many still-possible positions of the remaining ships would cover it (honouring the touch rule) and fires at the most likely one. While searching it uses a checkerboard pattern matched to the smallest remaining ship.",
+            "On average the AI needs about 70 (Easy), 60 (Medium) and 45 shots (Hard) to sink a whole fleet - and it only knows what you can see too."
+          ]
+        },
+        {
+          "h": "2 players",
+          "body": [
+            "In multiplayer you take turns at the same computer. Before deploying and before every turn a handover screen hides both fleets until the next player confirms with [Enter] or a click.",
+            "It also reports how many shots and hits the last attack on your fleet had. The web version only plays against the AI."
+          ]
+        },
+        {
+          "h": "Points & achievements",
+          "body": [
+            "Every win against the AI counts one point; the high score is the most wins in one session. Two-player mode is not scored.",
+            "- Flawless Fleet: beat the AI without losing a single ship.",
+            "- Fleet Admiral: sink the hard AI's fleet."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Spread your ships across the whole board and don't line them all up along the edge.",
+            "- When searching, every second square is enough (checkerboard) - once only long ships are left, even every third.",
+            "- Without the touch rule, every square around a sunk ship is guaranteed to be water."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "casino",
+      "category": "games",
+      "game": "CasinoGame",
+      "title": "Casino",
+      "keywords": [
+        "casino",
+        "roulette",
+        "slot",
+        "slot machine",
+        "llama",
+        "jackpot",
+        "free spins",
+        "chips",
+        "bets",
+        "wheel"
+      ],
+      "sections": [
+        {
+          "h": "The Llama Bank",
+          "body": [
+            "Casino, Blackjack and Poker share one account: the llama chips (start 1000). Bets are taken immediately, wins are credited - everything is saved permanently.",
+            "Every game keeps its own balance. The Casino highscore is the peak of 1000 + casino balance; wins at Blackjack or Poker don't count here.",
+            "Broke (less than the minimum bet) means a bank loan: your account is filled back up to 1000. Loans don't count towards any balance; their number is shown top right."
+          ]
+        },
+        {
+          "h": "Roulette - placing bets",
+          "body": [
+            "European wheel with 37 pockets (0 to 36). Pick the chip value at the bottom: 1, 5, 25, 100 or 500 (keys [1] to [5] or mouse wheel).",
+            "Left click places a chip, right click takes it away again. Where you click decides the bet:",
+            "- Centre of a number: straight up, pays 35:1",
+            "- Edge between two numbers: split, 17:1",
+            "- Outer line of a number column: street with 3 numbers, 11:1 (next to zero also 0-1-2 and 0-2-3)",
+            "- Corner between four numbers: corner, 8:1 (outside at zero: 0-1-2-3)",
+            "- Corner on the outer line between two columns: six line, 5:1",
+            "- Column (2:1) and dozen (2:1), red/black, even/odd and low 1-18 / high 19-36 (each 1:1)",
+            "Next to the wheel you can see which bet is under the mouse and what it pays."
+          ]
+        },
+        {
+          "h": "Roulette - spinning",
+          "body": [
+            "[Enter] or SPIN starts the round: the stake is taken and the winning number is drawn. The ball spirals in and drops exactly into that pocket - [Space] or a click fast-forwards.",
+            "Rebet [R] places the last round's bets again, Double [D] doubles all bets, Clear [Backspace] empties the table.",
+            "The last 12 numbers are shown at the top; winning bets show their payout."
+          ]
+        },
+        {
+          "h": "Llama Slot",
+          "body": [
+            "5 reels, 3 rows, 10 paylines. Lines pay from 3 matching symbols from left to right; the numbers at the sides show where each line runs (hover = show line).",
+            "Bet per line: 1, 2, 5 or 10 ([+]/[-] or mouse wheel) - all 10 lines are always played.",
+            "- Llama = wild: replaces every symbol except the gold coin. 5 llamas on one line are the Llama Jackpot.",
+            "- Gold coin = scatter: 3, 4 or 5 coins anywhere pay 2, 10 or 50 times the total bet and award 10 free spins in which all wins count double. Free spins can be retriggered.",
+            "The paytable shows every payout for your current bet. The return to player is 96.1% - calculated exactly from the reel strips."
+          ]
+        },
+        {
+          "h": "Llama Slot - controls",
+          "body": [
+            "[Space], [Enter] or a click on the reels spins; pressing again during a spin fast-forwards.",
+            "Auto spin: [A] starts 10 rounds, [Shift]+[A] 25 rounds (or use the Auto button), press again to stop. [T] toggles turbo, [I] opens the paytable.",
+            "Won free spins are saved immediately and continue the next time you play."
+          ]
+        },
+        {
+          "h": "Achievements",
+          "body": [
+            "- Casino milestone: highscore 5000",
+            "- Bullseye: win with a straight-up bet in roulette",
+            "- Llama Jackpot: 5 llamas on one payline"
           ]
         }
       ]

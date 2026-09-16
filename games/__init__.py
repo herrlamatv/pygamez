@@ -43,6 +43,10 @@ from .lamatowerdefense import LamaTowerDefenseGame
 from .minigolf import MiniGolfGame
 from .pinball import PinballGame
 from .bowling import BowlingGame
+from .crossyroad import CrossyRoadGame
+from .geodash import GeometryDashGame
+from .battleship import BattleshipGame
+from .casino import CasinoGame
 
 # Reihenfolge der Spiele im Menü
 ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
@@ -55,4 +59,5 @@ ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
              ChessGame, MuehleGame, SimonGame, BilliardGame,
              SlidingPuzzleGame, MastermindGame, BubbleShooterGame, HangmanGame,
              BlockJumpGame, LamaTowerDefenseGame, MiniGolfGame,
-             PinballGame, BowlingGame]
+             PinballGame, BowlingGame, CrossyRoadGame, GeometryDashGame,
+             BattleshipGame, CasinoGame]

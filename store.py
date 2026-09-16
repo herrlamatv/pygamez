@@ -38,14 +38,62 @@ _PATH = os.path.join(_DIR, "mem.json")
 _LEGACY_HS_PATH = os.path.join(_DIR, "highscores.json")
 
 
-def _read_raw():
-    """Liest mem.json roh (immer ein dict, leer bei Fehler/fehlender Datei)."""
+def _read_json(path):
+    """Liest eine JSON-Datei als dict (None bei Fehler/fehlender Datei)."""
     try:
-        with open(_PATH, "r", encoding="utf-8") as f:
+        with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
-            return data if isinstance(data, dict) else {}
+            return data if isinstance(data, dict) else None
     except (OSError, json.JSONDecodeError, ValueError):
-        return {}
+        return None
+
+
+def _read_raw():
+    """Liest mem.json roh (immer ein dict, leer bei Fehler/fehlender Datei).
+
+    Ist mem.json beschädigt oder fehlt sie nach einem abgebrochenen Speichern,
+    wird die Sicherung mem.json.bak (Stand vor dem letzten Speichern) gelesen -
+    sonst würde das nächste Speichern alle Highscores, Erfolge und Chips
+    mit einer leeren Datei überschreiben.
+    """
+    data = _read_json(_PATH)
+    if data is None:
+        data = _read_json(_PATH + ".bak")
+    return data if data is not None else {}
+
+
+def write_json_atomic(path, obj, indent=2):
+    """Schreibt 'obj' als JSON, ohne dass ein Absturz die Datei zerstören kann.
+
+    Erst in eine Temp-Datei daneben, dann per os.replace an die richtige
+    Stelle (atomar). Die vorherige Fassung bleibt als '<path>.bak' liegen.
+    Gibt True bei Erfolg zurück; Fehler (z.B. keine Schreibrechte) werden
+    geschluckt, damit das Spiel ohne Persistenz weiterläuft.
+    """
+    tmp = path + ".tmp"
+    try:
+        text = json.dumps(obj, indent=indent, ensure_ascii=False)
+        with open(tmp, "w", encoding="utf-8") as f:
+            f.write(text)
+            f.flush()
+            try:
+                os.fsync(f.fileno())
+            except OSError:
+                pass
+        if os.path.exists(path):
+            try:
+                os.replace(path, path + ".bak")
+            except OSError:
+                pass
+        os.replace(tmp, path)
+        return True
+    except (OSError, TypeError, ValueError):
+        try:
+            if os.path.exists(tmp):
+                os.remove(tmp)
+        except OSError:
+            pass
+        return False
 
 
 def _read_legacy_highscores():
@@ -102,13 +150,9 @@ def save(data):
                  + " (YYYY-MM-DD HH:MM:SS)")
     out = {"_generated": stamp}
     out.update((k, v) for k, v in data.items() if k != "_generated")
-    try:
-        with open(_PATH, "w", encoding="utf-8") as f:
-            json.dump(out, f, indent=2, ensure_ascii=False)
-    except OSError:
-        # Schlägt das Speichern fehl (z.B. keine Schreibrechte), läuft das
-        # Spiel trotzdem weiter - nur ohne Persistenz.
-        pass
+    # Schlägt das Speichern fehl (z.B. keine Schreibrechte), läuft das
+    # Spiel trotzdem weiter - nur ohne Persistenz.
+    write_json_atomic(_PATH, out)
 
 
 def load_section(name):

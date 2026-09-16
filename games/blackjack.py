@@ -14,10 +14,13 @@ Regeln:
 - Split: genau EINMAL, bei gleichem Kartenwert (K+10 geht); Split-Asse
   bekommen je genau eine Karte; 21 nach Split zählt als 21, nicht Blackjack.
 
-Chips: Start 500, Einsätze 10/25/50/100 (stapelbar). Der Chipstand bleibt
-über Sitzungen erhalten (mem.json, Abschnitt "blackjack"). Der Highscore ist
-der höchste jemals erreichte Chipstand; er wird beim Menü-Rückweg gespeichert
-(game_over wird nie gesetzt). Pleite = Neustart mit 500 (Bestwert bleibt).
+Lama-Chips: Blackjack, Poker und Casino teilen sich ein Konto bei der
+Lama-Bank (lamabank.py, mem.json-Abschnitt "casino"). Einsätze 10/25/50/100
+(stapelbar) werden beim Geben sofort abgebucht - wer die Hand verlässt, verliert
+den Einsatz. Der Highscore ist der Höchststand von 1000 + Blackjack-Bilanz
+(Gewinne minus Einsätze nur in diesem Spiel); er wird beim Menü-Rückweg
+gespeichert (game_over wird nie gesetzt). Pleite (unter 10 Chips) = Bank-Kredit,
+das Konto wird wieder auf 1000 aufgefüllt.
 
 Steuerung: Buttons anklicken oder H = Hit, S = Stand, D = Double, X = Split,
 1-4 = Chips setzen, Backspace = Einsatz löschen, Enter = Geben/Weiter.
@@ -27,7 +30,7 @@ import random
 
 import pygame
 
-import store
+import lamabank
 import ui
 from game_base import Game, InputEvent
 from i18n import t
@@ -41,7 +44,6 @@ COL_FELT_EDGE = (15, 33, 26)
 CHIP_COLS = {10: (110, 160, 235), 25: (110, 205, 140),
              50: (230, 120, 90), 100: (40, 40, 48)}
 
-START_CHIPS = 500
 BETS = (10, 25, 50, 100)
 DEAL_T = 0.22       # Tween-Dauer je Karte
 FLIP_T = 0.25       # Hole-Card-Flip
@@ -75,16 +77,8 @@ class BlackjackGame(Game):
     # ===================================================== Aufbau / Reset
     def reset(self):
         self.game_over = False
-        data = store.load_section("blackjack")
-        try:
-            self.chips = max(0, int(data.get("chips", START_CHIPS)))
-        except (TypeError, ValueError):
-            self.chips = START_CHIPS
-        try:
-            self.best = max(self.chips, int(data.get("best", START_CHIPS)))
-        except (TypeError, ValueError):
-            self.best = max(self.chips, START_CHIPS)
-        self.score = self.best
+        lamabank.load()
+        self._sync_chips()
 
         self._make_fonts()
         self.renderer = C.CardRenderer(self.accent)
@@ -104,7 +98,7 @@ class BlackjackGame(Game):
         self._fly = {}
         self.dealer_wait = 0.0
         self.flip_t = 0.0
-        self.state = BET if self.chips >= BETS[0] else BROKE
+        self.state = BROKE if lamabank.is_broke("blackjack") else BET
 
     def _make_fonts(self):
         """Theme-Schriften (ui.font cached selbst); _huge hängt an height."""
@@ -149,9 +143,11 @@ class BlackjackGame(Game):
             self.action_rects[key] = pygame.Rect(
                 gap + i * (bw2 + gap), self.strip.y + 14, bw2, 44)
 
-    def _save(self):
-        store.save_section("blackjack", {"chips": self.chips,
-                                         "best": self.best})
+    def _sync_chips(self):
+        """Kontostand + Highscore aus der Lama-Bank übernehmen."""
+        self.chips = lamabank.balance()
+        self.best = lamabank.score_for("blackjack")
+        self.score = self.best
 
     # ===================================================== Schuh / Hände
     def _ensure_shoe(self):
@@ -181,10 +177,10 @@ class BlackjackGame(Game):
 
     # ===================================================== Runden-Ablauf
     def _start_deal(self):
-        if self.bet < BETS[0] or self.bet > self.chips:
+        if self.bet < BETS[0] or not lamabank.debit(self.bet, "blackjack"):
             return
+        self._sync_chips()
         self._ensure_shoe()
-        self.chips -= self.bet
         self.hands = [[]]
         self.hand_bets = [self.bet]
         self.hand_done = [False]
@@ -217,14 +213,14 @@ class BlackjackGame(Game):
         up = self.dealer[0]
         if up.rank == 1 or min(up.rank, 10) == 10:
             if dv == 21:                      # Dealer-Blackjack
-                self.hole_hidden = False
+                self._reveal_hole()
                 if player_bj:
                     self._settle(["push"])
                 else:
                     self._settle(["lose"])
                 return
         if player_bj:
-            self.hole_hidden = False
+            self._reveal_hole()
             self.ach_event("blackjack_two")
             self._settle(["blackjack"])
             return
@@ -261,7 +257,9 @@ class BlackjackGame(Game):
     def _double(self):
         if not self._can_double():
             return
-        self.chips -= self.hand_bets[self.active]
+        if not lamabank.debit(self.hand_bets[self.active], "blackjack"):
+            return
+        self._sync_chips()
         self.hand_bets[self.active] *= 2
         h = self.hands[self.active]
         h.append(self._draw_card())
@@ -272,8 +270,10 @@ class BlackjackGame(Game):
         if not self._can_split():
             return
         h = self.hands[0]
+        if not lamabank.debit(self.hand_bets[0], "blackjack"):
+            return
+        self._sync_chips()
         self.split_aces = (h[0].rank == 1)
-        self.chips -= self.hand_bets[0]
         self.hands = [[h[0]], [h[1]]]
         self.hand_bets = [self.hand_bets[0], self.hand_bets[0]]
         self.hand_done = [False, False]
@@ -298,16 +298,23 @@ class BlackjackGame(Game):
         # Alle Hände durch -> Dealer (nur wenn nicht alles Bust)
         busted_all = all(hand_value(h)[0] > 21 for h in self.hands)
         if busted_all:
-            self.hole_hidden = False
+            self._reveal_hole()
             self._settle(None)
         else:
             self._start_dealer()
 
+    def _reveal_hole(self):
+        """Hole-Card wirklich umdrehen: Sie wurde verdeckt ausgegeben, und der
+        Renderer zeigt verdeckte Karten immer als Rückseite - hole_hidden
+        allein reichte nicht (die Karte blieb bis zum Schluss verdeckt)."""
+        self.hole_hidden = False
+        for card in self.dealer:
+            card.face_up = True
+
     def _start_dealer(self):
         self.state = DEALER
-        # Hole-Card JETZT aufdecken, damit der Flip sichtbar abläuft
-        # (vorher blieb hole_hidden True und die Animation war toter Code).
-        self.hole_hidden = False
+        # Hole-Card JETZT aufdecken, damit der Flip sichtbar abläuft.
+        self._reveal_hole()
         self.flip_t = FLIP_T
         self.dealer_wait = DEALER_T
         self.play_sound("rotate")
@@ -325,7 +332,7 @@ class BlackjackGame(Game):
 
     def _settle(self, forced):
         """Zahlt alle Hände aus. forced: Liste je Hand oder None (berechnen)."""
-        self.hole_hidden = False
+        self._reveal_hole()
         dv, _ = hand_value(self.dealer)
         dealer_bust = dv > 21
         self.results = []
@@ -353,11 +360,8 @@ class BlackjackGame(Game):
             elif res == "push":
                 delta += bet
             self.results.append(res)
-        self.chips += delta
-        if self.chips > self.best:
-            self.best = self.chips
-        self.score = self.best
-        self._save()
+        lamabank.credit(delta, "blackjack")
+        self._sync_chips()
         self.state = PAYOUT
         if any(r == "blackjack" for r in self.results):
             self.play_sound("win")
@@ -370,7 +374,8 @@ class BlackjackGame(Game):
 
     def _to_bet(self):
         self.bet = 0
-        if self.chips < BETS[0]:
+        self._sync_chips()
+        if lamabank.is_broke("blackjack"):
             self.state = BROKE
             self.play_sound("gameover")
         else:
@@ -382,8 +387,7 @@ class BlackjackGame(Game):
             if event.kind == InputEvent.MOUSEDOWN or \
                     (event.kind == InputEvent.KEYDOWN
                      and event.key in ("Return", "space")):
-                self.chips = START_CHIPS
-                self._save()
+                lamabank.refill_if_broke("blackjack")
                 self._to_bet()
                 self.play_sound("click")
             return
@@ -403,7 +407,7 @@ class BlackjackGame(Game):
             if k in ("1", "2", "3", "4"):
                 self._add_chip(BETS[int(k) - 1])
             elif k == "BackSpace":
-                # Einsatz zurücknehmen (wird erst beim Geben abgezogen)
+                # Einsatz zurücknehmen (wird erst beim Geben abgebucht)
                 self.bet = 0
                 self.play_sound("move")
             elif k in ("Return", "space"):
@@ -664,6 +668,7 @@ class BlackjackGame(Game):
         best = self._small.render(f"{t('bj.best')}: {self.best}", True,
                                   ui.TEXT_DIM)
         s.blit(best, best.get_rect(center=(cx, cy + 2)))
-        sub = self._small.render(t("bj.broke_restart", n=START_CHIPS), True,
+        sub = self._small.render(t("bj.broke_restart",
+                                   n=lamabank.START_CHIPS), True,
                                  ui.TEXT)
         s.blit(sub, sub.get_rect(center=(cx, cy + 34)))

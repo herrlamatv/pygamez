@@ -78,6 +78,8 @@
     get wantsRightClick() { return !!this.meta.wantsRightClick; }
     get wantsEscape() { return false; }
     get captureMouse() { return false; }
+    /** Highscore-Banner bei Game Over? Modi ohne Highscore-Wertung liefern false. */
+    get showHighscoreBanner() { return true; }
 
     // ----- Hilfsfunktionen -------------------------------------------------
     drawCenterText(ctx, text, font, color, yOffset = 0) {
@@ -90,6 +92,10 @@
     isAction(key, action, player) {
       const players = player ? [player] : ["p1", "p2"];
       return players.some((p) => (this.controls[p] || {})[action] === key);
+    }
+    /** true, wenn key keiner Aktion von Spieler 1/2 zugeordnet ist (feste Zusatztasten). */
+    keyIsFree(key) {
+      return !["p1", "p2"].some((p) => Object.values(this.controls[p] || {}).includes(key));
     }
     playSound(name) {
       PG.audio.play(name);
@@ -114,6 +120,12 @@
      * Neue Runde innerhalb derselben Partie (z.B. Revanche im Brettspiel):
      * gibt reportResult() wieder frei, ohne dass gameOver umschalten muss.
      */
+    resumeFromGameOver() {
+      // Game Over aufheben, ohne dass app.js eine neue Partie zählt
+      // (z.B. Rückgängig nach dem letzten Zug bei 2048).
+      this.gameOver = false;
+      this._resumeSameGame = true;
+    }
     newRoundResult() {
       this._resultReported = false;
     }

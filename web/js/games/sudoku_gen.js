@@ -201,5 +201,322 @@
     return [puzzle, solution];
   }
 
-  PG.sudokuGen = { LEVELS, CLUES, ROW_OF, COL_OF, BOX_OF, UNITS, PEERS, seedFor, fill, countSolutions, dig, generate };
+  // =========================================================================
+  //  Varianten: allgemeine Einheiten-Listen + seedrand (Desktop == Browser)
+  // =========================================================================
+  // Alles ab hier ist bitgenau gleich zu games/sudoku_gen.py: gleicher
+  // Zufallsgenerator (PG.seedrand), gleiche Reihenfolge der Zufallszahlen,
+  // gleiche Grab-Entscheidungen -> X-Sudoku, Mini 6x6 und das Tages-Sudoku
+  // sind am PC und im Browser dieselben Rätsel. (Die klassischen Level oben
+  // bleiben beim alten Generator.)
+
+  const VARIANTS = ["classic", "x", "killer", "mini"];
+
+  // Vorgaben-Ziel je Stufe (Leicht/Normal/Schwer/Experte).
+  const VARIANT_CLUES = { classic: [42, 34, 29, 25], x: [36, 29, 25, 21], mini: [20, 16, 13, 10] };
+
+  // Grab-Regel je Stufe (siehe sudoku_gen.py DIG_RULES).
+  const DIG_RULES = ["singles", "singles", "unique", "hard"];
+
+  // Tages-Sudoku: Stufe je Wochentag (Montag = 0 ... Sonntag = 6).
+  const DAILY_DIFF = [0, 1, 1, 2, 2, 3, 2];
+
+  const bitLength = (m) => 32 - Math.clz32(m);
+
+  /** Geometrie eines Sudoku-Typs: Größe, Blockform und alle Einheiten. */
+  class Layout {
+    constructor(n, boxH, boxW, diagonals) {
+      this.n = n;
+      this.size = n * n;
+      this.boxH = boxH;
+      this.boxW = boxW;
+      this.diagonals = !!diagonals;
+      this.all = (1 << n) - 1;
+      const units = [];
+      for (let r = 0; r < n; r++) units.push(Array.from({ length: n }, (_, c) => r * n + c));
+      for (let c = 0; c < n; c++) units.push(Array.from({ length: n }, (_, r) => r * n + c));
+      for (let br = 0; br < n / boxH; br++) {
+        for (let bc = 0; bc < n / boxW; bc++) {
+          const u = [];
+          for (let r = 0; r < boxH; r++) for (let c = 0; c < boxW; c++) u.push((br * boxH + r) * n + bc * boxW + c);
+          units.push(u);
+        }
+      }
+      if (this.diagonals) {
+        units.push(Array.from({ length: n }, (_, i) => i * n + i));
+        units.push(Array.from({ length: n }, (_, i) => i * n + (n - 1 - i)));
+      }
+      this.units = units;
+      this.boxOf = [];
+      this.unitsOf = [];
+      this.peers = [];
+      for (let i = 0; i < this.size; i++) {
+        this.boxOf.push(Math.floor(Math.floor(i / n) / boxH) * (n / boxW) + Math.floor((i % n) / boxW));
+        const us = [];
+        const ps = new Set();
+        units.forEach((u, k) => {
+          if (u.includes(i)) {
+            us.push(k);
+            for (const j of u) if (j !== i) ps.add(j);
+          }
+        });
+        this.unitsOf.push(us);
+        this.peers.push(Array.from(ps).sort((a, b) => a - b));
+      }
+    }
+    /** Liegt Zelle i auf einer der beiden Diagonalen (nur X-Sudoku)? */
+    onDiagonal(i) {
+      const r = Math.floor(i / this.n), c = i % this.n;
+      return this.diagonals && (r === c || r + c === this.n - 1);
+    }
+  }
+
+  const LAYOUTS = {};
+  function layoutFor(variant) {
+    if (!LAYOUTS[variant]) {
+      if (variant === "mini") LAYOUTS[variant] = new Layout(6, 2, 3, false);
+      else if (variant === "x") LAYOUTS[variant] = new Layout(9, 3, 3, true);
+      else LAYOUTS[variant] = new Layout(9, 3, 3, false);
+    }
+    return LAYOUTS[variant];
+  }
+
+  /** Volle Lösung per Backtracking (Zelle mit den wenigsten Kandidaten zuerst). */
+  function fillGrid(lay, rng) {
+    const n = lay.n, size = lay.size, ALL = lay.all;
+    const board = new Array(size).fill(0);
+    const umask = new Array(lay.units.length).fill(ALL);
+    const uof = lay.unitsOf;
+
+    function solve(left) {
+      if (!left) return true;
+      let bestI = -1, bestC = 0, bestN = 99;
+      for (let i = 0; i < size; i++) {
+        if (board[i]) continue;
+        let c = ALL;
+        for (const u of uof[i]) c &= umask[u];
+        const k = POPCOUNT[c];
+        if (k < bestN) {
+          bestI = i;
+          bestC = c;
+          bestN = k;
+          if (k <= 1) break;
+        }
+      }
+      if (!bestC) return false;
+      const digits = [];
+      for (let d = 1; d <= n; d++) if ((bestC >> (d - 1)) & 1) digits.push(d);
+      rng.shuffle(digits);
+      const us = uof[bestI];
+      for (const d of digits) {
+        const m = 1 << (d - 1);
+        board[bestI] = d;
+        for (const u of us) umask[u] ^= m;
+        if (solve(left - 1)) return true;
+        for (const u of us) umask[u] ^= m;
+        board[bestI] = 0;
+      }
+      return false;
+    }
+
+    solve(size);
+    return board;
+  }
+
+  /** Zählt Lösungen (MRV, Abbruch bei limit) - Ergebnis = min(Anzahl, limit). */
+  function countVariant(lay, puzzle, limit = 2) {
+    const size = lay.size, ALL = lay.all;
+    const board = puzzle.slice();
+    const uof = lay.unitsOf;
+    const umask = new Array(lay.units.length).fill(ALL);
+    for (let i = 0; i < size; i++) {
+      const d = board[i];
+      if (!d) continue;
+      const m = 1 << (d - 1);
+      for (const u of uof[i]) {
+        if (!(umask[u] & m)) return 0;
+        umask[u] ^= m;
+      }
+    }
+    const empty = [];
+    for (let i = 0; i < size; i++) if (!board[i]) empty.push(i);
+    let count = 0;
+
+    function solve() {
+      let bestI = -1, bestC = 0, bestN = 99;
+      for (const i of empty) {
+        if (board[i]) continue;
+        let c = ALL;
+        for (const u of uof[i]) c &= umask[u];
+        if (!c) return;
+        const k = POPCOUNT[c];
+        if (k < bestN) {
+          bestI = i;
+          bestC = c;
+          bestN = k;
+          if (k === 1) break;
+        }
+      }
+      if (bestI < 0) {
+        count++;
+        return;
+      }
+      const us = uof[bestI];
+      let c = bestC;
+      while (c) {
+        const m = c & -c;
+        c ^= m;
+        board[bestI] = bitLength(m);
+        for (const u of us) umask[u] ^= m;
+        solve();
+        board[bestI] = 0;
+        for (const u of us) umask[u] ^= m;
+        if (count >= limit) return;
+      }
+    }
+
+    solve();
+    return count;
+  }
+
+  /** Löst nur mit Singles (Naked + Hidden Single). Lösung oder null. */
+  function solveSingles(lay, puzzle) {
+    const size = lay.size, ALL = lay.all;
+    const board = puzzle.slice();
+    const peers = lay.peers;
+    const cand = new Array(size).fill(0);
+    for (let i = 0; i < size; i++) {
+      const d = board[i];
+      if (d) {
+        for (const j of peers[i]) if (board[j] === d) return null;
+        continue;
+      }
+      let used = 0;
+      for (const j of peers[i]) if (board[j]) used |= 1 << (board[j] - 1);
+      cand[i] = ALL & ~used;
+    }
+    let left = 0;
+    for (const v of board) if (!v) left++;
+    while (left) {
+      let placed = 0;
+      for (let i = 0; i < size; i++) {
+        if (board[i]) continue;
+        const c = cand[i];
+        if (!c) return null;
+        if (!(c & (c - 1))) {
+          board[i] = bitLength(c);
+          cand[i] = 0;
+          for (const j of peers[i]) cand[j] &= ~c;
+          placed++;
+        }
+      }
+      for (const cells of lay.units) {
+        let once = 0, twice = 0, have = 0;
+        for (const i of cells) {
+          if (board[i]) have |= 1 << (board[i] - 1);
+          else {
+            const c = cand[i];
+            twice |= once & c;
+            once |= c;
+          }
+        }
+        if (ALL & ~have & ~once) return null;
+        let single = once & ~twice & ~have;
+        while (single) {
+          const m = single & -single;
+          single ^= m;
+          for (const i of cells) {
+            if (!board[i] && cand[i] & m) {
+              board[i] = bitLength(m);
+              cand[i] = 0;
+              for (const j of peers[i]) cand[j] &= ~m;
+              placed++;
+              break;
+            }
+          }
+        }
+      }
+      if (!placed) return null;
+      left -= placed;
+    }
+    return board;
+  }
+
+  /** Leert Zellen in rng-Reihenfolge, solange das Rätsel (nach Regel) lösbar bleibt. */
+  function digVariant(lay, solution, target, rule, rng) {
+    const puzzle = solution.slice();
+    const order = Array.from({ length: lay.size }, (_, i) => i);
+    rng.shuffle(order);
+    let clues = lay.size;
+    let easy = true;
+    for (const i of order) {
+      if (clues <= target) {
+        if (rule !== "hard") break;
+        if (easy) easy = solveSingles(lay, puzzle) !== null;
+        if (!easy) break;
+      }
+      const saved = puzzle[i];
+      puzzle[i] = 0;
+      const ok = rule === "singles" ? solveSingles(lay, puzzle) !== null : countVariant(lay, puzzle) === 1;
+      if (ok) clues--;
+      else puzzle[i] = saved;
+    }
+    return puzzle;
+  }
+
+  function variantSeed(variant, diff, level) {
+    return PG.seedrand.seedFrom("sudoku", variant, Math.trunc(diff), Math.trunc(level));
+  }
+
+  /** [puzzle, solution] für X-Sudoku ("x") oder Mini 6x6 ("mini"). */
+  function generateVariant(variant, diff, level) {
+    const lay = layoutFor(variant);
+    const clues = VARIANT_CLUES[variant] || VARIANT_CLUES.classic;
+    diff = Math.max(0, Math.min(3, Math.trunc(diff)));
+    const rng = new PG.seedrand.Rand(variantSeed(variant, diff, level));
+    const solution = fillGrid(lay, rng);
+    const puzzle = digVariant(lay, solution, clues[diff], DIG_RULES[diff], rng);
+    return [puzzle, solution];
+  }
+
+  /** Stufe des Tages-Sudokus (Wochentag, Montag = 0). */
+  function dailyDiff(date) {
+    const [y, m, d] = (date || PG.seedrand.todayStr()).split("-").map(Number);
+    const wd = (new Date(Date.UTC(y, m - 1, d)).getUTCDay() + 6) % 7;
+    return DAILY_DIFF[wd];
+  }
+
+  function weekday(date) {
+    const [y, m, d] = date.split("-").map(Number);
+    return (new Date(Date.UTC(y, m - 1, d)).getUTCDay() + 6) % 7;
+  }
+
+  /** [puzzle, solution, diff] des Tages-Sudokus (klassisch 9x9). */
+  function generateDaily(date) {
+    date = date || PG.seedrand.todayStr();
+    const diff = dailyDiff(date);
+    const lay = layoutFor("classic");
+    const rng = new PG.seedrand.Rand(PG.seedrand.dailySeed("sudoku", date));
+    const solution = fillGrid(lay, rng);
+    const puzzle = digVariant(lay, solution, VARIANT_CLUES.classic[diff], DIG_RULES[diff], rng);
+    return [puzzle, solution, diff];
+  }
+
+  /** [puzzle, solution, cages] eines vorab erzeugten Killer-Levels (oder null). */
+  function killerLevel(diff, level) {
+    const data = PG.sudokuKiller;
+    const list = data && data[String(Math.max(0, Math.min(3, Math.trunc(diff))))];
+    if (!list || level < 1 || level > list.length) return null;
+    const raw = list[level - 1];
+    const sol = raw.s.split("").map(Number);
+    const puz = raw.g.split("").map(Number);
+    const cages = raw.c.map(([total, cells]) => [total, cells.slice()]);
+    return [puz, sol, cages];
+  }
+
+  PG.sudokuGen = {
+    LEVELS, CLUES, ROW_OF, COL_OF, BOX_OF, UNITS, PEERS, seedFor, fill, countSolutions, dig, generate,
+    VARIANTS, VARIANT_CLUES, DIG_RULES, DAILY_DIFF, Layout, layoutFor, fillGrid, countVariant, solveSingles,
+    digVariant, variantSeed, generateVariant, dailyDiff, weekday, generateDaily, killerLevel,
+  };
 })();

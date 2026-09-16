@@ -104,13 +104,13 @@ MILESTONES = {
     "memory": 1500,        # 6x6 flott gelöst
     "solitaire": 500,      # gewonnene Partie mit Bonus
     "aim": 4000,           # gute Sitzung
-    "blackjack": 800,      # Chips deutlich vermehrt
+    "blackjack": 1600,     # Blackjack-Bilanz: Start-Chips (1000) um 600 vermehrt
     "tunnel": 15000,       # lange Endlos-Fahrt
     "maze": 1500,          # ~2 Level mit Orbs
     "kniffel": 200,        # Gesamtsumme mit Bonus
     "wordle": 150,         # ~3-4 Wörter in Folge
     "trex": 600,           # lange Strecke
-    "poker": 1500,         # Start-Chips ver-1,5-facht
+    "poker": 1500,         # Poker-Bilanz: Start-Chips (1000) ver-1,5-facht
     "simon": 12,           # 12er-Sequenz
     "slide": 4000,         # 4x4 flott gelöst
     "mastermind": 150,     # mehrere Codes in Folge
@@ -121,6 +121,9 @@ MILESTONES = {
     "minigolf": 5000,      # eine Runde deutlich unter Par gespielt
     "pinball": 25000,      # solide Partie mit Multiplikator
     "bowling": 120,        # ordentliches Spiel mit ein paar Spares
+    "crossy": 150,         # 150 Reihen weit gehüpft
+    "geodash": 20,         # 20 Sterne (Level-Sterne + Münzen)
+    "casino": 5000,        # Casino-Bilanz auf 5000 Chips gebracht
 }
 
 # Besondere Momente: (id, icon, highscore_key, target).
@@ -134,7 +137,7 @@ SPECIALS = [
     ("tetris_four",    "star",  "tetris",      None),   # 4 Reihen auf einmal
     ("kniffel_five",   "star",  "kniffel",     None),   # Kniffel gewürfelt
     ("blackjack_two",  "medal", "blackjack",   None),   # Blackjack mit 2 Karten
-    ("poker_rich",     "medal", "poker",       2000),   # Chips verdoppelt
+    ("poker_rich",     "medal", "poker",       2000),   # Poker-Bilanz verdoppelt (+1000)
     ("wordle_two",     "gem",   "wordle",      None),   # in <= 2 Versuchen
     ("hangman_clean",  "check", "hangman",     None),   # ohne Fehlversuch
     ("sudoku_clean",   "check", "sudoku",      None),   # fehlerfrei gelöst
@@ -157,6 +160,25 @@ SPECIALS = [
     ("pin_high",       "crown", "pinball",     50000),  # 50.000 in einer Partie
     ("bowl_turkey",    "flag",  "bowling",     None),   # drei Strikes in Folge
     ("bowl_200",       "crown", "bowling",     200),    # 200er-Spiel
+    ("crossy_char",    "gem",   "crossy",      None),   # erste Figur gekauft
+    ("crossy_train",   "flag",  "crossy",      None),   # 5 Gleise in Folge überquert
+    ("gd_first",       "star",  "geodash",     None),   # erstes Level geschafft
+    ("gd_coins",       "medal", "geodash",     None),   # alle 3 Münzen eines Levels
+    ("gd_demon",       "crown", "geodash",     None),   # Dämon-Level geschafft
+    ("bs_flawless",    "heart", "battleship",  None),   # Sieg ohne verlorenes Schiff
+    ("bs_hard",        "crown", "battleship",  None),   # Sieg gegen die schwere KI
+    ("roulette_plein", "star",  "casino",      None),   # Volltreffer auf eine Zahl
+    ("slots_jackpot",  "gem",   "casino",      None),   # 5 Lamas auf einer Linie
+    ("tetris_tspin",   "star",  "tetris",      None),   # T-Spin Double
+    ("tetris_pc",      "gem",   "tetris",      None),   # Perfect Clear
+    ("tetris_sprint",  "clock", "tetris",      None),   # 40 Zeilen unter 2:00
+    ("tile_4096",      "crown", "2048",        None),   # 4096er-Kachel
+    ("chess_puzzles",  "check", "chess",       25),     # 25 Schachrätsel gelöst
+    ("chess_master",   "crown", "chess",       None),   # Sieg gegen Stufe 6
+    ("wordle_daily7",  "flag",  "wordle",      7),      # 7 Tageswörter in Folge
+    ("wordle_quordle", "gem",   "wordle",      None),   # Quordle gelöst
+    ("sudoku_killer",  "medal", "sudoku",      None),   # Killer-Sudoku gelöst
+    ("sudoku_stars",   "star",  "sudoku",      30),     # 30 Level mit 3 Sternen
 ]
 
 _unlocked = None      # {id: "YYYY-MM-DD HH:MM"} (In-Memory-Kopie)

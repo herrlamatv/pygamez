@@ -12,13 +12,15 @@
 
 Une collection de jeux de bureau en Python : **Tkinter** fournit la fenêtre et
 le menu, **Pygame** est intégré comme écran de jeu à l'intérieur de la fenêtre
-Tkinter. Quarante-deux jeux avec des options partagées, des commandes entièrement
+Tkinter. Quarante-six jeux avec des options partagées, des commandes entièrement
 réassignables, des meilleurs scores, des effets sonores procéduraux et, pour
-plusieurs titres, un mode multijoueur. L'interface est **multilingue**
-(allemand / anglais / français / espagnol / portugais) ; la langue se choisit au
-premier démarrage sur un **écran d'accueil** qui permet aussi de régler la
-**résolution** et le **son** (désactivé par défaut) ; l'espagnol et le portugais
-se cachent derrière le bouton **« Plus »**. Tout reste modifiable dans les options.
+plusieurs titres, un mode multijoueur. L'interface est **multilingue** –
+**14 langues** (allemand / anglais / français / espagnol / portugais / polonais /
+turc / danois / norvégien / suédois / finnois / tchèque / slovène / croate) ; la
+langue se choisit au premier démarrage sur un **écran d'accueil** qui permet
+aussi de régler la **résolution** et le **son** (désactivé par défaut) ; en
+dehors des trois langues principales, toutes les autres se cachent derrière le
+bouton **« Plus »**. Tout reste modifiable dans les options.
 
 ### Démarrage rapide
 
@@ -48,30 +50,34 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Air Hockey** | 1 / 2 joueurs | Physique 2D avec transfert d'impulsion, contrôle à la souris, IA et power-ups |
 | **Tic-Tac-Toe** | 1 / 2 joueurs | Jeu m,n,k de 3x3 à 9x9, trois niveaux d'IA **ou** X contre O en local |
 | **Breakout** | 1 joueur        | Casse-briques avec types de briques, power-ups, combos et de nombreux niveaux |
-| **Tetris**   | 1 / 2 joueurs   | Classique ou Versus (deux champs côte à côte) |
+| **Tetris**   | 1 / 2 joueurs   | Règles Guideline modernes (SRS, réserve, aperçu de 5 pièces, T-Spins) : Marathon, Sprint 40, Ultra 2:00, duel contre l'IA (3 niveaux) ou à deux avec lignes de déchets |
 | **Invaders** | 1 joueur        | Space Invaders : vide les vagues, protège tes vies |
 | **Asteroids** | 1 / 2 joueurs  | Physique d'inertie, vagues, OVNIs, power-ups, hyperespace - en solo ou duel coopératif |
 | **Pac-Man**  | 1 joueur        | Clone fidèle : 4 IA de fantômes, pilules de pouvoir, tunnels, fruits, niveaux |
 | **Flappy Bird** | 1 joueur     | Vol gravitationnel entre les tuyaux, pièces, bouclier, jour/nuit, médailles |
 | **Doodle Jump** | 1 joueur     | Saut automatique vers le haut, types de plateformes, ressorts, hélice, monstres |
-| **2048**     | 1 joueur        | Puzzle de nombres à faire glisser, objectif : la tuile 2048 |
+| **2048**     | 1 joueur        | Puzzle de nombres à faire glisser de 3x3 à 8x8 : Classique, Contre-la-montre et Infini, annulation, animations fluides, parties sauvegardées |
 | **Minesweeper** | 1 joueur     | Le classique avec premier clic sûr, chording, smiley et meilleurs temps |
-| **Sudoku**      | 1 joueur     | 400 niveaux à graine (4 difficultés x 100), 4 modes d'assistance avec multiplicateur de score, notes, indices, limite de 3 erreurs |
+| **Sudoku**      | 1 joueur     | 4 variantes (Classique, Sudoku X, Killer, Mini 6x6) de 400 niveaux chacune, Sudoku du jour, jusqu'à 3 étoiles par niveau, 4 modes d'assistance, annulation, sauvegarde |
 | **Frogger**     | 1 joueur     | Route + rivière + 5 abris, mouche bonus, crocodiles, limite de temps, 3 difficultés |
 | **Memory**      | 1 / 2 joueurs | Trouve les paires sur 4x4 à 8x6, animation de retournement, score en solo ou duel |
 | **Solitaire**   | 1 joueur     | 5 variantes (Klondike, Spider, FreeCell, Pyramide, TriPeaks) avec glisser-déposer et annulation |
 | **Aim Trainer** | 1 joueur     | Tir sur cible 3D détendu : la souris dirige la caméra, 4 modes (précision/réflexes/mobiles/chill), 3 thèmes dont un trou noir |
 | **Puissance 4** | 1 / 2 joueurs | Le classique avec animation de chute : 3 niveaux d'IA (minimax) ou duel local |
 | **Duel de tanks** | 1 / 2 joueurs | Duel 2D en arène avec tirs à ricochet, power-ups, 4 arènes, IA à 3 niveaux |
-| **Blackjack**    | 1 joueur    | Blackjack de casino avec sabot de 4 jeux, doubler/partager, blackjack 3:2 et solde de jetons persistant |
+| **Blackjack**    | 1 joueur    | Blackjack de casino avec sabot de 4 jeux, doubler/partager et blackjack 3:2 ; joue avec les jetons Lama de la Banque Lama commune |
 | **Tunnel Racer** | 1 joueur    | Vol 3D dans un tube néon : mode sans fin + 30 niveaux, pilotage au clavier ou à la souris, motion blur |
 | **Labyrinthe 3D** | 1 joueur   | Raycaster à la première personne (style Wolfenstein) avec 50 niveaux à graine, orbes, minicarte - ou vue 2D de dessus |
 | **Reversi**      | 1 / 2 joueurs | Othello 8x8 : encercler et retourner les pions, 3 forces d'IA (minimax) ou un duel local |
 | **Yams**         | 1 / 2 joueurs | Classique de dés à 13 catégories, bonus supérieur et Yams ; course au score ou hotseat à 2 |
-| **Wordle**       | 1 joueur   | Devine le mot de 5 lettres en 6 essais, série sans fin, indices colorés, vraies listes de mots en 14 langues |
+| **Wordle**       | 1 joueur   | Devine des mots de 4 à 7 lettres : Sans fin, Mot du jour, Dordle et Quordle, mode difficile, palette daltonien, statistiques en histogramme, partage du résultat, vraies listes de mots en 14 langues |
 | **T-Rex Runner** | 1 joueur   | Course infinie dans le désert : saut variable, s'accroupir, cactus & ptérodactyles, cycle jour/nuit, vitesse croissante, 3 difficultés |
 | **Dames**        | 1 / 2 joueurs | 3 règles au choix (allemandes 8×8, internationales 10×10, checkers), prise obligatoire & dame volante, 3 niveaux d'IA (minimax) ou duel local |
-| **Poker**        | 1 joueur   | 3 variantes au choix : Texas Hold'em contre l'IA, 5 Card Draw et Vidéo Poker ; tours d'enchères, blinds, compte de jetons persistant |
+| **Poker**        | 1 joueur   | 3 variantes au choix : Texas Hold'em contre l'IA, 5 Card Draw et Vidéo Poker ; tours d'enchères, blinds, jetons Lama de la Banque Lama commune |
+| **Échecs**      | 1 / 2 joueurs | Règles complètes, Chess960 et pendule, 6 niveaux d'IA, 200 problèmes de la base Lichess, annulation/indice, liste des coups, export PGN ou duel local |
+| **Moulin**      | 1 / 2 joueurs | Phases de pose, de déplacement et de vol, moulins et prises, vol désactivable, 3 niveaux d'IA ou duel local |
+| **Simon**       | 1 / 2 joueurs | Jeu de mémoire Senso : modes Classique/Speed/Reverse/Mixte + duel, son oui/non/mixte, 4/6/9 cases, record par mode |
+| **Billard**     | 1 / 2 joueurs | 8-Ball, 9-Ball et entraînement en 2D, vue 3D fixe ou caméra 3D libre ; physique douce, aide à la visée, IA à 3 niveaux |
 | **Taquin**         | 1 joueur   | Jeu du 15 en 3x3/4x4/5x5 : glisse les tuiles numérotées dans le trou, contrôle souris ou flèches, score selon coups & temps |
 | **Mastermind**     | 1 joueur   | Perce le code couleur secret (3 modes : 4×6, classique, 5×8), pions indicateurs noirs/blancs, série sans fin |
 | **Bubble Shooter** | 1 joueur   | Clone de Puzzle Bobble : tire des couleurs identiques par groupes de trois, rebonds sur les parois, grappes qui tombent, 3 difficultés |
@@ -81,13 +87,19 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Minigolf**    | 1 / 2 joueurs | 360 trous sur 40 parcours (18 construits à la main, 342 générés) : sable, rampes, eau, pare-chocs, moulins & blocs mobiles ; carte de score avec par et bonus trou en un ; **éditeur de trous** avec 15 types d'objets, 12 modèles et partage en `.lamapgzmap` |
 | **Pinball**     | 1 / 2 joueurs | Flipper avec 3 tables : bumpers, slingshots, cibles, couloirs L-A-M-A, multibille avec jackpot, sauvegarde de bille, secousse & tilt |
 | **Bowling**     | 1 / 2 joueurs | 10 frames avec la vraie règle strike/spare, physique des quilles, effet hook et piste en perspective, 3 difficultés |
+| **Crossy Road** | 1 joueur      | Sauter sans fin par-dessus prés, routes, rivières et voies ferrées en style voxel isométrique : jour/nuit, aigle, 10 personnages à acheter, parcours du jour |
+| **Geometry Dash** | 1 joueur    | Plateforme rythmique avec cube, vaisseau, boule, OVNI et onde : 8 niveaux de Facile à Démon avec 3 pièces secrètes chacun, mode entraînement, bande-son par niveau ; **éditeur de niveaux** avec partage en `.lamapgzlevel` |
+| **Battleship**  | 1 / 2 joueurs | Bataille navale 10x10 : flotte placée par glisser-déposer, 3 règles au choix (contact, salve, rejouer), IA à 3 niveaux ou duel local avec écran de passation |
+| **Casino**      | 1 joueur      | Roulette européenne avec toutes les mises classiques et Machine Lama (5 rouleaux, 10 lignes, wild, tours gratuits) ; un seul compte de jetons Lama avec le Blackjack et le Poker |
 
 **Le multijoueur (2 joueurs en local)** est disponible pour **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duel
 coopératif)**, **Memory (duel)**, **Puissance 4**, **Duel de tanks**,
-**Reversi**, **Yams**, **Dames**, **Minigolf**, **Pinball** et **Bowling**.
-Le mode se choisit directement sur l'écran de préparation
-(*Un joueur / Multijoueur*).
+**Reversi**, **Yams**, **Dames**, **Échecs**, **Moulin**, **Simon (duel)**,
+**Billard**, **Minigolf**, **Pinball**, **Bowling** et **Battleship** (avec un
+écran de passation qui cache les flottes) - 20 jeux en tout. Le mode se choisit
+directement sur l'écran de préparation (*Un joueur / Multijoueur*) ; Tetris
+propose en plus un **duel contre l'IA**. La version web est uniquement en solo.
 
 #### Détails par jeu
 
@@ -204,10 +216,31 @@ Le mode se choisit directement sur l'écran de préparation
   **Espace** lance la balle (tire le laser), **P/Échap** = pause.
 
 **Tetris**
-- Gauche/Droite déplace, Haut = pivoter, Bas = soft drop, Action = hard drop.
-- Les lignes complètes donnent des points ; le niveau monte toutes les 10
-  lignes.
-- **Versus** : perd celui dont la pile touche le haut en premier.
+- **Règles Guideline modernes** : terrain de 10x20, pièces tirées d'un **sac de
+  7**, **système de rotation SRS** avec de vrais wall kicks (y compris pour la
+  pièce I), rotation dans les deux sens, **réserve** (une fois par pièce),
+  **aperçu de 5 pièces**, pièce fantôme et **lock delay** (0,5 s, au plus 15
+  remises à zéro).
+- **Trois modes** sur l'écran de préparation : *Solo*, *Duel contre l'IA* et *2
+  joueurs*. Le Solo propose dans le setup **Marathon** (niveau de départ 1-15,
+  compte pour le record), **Sprint 40 lignes** (meilleur temps) et **Ultra 2
+  minutes** (meilleur score) ; les records sont dans la section `tetris` de
+  `mem.json`.
+- **Score Guideline** : du Single au Tetris, **T-Spins** (complets et mini),
+  **Back-to-Back** (x1,5), **combos** et **Perfect Clear** - avec annonces,
+  animation d'effacement, traînée de hard drop, particules et effet de montée de
+  niveau.
+- **Duel avec lignes de déchets** : les lignes effacées envoient des déchets à
+  l'adversaire (Tetris = 4, T-Spin Double = 4 …), les déchets entrants sont
+  annoncés dans une barre d'alerte et **compensés** par tes propres attaques ;
+  les deux terrains reçoivent la même suite de pièces. L'**IA** existe en 3
+  niveaux et la vitesse augmente toutes les 40 secondes.
+- **Commandes** : Gauche/Droite avec **DAS/ARR** personnalisés (réglables dans le
+  setup), Haut = rotation à droite, Bas = soft drop, Action = hard drop ;
+  **C**/Maj = réserve, **Z**/**Y** = rotation à gauche, **X** = rotation à
+  droite. À deux, J1 met en réserve avec **Q** et tourne à gauche avec **E**, J2
+  avec **Maj droite** / **Ctrl droite**. Après la partie : **R** = rejouer,
+  **S** = setup.
 
 **Invaders** – deux modes (sur l'écran de préparation) :
 - **Classique** : le bloc d'aliens classique ; ensuite dans le setup :
@@ -285,8 +318,22 @@ bouclier, amélioration d'arme), effets d'explosion, meilleur score.
   score.
 - Commandes : gauche/droite = bouger, Haut / Espace = tirer.
 
-**2048** – flèches/WASD font glisser toutes les tuiles ; les nombres égaux
-fusionnent.
+**2048**
+- **Écran de réglages dédié** avec des plateaux de **3x3 à 8x8** et trois modes :
+  *Classique* (objectif 2048, puis « Continuer ? »), *Contre-la-montre* (3
+  minutes, le chrono démarre au premier coup) et *Infini*.
+- **Animations fluides** : les tuiles glissent, fusionnent avec un « pop » et
+  apparaissent en grandissant ; pop-ups de points, étincelles dès 128, onde de
+  choc dès 2048 et nouvelles couleurs jusqu'à 131072. Les saisies pendant une
+  animation sont mises en mémoire.
+- **Annuler** (désactivé / 3 par partie / illimité, touche **U** ou Retour
+  arrière) - l'utiliser exclut la partie du record et des succès de tuiles.
+- **Sauvegarder et reprendre** : la partie en cours est sauvegardée
+  automatiquement par taille et par mode ; meilleurs scores et plus grande tuile
+  par taille/mode sont dans la section `g2048` de `mem.json`.
+- Commandes : flèches/WASD ou **balayage** à la souris/au pavé tactile,
+  **R**/**N** = nouvelle partie, **Tab** = réglages. Le record ne compte qu'en
+  **4x4 Classique** sans annulation.
 
 **Minesweeper**
 - Trois niveaux : **Débutant** (9x9, 10 mines), **Avancé** (16x16, 40),
@@ -304,26 +351,35 @@ fusionnent.
 - Points = valeur de base du niveau moins les secondes.
 
 **Sudoku**
-- **400 niveaux** : 4 difficultés (Facile/Normal/Difficile/Expert) x 100
-  niveaux. Les puzzles sont **générés par graine et à solution unique** - le
-  niveau 12 de « Difficile » est le même puzzle sur chaque PC. Les niveaux
-  résolus sont enregistrés et cochés dans la sélection.
+- **4 variantes** de **400 niveaux** chacune (4 difficultés x 100) : *Classique*
+  (les niveaux à graine connus - les niveaux résolus restent cochés), *Sudoku X*
+  (les deux diagonales contiennent chaque chiffre une seule fois), *Killer*
+  (cages en pointillés avec somme ; 400 niveaux générés à l'avance) et *Mini
+  6x6*. Chaque puzzle a une **solution unique** - le niveau 12 de « Difficile »
+  est le même puzzle sur chaque PC.
+- **Sudoku du jour** : une grille par jour pour tout le monde, identique sur PC
+  et dans le navigateur ; la difficulté dépend du jour de la semaine (du lundi
+  Facile au samedi Expert), et résoudre chaque jour construit une série.
+- **Jusqu'à 3 étoiles par niveau** (résolu · sans erreur ni indice · en plus
+  sous le temps cible) et **meilleur temps** dans la sélection ; les **grilles
+  commencées** sont sauvegardées automatiquement et reprises la fois suivante.
 - **4 modes de jeu** (choisis avant de commencer) avec multiplicateur de
   score : **Classique** (x2,0 - sans aides), **Notes** (x1,5 - + notes au
-  crayon), **Confort** (x1,0 - + erreurs en rouge, surlignage des conflits et
-  des chiffres identiques, les entrées correctes se verrouillent),
-  **Assistant** (x0,7 - + indice, max. 3).
-- Chaque entrée est vérifiée immédiatement contre la solution ; avec la
-  **limite de 3 erreurs** activée (option du setup), la troisième erreur met
-  fin à la partie.
+  crayon et candidats automatiques), **Confort** (x1,0 - + erreurs en rouge,
+  conflits et sommes de cage fausses marqués, les entrées correctes se
+  verrouillent), **Assistant** (x0,7 - + indice, max. 3). Avec la **limite de
+  3 erreurs** activée (option du setup), la troisième erreur met fin à la
+  partie.
 - Commandes : flèches/WASD = case, **1-9** = chiffre (pavé numérique aussi),
-  **0/Retour arrière/clic droit** = effacer, **N** = notes, **H** = indice,
-  **R** = recommencer le niveau, **Q** = sélection des niveaux ; entièrement
-  jouable à la souris (pavé numérique à droite). Après la fin, **A** masque le
-  bandeau et affiche la **solution** complète sur le plateau (A à nouveau =
-  retour).
-- Points = (base de la difficulté - temps - erreurs - indices) x multiplicateur
-  du mode.
+  **0/Suppr/clic droit** = effacer, **U**/**Z** = annuler, **Y** = rétablir,
+  **N** = notes, **C** = candidats automatiques, **H** = indice, **M** =
+  marqueur de couleur, **R** = recommencer le niveau, **Q** = sélection des
+  niveaux. Saisie « chiffre d'abord » (setup, **I**) et **compteur de chiffres
+  restants** sous chaque chiffre ; entièrement jouable à la souris. Après la
+  fin, **A** affiche la **solution** complète.
+- Points = (base de la variante et de la difficulté - temps - erreurs -
+  indices) x multiplicateur du mode ; toutes les variantes et le Sudoku du jour
+  comptent pour le record.
 
 **Frogger**
 - 5 voies de circulation (voitures/camions) et 5 voies de rivière (troncs,
@@ -395,12 +451,17 @@ fusionnent.
 - Vraies règles de casino : **sabot de 4 jeux**, le croupier reste à 17, le
   **blackjack paie 3:2**, peek du croupier avec as/10 ; **doubler** et **un
   partage** (les as partagés reçoivent une carte chacun).
-- **Solde de jetons persistant** : départ avec 500, solde et **record**
-  survivent à chaque redémarrage (`mem.json`) ; sous 10 jetons tu en reçois 500
-  neufs - le record reste.
+- **Jetons Lama** : le Blackjack joue avec le compte de la **Banque Lama**,
+  partagé avec le Poker et le Casino (départ 1000, enregistré durablement dans
+  `mem.json`). La mise est débitée dès la distribution ; sous 10 jetons,
+  Entrée accorde un **crédit bancaire** qui remonte le compte à 1000.
+- **Record** = plus haut niveau de ton **bilan au Blackjack** (1000 plus tout ce
+  qui a été gagné et perdu au Blackjack) - les gains à la roulette, à la machine
+  à sous ou au poker ne comptent pas ici, les crédits non plus.
 - Manipulation par boutons de jetons et touches (**H**it/**S**tand/**D**ouble/
-  partager **X**, **1-4** = mise, Entrée = distribuer) avec animations de
-  cartes et retournement de la carte cachée.
+  partager **X**, **1-4** = mise, Retour arrière = annuler la mise, Entrée =
+  distribuer) avec animations de cartes ; la carte cachée du croupier se
+  retourne désormais vraiment.
 
 **Tunnel Racer**
 - **Vol 3D dans un tube néon** (rendu logiciel comme l'Aim Trainer) : barres,
@@ -445,18 +506,75 @@ fusionnent.
   Entrée).
 
 **Wordle**
-- Devine le **mot de 5 lettres en 6 essais** ; retour coloré (vert/jaune/gris)
-  avec un **comptage correct des lettres doubles** et un clavier à l'écran qui se
-  colore.
-- **Série sans fin** : chaque mot résolu rapporte des points (moins d'essais =
-  plus), le premier mot non trouvé met fin à la partie - total = meilleur score.
+- Devine le mot caché ; retour coloré (vert/jaune/gris) avec un **comptage
+  correct des lettres doubles** et un clavier à l'écran qui se colore (AZERTY en
+  français, QWERTZ en allemand, tchèque, slovène et croate, sinon QWERTY).
+- **Quatre modes** : *Sans fin* (un mot après l'autre avec 6 essais chacun ;
+  chaque mot trouvé rapporte des points, le premier raté termine la partie), *Mot
+  du jour* (un mot par jour par langue et longueur - le même sur PC et dans le
+  navigateur - avec compte à rebours et série ; un mot du jour commencé est
+  sauvegardé), *Dordle* (2 mots à la fois en 7 essais) et *Quordle* (4 mots en 9
+  essais, les touches montrent les couleurs de toutes les grilles).
+- **Réglages** avant chaque partie : **longueur de 4 à 7 lettres**, **mode
+  difficile** (les indices trouvés doivent être réutilisés) et **palette
+  daltonien** (orange/bleu) ; les statistiques s'affichent à côté.
 - **Vraies listes de mots dans les 14 langues** (dossier `woordlistz/`, A-Z
-  uniquement) : plus de **34 000 solutions** et **213 000 mots acceptés** au
-  total. Chaque essai est vérifié dans la liste - sinon il est refusé et la
-  ligne tremble brièvement.
-- **Deux modes** : *Normal* et *Difficile* - en mode difficile, les indices
-  trouvés doivent être réutilisés. Tape au clavier ou clique les touches à
-  l'écran.
+  uniquement), avec des listes propres à chaque longueur : pour 5 lettres, près de
+  **34 000 solutions** et plus de **213 000 mots acceptés**, environ 134 000
+  solutions toutes longueurs confondues. Les solutions sont des mots courants,
+  sans noms propres, restes d'anglais ni mots choquants ; chaque essai est vérifié
+  dans la liste - sinon il est refusé et la ligne tremble brièvement.
+- **Statistiques** par langue, longueur et mode : parties, taux de victoire, série
+  actuelle et meilleure série et **répartition des essais en histogramme**
+  (section `wordle` de `mem.json`). **Partager** (**C**) copie une grille d'emojis
+  sans dévoiler la solution.
+- Le record ne compte que *Sans fin* en 5 lettres, les autres longueurs ont leurs
+  propres records. Succès **Voyant** (2 essais au plus), **Accro aux mots** (7 mots
+  du jour d'affilée) et **Génie au carré** (Quordle résolu).
+
+**Poker**
+- **3 variantes** sur l'écran de préparation : **Texas Hold'em** contre 1 à 3
+  adversaires IA avec bouton de donneur, blinds et quatre tours d'enchères, **5
+  Card Draw** (en tête-à-tête contre l'IA, un échange de cartes) et **Vidéo
+  Poker** (*Jacks or Better*, en solo contre la table de gains).
+- Actions par boutons ou touches : **F** = se coucher, **C** = parole/suivre,
+  **R** = relancer, **A** = tapis ; garder/échanger des cartes par clic ou avec
+  **1-5**, **Entrée** tire ou distribue la main suivante.
+- **Jetons Lama** de la **Banque Lama** commune : au début d'une main, ton compte
+  est posé sur la table comme tapis, et ce qui part au pot est débité aussitôt -
+  quitter la table en pleine main ne coûte que ta part du pot. À sec (moins que
+  la grosse blind de 20, moins de 10 au Vidéo Poker) = crédit bancaire qui
+  remonte le compte à 1000.
+- **Record** = plus haut niveau de ton **bilan au Poker** (1000 plus tous les
+  gains et pertes au poker) ; le succès **Chip leader** ne compte lui aussi que
+  le bilan au poker.
+
+**Échecs**
+- **Échecs complets** : tous les déplacements, y compris **roque**, **prise en
+  passant** et **promotion** (pièce au choix) ; **échec, mat et pat** ainsi que
+  nulle par la **règle des 50 coups**, la **triple répétition**, le **matériel
+  insuffisant** ou d'un commun accord.
+- **Trois modes** : *partie* contre l'IA, *2 joueurs* sur le même ordinateur (le
+  plateau peut pivoter après chaque coup) et **problèmes**.
+- **IA plus forte et sans saccades** en 6 niveaux de *Débutant* à *Maître* :
+  approfondissement itératif, table de transposition, recherche de quiescence,
+  livre d'ouvertures et évaluation avec mobilité, structure de pions et sécurité
+  du roi. L'IA calcule par petites tranches à chaque image - le jeu ne saccade
+  jamais.
+- **Réglages** : choix de la couleur, **pendule** (aucune, 1+0, 3+2, 5+0, 10+5)
+  et **Chess960** (les 960 positions de départ, le numéro s'affiche au-dessus de
+  la liste des coups).
+- **Barre latérale** avec pendules, pièces prises, bilan matériel et **liste des
+  coups (SAN)** défilable ; glisser-déposer, pièces qui glissent, coordonnées.
+  Touches : **U** = annuler, **H** = flèche d'indice, **O** = proposer nulle,
+  **X** = abandonner, **F** = retourner le plateau, après la partie **P** =
+  **export PGN**.
+- **Problèmes** : 200 problèmes en 5 niveaux (mat en 1/2/3, tactique I/II) issus
+  de la **base de problèmes libre de Lichess (CC0)**, vérifiés avec le moteur du
+  jeu ; dans les problèmes de mat, chaque coup qui mate compte. La progression
+  est dans la section `chess` de `mem.json`.
+- Annuler et indice rendent une partie « assistée » : le record ne compte que les
+  victoires sans aide contre l'IA (par session).
 
 **Tower Defense**
 - **Défense de vagues sans fin** sur **4 cartes** (Prairie, Canyon, Croisement,
@@ -556,6 +674,102 @@ fusionnent.
 - **Replay de la partie** : à la fin, **P** rejoue tous les lancers, **S** les
   enregistre dans l'archive (bouton **Replays** de la barre latérale).
 
+**Crossy Road**
+- **Des sauts sans fin** par-dessus des prés (arbres et rochers barrent le
+  passage), des routes avec voitures et camions, des rivières avec troncs et
+  nénuphars et des **voies ferrées** où un train surgit après feu d'alerte et
+  sonnerie - plus loin, de vraies gares avec jusqu'à 5 voies. Le parcours se
+  construit rangée par rangée, a toujours un chemin praticable, et la vitesse
+  comme le trafic augmentent.
+- **Style voxel isométrique** : personnages, véhicules et arbres en blocs ombrés
+  (pré-rendus pour chaque taille de case), caméra fluide, squash & stretch à
+  chaque saut, éclaboussures, animation d'écrasement, plumes et pièces
+  scintillantes ; dès la rangée 50, **cycle jour/nuit** avec phares.
+- **L'aigle** : la caméra avance lentement - traîne trop ou recule de plus de
+  trois rangées et l'aigle t'emporte (un bord rouge prévient avant). Dériver hors
+  de l'écran sur un tronc, c'est aussi perdu.
+- **Pièces et personnages** : les pièces ramassées (pièce géante = 5) sont
+  sauvegardées et achètent de nouveaux personnages dans l'onglet
+  **Personnages** : grenouille, cochon, pingouin, chat, renard, lama, robot,
+  fantôme et licorne (25 à 250 pièces) ; le poulet est là dès le départ.
+- **Modes** : *Sans fin* (points = rangée la plus lointaine, compte pour le
+  record) et *Parcours du jour* (le même pour tous aujourd'hui, aussi dans le
+  navigateur, avec son propre record du jour). Commandes : flèches/WASD,
+  Espace/Entrée/clic = sauter en avant ; dans le setup **H** = ombres, **N** =
+  jour/nuit. Pièces, personnages et record du jour sont dans la section `crossy`
+  de `mem.json`.
+
+**Geometry Dash**
+- **Plateforme rythmique** : ton personnage fonce tout seul vers la droite - tu
+  décides seulement quand sauter ou voler. **Cinq formes** - cube, vaisseau,
+  boule, OVNI et onde -, plus des portails de forme, de gravité et de vitesse
+  (0,5x à 3x), des **tremplins et orbes** jaunes/roses/bleus, demi-blocs, pics,
+  fosses et déclencheurs de couleur.
+- **8 niveaux intégrés** de *Facile* à *Démon* (« Lama Inferno ») avec **3 pièces
+  secrètes** chacun. Chaque niveau est prouvé faisable : lors de sa création, un
+  solveur l'a terminé avec le vrai code du jeu - pièces comprises, et même décalé
+  de 1/240 de seconde.
+- **Physique précise** : calcul en virgule fixe à pas fixe de 240 Hz ; chaque
+  appui agit exactement dans le pas où il a eu lieu - identique à toute cadence
+  d'images et au bit près dans le navigateur.
+- **Mode entraînement** (**P**) avec points de contrôle automatiques et manuels
+  (**Z** pour poser, **X** pour effacer), compteur de tentatives, barre de
+  progression, explosions et redémarrage immédiat (**R**). Chaque niveau a sa
+  **propre bande-son** - fond, sol et orbes pulsent en rythme (musique coupable
+  avec **M**).
+- **Étoiles et pièces** : termine un niveau en mode normal pour gagner ses
+  étoiles, chaque pièce vaut une étoile de plus ; le record est le **total
+  d'étoiles** (65 au maximum). Records par niveau, pièces, tentatives et sauts
+  sont dans la section `geodash` de `mem.json`.
+- **Éditeur de niveaux** dans l'onglet **NIVEAUX** : toile quadrillée, palette de
+  6 groupes (blocs, dangers, tremplins et orbes, portails, vitesse, extras),
+  rotation, annuler/rétablir, barre d'aperçu, **test depuis le début ou depuis
+  ici** et réglages du niveau (vitesse et forme de départ, style musical, BPM,
+  couleurs). La coche **« vérifié »** n'apparaît qu'une fois ton propre niveau
+  réussi. **Partager** écrit un fichier `.lamapgzlevel`, **Importer** le relit ;
+  les niveaux sont stockés dans `ugc.json` à côté de tes trous de minigolf.
+
+**Battleship**
+- **Bataille navale en 10x10** avec porte-avions (5 cases), cuirassé (4),
+  croiseur (3), sous-marin (3) et destroyer (2) - le premier à couler toute la
+  flotte adverse gagne.
+- **Placer la flotte** par glisser-déposer depuis le dock : **R** ou clic droit
+  fait pivoter, l'aperçu brille en vert ou en rouge, **X** place tout au hasard,
+  **C** vide le plateau ; ton dernier placement est reproposé la manche suivante.
+- **Règles dans le setup** (sauvegardées) : *les navires peuvent se toucher*,
+  *salve* (autant de tirs par tour que de navires encore à flot) et *tirer encore
+  après une touche*.
+- **IA à 3 niveaux** : Facile tire au hasard, Moyen traque méthodiquement les
+  touches, Difficile calcule une **carte de probabilités** avec parité en damier
+  (en moyenne environ 70 / 60 / 45 tirs pour toute une flotte). Ou **2 joueurs**
+  sur le même ordinateur - un **écran de passation** cache les deux flottes avant
+  chaque tour.
+- **Visuels** : balayage radar, vagues animées, obus en cloche, gerbes d'eau,
+  explosions avec fumée et cases en feu, révélation « COULÉ ! » et bilan de fin
+  de manche avec tirs, touches et précision. Le record compte tes **victoires
+  contre l'IA** dans une session.
+
+**Casino**
+- **Roulette** (européenne, 37 cases) : toutes les mises classiques en cliquant
+  un numéro, un bord ou un coin - **plein** (35:1), cheval, transversale, carré,
+  sixain, colonne, douzaine, rouge/noir, pair/impair et manque/passe. Jetons de
+  1/5/25/100/500, clic droit pour retirer des jetons ; **Lancer**, **Rejouer**
+  (**R**), **Doubler** (**D**) et **Effacer**. La bille tourne en spirale jusqu'à
+  la case tirée à l'avance, et les 12 derniers numéros s'affichent en haut.
+- **Machine Lama** : 5 rouleaux x 3 rangées, **10 lignes de gain**, **lama =
+  wild**, **pièces d'or = scatter** avec 10 tours gratuits à gains doublés, mise
+  par ligne 1/2/5/10, **tours automatiques** (10/25), **turbo** et table des
+  gains. Le **taux de redistribution est de 96,1 %** - calculé exactement à partir
+  des bandes des rouleaux.
+- **Banque Lama** : Casino, Blackjack et Poker partagent un compte de **jetons
+  Lama** (départ 1000, section `casino` de `mem.json`) ; les anciens soldes sont
+  repris automatiquement. Les mises sont débitées aussitôt, chaque jeu tient son
+  propre bilan pour son record, et à sec tu reçois un **crédit bancaire** qui
+  remonte le compte à 1000.
+- Confettis, pluies de pièces, bannières gros gain/méga/jackpot et animations des
+  lignes gagnantes ; succès **En plein dans le mille** (plein gagnant à la
+  roulette) et **Jackpot Lama** (5 lamas sur une ligne).
+
 Les meilleurs scores sont enregistrés dans la section `highscores` de
 `mem.json` (à côté du code) – avec la langue (section `mem`).
 
@@ -579,8 +793,10 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
   dans le menu, **pluie de confettis pour un nouveau record** et un vrai
   **flou** derrière la superposition de pause.
 - L'**écran de préparation** de chaque jeu apparaît dans sa couleur d'accent et
-  affiche le record précédent sous forme de puce.
-- **Look unifié en jeu** : les 42 jeux partagent la palette et la police du
+  affiche le record précédent sous forme de puce. Avec beaucoup de modes et une
+  petite résolution, il devient **compact** : Options, Wiki et Retour passent sur
+  une seule ligne et la police s'adapte - plus rien ne déborde de l'écran.
+- **Look unifié en jeu** : les 46 jeux partagent la palette et la police du
   menu - les HUD, écrans de préparation et superpositions suivent le design
   choisi dans les options (v4.1 / v4 / Classique), tandis que chaque terrain
   garde ses couleurs d'identité. Chaque jeu gère proprement un changement de
@@ -589,12 +805,14 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
 - **Wiki intégré** (« LamaWiki ») : aide détaillée pour chaque jeu (commandes,
   modes, points, astuces) plus des pages générales - avec **champ de
   recherche**, catégories, articles défilables et puces de touches, dans les
-  cinq langues. Accessible via le bouton **« Wiki / Aide »** de la barre
+  14 langues. Accessible via le bouton **« Wiki / Aide »** de la barre
   latérale et depuis l'écran de préparation de chaque jeu (ouvre directement sa
   page).
-- **Succès & statistiques** : **69 succès** en trois catégories (objectifs
-  globaux, un palier de points par jeu et des moments spéciaux comme un échec
-  et mat contre l'IA ou la tuile 2048) avec **notification dorée et fanfare**
+- **Succès & statistiques** : **107 succès** en trois catégories (23 objectifs
+  globaux, 37 paliers de points et 47 moments spéciaux comme un échec et mat
+  contre l'IA, la tuile 4096, un T-Spin Double, 25 problèmes d'échecs résolus,
+  un Killer Sudoku ou le jackpot lama ; dans 2048 et aux échecs, les parties
+  avec annulation ou indices ne comptent pas) avec **notification dorée et fanfare**
   au déblocage - même en pleine partie ; les anciens records sont crédités
   automatiquement. Plus un onglet **Statistiques** : temps de jeu total,
   parties, victoires, records, jeu préféré et tableau par jeu trié par temps
@@ -615,7 +833,15 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
 - **F11** (ou le bouton « Plein écran oui/non ») = plein écran. L'affichage
   Pygame reste intégré et est agrandi en conservant les proportions (bandes
   noires si le rapport diffère). La fenêtre se redimensionne librement.
-- **« Retour au menu »** termine le jeu et enregistre le meilleur score.
+- **« Retour au menu »** termine le jeu et enregistre le meilleur score - tout
+  comme passer à un autre jeu via la barre latérale.
+- **Touches fixes supplémentaires** : en plus des cinq actions réaffectables,
+  certains jeux ont leurs propres touches (par ex. réserve **C** et rotation à
+  gauche **Z** dans Tetris, annuler **U** dans 2048, aux échecs et au Sudoku).
+  Elles ne fonctionnent que si la touche n'est affectée à aucune action dans les
+  options et sont indiquées dans l'aide du setup et dans le wiki. Les touches
+  maintenues sont bien détectées et relâchées à la pause ou avec Alt-Tab - plus
+  rien ne « colle ».
 - **« Quitter »** ferme proprement Pygame et Tkinter.
 
 ### Options, commandes et son
@@ -666,22 +892,24 @@ start.sh             Script de lancement (Linux / macOS / Git Bash)
 pyinstall.bat        Build EXE (Windows) : met tout dans builds\PyGameZ.exe
 main.py              Interface Tkinter, intégration Pygame, boucle de jeu centrale
 game_base.py         Classe de base des jeux (update/draw/handle_event) + InputEvent + assistants
-settings.py          Charger/enregistrer les réglages (son/vibration/touches) (JSON)
-audio.py             Effets sonores procéduraux + vibration de manette
+settings.py          Charger/enregistrer les réglages (son/vibration/touches/options de jeu avec règles de contrôle) (JSON)
+audio.py             Effets sonores procéduraux, boucles musicales + vibration de manette
 menu.py              Écrans de langue, de préparation (mode) et d'options (son/commandes)
 highscore.py         Charger/enregistrer les meilleurs scores (section dans mem.json)
-store.py             Fichier de sauvegarde central mem.json (sections : mem, highscores, stats, achievements)
+store.py             Fichier de sauvegarde central mem.json (sections : mem, highscores, stats, achievements + progression des jeux), atomique avec copie .bak
 stats.py             Statistiques du joueur (parties, temps de jeu, victoires, records) par jeu
 achievements.py      Succès : définitions, logique de déblocage, notification (toast)
 progress.py          Écran Succès & statistiques (deux onglets, défilable)
 replay.py            Enregistrement et archive des rediffusions (replay.json)
 replayview.py        Écran Replay : liste de l'archive et lecture
-ugc.py               Trous personnels : stockage, vérification, export/import (ugc.json)
+ugc.py               Contenus personnels (trous de minigolf, niveaux Geometry Dash) : stockage, vérification, export/import (ugc.json)
 swear.py             Filtre de mots pour noms et id (lang/swear/*.yml, les 14 langues)
 filepick.py          Boîtes de dialogue de fichiers ("Exporter sous ...", "Importer")
 prestige.py          Système de prestige de Snake
 competitive.py       Paramètres du mode Compétitif de Snake (niveaux, machine à sous, pommes de pari)
 ngb.py               Personnalisation visuelle (« mods ») : couleur de tête + grille + menu (mem-ngb.json)
+lamabank.py          Banque Lama : compte de jetons commun au Blackjack, au Poker et au Casino (section casino de mem.json)
+seedrand.py          Générateur aléatoire aux nombres identiques au bit près en Python et dans le navigateur (modes du jour, nouveaux problèmes)
 i18n.py              Moteur de traduction (charge lang/*.json, t("clé"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Textes (une clé par texte)
@@ -693,25 +921,49 @@ lamawiki/
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 woordlistz/
   build_wordlists.py   Reconstruit les listes de mots de Wordle (dictionnaires + fréquences)
-  de/ en/ fr/ ... hr/  answers.txt (solutions) + allowed.txt (mots acceptés), 14 langues
+  de/ en/ fr/ ... hr/  answers.txt + allowed.txt (5 lettres), answers4/6/7.txt + allowed4/6/7.txt (4, 6, 7 lettres), 14 langues
+devtools/            Outils de développement (non inclus dans la .exe)
+  merge_staging.py           Intègre traductions et pages wiki de devtools/staging/ dans les 14 fichiers de langue
+  build_chess_puzzles.py     Construit les 200 problèmes d'échecs depuis la base de problèmes Lichess (CC0)
+  build_sudoku_killer.py     Génère les 400 Killer Sudokus à solution unique
+  build_crossyroad_models.py Écrit les modèles voxel de Crossy Road pour la version web
+  build_geodash_levels.py    Construit les 8 niveaux de Geometry Dash et prouve avec le solveur que chacun est faisable, pièces comprises
+  build_geodash_solver.py    Solveur utilisant le vrai code de pas (solutions dans geodash_proofs.json)
 games/
-  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
+  tetris.py  tetris_core.py  tetris_ai.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py  sudoku_draw.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py  wordle_words.py
+  trexrunner.py  dame.py  poker.py  muehle.py
+  chess.py  chess_engine.py  chess_draw.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
-  levels/
+  crossyroad.py  crossyroad_world.py  crossyroad_draw.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  battleship.py  battleship_core.py
+  casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  levels/              Données de niveaux : snake-comp.json, chess-puzzles.json (+ README des sources), sudoku-killer.json, geodash.json
+tests/
+  arcade_casino_audit.py     Audit global (saisie, seedrand Python = JS, sauvegarde, fichiers de langue, écrans de préparation) + tous les audit_*.py
+  audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Audits headless par jeu
+  newgames_audit.py  blockjump_audit.py
 ```
 
 La langue choisie est enregistrée dans `mem.json` (dans la section `mem`, à
 côté de la section `highscores` du même fichier) et chargée automatiquement au
 prochain démarrage.
+
+**Sources et licences :** les 200 problèmes d'échecs proviennent de la
+[base de problèmes Lichess](https://database.lichess.org/#puzzles) (licence
+**CC0 1.0**, domaine public - merci à lichess.org !) ; les détails sont dans
+`games/levels/chess-puzzles.README.md`. Les sources des listes de mots de Wordle
+sont indiquées dans `woordlistz/README.md`.
 
 ### Notes de plateforme
 
@@ -826,13 +1078,15 @@ Les réglages et meilleurs scores (`settings.json`, `mem.json`,
 
 Una colección de juegos de escritorio en Python: **Tkinter** aporta la ventana y
 el menú, **Pygame** va incrustado como pantalla de juego dentro de la ventana de
-Tkinter. Cuarenta y dos juegos con opciones compartidas, controles totalmente
+Tkinter. Cuarenta y seis juegos con opciones compartidas, controles totalmente
 reasignables, récords, efectos de sonido procedurales y, en varios títulos, modo
-multijugador. La interfaz es **multilingüe** (alemán / inglés / francés /
-español / portugués); el idioma se elige en una **pantalla de bienvenida** en el
-primer arranque, que también permite ajustar la **resolución** y el **sonido**
-(desactivado por defecto); el español y el portugués están tras el botón
-**«Más»**. Todo se puede cambiar en cualquier momento en las opciones.
+multijugador. La interfaz es **multilingüe** – **14 idiomas** (alemán / inglés /
+francés / español / portugués / polaco / turco / danés / noruego / sueco / finés /
+checo / esloveno / croata); el idioma se elige en una **pantalla de bienvenida**
+en el primer arranque, que también permite ajustar la **resolución** y el
+**sonido** (desactivado por defecto); aparte de los tres idiomas principales,
+todos los demás están tras el botón **«Más»**. Todo se puede cambiar en
+cualquier momento en las opciones.
 
 ### Inicio rápido
 
@@ -862,30 +1116,34 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Air Hockey** | 1 / 2 jugadores | Física 2D con transferencia de impulso, control con ratón, IA y power-ups |
 | **Tic-Tac-Toe** | 1 / 2 jugadores | Juego m,n,k de 3x3 a 9x9, tres niveles de IA **o** X contra O en local |
 | **Breakout** | 1 jugador       | Rompe-ladrillos con tipos de ladrillo, power-ups, combos y muchos niveles |
-| **Tetris**   | 1 / 2 jugadores | Clásico o Versus (dos campos lado a lado) |
+| **Tetris**   | 1 / 2 jugadores | Reglas Guideline modernas (SRS, reserva, vista previa de 5 piezas, T-Spins): Maratón, Sprint 40, Ultra 2:00, Versus contra la IA (3 niveles) o a dos con líneas basura |
 | **Invaders** | 1 jugador       | Space Invaders: vacía las oleadas, protege tus vidas |
 | **Asteroids** | 1 / 2 jugadores | Física de inercia, oleadas, OVNIs, power-ups, hiperespacio - solo o duelo cooperativo |
 | **Pac-Man**  | 1 jugador       | Clon fiel: 4 IAs de fantasmas, píldoras de poder, túneles, frutas, niveles |
 | **Flappy Bird** | 1 jugador    | Vuelo con gravedad entre tuberías, monedas, escudo, día/noche, medallas |
 | **Doodle Jump** | 1 jugador    | Salto automático hacia arriba, tipos de plataforma, muelles, hélice, monstruos |
-| **2048**     | 1 jugador       | Puzle de deslizar números, objetivo: la ficha 2048 |
+| **2048**     | 1 jugador       | Puzle de números deslizantes de 3x3 a 8x8: Clásico, Contrarreloj e Infinito, deshacer, animaciones fluidas, partidas guardadas |
 | **Minesweeper** | 1 jugador    | El clásico con primer clic seguro, chording, smiley y mejores tiempos |
-| **Sudoku**      | 1 jugador    | 400 niveles con semilla (4 dificultades x 100), 4 modos de ayuda con multiplicador, notas, pistas, límite de 3 errores |
+| **Sudoku**      | 1 jugador    | 4 variantes (Clásico, Sudoku X, Killer, Mini 6x6) de 400 niveles cada una, Sudoku del día, hasta 3 estrellas por nivel, 4 modos de asistencia, deshacer, partida guardada |
 | **Frogger**     | 1 jugador    | Carretera + río + 5 bahías, mosca de bonus, cocodrilos, límite de tiempo, 3 dificultades |
 | **Memory**      | 1 / 2 jugadores | Encuentra parejas en 4x4 hasta 8x6, animación de volteo, solo o duelo |
 | **Solitario**   | 1 jugador    | 5 variantes (Klondike, Spider, FreeCell, Pirámide, TriPeaks) con arrastrar y soltar y deshacer |
 | **Aim Trainer** | 1 jugador    | Tiro al blanco 3D relajado: el ratón dirige la cámara, 4 modos (precisión/reflejos/móviles/chill), 3 temas incl. un agujero negro |
 | **Cuatro en raya** | 1 / 2 jugadores | El clásico con animación de caída: 3 niveles de IA (minimax) o duelo local |
 | **Duelo de tanques** | 1 / 2 jugadores | Duelo 2D en arena con disparos con rebote, power-ups, 4 arenas, IA con 3 niveles |
-| **Blackjack**    | 1 jugador    | Blackjack de casino con zapato de 4 barajas, doblar/dividir, blackjack 3:2 y saldo de fichas persistente |
+| **Blackjack**    | 1 jugador    | Blackjack de casino con zapato de 4 barajas, doblar/dividir y blackjack 3:2; juega con las fichas Llama del Banco Llama común |
 | **Tunnel Racer** | 1 jugador    | Vuelo 3D por un tubo de neón: modo sin fin + 30 niveles, control por teclas o ratón, motion blur |
 | **Laberinto 3D** | 1 jugador    | Raycaster en primera persona (estilo Wolfenstein) con 50 niveles con semilla, orbes, minimapa - o vista cenital 2D |
 | **Reversi**      | 1 / 2 jugadores | Othello en 8x8: atrapar y voltear fichas, 3 fuerzas de IA (minimax) o un duelo local |
 | **Yahtzee**      | 1 / 2 jugadores | Clásico de dados con 13 categorías, bono superior y Yahtzee; carrera por el récord o hotseat a 2 |
-| **Wordle**       | 1 jugador    | Adivina la palabra de 5 letras en 6 intentos, racha sin fin, pistas de color, listas de palabras reales en 14 idiomas |
+| **Wordle**       | 1 jugador    | Adivina palabras de 4 a 7 letras: Infinito, Palabra del día, Dordle y Quordle, modo difícil, paleta para daltónicos, estadísticas con gráfico de barras, compartir resultado, listas reales en 14 idiomas |
 | **T-Rex Runner** | 1 jugador    | Carrera infinita por el desierto: salto variable, agacharse, cactus y pterodáctilos, ciclo día/noche, velocidad creciente, 3 dificultades |
 | **Damas**        | 1 / 2 jugadores | 3 reglamentos a elegir (alemanas 8×8, internacionales 10×10, checkers), captura obligatoria y dama voladora, 3 fuerzas de IA (minimax) o duelo local |
-| **Póker**        | 1 jugador    | 3 variantes a elegir: Texas Hold'em contra la IA, 5 Card Draw y Video Poker; rondas de apuestas, ciegas, cuenta de fichas persistente |
+| **Póker**        | 1 jugador    | 3 variantes a elegir: Texas Hold'em contra la IA, 5 Card Draw y Video Póker; rondas de apuestas, ciegas, fichas Llama del Banco Llama común |
+| **Ajedrez**     | 1 / 2 jugadores | Reglas completas, Chess960 y reloj, 6 niveles de IA, 200 problemas de la base de Lichess, deshacer/pista, lista de jugadas, exportación PGN o duelo local |
+| **Molino**      | 1 / 2 jugadores | Fases de colocar, mover y volar, molinos y capturas, vuelo desactivable, 3 niveles de IA o duelo local |
+| **Simon**       | 1 / 2 jugadores | Juego de memoria Senso: modos Clásico/Speed/Reverse/Mixto + duelo, sonido sí/no/mixto, 4/6/9 casillas, récord por modo |
+| **Billar**      | 1 / 2 jugadores | Bola 8, bola 9 y práctica en 2D, vista 3D fija o cámara 3D libre; física suave, ayuda de puntería, IA de 3 niveles |
 | **Puzle deslizante** | 1 jugador  | Puzle-15 en 3x3/4x4/5x5: desliza las fichas numeradas al hueco, control con ratón o flechas, puntos por movimientos y tiempo |
 | **Mastermind**       | 1 jugador  | Descifra el código de color secreto (3 modos: 4×6, clásico, 5×8), fichas de pista negras/blancas, racha sin fin |
 | **Bubble Shooter**   | 1 jugador  | Clon de Puzzle Bobble: dispara colores iguales en grupos de tres, rebotes en las paredes, racimos que caen, 3 dificultades |
@@ -895,12 +1153,19 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Minigolf**    | 1 / 2 jugadores | 360 hoyos en 40 recorridos (18 hechos a mano, 342 generados): arena, rampas, agua, parachoques, molinos y bloques móviles; tarjeta con par y bonus de hoyo en uno; **editor de hoyos propio** con 15 tipos de objetos, 12 plantillas y compartir como `.lamapgzmap` |
 | **Pinball**     | 1 / 2 jugadores | Máquina de pinball con 3 mesas: bumpers, slingshots, dianas, carriles L-A-M-A, multibola con jackpot, salvabolas, empujón y tilt |
 | **Bowling**     | 1 / 2 jugadores | 10 frames con la puntuación oficial de strike/spare, física real de bolos, efecto hook y pista en perspectiva, 3 dificultades |
+| **Crossy Road** | 1 jugador       | Saltar sin fin por praderas, carreteras, ríos y vías de tren con estilo vóxel isométrico: día/noche, águila, 10 personajes comprables, ruta del día |
+| **Geometry Dash** | 1 jugador     | Plataformas rítmico con cubo, nave, bola, OVNI y onda: 8 niveles de Fácil a Demonio con 3 monedas secretas cada uno, modo práctica, banda sonora por nivel; **editor de niveles** con compartir como `.lamapgzlevel` |
+| **Battleship**  | 1 / 2 jugadores | Batalla naval 10x10: flota colocada arrastrando, 3 reglas opcionales (contacto, salva, repetir disparo), IA de 3 niveles o duelo local con pantalla de relevo |
+| **Casino**      | 1 jugador       | Ruleta europea con todas las apuestas clásicas y Máquina Llama (5 rodillos, 10 líneas, comodín, tiradas gratis); una sola cuenta de fichas Llama con Blackjack y Póker |
 
 **El multijugador (2 jugadores en local)** está disponible en **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
 cooperativo)**, **Memory (duelo)**, **Cuatro en raya**, **Duelo de tanques**,
-**Reversi**, **Yahtzee**, **Damas**, **Minigolf**, **Pinball** y **Bowling**.
-El modo se elige directamente en la pantalla previa (*Un jugador / Multijugador*).
+**Reversi**, **Yahtzee**, **Damas**, **Ajedrez**, **Molino**, **Simon (duelo)**,
+**Billar**, **Minigolf**, **Pinball**, **Bowling** y **Battleship** (con una
+pantalla de relevo que oculta las flotas): 20 juegos en total. El modo se elige
+directamente en la pantalla previa (*Un jugador / Multijugador*); Tetris ofrece
+además **Versus contra la IA**. La versión web es solo para un jugador.
 
 #### Detalles por juego
 
@@ -1002,9 +1267,29 @@ El modo se elige directamente en la pantalla previa (*Un jugador / Multijugador*
   (dispara láser), **P/Esc** = pausa.
 
 **Tetris**
-- Izq/Der mueve, Arriba = girar, Abajo = soft drop, Acción = hard drop.
-- Las líneas completas dan puntos; cada 10 líneas sube el nivel.
-- **Versus**: pierde aquel cuya pila toca antes arriba.
+- **Reglas Guideline modernas**: campo de 10x20, piezas de una **bolsa de 7**,
+  **sistema de giro SRS** con wall kicks reales (también para la pieza I), giro
+  en ambos sentidos, **reserva** (una vez por pieza), **vista previa de 5
+  piezas**, pieza fantasma y **lock delay** (0,5 s, como máximo 15 reinicios).
+- **Tres modos** en la pantalla previa: *Solo*, *Contra la IA* y *2 jugadores*.
+  Solo ofrece en la configuración **Maratón** (nivel inicial 1-15, cuenta para el
+  récord), **Sprint 40 líneas** (mejor tiempo) y **Ultra 2 minutos** (mejor
+  puntuación); las marcas se guardan en la sección `tetris` de `mem.json`.
+- **Puntuación Guideline**: de Single a Tetris, **T-Spins** (completos y mini),
+  **Back-to-Back** (x1,5), **combos** y **Perfect Clear**, con avisos en
+  pantalla, animación de borrado, estela de hard drop, partículas y efecto de
+  subida de nivel.
+- **Versus con líneas basura**: las líneas borradas envían basura al rival
+  (Tetris = 4, T-Spin Double = 4 …), la basura entrante se anuncia en una barra
+  de aviso y se **compensa** con tus propios ataques; ambos campos reciben la
+  misma secuencia de piezas. La **IA** tiene 3 niveles y la velocidad sube cada
+  40 segundos.
+- **Controles**: Izq/Der con **DAS/ARR** propios (ajustables en la
+  configuración), Arriba = girar a la derecha, Abajo = soft drop, Acción = hard
+  drop; **C**/Mayús = reserva, **Z**/**Y** = girar a la izquierda, **X** = girar
+  a la derecha. A dos jugadores, J1 reserva con **Q** y gira a la izquierda con
+  **E**, J2 con **Mayús derecha** / **Ctrl derecho**. Tras la partida: **R** =
+  otra vez, **S** = configuración.
 
 **Invaders** – dos modos (en la pantalla previa):
 - **Clásico**: bloque de aliens clásico; luego en el setup: **movimiento** (solo
@@ -1075,7 +1360,22 @@ arma), efectos de explosión, récord.
 - Puntos = altura alcanzada; la dificultad sube con la altura. Récord.
 - Controles: izq/der = mover, Arriba / Espacio = disparar.
 
-**2048** – flechas/WASD deslizan todas las fichas; los números iguales se fusionan.
+**2048**
+- **Pantalla de configuración propia** con tableros de **3x3 a 8x8** y tres
+  modos: *Clásico* (meta 2048, después «¿Seguir jugando?»), *Contrarreloj* (3
+  minutos, el reloj arranca con el primer movimiento) e *Infinito*.
+- **Animaciones fluidas**: las fichas se deslizan, se fusionan con un «pop» y
+  aparecen creciendo; puntos emergentes, chispas desde 128, onda expansiva desde
+  2048 y nuevos colores hasta 131072. Lo que pulses durante una animación se
+  guarda y se ejecuta después.
+- **Deshacer** (desactivado / 3 por partida / ilimitado, tecla **U** o Backspace):
+  quien lo usa juega sin récord y sin logros de fichas.
+- **Guardar y reanudar**: la partida en curso se guarda automáticamente por
+  tamaño y modo; mejores puntuaciones y ficha más alta por tamaño/modo están en
+  la sección `g2048` de `mem.json`.
+- Controles: flechas/WASD o **deslizar** con ratón/touchpad, **R**/**N** = nueva
+  partida, **Tab** = configuración. El récord solo cuenta en **4x4 Clásico** sin
+  deshacer.
 
 **Minesweeper**
 - Tres niveles: **Principiante** (9x9, 10 minas), **Avanzado** (16x16, 40),
@@ -1092,22 +1392,34 @@ arma), efectos de explosión, récord.
 - Puntos = valor base del nivel menos segundos.
 
 **Sudoku**
-- **400 niveles**: 4 dificultades (Fácil/Normal/Difícil/Experto) x 100 niveles.
-  Los puzles se **generan por semilla y tienen solución única** - el nivel 12 de
-  "Difícil" es el mismo puzle en cualquier PC. Los resueltos se guardan y se
-  marcan en la selección.
+- **4 variantes** de **400 niveles** cada una (4 dificultades x 100): *Clásico*
+  (los niveles por semilla de siempre; los resueltos siguen marcados), *Sudoku X*
+  (ambas diagonales contienen cada dígito una sola vez), *Killer* (jaulas
+  discontinuas con suma; 400 niveles generados de antemano) y *Mini 6x6*. Todos
+  los puzles tienen **solución única**: el nivel 12 de "Difícil" es el mismo
+  puzle en cualquier PC.
+- **Sudoku del día**: un puzle diario para todos, idéntico en PC y en el
+  navegador; la dificultad depende del día de la semana (de lunes Fácil a sábado
+  Experto), y resolverlo cada día crea una racha.
+- **Hasta 3 estrellas por nivel** (resuelto · sin errores ni pistas · además por
+  debajo del tiempo objetivo) y **mejor tiempo** en la selección; los **sudokus
+  empezados** se guardan solos y se reanudan la próxima vez.
 - **4 modos de juego** (antes de empezar) con multiplicador: **Clásico** (x2,0 -
-  sin ayudas), **Notas** (x1,5 - + notas a lápiz), **Confort** (x1,0 - + errores
-  en rojo, resalte de conflictos y de dígitos iguales, entradas correctas se
-  fijan), **Asistente** (x0,7 - + pista, máx. 3).
-- Cada entrada se comprueba al momento contra la solución; con el **límite de 3
-  errores** activo (opción del setup) el tercer error acaba la partida.
+  sin ayudas), **Notas** (x1,5 - + notas a lápiz y candidatos automáticos),
+  **Confort** (x1,0 - + errores en rojo, conflictos y sumas de jaula erróneas
+  marcados, entradas correctas se fijan), **Asistente** (x0,7 - + pista, máx.
+  3). Con el **límite de 3 errores** activo (opción del setup) el tercer error
+  acaba la partida.
 - Controles: flechas/WASD = celda, **1-9** = dígito (también teclado numérico),
-  **0/Backspace/clic derecho** = borrar, **N** = notas, **H** = pista,
-  **R** = reiniciar nivel, **Q** = selección; jugable por completo con el ratón
-  (panel numérico a la derecha). Tras el final, **A** oculta el cartel y muestra
-  la **solución** completa (A de nuevo = volver).
-- Puntos = (base del nivel - tiempo - errores - pistas) x multiplicador del modo.
+  **0/Supr/clic derecho** = borrar, **U**/**Z** = deshacer, **Y** = rehacer,
+  **N** = notas, **C** = candidatos automáticos, **H** = pista, **M** = marcador
+  de color, **R** = reiniciar nivel, **Q** = selección. Entrada «dígito primero»
+  (setup, **I**) y un **contador de dígitos restantes** bajo cada dígito;
+  jugable por completo con el ratón. Tras el final, **A** muestra la **solución**
+  completa.
+- Puntos = (base de variante y dificultad - tiempo - errores - pistas) x
+  multiplicador del modo; todas las variantes y el Sudoku del día cuentan para
+  el récord.
 
 **Frogger**
 - 5 carriles de tráfico (coches/camiones) y 5 vías de río (troncos, tortugas que
@@ -1172,12 +1484,17 @@ arma), efectos de explosión, récord.
 - Reglas de casino reales: **zapato de 4 barajas**, el crupier se planta en 17,
   el **blackjack paga 3:2**, peek del crupier con as/10; **doblar** y **una
   división** (los ases divididos reciben una carta cada uno).
-- **Saldo de fichas persistente**: empiezas con 500, saldo y **récord**
-  sobreviven a cada reinicio (`mem.json`); con menos de 10 fichas recibes 500
-  nuevas - el récord se queda.
+- **Fichas Llama**: el Blackjack juega con la cuenta del **Banco Llama**, que
+  comparte con Póker y Casino (inicio 1000, guardada en `mem.json`). La apuesta
+  se descuenta al repartir; con menos de 10 fichas, Enter pide un **crédito del
+  banco** que devuelve la cuenta a 1000.
+- **Récord** = máximo de tu **balance en Blackjack** (1000 más todo lo ganado y
+  perdido en Blackjack): las ganancias en la ruleta, la tragaperras o el póker no
+  cuentan aquí, y los créditos tampoco.
 - Manejo con botones de fichas y teclas (**H**it/**S**tand/**D**ouble/dividir
-  **X**, **1-4** = apuesta, Enter = repartir) con animaciones de cartas y volteo
-  de la carta tapada.
+  **X**, **1-4** = apuesta, Backspace = quitar apuesta, Enter = repartir) con
+  animaciones de cartas; la carta tapada del crupier ahora sí se da la vuelta al
+  descubrirla.
 
 **Tunnel Racer**
 - **Vuelo 3D por un tubo de neón** (renderizador por software como el Aim
@@ -1218,17 +1535,76 @@ arma), efectos de explosión, récord.
   dos hojas en paralelo; juega con ratón o teclas (Espacio, 1-5, flechas, Enter).
 
 **Wordle**
-- Adivina la **palabra de 5 letras en 6 intentos**; respuesta de color
-  (verde/amarillo/gris) con **conteo correcto de letras repetidas** y un teclado
-  en pantalla que se colorea.
-- **Racha sin fin**: cada palabra resuelta da puntos (menos intentos = más), la
-  primera palabra no resuelta termina la partida - total = récord.
+- Adivina la palabra oculta; respuesta de color (verde/amarillo/gris) con
+  **conteo correcto de letras repetidas** y un teclado en pantalla que se colorea
+  (QWERTZ en alemán, checo, esloveno y croata, AZERTY en francés, QWERTY en el
+  resto).
+- **Cuatro modos**: *Infinito* (una palabra tras otra con 6 intentos cada una;
+  cada palabra resuelta da puntos y la primera sin resolver termina la partida),
+  *Palabra del día* (una palabra al día por idioma y longitud, la misma en PC y en
+  el navegador, con cuenta atrás y racha; la palabra del día empezada se guarda),
+  *Dordle* (2 palabras a la vez en 7 intentos) y *Quordle* (4 palabras en 9
+  intentos; las teclas muestran los colores de todos los tableros).
+- **Configuración** antes de cada partida: **longitud de 4 a 7 letras**, **modo
+  difícil** (hay que reutilizar las pistas encontradas) y **paleta para
+  daltónicos** (naranja/azul); al lado se muestran las estadísticas.
 - **Listas de palabras reales en los 14 idiomas** (carpeta `woordlistz/`, solo
-  A-Z): más de **34.000 soluciones** y **213.000 intentos válidos** en total.
-  Cada intento se comprueba con la lista; lo demás se rechaza y la fila tiembla
-  un momento.
-- **Dos modos**: *Normal* y *Difícil* - en el modo difícil hay que reutilizar
-  las pistas encontradas. Escribe con el teclado o pulsa las teclas en pantalla.
+  A-Z), con listas propias para cada longitud: solo con 5 letras, casi **34.000
+  soluciones** y más de **213.000 intentos válidos**, unas 134.000 soluciones
+  sumando todas las longitudes. Las soluciones son palabras comunes, sin nombres,
+  restos de inglés ni palabras ofensivas; cada intento se comprueba con la lista y
+  lo demás se rechaza mientras la fila tiembla un momento.
+- **Estadísticas** por idioma, longitud y modo: partidas, porcentaje de victorias,
+  racha actual y mejor racha y la **distribución de intentos en un gráfico de
+  barras** (sección `wordle` de `mem.json`). **Compartir** (**C**) copia una
+  cuadrícula de emojis sin revelar la solución.
+- El récord solo cuenta *Infinito* con 5 letras; las demás longitudes tienen sus
+  propias marcas. Logros **Clarividente** (2 intentos como máximo), **Hábito de
+  palabras** (7 palabras del día seguidas) y **Genio cuádruple** (Quordle
+  resuelto).
+
+**Póker**
+- **3 variantes** en la pantalla previa: **Texas Hold'em** contra 1-3 rivales de
+  IA con botón de repartidor, ciegas y cuatro rondas de apuestas, **5 Card Draw**
+  (mano a mano contra la IA, un descarte) y **Video Póker** (*Jacks or Better*,
+  en solitario contra la tabla de pagos).
+- Acciones con botones o teclas: **F** = retirarse, **C** = pasar/igualar, **R** =
+  subir, **A** = all-in; mantener/cambiar cartas con clic o **1-5**, **Enter**
+  roba o reparte la siguiente mano.
+- **Fichas Llama** del **Banco Llama** común: al empezar una mano tu cuenta está
+  en la mesa como pila, y lo que va al bote se descuenta al instante; dejar la
+  mesa a mitad de mano solo te cuesta tu parte del bote. Sin fondos (menos que la
+  ciega grande de 20, menos de 10 en Video Póker) = crédito del banco que
+  devuelve la cuenta a 1000.
+- **Récord** = máximo de tu **balance en Póker** (1000 más todas las ganancias y
+  pérdidas en póker); el logro **Chip leader** también cuenta solo ese balance.
+
+**Ajedrez**
+- **Ajedrez completo**: todos los movimientos, incluidos **enroque**, **captura
+  al paso** y **coronación** (pieza a elegir); **jaque, jaque mate y ahogado** y
+  tablas por la **regla de los 50 movimientos**, **triple repetición**,
+  **material insuficiente** o acuerdo.
+- **Tres modos**: *partida* contra la IA, *2 jugadores* en el mismo ordenador (el
+  tablero puede girar tras cada jugada) y **problemas**.
+- **IA más fuerte y sin tirones** en 6 niveles de *Principiante* a *Maestro*:
+  profundización iterativa, tabla de transposición, búsqueda de quiescencia,
+  libro de aperturas y una evaluación con movilidad, estructura de peones y
+  seguridad del rey. La IA calcula en pequeñas porciones por fotograma: el juego
+  nunca da tirones.
+- **Configuración**: elección de color, **reloj** (sin reloj, 1+0, 3+2, 5+0,
+  10+5) y **Chess960** (las 960 posiciones iniciales, el número aparece sobre la
+  lista de jugadas).
+- **Barra lateral** con relojes, piezas capturadas, balance de material y una
+  **lista de jugadas (SAN)** desplazable; arrastrar y soltar, piezas que se
+  deslizan, coordenadas. Teclas: **U** = deshacer, **H** = flecha de pista,
+  **O** = ofrecer tablas, **X** = rendirse, **F** = girar el tablero, tras la
+  partida **P** = **exportar PGN**.
+- **Problemas**: 200 problemas en 5 niveles (mate en 1/2/3, táctica I/II) de la
+  **base de problemas libre de Lichess (CC0)**, comprobados con el motor del
+  juego; en los problemas de mate vale cualquier jugada que dé mate. El progreso
+  está en la sección `chess` de `mem.json`.
+- Deshacer y pista marcan la partida como «asistida»: el récord solo cuenta las
+  victorias sin ayuda contra la IA (por sesión).
 
 **Tower Defense**
 - **Defensa de oleadas sin fin** en **4 mapas** (Pradera, Cañón, Cruce,
@@ -1329,6 +1705,100 @@ arma), efectos de explosión, récord.
 - **Repetición de la partida**: al final, **P** muestra otra vez todas las
   tiradas y **S** las guarda en el archivo (botón **Repeticiones**).
 
+**Crossy Road**
+- **Saltos sin fin** por praderas (árboles y rocas cortan el paso), carreteras con
+  coches y camiones, ríos con troncos y nenúfares y **vías de tren** por las que
+  llega un tren tras la luz de aviso y la campana; más adelante esperan
+  estaciones con hasta 5 vías. La ruta se crea fila a fila, siempre tiene un
+  camino transitable, y la velocidad y el tráfico aumentan.
+- **Estilo vóxel isométrico**: personajes, vehículos y árboles hechos de bloques
+  sombreados (prerenderizados para cada tamaño de casilla), cámara suave, squash
+  & stretch al saltar, salpicaduras, animación de aplastamiento, plumas y
+  monedas que brillan; desde la fila 50, **ciclo día/noche** con faros.
+- **El águila**: la cámara avanza despacio; si te entretienes demasiado o
+  retrocedes más de tres filas, el águila te atrapa (antes avisa un borde rojo).
+  Salir de la pantalla a la deriva sobre un tronco también acaba la partida.
+- **Monedas y personajes**: las monedas recogidas (moneda gigante = 5) se guardan
+  y compran personajes nuevos en la pestaña **Personajes**: rana, cerdo, pingüino,
+  gato, zorro, llama, robot, fantasma y unicornio (25 a 250 monedas); el pollo
+  está desde el principio.
+- **Modos**: *Infinito* (puntos = fila más lejana, cuenta para el récord) y *Ruta
+  del día* (hoy igual para todos, también en el navegador, con su propio récord
+  del día). Controles: flechas/WASD, Espacio/Enter/clic = saltar hacia delante;
+  en la configuración **H** = sombras, **N** = día/noche. Monedas, personajes y
+  récord del día se guardan en la sección `crossy` de `mem.json`.
+
+**Geometry Dash**
+- **Plataformas rítmico**: tu personaje corre solo hacia la derecha; tú solo
+  decides cuándo saltar o volar. **Cinco formas** (cubo, nave, bola, OVNI y onda),
+  además de portales de forma, gravedad y velocidad (0,5x a 3x), **plataformas y
+  orbes** amarillos/rosas/azules, medios bloques, pinchos, fosos y activadores de
+  color.
+- **8 niveles incluidos** de *Fácil* a *Demonio* («Lama Inferno») con **3
+  monedas secretas** cada uno. Cada nivel es superable de forma demostrada: al
+  crearlo, un solucionador lo completó con el código real del juego, monedas
+  incluidas e incluso desplazado 1/240 de segundo.
+- **Física precisa**: cálculo en coma fija con paso fijo de 240 Hz; cada pulsación
+  actúa exactamente en el paso en que ocurrió, igual con cualquier tasa de
+  fotogramas e idéntica bit a bit en el navegador.
+- **Modo práctica** (**P**) con puntos de control automáticos y propios (**Z**
+  pone, **X** borra), contador de intentos, barra de progreso, explosiones y
+  reinicio inmediato (**R**). Cada nivel tiene su **propia banda sonora**: fondo,
+  suelo y orbes laten al ritmo (la música se apaga con **M**).
+- **Estrellas y monedas**: al superar un nivel en modo normal ganas sus
+  estrellas, y cada moneda vale una estrella más; el récord es el **total de
+  estrellas** (65 como máximo). Mejores marcas por nivel, monedas, intentos y
+  saltos se guardan en la sección `geodash` de `mem.json`.
+- **Editor de niveles** en la pestaña **NIVELES**: lienzo con cuadrícula, paleta
+  de 6 grupos (bloques, peligros, plataformas y orbes, portales, velocidad,
+  extras), giro, deshacer/rehacer, barra de vista general, **probar desde el
+  inicio o desde aquí** y ajustes del nivel (velocidad y forma inicial, estilo
+  musical, BPM, colores). La marca **«verificado»** solo aparece cuando superas
+  tu propio nivel. **Compartir** escribe un archivo `.lamapgzlevel` e **Importar**
+  lo vuelve a leer; los niveles se guardan en `ugc.json` junto a tus hoyos de
+  minigolf.
+
+**Battleship**
+- **Batalla naval de 10x10** con portaaviones (5 casillas), acorazado (4),
+  crucero (3), submarino (3) y destructor (2): gana quien hunda primero toda la
+  flota enemiga.
+- **Colocar la flota** arrastrando desde el muelle: **R** o clic derecho gira, la
+  vista previa brilla en verde o rojo, **X** lo coloca todo al azar, **C** vacía
+  el tablero; tu última colocación se vuelve a proponer.
+- **Reglas en la configuración** (se guardan): *los barcos pueden tocarse*,
+  *salva* (tantos disparos por turno como barcos propios a flote) y *volver a
+  disparar tras un impacto*.
+- **IA de 3 niveles**: Fácil dispara al azar, Medio persigue los impactos de forma
+  sistemática, Difícil calcula un **mapa de probabilidades** con paridad de
+  tablero de ajedrez (de media unos 70 / 60 / 45 disparos para toda una flota).
+  O **2 jugadores** en el mismo ordenador: una **pantalla de relevo** oculta ambas
+  flotas antes de cada turno.
+- **Efectos**: barrido de radar, olas animadas, proyectiles en parábola,
+  salpicaduras, explosiones con humo y casillas en llamas, revelación
+  «¡HUNDIDO!» y resumen final con disparos, impactos y precisión. El récord
+  cuenta tus **victorias contra la IA** en una sesión.
+
+**Casino**
+- **Ruleta** (europea, 37 casillas): todas las apuestas clásicas con clic en un
+  número, un borde o una esquina: **pleno** (35:1), caballo, transversal, cuadro,
+  seisena, columna, docena, rojo/negro, par/impar y falta/pasa. Fichas de
+  1/5/25/100/500, clic derecho para retirarlas; **Girar**, **Repetir** (**R**),
+  **Doblar** (**D**) y **Borrar**. La bola entra en espiral en la casilla sorteada
+  de antemano, y arriba se ven los últimos 12 números.
+- **Máquina Llama**: 5 rodillos x 3 filas, **10 líneas de pago**, **llama =
+  comodín**, **monedas de oro = scatter** con 10 tiradas gratis y premios dobles,
+  apuesta por línea 1/2/5/10, **tirada automática** (10/25), **turbo** y tabla de
+  premios. El **retorno al jugador es del 96,1 %**, calculado con exactitud a
+  partir de las tiras de los rodillos.
+- **Banco Llama**: Casino, Blackjack y Póker comparten una cuenta de **fichas
+  Llama** (inicio 1000, sección `casino` de `mem.json`); los saldos antiguos se
+  pasan automáticamente. Las apuestas se descuentan al instante, cada juego lleva
+  su propio balance para su récord y, si te quedas sin fichas, recibes un
+  **crédito del banco** hasta 1000.
+- Confeti, lluvia de monedas, carteles de gran premio/mega/jackpot y animaciones
+  de líneas ganadoras; logros **Diana** (pleno ganador en la ruleta) y **Jackpot
+  Llama** (5 llamas en una línea).
+
 Los récords se guardan en la sección `highscores` de `mem.json` (junto al
 código) – junto con el idioma (sección `mem`).
 
@@ -1352,8 +1822,10 @@ extra) y pulida con aspecto de lanzador moderno:
   confirmar en el menú, **lluvia de confeti con un nuevo récord** y un
   **desenfoque real** tras la superposición de pausa.
 - La **pantalla previa** de cada juego aparece en su color de acento y muestra
-  el récord anterior como chip.
-- **Aspecto unificado en el juego**: los 42 juegos comparten la paleta y la
+  el récord anterior como chip. Con muchos modos y poca resolución se vuelve
+  **compacta**: Opciones, Wiki y Volver pasan a una sola fila y la letra se
+  adapta, así que nada se sale de la pantalla.
+- **Aspecto unificado en el juego**: los 46 juegos comparten la paleta y la
   tipografía del menú - los HUD, pantallas de configuración y superposiciones
   siguen el diseño elegido en las opciones (v4.1 / v4 / Clásico), mientras cada
   campo de juego conserva sus colores de identidad. Todos los juegos gestionan
@@ -1361,12 +1833,14 @@ extra) y pulida con aspecto de lanzador moderno:
   juegos en el menú se adaptan al idioma (p. ej. «Schach» → «Ajedrez»).
 - **Wiki integrado** ("LamaWiki"): ayuda detallada de cada juego (controles,
   modos, puntos, consejos) más páginas generales - con **buscador**, categorías,
-  artículos desplazables y chips de teclas, en los cinco idiomas. Accesible por
+  artículos desplazables y chips de teclas, en los 14 idiomas. Accesible por
   el botón **«Wiki / Ayuda»** de la barra lateral y desde la pantalla previa de
   cada juego (abre directamente su página).
-- **Logros y estadísticas**: **69 logros** en tres categorías (metas globales,
-  un hito de puntuación por juego y momentos especiales como un jaque mate a
-  la IA o la ficha de 2048) con **aviso dorado y fanfarria** al desbloquear,
+- **Logros y estadísticas**: **107 logros** en tres categorías (23 metas
+  globales, 37 hitos de puntuación y 47 momentos especiales como un jaque mate
+  a la IA, la ficha de 4096, un T-Spin Double, 25 problemas de ajedrez
+  resueltos, un Killer Sudoku o el jackpot de la llama; en 2048 y Ajedrez las
+  partidas con deshacer o pistas no cuentan) con **aviso dorado y fanfarria** al desbloquear,
   incluso en plena partida; los récords antiguos se acreditan automáticamente.
   Además, una pestaña de **estadísticas**: tiempo total, partidas, victorias,
   récords, juego favorito y tabla por juego ordenada por tiempo. Accesible por
@@ -1386,7 +1860,14 @@ extra) y pulida con aspecto de lanzador moderno:
 - **F11** (o el botón «Pantalla completa sí/no») = pantalla completa. La pantalla
   de Pygame sigue incrustada y se escala conservando la proporción (bandas negras
   si la proporción difiere). La ventana se puede redimensionar libremente.
-- **«Volver al menú»** termina el juego y guarda el récord.
+- **«Volver al menú»** termina el juego y guarda el récord; lo mismo ocurre al
+  cambiar a otro juego desde la barra lateral.
+- **Teclas fijas adicionales**: además de las cinco acciones asignables, algunos
+  juegos tienen teclas propias (p. ej. reservar **C** y girar a la izquierda
+  **Z** en Tetris, deshacer **U** en 2048, Ajedrez y Sudoku). Solo funcionan si
+  esa tecla no está asignada a ninguna acción en las opciones, y aparecen en el
+  aviso de la configuración y en el wiki. Las teclas mantenidas se detectan bien
+  y se sueltan al pausar o con Alt-Tab: ya nada se «atasca».
 - **«Salir»** cierra Pygame y Tkinter limpiamente.
 
 ### Opciones, controles y sonido
@@ -1437,22 +1918,24 @@ start.sh             Script de arranque (Linux / macOS / Git Bash)
 pyinstall.bat        Build de EXE (Windows): lo empaqueta todo en builds\PyGameZ.exe
 main.py              Interfaz Tkinter, incrustación de Pygame, bucle central
 game_base.py         Clase base de juego (update/draw/handle_event) + InputEvent + ayudas
-settings.py          Cargar/guardar ajustes (sonido/vibración/teclas) (JSON)
-audio.py             Efectos de sonido procedurales + vibración de gamepad
+settings.py          Cargar/guardar ajustes (sonido/vibración/teclas/opciones de juego con reglas de validación) (JSON)
+audio.py             Efectos de sonido procedurales, bucles de música + vibración del mando
 menu.py              Pantallas de idioma, previa (modo) y opciones (sonido/controles)
 highscore.py         Cargar/guardar récords (sección en mem.json)
-store.py             Archivo central mem.json (secciones: mem, highscores, stats, achievements)
+store.py             Archivo de guardado central mem.json (secciones: mem, highscores, stats, achievements + progreso de los juegos), atómico con copia .bak
 stats.py             Estadísticas del jugador (partidas, tiempo, victorias, récords) por juego
 achievements.py      Logros: definiciones, lógica de desbloqueo, aviso (toast)
 progress.py          Pantalla de logros y estadísticas (dos pestañas, desplazable)
 replay.py            Grabación y archivo de las repeticiones (replay.json)
 replayview.py        Pantalla de repeticiones: lista del archivo y reproducción
-ugc.py               Hoyos propios: almacenamiento, comprobación, export/import (ugc.json)
+ugc.py               Contenido propio (hoyos de minigolf, niveles de Geometry Dash): almacenamiento, validación, exportar/importar (ugc.json)
 swear.py             Filtro de palabras para nombres e id (lang/swear/*.yml, 14 idiomas)
 filepick.py          Diálogos de archivo ("Exportar como ...", "Importar")
 prestige.py          Sistema de prestigio de Snake
 competitive.py       Parámetros del modo Competitivo de Snake (niveles, tragaperras, manzanas de apuesta)
 ngb.py               Personalización visual ("mods"): color de cabeza + rejilla + menú (mem-ngb.json)
+lamabank.py          Banco Llama: cuenta de fichas común de Blackjack, Póker y Casino (sección casino de mem.json)
+seedrand.py          Generador aleatorio con números idénticos bit a bit en Python y en el navegador (modos diarios, nuevos puzles)
 i18n.py              Motor de traducción (carga lang/*.json, t("clave"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Textos (una clave por texto)
@@ -1464,25 +1947,49 @@ lamawiki/
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 woordlistz/
   build_wordlists.py   Reconstruye las listas de palabras de Wordle (diccionarios + frecuencias)
-  de/ en/ fr/ ... hr/  answers.txt (soluciones) + allowed.txt (intentos válidos), 14 idiomas
+  de/ en/ fr/ ... hr/  answers.txt + allowed.txt (5 letras), answers4/6/7.txt + allowed4/6/7.txt (4, 6, 7 letras), 14 idiomas
+devtools/            Herramientas de desarrollo (no se incluyen en el .exe)
+  merge_staging.py           Integra traducciones y páginas del wiki de devtools/staging/ en los 14 archivos de idioma
+  build_chess_puzzles.py     Genera los 200 problemas de ajedrez a partir de la base de problemas de Lichess (CC0)
+  build_sudoku_killer.py     Genera los 400 Killer Sudokus con solución única
+  build_crossyroad_models.py Escribe los modelos vóxel de Crossy Road para la versión web
+  build_geodash_levels.py    Construye los 8 niveles de Geometry Dash y demuestra con el solucionador que todos son superables, monedas incluidas
+  build_geodash_solver.py    Solucionador con el código de paso real (soluciones en geodash_proofs.json)
 games/
-  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
+  tetris.py  tetris_core.py  tetris_ai.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py  sudoku_draw.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py  wordle_words.py
+  trexrunner.py  dame.py  poker.py  muehle.py
+  chess.py  chess_engine.py  chess_draw.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
-  levels/
+  crossyroad.py  crossyroad_world.py  crossyroad_draw.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  battleship.py  battleship_core.py
+  casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  levels/              Datos de niveles: snake-comp.json, chess-puzzles.json (+ README de fuentes), sudoku-killer.json, geodash.json
+tests/
+  arcade_casino_audit.py     Auditoría general (entrada, seedrand Python = JS, guardado, archivos de idioma, pantallas previas) + todos los audit_*.py
+  audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Auditorías headless por juego
+  newgames_audit.py  blockjump_audit.py
 ```
 
 El idioma elegido se guarda en `mem.json` (en la sección `mem`, junto a la
 sección `highscores` del mismo archivo) y se carga automáticamente en el
 siguiente arranque.
+
+**Fuentes y licencias:** los 200 problemas de ajedrez proceden de la
+[base de problemas de Lichess](https://database.lichess.org/#puzzles) (licencia
+**CC0 1.0**, dominio público; ¡gracias, lichess.org!); los detalles están en
+`games/levels/chess-puzzles.README.md`. Las fuentes de las listas de palabras de
+Wordle figuran en `woordlistz/README.md`.
 
 ### Notas de plataforma
 
@@ -1591,13 +2098,15 @@ junto al .exe al jugar.
 
 Uma coleção de jogos de desktop em Python: o **Tkinter** fornece a janela e o
 menu, o **Pygame** é incorporado como ecrã de jogo dentro da janela do Tkinter.
-Quarenta e dois jogos com opções partilhadas, controlos totalmente reatribuíveis,
+Quarenta e seis jogos com opções partilhadas, controlos totalmente reatribuíveis,
 recordes, efeitos sonoros procedurais e, em vários títulos, modo multijogador.
-A interface é **multilingue** (alemão / inglês / francês / espanhol /
-português); o idioma escolhe-se num **ecrã de boas-vindas** no primeiro arranque,
-que também permite definir a **resolução** e o **som** (desligado por omissão); o
-espanhol e o português estão atrás do botão **«Mais»**. Tudo pode ser mudado a
-qualquer momento nas opções.
+A interface é **multilingue** – **14 idiomas** (alemão / inglês / francês /
+espanhol / português / polaco / turco / dinamarquês / norueguês / sueco /
+finlandês / checo / esloveno / croata); o idioma escolhe-se num **ecrã de
+boas-vindas** no primeiro arranque, que também permite definir a **resolução** e
+o **som** (desligado por omissão); além dos três idiomas principais, todos os
+outros estão atrás do botão **«Mais»**. Tudo pode ser mudado a qualquer momento
+nas opções.
 
 ### Início rápido
 
@@ -1627,30 +2136,34 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Air Hockey** | 1 / 2 jogadores | Física 2D com transferência de impulso, controlo com rato, IA e power-ups |
 | **Tic-Tac-Toe** | 1 / 2 jogadores | Jogo m,n,k de 3x3 a 9x9, três níveis de IA **ou** X contra O em local |
 | **Breakout** | 1 jogador       | Parte-tijolos com tipos de tijolo, power-ups, combos e muitos níveis |
-| **Tetris**   | 1 / 2 jogadores | Clássico ou Versus (dois campos lado a lado) |
+| **Tetris**   | 1 / 2 jogadores | Regras Guideline modernas (SRS, reserva, pré-visualização de 5 peças, T-Spins): Maratona, Sprint 40, Ultra 2:00, Versus contra a IA (3 níveis) ou a dois com linhas de lixo |
 | **Invaders** | 1 jogador       | Space Invaders: limpa as vagas, protege as tuas vidas |
 | **Asteroids** | 1 / 2 jogadores | Física de inércia, vagas, OVNIs, power-ups, hiperespaço - a solo ou duelo cooperativo |
 | **Pac-Man**  | 1 jogador       | Clone fiel: 4 IAs de fantasmas, pílulas de poder, túneis, frutas, níveis |
 | **Flappy Bird** | 1 jogador    | Voo com gravidade entre canos, moedas, escudo, dia/noite, medalhas |
 | **Doodle Jump** | 1 jogador    | Salto automático para cima, tipos de plataforma, molas, hélice, monstros |
-| **2048**     | 1 jogador       | Puzzle de deslizar números, objetivo: a peça 2048 |
+| **2048**     | 1 jogador       | Puzzle de deslizar números de 3x3 a 8x8: Clássico, Contrarrelógio e Infinito, desfazer, animações fluidas, partidas guardadas |
 | **Minesweeper** | 1 jogador    | O clássico com primeiro clique seguro, chording, smiley e melhores tempos |
-| **Sudoku**      | 1 jogador    | 400 níveis com semente (4 dificuldades x 100), 4 modos de ajuda com multiplicador, notas, dicas, limite de 3 erros |
+| **Sudoku**      | 1 jogador    | 4 variantes (Clássico, Sudoku X, Killer, Mini 6x6) com 400 níveis cada, Sudoku do dia, até 3 estrelas por nível, 4 modos de ajuda, desfazer, jogo guardado |
 | **Frogger**     | 1 jogador    | Estrada + rio + 5 baías, mosca bónus, crocodilos, limite de tempo, 3 dificuldades |
 | **Memory**      | 1 / 2 jogadores | Encontra pares em 4x4 até 8x6, animação de viragem, a solo ou em duelo |
 | **Solitário**   | 1 jogador    | 5 variantes (Klondike, Spider, FreeCell, Pirâmide, TriPeaks) com arrastar e largar e anular |
 | **Aim Trainer** | 1 jogador    | Tiro ao alvo 3D descontraído: o rato dirige a câmara, 4 modos (precisão/reflexos/móveis/chill), 3 temas incl. um buraco negro |
 | **Quatro em linha** | 1 / 2 jogadores | O clássico com animação de queda: 3 níveis de IA (minimax) ou duelo local |
 | **Duelo de tanques** | 1 / 2 jogadores | Duelo 2D em arena com tiros com ricochete, power-ups, 4 arenas, IA com 3 níveis |
-| **Blackjack**    | 1 jogador    | Blackjack de casino com shoe de 4 baralhos, dobrar/dividir, blackjack 3:2 e saldo de fichas persistente |
+| **Blackjack**    | 1 jogador    | Blackjack de casino com shoe de 4 baralhos, dobrar/dividir e blackjack 3:2; joga com as fichas Lama do Banco Lama comum |
 | **Tunnel Racer** | 1 jogador    | Voo 3D num tubo de néon: modo sem fim + 30 níveis, controlo por teclas ou rato, motion blur |
 | **Labirinto 3D** | 1 jogador    | Raycaster na primeira pessoa (estilo Wolfenstein) com 50 níveis com semente, orbes, minimapa - ou vista de cima 2D |
 | **Reversi**      | 1 / 2 jogadores | Othello em 8x8: cercar e virar peças, 3 forças de IA (minimax) ou um duelo local |
 | **Yahtzee**      | 1 / 2 jogadores | Clássico de dados com 13 categorias, bónus superior e Yahtzee; caça ao recorde ou hotseat a 2 |
-| **Wordle**       | 1 jogador    | Adivinha a palavra de 5 letras em 6 tentativas, série sem fim, pistas coloridas, listas de palavras reais em 14 idiomas |
+| **Wordle**       | 1 jogador    | Adivinha palavras de 4 a 7 letras: Infinito, Palavra do dia, Dordle e Quordle, modo difícil, paleta para daltónicos, estatísticas com gráfico de barras, partilhar resultado, listas reais em 14 idiomas |
 | **T-Rex Runner** | 1 jogador    | Corrida infinita pelo deserto: salto variável, agachar, cactos e pterodáctilos, ciclo dia/noite, velocidade crescente, 3 dificuldades |
 | **Damas**        | 1 / 2 jogadores | 3 regulamentos à escolha (alemãs 8×8, internacionais 10×10, checkers), captura obrigatória e dama voadora, 3 forças de IA (minimax) ou duelo local |
-| **Póquer**       | 1 jogador    | 3 variantes à escolha: Texas Hold'em contra a IA, 5 Card Draw e Video Poker; rondas de apostas, blinds, saldo de fichas persistente |
+| **Póquer**       | 1 jogador    | 3 variantes à escolha: Texas Hold'em contra a IA, 5 Card Draw e Video Poker; rondas de apostas, blinds, fichas Lama do Banco Lama comum |
+| **Xadrez**      | 1 / 2 jogadores | Regras completas, Chess960 e relógio, 6 níveis de IA, 200 problemas da base do Lichess, desfazer/dica, lista de lances, exportação PGN ou duelo local |
+| **Trilha**      | 1 / 2 jogadores | Fases de colocar, mover e voar, moinhos e capturas, voo desligável, 3 níveis de IA ou duelo local |
+| **Simon**       | 1 / 2 jogadores | Jogo de memória Senso: modos Clássico/Speed/Reverse/Misto + duelo, som sim/não/misto, 4/6/9 casas, recorde por modo |
+| **Bilhar**      | 1 / 2 jogadores | Bola 8, bola 9 e treino em 2D, vista 3D fixa ou câmara 3D livre; física suave, ajuda de mira, IA com 3 níveis |
 | **Quebra-cabeça deslizante** | 1 jogador | Jogo do 15 em 3x3/4x4/5x5: deslize as peças numeradas para o vazio, controle por rato ou setas, pontos por jogadas e tempo |
 | **Mastermind**       | 1 jogador  | Decifra o código de cor secreto (3 modos: 4×6, clássico, 5×8), pinos de dica pretos/brancos, série sem fim |
 | **Bubble Shooter**   | 1 jogador  | Clone do Puzzle Bobble: atira cores iguais em grupos de três, ressaltos nas paredes, grupos que caem, 3 dificuldades |
@@ -1660,12 +2173,19 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Minigolf**    | 1 / 2 jogadores | 360 buracos em 40 percursos (18 feitos à mão, 342 gerados): areia, rampas, água, para-choques, moinhos e blocos móveis; cartão com par e bónus de buraco em um; **editor de buracos próprio** com 15 tipos de objetos, 12 modelos e partilha como `.lamapgzmap` |
 | **Pinball**     | 1 / 2 jogadores | Máquina de pinball com 3 mesas: bumpers, slingshots, alvos, corredores L-A-M-A, multibola com jackpot, salva-bolas, empurrão e tilt |
 | **Bowling**     | 1 / 2 jogadores | 10 frames com a pontuação oficial de strike/spare, física real dos pinos, efeito hook e pista em perspetiva, 3 dificuldades |
+| **Crossy Road** | 1 jogador       | Saltar sem fim por relvados, estradas, rios e linhas de comboio em estilo voxel isométrico: dia/noite, águia, 10 personagens para comprar, percurso do dia |
+| **Geometry Dash** | 1 jogador     | Plataformas rítmico com cubo, nave, bola, OVNI e onda: 8 níveis de Fácil a Demónio com 3 moedas secretas cada, modo treino, banda sonora por nível; **editor de níveis** com partilha como `.lamapgzlevel` |
+| **Battleship**  | 1 / 2 jogadores | Batalha naval 10x10: frota posicionada arrastando, 3 regras opcionais (tocar, salva, voltar a disparar), IA com 3 níveis ou duelo local com ecrã de passagem |
+| **Casino**      | 1 jogador       | Roleta europeia com todas as apostas clássicas e Máquina Lama (5 rolos, 10 linhas, wild, rodadas grátis); uma só conta de fichas Lama com o Blackjack e o Póquer |
 
 **O multijogador (2 jogadores em local)** está disponível em **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
 cooperativo)**, **Memory (duelo)**, **Quatro em linha**, **Duelo de tanques**,
-**Reversi**, **Yahtzee**, **Damas**, **Minigolf**, **Pinball** e **Bowling**.
-O modo escolhe-se diretamente no ecrã de preparação (*Um jogador / Multijogador*).
+**Reversi**, **Yahtzee**, **Damas**, **Xadrez**, **Trilha**, **Simon (duelo)**,
+**Bilhar**, **Minigolf**, **Pinball**, **Bowling** e **Battleship** (com um ecrã
+de passagem que esconde as frotas) - 20 jogos no total. O modo escolhe-se
+diretamente no ecrã de preparação (*Um jogador / Multijogador*); o Tetris
+oferece ainda **Versus contra a IA**. A versão web é apenas para um jogador.
 
 #### Detalhes por jogo
 
@@ -1768,9 +2288,29 @@ O modo escolhe-se diretamente no ecrã de preparação (*Um jogador / Multijogad
   (dispara laser), **P/Esc** = pausa.
 
 **Tetris**
-- Esq/Dir move, Cima = rodar, Baixo = soft drop, Ação = hard drop.
-- Linhas completas dão pontos; a cada 10 linhas sobe o nível.
-- **Versus**: perde aquele cuja pilha toca primeiro no topo.
+- **Regras Guideline modernas**: campo de 10x20, peças de um **saco de 7**,
+  **sistema de rotação SRS** com wall kicks verdadeiros (também para a peça I),
+  rotação nos dois sentidos, **reserva** (uma vez por peça), **pré-visualização
+  de 5 peças**, peça fantasma e **lock delay** (0,5 s, no máximo 15 reinícios).
+- **Três modos** no ecrã de preparação: *Solo*, *Contra a IA* e *2 jogadores*. O
+  Solo oferece nas definições **Maratona** (nível inicial 1-15, conta para o
+  recorde), **Sprint 40 linhas** (melhor tempo) e **Ultra 2 minutos** (melhor
+  pontuação); os melhores valores ficam na secção `tetris` do `mem.json`.
+- **Pontuação Guideline**: de Single a Tetris, **T-Spins** (completos e mini),
+  **Back-to-Back** (x1,5), **combos** e **Perfect Clear** - com avisos,
+  animação de limpeza, rasto de hard drop, partículas e efeito de subida de
+  nível.
+- **Versus com linhas de lixo**: as linhas limpas enviam lixo ao adversário
+  (Tetris = 4, T-Spin Double = 4 …), o lixo que chega é anunciado numa barra de
+  aviso e **compensado** pelos teus próprios ataques; os dois campos recebem a
+  mesma sequência de peças. A **IA** tem 3 níveis e a velocidade sobe a cada 40
+  segundos.
+- **Controlos**: Esq/Dir com **DAS/ARR** próprios (ajustáveis nas definições),
+  Cima = rodar para a direita, Baixo = soft drop, Ação = hard drop; **C**/Shift =
+  reserva, **Z**/**Y** = rodar para a esquerda, **X** = rodar para a direita. A
+  dois, o J1 guarda com **Q** e roda para a esquerda com **E**, o J2 com **Shift
+  direito** / **Ctrl direito**. Depois do jogo: **R** = de novo, **S** =
+  definições.
 
 **Invaders** – dois modos (no ecrã de preparação):
 - **Clássico**: o clássico bloco de aliens; depois no setup: **movimento** (só
@@ -1841,7 +2381,22 @@ melhoria de arma), efeitos de explosão, recorde.
 - Pontos = altura alcançada; a dificuldade sobe com a altura. Recorde.
 - Controlos: esq/dir = mover, Cima / Espaço = disparar.
 
-**2048** – setas/WASD deslizam todas as peças; números iguais fundem-se.
+**2048**
+- **Ecrã de configuração próprio** com tabuleiros de **3x3 a 8x8** e três modos:
+  *Clássico* (objetivo 2048, depois «Continuar a jogar?»), *Contrarrelógio* (3
+  minutos, o relógio arranca com o primeiro movimento) e *Infinito*.
+- **Animações fluidas**: as peças deslizam, fundem-se com um «pop» e aparecem a
+  crescer; pontos a saltar, faíscas a partir de 128, onda de choque a partir de
+  2048 e novas cores até 131072. O que premires durante uma animação fica em
+  memória.
+- **Desfazer** (desligado / 3 por jogo / ilimitado, tecla **U** ou Backspace) -
+  quem o usa joga sem recorde e sem conquistas de peças.
+- **Guardar e retomar**: a partida em curso é guardada automaticamente por
+  tamanho e modo; melhores pontuações e maior peça por tamanho/modo ficam na
+  secção `g2048` do `mem.json`.
+- Controlos: setas/WASD ou **deslizar** com rato/touchpad, **R**/**N** = novo
+  jogo, **Tab** = configuração. O recorde só conta em **4x4 Clássico** sem
+  desfazer.
 
 **Minesweeper**
 - Três níveis: **Principiante** (9x9, 10 minas), **Avançado** (16x16, 40),
@@ -1858,22 +2413,34 @@ melhoria de arma), efeitos de explosão, recorde.
 - Pontos = valor base do nível menos segundos.
 
 **Sudoku**
-- **400 níveis**: 4 dificuldades (Fácil/Normal/Difícil/Perito) x 100 níveis. Os
-  puzzles são **gerados por semente e têm solução única** - o nível 12 de
-  "Difícil" é o mesmo puzzle em qualquer PC. Os resolvidos são guardados e
-  assinalados na escolha de níveis.
+- **4 variantes** com **400 níveis** cada (4 dificuldades x 100): *Clássico* (os
+  níveis por semente de sempre - os resolvidos continuam assinalados), *Sudoku X*
+  (as duas diagonais contêm cada dígito uma só vez), *Killer* (jaulas tracejadas
+  com soma; 400 níveis gerados antecipadamente) e *Mini 6x6*. Todos os puzzles
+  têm **solução única** - o nível 12 de "Difícil" é o mesmo puzzle em qualquer
+  PC.
+- **Sudoku do dia**: um puzzle por dia para todos, igual no PC e no navegador; a
+  dificuldade depende do dia da semana (de segunda Fácil a sábado Perito), e
+  resolver todos os dias cria uma sequência.
+- **Até 3 estrelas por nível** (resolvido · sem erros nem dicas · e abaixo do
+  tempo-alvo) e **melhor tempo** na escolha de níveis; os **puzzles começados**
+  são guardados automaticamente e retomados na vez seguinte.
 - **4 modos de jogo** (antes de começar) com multiplicador: **Clássico** (x2,0 -
-  sem ajudas), **Notas** (x1,5 - + notas a lápis), **Conforto** (x1,0 - + erros
-  a vermelho, realce de conflitos e dígitos iguais, entradas corretas fixam-se),
-  **Assistente** (x0,7 - + dica, máx. 3).
-- Cada entrada é verificada logo contra a solução; com o **limite de 3 erros**
-  ativo (opção do setup) o terceiro erro acaba a partida.
+  sem ajudas), **Notas** (x1,5 - + notas a lápis e candidatos automáticos),
+  **Conforto** (x1,0 - + erros a vermelho, conflitos e somas de jaula erradas
+  marcados, entradas corretas fixam-se), **Assistente** (x0,7 - + dica, máx. 3).
+  Com o **limite de 3 erros** ativo (opção do setup) o terceiro erro acaba a
+  partida.
 - Controlos: setas/WASD = célula, **1-9** = dígito (também teclado numérico),
-  **0/Backspace/clique direito** = apagar, **N** = notas, **H** = dica,
-  **R** = recomeçar nível, **Q** = escolha de níveis; totalmente jogável com o
-  rato (painel numérico à direita). Depois do fim, **A** esconde a faixa e
-  mostra a **solução** completa (A de novo = voltar).
-- Pontos = (base do nível - tempo - erros - dicas) x multiplicador do modo.
+  **0/Delete/clique direito** = apagar, **U**/**Z** = desfazer, **Y** = refazer,
+  **N** = notas, **C** = candidatos automáticos, **H** = dica, **M** = marcador de
+  cor, **R** = recomeçar nível, **Q** = escolha de níveis. Entrada «dígito
+  primeiro» (setup, **I**) e um **contador de dígitos restantes** por baixo de
+  cada dígito; totalmente jogável com o rato. Depois do fim, **A** mostra a
+  **solução** completa.
+- Pontos = (base da variante e da dificuldade - tempo - erros - dicas) x
+  multiplicador do modo; todas as variantes e o Sudoku do dia contam para o
+  recorde.
 
 **Frogger**
 - 5 faixas de trânsito (carros/camiões) e 5 vias de rio (troncos, tartarugas que
@@ -1937,12 +2504,16 @@ melhoria de arma), efeitos de explosão, recorde.
 - Regras de casino verdadeiras: **shoe de 4 baralhos**, o dealer fica em 17, o
   **blackjack paga 3:2**, peek do dealer com ás/10; **dobrar** e **uma divisão**
   (ases divididos recebem uma carta cada).
-- **Saldo de fichas persistente**: começas com 500, saldo e **recorde**
-  sobrevivem a cada reinício (`mem.json`); com menos de 10 fichas recebes 500
-  novas - o recorde fica.
+- **Fichas Lama**: o Blackjack joga com a conta do **Banco Lama**, partilhada com
+  o Póquer e o Casino (início 1000, guardada no `mem.json`). A aposta é debitada
+  ao dar as cartas; com menos de 10 fichas, Enter pede um **crédito do banco**
+  que repõe a conta em 1000.
+- **Recorde** = máximo do teu **saldo no Blackjack** (1000 mais tudo o que foi
+  ganho e perdido no Blackjack) - ganhos na roleta, na slot machine ou no póquer
+  não contam aqui, e os créditos também não.
 - Manejo com botões de fichas e teclas (**H**it/**S**tand/**D**ouble/dividir
-  **X**, **1-4** = aposta, Enter = dar) com animações de cartas e viragem da
-  carta tapada.
+  **X**, **1-4** = aposta, Backspace = limpar aposta, Enter = dar) com animações
+  de cartas; a carta tapada do dealer agora vira-se mesmo ao ser revelada.
 
 **Tunnel Racer**
 - **Voo 3D num tubo de néon** (renderizador por software como o Aim Trainer):
@@ -1981,17 +2552,75 @@ melhoria de arma), efeitos de explosão, recorde.
   folhas lado a lado; joga com o rato ou teclas (Espaço, 1-5, setas, Enter).
 
 **Wordle**
-- Adivinha a **palavra de 5 letras em 6 tentativas**; resposta colorida
-  (verde/amarelo/cinzento) com **contagem correta de letras repetidas** e um
-  teclado no ecrã que se colore.
-- **Série sem fim**: cada palavra resolvida dá pontos (menos tentativas = mais),
-  a primeira palavra não resolvida termina a partida - total = recorde.
-- **Listas de palavras a sério nos 14 idiomas** (pasta `woordlistz/`, só A-Z):
-  mais de **34.000 soluções** e **213.000 tentativas aceites** no total. Cada
-  tentativa é verificada na lista; o resto é recusado e a linha abana por
-  instantes.
-- **Dois modos**: *Normal* e *Difícil* - no modo difícil as pistas encontradas
-  têm de ser reaproveitadas. Escreve no teclado ou clica as teclas no ecrã.
+- Adivinha a palavra escondida; resposta colorida (verde/amarelo/cinzento) com
+  **contagem correta de letras repetidas** e um teclado no ecrã que se colore
+  (QWERTZ em alemão, checo, esloveno e croata, AZERTY em francês, QWERTY nos
+  restantes).
+- **Quatro modos**: *Infinito* (uma palavra atrás da outra com 6 tentativas cada;
+  cada palavra resolvida dá pontos e a primeira falhada termina a partida),
+  *Palavra do dia* (uma palavra por dia por idioma e comprimento - a mesma no PC e
+  no navegador - com contagem decrescente e sequência; a palavra do dia começada
+  fica guardada), *Dordle* (2 palavras ao mesmo tempo em 7 tentativas) e *Quordle*
+  (4 palavras em 9 tentativas, as teclas mostram as cores de todos os tabuleiros).
+- **Configuração** antes de cada partida: **comprimento de 4 a 7 letras**, **modo
+  difícil** (as pistas encontradas têm de ser reaproveitadas) e **paleta para
+  daltónicos** (laranja/azul); ao lado aparecem as estatísticas.
+- **Listas de palavras a sério nos 14 idiomas** (pasta `woordlistz/`, só A-Z), com
+  listas próprias por comprimento: só com 5 letras, quase **34.000 soluções** e
+  mais de **213.000 tentativas aceites**, cerca de 134.000 soluções somando todos
+  os comprimentos. As soluções são palavras comuns, sem nomes, restos de inglês nem
+  palavras ofensivas; cada tentativa é verificada na lista - o resto é recusado e
+  a linha abana por instantes.
+- **Estatísticas** por idioma, comprimento e modo: jogos, percentagem de vitórias,
+  sequência atual e melhor sequência e a **distribuição de tentativas num gráfico
+  de barras** (secção `wordle` do `mem.json`). **Partilhar** (**C**) copia uma
+  grelha de emojis sem revelar a solução.
+- O recorde só conta *Infinito* com 5 letras; os outros comprimentos têm os seus
+  próprios melhores valores. Conquistas **Vidente** (2 tentativas no máximo),
+  **Hábito de palavras** (7 palavras do dia seguidas) e **Génio quádruplo**
+  (Quordle resolvido).
+
+**Póquer**
+- **3 variantes** no ecrã de preparação: **Texas Hold'em** contra 1-3 adversários
+  da IA com botão de dealer, blinds e quatro rondas de apostas, **5 Card Draw**
+  (frente a frente contra a IA, uma troca de cartas) e **Video Poker** (*Jacks or
+  Better*, a solo contra a tabela de prémios).
+- Ações com botões ou teclas: **F** = desistir, **C** = passar/pagar, **R** =
+  aumentar, **A** = all-in; guardar/trocar cartas com clique ou **1-5**, **Enter**
+  compra ou dá a mão seguinte.
+- **Fichas Lama** do **Banco Lama** comum: no início de uma mão a tua conta fica
+  na mesa como pilha, e o que vai para o pote é debitado logo - sair da mesa a meio
+  da mão só custa a tua parte do pote. Sem fichas (menos do que o big blind de 20,
+  menos de 10 no Video Poker) = crédito do banco que repõe a conta em 1000.
+- **Recorde** = máximo do teu **saldo no Póquer** (1000 mais todos os ganhos e
+  perdas no póquer); a conquista **Chip leader** também conta só esse saldo.
+
+**Xadrez**
+- **Xadrez completo**: todos os lances, incluindo **roque**, **en passant** e
+  **promoção** (peça à escolha); **xeque, xeque-mate e afogamento** e empate pela
+  **regra dos 50 lances**, **tripla repetição**, **material insuficiente** ou
+  acordo.
+- **Três modos**: *partida* contra a IA, *2 jogadores* no mesmo computador (o
+  tabuleiro pode rodar após cada lance) e **problemas**.
+- **IA mais forte e sem soluços** em 6 níveis de *Iniciante* a *Mestre*:
+  aprofundamento iterativo, tabela de transposição, pesquisa de quiescência,
+  livro de aberturas e uma avaliação com mobilidade, estrutura de peões e
+  segurança do rei. A IA calcula em pequenas fatias por imagem - o jogo nunca
+  engasga.
+- **Configuração**: escolha da cor, **relógio** (sem relógio, 1+0, 3+2, 5+0,
+  10+5) e **Chess960** (as 960 posições iniciais, o número aparece por cima da
+  lista de lances).
+- **Barra lateral** com relógios, peças capturadas, balanço material e uma
+  **lista de lances (SAN)** deslocável; arrastar e largar, peças que deslizam,
+  coordenadas. Teclas: **U** = desfazer, **H** = seta de dica, **O** = propor
+  empate, **X** = desistir, **F** = rodar o tabuleiro, depois da partida **P** =
+  **exportar PGN**.
+- **Problemas**: 200 problemas em 5 níveis (mate em 1/2/3, tática I/II) da
+  **base de problemas livre do Lichess (CC0)**, verificados com o motor do jogo;
+  nos problemas de mate vale qualquer lance que dê mate. O progresso fica na
+  secção `chess` do `mem.json`.
+- Desfazer e dica tornam a partida «assistida»: o recorde só conta vitórias sem
+  ajuda contra a IA (por sessão).
 
 **Tower Defense**
 - **Defesa de ondas sem fim** em **4 mapas** (Campina, Desfiladeiro, Cruzamento,
@@ -2091,6 +2720,99 @@ melhoria de arma), efeitos de explosão, recorde.
 - **Replay da partida**: no fim, **P** mostra todos os lançamentos outra vez e
   **S** guarda-os no arquivo (botão **Replays**).
 
+**Crossy Road**
+- **Saltos sem fim** por relvados (árvores e pedras bloqueiam o caminho),
+  estradas com carros e camiões, rios com troncos e nenúfares e **linhas de
+  comboio** onde um comboio chega a toda a velocidade após luz de aviso e sino -
+  mais à frente esperam estações com até 5 linhas. O percurso é criado fila a
+  fila, tem sempre um caminho transitável, e a velocidade e o trânsito aumentam.
+- **Estilo voxel isométrico**: personagens, veículos e árvores feitos de blocos
+  sombreados (pré-renderizados para cada tamanho de casa), câmara suave, squash &
+  stretch ao saltar, salpicos, animação de esmagamento, penas e moedas a brilhar;
+  a partir da fila 50, **ciclo dia/noite** com faróis.
+- **A águia**: a câmara avança devagar - quem se demora demasiado ou recua mais
+  de três filas é apanhado pela águia (antes avisa uma borda vermelha). Sair do
+  ecrã à deriva num tronco também acaba a partida.
+- **Moedas e personagens**: as moedas apanhadas (moeda gigante = 5) ficam
+  guardadas e compram novas personagens no separador **Personagens**: rã, porco,
+  pinguim, gato, raposa, lama, robô, fantasma e unicórnio (25 a 250 moedas); a
+  galinha está lá desde o início.
+- **Modos**: *Infinito* (pontos = fila mais distante, conta para o recorde) e
+  *Percurso do dia* (hoje igual para todos, também no navegador, com recorde do
+  dia próprio). Controlos: setas/WASD, Espaço/Enter/clique = saltar em frente; na
+  configuração **H** = sombras, **N** = dia/noite. Moedas, personagens e recorde
+  do dia ficam na secção `crossy` do `mem.json`.
+
+**Geometry Dash**
+- **Plataformas rítmico**: a tua personagem corre sozinha para a direita - só
+  decides quando saltar ou voar. **Cinco formas** - cubo, nave, bola, OVNI e
+  onda -, mais portais de forma, gravidade e velocidade (0,5x a 3x),
+  **plataformas e orbes** amarelos/rosa/azuis, meios blocos, espinhos, buracos e
+  gatilhos de cor.
+- **8 níveis incluídos** de *Fácil* a *Demónio* («Lama Inferno») com **3 moedas
+  secretas** cada. Cada nível é comprovadamente possível: ao construí-lo, um
+  solucionador completou-o com o verdadeiro código do jogo - com todas as moedas
+  e até com 1/240 de segundo de desvio.
+- **Física precisa**: cálculo em vírgula fixa com passo fixo de 240 Hz; cada
+  toque atua exatamente no passo em que aconteceu - igual a qualquer taxa de
+  fotogramas e idêntico bit a bit no navegador.
+- **Modo treino** (**P**) com pontos de controlo automáticos e próprios (**Z**
+  coloca, **X** apaga), contador de tentativas, barra de progresso, explosões e
+  recomeço imediato (**R**). Cada nível tem a sua **própria banda sonora** -
+  fundo, chão e orbes pulsam ao ritmo (música desligável com **M**).
+- **Estrelas e moedas**: quem conclui um nível no modo normal ganha as suas
+  estrelas, e cada moeda vale mais uma estrela; o recorde é o **total de
+  estrelas** (no máximo 65). Melhores valores por nível, moedas, tentativas e
+  saltos ficam na secção `geodash` do `mem.json`.
+- **Editor de níveis** no separador **NÍVEIS**: tela com grelha, paleta com 6
+  grupos (blocos, perigos, plataformas e orbes, portais, velocidade, extras),
+  rotação, desfazer/refazer, barra de visão geral, **testar desde o início ou a
+  partir daqui** e definições do nível (velocidade e forma inicial, estilo
+  musical, BPM, cores). O visto **«verificado»** só aparece depois de concluíres
+  o teu próprio nível. **Partilhar** escreve um ficheiro `.lamapgzlevel` e
+  **Importar** volta a lê-lo; os níveis ficam em `ugc.json`, ao lado dos teus
+  buracos de minigolfe.
+
+**Battleship**
+- **Batalha naval em 10x10** com porta-aviões (5 casas), couraçado (4), cruzador
+  (3), submarino (3) e contratorpedeiro (2) - ganha quem afundar primeiro toda a
+  frota inimiga.
+- **Posicionar a frota** arrastando a partir da doca: **R** ou clique direito
+  roda, a pré-visualização brilha a verde ou vermelho, **X** posiciona tudo ao
+  acaso, **C** limpa o tabuleiro; a última disposição volta a ser sugerida.
+- **Regras na configuração** (guardadas): *os navios podem tocar-se*, *salva*
+  (tantos tiros por jogada quantos navios próprios à tona) e *disparar de novo
+  após acertar*.
+- **IA com 3 níveis**: Fácil dispara ao acaso, Médio persegue os acertos de forma
+  sistemática, Difícil calcula um **mapa de probabilidades** com paridade de
+  tabuleiro de xadrez (em média cerca de 70 / 60 / 45 tiros para uma frota
+  inteira). Ou **2 jogadores** no mesmo computador - um **ecrã de passagem**
+  esconde as duas frotas antes de cada jogada.
+- **Visual**: varrimento de radar, ondas animadas, granadas em arco, salpicos,
+  explosões com fumo e casas a arder, revelação «AFUNDADO!» e resumo final com
+  tiros, acertos e pontaria. O recorde conta as tuas **vitórias contra a IA** numa
+  sessão.
+
+**Casino**
+- **Roleta** (europeia, 37 casas): todas as apostas clássicas com clique num
+  número, numa aresta ou num canto - **pleno** (35:1), cavalo, transversal,
+  quadrado, sextena, coluna, dúzia, vermelho/preto, par/ímpar e baixo/alto. Fichas
+  de 1/5/25/100/500, clique direito retira fichas; **Rodar**, **Repetir** (**R**),
+  **Dobrar** (**D**) e **Limpar**. A bola entra em espiral na casa sorteada de
+  antemão, e em cima aparecem os últimos 12 números.
+- **Máquina Lama**: 5 rolos x 3 filas, **10 linhas de prémio**, **lama = wild**,
+  **moedas de ouro = scatter** com 10 rodadas grátis e prémios a dobrar, aposta
+  por linha 1/2/5/10, **rodadas automáticas** (10/25), **turbo** e tabela de
+  prémios. O **retorno ao jogador é de 96,1 %** - calculado com exatidão a partir
+  das fitas dos rolos.
+- **Banco Lama**: Casino, Blackjack e Póquer partilham uma conta de **fichas Lama**
+  (início 1000, secção `casino` do `mem.json`); os saldos antigos passam
+  automaticamente. As apostas são debitadas logo, cada jogo tem o seu próprio
+  saldo para o recorde e, sem fichas, recebes um **crédito do banco** até 1000.
+- Confetes, chuva de moedas, faixas de grande prémio/mega/jackpot e animações das
+  linhas vencedoras; conquistas **Em cheio** (pleno ganho na roleta) e **Jackpot
+  Lama** (5 lamas numa linha).
+
 Os recordes são guardados na secção `highscores` de `mem.json` (junto ao
 código) – juntamente com o idioma (secção `mem`).
 
@@ -2114,8 +2836,10 @@ e polida com aspeto de launcher moderno:
   confirmar no menu, **chuva de confetes num novo recorde** e um **desfoque
   verdadeiro** atrás da sobreposição de pausa.
 - O **ecrã de preparação** de cada jogo aparece na sua cor de destaque e mostra
-  o recorde anterior como chip.
-- **Visual unificado no jogo**: os 42 jogos partilham a paleta e a tipografia do
+  o recorde anterior como chip. Com muitos modos e pouca resolução fica
+  **compacto**: Opções, Wiki e Voltar passam para uma só linha e a letra
+  ajusta-se - nada sai do ecrã.
+- **Visual unificado no jogo**: os 46 jogos partilham a paleta e a tipografia do
   menu - os HUD, ecrãs de preparação e sobreposições seguem o design escolhido
   nas opções (v4.1 / v4 / Clássico), enquanto cada campo de jogo mantém as suas
   cores de identidade. Todos os jogos lidam corretamente com uma mudança de
@@ -2123,12 +2847,14 @@ e polida com aspeto de launcher moderno:
   (p. ex. «Schach» → «Xadrez»).
 - **Wiki integrado** ("LamaWiki"): ajuda detalhada de cada jogo (controlos,
   modos, pontos, dicas) mais páginas gerais - com **campo de pesquisa**,
-  categorias, artigos deslocáveis e chips de teclas, nos cinco idiomas.
+  categorias, artigos deslocáveis e chips de teclas, nos 14 idiomas.
   Acessível pelo botão **«Wiki / Ajuda»** da barra lateral e a partir do ecrã de
   preparação de cada jogo (abre logo a sua página).
-- **Conquistas e estatísticas**: **69 conquistas** em três categorias (metas
-  globais, um marco de pontuação por jogo e momentos especiais como um
-  xeque-mate à IA ou a peça 2048) com **aviso dourado e fanfarra** ao
+- **Conquistas e estatísticas**: **107 conquistas** em três categorias (23 metas
+  globais, 37 marcos de pontuação e 47 momentos especiais como um xeque-mate à
+  IA, a peça 4096, um T-Spin Double, 25 problemas de xadrez resolvidos, um
+  Killer Sudoku ou o jackpot do lama; no 2048 e no Xadrez, partidas com desfazer
+  ou dicas não contam) com **aviso dourado e fanfarra** ao
   desbloquear - mesmo a meio do jogo; os recordes antigos são creditados
   automaticamente. Além disso, um separador de **estatísticas**: tempo total,
   partidas, vitórias, recordes, jogo favorito e tabela por jogo ordenada por
@@ -2148,7 +2874,14 @@ e polida com aspeto de launcher moderno:
 - **F11** (ou o botão «Ecrã inteiro sim/não») = ecrã inteiro. O ecrã do Pygame
   continua incorporado e é ampliado mantendo a proporção (barras pretas se a
   proporção diferir). A janela pode ser redimensionada livremente.
-- **«Voltar ao menu»** termina o jogo e guarda o recorde.
+- **«Voltar ao menu»** termina o jogo e guarda o recorde - tal como mudar para
+  outro jogo pela barra lateral.
+- **Teclas fixas extra**: além das cinco ações atribuíveis, alguns jogos têm
+  teclas próprias (p. ex. reserva **C** e rodar para a esquerda **Z** no Tetris,
+  desfazer **U** no 2048, no Xadrez e no Sudoku). Só funcionam se essa tecla não
+  estiver atribuída a nenhuma ação nas opções, e aparecem na dica da configuração
+  e no wiki. Teclas mantidas premidas são bem detetadas e soltas ao pausar ou com
+  Alt-Tab - nada fica «preso».
 - **«Sair»** fecha o Pygame e o Tkinter de forma limpa.
 
 ### Opções, controlos e som
@@ -2197,22 +2930,24 @@ start.sh             Script de arranque (Linux / macOS / Git Bash)
 pyinstall.bat        Build de EXE (Windows): empacota tudo em builds\PyGameZ.exe
 main.py              Interface Tkinter, incorporação do Pygame, ciclo central
 game_base.py         Classe base de jogo (update/draw/handle_event) + InputEvent + auxiliares
-settings.py          Carregar/guardar definições (som/vibração/teclas) (JSON)
-audio.py             Efeitos sonoros procedurais + vibração de gamepad
+settings.py          Carregar/guardar definições (som/vibração/teclas/opções de jogo com regras de validação) (JSON)
+audio.py             Efeitos sonoros procedurais, loops de música + vibração do comando
 menu.py              Ecrãs de idioma, preparação (modo) e opções (som/controlos)
 highscore.py         Carregar/guardar recordes (secção em mem.json)
-store.py             Ficheiro central mem.json (secções: mem, highscores, stats, achievements)
+store.py             Ficheiro de gravação central mem.json (secções: mem, highscores, stats, achievements + progresso dos jogos), atómico com cópia .bak
 stats.py             Estatísticas do jogador (partidas, tempo, vitórias, recordes) por jogo
 achievements.py      Conquistas: definições, lógica de desbloqueio, aviso (toast)
 progress.py          Ecrã de conquistas e estatísticas (dois separadores, deslocável)
 replay.py            Gravação e arquivo das repetições (replay.json)
 replayview.py        Ecrã de replays: lista do arquivo e reprodução
-ugc.py               Buracos próprios: armazenamento, verificação, export/import (ugc.json)
+ugc.py               Conteúdo próprio (buracos de minigolfe, níveis de Geometry Dash): armazenamento, validação, exportar/importar (ugc.json)
 swear.py             Filtro de palavras para nomes e id (lang/swear/*.yml, 14 idiomas)
 filepick.py          Janelas de ficheiros ("Exportar como ...", "Importar")
 prestige.py          Sistema de prestígio do Snake
 competitive.py       Parâmetros do modo Competitivo do Snake (níveis, slot machine, maçãs de aposta)
 ngb.py               Personalização visual ("mods"): cor da cabeça + grelha + menu (mem-ngb.json)
+lamabank.py          Banco Lama: conta de fichas comum do Blackjack, Póquer e Casino (secção casino do mem.json)
+seedrand.py          Gerador aleatório com números idênticos bit a bit em Python e no navegador (modos diários, novos puzzles)
 i18n.py              Motor de tradução (carrega lang/*.json, t("chave"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Textos (uma chave por texto)
@@ -2224,24 +2959,48 @@ lamawiki/
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 woordlistz/
   build_wordlists.py   Reconstrói as listas de palavras do Wordle (dicionários + frequências)
-  de/ en/ fr/ ... hr/  answers.txt (soluções) + allowed.txt (tentativas aceites), 14 idiomas
+  de/ en/ fr/ ... hr/  answers.txt + allowed.txt (5 letras), answers4/6/7.txt + allowed4/6/7.txt (4, 6, 7 letras), 14 idiomas
+devtools/            Ferramentas de desenvolvimento (não incluídas no .exe)
+  merge_staging.py           Integra traduções e páginas do wiki de devtools/staging/ nos 14 ficheiros de idioma
+  build_chess_puzzles.py     Gera os 200 problemas de xadrez a partir da base de problemas do Lichess (CC0)
+  build_sudoku_killer.py     Gera os 400 Killer Sudokus com solução única
+  build_crossyroad_models.py Escreve os modelos voxel do Crossy Road para a versão web
+  build_geodash_levels.py    Constrói os 8 níveis do Geometry Dash e prova com o solucionador que cada um é possível, moedas incluídas
+  build_geodash_solver.py    Solucionador com o verdadeiro código de passo (soluções em geodash_proofs.json)
 games/
-  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
+  tetris.py  tetris_core.py  tetris_ai.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py  sudoku_draw.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py  wordle_words.py
+  trexrunner.py  dame.py  poker.py  muehle.py
+  chess.py  chess_engine.py  chess_draw.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
-  levels/
+  crossyroad.py  crossyroad_world.py  crossyroad_draw.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  battleship.py  battleship_core.py
+  casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  levels/              Dados de níveis: snake-comp.json, chess-puzzles.json (+ README das fontes), sudoku-killer.json, geodash.json
+tests/
+  arcade_casino_audit.py     Auditoria geral (entrada, seedrand Python = JS, gravação, ficheiros de idioma, ecrãs de preparação) + todos os audit_*.py
+  audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Auditorias headless por jogo
+  newgames_audit.py  blockjump_audit.py
 ```
 
 O idioma escolhido é guardado em `mem.json` (na secção `mem`, junto à secção
 `highscores` do mesmo ficheiro) e carregado automaticamente no próximo arranque.
+
+**Fontes e licenças:** os 200 problemas de xadrez vêm da
+[base de problemas do Lichess](https://database.lichess.org/#puzzles) (licença
+**CC0 1.0**, domínio público - obrigado, lichess.org!); os detalhes estão em
+`games/levels/chess-puzzles.README.md`. As fontes das listas de palavras do
+Wordle estão indicadas em `woordlistz/README.md`.
 
 ### Notas de plataforma
 
@@ -2348,8 +3107,8 @@ do .exe durante o jogo.
 ## 🇵🇱 Polski
 
 Kolekcja gier na komputer stworzona w Pythonie: **Tkinter** zapewnia okno i menu,
-a **Pygame** jest osadzony jako ekran gry wewnątrz okna Tkinter. Czterdzieści dwie
-gry ze wspólnymi opcjami, w pełni przypisywalnym sterowaniem, rekordami,
+a **Pygame** jest osadzony jako ekran gry wewnątrz okna Tkinter. Czterdzieści sześć
+gier ze wspólnymi opcjami, w pełni przypisywalnym sterowaniem, rekordami,
 proceduralnymi efektami dźwiękowymi oraz — w części tytułów — trybem wieloosobowym.
 Interfejs jest **wielojęzyczny** — **14 języków** (niemiecki / angielski /
 francuski / hiszpański / portugalski / polski / turecki / duński / norweski /
@@ -2388,31 +3147,31 @@ krok po kroku znajduje się na samym dole w sekcji
 | **Air Hockey** | 1 / 2 graczy  | Fizyka 2D z przenoszeniem pędu, sterowanie myszą, SI i power-upy |
 | **Kółko i krzyżyk** | 1 / 2 graczy | Gra m,n,k na planszy od 3x3 do 9x9, trzy poziomy SI **lub** lokalnie X kontra O |
 | **Breakout** | 1 gracz         | Zbijanie klocków z różnymi rodzajami cegieł, power-upami, combo i wieloma poziomami |
-| **Tetris**   | 1 / 2 graczy    | Klasyczny lub Versus (dwa pola obok siebie) |
+| **Tetris**   | 1 / 2 graczy    | Nowoczesne zasady Guideline (SRS, schowek, podgląd 5 klocków, T-Spiny): Maraton, Sprint 40, Ultra 2:00, pojedynek z SI (3 poziomy) lub we dwoje z liniami śmieci |
 | **Invaders** | 1 gracz         | Space Invaders: czyść fale, chroń swoje życia |
 | **Asteroids** | 1 / 2 graczy   | Fizyka bezwładności, fale, UFO, power-upy, hiperprzestrzeń — solo lub pojedynek kooperacyjny |
 | **Pac-Man**  | 1 gracz         | Wierny klon: 4 SI duchów, kulki mocy, tunel, owoce, poziomy |
 | **Flappy Bird** | 1 gracz      | Grawitacyjny lot przez rury, monety, tarcza, dzień/noc, medale |
 | **Doodle Jump** | 1 gracz      | Automatyczne skakanie w górę, rodzaje platform, sprężyny, śmigło, potwory |
-| **2048**     | 1 gracz         | Układanka z przesuwaniem liczb, cel: kafelek 2048 |
+| **2048**     | 1 gracz         | Układanka z przesuwaniem liczb od 3x3 do 8x8: Klasyczny, Na czas i Bez końca, cofanie, płynne animacje, zapisywane partie |
 | **Saper**    | 1 gracz         | Klasyk z bezpiecznym pierwszym kliknięciem, chordingiem, buźką i najlepszymi czasami |
-| **Sudoku**   | 1 gracz         | 400 poziomów z ziarna (4 poziomy trudności x 100), 4 tryby pomocy z mnożnikiem punktów, notatki, podpowiedzi, limit 3 błędów |
+| **Sudoku**   | 1 gracz         | 4 warianty (Klasyczne, X-Sudoku, Killer, Mini 6x6) po 400 poziomów, Sudoku dnia, do 3 gwiazdek na poziom, 4 tryby pomocy, cofanie, zapis gry |
 | **Frogger**  | 1 gracz         | Droga + rzeka + 5 przystani, bonusowa mucha, krokodyle, limit czasu, 3 poziomy trudności |
 | **Memory**   | 1 / 2 graczy    | Znajdź pary na planszy od 4x4 do 8x6, animacja odwracania, punktacja solo lub pojedynek |
 | **Pasjans**  | 1 gracz         | 5 wariantów (Klondike, Spider, FreeCell, Piramida, TriPeaks) z przeciąganiem i cofaniem |
 | **Aim Trainer** | 1 gracz      | Wyluzowane strzelanie do celów 3D: mysz steruje kamerą, 4 tryby (precyzja/refleks/ruchome/chill), 3 motywy, w tym czarna dziura |
 | **Cztery w rzędzie** | 1 / 2 graczy | Klasyk z animacją opadania: 3 poziomy SI (minimax) lub lokalny pojedynek |
 | **Pojedynek czołgów** | 1 / 2 graczy | Pojedynek 2D na arenie z rykoszetującymi pociskami, power-upami, 4 arenami, SI o 3 poziomach |
-| **Blackjack** | 1 gracz        | Kasynowy blackjack z butem na 4 talie, double/split, blackjack 3:2 i trwałym stanem żetonów |
+| **Blackjack** | 1 gracz        | Kasynowy blackjack z butem na 4 talie, double/split i blackjackiem 3:2; gra żetonami Lamy ze wspólnego Banku Lamy |
 | **Tunnel Racer** | 1 gracz     | Lot 3D neonowym tunelem: tryb nieskończony + 30 poziomów, sterowanie klawiszami lub myszą, motion blur |
 | **Labirynt 3D** | 1 gracz      | Raycaster z perspektywy pierwszej osoby (styl Wolfenstein) z 50 poziomami z ziarna, orbami, minimapą — lub widok 2D z góry |
 | **Reversi**  | 1 / 2 graczy    | Othello na 8x8: osaczaj i odwracaj pionki, 3 poziomy SI (minimax) lub lokalny pojedynek |
 | **Yahtzee**  | 1 / 2 graczy    | Klasyk w kości z 13 kategoriami, górnym bonusem i Yahtzee; pogoń za rekordem lub hotseat dla 2 graczy |
-| **Wordle**   | 1 gracz         | Odgadnij 5-literowe słowo w 6 próbach, nieskończona seria, kolorowe podpowiedzi, prawdziwe listy słów w 14 językach |
+| **Wordle**   | 1 gracz         | Zgadywanie słów od 4 do 7 liter: Bez końca, Słowo dnia, Dordle i Quordle, tryb trudny, paleta dla daltonistów, statystyki z wykresem, udostępnianie wyniku, prawdziwe listy słów w 14 językach |
 | **T-Rex Runner** | 1 gracz     | Nieskończony bieg przez pustynię: zmienny skok, kucanie, kaktusy i pterodaktyle, cykl dzień/noc, rosnące tempo, 3 poziomy trudności |
 | **Warcaby**  | 1 / 2 graczy    | 3 zestawy zasad (niemieckie 8×8, międzynarodowe 10×10, checkers), bicie obowiązkowe i latająca damka, 3 poziomy SI (minimax) lub lokalny pojedynek |
-| **Poker**    | 1 gracz         | 3 warianty do wyboru: Texas Hold'em przeciw SI, 5 Card Draw i Video Poker; rundy licytacji, blindy, trwałe konto żetonów |
-| **Szachy**   | 1 / 2 graczy    | Pełne zasady (roszada, en passant, promocja, mat/pat/remis), 6 poziomów SI (minimax + alpha-beta) lub lokalny pojedynek, wybór koloru |
+| **Poker**    | 1 gracz         | 3 warianty do wyboru: Texas Hold'em przeciw SI, 5 Card Draw i Video Poker; rundy licytacji, blindy, żetony Lamy ze wspólnego Banku Lamy |
+| **Szachy**   | 1 / 2 graczy    | Pełne zasady, Chess960 i zegar szachowy, 6 poziomów SI, 200 zadań z bazy Lichess, cofanie/podpowiedź, lista ruchów, eksport PGN lub lokalny pojedynek |
 | **Młynek**   | 1 / 2 graczy    | Fazy stawiania/przesuwania/latania, młynki i bicie, opcjonalna zasada latania, 3 poziomy SI lub lokalny pojedynek |
 | **Simon**    | 1 / 2 graczy    | Gra pamięciowa Senso: tryby Klasyczny/Szybki/Odwrotny/Mieszany + Pojedynek, dźwięk wył./wł./mieszany, 4/6/9 pól, najlepszy wynik na tryb |
 | **Bilard**   | 1 / 2 graczy    | 8-ball, 9-ball i trening w 2D, stały widok 3D lub swobodnie obracana kamera 3D; płynna fizyka, pomoc w celowaniu, 3 poziomy SI |
@@ -2425,13 +3184,20 @@ krok po kroku znajduje się na samym dole w sekcji
 | **Minigolf**    | 1 / 2 graczy    | 360 dołków na 40 polach (18 ręcznych, 342 generowane): piasek, rampy, woda, odbijacze, wiatraki i ruchome bloki; karta z par i bonusem hole in one; **własny edytor dołków** z 15 typami obiektów, 12 szablonami i udostępnianiem jako `.lamapgzmap` |
 | **Pinball**     | 1 / 2 graczy    | Automat do flipera z 3 stołami: bumpery, slingshoty, cele, tory L-A-M-A, multiball z jackpotem, ratunek kuli, potrącenie i tilt |
 | **Bowling**     | 1 / 2 graczy    | 10 frame'ów z oficjalną punktacją strike/spare, prawdziwą fizyką kręgli, hookiem i torem w perspektywie, 3 poziomy trudności |
+| **Crossy Road** | 1 gracz       | Niekończące się skoki przez łąki, ulice, rzeki i tory w izometrycznym stylu voxel: dzień/noc, orzeł, 10 postaci do kupienia, trasa dnia |
+| **Geometry Dash** | 1 gracz       | Rytmiczna platformówka z kostką, statkiem, kulą, UFO i falą: 8 poziomów od Łatwego do Demona, w każdym 3 sekretne monety, tryb treningu, soundtrack dla każdego poziomu; **edytor poziomów** z udostępnianiem jako `.lamapgzlevel` |
+| **Battleship**  | 1 / 2 graczy  | Bitwa morska 10x10: rozstawianie floty przeciąganiem, 3 przełączniki zasad (stykanie, salwa, ponowny strzał), SI z 3 poziomami lub lokalny pojedynek z ekranem przekazania |
+| **Casino**      | 1 gracz       | Ruletka europejska ze wszystkimi klasycznymi zakładami i Automat Lamy (5 bębnów, 10 linii, dziki symbol, darmowe spiny); jedno konto żetonów Lamy z Blackjackiem i Pokerem |
 
 **Tryb wieloosobowy (2 graczy lokalnie)** jest dostępny w grach **Snake**, **Pong**,
 **Air Hockey**, **Kółko i krzyżyk**, **Tetris (Versus)**, **Asteroids (pojedynek
 kooperacyjny)**, **Memory (pojedynek)**, **Cztery w rzędzie**, **Pojedynek czołgów**,
 **Reversi**, **Yahtzee**, **Warcaby**, **Szachy**, **Młynek**, **Simon (pojedynek)**,
-**Bilard**, **Minigolf**, **Pinball** i **Bowling**. Tryb wybiera się bezpośrednio na ekranie przygotowania do gry
-(*Jeden gracz / Wielu graczy*).
+**Bilard**, **Minigolf**, **Pinball**, **Bowling** i **Battleship** (z ekranem
+przekazania, który zasłania floty) — łącznie 20 gier. Tryb wybiera się
+bezpośrednio na ekranie przygotowania do gry (*Jeden gracz / Wielu graczy*);
+Tetris oferuje dodatkowo **pojedynek z SI**. Wersja przeglądarkowa jest wyłącznie
+jednoosobowa.
 
 #### Szczegóły funkcji dla każdej gry
 
@@ -2543,21 +3309,27 @@ kooperacyjny)**, **Memory (pojedynek)**, **Cztery w rzędzie**, **Pojedynek czo�
   wypuszcza piłkę (wystrzeliwuje laser), **P/Esc** = pauza.
 
 **Tetris**
-- Lewo/Prawo przesuwa, Góra = obrót, Dół = soft drop, Akcja = hard drop.
-- Pełne rzędy dają punkty, co 10 rzędów rośnie poziom.
-- **Versus**: przegrywa ten, czyj stos pierwszy sięgnie góry.
-
-**Invaders** — dwa tryby (do wyboru na ekranie przygotowania):
-- **Klasyczny**: klasyczny blok kosmitów; następnie w konfiguracji do wyboru:
-  **Ruch** (tylko lewo/prawo *lub* swobodnie z WASD) i **Celowanie** (zawsze w górę
-  *lub* w stronę **myszy** — wtedy strzelasz tam, gdzie jest kursor). Zniszczeni
-  kosmici czasem upuszczają power-upy.
-- **Arena (swobodna)**: swobodny ruch we wszystkich kierunkach, wrogowie napływają
-  ze wszystkich krawędzi; celujesz w kierunku ruchu, broń zmieniasz klawiszami
-  **1–4**.
-Wspólne: system poziomów z **bossem** co 4. poziom, cztery bronie (blaster, strzał
-rozproszony, szybki ogień, laser), power-upy (dodatkowe życie, tarcza, ulepszenie
-broni), efekty wybuchów, rekord.
+- **Nowoczesne zasady Guideline**: pole 10x20, klocki z **worka 7**, **system
+  obrotu SRS** z prawdziwymi wall kickami (także dla klocka I), obrót w obie
+  strony, **schowek** (raz na klocek), **podgląd 5 klocków**, cień klocka i
+  **lock delay** (0,5 s, najwyżej 15 resetów).
+- **Trzy tryby** na ekranie przygotowania: *Solo*, *Pojedynek z AI* i *2 graczy*.
+  Solo oferuje w konfiguracji **Maraton** (poziom startowy 1–15, liczy się do
+  rekordu), **Sprint 40 linii** (najlepszy czas) i **Ultra 2 minuty** (najlepszy
+  wynik); rekordy trafiają do sekcji `tetris` w `mem.json`.
+- **Punktacja Guideline**: od Single do Tetrisa, **T-Spiny** (pełne i mini),
+  **Back-to-Back** (x1,5), **combo** i **Perfect Clear** — z napisami na
+  ekranie, animacją kasowania linii, smugą hard dropu, cząsteczkami i efektem
+  awansu.
+- **Pojedynek z liniami śmieci**: skasowane linie wysyłają śmieci do rywala
+  (Tetris = 4, T-Spin Double = 4 …), nadchodzące śmieci zapowiada pasek
+  ostrzeżenia, a własne ataki je **odejmują**; oba pola dostają tę samą kolejność
+  klocków. **SI** ma 3 poziomy, a tempo rośnie co 40 sekund.
+- **Sterowanie**: Lewo/Prawo z własnym **DAS/ARR** (ustawianym w konfiguracji),
+  Góra = obrót w prawo, Dół = soft drop, Akcja = hard drop; **C**/Shift =
+  schowek, **Z**/**Y** = obrót w lewo, **X** = obrót w prawo. We dwoje gracz 1
+  odkłada klocek **Q** i obraca w lewo **E**, gracz 2 **prawym Shiftem** /
+  **prawym Ctrl**. Po grze: **R** = jeszcze raz, **S** = konfiguracja.
 
 **Asteroids**
 - **Fizyka bezwładności**: góra = ciąg w kierunku patrzenia, lewo/prawo = obrót,
@@ -2621,6 +3393,22 @@ broni), efekty wybuchów, rekord.
 
 **2048** — strzałki/WASD przesuwają wszystkie kafelki; równe liczby się łączą.
 
+**2048**
+- **Własny ekran konfiguracji** z planszami od **3x3 do 8x8** i trzema trybami:
+  *Klasyczny* (cel 2048, potem „Grać dalej?"), *Na czas* (3 minuty, zegar rusza
+  z pierwszym ruchem) i *Bez końca*.
+- **Płynne animacje**: kafelki się przesuwają, łączą z efektem „pop" i rosną przy
+  pojawieniu; wyskakujące punkty, iskry od 128, fala uderzeniowa od 2048 i nowe
+  kolory aż do 131072. Wejścia podczas animacji są buforowane.
+- **Cofanie** (wyłączone / 3 na grę / bez limitu, klawisz **U** lub Backspace) —
+  kto z niego korzysta, gra bez rekordu i bez osiągnięć za kafelki.
+- **Zapis i wznawianie**: trwająca partia zapisuje się automatycznie dla każdego
+  rozmiaru i trybu; najlepsze wyniki i największy kafelek dla rozmiaru/trybu są w
+  sekcji `g2048` pliku `mem.json`.
+- Sterowanie: strzałki/WASD lub **przeciągnięcie** myszą/touchpadem,
+  **R**/**N** = nowa gra, **Tab** = konfiguracja. Rekord liczy się tylko w
+  **4x4 Klasycznym** bez cofania.
+
 **Saper**
 - Trzy poziomy: **Początkujący** (9x9, 10 min), **Zaawansowany** (16x16, 40),
   **Ekspert** (30x16, 99) — **najlepszy czas na każdym poziomie** jest zapisywany
@@ -2636,22 +3424,33 @@ broni), efekty wybuchów, rekord.
 - Punkty = wartość bazowa poziomu minus sekundy.
 
 **Sudoku**
-- **400 poziomów**: 4 poziomy trudności (Łatwy/Normalny/Trudny/Ekspert) x 100
-  poziomów. Łamigłówki są **generowane z ziarna i mają jednoznaczne rozwiązanie**
-  — poziom 12 z „Trudnego" to ta sama łamigłówka na każdym komputerze. Rozwiązane
-  poziomy są zapisywane i odhaczane w wyborze poziomów.
+- **4 warianty** po **400 poziomów** (4 poziomy trudności x 100): *Klasyczne*
+  (znane poziomy z ziarna — rozwiązane pozostają odhaczone), *X-Sudoku* (obie
+  przekątne zawierają każdą cyfrę dokładnie raz), *Killer* (przerywane klatki
+  z sumą; 400 poziomów wygenerowanych wcześniej) i *Mini 6x6*. Każda łamigłówka
+  ma **jednoznaczne rozwiązanie** — poziom 12 z „Trudnego" to ta sama łamigłówka
+  na każdym komputerze.
+- **Sudoku dnia**: jedna łamigłówka dziennie dla wszystkich, taka sama na
+  komputerze i w przeglądarce; trudność zależy od dnia tygodnia (od
+  poniedziałku Łatwy do soboty Ekspert), a codzienne rozwiązywanie buduje serię.
+- **Do 3 gwiazdek na poziom** (rozwiązany · bez błędów i podpowiedzi · dodatkowo
+  poniżej czasu docelowego) i **najlepszy czas** w wyborze poziomów; **rozpoczęte
+  łamigłówki** zapisują się automatycznie i są wznawiane przy następnym starcie.
 - **4 tryby gry** (wybierane przed startem) z mnożnikiem punktów: **Klasyczny**
-  (x2,0 — bez pomocy), **Notatki** (x1,5 — + ołówkowe notatki), **Komfort** (x1,0
-  — + błędne cyfry na czerwono, podświetlanie konfliktów i tych samych cyfr,
-  poprawne wpisy się blokują), **Asystent** (x0,7 — + podpowiedź, maks. 3).
-- Każdy wpis jest natychmiast sprawdzany z rozwiązaniem; przy włączonym **limicie
-  3 błędów** (opcja w konfiguracji) trzeci błąd kończy grę.
+  (x2,0 — bez pomocy), **Notatki** (x1,5 — + ołówkowe notatki i automatyczne
+  kandydaty), **Komfort** (x1,0 — + błędne cyfry na czerwono, oznaczone
+  konflikty i błędne sumy klatek, poprawne wpisy się blokują), **Asystent**
+  (x0,7 — + podpowiedź, maks. 3). Przy włączonym **limicie 3 błędów** (opcja w
+  konfiguracji) trzeci błąd kończy grę.
 - Sterowanie: strzałki/WASD = komórka, **1-9** = cyfra (również klawiatura
-  numeryczna), **0/Backspace/prawy przycisk** = wymaż, **N** = notatki,
-  **H** = podpowiedź, **R** = zacznij poziom od nowa, **Q** = wybór poziomu; w
-  pełni grywalne myszą (pole cyfr po prawej). Po zakończeniu gry **A** ukrywa baner
-  i pokazuje pełne **rozwiązanie** na planszy (ponownie A = powrót).
-- Punkty = (baza poziomu trudności − czas − błędy − podpowiedzi) x mnożnik trybu.
+  numeryczna), **0/Delete/prawy przycisk** = wymaż, **U**/**Z** = cofnij,
+  **Y** = ponów, **N** = notatki, **C** = automatyczne kandydaty, **H** =
+  podpowiedź, **M** = kolorowy znacznik, **R** = zacznij poziom od nowa, **Q** =
+  wybór poziomu. Wpisywanie „najpierw cyfra" (konfiguracja, **I**) i **licznik
+  brakujących cyfr** pod każdą cyfrą; w pełni grywalne myszą. Po zakończeniu gry
+  **A** pokazuje pełne **rozwiązanie**.
+- Punkty = (baza wariantu i poziomu trudności − czas − błędy − podpowiedzi) x
+  mnożnik trybu; wszystkie warianty i Sudoku dnia liczą się do rekordu.
 
 **Frogger**
 - 5 pasów ruchu (samochody/ciężarówki) i 5 torów rzeki (kłody, żółwie, które
@@ -2715,12 +3514,17 @@ broni), efekty wybuchów, rekord.
 - Prawdziwe zasady kasyna: **but na 4 talie**, krupier staje na 17, **blackjack
   płaci 3:2**, podejrzenie krupiera przy asie/10; **podwojenie** i **jeden podział**
   (rozdzielone asy dostają po jednej karcie).
-- **Trwały stan żetonów**: start z 500, stan i **rekord** przetrwają każde ponowne
-  uruchomienie (`mem.json`); poniżej 10 żetonów dostajesz 500 nowych — rekord
-  zostaje.
+- **Żetony Lamy**: Blackjack gra kontem **Banku Lamy**, które dzieli z Pokerem i
+  Casino (start 1000, trwale zapisane w `mem.json`). Stawka jest pobierana od razu
+  przy rozdaniu; poniżej 10 żetonów Enter bierze **kredyt bankowy**, który
+  uzupełnia konto do 1000.
+- **Rekord** = najwyższy stan twojego **bilansu w Blackjacku** (1000 plus
+  wszystko, co wygrano i przegrano w Blackjacku) — wygrane w ruletce, na
+  automacie czy w pokerze się tu nie liczą, kredyty też nie.
 - Obsługa przyciskami żetonów i klawiszami (**H**it/**S**tand/**D**ouble/podział
-  **X**, **1-4** = zakład, Enter = rozdanie) z animacjami kart i odsłonięciem
-  zakrytej karty.
+  **X**, **1-4** = zakład, Backspace = cofnij zakład, Enter = rozdanie) z
+  animacjami kart; zakryta karta krupiera przy odsłonięciu naprawdę się teraz
+  odwraca.
 
 **Tunnel Racer**
 - **Lot 3D neonowym tunelem** (renderer programowy jak w Aim Trainerze): belki,
@@ -2761,28 +3565,73 @@ broni), efekty wybuchów, rekord.
   strzałki, Enter).
 
 **Wordle**
-- Odgadnij **5-literowe słowo w 6 próbach**; kolorowa odpowiedź (zielony/żółty/szary)
-  z poprawnym **liczeniem powtórzonych liter** i klawiaturą ekranową, która się
-  koloruje.
-- **Nieskończona seria**: każde odgadnięte słowo daje punkty (mniej prób = więcej),
-  pierwsze nieodgadnięte słowo kończy rozgrywkę — suma = rekord.
-- **Prawdziwe listy słów w 14 językach** (katalog `woordlistz/`, tylko A-Z): razem
-  ponad **34 000 haseł** i **213 000 dozwolonych słów**. Każda próba jest sprawdzana
-  z listą - reszta jest odrzucana, a wiersz chwilę się trzęsie.
-- **Dwa tryby**: *Normalny* i *Trudny* - w trudnym trzeba wykorzystywać znalezione
-  podpowiedzi. Pisz na klawiaturze lub klikaj klawisze na ekranie.
+- Odgadnij ukryte słowo; kolorowa odpowiedź (zielony/żółty/szary) z poprawnym
+  **liczeniem powtórzonych liter** i klawiaturą ekranową, która się koloruje
+  (QWERTZ dla niemieckiego, czeskiego, słoweńskiego i chorwackiego, AZERTY dla
+  francuskiego, w pozostałych QWERTY).
+- **Cztery tryby**: *Bez końca* (słowo za słowem, po 6 prób; każde odgadnięte
+  słowo daje punkty, pierwsze nieodgadnięte kończy grę), *Słowo dnia* (jedno słowo
+  dziennie dla każdego języka i długości — takie samo na komputerze i w
+  przeglądarce — z odliczaniem i serią; rozpoczęte słowo dnia jest zapisywane),
+  *Dordle* (2 słowa naraz w 7 próbach) i *Quordle* (4 słowa w 9 próbach, klawisze
+  pokazują kolory wszystkich plansz).
+- **Konfiguracja** przed każdą grą: **długość słowa od 4 do 7**, **tryb trudny**
+  (znalezione podpowiedzi trzeba wykorzystywać dalej) i **paleta dla daltonistów**
+  (pomarańczowy/niebieski); obok widać statystyki.
+- **Prawdziwe listy słów w 14 językach** (katalog `woordlistz/`, tylko A-Z), dla
+  każdej długości osobne: przy 5 literach blisko **34 000 haseł** i ponad
+  **213 000 dozwolonych słów**, łącznie ok. 134 000 haseł we wszystkich
+  długościach. Hasła to popularne słowa bez imion, angielskich wtrąceń i słów
+  obraźliwych; każda próba jest sprawdzana z listą — reszta jest odrzucana, a
+  wiersz chwilę się trzęsie.
+- **Statystyki** dla języka, długości i trybu: gry, procent wygranych, bieżąca i
+  najlepsza seria oraz **rozkład prób na wykresie słupkowym** (sekcja `wordle` w
+  `mem.json`). **Udostępnij** (**C**) kopiuje siatkę emoji bez zdradzania hasła.
+- Rekord liczy tylko *Bez końca* z 5 literami; pozostałe długości mają własne
+  najlepsze wyniki. Osiągnięcia **Jasnowidz** (najwyżej 2 próby), **Słowny nawyk**
+  (7 słów dnia z rzędu) i **Poczwórny geniusz** (rozwiązane Quordle).
+
+**Poker**
+- **3 warianty** na ekranie przygotowania: **Texas Hold'em** przeciw 1–3
+  przeciwnikom SI z przyciskiem krupiera, blindami i czterema rundami licytacji,
+  **5 Card Draw** (jeden na jednego z SI, jedna wymiana kart) i **Video Poker**
+  (*Jacks or Better*, solo przeciw tabeli wypłat).
+- Akcje przyciskami lub klawiszami: **F** = pas, **C** = czekaj/sprawdź, **R** =
+  podbij, **A** = all-in; zatrzymywanie/wymiana kart kliknięciem lub **1-5**,
+  **Enter** dobiera albo rozdaje kolejną rękę.
+- **Żetony Lamy** ze wspólnego **Banku Lamy**: na początku rozdania twoje konto
+  leży na stole jako stos, a to, co trafia do puli, jest od razu pobierane —
+  wyjście od stołu w trakcie rozdania kosztuje tylko twój udział w puli.
+  Bankructwo (mniej niż big blind 20, w Video Pokerze mniej niż 10) = kredyt
+  bankowy do 1000.
+- **Rekord** = najwyższy stan **bilansu w Pokerze** (1000 plus wszystkie wygrane
+  i przegrane w pokerze); osiągnięcie **Chip leader** też liczy tylko ten bilans.
 
 **Szachy**
 - **Pełne szachy**: wszystkie ruchy bierek, w tym **roszada**, **en passant** i
   **promocja pionka** (do wyboru bierka); **szach, mat i pat** oraz remisy z
-  **reguły 50 posunięć**, **trzykrotnego powtórzenia pozycji** i **niewystarczającego
-  materiału**.
-- **6 poziomów SI** od *Początkującego* do *Mistrza* (negamax z alfa-beta,
-  sortowanie ruchów, tablice wartości bierka-pole, przeszukiwanie spokojne);
-  **budżet czasu** utrzymuje płynność każdego ruchu SI. **Wybór koloru**
-  białe/czarne lub **lokalny pojedynek**.
-- Legalne ruchy są podświetlane, szach jest oznaczany; grasz **myszą** lub kursorem
-  wyboru. Każde zwycięstwo nad SI daje jeden punkt do rekordu.
+  **reguły 50 posunięć**, **trzykrotnego powtórzenia pozycji**,
+  **niewystarczającego materiału** lub za zgodą.
+- **Trzy tryby**: *partia* z SI, *2 graczy* przy jednym komputerze (plansza może
+  się obracać po każdym ruchu) i **zadania**.
+- **Silniejsza, płynna SI** w 6 poziomach od *Początkującego* do *Mistrza*:
+  iteracyjne pogłębianie, tablica transpozycji, przeszukiwanie spokojne, księga
+  otwarć i ocena uwzględniająca mobilność, strukturę pionków i bezpieczeństwo
+  króla. SI liczy w małych porcjach na klatkę — gra nigdy się nie zacina.
+- **Konfiguracja**: wybór koloru, **zegar szachowy** (bez, 1+0, 3+2, 5+0, 10+5)
+  i **Chess960** (wszystkie 960 ustawień początkowych, numer widać nad listą
+  ruchów).
+- **Panel boczny** z zegarami, zbitymi bierkami, bilansem materiału i przewijaną
+  **listą ruchów (SAN)**; przeciąganie, płynnie sunące bierki, współrzędne.
+  Klawisze: **U** = cofnij, **H** = strzałka podpowiedzi, **O** = propozycja
+  remisu, **X** = poddanie, **F** = obrót planszy, po partii **P** = **eksport
+  PGN**.
+- **Zadania**: 200 zadań w 5 etapach (mat w 1/2/3, taktyka I/II) z **wolnej bazy
+  zadań Lichess (CC0)**, sprawdzonych własnym silnikiem; w zadaniach matowych
+  liczy się każdy ruch dający mata. Postęp jest w sekcji `chess` pliku
+  `mem.json`.
+- Cofanie i podpowiedź czynią partię „wspomaganą": do rekordu liczą się tylko
+  zwycięstwa nad SI bez pomocy (w ramach sesji).
 
 **Młynek**
 - **Młynek** ze wszystkimi trzema fazami: **stawianie** (po 9 pionków),
@@ -2965,6 +3814,95 @@ broni), efekty wybuchów, rekord.
 - **Powtórka partii**: na końcu **P** pokazuje wszystkie rzuty jeszcze raz, a
   **S** zapisuje je w archiwum (przycisk **Powtórki**).
 
+**Crossy Road**
+- **Niekończące się skoki** przez łąki (drzewa i kamienie blokują drogę), ulice z
+  samochodami i ciężarówkami, rzeki z pniami i liśćmi lilii oraz **tory**, po
+  których po sygnale świetlnym i dzwonku pędzi pociąg — dalej czekają całe stacje
+  z maksymalnie 5 torami. Trasa powstaje rząd po rzędzie, zawsze ma przejście, a
+  tempo i ruch rosną.
+- **Izometryczny styl voxel**: postacie, pojazdy i drzewa z cieniowanych bloków
+  (wstępnie renderowane dla każdego rozmiaru pola), płynna kamera, squash &
+  stretch przy skokach, plusk wody, animacja zgniecenia, pióra i błyszczące
+  monety; od rzędu 50 **zmiana dnia i nocy** z reflektorami.
+- **Orzeł**: kamera powoli sunie do przodu — kto za długo zwleka albo cofnie się
+  o więcej niż trzy rzędy, tego porywa orzeł (wcześniej ostrzega czerwona
+  ramka). Zniesienie na pniu poza ekran też kończy grę.
+- **Monety i postacie**: zebrane monety (wielka moneta = 5) zostają zapisane i
+  kupują nowe postacie w zakładce **Postacie**: żaba, świnia, pingwin, kot, lis,
+  lama, robot, duch i jednorożec (25–250 monet); kurczak jest od początku.
+- **Tryby**: *Bez końca* (punkty = najdalszy rząd, liczy się do rekordu) i
+  *Trasa dnia* (dziś taka sama dla wszystkich, także w przeglądarce, z własnym
+  rekordem dnia). Sterowanie: strzałki/WASD, Spacja/Enter/klik = skok do przodu;
+  w konfiguracji **H** = cienie, **N** = dzień/noc. Monety, postacie i rekord
+  dnia są w sekcji `crossy` pliku `mem.json`.
+
+**Geometry Dash**
+- **Rytmiczna platformówka**: postać sama pędzi w prawo - ty decydujesz tylko,
+  kiedy skoczyć lub lecieć. **Pięć form** — kostka, statek, kula, UFO i fala — do
+  tego portale formy, grawitacji i prędkości (0,5x do 3x), żółte/różowe/niebieskie
+  **wyrzutnie i kule**, półbloki, kolce, doły i wyzwalacze kolorów.
+- **8 wbudowanych poziomów** od *Łatwego* do *Demona* („Lama Inferno"), w każdym
+  **3 sekretne monety**. Udowodniono, że każdy poziom da się przejść: przy budowie
+  solver ukończył go prawdziwym kodem gry — razem ze wszystkimi monetami, nawet
+  przesunięty o 1/240 sekundy.
+- **Precyzyjna fizyka**: obliczenia stałoprzecinkowe ze stałym krokiem 240 Hz;
+  każde wciśnięcie działa dokładnie w kroku, w którym nastąpiło — tak samo przy
+  każdej liczbie klatek i bit w bit tak samo w przeglądarce.
+- **Tryb treningu** (**P**) z automatycznymi i własnymi punktami kontrolnymi
+  (**Z** stawia, **X** usuwa), licznikiem prób, paskiem postępu, eksplozjami i
+  natychmiastowym restartem (**R**). Każdy poziom ma **własny soundtrack** — tło,
+  podłoże i kule pulsują w rytm (muzykę wyłącza **M**).
+- **Gwiazdki i monety**: kto ukończy poziom w trybie normalnym, dostaje jego
+  gwiazdki, a każda moneta jest warta kolejną; rekord to **suma gwiazdek**
+  (najwyżej 65). Najlepsze wyniki poziomów, monety, próby i skoki są w sekcji
+  `geodash` pliku `mem.json`.
+- **Edytor poziomów** w zakładce **POZIOMY**: płótno z siatką, paleta z 6 grupami
+  (bloki, zagrożenia, wyrzutnie i kule, portale, prędkość, dodatki), obracanie,
+  cofnij/ponów, pasek podglądu, **test od startu lub od tego miejsca** i
+  ustawienia poziomu (prędkość i forma startowa, styl muzyki, BPM, kolory).
+  Znaczek **„zweryfikowany"** pojawia się dopiero, gdy sam przejdziesz swój
+  poziom. **Udostępnij** zapisuje plik `.lamapgzlevel`, **Import** wczytuje go z
+  powrotem; poziomy trafiają do `ugc.json` obok własnych dołków do minigolfa.
+
+**Battleship**
+- **Bitwa morska 10x10** z lotniskowcem (5 pól), pancernikiem (4), krążownikiem
+  (3), okrętem podwodnym (3) i niszczycielem (2) — wygrywa ten, kto pierwszy
+  zatopi całą wrogą flotę.
+- **Rozstawianie floty** przeciąganiem z doku: **R** lub prawy przycisk obraca,
+  podgląd świeci na zielono lub czerwono, **X** rozstawia losowo, **C** czyści
+  planszę; ostatnie ustawienie jest proponowane ponownie.
+- **Zasady w konfiguracji** (zapisywane): *statki mogą się stykać*, *salwa* (tyle
+  strzałów na turę, ile twoich statków jest na wodzie) i *kolejny strzał po
+  trafieniu*.
+- **SI z 3 poziomami**: Łatwy strzela losowo, Średni systematycznie dobija
+  trafienia, Trudny liczy **mapę prawdopodobieństwa** z parzystością szachownicy
+  (średnio ok. 70 / 60 / 45 strzałów na całą flotę). Albo **2 graczy** przy
+  jednym komputerze — **ekran przekazania** zasłania obie floty przed każdą turą.
+- **Oprawa**: omiatanie radaru, animowane fale, pociski lecące łukiem, plusk,
+  eksplozje z dymem i płonące pola, odsłonięcie „ZATOPIONY!" oraz podsumowanie
+  rundy ze strzałami, trafieniami i celnością. Rekord liczy **zwycięstwa nad SI**
+  w jednej sesji.
+
+**Casino**
+- **Ruletka** (europejska, 37 pól): wszystkie klasyczne zakłady kliknięciem w
+  liczbę, krawędź lub róg — **plein** (35:1), cheval, transversale, carré,
+  sixain, kolumna, tuzin, czerwone/czarne, parzyste/nieparzyste i
+  manque/passe. Żetony 1/5/25/100/500, prawy przycisk zdejmuje żetony;
+  **Zakręć**, **Powtórz** (**R**), **Podwój** (**D**) i **Wyczyść**. Kulka wpada
+  spiralą do pola wylosowanego wcześniej, a u góry widać ostatnie 12 liczb.
+- **Automat Lamy**: 5 bębnów x 3 rzędy, **10 linii wygrywających**, **lama =
+  dziki symbol**, **złote monety = scatter** z 10 darmowymi spinami i
+  podwojonymi wygranymi, stawka na linię 1/2/5/10, **auto-spin** (10/25),
+  **turbo** i tabela wypłat. **Wskaźnik zwrotu wynosi 96,1%** — policzony
+  dokładnie z pasów bębnów.
+- **Bank Lamy**: Casino, Blackjack i Poker dzielą jedno konto **żetonów Lamy**
+  (start 1000, sekcja `casino` w `mem.json`); stare stany żetonów przechodzą
+  automatycznie. Stawki są pobierane od razu, każda gra prowadzi własny bilans
+  do rekordu, a przy bankructwie dostajesz **kredyt bankowy** do 1000.
+- Konfetti, deszcz monet, banery big/mega/jackpot i animacje linii
+  wygrywających; osiągnięcia **W dziesiątkę** (wygrany plein w ruletce) i
+  **Jackpot Lamy** (5 lam na jednej linii).
+
 Rekordy są przechowywane w sekcji `highscores` pliku `mem.json` (obok kodu) —
 razem z językiem (sekcja `mem`).
 
@@ -2987,20 +3925,24 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
   **deszcz konfetti przy nowym rekordzie** i prawdziwe **rozmycie** za nakładką
   pauzy.
 - **Ekran przygotowania** każdej gry pojawia się w jej kolorze akcentu i pokazuje
-  poprzedni rekord jako chip.
-- **Jednolity wygląd w grze**: wszystkie 42 gry korzystają z tej samej palety motywu
+  poprzedni rekord jako chip. Przy wielu trybach i małej rozdzielczości staje się
+  **kompaktowy**: Opcje, Wiki i Powrót trafiają do jednego rzędu, a czcionka się
+  dopasowuje — nic już nie wychodzi poza ekran.
+- **Jednolity wygląd w grze**: wszystkie 46 gier korzysta z tej samej palety motywu
   i czcionki co menu — HUD-y, ekrany konfiguracji i nakładki podążają za wyglądem
   wybranym w opcjach (v4.1 / v4 / Klasyczny), a każde pole gry zachowuje swoje
   kolory tożsamości. Każda gra poprawnie obsługuje zmianę rozdzielczości w trakcie
   gry, a nazwy w menu zależą od języka (np. „Schach" → „Szachy").
 - **Wbudowana wiki** („LamaWiki"): szczegółowa pomoc do każdej gry (sterowanie,
   tryby, punktacja, wskazówki) plus strony ogólne — z **polem wyszukiwania**,
-  kategoriami, przewijanymi artykułami i chipami klawiszy, we wszystkich pięciu
+  kategoriami, przewijanymi artykułami i chipami klawiszy, we wszystkich 14
   językach. Dostępna przez przycisk **„Wiki / Pomoc"** na pasku bocznym i z ekranu
   przygotowania każdej gry (otwiera bezpośrednio jej stronę).
-- **Osiągnięcia i statystyki**: **69 osiągnięć** w trzech kategoriach (cele
-  ogólne, próg punktowy dla każdej gry i wyjątkowe momenty, jak mat SI czy
-  kafelek 2048) ze **złotym powiadomieniem i fanfarą** przy odblokowaniu -
+- **Osiągnięcia i statystyki**: **107 osiągnięć** w trzech kategoriach (23 cele
+  ogólne, 37 progów punktowych i 47 wyjątkowych momentów, jak mat SI, kafelek
+  4096, T-Spin Double, 25 rozwiązanych zadań szachowych, Killer Sudoku czy
+  lamowy jackpot; w 2048 i szachach partie z cofaniem lub podpowiedziami się
+  nie liczą) ze **złotym powiadomieniem i fanfarą** przy odblokowaniu -
   nawet w trakcie gry; stare rekordy są zaliczane automatycznie. Do tego
   zakładka **statystyk**: łączny czas gry, rozgrywki, zwycięstwa, rekordy,
   ulubiona gra i tabela gier posortowana według czasu. Dostępne przez przycisk
@@ -3020,7 +3962,14 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
 - **F11** (lub przycisk „Pełny ekran wł./wył.") = przełącz pełny ekran. Wyświetlacz
   Pygame pozostaje osadzony i jest skalowany w górę z zachowaniem proporcji (czarne
   pasy przy innym stosunku boków). Okno można dowolnie skalować.
-- **„Powrót do menu"** kończy grę i zapisuje rekord.
+- **„Powrót do menu"** kończy grę i zapisuje rekord — tak samo jak przejście do
+  innej gry z paska bocznego.
+- **Stałe klawisze dodatkowe**: oprócz pięciu przypisywalnych akcji niektóre gry
+  mają własne klawisze (np. schowek **C** i obrót w lewo **Z** w Tetrisie,
+  cofnięcie **U** w 2048, szachach i Sudoku). Działają tylko wtedy, gdy klawisz
+  nie jest przypisany do żadnej akcji w opcjach, a wymieniają je podpowiedź w
+  konfiguracji i wiki. Przytrzymane klawisze są poprawnie rozpoznawane i
+  zwalniane przy pauzie lub Alt-Tab — nic się nie „zacina".
 - **„Wyjście"** zamyka Pygame i Tkinter w czysty sposób.
 
 ### Opcje, sterowanie i dźwięk
@@ -3068,22 +4017,24 @@ start.sh             Skrypt uruchamiający (Linux / macOS / Git Bash)
 pyinstall.bat        Budowanie EXE (Windows): pakuje wszystko do builds\PyGameZ.exe
 main.py              Interfejs Tkinter, osadzenie Pygame, centralna pętla gry
 game_base.py         Klasa bazowa gry (update/draw/handle_event) + InputEvent + funkcje pomocnicze
-settings.py          Wczytywanie/zapis ustawień (dźwięk/haptyka/przypisania klawiszy) (JSON)
-audio.py             Proceduralne efekty dźwiękowe + wibracje gamepada
+settings.py          Wczytywanie/zapis ustawień (dźwięk/haptyka/klawisze/opcje gier z regułami sprawdzania) (JSON)
+audio.py             Proceduralne efekty dźwiękowe, pętle muzyczne + wibracje gamepada
 menu.py              Ekran języka, przygotowania (tryb) i opcji (dźwięk/sterowanie)
 highscore.py         Wczytywanie/zapis rekordów (sekcja w mem.json)
-store.py             Centralny plik zapisu mem.json (sekcje: mem, highscores, stats, achievements)
+store.py             Centralny plik zapisu mem.json (sekcje: mem, highscores, stats, achievements + postępy gier), atomowo z kopią .bak
 stats.py             Statystyki gracza (rozgrywki, czas, zwycięstwa, rekordy) na grę
 achievements.py      Osiągnięcia: definicje, logika odblokowań, powiadomienie (toast)
 progress.py          Ekran osiągnięć i statystyk (dwie zakładki, przewijany)
 replay.py            Nagrywanie i archiwum powtórek (replay.json)
 replayview.py        Ekran powtórek: lista archiwum i odtwarzanie
-ugc.py               Własne dołki: zapis, sprawdzanie, eksport/import (ugc.json)
+ugc.py               Własne treści (dołki do minigolfa, poziomy Geometry Dash): przechowywanie, sprawdzanie, eksport/import (ugc.json)
 swear.py             Filtr słów dla nazw i id (lang/swear/*.yml, wszystkie 14 języków)
 filepick.py          Okna plików ("Eksportuj jako ...", "Importuj")
 prestige.py          System prestiżu dla Snake
 competitive.py       Strojenie trybu Competitive w Snake (poziomy, slot machine, jabłka zakładów)
 ngb.py               Personalizacja wizualna („mody"): kolor głowy + siatka współrzędnych + menu (mem-ngb.json)
+lamabank.py          Bank Lamy: wspólne konto żetonów Blackjacka, Pokera i Casino (sekcja casino w mem.json)
+seedrand.py          Generator losowy z identycznymi co do bitu liczbami w Pythonie i przeglądarce (tryby dnia, nowe łamigłówki)
 i18n.py              Silnik tłumaczeń (wczytuje lang/*.json, t("klucz"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Teksty językowe (jeden klucz zastępczy na tekst)
@@ -3095,25 +4046,49 @@ lamawiki/
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 woordlistz/
   build_wordlists.py   Buduje listy słów Wordle na nowo (słowniki + listy częstości)
-  de/ en/ fr/ ... hr/  answers.txt (hasła) + allowed.txt (dozwolone słowa), 14 języków
+  de/ en/ fr/ ... hr/  answers.txt + allowed.txt (5 liter), answers4/6/7.txt + allowed4/6/7.txt (4, 6, 7 liter), 14 języków
+devtools/            Narzędzia deweloperskie (nie trafiają do .exe)
+  merge_staging.py           Wgrywa tłumaczenia i strony wiki z devtools/staging/ do wszystkich 14 plików językowych
+  build_chess_puzzles.py     Buduje 200 zadań szachowych z bazy zadań Lichess (CC0)
+  build_sudoku_killer.py     Generuje 400 Killer Sudoku z jednoznacznym rozwiązaniem
+  build_crossyroad_models.py Zapisuje modele voxel Crossy Road dla wersji przeglądarkowej
+  build_geodash_levels.py    Buduje 8 poziomów Geometry Dash i solverem dowodzi, że każdy da się przejść razem z monetami
+  build_geodash_solver.py    Solver korzystający z prawdziwego kodu kroku (rozwiązania w geodash_proofs.json)
 games/
-  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
+  tetris.py  tetris_core.py  tetris_ai.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py  sudoku_draw.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py  wordle_words.py
+  trexrunner.py  dame.py  poker.py  muehle.py
+  chess.py  chess_engine.py  chess_draw.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
-  levels/
+  crossyroad.py  crossyroad_world.py  crossyroad_draw.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  battleship.py  battleship_core.py
+  casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  levels/              Dane poziomów: snake-comp.json, chess-puzzles.json (+ README ze źródłami), sudoku-killer.json, geodash.json
+tests/
+  arcade_casino_audit.py     Audyt całościowy (wejście, seedrand Python = JS, zapis, pliki językowe, ekrany przygotowania) + wszystkie audit_*.py
+  audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Audyty headless dla każdej gry
+  newgames_audit.py  blockjump_audit.py
 ```
 
 Wybrany język jest zapisywany w `mem.json` (w sekcji `mem`, obok sekcji
 `highscores` w tym samym pliku) i automatycznie wczytywany przy następnym
 uruchomieniu.
+
+**Źródła i licencje:** 200 zadań szachowych pochodzi z
+[bazy zadań Lichess](https://database.lichess.org/#puzzles) (licencja
+**CC0 1.0**, domena publiczna — dziękujemy, lichess.org!); szczegóły są w
+`games/levels/chess-puzzles.README.md`. Źródła list słów do Wordle podaje
+`woordlistz/README.md`.
 
 ### Uwagi dotyczące platform
 
@@ -3224,7 +4199,7 @@ Python ile hazırlanmış bir masaüstü oyun koleksiyonu: pencereyi ve menüyü
 **Tkinter** sağlar, **Pygame** ise oyun ekranı olarak Tkinter penceresinin içine
 gömülüdür. Ortak seçenekler, tamamen yeniden atanabilen kontroller, yüksek
 skorlar, prosedürel ses efektleri ve bazı oyunlarda çok oyunculu mod içeren kırk
-iki oyun. Arayüz **çok dillidir** – **14 dil** (Almanca / İngilizce /
+altı oyun. Arayüz **çok dillidir** – **14 dil** (Almanca / İngilizce /
 Fransızca / İspanyolca / Portekizce / Lehçe / Türkçe / Danca / Norveççe /
 İsveççe / Fince / Çekçe / Slovence / Hırvatça); dil, ilk açılışta bir
 **karşılama ekranında** seçilir; bu ekran ayrıca **çözünürlüğü** ve **sesi**
@@ -3261,31 +4236,31 @@ yoksa sistemdeki Python'ı. Ayrıntılı, adım adım bir kılavuz en altta
 | **Air Hockey** | 1 / 2 oyuncu  | Momentum aktarımlı 2D fizik, fare kontrolü, yapay zekâ ve güçlendirmeler |
 | **Tic-Tac-Toe** | 1 / 2 oyuncu | 3x3'ten 9x9'a m,n,k oyunu, üç yapay zekâ seviyesi **veya** yerel X'e karşı O |
 | **Breakout** | 1 oyuncu        | Tuğla türleri, güçlendirmeler, kombolar ve pek çok bölüm içeren tuğla kırma oyunu |
-| **Tetris**   | 1 / 2 oyuncu    | Klasik ya da Versus (yan yana iki alan) |
+| **Tetris**   | 1 / 2 oyuncu    | Modern Guideline kuralları (SRS, saklama, 5 parça önizleme, T-Spin): Maraton, Sprint 40, Ultra 2:00, yapay zekâya karşı Versus (3 seviye) ya da çöp satırlı iki kişilik düello |
 | **Invaders** | 1 oyuncu        | Space Invaders: dalgaları temizle, canlarını koru |
 | **Asteroids** | 1 / 2 oyuncu   | Atalet fiziği, dalgalar, UFO'lar, güçlendirmeler, hiperuzay - tek başına ya da ortaklaşa düello |
 | **Pac-Man**  | 1 oyuncu        | Aslına sadık klon: 4 hayalet yapay zekâsı, güç hapları, tünel, meyveler, bölümler |
 | **Flappy Bird** | 1 oyuncu     | Borular arasında yer çekimiyle uçuş, madeni paralar, kalkan, gündüz/gece, madalyalar |
 | **Doodle Jump** | 1 oyuncu     | Yukarı doğru otomatik zıplama, platform türleri, yaylar, pervane, canavarlar |
-| **2048**     | 1 oyuncu        | Sayı kaydırma bulmacası, hedef: 2048 karosu |
+| **2048**     | 1 oyuncu        | 3x3'ten 8x8'e sayı kaydırma bulmacası: Klasik, Zamana karşı ve Sonsuz, geri alma, akıcı animasyonlar, kaydedilen oyunlar |
 | **Minesweeper** | 1 oyuncu     | Güvenli ilk tıklama, chording, gülen yüz ve en iyi süreler içeren klasik oyun |
-| **Sudoku**      | 1 oyuncu     | 400 tohumlu bölüm (4 zorluk x 100), skor çarpanlı 4 yardım modu, notlar, ipuçları, 3 hata sınırı |
+| **Sudoku**      | 1 oyuncu     | Her biri 400 bölümlü 4 tür (Klasik, X-Sudoku, Killer, Mini 6x6), Günün Sudokusu, bölüm başına 3 yıldıza kadar, 4 yardım modu, geri alma, kayıt |
 | **Frogger**     | 1 oyuncu     | Yol + nehir + 5 yuva, bonus sinek, timsahlar, süre sınırı, 3 zorluk |
 | **Memory**      | 1 / 2 oyuncu | 4x4'ten 8x6'ya kadar eş bul, çevirme animasyonu, tekli puanlama ya da düello |
 | **Solitaire**   | 1 oyuncu     | Sürükle-bırak ve geri al özellikli 5 çeşit (Klondike, Spider, FreeCell, Piramit, TriPeaks) |
 | **Aim Trainer** | 1 oyuncu     | Sakin 3D hedef atışı: fare kamerayı yönlendirir, 4 mod (isabet/refleks/hareketli/sakin), kara delik dahil 3 tema |
 | **Dört Taş**    | 1 / 2 oyuncu | Düşen pul animasyonlu klasik oyun: 3 yapay zekâ seviyesi (minimax) ya da yerel düello |
 | **Tank Düellosu** | 1 / 2 oyuncu | Sekmeli atışlar, güçlendirmeler, 4 arena ve 3 seviyeli yapay zekâ içeren 2D arena düellosu |
-| **Blackjack**    | 1 oyuncu    | 4 desteli shoe, ikiye katlama/bölme, 3:2 blackjack ve kalıcı fiş bakiyesi içeren kumarhane blackjack'i |
+| **Blackjack**    | 1 oyuncu    | 4 desteli shoe, ikiye katlama/bölme ve 3:2 blackjack içeren kumarhane blackjack'i; ortak Lama Bankası'nın Lama çipleriyle oynanır |
 | **Tunnel Racer** | 1 oyuncu    | 3D neon tüp uçuşu: sonsuz mod + 30 bölüm, tuş ya da fare ile kontrol, hareket bulanıklığı (motion blur) |
 | **3D Labirent**  | 1 oyuncu    | Birinci şahıs raycaster (Wolfenstein tarzı), 50 tohumlu bölüm, orblar, mini harita - ya da 2D kuşbakışı görünüm |
 | **Reversi**      | 1 / 2 oyuncu | 8x8 Othello: taşları kıstırıp çevir, 3 yapay zekâ seviyesi (minimax) ya da yerel düello |
 | **Kniffel (Yahtzee)** | 1 / 2 oyuncu | 13 kategori, üst bonus ve Yahtzee içeren klasik zar oyunu; rekor avı ya da 2 oyunculu hotseat |
-| **Wordle**       | 1 oyuncu    | 5 harfli kelimeyi 6 denemede tahmin et, sonsuz seri, renkli ipuçları, 14 dilde gerçek kelime listeleri |
+| **Wordle**       | 1 oyuncu    | 4 ile 7 harfli kelime tahmini: Sonsuz, Günün kelimesi, Dordle ve Quordle, zor mod, renk körü paleti, çubuk grafikli istatistik, sonucu paylaşma, 14 dilde gerçek kelime listeleri |
 | **T-Rex Runner** | 1 oyuncu    | Sonsuz çöl koşusu: değişken zıplama, eğilme, kaktüsler ve pterodaktiller, gündüz/gece döngüsü, artan hız, 3 zorluk |
 | **Dama**         | 1 / 2 oyuncu | 3 kural seti (Alman 8×8, Uluslararası 10×10, Checkers), zorunlu yeme ve uçan dama, 3 yapay zekâ seviyesi (minimax) ya da yerel düello |
-| **Poker**        | 1 oyuncu    | Seçilebilir 3 çeşit: yapay zekâya karşı Texas Hold'em, 5 Card Draw ve Video Poker; bahis turları, blindler, kalıcı fiş bakiyesi |
-| **Satranç**      | 1 / 2 oyuncu | Tüm kurallar (rok, geçerken alma, terfi, mat/pat/beraberlik), 6 yapay zekâ seviyesi (minimax + alfa-beta) ya da yerel düello, renk seçimi |
+| **Poker**        | 1 oyuncu    | Seçilebilir 3 çeşit: yapay zekâya karşı Texas Hold'em, 5 Card Draw ve Video Poker; bahis turları, blind'lar, ortak Lama Bankası'nın Lama çipleri |
+| **Satranç**      | 1 / 2 oyuncu | Tüm kurallar, Chess960 ve satranç saati, 6 yapay zekâ seviyesi, Lichess veritabanından 200 bulmaca, geri alma/ipucu, hamle listesi, PGN dışa aktarma ya da yerel düello |
 | **Dokuz Taş**    | 1 / 2 oyuncu | Dizme/hareket/uçma aşamaları, değirmenler ve alışlar, isteğe bağlı uçma kuralı, 3 yapay zekâ seviyesi ya da yerel düello |
 | **Simon**        | 1 / 2 oyuncu | Senso hafıza oyunu: Klasik/Hız/Ters/Karışık modlar + Düello, ses kapalı/açık/karışık, 4/6/9 tuş, mod başına en iyi skor |
 | **Bilardo**      | 1 / 2 oyuncu | 2D'de 8-top, 9-top ve antrenman, sabit 3D görünüm ya da serbest dönen 3D kamera; yumuşak fizik, nişan yardımı, 3 yapay zekâ seviyesi |
@@ -3298,14 +4273,19 @@ yoksa sistemdeki Python'ı. Ayrıntılı, adım adım bir kılavuz en altta
 | **Minigolf**    | 1 / 2 oyuncu | 40 parkurda 360 delik (18 elle tasarlanmış, 342 üretilmiş): kum, rampalar, su, tamponlar, yel değirmenleri ve gezen bloklar; par ve hole-in-one bonuslu skor kartı; 15 nesne türü, 12 şablon ve `.lamapgzmap` olarak paylaşımla **kendi delik düzenleyicisi** |
 | **Pinball**     | 1 / 2 oyuncu | 3 masalı pinball makinesi: bumperlar, slingshotlar, hedefler, L-A-M-A şeritleri, jackpotlu multiball, top koruma, sarsma ve tilt |
 | **Bowling**     | 1 / 2 oyuncu | Resmî strike/spare puanlamasıyla 10 frame, gerçek labut fiziği, hook efekti ve perspektifli pist, 3 zorluk |
+| **Crossy Road** | 1 oyuncu     | İzometrik voksel görünümde çayırlar, yollar, nehirler ve raylar üzerinden sonsuz zıplama: gece/gündüz, kartal, satın alınabilen 10 karakter, günün parkuru |
+| **Geometry Dash** | 1 oyuncu    | Küp, gemi, top, UFO ve dalgalı ritim platform oyunu: Kolay'dan İblis'e her birinde 3 gizli altın olan 8 bölüm, antrenman modu, bölüm başına müzik; `.lamapgzlevel` olarak paylaşımlı **bölüm editörü** |
+| **Battleship**  | 1 / 2 oyuncu | 10x10 deniz savaşı: sürükle-bırak filo yerleşimi, 3 kural anahtarı (temas, salvo, tekrar ateş), 3 seviyeli yapay zekâ ya da devir ekranlı yerel düello |
+| **Casino**      | 1 oyuncu     | Tüm klasik bahislerle Avrupa ruleti ve Lama Slotu (5 makara, 10 hat, joker, bedava dönüşler); Blackjack ve Poker ile tek bir Lama çipi hesabı |
 
 **Çok oyunculu (2 oyuncu yerel)** şu oyunlarda mevcuttur: **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (ortaklaşa
 düello)**, **Memory (düello)**, **Dört Taş**, **Tank Düellosu**, **Reversi**,
-**Kniffel**, **Dama**, **Satranç**, **Dokuz Taş**, **Simon (düello)** ve
-**Bilardo**, **Minigolf**, **Pinball** ve **Bowling**. Mod, doğrudan oyun
-öncesi ekranında
-(*Tek oyunculu / Çok oyunculu*) seçilir.
+**Kniffel**, **Dama**, **Satranç**, **Dokuz Taş**, **Simon (düello)**,
+**Bilardo**, **Minigolf**, **Pinball**, **Bowling** ve **Battleship** (filoları
+gizleyen bir devir ekranıyla) - toplam 20 oyun. Mod, doğrudan oyun öncesi
+ekranında (*Tek oyunculu / Çok oyunculu*) seçilir; Tetris ayrıca **yapay zekâya
+karşı Versus** sunar. Web sürümü yalnızca tek oyunculudur.
 
 #### Oyun başına özellik ayrıntıları
 
@@ -3418,10 +4398,27 @@ düello)**, **Memory (düello)**, **Dört Taş**, **Tank Düellosu**, **Reversi*
   (lazer ateşler), **P/Esc** = duraklat.
 
 **Tetris**
-- Sol/Sağ hareket ettirir, Yukarı = döndür, Aşağı = soft drop, Aksiyon = hard
-  drop.
-- Dolu satırlar puan verir, her 10 satırda seviye artar.
-- **Versus**: yığını önce en üste değen kaybeder.
+- **Modern Guideline kuralları**: 10x20 alan, **7'li torbadan** gelen parçalar,
+  gerçek wall kick'li **SRS dönüş sistemi** (I parçası dahil), iki yöne dönüş,
+  **saklama** (parça başına bir kez), **5 parça önizleme**, gölge parça ve **lock
+  delay** (0,5 sn, en fazla 15 sıfırlama).
+- Oyun öncesi ekranında **üç mod**: *Tek Kişilik*, *YZ'ye Karşı* ve *2 Oyuncu*.
+  Tek Kişilik, ayarlarda **Maraton** (başlangıç seviyesi 1-15, rekora sayılır),
+  **Sprint 40 satır** (en iyi süre) ve **Ultra 2 dakika** (en iyi skor) sunar; en
+  iyiler `mem.json` dosyasının `tetris` bölümünde durur.
+- **Guideline puanlaması**: Single'dan Tetris'e, **T-Spin'ler** (tam ve mini),
+  **Back-to-Back** (x1,5), **combo'lar** ve **Perfect Clear** - ekran yazıları,
+  satır silme animasyonu, hard drop izi, parçacıklar ve seviye atlama efektiyle.
+- **Çöp satırlı Versus**: silinen satırlar rakibe çöp gönderir (Tetris = 4,
+  T-Spin Double = 4 …), gelen çöp bir uyarı çubuğunda duyurulur ve kendi
+  saldırılarınla **mahsup edilir**; iki alan da aynı parça sırasını alır. **Yapay
+  zekâ** 3 seviyelidir ve hız her 40 saniyede artar.
+- **Kontroller**: kendi **DAS/ARR** değerleriyle Sol/Sağ (ayarlardan
+  değiştirilebilir), Yukarı = sağa çevir, Aşağı = soft drop, Aksiyon = hard drop;
+  **C**/Shift = saklama, **Z**/**Y** = sola çevir, **X** = sağa çevir. İki
+  kişilikte 1. oyuncu **Q** ile saklar ve **E** ile sola çevirir, 2. oyuncu
+  **sağ Shift** / **sağ Ctrl** ile. Oyun bitince: **R** = tekrar, **S** =
+  ayarlar.
 
 **Invaders** – iki mod (oyun öncesi ekranda seçilebilir):
 - **Klasik**: klasik uzaylı bloğu; ardından setup ekranında seçilebilir:
@@ -3493,7 +4490,22 @@ patlama efektleri, yüksek skor.
 - Puan = ulaşılan yükseklik; zorluk yükseklikle artar. Yüksek skor.
 - Kontroller: sol/sağ = hareket, Yukarı / Boşluk = ateş.
 
-**2048** – oklar/WASD tüm karoları kaydırır; eşit sayılar birleşir.
+**2048**
+- **3x3'ten 8x8'e** tahta boyutları ve üç modla **kendi ayar ekranı**: *Klasik*
+  (hedef 2048, ardından "Oynamaya devam?"), *Zamana karşı* (3 dakika, saat ilk
+  hamleyle başlar) ve *Sonsuz*.
+- **Akıcı animasyonlar**: taşlar kayar, "pop" efektiyle birleşir ve büyüyerek
+  belirir; puan göstergeleri, 128'den itibaren kıvılcımlar, 2048'den itibaren şok
+  dalgası ve 131072'ye kadar yeni renkler. Animasyon sırasında girilen hamleler
+  sıraya alınır.
+- **Geri alma** (kapalı / oyun başına 3 / sınırsız, **U** tuşu ya da Backspace) -
+  kullanan, rekorsuz ve taş başarımları olmadan oynar.
+- **Kaydet ve devam et**: süren oyun, boyut ve moda göre otomatik kaydedilir; en
+  iyi skorlar ve boyut/mod başına en büyük taş `mem.json` dosyasının `g2048`
+  bölümündedir.
+- Kontroller: oklar/WASD ya da fare/touchpad ile **kaydırma**, **R**/**N** = yeni
+  oyun, **Tab** = ayarlar. Rekor yalnızca geri almasız **4x4 Klasik**'te
+  sayılır.
 
 **Minesweeper**
 - Üç seviye: **Başlangıç** (9x9, 10 mayın), **Orta** (16x16, 40), **Uzman**
@@ -3509,21 +4521,31 @@ patlama efektleri, yüksek skor.
 - Puan = seviyenin taban değeri eksi saniyeler.
 
 **Sudoku**
-- **400 bölüm**: 4 zorluk (Kolay/Normal/Zor/Uzman) x 100 bölüm. Bulmacalar
-  **tohumla üretilir ve tek çözümlüdür** - "Zor"un 12. bölümü her bilgisayarda
-  aynı bulmacadır. Çözülen bölümler kaydedilir ve bölüm seçiminde işaretlenir.
+- Her biri **400 bölümlü 4 tür** (4 zorluk x 100): *Klasik* (bilinen tohumlu
+  bölümler - çözülenler işaretli kalır), *X-Sudoku* (iki köşegen de her rakamı
+  tam bir kez içerir), *Killer* (toplamlı kesik çizgili kafesler; önceden
+  üretilmiş 400 bölüm) ve *Mini 6x6*. Her bulmacanın **tek çözümü** vardır -
+  "Zor"un 12. bölümü her bilgisayarda aynı bulmacadır.
+- **Günün Sudokusu**: herkes için günde bir bulmaca, bilgisayarda ve tarayıcıda
+  aynı; zorluk haftanın gününe bağlıdır (pazartesi Kolay'dan cumartesi Uzman'a),
+  her gün çözen bir seri oluşturur.
+- **Bölüm başına 3 yıldıza kadar** (çözüldü · hatasız ve ipucusuz · ayrıca hedef
+  sürenin altında) ve bölüm seçiminde **en iyi süre**; **yarım kalan bulmacalar**
+  otomatik kaydedilir ve bir sonraki açılışta devam eder.
 - Skor çarpanlı **4 oyun modu** (başlamadan önce seçilir): **Klasik** (x2.0 -
-  yardımsız), **Notlar** (x1.5 - + kalem notları), **Konfor** (x1.0 - + yanlış
-  rakamlar kırmızı, çakışma ve aynı rakam vurgusu, doğru girişler kilitlenir),
-  **Asistan** (x0.7 - + ipucu tuşu, en fazla 3).
-- Her giriş anında çözümle karşılaştırılır; **3 hata sınırı** etkinken (setup
-  seçeneği) üçüncü hata oyunu bitirir.
-- Kontroller: oklar/WASD = hücre, **1-9** = rakam (numpad da),
-  **0/Backspace/sağ tıklama** = sil, **N** = notlar, **H** = ipucu, **R** =
-  bölümü yeniden başlat, **Q** = bölüm seçimi; tamamen fareyle oynanabilir (sağda
-  sayı paneli). Oyun bittikten sonra **A** afişi gizler ve tahtadaki tam
-  **çözümü** gösterir (tekrar A = geri).
-- Puan = (zorluk tabanı - süre - hatalar - ipuçları) x mod çarpanı.
+  yardımsız), **Notlar** (x1.5 - + kalem notları ve otomatik adaylar), **Konfor**
+  (x1.0 - + yanlış rakamlar kırmızı, çakışmalar ve hatalı kafes toplamları
+  işaretli, doğru girişler kilitlenir), **Asistan** (x0.7 - + ipucu tuşu, en
+  fazla 3). **3 hata sınırı** etkinken (setup seçeneği) üçüncü hata oyunu
+  bitirir.
+- Kontroller: oklar/WASD = hücre, **1-9** = rakam (numpad da), **0/Delete/sağ
+  tıklama** = sil, **U**/**Z** = geri al, **Y** = yinele, **N** = notlar, **C** =
+  otomatik adaylar, **H** = ipucu, **M** = renk işaretçisi, **R** = bölümü yeniden
+  başlat, **Q** = bölüm seçimi. "Önce rakam" girişi (setup, **I**) ve her rakamın
+  altında bir **kalan rakam sayacı**; tamamen fareyle oynanabilir. Oyun bittikten
+  sonra **A** tam **çözümü** gösterir.
+- Puan = (tür ve zorluk tabanı - süre - hatalar - ipuçları) x mod çarpanı; tüm
+  türler ve Günün Sudokusu rekora sayılır.
 
 **Frogger**
 - 5 trafik şeridi (arabalar/kamyonlar) ve 5 nehir şeridi (kütükler, üst
@@ -3589,11 +4611,16 @@ patlama efektleri, yüksek skor.
 - Gerçek kumarhane kuralları: **4 desteli shoe**, kurpiyer 17'de durur,
   **blackjack 3:2 öder**, as/10'da kurpiyer peek'i; **ikiye katlama** ve **bir
   kez bölme** (bölünen aslar her biri bir kart alır).
-- **Kalıcı fiş bakiyesi**: 500 ile başla, bakiye ve **rekor** her yeniden
-  başlatmayı atlatır (`mem.json`); 10 fişin altında 500 yeni fiş alırsın - rekor
-  kalır.
-- Fiş düğmeleri ve tuşlarla oynanır (**H**it/**S**tand/**D**ouble/bölme **X**,
-  **1-4** = bahis, Enter = dağıt); kart animasyonları ve kapalı kart çevirmesiyle.
+- **Lama çipleri**: Blackjack, Poker ve Casino ile paylaşılan **Lama Bankası**
+  hesabıyla oynanır (başlangıç 1000, kalıcı olarak `mem.json` içinde). Bahis kart
+  dağıtılırken hemen düşülür; 10 çipin altında Enter, hesabı 1000'e tamamlayan bir
+  **banka kredisi** alır.
+- **Rekor** = kendi **Blackjack bakiyenin** en yüksek seviyesi (1000 artı
+  Blackjack'te kazanılan ve kaybedilen her şey) - rulette, slotta ya da pokerde
+  kazanılanlar burada sayılmaz, krediler de sayılmaz.
+- Çip düğmeleri ve tuşlarla oynanır (**H**it/**S**tand/**D**ouble/bölme **X**,
+  **1-4** = bahis, Backspace = bahsi temizle, Enter = dağıt); kart
+  animasyonlarıyla - kurpiyerin kapalı kartı açılırken artık gerçekten döner.
 
 **Tunnel Racer**
 - **3D neon tüp uçuşu** (Aim Trainer gibi yazılım işleyici): çubuklar, bloklar ve
@@ -3634,28 +4661,72 @@ patlama efektleri, yüksek skor.
   1-5, oklar, Enter).
 
 **Wordle**
-- **5 harfli kelimeyi 6 denemede** tahmin edin; doğru **tekrar eden harf
-  sayımıyla** renkli geri bildirim (yeşil/sarı/gri) ve renklenen bir ekran
-  klavyesi.
-- **Sonsuz seri**: çözülen her kelime puan kazandırır (daha az deneme = daha
-  çok), çözülemeyen ilk kelime seriyi bitirir - toplam = yüksek skor.
-- **14 dilde gerçek kelime listeleri** (`woordlistz/` klasörü, yalnızca A-Z):
-  toplam **34.000'den fazla çözüm** ve **213.000 geçerli kelime**. Her tahmin
-  listeyle karşılaştırılır; listede yoksa reddedilir ve satır kısaca titrer.
-- **İki mod**: *Normal* ve *Zor* - zor modda bulunan ipuçları yeniden
-  kullanılmalı. Klavyeyle yazın ya da ekran tuşlarına tıklayın.
+- Gizli kelimeyi tahmin edin; doğru **tekrar eden harf sayımıyla** renkli geri
+  bildirim (yeşil/sarı/gri) ve renklenen bir ekran klavyesi (Almanca, Çekçe,
+  Slovence ve Hırvatça için QWERTZ, Fransızca için AZERTY, diğerlerinde QWERTY).
+- **Dört mod**: *Sonsuz* (her biri 6 denemeli art arda kelimeler; çözülen her
+  kelime puan kazandırır, çözülemeyen ilk kelime oyunu bitirir), *Günün kelimesi*
+  (her dil ve uzunluk için günde bir kelime - bilgisayarda ve tarayıcıda aynı -
+  geri sayım ve seriyle; başlanmış günlük kelime kaydedilir), *Dordle* (7
+  denemede aynı anda 2 kelime) ve *Quordle* (9 denemede 4 kelime, tuşlar tüm
+  tahtaların renklerini gösterir).
+- Her oyundan önce **ayarlar**: **4 ile 7 arası kelime uzunluğu**, **zor mod**
+  (bulunan ipuçları yeniden kullanılmalı) ve **renk körü paleti** (turuncu/mavi);
+  yanında istatistikler görünür.
+- **14 dilde gerçek kelime listeleri** (`woordlistz/` klasörü, yalnızca A-Z), her
+  uzunluk için ayrı: yalnızca 5 harfte yaklaşık **34.000 çözüm** ve **213.000'i
+  aşkın geçerli kelime**, dört uzunluğun toplamında yaklaşık 134.000 çözüm.
+  Çözümler; özel isim, İngilizce kalıntı ve saldırgan sözcük içermeyen yaygın
+  kelimelerdir; her tahmin listeyle karşılaştırılır - listede yoksa reddedilir ve
+  satır kısaca titrer.
+- Dil, uzunluk ve mod başına **istatistik**: oyunlar, kazanma oranı, güncel ve en
+  iyi seri ile **çubuk grafik olarak deneme dağılımı** (`mem.json` içindeki
+  `wordle` bölümü). **Paylaş** (**C**), çözümü ele vermeden bir emoji ızgarasını
+  panoya kopyalar.
+- Rekora yalnızca 5 harfli *Sonsuz* sayılır; diğer uzunlukların kendi en iyileri
+  vardır. **Kâhin** (en fazla 2 deneme), **Kelime alışkanlığı** (art arda 7 günün
+  kelimesi) ve **Dörtlü dahi** (Quordle çözüldü) başarımları.
+
+**Poker**
+- Oyun öncesi ekranında **3 çeşit**: krupiye düğmesi, blind'lar ve dört bahis
+  turuyla 1-3 yapay zekâ rakibe karşı **Texas Hold'em**, **5 Card Draw** (yapay
+  zekâyla bire bir, bir kez kart değiştirme) ve **Video Poker** (*Jacks or
+  Better*, ödeme tablosuna karşı tek başına).
+- Düğmeler ya da tuşlarla eylemler: **F** = pas (fold), **C** = kontrol/gör,
+  **R** = artır, **A** = all-in; kartları tıklayarak ya da **1-5** ile tut/değiştir,
+  **Enter** kart çeker ya da sonraki eli dağıtır.
+- Ortak **Lama Bankası**'nın **Lama çipleri**: bir elin başında hesabın masada
+  yığın olarak durur ve pota giden her şey hemen düşülür - eli yarıda bırakıp
+  masadan kalkmak yalnızca pottaki payına mal olur. İflas (20'lik büyük blind'ın,
+  Video Poker'de 10'un altı) = hesabı 1000'e tamamlayan banka kredisi.
+- **Rekor** = **Poker bakiyenin** en yüksek seviyesi (1000 artı pokerdeki tüm
+  kazanç ve kayıplar); **Chip lideri** başarımı da yalnızca bu bakiyeyi sayar.
 
 **Satranç**
 - **Eksiksiz satranç**: **rok**, **geçerken alma** ve **piyon terfisi** (taş
   seçilebilir) dahil tüm taş hamleleri; **şah, şah mat ve pat** ile **elli hamle
-  kuralı**, **üçlü tekrar** ve **yetersiz materyal** yoluyla beraberlikler.
-- *Acemi*'den *Usta*'ya **6 yapay zekâ seviyesi** (alfa-beta ile negamax, hamle
-  sıralaması, taş-kare tabloları, sükûnet araması); bir **zaman bütçesi** her
-  yapay zekâ hamlesini akıcı tutar. **Renk seçimi** beyaz/siyah ya da **yerel
-  düello**.
-- Geçerli hamleler vurgulanır, şah durumu belirtilir; **fare** ya da seçim
-  imleciyle oynayın. Yapay zekâya karşı her galibiyet bir yüksek skor puanı
-  kazandırır.
+  kuralı**, **üçlü tekrar**, **yetersiz materyal** ya da anlaşma yoluyla
+  beraberlikler.
+- **Üç mod**: yapay zekâya karşı *oyun*, aynı bilgisayarda *2 oyuncu* (tahta
+  istenirse her hamleden sonra döner) ve **bulmacalar**.
+- *Acemi*'den *Usta*'ya 6 seviyede **daha güçlü, takılmayan yapay zekâ**:
+  yinelemeli derinleştirme, transpozisyon tablosu, sükûnet araması, açılış
+  kitabı ve hareketlilik, piyon yapısı ile şah güvenliğini hesaba katan bir
+  değerlendirme. Yapay zekâ kare başına küçük parçalar hâlinde hesaplar - oyun
+  asla takılmaz.
+- **Ayarlar**: renk seçimi, **satranç saati** (yok, 1+0, 3+2, 5+0, 10+5) ve
+  **Chess960** (960 başlangıç dizilişinin tamamı, numarası hamle listesinin
+  üstünde yazar).
+- Saatler, alınan taşlar, materyal dengesi ve kaydırılabilir **hamle listesi
+  (SAN)** içeren **kenar paneli**; sürükle-bırak, kayan taşlar, koordinatlar.
+  Tuşlar: **U** = geri al, **H** = ipucu oku, **O** = beraberlik teklif et, **X** =
+  terk et, **F** = tahtayı çevir, oyundan sonra **P** = **PGN dışa aktarma**.
+- **Bulmacalar**: 5 aşamada 200 bulmaca (1/2/3 hamlede mat, taktik I/II),
+  **Lichess'in serbest bulmaca veritabanından (CC0)** alınmış ve oyunun kendi
+  motoruyla doğrulanmış; mat bulmacalarında mat eden her hamle geçerlidir.
+  İlerleme `mem.json` dosyasının `chess` bölümündedir.
+- Geri alma ve ipucu oyunu "yardımlı" yapar: rekor yalnızca yapay zekâya karşı
+  yardımsız galibiyetleri sayar (oturum başına).
 
 **Dokuz Taş**
 - Üç aşamalı **değirmenler**: **dizme** (her biri 9 taş), çizgiler boyunca
@@ -3836,6 +4907,95 @@ patlama efektleri, yüksek skor.
 - **Partinin tekrarı**: sonunda **P** tüm atışları yeniden gösterir, **S** onları
   arşive kaydeder (**Tekrarlar** düğmesi).
 
+**Crossy Road**
+- Çayırlar (ağaçlar ve kayalar yolu keser), araba ve kamyonlu yollar, kütük ve
+  nilüferli nehirler ve uyarı ışığı ile zilden sonra bir trenin geldiği **raylar**
+  üzerinden **sonsuz zıplama** - ilerleyince 5 raya kadar koca istasyonlar
+  bekler. Parkur satır satır oluşur, her zaman geçilebilir bir yol vardır; hız ve
+  trafik giderek artar.
+- **İzometrik voksel görünüm**: gölgeli bloklardan karakterler, araçlar ve
+  ağaçlar (her kare boyutu için önceden çizilir), yumuşak kamera, zıplarken
+  squash & stretch, su sıçraması, ezilme animasyonu, tüyler ve parıldayan
+  jetonlar; 50. satırdan itibaren farlarla **gece/gündüz döngüsü**.
+- **Kartal**: kamera yavaşça ilerler - çok oyalanan ya da üç satırdan fazla geri
+  giden kartala yakalanır (önce kırmızı bir kenar uyarır). Bir kütükle ekranın
+  dışına sürüklenmek de oyunu bitirir.
+- **Jetonlar ve karakterler**: toplanan jetonlar (dev jeton = 5) kaydedilir ve
+  **Karakterler** sekmesinde yeni karakterler satın alır: kurbağa, domuz,
+  penguen, kedi, tilki, lama, robot, hayalet ve tek boynuzlu at (25-250 jeton);
+  tavuk en baştan beri senindir.
+- **Modlar**: *Sonsuz* (puan = en uzak satır, rekora sayılır) ve *Günün parkuru*
+  (bugün herkes için aynı, tarayıcıda da, kendi günlük rekoruyla). Kontroller:
+  oklar/WASD, Boşluk/Enter/tıklama = ileri zıpla; ayarlarda **H** = gölgeler,
+  **N** = gece/gündüz. Jetonlar, karakterler ve günlük rekor `mem.json`
+  dosyasının `crossy` bölümündedir.
+
+**Geometry Dash**
+- **Ritim platform oyunu**: karakterin kendiliğinden sağa doğru hızla ilerler -
+  sen yalnızca ne zaman zıplayacağına ya da uçacağına karar verirsin. **Beş
+  biçim** - küp, gemi, top, UFO ve dalga -, ayrıca biçim, yerçekimi ve hız
+  portalları (0,5x ile 3x arası), sarı/pembe/mavi **pedler ve küreler**, yarım
+  bloklar, dikenler, çukurlar ve renk tetikleyicileri.
+- *Kolay*'dan *İblis*'e (“Lama Inferno”) her birinde **3 gizli altın** bulunan
+  **8 hazır bölüm**. Her bölümün geçilebildiği kanıtlanmıştır: yapım sırasında bir
+  çözücü onu gerçek oyun koduyla bitirdi - tüm altınlarla ve saniyenin 1/240'ı
+  kadar kaydırıldığında bile.
+- **Hassas fizik**: sabit 240 Hz adımlı sabit noktalı hesaplama; her basış tam
+  olarak gerçekleştiği adımda etki eder - her kare hızında aynı, tarayıcıda bit bit
+  aynı.
+- Otomatik ve kendi kontrol noktalarıyla (**Z** koyar, **X** siler) **antrenman
+  modu** (**P**), deneme sayacı, ilerleme çubuğu, patlamalar ve anında yeniden
+  başlama (**R**). Her bölümün **kendi müziği** vardır - arka plan, zemin ve
+  küreler ritimle atar (müzik **M** ile kapatılır).
+- **Yıldızlar ve altınlar**: bir bölümü normal modda bitiren yıldızlarını alır, her
+  altın bir yıldız daha değerindedir; rekor **toplam yıldız** sayısıdır (en fazla
+  65). Bölüm başına en iyiler, altınlar, denemeler ve zıplamalar `mem.json`
+  dosyasının `geodash` bölümünde durur.
+- **BÖLÜMLER** sekmesinde **bölüm editörü**: ızgaralı tuval, 6 gruplu palet
+  (bloklar, tehlikeler, pedler ve küreler, portallar, hız, ekstralar), döndürme,
+  geri al/yinele, genel bakış şeridi, **baştan ya da buradan test** ve bölüm
+  ayarları (başlangıç hızı ve biçimi, müzik tarzı, BPM, renkler). **“Doğrulandı”**
+  işareti ancak kendi bölümünü geçtiğinde gelir. **Paylaş** bir `.lamapgzlevel`
+  dosyası yazar, **İçe aktar** onu geri okur; bölümler kendi minigolf
+  parkurlarının yanında `ugc.json` içinde saklanır.
+
+**Battleship**
+- Uçak gemisi (5 kare), zırhlı (4), kruvazör (3), denizaltı (3) ve muhrip (2) ile
+  **10x10 deniz savaşı** - düşman filosunu ilk batıran kazanır.
+- **Filoyu yerleştirme**: rıhtımdan sürükle-bırak; **R** ya da sağ tıklama
+  döndürür, önizleme yeşil ya da kırmızı yanar, **X** her şeyi rastgele yerleştirir,
+  **C** tahtayı boşaltır; son dizilimin bir sonraki turda yeniden önerilir.
+- **Ayarlardaki kurallar** (kaydedilir): *gemiler birbirine değebilir*, *salvo*
+  (tur başına yüzen gemi sayın kadar atış) ve *isabetten sonra tekrar ateş et*.
+- **3 seviyeli yapay zekâ**: Kolay rastgele ateş eder, Orta isabetlerin peşine
+  sistemli biçimde düşer, Zor dama tahtası paritesiyle bir **olasılık haritası**
+  hesaplar (bütün bir filo için ortalama yaklaşık 70 / 60 / 45 atış). Ya da aynı
+  bilgisayarda **2 oyuncu** - bir **devir ekranı** her turdan önce iki filoyu da
+  gizler.
+- **Görseller**: radar taraması, animasyonlu dalgalar, kavis çizen mermiler, su
+  sıçramaları, dumanlı patlamalar ve yanan kareler, "BATTI!" gösterimi ve atış,
+  isabet ve isabet oranını gösteren tur sonu özeti. Rekor, bir oturumdaki **yapay
+  zekâya karşı galibiyetleri** sayar.
+
+**Casino**
+- **Rulet** (Avrupa, 37 cep): bir sayıya, kenara ya da köşeye tıklayarak tüm
+  klasik bahisler - **plein** (35:1), cheval, transversale, carré, sixain, kolon,
+  düzine, kırmızı/siyah, tek/çift ve manque/passe. 1/5/25/100/500'lük çipler, sağ
+  tıklama çip kaldırır; **Çevir**, **Tekrarla** (**R**), **İkiye katla** (**D**)
+  ve **Temizle**. Top önceden çekilen cebe spiral çizerek düşer, üstte son 12
+  sayı görünür.
+- **Lama Slotu**: 5 makara x 3 sıra, **10 kazanç hattı**, **lama = joker**,
+  **altın paralar = scatter** ile iki kat kazançlı 10 bedava dönüş, hat başına
+  1/2/5/10 bahis, **otomatik dönüş** (10/25), **turbo** ve ödeme tablosu.
+  **Geri ödeme oranı %96,1'dir** - makara şeritlerinden tam olarak hesaplanmıştır.
+- **Lama Bankası**: Casino, Blackjack ve Poker tek bir **Lama çipi** hesabını
+  paylaşır (başlangıç 1000, `mem.json` içindeki `casino` bölümü); eski çip
+  bakiyeleri otomatik aktarılır. Bahisler hemen düşülür, her oyun rekoru için
+  kendi bakiyesini tutar, iflasta 1000'e tamamlayan bir **banka kredisi** gelir.
+- Konfeti, para yağmuru, büyük/mega/jackpot afişleri ve kazanç hattı
+  animasyonları; **Tam isabet** (rulette kazanan plein) ve **Lama Jackpotu** (tek
+  hatta 5 lama) başarımları.
+
 Yüksek skorlar `mem.json` dosyasının `highscores` bölümünde (kodun yanında) - dil
 ile birlikte (`mem` bölümü) saklanır.
 
@@ -3858,8 +5018,10 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
   kıvılcımlar, **yeni bir yüksek skorda konfeti yağmuru** ve duraklatma
   katmanının arkasında gerçek bir **bulanıklık**.
 - Her oyunun **oyun öncesi ekranı** o oyunun vurgu renginde belirir ve önceki
-  rekoru bir çip olarak gösterir.
-- **Birleşik oyun içi görünüm**: 42 oyunun tamamı menünün tema paletini ve yazı
+  rekoru bir çip olarak gösterir. Çok mod ve düşük çözünürlükte **kompakt** hâle
+  gelir: Seçenekler, Wiki ve Geri tek satıra geçer, yazı boyutu uyum sağlar -
+  artık hiçbir şey ekrandan taşmaz.
+- **Birleşik oyun içi görünüm**: 46 oyunun tamamı menünün tema paletini ve yazı
   tipini paylaşır - HUD'lar, setup ekranları ve katmanlar seçeneklerde belirlenen
   tasarımı (v4.1 / v4 / Klasik) izlerken her oyun alanı kendi kimlik renklerini
   korur. Artık her oyun, oyun ortasındaki çözünürlük değişikliklerini düzgün
@@ -3867,12 +5029,13 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
   "Satranç" / « Échecs »).
 - **Oyun içi wiki** ("LamaWiki"): her oyun için ayrıntılı yardım (kontroller,
   modlar, puanlama, ipuçları) ve genel sayfalar - **arama kutusu**, kategoriler,
-  kaydırılabilir makaleler ve tuş çipleriyle, beş dilde. Kenar çubuğundaki
+  kaydırılabilir makaleler ve tuş çipleriyle, 14 dilde. Kenar çubuğundaki
   **"Wiki / Yardım"** düğmesiyle ve her oyunun oyun öncesi ekranından erişilebilir
   (doğrudan o oyunun sayfasını açar).
-- **Başarımlar ve istatistikler**: üç kategoride **69 başarım** (genel
-  hedefler, her oyun için bir puan hedefi ve yapay zekâyı mat etmek ya da 2048
-  taşı gibi özel anlar); açıldığında **altın bildirim ve fanfar** - oyunun
+- **Başarımlar ve istatistikler**: üç kategoride **107 başarım** (23 genel
+  hedef, 37 puan hedefi ve yapay zekâyı mat etmek, 4096 taşı, T-Spin Double, 25
+  çözülmüş satranç bulmacası, Killer Sudoku ya da lama jackpotu gibi 47 özel an;
+  2048 ve satrançta geri alma veya ipucu kullanılan oyunlar sayılmaz); açıldığında **altın bildirim ve fanfar** - oyunun
   ortasında bile; eski rekorlar otomatik sayılır. Ayrıca bir **istatistik**
   sekmesi: toplam süre, oyunlar, galibiyetler, rekorlar, favori oyun ve süreye
   göre sıralı oyun tablosu. Kenar çubuğundaki **"Başarımlar ve
@@ -3891,7 +5054,14 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
 - **F11** (ya da "Tam ekran aç/kapa" düğmesi) = tam ekranı açar/kapatır. Pygame
   ekranı gömülü kalır ve en boy oranını koruyarak büyütülür (oran farklıysa siyah
   şeritler). Pencere serbestçe yeniden boyutlandırılabilir.
-- **"Menüye dön"** oyunu bitirir ve yüksek skoru kaydeder.
+- **"Menüye dön"** oyunu bitirir ve yüksek skoru kaydeder - kenar çubuğundan
+  başka bir oyuna geçmek de aynısını yapar.
+- **Sabit ek tuşlar**: atanabilen beş eylemin yanında bazı oyunların kendi
+  tuşları vardır (ör. Tetris'te saklama **C** ve sola çevirme **Z**, 2048,
+  satranç ve Sudoku'da geri alma **U**). Bunlar yalnızca o tuş seçeneklerde
+  hiçbir eyleme atanmamışsa çalışır; ayar ipucunda ve wiki'de listelenir. Basılı
+  tutulan tuşlar doğru algılanır ve duraklatmada ya da Alt-Tab ile bırakılır -
+  artık hiçbir tuş "takılı" kalmaz.
 - **"Çıkış"** Pygame ve Tkinter'ı düzgün biçimde kapatır.
 
 ### Seçenekler, kontroller ve ses
@@ -3937,22 +5107,24 @@ start.sh            Başlatma betiği (Linux / macOS / Git Bash)
 pyinstall.bat       EXE derlemesi (Windows): her şeyi builds\PyGameZ.exe içine paketler
 main.py             Tkinter arayüzü, Pygame gömme, merkezî oyun döngüsü
 game_base.py        Oyun temel sınıfı (update/draw/handle_event) + InputEvent + yardımcılar
-settings.py         Ayarları yükle/kaydet (ses/titreşim/tuş atamaları) (JSON)
-audio.py            Prosedürel ses efektleri + gamepad titreşimi
+settings.py          Ayarları yükler/kaydeder (ses/titreşim/tuş atamaları/doğrulama kurallı oyun seçenekleri) (JSON)
+audio.py             Prosedürel ses efektleri, müzik döngüleri + gamepad titreşimi
 menu.py             Dil, oyun öncesi (mod) ve seçenekler ekranı (ses/kontroller)
 highscore.py        Yüksek skorları yükle/kaydet (mem.json içindeki bölüm)
-store.py            Merkezî kayıt dosyası mem.json (bölümler: mem, highscores, stats, achievements)
+store.py             Merkezi kayıt dosyası mem.json (bölümler: mem, highscores, stats, achievements + oyun ilerlemeleri), .bak yedekli atomik yazım
 stats.py             Oyuncu istatistikleri (oyun, süre, galibiyet, rekor) oyun başına
 achievements.py      Başarımlar: tanımlar, açma mantığı, bildirim (toast)
 progress.py          Başarımlar ve istatistikler ekranı (iki sekme, kaydırılabilir)
 replay.py            Tekrarların kaydı ve arşivi (replay.json)
 replayview.py        Tekrar ekranı: arşiv listesi ve oynatma
-ugc.py               Kendi delikleri: depolama, denetim, dışa/içe aktarma (ugc.json)
+ugc.py               Kendi içerikler (minigolf parkurları, Geometry Dash seviyeleri): depolama, doğrulama, dışa/içe aktarma (ugc.json)
 swear.py             Adlar ve id'ler için kelime filtresi (lang/swear/*.yml, 14 dil)
 filepick.py          Dosya pencereleri ("Farklı dışa aktar ...", "İçe aktar")
 prestige.py         Snake için prestij sistemi
 competitive.py      Snake'in Rekabetçi modu için ince ayar (seviyeler, slot makinesi, kumar elmaları)
 ngb.py              Görsel kişiselleştirme ("mods"): baş rengi + koordinat ızgarası + menü (mem-ngb.json)
+lamabank.py          Lama Bankası: Blackjack, Poker ve Casino'nun ortak çip hesabı (mem.json içindeki casino bölümü)
+seedrand.py          Python'da ve tarayıcıda bit bit aynı sayılar üreten rastgele üreteci (günlük modlar, yeni bulmacalar)
 i18n.py             Çeviri motoru (lang/*.json yükler, t("anahtar"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Dil metinleri (metin başına bir yer tutucu anahtar)
@@ -3964,24 +5136,48 @@ lamawiki/
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 woordlistz/
   build_wordlists.py   Wordle kelime listelerini yeniden üretir (sözlükler + sıklık listeleri)
-  de/ en/ fr/ ... hr/  answers.txt (çözümler) + allowed.txt (geçerli kelimeler), 14 dil
+  de/ en/ fr/ ... hr/  answers.txt + allowed.txt (5 harf), answers4/6/7.txt + allowed4/6/7.txt (4, 6, 7 harf), 14 dil
+devtools/            Geliştirici araçları (.exe'ye paketlenmez)
+  merge_staging.py           devtools/staging/ içindeki çevirileri ve wiki sayfalarını 14 dil dosyasına işler
+  build_chess_puzzles.py     200 satranç bulmacasını Lichess bulmaca veritabanından (CC0) oluşturur
+  build_sudoku_killer.py     Tek çözümlü 400 Killer Sudoku üretir
+  build_crossyroad_models.py Crossy Road voksel modellerini web sürümü için yazar
+  build_geodash_levels.py    8 Geometry Dash bölümünü oluşturur ve her birinin altınlarla birlikte geçilebildiğini çözücüyle kanıtlar
+  build_geodash_solver.py    Gerçek adım koduyla çalışan çözücü (çözümler geodash_proofs.json içinde)
 games/
-  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
+  tetris.py  tetris_core.py  tetris_ai.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py  sudoku_draw.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py  wordle_words.py
+  trexrunner.py  dame.py  poker.py  muehle.py
+  chess.py  chess_engine.py  chess_draw.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
-  levels/
+  crossyroad.py  crossyroad_world.py  crossyroad_draw.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  battleship.py  battleship_core.py
+  casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  levels/              Seviye verileri: snake-comp.json, chess-puzzles.json (+ kaynak README), sudoku-killer.json, geodash.json
+tests/
+  arcade_casino_audit.py     Genel denetim (giriş, seedrand Python = JS, kayıt, dil dosyaları, oyun öncesi ekranları) + tüm audit_*.py
+  audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Oyun başına headless denetimler
+  newgames_audit.py  blockjump_audit.py
 ```
 
 Seçilen dil `mem.json` içinde (aynı dosyadaki `highscores` bölümünün yanındaki
 `mem` bölümünde) saklanır ve bir sonraki açılışta otomatik olarak yüklenir.
+
+**Kaynaklar ve lisanslar:** 200 satranç bulmacası
+[Lichess bulmaca veritabanından](https://database.lichess.org/#puzzles) gelir
+(lisans **CC0 1.0**, kamu malı - teşekkürler, lichess.org!); ayrıntılar
+`games/levels/chess-puzzles.README.md` dosyasındadır. Wordle kelime listelerinin
+kaynakları `woordlistz/README.md` dosyasında belirtilir.
 
 ### Platform notları
 
@@ -4088,7 +5284,7 @@ paketler. Dosya, Python kurulu olmayan herhangi bir Windows bilgisayarında
 ## 🇩🇰 Dansk
 
 En skrivebords-spilsamling i Python: **Tkinter** leverer vinduet og menuen,
-**Pygame** indlejres som spildisplay inde i Tkinter-vinduet. Toogfyrre spil
+**Pygame** indlejres som spildisplay inde i Tkinter-vinduet. Seksogfyrre spil
 med fælles indstillinger, frit omdefinerbare kontroller, highscores, proceduralt
 genererede lydeffekter og – for nogle titler – en multiplayer-tilstand.
 Grænsefladen er **flersproget** og fås på **14 sprog**; sproget vælges på en
@@ -4125,31 +5321,31 @@ nederst under **[Installationsguide](#installationsguide)**.
 | **Air Hockey** | 1 / 2 spillere | 2D-fysik med impulsoverførsel, musestyring, AI og power-ups |
 | **Tic-Tac-Toe** | 1 / 2 spillere | m,n,k-spil på 3x3 til 9x9, tre AI-styrker **eller** lokal X mod O |
 | **Breakout** | 1 spiller       | Brick breaker med stentyper, power-ups, combos og mange baner |
-| **Tetris**   | 1 / 2 spillere  | Klassisk eller Versus (to felter side om side) |
+| **Tetris**   | 1 / 2 spillere  | Moderne Guideline-regler (SRS, reserve, 5-brikkers forhåndsvisning, T-Spins): Maraton, Sprint 40, Ultra 2:00, Versus mod AI'en (3 styrker) eller for to med affaldsrækker |
 | **Invaders** | 1 spiller       | Space Invaders: ryd bølgerne, beskyt dine liv |
 | **Asteroids** | 1 / 2 spillere | Inertifysik, bølger, UFO'er, power-ups, hyperrum - solo eller co-op-duel |
 | **Pac-Man**  | 1 spiller       | Tro klon: 4 spøgelses-AI'er, power-piller, tunnel, frugt, baner |
 | **Flappy Bird** | 1 spiller    | Tyngdekraftsflugt gennem rør, mønter, skjold, dag/nat, medaljer |
 | **Doodle Jump** | 1 spiller    | Auto-hop opad, platformstyper, fjedre, propel, monstre |
-| **2048**     | 1 spiller       | Tal-skydespil, mål: 2048-brikken |
+| **2048**     | 1 spiller       | Tal-skydespil fra 3x3 til 8x8: Klassisk, Tidsangreb og Uendelig, fortryd, flydende animationer, gemte partier |
 | **Minesweeper** | 1 spiller    | Klassikeren med sikkert første klik, chording, smiley og bedste tider |
-| **Sudoku**      | 1 spiller    | 400 seed-genererede baner (4 sværhedsgrader x 100), 4 hjælpetilstande med pointmultiplikator, noter, tips, 3-fejls-grænse |
+| **Sudoku**      | 1 spiller    | 4 varianter (Klassisk, X-sudoku, Killer, Mini 6x6) med hver 400 baner, dagens sudoku, op til 3 stjerner pr. bane, 4 hjælpetilstande, fortryd, gemt spil |
 | **Frogger**     | 1 spiller    | Vej + flod + 5 bugter, bonusflue, krokodiller, tidsgrænse, 3 sværhedsgrader |
 | **Memory**      | 1 / 2 spillere | Find par på 4x4 op til 8x6, vendeanimation, solo-scoring eller duel |
 | **Kabale**      | 1 spiller    | 5 varianter (Klondike, Spider, FreeCell, Pyramide, TriPeaks) med træk og slip og fortryd |
 | **Aim Trainer** | 1 spiller    | Afslappet 3D-målskydning: musen styrer kameraet, 4 tilstande (præcision/refleks/bevægelig/chill), 3 temaer inkl. et sort hul |
 | **Fire på stribe** | 1 / 2 spillere | Klassikeren med falde-animation: 3 AI-styrker (minimax) eller lokal duel |
 | **Tankduel**    | 1 / 2 spillere | 2D-arenaduel med rikochetskud, power-ups, 4 arenaer, AI med 3 styrker |
-| **Blackjack**   | 1 spiller    | Casino-blackjack med 4-decks sko, double/split, 3:2-blackjack og en vedvarende chipsaldo |
+| **Blackjack**   | 1 spiller    | Casino-blackjack med 4-decks sko, double/split og 3:2-blackjack; spilles med lama-chips fra den fælles Lama-bank |
 | **Tunnel Racer** | 1 spiller   | 3D-neon-rørflugt: endeløs tilstand + 30 baner, tast- eller musestyring, motion blur |
 | **3D-labyrint** | 1 spiller    | Førstepersons-raycaster (Wolfenstein-stil) med 50 seed-genererede baner, orbs, minikort - eller 2D-fugleperspektiv |
 | **Reversi**     | 1 / 2 spillere | Othello på 8x8: indfang og vend brikker, 3 AI-styrker (minimax) eller lokal duel |
 | **Yatzy**       | 1 / 2 spillere | Terningklassiker med 13 kategorier, øvre bonus og Yatzy; highscore-jagt eller 2-spiller-hotseat |
-| **Wordle**      | 1 spiller    | Gæt ordet på 5 bogstaver på 6 forsøg, endeløs streak, farvede spor, rigtige ordlister på 14 sprog |
+| **Wordle**      | 1 spiller    | Gæt ord på 4 til 7 bogstaver: Uendelig, Dagens ord, Dordle og Quordle, svær tilstand, farveblind-palet, statistik med søjlediagram, del resultatet, rigtige ordlister på 14 sprog |
 | **T-Rex Runner** | 1 spiller   | Endeløst ørkenløb: variabelt hop, dukke, kaktusser og pterodaktyler, dag/nat-cyklus, stigende tempo, 3 sværhedsgrader |
 | **Dam**         | 1 / 2 spillere | 3 regelsæt (tysk 8×8, international 10×10, checkers), slagtvang og flyvende dam, 3 AI-styrker (minimax) eller lokal duel |
-| **Poker**       | 1 spiller    | 3 valgbare varianter: Texas Hold'em mod AI, 5 Card Draw og Video Poker; budrunder, blinds, vedvarende chipsaldo |
-| **Skak**        | 1 / 2 spillere | Fulde regler (rokade, en passant, forvandling, mat/pat/remis), 6 AI-styrker (minimax + alfa-beta) eller lokal duel, farvevalg |
+| **Poker**       | 1 spiller    | 3 valgbare varianter: Texas Hold'em mod AI, 5 Card Draw og Video Poker; budrunder, blinds, lama-chips fra den fælles Lama-bank |
+| **Skak**        | 1 / 2 spillere | Fulde regler, Chess960 og skakur, 6 AI-styrker, 200 opgaver fra Lichess-databasen, fortryd/hint, trækliste, PGN-eksport eller lokal duel |
 | **Mølle**       | 1 / 2 spillere | Sætte-/flytte-/springfaser, møller og slag, valgfri flyveregel, 3 AI-styrker eller lokal duel |
 | **Simon**       | 1 / 2 spillere | Senso-huskespil: Klassisk/Speed/Reverse/Blandet-tilstande + duel, lyd fra/til/blandet, 4/6/9 felter, bedste pr. tilstand |
 | **Billard**     | 1 / 2 spillere | 8-ball, 9-ball og øvelsestilstand i 2D, fast 3D-visning eller frit roterbart 3D-kamera; blød fysik, sigtehjælp, 3 AI-styrker |
@@ -4162,13 +5358,19 @@ nederst under **[Installationsguide](#installationsguide)**.
 | **Minigolf**    | 1 / 2 spillere | 360 baner på 40 forløb (18 håndbyggede, 342 genererede): sand, ramper, vand, bumpere, vindmøller & vandrende klodser; scorekort med par og hole-in-one-bonus; **egen huleditor** med 15 objekttyper, 12 skabeloner og deling som `.lamapgzmap` |
 | **Pinball**     | 1 / 2 spillere | Flippermaskine med 3 borde: bumpere, slingshots, mål, L-A-M-A-baner, multiball med jackpot, kugleredning, puf & tilt |
 | **Bowling**     | 1 / 2 spillere | 10 frames med officiel strike/spare-optælling, ægte keglefysik, hook-skrue og bane i perspektiv, 3 sværhedsgrader |
+| **Crossy Road** | 1 spiller     | Endeløse hop over enge, veje, floder og togskinner i isometrisk voxel-look: dag/nat, ørn, 10 figurer at købe, dagens rute |
+| **Geometry Dash** | 1 spiller   | Rytme-platformspil med terning, skib, bold, UFO og bølge: 8 baner fra Let til Dæmon med 3 hemmelige mønter hver, træningstilstand, soundtrack pr. bane; **baneeditor** med deling som `.lamapgzlevel` |
+| **Battleship**  | 1 / 2 spillere | Søslag på 10x10: flåden placeres med træk og slip, 3 regelkontakter (berøring, salve, skyd igen), AI med 3 styrker eller lokal duel med overdragelsesskærm |
+| **Casino**      | 1 spiller     | Europæisk roulette med alle klassiske indsatser og Lama-slot (5 hjul, 10 gevinstlinjer, wild, gratisspil); én lama-chip-konto sammen med Blackjack og Poker |
 
 **Multiplayer (2 spillere lokalt)** findes til **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op-duel)**,
 **Memory (duel)**, **Fire på stribe**, **Tankduel**, **Reversi**, **Yatzy**,
 **Dam**, **Skak**, **Mølle**, **Simon (duel)**, **Billard**, **Minigolf**,
-**Pinball** og **Bowling**. Tilstanden vælges
-direkte på forspils-skærmen (*Enkeltspiller / Multiplayer*).
+**Pinball**, **Bowling** og **Battleship** (med en overdragelsesskærm, der skjuler
+flåderne) - i alt 20 spil. Tilstanden vælges direkte på forspils-skærmen
+(*Enkeltspiller / Multiplayer*); Tetris har desuden **Versus mod AI'en**.
+Webversionen er kun til én spiller.
 
 #### Funktionsdetaljer pr. spil
 
@@ -4273,9 +5475,27 @@ direkte på forspils-skærmen (*Enkeltspiller / Multiplayer*).
   bolden (affyrer laser), **P/Esc** = pause.
 
 **Tetris**
-- Venstre/Højre flytter, Op = drej, Ned = soft drop, Handling = hard drop.
-- Fulde rækker giver point, for hver 10 rækker stiger niveauet.
-- **Versus**: den, hvis stak først rammer toppen, taber.
+- **Moderne Guideline-regler**: 10x20-felt, brikker fra en **7-pose**,
+  **SRS-rotationssystemet** med ægte wall kicks (også for I-brikken), drejning i
+  begge retninger, **reserve** (én gang pr. brik), **forhåndsvisning af 5
+  brikker**, skyggebrik og **lock delay** (0,5 s, højst 15 nulstillinger).
+- **Tre tilstande** på forspils-skærmen: *Solo*, *Mod AI* og *2 spillere*. Solo
+  tilbyder i opsætningen **Maraton** (startniveau 1-15, tæller til highscoren),
+  **Sprint 40 rækker** (bedste tid) og **Ultra 2 minutter** (bedste score);
+  rekorderne ligger i afsnittet `tetris` i `mem.json`.
+- **Guideline-pointgivning**: single til Tetris, **T-Spins** (fulde og mini),
+  **Back-to-Back** (x1,5), **combos** og **Perfect Clear** - med tekster på
+  skærmen, rydningsanimation, hard-drop-spor, partikler og level-up-effekt.
+- **Versus med affaldsrækker**: ryddede rækker sender affald til modstanderen
+  (Tetris = 4, T-Spin Double = 4 …), indkommende affald varsles i en advarselsbjælke
+  og **modregnes** af dine egne angreb; begge felter får den samme brikrækkefølge.
+  **AI'en** findes i 3 styrker, og tempoet stiger hvert 40. sekund.
+- **Styring**: Venstre/Højre med eget **DAS/ARR** (kan indstilles i
+  opsætningen), Op = drej til højre, Ned = soft drop, Handling = hard drop;
+  **C**/Shift = reserve, **Z**/**Y** = drej til venstre, **X** = drej til højre.
+  For to lægger spiller 1 i reserve med **Q** og drejer til venstre med **E**,
+  spiller 2 med **højre Shift** / **højre Ctrl**. Efter spillet: **R** = igen,
+  **S** = opsætning.
 
 **Invaders** – to tilstande (vælges på forspils-skærmen):
 - **Klassisk**: den klassiske alienblok; derefter valgbart på setup-skærmen:
@@ -4345,7 +5565,21 @@ eksplosionseffekter, highscore.
 - Point = nået højde; sværhedsgraden stiger med højden. Highscore.
 - Styring: venstre/højre = bevæg, Op / Mellemrum = skyd.
 
-**2048** – piletaster/WASD skubber alle brikker; ens tal smelter sammen.
+**2048**
+- **Egen opsætningsskærm** med brætstørrelser fra **3x3 til 8x8** og tre
+  tilstande: *Klassisk* (mål 2048, derefter »Spil videre?«), *Tidsangreb* (3
+  minutter, uret starter ved første træk) og *Uendelig*.
+- **Flydende animationer**: brikker glider, smelter sammen med et »pop« og vokser
+  frem; point-popups, gnister fra 128, en trykbølge fra 2048 og nye farver helt
+  op til 131072. Input under en animation bliver gemt og udført bagefter.
+- **Fortryd** (fra / 3 pr. spil / ubegrænset, tast **U** eller Backspace) - bruger
+  du det, spiller du uden highscore og uden brik-præstationer.
+- **Gem og fortsæt**: det igangværende parti gemmes automatisk pr. størrelse og
+  tilstand; bedste score og største brik pr. størrelse/tilstand ligger i afsnittet
+  `g2048` i `mem.json`.
+- Styring: piletaster/WASD eller **swipe** med mus/touchpad, **R**/**N** = nyt
+  spil, **Tab** = opsætning. Highscoren tæller kun i **4x4 Klassisk** uden
+  fortryd.
 
 **Minesweeper**
 - Tre niveauer: **Begynder** (9x9, 10 miner), **Øvet** (16x16, 40), **Ekspert**
@@ -4360,22 +5594,32 @@ eksplosionseffekter, highscore.
 - Point = niveauets grundværdi minus sekunder.
 
 **Sudoku**
-- **400 baner**: 4 sværhedsgrader (Let/Normal/Svær/Ekspert) x 100 baner.
-  Puslespillene er **seed-genererede med en entydig løsning** - niveau 12 af
-  "Svær" er det samme puslespil på enhver PC. Løste baner gemmes og krydses af i
-  baneudvalget.
+- **4 varianter** med hver **400 baner** (4 sværhedsgrader x 100): *Klassisk*
+  (de kendte seed-baner - løste baner forbliver afkrydset), *X-sudoku* (begge
+  diagonaler indeholder hvert ciffer præcis én gang), *Killer* (stiplede bure med
+  sum; 400 baner genereret på forhånd) og *Mini 6x6*. Alle puslespil har en
+  **entydig løsning** - bane 12 af "Svær" er det samme puslespil på enhver PC.
+- **Dagens sudoku**: én opgave om dagen til alle, ens på PC og i browseren;
+  sværhedsgraden afhænger af ugedagen (fra mandag Let til lørdag Ekspert), og løser
+  du hver dag, bygger du en stime op.
+- **Op til 3 stjerner pr. bane** (løst · uden fejl og tips · desuden under
+  måltiden) og **bedste tid** i baneudvalget; **påbegyndte opgaver** gemmes
+  automatisk og fortsættes næste gang.
 - **4 spiltilstande** (vælges før start) med en pointmultiplikator: **Klassisk**
-  (x2.0 - ingen hjælp), **Noter** (x1.5 - + blyantsnoter), **Komfort** (x1.0 - +
-  forkerte cifre røde, fremhævning af konflikter og ens cifre, korrekte
-  indtastninger låser fast), **Assistent** (x0.7 - + tip-tast, maks. 3).
-- Hver indtastning tjekkes straks mod løsningen; med **3-fejls-grænsen** slået til
-  (setup-mulighed) slutter spillet ved den tredje fejl.
+  (x2.0 - ingen hjælp), **Noter** (x1.5 - + blyantsnoter og automatiske
+  kandidater), **Komfort** (x1.0 - + forkerte cifre røde, konflikter og forkerte
+  bursummer markeret, korrekte indtastninger låser fast), **Assistent** (x0.7 - +
+  tip-tast, maks. 3). Med **3-fejls-grænsen** slået til (setup-mulighed) slutter
+  spillet ved den tredje fejl.
 - Styring: piletaster/WASD = celle, **1-9** = ciffer (også numpad),
-  **0/Backspace/højreklik** = slet, **N** = noter, **H** = tip, **R** = genstart
-  bane, **Q** = baneudvalg; fuldt spilbart med musen (talpanel til højre). Når
-  spillet er slut, skjuler **A** banneret og afslører den fulde **løsning** på
-  brættet (A igen = tilbage).
-- Point = (banens grundværdi - tid - fejl - tips) x tilstandens multiplikator.
+  **0/Delete/højreklik** = slet, **U**/**Z** = fortryd, **Y** = gentag, **N** =
+  noter, **C** = udfyld kandidater automatisk, **H** = tip, **M** = farvemarkør,
+  **R** = genstart bane, **Q** = baneudvalg. Indtastning »ciffer først« (setup,
+  **I**) og en **tæller for manglende cifre** under hvert ciffer; fuldt spilbart
+  med musen. Når spillet er slut, viser **A** den fulde **løsning**.
+- Point = (grundværdi for variant og sværhedsgrad - tid - fejl - tips) x
+  tilstandens multiplikator; alle varianter og dagens sudoku tæller til
+  highscoren.
 
 **Frogger**
 - 5 trafikbaner (biler/lastbiler) og 5 flodbaner (træstammer, skildpadder der
@@ -4438,10 +5682,17 @@ eksplosionseffekter, highscore.
 - Ægte casinoregler: **4-decks sko**, dealeren står på 17, **blackjack betaler
   3:2**, dealer-peek ved es/10; **double down** og **ét split** (splittede esser
   får ét kort hver).
-- **Vedvarende chipsaldo**: start med 500, saldo og **rekord** overlever hver
-  genstart (`mem.json`); under 10 chips får du 500 friske - rekorden bliver.
+- **Lama-chips**: Blackjack spiller med kontoen i **Lama-banken**, som deles med
+  Poker og Casino (start 1000, gemt permanent i `mem.json`). Indsatsen trækkes,
+  så snart der gives; under 10 chips tager Enter et **banklån**, der fylder
+  kontoen op til 1000.
+- **Highscore** = højeste stand af din egen **Blackjack-balance** (1000 plus alt,
+  hvad der er vundet og tabt i Blackjack) - gevinster i roulette, på slotten eller
+  i poker tæller ikke her, og det gør lån heller ikke.
 - Spilles via chipknapper og taster (**H**it/**S**tand/**D**ouble/split **X**,
-  **1-4** = indsats, Enter = giv) med kortanimationer og et hulkort-flip.
+  **1-4** = indsats, Backspace = nulstil indsats, Enter = giv) med
+  kortanimationer; dealerens hulkort vender nu også rigtigt rundt, når det
+  afsløres.
 
 **Tunnel Racer**
 - **3D-neon-rørflugt** (softwarerenderer som Aim Traineren): bjælker, klodser og
@@ -4480,26 +5731,69 @@ eksplosionseffekter, highscore.
   (Mellemrum, 1-5, piletaster, Enter).
 
 **Wordle**
-- Gæt **ordet på 5 bogstaver på 6 forsøg**; farvet feedback (grøn/gul/grå) med
-  korrekt **optælling af dobbeltbogstaver** og et skærmtastatur, der farves.
-- **Endeløs streak**: hvert løst ord giver point (færre forsøg = flere), det første
-  uløste ord afslutter forsøget - sum = highscore.
-- **Rigtige ordlister på alle 14 sprog** (mappen `woordlistz/`, kun A-Z): i alt
-  over **34.000 løsninger** og **213.000 tilladte gæt**. Hvert gæt tjekkes mod
-  listen - alt andet afvises, og rækken ryster kort.
-- **To tilstande**: *Normal* og *Svær* - i svær tilstand skal fundne spor bruges
-  igen. Skriv på tastaturet eller klik på tasterne på skærmen.
+- Gæt det skjulte ord; farvet feedback (grøn/gul/grå) med korrekt **optælling af
+  dobbeltbogstaver** og et skærmtastatur, der farves (QWERTZ til tysk, tjekkisk,
+  slovensk og kroatisk, AZERTY til fransk, ellers QWERTY).
+- **Fire tilstande**: *Uendelig* (det ene ord efter det andet med 6 forsøg hver;
+  hvert løst ord giver point, det første uløste afslutter spillet), *Dagens ord*
+  (ét ord om dagen pr. sprog og længde - ens på PC og i browseren - med nedtælling
+  og stime; et påbegyndt dagens ord gemmes), *Dordle* (2 ord på én gang på 7
+  forsøg) og *Quordle* (4 ord på 9 forsøg, tasterne viser farverne fra alle
+  plader).
+- **Opsætning** før hvert spil: **ordlængde 4 til 7**, **svær tilstand** (fundne
+  spor skal bruges igen) og **farveblind-palet** (orange/blå); ved siden af står
+  statistikken.
+- **Rigtige ordlister på alle 14 sprog** (mappen `woordlistz/`, kun A-Z), med egne
+  lister for hver længde: alene ved 5 bogstaver knap **34.000 løsninger** og over
+  **213.000 tilladte gæt**, omkring 134.000 løsninger på tværs af alle fire
+  længder. Løsningerne er almindelige ord uden navne, engelske rester og stødende
+  ord; hvert gæt tjekkes mod listen - alt andet afvises, og rækken ryster kort.
+- **Statistik** pr. sprog, længde og tilstand: spil, vinderprocent, aktuel og
+  bedste stime og **fordelingen af forsøg som søjlediagram** (afsnittet `wordle`
+  i `mem.json`). **Del** (**C**) kopierer et emoji-gitter uden at afsløre ordet.
+- Highscoren tæller kun *Uendelig* med 5 bogstaver; de andre længder har egne
+  bedste resultater. Præstationerne **Synsk** (højst 2 forsøg), **Ordvane** (7
+  dagens ord i træk) og **Firdobbelt geni** (Quordle løst).
+
+**Poker**
+- **3 varianter** på forspils-skærmen: **Texas Hold'em** mod 1-3 AI-modstandere
+  med dealerknap, blinds og fire budrunder, **5 Card Draw** (heads-up mod AI'en,
+  én bytterunde) og **Video Poker** (*Jacks or Better*, solo mod
+  gevinsttabellen).
+- Handlinger via knapper eller taster: **F** = fold, **C** = check/call, **R** =
+  raise, **A** = all-in; hold/byt kort med klik eller **1-5**, **Enter** trækker
+  eller giver næste hånd.
+- **Lama-chips** fra den fælles **Lama-bank**: ved starten af en hånd ligger din
+  konto på bordet som stak, og det, der går i potten, trækkes med det samme -
+  forlader du bordet midt i en hånd, mister du kun din andel af potten. Pengene
+  opbrugt (under big blind på 20, under 10 i Video Poker) = banklån op til 1000.
+- **Highscore** = højeste stand af din **Poker-balance** (1000 plus alle
+  gevinster og tab i poker); præstationen **Chipleader** tæller også kun
+  pokerbalancen.
 
 **Skak**
 - **Fuldstændigt skak**: alle brikkers træk inkl. **rokade**, **en passant** og
   **bondeforvandling** (vælg brikken); **skak, skakmat og pat** samt remis ved
-  **50-træks-reglen**, **trefoldig stillingsgentagelse** og **utilstrækkeligt
-  materiale**.
-- **6 AI-styrker** fra *Begynder* til *Mester* (negamax med alfa-beta,
-  trækssortering, brik-felt-tabeller, quiescence-søgning); et **tidsbudget** holder
-  hvert AI-træk flydende. **Farvevalg** hvid/sort eller en **lokal duel**.
-- Lovlige træk fremhæves, skak markeres; spil med **musen** eller en
-  markeringsmarkør. Hver sejr mod AI'en giver ét highscore-point.
+  **50-træks-reglen**, **trefoldig stillingsgentagelse**, **utilstrækkeligt
+  materiale** eller aftale.
+- **Tre tilstande**: *parti* mod AI'en, *2 spillere* ved samme computer
+  (brættet kan dreje efter hvert træk) og **opgaver**.
+- **Stærkere AI uden hak** i 6 niveauer fra *Begynder* til *Mester*: iterativ
+  uddybning, transpositionstabel, quiescence-søgning, åbningsbog og en vurdering
+  med mobilitet, bondestruktur og kongesikkerhed. AI'en regner i små bidder pr.
+  billede - spillet hakker aldrig.
+- **Opsætning**: farvevalg, **skakur** (intet, 1+0, 3+2, 5+0, 10+5) og
+  **Chess960** (alle 960 startopstillinger, nummeret står over træklisten).
+- **Sidepanel** med ure, slåede brikker, materialebalance og en rullebar
+  **trækliste (SAN)**; træk og slip, glidende brikker, koordinater. Taster: **U**
+  = fortryd, **H** = hintpil, **O** = tilbyd remis, **X** = opgiv, **F** = vend
+  brættet, efter partiet **P** = **PGN-eksport**.
+- **Opgaver**: 200 opgaver i 5 trin (mat i 1/2/3, taktik I/II) fra **Lichess'
+  frie opgavedatabase (CC0)**, kontrolleret med spillets egen motor; i
+  matopgaver tæller ethvert træk, der sætter mat. Fremskridtet ligger i afsnittet
+  `chess` i `mem.json`.
+- Fortryd og hint gør et parti »assisteret«: highscoren tæller kun sejre uden
+  hjælp mod AI'en (pr. session).
 
 **Mølle**
 - **Mølle** med alle tre faser: **at sætte** (9 brikker hver), **at flytte** langs
@@ -4674,6 +5968,92 @@ eksplosionseffekter, highscore.
 - **Replay af partiet**: til sidst viser **P** alle kast igen, og **S** gemmer
   dem i arkivet (knappen **Replays**).
 
+**Crossy Road**
+- **Endeløse hop** over enge (træer og sten spærrer vejen), veje med biler og
+  lastbiler, floder med træstammer og åkander og **togskinner**, hvor et tog
+  suser forbi efter advarselslys og klokke - længere fremme venter hele
+  stationer med op til 5 spor. Ruten bygges række for række, har altid en
+  farbar vej, og både tempo og trafik stiger.
+- **Isometrisk voxel-look**: figurer, køretøjer og træer af skyggelagte klodser
+  (forudrenderet til hver feltstørrelse), et blødt følgende kamera, squash &
+  stretch ved hop, vandplask, en fladtrykningsanimation, fjer og funklende
+  mønter; fra række 50 **dag/nat-skift** med forlygter.
+- **Ørnen**: kameraet kryber fremad - nøler du for længe eller går mere end tre
+  rækker tilbage, tager ørnen dig (en rød kant advarer først). At drive ud af
+  billedet på en træstamme er også slut.
+- **Mønter og figurer**: indsamlede mønter (kæmpemønt = 5) gemmes og køber nye
+  figurer under fanen **Figurer**: frø, gris, pingvin, kat, ræv, lama, robot,
+  spøgelse og enhjørning (25 til 250 mønter); kyllingen er med fra start.
+- **Tilstande**: *Uendelig* (point = længste række, tæller til highscoren) og
+  *Dagens rute* (ens for alle i dag, også i browseren, med egen dagsrekord).
+  Styring: piletaster/WASD, mellemrum/Enter/klik = hop frem; i opsætningen **H** =
+  skygger, **N** = dag/nat. Mønter, figurer og dagsrekord ligger i afsnittet
+  `crossy` i `mem.json`.
+
+**Geometry Dash**
+- **Rytme-platformspil**: figuren suser selv mod højre - du bestemmer kun, hvornår
+  der hoppes eller flyves. **Fem former** - terning, skib, bold, UFO og bølge -
+  plus form-, tyngdekraft- og fartportaler (0,5x til 3x), gule/lyserøde/blå
+  **pads og kugler**, halvblokke, pigge, gruber og farvetriggere.
+- **8 indbyggede baner** fra *Let* til *Dæmon* (»Lama Inferno«) med **3
+  hemmelige mønter** hver. Hver bane kan beviseligt klares: da den blev bygget,
+  løste en løsningsalgoritme den med spillets rigtige kode - inklusive alle mønter
+  og endda forskudt med 1/240 sekund.
+- **Præcis fysik**: fastkommaberegning med fast 240 Hz-skridt; hvert tryk virker
+  præcis i det skridt, hvor det skete - ens ved enhver billedhastighed og
+  bit-identisk i browseren.
+- **Træningstilstand** (**P**) med automatiske og egne checkpoints (**Z** sætter,
+  **X** sletter), forsøgstæller, fremskridtsbjælke, eksplosioner og øjeblikkelig
+  genstart (**R**). Hver bane har sit **eget soundtrack** - baggrund, underlag og
+  kugler pulserer i takt (musikken slås fra med **M**).
+- **Stjerner og mønter**: klarer du en bane i normal tilstand, får du dens
+  stjerner, og hver mønt er en ekstra stjerne værd; highscoren er det **samlede
+  antal stjerner** (højst 65). Bedste resultater pr. bane, mønter, forsøg og hop
+  ligger i afsnittet `geodash` i `mem.json`.
+- **Baneeditor** under fanen **BANER**: lærred med gitter, palet med 6 grupper
+  (blokke, farer, pads og kugler, portaler, fart, ekstra), drejning,
+  fortryd/gentag, oversigtsbjælke, **test fra start eller herfra** og
+  baneindstillinger (startfart, startform, musikstil, BPM, farver). Fluebenet
+  **»verificeret«** kommer først, når du selv har klaret din bane. **Del**
+  skriver en `.lamapgzlevel`-fil, **Import** læser den ind igen; banerne gemmes i
+  `ugc.json` ved siden af dine egne minigolfbaner.
+
+**Battleship**
+- **Søslag på 10x10** med hangarskib (5 felter), slagskib (4), krydser (3),
+  ubåd (3) og destroyer (2) - den, der først sænker hele fjendens flåde, vinder.
+- **Placér flåden** med træk og slip fra dokken: **R** eller højreklik drejer,
+  forhåndsvisningen lyser grønt eller rødt, **X** placerer alt tilfældigt, **C**
+  rydder brættet; din sidste opstilling foreslås igen.
+- **Regler i opsætningen** (gemmes): *skibe må røre hinanden*, *salve* (lige så
+  mange skud pr. tur, som du har skibe flydende) og *skyd igen efter et træf*.
+- **AI med 3 styrker**: Let skyder tilfældigt, Mellem forfølger træffere
+  systematisk, Svær beregner et **sandsynlighedskort** med skakbrætsparitet (i
+  snit ca. 70 / 60 / 45 skud for en hel flåde). Eller **2 spillere** ved samme
+  computer - en **overdragelsesskærm** skjuler begge flåder før hver tur.
+- **Grafik**: radar-sweep, animerede bølger, granater i bue, plask, eksplosioner
+  med røg og brændende felter, en »SÆNKET!«-afsløring og en rundeoversigt med
+  skud, træffere og træfprocent. Highscoren tæller dine **sejre mod AI'en** i en
+  session.
+
+**Casino**
+- **Roulette** (europæisk, 37 felter): alle klassiske indsatser ved klik på et
+  tal, en kant eller et hjørne - **plein** (35:1), cheval, transversale, carré,
+  sixain, kolonne, dusin, rød/sort, lige/ulige og manque/passe. Chipværdier
+  1/5/25/100/500, højreklik fjerner chips; **Drej**, **Gentag** (**R**),
+  **Fordobl** (**D**) og **Ryd**. Kuglen løber i spiral ned i det felt, der er
+  trukket på forhånd, og øverst står de sidste 12 tal.
+- **Lama-slot**: 5 hjul x 3 rækker, **10 gevinstlinjer**, **lama = wild**,
+  **guldmønter = scatter** med 10 gratisspil og dobbelte gevinster, indsats pr.
+  linje 1/2/5/10, **auto-spin** (10/25), **turbo** og gevinsttabel.
+  **Tilbagebetalingsprocenten er 96,1 %** - beregnet nøjagtigt ud fra hjulstrimlerne.
+- **Lama-banken**: Casino, Blackjack og Poker deler én konto med **lama-chips**
+  (start 1000, afsnittet `casino` i `mem.json`); gamle chipsaldi overføres
+  automatisk. Indsatser trækkes med det samme, hvert spil fører sin egen balance
+  til highscoren, og går du fallit, får du et **banklån** op til 1000.
+- Konfetti, mønteregn, big/mega/jackpot-bannere og gevinstlinje-animationer;
+  præstationerne **Plet** (vundet plein i roulette) og **Lama-jackpot** (5 lamaer
+  på én linje).
+
 Highscores gemmes i afsnittet `highscores` i `mem.json` (ved siden af koden) –
 sammen med sproget (afsnittet `mem`).
 
@@ -4695,20 +6075,24 @@ og stylet som en moderne spil-launcher:
   menupunkt, **konfettiregn ved en ny highscore** og en ægte **sløring** bag
   pause-overlayet.
 - Hvert spils **forspils-skærm** vises i det pågældende spils accentfarve og viser
-  den tidligere rekord som en chip.
-- **Ensartet look i spillet**: alle 42 spil deler menuens temapalet og skrifttype -
+  den tidligere rekord som en chip. Ved mange tilstande og lav opløsning bliver den
+  **kompakt**: Indstillinger, Wiki og Tilbage rykker op på én række, og skriften
+  tilpasser sig - intet løber længere ud af billedet.
+- **Ensartet look i spillet**: alle 46 spil deler menuens temapalet og skrifttype -
   HUD'er, setup-skærme og overlays følger det design, der er valgt i indstillingerne
   (v4.1 / v4 / Klassisk), mens hvert spillefelt beholder sine identitetsfarver.
   Hvert spil håndterer nu en opløsningsændring midt i spillet rent, og menunavnene
   er sprogafhængige (f.eks. »Schach« → »Skak«).
 - **Indbygget wiki** ("LamaWiki"): detaljeret hjælp til hvert spil (styring,
   tilstande, point, tips) plus generelle sider - med et **søgefelt**, kategorier,
-  rulbare artikler og tastekap-chips, på alle fem sprog. Nås via sidebjælkeknappen
+  rulbare artikler og tastekap-chips, på alle 14 sprog. Nås via sidebjælkeknappen
   **»Wiki / Hjælp«** og fra hvert spils forspils-skærm (åbner det pågældende spils
   side direkte).
-- **Præstationer & statistik**: **69 præstationer** i tre kategorier (mål på
-  tværs af samlingen, én point-milepæl pr. spil og særlige øjeblikke som
-  skakmat mod AI'en eller 2048-brikken) med **gylden notifikation og fanfare**
+- **Præstationer & statistik**: **107 præstationer** i tre kategorier (23 mål på
+  tværs af samlingen, 37 point-milepæle og 47 særlige øjeblikke som skakmat mod
+  AI'en, 4096-brikken, en T-Spin Double, 25 løste skakopgaver, en Killer Sudoku
+  eller lama-jackpotten; i 2048 og skak tæller partier med fortryd eller hint
+  ikke) med **gylden notifikation og fanfare**
   ved oplåsning - selv midt i spillet; gamle rekorder godskrives automatisk.
   Dertil en **statistik**-fane: samlet spilletid, partier, sejre, rekorder,
   yndlingsspil og en tabel pr. spil sorteret efter spilletid. Nås via knappen
@@ -4729,7 +6113,14 @@ og stylet som en moderne spil-launcher:
   Pygame-displayet forbliver indlejret og skaleres op med bevaret
   højde-bredde-forhold (sorte bjælker, når forholdet afviger). Vinduet kan frit
   ændre størrelse.
-- **»Tilbage til menu«** afslutter spillet og gemmer highscoren.
+- **»Tilbage til menu«** afslutter spillet og gemmer highscoren - det samme gør
+  et skift til et andet spil via sidebjælken.
+- **Faste ekstrataster**: ud over de fem handlinger, der kan bindes, har nogle
+  spil deres egne taster (f.eks. reserve **C** og drej til venstre **Z** i
+  Tetris, fortryd **U** i 2048, skak og sudoku). De virker kun, hvis tasten ikke
+  er bundet til en handling i indstillingerne, og står i opsætningshintet og i
+  wikien. Holdte taster registreres rent og slippes ved pause eller Alt-Tab -
+  intet »hænger« længere.
 - **»Afslut«** lukker Pygame og Tkinter rent.
 
 ### Indstillinger, styring og lyd
@@ -4775,22 +6166,24 @@ start.sh             Startscript (Linux / macOS / Git Bash)
 pyinstall.bat        EXE-build (Windows): pakker alt ind i builds\PyGameZ.exe
 main.py              Tkinter-UI, Pygame-indlejring, central spil-loop
 game_base.py         Spil-basisklasse (update/draw/handle_event) + InputEvent + hjælpere
-settings.py          Indlæs/gem indstillinger (lyd/haptik/tastebindinger) (JSON)
-audio.py             Procedurale lydeffekter + gamepad-rumble
+settings.py          Indlæser/gemmer indstillinger (lyd/haptik/tastebindinger/spilindstillinger med kontrolregler) (JSON)
+audio.py             Procedurale lydeffekter, musikløkker + gamepad-rumble
 menu.py              Sprog-, forspils- (tilstand) og indstillingsskærm (lyd/styring)
 highscore.py         Indlæs/gem highscores (afsnit i mem.json)
-store.py             Central gemmefil mem.json (afsnit: mem, highscores, stats, achievements)
+store.py             Central gemmefil mem.json (afsnit: mem, highscores, stats, achievements + spilfremskridt), atomisk med .bak-kopi
 stats.py             Spillerstatistik (partier, spilletid, sejre, rekorder) pr. spil
 achievements.py      Præstationer: definitioner, oplåsning, notifikation (toast)
 progress.py          Skærm for præstationer & statistik (to faner, rulbar)
 replay.py            Optagelse og arkiv over replays (replay.json)
 replayview.py        Replay-skærm: arkivliste og afspilning
-ugc.py               Egne huller: lagring, kontrol, eksport/import (ugc.json)
+ugc.py               Eget indhold (minigolfbaner, Geometry Dash-baner): lagring, kontrol, eksport/import (ugc.json)
 swear.py             Ordfilter til navne og id'er (lang/swear/*.yml, alle 14 sprog)
 filepick.py          Fildialoger ("Eksportér som ...", "Importér")
 prestige.py          Prestige-system til Snake
 competitive.py       Finindstilling til Snakes Competitive-tilstand (niveauer, enarmet tyveknægt, gamble-æbler)
 ngb.py               Visuel tilpasning ("mods"): hovedfarve + koordinatgitter + menu (mem-ngb.json)
+lamabank.py          Lama-banken: fælles chipkonto for Blackjack, Poker og Casino (afsnittet casino i mem.json)
+seedrand.py          Tilfældighedsgenerator med bit-identiske tal i Python og browseren (dagens tilstande, nye opgaver)
 i18n.py              Oversættelsesmotor (indlæser lang/*.json, t("nøgle"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Sprogstrenge (én pladsholdernøgle pr. tekst)
@@ -4802,24 +6195,48 @@ lamawiki/
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 woordlistz/
   build_wordlists.py   Bygger Wordles ordlister igen (ordbøger + frekvenslister)
-  de/ en/ fr/ ... hr/  answers.txt (løsninger) + allowed.txt (tilladte gæt), 14 sprog
+  de/ en/ fr/ ... hr/  answers.txt + allowed.txt (5 bogstaver), answers4/6/7.txt + allowed4/6/7.txt (4, 6, 7 bogstaver), 14 sprog
+devtools/            Udviklerværktøjer (pakkes ikke med i .exe'en)
+  merge_staging.py           Indsætter oversættelser og wikisider fra devtools/staging/ i alle 14 sprogfiler
+  build_chess_puzzles.py     Bygger de 200 skakopgaver ud fra Lichess' opgavedatabase (CC0)
+  build_sudoku_killer.py     Genererer de 400 entydigt løsbare Killer Sudokuer
+  build_crossyroad_models.py Skriver voxel-modellerne til Crossy Road til webversionen
+  build_geodash_levels.py    Bygger de 8 Geometry Dash-baner og beviser med løsningsalgoritmen, at hver kan klares inkl. mønter
+  build_geodash_solver.py    Løsningsalgoritme med spillets rigtige skridt-kode (løsninger i geodash_proofs.json)
 games/
-  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
+  tetris.py  tetris_core.py  tetris_ai.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py  sudoku_draw.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py  wordle_words.py
+  trexrunner.py  dame.py  poker.py  muehle.py
+  chess.py  chess_engine.py  chess_draw.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
-  levels/
+  crossyroad.py  crossyroad_world.py  crossyroad_draw.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  battleship.py  battleship_core.py
+  casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  levels/              Banedata: snake-comp.json, chess-puzzles.json (+ kilde-README), sudoku-killer.json, geodash.json
+tests/
+  arcade_casino_audit.py     Samlet audit (input, seedrand Python = JS, gemning, sprogfiler, forspils-skærme) + alle audit_*.py
+  audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless-audits pr. spil
+  newgames_audit.py  blockjump_audit.py
 ```
 
 Det valgte sprog gemmes i `mem.json` (i afsnittet `mem`, ved siden af afsnittet
 `highscores` i den samme fil) og indlæses automatisk ved næste start.
+
+**Kilder og licenser:** de 200 skakopgaver stammer fra
+[Lichess' opgavedatabase](https://database.lichess.org/#puzzles) (licens
+**CC0 1.0**, public domain - tak til lichess.org!); detaljer står i
+`games/levels/chess-puzzles.README.md`. Kilderne til Wordles ordlister står i
+`woordlistz/README.md`.
 
 ### Platformsnoter
 
@@ -4924,7 +6341,7 @@ Python og kan kopieres frit. Indstillinger og highscores (`settings.json`,
 ## 🇳🇴 Norsk
 
 En samling skrivebordsspill i Python: **Tkinter** står for vinduet og menyen,
-**Pygame** er bygget inn som spillvisning inne i Tkinter-vinduet. Førtito
+**Pygame** er bygget inn som spillvisning inne i Tkinter-vinduet. Førtiseks
 spill med felles innstillinger, fritt omdefinerbar styring, rekorder,
 prosedyregenererte lydeffekter og – for enkelte titler – flerspillermodus.
 Grensesnittet er **flerspråklig** – **14 språk** (tysk / engelsk / fransk /
@@ -4963,31 +6380,31 @@ nederst under **[Installasjonsveiledning](#installasjonsveiledning)**.
 | **Air Hockey** | 1 / 2 spillere | 2D-fysikk med impulsoverføring, musestyring, KI og power-ups |
 | **Tic-Tac-Toe** | 1 / 2 spillere | m,n,k-spill på 3x3 til 9x9, tre KI-nivåer **eller** lokalt X mot O |
 | **Breakout** | 1 spiller       | Murbrekker med steintyper, power-ups, comboer og mange nivåer |
-| **Tetris**   | 1 / 2 spillere  | Klassisk eller Versus (to felt side om side) |
+| **Tetris**   | 1 / 2 spillere  | Moderne Guideline-regler (SRS, reserve, forhåndsvisning av 5 brikker, T-Spins): Maraton, Sprint 40, Ultra 2:00, Versus mot KI (3 nivåer) eller for to med søppelrader |
 | **Invaders** | 1 spiller       | Space Invaders: tøm bølgene, beskytt livene dine |
 | **Asteroids** | 1 / 2 spillere | Treghetsfysikk, bølger, UFO-er, power-ups, hyperrom – solo eller co-op-duell |
 | **Pac-Man**  | 1 spiller       | Tro klone: 4 spøkelses-KI-er, kraftpiller, tunnel, frukt, nivåer |
 | **Flappy Bird** | 1 spiller    | Tyngdekraftsflukt gjennom rør, mynter, skjold, dag/natt, medaljer |
 | **Doodle Jump** | 1 spiller    | Automatisk hopp oppover, plattformtyper, fjærer, propell, monstre |
-| **2048**     | 1 spiller       | Tallskyvespill, mål: 2048-brikken |
+| **2048**     | 1 spiller       | Tallskyvespill fra 3x3 til 8x8: Klassisk, Tidsangrep og Uendelig, angre, flytende animasjoner, lagrede partier |
 | **Minesweeper** | 1 spiller    | Klassikeren med trygt førsteklikk, chording, smilefjes og bestetider |
-| **Sudoku**      | 1 spiller    | 400 seed-genererte nivåer (4 vanskelighetsgrader x 100), 4 hjelpemoduser med poengmultiplikator, notater, hint, 3-feil-grense |
+| **Sudoku**      | 1 spiller    | 4 varianter (Klassisk, X-sudoku, Killer, Mini 6x6) med 400 nivåer hver, dagens sudoku, opptil 3 stjerner per nivå, 4 hjelpemoduser, angre, lagret spill |
 | **Frogger**     | 1 spiller    | Vei + elv + 5 bukter, bonusflue, krokodiller, tidsgrense, 3 vanskelighetsgrader |
 | **Memory**      | 1 / 2 spillere | Finn par på 4x4 opp til 8x6, snuanimasjon, solopoeng eller duell |
 | **Kabal**       | 1 spiller    | 5 varianter (Klondike, Spider, FreeCell, Pyramide, TriPeaks) med dra og slipp og angre |
 | **Aim Trainer** | 1 spiller    | Avslappet 3D-blinkskyting: musa styrer kameraet, 4 moduser (presisjon/refleks/bevegelig/chill), 3 temaer inkl. et svart hull |
 | **Fire på rad** | 1 / 2 spillere | Klassikeren med fallanimasjon: 3 KI-nivåer (minimax) eller lokal duell |
 | **Tankduell**    | 1 / 2 spillere | 2D-arenaduell med rikosjettskudd, power-ups, 4 arenaer, KI med 3 nivåer |
-| **Blackjack**    | 1 spiller    | Casino-blackjack med 4-kortstokks sko, doble/dele, 3:2-blackjack og varig sjetongsaldo |
+| **Blackjack**    | 1 spiller    | Casino-blackjack med 4-kortstokks sko, doble/dele og 3:2-blackjack; spilles med lama-sjetonger fra den felles Lama-banken |
 | **Tunnel Racer** | 1 spiller    | 3D-neonrørflukt: endeløs modus + 30 nivåer, tast- eller musestyring, motion blur |
 | **3D-labyrint**  | 1 spiller    | Førstepersons raycaster (Wolfenstein-stil) med 50 seed-genererte nivåer, orber, minikart – eller 2D-ovenfravisning |
 | **Reversi**      | 1 / 2 spillere | Othello på 8x8: fang og snu brikker, 3 KI-nivåer (minimax) eller lokal duell |
 | **Yatzy**        | 1 / 2 spillere | Terningklassiker med 13 kategorier, øvre bonus og Yatzy; rekordjakt eller 2-spiller-hotseat |
-| **Wordle**       | 1 spiller    | Gjett det 5-bokstavers ordet på 6 forsøk, endeløs streak, fargehint, ekte ordlister på 14 språk |
+| **Wordle**       | 1 spiller    | Gjett ord med 4 til 7 bokstaver: Uendelig, Dagens ord, Dordle og Quordle, vanskelig modus, fargeblind-palett, statistikk med søylediagram, del resultatet, ekte ordlister på 14 språk |
 | **T-Rex Runner** | 1 spiller    | Endeløst ørkenløp: variabelt hopp, dukking, kaktus og pterodaktyler, dag/natt-syklus, økende fart, 3 vanskelighetsgrader |
 | **Dam**          | 1 / 2 spillere | 3 regelsett (tysk 8×8, internasjonal 10×10, checkers), slåtvang og flygende dame, 3 KI-nivåer (minimax) eller lokal duell |
-| **Poker**        | 1 spiller    | 3 valgbare varianter: Texas Hold'em mot KI, 5 Card Draw og Video Poker; innsatsrunder, blinds, varig sjetongbeholdning |
-| **Sjakk**        | 1 / 2 spillere | Fullstendige regler (rokade, en passant, forfremmelse, matt/patt/remis), 6 KI-nivåer (minimax + alfa-beta) eller lokal duell, fargevalg |
+| **Poker**        | 1 spiller    | 3 valgbare varianter: Texas Hold'em mot KI, 5 Card Draw og Video Poker; innsatsrunder, blinds, lama-sjetonger fra den felles Lama-banken |
+| **Sjakk**        | 1 / 2 spillere | Fullstendige regler, Chess960 og sjakkur, 6 KI-nivåer, 200 oppgaver fra Lichess-databasen, angre/hint, trekkliste, PGN-eksport eller lokal duell |
 | **Mølle**        | 1 / 2 spillere | Legge-/flytte-/flygefaser, møller og slåing, valgfri flygeregel, 3 KI-nivåer eller lokal duell |
 | **Simon**        | 1 / 2 spillere | Senso-huskespill: modusene Klassisk/Speed/Reverse/Blandet + Duell, lyd av/på/blandet, 4/6/9 felt, best per modus |
 | **Biljard**      | 1 / 2 spillere | 8-ball, 9-ball og øvingsmodus i 2D, fast 3D-visning eller fritt roterbart 3D-kamera; myk fysikk, siktehjelp, 3 KI-nivåer |
@@ -5000,12 +6417,19 @@ nederst under **[Installasjonsveiledning](#installasjonsveiledning)**.
 | **Minigolf**    | 1 / 2 spillere | 360 baner på 40 løyper (18 håndlagde, 342 genererte): sand, ramper, vann, støtfangere, vindmøller & vandrende klosser; scorekort med par og hole-in-one-bonus; **egen hullredigerer** med 15 objekttyper, 12 maler og deling som `.lamapgzmap` |
 | **Pinball**     | 1 / 2 spillere | Flipperautomat med 3 bord: bumpere, slingshots, mål, L-A-M-A-baner, multiball med jackpot, kuleredning, dytt & tilt |
 | **Bowling**     | 1 / 2 spillere | 10 frames med offisiell strike/spare-telling, ekte kjeglefysikk, hook-skru og bane i perspektiv, 3 vanskelighetsgrader |
+| **Crossy Road** | 1 spiller     | Endeløse hopp over gress, veier, elver og togspor i isometrisk voxel-stil: dag/natt, ørn, 10 figurer å kjøpe, dagens rute |
+| **Geometry Dash** | 1 spiller   | Rytme-plattformspill med kube, skip, ball, UFO og bølge: 8 baner fra Lett til Demon med 3 hemmelige mynter hver, treningsmodus, lydspor per bane; **baneeditor** med deling som `.lamapgzlevel` |
+| **Battleship**  | 1 / 2 spillere | Sjøslag på 10x10: flåten plasseres med dra og slipp, 3 regelbrytere (berøring, salve, skyt igjen), KI med 3 nivåer eller lokal duell med overleveringsskjerm |
+| **Casino**      | 1 spiller     | Europeisk rulett med alle klassiske innsatser og Lama-automat (5 hjul, 10 gevinstlinjer, wild, gratisspinn); én konto med lama-sjetonger sammen med Blackjack og Poker |
 
 **Flerspiller (2 spillere lokalt)** er tilgjengelig for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids
 (co-op-duell)**, **Memory (duell)**, **Fire på rad**, **Tankduell**, **Reversi**,
 **Yatzy**, **Dam**, **Sjakk**, **Mølle**, **Simon (duell)**, **Biljard**,
-**Minigolf**, **Pinball** og **Bowling**. Modusen velges rett i forspillskjermen (*Énspiller / Flerspiller*).
+**Minigolf**, **Pinball**, **Bowling** og **Battleship** (med en
+overleveringsskjerm som skjuler flåtene) – til sammen 20 spill. Modusen velges
+rett i forspillskjermen (*Énspiller / Flerspiller*); Tetris har i tillegg
+**Versus mot KI**. Nettversjonen er kun for én spiller.
 
 #### Detaljer per spill
 
@@ -5106,9 +6530,27 @@ nederst under **[Installasjonsveiledning](#installasjonsveiledning)**.
   skyter ut ballen (fyrer laser), **P/Esc** = pause.
 
 **Tetris**
-- Venstre/Høyre for å flytte, Opp = rotere, Ned = soft drop, Handling = hard drop.
-- Fulle rader gir poeng, for hver 10. rad stiger nivået.
-- **Versus**: den hvis stabel når toppen først, taper.
+- **Moderne Guideline-regler**: 10x20-felt, brikker fra en **7-pose**,
+  **SRS-rotasjonssystemet** med ekte wall kicks (også for I-brikken), rotasjon i
+  begge retninger, **reserve** (én gang per brikke), **forhåndsvisning av 5
+  brikker**, skyggebrikke og **lock delay** (0,5 s, maks. 15 nullstillinger).
+- **Tre moduser** på forspillskjermen: *Solo*, *Mot AI* og *2 spillere*. Solo
+  tilbyr i oppsettet **Maraton** (startnivå 1–15, teller for rekorden), **Sprint
+  40 rader** (beste tid) og **Ultra 2 minutter** (beste poengsum); rekordene
+  ligger i seksjonen `tetris` i `mem.json`.
+- **Guideline-poengberegning**: single til Tetris, **T-Spins** (fulle og mini),
+  **Back-to-Back** (x1,5), **combos** og **Perfect Clear** – med tekster på
+  skjermen, rydde-animasjon, hard-drop-spor, partikler og nivå-opp-effekt.
+- **Versus med søppelrader**: ryddede rader sender søppel til motstanderen
+  (Tetris = 4, T-Spin Double = 4 …), innkommende søppel varsles i en varselstolpe
+  og **motregnes** av dine egne angrep; begge feltene får samme brikkerekkefølge.
+  **KI-en** finnes i 3 nivåer, og tempoet øker hvert 40. sekund.
+- **Styring**: Venstre/Høyre med egen **DAS/ARR** (kan stilles inn i oppsettet),
+  Opp = roter mot høyre, Ned = soft drop, Handling = hard drop; **C**/Shift =
+  reserve, **Z**/**Y** = roter mot venstre, **X** = roter mot høyre. For to legger
+  spiller 1 i reserve med **Q** og roterer mot venstre med **E**, spiller 2 med
+  **høyre Shift** / **høyre Ctrl**. Etter spillet: **R** = igjen, **S** =
+  oppsett.
 
 **Invaders** – to moduser (valgbare i forspillskjermen):
 - **Klassisk**: den klassiske alienblokken; deretter valgbart i oppsettskjermen:
@@ -5180,7 +6622,20 @@ våpenoppgradering), eksplosjonseffekter, rekord.
 - Poeng = høyde oppnådd; vanskelighetsgraden stiger med høyden. Rekord.
 - Styring: venstre/høyre = bevege, Opp / mellomrom = skyte.
 
-**2048** – piler/WASD skyver alle brikkene; like tall smelter sammen.
+**2048**
+- **Egen oppsettskjerm** med brettstørrelser fra **3x3 til 8x8** og tre moduser:
+  *Klassisk* (mål 2048, deretter «Spille videre?»), *Tidsangrep* (3 minutter,
+  klokka starter ved første trekk) og *Uendelig*.
+- **Flytende animasjoner**: brikker glir, smelter sammen med et «pop» og vokser
+  fram; poeng-popups, gnister fra 128, en trykkbølge fra 2048 og nye farger helt
+  opp til 131072. Input under en animasjon lagres og utføres rett etter.
+- **Angre** (av / 3 per spill / ubegrenset, tast **U** eller Backspace) – bruker
+  du det, spiller du uten rekord og uten brikke-prestasjoner.
+- **Lagre og fortsette**: partiet som pågår, lagres automatisk per størrelse og
+  modus; beste poengsum og største brikke per størrelse/modus ligger i seksjonen
+  `g2048` i `mem.json`.
+- Styring: piler/WASD eller **sveip** med mus/touchpad, **R**/**N** = nytt spill,
+  **Tab** = oppsett. Rekorden teller bare i **4x4 Klassisk** uten angre.
 
 **Minesweeper**
 - Tre nivåer: **Nybegynner** (9x9, 10 miner), **Viderekommen** (16x16, 40),
@@ -5195,22 +6650,33 @@ våpenoppgradering), eksplosjonseffekter, rekord.
 - Poeng = nivåets grunnverdi minus sekunder.
 
 **Sudoku**
-- **400 nivåer**: 4 vanskelighetsgrader (Lett/Normal/Vanskelig/Ekspert) x 100
-  nivåer. Puslespillene er **seed-generert med én entydig løsning** – nivå 12 av
-  «Vanskelig» er det samme puslespillet på hver PC. Løste nivåer lagres og hakes
-  av i nivåvalget.
+- **4 varianter** med **400 nivåer** hver (4 vanskelighetsgrader x 100):
+  *Klassisk* (de kjente seed-nivåene – løste nivåer forblir avhuket), *X-sudoku*
+  (begge diagonalene inneholder hvert siffer nøyaktig én gang), *Killer*
+  (stiplede bur med sum; 400 nivåer generert på forhånd) og *Mini 6x6*. Alle
+  puslespill har **én entydig løsning** – nivå 12 av «Vanskelig» er det samme
+  puslespillet på hver PC.
+- **Dagens sudoku**: én oppgave om dagen for alle, lik på PC og i nettleseren;
+  vanskelighetsgraden avhenger av ukedagen (fra mandag Lett til lørdag Ekspert),
+  og løser du hver dag, bygger du opp en rekke.
+- **Opptil 3 stjerner per nivå** (løst · uten feil og hint · i tillegg under
+  måltiden) og **beste tid** i nivåvalget; **påbegynte oppgaver** lagres
+  automatisk og fortsettes neste gang.
 - **4 spillmoduser** (velges før start) med poengmultiplikator: **Klassisk**
-  (x2.0 – ingen hjelp), **Notater** (x1.5 – + blyantnotater), **Komfort** (x1.0 –
-  + gale sifre i rødt, konflikt- og lik-sifferutheving, riktige oppføringer låses),
-  **Assistent** (x0.7 – + hinttast, maks. 3).
-- Hver oppføring sjekkes umiddelbart mot løsningen; med **3-feil-grensen** aktivert
-  (oppsettvalg) avslutter den tredje feilen partiet.
+  (x2.0 – ingen hjelp), **Notater** (x1.5 – + blyantnotater og automatiske
+  kandidater), **Komfort** (x1.0 – + gale sifre i rødt, konflikter og feil
+  bursummer markert, riktige oppføringer låses), **Assistent** (x0.7 – +
+  hinttast, maks. 3). Med **3-feil-grensen** aktivert (oppsettvalg) avslutter den
+  tredje feilen partiet.
 - Styring: piler/WASD = celle, **1-9** = siffer (også talltastatur),
-  **0/Backspace/høyreklikk** = viske ut, **N** = notater, **H** = hint,
-  **R** = start nivå på nytt, **Q** = nivåvalg; fullt spillbart med musa
-  (talltastatur til høyre). Etter at spillet er over, skjuler **A** banneret og
-  viser hele **løsningen** på brettet (A igjen = tilbake).
-- Poeng = (nivåets basis - tid - feil - hint) x modusmultiplikator.
+  **0/Delete/høyreklikk** = viske ut, **U**/**Z** = angre, **Y** = gjør om, **N** =
+  notater, **C** = fyll inn kandidater automatisk, **H** = hint, **M** =
+  fargemarkør, **R** = start nivå på nytt, **Q** = nivåvalg. Inntasting «siffer
+  først» (oppsett, **I**) og en **teller for gjenværende sifre** under hvert
+  siffer; fullt spillbart med musa. Etter at spillet er over, viser **A** hele
+  **løsningen**.
+- Poeng = (basis for variant og vanskelighetsgrad - tid - feil - hint) x
+  modusmultiplikator; alle varianter og dagens sudoku teller for rekorden.
 
 **Frogger**
 - 5 trafikkfelt (biler/lastebiler) og 5 elvefelt (tømmerstokker, skilpadder som
@@ -5273,11 +6739,16 @@ våpenoppgradering), eksplosjonseffekter, rekord.
 - Ekte casinoregler: **4-kortstokks sko**, giveren står på 17, **blackjack betaler
   3:2**, giveren titter ved ess/10; **doble** og **én deling** (delte ess får ett
   kort hver).
-- **Varig sjetongsaldo**: start med 500, saldo og **rekord** overlever hver omstart
-  (`mem.json`); under 10 sjetonger får du 500 nye – rekorden består.
+- **Lama-sjetonger**: Blackjack spiller med kontoen i **Lama-banken**, som deles
+  med Poker og Casino (start 1000, lagret permanent i `mem.json`). Innsatsen
+  trekkes så snart kortene gis; under 10 sjetonger tar Enter et **banklån** som
+  fyller kontoen opp til 1000.
+- **Rekord** = høyeste stand av din egen **Blackjack-balanse** (1000 pluss alt som
+  er vunnet og tapt i Blackjack) – gevinster i rulett, på automaten eller i poker
+  teller ikke her, og det gjør heller ikke lån.
 - Spilles via sjetongknapper og taster (**H**it/**S**tand/**D**oble/dele **X**,
-  **1-4** = innsats, Enter = gi) med kortanimasjoner og en vending av det skjulte
-  kortet.
+  **1-4** = innsats, Backspace = nullstill innsats, Enter = gi) med
+  kortanimasjoner; giverens skjulte kort snur seg nå virkelig når det avsløres.
 
 **Tunnel Racer**
 - **3D-neonrørflukt** (software-renderer som Aim Trainer): stenger, blokker og
@@ -5315,27 +6786,68 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   med to ark side om side; spill med mus eller taster (mellomrom, 1-5, piler, Enter).
 
 **Wordle**
-- Gjett det **5-bokstavers ordet på 6 forsøk**; farget tilbakemelding
-  (grønn/gul/grå) med korrekt **telling av doble bokstaver** og et skjermtastatur
-  som farges.
-- **Endeløs streak**: hvert løste ord gir poeng (færre forsøk = mer), det første
-  uløste ordet avslutter runden – total = rekord.
-- **Ekte ordlister på alle 14 språk** (mappen `woordlistz/`, kun A-Z): til sammen
-  over **34 000 løsninger** og **213 000 tillatte gjett**. Hvert gjett sjekkes mot
-  listen - alt annet avvises, og raden rister kort.
-- **To moduser**: *Normal* og *Vanskelig* - i vanskelig modus må hint du har
-  funnet brukes videre. Skriv på tastaturet eller klikk tastene på skjermen.
+- Gjett det skjulte ordet; farget tilbakemelding (grønn/gul/grå) med korrekt
+  **telling av doble bokstaver** og et skjermtastatur som farges (QWERTZ for tysk,
+  tsjekkisk, slovensk og kroatisk, AZERTY for fransk, ellers QWERTY).
+- **Fire moduser**: *Uendelig* (det ene ordet etter det andre med 6 forsøk hver;
+  hvert løste ord gir poeng, det første uløste avslutter spillet), *Dagens ord*
+  (ett ord om dagen per språk og lengde – likt på PC og i nettleseren – med
+  nedtelling og rekke; et påbegynt dagens ord lagres), *Dordle* (2 ord samtidig
+  på 7 forsøk) og *Quordle* (4 ord på 9 forsøk, tastene viser fargene fra alle
+  brettene).
+- **Oppsett** før hvert spill: **ordlengde 4 til 7**, **vanskelig modus** (hint du
+  har funnet, må brukes videre) og **fargeblind-palett** (oransje/blå); ved siden
+  av står statistikken.
+- **Ekte ordlister på alle 14 språk** (mappen `woordlistz/`, kun A-Z), med egne
+  lister for hver lengde: bare ved 5 bokstaver nesten **34 000 løsninger** og over
+  **213 000 tillatte gjett**, rundt 134 000 løsninger i alle fire lengdene til
+  sammen. Løsningene er vanlige ord uten navn, engelske rester og støtende ord;
+  hvert gjett sjekkes mot listen – alt annet avvises, og raden rister kort.
+- **Statistikk** per språk, lengde og modus: spill, vinnerprosent, nåværende og
+  beste rekke og **fordelingen av forsøk som søylediagram** (seksjonen `wordle` i
+  `mem.json`). **Del** (**C**) kopierer et emoji-rutenett uten å avsløre ordet.
+- Rekorden teller bare *Uendelig* med 5 bokstaver; de andre lengdene har egne beste
+  resultater. Prestasjonene **Synsk** (høyst 2 forsøk), **Ordvane** (7 dagens ord
+  på rad) og **Firedobbelt geni** (Quordle løst).
+
+**Poker**
+- **3 varianter** på forspillskjermen: **Texas Hold'em** mot 1–3 KI-motstandere
+  med dealerknapp, blinds og fire innsatsrunder, **5 Card Draw** (heads-up mot
+  KI-en, én byttedel) og **Video Poker** (*Jacks or Better*, solo mot
+  gevinsttabellen).
+- Handlinger via knapper eller taster: **F** = fold, **C** = check/call, **R** =
+  raise, **A** = all-in; hold/bytt kort med klikk eller **1-5**, **Enter** trekker
+  eller gir neste hånd.
+- **Lama-sjetonger** fra den felles **Lama-banken**: ved starten av en hånd ligger
+  kontoen din på bordet som stabel, og det som går i potten, trekkes med en gang –
+  forlater du bordet midt i en hånd, taper du bare din andel av potten. Blakk
+  (under big blind på 20, under 10 i Video Poker) = banklån opp til 1000.
+- **Rekord** = høyeste stand av **Poker-balansen** din (1000 pluss alle gevinster
+  og tap i poker); prestasjonen **Chipleader** teller også bare pokerbalansen.
 
 **Sjakk**
 - **Fullstendig sjakk**: alle brikketrekk inkludert **rokade**, **en passant** og
   **bondeforfremmelse** (velg brikke); **sjakk, sjakkmatt og patt** pluss remis
-  ved **femtitrekksregelen**, **trefoldig stillingsgjentakelse** og
-  **utilstrekkelig materiale**.
-- **6 KI-nivåer** fra *Nybegynner* til *Mester* (negamax med alfa-beta,
-  trekksortering, brikke-felt-tabeller, ro-søk); et **tidsbudsjett** holder hvert
-  KI-trekk flytende. **Fargevalg** hvit/svart eller en **lokal duell**.
-- Lovlige trekk er uthevet, sjakk markeres; spill med **musa** eller en
-  utvalgsmarkør. Hver seier mot KI-en gir ett rekordpoeng.
+  ved **femtitrekksregelen**, **trefoldig stillingsgjentakelse**,
+  **utilstrekkelig materiale** eller avtale.
+- **Tre moduser**: *parti* mot KI-en, *2 spillere* ved samme datamaskin (brettet
+  kan snu seg etter hvert trekk) og **oppgaver**.
+- **Sterkere KI uten hakking** i 6 nivåer fra *Nybegynner* til *Mester*: iterativ
+  fordypning, transposisjonstabell, ro-søk, åpningsbok og en evaluering med
+  mobilitet, bondestruktur og kongesikkerhet. KI-en regner i små biter per bilde –
+  spillet hakker aldri.
+- **Oppsett**: fargevalg, **sjakkur** (ingen, 1+0, 3+2, 5+0, 10+5) og **Chess960**
+  (alle 960 startstillinger, nummeret står over trekklisten).
+- **Sidepanel** med klokker, slåtte brikker, materiellbalanse og en rullbar
+  **trekkliste (SAN)**; dra og slipp, glidende brikker, koordinater. Taster: **U** =
+  angre, **H** = hintpil, **O** = tilby remis, **X** = gi opp, **F** = snu
+  brettet, etter partiet **P** = **PGN-eksport**.
+- **Oppgaver**: 200 oppgaver i 5 trinn (matt i 1/2/3, taktikk I/II) fra
+  **Lichess' frie oppgavedatabase (CC0)**, kontrollert med spillets egen motor; i
+  matt-oppgaver teller ethvert trekk som setter matt. Fremgangen ligger i
+  seksjonen `chess` i `mem.json`.
+- Angre og hint gjør et parti «assistert»: rekorden teller bare seire uten hjelp
+  mot KI-en (per økt).
 
 **Mølle**
 - **Mølle** med alle tre faser: **legging** (9 brikker hver), **flytting** langs
@@ -5509,6 +7021,94 @@ våpenoppgradering), eksplosjonseffekter, rekord.
 - **Replay av partiet**: til slutt viser **P** alle kastene på nytt, og **S**
   lagrer dem i arkivet (knappen **Replays**).
 
+**Crossy Road**
+- **Endeløse hopp** over gress (trær og steiner sperrer veien), veier med biler og
+  lastebiler, elver med tømmerstokker og vannliljer og **togspor** der et tog
+  suser forbi etter varsellys og bjelle – lenger fremme venter hele stasjoner med
+  opptil 5 spor. Ruten bygges rad for rad, har alltid en farbar vei, og både tempo
+  og trafikk øker.
+- **Isometrisk voxel-stil**: figurer, kjøretøy og trær av skyggelagte klosser
+  (forhåndsrendret for hver rutestørrelse), mykt følgende kamera, squash &
+  stretch ved hopp, vannsprut, flatklemming-animasjon, fjær og glitrende mynter;
+  fra rad 50 **dag/natt-skifte** med frontlys.
+- **Ørnen**: kameraet kryper fremover – nøler du for lenge eller går mer enn tre
+  rader tilbake, tar ørnen deg (en rød kant varsler først). Å drive ut av bildet
+  på en tømmerstokk er også slutt.
+- **Mynter og figurer**: innsamlede mynter (kjempemynt = 5) lagres og kjøper nye
+  figurer i fanen **Figurer**: frosk, gris, pingvin, katt, rev, lama, robot,
+  spøkelse og enhjørning (25 til 250 mynter); kyllingen er med fra start.
+- **Moduser**: *Uendelig* (poeng = lengste rad, teller for rekorden) og *Dagens
+  rute* (lik for alle i dag, også i nettleseren, med egen dagsrekord). Styring:
+  piler/WASD, mellomrom/Enter/klikk = hopp fram; i oppsettet **H** = skygger,
+  **N** = dag/natt. Mynter, figurer og dagsrekord ligger i seksjonen `crossy` i
+  `mem.json`.
+
+**Geometry Dash**
+- **Rytme-plattformspill**: figuren suser av seg selv mot høyre – du bestemmer
+  bare når det skal hoppes eller flys. **Fem former** – kube, skip, ball, UFO og
+  bølge – pluss form-, tyngdekraft- og fartsportaler (0,5x til 3x),
+  gule/rosa/blå **pads og kuler**, halvblokker, pigger, groper og fargetriggere.
+- **8 innebygde baner** fra *Lett* til *Demon* («Lama Inferno») med **3 hemmelige
+  mynter** hver. Hver bane kan bevislig klares: da den ble bygget, løste en
+  løsningsalgoritme den med spillets ekte kode – med alle myntene og til og med
+  forskjøvet med 1/240 sekund.
+- **Presis fysikk**: fastkommaberegning med fast 240 Hz-steg; hvert trykk virker
+  nøyaktig i steget der det skjedde – likt ved enhver bildefrekvens og
+  bit-identisk i nettleseren.
+- **Treningsmodus** (**P**) med automatiske og egne sjekkpunkter (**Z** setter,
+  **X** sletter), forsøksteller, fremdriftslinje, eksplosjoner og øyeblikkelig
+  omstart (**R**). Hver bane har sitt **eget lydspor** – bakgrunn, underlag og
+  kuler pulserer i takt (musikken slås av med **M**).
+- **Stjerner og mynter**: klarer du en bane i normal modus, får du stjernene, og
+  hver mynt er verdt en stjerne til; rekorden er det **samlede antallet stjerner**
+  (høyst 65). Beste resultater per bane, mynter, forsøk og hopp ligger i
+  seksjonen `geodash` i `mem.json`.
+- **Baneeditor** i fanen **BANER**: lerret med rutenett, palett med 6 grupper
+  (blokker, farer, pads og kuler, portaler, fart, ekstra), rotering, angre/gjør
+  om, oversiktsstripe, **test fra start eller herfra** og baneinnstillinger
+  (startfart, startform, musikkstil, BPM, farger). Haken **«verifisert»** kommer
+  først når du selv har klart banen din. **Del** skriver en `.lamapgzlevel`-fil,
+  **Import** leser den inn igjen; banene lagres i `ugc.json` ved siden av dine
+  egne minigolfbaner.
+
+**Battleship**
+- **Sjøslag på 10x10** med hangarskip (5 ruter), slagskip (4), krysser (3),
+  ubåt (3) og destroyer (2) – den som først senker hele fiendens flåte, vinner.
+- **Plasser flåten** med dra og slipp fra dokken: **R** eller høyreklikk roterer,
+  forhåndsvisningen lyser grønt eller rødt, **X** plasserer alt tilfeldig, **C**
+  tømmer brettet; den siste oppstillingen din foreslås igjen.
+- **Regler i oppsettet** (lagres): *skip kan ligge inntil hverandre*, *salve* (like
+  mange skudd per tur som du har skip flytende) og *skyt igjen etter et treff*.
+- **KI med 3 nivåer**: Lett skyter tilfeldig, Middels følger opp treff
+  systematisk, Vanskelig beregner et **sannsynlighetskart** med
+  sjakkbrettparitet (i snitt ca. 70 / 60 / 45 skudd for en hel flåte). Eller **2
+  spillere** ved samme datamaskin – en **overleveringsskjerm** skjuler begge
+  flåtene før hver tur.
+- **Grafikk**: radarsveip, animerte bølger, granater i bue, vannsprut,
+  eksplosjoner med røyk og brennende ruter, en «SENKET!»-avsløring og en
+  rundeoppsummering med skudd, treff og treffprosent. Rekorden teller **seirene
+  dine mot KI-en** i én økt.
+
+**Casino**
+- **Rulett** (europeisk, 37 felt): alle klassiske innsatser ved klikk på et tall,
+  en kant eller et hjørne – **plein** (35:1), cheval, transversale, carré, sixain,
+  kolonne, dusin, rød/svart, partall/oddetall og manque/passe. Sjetongverdier
+  1/5/25/100/500, høyreklikk fjerner sjetonger; **Snurr**, **Gjenta** (**R**),
+  **Doble** (**D**) og **Tøm**. Kula spinner i spiral ned i feltet som er trukket
+  på forhånd, og øverst står de siste 12 tallene.
+- **Lama-automat**: 5 hjul x 3 rader, **10 gevinstlinjer**, **lama = wild**,
+  **gullmynter = scatter** med 10 gratisspinn og doble gevinster, innsats per
+  linje 1/2/5/10, **auto-spinn** (10/25), **turbo** og gevinsttabell.
+  **Tilbakebetalingsprosenten er 96,1 %** – beregnet nøyaktig fra hjulstrimlene.
+- **Lama-banken**: Casino, Blackjack og Poker deler én konto med
+  **lama-sjetonger** (start 1000, seksjonen `casino` i `mem.json`); gamle
+  sjetongsaldoer overføres automatisk. Innsatser trekkes med en gang, hvert spill
+  fører sin egen balanse for rekorden, og går du blakk, får du et **banklån** opp
+  til 1000.
+- Konfetti, myntregn, big/mega/jackpot-bannere og gevinstlinje-animasjoner;
+  prestasjonene **Blinkskudd** (vunnet plein i rulett) og **Lama-jackpot** (5
+  lamaer på én linje).
+
 Rekordene lagres i `highscores`-delen av `mem.json` (ved siden av koden) – sammen
 med språket (delen `mem`).
 
@@ -5530,20 +7130,24 @@ pakker) og stylet som en moderne spill-launcher:
   menyvalg, **konfettiregn ved ny rekord** og en ekte **uskarphet** bak
   pause-overlegget.
 - Hvert spills **forspillskjerm** vises i spillets aksentfarge og viser forrige
-  rekord som en chip.
-- **Enhetlig utseende i spillet**: alle 42 spillene deler menyens temapalett og
+  rekord som en chip. Med mange moduser og lav oppløsning blir den **kompakt**:
+  Innstillinger, Wiki og Tilbake samles på én rad, og skriften tilpasser seg –
+  ingenting havner lenger utenfor bildet.
+- **Enhetlig utseende i spillet**: alle 46 spillene deler menyens temapalett og
   skrift – HUD-er, oppsettskjermer og overlegg følger designet valgt i
   alternativene (v4.1 / v4 / Classic), mens hver spillflate beholder sine
   identitetsfarger. Hvert spill håndterer nå oppløsningsendringer midt i spillet
   på en ren måte, og navnene i menyen er språkavhengige (f.eks. «Schach» → «Sjakk»).
 - **Innebygd wiki** («LamaWiki»): detaljert hjelp for hvert spill (styring,
   moduser, poeng, tips) pluss generelle sider – med et **søkefelt**, kategorier,
-  rullbare artikler og tastekapsler, på alle fem språk. Nåbar via sidefelt-knappen
+  rullbare artikler og tastekapsler, på alle 14 språk. Nåbar via sidefelt-knappen
   **«Wiki / Hjelp»** og fra hvert spills forspillskjerm (åpner spillets side
   direkte).
-- **Prestasjoner & statistikk**: **69 prestasjoner** i tre kategorier (mål på
-  tvers av samlingen, én poengmilepæl per spill og spesielle øyeblikk som
-  sjakkmatt mot AI-en eller 2048-brikken) med **gyllent varsel og fanfare**
+- **Prestasjoner & statistikk**: **107 prestasjoner** i tre kategorier (23 mål
+  på tvers av samlingen, 37 poengmilepæler og 47 spesielle øyeblikk som sjakkmatt
+  mot KI-en, 4096-brikken, en T-Spin Double, 25 løste sjakkoppgaver, en Killer
+  Sudoku eller lama-jackpoten; i 2048 og sjakk teller ikke partier med angre
+  eller hint) med **gyllent varsel og fanfare**
   ved opplåsing - selv midt i spillet; gamle rekorder godskrives automatisk.
   I tillegg en **statistikk**-fane: total spilletid, partier, seire, rekorder,
   favorittspill og en tabell per spill sortert etter spilletid. Nås via
@@ -5562,7 +7166,14 @@ pakker) og stylet som en moderne spill-launcher:
 - **F11** (eller knappen «Fullskjerm på/av») = veksle fullskjerm. Pygame-visningen
   forblir innebygd og skaleres opp med bevart sideforhold (svarte kanter når
   sideforholdet avviker). Vinduet kan endres fritt i størrelse.
-- **«Tilbake til menyen»** avslutter spillet og lagrer rekorden.
+- **«Tilbake til menyen»** avslutter spillet og lagrer rekorden – det samme gjør
+  et bytte til et annet spill via sidefeltet.
+- **Faste ekstrataster**: i tillegg til de fem handlingene som kan bindes, har
+  noen spill egne taster (f.eks. reserve **C** og roter mot venstre **Z** i
+  Tetris, angre **U** i 2048, sjakk og sudoku). De virker bare hvis tasten ikke
+  er bundet til en handling i alternativene, og står i oppsettshintet og i
+  wikien. Holdte taster registreres riktig og slippes ved pause eller Alt-Tab –
+  ingenting «henger» lenger.
 - **«Avslutt»** lukker Pygame og Tkinter på en ren måte.
 
 ### Alternativer, styring og lyd
@@ -5608,22 +7219,24 @@ start.sh             Startskript (Linux / macOS / Git Bash)
 pyinstall.bat        EXE-bygg (Windows): pakker alt i builds\PyGameZ.exe
 main.py              Tkinter-grensesnitt, Pygame-innbygging, sentral spilløkke
 game_base.py         Spill-baseklasse (update/draw/handle_event) + InputEvent + hjelpere
-settings.py          Laste/lagre innstillinger (lyd/haptikk/tastebindinger) (JSON)
-audio.py             Prosedyregenererte lydeffekter + gamepad-rumble
+settings.py          Laster/lagrer innstillinger (lyd/haptikk/tastebindinger/spillalternativer med kontrollregler) (JSON)
+audio.py             Prosedyregenererte lydeffekter, musikksløyfer + gamepad-rumble
 menu.py              Språk-, forspill- (modus) og alternativskjerm (lyd/styring)
 highscore.py         Laste/lagre rekorder (del i mem.json)
-store.py             Sentral lagringsfil mem.json (deler: mem, highscores, stats, achievements)
+store.py             Sentral lagringsfil mem.json (seksjoner: mem, highscores, stats, achievements + spillfremgang), atomisk med .bak-kopi
 stats.py             Spillerstatistikk (partier, spilletid, seire, rekorder) per spill
 achievements.py      Prestasjoner: definisjoner, opplåsing, varsel (toast)
 progress.py          Skjerm for prestasjoner & statistikk (to faner, rullbar)
 replay.py            Opptak og arkiv over replays (replay.json)
 replayview.py        Replay-skjerm: arkivliste og avspilling
-ugc.py               Egne hull: lagring, kontroll, eksport/import (ugc.json)
+ugc.py               Eget innhold (minigolfbaner, Geometry Dash-nivåer): lagring, kontroll, eksport/import (ugc.json)
 swear.py             Ordfilter for navn og id-er (lang/swear/*.yml, alle 14 språk)
 filepick.py          Fildialoger ("Eksporter som ...", "Importer")
 prestige.py          Prestige-system for Snake
 competitive.py       Finjustering av Snakes Competitive-modus (nivåer, enarmet banditt, gambleepler)
 ngb.py               Visuell tilpasning («mods»): hodefarge + koordinatrutenett + meny (mem-ngb.json)
+lamabank.py          Lama-banken: felles sjetongkonto for Blackjack, Poker og Casino (seksjonen casino i mem.json)
+seedrand.py          Tilfeldighetsgenerator med bit-identiske tall i Python og nettleseren (dagens moduser, nye oppgaver)
 i18n.py              Oversettelsesmotor (laster lang/*.json, t("nøkkel"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Språkstrenger (én plassholdernøkkel per tekst)
@@ -5635,24 +7248,48 @@ lamawiki/
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 woordlistz/
   build_wordlists.py   Bygger ordlistene til Wordle på nytt (ordbøker + frekvenslister)
-  de/ en/ fr/ ... hr/  answers.txt (løsninger) + allowed.txt (tillatte gjett), 14 språk
+  de/ en/ fr/ ... hr/  answers.txt + allowed.txt (5 bokstaver), answers4/6/7.txt + allowed4/6/7.txt (4, 6, 7 bokstaver), 14 språk
+devtools/            Utviklerverktøy (pakkes ikke inn i .exe-filen)
+  merge_staging.py           Legger oversettelser og wikisider fra devtools/staging/ inn i alle 14 språkfilene
+  build_chess_puzzles.py     Bygger de 200 sjakkoppgavene fra Lichess' oppgavedatabase (CC0)
+  build_sudoku_killer.py     Genererer de 400 entydig løsbare Killer Sudokuene
+  build_crossyroad_models.py Skriver voxel-modellene til Crossy Road for nettversjonen
+  build_geodash_levels.py    Bygger de 8 Geometry Dash-banene og beviser med løsningsalgoritmen at hver kan klares, mynter inkludert
+  build_geodash_solver.py    Løsningsalgoritme med spillets ekte stegkode (løsninger i geodash_proofs.json)
 games/
-  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
+  tetris.py  tetris_core.py  tetris_ai.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py  sudoku_draw.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py  wordle_words.py
+  trexrunner.py  dame.py  poker.py  muehle.py
+  chess.py  chess_engine.py  chess_draw.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
-  levels/
+  crossyroad.py  crossyroad_world.py  crossyroad_draw.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  battleship.py  battleship_core.py
+  casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  levels/              Nivådata: snake-comp.json, chess-puzzles.json (+ kilde-README), sudoku-killer.json, geodash.json
+tests/
+  arcade_casino_audit.py     Samlet revisjon (input, seedrand Python = JS, lagring, språkfiler, forspillskjermer) + alle audit_*.py
+  audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless-revisjoner per spill
+  newgames_audit.py  blockjump_audit.py
 ```
 
 Det valgte språket lagres i `mem.json` (i `mem`-delen, ved siden av
 `highscores`-delen i samme fil) og lastes automatisk ved neste oppstart.
+
+**Kilder og lisenser:** de 200 sjakkoppgavene kommer fra
+[Lichess' oppgavedatabase](https://database.lichess.org/#puzzles) (lisens
+**CC0 1.0**, fritt tilgjengelig – takk til lichess.org!); detaljer står i
+`games/levels/chess-puzzles.README.md`. Kildene til Wordle-ordlistene står i
+`woordlistz/README.md`.
 
 ### Plattformmerknader
 
@@ -5758,7 +7395,7 @@ kopieres fritt. Innstillinger og rekorder (`settings.json`, `mem.json`,
 ## 🇸🇪 Svenska
 
 En spelsamling för skrivbordet i Python: **Tkinter** står för fönstret och menyn,
-**Pygame** bäddas in som spelyta inuti Tkinter-fönstret. Fyrtiotvå spel med
+**Pygame** bäddas in som spelyta inuti Tkinter-fönstret. Fyrtiosex spel med
 gemensamma inställningar, fritt ombindbara kontroller, topplistor, procedurella
 ljudeffekter och, för vissa titlar, ett flerspelarläge. Gränssnittet är
 **flerspråkigt** – **14 språk** (tyska / engelska / franska / spanska /
@@ -5797,31 +7434,31 @@ under **[Installationsguide](#installationsguide)**.
 | **Air Hockey** | 1 / 2 spelare | 2D-fysik med impulsöverföring, musstyrning, AI och power-ups |
 | **Tic-Tac-Toe** | 1 / 2 spelare | m,n,k-spel på 3x3 till 9x9, tre AI-nivåer **eller** lokalt X mot O |
 | **Breakout** | 1 spelare       | Brick-breaker med olika stentyper, power-ups, combos och många banor |
-| **Tetris**   | 1 / 2 spelare   | Klassiskt eller Versus (två fält sida vid sida) |
+| **Tetris**   | 1 / 2 spelare   | Moderna Guideline-regler (SRS, reserv, förhandsvisning av 5 bitar, T-Spins): Maraton, Sprint 40, Ultra 2:00, Versus mot AI (3 nivåer) eller två spelare med skräprader |
 | **Invaders** | 1 spelare       | Space Invaders: rensa vågorna, skydda dina liv |
 | **Asteroids** | 1 / 2 spelare  | Tröghetsfysik, vågor, UFO:n, power-ups, hyperrymd - solo eller co-op-duell |
 | **Pac-Man**  | 1 spelare       | Trogen klon: 4 spök-AI:n, kraftpiller, tunnel, frukt, banor |
 | **Flappy Bird** | 1 spelare    | Gravitationsflygning genom rör, mynt, sköld, dag/natt, medaljer |
 | **Doodle Jump** | 1 spelare    | Automatiskt hopp uppåt, plattformstyper, fjädrar, propeller, monster |
-| **2048**     | 1 spelare       | Sifferpussel där man skjuter brickor, mål: 2048-brickan |
+| **2048**     | 1 spelare       | Sifferpussel där man skjuter brickor, från 3x3 till 8x8: Klassiskt, Tidsattack och Oändligt, ångra, mjuka animationer, sparade partier |
 | **Minesweeper** | 1 spelare    | Klassikern med säkert första klick, chording, smiley och bästa tider |
-| **Sudoku**      | 1 spelare    | 400 seed-genererade banor (4 svårighetsgrader x 100), 4 hjälplägen med poängmultiplikator, anteckningar, tips, 3-felsgräns |
+| **Sudoku**      | 1 spelare    | 4 varianter (Klassisk, X-sudoku, Killer, Mini 6x6) med 400 banor var, dagens sudoku, upp till 3 stjärnor per bana, 4 hjälplägen, ångra, sparat spel |
 | **Frogger**     | 1 spelare    | Väg + flod + 5 vikar, bonusfluga, krokodiler, tidsgräns, 3 svårighetsgrader |
 | **Memory**      | 1 / 2 spelare | Hitta par på 4x4 upp till 8x6, vändningsanimation, solopoäng eller duell |
 | **Patiens**     | 1 spelare    | 5 varianter (Klondike, Spider, FreeCell, Pyramid, TriPeaks) med dra och släpp och ångra |
 | **Aim Trainer** | 1 spelare    | Avslappnat 3D-prickskytte: musen styr kameran, 4 lägen (precision/reflex/rörliga/chill), 3 teman inkl. ett svart hål |
 | **Fyra i rad** | 1 / 2 spelare | Klassikern med fallanimation: 3 AI-nivåer (minimax) eller en lokal duell |
 | **Tankduell**    | 1 / 2 spelare | 2D-arenaduell med studsande skott, power-ups, 4 arenor, AI med 3 nivåer |
-| **Blackjack**    | 1 spelare    | Casino-blackjack med sko på 4 lekar, dubbla/dela, blackjack 3:2 och bestående marker-saldo |
+| **Blackjack**    | 1 spelare    | Casino-blackjack med sko på 4 lekar, dubbla/dela och blackjack 3:2; spelas med lamamarker från den gemensamma Lamabanken |
 | **Tunnel Racer** | 1 spelare    | 3D-neonrörsflygning: oändligt läge + 30 banor, styrning med tangenter eller mus, motion blur |
 | **3D-labyrint**  | 1 spelare    | Förstapersons-raycaster (Wolfenstein-stil) med 50 seed-genererade banor, orbs, minikarta - eller en 2D-vy uppifrån |
 | **Reversi**      | 1 / 2 spelare | Othello på 8x8: fånga och vänd brickor, 3 AI-nivåer (minimax) eller en lokal duell |
 | **Yatzy**        | 1 / 2 spelare | Tärningsklassiker med 13 kategorier, övre bonus och yatzy; jakt på topplistan eller hotseat för 2 |
-| **Wordle**       | 1 spelare    | Gissa det 5 bokstäver långa ordet på 6 försök, oändlig streak, färgade ledtrådar, riktiga ordlistor på 14 språk |
+| **Wordle**       | 1 spelare    | Gissa ord med 4 till 7 bokstäver: Oändlig, Dagens ord, Dordle och Quordle, svårt läge, färgblind-palett, statistik med stapeldiagram, dela resultatet, riktiga ordlistor på 14 språk |
 | **T-Rex Runner** | 1 spelare    | Oändlig ökenlöpning: variabelt hopp, ducka, kaktusar & pterodaktyler, dag/natt-cykel, stigande tempo, 3 svårighetsgrader |
 | **Dam**          | 1 / 2 spelare | 3 regeluppsättningar (tysk 8×8, internationell 10×10, checkers), slagtvång & flygande dam, 3 AI-nivåer (minimax) eller en lokal duell |
-| **Poker**        | 1 spelare    | 3 valbara varianter: Texas Hold'em mot AI, 5 Card Draw och Video Poker; satsningsrundor, blinds, bestående markerkassa |
-| **Schack**       | 1 / 2 spelare | Fullständiga regler (rockad, en passant, förvandling, matt/patt/remi), 6 AI-nivåer (minimax + alfa-beta) eller en lokal duell, färgval |
+| **Poker**        | 1 spelare    | 3 valbara varianter: Texas Hold'em mot AI, 5 Card Draw och Video Poker; satsningsrundor, blinds, lamamarker från den gemensamma Lamabanken |
+| **Schack**       | 1 / 2 spelare | Fullständiga regler, Chess960 och schackklocka, 6 AI-nivåer, 200 problem från Lichess-databasen, ångra/tips, draglista, PGN-export eller lokal duell |
 | **Kvarn**        | 1 / 2 spelare | Placera-/flytta-/flyga-faser, kvarnar & slag, valfri flygregel, 3 AI-nivåer eller en lokal duell |
 | **Simon**        | 1 / 2 spelare | Senso-minnesspel: lägena Klassiskt/Speed/Reverse/Mixat + Duell, ljud av/på/mixat, 4/6/9 knappar, bästa per läge |
 | **Biljard**      | 1 / 2 spelare | 8-ball, 9-ball & övning i 2D, fast 3D-vy eller fritt roterbar 3D-kamera; mjuk fysik, sikthjälp, 3 AI-nivåer |
@@ -5834,13 +7471,19 @@ under **[Installationsguide](#installationsguide)**.
 | **Minigolf**    | 1 / 2 spelare | 360 banor på 40 slingor (18 handbyggda, 342 genererade): sand, ramper, vatten, kuddar, väderkvarnar & vandrande block; scorekort med par och hole-in-one-bonus; **egen hålredigerare** med 15 objekttyper, 12 mallar och delning som `.lamapgzmap` |
 | **Pinball**     | 1 / 2 spelare | Flipperspel med 3 bord: bumpers, slingshots, mål, L-A-M-A-banor, multiboll med jackpot, bollräddning, knuff & tilt |
 | **Bowling**     | 1 / 2 spelare | 10 frames med officiell strike/spare-räkning, äkta kägelfysik, skruv och bana i perspektiv, 3 svårighetsgrader |
+| **Crossy Road** | 1 spelare     | Oändliga hopp över ängar, vägar, floder och järnvägsspår i isometrisk voxelstil: dag/natt, örn, 10 figurer att köpa, dagens bana |
+| **Geometry Dash** | 1 spelare   | Rytmplattformspel med kub, skepp, boll, UFO och våg: 8 banor från Lätt till Demon med 3 hemliga mynt var, träningsläge, soundtrack per bana; **baneditor** med delning som `.lamapgzlevel` |
+| **Battleship**  | 1 / 2 spelare | Sjöslag på 10x10: flottan placeras med dra och släpp, 3 regelreglage (beröring, salva, skjut igen), AI med 3 nivåer eller lokal duell med överlämningsskärm |
+| **Casino**      | 1 spelare     | Europeisk roulette med alla klassiska insatser och Lamaautomat (5 hjul, 10 vinstlinjer, wild, gratissnurr); ett gemensamt konto med lamamarker för Blackjack och Poker |
 
 **Flerspelarläge (2 spelare lokalt)** finns för **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op-duell)**,
 **Memory (duell)**, **Fyra i rad**, **Tankduell**, **Reversi**, **Yatzy**,
 **Dam**, **Schack**, **Kvarn**, **Simon (duell)**, **Biljard**, **Minigolf**,
-**Pinball** och **Bowling**. Läget väljs
-direkt på förspelsskärmen (*Enspelarläge / Flerspelarläge*).
+**Pinball**, **Bowling** och **Battleship** (med en överlämningsskärm som döljer
+flottorna) - totalt 20 spel. Läget väljs direkt på förspelsskärmen
+(*Enspelarläge / Flerspelarläge*); Tetris har dessutom **Versus mot AI**.
+Webbversionen är endast för en spelare.
 
 #### Funktionsdetaljer per spel
 
@@ -5939,9 +7582,23 @@ direkt på förspelsskärmen (*Enspelarläge / Flerspelarläge*).
   (avfyrar lasern), **P/Esc** = paus.
 
 **Tetris**
-- Vänster/Höger flyttar, Upp = rotera, Ner = soft drop, Åtgärd = hard drop.
-- Fulla rader ger poäng, var tionde rad ökar nivån.
-- **Versus**: den vars hög når toppen först förlorar.
+- **Moderna Guideline-regler**: 10x20-plan, bitar ur en **7-påse**, **SRS-rotationssystemet** med äkta
+  wall kicks (även för I-biten), rotation åt båda hållen, **reserv** (en gång per bit),
+  **förhandsvisning av 5 bitar**, skuggbit och **lock delay** (0,5 s, högst 15 nollställningar).
+- **Tre lägen** på förspelsskärmen: *Solo*, *Mot AI* och *2 spelare*. Solo erbjuder i inställningarna
+  **Maraton** (startnivå 1-15, räknas till rekordet), **Sprint 40 rader** (bästa tid) och **Ultra 2
+  minuter** (bästa poäng); rekorden sparas i sektionen `tetris` i `mem.json`.
+- **Guideline-poäng**: singel till Tetris, **T-Spins** (hela och mini), **Back-to-Back** (x1,5),
+  **combos** och **Perfect Clear** - med texter på skärmen, rensningsanimation, hard drop-spår,
+  partiklar och nivåhöjningseffekt.
+- **Versus med skräprader**: rensade rader skickar skräp till motståndaren (Tetris = 4, T-Spin Double
+  = 4 …), inkommande skräp varslas i en varningsstapel och **kvittas** mot dina egna attacker; båda
+  planen får samma bitordning. **AI:n** finns i 3 nivåer och tempot ökar var 40:e sekund.
+- **Styrning**: Vänster/Höger med egen **DAS/ARR** (ställs in i inställningarna), Upp = rotera åt
+  höger, Ner = soft drop, Åtgärd = hard drop; **C**/Shift = reserv, **Z**/**Y** = rotera åt vänster,
+  **X** = rotera åt höger. Två spelare: spelare 1 lägger i reserv med **Q** och roterar åt vänster med
+  **E**, spelare 2 med **höger Shift** / **höger Ctrl**. Efter spelet: **R** = igen, **S** =
+  inställningar.
 
 **Invaders** – två lägen (valbara på förspelsskärmen):
 - **Klassiskt**: det klassiska alien-blocket; sedan valbart i setup-skärmen:
@@ -6008,7 +7665,19 @@ explosionseffekter, topplista.
 - Poäng = uppnådd höjd; svårigheten stiger med höjden. Topplista.
 - Styrning: vänster/höger = flytta, Upp / Mellanslag = skjuta.
 
-**2048** – pilar/WASD skjuter alla brickor; lika tal slås ihop.
+**2048**
+- **Egen inställningsskärm** med brädstorlekar från **3x3 till 8x8** och tre lägen: *Klassiskt* (mål
+  2048, sedan ”Spela vidare?”), *Tidsattack* (3 minuter, klockan startar vid första draget) och
+  *Oändligt*.
+- **Mjuka animationer**: brickor glider, slås ihop med ett ”pop” och växer fram; poäng-popups, gnistor
+  från 128, en tryckvåg från 2048 och nya färger ända upp till 131072. Inmatningar under en animation
+  sparas och körs direkt efteråt.
+- **Ångra** (av / 3 per parti / obegränsat, tangent **U** eller Backspace) - den som använder det
+  spelar utan rekord och utan brick-prestationer.
+- **Spara och fortsätt**: det pågående partiet sparas automatiskt per storlek och läge; bästa poäng och
+  största bricka per storlek/läge finns i sektionen `g2048` i `mem.json`.
+- Styrning: pilar/WASD eller **svep** med mus/pekplatta, **R**/**N** = nytt parti, **Tab** =
+  inställningar. Rekordet räknas bara i **4x4 Klassiskt** utan ångra.
 
 **Minesweeper**
 - Tre nivåer: **Nybörjare** (9x9, 10 minor), **Mellan** (16x16, 40), **Expert**
@@ -6023,21 +7692,27 @@ explosionseffekter, topplista.
 - Poäng = nivåns grundvärde minus sekunder.
 
 **Sudoku**
-- **400 banor**: 4 svårighetsgrader (Lätt/Normal/Svår/Expert) x 100 banor. Pusslen är
-  **seed-genererade med en unik lösning** - bana 12 i ”Svår” är samma pussel på varje
-  dator. Lösta banor sparas och bockas av i banvalet.
-- **4 spellägen** (väljs innan start) med en poängmultiplikator: **Klassiskt** (x2,0 -
-  inga hjälpmedel), **Anteckningar** (x1,5 - + blyertsanteckningar), **Komfort** (x1,0 -
-  + fel i rött, markering av konflikter och samma siffra, korrekta inmatningar låses
-  fast), **Assistent** (x0,7 - + tips-tangent, max. 3).
-- Varje inmatning kontrolleras omedelbart mot lösningen; med **3-felsgränsen** aktiverad
-  (setup-alternativ) avslutar det tredje felet spelet.
-- Styrning: pilar/WASD = ruta, **1-9** = siffra (även numeriskt tangentbord),
-  **0/Backspace/högerklick** = radera, **N** = anteckningar, **H** = tips, **R** = starta
-  om banan, **Q** = banval; fullt spelbart med musen (siffertangentbord till höger). När
-  spelet är slut döljer **A** bannern och visar hela **lösningen** på brädet (A igen =
-  tillbaka).
-- Poäng = (svårighetsgradens bas - tid - fel - tips) x lägets multiplikator.
+- **4 varianter** med **400 banor** var (4 svårighetsgrader x 100): *Klassisk* (de kända
+  seed-banorna - lösta banor förblir avbockade), *X-sudoku* (båda diagonalerna innehåller varje siffra
+  exakt en gång), *Killer* (streckade burar med summa; 400 banor genererade i förväg) och *Mini 6x6*.
+  Alla pussel har en **unik lösning** - bana 12 i ”Svår” är samma pussel på varje dator.
+- **Dagens sudoku**: ett pussel om dagen för alla, likadant på datorn och i webbläsaren;
+  svårighetsgraden beror på veckodagen (från måndag Lätt till lördag Expert), och den som löser varje
+  dag bygger en svit.
+- **Upp till 3 stjärnor per bana** (löst · utan fel och tips · dessutom under måltiden) och **bästa
+  tid** i banvalet; **påbörjade pussel** sparas automatiskt och fortsätter nästa gång.
+- **4 spellägen** (väljs innan start) med en poängmultiplikator: **Klassiskt** (x2,0 - inga
+  hjälpmedel), **Anteckningar** (x1,5 - + blyertsanteckningar och automatiska kandidater), **Komfort**
+  (x1,0 - + fel i rött, konflikter och felaktiga bursummor markerade, korrekta inmatningar låses fast),
+  **Assistent** (x0,7 - + tips-tangent, max. 3). Med **3-felsgränsen** aktiverad (setup-alternativ)
+  avslutar det tredje felet spelet.
+- Styrning: pilar/WASD = ruta, **1-9** = siffra (även numeriskt tangentbord), **0/Delete/högerklick** =
+  radera, **U**/**Z** = ångra, **Y** = gör om, **N** = anteckningar, **C** = fyll i kandidater
+  automatiskt, **H** = tips, **M** = färgmarkör, **R** = starta om banan, **Q** = banval. Inmatning
+  ”siffra först” (setup, **I**) och en **räknare för kvarvarande siffror** under varje siffra; fullt
+  spelbart med musen. När spelet är slut visar **A** hela **lösningen**.
+- Poäng = (bas för variant och svårighetsgrad - tid - fel - tips) x lägets multiplikator; alla
+  varianter och dagens sudoku räknas till rekordet.
 
 **Frogger**
 - 5 trafikfiler (bilar/lastbilar) och 5 flodbanor (stockar, sköldpaddor som **dyker** på
@@ -6095,10 +7770,15 @@ explosionseffekter, topplista.
 **Blackjack**
 - Äkta casinoregler: **sko med 4 lekar**, dealern stannar på 17, **blackjack betalar 3:2**,
   dealern tjuvkikar vid ess/10; **dubbla** och **en delning** (delade ess får ett kort var).
-- **Bestående marker-saldo**: börja med 500, saldo och **rekord** överlever varje omstart
-  (`mem.json`); under 10 marker får du 500 nya - rekordet står kvar.
-- Spelas via markerknappar och tangenter (**H**it / **S**tanna / **D**ubbla / dela **X**,
-  **1-4** = insats, Enter = ge) med kortanimationer och en vändning av det dolda kortet.
+- **Lamamarker**: Blackjack spelar med kontot i **Lamabanken**, som delas med Poker och Casino (start
+  1000, sparas permanent i `mem.json`). Insatsen dras så fort korten ges; under 10 marker tar Enter ett
+  **banklån** som fyller på kontot till 1000.
+- **Rekord** = högsta nivån på din egen **Blackjack-balans** (1000 plus allt som vunnits och
+  förlorats i Blackjack) - vinster i roulette, på automaten eller i poker räknas inte här, och inte
+  heller lån.
+- Spelas via markerknappar och tangenter (**H**it / **S**tanna / **D**ubbla / dela **X**, **1-4** =
+  insats, Backspace = nollställ insatsen, Enter = ge) med kortanimationer; dealerns dolda kort vänds
+  nu på riktigt när det visas.
 
 **Tunnel Racer**
 - **3D-neonrörsflygning** (mjukvarurenderare som i Aim Trainer): balkar, block och
@@ -6134,25 +7814,61 @@ explosionseffekter, topplista.
   sida vid sida; spela med musen eller tangenter (Mellanslag, 1-5, pilar, Enter).
 
 **Wordle**
-- Gissa det **5 bokstäver långa ordet på 6 försök**; färgåterkoppling (grön/gul/grå) med korrekt
-  **räkning av dubbla bokstäver** och ett skärmtangentbord som färgas.
-- **Oändlig streak**: varje löst ord ger poäng (färre gissningar = mer), det första olösta ordet
-  avslutar omgången - totalen = topplista.
-- **Riktiga ordlistor på alla 14 språk** (mappen `woordlistz/`, endast A-Z): totalt över
-  **34 000 lösningar** och **213 000 tillåtna gissningar**. Varje gissning kontrolleras mot
-  listan - annat avvisas och raden skakar till.
-- **Två lägen**: *Normalt* och *Svårt* - i svårt läge måste hittade ledtrådar användas
-  vidare. Skriv på tangentbordet eller klicka på tangenterna på skärmen.
+- Gissa det dolda ordet; färgåterkoppling (grön/gul/grå) med korrekt **räkning av dubbla
+  bokstäver** och ett skärmtangentbord som färgas (QWERTZ för tyska, tjeckiska, slovenska och
+  kroatiska, AZERTY för franska, annars QWERTY).
+- **Fyra lägen**: *Oändlig* (ord efter ord med 6 försök vardera; varje löst ord ger poäng, det
+  första olösta avslutar spelet), *Dagens ord* (ett ord om dagen per språk och längd - samma på
+  datorn och i webbläsaren - med nedräkning och svit; ett påbörjat dagens ord sparas), *Dordle*
+  (2 ord samtidigt på 7 försök) och *Quordle* (4 ord på 9 försök, tangenterna visar färgerna
+  från alla brickor).
+- **Inställningar** före varje parti: **ordlängd 4 till 7**, **svårt läge** (hittade ledtrådar
+  måste användas vidare) och **färgblind-palett** (orange/blå); bredvid visas statistiken.
+- **Riktiga ordlistor på alla 14 språk** (mappen `woordlistz/`, endast A-Z), med egna listor för
+  varje längd: bara för 5 bokstäver nästan **34 000 lösningar** och över **213 000 tillåtna
+  gissningar**, runt 134 000 lösningar i alla fyra längderna tillsammans. Lösningarna är vanliga
+  ord utan namn, engelska rester och stötande ord; varje gissning kontrolleras mot listan -
+  annat avvisas och raden skakar till.
+- **Statistik** per språk, längd och läge: spelade partier, vinstprocent, aktuell och bästa svit
+  och **fördelningen av försök som stapeldiagram** (sektionen `wordle` i `mem.json`). **Dela**
+  (**C**) kopierar ett emoji-rutnät utan att avslöja ordet.
+- Rekordet räknar bara *Oändlig* med 5 bokstäver; de andra längderna har egna bästa resultat.
+  Prestationerna **Synsk** (högst 2 försök), **Ordvana** (7 dagens ord i rad) och **Fyrdubbelt
+  geni** (Quordle löst).
+
+**Poker**
+- **3 varianter** på förspelsskärmen: **Texas Hold'em** mot 1-3 AI-motståndare med dealerknapp, blinds
+  och fyra satsningsrundor, **5 Card Draw** (heads-up mot AI:n, ett kortbyte) och **Video Poker**
+  (*Jacks or Better*, solo mot vinsttabellen).
+- Handlingar via knappar eller tangenter: **F** = fold, **C** = check/call, **R** = raise, **A** =
+  all-in; behåll/byt kort med klick eller **1-5**, **Enter** drar eller ger nästa hand.
+- **Lamamarker** från den gemensamma **Lamabanken**: i början av en hand ligger ditt konto på bordet
+  som stack, och det som går till potten dras direkt - lämnar du bordet mitt i en hand förlorar du
+  bara din andel av potten. Pank (under big blind på 20, under 10 i Video Poker) = banklån upp till
+  1000.
+- **Rekord** = högsta nivån på din **Poker-balans** (1000 plus alla vinster och förluster i poker);
+  prestationen **Chipleader** räknar också bara pokerbalansen.
 
 **Schack**
 - **Fullständigt schack**: alla pjäsdrag inklusive **rockad**, **en passant** och
   **bondeförvandling** (välj pjäs); **schack, schackmatt och patt** samt remi genom
-  **50-dragsregeln**, **trefaldig ställningsupprepning** och **otillräckligt material**.
-- **6 AI-nivåer** från *Nybörjare* till *Mästare* (negamax med alfa-beta, dragsortering,
-  pjäs-ruta-tabeller, lugnsökning); en **tidsbudget** håller varje AI-drag flytande. **Färgval**
-  vitt/svart eller en **lokal duell**.
-- Lagliga drag markeras, schack flaggas; spela med **musen** eller en markeringspekare. Varje
-  vinst mot AI:n ger en topplistepoäng.
+  **50-dragsregeln**, **trefaldig ställningsupprepning**, **otillräckligt material** eller
+  överenskommelse.
+- **Tre lägen**: *parti* mot AI:n, *2 spelare* vid samma dator (brädet kan vändas efter varje drag)
+  och **problem**.
+- **Starkare AI utan hack** i 6 nivåer från *Nybörjare* till *Mästare*: iterativ fördjupning,
+  transpositionstabell, lugnsökning, öppningsbok och en värdering med rörlighet, bondestruktur och
+  kungssäkerhet. AI:n räknar i små portioner per bildruta - spelet hackar aldrig.
+- **Inställningar**: färgval, **schackklocka** (ingen, 1+0, 3+2, 5+0, 10+5) och **Chess960** (alla 960
+  utgångsställningar, numret står ovanför draglistan).
+- **Sidopanel** med klockor, slagna pjäser, materialbalans och en scrollbar **draglista (SAN)**; dra och
+  släpp, glidande pjäser, koordinater. Tangenter: **U** = ångra, **H** = tipspil, **O** = erbjud remi,
+  **X** = ge upp, **F** = vänd brädet, efter partiet **P** = **PGN-export**.
+- **Problem**: 200 problem i 5 steg (matt i 1/2/3, taktik I/II) från **Lichess fria problemdatabas
+  (CC0)**, kontrollerade med spelets egen motor; i mattproblem räknas varje drag som sätter matt.
+  Framstegen sparas i sektionen `chess` i `mem.json`.
+- Ångra och tips gör ett parti ”assisterat”: rekordet räknar bara vinster utan hjälp mot AI:n (per
+  session).
 
 **Kvarn**
 - **Kvarn** med alla tre faser: **utplacering** (9 pjäser var), **förflyttning** längs linjerna
@@ -6320,6 +8036,80 @@ explosionseffekter, topplista.
 - **Replay av partiet**: i slutet visar **P** alla kast igen och **S** sparar dem
   i arkivet (knappen **Replays**).
 
+**Crossy Road**
+- **Oändliga hopp** över ängar (träd och stenar blockerar vägen), vägar med bilar och lastbilar, floder
+  med stockar och näckrosor och **järnvägsspår** där ett tåg dundrar förbi efter varningsljus och
+  klocka - längre fram väntar hela stationer med upp till 5 spår. Banan byggs rad för rad, har alltid
+  en farbar väg, och både tempo och trafik ökar.
+- **Isometrisk voxelstil**: figurer, fordon och träd av skuggade block (förrenderade för varje
+  rutstorlek), mjukt följande kamera, squash & stretch vid hopp, vattenplask, tillplattningsanimation,
+  fjädrar och glittrande mynt; från rad 50 **dag/natt-växling** med strålkastare.
+- **Örnen**: kameran kryper framåt - den som dröjer för länge eller går mer än tre rader tillbaka tas
+  av örnen (en röd kant varnar först). Att driva ut ur bilden på en stock är också slut.
+- **Mynt och figurer**: insamlade mynt (jättemynt = 5) sparas och köper nya figurer i fliken
+  **Figurer**: groda, gris, pingvin, katt, räv, lama, robot, spöke och enhörning (25 till 250 mynt);
+  kycklingen finns med från start.
+- **Lägen**: *Oändlig* (poäng = längsta raden, räknas till rekordet) och *Dagens bana* (samma för
+  alla i dag, även i webbläsaren, med eget dagsrekord). Styrning: pilar/WASD, mellanslag/Enter/klick =
+  hoppa framåt; i inställningarna **H** = skuggor, **N** = dag/natt. Mynt, figurer och dagsrekord
+  sparas i sektionen `crossy` i `mem.json`.
+
+**Geometry Dash**
+- **Rytmplattformspel**: figuren rusar av sig själv åt höger - du bestämmer bara när den
+  ska hoppa eller flyga. **Fem former** - kub, skepp, boll, UFO och våg - plus form-,
+  gravitations- och fartportaler (0,5x till 3x), gula/rosa/blå **pads och klot**,
+  halvblock, spikar, gropar och färgtriggers.
+- **8 inbyggda banor** från *Lätt* till *Demon* (”Lama Inferno”) med **3 hemliga mynt**
+  var. Varje bana går bevisligen att klara: när den byggdes löste en lösningsalgoritm den
+  med spelets riktiga kod - med alla mynt och till och med förskjuten med 1/240 sekund.
+- **Exakt fysik**: fixpunktsberäkning med fast 240 Hz-steg; varje tryck verkar exakt i det
+  steg där det skedde - likadant vid varje bildfrekvens och bitidentiskt i webbläsaren.
+- **Träningsläge** (**P**) med automatiska och egna kontrollpunkter (**Z** sätter, **X**
+  tar bort), försöksräknare, förloppsindikator, explosioner och omedelbar omstart (**R**).
+  Varje bana har sitt **eget soundtrack** - bakgrund, mark och klot pulserar i takt
+  (musiken stängs av med **M**).
+- **Stjärnor och mynt**: klarar du en bana i normalt läge får du dess stjärnor, och varje
+  mynt är värt en stjärna till; rekordet är det **totala antalet stjärnor** (högst 65).
+  Bästa resultat per bana, mynt, försök och hopp sparas i sektionen `geodash` i
+  `mem.json`.
+- **Baneditor** i fliken **BANOR**: rutnätsduk, palett med 6 grupper (block, faror, pads och
+  klot, portaler, fart, extra), rotering, ångra/gör om, översiktsremsa, **test från start
+  eller härifrån** och baninställningar (startfart, startform, musikstil, BPM, färger).
+  Bocken **”verifierad”** kommer först när du själv har klarat din bana. **Dela** skriver
+  en `.lamapgzlevel`-fil och **Importera** läser in den igen; banorna sparas i `ugc.json`
+  bredvid dina egna minigolfbanor.
+
+**Battleship**
+- **Sjöslag på 10x10** med hangarfartyg (5 rutor), slagskepp (4), kryssare (3), ubåt (3) och
+  jagare (2) - den som först sänker hela fiendens flotta vinner.
+- **Placera flottan** med dra och släpp från dockan: **R** eller högerklick roterar, förhandsvisningen
+  lyser grönt eller rött, **X** placerar allt slumpmässigt, **C** tömmer brädet; din senaste
+  uppställning föreslås igen.
+- **Regler i inställningarna** (sparas): *skepp får nudda varandra*, *salva* (lika många skott per tur
+  som du har skepp flytande) och *skjut igen efter en träff*.
+- **AI med 3 nivåer**: Lätt skjuter slumpmässigt, Medel följer upp träffar systematiskt, Svår beräknar
+  en **sannolikhetskarta** med schackbrädesparitet (i snitt cirka 70 / 60 / 45 skott för en hel
+  flotta). Eller **2 spelare** vid samma dator - en **överlämningsskärm** döljer båda flottorna före
+  varje tur.
+- **Grafik**: radarsvep, animerade vågor, granater i båge, plask, explosioner med rök och brinnande
+  rutor, en ”SÄNKT!”-avslöjning och en rundsammanfattning med skott, träffar och träffsäkerhet.
+  Rekordet räknar dina **vinster mot AI:n** under en session.
+
+**Casino**
+- **Roulette** (europeisk, 37 fack): alla klassiska insatser genom klick på ett nummer, en kant eller
+  ett hörn - **plein** (35:1), cheval, transversale, carré, sixain, kolumn, dussin, rött/svart,
+  jämnt/udda och manque/passe. Markvärden 1/5/25/100/500, högerklick tar bort marker; **Snurra**,
+  **Upprepa** (**R**), **Dubbla** (**D**) och **Rensa**. Kulan snurrar i spiral ner i det fack som
+  dragits i förväg, och överst visas de senaste 12 numren.
+- **Lamaautomat**: 5 hjul x 3 rader, **10 vinstlinjer**, **lama = wild**, **guldmynt = scatter** med
+  10 gratissnurr och dubbla vinster, insats per linje 1/2/5/10, **autosnurr** (10/25), **turbo** och
+  vinsttabell. **Återbetalningsgraden är 96,1 %** - exakt beräknad från hjulremsorna.
+- **Lamabanken**: Casino, Blackjack och Poker delar ett konto med **lamamarker** (start 1000,
+  sektionen `casino` i `mem.json`); gamla marksaldon förs över automatiskt. Insatser dras direkt, varje
+  spel för sin egen balans till rekordet, och går du pank får du ett **banklån** upp till 1000.
+- Konfetti, myntregn, big/mega/jackpot-banderoller och vinstlinjeanimationer; prestationerna
+  **Fullträff** (vunnen plein i roulette) och **Lamajackpot** (5 lamor på en linje).
+
 Topplistorna sparas i avsnittet `highscores` i `mem.json` (bredvid koden) – tillsammans med
 språket (avsnittet `mem`).
 
@@ -6339,18 +8129,21 @@ modern spel-launcher:
 - **Effekter överallt**: mjuka skärmövergångar, gnistor när man bekräftar ett menyval, **konfettiregn
   vid nytt rekord** och en riktig **oskärpa** bakom pausöverlägget.
 - Varje spels **förspelsskärm** visas i det spelets accentfärg och visar det tidigare rekordet som ett
-  chip.
-- **Enhetlig look i spelet**: alla 42 spel delar menyns temapalett och typsnitt - HUD:ar, setup-skärmar
+  chip. Med många lägen och låg upplösning blir den **kompakt**: Inställningar, Wiki och Tillbaka hamnar
+  på en rad och typsnittet anpassas - inget hamnar längre utanför bilden.
+- **Enhetlig look i spelet**: alla 46 spel delar menyns temapalett och typsnitt - HUD:ar, setup-skärmar
   och överlägg följer den design som valts i alternativen (v4.1 / v4 / Classic), medan varje spelplan
   behåller sina identitetsfärger. Varje spel hanterar nu upplösningsbyten mitt i spelet snyggt, och
   menynamnen är språkanpassade (t.ex. ”Schach” → ”Schack”).
 - **Inbyggt wiki** (”LamaWiki”): detaljerad hjälp för varje spel (styrning, lägen, poäng, tips) plus
-  allmänna sidor - med en **sökruta**, kategorier, scrollbara artiklar och tangentchips, på alla fem
+  allmänna sidor - med en **sökruta**, kategorier, scrollbara artiklar och tangentchips, på alla 14
   språk. Nås via sidofältsknappen **”Wiki / Hjälp”** och från varje spels förspelsskärm (öppnar det
   spelets sida direkt).
-- **Prestationer & statistik**: **69 prestationer** i tre kategorier (mål för
-  hela samlingen, en poängmilstolpe per spel och speciella ögonblick som
-  schackmatt mot AI:n eller 2048-brickan) med **gyllene avisering och fanfar**
+- **Prestationer & statistik**: **107 prestationer** i tre kategorier (23 mål
+  för hela samlingen, 37 poängmilstolpar och 47 speciella ögonblick som
+  schackmatt mot AI:n, 4096-brickan, en T-Spin Double, 25 lösta schackproblem,
+  ett Killer Sudoku eller lama-jackpotten; i 2048 och schack räknas inte partier
+  med ångra eller tips) med **gyllene avisering och fanfar**
   vid upplåsning - även mitt i spelet; gamla rekord tillgodoräknas
   automatiskt. Dessutom en **statistik**-flik: total speltid, partier, segrar,
   rekord, favoritspel och en tabell per spel sorterad efter speltid. Nås via
@@ -6369,7 +8162,13 @@ modern spel-launcher:
 - **F11** (eller knappen ”Helskärm på/av”) = växla helskärm. Pygame-displayen förblir inbäddad och
   skalas upp med bibehållet bildförhållande (svarta kanter när bildförhållandet skiljer sig). Fönstret
   kan storleksändras fritt.
-- **”Tillbaka till menyn”** avslutar spelet och sparar topplistan.
+- **”Tillbaka till menyn”** avslutar spelet och sparar topplistan - det gör även ett byte till ett
+  annat spel via sidofältet.
+- **Fasta extratangenter**: utöver de fem handlingar som kan bindas har vissa spel egna tangenter
+  (t.ex. reserv **C** och rotera åt vänster **Z** i Tetris, ångra **U** i 2048, schack och sudoku).
+  De fungerar bara om tangenten inte är bunden till en handling i alternativen och står i
+  inställningstipset och i wikin. Nedhållna tangenter känns igen korrekt och släpps vid paus eller
+  Alt-Tab - inget ”hänger sig” längre.
 - **”Avsluta”** stänger Pygame och Tkinter på ett rent sätt.
 
 ### Alternativ, styrning och ljud
@@ -6410,22 +8209,24 @@ start.sh             Startskript (Linux / macOS / Git Bash)
 pyinstall.bat        EXE-bygge (Windows): packar allt i builds\PyGameZ.exe
 main.py              Tkinter-gränssnitt, Pygame-inbäddning, central spelloop
 game_base.py         Spelbasklass (update/draw/handle_event) + InputEvent + hjälpfunktioner
-settings.py          Ladda/spara inställningar (ljud/haptik/tangentbindningar) (JSON)
-audio.py             Procedurella ljudeffekter + gamepad-vibration
+settings.py          Läser/sparar inställningar (ljud/haptik/tangentbindningar/spelalternativ med kontrollregler) (JSON)
+audio.py             Procedurella ljudeffekter, musikslingor + handkontrollsvibration
 menu.py              Skärmar för språk, förspel (läge) och alternativ (ljud/styrning)
 highscore.py         Ladda/spara topplistor (avsnitt i mem.json)
-store.py             Central sparfil mem.json (avsnitt: mem, highscores, stats, achievements)
+store.py             Central sparfil mem.json (sektioner: mem, highscores, stats, achievements + spelframsteg), atomär med .bak-kopia
 stats.py             Spelarstatistik (partier, speltid, segrar, rekord) per spel
 achievements.py      Prestationer: definitioner, upplåsning, avisering (toast)
 progress.py          Skärm för prestationer & statistik (två flikar, rullbar)
 replay.py            Inspelning och arkiv för replays (replay.json)
 replayview.py        Replay-skärm: arkivlista och uppspelning
-ugc.py               Egna hål: lagring, kontroll, export/import (ugc.json)
+ugc.py               Eget innehåll (minigolfbanor, Geometry Dash-nivåer): lagring, kontroll, export/import (ugc.json)
 swear.py             Ordfilter för namn och id (lang/swear/*.yml, alla 14 språk)
 filepick.py          Fildialoger ("Exportera som ...", "Importera")
 prestige.py          Prestige-system för Snake
 competitive.py       Finjustering av Snakes Competitive-läge (nivåer, enarmad bandit, speläpplen)
 ngb.py               Visuell personalisering ("mods"): huvudfärg + koordinatrutnät + meny (mem-ngb.json)
+lamabank.py          Lamabanken: gemensamt markkonto för Blackjack, Poker och Casino (sektionen casino i mem.json)
+seedrand.py          Slumpgenerator med bitidentiska tal i Python och webbläsaren (dagens lägen, nya pussel)
 i18n.py              Översättningsmotor (laddar lang/*.json, t("nyckel"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Språksträngar (en platshållarnyckel per text)
@@ -6437,24 +8238,47 @@ lamawiki/
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 woordlistz/
   build_wordlists.py   Bygger om Wordles ordlistor (ordböcker + frekvenslistor)
-  de/ en/ fr/ ... hr/  answers.txt (lösningar) + allowed.txt (tillåtna gissningar), 14 språk
+  de/ en/ fr/ ... hr/  answers.txt + allowed.txt (5 bokstäver), answers4/6/7.txt + allowed4/6/7.txt (4, 6, 7 bokstäver), 14 språk
+devtools/            Utvecklarverktyg (packas inte in i .exe-filen)
+  merge_staging.py           För in översättningar och wikisidor från devtools/staging/ i alla 14 språkfiler
+  build_chess_puzzles.py     Bygger de 200 schackproblemen från Lichess problemdatabas (CC0)
+  build_sudoku_killer.py     Genererar de 400 entydigt lösbara Killer Sudokun
+  build_crossyroad_models.py Skriver Crossy Roads voxelmodeller för webbversionen
+  build_geodash_levels.py    Bygger de 8 Geometry Dash-banorna och bevisar med lösningsalgoritmen att varje bana går att klara, mynt inräknade
+  build_geodash_solver.py    Lösningsalgoritm med spelets riktiga stegkod (lösningar i geodash_proofs.json)
 games/
-  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
+  tetris.py  tetris_core.py  tetris_ai.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py  sudoku_draw.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py  wordle_words.py
+  trexrunner.py  dame.py  poker.py  muehle.py
+  chess.py  chess_engine.py  chess_draw.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
-  levels/
+  crossyroad.py  crossyroad_world.py  crossyroad_draw.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  battleship.py  battleship_core.py
+  casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  levels/              Nivådata: snake-comp.json, chess-puzzles.json (+ käll-README), sudoku-killer.json, geodash.json
+tests/
+  arcade_casino_audit.py     Övergripande granskning (inmatning, seedrand Python = JS, sparande, språkfiler, förspelsskärmar) + alla audit_*.py
+  audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless-granskningar per spel
+  newgames_audit.py  blockjump_audit.py
 ```
 
 Det valda språket sparas i `mem.json` (i avsnittet `mem`, bredvid avsnittet `highscores` i samma fil)
 och laddas automatiskt vid nästa start.
+
+**Källor och licenser:** de 200 schackproblemen kommer från
+[Lichess problemdatabas](https://database.lichess.org/#puzzles) (licens **CC0 1.0**,
+public domain - tack, lichess.org!); detaljer finns i `games/levels/chess-puzzles.README.md`.
+Källorna till Wordles ordlistor anges i `woordlistz/README.md`.
 
 ### Plattformsanteckningar
 
@@ -6557,7 +8381,7 @@ medan du spelar.
 ## 🇫🇮 Suomi
 
 Työpöytäpelikokoelma Pythonilla: **Tkinter** tarjoaa ikkunan ja valikon,
-**Pygame** upotetaan pelinäytöksi Tkinter-ikkunan sisään. Neljäkymmentäkaksi
+**Pygame** upotetaan pelinäytöksi Tkinter-ikkunan sisään. Neljäkymmentäkuusi
 peliä, joilla on yhteiset asetukset, vapaasti uudelleenmääriteltävät ohjaimet,
 ennätykset, proseduraaliset äänitehosteet ja osassa peleistä moninpeli.
 Käyttöliittymä on **monikielinen** – **14 kieltä** (saksa / englanti / ranska /
@@ -6596,31 +8420,31 @@ ohje löytyy aivan alhaalta kohdasta **[Asennusopas](#asennusopas)**.
 | **Air Hockey** | 1 / 2 pelaajaa | 2D-fysiikka liikemäärän siirrolla, hiiriohjaus, tekoäly ja power-upit |
 | **Tic-Tac-Toe** | 1 / 2 pelaajaa | m,n,k-peli koossa 3x3–9x9, kolme tekoälyn tasoa **tai** paikallinen X vastaan O |
 | **Breakout** | 1 pelaaja       | Tiilenmurskain tiililajeilla, power-upeilla, comboilla ja monilla kentillä |
-| **Tetris**   | 1 / 2 pelaajaa  | Klassinen tai Versus (kaksi kenttää vierekkäin) |
+| **Tetris**   | 1 / 2 pelaajaa  | Modernit Guideline-säännöt (SRS, varasto, 5 palan esikatselu, T-Spinit): Maraton, Sprintti 40, Ultra 2:00, Versus tekoälyä vastaan (3 tasoa) tai kaksinpeli roskariveillä |
 | **Invaders** | 1 pelaaja       | Space Invaders: tyhjennä aallot, suojele elämiäsi |
 | **Asteroids** | 1 / 2 pelaajaa | Hitausfysiikka, aallot, UFOt, power-upit, hyperavaruus – yksin tai yhteistyökaksintaisteluna |
 | **Pac-Man**  | 1 pelaaja       | Uskollinen klooni: 4 haamun tekoälyä, voimapillerit, tunneli, hedelmät, kentät |
 | **Flappy Bird** | 1 pelaaja    | Painovoimalento putkien läpi, kolikot, kilpi, päivä/yö, mitalit |
 | **Doodle Jump** | 1 pelaaja    | Automaattinen ylöspäin hyppy, tasotyypit, jouset, potkuri, hirviöt |
-| **2048**     | 1 pelaaja       | Numeroiden liu'utuspulma, tavoite: 2048-ruutu |
+| **2048**     | 1 pelaaja       | Numeroiden liu'utuspulma 3x3:sta 8x8:aan: Klassinen, Aikahaaste ja Loputon, kumoaminen, sulavat animaatiot, tallennetut pelit |
 | **Minesweeper** | 1 pelaaja    | Klassikko turvallisella ensiklikkauksella, chording, hymiö ja parhaat ajat |
-| **Sudoku**      | 1 pelaaja    | 400 siemenpohjaista kenttää (4 vaikeustasoa x 100), 4 avustustilaa pistekertoimella, muistiinpanot, vihjeet, 3 virheen raja |
+| **Sudoku**      | 1 pelaaja    | 4 muunnelmaa (Klassinen, X-sudoku, Killer, Mini 6x6), kussakin 400 kenttää, päivän sudoku, enintään 3 tähteä kentältä, 4 avustustilaa, kumoaminen, tallennus |
 | **Frogger**     | 1 pelaaja    | Tie + joki + 5 poukamaa, bonuskärpänen, krokotiilit, aikaraja, 3 vaikeustasoa |
 | **Memory**      | 1 / 2 pelaajaa | Etsi parit koossa 4x4–8x6, kääntöanimaatio, yksinpisteytys tai kaksintaistelu |
 | **Pasianssi**   | 1 pelaaja    | 5 muunnelmaa (Klondike, Spider, FreeCell, Pyramidi, TriPeaks) vedä ja pudota -toiminnolla ja kumoamisella |
 | **Aim Trainer** | 1 pelaaja    | Rento 3D-maaliammunta: hiiri ohjaa kameraa, 4 tilaa (tarkkuus/refleksi/liikkuvat/chill), 3 teemaa ml. musta aukko |
 | **Neljän suora** | 1 / 2 pelaajaa | Klassikko putoamisanimaatiolla: 3 tekoälyn tasoa (minimax) tai paikallinen kaksintaistelu |
 | **Tankkikaksintaistelu** | 1 / 2 pelaajaa | 2D-areenakaksintaistelu kimpoavilla laukauksilla, power-upit, 4 areenaa, tekoäly 3 tasolla |
-| **Blackjack**    | 1 pelaaja    | Kasino-blackjack 4 pakan kengällä, tuplaus/jako, 3:2-blackjack ja pysyvä pelimerkkisaldo |
+| **Blackjack**    | 1 pelaaja    | Kasino-blackjack 4 pakan kengällä, tuplaus/jako ja 3:2-blackjack; pelataan yhteisen Laamapankin laamamerkeillä |
 | **Tunnel Racer** | 1 pelaaja    | 3D-neonputkilento: loputon tila + 30 kenttää, näppäin- tai hiiriohjaus, motion blur |
 | **3D-labyrintti** | 1 pelaaja   | Ensimmäisen persoonan raycaster (Wolfenstein-tyyli) 50 siemenpohjaisella kentällä, orbit, minikartta – tai 2D-yläkuva |
 | **Reversi**      | 1 / 2 pelaajaa | Othello 8x8:ssa: saarrata ja käännä kiekot, 3 tekoälyn tasoa (minimax) tai paikallinen kaksintaistelu |
 | **Yatzy**        | 1 / 2 pelaajaa | Noppaklassikko 13 kategorialla, yläbonus ja Yatzy; ennätysjahti tai 2 pelaajan hotseat |
-| **Wordle**       | 1 pelaaja    | Arvaa 5-kirjaiminen sana 6 yrityksellä, loputon putki, väriviheet, aidot sanalistat 14 kielellä |
+| **Wordle**       | 1 pelaaja    | Arvaa 4–7-kirjaimisia sanoja: Loputon, Päivän sana, Dordle ja Quordle, vaikea tila, värisokeiden paletti, tilastot pylväsdiagrammilla, tuloksen jakaminen, aidot sanalistat 14 kielellä |
 | **T-Rex Runner** | 1 pelaaja    | Loputon aavikkojuoksu: vaihteleva hyppy, kyykistys, kaktukset ja pterodaktyylit, päivä/yö-sykli, kasvava vauhti, 3 vaikeustasoa |
 | **Tammi**        | 1 / 2 pelaajaa | 3 sääntökokoelmaa (saksalainen 8×8, kansainvälinen 10×10, checkers), pakkolyönti ja lentävä kuningatar, 3 tekoälyn tasoa (minimax) tai paikallinen kaksintaistelu |
-| **Pokeri**       | 1 pelaaja    | 3 valittavaa muunnelmaa: Texas Hold'em tekoälyä vastaan, 5 Card Draw ja Video Poker; panostuskierrokset, blindit, pysyvä pelimerkkisaldo |
-| **Shakki**       | 1 / 2 pelaajaa | Täydet säännöt (linnoitus, ohestalyönti, korotus, matti/patti/tasapelit), 6 tekoälyn tasoa (minimax + alfa-beta) tai paikallinen kaksintaistelu, värivalinta |
+| **Pokeri**       | 1 pelaaja    | 3 valittavaa muunnelmaa: Texas Hold'em tekoälyä vastaan, 5 Card Draw ja Video Poker; panostuskierrokset, blindit, yhteisen Laamapankin laamamerkit |
+| **Shakki**       | 1 / 2 pelaajaa | Täydet säännöt, Chess960 ja shakkikello, 6 tekoälyn tasoa, 200 tehtävää Lichessin tietokannasta, kumoa/vihje, siirtolista, PGN-vienti tai paikallinen kaksintaistelu |
 | **Mylly**        | 1 / 2 pelaajaa | Asettelu-/siirto-/lentovaiheet, myllyt ja lyönnit, valinnainen lentosääntö, 3 tekoälyn tasoa tai paikallinen kaksintaistelu |
 | **Simon**        | 1 / 2 pelaajaa | Senso-muistipeli: Klassinen/Speed/Reverse/Mixed-tilat + kaksintaistelu, ääni pois/päällä/sekoitettu, 4/6/9 painiketta, paras per tila |
 | **Biljardi**     | 1 / 2 pelaajaa | 8-ball, 9-ball ja harjoittelu 2D:ssä, kiinteä 3D-näkymä tai vapaasti kiertävä 3D-kamera; pehmeä fysiikka, tähtäysapu, 3 tekoälyn tasoa |
@@ -6633,14 +8457,20 @@ ohje löytyy aivan alhaalta kohdasta **[Asennusopas](#asennusopas)**.
 | **Minigolf**    | 1 / 2 pelaajaa | 360 rataa 40 kierroksella (18 käsin rakennettua, 342 luotua): hiekkaa, ramppeja, vettä, puskureita, tuulimyllyjä ja vaeltavia lohkoja; tuloskortti parilla ja hole-in-one-bonuksella; **oma reikäeditori**, 15 objektityyppiä, 12 pohjaa ja jako `.lamapgzmap`-tiedostona |
 | **Pinball**     | 1 / 2 pelaajaa | Flipperiautomaatti kolmella pöydällä: puskurit, slingshotit, maalit, L-A-M-A-kaistat, multiball ja jackpot, pallonpelastus, töytäisy ja tilt |
 | **Bowling**     | 1 / 2 pelaajaa | 10 framea virallisella strike/spare-laskennalla, aito keilafysiikka, hook-kierre ja perspektiivinen rata, 3 vaikeustasoa |
+| **Crossy Road** | 1 pelaaja     | Loputonta hyppimistä niittyjen, teiden, jokien ja rautateiden yli isometrisessä vokselityylissä: päivä/yö, kotka, 10 ostettavaa hahmoa, päivän reitti |
+| **Geometry Dash** | 1 pelaaja   | Rytmitasohyppely kuutiolla, aluksella, pallolla, UFOlla ja aallolla: 8 kenttää Helposta Demoniin, kussakin 3 salaista kolikkoa, harjoitustila, oma soundtrack; **kenttäeditori** ja jakaminen `.lamapgzlevel`-tiedostona |
+| **Battleship**  | 1 / 2 pelaajaa | Meritaistelu 10x10: laivaston sijoitus vetämällä, 3 sääntökytkintä (kosketus, salvo, uusi laukaus), tekoäly 3 tasolla tai paikallinen kaksintaistelu luovutusnäytöllä |
+| **Casino**      | 1 pelaaja     | Eurooppalainen ruletti kaikilla klassisilla panoksilla ja Laama-automaatti (5 rullaa, 10 voittolinjaa, jokeri, ilmaiskierrokset); yksi laamamerkkitili Blackjackin ja Pokerin kanssa |
 
 **Moninpeli (2 pelaajaa paikallisesti)** on saatavilla peleihin **Snake**,
 **Pong**, **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids
 (yhteistyökaksintaistelu)**, **Memory (kaksintaistelu)**, **Neljän suora**,
 **Tankkikaksintaistelu**, **Reversi**, **Yatzy**, **Tammi**, **Shakki**,
-**Mylly**, **Simon (kaksintaistelu)**, **Biljardi**, **Minigolf**, **Pinball**
-ja **Bowling**. Tila valitaan suoraan
-pelin esinäytöllä (*Yksinpeli / Moninpeli*).
+**Mylly**, **Simon (kaksintaistelu)**, **Biljardi**, **Minigolf**, **Pinball**,
+**Bowling** ja **Battleship** (laivastot piilottavalla luovutusnäytöllä) –
+yhteensä 20 peliä. Tila valitaan suoraan pelin esinäytöllä (*Yksinpeli /
+Moninpeli*); Tetriksessä on lisäksi **Versus tekoälyä vastaan**. Selainversio on
+pelkkää yksinpeliä.
 
 #### Pelikohtaiset ominaisuudet
 
@@ -6747,9 +8577,29 @@ pelin esinäytöllä (*Yksinpeli / Moninpeli*).
   (ampuu laserin), **P/Esc** = tauko.
 
 **Tetris**
-- Vasen/Oikea siirtää, Ylös = pyöritä, Alas = pehmeä pudotus, Toiminto = kova pudotus.
-- Täydet rivit antavat pisteitä, joka 10. rivi nostaa tasoa.
-- **Versus**: häviää se, jonka pino osuu ensimmäisenä ylös.
+- **Modernit Guideline-säännöt**: 10x20-kenttä, palat **7 palan pussista**,
+  **SRS-kiertojärjestelmä** aidoilla wall kickeillä (myös I-palalle), kierto
+  kumpaankin suuntaan, **varasto** (kerran palaa kohden), **5 palan esikatselu**,
+  haamupala ja **lock delay** (0,5 s, enintään 15 nollausta).
+- **Kolme tilaa** esinäytöllä: *Yksinpeli*, *Tekoälyä vastaan* ja *2 pelaajaa*.
+  Yksinpeli tarjoaa asetuksissa **Maratonin** (aloitustaso 1–15, lasketaan
+  ennätykseen), **Sprintin 40 riviä** (paras aika) ja **Ultran 2 minuuttia** (paras
+  tulos); parhaat tulokset tallentuvat `mem.json`-tiedoston osioon `tetris`.
+- **Guideline-pisteytys**: singlestä Tetrikseen, **T-Spinit** (täydet ja mini),
+  **Back-to-Back** (x1,5), **combot** ja **Perfect Clear** – ruututeksteillä,
+  rivinpoistoanimaatiolla, kovan pudotuksen jäljellä, partikkeleilla ja
+  tasonnousutehosteella.
+- **Versus roskariveillä**: poistetut rivit lähettävät roskaa vastustajalle
+  (Tetris = 4, T-Spin Double = 4 …), saapuva roska näkyy varoituspalkissa ja
+  **kuittautuu** omilla hyökkäyksilläsi; molemmat kentät saavat saman
+  palajärjestyksen. **Tekoälyssä** on 3 tasoa, ja vauhti kiihtyy 40 sekunnin
+  välein.
+- **Ohjaus**: Vasen/Oikea omalla **DAS/ARR**-säädöllä (asetuksissa), Ylös = kierto
+  oikealle, Alas = pehmeä pudotus, Toiminto = kova pudotus; **C**/Shift = varasto,
+  **Z**/**Y** = kierto vasemmalle, **X** = kierto oikealle. Kaksinpelissä pelaaja 1
+  varastoi **Q**:lla ja kiertää vasemmalle **E**:llä, pelaaja 2 **oikealla
+  Shiftillä** / **oikealla Ctrl:llä**. Pelin jälkeen: **R** = uudestaan, **S** =
+  asetukset.
 
 **Invaders** – kaksi tilaa (valittavissa esinäytöllä):
 - **Klassinen**: perinteinen alien-lohko; sen jälkeen asetusnäytöllä valittavissa:
@@ -6819,7 +8669,21 @@ räjähdystehosteet, ennätys.
 - Pisteet = saavutettu korkeus; vaikeus kasvaa korkeuden myötä. Ennätys.
 - Ohjaus: vasen/oikea = liiku, Ylös / Välilyönti = ammu.
 
-**2048** – nuolet/WASD liu'uttavat kaikki ruudut; samat numerot sulautuvat.
+**2048**
+- **Oma asetusnäyttö**: laudan koko **3x3:sta 8x8:aan** ja kolme tilaa:
+  *Klassinen* (tavoite 2048, sen jälkeen "Jatketaanko?"), *Aikahaaste* (3
+  minuuttia, kello käynnistyy ensimmäisestä siirrosta) ja *Loputon*.
+- **Sulavat animaatiot**: laatat liukuvat, yhdistyvät "pop"-efektillä ja kasvavat
+  esiin; pistepopupit, kipinät 128:sta alkaen, paineaalto 2048:sta alkaen ja uudet
+  värit aina 131072:een asti. Animaation aikana annetut syötteet puskuroidaan.
+- **Kumoaminen** (pois / 3 per peli / rajaton, näppäin **U** tai Backspace) – sen
+  käyttäjä pelaa ilman ennätystä ja ilman laattasaavutuksia.
+- **Tallenna ja jatka**: käynnissä oleva peli tallentuu automaattisesti koon ja
+  tilan mukaan; parhaat tulokset ja suurin laatta koon/tilan mukaan löytyvät
+  `mem.json`-tiedoston osiosta `g2048`.
+- Ohjaus: nuolet/WASD tai **pyyhkäisy** hiirellä/kosketuslevyllä, **R**/**N** = uusi
+  peli, **Tab** = asetukset. Ennätys lasketaan vain **4x4 Klassisessa** ilman
+  kumoamista.
 
 **Minesweeper**
 - Kolme tasoa: **Aloittelija** (9x9, 10 miinaa), **Edistynyt** (16x16, 40),
@@ -6835,23 +8699,33 @@ räjähdystehosteet, ennätys.
 - Pisteet = tason perusarvo miinus sekunnit.
 
 **Sudoku**
-- **400 kenttää**: 4 vaikeustasoa (Helppo/Normaali/Vaikea/Ekspertti) x 100 kenttää.
-  Pulmat ovat **siemenpohjaisesti luotuja ja yksiselitteisesti ratkeavia** –
-  "Vaikean" kenttä 12 on sama pulma jokaisella tietokoneella. Ratkaistut kentät
-  tallennetaan ja merkitään kenttävalinnassa.
+- **4 muunnelmaa**, kussakin **400 kenttää** (4 vaikeustasoa x 100): *Klassinen*
+  (tutut siemenpohjaiset kentät – ratkaistut pysyvät merkittyinä), *X-sudoku*
+  (molemmat lävistäjät sisältävät jokaisen numeron tasan kerran), *Killer*
+  (katkoviivahäkit summineen; 400 valmiiksi luotua kenttää) ja *Mini 6x6*.
+  Jokainen pulma on **yksiselitteisesti ratkeava** – "Vaikean" kenttä 12 on sama
+  pulma jokaisella tietokoneella.
+- **Päivän sudoku**: yksi pulma päivässä kaikille, sama tietokoneella ja
+  selaimessa; vaikeus riippuu viikonpäivästä (maanantain Helposta lauantain
+  Ekspertiin), ja päivittäin ratkaisemalla kerryttää putken.
+- **Enintään 3 tähteä kentältä** (ratkaistu · ilman virheitä ja vihjeitä ·
+  lisäksi alle tavoiteajan) ja **paras aika** kenttävalinnassa; **kesken jääneet
+  pulmat** tallentuvat automaattisesti ja jatkuvat seuraavalla kerralla.
 - **4 pelitilaa** (valitaan ennen aloitusta) pistekertoimella: **Klassinen**
-  (x2,0 - ei apuja), **Muistiinpanot** (x1,5 - + lyijykynämuistiinpanot),
-  **Mukavuus** (x1,0 - + väärät numerot punaisella, konflikti- ja
-  samannumerokorostus, oikeat syötteet lukittuvat), **Avustus** (x0,7 - +
-  vihjenäppäin, enint. 3).
-- Jokainen syöte tarkistetaan heti ratkaisua vasten; kun **3 virheen raja** on
+  (x2,0 - ei apuja), **Muistiinpanot** (x1,5 - + lyijykynämuistiinpanot ja
+  automaattiset ehdokkaat), **Mukavuus** (x1,0 - + väärät numerot punaisella,
+  ristiriidat ja väärät häkkisummat merkitään, oikeat syötteet lukittuvat),
+  **Avustus** (x0,7 - + vihjenäppäin, enint. 3). Kun **3 virheen raja** on
   käytössä (asetusvaihtoehto), kolmas virhe päättää pelin.
 - Ohjaus: nuolet/WASD = ruutu, **1-9** = numero (myös numeronäppäimistö),
-  **0/Backspace/oikea klikkaus** = pyyhi, **N** = muistiinpanot, **H** = vihje,
-  **R** = aloita kenttä alusta, **Q** = kenttävalinta; täysin pelattavissa hiirellä
-  (numeronäppäimistö oikealla). Pelin päätyttyä **A** piilottaa bannerin ja paljastaa
-  koko **ratkaisun** laudalle (A uudelleen = takaisin).
-- Pisteet = (vaikeustason perusarvo - aika - virheet - vihjeet) x tilan kerroin.
+  **0/Delete/oikea klikkaus** = pyyhi, **U**/**Z** = kumoa, **Y** = tee uudelleen,
+  **N** = muistiinpanot, **C** = täytä ehdokkaat automaattisesti, **H** = vihje,
+  **M** = värimerkki, **R** = aloita kenttä alusta, **Q** = kenttävalinta. Syöttö
+  "numero ensin" (asetukset, **I**) ja **jäljellä olevien numeroiden laskuri**
+  jokaisen numeron alla; täysin pelattavissa hiirellä. Pelin päätyttyä **A**
+  näyttää koko **ratkaisun**.
+- Pisteet = (muunnelman ja vaikeustason perusarvo - aika - virheet - vihjeet) x
+  tilan kerroin; kaikki muunnelmat ja päivän sudoku lasketaan ennätykseen.
 
 **Frogger**
 - 5 liikennekaistaa (autot/kuorma-autot) ja 5 jokikaistaa (tukit, kilpikonnat jotka
@@ -6916,11 +8790,16 @@ räjähdystehosteet, ennätys.
 - Aidot kasinosäännöt: **4 pakan kenkä**, jakaja jää 17:ään, **blackjack maksaa
   3:2**, jakajan kurkistus ässällä/10:llä; **tuplaus** ja **yksi jako** (jaetut ässät
   saavat yhden kortin kumpikin).
-- **Pysyvä pelimerkkisaldo**: aloitat 500:lla, saldo ja **ennätys** säilyvät
-  jokaisen uudelleenkäynnistyksen yli (`mem.json`); alle 10 pelimerkin saat 500
-  uutta – ennätys pysyy.
+- **Laamamerkit**: Blackjack pelaa **Laamapankin** tilillä, joka on yhteinen
+  Pokerin ja Casinon kanssa (alku 1000, tallentuu pysyvästi `mem.json`-tiedostoon).
+  Panos veloitetaan heti jaettaessa; alle 10 merkin kohdalla Enter ottaa
+  **pankkilainan**, joka täyttää tilin taas 1000:een.
+- **Ennätys** = oman **Blackjack-saldosi** huippu (1000 plus kaikki Blackjackissa
+  voitettu ja hävitty) – voitot ruletissa, automaatissa tai pokerissa eivät
+  lasketa tähän, eivätkä myöskään lainat.
 - Pelataan pelimerkkipainikkeilla ja näppäimillä (**H**it/**S**tand/**D**ouble/jako
-  **X**, **1-4** = panos, Enter = jaa) korttianimaatioilla ja piilokortin käännöllä.
+  **X**, **1-4** = panos, Backspace = tyhjennä panos, Enter = jaa)
+  korttianimaatioilla; jakajan piilokortti kääntyy nyt oikeasti paljastettaessa.
 
 **Tunnel Racer**
 - **3D-neonputkilento** (ohjelmistorenderöijä kuten Aim Trainerissa): palkit, lohkot
@@ -6962,28 +8841,73 @@ räjähdystehosteet, ennätys.
   nuolet, Enter).
 
 **Wordle**
-- Arvaa **5-kirjaiminen sana 6 yrityksellä**; värillinen palaute
-  (vihreä/keltainen/harmaa) oikealla **toistuvien kirjainten laskennalla** ja
-  värittyvällä ruutunäppäimistöllä.
-- **Loputon putki**: jokainen ratkaistu sana antaa pisteitä (vähemmän arvauksia =
-  enemmän), ensimmäinen ratkaisematon sana päättää pelin – summa = ennätys.
-- **Aidot sanalistat kaikilla 14 kielellä** (kansio `woordlistz/`, vain A-Z):
-  yhteensä yli **34 000 ratkaisua** ja **213 000 sallittua sanaa**. Jokainen
-  arvaus tarkistetaan listasta - muut hylätään ja rivi tärähtää hetken.
-- **Kaksi pelitilaa**: *Normaali* ja *Vaikea* - vaikeassa löydetyt vihjeet on
-  käytettävä uudelleen. Kirjoita näppäimistöllä tai klikkaa ruutunäppäimiä.
+- Arvaa piilotettu sana; värillinen palaute (vihreä/keltainen/harmaa) oikealla
+  **toistuvien kirjainten laskennalla** ja värittyvällä ruutunäppäimistöllä
+  (QWERTZ saksalle, tšekille, sloveenille ja kroatialle, AZERTY ranskalle, muuten
+  QWERTY).
+- **Neljä pelitilaa**: *Loputon* (sana toisensa perään, kullekin 6 arvausta;
+  jokainen ratkaistu sana antaa pisteitä ja ensimmäinen ratkaisematon päättää
+  pelin), *Päivän sana* (yksi sana päivässä kielen ja pituuden mukaan – sama
+  tietokoneella ja selaimessa – lähtölaskennalla ja putkella; aloitettu päivän
+  sana tallentuu), *Dordle* (2 sanaa yhtä aikaa 7 arvauksella) ja *Quordle* (4
+  sanaa 9 arvauksella, näppäimet näyttävät kaikkien ruudukoiden värit).
+- **Asetukset** ennen jokaista peliä: **sanan pituus 4–7**, **vaikea tila**
+  (löydetyt vihjeet on käytettävä uudelleen) ja **värisokeiden paletti**
+  (oranssi/sininen); vieressä näkyvät tilastot.
+- **Aidot sanalistat kaikilla 14 kielellä** (kansio `woordlistz/`, vain A-Z),
+  jokaiselle pituudelle omat: pelkästään 5 kirjaimen sanoja lähes **34 000
+  ratkaisua** ja yli **213 000 sallittua arvausta**, kaikkien neljän pituuden
+  yhteensä noin 134 000 ratkaisua. Ratkaisut ovat yleisiä sanoja ilman nimiä,
+  englanninkielisiä jäänteitä ja loukkaavia sanoja; jokainen arvaus tarkistetaan
+  listasta – muut hylätään ja rivi tärähtää hetken.
+- **Tilastot** kielen, pituuden ja pelitilan mukaan: pelit, voittoprosentti,
+  nykyinen ja paras putki sekä **arvausten jakauma pylväsdiagrammina**
+  (`mem.json`-tiedoston osio `wordle`). **Jaa** (**C**) kopioi emojiruudukon
+  leikepöydälle paljastamatta sanaa.
+- Ennätykseen lasketaan vain *Loputon* 5 kirjaimella; muilla pituuksilla on omat
+  parhaat tuloksensa. Saavutukset **Selvännäkijä** (enintään 2 arvausta),
+  **Sanatapa** (7 päivän sanaa peräkkäin) ja **Nelinkertainen nero** (Quordle
+  ratkaistu).
+
+**Pokeri**
+- **3 muunnelmaa** esinäytöllä: **Texas Hold'em** 1–3 tekoälyvastustajaa vastaan
+  jakajanapilla, blindeillä ja neljällä panostuskierroksella, **5 Card Draw**
+  (kaksin tekoälyä vastaan, yksi korttien vaihto) ja **Video Poker** (*Jacks or
+  Better*, yksin voittotaulukkoa vastaan).
+- Toiminnot painikkeilla tai näppäimillä: **F** = luovuta, **C** = sökö/maksa,
+  **R** = korota, **A** = all-in; korttien pito/vaihto klikkaamalla tai **1-5**,
+  **Enter** vaihtaa kortit tai jakaa seuraavan käden.
+- Yhteisen **Laamapankin** **laamamerkit**: käden alussa tilisi on pöydällä
+  pinona, ja pottiin menevä summa veloitetaan heti – pöydästä poistuminen kesken
+  käden maksaa vain osuutesi potista. Rahat loppu (alle 20:n ison blindin, Video
+  Pokerissa alle 10) = pankkilaina 1000:een.
+- **Ennätys** = **Pokeri-saldosi** huippu (1000 plus kaikki pokerin voitot ja
+  tappiot); myös **Merkkijohtaja**-saavutus laskee vain pokerisaldon.
 
 **Shakki**
 - **Täysi shakki**: kaikki nappuloiden siirrot mukaan lukien **linnoitus**,
   **ohestalyönti** ja **sotilaan korotus** (valitse nappula); **shakki, matti ja
-  patti** sekä tasapelit **50 siirron säännöllä**, **kolminkertaisella toistolla** ja
-  **riittämättömällä materiaalilla**.
-- **6 tekoälyn tasoa** *Aloittelijasta* *Mestariin* (negamax alfa-betalla,
-  siirtojärjestys, nappula-ruutu-taulukot, lepohaku); **aikabudjetti** pitää jokaisen
-  tekoälyn siirron sujuvana. **Värivalinta** valkoinen/musta tai **paikallinen
-  kaksintaistelu**.
-- Lailliset siirrot korostetaan, shakki merkitään; pelaa **hiirellä** tai
-  valintakursorilla. Jokainen voitto tekoälyä vastaan antaa yhden ennätyspisteen.
+  patti** sekä tasapelit **50 siirron säännöllä**, **kolminkertaisella toistolla**,
+  **riittämättömällä materiaalilla** tai sopimuksella.
+- **Kolme tilaa**: *peli* tekoälyä vastaan, *2 pelaajaa* samalla koneella (lauta
+  voi kääntyä jokaisen siirron jälkeen) ja **tehtävät**.
+- **Vahvempi, nykimätön tekoäly** 6 tasolla *Aloittelijasta* *Mestariin*:
+  iteratiivinen syventäminen, transpositiotaulu, lepohaku, avauskirja ja arvio,
+  joka huomioi liikkuvuuden, sotilasrakenteen ja kuninkaan turvallisuuden.
+  Tekoäly laskee pienissä paloissa kuvaa kohden – peli ei koskaan nyi.
+- **Asetukset**: värin valinta, **shakkikello** (ei, 1+0, 3+2, 5+0, 10+5) ja
+  **Chess960** (kaikki 960 alkuasemaa, numero näkyy siirtolistan yläpuolella).
+- **Sivupaneeli** kelloilla, lyödyillä nappuloilla, materiaalitasapainolla ja
+  vieritettävällä **siirtolistalla (SAN)**; vedä ja pudota, liukuvat nappulat,
+  koordinaatit. Näppäimet: **U** = kumoa, **H** = vihjenuoli, **O** = tarjoa
+  tasapeliä, **X** = luovuta, **F** = käännä lauta, pelin jälkeen **P** =
+  **PGN-vienti**.
+- **Tehtävät**: 200 tehtävää 5 vaiheessa (matti 1/2/3 siirrolla, taktiikka I/II)
+  **Lichessin vapaasta tehtävätietokannasta (CC0)**, tarkistettu pelin omalla
+  moottorilla; mattitehtävissä kelpaa jokainen mattiin johtava siirto. Edistyminen
+  tallentuu `mem.json`-tiedoston osioon `chess`.
+- Kumoaminen ja vihje tekevät pelistä "avustetun": ennätykseen lasketaan vain
+  voitot tekoälyä vastaan ilman apua (istuntoa kohden).
 
 **Mylly**
 - **Mylly** kaikilla kolmella vaiheella: **asettelu** (9 nappulaa kummallakin),
@@ -7166,6 +9090,96 @@ räjähdystehosteet, ennätys.
 - **Pelin uusinta**: lopuksi **P** näyttää kaikki heitot uudelleen ja **S**
   tallentaa ne arkistoon (painike **Uusinnat**).
 
+**Crossy Road**
+- **Loputonta hyppimistä** niittyjen (puut ja kivet tukkivat tien), autojen ja
+  rekkojen täyttämien teiden, tukkien ja lumpeiden täplittämien jokien ja
+  **rautateiden** yli, joilla juna syöksyy ohi varoitusvalon ja kellon jälkeen –
+  myöhemmin odottavat kokonaiset asemat jopa 5 raiteella. Reitti syntyy rivi
+  kerrallaan, siinä on aina kuljettava polku, ja vauhti ja liikenne kasvavat.
+- **Isometrinen vokselityyli**: hahmot, ajoneuvot ja puut varjostetuista
+  kuutioista (esirenderöity jokaiselle ruutukoolle), pehmeästi seuraava kamera,
+  squash & stretch hypätessä, vesiroiskeet, litistymisanimaatio, höyhenet ja
+  kimaltelevat kolikot; rivistä 50 alkaen **päivän ja yön vaihtelu** ajovaloineen.
+- **Kotka**: kamera etenee hiljalleen – liian kauan vitkutteleva tai yli kolme
+  riviä peruuttava joutuu kotkan nappaamaksi (punainen reuna varoittaa ensin).
+  Tukin mukana kuvan ulkopuolelle ajautuminen päättää myös pelin.
+- **Kolikot ja hahmot**: kerätyt kolikot (jättikolikko = 5) tallentuvat, ja niillä
+  ostetaan uusia hahmoja **Hahmot**-välilehdeltä: sammakko, possu, pingviini,
+  kissa, kettu, laama, robotti, aave ja yksisarvinen (25–250 kolikkoa); kana on
+  mukana alusta asti.
+- **Tilat**: *Loputon* (pisteet = pisin rivi, lasketaan ennätykseen) ja *Päivän
+  reitti* (tänään sama kaikille, myös selaimessa, omalla päivän ennätyksellä).
+  Ohjaus: nuolet/WASD, välilyönti/Enter/klikkaus = hyppy eteenpäin; asetuksissa
+  **H** = varjot, **N** = päivä/yö. Kolikot, hahmot ja päivän ennätys tallentuvat
+  `mem.json`-tiedoston osioon `crossy`.
+
+**Geometry Dash**
+- **Rytmitasohyppely**: hahmo kiitää itsestään oikealle – sinä päätät vain, milloin
+  hypätään tai lennetään. **Viisi muotoa** – kuutio, alus, pallo, UFO ja aalto –
+  sekä muoto-, painovoima- ja nopeusportaalit (0,5x–3x), keltaiset/pinkit/siniset
+  **ponnahtimet ja pallot**, puolikaspalikat, piikit, kuopat ja värilaukaisimet.
+- **8 valmista kenttää** *Helposta* *Demoniin* ("Lama Inferno"), kussakin **3
+  salaista kolikkoa**. Jokainen kenttä on todistetusti läpäistävissä:
+  rakennusvaiheessa ratkaisija läpäisi sen pelin oikealla koodilla – kaikkine
+  kolikkoineen ja jopa 1/240 sekuntia siirrettynä.
+- **Tarkka fysiikka**: kiintolukulaskenta kiinteällä 240 Hz:n askeleella; jokainen
+  painallus vaikuttaa juuri siinä askeleessa, jossa se tapahtui – sama millä
+  tahansa kuvataajuudella ja bitilleen sama selaimessa.
+- **Harjoitustila** (**P**) automaattisilla ja omilla tarkistuspisteillä (**Z**
+  asettaa, **X** poistaa), yrityslaskuri, edistymispalkki, räjähdykset ja
+  välitön uusintayritys (**R**). Jokaisella kentällä on **oma soundtrack** – tausta,
+  maa ja pallot sykkivät tahdissa (musiikin saa pois **M**:llä).
+- **Tähdet ja kolikot**: kun läpäiset kentän normaalitilassa, saat sen tähdet, ja
+  jokainen kolikko on yhden lisätähden arvoinen; ennätys on **tähtien
+  kokonaismäärä** (enintään 65). Kenttäkohtaiset parhaat, kolikot, yritykset ja
+  hypyt tallentuvat `mem.json`-tiedoston osioon `geodash`.
+- **Kenttäeditori** **KENTÄT**-välilehdellä: ruudukkopohja, 6 ryhmän paletti
+  (palikat, vaarat, ponnahtimet ja pallot, portaalit, nopeus, lisät), kääntö,
+  kumoa/tee uudelleen, yleiskuvapalkki, **testaus alusta tai tästä kohdasta** ja
+  kentän asetukset (aloitusnopeus, aloitusmuoto, musiikkityyli, BPM, värit).
+  **"Varmistettu"**-merkki tulee vasta, kun olet itse läpäissyt kenttäsi.
+  **Jaa** kirjoittaa `.lamapgzlevel`-tiedoston ja **Tuo** lukee sen takaisin;
+  kentät tallentuvat `ugc.json`-tiedostoon omien minigolfratojen viereen.
+
+**Battleship**
+- **Meritaistelu 10x10-ruudukolla**: lentotukialus (5 ruutua), taistelulaiva (4),
+  risteilijä (3), sukellusvene (3) ja hävittäjä (2) – voittaja on se, joka upottaa
+  ensin koko vihollislaivaston.
+- **Laivaston sijoitus** vetämällä telakasta: **R** tai oikea klikkaus kääntää,
+  esikatselu hehkuu vihreänä tai punaisena, **X** sijoittaa kaiken satunnaisesti,
+  **C** tyhjentää laudan; viimeisin sijoittelusi ehdotetaan uudelleen.
+- **Säännöt asetuksissa** (tallentuvat): *laivat saavat koskettaa toisiaan*,
+  *salvo* (vuorossa yhtä monta laukausta kuin omia laivoja on pinnalla) ja *osuman
+  jälkeen ammu uudelleen*.
+- **Tekoäly 3 tasolla**: Helppo ampuu satunnaisesti, Keskitaso jahtaa osumia
+  järjestelmällisesti, Vaikea laskee **todennäköisyyskartan** shakkilautapariteetilla
+  (keskimäärin noin 70 / 60 / 45 laukausta koko laivastoon). Tai **2 pelaajaa**
+  samalla koneella – **luovutusnäyttö** piilottaa molemmat laivastot ennen
+  jokaista vuoroa.
+- **Grafiikka**: tutkapyyhkäisy, animoidut aallot, kaarevat ammukset, roiskeet,
+  räjähdykset savuineen ja palavat ruudut, "UPPOSI!"-paljastus sekä kierroksen
+  yhteenveto laukauksista, osumista ja osumatarkkuudesta. Ennätys laskee
+  **voittosi tekoälyä vastaan** yhden istunnon aikana.
+
+**Casino**
+- **Ruletti** (eurooppalainen, 37 lokeroa): kaikki klassiset panokset
+  klikkaamalla numeroa, reunaa tai kulmaa – **plein** (35:1), cheval,
+  transversale, carré, sixain, sarake, tusina, punainen/musta, parillinen/pariton ja
+  manque/passe. Merkkiarvot 1/5/25/100/500, oikea klikkaus poistaa merkkejä;
+  **Pyöritä**, **Toista** (**R**), **Tuplaa** (**D**) ja **Tyhjennä**. Kuula kiertää
+  spiraalina ennalta arvottuun lokeroon, ja ylhäällä näkyvät 12 viimeisintä numeroa.
+- **Laama-automaatti**: 5 rullaa x 3 riviä, **10 voittolinjaa**, **laama = jokeri**,
+  **kultakolikot = scatter**, joista 10 ilmaiskierrosta tuplavoitoin, panos per
+  linja 1/2/5/10, **automaattipyöritys** (10/25), **turbo** ja voittotaulukko.
+  **Palautusprosentti on 96,1 %** – laskettu tarkasti rullanauhoista.
+- **Laamapankki**: Casino, Blackjack ja Poker jakavat yhden **laamamerkkitilin**
+  (alku 1000, `mem.json`-tiedoston osio `casino`); vanhat merkkisaldot siirtyvät
+  automaattisesti. Panokset veloitetaan heti, jokainen peli pitää ennätystään
+  varten omaa saldoaan, ja rahojen loppuessa saat **pankkilainan** 1000:een.
+- Konfetti, kolikkosade, big/mega/jackpot-bannerit ja voittolinja-animaatiot;
+  saavutukset **Napakymppi** (voitettu plein ruletissa) ja **Laamajackpot** (5 laamaa
+  samalla linjalla).
+
 Ennätykset tallennetaan tiedoston `mem.json` osioon `highscores` (koodin vieressä)
 – yhdessä kielen kanssa (osio `mem`).
 
@@ -7187,20 +9201,24 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
 - **Tehosteita kaikkialla**: pehmeät näyttösiirtymät, kipinöitä valikon vahvistuksessa,
   **konfettisade uudesta ennätyksestä** ja aito **sumennus** taukopeiton takana.
 - Jokaisen pelin **esinäyttö** ilmestyy kyseisen pelin korostusvärissä ja näyttää
-  edellisen ennätyksen chippinä.
-- **Yhtenäinen pelin ilme**: kaikki 42 peliä jakavat valikon teemapaletin ja fontin –
+  edellisen ennätyksen chippinä. Kun tiloja on paljon ja resoluutio pieni, se
+  muuttuu **tiiviiksi**: Asetukset, Wiki ja Takaisin siirtyvät samalle riville ja
+  fontti mukautuu – mikään ei enää valu kuvan ulkopuolelle.
+- **Yhtenäinen pelin ilme**: kaikki 46 peliä jakavat valikon teemapaletin ja fontin –
   HUDit, asetusnäytöt ja peittokerrokset noudattavat asetuksissa valittua ulkoasua
   (v4.1 / v4 / Klassinen), kun taas jokainen pelikenttä säilyttää identiteettivärinsä.
   Jokainen peli käsittelee nyt siististi resoluution vaihdon kesken pelin, ja valikon
   nimet mukautuvat kieleen (esim. "Schach" → "Shakki").
 - **Pelin sisäinen wiki** ("LamaWiki"): yksityiskohtainen ohje jokaiselle pelille
   (ohjaus, tilat, pisteytys, vinkit) sekä yleiset sivut – **hakukentällä**,
-  kategorioilla, vieritettävillä artikkeleilla ja näppäinsiruilla, kaikilla viidellä
+  kategorioilla, vieritettävillä artikkeleilla ja näppäinsiruilla, kaikilla 14
   kielellä. Saavutettavissa sivupalkin **"Wiki / Ohje"** -painikkeella ja jokaisen
   pelin esinäytöstä (avaa suoraan kyseisen pelin sivun).
-- **Saavutukset ja tilastot**: **69 saavutusta** kolmessa kategoriassa (koko
-  kokoelman tavoitteet, yksi pistevirstanpylväs peliä kohden ja erityiset
-  hetket kuten shakkimatti tekoälylle tai 2048-laatta); avautuessa **kultainen
+- **Saavutukset ja tilastot**: **107 saavutusta** kolmessa kategoriassa (23 koko
+  kokoelman tavoitetta, 37 pistevirstanpylvästä ja 47 erityistä hetkeä kuten
+  shakkimatti tekoälylle, 4096-laatta, T-Spin Double, 25 ratkaistua
+  shakkitehtävää, Killer Sudoku tai laamajättipotti; 2048:ssa ja shakissa
+  kumoamista tai vihjeitä käyttäneitä pelejä ei lasketa); avautuessa **kultainen
   ilmoitus ja fanfaari** - myös kesken pelin; vanhat ennätykset hyvitetään
   automaattisesti. Lisäksi **tilastot**-välilehti: kokonaispeliaika,
   pelikerrat, voitot, ennätykset, lempipeli ja peliajan mukaan järjestetty
@@ -7219,7 +9237,14 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
 - **F11** (tai painike "Koko näyttö päälle/pois") = koko näyttö päälle/pois.
   Pygame-näyttö pysyy upotettuna ja skaalataan kuvasuhde säilyttäen (mustat palkit,
   jos kuvasuhde poikkeaa). Ikkunan kokoa voi muuttaa vapaasti.
-- **"Takaisin valikkoon"** päättää pelin ja tallentaa ennätyksen.
+- **"Takaisin valikkoon"** päättää pelin ja tallentaa ennätyksen – samoin
+  siirtyminen toiseen peliin sivupalkista.
+- **Kiinteät lisänäppäimet**: viiden määritettävän toiminnon lisäksi joissakin
+  peleissä on omia näppäimiä (esim. varasto **C** ja kierto vasemmalle **Z**
+  Tetriksessä, kumoa **U** 2048:ssa, shakissa ja Sudokussa). Ne toimivat vain,
+  jos näppäintä ei ole asetuksissa määritetty millekään toiminnolle, ja ne
+  kerrotaan asetusvihjeessä ja wikissä. Pohjassa pidetyt näppäimet tunnistetaan
+  oikein ja vapautetaan tauolla tai Alt-Tabilla – mikään ei enää "jumitu".
 - **"Lopeta"** sulkee Pygamen ja Tkinterin siististi.
 
 ### Asetukset, ohjaus ja ääni
@@ -7266,22 +9291,24 @@ start.sh             Käynnistysskripti (Linux / macOS / Git Bash)
 pyinstall.bat        EXE-käännös (Windows): pakkaa kaiken tiedostoon builds\PyGameZ.exe
 main.py              Tkinter-käyttöliittymä, Pygame-upotus, keskeinen pelisilmukka
 game_base.py         Pelin perusluokka (update/draw/handle_event) + InputEvent + apurit
-settings.py          Asetusten lataus/tallennus (ääni/haptiikka/näppäinmääritykset) (JSON)
-audio.py             Proseduraaliset äänitehosteet + peliohjaimen värinä
+settings.py          Asetusten lataus/tallennus (ääni/haptiikka/näppäimet/peliasetukset tarkistussäännöillä) (JSON)
+audio.py             Proseduraaliset äänitehosteet, musiikkisilmukat + peliohjaimen tärinä
 menu.py              Kieli-, esinäyttö- (tila) ja asetusnäytöt (ääni/ohjaus)
 highscore.py         Ennätysten lataus/tallennus (osio tiedostossa mem.json)
-store.py             Keskitetty tallennustiedosto mem.json (osiot: mem, highscores, stats, achievements)
+store.py             Keskitetty tallennustiedosto mem.json (osiot: mem, highscores, stats, achievements + pelien edistyminen), atominen .bak-varmuuskopiolla
 stats.py             Pelaajatilastot (pelikerrat, peliaika, voitot, ennätykset) peliä kohden
 achievements.py      Saavutukset: määritykset, avaaminen, ilmoitus (toast)
 progress.py          Saavutukset ja tilastot -näyttö (kaksi välilehteä, vieritettävä)
 replay.py            Uusintojen tallennus ja arkisto (replay.json)
 replayview.py        Uusintanäyttö: arkistolista ja toisto
-ugc.py               Omat reiät: tallennus, tarkistus, vienti/tuonti (ugc.json)
+ugc.py               Oma sisältö (minigolfradat, Geometry Dash -tasot): tallennus, tarkistus, vienti/tuonti (ugc.json)
 swear.py             Sanasuodatin nimille ja id:ille (lang/swear/*.yml, 14 kieltä)
 filepick.py          Tiedostoikkunat ("Vie nimellä ...", "Tuo")
 prestige.py          Snaken prestige-järjestelmä
 competitive.py       Snaken Competitive-tilan hienosäätö (tasot, kolikkopeli, veto-omenat)
 ngb.py               Visuaalinen mukauttaminen ("modit"): pään väri + koordinaattiruudukko + valikko (mem-ngb.json)
+lamabank.py          Laamapankki: Blackjackin, Pokerin ja Casinon yhteinen merkkitili (osio casino mem.json-tiedostossa)
+seedrand.py          Satunnaislukugeneraattori, joka tuottaa bitilleen samat luvut Pythonissa ja selaimessa (päivän tilat, uudet pulmat)
 i18n.py              Käännösmoottori (lataa lang/*.json, t("avain"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Kielitekstit (yksi paikkamerkkiavain per teksti)
@@ -7293,24 +9320,48 @@ lamawiki/
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 woordlistz/
   build_wordlists.py   Rakentaa Wordlen sanalistat uudelleen (sanakirjat + taajuuslistat)
-  de/ en/ fr/ ... hr/  answers.txt (ratkaisut) + allowed.txt (sallitut sanat), 14 kieltä
+  de/ en/ fr/ ... hr/  answers.txt + allowed.txt (5 kirjainta), answers4/6/7.txt + allowed4/6/7.txt (4, 6, 7 kirjainta), 14 kieltä
+devtools/            Kehitystyökalut (eivät tule .exe-tiedostoon)
+  merge_staging.py           Vie devtools/staging/-kansion käännökset ja wikisivut kaikkiin 14 kielitiedostoon
+  build_chess_puzzles.py     Rakentaa 200 shakkitehtävää Lichessin tehtävätietokannasta (CC0)
+  build_sudoku_killer.py     Luo 400 yksiselitteisesti ratkeavaa Killer Sudokua
+  build_crossyroad_models.py Kirjoittaa Crossy Roadin vokselimallit selainversiota varten
+  build_geodash_levels.py    Rakentaa 8 Geometry Dash -kenttää ja todistaa ratkaisijalla, että jokainen on läpäistävissä kolikoineen
+  build_geodash_solver.py    Ratkaisija pelin oikealla askelkoodilla (ratkaisut tiedostossa geodash_proofs.json)
 games/
-  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
+  tetris.py  tetris_core.py  tetris_ai.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py  sudoku_draw.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py  wordle_words.py
+  trexrunner.py  dame.py  poker.py  muehle.py
+  chess.py  chess_engine.py  chess_draw.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
-  levels/
+  crossyroad.py  crossyroad_world.py  crossyroad_draw.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  battleship.py  battleship_core.py
+  casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  levels/              Tasodata: snake-comp.json, chess-puzzles.json (+ lähde-README), sudoku-killer.json, geodash.json
+tests/
+  arcade_casino_audit.py     Kokonaistarkastus (syöte, seedrand Python = JS, tallennus, kielitiedostot, esinäytöt) + kaikki audit_*.py
+  audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless-tarkastukset peleittäin
+  newgames_audit.py  blockjump_audit.py
 ```
 
 Valittu kieli tallennetaan tiedostoon `mem.json` (osioon `mem`, saman tiedoston osion
 `highscores` viereen) ja ladataan automaattisesti seuraavalla käynnistyksellä.
+
+**Lähteet ja lisenssit:** 200 shakkitehtävää on peräisin
+[Lichessin tehtävätietokannasta](https://database.lichess.org/#puzzles) (lisenssi
+**CC0 1.0**, vapaa käyttö – kiitos, lichess.org!); tarkemmat tiedot ovat tiedostossa
+`games/levels/chess-puzzles.README.md`. Wordlen sanalistojen lähteet kerrotaan
+tiedostossa `woordlistz/README.md`.
 
 ### Alustahuomiot
 
@@ -7414,7 +9465,7 @@ Pythonia ja sen voi kopioida vapaasti. Asetukset ja ennätykset (`settings.json`
 ## 🇨🇿 Čeština
 
 Sbírka desktopových her v Pythonu: **Tkinter** tvoří okno a menu, **Pygame** je
-vložen jako herní obrazovka do okna Tkinteru. Čtyřicet dva her se sdílenými
+vložen jako herní obrazovka do okna Tkinteru. Čtyřicet šest her se sdílenými
 nastaveními, volně přemapovatelným ovládáním, nejlepšími skóre, procedurálními
 zvukovými efekty a u některých titulů i režimem pro více hráčů. Rozhraní je
 **vícejazyčné** – **14 jazyků** (němčina / angličtina / francouzština /
@@ -7454,31 +9505,31 @@ existuje, jinak systémový Python. Podrobný návod krok za krokem je úplně d
 | **Air Hockey** | 1 / 2 hráči   | 2D fyzika s přenosem impulzu, ovládání myší, AI a power-upy |
 | **Tic-Tac-Toe** | 1 / 2 hráči  | Hra m,n,k na 3x3 až 9x9, tři úrovně AI **nebo** lokálně X proti O |
 | **Breakout** | 1 hráč          | Rozbíječka cihel s druhy cihel, power-upy, comby a mnoha úrovněmi |
-| **Tetris**   | 1 / 2 hráči     | Klasický nebo Versus (dvě pole vedle sebe) |
+| **Tetris**   | 1 / 2 hráči     | Moderní pravidla Guideline (SRS, odložení kostky, náhled 5 kostek, T-Spiny): Maraton, Sprint 40, Ultra 2:00, Versus proti AI (3 úrovně) nebo ve dvou s odpadními řadami |
 | **Invaders** | 1 hráč          | Space Invaders: vyčisti vlny, chraň své životy |
 | **Asteroids** | 1 / 2 hráči    | Fyzika setrvačnosti, vlny, UFO, power-upy, hyperprostor - sólo nebo kooperativní duel |
 | **Pac-Man**  | 1 hráč          | Věrný klon: 4 AI duchů, mocenské pilulky, tunel, ovoce, úrovně |
 | **Flappy Bird** | 1 hráč       | Gravitační let mezi trubkami, mince, štít, den/noc, medaile |
 | **Doodle Jump** | 1 hráč       | Automatický skok vzhůru, typy plošin, pružiny, vrtule, příšery |
-| **2048**     | 1 hráč          | Hlavolam s posouváním čísel, cíl: dlaždice 2048 |
+| **2048**     | 1 hráč          | Hlavolam s posouváním čísel od 3x3 do 8x8: Klasický, Na čas a Nekonečný, vracení tahů, plynulé animace, ukládání partií |
 | **Minesweeper** | 1 hráč       | Klasika s bezpečným prvním klikem, chordingem, smajlíkem a nejlepšími časy |
-| **Sudoku**      | 1 hráč       | 400 úrovní ze semínka (4 obtížnosti x 100), 4 režimy pomoci s násobitelem skóre, poznámky, nápovědy, limit 3 chyb |
+| **Sudoku**      | 1 hráč       | 4 varianty (Klasické, X-sudoku, Killer, Mini 6x6), každá se 400 úrovněmi, Sudoku dne, až 3 hvězdy za úroveň, 4 režimy pomoci, vracení tahů, uložená hra |
 | **Frogger**     | 1 hráč       | Silnice + řeka + 5 zátok, bonusová moucha, krokodýli, časový limit, 3 obtížnosti |
 | **Memory**      | 1 / 2 hráči  | Hledej dvojice na 4x4 až 8x6, animace otočení, sólo hodnocení nebo duel |
 | **Solitér**     | 1 hráč       | 5 variant (Klondike, Spider, FreeCell, Pyramida, TriPeaks) s táhni a pusť a krokem zpět |
 | **Aim Trainer** | 1 hráč       | Pohodová 3D střelba na terče: myš řídí kameru, 4 režimy (přesnost/reflex/pohyblivé/chill), 3 témata vč. černé díry |
 | **Čtyři v řadě** | 1 / 2 hráči | Klasika s animací padání disku: 3 úrovně AI (minimax) nebo lokální duel |
 | **Tankový duel** | 1 / 2 hráči | 2D duel v aréně s odrazovými střelami, power-upy, 4 arény, AI se 3 úrovněmi |
-| **Blackjack**    | 1 hráč      | Kasino blackjack se shoe ze 4 balíčků, zdvojení/rozdělení, blackjack 3:2 a trvalý stav žetonů |
+| **Blackjack**    | 1 hráč      | Kasino blackjack se shoe ze 4 balíčků, zdvojení/rozdělení a blackjackem 3:2; hraje se s lama žetony společné Lama banky |
 | **Tunnel Racer** | 1 hráč      | 3D let neonovým tunelem: nekonečný režim + 30 úrovní, ovládání klávesami nebo myší, motion blur |
 | **3D bludiště**  | 1 hráč      | Raycaster z první osoby (styl Wolfenstein) s 50 úrovněmi ze semínka, orby, minimapa - nebo 2D pohled shora |
 | **Reversi**      | 1 / 2 hráči | Othello na 8x8: sevři a otoč kameny, 3 úrovně AI (minimax) nebo lokální duel |
 | **Kniffel (Yahtzee)** | 1 / 2 hráči | Kostková klasika se 13 kategoriemi, horním bonusem a Yahtzee; hon za rekordem nebo hotseat pro 2 |
-| **Wordle**       | 1 hráč      | Uhodni pětipísmenné slovo na 6 pokusů, nekonečná série, barevné nápovědy, skutečné seznamy slov ve 14 jazycích |
+| **Wordle**       | 1 hráč      | Hádání slov o 4 až 7 písmenech: Nekonečno, Slovo dne, Dordle a Quordle, těžký režim, paleta pro barvoslepé, statistiky s grafem, sdílení výsledku, skutečné seznamy slov ve 14 jazycích |
 | **T-Rex Runner** | 1 hráč      | Nekonečný běh pouští: variabilní skok, krčení, kaktusy a pterodaktylové, cyklus den/noc, rostoucí rychlost, 3 obtížnosti |
 | **Dáma**         | 1 / 2 hráči | 3 sady pravidel (německá 8×8, mezinárodní 10×10, checkers), povinné braní a létající dámy, 3 úrovně AI (minimax) nebo lokální duel |
-| **Poker**        | 1 hráč      | 3 volitelné varianty: Texas Hold'em proti AI, 5 Card Draw a Video Poker; sázková kola, blindy, trvalý bankroll žetonů |
-| **Šachy**        | 1 / 2 hráči | Kompletní pravidla (rošáda, braní mimochodem, proměna, mat/pat/remízy), 6 úrovní AI (minimax + alfa-beta) nebo lokální duel, volba barvy |
+| **Poker**        | 1 hráč      | 3 volitelné varianty: Texas Hold'em proti AI, 5 Card Draw a Video Poker; sázková kola, blindy, lama žetony společné Lama banky |
+| **Šachy**        | 1 / 2 hráči | Kompletní pravidla, Chess960 a šachové hodiny, 6 úrovní AI, 200 úloh z databáze Lichess, vrácení tahu/nápověda, seznam tahů, export PGN nebo lokální duel |
 | **Mlýn**         | 1 / 2 hráči | Fáze pokládání/posouvání/létání, mlýny a braní, volitelné pravidlo létání, 3 úrovně AI nebo lokální duel |
 | **Simon**        | 1 / 2 hráči | Pamětová hra Senso: režimy Klasický/Speed/Reverse/Smíšený + Duel, zvuk vyp/zap/smíšený, 4/6/9 polí, nejlepší skóre pro každý režim |
 | **Kulečník**     | 1 / 2 hráči | 8-ball, 9-ball a trénink ve 2D, pevný 3D pohled nebo volně otočná 3D kamera; plynulá fyzika, asistence míření, 3 úrovně AI |
@@ -7491,12 +9542,19 @@ existuje, jinak systémový Python. Podrobný návod krok za krokem je úplně d
 | **Minigolf**    | 1 / 2 hráči | 360 drah na 40 hřištích (18 ručních, 342 vytvořených): písek, rampy, voda, odrazníky, mlýny a bloudící bloky; karta s parem a bonusem za hole in one; **vlastní editor drah** s 15 typy objektů, 12 šablonami a sdílením jako `.lamapgzmap` |
 | **Pinball**     | 1 / 2 hráči | Pinballový automat se 3 stoly: bumpery, slingshoty, terče, dráhy L-A-M-A, multiball s jackpotem, záchrana koule, šťouch a tilt |
 | **Bowling**     | 1 / 2 hráči | 10 framů s oficiálním počítáním strike/spare, skutečnou fyzikou kuželek, hookem a dráhou v perspektivě, 3 obtížnosti |
+| **Crossy Road** | 1 hráč        | Nekonečné skákání přes louky, silnice, řeky a koleje v izometrickém voxelovém stylu: den/noc, orel, 10 postav ke koupi, denní trasa |
+| **Geometry Dash** | 1 hráč      | Rytmická plošinovka s kostkou, lodí, míčem, UFO a vlnou: 8 levelů od Lehkého po Démona, v každém 3 tajné mince, tréninkový režim, soundtrack pro každý level; **editor levelů** se sdílením jako `.lamapgzlevel` |
+| **Battleship**  | 1 / 2 hráči   | Námořní bitva 10x10: rozmístění flotily přetažením, 3 přepínače pravidel (dotyk, salva, střelba znovu), AI se 3 úrovněmi nebo lokální duel s předávací obrazovkou |
+| **Casino**      | 1 hráč        | Evropská ruleta se všemi klasickými sázkami a Lama automat (5 válců, 10 výherních linií, divoký symbol, volné otočky); jeden účet lama žetonů s Blackjackem a Pokerem |
 
 **Více hráčů (2 hráči lokálně)** je k dispozici pro **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (kooperativní
 duel)**, **Memory (duel)**, **Čtyři v řadě**, **Tankový duel**, **Reversi**,
 **Kniffel**, **Dáma**, **Šachy**, **Mlýn**, **Simon (duel)**, **Kulečník**,
-**Minigolf**, **Pinball** a **Bowling**. Režim se volí přímo na přípravné obrazovce (*Jeden hráč / Více hráčů*).
+**Minigolf**, **Pinball**, **Bowling** a **Battleship** (s předávací obrazovkou,
+která skryje flotily) - celkem 20 her. Režim se volí přímo na přípravné
+obrazovce (*Jeden hráč / Více hráčů*); Tetris navíc nabízí **Versus proti AI**.
+Webová verze je jen pro jednoho hráče.
 
 #### Podrobnosti k jednotlivým hrám
 
@@ -7604,9 +9662,27 @@ duel)**, **Memory (duel)**, **Čtyři v řadě**, **Tankový duel**, **Reversi**
   **Mezerník** vypustí míček (vystřelí laser), **P/Esc** = pauza.
 
 **Tetris**
-- Vlevo/Vpravo posun, Nahoru = otočit, Dolů = soft drop, Akce = hard drop.
-- Plné řady dávají body, každých 10 řad stoupá úroveň.
-- **Versus**: prohrává ten, jehož komín narazí na strop jako první.
+- **Moderní pravidla Guideline**: pole 10x20, kostky ze **sáčku po 7**, **systém
+  otáčení SRS** se skutečnými wall kicky (i pro kostku I), otáčení oběma směry,
+  **odložení kostky** (jednou za kostku), **náhled 5 kostek**, stín kostky a
+  **lock delay** (0,5 s, nejvýše 15 resetů).
+- **Tři režimy** na přípravné obrazovce: *Sólo*, *Proti AI* a *2 hráči*. Sólo
+  nabízí v nastavení **Maraton** (počáteční úroveň 1–15, počítá se do rekordu),
+  **Sprint 40 řad** (nejlepší čas) a **Ultra 2 minuty** (nejlepší skóre); nejlepší
+  výsledky se ukládají do sekce `tetris` v `mem.json`.
+- **Bodování podle Guideline**: od Single po Tetris, **T-Spiny** (plné i mini),
+  **Back-to-Back** (x1,5), **komba** a **Perfect Clear** - s nápisy na obrazovce,
+  animací mazání řad, stopou hard dropu, částicemi a efektem postupu na další
+  úroveň.
+- **Versus s odpadními řadami**: smazané řady posílají soupeři odpad (Tetris = 4,
+  T-Spin Double = 4 …), příchozí odpad ohlásí varovný pruh a vlastní útoky ho
+  **započítají**; obě pole dostávají stejné pořadí kostek. **AI** má 3 úrovně a
+  tempo se zvyšuje každých 40 sekund.
+- **Ovládání**: Vlevo/Vpravo s vlastním **DAS/ARR** (nastavitelným v nastavení),
+  Nahoru = otočit doprava, Dolů = soft drop, Akce = hard drop; **C**/Shift =
+  odložit, **Z**/**Y** = otočit doleva, **X** = otočit doprava. Ve dvou hráč 1
+  odkládá klávesou **Q** a otáčí doleva **E**, hráč 2 **pravým Shiftem** /
+  **pravým Ctrl**. Po hře: **R** = znovu, **S** = nastavení.
 
 **Invaders** – dva režimy (na výběr na přípravné obrazovce):
 - **Klasický**: klasický blok mimozemšťanů; poté v nastavení na výběr: **pohyb**
@@ -7678,7 +9754,20 @@ zbraně), efekty explozí, nejlepší skóre.
 - Body = dosažená výška; obtížnost roste s výškou. Nejlepší skóre.
 - Ovládání: vlevo/vpravo = pohyb, Nahoru / Mezerník = střelba.
 
-**2048** – šipky/WASD posouvají všechny dlaždice; stejná čísla se slučují.
+**2048**
+- **Vlastní obrazovka nastavení** s deskami od **3x3 do 8x8** a třemi režimy:
+  *Klasický* (cíl 2048, pak „Hrát dál?"), *Na čas* (3 minuty, hodiny se spustí
+  prvním tahem) a *Nekonečný*.
+- **Plynulé animace**: dlaždice kloužou, spojují se s efektem „pop" a vyrůstají;
+  vyskakující body, jiskry od 128, tlaková vlna od 2048 a nové barvy až do
+  131072. Vstupy během animace se uloží do fronty.
+- **Vracení tahů** (vypnuto / 3 za hru / neomezeně, klávesa **U** nebo
+  Backspace) - kdo ho použije, hraje bez rekordu a bez úspěchů za dlaždice.
+- **Uložení a pokračování**: rozehraná partie se automaticky ukládá pro každou
+  velikost a režim; nejlepší skóre a největší dlaždice podle velikosti/režimu jsou
+  v sekci `g2048` souboru `mem.json`.
+- Ovládání: šipky/WASD nebo **tažení** myší/touchpadem, **R**/**N** = nová hra,
+  **Tab** = nastavení. Rekord se počítá jen v **4x4 Klasickém** bez vracení tahů.
 
 **Minesweeper**
 - Tři úrovně: **Začátečník** (9x9, 10 min), **Pokročilý** (16x16, 40), **Expert**
@@ -7695,22 +9784,32 @@ zbraně), efekty explozí, nejlepší skóre.
 - Body = základní hodnota úrovně minus sekundy.
 
 **Sudoku**
-- **400 úrovní**: 4 obtížnosti (Lehká/Normální/Těžká/Expert) x 100 úrovní.
-  Hlavolamy jsou **generované ze semínka a mají jediné řešení** - úroveň 12 v
-  „Těžké" je na každém PC stejný hlavolam. Vyřešené úrovně se ukládají a v
-  přehledu úrovní zaškrtávají.
+- **4 varianty**, každá se **400 úrovněmi** (4 obtížnosti x 100): *Klasické*
+  (známé úrovně ze semínka - vyřešené zůstávají zaškrtnuté), *X-sudoku* (obě
+  úhlopříčky obsahují každou číslici právě jednou), *Killer* (čárkované klece se
+  součtem; 400 předem vygenerovaných úrovní) a *Mini 6x6*. Každý hlavolam má
+  **jediné řešení** - úroveň 12 v „Těžké" je na každém PC stejný hlavolam.
+- **Sudoku dne**: jeden hlavolam denně pro všechny, stejný na PC i v prohlížeči;
+  obtížnost závisí na dni v týdnu (od pondělní Lehké po sobotní Expert) a
+  každodenním řešením budeš budovat sérii.
+- **Až 3 hvězdy za úroveň** (vyřešeno · bez chyb a nápověd · navíc pod cílovým
+  časem) a **nejlepší čas** v přehledu úrovní; **rozehrané hlavolamy** se
+  automaticky ukládají a příště pokračují.
 - **4 herní režimy** (volba před startem) s násobitelem skóre: **Klasický**
-  (x2,0 - bez pomůcek), **Poznámky** (x1,5 - + tužkové poznámky), **Komfort**
-  (x1,0 - + špatné číslice červeně, zvýraznění konfliktů a stejných číslic,
-  správné zápisy se uzamknou), **Asistent** (x0,7 - + nápověda, max. 3).
-- Každý zápis se ihned porovnává s řešením; se zapnutým **limitem 3 chyb**
-  (volba v nastavení) třetí chyba ukončí partii.
+  (x2,0 - bez pomůcek), **Poznámky** (x1,5 - + tužkové poznámky a automatičtí
+  kandidáti), **Komfort** (x1,0 - + špatné číslice červeně, vyznačené konflikty a
+  chybné součty klecí, správné zápisy se uzamknou), **Asistent** (x0,7 - +
+  nápověda, max. 3). Se zapnutým **limitem 3 chyb** (volba v nastavení) třetí
+  chyba ukončí partii.
 - Ovládání: šipky/WASD = buňka, **1-9** = číslice (i numerická klávesnice),
-  **0/Backspace/pravý klik** = mazat, **N** = poznámky, **H** = nápověda,
-  **R** = restart úrovně, **Q** = výběr úrovní; plně hratelné myší (numerický
-  panel vpravo). Po skončení hry **A** skryje banner a odkryje na desce celé
-  **řešení** (znovu A = zpět).
-- Body = (základ obtížnosti - čas - chyby - nápovědy) x násobitel režimu.
+  **0/Delete/pravý klik** = mazat, **U**/**Z** = zpět, **Y** = znovu, **N** =
+  poznámky, **C** = automaticky doplnit kandidáty, **H** = nápověda, **M** =
+  barevná značka, **R** = restart úrovně, **Q** = výběr úrovní. Zadávání
+  „nejdřív číslice" (nastavení, **I**) a **počítadlo zbývajících číslic** pod
+  každou číslicí; plně hratelné myší. Po skončení hry **A** ukáže celé
+  **řešení**.
+- Body = (základ varianty a obtížnosti - čas - chyby - nápovědy) x násobitel
+  režimu; do rekordu se počítají všechny varianty i Sudoku dne.
 
 **Frogger**
 - 5 dopravních pruhů (auta/kamiony) a 5 říčních pruhů (klády, želvy, které se ve
@@ -7775,11 +9874,16 @@ zbraně), efekty explozí, nejlepší skóre.
 - Skutečná kasino pravidla: **shoe se 4 balíčky**, krupiér stojí na 17,
   **blackjack platí 3:2**, nahlédnutí krupiéra při esu/desítce; **zdvojení** a
   **jedno rozdělení** (rozdělená esa dostanou po jedné kartě).
-- **Trvalý stav žetonů**: start s 500, stav a **rekord** přežijí každý restart
-  (`mem.json`); pod 10 žetonů dostaneš 500 nových - rekord zůstává.
+- **Lama žetony**: Blackjack hraje s účtem **Lama banky**, který sdílí s Pokerem
+  a Casinem (start 1000, trvale uložený v `mem.json`). Sázka se strhne hned při
+  rozdání; pod 10 žetonů si Enter vezme **bankovní úvěr**, který účet doplní na
+  1000.
+- **Rekord** = nejvyšší stav tvé **bilance v Blackjacku** (1000 plus vše, co se v
+  Blackjacku vyhrálo a prohrálo) - výhry v ruletě, na automatu nebo v pokeru se
+  sem nepočítají, úvěry také ne.
 - Ovládání pomocí tlačítek žetonů a kláves (**H**it/**S**tand/**D**ouble/rozdělit
-  **X**, **1-4** = sázka, Enter = rozdat) s animacemi karet a otočením skryté
-  karty.
+  **X**, **1-4** = sázka, Backspace = zrušit sázku, Enter = rozdat) s animacemi
+  karet; skrytá karta krupiéra se při odkrytí teď opravdu otočí.
 
 **Tunnel Racer**
 - **3D let neonovým tunelem** (softwarový renderer jako u Aim Traineru): tyče,
@@ -7820,26 +9924,68 @@ zbraně), efekty explozí, nejlepší skóre.
   (Mezerník, 1-5, šipky, Enter).
 
 **Wordle**
-- Uhodni **pětipísmenné slovo na 6 pokusů**; barevná zpětná vazba
-  (zelená/žlutá/šedá) se správným **počítáním zdvojených písmen** a klávesnicí na
-  obrazovce, která se obarvuje.
-- **Nekonečná série**: každé vyřešené slovo dává body (méně pokusů = víc), první
-  nevyřešené slovo ukončí hru - součet = nejlepší skóre.
-- **Skutečné seznamy slov ve všech 14 jazycích** (složka `woordlistz/`, jen A-Z):
-  dohromady přes **34 000 řešení** a **213 000 povolených slov**. Každý pokus se
-  ověřuje proti seznamu - ostatní se odmítne a řádek se krátce zatřese.
-- **Dva režimy**: *Normální* a *Těžký* - v těžkém musíš nalezené nápovědy dál
-  používat. Piš na klávesnici nebo klikej na klávesy na obrazovce.
+- Uhodni skryté slovo; barevná zpětná vazba (zelená/žlutá/šedá) se správným
+  **počítáním zdvojených písmen** a klávesnicí na obrazovce, která se obarvuje
+  (QWERTZ pro němčinu, češtinu, slovinštinu a chorvatštinu, AZERTY pro
+  francouzštinu, jinak QWERTY).
+- **Čtyři režimy**: *Nekonečno* (slovo za slovem, vždy 6 pokusů; každé vyřešené
+  slovo dává body, první nevyřešené hru ukončí), *Slovo dne* (jedno slovo denně
+  pro každý jazyk a délku - stejné na PC i v prohlížeči - s odpočtem a sérií;
+  rozehrané slovo dne se uloží), *Dordle* (2 slova najednou na 7 pokusů) a
+  *Quordle* (4 slova na 9 pokusů, klávesy ukazují barvy všech mřížek).
+- **Nastavení** před každou hrou: **délka slova 4 až 7**, **těžký režim**
+  (nalezené nápovědy musíš dál používat) a **paleta pro barvoslepé**
+  (oranžová/modrá); vedle je vidět statistika.
+- **Skutečné seznamy slov ve všech 14 jazycích** (složka `woordlistz/`, jen A-Z),
+  pro každou délku vlastní: jen u 5 písmen téměř **34 000 řešení** a přes
+  **213 000 povolených slov**, napříč všemi čtyřmi délkami zhruba 134 000 řešení.
+  Řešení jsou běžná slova bez jmen, anglických zbytků a urážlivých výrazů; každý
+  pokus se ověřuje proti seznamu - ostatní se odmítne a řádek se krátce zatřese.
+- **Statistika** podle jazyka, délky a režimu: hry, podíl výher, aktuální a
+  nejlepší série a **rozložení pokusů jako sloupcový graf** (sekce `wordle` v
+  `mem.json`). **Sdílet** (**C**) zkopíruje mřížku emoji, aniž by prozradila
+  řešení.
+- Do rekordu se počítá jen *Nekonečno* s 5 písmeny; ostatní délky mají vlastní
+  nejlepší výsledky. Úspěchy **Jasnovidec** (nejvýš 2 pokusy), **Slovní zvyk**
+  (7 slov dne za sebou) a **Čtyřnásobný génius** (vyřešené Quordle).
+
+**Poker**
+- **3 varianty** na přípravné obrazovce: **Texas Hold'em** proti 1–3 soupeřům s
+  AI s tlačítkem dealera, blindy a čtyřmi sázkovými koly, **5 Card Draw** (heads-up
+  proti AI, jedna výměna karet) a **Video Poker** (*Jacks or Better*, sólo proti
+  výplatní tabulce).
+- Akce tlačítky nebo klávesami: **F** = fold, **C** = check/call, **R** = raise,
+  **A** = all-in; držení/výměna karet kliknutím nebo **1-5**, **Enter** dobírá
+  nebo rozdá další ruku.
+- **Lama žetony** společné **Lama banky**: na začátku ruky leží tvůj účet na stole
+  jako stack a co jde do banku, strhne se hned - odchod od stolu uprostřed ruky tě
+  stojí jen tvůj podíl v banku. Bez peněz (méně než big blind 20, ve Video Pokeru
+  méně než 10) = bankovní úvěr do 1000.
+- **Rekord** = nejvyšší stav **bilance v Pokeru** (1000 plus všechny výhry a
+  prohry v pokeru); úspěch **Chipleader** počítá také jen tuto bilanci.
 
 **Šachy**
 - **Kompletní šachy**: všechny tahy figur včetně **rošády**, **braní mimochodem**
   a **proměny pěšce** (figuru lze zvolit); **šach, mat a pat** plus remízy podle
-  **pravidla 50 tahů**, **trojího opakování pozice** a **nedostatku materiálu**.
-- **6 úrovní AI** od *Začátečníka* po *Mistra* (negamax s alfa-beta, řazení tahů,
-  tabulky hodnot figur/polí, klidové prohledávání); **časový rozpočet** udržuje
-  každý tah AI plynulý. **Volba barvy** bílá/černá nebo **lokální duel**.
-- Povolené tahy jsou zvýrazněné, šach je vyznačen; hraj **myší** nebo výběrovým
-  kurzorem. Každá výhra proti AI přidá jeden bod do nejlepšího skóre.
+  **pravidla 50 tahů**, **trojího opakování pozice**, **nedostatku materiálu** nebo
+  dohodou.
+- **Tři režimy**: *partie* proti AI, *2 hráči* u jednoho počítače (deska se může
+  po každém tahu otočit) a **úlohy**.
+- **Silnější AI bez zasekávání** v 6 úrovních od *Začátečníka* po *Mistra*:
+  iterativní prohlubování, transpoziční tabulka, klidové prohledávání, kniha
+  zahájení a hodnocení s mobilitou, pěšcovou strukturou a bezpečností krále. AI
+  počítá v malých dávkách na snímek - hra se nikdy nezasekne.
+- **Nastavení**: volba barvy, **šachové hodiny** (bez, 1+0, 3+2, 5+0, 10+5) a
+  **Chess960** (všech 960 výchozích postavení, číslo je nad seznamem tahů).
+- **Boční panel** s hodinami, sebranými figurami, materiálovou bilancí a
+  posuvným **seznamem tahů (SAN)**; táhni a pusť, klouzající figury, souřadnice.
+  Klávesy: **U** = vrátit tah, **H** = šipka nápovědy, **O** = nabídnout remízu,
+  **X** = vzdát se, **F** = otočit desku, po partii **P** = **export PGN**.
+- **Úlohy**: 200 úloh v 5 stupních (mat 1/2/3 tahem, taktika I/II) z **volné
+  databáze úloh Lichess (CC0)**, ověřených vlastním enginem; u matových úloh platí
+  každý tah, který dá mat. Postup je v sekci `chess` souboru `mem.json`.
+- Vrácení tahu a nápověda dělají z partie „asistovanou": do rekordu se počítají
+  jen výhry proti AI bez pomoci (za relaci).
 
 **Mlýn**
 - **Mlýn** se všemi třemi fázemi: **pokládání** (po 9 kamenech), **posouvání** po
@@ -8012,6 +10158,92 @@ zbraně), efekty explozí, nejlepší skóre.
 - **Záznam partie**: na konci **P** přehraje všechny hody znovu a **S** je uloží
   do archivu (tlačítko **Záznamy**).
 
+**Crossy Road**
+- **Nekonečné skákání** přes louky (stromy a kameny blokují cestu), silnice s auty
+  a náklaďáky, řeky s kmeny a lekníny a **koleje**, po kterých po výstražném
+  světle a zvonku přiřítí vlak - dál čekají celá nádraží až s 5 kolejemi. Trasa
+  vzniká řadu po řadě, vždy má průchozí cestu a tempo i provoz rostou.
+- **Izometrický voxelový styl**: postavy, vozidla a stromy ze stínovaných kostek
+  (předrenderované pro každou velikost pole), plynule sledující kamera, squash &
+  stretch při skocích, šplouchání vody, animace rozmáčknutí, peří a třpytivé
+  mince; od řady 50 **střídání dne a noci** se světlomety.
+- **Orel**: kamera se pomalu posouvá vpřed - kdo příliš otálí nebo couvne o víc
+  než tři řady, toho odnese orel (předem varuje červený okraj). Odplavání na kmeni
+  mimo obraz také končí hru.
+- **Mince a postavy**: sebrané mince (obří mince = 5) se ukládají a kupují nové
+  postavy v záložce **Postavy**: žába, prase, tučňák, kočka, liška, lama, robot,
+  duch a jednorožec (25 až 250 mincí); kuře je k dispozici od začátku.
+- **Režimy**: *Nekonečno* (body = nejvzdálenější řada, počítá se do rekordu) a
+  *Denní trasa* (dnes pro všechny stejná, i v prohlížeči, s vlastním denním
+  rekordem). Ovládání: šipky/WASD, mezerník/Enter/klik = skok vpřed; v nastavení
+  **H** = stíny, **N** = den/noc. Mince, postavy a denní rekord jsou v sekci
+  `crossy` souboru `mem.json`.
+
+**Geometry Dash**
+- **Rytmická plošinovka**: postavička sama uhání doprava - ty rozhoduješ jen o
+  tom, kdy skočit nebo letět. **Pět podob** - kostka, loď, míč, UFO a vlna - k
+  tomu portály podoby, gravitace a rychlosti (0,5x až 3x), žluté/růžové/modré
+  **odrazy a koule**, poloviční bloky, bodáky, jámy a barevné spouštěče.
+- **8 vestavěných levelů** od *Lehkého* po *Démona* („Lama Inferno"), v každém **3
+  tajné mince**. Každý level je prokazatelně zvládnutelný: při stavbě ho řešič
+  dohrál se skutečným kódem hry - se všemi mincemi a dokonce i při posunu o
+  1/240 sekundy.
+- **Přesná fyzika**: výpočty s pevnou řádovou čárkou v pevném kroku 240 Hz;
+  každý stisk působí přesně v kroku, ve kterém nastal - stejně při jakékoli
+  snímkové frekvenci a bitově shodně v prohlížeči.
+- **Tréninkový režim** (**P**) s automatickými i vlastními checkpointy (**Z**
+  postaví, **X** smaže), počítadlem pokusů, ukazatelem postupu, explozemi a
+  okamžitým restartem (**R**). Každý level má **vlastní soundtrack** - pozadí,
+  země i koule pulzují do rytmu (hudbu vypneš klávesou **M**).
+- **Hvězdy a mince**: kdo level dokončí v normálním režimu, získá jeho hvězdy, a
+  každá mince má cenu další hvězdy; rekordem je **celkový počet hvězd** (nejvýš
+  65). Nejlepší výsledky levelů, mince, pokusy a skoky jsou v sekci `geodash`
+  souboru `mem.json`.
+- **Editor levelů** na záložce **LEVELY**: plátno s mřížkou, paleta se 6 skupinami
+  (bloky, nebezpečí, odrazy a koule, portály, rychlost, doplňky), otáčení,
+  zpět/znovu, přehledový pruh, **test od startu nebo odsud** a nastavení levelu
+  (počáteční rychlost a podoba, hudební styl, BPM, barvy). Značka **„ověřeno"**
+  přibude, až když svůj level sám dohraješ. **Sdílet** zapíše soubor
+  `.lamapgzlevel`, **Import** ho zase načte; levely se ukládají do `ugc.json`
+  vedle vlastních minigolfových jamek.
+
+**Battleship**
+- **Námořní bitva 10x10** s letadlovou lodí (5 polí), bitevní lodí (4), křižníkem
+  (3), ponorkou (3) a torpédoborcem (2) - vyhrává ten, kdo první potopí celou
+  nepřátelskou flotilu.
+- **Rozmístění flotily** přetažením z doku: **R** nebo pravý klik otáčí, náhled
+  svítí zeleně nebo červeně, **X** rozmístí vše náhodně, **C** vyprázdní desku;
+  poslední rozestavení se nabídne znovu.
+- **Pravidla v nastavení** (ukládají se): *lodě se smějí dotýkat*, *salva* (tolik
+  výstřelů za tah, kolik vlastních lodí je na hladině) a *po zásahu střílíš znovu*.
+- **AI se 3 úrovněmi**: Lehká střílí náhodně, Střední systematicky dorazí
+  zásahy, Těžká počítá **mapu pravděpodobnosti** s paritou šachovnice (v průměru
+  asi 70 / 60 / 45 výstřelů na celou flotilu). Nebo **2 hráči** u jednoho počítače -
+  **předávací obrazovka** před každým tahem skryje obě flotily.
+- **Grafika**: radarové skenování, animované vlny, granáty v oblouku, šplouchnutí,
+  exploze s kouřem a hořící pole, odhalení „POTOPENO!" a souhrn kola se
+  střelami, zásahy a přesností. Rekord počítá tvé **výhry proti AI** během jedné
+  relace.
+
+**Casino**
+- **Ruleta** (evropská, 37 polí): všechny klasické sázky kliknutím na číslo,
+  hranu nebo roh - **plein** (35:1), cheval, transversale, carré, sixain, sloupec,
+  tucet, červená/černá, sudá/lichá a manque/passe. Žetony 1/5/25/100/500, pravý
+  klik žetony odebere; **Roztočit**, **Opakovat** (**R**), **Zdvojit** (**D**) a
+  **Smazat**. Kulička se ve spirále skutálí do předem vylosovaného pole a nahoře je
+  vidět posledních 12 čísel.
+- **Lama automat**: 5 válců x 3 řady, **10 výherních linií**, **lama = divoký
+  symbol**, **zlaté mince = scatter** s 10 volnými otočkami a dvojnásobnými
+  výhrami, sázka na linii 1/2/5/10, **automatické otáčení** (10/25), **turbo** a
+  výherní tabulka. **Výplatní poměr je 96,1 %** - vypočtený přesně z pásů válců.
+- **Lama banka**: Casino, Blackjack a Poker sdílejí jeden účet **lama žetonů**
+  (start 1000, sekce `casino` v `mem.json`); staré stavy žetonů se převezmou
+  automaticky. Sázky se strhnou hned, každá hra si pro rekord vede vlastní bilanci
+  a při bankrotu dostaneš **bankovní úvěr** do 1000.
+- Konfety, déšť mincí, bannery big/mega/jackpot a animace výherních linií;
+  úspěchy **Terno** (výherní plein v ruletě) a **Lama jackpot** (5 lam na jedné
+  linii).
+
 Nejlepší skóre se ukládají do sekce `highscores` souboru `mem.json` (vedle
 kódu) – spolu s jazykem (sekce `mem`).
 
@@ -8034,20 +10266,24 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
   **déšť konfet při novém rekordu** a skutečné **rozostření** za překrytím
   pauzy.
 - **Přípravná obrazovka** každé hry se zobrazuje v její akcentové barvě a ukazuje
-  dosavadní rekord jako čip.
-- **Jednotný vzhled ve hře**: všech 42 her sdílí paletu témat a písmo menu -
+  dosavadní rekord jako čip. Při mnoha režimech a malém rozlišení se stane
+  **kompaktní**: Možnosti, Wiki a Zpět se přesunou do jedné řady a písmo se
+  přizpůsobí - nic už nepřetéká z obrazu.
+- **Jednotný vzhled ve hře**: všech 46 her sdílí paletu témat a písmo menu -
   HUDy, obrazovky nastavení a překrytí následují design zvolený v nastavení
   (v4.1 / v4 / Klasický), zatímco každé hrací pole si ponechává své identitní
   barvy. Každá hra nyní čistě zvládne změnu rozlišení uprostřed partie a názvy
   her v menu se přizpůsobují jazyku (např. „Schach" → „Šachy").
 - **Vestavěná wiki** („LamaWiki"): podrobná nápověda ke každé hře (ovládání,
   režimy, body, tipy) plus obecné stránky - s **vyhledávacím polem**,
-  kategoriemi, rolovatelnými články a čipy kláves, ve všech pěti jazycích.
+  kategoriemi, rolovatelnými články a čipy kláves, ve všech 14 jazycích.
   Dostupná přes tlačítko **„Wiki / Nápověda"** v postranním panelu a z přípravné
   obrazovky každé hry (otevře přímo její stránku).
-- **Úspěchy a statistiky**: **69 úspěchů** ve třech kategoriích (cíle napříč
-  sbírkou, jeden bodový milník na hru a výjimečné okamžiky jako šachmat AI
-  nebo dlaždice 2048) se **zlatým oznámením a fanfárou** při odemčení - i
+- **Úspěchy a statistiky**: **107 úspěchů** ve třech kategoriích (23 cílů
+  napříč sbírkou, 37 bodových milníků a 47 výjimečných okamžiků jako šachmat AI,
+  dlaždice 4096, T-Spin Double, 25 vyřešených šachových úloh, Killer Sudoku nebo
+  lamí jackpot; ve 2048 a v šachu se partie s vrácením tahu či nápovědou
+  nepočítají) se **zlatým oznámením a fanfárou** při odemčení - i
   uprostřed hry; staré rekordy se započítají automaticky. K tomu záložka
   **statistik**: celkový herní čas, partie, výhry, rekordy, oblíbená hra a
   tabulka her seřazená podle času. Dostupné tlačítkem **„Úspěchy a
@@ -8066,7 +10302,14 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
 - **F11** (nebo tlačítko „Celá obrazovka zap/vyp") = přepnutí celé obrazovky.
   Zobrazení Pygame zůstává vložené a zvětšuje se se zachováním poměru stran
   (černé pruhy při odlišném poměru). Okno lze libovolně měnit.
-- **„Zpět do menu"** ukončí hru a uloží nejlepší skóre.
+- **„Zpět do menu"** ukončí hru a uloží nejlepší skóre - stejně jako přepnutí do
+  jiné hry přes postranní panel.
+- **Pevné přídavné klávesy**: kromě pěti přiřaditelných akcí mají některé hry
+  vlastní klávesy (např. odložení **C** a otočení doleva **Z** v Tetrisu,
+  vrácení tahu **U** ve 2048, šachu a Sudoku). Fungují jen tehdy, když klávesa
+  není v možnostech přiřazena žádné akci, a najdeš je v nápovědě nastavení i ve
+  wiki. Držené klávesy se správně rozpoznají a při pauze nebo Alt-Tab se uvolní -
+  nic se už „nezasekne".
 - **„Ukončit"** čistě zavře Pygame a Tkinter.
 
 ### Nastavení, ovládání a zvuk
@@ -8113,22 +10356,24 @@ start.sh             Spouštěcí skript (Linux / macOS / Git Bash)
 pyinstall.bat        Sestavení EXE (Windows): zabalí vše do builds\PyGameZ.exe
 main.py              Rozhraní Tkinter, vložení Pygame, centrální herní smyčka
 game_base.py         Základní třída her (update/draw/handle_event) + InputEvent + pomocníci
-settings.py          Načtení/uložení nastavení (zvuk/haptika/klávesy) (JSON)
-audio.py             Procedurální zvukové efekty + vibrace gamepadu
+settings.py          Načítání/ukládání nastavení (zvuk/haptika/klávesy/herní volby s kontrolními pravidly) (JSON)
+audio.py             Procedurální zvukové efekty, hudební smyčky + vibrace gamepadu
 menu.py              Obrazovky jazyka, přípravy (režim) a nastavení (zvuk/ovládání)
 highscore.py         Načtení/uložení nejlepších skóre (sekce v mem.json)
-store.py             Centrální soubor mem.json (sekce: mem, highscores, stats, achievements)
+store.py             Centrální soubor uložení mem.json (sekce: mem, highscores, stats, achievements + postup her), atomicky se zálohou .bak
 stats.py             Statistiky hráče (partie, herní čas, výhry, rekordy) na hru
 achievements.py      Úspěchy: definice, odemykání, oznámení (toast)
 progress.py          Obrazovka úspěchů a statistik (dvě záložky, posuvná)
 replay.py            Nahrávání a archiv záznamů (replay.json)
 replayview.py        Obrazovka záznamů: seznam archivu a přehrávání
-ugc.py               Vlastní dráhy: ukládání, kontrola, export/import (ugc.json)
+ugc.py               Vlastní obsah (minigolfové jamky, úrovně Geometry Dash): úložiště, kontrola, export/import (ugc.json)
 swear.py             Filtr slov pro názvy a id (lang/swear/*.yml, všech 14 jazyků)
 filepick.py          Dialogy souborů ("Exportovat jako ...", "Importovat")
 prestige.py          Systém prestiže pro Snake
 competitive.py       Parametry Kompetitivního režimu Snaku (úrovně, automat, sázková jablka)
 ngb.py               Vizuální přizpůsobení („mody"): barva hlavy + souřadnicová mřížka + menu (mem-ngb.json)
+lamabank.py          Lama banka: společný účet žetonů pro Blackjack, Poker a Casino (sekce casino v mem.json)
+seedrand.py          Generátor náhodných čísel s bitově shodnými čísly v Pythonu i v prohlížeči (denní režimy, nové hlavolamy)
 i18n.py              Překladový engine (načítá lang/*.json, t("klíč"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Jazykové řetězce (jeden zástupný klíč na text)
@@ -8140,24 +10385,48 @@ lamawiki/
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 woordlistz/
   build_wordlists.py   Znovu sestaví seznamy slov pro Wordle (slovníky + frekvenční seznamy)
-  de/ en/ fr/ ... hr/  answers.txt (řešení) + allowed.txt (povolená slova), 14 jazyků
+  de/ en/ fr/ ... hr/  answers.txt + allowed.txt (5 písmen), answers4/6/7.txt + allowed4/6/7.txt (4, 6, 7 písmen), 14 jazyků
+devtools/            Vývojářské nástroje (nebalí se do .exe)
+  merge_staging.py           Nahraje překlady a wiki stránky z devtools/staging/ do všech 14 jazykových souborů
+  build_chess_puzzles.py     Sestaví 200 šachových úloh z databáze úloh Lichess (CC0)
+  build_sudoku_killer.py     Vygeneruje 400 Killer Sudoku s jediným řešením
+  build_crossyroad_models.py Zapíše voxelové modely Crossy Road pro webovou verzi
+  build_geodash_levels.py    Sestaví 8 levelů Geometry Dash a řešičem dokáže, že každý je zvládnutelný i s mincemi
+  build_geodash_solver.py    Řešič se skutečným kódem kroku (řešení v geodash_proofs.json)
 games/
-  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
+  tetris.py  tetris_core.py  tetris_ai.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py  sudoku_draw.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py  wordle_words.py
+  trexrunner.py  dame.py  poker.py  muehle.py
+  chess.py  chess_engine.py  chess_draw.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
-  levels/
+  crossyroad.py  crossyroad_world.py  crossyroad_draw.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  battleship.py  battleship_core.py
+  casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  levels/              Data úrovní: snake-comp.json, chess-puzzles.json (+ README se zdroji), sudoku-killer.json, geodash.json
+tests/
+  arcade_casino_audit.py     Celkový audit (vstup, seedrand Python = JS, ukládání, jazykové soubory, přípravné obrazovky) + všechny audit_*.py
+  audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless audity pro jednotlivé hry
+  newgames_audit.py  blockjump_audit.py
 ```
 
 Zvolený jazyk se ukládá do `mem.json` (v sekci `mem`, vedle sekce `highscores`
 téhož souboru) a při dalším spuštění se automaticky načte.
+
+**Zdroje a licence:** 200 šachových úloh pochází z
+[databáze úloh Lichess](https://database.lichess.org/#puzzles) (licence
+**CC0 1.0**, volné dílo - díky, lichess.org!); podrobnosti jsou v
+`games/levels/chess-puzzles.README.md`. Zdroje seznamů slov pro Wordle uvádí
+`woordlistz/README.md`.
 
 ### Poznámky k platformám
 
@@ -8264,7 +10533,7 @@ a lze jej volně kopírovat. Nastavení a nejlepší skóre (`settings.json`,
 ## 🇸🇮 Slovenščina
 
 Zbirka namiznih iger v Pythonu: **Tkinter** poskrbi za okno in meni, **Pygame**
-je kot prikaz igre vgrajen v okno Tkinter. Dvainštirideset iger s skupnimi
+je kot prikaz igre vgrajen v okno Tkinter. Šestinštirideset iger s skupnimi
 možnostmi, prosto nastavljivim krmiljenjem, rekordi, proceduralnimi zvočnimi
 učinki in, pri nekaterih naslovih, večigralskim načinom. Vmesnik je
 **večjezičen** – **14 jezikov** (nemščina / angleščina / francoščina /
@@ -8303,31 +10572,31 @@ obstaja, sicer sistemski Python. Na dnu dokumenta je podroben vodnik po korakih:
 | **Air Hockey** | 1 / 2 igralca | 2D-fizika s prenosom gibalne količine, upravljanje z miško, UI in power-ups |
 | **Tic-Tac-Toe** | 1 / 2 igralca | Igra m,n,k na 3x3 do 9x9, tri jakosti UI **ali** lokalno X proti O |
 | **Breakout** | 1 igralec       | Razbijanje opek z vrstami opek, power-ups, kombinacijami in številnimi ravnmi |
-| **Tetris**   | 1 / 2 igralca   | Klasika ali Versus (dve polji drug ob drugem) |
+| **Tetris**   | 1 / 2 igralca   | Sodobna pravila Guideline (SRS, shramba, predogled 5 kock, T-Spini): Maraton, Šprint 40, Ultra 2:00, Versus proti UI (3 jakosti) ali v dvoje z vrsticami smeti |
 | **Invaders** | 1 igralec       | Space Invaders: očisti vale, zaščiti svoja življenja |
 | **Asteroids** | 1 / 2 igralca  | Fizika vztrajnosti, vali, NLP-ji, power-ups, hiperprostor - sam ali kooperativni dvoboj |
 | **Pac-Man**  | 1 igralec       | Zvest klon: 4 UI-ji duhov, močne tablete, tunel, sadje, ravni |
 | **Flappy Bird** | 1 igralec    | Gravitacijski let skozi cevi, kovanci, ščit, dan/noč, medalje |
 | **Doodle Jump** | 1 igralec    | Samodejni skok navzgor, vrste ploščadi, vzmeti, propeler, pošasti |
-| **2048**     | 1 igralec       | Sestavljanka z drsenjem števil, cilj: ploščica 2048 |
+| **2048**     | 1 igralec       | Sestavljanka z drsenjem števil od 3x3 do 8x8: Klasično, Na čas in Neskončno, razveljavitev, tekoče animacije, shranjene partije |
 | **Minesweeper** | 1 igralec    | Klasika z varnim prvim klikom, chording, smeškom in najboljšimi časi |
-| **Sudoku**      | 1 igralec    | 400 ravni s semenom (4 težavnosti x 100), 4 načini pomoči z množiteljem točk, zapiski, namigi, omejitev 3 napak |
+| **Sudoku**      | 1 igralec    | 4 različice (Klasični, X-sudoku, Killer, Mini 6x6) s po 400 ravnmi, Sudoku dneva, do 3 zvezdice na raven, 4 načini pomoči, razveljavitev, shranjena igra |
 | **Frogger**     | 1 igralec    | Cesta + reka + 5 zalivov, bonus muha, krokodili, časovna omejitev, 3 težavnosti |
 | **Memory**      | 1 / 2 igralca | Poišči pare na 4x4 do 8x6, animacija obračanja, samostojno točkovanje ali dvoboj |
 | **Pasjansa**    | 1 igralec    | 5 različic (Klondike, Spider, FreeCell, Piramida, TriPeaks) s povleci in spusti ter razveljavitvijo |
 | **Aim Trainer** | 1 igralec    | Sproščeno 3D-streljanje v tarče: miška vodi kamero, 4 načini (natančnost/refleks/premikajoče/chill), 3 teme vkl. črno luknjo |
 | **Štiri v vrsto** | 1 / 2 igralca | Klasika z animacijo padanja: 3 jakosti UI (minimax) ali lokalni dvoboj |
 | **Tankovski dvoboj** | 1 / 2 igralca | 2D-dvoboj v areni z odbojnimi streli, power-ups, 4 arene, UI s 3 jakostmi |
-| **Blackjack**    | 1 igralec    | Kazinojski blackjack s 4-paketnim čeveljcem, podvojitev/delitev, blackjack 3:2 in trajno stanje žetonov |
+| **Blackjack**    | 1 igralec    | Kazinojski blackjack s 4-paketnim čeveljcem, podvojitev/delitev in blackjack 3:2; igra se z lama žetoni skupne Lama banke |
 | **Tunnel Racer** | 1 igralec    | 3D-let skozi neonsko cev: neskončni način + 30 ravni, upravljanje s tipkami ali miško, motion blur |
 | **3D-labirint**  | 1 igralec    | Raycaster v prvi osebi (slog Wolfenstein) s 50 ravnmi s semenom, orbi, minimapo - ali 2D-pogled od zgoraj |
 | **Reversi**      | 1 / 2 igralca | Othello na 8x8: ujemi in obrni ploščke, 3 jakosti UI (minimax) ali lokalni dvoboj |
 | **Kniffel (Yahtzee)** | 1 / 2 igralca | Klasika s kockami s 13 kategorijami, zgornjim bonusom in Yahtzeejem; lov na rekord ali dvoigralski hotseat |
-| **Wordle**       | 1 igralec    | Ugani 5-črkovno besedo v 6 poskusih, neskončni niz, barvni namigi, pravi seznami besed v 14 jezikih |
+| **Wordle**       | 1 igralec    | Ugibanje besed s 4 do 7 črkami: Neskončno, Beseda dneva, Dordle in Quordle, težki način, paleta za barvno slepe, statistika z grafom, deljenje rezultata, pravi seznami besed v 14 jezikih |
 | **T-Rex Runner** | 1 igralec    | Neskončni tek po puščavi: spremenljiv skok, priklek, kaktusi in pterodaktili, cikel dan/noč, naraščajoča hitrost, 3 težavnosti |
 | **Dama**         | 1 / 2 igralca | 3 pravila (nemška 8×8, mednarodna 10×10, checkers), obvezno jemanje in leteča dama, 3 jakosti UI (minimax) ali lokalni dvoboj |
-| **Poker**        | 1 igralec    | 3 izbirne različice: Texas Hold'em proti UI, 5 Card Draw in Video Poker; krogi stav, blindi, trajno stanje žetonov |
-| **Šah**          | 1 / 2 igralca | Vsa pravila (rošada, en passant, pretvorba, mat/pat/remi), 6 jakosti UI (minimax + alfa-beta) ali lokalni dvoboj, izbira barve |
+| **Poker**        | 1 igralec    | 3 izbirne različice: Texas Hold'em proti UI, 5 Card Draw in Video Poker; krogi stav, blindi, lama žetoni skupne Lama banke |
+| **Šah**          | 1 / 2 igralca | Vsa pravila, Chess960 in šahovska ura, 6 jakosti UI, 200 ugank iz baze Lichess, razveljavitev/namig, seznam potez, izvoz PGN ali lokalni dvoboj |
 | **Mlin**         | 1 / 2 igralca | Faze postavljanja/premikanja/letenja, mlini in jemanja, izbirno pravilo letenja, 3 jakosti UI ali lokalni dvoboj |
 | **Simon**        | 1 / 2 igralca | Spominska igra Senso: načini Klasični/Speed/Reverse/Mešani + Dvoboj, zvok izkl./vkl./mešan, 4/6/9 polj, najboljši po načinu |
 | **Biljard**      | 1 / 2 igralca | 8-ball, 9-ball in vadba v 2D, fiksni 3D-pogled ali prosto vrtljiva 3D-kamera; gladka fizika, pomoč pri merjenju, 3 jakosti UI |
@@ -8340,14 +10609,19 @@ obstaja, sicer sistemski Python. Na dnu dokumenta je podroben vodnik po korakih:
 | **Minigolf**    | 1 / 2 igralca | 360 stez na 40 igriščih (18 ročnih, 342 ustvarjenih): pesek, klančine, voda, odbijači, mlini in tavajoči bloki; kartica s parom in bonusom za hole in one; **lasten urejevalnik stez** s 15 vrstami predmetov, 12 predlogami in deljenjem kot `.lamapgzmap` |
 | **Pinball**     | 1 / 2 igralca | Pinball avtomat s 3 mizami: odbijači, slingshoti, tarče, steze L-A-M-A, multiball z jackpotom, rešitev krogle, sunek in tilt |
 | **Bowling**     | 1 / 2 igralca | 10 framov z uradnim štetjem strike/spare, pravo fiziko kegljev, hookom in stezo v perspektivi, 3 težavnosti |
+| **Crossy Road** | 1 igralec     | Neskončno skakanje čez travnike, ceste, reke in tire v izometričnem voksel slogu: dan/noč, orel, 10 likov za nakup, dnevna proga |
+| **Geometry Dash** | 1 igralec   | Ritmična ploščadna igra s kocko, ladjo, žogo, NLP in valom: 8 stopenj od Lahke do Demona s po 3 skrivnimi kovanci, način vaje, glasba za vsako stopnjo; **urejevalnik stopenj** z deljenjem kot `.lamapgzlevel` |
+| **Battleship**  | 1 / 2 igralca | Pomorska bitka 10x10: postavitev flote z vlečenjem, 3 stikala pravil (dotik, salva, ponovni strel), UI s 3 jakostmi ali lokalni dvoboj z zaslonom za predajo |
+| **Casino**      | 1 igralec     | Evropska ruleta z vsemi klasičnimi stavami in Lama avtomat (5 kolutov, 10 dobitnih linij, divji simbol, brezplačni vrtljaji); en račun lama žetonov z Blackjackom in Pokrom |
 
 **Večigralski način (2 igralca lokalno)** je na voljo za igre **Snake**,
 **Pong**, **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**,
 **Asteroids (kooperativni dvoboj)**, **Memory (dvoboj)**, **Štiri v vrsto**,
 **Tankovski dvoboj**, **Reversi**, **Kniffel**, **Dama**, **Šah**, **Mlin**,
-**Simon (dvoboj)**, **Biljard**, **Minigolf**, **Pinball** in **Bowling**.
-Način se izbere kar na predigralnem zaslonu
-(*En igralec / Več igralcev*).
+**Simon (dvoboj)**, **Biljard**, **Minigolf**, **Pinball**, **Bowling** in
+**Battleship** (z zaslonom za predajo, ki skrije flote) - skupaj 20 iger. Način
+se izbere kar na predigralnem zaslonu (*En igralec / Več igralcev*); Tetris
+ponuja še **Versus proti UI**. Spletna različica je samo za enega igralca.
 
 #### Podrobnosti po igrah
 
@@ -8451,9 +10725,27 @@ Način se izbere kar na predigralnem zaslonu
   žogico (sproži laser), **P/Esc** = pavza.
 
 **Tetris**
-- Levo/desno za premik, gor = vrtenje, dol = mehki spust, akcija = trdi spust.
-- Polne vrstice dajo točke, vsakih 10 vrstic se raven zviša.
-- **Versus**: izgubi tisti, čigar kup prvi doseže vrh.
+- **Sodobna pravila Guideline**: igrišče 10x20, kocke iz **vrečke po 7**, **sistem
+  vrtenja SRS** s pravimi wall kicki (tudi za kocko I), vrtenje v obe smeri,
+  **shramba** (enkrat na kocko), **predogled 5 kock**, senčna kocka in **lock
+  delay** (0,5 s, največ 15 ponastavitev).
+- **Trije načini** na predigralnem zaslonu: *Solo*, *Proti AI* in *2 igralca*.
+  Solo v nastavitvah ponuja **Maraton** (začetna stopnja 1–15, šteje za rekord),
+  **Šprint 40 vrstic** (najboljši čas) in **Ultra 2 minuti** (najboljši rezultat);
+  najboljši rezultati se shranijo v razdelek `tetris` v `mem.json`.
+- **Točkovanje Guideline**: od singla do Tetrisa, **T-Spini** (polni in mini),
+  **Back-to-Back** (x1,5), **kombinacije** in **Perfect Clear** - z napisi na
+  zaslonu, animacijo brisanja vrstic, sledjo trdega spusta, delci in učinkom
+  napredovanja.
+- **Versus z vrsticami smeti**: počiščene vrstice pošiljajo nasprotniku smeti
+  (Tetris = 4, T-Spin Double = 4 …), prihajajoče smeti napove opozorilni trak,
+  lastni napadi pa jih **odštejejo**; obe igrišči dobita enako zaporedje kock.
+  **UI** ima 3 jakosti, hitrost pa se poveča vsakih 40 sekund.
+- **Upravljanje**: levo/desno z lastnim **DAS/ARR** (nastavljivo v nastavitvah),
+  gor = vrtenje desno, dol = mehki spust, akcija = trdi spust; **C**/Shift =
+  shramba, **Z**/**Y** = vrtenje levo, **X** = vrtenje desno. V dvoje igralec 1
+  shranjuje s **Q** in vrti levo z **E**, igralec 2 z **desnim Shiftom** /
+  **desnim Ctrl**. Po igri: **R** = znova, **S** = nastavitve.
 
 **Invaders** – dva načina (izbirna na predigralnem zaslonu):
 - **Klasični**: klasičen blok vesoljcev; nato izbirno v setupu: **gibanje** (samo
@@ -8524,7 +10816,21 @@ nadgradnja orožja), učinki eksplozij, rekord.
 - Točke = dosežena višina; težavnost narašča z višino. Rekord.
 - Upravljanje: levo/desno = premik, gor / preslednica = strel.
 
-**2048** – puščice/WASD zdrsnejo vse ploščice; enaka števila se združijo.
+**2048**
+- **Lasten nastavitveni zaslon** s ploščami od **3x3 do 8x8** in tremi načini:
+  *Klasično* (cilj 2048, nato »Igraš naprej?«), *Na čas* (3 minute, ura se zažene
+  ob prvi potezi) in *Neskončno*.
+- **Tekoče animacije**: ploščice drsijo, se združijo z učinkom »pop« in zrastejo v
+  polje; pojavne točke, iskre od 128, udarni val od 2048 in nove barve vse do
+  131072. Vnosi med animacijo se shranijo v vrsto.
+- **Razveljavitev** (izklopljeno / 3 na igro / neomejeno, tipka **U** ali
+  vračalka) - kdor jo uporabi, igra brez rekorda in brez dosežkov za ploščice.
+- **Shrani in nadaljuj**: tekoča partija se samodejno shrani za vsako velikost in
+  način; najboljši rezultati in največja ploščica po velikosti/načinu so v
+  razdelku `g2048` v `mem.json`.
+- Upravljanje: puščice/WASD ali **poteg** z miško/sledilno ploščico, **R**/**N** =
+  nova igra, **Tab** = nastavitve. Rekord šteje le v **4x4 Klasično** brez
+  razveljavitve.
 
 **Minesweeper**
 - Tri ravni: **Začetnik** (9x9, 10 min), **Napredni** (16x16, 40), **Strokovnjak**
@@ -8539,22 +10845,31 @@ nadgradnja orožja), učinki eksplozij, rekord.
 - Točke = osnovna vrednost ravni minus sekunde.
 
 **Sudoku**
-- **400 ravni**: 4 težavnosti (Lahka/Normalna/Težka/Strokovnjak) x 100 ravni.
-  Uganke so **generirane s semenom in imajo enolično rešitev** - raven 12 v
-  »Težka« je na vsakem računalniku ista uganka. Rešene ravni se shranijo in
-  odkljukajo v izbiri ravni.
+- **4 različice** s po **400 ravnmi** (4 težavnosti x 100): *Klasični* (znane
+  ravni s semenom - rešene ostanejo odkljukane), *X-sudoku* (obe diagonali
+  vsebujeta vsako števko natanko enkrat), *Killer* (črtkane kletke z vsoto; 400
+  vnaprej ustvarjenih ravni) in *Mini 6x6*. Vsaka uganka ima **enolično
+  rešitev** - raven 12 v »Težka« je na vsakem računalniku ista uganka.
+- **Sudoku dneva**: ena uganka na dan za vse, enaka na računalniku in v
+  brskalniku; težavnost je odvisna od dneva v tednu (od ponedeljkove Lahke do
+  sobotne Strokovnjak), z vsakodnevnim reševanjem pa gradiš niz.
+- **Do 3 zvezdice na raven** (rešeno · brez napak in namigov · poleg tega pod
+  ciljnim časom) in **najboljši čas** v izbiri ravni; **začete uganke** se
+  samodejno shranijo in se naslednjič nadaljujejo.
 - **4 igralni načini** (izbrani pred začetkom) z množiteljem točk: **Klasični**
-  (x2.0 - brez pomoči), **Zapiski** (x1.5 - + zapiski s svinčnikom), **Udobje**
-  (x1.0 - + napačne števke rdeče, poudarjanje konfliktov in enakih števk,
-  pravilni vnosi se zaklenejo), **Pomočnik** (x0.7 - + tipka za namig, največ 3).
-- Vsak vnos se takoj preveri z rešitvijo; z vklopljeno **omejitvijo 3 napak**
-  (možnost v setupu) tretja napaka konča igro.
+  (x2.0 - brez pomoči), **Zapiski** (x1.5 - + zapiski s svinčnikom in samodejni
+  kandidati), **Udobje** (x1.0 - + napačne števke rdeče, označeni konflikti in
+  napačne vsote kletk, pravilni vnosi se zaklenejo), **Pomočnik** (x0.7 - + tipka
+  za namig, največ 3). Z vklopljeno **omejitvijo 3 napak** (možnost v setupu)
+  tretja napaka konča igro.
 - Upravljanje: puščice/WASD = celica, **1-9** = števka (tudi numerična
-  tipkovnica), **0/vračalka/desni klik** = izbriši, **N** = zapiski, **H** = namig,
-  **R** = ponovi raven, **Q** = izbira ravni; povsem igralno z miško (številska
-  tipkovnica na desni). Po koncu igre **A** skrije pasico in na plošči razkrije
-  celotno **rešitev** (znova A = nazaj).
-- Točke = (osnova težavnosti - čas - napake - namigi) x množitelj načina.
+  tipkovnica), **0/Delete/desni klik** = izbriši, **U**/**Z** = razveljavi, **Y** =
+  uveljavi znova, **N** = zapiski, **C** = samodejno vpiši kandidate, **H** = namig,
+  **M** = barvna oznaka, **R** = ponovi raven, **Q** = izbira ravni. Vnos »najprej
+  števka« (setup, **I**) in **števec manjkajočih števk** pod vsako števko; povsem
+  igralno z miško. Po koncu igre **A** razkrije celotno **rešitev**.
+- Točke = (osnova različice in težavnosti - čas - napake - namigi) x množitelj
+  načina; vse različice in Sudoku dneva štejejo za rekord.
 
 **Frogger**
 - 5 prometnih pasov (avtomobili/tovornjaki) in 5 rečnih pasov (debla, želve, ki se
@@ -8619,11 +10934,16 @@ nadgradnja orožja), učinki eksplozij, rekord.
 - Prava kazinojska pravila: **čeveljec s 4 paketi**, delivec ostane pri 17,
   **blackjack plača 3:2**, delivčev peek ob asu/10; **podvojitev** in **ena
   delitev** (razdeljena asa dobita vsak po eno karto).
-- **Trajno stanje žetonov**: začneš s 500, stanje in **rekord** preživita vsak
-  ponovni zagon (`mem.json`); pod 10 žetoni dobiš 500 svežih - rekord ostane.
+- **Lama žetoni**: Blackjack igra z računom **Lama banke**, ki si ga deli s
+  Pokrom in Casinom (začetek 1000, trajno shranjen v `mem.json`). Stava se odšteje
+  takoj ob deljenju; pod 10 žetoni enter vzame **bančni kredit**, ki račun spet
+  napolni do 1000.
+- **Rekord** = najvišje stanje tvoje **bilance v Blackjacku** (1000 plus vse, kar
+  je bilo v Blackjacku dobljeno in izgubljeno) - dobitki na ruleti, avtomatu ali v
+  pokru tu ne štejejo, krediti prav tako ne.
 - Igra se prek gumbov za žetone in tipk (**H**it/**S**tand/**D**ouble/delitev
-  **X**, **1-4** = stava, enter = razdeli) z animacijami kart in obratom zakrite
-  karte.
+  **X**, **1-4** = stava, vračalka = počisti stavo, enter = razdeli) z animacijami
+  kart; delivčeva zakrita karta se ob razkritju zdaj res obrne.
 
 **Tunnel Racer**
 - **3D-let skozi neonsko cev** (programski izrisovalnik kot pri Aim Trainerju):
@@ -8662,26 +10982,68 @@ nadgradnja orožja), učinki eksplozij, rekord.
   enter).
 
 **Wordle**
-- Ugani **5-črkovno besedo v 6 poskusih**; barvna povratna informacija
-  (zeleno/rumeno/sivo) s **pravilnim štetjem podvojenih črk** in zaslonsko
-  tipkovnico, ki se obarva.
-- **Neskončni niz**: vsaka rešena beseda prinese točke (manj poskusov = več), prva
-  nerešena beseda konča niz - vsota = rekord.
-- **Pravi seznami besed v vseh 14 jezikih** (mapa `woordlistz/`, samo A-Z): skupaj
-  več kot **34.000 rešitev** in **213.000 dovoljenih besed**. Vsak poskus se preveri
-  s seznamom - drugo je zavrnjeno in vrstica se na kratko strese.
-- **Dva načina**: *Normalno* in *Težko* - v težkem je treba najdene namige
-  uporabiti naprej. Tipkaj na tipkovnici ali klikaj zaslonske tipke.
+- Ugani skrito besedo; barvna povratna informacija (zeleno/rumeno/sivo) s
+  **pravilnim štetjem podvojenih črk** in zaslonsko tipkovnico, ki se obarva
+  (QWERTZ za nemščino, češčino, slovenščino in hrvaščino, AZERTY za francoščino,
+  sicer QWERTY).
+- **Štirje načini**: *Neskončno* (beseda za besedo, vsakič 6 poskusov; vsaka
+  rešena beseda prinese točke, prva nerešena konča igro), *Beseda dneva* (ena
+  beseda na dan za vsak jezik in dolžino - enaka na računalniku in v brskalniku -
+  z odštevanjem in nizom; začeta beseda dneva se shrani), *Dordle* (2 besedi hkrati
+  v 7 poskusih) in *Quordle* (4 besede v 9 poskusih, tipke kažejo barve vseh mrež).
+- **Nastavitve** pred vsako igro: **dolžina besede 4 do 7**, **težki način**
+  (najdene namige je treba uporabiti naprej) in **paleta za barvno slepe**
+  (oranžna/modra); ob strani je statistika.
+- **Pravi seznami besed v vseh 14 jezikih** (mapa `woordlistz/`, samo A-Z), za
+  vsako dolžino posebej: samo pri 5 črkah skoraj **34.000 rešitev** in več kot
+  **213.000 dovoljenih besed**, v vseh štirih dolžinah skupaj približno 134.000
+  rešitev. Rešitve so pogoste besede brez imen, angleških ostankov in žaljivih
+  besed; vsak poskus se preveri s seznamom - drugo je zavrnjeno in vrstica se na
+  kratko strese.
+- **Statistika** po jeziku, dolžini in načinu: igre, delež zmag, trenutni in
+  najdaljši niz ter **razporeditev poskusov kot stolpčni graf** (razdelek `wordle`
+  v `mem.json`). **Deli** (**C**) kopira mrežo emojijev, ne da bi izdala rešitev.
+- Za rekord šteje le *Neskončno* s 5 črkami; druge dolžine imajo svoje najboljše
+  rezultate. Dosežki **Jasnovidec** (največ 2 poskusa), **Besedna navada** (7
+  besed dneva zapored) in **Štirikratni genij** (rešen Quordle).
+
+**Poker**
+- **3 različice** na predigralnem zaslonu: **Texas Hold'em** proti 1–3 nasprotnikom
+  UI z gumbom delivca, blindi in štirimi krogi stav, **5 Card Draw** (ena na ena
+  proti UI, ena menjava kart) in **Video Poker** (*Jacks or Better*, solo proti
+  tabeli izplačil).
+- Dejanja z gumbi ali tipkami: **F** = odstop (fold), **C** = check/call, **R** =
+  dvig, **A** = all-in; zadrži/zamenjaj karte s klikom ali **1-5**, **enter**
+  dobi karte ali razdeli naslednjo roko.
+- **Lama žetoni** skupne **Lama banke**: na začetku roke je tvoj račun na mizi kot
+  kup, kar gre v pot, pa se takoj odšteje - če mizo zapustiš sredi roke, izgubiš
+  le svoj delež v potu. Brez denarja (manj kot veliki blind 20, v Video Pokru manj
+  kot 10) = bančni kredit do 1000.
+- **Rekord** = najvišje stanje **bilance v Pokru** (1000 plus vsi dobitki in
+  izgube v pokru); dosežek **Chipleader** prav tako šteje le to bilanco.
 
 **Šah**
 - **Popolni šah**: vse poteze figur, vključno z **rošado**, **en passant** in
   **pretvorbo kmeta** (izbereš figuro); **šah, mat in pat** ter remi po **pravilu
-  50 potez**, **trikratni ponovitvi položaja** in **nezadostnem materialu**.
-- **6 jakosti UI** od *Začetnika* do *Mojstra* (negamax z alfa-beta, razvrščanje
-  potez, tabele vrednosti figur/polj, umirjeno iskanje); **časovni proračun**
-  ohranja vsako potezo UI gladko. **Izbira barve** bela/črna ali **lokalni dvoboj**.
-- Dovoljene poteze so poudarjene, šah je označen; igraj z **miško** ali izbirnim
-  kazalcem. Vsaka zmaga proti UI prinese eno točko k rekordu.
+  50 potez**, **trikratni ponovitvi položaja**, **nezadostnem materialu** ali
+  dogovoru.
+- **Trije načini**: *partija* proti UI, *2 igralca* za istim računalnikom (plošča
+  se lahko po vsaki potezi obrne) in **uganke**.
+- **Močnejša UI brez zatikanja** v 6 jakostih od *Začetnika* do *Mojstra*:
+  iterativno poglabljanje, transpozicijska tabela, umirjeno iskanje, knjiga otvoritev
+  in ocena z mobilnostjo, strukturo kmetov in varnostjo kralja. UI računa v majhnih
+  obrokih na sličico - igra se nikoli ne zatika.
+- **Nastavitve**: izbira barve, **šahovska ura** (brez, 1+0, 3+2, 5+0, 10+5) in
+  **Chess960** (vseh 960 začetnih postavitev, številka je nad seznamom potez).
+- **Stranska plošča** z urama, zajetimi figurami, materialno bilanco in drsnim
+  **seznamom potez (SAN)**; povleci in spusti, drseče figure, koordinate. Tipke:
+  **U** = razveljavi, **H** = puščica namiga, **O** = ponudi remi, **X** = predaja,
+  **F** = obrni ploščo, po partiji **P** = **izvoz PGN**.
+- **Uganke**: 200 ugank v 5 stopnjah (mat v 1/2/3, taktika I/II) iz **proste baze
+  ugank Lichess (CC0)**, preverjenih z lastnim pogonom; pri matnih ugankah velja
+  vsaka poteza, ki matira. Napredek je v razdelku `chess` v `mem.json`.
+- Razveljavitev in namig naredita partijo »podprto«: rekord šteje le zmage proti
+  UI brez pomoči (na sejo).
 
 **Mlin**
 - **Mlin** z vsemi tremi fazami: **postavljanje** (po 9 figur), **premikanje**
@@ -8859,6 +11221,95 @@ nadgradnja orožja), učinki eksplozij, rekord.
 - **Posnetek partije**: na koncu **P** znova pokaže vse mete, **S** pa jih
   shrani v arhiv (gumb **Posnetki**).
 
+**Crossy Road**
+- **Neskončno skakanje** čez travnike (drevesa in kamni zapirajo pot), ceste z
+  avtomobili in tovornjaki, reke z debli in lokvanji ter **tire**, po katerih po
+  opozorilni luči in zvoncu pridrvi vlak - naprej čakajo cele postaje z do 5 tiri.
+  Proga nastaja vrstico za vrstico, vedno ima prehodno pot, hitrost in promet pa
+  naraščata.
+- **Izometrični voksel slog**: liki, vozila in drevesa iz senčenih kock
+  (vnaprej izrisani za vsako velikost polja), mehko sledeča kamera, squash &
+  stretch pri skokih, pljuski vode, animacija sploščenja, perje in bleščeči
+  kovanci; od vrstice 50 **menjava dneva in noči** z žarometi.
+- **Orel**: kamera se počasi pomika naprej - kdor predolgo oklijeva ali se vrne za
+  več kot tri vrstice, ga zgrabi orel (prej opozori rdeč rob). Če te deblo odnese
+  čez rob slike, je igre prav tako konec.
+- **Kovanci in liki**: zbrani kovanci (velikanski kovanec = 5) se shranijo in z
+  njimi v zavihku **Liki** kupuješ nove like: žabo, prašiča, pingvina, mačko,
+  lisico, lamo, robota, duha in samoroga (25 do 250 kovancev); piščanec je na voljo
+  od začetka.
+- **Načini**: *Neskončno* (točke = najdaljša vrstica, šteje za rekord) in *Dnevna
+  proga* (danes enaka za vse, tudi v brskalniku, z lastnim dnevnim rekordom).
+  Upravljanje: puščice/WASD, preslednica/enter/klik = skok naprej; v nastavitvah
+  **H** = sence, **N** = dan/noč. Kovanci, liki in dnevni rekord so v razdelku
+  `crossy` v `mem.json`.
+
+**Geometry Dash**
+- **Ritmična ploščadna igra**: lik sam drvi v desno - ti odločaš le, kdaj skočiti
+  ali leteti. **Pet oblik** - kocka, ladja, žoga, NLP in val - poleg tega portali
+  oblike, težnosti in hitrosti (0,5x do 3x), rumeni/roza/modri **odskoki in
+  krogle**, polbloki, konice, jame in barvni sprožilci.
+- **8 vgrajenih stopenj** od *Lahko* do *Demon* (»Lama Inferno«) s po **3
+  skrivnimi kovanci**. Vsaka stopnja je dokazano rešljiva: ob gradnji jo je
+  reševalec opravil s pravo kodo igre - z vsemi kovanci in celo z zamikom 1/240
+  sekunde.
+- **Natančna fizika**: računanje s stalno vejico v stalnem koraku 240 Hz; vsak
+  pritisk učinkuje natanko v koraku, v katerem se je zgodil - enako pri vsaki
+  hitrosti sličic in bitno enako v brskalniku.
+- **Način vaje** (**P**) s samodejnimi in lastnimi kontrolnimi točkami (**Z**
+  postavi, **X** izbriše), števcem poskusov, vrstico napredka, eksplozijami in
+  takojšnjim ponovnim začetkom (**R**). Vsaka stopnja ima **svojo glasbo** -
+  ozadje, tla in krogle utripajo v ritmu (glasbo izklopiš z **M**).
+- **Zvezdice in kovanci**: kdor stopnjo opravi v običajnem načinu, dobi njene
+  zvezdice, vsak kovanec pa je vreden še eno zvezdico; rekord je **skupno število
+  zvezdic** (največ 65). Najboljši rezultati stopenj, kovanci, poskusi in skoki so
+  v razdelku `geodash` v `mem.json`.
+- **Urejevalnik stopenj** v zavihku **STOPNJE**: platno z mrežo, paleta s 6
+  skupinami (bloki, nevarnosti, odskoki in krogle, portali, hitrost, dodatki),
+  vrtenje, razveljavi/uveljavi, pregledni trak, **test od začetka ali od tu** in
+  nastavitve stopnje (začetna hitrost in oblika, glasbeni slog, BPM, barve).
+  Kljukica **»preverjeno«** se pojavi šele, ko svojo stopnjo sam opraviš.
+  **Deli** zapiše datoteko `.lamapgzlevel`, **Uvozi** jo spet prebere; stopnje se
+  shranijo v `ugc.json` poleg lastnih minigolf prog.
+
+**Battleship**
+- **Pomorska bitka 10x10** z letalonosilko (5 polj), bojno ladjo (4), križarko
+  (3), podmornico (3) in rušilcem (2) - zmaga, kdor prvi potopi celotno sovražno
+  floto.
+- **Postavitev flote** z vlečenjem iz doka: **R** ali desni klik zavrti, predogled
+  sveti zeleno ali rdeče, **X** vse postavi naključno, **C** izprazni ploščo;
+  zadnja postavitev se znova predlaga.
+- **Pravila v nastavitvah** (se shranijo): *ladje se lahko dotikajo*, *salva*
+  (toliko strelov na potezo, kolikor lastnih ladij še plava) in *po zadetku
+  streljaš še enkrat*.
+- **UI s 3 jakostmi**: Lahko strelja naključno, Srednje sistematično dotolče
+  zadetke, Težko izračuna **zemljevid verjetnosti** s parnostjo šahovnice (v
+  povprečju približno 70 / 60 / 45 strelov za celo floto). Ali **2 igralca** za
+  istim računalnikom - **zaslon za predajo** pred vsako potezo skrije obe floti.
+- **Grafika**: radarski preplet, animirani valovi, granate v loku, pljuski,
+  eksplozije z dimom in gorečimi polji, razkritje »POTOPLJENO!« ter povzetek
+  kroga s streli, zadetki in natančnostjo. Rekord šteje tvoje **zmage proti UI** v
+  eni seji.
+
+**Casino**
+- **Ruleta** (evropska, 37 polj): vse klasične stave s klikom na število, rob ali
+  kot - **plein** (35:1), cheval, transversale, carré, sixain, stolpec, ducat,
+  rdeče/črno, sodo/liho in manque/passe. Žetoni 1/5/25/100/500, desni klik žetone
+  odstrani; **Zavrti**, **Ponovi** (**R**), **Podvoji** (**D**) in **Počisti**.
+  Kroglica se v spirali zakotali v vnaprej izžrebano polje, zgoraj pa je vidnih
+  zadnjih 12 števil.
+- **Lama avtomat**: 5 kolutov x 3 vrstice, **10 dobitnih linij**, **lama = divji
+  simbol**, **zlatniki = scatter** z 10 brezplačnimi vrtljaji in dvojnimi dobitki,
+  stava na linijo 1/2/5/10, **samodejno vrtenje** (10/25), **turbo** in tabela
+  dobitkov. **Stopnja vračila je 96,1 %** - natančno izračunana iz trakov kolutov.
+- **Lama banka**: Casino, Blackjack in Poker si delijo en račun **lama žetonov**
+  (začetek 1000, razdelek `casino` v `mem.json`); stara stanja žetonov se prenesejo
+  samodejno. Stave se odštejejo takoj, vsaka igra vodi svojo bilanco za rekord, ob
+  bankrotu pa dobiš **bančni kredit** do 1000.
+- Konfeti, dež kovancev, pasice big/mega/jackpot in animacije dobitnih linij;
+  dosežka **Polni zadetek** (dobljen plein na ruleti) in **Lama jackpot** (5 lam na
+  eni liniji).
+
 Rekordi se shranijo v razdelku `highscores` datoteke `mem.json` (poleg kode) –
 skupaj z jezikom (razdelek `mem`).
 
@@ -8881,20 +11332,23 @@ oblikovan kot sodoben zaganjalnik iger:
   **dež konfetov ob novem rekordu** in pravo **zamegljenje** za prekrivnim slojem
   pavze.
 - **Predigralni zaslon** vsake igre se pojavi v njeni poudarni barvi in prejšnji
-  rekord prikaže kot čip.
-- **Poenoten videz v igri**: vseh 42 iger si deli barvno paleto in pisavo menija -
+  rekord prikaže kot čip. Pri veliko načinih in majhni ločljivosti postane
+  **kompakten**: Možnosti, Wiki in Nazaj se postavijo v eno vrsto, pisava pa se
+  prilagodi - nič več ne sega čez rob slike.
+- **Poenoten videz v igri**: vseh 46 iger si deli barvno paleto in pisavo menija -
   HUD-i, nastavitveni zasloni in prekrivni sloji sledijo izbranemu dizajnu v
   možnostih (v4.1 / v4 / Klasični), medtem ko vsako igrišče obdrži svoje
   identitetne barve. Vsaka igra zdaj čisto obvlada spremembo ločljivosti med igro,
   imena v meniju pa so odvisna od jezika (npr. »Schach« → »Chess« / »Šah«).
 - **Vgrajeni wiki** (»LamaWiki«): podrobna pomoč za vsako igro (upravljanje,
   načini, točkovanje, nasveti) ter splošne strani - z **iskalnim poljem**,
-  kategorijami, drsečimi članki in čipi tipk, v vseh petih jezikih. Dostopen prek
+  kategorijami, drsečimi članki in čipi tipk, v vseh 14 jezikih. Dostopen prek
   gumba **»Wiki / Pomoč«** v stranski vrstici in z predigralnega zaslona vsake
   igre (odpre neposredno njeno stran).
-- **Dosežki in statistika**: **69 dosežkov** v treh kategorijah (cilji na
-  ravni zbirke, en točkovni mejnik na igro in posebni trenutki, kot sta
-  šah-mat UI ali ploščica 2048) z **zlatim obvestilom in fanfaro** ob
+- **Dosežki in statistika**: **107 dosežkov** v treh kategorijah (23 ciljev na
+  ravni zbirke, 37 točkovnih mejnikov in 47 posebnih trenutkov, kot so šah-mat
+  UI, ploščica 4096, T-Spin Double, 25 rešenih šahovskih ugank, Killer Sudoku ali
+  lamji jackpot; v 2048 in šahu partije z razveljavitvijo ali namigom ne štejejo) z **zlatim obvestilom in fanfaro** ob
   odklepanju - tudi sredi igre; stari rekordi se upoštevajo samodejno. Poleg
   tega zavihek **statistike**: skupni čas igranja, partije, zmage, rekordi,
   najljubša igra in tabela iger, razvrščena po času. Na voljo prek gumba
@@ -8914,7 +11368,14 @@ oblikovan kot sodoben zaganjalnik iger:
   Prikaz Pygame ostane vgrajen in se poveča z ohranitvijo razmerja stranic (črni
   robovi, kadar se razmerje razlikuje). Okno je mogoče prosto spreminjati po
   velikosti.
-- **»Nazaj v meni«** konča igro in shrani rekord.
+- **»Nazaj v meni«** konča igro in shrani rekord - enako velja za preklop na
+  drugo igro prek stranske vrstice.
+- **Stalne dodatne tipke**: poleg petih dodeljivih dejanj imajo nekatere igre
+  svoje tipke (npr. shramba **C** in vrtenje v levo **Z** v Tetrisu,
+  razveljavitev **U** v 2048, šahu in Sudokuju). Delujejo le, če tipka v
+  možnostih ni dodeljena nobenemu dejanju, navedene pa so v namigu nastavitev in
+  v wikiju. Držane tipke se pravilno zaznajo in ob pavzi ali Alt-Tab sprostijo -
+  nič se ne »zatakne« več.
 - **»Izhod«** čisto zapre Pygame in Tkinter.
 
 ### Možnosti, upravljanje in zvok
@@ -8960,22 +11421,24 @@ start.sh             Zagonska skripta (Linux / macOS / Git Bash)
 pyinstall.bat        Gradnja EXE (Windows): vse zapakira v builds\PyGameZ.exe
 main.py              Vmesnik Tkinter, vgradnja Pygame, osrednja igralna zanka
 game_base.py         Osnovni razred iger (update/draw/handle_event) + InputEvent + pomočniki
-settings.py          Nalaganje/shranjevanje nastavitev (zvok/haptika/preslikave tipk) (JSON)
-audio.py             Proceduralni zvočni učinki + tresenje krmilnika (rumble)
+settings.py          Nalaganje/shranjevanje nastavitev (zvok/haptika/tipke/možnosti iger s pravili preverjanja) (JSON)
+audio.py             Proceduralni zvočni učinki, glasbene zanke + vibriranje igralne ploščice
 menu.py              Zasloni za jezik, predigro (način) in možnosti (zvok/upravljanje)
 highscore.py         Nalaganje/shranjevanje rekordov (razdelek v mem.json)
-store.py             Osrednja datoteka za shranjevanje mem.json (razdelka: mem, highscores, stats, achievements)
+store.py             Osrednja datoteka shranjevanja mem.json (razdelki: mem, highscores, stats, achievements + napredek iger), atomsko z varnostno kopijo .bak
 stats.py             Statistika igralca (partije, čas igranja, zmage, rekordi) na igro
 achievements.py      Dosežki: definicije, odklepanje, obvestilo (toast)
 progress.py          Zaslon dosežkov in statistike (dva zavihka, drsni)
 replay.py            Snemanje in arhiv posnetkov (replay.json)
 replayview.py        Zaslon posnetkov: seznam arhiva in predvajanje
-ugc.py               Lastne steze: shramba, preverjanje, izvoz/uvoz (ugc.json)
+ugc.py               Lastna vsebina (minigolf proge, stopnje Geometry Dash): shranjevanje, preverjanje, izvoz/uvoz (ugc.json)
 swear.py             Besedni filter za imena in id (lang/swear/*.yml, vseh 14 jezikov)
 filepick.py          Pogovorna okna za datoteke ("Izvozi kot ...", "Uvozi")
 prestige.py          Sistem prestiža za Snake
 competitive.py       Nastavitve za Tekmovalni način igre Snake (ravni, igralni avtomat, jabolka za stave)
 ngb.py               Vizualna prilagoditev (»modi«): barva glave + koordinatna mreža + meni (mem-ngb.json)
+lamabank.py          Lama banka: skupni račun žetonov za Blackjack, Poker in Casino (razdelek casino v mem.json)
+seedrand.py          Generator naključnih števil z bitno enakimi števili v Pythonu in brskalniku (dnevni načini, nove uganke)
 i18n.py              Prevajalski pogon (naloži lang/*.json, t("ključ"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Jezikovni nizi (en ključ na besedilo)
@@ -8987,24 +11450,48 @@ lamawiki/
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 woordlistz/
   build_wordlists.py   Znova zgradi sezname besed za Wordle (slovarji + seznami pogostosti)
-  de/ en/ fr/ ... hr/  answers.txt (rešitve) + allowed.txt (dovoljene besede), 14 jezikov
+  de/ en/ fr/ ... hr/  answers.txt + allowed.txt (5 črk), answers4/6/7.txt + allowed4/6/7.txt (4, 6, 7 črk), 14 jezikov
+devtools/            Razvijalska orodja (ne pakirajo se v .exe)
+  merge_staging.py           Prenese prevode in wiki strani iz devtools/staging/ v vseh 14 jezikovnih datotek
+  build_chess_puzzles.py     Zgradi 200 šahovskih ugank iz baze ugank Lichess (CC0)
+  build_sudoku_killer.py     Ustvari 400 Killer Sudokujev z enolično rešitvijo
+  build_crossyroad_models.py Zapiše voksel modele Crossy Road za spletno različico
+  build_geodash_levels.py    Zgradi 8 stopenj Geometry Dash in z reševalcem dokaže, da je vsaka rešljiva skupaj s kovanci
+  build_geodash_solver.py    Reševalec s pravo kodo koraka (rešitve v geodash_proofs.json)
 games/
-  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
+  tetris.py  tetris_core.py  tetris_ai.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py  sudoku_draw.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py  wordle_words.py
+  trexrunner.py  dame.py  poker.py  muehle.py
+  chess.py  chess_engine.py  chess_draw.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
-  levels/
+  crossyroad.py  crossyroad_world.py  crossyroad_draw.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  battleship.py  battleship_core.py
+  casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  levels/              Podatki o ravneh: snake-comp.json, chess-puzzles.json (+ README z viri), sudoku-killer.json, geodash.json
+tests/
+  arcade_casino_audit.py     Celovita revizija (vnos, seedrand Python = JS, shranjevanje, jezikovne datoteke, predigralni zasloni) + vsi audit_*.py
+  audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless revizije za posamezne igre
+  newgames_audit.py  blockjump_audit.py
 ```
 
 Izbrani jezik se shrani v `mem.json` (v razdelku `mem`, poleg razdelka
 `highscores` v isti datoteki) in se ob naslednjem zagonu samodejno naloži.
+
+**Viri in licence:** 200 šahovskih ugank izvira iz
+[baze ugank Lichess](https://database.lichess.org/#puzzles) (licenca
+**CC0 1.0**, javna domena - hvala, lichess.org!); podrobnosti so v
+`games/levels/chess-puzzles.README.md`. Viri seznamov besed za Wordle so navedeni
+v `woordlistz/README.md`.
 
 ### Opombe glede platform
 
@@ -9108,7 +11595,7 @@ prosto kopirati. Nastavitve in rekordi (`settings.json`, `mem.json`,
 ## 🇭🇷 Hrvatski
 
 Zbirka desktop igara u Pythonu: **Tkinter** pruža prozor i izbornik, a **Pygame**
-je ugrađen kao prikaz igre unutar Tkinter prozora. Četrdeset i dvije igre sa
+je ugrađen kao prikaz igre unutar Tkinter prozora. Četrdeset i šest igara sa
 zajedničkim opcijama, slobodno preslagivim upravljanjem, rekordima,
 proceduralnim zvučnim efektima i, kod nekih naslova, višeigračkim modom. Sučelje
 je **višejezično** – **14 jezika** (njemački / engleski / francuski / španjolski /
@@ -9147,31 +11634,31 @@ dnu pod **[Vodič za instalaciju](#vodič-za-instalaciju)**.
 | **Air Hockey** | 1 / 2 igrača  | 2D fizika s prijenosom impulsa, upravljanje mišem, AI i power-ups |
 | **Tic-Tac-Toe** | 1 / 2 igrača | m,n,k igra na 3x3 do 9x9, tri razine AI-ja **ili** lokalno X protiv O |
 | **Breakout** | 1 igrač         | Razbijanje cigli s vrstama cigli, power-ups, kombinacijama i mnogo razina |
-| **Tetris**   | 1 / 2 igrača    | Klasično ili Versus (dva polja jedno pored drugog) |
+| **Tetris**   | 1 / 2 igrača    | Moderna Guideline pravila (SRS, spremište, pregled 5 kocki, T-Spinovi): Maraton, Sprint 40, Ultra 2:00, Versus protiv AI-ja (3 razine) ili u dvoje s linijama smeća |
 | **Invaders** | 1 igrač         | Space Invaders: očistite valove, zaštitite živote |
 | **Asteroids** | 1 / 2 igrača   | Fizika inercije, valovi, NLO-i, power-ups, hiperprostor - solo ili kooperativni dvoboj |
 | **Pac-Man**  | 1 igrač         | Vjeran klon: 4 AI-ja duhova, super-pilule, tunel, voće, razine |
 | **Flappy Bird** | 1 igrač      | Gravitacijski let kroz cijevi, novčići, štit, dan/noć, medalje |
 | **Doodle Jump** | 1 igrač      | Automatski skok prema gore, vrste platformi, opruge, propeler, čudovišta |
-| **2048**     | 1 igrač         | Slagalica s klizanjem brojeva, cilj: pločica 2048 |
+| **2048**     | 1 igrač         | Slagalica s klizanjem brojeva od 3x3 do 8x8: Klasično, Utrka s vremenom i Beskonačno, poništavanje, tečne animacije, spremljene partije |
 | **Minesweeper** | 1 igrač      | Klasik sa sigurnim prvim klikom, chordingom, smileyjem i najboljim vremenima |
-| **Sudoku**      | 1 igrač      | 400 razina sa sjemenom (4 težine x 100), 4 moda pomoći s množiteljem bodova, bilješke, savjeti, ograničenje od 3 pogreške |
+| **Sudoku**      | 1 igrač      | 4 varijante (Klasični, X-sudoku, Killer, Mini 6x6) s po 400 razina, Sudoku dana, do 3 zvjezdice po razini, 4 moda pomoći, poništavanje, spremljena igra |
 | **Frogger**     | 1 igrač      | Cesta + rijeka + 5 uvala, bonus muha, krokodili, vremensko ograničenje, 3 težine |
 | **Memory**      | 1 / 2 igrača | Pronađite parove na 4x4 do 8x6, animacija okretanja, solo bodovanje ili dvoboj |
 | **Pasijans**    | 1 igrač      | 5 varijanti (Klondike, Spider, FreeCell, Piramida, TriPeaks) s povuci-i-ispusti i poništavanjem |
 | **Aim Trainer** | 1 igrač      | Opušteno 3D gađanje meta: miš upravlja kamerom, 4 moda (preciznost/refleks/pokretne/chill), 3 teme uklj. crnu rupu |
 | **Četiri u nizu** | 1 / 2 igrača | Klasik s animacijom padanja žetona: 3 razine AI-ja (minimax) ili lokalni dvoboj |
 | **Tenkovski dvoboj** | 1 / 2 igrača | 2D dvoboj u areni s rikošetnim hicima, power-ups, 4 arene, AI s 3 razine |
-| **Blackjack**    | 1 igrač     | Kasino blackjack sa shoeom od 4 špila, udvostručavanje/dijeljenje, blackjack 3:2 i trajni saldo žetona |
+| **Blackjack**    | 1 igrač     | Kasino blackjack sa shoeom od 4 špila, udvostručavanje/dijeljenje i blackjack 3:2; igra se lama žetonima zajedničke Lama banke |
 | **Tunnel Racer** | 1 igrač     | Let kroz 3D neonsku cijev: beskonačni mod + 30 razina, upravljanje tipkama ili mišem, motion blur |
 | **3D labirint**  | 1 igrač     | Raycaster iz prvog lica (stil Wolfensteina) s 50 razina sa sjemenom, orbovi, minimapa - ili 2D pogled odozgo |
 | **Reversi**      | 1 / 2 igrača | Othello na 8x8: zarobite i okrenite žetone, 3 razine AI-ja (minimax) ili lokalni dvoboj |
 | **Yahtzee**      | 1 / 2 igrača | Klasik s kockicama s 13 kategorija, gornji bonus i Yahtzee; lov na rekord ili hotseat za 2 igrača |
-| **Wordle**       | 1 igrač     | Pogodite riječ od 5 slova u 6 pokušaja, beskonačni niz, obojeni savjeti, pravi popisi riječi na 14 jezika |
+| **Wordle**       | 1 igrač     | Pogađanje riječi od 4 do 7 slova: Beskonačno, Riječ dana, Dordle i Quordle, teški način, paleta za daltoniste, statistika s grafikonom, dijeljenje rezultata, pravi popisi riječi na 14 jezika |
 | **T-Rex Runner** | 1 igrač     | Beskonačna pustinjska trka: promjenjiv skok, saginjanje, kaktusi i pterodaktili, izmjena dan/noć, rastuća brzina, 3 težine |
 | **Dame**         | 1 / 2 igrača | 3 skupa pravila (njemačke 8×8, međunarodne 10×10, checkers), obavezno uzimanje i leteća dama, 3 razine AI-ja (minimax) ili lokalni dvoboj |
-| **Poker**        | 1 igrač     | 3 varijante po izboru: Texas Hold'em protiv AI-ja, 5 Card Draw i Video Poker; runde klađenja, blindovi, trajni saldo žetona |
-| **Šah**          | 1 / 2 igrača | Potpuna pravila (rokada, en passant, promocija, mat/pat/remi), 6 razina AI-ja (minimax + alfa-beta) ili lokalni dvoboj, izbor boje |
+| **Poker**        | 1 igrač     | 3 varijante po izboru: Texas Hold'em protiv AI-ja, 5 Card Draw i Video Poker; runde klađenja, blindovi, lama žetoni zajedničke Lama banke |
+| **Šah**          | 1 / 2 igrača | Potpuna pravila, Chess960 i šahovski sat, 6 razina AI-ja, 200 zadataka iz Lichess baze, poništavanje/savjet, popis poteza, izvoz PGN-a ili lokalni dvoboj |
 | **Mlin**         | 1 / 2 igrača | Faze postavljanja/pomicanja/letenja, mlinovi i uzimanja, opcionalno pravilo letenja, 3 razine AI-ja ili lokalni dvoboj |
 | **Simon**        | 1 / 2 igrača | Senso igra pamćenja: modovi Klasično/Speed/Reverse/Miješano + Dvoboj, zvuk isklj./uklj./miješan, 4/6/9 polja, najbolji po modu |
 | **Biljar**       | 1 / 2 igrača | 8-ball, 9-ball i vježba u 2D-u, fiksni 3D prikaz ili slobodno rotirajuća 3D kamera; glatka fizika, pomoć pri ciljanju, 3 razine AI-ja |
@@ -9184,13 +11671,19 @@ dnu pod **[Vodič za instalaciju](#vodič-za-instalaciju)**.
 | **Minigolf**    | 1 / 2 igrača | 360 staza na 40 terena (18 ručnih, 342 generirane): pijesak, rampe, voda, odbojnici, vjetrenjače i lutajući blokovi; kartica s parom i bonusom za hole in one; **vlastiti uređivač staza** s 15 vrsta objekata, 12 predložaka i dijeljenjem kao `.lamapgzmap` |
 | **Pinball**     | 1 / 2 igrača | Pinball automat s 3 stola: odbojnici, slingshotovi, mete, staze L-A-M-A, multiball s jackpotom, spašavanje kugle, gurkanje i tilt |
 | **Bowling**     | 1 / 2 igrača | 10 frameova sa službenim brojanjem strike/spare, pravom fizikom čunjeva, hookom i stazom u perspektivi, 3 težine |
+| **Crossy Road** | 1 igrač       | Beskonačno skakanje preko livada, cesta, rijeka i tračnica u izometrijskom voxel stilu: dan/noć, orao, 10 likova za kupnju, dnevna staza |
+| **Geometry Dash** | 1 igrač     | Ritmička platformska igra s kockom, brodom, loptom, NLO-om i valom: 8 razina od Lako do Demon s po 3 tajna novčića, način vježbe, glazba za svaku razinu; **uređivač razina** s dijeljenjem kao `.lamapgzlevel` |
+| **Battleship**  | 1 / 2 igrača  | Pomorska bitka 10x10: raspoređivanje flote povlačenjem, 3 prekidača pravila (dodir, salva, ponovni hitac), AI s 3 razine ili lokalni dvoboj sa zaslonom za predaju |
+| **Casino**      | 1 igrač       | Europski rulet sa svim klasičnim ulozima i Lama automat (5 valjaka, 10 dobitnih linija, džoker, besplatne vrtnje); jedan račun lama žetona s Blackjackom i Pokerom |
 
 **Više igrača (2 igrača lokalno)** dostupno je za **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (kooperativni
 dvoboj)**, **Memory (dvoboj)**, **Četiri u nizu**, **Tenkovski dvoboj**,
 **Reversi**, **Yahtzee**, **Dame**, **Šah**, **Mlin**, **Simon (dvoboj)**,
-**Biljar**, **Minigolf**, **Pinball** i **Bowling**. Mod se bira izravno na zaslonu pripreme
-(*Jedan igrač / Više igrača*).
+**Biljar**, **Minigolf**, **Pinball**, **Bowling** i **Battleship** (sa zaslonom za
+predaju koji skriva flote) - ukupno 20 igara. Mod se bira izravno na zaslonu
+pripreme (*Jedan igrač / Više igrača*); Tetris uz to nudi **Versus protiv AI-ja**.
+Web-inačica je samo za jednog igrača.
 
 #### Detalji značajki po igri
 
@@ -9298,9 +11791,27 @@ dvoboj)**, **Memory (dvoboj)**, **Četiri u nizu**, **Tenkovski dvoboj**,
   loptu (ispaljuje laser), **P/Esc** = pauza.
 
 **Tetris**
-- Lijevo/Desno za pomicanje, Gore = rotacija, Dolje = soft drop, Akcija = hard drop.
-- Pune linije donose bodove, svakih 10 linija razina raste.
-- **Versus**: gubi onaj čija hrpa prva dotakne vrh.
+- **Moderna Guideline pravila**: polje 10x20, kocke iz **vrećice od 7**, **SRS
+  sustav rotacije** sa stvarnim wall kickovima (i za kocku I), okretanje u oba
+  smjera, **spremište** (jednom po kocki), **pregled 5 kocki**, sjena kocke i
+  **lock delay** (0,5 s, najviše 15 resetiranja).
+- **Tri načina** na zaslonu pripreme: *Solo*, *Protiv AI* i *2 igrača*. Solo u
+  postavkama nudi **Maraton** (početna razina 1–15, broji se za rekord), **Sprint
+  40 linija** (najbolje vrijeme) i **Ultra 2 minute** (najbolji rezultat); najbolji
+  rezultati spremaju se u odjeljak `tetris` u `mem.json`.
+- **Bodovanje po Guidelineu**: od singlea do Tetrisa, **T-Spinovi** (puni i mini),
+  **Back-to-Back** (x1,5), **kombinacije** i **Perfect Clear** - s natpisima na
+  zaslonu, animacijom brisanja linija, tragom hard dropa, česticama i efektom
+  prelaska na višu razinu.
+- **Versus s linijama smeća**: očišćene linije šalju smeće protivniku (Tetris = 4,
+  T-Spin Double = 4 …), dolazno smeće najavljuje traka upozorenja, a vlastiti
+  napadi ga **poništavaju**; oba polja dobivaju isti redoslijed kocki. **AI** ima
+  3 razine, a tempo raste svakih 40 sekundi.
+- **Upravljanje**: Lijevo/Desno s vlastitim **DAS/ARR** (podesivo u postavkama),
+  Gore = okretanje udesno, Dolje = soft drop, Akcija = hard drop; **C**/Shift =
+  spremište, **Z**/**Y** = okretanje ulijevo, **X** = okretanje udesno. U dvoje
+  igrač 1 sprema tipkom **Q** i okreće ulijevo tipkom **E**, igrač 2 **desnim
+  Shiftom** / **desnim Ctrlom**. Nakon igre: **R** = ponovno, **S** = postavke.
 
 **Invaders** – dva moda (odabir na zaslonu pripreme):
 - **Klasično**: klasični blok vanzemaljaca; zatim se u setup zaslonu bira:
@@ -9371,7 +11882,21 @@ nadogradnja oružja), efekti eksplozije, rekord.
 - Rezultat = dosegnuta visina; težina raste s visinom. Rekord.
 - Upravljanje: lijevo/desno = kretanje, Gore / razmaknica = pucanje.
 
-**2048** – strelice/WASD pomiču sve pločice; jednaki brojevi se spajaju.
+**2048**
+- **Vlastiti zaslon postavki** s pločama od **3x3 do 8x8** i tri načina:
+  *Klasično* (cilj 2048, zatim „Nastaviti igru?"), *Utrka s vremenom* (3 minute,
+  sat kreće s prvim potezom) i *Beskonačno*.
+- **Tečne animacije**: pločice klize, spajaju se uz efekt „pop" i izrastaju;
+  skočni bodovi, iskre od 128, udarni val od 2048 i nove boje sve do 131072. Unosi
+  tijekom animacije spremaju se u red.
+- **Poništavanje** (isključeno / 3 po igri / neograničeno, tipka **U** ili
+  Backspace) - tko ga koristi, igra bez rekorda i bez postignuća za pločice.
+- **Spremi i nastavi**: partija u tijeku automatski se sprema za svaku veličinu i
+  način; najbolji rezultati i najveća pločica po veličini/načinu nalaze se u
+  odjeljku `g2048` u `mem.json`.
+- Upravljanje: strelice/WASD ili **povlačenje** mišem/touchpadom, **R**/**N** = nova
+  igra, **Tab** = postavke. Rekord se računa samo u **4x4 Klasično** bez
+  poništavanja.
 
 **Minesweeper**
 - Tri razine: **Početnik** (9x9, 10 mina), **Napredni** (16x16, 40), **Stručnjak**
@@ -9386,22 +11911,32 @@ nadogradnja oružja), efekti eksplozije, rekord.
 - Bodovi = osnovna vrijednost razine minus sekunde.
 
 **Sudoku**
-- **400 razina**: 4 težine (Lako/Normalno/Teško/Stručnjak) x 100 razina. Zagonetke
-  su **generirane sjemenom i imaju jedinstveno rješenje** - razina 12 „Teško" je
-  ista zagonetka na svakom računalu. Riješene razine se spremaju i označavaju u
-  izboru razina.
+- **4 varijante** s po **400 razina** (4 težine x 100): *Klasični* (poznate razine
+  sa sjemenom - riješene ostaju označene), *X-sudoku* (obje dijagonale sadrže
+  svaku znamenku točno jednom), *Killer* (isprekidani kavezi sa zbrojem; 400
+  unaprijed generiranih razina) i *Mini 6x6*. Svaka zagonetka ima **jedinstveno
+  rješenje** - razina 12 „Teško" ista je zagonetka na svakom računalu.
+- **Sudoku dana**: jedna zagonetka dnevno za sve, ista na računalu i u
+  pregledniku; težina ovisi o danu u tjednu (od ponedjeljka Lako do subote
+  Stručnjak), a svakodnevnim rješavanjem gradi se niz.
+- **Do 3 zvjezdice po razini** (riješeno · bez pogrešaka i savjeta · uz to ispod
+  ciljanog vremena) i **najbolje vrijeme** u izboru razina; **započete zagonetke**
+  automatski se spremaju i nastavljaju sljedeći put.
 - **4 moda igre** (biraju se prije početka) s množiteljem bodova: **Klasično**
-  (x2.0 - bez pomoći), **Bilješke** (x1.5 - + olovkom bilješke), **Udobnost**
-  (x1.0 - + pogrešne znamenke crveno, isticanje sukoba i istih znamenki, točni
-  unosi se zaključavaju), **Asistent** (x0.7 - + tipka za savjet, maks. 3).
-- Svaki se unos odmah provjerava prema rješenju; s uključenim **ograničenjem od 3
-  pogreške** (opcija u setupu) treća pogreška završava partiju.
-- Upravljanje: strelice/WASD = ćelija, **1-9** = znamenka (i numerička tipkovnica),
-  **0/Backspace/desni klik** = brisanje, **N** = bilješke, **H** = savjet,
-  **R** = ponovno pokreni razinu, **Q** = izbor razina; potpuno igrivo mišem
-  (numerička ploča desno). Nakon kraja partije, **A** skriva natpis i otkriva
-  cjelovito **rješenje** na ploči (ponovno A = natrag).
-- Bodovi = (osnova težine - vrijeme - pogreške - savjeti) x množitelj moda.
+  (x2.0 - bez pomoći), **Bilješke** (x1.5 - + olovkom bilješke i automatski
+  kandidati), **Udobnost** (x1.0 - + pogrešne znamenke crveno, označeni sukobi i
+  pogrešni zbrojevi kaveza, točni unosi se zaključavaju), **Asistent** (x0.7 - +
+  tipka za savjet, maks. 3). S uključenim **ograničenjem od 3 pogreške** (opcija u
+  setupu) treća pogreška završava partiju.
+- Upravljanje: strelice/WASD = ćelija, **1-9** = znamenka (i numerička
+  tipkovnica), **0/Delete/desni klik** = brisanje, **U**/**Z** = poništi, **Y** =
+  ponovi, **N** = bilješke, **C** = automatski upiši kandidate, **H** = savjet,
+  **M** = oznaka bojom, **R** = ponovno pokreni razinu, **Q** = izbor razina. Unos
+  „najprije znamenka" (setup, **I**) i **brojač preostalih znamenki** ispod svake
+  znamenke; potpuno igrivo mišem. Nakon kraja partije **A** otkriva cjelovito
+  **rješenje**.
+- Bodovi = (osnova varijante i težine - vrijeme - pogreške - savjeti) x množitelj
+  moda; sve varijante i Sudoku dana računaju se za rekord.
 
 **Frogger**
 - 5 prometnih traka (auti/kamioni) i 5 riječnih traka (trupci, kornjače koje
@@ -9466,12 +12001,16 @@ nadogradnja oružja), efekti eksplozije, rekord.
 - Prava kasino pravila: **shoe od 4 špila**, djelitelj staje na 17, **blackjack
   plaća 3:2**, djelitelj viri kod asa/10; **udvostručavanje** i **jedno dijeljenje**
   (razdvojeni asovi dobivaju po jednu kartu).
-- **Trajni saldo žetona**: počinjete s 500, saldo i **rekord** preživljavaju svako
-  ponovno pokretanje (`mem.json`); ispod 10 žetona dobivate 500 novih - rekord
-  ostaje.
+- **Lama žetoni**: Blackjack igra s računom **Lama banke**, koji dijeli s Pokerom i
+  Casinom (početak 1000, trajno spremljen u `mem.json`). Ulog se skida odmah pri
+  dijeljenju; ispod 10 žetona Enter uzima **bankovni kredit** koji račun vraća na
+  1000.
+- **Rekord** = najviše stanje vaše **bilance u Blackjacku** (1000 plus sve što je
+  u Blackjacku dobiveno i izgubljeno) - dobici na ruletu, automatu ili u pokeru
+  ovdje se ne računaju, a ni krediti.
 - Igra se preko gumba sa žetonima i tipki (**H**it/**S**tand/**D**ouble/dijeljenje
-  **X**, **1-4** = ulog, Enter = dijeli) uz animacije karata i okretanje skrivene
-  karte.
+  **X**, **1-4** = ulog, Backspace = poništi ulog, Enter = dijeli) uz animacije
+  karata; skrivena karta djelitelja pri otkrivanju sada se zaista okreće.
 
 **Tunnel Racer**
 - **Let kroz 3D neonsku cijev** (softverski renderer kao Aim Trainer): grede,
@@ -9512,27 +12051,71 @@ nadogradnja oružja), efekti eksplozije, rekord.
   1-5, strelice, Enter).
 
 **Wordle**
-- Pogodite **riječ od 5 slova u 6 pokušaja**; obojena povratna informacija
-  (zeleno/žuto/sivo) uz ispravno **brojanje ponovljenih slova** i zaslonsku
-  tipkovnicu koja se boji.
-- **Beskonačni niz**: svaka riješena riječ donosi bodove (manje pokušaja = više),
-  prva neriješena riječ završava niz - ukupno = rekord.
-- **Pravi popisi riječi na svih 14 jezika** (mapa `woordlistz/`, samo A-Z): ukupno
-  više od **34.000 rješenja** i **213.000 dopuštenih riječi**. Svaki pokušaj se
-  provjerava prema popisu - ostalo se odbija i redak se nakratko trese.
-- **Dva načina**: *Normalno* i *Teško* - u teškom se pronađeni savjeti moraju
-  dalje koristiti. Tipkajte na tipkovnici ili klikajte tipke na zaslonu.
+- Pogodite skrivenu riječ; obojena povratna informacija (zeleno/žuto/sivo) uz
+  ispravno **brojanje ponovljenih slova** i zaslonsku tipkovnicu koja se boji
+  (QWERTZ za njemački, češki, slovenski i hrvatski, AZERTY za francuski, inače
+  QWERTY).
+- **Četiri načina**: *Beskonačno* (riječ za riječju, svaka sa 6 pokušaja; svaka
+  riješena riječ donosi bodove, prva neriješena završava igru), *Riječ dana* (jedna
+  riječ dnevno za svaki jezik i duljinu - ista na računalu i u pregledniku - s
+  odbrojavanjem i nizom; započeta riječ dana se sprema), *Dordle* (2 riječi
+  istodobno u 7 pokušaja) i *Quordle* (4 riječi u 9 pokušaja, tipke pokazuju boje
+  svih ploča).
+- **Postavke** prije svake igre: **duljina riječi od 4 do 7**, **teški način**
+  (pronađeni savjeti moraju se dalje koristiti) i **paleta za daltoniste**
+  (narančasta/plava); pokraj se vidi statistika.
+- **Pravi popisi riječi na svih 14 jezika** (mapa `woordlistz/`, samo A-Z), za
+  svaku duljinu posebni: samo za 5 slova gotovo **34.000 rješenja** i više od
+  **213.000 dopuštenih riječi**, u sve četiri duljine ukupno oko 134.000 rješenja.
+  Rješenja su uobičajene riječi bez imena, engleskih ostataka i uvredljivih riječi;
+  svaki pokušaj provjerava se prema popisu - ostalo se odbija i redak se nakratko
+  trese.
+- **Statistika** po jeziku, duljini i načinu: igre, postotak pobjeda, trenutačni i
+  najbolji niz te **raspodjela pokušaja kao stupčasti grafikon** (odjeljak
+  `wordle` u `mem.json`). **Podijeli** (**C**) kopira mrežu emojija bez otkrivanja
+  rješenja.
+- Za rekord se broji samo *Beskonačno* s 5 slova; ostale duljine imaju vlastite
+  najbolje rezultate. Postignuća **Vidovnjak** (najviše 2 pokušaja), **Navika
+  riječi** (7 riječi dana zaredom) i **Četverostruki genij** (riješen Quordle).
+
+**Poker**
+- **3 varijante** na zaslonu pripreme: **Texas Hold'em** protiv 1–3 AI protivnika s
+  gumbom djelitelja, blindovima i četiri runde klađenja, **5 Card Draw** (jedan na
+  jedan protiv AI-ja, jedna zamjena karata) i **Video Poker** (*Jacks or Better*,
+  solo protiv tablice isplata).
+- Radnje gumbima ili tipkama: **F** = fold, **C** = check/call, **R** = raise,
+  **A** = all-in; zadržavanje/zamjena karata klikom ili **1-5**, **Enter** vuče
+  karte ili dijeli sljedeću ruku.
+- **Lama žetoni** zajedničke **Lama banke**: na početku ruke vaš je račun na stolu
+  kao hrpa, a ono što ide u pot odmah se skida - napustite li stol usred ruke,
+  gubite samo svoj udio u potu. Bez novca (manje od big blinda od 20, u Video
+  Pokeru manje od 10) = bankovni kredit do 1000.
+- **Rekord** = najviše stanje **bilance u Pokeru** (1000 plus svi dobici i gubici u
+  pokeru); postignuće **Chipleader** također broji samo tu bilancu.
 
 **Šah**
 - **Potpuni šah**: svi potezi figura uključujući **rokadu**, **en passant** i
   **promociju pješaka** (birate figuru); **šah, mat i pat** te remi po **pravilu
-  50 poteza**, **trostrukom ponavljanju pozicije** i **nedostatnom materijalu**.
-- **6 razina AI-ja** od *Početnika* do *Majstora* (negamax s alfa-betom,
-  sortiranje poteza, tablice figura i polja, quiescence pretraga); **vremenski
-  proračun** održava svaki potez AI-ja tečnim. **Izbor boje** bijeli/crni ili
-  **lokalni dvoboj**.
-- Legalni potezi su istaknuti, šah je označen; igrate **mišem** ili kursorom za
-  odabir. Svaka pobjeda protiv AI-ja donosi jedan bod za rekord.
+  50 poteza**, **trostrukom ponavljanju pozicije**, **nedostatnom materijalu** ili
+  dogovoru.
+- **Tri načina**: *partija* protiv AI-ja, *2 igrača* za istim računalom (ploča se
+  može okretati nakon svakog poteza) i **zadaci**.
+- **Jači AI bez trzanja** u 6 razina od *Početnika* do *Majstora*: iterativno
+  produbljivanje, transpozicijska tablica, quiescence pretraga, knjiga otvaranja i
+  procjena s pokretljivošću, strukturom pješaka i sigurnošću kralja. AI računa u
+  malim obrocima po sličici - igra nikad ne trza.
+- **Postavke**: izbor boje, **šahovski sat** (bez, 1+0, 3+2, 5+0, 10+5) i
+  **Chess960** (svih 960 početnih pozicija, broj stoji iznad popisa poteza).
+- **Bočna ploča** sa satovima, uzetim figurama, bilancom materijala i pomičnim
+  **popisom poteza (SAN)**; povuci i ispusti, figure koje klize, koordinate.
+  Tipke: **U** = poništi, **H** = strelica savjeta, **O** = ponudi remi, **X** =
+  predaja, **F** = okreni ploču, nakon partije **P** = **izvoz PGN-a**.
+- **Zadaci**: 200 zadataka u 5 stupnjeva (mat u 1/2/3, taktika I/II) iz
+  **slobodne Lichess baze zadataka (CC0)**, provjerenih vlastitim motorom; u
+  zadacima s matom vrijedi svaki potez koji matira. Napredak je u odjeljku `chess`
+  u `mem.json`.
+- Poništavanje i savjet čine partiju „potpomognutom": za rekord se broje samo
+  pobjede protiv AI-ja bez pomoći (po sesiji).
 
 **Mlin**
 - **Mlin** sa sve tri faze: **postavljanje** (po 9 figura), **pomicanje** duž
@@ -9709,6 +12292,93 @@ nadogradnja oružja), efekti eksplozije, rekord.
 - **Snimka partije**: na kraju **P** ponovno prikazuje sva bacanja, a **S** ih
   sprema u arhivu (gumb **Snimke**).
 
+**Crossy Road**
+- **Beskonačno skakanje** preko livada (drveće i kamenje zatvaraju put), cesta s
+  automobilima i kamionima, rijeka s deblima i lopočima te **tračnica** po kojima
+  nakon svjetla upozorenja i zvona projuri vlak - dalje čekaju cijele stanice s do
+  5 kolosijeka. Staza nastaje red po red, uvijek ima prohodan put, a tempo i
+  promet rastu.
+- **Izometrijski voxel stil**: likovi, vozila i drveće od sjenčanih kocaka
+  (unaprijed iscrtani za svaku veličinu polja), kamera koja glatko prati, squash &
+  stretch pri skokovima, prskanje vode, animacija spljoštenja, perje i svjetlucavi
+  novčići; od reda 50 **izmjena dana i noći** s farovima.
+- **Orao**: kamera polako puzi naprijed - tko predugo oklijeva ili se vrati za više
+  od tri reda, zgrabi ga orao (crveni rub prije upozorava). Ako vas deblo odnese
+  preko ruba slike, igri je također kraj.
+- **Novčići i likovi**: skupljeni novčići (divovski novčić = 5) se spremaju i
+  kupuju nove likove u kartici **Likovi**: žabu, svinju, pingvina, mačku, lisicu,
+  lamu, robota, duha i jednoroga (25 do 250 novčića); pile je dostupno od početka.
+- **Načini**: *Beskonačno* (bodovi = najdalji red, broji se za rekord) i *Dnevna
+  staza* (danas ista za sve, i u pregledniku, s vlastitim dnevnim rekordom).
+  Upravljanje: strelice/WASD, razmaknica/Enter/klik = skok naprijed; u postavkama
+  **H** = sjene, **N** = dan/noć. Novčići, likovi i dnevni rekord nalaze se u
+  odjeljku `crossy` u `mem.json`.
+
+**Geometry Dash**
+- **Ritmička platformska igra**: lik sam juri udesno - vi odlučujete samo kada
+  skočiti ili letjeti. **Pet oblika** - kocka, brod, lopta, NLO i val - uz to
+  portali oblika, gravitacije i brzine (0,5x do 3x), žuti/ružičasti/plavi
+  **odskoci i kugle**, polublokovi, šiljci, jame i okidači boja.
+- **8 ugrađenih razina** od *Lako* do *Demon* („Lama Inferno") s po **3 tajna
+  novčića**. Svaka razina dokazano je prolazna: pri izradi ju je rješavač prešao
+  pravim kodom igre - sa svim novčićima, čak i s pomakom od 1/240 sekunde.
+- **Precizna fizika**: računanje s nepomičnim zarezom u stalnom koraku od 240 Hz;
+  svaki pritisak djeluje točno u koraku u kojem se dogodio - jednako pri svakoj
+  brzini sličica i bitovno jednako u pregledniku.
+- **Način vježbe** (**P**) s automatskim i vlastitim kontrolnim točkama (**Z**
+  postavlja, **X** briše), brojačem pokušaja, trakom napretka, eksplozijama i
+  trenutačnim ponovnim pokretanjem (**R**). Svaka razina ima **vlastitu glazbu** -
+  pozadina, tlo i kugle pulsiraju u ritmu (glazba se isključuje tipkom **M**).
+- **Zvjezdice i novčići**: tko prijeđe razinu u normalnom načinu, dobiva njezine
+  zvjezdice, a svaki novčić vrijedi još jednu; rekord je **ukupan broj
+  zvjezdica** (najviše 65). Najbolji rezultati po razini, novčići, pokušaji i
+  skokovi nalaze se u odjeljku `geodash` u `mem.json`.
+- **Uređivač razina** na kartici **RAZINE**: platno s mrežom, paleta sa 6 skupina
+  (blokovi, opasnosti, odskoci i kugle, portali, brzina, dodaci), okretanje,
+  poništi/ponovi, pregledna traka, **test od početka ili odavde** i postavke
+  razine (početna brzina i oblik, glazbeni stil, BPM, boje). Kvačica
+  **„provjereno"** dolazi tek kada sami prijeđete svoju razinu. **Podijeli**
+  zapisuje datoteku `.lamapgzlevel`, **Uvoz** je ponovno učitava; razine se
+  spremaju u `ugc.json` uz vlastite minigolf staze.
+
+**Battleship**
+- **Pomorska bitka 10x10** s nosačem zrakoplova (5 polja), bojnim brodom (4),
+  krstaricom (3), podmornicom (3) i razaračem (2) - pobjeđuje tko prvi potopi
+  cijelu neprijateljsku flotu.
+- **Raspoređivanje flote** povlačenjem iz doka: **R** ili desni klik okreće,
+  pregled svijetli zeleno ili crveno, **X** sve raspoređuje nasumično, **C** prazni
+  ploču; posljednji raspored ponovno se predlaže.
+- **Pravila u postavkama** (spremaju se): *brodovi se smiju dodirivati*, *salva*
+  (onoliko hitaca po potezu koliko vlastitih brodova još pluta) i *nakon pogotka
+  pucaš ponovno*.
+- **AI s 3 razine**: Lako puca nasumično, Srednje sustavno dovršava pogotke, Teško
+  računa **kartu vjerojatnosti** s paritetom šahovnice (u prosjeku oko 70 / 60 / 45
+  hitaca za cijelu flotu). Ili **2 igrača** za istim računalom - **zaslon za
+  predaju** prije svakog poteza skriva obje flote.
+- **Grafika**: radarsko skeniranje, animirani valovi, granate u luku, prskanje,
+  eksplozije s dimom i zapaljena polja, otkrivanje „POTOPLJENO!" i sažetak runde s
+  hicima, pogocima i preciznošću. Rekord broji vaše **pobjede protiv AI-ja** u
+  jednoj sesiji.
+
+**Casino**
+- **Rulet** (europski, 37 polja): svi klasični ulozi klikom na broj, rub ili kut -
+  **plein** (35:1), cheval, transversale, carré, sixain, stupac, desetica,
+  crveno/crno, par/nepar i manque/passe. Žetoni 1/5/25/100/500, desni klik uklanja
+  žetone; **Zavrti**, **Ponovi** (**R**), **Udvostruči** (**D**) i **Očisti**.
+  Kuglica se spiralno skotrlja u unaprijed izvučeno polje, a gore se vidi
+  posljednjih 12 brojeva.
+- **Lama automat**: 5 valjaka x 3 reda, **10 dobitnih linija**, **lama = džoker**,
+  **zlatnici = scatter** s 10 besplatnih vrtnji i dvostrukim dobicima, ulog po
+  liniji 1/2/5/10, **automatska vrtnja** (10/25), **turbo** i tablica isplata.
+  **Stopa povrata je 96,1 %** - točno izračunata iz traka valjaka.
+- **Lama banka**: Casino, Blackjack i Poker dijele jedan račun **lama žetona**
+  (početak 1000, odjeljak `casino` u `mem.json`); stara stanja žetona prenose se
+  automatski. Ulozi se skidaju odmah, svaka igra vodi vlastitu bilancu za rekord, a
+  pri bankrotu dobivate **bankovni kredit** do 1000.
+- Konfeti, kiša novčića, natpisi big/mega/jackpot i animacije dobitnih linija;
+  postignuća **Pun pogodak** (dobitni plein na ruletu) i **Lama jackpot** (5 lama na
+  jednoj liniji).
+
 Rekordi se spremaju u odjeljak `highscores` datoteke `mem.json` (uz kôd) – zajedno
 s jezikom (odjeljak `mem`).
 
@@ -9730,20 +12400,24 @@ dotjerano poput modernog pokretača igara:
 - **Efekti posvuda**: meki prijelazi zaslona, iskre pri potvrdi u izborniku,
   **kiša konfeta pri novom rekordu** i pravi **blur** iza pauznog prekrivača.
 - **Zaslon pripreme** svake igre pojavljuje se u njezinoj naglasnoj boji i
-  prikazuje prethodni rekord kao čip.
-- **Ujednačen izgled u igri**: svih 42 igre dijele paletu teme i font izbornika -
+  prikazuje prethodni rekord kao čip. Uz mnogo načina i malu razlučivost postaje
+  **kompaktan**: Opcije, Wiki i Natrag slažu se u jedan red, a font se
+  prilagođava - ništa više ne izlazi iz slike.
+- **Ujednačen izgled u igri**: svih 46 igara dijeli paletu teme i font izbornika -
   HUD-ovi, zasloni pripreme i prekrivači slijede dizajn odabran u opcijama
   (v4.1 / v4 / Classic), dok svako igralište zadržava svoje prepoznatljive boje.
   Svaka igra sada uredno obrađuje promjenu razlučivosti usred partije, a nazivi u
   izborniku prilagođavaju se jeziku (npr. „Schach" → „Chess" / « Échecs »).
 - **Ugrađeni wiki** („LamaWiki"): detaljna pomoć za svaku igru (upravljanje,
   modovi, bodovanje, savjeti) uz opće stranice - s **poljem za pretraživanje**,
-  kategorijama, člancima koji se pomiču i čipovima s tipkama, na svih pet jezika.
+  kategorijama, člancima koji se pomiču i čipovima s tipkama, na svih 14 jezika.
   Dostupan preko gumba **„Wiki / Pomoć"** u bočnoj traci i sa zaslona pripreme
   svake igre (izravno otvara njezinu stranicu).
-- **Postignuća i statistika**: **69 postignuća** u tri kategorije (ciljevi na
-  razini kolekcije, jedna bodovna prekretnica po igri i posebni trenuci poput
-  šah-mata AI-ju ili pločice 2048) sa **zlatnom obavijesti i fanfarom** pri
+- **Postignuća i statistika**: **107 postignuća** u tri kategorije (23 cilja na
+  razini kolekcije, 37 bodovnih prekretnica i 47 posebnih trenutaka poput
+  šah-mata AI-ju, pločice 4096, T-Spin Doublea, 25 riješenih šahovskih zadataka,
+  Killer Sudokua ili laminog jackpota; u 2048 i šahu partije s poništavanjem ili
+  savjetom ne računaju se) sa **zlatnom obavijesti i fanfarom** pri
   otključavanju - čak i usred igre; stari rekordi priznaju se automatski. Uz
   to kartica **statistike**: ukupno vrijeme igranja, partije, pobjede,
   rekordi, najdraža igra i tablica igara poredana po vremenu. Dostupno preko
@@ -9762,7 +12436,14 @@ dotjerano poput modernog pokretača igara:
 - **F11** (ili gumb „Puni zaslon uklj./isklj.") = uključivanje/isključivanje punog
   zaslona. Pygame prikaz ostaje ugrađen i uvećava se uz zadržavanje omjera stranica
   (crne trake kad se omjer razlikuje). Prozor se može slobodno mijenjati veličinom.
-- **„Natrag na izbornik"** završava igru i sprema rekord.
+- **„Natrag na izbornik"** završava igru i sprema rekord - isto vrijedi i za
+  prelazak u drugu igru preko bočne trake.
+- **Fiksne dodatne tipke**: osim pet radnji koje se mogu dodijeliti, neke igre
+  imaju vlastite tipke (npr. spremište **C** i okretanje ulijevo **Z** u Tetrisu,
+  poništavanje **U** u 2048, šahu i Sudokuu). Rade samo ako tipka u opcijama nije
+  dodijeljena nijednoj radnji, a navedene su u savjetu postavki i u wikiju.
+  Držane tipke ispravno se prepoznaju i otpuštaju pri pauzi ili Alt-Tabu - ništa
+  više ne „zapinje".
 - **„Izlaz"** uredno zatvara Pygame i Tkinter.
 
 ### Opcije, upravljanje i zvuk
@@ -9808,22 +12489,24 @@ start.sh             Skripta za pokretanje (Linux / macOS / Git Bash)
 pyinstall.bat        Izrada EXE-a (Windows): pakira sve u builds\PyGameZ.exe
 main.py              Tkinter sučelje, ugradnja Pygamea, središnja petlja igre
 game_base.py         Osnovna klasa igre (update/draw/handle_event) + InputEvent + pomoćnici
-settings.py          Učitavanje/spremanje postavki (zvuk/haptika/tipke) (JSON)
-audio.py             Proceduralni zvučni efekti + vibracija gamepada
+settings.py          Učitavanje/spremanje postavki (zvuk/haptika/tipke/opcije igara s pravilima provjere) (JSON)
+audio.py             Proceduralni zvučni efekti, glazbene petlje + vibracija gamepada
 menu.py              Zasloni jezika, pripreme (mod) i opcija (zvuk/upravljanje)
 highscore.py         Učitavanje/spremanje rekorda (odjeljak u mem.json)
-store.py             Središnja datoteka mem.json (odjeljci: mem, highscores, stats, achievements)
+store.py             Središnja datoteka spremanja mem.json (odjeljci: mem, highscores, stats, achievements + napredak igara), atomski sa sigurnosnom kopijom .bak
 stats.py             Statistika igrača (partije, vrijeme, pobjede, rekordi) po igri
 achievements.py      Postignuća: definicije, otključavanje, obavijest (toast)
 progress.py          Zaslon postignuća i statistike (dvije kartice, pomični)
 replay.py            Snimanje i arhiva snimaka (replay.json)
 replayview.py        Zaslon snimaka: popis arhive i reprodukcija
-ugc.py               Vlastite staze: pohrana, provjera, izvoz/uvoz (ugc.json)
+ugc.py               Vlastiti sadržaj (minigolf staze, razine Geometry Dasha): pohrana, provjera, izvoz/uvoz (ugc.json)
 swear.py             Filtar riječi za nazive i id (lang/swear/*.yml, svih 14 jezika)
 filepick.py          Dijalozi datoteka ("Izvezi kao ...", "Uvezi")
 prestige.py          Prestiž-sustav za Snake
 competitive.py       Ugađanje Competitive moda za Snake (razine, slot machine, kockarske jabuke)
 ngb.py               Vizualna personalizacija ("mods"): boja glave + koordinatna mreža + izbornik (mem-ngb.json)
+lamabank.py          Lama banka: zajednički račun žetona za Blackjack, Poker i Casino (odjeljak casino u mem.json)
+seedrand.py          Generator slučajnih brojeva s bitovno jednakim brojevima u Pythonu i pregledniku (dnevni načini, nove zagonetke)
 i18n.py              Prevoditeljski mehanizam (učitava lang/*.json, t("ključ"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Jezični nizovi (jedan ključ po tekstu)
@@ -9835,24 +12518,48 @@ lamawiki/
   lang.expansion/                           pl, tr, da, no, sv, fi, cs, sl, hr
 woordlistz/
   build_wordlists.py   Ponovno gradi popise riječi za Wordle (rječnici + popisi učestalosti)
-  de/ en/ fr/ ... hr/  answers.txt (rješenja) + allowed.txt (dopuštene riječi), 14 jezika
+  de/ en/ fr/ ... hr/  answers.txt + allowed.txt (5 slova), answers4/6/7.txt + allowed4/6/7.txt (4, 6, 7 slova), 14 jezika
+devtools/            Razvojni alati (ne pakiraju se u .exe)
+  merge_staging.py           Unosi prijevode i wiki stranice iz devtools/staging/ u svih 14 jezičnih datoteka
+  build_chess_puzzles.py     Gradi 200 šahovskih zadataka iz Lichess baze zadataka (CC0)
+  build_sudoku_killer.py     Generira 400 Killer Sudokua s jedinstvenim rješenjem
+  build_crossyroad_models.py Zapisuje voxel modele Crossy Roada za web-inačicu
+  build_geodash_levels.py    Gradi 8 razina Geometry Dasha i rješavačem dokazuje da je svaka prolazna zajedno s novčićima
+  build_geodash_solver.py    Rješavač sa stvarnim kodom koraka (rješenja u geodash_proofs.json)
 games/
-  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py  tetris.py
+  snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
+  tetris.py  tetris_core.py  tetris_ai.py
   invaders.py  asteroids.py  pacman.py  flappy.py  doodle.py
-  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py
+  game2048.py  minesweeper.py  sudoku.py  sudoku_gen.py  sudoku_draw.py
   frogger.py  memory.py  solitaire.py  cards.py  aimtrainer.py
   connect4.py  tanks.py  blackjack.py  tunnelracer.py
-  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py
-  trexrunner.py  dame.py  poker.py  chess.py  muehle.py
+  labyrinth.py  maze_gen.py  reversi.py  kniffel.py  wordle.py  wordle_words.py
+  trexrunner.py  dame.py  poker.py  muehle.py
+  chess.py  chess_engine.py  chess_draw.py
   simon.py  billiard.py  slidepuzzle.py  mastermind.py
   bubbleshooter.py  hangman.py  hangman_words.py  blockjump.py
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
-  levels/
+  crossyroad.py  crossyroad_world.py  crossyroad_draw.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  battleship.py  battleship_core.py
+  casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  levels/              Podaci razina: snake-comp.json, chess-puzzles.json (+ README s izvorima), sudoku-killer.json, geodash.json
+tests/
+  arcade_casino_audit.py     Cjelovita provjera (unos, seedrand Python = JS, spremanje, jezične datoteke, zasloni pripreme) + svi audit_*.py
+  audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless provjere po igri
+  newgames_audit.py  blockjump_audit.py
 ```
 
 Odabrani jezik sprema se u `mem.json` (u odjeljku `mem`, uz odjeljak `highscores` u
 istoj datoteci) i automatski se učitava pri sljedećem pokretanju.
+
+**Izvori i licence:** 200 šahovskih zadataka potječe iz
+[Lichess baze zadataka](https://database.lichess.org/#puzzles) (licenca
+**CC0 1.0**, javno dobro - hvala, lichess.org!); pojedinosti su u
+`games/levels/chess-puzzles.README.md`. Izvori popisa riječi za Wordle navedeni su
+u `woordlistz/README.md`.
 
 ### Napomene o platformi
 

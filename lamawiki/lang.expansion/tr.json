@@ -11,14 +11,16 @@
         "menü",
         "duraklat",
         "tam ekran",
-        "kenar çubuğu"
+        "kenar çubuğu",
+        "çok oyunculu"
       ],
       "sections": [
         {
           "h": "Bir oyun başlatmak",
           "body": [
             "Bir oyunu üç şekilde başlatabilirsin: soldaki kenar çubuğundaki oyun listesinden, başlangıç ekranındaki oyun ızgarasından veya oyun öncesi ekranı üzerinden doğrudan bu wiki'den.",
-            "Her oyundan önce oyun öncesi ekranı belirir: modu orada seç (ör. tek oyunculu veya çok oyunculu) ve seçeneklere ve bu wiki'ye ulaş."
+            "Her oyundan önce oyun öncesi ekranı belirir: modu orada seç (ör. tek oyunculu veya çok oyunculu) ve seçeneklere ve bu wiki'ye ulaş.",
+            "Bir oyunun çok modu varsa veya pencere küçükse, oyun öncesi ekranında Seçenekler, Wiki ve Geri tek bir satıra dizilir - böylece her şey görünür kalır."
           ]
         },
         {
@@ -26,7 +28,7 @@
           "body": [
             "- [Esc] çalışan oyunu duraklatır ve devam ettirir - menülerde geri gider.",
             "- [F11] tam ekranı açar ve kapatır.",
-            "- Yeşil Menüye dön düğmesi oyunu bitirir ve en yüksek skoru kaydeder."
+            "- Yeşil Menüye dön düğmesi oyunu bitirir ve en yüksek skoru kaydeder - kenar çubuğundan başka bir oyuna geçmek de aynısını yapar."
           ]
         },
         {
@@ -39,8 +41,9 @@
         {
           "h": "Çok oyunculu",
           "body": [
-            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) ve Asteroids (kooperatif düello) yerel 2 oyunculu moda sahiptir - oyun öncesi ekranından seçilebilir.",
-            "Tek oyunculuda her iki tuş ataması da aynı karakteri kontrol eder; çok oyunculuda her biri birer tane (varsayılan: P1 = WASD, P2 = ok tuşları veya IJKL - seçeneklere bak)."
+            "20 oyunda yerel 2 oyunculu mod var: Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus), Asteroids (kooperatif düello), Hafıza, Dört Bir Arada, Tank Düellosu, Reversi, Yahtzee, Dama, Satranç, Dokuz Taş, Simon, Bilardo, Minigolf, Pinball, Bowling ve Battleship - oyun öncesi ekranından seçilebilir.",
+            "Tek oyunculuda her iki tuş ataması da aynı karakteri kontrol eder; çok oyunculuda her biri birer tane (varsayılan: P1 = WASD, P2 = ok tuşları veya IJKL - seçeneklere bak).",
+            "Tetris ayrıca yapay zekâya karşı Versus sunar; Battleship'i iki kişi oynarken bir devir ekranı filoları gizler. Web sürümü yalnızca tek oyunculudur."
           ]
         }
       ]
@@ -60,7 +63,8 @@
         "dil",
         "tasarim",
         "gorunum",
-        "tema"
+        "tema",
+        "sabit tuşlar"
       ],
       "sections": [
         {
@@ -75,7 +79,8 @@
           "body": [
             "Üç hazır ayar mevcuttur: WASD + ok tuşları, WASD + IJKL ve ok tuşları + WASD.",
             "Her bir tuş yeniden atanabilir: bir satıra tıkla veya Enter ile onayla, ardından istediğin tuşa bas. [Esc] iptal eder.",
-            "Atamalar oyuncu 1 ve oyuncu 2 için ayrıdır ve kalıcı olarak kaydedilir."
+            "Atamalar oyuncu 1 ve oyuncu 2 için ayrıdır ve kalıcı olarak kaydedilir.",
+            "Her oyuncu için beş eylem yeniden atanabilir: yukarı, aşağı, sol, sağ ve eylem. Bazı oyunlarda ayrıca sabit tuşlar vardır - ör. Tetris'te saklama [C] ve sola çevirme [Z] ya da 2048, satranç ve Sudoku'da geri alma [U]. Bunlar yalnızca o tuş hiçbir eyleme atanmamışsa çalışır; oyunun ayar ipucu ve wiki sayfası bunları listeler."
           ]
         },
         {
@@ -96,7 +101,7 @@
         {
           "h": "Dil",
           "body": [
-            "Arayüz Almanca, İngilizce, Fransızca, İspanyolca ve Portekizce olarak mevcuttur. Seçenekler ekranından veya kenar çubuğundaki Dil (Language) üzerinden değiştir - bu wiki de dil değiştirir."
+            "Arayüz 14 dilde mevcuttur: Almanca, İngilizce, Fransızca, İspanyolca, Portekizce, Lehçe, Türkçe, Danca, Norveççe, İsveççe, Fince, Çekçe, Slovence ve Hırvatça. Seçenekler ekranından veya kenar çubuğundaki Dil (Language) üzerinden değiştir - bu wiki de dil değiştirir."
           ]
         }
       ]
@@ -111,30 +116,58 @@
         "rekor",
         "puan",
         "ilerleme",
-        "dosyalar"
+        "dosyalar",
+        "yedek",
+        "backup",
+        "lama çipleri",
+        "ugc"
       ],
       "sections": [
         {
           "h": "En yüksek skorlar",
           "body": [
             "Her oyun bir tur bittiğinde en iyi değerini otomatik olarak kaydeder. Yeni bir rekor altın bir afiş gösterir - üstüne bir de konfeti yağmuru.",
-            "En iyi değerleri her yerde görebilirsin: kenar çubuğu listesinde yıldız olarak, başlangıç ekranındaki kayan yazıda ve durum kartında."
+            "En iyi değerleri her yerde görebilirsin: kenar çubuğu listesinde yıldız olarak, başlangıç ekranındaki kayan yazıda ve durum kartında.",
+            "Rekor sayılmayan modlar - Tetris'te Sprint ve Ultra, Crossy Road'daki günün parkuru veya geri almalı 2048 gibi - afiş göstermez; bu modların en iyi sürelerini ve günlük en iyilerini oyun kendisi saklar."
           ]
         },
         {
           "h": "Ne, nerede saklanır?",
           "body": [
-            "- settings.json: ses, ses seviyesi, tuş atamaları, çözünürlük, FPS ve oyun seçenekleri (ör. Snake modu, Sudoku ayarları).",
-            "- mem.json: en yüksek skorlar, seçilen dil ve Sudoku seviye ilerlemesi.",
+            "- settings.json: ses, ses seviyesi, tuş atamaları, çözünürlük, FPS, tasarım ve oyun seçenekleri (ör. Snake modu, Tetris DAS/ARR, Sudoku türü, Battleship kuralları).",
+            "- mem.json: en yüksek skorlar, seçilen dil, başarımlar ve istatistikler - ayrıca pek çok oyunun ilerlemesi kendi bölümlerinde (aşağıya bak).",
             "- mem-ngb.json: Snake'in görsel modları (kafa rengi, ızgara, afiş).",
             "- replay.json: minigolf ve bowlingin kaydedilmiş tekrarları.",
+            "- ugc.json: kendi minigolf parkurların ve Geometry Dash bölümlerin (.lamapgzmap veya .lamapgzlevel olarak paylaşılır).",
             "Bu dosyalar doğrudan oyun klasöründe durur ve sıfırlamak için silmen yeterlidir."
+          ]
+        },
+        {
+          "h": "mem.json içindeki ilerleme",
+          "body": [
+            "İlerlemesi olan her oyunun mem.json içinde kendi bölümü vardır, örneğin:",
+            "- sudoku: yıldızları ve en iyi süreleriyle çözülmüş seviyeler, yarım kalan bulmacalar ve serisiyle birlikte Günün Sudokusu.",
+            "- casino: Lama Bankası hesabı - Blackjack, Poker ve Casino için Lama çipleri ve her oyunun bakiyesi.",
+            "- crossy: toplanan jetonlar, satın alınan karakterler ve Crossy Road'un günlük en iyisi.",
+            "- tetris: Sprint'te en iyi süre, Ultra'da en iyi skor ve yapay zekâya karşı Versus bilançosu.",
+            "- g2048: kaydedilmiş 2048 oyunları ve tahta boyutu ile moda göre en iyi skorlar.",
+            "- chess: satranç bulmaca modundaki ilerlemen.",
+            "- geodash: Geometry Dash'te bölüm başına en iyi yüzde (Normal ve Antrenman), bulunan altınlar, denemeler ve zıplamalar.",
+            "- wordle: mod, dil ve kelime uzunluğu başına istatistikler, günün kelimesinin durumu ve en iyi skorlar.",
+            "Bunlara minigolf, pinball, bowling ve lamatowerdef gibi bölümler en iyi sonuçlarıyla eklenir."
+          ]
+        },
+        {
+          "h": "Otomatik yedek",
+          "body": [
+            "mem.json ve settings.json çökmeye karşı güvenli yazılır: önce geçici bir dosyaya, sonra tek adımda yerine konur. Önceki sürüm mem.json.bak veya settings.json.bak olarak kalır.",
+            "mem.json bir gün bozulursa oyun yedeği otomatik olarak okur - böylece rekorlar, başarımlar ve Lama çipleri kaybolmaz."
           ]
         },
         {
           "h": "İpucu",
           "body": [
-            "Puanlar yalnızca Menüye dön ile çıktığında veya tur normal şekilde bittiğinde kaydedilir - oyunun ortasında pencere sertçe kapatıldığında değil."
+            "Puanlar bir tur bittiğinde, Menüye dön ile çıktığında, oyunun ortasında kenar çubuğundan başka bir oyun seçtiğinde veya koleksiyonu kapattığında kaydedilir. Yalnızca bir çökme ya da programın zorla sonlandırılması devam eden turu kaybettirir."
           ]
         }
       ]
@@ -201,19 +234,20 @@
         {
           "h": "Genel bakış",
           "body": [
-            "Koleksiyon artık ilerlemeni takip ediyor: 69 başarım ve 38 oyunun tamamı için ayrıntılı istatistikler. İkisine de kenar çubuğundaki Başarımlar ve istatistikler düğmesinden ulaşırsın; sekmeler arasında [Tab] veya tıklamayla geçersin."
+            "Koleksiyon ilerlemeni takip ediyor: 107 başarım ve 46 oyunun tamamı için ayrıntılı istatistikler. İkisine de kenar çubuğundaki Başarımlar ve istatistikler düğmesinden ulaşırsın; sekmeler arasında [Tab] veya tıklamayla geçersin."
           ]
         },
         {
           "h": "Başarımlar",
           "body": [
             "Üç kategori var:",
-            "- Genel: başlatılan oyunlar, denenen oyunlar, toplam oyun süresi, kırılan rekorlar ve galibiyetler gibi koleksiyon geneli hedefler - artı Gece kuşu (gece yarısından sonra oynamak) gibi küçük sürprizler.",
-            "- Puan kilometre taşları: her oyun için puan ölçeğine göre ayarlanmış adil bir hedef puan.",
-            "- Özel anlar: yapay zekâyı mat etmek, KNIFFEL, 2048 taşı, 2 denemede Wordle ve daha fazlası.",
+            "- Genel (23): başlatılan oyunlar, denenen oyunlar, toplam oyun süresi, kırılan rekorlar ve galibiyetler gibi koleksiyon geneli hedefler - artı Gece kuşu (gece yarısından sonra oynamak) gibi küçük sürprizler.",
+            "- Puan kilometre taşları (37): her oyun için puan ölçeğine göre ayarlanmış adil bir hedef puan.",
+            "- Özel anlar (47): yapay zekâyı mat etmek, KNIFFEL, 2048 ve 4096 taşları, Tetris'te T-Spin Double ve Perfect Clear, çözülmüş 25 satranç bulmacası, ilk Killer Sudoku'n, rulette tek sayıya tam isabet, slot makinesinde lama jackpotu, Battleship'te tek gemi kaybetmeden zafer ve daha fazlası.",
             "Bir başarım açıldığında sağ üstte altın rengi bir bildirim ve kısa bir fanfar belirir - oyunun ortasında bile.",
             "Mevcut veriler sayılır: güncellemeden sonraki ilk açılışta eski rekorların otomatik olarak işlenir (bildirim havai fişekleri olmadan).",
-            "Kilitli başarımlar ilerleme çubuğu, açılanlar tarihlerini gösterir."
+            "Kilitli başarımlar ilerleme çubuğu, açılanlar tarihlerini gösterir.",
+            "2048 ve satrançta geri alma veya ipucu kullanılan oyunlar rekorlara ve başarımlara sayılmaz - denemek serbest, yalnızca yardımsız oyunlar değerlendirilir."
           ]
         },
         {
@@ -495,30 +529,82 @@
       "title": "Tetris",
       "keywords": [
         "parçalar",
-        "sıralar",
+        "satırlar",
         "döndür",
+        "sakla",
+        "t-spin",
+        "sprint",
+        "ultra",
+        "maraton",
         "versus",
-        "yığın"
+        "çöp"
       ],
       "sections": [
         {
+          "h": "Modlar",
+          "body": [
+            "Tek Kişilik: varyantı ayarlardan seçersin. Maraton sonsuzdur, seviye her 10 satırda yükselir (başlangıç seviyesi 1-15) - rekora yalnızca Maraton sayılır.",
+            "- Sprint 40: 40 satırı olabildiğince hızlı temizle; en iyi süren kaydedilir.",
+            "- Ultra 2:00: iki dakikada olabildiğince çok puan topla; rekorun kaydedilir.",
+            "YZ'ye Karşı: üç güç seviyesi olan bir yapay zekâya karşı oynarsın (Kolay, Orta, Zor). Satır temizleyen karşıya çöp satırları gönderir; yığını ilk tavana değen nakavt olur. Her seviyeye karşı durumun kaydedilir.",
+            "2 Oyuncu (yalnızca PC sürümü): aynısı tek klavyede iki kişi. İki alan da her zaman aynı parça sırasını alır."
+          ]
+        },
+        {
           "h": "Kontroller",
           "body": [
-            "Sol/sağ parçayı hareket ettirir, yukarı onu döndürür, aşağı yumuşak düşüş ve eylem tuşu (varsayılan: [Space]) sert düşüştür."
+            "[Sol] [Sağ] parçayı kaydırır - basılı tutarsan DAS süresinden sonra kaymaya başlar ve ARR hızında devam eder. [Yukarı] sağa çevirir, [Aşağı] yumuşak düşüştür, eylem tuşu (varsayılan: [Boşluk] ) parçayı anında düşürür (sert düşüş).",
+            "- [C] veya [Shift] parçayı saklama alanına koyar (parça başına bir kez), [Z] veya [Y] sola, [X] sağa çevirir.",
+            "- 2 Oyuncu: 1. oyuncu [Q] ile saklar ve [E] ile sola çevirir, 2. oyuncu sağ [Shift] ile saklar ve sağ [Ctrl] ile sola çevirir.",
+            "- Bu sabit tuşlar yalnızca onları kendin bir eyleme atamadıysan çalışır.",
+            "Sprint ve Ultra'da [R] anında yeniden başlatır. Oyun bitince: [R] = tekrar, [S] = ayarlar - sert düşüş tuşları bilerek hiçbir şeyi yeniden başlatmaz.",
+            "Ayarlarda DAS'ı (sürekli harekete kadar gecikme), ARR'yi (sonrasındaki hız, 0 ms = doğrudan kenara) ve hayalet parçayı ayarlarsın."
           ]
         },
         {
-          "h": "Modlar ve puanlama",
+          "h": "Modern kurallar",
           "body": [
-            "Dolu sıralar puan verir - aynı anda birkaç tanesi çok daha fazla verir. Her 10 sırada bir seviye ve hız artar.",
-            "Versus (çok oyunculu): yan yana iki tahta, yığını önce en tepeye çarpan kaybeder."
+            "Parçalar 7'li torbalarla gelir: yedi parçanın her biri her yedili grupta tam bir kez çıkar. Önizleme sonraki 5 parçayı gösterir.",
+            "Döndürme SRS'e göre yapılır: parça sıkışırsa oyun dört alternatif konuma kadar dener (wall kick) - böylece parçalar köşelerin etrafında bile döndürülebilir.",
+            "Yere değen parça kilitlenmeden önce 0,5 saniye bekler. Her hareket veya dönüş bu süreyi sıfırlar, her derinlikte en fazla 15 kez.",
+            "Oyun biter: yeni parçaya yer kalmazsa, bir parça tamamen alanın üstünde kilitlenirse ya da çöp yığını tavandan dışarı iterse."
           ]
         },
         {
-          "h": "İpuçları",
+          "h": "Puanlama",
           "body": [
-            "- Uzun I parçası için bir sütunu boş tut ve dörtlü sıralarla temizle.",
-            "- Düz kur: hız arttıkça yüksek kuleler çabucak devrilir."
+            "Tüm değerler seviyeyle çarpılır: Single 100 · Double 300 · Triple 500 · Tetris 800.",
+            "T-Spin: satırsız 400 · Single 800 · Double 1200 · Triple 1600. T-Spin Mini: 100 · 200 · 400.",
+            "- Back-to-Back: bir Tetris veya T-Spin hemen ardından gelirse x1,5 sayılır.",
+            "- Kombo: arka arkaya gelen her ek temizleme 50 x kombo x seviye ekler.",
+            "- Perfect Clear (alan tamamen boş): +800 / 1200 / 1800 / 2000, Back-to-Back Tetris olarak +3200.",
+            "- Yumuşak düşüş satır başına 1, sert düşüş 2 puan verir."
+          ]
+        },
+        {
+          "h": "T-Spin'ler",
+          "body": [
+            "T parçası bir dönüşle kilitlenir ve merkezinin etrafındaki dört köşeden en az üçü doluysa T-Spin sayılır (duvarlar ve zemin de sayılır).",
+            "Burnunun baktığı taraftaki iki köşe de doluysa tam T-Spin, değilse Mini olur. T boşluğa büyük kick ile (bir sütun yana, iki satır aşağı) girerse her zaman tam sayılır - T-Spin Triple böyle yapılır.",
+            "Alanın üzerindeki bildirimler T-SPIN, TETRIS, BACK-TO-BACK, KOMBO ve PERFECT CLEAR gösterir."
+          ]
+        },
+        {
+          "h": "Versus ve çöp satırları",
+          "body": [
+            "Saldırı: Double 1 · Triple 2 · Tetris 4 · T-Spin Single 2 · T-Spin Double 4 · T-Spin Triple 6 · Mini Double 1. Ayrıca Back-to-Back için +1, uzun kombolar için +1 ile +5 ve Perfect Clear için +10.",
+            "Gelen çöp, alanın solundaki uyarı çubuğunda görünür: sarıysa hâlâ bekliyor, kırmızıysa satır temizlemeyen bir sonraki parçanda yükselir - parça başına en fazla 8 satır, her yığında ortak bir delik.",
+            "Kendin satır temizlediğinde saldırın önce bekleyen çöpü siler; yalnızca kalanı rakibe gider.",
+            "Her 40 saniyede parçalar daha hızlı düşer (seviye 12'ye kadar)."
+          ]
+        },
+        {
+          "h": "İpuçları ve başarımlar",
+          "body": [
+            "- Düz inşa et ve kenarda I için bir sütunu boş tut - tek seferde dört satır puan ve saldırı getirir.",
+            "- Saklamayı Tetris için bir I ayırmak ya da uymayan bir parçayı kenara koymak için kullan.",
+            "- Versus'ta Back-to-Back kazandırır: arka arkaya iki Tetris 4 + 5 satır gönderir.",
+            "- Başarımlar: Tetris! (tek seferde 4 satır), Dönüş Ustası (T-Spin Double), Tertemiz (Perfect Clear), Hız Canavarı (2:00'ın altında Sprint 40). İki kişilik oyunda başarım yoktur."
           ]
         }
       ]
@@ -719,27 +805,76 @@
         "kutucuklar",
         "kaydır",
         "birleştir",
-        "sayılar"
+        "sayılar",
+        "sürükle",
+        "geri al",
+        "zamana karşı",
+        "sonsuz",
+        "boyut",
+        "sürdür",
+        "4096"
       ],
       "sections": [
         {
-          "h": "Kontroller ve kurallar",
+          "h": "Kontroller",
           "body": [
-            "Ok tuşları veya [W] [A] [S] [D] tüm kutucukları aynı anda tek bir yöne kaydırır. Eşit sayılar toplamlarında birleşir; her hamleden sonra yeni bir kutucuk belirir.",
-            "Amaç 2048 kutucuğudur - ondan sonra sonsuza kadar devam eder. Hiçbir hamle mümkün olmadığında kaybedersin."
+            "Oklar veya [W] [A] [S] [D] tüm taşları aynı anda tek yöne kaydırır. Fare veya dokunmatik yüzeyle de kaydırabilirsin: bas, istediğin yöne sürükle, bırak.",
+            "Basılı tutulan tuşlar tekrarlanmaz - her hamle ayrı bir tuşa basıştır. Animasyon sırasında verdiğin komutlar hatırlanır ve hemen ardından uygulanır.",
+            "[U] veya [Backspace] = geri al, [R] veya [N] = yeni oyun, [Tab] = ayarlara dön. Bu ek tuşlar yalnızca onları kendin bir eyleme atamadıysan çalışır."
           ]
         },
         {
-          "h": "Puanlama",
+          "h": "Kurallar",
           "body": [
-            "Her birleşme yeni kutucuğun değerini skoruna ekler."
+            "Çarpışan eşit sayılar toplamlarında birleşir. Her taş bir hamlede en fazla bir kez birleşir: sola kaydırılan 2, 2, 4, 4 dizisi 4, 8 olur.",
+            "Her geçerli hamleden sonra yeni bir taş belirir - genellikle 2, on seferde bir 4. Hiç hamle kalmadığında oyun biter.",
+            "4096'dan itibaren taşların kendi renkleri vardır: yeşilden maviye ve mora, oradan kızıla (131072); daha büyük taşlar koyu renkli ve altın rakamlıdır."
+          ]
+        },
+        {
+          "h": "Ayarlar: boyut ve mod",
+          "body": [
+            "Tahta boyutu 3x3 ile 8x8 arası - küçük tahtalar zordur, büyükler uzun zincirler için yer bırakır.",
+            "- Klasik: hedef 2048. Sonra oyun devam etmek isteyip istemediğini sorar - [Enter] devam eder, [N] yeni oyun başlatır.",
+            "- Zamana karşı: olabildiğince çok puan için 3 dakika. Süre ilk hamlenle başlar, tahtanın altındaki çubuk kalan süreyi gösterir.",
+            "- Sonsuz: hedef ve kesinti olmadan, hamle kalmayana kadar."
+          ]
+        },
+        {
+          "h": "Geri alma",
+          "body": [
+            "Ayarlardan seçilir: kapalı, oyun başına 3 veya sınırsız. Geri alma son hamleyi puanlarıyla birlikte iptal eder - oyun bittikten hemen sonra bile.",
+            "Kullandığın anda oyun \"geri almalı\" sayılır: rekora ve taş başarımlarına sayılmaz, en iyi skoru ayrı tutulur."
+          ]
+        },
+        {
+          "h": "Kaydetme ve sürdürme",
+          "body": [
+            "Devam eden oyun her boyut ve mod için otomatik olarak kaydedilir - hamlelerinden sonra ve oyundan çıkarken.",
+            "Ayarlarda kayıtlı oyunun puanı ve hamle sayısıyla Sürdür düğmesi belirir. Yeni oyun bu kaydı siler."
+          ]
+        },
+        {
+          "h": "Puanlar, en iyiler ve rekor",
+          "body": [
+            "Her birleşme yeni taşın değeri kadar puan getirir. Bilgi sütunu puanı, en iyi skoru, hamleleri, en büyük taşı, kalan geri almaları ve süreyi gösterir.",
+            "En iyi skorlar ve en büyük taş her boyut ve mod için kaydedilir. 2048 rekoru yalnızca geri almadan oynanan 4x4 Klasik'te sayılır."
+          ]
+        },
+        {
+          "h": "Başarımlar",
+          "body": [
+            "- 2048!: 2048 taşını oluştur.",
+            "- 4096!: 4096 taşını oluştur.",
+            "İkisi de 4x4'e kadar tahtalarda ve yalnızca geri almadan sayılır - her modda."
           ]
         },
         {
           "h": "İpuçları",
           "body": [
-            "- En büyük kutucuğunu bir köşeye park et ve o köşeyi asla bozma.",
-            "- Ağırlıklı olarak iki yönde kaydır - bu tahtayı düzenli tutar."
+            "- En büyük taşını bir köşeye park et ve o köşeye asla dokunma.",
+            "- Çoğunlukla iki yöne kaydır - böylece tahta düzenli kalır.",
+            "- Zamana karşı modunda hız önemlidir: erken birleştir ve taşları bir köşede topla."
           ]
         }
       ]
@@ -791,43 +926,68 @@
         "notlar",
         "seviyeler",
         "ipuçları",
-        "mantık"
+        "mantık",
+        "killer",
+        "x-sudoku",
+        "günlük",
+        "yıldızlar",
+        "geri al",
+        "adaylar"
       ],
       "sections": [
         {
+          "h": "Türler",
+          "body": [
+            "Kurulumda üstte türü, altında zorluğu seçersin. Her türde 4 zorluk çarpı 100 sabit seviye vardır ve her biri tek çözümlüdür.",
+            "- Klasik: bilinen 9x9. 400 seviye güncellemeden öncekiyle aynıdır - işaretlenen seviyeler işaretli kalır.",
+            "- X-Sudoku: ayrıca iki köşegen de her rakamı tam bir kez içerir (hafifçe işaretli).",
+            "- Killer: neredeyse hiç verilen rakam yok, onun yerine kesik çizgili kafesler var. Bir kafesteki rakamlar köşedeki küçük toplamı verir ve tekrar etmez. Kolay küçük kafesler ve daha çok ipucu, Uzman büyük kafesler içerir.",
+            "- Mini 6x6: 2x3 bloklar ve sadece 1'den 6'ya rakamlar, ekstra büyük hücrelerle.",
+            "- Günün Sudokusu ([T] veya sağdaki kart): günde bir klasik bulmaca, herkes için aynı - tarayıcıda da. Zorluk haftanın gününe bağlıdır (pazartesi kolay, salı ve çarşamba normal, perşembe, cuma ve pazar zor, cumartesi uzman). Her gün çözerek seri oluştur."
+          ]
+        },
+        {
           "h": "Kontroller",
           "body": [
-            "Bir hücreyi ok tuşları, [W] [A] [S] [D] veya fare tıklamasıyla seç - sağdaki sayı tuş takımı tamamen fareyle çalışır.",
-            "- [1] ile [9] bir rakam girer (numpad de çalışır).",
-            "- [0], Backspace veya sağ tıklama siler.",
-            "- [N] not modunu açar/kapatır, [H] bir ipucu verir, [R] seviyeyi yeniden başlatır, [Q] seviye seçimini açar.",
-            "- Oyun bittikten sonra, [A] afişi gizler ve tam çözümü gösterir."
+            "Bir hücreyi ok tuşları, [W] [A] [S] [D] veya fare tıklamasıyla seç. Sağdaki sayı tuş takımı tamamen fareyle çalışır ve her rakamın altında kaç tane eksik olduğunu gösterir.",
+            "- [1] ile [9] bir rakam girer, [0], Delete veya sağ tık siler.",
+            "- [U] veya [Z] geri alır, [Y] yineler.",
+            "- [N] notları açıp kapatır, [C] tüm adayları otomatik yazar, [H] bir ipucu verir.",
+            "- [M] hücreyi bir renk işaretiyle boyar (kurulumdaki \"Renk işaretleri\" anahtarı).",
+            "- [R] bulmacayı baştan başlatır, [Q] seviye seçimini açar, [A] oyun bitince çözümü gösterir.",
+            "\"Önce rakam\" girişi (kurulum, tuş [I]): önce bir rakam seç, sonra istediğin kadar hücreye tıkla ya da boşlukla yaz.",
+            "Kurulumda: [1] ile [4] zorluk, [V] tür, [T] günün sudokusu, [F] hata sınırı, oklar + Enter bir seviye başlatır. Harf tuşları yalnızca seçeneklerde bir eyleme atanmamışsa çalışır."
           ]
         },
         {
-          "h": "Seviyeler ve modlar",
+          "h": "Modlar ve puanlar",
           "body": [
-            "400 sabit seviye: 4 zorluk (kolay/normal/zor/uzman) çarpı 100 seviye. Her seviye her yerde aynı bulmacadır ve tek çözümlüdür; çözülen seviyeler işaretlenir.",
-            "Oyun modu yardımları ve skor çarpanını belirler:",
-            "- Klasik x2.0: yardım yok, kağıt üzerindeki gibi saf.",
-            "- Notlar x1.5: artı kurşun kalem notları.",
-            "- Konfor x1.0: hatalar anında kırmızı, çakışma vurgusu, doğru girişler kilitlenir.",
-            "- Yardım x0.7: ek olarak 3'e kadar ipucu."
+            "Oyun modu yardımları ve puan çarpanını belirler:",
+            "- Klasik x2.0: yardım yok, kağıttaki gibi saf.",
+            "- Notlar x1.5: artı kurşun kalem notları ve otomatik adaylar.",
+            "- Konfor x1.0: hatalar anında kırmızı, çakışmalar ve yanlış kafes toplamları işaretli, doğru girişler kilitlenir.",
+            "- Yardım x0.7: ek olarak 3'e kadar ipucu.",
+            "Her giriş anında çözüme göre kontrol edilir. 3 hata sınırıyla üçüncü hata oyunu bitirir - geri almak bir hatayı silmez.",
+            "Puan = (tür ve zorluk tabanı eksi süre, hatalar ve ipuçları) çarpı çarpan. Tüm türler ve günün sudokusu rekora sayılır."
           ]
         },
         {
-          "h": "Hatalar ve puanlama",
+          "h": "Yıldızlar ve kayıt",
           "body": [
-            "Her giriş anında çözüme göre kontrol edilir. 3 hata sınırı etkinken (kurulum, tuş [F]) üçüncü hata oyunu bitirir.",
-            "Puan = (zorluk tabanı eksi süre, hatalar ve ipuçları) çarpı mod çarpanı."
+            "Her seviye 3 yıldıza kadar verir: 1 çözmek için, 2 hatasız ve ipuçsuz, 3 ayrıca zorluğun hedef süresinin altında (seviye bilgisinde yazar).",
+            "Seviye seçimi yıldızları, en iyi süreyi ve çözülen seviyeleri gösterir; kıvrık bir köşe yarım kalan bulmacaları işaretler.",
+            "Yarım kalan bulmacalar otomatik kaydedilir - çıkarken, seviye seçimine dönerken ve oynarken düzenli olarak - ve bir dahaki sefere devam eder. Bu sırada mod değiştirirsen düşük olan çarpan sayılır.",
+            "Başarımlar: ilk Killer Sudoku için \"Kafes savaşçısı\", 3 yıldızlı 30 seviye için \"Yıldız koleksiyoncusu\"."
           ]
         },
         {
           "h": "İpuçları",
           "body": [
-            "- Zaten çok rakam içeren satırlar, sütunlar ve kutularla başla.",
-            "- Adayları çiftler halinde not al: iki hücre aynı iki adayı paylaşıyorsa, başka her yerden elenirler.",
-            "- Klasik modda acele etme: her hata anında sayılır, kırmızı bir işaret olmasa bile."
+            "- Zaten çok rakam içeren satır, sütun ve bloklarla başla.",
+            "- Adayları çiftler halinde not al: bir birimdeki iki hücre aynı iki adayı paylaşıyorsa, bu adaylar birimin geri kalanından düşer.",
+            "- Killer: her satır, sütun ve blok 45 eder. Kafesler neredeyse tamamen içindeyse, geri kalan eksik hücreyi ele verir.",
+            "- Killer: bazı toplamların tek bir kombinasyonu vardır - iki hücrede 3 her zaman 1+2, 17 her zaman 8+9'dur.",
+            "- X-Sudoku: köşegenler iki ek birimdir - onlara erken bak, ilk rakam çoğu zaman oradadır."
           ]
         }
       ]
@@ -1156,7 +1316,8 @@
         "21",
         "fişler",
         "krupiye",
-        "bahis"
+        "bahis",
+        "lama bankası"
       ],
       "sections": [
         {
@@ -1185,11 +1346,12 @@
           ]
         },
         {
-          "h": "Fişler",
+          "h": "Lama Çipleri",
           "body": [
-            "500 fişle başlarsın; bakiyen ve rekorun kalıcı olarak kaydedilir ve her yeniden başlatmada korunur.",
-            "En yüksek skor, şimdiye kadar ulaştığın en yüksek fiş bakiyesidir.",
-            "10 fişin altında iflas etmişsindir: [Enter] taze 500 fişle yeniden başlar - rekor kalır."
+            "Blackjack, Poker ve Casino, Lama Bankası'nda tek bir hesabı paylaşır: 1000 Lama çipiyle başlarsın ve bakiyen kalıcı olarak kaydedilir.",
+            "Bahis kartlar dağıtılır dağıtılmaz düşülür - süren bir eli bırakan bahsini kaybeder.",
+            "Rekor, blackjack bakiyenin ulaştığı en yüksek değerdir: 1000 artı blackjackte kazandığın ve kaybettiğin her şey. Rulette, slotta veya pokerde kazandıkların burada sayılmaz.",
+            "10 çipin altında iflas edersin: [Enter] bankadan kredi alır ve hesabını yeniden 1000'e tamamlar. Krediler bakiyeye sayılmaz."
           ]
         },
         {
@@ -1417,43 +1579,80 @@
         "harfler",
         "yeşil",
         "sarı",
-        "sozluk"
+        "sozluk",
+        "günün kelimesi",
+        "dordle",
+        "quordle",
+        "istatistik",
+        "paylaş",
+        "renk körü",
+        "uzunluk"
       ],
       "sections": [
         {
           "h": "Nasıl oynanır",
           "body": [
-            "Gizli 5 harfli kelimeyi 6 denemede tahmin et. Her tahminden sonra kutucuklar renk değiştirir: yeşil = doğru yerde doğru harf, sarı = harf var ama başka yerde, gri = harf kelimede yok.",
-            "Tekrarlanan harfler doğru şekilde işlenir: bir harf yalnızca cevapta gerçekten geçtiği sayıda sarı veya yeşil işaretlenir.",
-            "Her tahmin gerçek bir kelime olmalı: seçili dilin kelime listesiyle karşılaştırılır (dile göre 10.000 ile 19.000 arası geçerli kelime). Listede olmayan tahmin reddedilir: satır kısaca titrer ve tahmin sayılmaz. Çözümler her zaman aynı dilin yaygın kelimeleridir."
+            "Gizli kelimeyi tahmin et. Her tahminden sonra kareler renk değiştirir: yeşil = doğru harf doğru yerde, sarı = harf kelimede var ama başka yerde, gri = harf kelimede yok.",
+            "Tekrarlanan harfler doğru işlenir: bir harf, çözümde gerçekte kaç kez geçiyorsa en fazla o kadar sarı veya yeşil olur.",
+            "Her tahmin gerçek bir kelime olmalı - seçilen dil ve uzunluğun kelime listesiyle kontrol edilir (dile ve uzunluğa göre 4.000 ile 19.000 arası kabul edilen kelime). Listede olmayanlar reddedilir: satır kısa bir süre sallanır ve tahmin sayılmaz. Çözümler her zaman aynı dilin yaygın kelimeleridir - özel isim ve kaba kelime yoktur."
           ]
         },
         {
           "h": "Modlar",
           "body": [
-            "Normal: geçerli olan her kelimeyi tahmin edebilirsin - ipuçları yalnızca öneridir.",
-            "Zor: bulunan ipuçları yeniden kullanılmalı - yeşil harfler yerinde kalır, sarı harfler tekrar geçmelidir. Modu başlamadan önce seçersin."
+            "Sonsuz: her biri için 6 tahminle kelime kelime ilerlersin. Bilemediğin ilk kelime oyunu bitirir.",
+            "Günün kelimesi: günde bir kelime, 6 tahmin - her dil ve uzunlukta, bilgisayarda ve tarayıcıda herkes için aynı. Başladığın günün kelimesi kaydedilir; sonrasında oyun sonucunu, istatistikleri ve bir sonraki kelimeye geri sayımı gösterir. Serin yalnızca her gün oynarsan büyür.",
+            "Dordle: 7 tahminde aynı anda iki kelime - her tahmin iki tahta için de geçerlidir. Ekran klavyesinin tuşları ikiye bölünür: sol yarı tahta 1, sağ yarı tahta 2.",
+            "Quordle: 9 tahminde aynı anda dört kelime. Tuşlar dörde bölünür ve dört tahtanın renklerini gösterir."
+          ]
+        },
+        {
+          "h": "Başlamadan önce ayarlar",
+          "body": [
+            "Her oyundan önce ayar ekranı açılır - yanında seçili mod ve uzunluk için istatistiklerini görürsün.",
+            "- Kelime uzunluğu: 4, 5, 6 veya 7 harf; her uzunluğun kendi kelime listeleri vardır.",
+            "- Zor mod: bulunan ipuçları kullanılmalı - yeşil harfler yerinde kalır, sarılar yeniden geçmelidir. Dordle ve Quordle'da tahmin, çözülmemiş en az bir tahtanın ipuçlarına uymalıdır.",
+            "- Renk körü modu: yeşil yerine turuncu, sarı yerine mavi - paylaşılan sonuçta da.",
+            "Tüm ayarlar anında kaydedilir."
           ]
         },
         {
           "h": "Kontroller",
           "body": [
-            "- A-Z harfleri yaz, [Backspace] sonuncuyu siler, [Enter] satırı kontrol eder (yalnızca 5 harfle).",
-            "- Ekrandaki klavyeyi fareyle de kullanabilirsin; harfleri şimdiye kadar öğrendiklerine göre renklenir."
+            "- A-Z harfleri yaz, [Backspace] sonuncuyu siler, [Enter] satırı kontrol eder.",
+            "- Ekran klavyesi fareyle de çalışır: Almanca, Çekçe, Slovence ve Hırvatça için QWERTZ, Fransızca için AZERTY, diğerlerinde QWERTY. Tuşları şimdiye kadar öğrendiklerine göre renklenir.",
+            "- Sağ üstteki ayar simgesi ayar ekranına geri götürür.",
+            "- Ayar ekranında: [4] - [7] veya [Sol] / [Sağ] = uzunluk, [H] = zor mod, [F] = renk körü modu, [Enter] = başla.",
+            "- Oyundan sonra: [Enter] = tekrar, [C] = sonucu paylaş, [S] = ayarlar. [Boşluk] tahtalara bakabilmen için sonucu gizler."
           ]
         },
         {
-          "h": "Skor",
+          "h": "Puan ve istatistik",
           "body": [
-            "Sonsuza kadar devam eder: çözülen her kelime puan verir - daha az tahmin daha çok anlamına gelir (10 ila 60). Hemen ardından yeni bir kelime belirir.",
-            "Çözemediğin ilk kelime oyunu bitirir; topladığın puanlar en yüksek skorundur."
+            "Sonsuz: çözülen her kelime puan getirir - ne kadar az tahmin, o kadar çok puan (10 ile 60 arası). Rekora yalnızca 5 harfli Sonsuz mod sayılır; diğer uzunlukların kendi en iyi skorları vardır.",
+            "İstatistikler dil, uzunluk ve moda göre ayrı tutulur: oynanan oyunlar, kazanma yüzdesi, güncel ve en iyi seri ile çubuk grafik olarak tahmin dağılımı - son çözümünün çubuğu parlar."
+          ]
+        },
+        {
+          "h": "Sonucu paylaşma",
+          "body": [
+            "[C] veya Paylaş düğmesi sonucunu çözümü ele vermeden emoji ızgarası olarak panoya kopyalar - böylece herhangi bir sohbete yapıştırabilirsin. Skordan sonraki * zor modu gösterir."
+          ]
+        },
+        {
+          "h": "Başarımlar",
+          "body": [
+            "- Kâhin: bir kelimeyi en fazla 2 tahminde bil.",
+            "- Kelime alışkanlığı: art arda 7 günün kelimesini çöz.",
+            "- Dörtlü dahi: Quordle'da dört kelimenin hepsini çöz."
           ]
         },
         {
           "h": "İpuçları",
           "body": [
-            "- Birbirinden farklı, yaygın birçok harf içeren bir kelimeyle başla.",
-            "- Gri harfleri elemek için kullan ve sarı harfleri yeni bir konuma taşı."
+            "- Birçok farklı ve yaygın harf içeren bir kelimeyle başla.",
+            "- Gri harflerle olasılıkları ele, sarı harfleri yeni bir yere taşı.",
+            "- Dordle ve Quordle'da önce birden fazla tahta için ipucu veren kelimeleri dene."
           ]
         }
       ]
@@ -1552,7 +1751,8 @@
         "video poker",
         "çek",
         "fişler",
-        "körler"
+        "körler",
+        "lama bankası"
       ],
       "sections": [
         {
@@ -1573,9 +1773,17 @@
           ]
         },
         {
-          "h": "Fişler ve eller",
+          "h": "Lama Çipleri",
           "body": [
-            "Fişler (başlangıç 1000) kalıcıdır (mem.json). En yüksek skor en yüksek fiş sayındır. İflas = bir tıkla yeniden başla.",
+            "Lama Bankası'nın Lama çipleriyle oynanır - Blackjack ve Casino ile ortak bir hesap (başlangıç 1000, kalıcı olarak kaydedilir).",
+            "Bir elin başında hesabın masada yığın olarak durur; pota giren miktar hemen düşülür. Elin ortasında masadan kalkarsan pottaki payın gider - geri kalanı hesabına döner.",
+            "Rekor, poker bakiyenin ulaştığı en yüksek değerdir: 1000 artı pokerde kazandığın ve kaybettiğin her şey. Diğer oyunlardaki kazançlar burada sayılmaz.",
+            "İflas (20'lik büyük kördan az, Video Poker'de 10'dan az) = tek tıkla banka kredisi, hesabın yine 1000 olur."
+          ]
+        },
+        {
+          "h": "Eller",
+          "body": [
             "El sıralaması: Yüksek Kart < İkili < İki İkili < Üçlü < Kent < Floş < Full House < Dörtlü < Kent Floş < Royal Floş."
           ]
         }
@@ -1592,33 +1800,72 @@
         "mat",
         "rok",
         "geçerken alma",
-        "yapay zeka"
+        "yapay zeka",
+        "chess960",
+        "bulmaca",
+        "saat",
+        "pgn"
       ],
       "sections": [
         {
           "h": "Nasıl oynanır",
           "body": [
             "Tam kurallı satranç: bütün taş hamleleri, kısa ve uzun rok, geçerken alma ve piyon terfisinde vezir, kale, fil veya at seçimi.",
-            "Oyun şah mat ya da beraberlikle biter - pat, 50 hamle kuralı, üç kez tekrar veya yetersiz materyal.",
-            "Tek kişilikte hazırlık ekranında güç ve renk seçersin; iki kişilikte aynı bilgisayarda sırayla oynarsınız."
+            "Oyun şah mat, çekilme, süre bitmesi ya da beraberlikle biter - pat, 50 hamle kuralı, üç kez tekrar, yetersiz materyal veya anlaşma.",
+            "Üç mod: yapay zekaya karşı oyun, aynı bilgisayarda 2 oyuncu (yalnız masaüstü) ve bulmacalar.",
+            "Tahtanın yanında saat, alınan taşlar ve materyal farkıyla (ör. +2) oyuncular, altında standart notasyonda hamle listesi durur - fare tekerleğiyle kaydırılır."
           ]
         },
         {
           "h": "Kontroller",
           "body": [
-            "- Fare: önce kendi taşına, sonra hedef kareye tıkla. Geçerli kareler ve son hamle renkli gösterilir.",
+            "- Fare: kendi taşına tıkla ya da doğrudan hedef kareye sürükle. Geçerli kareler, son hamle ve şah çekilen şah renkli gösterilir.",
             "- Klavye: [Yön tuşları] veya [WASD] seçim çerçevesini taşır, [Boşluk] ya da [Enter] seçer ve oynar.",
-            "- Terfide dört taş belirir - tıklaman yeter.",
-            "- Oyun bitince: [Enter] yeni oyun, [S] hazırlığa dön (yalnız tek kişilik)."
+            "- Rok: şahı hedef kareye ya da kendi kalenin üstüne götür. Terfide taş seçimi belirir.",
+            "- Düğmeler: [U] veya [Backspace] geri al, [H] ipucu, [F] tahtayı çevir, [O] beraberlik teklif et, [X] çekil.",
+            "- Oyun bitince: [Enter] yeni oyun (renkler değişir), [S] ayarlar, [P] oyunu PGN olarak kaydet."
           ]
         },
         {
-          "h": "Yapay zeka gücü ve puan",
+          "h": "Ayarlar: güç, saat ve Chess960",
           "body": [
-            "Acemiden Ustaya altı kademe: Acemi rastgele oynar, orta kademeler bir ila üç yarım hamle derinliğinde arar ve bilerek hata yapar, Usta en derin arar ve alma dizilerini sakinlik aramasıyla bitirir.",
-            "Her aramanın süre ve düğüm bütçesi vardır, böylece arayüz asla donmaz.",
-            "Yüksek puan bu oturumda yapay zekaya karşı kazandığın oyunları sayar; iki kişilik mod puanlanmaz.",
-            "İpucu: taşları erken geliştir, rok yap ve kaleleri açık sütunlara koy."
+            "Acemiden Ustaya altı yapay zeka kademesi: Acemi rastgele oynar, orta kademeler oyunlarını bilerek çeşitlendirir, Zor ve Usta yinelemeli derinleştirme, transpozisyon tablosu ve sakinlik aramasıyla hesaplar ve bilinen açılışları tanır. Yapay zeka her karede küçük parçalar halinde düşünür - oyun hiç takılmaz.",
+            "Saat: yok, 1+0, 3+2, 5+0 veya 10+5 (dakika + hamle başına eklenen saniye). İlk hamleden sonra başlar. Süresi biten kaybeder - rakip artık hiç mat edemiyorsa oyun berabere biter.",
+            "Chess960: 960 rastgele başlangıç dizilişinden biri, numarası hamle listesinin üstünde görünür. Rokta şah yine g veya c'ye, kale f veya d'ye gelir; aradaki kareler boş olmalı ve şah şah çekilen bir kareden geçemez."
+          ]
+        },
+        {
+          "h": "Yardım, beraberlik ve puan",
+          "body": [
+            "Geri alma yapay zekaya karşı iki yarım hamleyi geri alır, ipucu en iyi hamleyi mavi okla gösterir. İkisi de oyunu \"yardımlı\" yapar: galibiyet rekor, istatistik ve başarımlarda sayılmaz.",
+            "Beraberlik teklifi: yapay zeka yalnızca konumunu en fazla eşit görürse kabul eder - yoksa reddeder ve yeni teklif ancak birkaç hamle sonra mümkün olur.",
+            "Yüksek puan bu oturumda yapay zekaya karşı yardımsız galibiyetlerini sayar. Ustayı (seviye 6) yenmek \"Büyükusta\" başarımını açar.",
+            "Oyun bitince PGN dosyası olarak kaydedebilir (tarayıcıda: indirme ve pano) ve herhangi bir satranç programında yeniden oynatabilirsin."
+          ]
+        },
+        {
+          "h": "İki kişilik",
+          "body": [
+            "Beyaz ve siyah aynı bilgisayarda sırayla oynar; saat ve Chess960 yapay zekaya karşı olduğu gibi çalışır. Ayarlardaki \"Her hamleden sonra tahtayı çevir\" ile tahta her hamleden sonra sırası gelen tarafa döner.",
+            "Beraberlik teklifi rakibe sorulur, çekilme sırası gelen taraf için geçerlidir. İki kişilik oyun puanlanmaz ve tarayıcı sürümünde bulunmaz."
+          ]
+        },
+        {
+          "h": "Bulmacalar",
+          "body": [
+            "Beş seviyede 200 bulmaca: 1 hamlede mat, 2 hamlede mat, 3 hamlede mat, Taktik I ve Taktik II - kolaydan zora her biri 40. Çözülenler işaretlenir ve ilerleme kaydedilir.",
+            "Önce rakip son hamlesini oynar, sonra sıra sende. Yanlış hamle kısa bir uyarıdan sonra geri alınır, rakibin cevabı kendiliğinden gelir. Mat bulmacalarında hemen mat eden her hamle sayılır.",
+            "- [H] çözümü göster (bulmaca o zaman çözülmüş sayılmaz), [U] tekrar dene, [N] sonraki bulmaca, [M] listeye dön.",
+            "25 bulmaca çözmek \"Bulmaca Ustası\" başarımını açar.",
+            "Kaynak: bulmacalar lichess.org'un serbestçe kullanılabilen bulmaca veritabanından (CC0) alınmış ve kendi motorumuzla kontrol edilmiştir - teşekkürler, Lichess!"
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Taşları erken geliştir, rok yap ve kaleleri açık sütunlara koy.",
+            "- Bulmacalarda önce şahlara, almalara ve tehditlere bak.",
+            "- Saatle oynarken fazla düşünme - 3+2 ve 10+5'teki ek süre birçok oyun sonunu kurtarır."
           ]
         }
       ]
@@ -2256,6 +2503,380 @@
           "body": [
             "On labut gerçek kütlesi olan dairelerdir: top onlara çarpar, onlar birbirini devirir. Yani strike şansın değil fiziğin sonucudur.",
             "Oyun toplamı rekorundur; ayrıca her zorluk için en iyi sonuç saklanır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crossyroad",
+      "category": "games",
+      "game": "CrossyRoadGame",
+      "title": "Crossy Road",
+      "keywords": [
+        "tavuk",
+        "yol",
+        "nehir",
+        "raylar",
+        "tren",
+        "kartal",
+        "jetonlar",
+        "karakterler",
+        "günlük",
+        "voxel"
+      ],
+      "sections": [
+        {
+          "h": "Kontroller",
+          "body": [
+            "Ok tuşları veya [W] [A] [S] [D] ile kare kare zıpla. [Boşluk], [Enter] ya da fare tıklaması ileri zıplatır.",
+            "- Zıplarken bir sonraki yöne basarsan, yere iner inmez tekrar zıplarsın. Tuşu basılı tutmak sürekli zıplatmaz.",
+            "Oyun bittikten sonra: [Enter] = tekrar, [F] = karakterler, [S] = ayarlar."
+          ]
+        },
+        {
+          "h": "Çimen, yollar, nehirler ve raylar",
+          "body": [
+            "Parkur sıra sıra sonsuza dek oluşturulur - her zaman yürünebilir bir yol vardır.",
+            "- Çimen: güvenli, ama ağaçlar ve kayalar yolu kapatır.",
+            "- Yollar: arabalar ve kamyonlar seni ezer. İlerledikçe trafik hızlanır ve yoğunlaşır.",
+            "- Nehirler: yalnızca kütüklerin ve nilüferlerin üstünde durabilirsin. Kütükler seni taşır - ekranın kenarından dışarı sürüklenirsen elenirsin.",
+            "- Raylar: kırmızı uyarı ışığı yanıp söner ve zil çalarsa, yaklaşık bir saniye sonra tren gelir. İleride art arda 5 raya kadar koca istasyonlar seni bekler."
+          ]
+        },
+        {
+          "h": "Kartal ve puanlar",
+          "body": [
+            "Kamera yavaşça ileri kayar. Çok oyalanırsan ya da üç sıradan fazla geri gidersen kartal seni kapar - önce ekranın altındaki kırmızı kenar uyarır.",
+            "Puan = ulaşılan en uzak sıra. Sonsuz modda bu senin rekorundur (kilometre taşı: 150 sıra).",
+            "50. sıradan itibaren gece ile gündüz değişir: gece farlar, trenler ve jetonlar parlar."
+          ]
+        },
+        {
+          "h": "Jetonlar ve karakterler",
+          "body": [
+            "Jetonlar parkura dağılmıştır, dev jeton 5 değerindedir. Toplanan jetonlar kalıcı olarak kaydedilir.",
+            "KARAKTERLER sekmesinde onlarla yeni karakterler alırsın: kurbağa, domuz, penguen, kedi, tilki, lama, robot, hayalet ve tek boynuzlu at (25 ile 250 jeton arası). Tavuk en baştan senindir.",
+            "- Başarımlar: ilk satın alınan karakter için \"Yeni tarz\", art arda 5 ray için \"Ray akrobatı\"."
+          ]
+        },
+        {
+          "h": "Modlar ve seçenekler",
+          "body": [
+            "- Sonsuz: her turda yeni bir parkur, rekora sayılır.",
+            "- Günün parkuru: bugün herkes için aynı (web sürümü dahil), kendi günlük rekoruyla - rekora sayılmaz.",
+            "Ayarlarda gölgeleri [H] ve gece-gündüz döngüsünü [N] açıp kapatırsın; Sol/Sağ karakterlerin arasında geçiş yapar."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash",
+      "category": "games",
+      "game": "GeometryDashGame",
+      "title": "Geometry Dash",
+      "keywords": [
+        "geometry dash",
+        "ritim",
+        "küp",
+        "gemi",
+        "top",
+        "ufo",
+        "dalga",
+        "portal",
+        "küre",
+        "ped",
+        "altın",
+        "yıldız",
+        "antrenman",
+        "kontrol noktası",
+        "iblis",
+        "müzik",
+        "bölüm"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Karakterin kendiliğinden sağa doğru koşar - sen yalnızca ne zaman zıplayacağına ya da uçacağına karar verirsin. Bir diken, bir çukur ya da bir bloğa kafa kafaya çarpma: patlama ve bir an sonra yeni deneme başlar.",
+            "Bitişe ulaştığında bölüm tamamlanır. Üstteki çubuk ilerlemeyi yüzde olarak gösterir, sağ üst köşede bu denemenin altınları görünür ve başlangıçta deneme sayacı bölümün içinde süzülür.",
+            "Her bölümün kendi müziği vardır; arka plan, zemin ve küreler ritimle birlikte atar. Müziği, ilerleme çubuğunu ve otomatik kontrol noktalarını bölüm seçim ekranında, bölüm kartının altından açıp kapatırsın."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- [Boşluk], [Yukarı], [W], [Enter] veya sol fare tuşu: zıpla ya da uç. Basılı tutmak sürekli basmak sayılır - küp her inişten hemen sonra yeniden zıplar.",
+            "- [R] anında yeniden başlatır, [Q] veya [Backspace] bölüm seçimine döner, [Esc] duraklatır.",
+            "- [P] antrenman modunu açıp kapatır; bu modda [Z] kontrol noktası koyar, [X] sonuncuyu siler.",
+            "- Bölüm seçimi: [Sol]/[Sağ] bölümler arasında gezer, [1] ile [8] arası doğrudan bir bölüme geçer, [Enter] başlatır, [P] Normal ya da Antrenman seçer, [M] müziği açıp kapatır, [Tab] BÖLÜMLER sekmesine geçer.",
+            "Her basış bir zaman damgası alır ve tam olarak gerçekleştiği fizik adımında (saniyenin 1/240'ı) etki eder - bilgisayar bir anlığına takılsa bile zıplama tam yerinde olur."
+          ]
+        },
+        {
+          "h": "Beş biçim",
+          "body": [
+            "Portallar karakterini dönüştürür - her biçim farklı uçar:",
+            "- Küp: basmak = zıplamak. Blokların üstüne konar; yanlarına çarparsa deneme biter.",
+            "- Gemi: basılı tut = yüksel, bırak = alçal.",
+            "- Top: yerdeyken dokunmak yerçekimini tersine çevirir - sonra tavanda yuvarlanmaya devam eder.",
+            "- UFO: her dokunuş havada bile küçük bir kanat çırpışıdır.",
+            "- Dalga: basılı tut = çapraz yukarı, bırak = çapraz aşağı. Minicik ama bir bloğa en ufak temas onu parçalar.",
+            "Gemi, top, UFO ve dalga zemin ile tavan arasındaki bir koridorda uçar - koridorun yüksekliğini portal belirler."
+          ]
+        },
+        {
+          "h": "Pedler, küreler ve portallar",
+          "body": [
+            "- Pedler yerdedir ve temas edince çalışır: sarı = yüksek zıplama, pembe = küçük zıplama, mavi = yerçekimini çevir.",
+            "- Küreler havada süzülür ve yalnızca onlara değerken basarsan çalışır - renkleri aynıdır. Kısa bir tampon, bir tık erken basmayı affeder.",
+            "- Yerçekimi portalları: sarı dünyayı baş aşağı çevirir, mavi eski hâline getirir. Hız portalları 0,5x, 1x, 2x veya 3x hıza geçirir.",
+            "- Bunlara yarım bloklar, küçük dikenler, zemini olmayan çukurlar ve arka planla zeminin rengini değiştiren renk tetikleyicileri eklenir."
+          ]
+        },
+        {
+          "h": "8 bölüm",
+          "body": [
+            "- Lama Launch (Kolay, 1 yıldız) ve Neon Steps (Kolay, 2 yıldız): zıplamalar, pedler, küreler ve ilk gemi.",
+            "- Orbit Garden (Normal, 3 yıldız): küre zincirleri, tavanda baş aşağı ve iki kat hızda gemi.",
+            "- Gravity Tide (Zor, 4 yıldız) ve Skyline Rush (Zor, 5 yıldız): yerçekimi portalları, top, UFO, çukurlar ve üç kat hız.",
+            "- Crystal Caves (Daha zor, 7 yıldız) ve Wave Reactor (Çılgın, 9 yıldız): beş biçimin hepsi, dar kapılar ve dalga tünelleri.",
+            "- Lama Inferno (İblis, 10 yıldız): üç kat hız ve hepsi bir arada.",
+            "Her bölümün, üç altının tamamıyla birlikte geçilebildiği kanıtlanmıştır: yapım sırasında bir çözücü onu gerçek oyun koduyla bitirdi - ve çözümü saniyenin 1/240'ı kadar kaydırıldığında bile işe yarıyor."
+          ]
+        },
+        {
+          "h": "Antrenman modu",
+          "body": [
+            "Antrenman modunda bir kazadan sonra başlangıçtan değil, son kontrol noktasından devam edersin - yeşil elmaslar bunları bölümde işaretler ve müzik çalmaya devam eder.",
+            "Otomatik kontrol noktaları yaklaşık her iki saniyede bir oluşur (kapatılabilir), [Z] ile kendi noktalarını koyarsın, [X] sonuncuyu siler.",
+            "Antrenmanın kendi rekoru vardır ve ne yıldız ne de altın kazandırır."
+          ]
+        },
+        {
+          "h": "Yıldızlar, altınlar ve başarımlar",
+          "body": [
+            "Bir bölümü normal modda bitirirsen yıldızlarını kazanırsın. Her bölümde ayrıca çoğu zaman en kolay yolun dışında kalan üç gizli altın saklıdır. Bölümü onlarla bitirdiğin anda sayılırlar - ve her biri bir yıldız daha değerindedir.",
+            "Rekorun toplam yıldız sayındır (en fazla 65) ve yalnızca artabilir. Oyun her bölüm için Normal ve Antrenman'daki en iyi yüzdeyi, bulunan altınları ve denemeleri saklar.",
+            "- Başarımlar: ilk tamamlanan bölüm için \"Ritimde\", bir bölümün üç altını için \"Altın avcısı\", Lama Inferno için \"İblis avcısı\" - ve 20 yıldızda bir kilometre taşı.",
+            "BÖLÜMLER sekmesinde kendi bölümlerini kurar, oynar ve paylaşırsın - \"Kendi bölümlerin (Geometry Dash)\" sayfasına bak."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash-levels",
+      "category": "games",
+      "title": "Kendi bölümlerin (Geometry Dash)",
+      "keywords": [
+        "kendi bölümlerin",
+        "editör",
+        "bölümler",
+        "ugc",
+        "kurmak",
+        "paylaşmak",
+        "içe aktarmak",
+        "dışa aktarmak",
+        "doğrulandı",
+        "lamapgzlevel",
+        "geometry dash"
+      ],
+      "sections": [
+        {
+          "h": "Bölüm kurmak",
+          "body": [
+            "Geometry Dash bölüm seçimindeki BÖLÜMLER sekmesinde kendi koleksiyonun durur (en fazla 60 bölüm). \"Yeni\" bölüm editörünü açar, \"Düzenle\" mevcut bir bölümü yeniden açar.",
+            "Solda ızgaralı tuval, sağda palet vardır: üstte Seç ve Silgi, altında altı grup - Bloklar, Tehlikeler, Pedler ve küreler, Portallar, Hız ve Ekstralar (gizli altınlar, renk tetikleyici). [1] ile [6] arası grupları doğrudan seçer.",
+            "- Tıklamak ya da sürüklemek seçili nesneyi yerleştirir, [R] onu döndürür: dikenler ve yarım bloklar dört yöne, pedler yukarı ya da aşağı.",
+            "- Seç aracıyla sürüklemek bir nesneyi taşır, [Del] siler. Sağ tık her zaman siler; sağ tuşla sürüklemek, fare tekerleği, yön tuşları veya [A]/[D] görünümü kaydırır.",
+            "- Altta seçili nesnenin değerleri görünür: biçim portallarında koridor yüksekliği, renk tetikleyicide hedef (arka plan ya da zemin), renk ve geçiş süresi.",
+            "- En alttaki şerit tüm bölümü bir bakışta gösterir - bir tıklama o noktaya atlar.",
+            "[U] geri alır, [Y] yineler, [G] ızgarayı gösterir ya da gizler, [S] kaydeder. [Esc] geri döner - kaydedilmemiş değişiklikler varsa ancak onaydan sonra.",
+            "Bölüm başına en fazla üç altın. Bitiş otomatik olarak son nesnenin biraz arkasına yerleşir."
+          ]
+        },
+        {
+          "h": "Bölüm ayarları",
+          "body": [
+            "Dişli simgesi bölüm ayarlarını açar: başlangıç hızı (0,5x ile 3x arası), başlangıç biçimi, müzik tarzı (Enerjik, Chiptune, Rüya gibi, Karanlık ya da müzik yok), BPM cinsinden tempo ile arka plan ve zemin rengi.",
+            "Ad ve id üstteki başlık satırındadır. id anahtardır: küçük harf, boşluksuz, yalnızca a-z, 0-9, - ve _ - aynı zamanda paylaşırken önerilen dosya adıdır."
+          ]
+        },
+        {
+          "h": "Test etmek ve doğrulamak",
+          "body": [
+            "\"Test\" ([Enter]) bölümü baştan oynatır, \"Buradan\" ([T]) mevcut noktadan - öncesindeki portallar geçilmiş sayılır. [Esc] tuvale geri döndürür.",
+            "Bölümünü testte en baştan ve antrenman modu olmadan bitirirsen yeşil \"doğrulandı\" işaretini alır. Nesnelerde, başlangıç hızında ya da başlangıç biçiminde sonradan yapılan her değişiklik bu işareti kaldırır - renkler, ad ve müzik kaldırmaz.",
+            "BÖLÜMLER sekmesinde \"Oyna\" seçili bölümü kendi rekoru ve deneme sayacıyla normal şekilde başlatır."
+          ]
+        },
+        {
+          "h": "Paylaşmak ve içe aktarmak",
+          "body": [
+            "\"Paylaş\" yapımcı adını ve dosya adını sorar. \"Farklı dışa aktar\" kaydetme penceresini açar, \"İndirilenler'e\" dosyayı doğrudan İndirilenler klasörüne koyar.",
+            "Dosyanın uzantısı .lamapgzlevel'dir ve JSON içerir. \"İçe aktar\" onu yeniden okur (.json da olur); id zaten kullanılıyorsa otomatik olarak -2, -3 ... eklenir. Doğrulama işareti bölümle birlikte gider.",
+            "Ad, id ve yapımcı; kaydederken, dışa aktarırken VE içe aktarırken 14 dilin kelime filtresinden geçer.",
+            "Her şey oyunun yanındaki ugc.json dosyasına kaydedilir - kendi minigolf deliklerinle aynı dosya. Tarayıcı sürümünde bölümler tarayıcı belleğinde kalır ve paylaşmak dosyayı indirir."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "battleship",
+      "category": "games",
+      "game": "BattleshipGame",
+      "title": "Battleship",
+      "keywords": [
+        "battleship",
+        "amiral battı",
+        "gemiler",
+        "filo",
+        "salvo",
+        "radar",
+        "yz",
+        "batır"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Her biri kendi 10x10 denizinde iki filo: uçak gemisi (5 kare), zırhlı (4), kruvazör (3), denizaltı (3) ve muhrip (2). Oyuncular sırayla rakibin tahtasındaki bir kareye ateş eder.",
+            "Solda radarlı büyük hedef tahtası, sağda kendi suların ve iki filonun özeti bulunur. Beyaz halka ıska, alevler isabet demektir. Bir geminin tüm kareleri vurulunca gemi batar ve silueti ortaya çıkar.",
+            "Düşmanın beş gemisini ilk batıran kazanır. Ardından özet, iki taraf için atışları, isabetleri, isabet oranını, turları ve kalan gemileri gösterir."
+          ]
+        },
+        {
+          "h": "Filoyu yerleştirme",
+          "body": [
+            "- Gemileri fareyle sağdaki rıhtımdan tahtaya sürükle - ya da birine tıkla, taşı ve tekrar tıkla. Yerleştirilmiş gemiler de aynı şekilde taşınır.",
+            "- [R] ya da sağ tık tutulan gemiyi (veya farenin altındaki gemiyi) döndürür.",
+            "- Konum geçerliyse önizleme yeşil, değilse kırmızı yanar.",
+            "- Klavye: oklar çerçeveyi taşır, [Space] bir gemiyi alır ve bırakır, [Enter] eksik olan sıradaki gemiyi alır.",
+            "- [X] rastgele yerleştirir, [C] tüm gemileri kaldırır. Filo tamamsa [Enter] ya da \"Hazır!\" savaşı başlatır.",
+            "Son dizilişin bir sonraki turda yeniden önerilir."
+          ]
+        },
+        {
+          "h": "Ayarlardaki kurallar",
+          "body": [
+            "Üç anahtar da anında kaydedilir ve iki taraf için geçerlidir:",
+            "- Gemiler birbirine değebilir: KAPALI olduğunda her geminin çevresinde çapraz dahil en az bir boş kare gerekir. Yasak bölge yerleştirirken aydınlatılır.",
+            "- Salvo: her turda yüzen gemin kadar atış hakkın olur - gemi kaybeden daha az ateş eder.",
+            "- İsabetten sonra tekrar ateş et: her isabet atışı geri verir, yani vurdukça ateş etmeye devam edersin."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Fare: hedef tahtasında bir kareye tıkla.",
+            "- Klavye: oklar ya da hareket tuşların nişan alır, [Space] veya [Enter] ateş eder.",
+            "- Tur bitince: [Enter] = yeni tur, [S] = ayarlara dön. [Esc] duraklatır."
+          ]
+        },
+        {
+          "h": "YZ seviyeleri",
+          "body": [
+            "- Kolay rastgele ateş eder ve bir isabetin ardından yalnızca bazen üstüne gider.",
+            "- Orta rastgele arar, isabetten sonra komşu kareleri yoklar ve isabet çizgilerini geminin sonuna kadar uzatır.",
+            "- Zor her kare için kalan gemilerin hâlâ mümkün olan kaç konumda o kareyi kapsayabileceğini (dokunma kuralı dahil) hesaplar ve en olası kareye ateş eder. Ararken en küçük kalan gemiye göre ayarlanmış bir satranç tahtası deseni kullanır.",
+            "Ortalama olarak YZ bütün bir filoyu batırmak için yaklaşık 70 (Kolay), 60 (Orta) ve 45 atışa (Zor) ihtiyaç duyar - ve yalnızca senin de gördüğünü bilir."
+          ]
+        },
+        {
+          "h": "2 oyuncu",
+          "body": [
+            "Çok oyunculu modda aynı bilgisayarda sırayla oynarsınız. Yerleştirmeden önce ve her turdan önce bir devir ekranı, sıradaki oyuncu [Enter] ya da tıklamayla onaylayana kadar iki filoyu da gizler.",
+            "Ayrıca filona yapılan son saldırının kaç atış ve isabet içerdiğini bildirir. Web sürümü yalnızca YZ'ye karşı oynanır."
+          ]
+        },
+        {
+          "h": "Puanlar ve başarımlar",
+          "body": [
+            "YZ'ye karşı her galibiyet bir puan sayılır; rekor, bir oturumdaki en yüksek galibiyet sayısıdır. 2 oyunculu mod puanlanmaz.",
+            "- Kusursuz filo: tek bir gemi kaybetmeden YZ'yi yen.",
+            "- Büyük amiral: zor YZ'nin filosunu batır."
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Gemilerini tahtanın her yerine dağıt, hepsini kenara dizme.",
+            "- Ararken iki kareden birine ateş etmek yeter (satranç tahtası) - yalnızca uzun gemiler kaldıysa üç kareden biri bile yeter.",
+            "- Dokunma kuralı kapalıysa batmış bir geminin çevresindeki her kare kesinlikle sudur."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "casino",
+      "category": "games",
+      "game": "CasinoGame",
+      "title": "Casino",
+      "keywords": [
+        "kumarhane",
+        "casino",
+        "rulet",
+        "slot",
+        "lama",
+        "jackpot",
+        "bedava dönüş",
+        "çip",
+        "bahis"
+      ],
+      "sections": [
+        {
+          "h": "Lama Bankası",
+          "body": [
+            "Casino, Blackjack ve Poker aynı hesapla oynar: Lama çipleri (başlangıç 1000). Bahisler hemen düşülür, kazançlar eklenir - her şey kalıcı olarak kaydedilir.",
+            "Her oyun kendi bakiyesini tutar. Casino rekoru, 1000 + Casino bakiyesinin ulaştığı en yüksek değerdir; Blackjack veya Poker kazançları burada sayılmaz.",
+            "İflas edince (en düşük bahisten az) bankadan kredi alırsın: hesabın yeniden 1000 olur. Krediler hiçbir bakiyeye sayılmaz; sayıları sağ üstte görünür."
+          ]
+        },
+        {
+          "h": "Rulet - bahis koyma",
+          "body": [
+            "37 bölmeli Avrupa ruleti (0'dan 36'ya). Çip değerini aşağıdan seç: 1, 5, 25, 100 veya 500 ([1] ile [5] arası tuşlar veya fare tekerleği).",
+            "Sol tık çip koyar, sağ tık geri alır. Tıkladığın yer bahsi belirler:",
+            "- Bir sayının ortası: tek sayı, 35'e 1 öder",
+            "- İki sayı arasındaki kenar: ikili, 17'ye 1",
+            "- Bir sayı sütununun dış çizgisi: 3 sayılık üçlü, 11'e 1 (sıfırın yanında 0-1-2 ve 0-2-3 de)",
+            "- Dört sayı arasındaki köşe: dörtlü, 8'e 1 (sıfırın dış tarafında: 0-1-2-3)",
+            "- İki sütun arasında dış çizgideki köşe: 6 sayılık altılı, 5'e 1",
+            "- Sütun (2'ye 1) ve düzine (2'ye 1), kırmızı/siyah, çift/tek ve düşük 1-18 / yüksek 19-36 (her biri 1'e 1)",
+            "Çarkın yanında farenin altındaki bahsi ve ne ödediğini görürsün."
+          ]
+        },
+        {
+          "h": "Rulet - çevirme",
+          "body": [
+            "[Enter] veya ÇEVİR turu başlatır: bahis düşülür ve kazanan sayı çekilir. Top spiral çizerek iner ve tam o bölmeye düşer - [Boşluk] veya bir tık hızlandırır.",
+            "Tekrarla [R] son turun bahislerini yeniden koyar, İkiye katla [D] tüm bahisleri ikiye katlar, Temizle [Backspace] masayı boşaltır.",
+            "Üstte son 12 sayı görünür; kazanan bahisler ödemelerini gösterir."
+          ]
+        },
+        {
+          "h": "Lama Slotu",
+          "body": [
+            "5 makara, 3 sıra, 10 kazanç hattı. Hatlar soldan sağa 3 aynı sembolden itibaren öder; kenarlardaki numaralar her hattın nereden geçtiğini gösterir (fareyle üzerine gel = hattı göster).",
+            "Hat başı bahis: 1, 2, 5 veya 10 ([+]/[-] veya fare tekerleği) - her zaman 10 hattın hepsi oynanır.",
+            "- Lama = joker: altın para hariç her sembolün yerine geçer. Bir hatta 5 lama Lama Jackpotu'dur.",
+            "- Altın para = scatter: herhangi bir yerde 3, 4 veya 5 para toplam bahsin 2, 10 veya 50 katını öder ve tüm kazançların çift sayıldığı 10 bedava dönüş verir. Bedava dönüşler yeniden tetiklenebilir.",
+            "Ödeme tablosu, mevcut bahsine göre tüm ödemeleri gösterir. Oyuncuya geri ödeme oranı %96,1'dir - makara şeritlerinden tam olarak hesaplanmıştır."
+          ]
+        },
+        {
+          "h": "Lama Slotu - kontroller",
+          "body": [
+            "[Boşluk], [Enter] veya makaralara tık çevirir; dönerken tekrar basmak hızlandırır.",
+            "Otomatik: [A] 10 tur, [Shift]+[A] 25 tur başlatır (veya Oto düğmesi), tekrar basmak durdurur. [T] turboyu açar, [I] ödeme tablosunu açar.",
+            "Kazanılan bedava dönüşler hemen kaydedilir ve bir sonraki oyunda devam eder."
+          ]
+        },
+        {
+          "h": "Başarımlar",
+          "body": [
+            "- Casino kilometre taşı: rekor 5000",
+            "- Tam isabet: rulette tek sayıya oynayıp kazan",
+            "- Lama Jackpotu: bir kazanç hattında 5 lama"
           ]
         }
       ]

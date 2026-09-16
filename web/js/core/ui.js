@@ -148,6 +148,7 @@
     BilliardGame: "#2f9e6a", SlidingPuzzleGame: "#5ac0e0", MastermindGame: "#c86ad8",
     BubbleShooterGame: "#ff7aa8", HangmanGame: "#d89a4a", BlockJumpGame: "#8fd14f",
     LamaTowerDefenseGame: "#e2725b", MiniGolfGame: "#4fd17a", PinballGame: "#7f5af0", BowlingGame: "#4a7de0",
+    CrossyRoadGame: "#e8e25a", GeometryDashGame: "#b9f23a", BattleshipGame: "#3a78b5", CasinoGame: "#d6336c",
   };
 
   // ------------------------------------------------------------ Farb-Helfer

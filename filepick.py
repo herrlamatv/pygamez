@@ -4,7 +4,8 @@ filepick.py
 ===========
 Die Datei-Dialoge des Spiels ("Exportieren als ...", "Importieren").
 
-Gebraucht werden sie beim Teilen eigener Minigolf-Bahnen (siehe ``ugc.py``).
+Gebraucht werden sie beim Teilen eigener Minigolf-Bahnen und Geometry-Dash-
+Level (siehe ``ugc.py``; die Endungen gibt der Aufrufer über ``exts`` vor).
 Das Fenster gehört ohnehin Tkinter - pygame zeichnet nur eingebettet hinein
 (siehe den Kopf von ``main.py``) -, also stehen die Standard-Dialoge von
 ``tkinter.filedialog`` ohne Umwege zur Verfügung.
@@ -37,7 +38,8 @@ def available():
 
 def _types(exts):
     """Baut die filetypes-Liste für die Dialoge."""
-    names = {".lamapgzmap": "PyGameZ Minigolf-Map", ".json": "JSON"}
+    names = {".lamapgzmap": "PyGameZ Minigolf-Map",
+             ".lamapgzlevel": "PyGameZ Geometry-Dash-Level", ".json": "JSON"}
     out = [(names.get(e, e.lstrip(".").upper()), "*" + e) for e in exts]
     out.append(("Alle Dateien", "*.*"))
     return out

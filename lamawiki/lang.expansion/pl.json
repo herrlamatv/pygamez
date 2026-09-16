@@ -11,14 +11,16 @@
         "menu",
         "pauza",
         "pełny ekran",
-        "pasek boczny"
+        "pasek boczny",
+        "wieloosobowy"
       ],
       "sections": [
         {
           "h": "Rozpoczynanie gry",
           "body": [
             "Grę możesz uruchomić na trzy sposoby: z listy gier na lewym pasku bocznym, z siatki gier na ekranie startowym albo bezpośrednio z tej wiki przez ekran przygotowania.",
-            "Przed każdą grą pojawia się ekran przygotowania: tam wybierasz tryb (np. jeden gracz lub wielu graczy) oraz dostajesz się do opcji i tej wiki."
+            "Przed każdą grą pojawia się ekran przygotowania: tam wybierasz tryb (np. jeden gracz lub wielu graczy) oraz dostajesz się do opcji i tej wiki.",
+            "Jeśli gra ma wiele trybów albo okno jest małe, Opcje, Wiki i Powrót ustawiają się na ekranie przygotowania w jednym rzędzie - dzięki temu wszystko pozostaje widoczne."
           ]
         },
         {
@@ -26,7 +28,7 @@
           "body": [
             "- [Esc] wstrzymuje i wznawia trwającą grę - w menu cofa.",
             "- [F11] włącza i wyłącza pełny ekran.",
-            "- Zielony przycisk Powrót do menu kończy grę i zapisuje najlepszy wynik."
+            "- Zielony przycisk Powrót do menu kończy grę i zapisuje najlepszy wynik - tak samo jak przejście do innej gry z paska bocznego."
           ]
         },
         {
@@ -39,8 +41,9 @@
         {
           "h": "Tryb wieloosobowy",
           "body": [
-            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) i Asteroids (pojedynek kooperacyjny) mają lokalny tryb dla 2 graczy - wybierany na ekranie przygotowania.",
-            "W trybie jednoosobowym oba przypisania klawiszy sterują tą samą postacią; w trybie wieloosobowym po jednym na gracza (domyślnie: G1 = WASD, G2 = strzałki lub IJKL - patrz opcje)."
+            "Lokalny tryb dla 2 graczy ma 20 gier: Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus), Asteroids (pojedynek kooperacyjny), Memory, Cztery w rzędzie, Pojedynek czołgów, Reversi, Yahtzee, Warcaby, Szachy, Młynek, Simon, Bilard, Minigolf, Pinball, Bowling i Battleship - wybierany na ekranie przygotowania.",
+            "W trybie jednoosobowym oba przypisania klawiszy sterują tą samą postacią; w trybie wieloosobowym po jednym na gracza (domyślnie: G1 = WASD, G2 = strzałki lub IJKL - patrz opcje).",
+            "Tetris oferuje też pojedynek z SI; w Battleship we dwoje ekran przekazania zasłania floty. Wersja przeglądarkowa jest wyłącznie jednoosobowa."
           ]
         }
       ]
@@ -60,7 +63,8 @@
         "język",
         "design",
         "wyglad",
-        "motyw"
+        "motyw",
+        "stałe klawisze"
       ],
       "sections": [
         {
@@ -75,7 +79,8 @@
           "body": [
             "Dostępne są trzy zestawy: WASD + strzałki, WASD + IJKL oraz strzałki + WASD.",
             "Każdy pojedynczy klawisz można zmienić: kliknij wiersz lub potwierdź klawiszem Enter, a następnie naciśnij żądany klawisz. [Esc] anuluje.",
-            "Przypisania są oddzielne dla gracza 1 i gracza 2 oraz zapisywane na stałe."
+            "Przypisania są oddzielne dla gracza 1 i gracza 2 oraz zapisywane na stałe.",
+            "Każdy gracz może zmienić pięć akcji: góra, dół, lewo, prawo i akcja. Niektóre gry mają dodatkowo stałe klawisze - np. schowek [C] i obrót w lewo [Z] w Tetrisie albo cofnięcie [U] w 2048, szachach i Sudoku. Działają tylko wtedy, gdy dany klawisz nie jest przypisany do żadnej akcji; wymienia je podpowiedź w ustawieniach i strona wiki gry."
           ]
         },
         {
@@ -96,7 +101,7 @@
         {
           "h": "Język",
           "body": [
-            "Interfejs jest dostępny w językach niemieckim, angielskim, francuskim, hiszpańskim i portugalskim. Przełączasz go na ekranie opcji lub przez Język na pasku bocznym - ta wiki również zmienia język."
+            "Interfejs jest dostępny w 14 językach: niemieckim, angielskim, francuskim, hiszpańskim, portugalskim, polskim, tureckim, duńskim, norweskim, szwedzkim, fińskim, czeskim, słoweńskim i chorwackim. Przełączasz go na ekranie opcji lub przez Język na pasku bocznym - ta wiki również zmienia język."
           ]
         }
       ]
@@ -111,30 +116,58 @@
         "rekord",
         "punkty",
         "postęp",
-        "pliki"
+        "pliki",
+        "kopia zapasowa",
+        "backup",
+        "żetony lamy",
+        "ugc"
       ],
       "sections": [
         {
           "h": "Najlepsze wyniki",
           "body": [
             "Każda gra zapisuje swój najlepszy wynik automatycznie po zakończeniu rundy. Nowy rekord pokazuje złoty baner - plus deszcz konfetti.",
-            "Najlepsze wyniki widzisz wszędzie: jako gwiazdkę na liście na pasku bocznym, na pasku przewijanym na ekranie startowym oraz na karcie stanu."
+            "Najlepsze wyniki widzisz wszędzie: jako gwiazdkę na liście na pasku bocznym, na pasku przewijanym na ekranie startowym oraz na karcie stanu.",
+            "Tryby bez rekordu - np. Sprint i Ultra w Tetrisie, trasa dnia w Crossy Road czy 2048 z cofaniem - nie pokazują banera; ich najlepsze czasy i wyniki dnia gra zapisuje sama."
           ]
         },
         {
           "h": "Co gdzie jest zapisywane?",
           "body": [
-            "- settings.json: dźwięk, głośność, przypisania klawiszy, rozdzielczość, FPS i opcje gier (np. tryb Snake, ustawienia Sudoku).",
-            "- mem.json: najlepsze wyniki, wybrany język oraz postęp poziomów Sudoku.",
+            "- settings.json: dźwięk, głośność, przypisania klawiszy, rozdzielczość, FPS, wygląd i opcje gier (np. tryb Snake, DAS/ARR w Tetrisie, wariant Sudoku, zasady Battleship).",
+            "- mem.json: najlepsze wyniki, wybrany język, osiągnięcia i statystyki - a do tego postępy wielu gier we własnych sekcjach (patrz niżej).",
             "- mem-ngb.json: wizualne mody Snake (kolor głowy, siatka, baner).",
             "- replay.json: zapisane powtórki z minigolfa i bowlingu.",
+            "- ugc.json: twoje własne dołki do minigolfa i poziomy Geometry Dash (udostępniane jako .lamapgzmap lub .lamapgzlevel).",
             "Te pliki leżą bezpośrednio w folderze gry i wystarczy je skasować, aby wszystko zresetować."
+          ]
+        },
+        {
+          "h": "Postępy w mem.json",
+          "body": [
+            "Każda gra z postępami ma w mem.json własną sekcję, na przykład:",
+            "- sudoku: rozwiązane poziomy z gwiazdkami i najlepszym czasem, rozpoczęte łamigłówki oraz Sudoku dnia z serią.",
+            "- casino: konto Banku Lamy - żetony Lamy dla Blackjacka, Pokera i Casino wraz z bilansem każdej gry.",
+            "- crossy: zebrane monety, kupione postacie i najlepszy wynik dnia w Crossy Road.",
+            "- tetris: najlepszy czas w Sprincie, najlepszy wynik w Ultra i bilans pojedynków z SI.",
+            "- g2048: zapisane partie 2048 i najlepsze wyniki dla każdego rozmiaru planszy i trybu.",
+            "- chess: twoje postępy w trybie zadań szachowych.",
+            "- geodash: najlepszy wynik procentowy każdego poziomu (Normalny i Trening), znalezione monety, próby i skoki w Geometry Dash.",
+            "- wordle: statystyki dla trybu, języka i długości słowa, stan słowa dnia oraz najlepsze wyniki.",
+            "Do tego m.in. minigolf, pinball, bowling i lamatowerdef z najlepszymi wynikami."
+          ]
+        },
+        {
+          "h": "Automatyczna kopia zapasowa",
+          "body": [
+            "mem.json i settings.json są zapisywane bezpiecznie: najpierw do pliku tymczasowego, potem podmieniane w jednym kroku. Poprzednia wersja zostaje jako mem.json.bak lub settings.json.bak.",
+            "Jeśli mem.json kiedyś się uszkodzi, gra automatycznie wczyta kopię - rekordy, osiągnięcia i żetony Lamy nie przepadną."
           ]
         },
         {
           "h": "Wskazówka",
           "body": [
-            "Punkty są zapisywane tylko wtedy, gdy wyjdziesz przez Powrót do menu lub gdy runda zakończy się normalnie - nie po gwałtownym zamknięciu okna w trakcie gry."
+            "Punkty są zapisywane po zakończeniu partii, przy wyjściu przez Powrót do menu, przy wyborze innej gry na pasku bocznym w trakcie rozgrywki oraz przy zamykaniu kolekcji. Tylko awaria lub siłowe zamknięcie programu sprawia, że trwająca partia przepada."
           ]
         }
       ]
@@ -201,19 +234,20 @@
         {
           "h": "Przegląd",
           "body": [
-            "Kolekcja śledzi teraz twoje postępy: 69 osiągnięć i szczegółowe statystyki wszystkich 38 gier. Znajdziesz je pod przyciskiem Osiągnięcia i statystyki na pasku bocznym; zakładki przełączasz [Tab] lub kliknięciem."
+            "Kolekcja śledzi twoje postępy: 107 osiągnięć i szczegółowe statystyki wszystkich 46 gier. Znajdziesz je pod przyciskiem Osiągnięcia i statystyki na pasku bocznym; zakładki przełączasz [Tab] lub kliknięciem."
           ]
         },
         {
           "h": "Osiągnięcia",
           "body": [
             "Są trzy kategorie:",
-            "- Ogólne: cele dla całej kolekcji, np. rozpoczęte rozgrywki, wypróbowane gry, łączny czas gry, pobite rekordy i zwycięstwa - plus smaczki jak Nocny marek (granie po północy).",
-            "- Progi punktowe: jeden uczciwy cel punktowy na grę, dopasowany do jej skali.",
-            "- Wyjątkowe momenty: mat na SI, KNIFFEL, kafelek 2048, Wordle w 2 próbach i więcej.",
+            "- Ogólne (23): cele dla całej kolekcji, np. rozpoczęte rozgrywki, wypróbowane gry, łączny czas gry, pobite rekordy i zwycięstwa - plus smaczki jak Nocny marek (granie po północy).",
+            "- Progi punktowe (37): jeden uczciwy cel punktowy na grę, dopasowany do jej skali.",
+            "- Wyjątkowe momenty (47): mat na SI, KNIFFEL, kafelki 2048 i 4096, T-Spin Double i Perfect Clear w Tetrisie, 25 rozwiązanych zadań szachowych, pierwsze Killer Sudoku, trafienie pojedynczej liczby w ruletce, lamowy jackpot na automacie, wygrana w Battleship bez utraty statku i więcej.",
             "Przy odblokowaniu w prawym górnym rogu pojawia się złote powiadomienie z krótką fanfarą - nawet w trakcie gry.",
             "Stare dane się liczą: przy pierwszym uruchomieniu po aktualizacji dotychczasowe rekordy zostają zaliczone automatycznie (bez fajerwerków powiadomień).",
-            "Zablokowane osiągnięcia pokazują pasek postępu, odblokowane - datę."
+            "Zablokowane osiągnięcia pokazują pasek postępu, odblokowane - datę.",
+            "W 2048 i szachach partie z cofaniem ruchu lub podpowiedziami nie liczą się do rekordów ani osiągnięć - próbować wolno, oceniana jest tylko gra bez pomocy."
           ]
         },
         {
@@ -495,30 +529,82 @@
       "title": "Tetris",
       "keywords": [
         "klocki",
-        "rzędy",
+        "linie",
         "obracanie",
+        "schowek",
+        "t-spin",
+        "sprint",
+        "ultra",
+        "maraton",
         "versus",
-        "stos"
+        "śmieci"
       ],
       "sections": [
         {
+          "h": "Tryby",
+          "body": [
+            "Solo: wariant wybierasz w ustawieniach. Maraton trwa bez końca, a poziom rośnie co 10 linii (poziom startowy 1-15) - do rekordu liczy się tylko Maraton.",
+            "- Sprint 40: skasuj 40 linii jak najszybciej; najlepszy czas zostaje zapisany.",
+            "- Ultra 2:00: zdobądź jak najwięcej punktów w dwie minuty; rekord zostaje zapisany.",
+            "Pojedynek z AI: grasz przeciw AI o trzech poziomach (Łatwy, Średni, Trudny). Kto kasuje linie, wysyła śmieci na drugą stronę; kogo stos pierwszy dotknie sufitu, ten jest K.O. Bilans z każdym poziomem zostaje zapisany.",
+            "2 graczy (tylko wersja PC): to samo we dwoje na jednej klawiaturze. Oba pola dostają zawsze tę samą kolejkę klocków."
+          ]
+        },
+        {
           "h": "Sterowanie",
           "body": [
-            "Lewo/prawo przesuwa klocek, góra obraca go, dół to miękki zrzut, a klawisz akcji (domyślnie: [Space] ) twardy zrzut."
+            "[Lewo] [Prawo] przesuwają klocek - przytrzymany rusza po czasie DAS i dalej sunie w tempie ARR. [Góra] obraca w prawo, [Dół] to miękki zrzut, a klawisz akcji (domyślnie: [Spacja] ) zrzuca klocek od razu (twardy zrzut).",
+            "- [C] lub [Shift] odkłada klocek do schowka (raz na klocek), [Z] lub [Y] obraca w lewo, [X] w prawo.",
+            "- 2 graczy: gracz 1 odkłada klawiszem [Q] i obraca w lewo klawiszem [E], gracz 2 odkłada prawym [Shift] i obraca w lewo prawym [Ctrl].",
+            "- Te stałe klawisze działają tylko wtedy, gdy nie przypisałeś ich samodzielnie do żadnej akcji.",
+            "W Sprincie i Ultra [R] od razu zaczyna od nowa. Po grze: [R] = jeszcze raz, [S] = ustawienia - klawisze twardego zrzutu celowo niczego nie restartują.",
+            "W ustawieniach regulujesz DAS (opóźnienie do ciągłego ruchu), ARR (tempo potem, 0 ms = od razu do ściany) i cień klocka."
           ]
         },
         {
-          "h": "Tryby i punktacja",
+          "h": "Nowoczesne zasady",
           "body": [
-            "Pełne rzędy dają punkty - kilka naraz daje znacznie więcej. Co 10 rzędów rośnie poziom i prędkość.",
-            "Versus (tryb wieloosobowy): dwie plansze obok siebie, przegrywa ten, czyj stos pierwszy sięgnie góry."
+            "Klocki przychodzą w workach po 7: każdy z siedmiu klocków pojawia się dokładnie raz w każdej siódemce. Podgląd pokazuje 5 następnych.",
+            "Obrót działa według SRS: gdy klocek się zablokuje, gra próbuje do czterech pozycji zastępczych (wall kicks) - klocki da się więc obracać nawet wokół krawędzi.",
+            "Na dole klocek czeka 0,5 sekundy, zanim się zablokuje. Każdy ruch lub obrót zeruje ten czas, najwyżej 15 razy na daną głębokość.",
+            "Koniec gry: nowy klocek nie ma miejsca, klocek zablokuje się w całości nad polem albo śmieci wypchną stos górą."
           ]
         },
         {
-          "h": "Wskazówki",
+          "h": "Punktacja",
           "body": [
-            "- Trzymaj jedną kolumnę wolną dla długiego klocka I i zbijaj poczwórnymi rzędami.",
-            "- Buduj płasko: wysokie wieże szybko się przewracają, gdy rośnie prędkość."
+            "Wszystkie wartości razy poziom: Single 100 · Double 300 · Triple 500 · Tetris 800.",
+            "T-Spin: bez linii 400 · Single 800 · Double 1200 · Triple 1600. T-Spin Mini: 100 · 200 · 400.",
+            "- Back-to-Back: Tetris lub T-Spin zaraz po poprzednim liczy się x1,5.",
+            "- Kombo: każde kolejne skasowanie z rzędu daje dodatkowo 50 x kombo x poziom.",
+            "- Perfect Clear (całkiem puste pole): +800 / 1200 / 1800 / 2000, jako Tetris Back-to-Back +3200.",
+            "- Miękki zrzut daje 1 punkt, twardy 2 punkty za rząd."
+          ]
+        },
+        {
+          "h": "T-Spiny",
+          "body": [
+            "T-Spin liczy się, gdy klocek T zablokuje się po obrocie, a co najmniej trzy z czterech narożników wokół jego środka są zajęte (ściany i dno też się liczą).",
+            "Jeśli oba narożniki po stronie, w którą wskazuje jego nosek, są zajęte, to pełny T-Spin, w przeciwnym razie Mini. Jeśli T wkręci się w lukę dużym kickiem (kolumna w bok, dwa rzędy w dół), zawsze liczy się jako pełny - tak powstaje T-Spin Triple.",
+            "Komunikaty nad polem pokazują T-SPIN, TETRIS, BACK-TO-BACK, KOMBO i PERFECT CLEAR."
+          ]
+        },
+        {
+          "h": "Pojedynek i śmieci",
+          "body": [
+            "Atak: Double 1 · Triple 2 · Tetris 4 · T-Spin Single 2 · T-Spin Double 4 · T-Spin Triple 6 · Mini Double 1. Do tego +1 za Back-to-Back, od +1 do +5 za długie kombo i +10 za Perfect Clear.",
+            "Nadchodzące śmieci widać na pasku ostrzeżenia po lewej stronie pola: żółte jeszcze czekają, czerwone wyrosną przy twoim następnym klocku, który nie skasuje linii - najwyżej 8 rzędów na klocek, każda porcja ze wspólną dziurą.",
+            "Gdy sam kasujesz linie, twój atak najpierw znosi czekające śmieci; tylko reszta trafia do przeciwnika.",
+            "Co 40 sekund klocki spadają szybciej (do poziomu 12)."
+          ]
+        },
+        {
+          "h": "Wskazówki i osiągnięcia",
+          "body": [
+            "- Buduj płasko i zostaw wolną kolumnę przy brzegu na klocek I - cztery linie naraz dają punkty i atak.",
+            "- Używaj schowka, by zachować I na Tetris albo odłożyć niepasujący klocek.",
+            "- W pojedynku opłaca się Back-to-Back: dwa Tetrisy z rzędu wysyłają 4 + 5 linii.",
+            "- Osiągnięcia: Tetris! (4 linie naraz), Mistrz obrotu (T-Spin Double), Czyściutko (Perfect Clear), Sprinter (Sprint 40 poniżej 2:00). We dwoje nie ma osiągnięć."
           ]
         }
       ]
@@ -719,27 +805,76 @@
         "kafelki",
         "przesuwanie",
         "łączenie",
-        "liczby"
+        "liczby",
+        "gest",
+        "cofanie",
+        "na czas",
+        "bez końca",
+        "rozmiar",
+        "wznów",
+        "4096"
       ],
       "sections": [
         {
-          "h": "Sterowanie i zasady",
+          "h": "Sterowanie",
           "body": [
-            "Strzałki lub [W] [A] [S] [D] przesuwają wszystkie kafelki naraz w jednym kierunku. Jednakowe liczby łączą się w swoją sumę; po każdym ruchu pojawia się nowy kafelek.",
-            "Celem jest kafelek 2048 - potem gra toczy się bez końca. Przegrywasz, gdy żaden ruch nie jest możliwy."
+            "Strzałki lub [W] [A] [S] [D] przesuwają wszystkie kafelki naraz w jednym kierunku. Myszą lub touchpadem możesz też przeciągać: naciśnij, przeciągnij w wybranym kierunku i puść.",
+            "Przytrzymane klawisze się nie powtarzają - każdy ruch to osobne naciśnięcie. Polecenia wydane w trakcie animacji są zapamiętywane i wykonywane zaraz po niej.",
+            "[U] lub [Backspace] = cofnij, [R] lub [N] = nowa gra, [Tab] = powrót do ustawień. Te dodatkowe klawisze działają tylko wtedy, gdy sam nie przypisałeś ich do żadnej akcji."
           ]
         },
         {
-          "h": "Punktacja",
+          "h": "Zasady",
           "body": [
-            "Każde połączenie dodaje wartość nowego kafelka do twojego wyniku."
+            "Równe liczby, które się zderzą, łączą się w swoją sumę. Każdy kafelek łączy się najwyżej raz na ruch: 2, 2, 4, 4 przesunięte w lewo dają 4, 8.",
+            "Po każdym ważnym ruchu pojawia się nowy kafelek - zwykle 2, raz na dziesięć razy 4. Gdy żaden ruch nie jest już możliwy, gra się kończy.",
+            "Od 4096 kafelki mają własne kolory: od zieleni przez błękit i fiolet aż po karmin (131072); jeszcze większe są ciemne ze złotymi cyframi."
+          ]
+        },
+        {
+          "h": "Ustawienia: rozmiar i tryb",
+          "body": [
+            "Rozmiar planszy od 3x3 do 8x8 - małe plansze są podchwytliwe, duże dają miejsce na długie łańcuchy.",
+            "- Klasyczny: celem jest 2048. Potem gra pyta, czy chcesz grać dalej - [Enter] kontynuuje, [N] zaczyna nową grę.",
+            "- Na czas: 3 minuty na jak najwięcej punktów. Zegar rusza z pierwszym ruchem, pasek pod planszą pokazuje pozostały czas.",
+            "- Bez końca: bez celu i bez przerw, aż zabraknie ruchów."
+          ]
+        },
+        {
+          "h": "Cofanie",
+          "body": [
+            "Do wyboru w ustawieniach: wyłączone, 3 na grę lub bez limitu. Cofnięcie odwraca ostatni ruch razem z punktami - nawet tuż po końcu gry.",
+            "Gdy go użyjesz, gra liczy się jako rozegrana \"z cofaniem\": nie wlicza się do rekordu ani do osiągnięć za kafelki, a jej najlepszy wynik jest zapisywany osobno."
+          ]
+        },
+        {
+          "h": "Zapis i wznawianie",
+          "body": [
+            "Trwająca gra zapisuje się automatycznie osobno dla każdego rozmiaru i trybu - po twoich ruchach i przy wychodzeniu z gry.",
+            "W ustawieniach pojawia się wtedy Wznów z punktami i ruchami zapisanej gry. Nowa gra usuwa ten zapis."
+          ]
+        },
+        {
+          "h": "Punkty, najlepsze wyniki i rekord",
+          "body": [
+            "Każde połączenie daje wartość nowego kafelka. Kolumna informacji pokazuje punkty, najlepszy wynik, ruchy, największy kafelek, pozostałe cofnięcia i czas.",
+            "Najlepsze wyniki i największy kafelek są zapisywane dla każdego rozmiaru i trybu. Rekord gry 2048 liczy się tylko w 4x4 Klasycznym bez cofania."
+          ]
+        },
+        {
+          "h": "Osiągnięcia",
+          "body": [
+            "- 2048!: stwórz kafelek 2048.",
+            "- 4096!: stwórz kafelek 4096.",
+            "Oba liczą się na planszach do 4x4 i tylko bez cofania - w każdym trybie."
           ]
         },
         {
           "h": "Wskazówki",
           "body": [
-            "- Zaparkuj swój największy kafelek w rogu i nigdy nie ruszaj tego rogu.",
-            "- Przesuwaj głównie w dwóch kierunkach - to utrzymuje planszę uporządkowaną."
+            "- Zaparkuj największy kafelek w rogu i nigdy nie ruszaj tego rogu.",
+            "- Przesuwaj głównie w dwóch kierunkach - plansza pozostaje uporządkowana.",
+            "- W trybie na czas liczy się tempo: łącz wcześnie i trzymaj kafelki razem w jednym rogu."
           ]
         }
       ]
@@ -786,48 +921,73 @@
       "game": "SudokuGame",
       "title": "Sudoku",
       "keywords": [
-        "łamigłówka",
+        "lamiglowka",
         "liczby",
         "notatki",
         "poziomy",
         "podpowiedzi",
-        "logika"
+        "logika",
+        "killer",
+        "x-sudoku",
+        "sudoku dnia",
+        "gwiazdki",
+        "cofnij",
+        "kandydaci"
       ],
       "sections": [
         {
+          "h": "Warianty",
+          "body": [
+            "W ustawieniach wybierasz u góry wariant, a pod nim poziom trudności. Każdy wariant ma 4 poziomy trudności razy 100 stałych plansz, każda z jednym rozwiązaniem.",
+            "- Klasyczne: znane 9x9. 400 plansz jest takich samych jak przed aktualizacją - odhaczone poziomy zostają odhaczone.",
+            "- X-Sudoku: dodatkowo obie przekątne zawierają każdą cyfrę dokładnie raz (subtelnie zaznaczone).",
+            "- Killer: prawie bez podanych cyfr, za to z przerywanymi klatkami. Cyfry w klatce dają małą sumę w jej rogu i się nie powtarzają. Łatwy ma małe klatki i więcej podpowiedzi, Ekspert duże klatki.",
+            "- Mini 6x6: bloki 2x3 i tylko cyfry od 1 do 6, z bardzo dużymi polami.",
+            "- Sudoku dnia ([T] lub karta po prawej): jedna klasyczna plansza dziennie, taka sama dla wszystkich - także w przeglądarce. Trudność zależy od dnia tygodnia (poniedziałek łatwy, wtorek i środa normalny, czwartek, piątek i niedziela trudny, sobota ekspert). Rozwiązuj codziennie, by budować serię."
+          ]
+        },
+        {
           "h": "Sterowanie",
           "body": [
-            "Wybierz pole strzałkami, [W] [A] [S] [D] lub kliknięciem myszy - klawiatura numeryczna po prawej działa całkowicie za pomocą myszy.",
-            "- [1] do [9] wpisuje cyfrę (klawiatura numeryczna też działa).",
-            "- [0], Backspace lub prawe kliknięcie wymazuje.",
-            "- [N] przełącza tryb notatek, [H] daje podpowiedź, [R] restartuje poziom, [Q] otwiera wybór poziomu.",
-            "- Po zakończeniu gry [A] ukrywa baner i pokazuje pełne rozwiązanie."
+            "Pole wybierasz strzałkami, [W] [A] [S] [D] lub kliknięciem. Klawiatura cyfr po prawej działa w całości myszą i pod każdą cyfrą pokazuje, ile jej jeszcze brakuje.",
+            "- [1] do [9] wpisuje cyfrę, [0], Delete lub prawy klik wymazuje.",
+            "- [U] lub [Z] cofa, [Y] ponawia.",
+            "- [N] przełącza notatki, [C] automatycznie wpisuje wszystkich kandydatów, [H] daje podpowiedź.",
+            "- [M] koloruje pole znacznikiem (przełącznik \"Kolorowe znaczniki\" w ustawieniach).",
+            "- [R] zaczyna planszę od nowa, [Q] otwiera wybór poziomu, [A] po zakończeniu pokazuje rozwiązanie.",
+            "Wprowadzanie \"Najpierw cyfra\" (ustawienia, klawisz [I]): najpierw wybierz cyfrę, potem klikaj dowolnie wiele pól albo wpisz ją spacją.",
+            "W ustawieniach: [1] do [4] trudność, [V] wariant, [T] sudoku dnia, [F] limit błędów, strzałki + Enter uruchamiają poziom. Litery działają tylko wtedy, gdy nie są przypisane do żadnej akcji w opcjach."
           ]
         },
         {
-          "h": "Poziomy i tryby",
+          "h": "Tryby i punkty",
           "body": [
-            "400 stałych poziomów: 4 poziomy trudności (łatwy/normalny/trudny/ekspert) razy 100 poziomów. Każdy poziom to wszędzie ta sama łamigłówka o jednoznacznym rozwiązaniu; rozwiązane poziomy są odhaczane.",
-            "Tryb gry ustala pomoce i mnożnik punktów:",
-            "- Klasyczny x2.0: bez pomocy, czysto jak na papierze.",
-            "- Notatki x1.5: plus notatki ołówkiem.",
-            "- Komfort x1.0: błędy od razu na czerwono, podświetlanie konfliktów, poprawne wpisy się blokują.",
-            "- Asystent x0.7: dodatkowo do 3 podpowiedzi."
+            "Tryb gry określa pomoce i mnożnik punktów:",
+            "- Klasyczny x2.0: bez pomocy, jak na papierze.",
+            "- Notatki x1.5: plus notatki ołówkiem i automatyczni kandydaci.",
+            "- Komfort x1.0: błędy od razu na czerwono, zaznaczone konflikty i złe sumy klatek, poprawne wpisy się blokują.",
+            "- Wsparcie x0.7: dodatkowo do 3 podpowiedzi.",
+            "Każdy wpis jest od razu sprawdzany. Z limitem 3 błędów trzeci błąd kończy grę - cofnięcie nie usuwa błędu.",
+            "Punkty = (baza wariantu i trudności minus czas, błędy i podpowiedzi) razy mnożnik. Wszystkie warianty i sudoku dnia liczą się do rekordu."
           ]
         },
         {
-          "h": "Błędy i punktacja",
+          "h": "Gwiazdki i zapis gry",
           "body": [
-            "Każdy wpis jest natychmiast porównywany z rozwiązaniem. Przy aktywnym limicie 3 błędów (ustawienia, klawisz [F] ) trzeci błąd kończy grę.",
-            "Punkty = (baza trudności minus czas, błędy i podpowiedzi) razy mnożnik trybu."
+            "Każdy poziom daje do 3 gwiazdek: 1 za rozwiązanie, 2 bez błędów i podpowiedzi, 3 dodatkowo poniżej czasu docelowego danej trudności (widać go w informacjach o poziomie).",
+            "Wybór poziomu pokazuje gwiazdki, najlepszy czas i rozwiązane poziomy; zagięty róg oznacza rozpoczęte plansze.",
+            "Rozpoczęte plansze zapisują się same - przy wyjściu, przy powrocie do wyboru poziomu i regularnie w trakcie gry - i są kontynuowane przy kolejnym starcie. Jeśli zmienisz tryb, liczy się mniejszy mnożnik.",
+            "Osiągnięcia: \"Pogromca klatek\" za pierwsze sudoku Killer, \"Zbieracz gwiazd\" za 30 poziomów z 3 gwiazdkami."
           ]
         },
         {
           "h": "Wskazówki",
           "body": [
-            "- Zacznij od wierszy, kolumn i kwadratów, które już mają wiele cyfr.",
-            "- Notuj kandydatów w parach: jeśli dwa pola mają te same dwa kandydatury, znikają one wszędzie indziej.",
-            "- W trybie klasycznym nie spiesz się: każdy błąd liczy się od razu, nawet bez czerwonego oznaczenia."
+            "- Zacznij od wierszy, kolumn i bloków, w których stoi już dużo cyfr.",
+            "- Zapisuj kandydatów parami: jeśli dwa pola jednej grupy mają tych samych dwóch kandydatów, znikają oni z reszty grupy.",
+            "- Killer: każdy wiersz, kolumna i blok daje 45. Jeśli klatki leżą w nich prawie w całości, reszta zdradza brakujące pole.",
+            "- Killer: niektóre sumy mają tylko jedną kombinację - 3 w dwóch polach to zawsze 1+2, 17 zawsze 8+9.",
+            "- X-Sudoku: przekątne to dwie dodatkowe grupy - sprawdzaj je wcześnie, często kryje się tam pierwsza cyfra."
           ]
         }
       ]
@@ -1156,7 +1316,8 @@
         "21",
         "żetony",
         "krupier",
-        "zakład"
+        "zakład",
+        "bank lamy"
       ],
       "sections": [
         {
@@ -1185,11 +1346,12 @@
           ]
         },
         {
-          "h": "Żetony",
+          "h": "Żetony Lamy",
           "body": [
-            "Zaczynasz z 500 żetonami; twój stan konta i rekord są zapisywane na stałe i przetrwają każdy restart.",
-            "Najlepszy wynik to najwyższy stan żetonów, jaki kiedykolwiek osiągnąłeś.",
-            "Poniżej 10 żetonów jesteś bankrutem: [Enter] restartuje z 500 świeżymi żetonami - rekord pozostaje."
+            "Blackjack, Poker i Casino dzielą jedno konto w Banku Lamy: zaczynasz z 1000 żetonów Lamy, a stan konta jest trwale zapisywany.",
+            "Stawka jest pobierana od razu przy rozdaniu - kto opuści trwające rozdanie, traci ją.",
+            "Rekord to najwyższy stan twojego bilansu w blackjacku: 1000 plus wszystko, co wygrałeś i przegrałeś w blackjacku. Wygrane w ruletce, na automacie czy w pokerze się tu nie liczą.",
+            "Poniżej 10 żetonów jesteś bankrutem: [Enter] bierze kredyt z banku i uzupełnia konto do 1000. Kredyty nie liczą się do bilansu."
           ]
         },
         {
@@ -1417,43 +1579,80 @@
         "litery",
         "zielony",
         "żółty",
-        "slownik"
+        "slownik",
+        "słowo dnia",
+        "dordle",
+        "quordle",
+        "statystyki",
+        "udostępnij",
+        "daltonizm",
+        "długość"
       ],
       "sections": [
         {
           "h": "Jak grać",
           "body": [
-            "Odgadnij ukryte 5-literowe słowo w 6 próbach. Po każdej próbie kafelki zmieniają kolor: zielony = właściwa litera na właściwym miejscu, żółty = litera występuje, ale gdzie indziej, szary = litery nie ma w słowie.",
-            "Powtarzające się litery są obsługiwane poprawnie: litera jest oznaczana na żółto lub zielono tylko tyle razy, ile faktycznie występuje w odpowiedzi.",
-            "Każda próba musi być prawdziwym słowem - jest sprawdzana z listą słów wybranego języka (od 10 000 do 19 000 dozwolonych słów, zależnie od języka). Reszta jest odrzucana: wiersz chwilę się trzęsie, a próba się nie liczy. Hasła to zawsze popularne słowa tego samego języka."
+            "Odgadnij ukryte słowo. Po każdej próbie pola zmieniają kolor: zielony = właściwa litera na właściwym miejscu, żółty = litera jest w słowie, ale gdzie indziej, szary = litery nie ma w słowie.",
+            "Powtórzone litery są liczone poprawnie: litera jest oznaczona na żółto lub zielono tylko tyle razy, ile razy naprawdę występuje w rozwiązaniu.",
+            "Każda próba musi być prawdziwym słowem - sprawdzana jest na liście słów wybranego języka i długości (od 4000 do 19 000 dozwolonych słów, zależnie od języka i długości). Inne słowa są odrzucane: wiersz na chwilę się trzęsie, a próba się nie liczy. Rozwiązania to zawsze popularne słowa tego samego języka - bez nazw własnych i obraźliwych słów."
           ]
         },
         {
           "h": "Tryby",
           "body": [
-            "Normalny: możesz zgadywać dowolne dozwolone słowo - podpowiedzi są tylko sugestią.",
-            "Trudny: znalezione podpowiedzi trzeba wykorzystać - zielone litery zostają na miejscu, żółte muszą wystąpić ponownie. Tryb wybierasz przed startem."
+            "Bez końca: słowo za słowem, na każde 6 prób. Pierwsze słowo, którego nie odgadniesz, kończy grę.",
+            "Słowo dnia: jedno słowo dziennie w 6 próbach - dla wszystkich takie samo w każdym języku i długości, na PC i w przeglądarce. Rozpoczęte słowo dnia jest zapisywane; potem gra pokazuje wynik, statystyki i odliczanie do następnego słowa. Seria rośnie tylko wtedy, gdy grasz codziennie.",
+            "Dordle: dwa słowa naraz w 7 próbach - każda próba liczy się dla obu plansz. Klawisze klawiatury ekranowej są podzielone: lewa połowa to plansza 1, prawa to plansza 2.",
+            "Quordle: cztery słowa naraz w 9 próbach. Klawisze są podzielone na ćwiartki i pokazują kolory wszystkich czterech plansz."
+          ]
+        },
+        {
+          "h": "Ustawienia przed startem",
+          "body": [
+            "Przed każdą grą pojawia się ekran ustawień - obok widać twoje statystyki dla wybranego trybu i długości.",
+            "- Długość słowa: 4, 5, 6 lub 7 liter, każda z własnymi listami słów.",
+            "- Tryb trudny: odkryte wskazówki trzeba wykorzystać - zielone litery zostają na miejscu, żółte muszą pojawić się ponownie. W Dordle i Quordle próba musi pasować do wskazówek co najmniej jednej nierozwiązanej planszy.",
+            "- Tryb dla daltonistów: pomarańczowy zamiast zielonego i niebieski zamiast żółtego - także w udostępnianym wyniku.",
+            "Wszystkie ustawienia są od razu zapisywane."
           ]
         },
         {
           "h": "Sterowanie",
           "body": [
-            "- Wpisuj litery A-Z, [Backspace] usuwa ostatnią, [Enter] sprawdza wiersz (tylko przy 5 literach).",
-            "- Możesz też użyć klawiatury ekranowej za pomocą myszy; jej litery kolorują się na podstawie tego, czego już się dowiedziałeś."
+            "- Wpisuj litery A-Z, [Backspace] usuwa ostatnią, [Enter] sprawdza wiersz.",
+            "- Klawiatura ekranowa działa też myszą: QWERTZ dla niemieckiego, czeskiego, słoweńskiego i chorwackiego, AZERTY dla francuskiego, w pozostałych QWERTY. Jej klawisze kolorują się według tego, co już wiesz.",
+            "- Ikona suwaków w prawym górnym rogu wraca do ekranu ustawień.",
+            "- W ustawieniach: [4] do [7] lub [Lewo] / [Prawo] = długość, [H] = tryb trudny, [F] = tryb dla daltonistów, [Enter] = start.",
+            "- Po grze: [Enter] = jeszcze raz, [C] = udostępnij wynik, [S] = ustawienia. [Spacja] ukrywa wynik, aby obejrzeć plansze."
           ]
         },
         {
-          "h": "Punktacja",
+          "h": "Punktacja i statystyki",
           "body": [
-            "Gra toczy się bez końca: każde rozwiązane słowo daje punkty - mniej prób oznacza więcej (10 do 60). Zaraz potem pojawia się nowe słowo.",
-            "Pierwsze słowo, którego NIE zdołasz rozwiązać, kończy grę; zebrane punkty to twój najlepszy wynik."
+            "Bez końca: każde odgadnięte słowo daje punkty - im mniej prób, tym więcej (od 10 do 60). Do rekordu liczy się tylko tryb Bez końca z 5 literami; pozostałe długości mają własne najlepsze wyniki.",
+            "Statystyki są zapisywane osobno dla języka, długości i trybu: rozegrane gry, procent wygranych, aktualna i najlepsza seria oraz rozkład prób jako wykres słupkowy - słupek ostatniej wygranej świeci."
+          ]
+        },
+        {
+          "h": "Udostępnianie wyniku",
+          "body": [
+            "[C] lub przycisk Udostępnij kopiuje wynik do schowka jako siatkę emoji - bez zdradzania rozwiązania - więc możesz go wkleić do dowolnego czatu. Gwiazdka * za wynikiem oznacza tryb trudny."
+          ]
+        },
+        {
+          "h": "Osiągnięcia",
+          "body": [
+            "- Jasnowidz: odgadnij słowo w maksymalnie 2 próbach.",
+            "- Słowny nawyk: rozwiąż 7 słów dnia z rzędu.",
+            "- Poczwórny geniusz: rozwiąż wszystkie cztery słowa w Quordle."
           ]
         },
         {
           "h": "Wskazówki",
           "body": [
-            "- Zaczynaj od słowa z wieloma różnymi, częstymi literami.",
-            "- Używaj szarych liter do wykluczania i przesuwaj żółte litery na nową pozycję."
+            "- Zacznij od słowa z wieloma różnymi, częstymi literami.",
+            "- Szarymi literami wykluczaj możliwości, a żółte przestawiaj na nowe miejsca.",
+            "- W Dordle i Quordle najpierw zgaduj słowa, które dają wskazówki dla kilku plansz naraz."
           ]
         }
       ]
@@ -1552,7 +1751,8 @@
         "video poker",
         "dobierany",
         "żetony",
-        "ciemne"
+        "ciemne",
+        "bank lamy"
       ],
       "sections": [
         {
@@ -1573,9 +1773,17 @@
           ]
         },
         {
-          "h": "Żetony i układy",
+          "h": "Żetony Lamy",
           "body": [
-            "Żetony (start 1000) są zachowywane (mem.json). Najlepszy wynik to twoja najwyższa liczba żetonów. Bankructwo = restart jednym kliknięciem.",
+            "Gra toczy się o żetony Lamy z Banku Lamy - wspólne konto z Blackjackiem i Casino (start 1000, trwale zapisywane).",
+            "Na początku rozdania twoje konto leży na stole jako stos; to, co trafia do puli, jest od razu pobierane. Jeśli opuścisz stół w trakcie rozdania, twoja część puli przepada - reszta wraca na konto.",
+            "Rekord to najwyższy stan twojego bilansu w pokerze: 1000 plus wszystko, co wygrałeś i przegrałeś w pokerze. Wygrane w innych grach się tu nie liczą.",
+            "Bankructwo (mniej niż duża ciemna 20, w Video Pokerze mniej niż 10) = kredyt z banku jednym kliknięciem, konto znów ma 1000."
+          ]
+        },
+        {
+          "h": "Układy",
+          "body": [
             "Ranking układów: Wysoka karta < Para < Dwie pary < Trójka < Strit < Kolor < Full < Kareta < Poker < Poker królewski."
           ]
         }
@@ -1592,33 +1800,72 @@
         "mat",
         "roszada",
         "en passant",
-        "ai"
+        "ai",
+        "chess960",
+        "zadania",
+        "zegar",
+        "pgn"
       ],
       "sections": [
         {
           "h": "Jak się gra",
           "body": [
             "Szachy z pełnym zestawem zasad: wszystkie ruchy bierek, roszada krótka i długa, bicie w przelocie oraz promocja pionka na hetmana, wieżę, gońca lub skoczka.",
-            "Partia kończy się matem albo remisem - przez pat, regułę 50 posunięć, trzykrotne powtórzenie pozycji lub niewystarczający materiał.",
-            "W trybie jednoosobowym wybierasz siłę i kolor w ustawieniach; we dwoje gracie na zmianę przy jednym komputerze."
+            "Partia kończy się matem, poddaniem, przekroczeniem czasu albo remisem - przez pat, regułę 50 posunięć, trzykrotne powtórzenie, niewystarczający materiał lub zgodę.",
+            "Trzy tryby: partia z AI, 2 graczy przy jednym komputerze (tylko wersja na komputer) i zadania.",
+            "Obok szachownicy widać graczy z zegarem, zbitymi bierkami i bilansem materiału (np. +2), a pod nimi listę ruchów w notacji standardowej - przewijaną kółkiem myszy."
           ]
         },
         {
           "h": "Sterowanie",
           "body": [
-            "- Mysz: kliknij swoją bierkę, a potem pole docelowe. Możliwe pola i ostatni ruch są podświetlone.",
+            "- Mysz: kliknij swoją bierkę albo przeciągnij ją od razu na pole docelowe. Możliwe pola, ostatni ruch i szachowany król są podświetlone.",
             "- Klawiatura: [Strzałki] lub [WASD] przesuwają ramkę, [Spacja] albo [Enter] wybiera i wykonuje ruch.",
-            "- Przy promocji pojawiają się cztery bierki - wystarczy kliknąć.",
-            "- Po partii: [Enter] nowa partia, [S] powrót do ustawień (tylko jeden gracz)."
+            "- Roszada: przesuń króla na pole docelowe albo na własną wieżę. Przy promocji pojawia się wybór bierki.",
+            "- Przyciski: [U] lub [Backspace] cofnij, [H] podpowiedź, [F] obróć szachownicę, [O] zaproponuj remis, [X] poddaj się.",
+            "- Po partii: [Enter] nowa partia (kolory się zmieniają), [S] ustawienia, [P] zapisz partię jako PGN."
           ]
         },
         {
-          "h": "Siła AI i punkty",
+          "h": "Ustawienia: siła, zegar i Chess960",
           "body": [
-            "Sześć poziomów, od Początkującego do Mistrza: Początkujący gra losowo, poziomy średnie liczą jeden do trzech półruchów i celowo się mylą, Mistrz szuka najgłębiej i dolicza bicia w przeszukiwaniu spokojnych pozycji.",
-            "Każde przeszukiwanie ma limit czasu i węzłów, żeby interfejs nigdy się nie zaciął.",
-            "Wynik liczy zwycięstwa nad AI w tej sesji; tryb dwuosobowy nie jest punktowany.",
-            "Wskazówka: rozwijaj bierki wcześnie, wykonaj roszadę i ustaw wieże na otwartych liniach."
+            "Sześć poziomów AI od Początkującego do Mistrza: Początkujący gra losowo, poziomy średnie celowo urozmaicają grę, Trudny i Mistrz liczą z iteracyjnym pogłębianiem, tablicą transpozycji i przeszukiwaniem spokojnych pozycji oraz znają popularne debiuty. AI myśli małymi porcjami na klatkę - gra nigdy się nie zacina.",
+            "Zegar: bez, 1+0, 3+2, 5+0 lub 10+5 (minuty + sekundy dodawane za ruch). Rusza po pierwszym ruchu. Kto przekroczy czas, przegrywa - chyba że przeciwnik nie może już w ogóle dać mata, wtedy jest remis.",
+            "Chess960: jedno z 960 losowych ustawień początkowych, jego numer widać nad listą ruchów. Przy roszadzie król i tak staje na g lub c, a wieża na f lub d; pola pomiędzy muszą być wolne, a król nie może przechodzić przez szach."
+          ]
+        },
+        {
+          "h": "Pomoc, remis i punkty",
+          "body": [
+            "Cofnięcie zabiera przeciw AI dwa półruchy, podpowiedź pokazuje najlepszy ruch niebieską strzałką. Obie rzeczy sprawiają, że partia jest „z pomocą”: wygrana nie liczy się wtedy do rekordu, statystyk ani osiągnięć.",
+            "Propozycja remisu: AI przyjmuje ją tylko wtedy, gdy ocenia swoją pozycję co najwyżej jako równą - inaczej odmawia, a kolejną propozycję możesz złożyć dopiero po kilku ruchach.",
+            "Rekord liczy twoje zwycięstwa bez pomocy nad AI w tej sesji. Wygrana z Mistrzem (poziom 6) odblokowuje osiągnięcie „Arcymistrz”.",
+            "Po partii możesz zapisać ją jako plik PGN (w przeglądarce: pobranie i schowek) i odtworzyć w dowolnym programie szachowym."
+          ]
+        },
+        {
+          "h": "We dwoje",
+          "body": [
+            "Białe i czarne grają na zmianę przy jednym komputerze; zegar i Chess960 działają jak w grze z AI. Z opcją „Obracaj szachownicę po każdym ruchu” plansza po każdym ruchu obraca się do strony, która ma ruch.",
+            "Propozycja remisu pyta przeciwnika, poddanie dotyczy strony na posunięciu. Tryb dwuosobowy nie jest punktowany i nie ma go w wersji przeglądarkowej."
+          ]
+        },
+        {
+          "h": "Zadania",
+          "body": [
+            "200 zadań w pięciu poziomach: Mat w 1, Mat w 2, Mat w 3, Taktyka I i Taktyka II - po 40, od łatwych do trudnych. Rozwiązane dostają znaczek, a postęp jest zapisywany.",
+            "Najpierw przeciwnik wykonuje swój ostatni ruch, potem twoja kolej. Błędny ruch zostaje cofnięty po krótkiej wskazówce, a odpowiedź przeciwnika pojawia się sama. W zadaniach matowych liczy się każdy ruch, który od razu daje mata.",
+            "- [H] pokaż rozwiązanie (zadanie nie liczy się wtedy jako rozwiązane), [U] jeszcze raz, [N] następne zadanie, [M] powrót do listy.",
+            "25 rozwiązanych zadań odblokowuje osiągnięcie „Łamigłówka”.",
+            "Źródło: zadania pochodzą z wolnej bazy zadań lichess.org (CC0) i zostały sprawdzone naszym własnym silnikiem - dziękujemy, Lichess!"
+          ]
+        },
+        {
+          "h": "Wskazówki",
+          "body": [
+            "- Rozwijaj bierki wcześnie, wykonaj roszadę i ustaw wieże na otwartych liniach.",
+            "- W zadaniach najpierw szukaj szachów, bić i zagrożeń.",
+            "- Z zegarem nie myśl za długo - dodatek czasu w 3+2 i 10+5 ratuje niejedną końcówkę."
           ]
         }
       ]
@@ -2256,6 +2503,379 @@
           "body": [
             "Dziesięć kręgli to koła z prawdziwą masą: kula je uderza, a one przewracają się nawzajem. Strike jest więc wynikiem fizyki, a nie przypadku.",
             "Suma gry to rekord; dodatkowo zapisywany jest najlepszy wynik dla każdego poziomu."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crossyroad",
+      "category": "games",
+      "game": "CrossyRoadGame",
+      "title": "Crossy Road",
+      "keywords": [
+        "kura",
+        "ulica",
+        "rzeka",
+        "tory",
+        "pociąg",
+        "orzeł",
+        "monety",
+        "postacie",
+        "dzienna",
+        "voxel"
+      ],
+      "sections": [
+        {
+          "h": "Sterowanie",
+          "body": [
+            "Skacz pole po polu strzałkami lub [W] [A] [S] [D]. [Spacja], [Enter] albo kliknięcie myszą skaczą do przodu.",
+            "- Jeśli wciśniesz kolejny kierunek jeszcze w locie, skoczysz od razu po wylądowaniu. Przytrzymanie klawisza nie skacze bez końca.",
+            "Po game over: [Enter] = jeszcze raz, [F] = postacie, [S] = ustawienia."
+          ]
+        },
+        {
+          "h": "Trawa, ulice, rzeki i tory",
+          "body": [
+            "Trasa powstaje bez końca rząd po rzędzie - zawsze istnieje przejście.",
+            "- Trawa: bezpieczna, ale drzewa i kamienie zagradzają drogę.",
+            "- Ulice: samochody i ciężarówki cię rozjadą. Im dalej zajdziesz, tym szybszy i gęstszy ruch.",
+            "- Rzeki: stać możesz tylko na kłodach i liściach lilii. Kłody niosą cię ze sobą - kto wypłynie poza krawędź ekranu, odpada.",
+            "- Tory: gdy miga czerwone światło i dzwoni dzwonek, mniej więcej sekundę później nadjeżdża pociąg. Dalej czekają całe stacje z nawet 5 torami pod rząd."
+          ]
+        },
+        {
+          "h": "Orzeł i punkty",
+          "body": [
+            "Kamera powoli przesuwa się naprzód. Kto marudzi zbyt długo albo cofnie się o więcej niż trzy rzędy, tego porywa orzeł - wcześniej ostrzega czerwony pasek na dole ekranu.",
+            "Punkty = najdalszy osiągnięty rząd. W trybie Bez końca to twój rekord (kamień milowy: 150 rzędów).",
+            "Od rzędu 50 zmieniają się dzień i noc: w nocy świecą reflektory, pociągi i monety."
+          ]
+        },
+        {
+          "h": "Monety i postacie",
+          "body": [
+            "Na trasie leżą monety, wielka moneta jest warta 5. Zebrane monety zostają zapisane.",
+            "W zakładce POSTACIE kupujesz za nie nowe postacie: żabę, świnkę, pingwina, kota, lisa, lamę, robota, ducha i jednorożca (od 25 do 250 monet). Kurę masz od początku.",
+            "- Osiągnięcia: „Nowy wygląd” za pierwszą kupioną postać, „Torowy akrobata” za 5 torów pod rząd."
+          ]
+        },
+        {
+          "h": "Tryby i opcje",
+          "body": [
+            "- Bez końca: w każdej rundzie nowa trasa, liczy się do rekordu.",
+            "- Trasa dnia: dziś taka sama dla wszystkich (także w wersji przeglądarkowej), z własnym rekordem dnia - nie liczy się do rekordu.",
+            "W ustawieniach włączasz i wyłączasz cienie [H] oraz zmianę dnia i nocy [N]; Lewo/Prawo przełącza między twoimi postaciami."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash",
+      "category": "games",
+      "game": "GeometryDashGame",
+      "title": "Geometry Dash",
+      "keywords": [
+        "geometry dash",
+        "rytm",
+        "kostka",
+        "statek",
+        "kula",
+        "ufo",
+        "fala",
+        "portal",
+        "wyrzutnia",
+        "monety",
+        "gwiazdki",
+        "trening",
+        "checkpoint",
+        "demon",
+        "muzyka",
+        "poziom"
+      ],
+      "sections": [
+        {
+          "h": "Jak grać",
+          "body": [
+            "Twoja postać sama pędzi w prawo - ty decydujesz tylko, kiedy skoczyć albo lecieć. Kolec, dół albo czołowe zderzenie z blokiem: wybuch, a chwilę później rusza już kolejna próba.",
+            "Poziom jest ukończony, gdy dotrzesz do mety. Pasek u góry pokazuje postęp w procentach, w prawym górnym rogu widać monety z tej próby, a na starcie w poziomie unosi się licznik prób.",
+            "Każdy poziom ma własną ścieżkę dźwiękową; tło, podłoże i kule pulsują w rytm muzyki. Muzykę, pasek postępu i automatyczne punkty kontrolne włączasz na ekranie wyboru poziomu, pod kartą poziomu."
+          ]
+        },
+        {
+          "h": "Sterowanie",
+          "body": [
+            "- [Spacja], [Góra], [W], [Enter] lub lewy przycisk myszy: skok albo lot. Przytrzymanie działa jak ciągłe wciskanie - kostka odbija się wtedy od razu po każdym lądowaniu.",
+            "- [R] od razu zaczyna od nowa, [Q] lub [Backspace] wraca do wyboru poziomu, [Esc] pauzuje.",
+            "- [P] włącza i wyłącza tryb treningowy; w nim [Z] stawia punkt kontrolny, a [X] usuwa ostatni.",
+            "- Wybór poziomu: [Lewo]/[Prawo] przełączają poziomy, [1] do [8] przechodzą prosto do poziomu, [Enter] startuje, [P] wybiera Normalny lub Trening, [M] przełącza muzykę, [Tab] przechodzi do zakładki POZIOMY.",
+            "Każde wciśnięcie dostaje znacznik czasu i działa dokładnie w tym kroku fizyki (1/240 sekundy), w którym nastąpiło - skok wychodzi więc idealnie, nawet gdy komputer na chwilę przytnie."
+          ]
+        },
+        {
+          "h": "Pięć form",
+          "body": [
+            "Portale zmieniają twoją postać - każda forma lata inaczej:",
+            "- Kostka: wciśnięcie = skok. Ląduje na blokach; uderzenie w ich bok kończy próbę.",
+            "- Statek: przytrzymanie = wznoszenie, puszczenie = opadanie.",
+            "- Kula: stuknięcie na ziemi odwraca grawitację - potem toczy się dalej po suficie.",
+            "- UFO: każde stuknięcie to małe machnięcie skrzydłami, także w powietrzu.",
+            "- Fala: przytrzymanie = ukośnie w górę, puszczenie = ukośnie w dół. Jest malutka, ale każde dotknięcie bloku ją roztrzaskuje.",
+            "Statek, kula, UFO i fala latają w korytarzu między podłożem a sufitem - jego wysokość wyznacza portal."
+          ]
+        },
+        {
+          "h": "Wyrzutnie, kule i portale",
+          "body": [
+            "- Wyrzutnie leżą na ziemi i działają przy dotknięciu: żółta = wysoki skok, różowa = mały skok, niebieska = odwrócenie grawitacji.",
+            "- Kule unoszą się w powietrzu i działają tylko wtedy, gdy wciśniesz przycisk, dotykając ich - w tych samych kolorach. Krótki bufor wybacza odrobinę za wczesne wciśnięcie.",
+            "- Portale grawitacji: żółty odwraca świat do góry nogami, niebieski przywraca go. Portale prędkości przełączają na 0,5x, 1x, 2x lub 3x.",
+            "- Do tego dochodzą półbloki, małe kolce, doły bez podłoża i wyzwalacze koloru, które zmieniają barwę tła i podłoża."
+          ]
+        },
+        {
+          "h": "8 poziomów",
+          "body": [
+            "- Lama Launch (Łatwy, 1 gwiazdka) i Neon Steps (Łatwy, 2 gwiazdki): skoki, wyrzutnie, kule i pierwszy statek.",
+            "- Orbit Garden (Normalny, 3 gwiazdki): łańcuchy kul, do góry nogami pod sufitem, statek z podwójną prędkością.",
+            "- Gravity Tide (Trudny, 4 gwiazdki) i Skyline Rush (Trudny, 5 gwiazdek): portale grawitacji, kula, UFO, doły i potrójna prędkość.",
+            "- Crystal Caves (Trudniejszy, 7 gwiazdek) i Wave Reactor (Szalony, 9 gwiazdek): wszystkie pięć form, wąskie bramy i tunele fali.",
+            "- Lama Inferno (Demon, 10 gwiazdek): potrójna prędkość i wszystko naraz.",
+            "Udowodniono, że każdy poziom da się przejść razem ze wszystkimi trzema monetami: przy budowie solver ukończył go prawdziwym kodem gry - a jego rozwiązanie działa nawet przesunięte o 1/240 sekundy."
+          ]
+        },
+        {
+          "h": "Tryb treningowy",
+          "body": [
+            "W trybie treningowym po rozbiciu grasz dalej od ostatniego punktu kontrolnego zamiast od startu - zielone romby zaznaczają je w poziomie, a muzyka po prostu gra dalej.",
+            "Automatyczne punkty kontrolne powstają mniej więcej co dwie sekundy (można je wyłączyć), [Z] stawia własne, a [X] usuwa ostatni.",
+            "Trening ma własny rekord i nie daje ani gwiazdek, ani monet."
+          ]
+        },
+        {
+          "h": "Gwiazdki, monety i osiągnięcia",
+          "body": [
+            "Kto ukończy poziom w trybie normalnym, dostaje jego gwiazdki. W każdym poziomie ukryte są też trzy sekretne monety, często z dala od najłatwiejszej drogi. Liczą się, gdy ukończysz z nimi poziom - a każda jest warta kolejną gwiazdkę.",
+            "Twój rekord to suma gwiazdek (najwyżej 65) i może tylko rosnąć. Dla każdego poziomu gra zapamiętuje najlepszy wynik procentowy w trybie Normalnym i Treningu, znalezione monety oraz liczbę prób.",
+            "- Osiągnięcia: \"W rytmie\" za pierwszy ukończony poziom, \"Łowca monet\" za wszystkie trzy monety z poziomu, \"Pogromca demonów\" za Lama Inferno - oraz kamień milowy przy 20 gwiazdkach.",
+            "W zakładce POZIOMY budujesz, grasz i udostępniasz własne poziomy - zobacz stronę \"Własne poziomy (Geometry Dash)\"."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash-levels",
+      "category": "games",
+      "title": "Własne poziomy (Geometry Dash)",
+      "keywords": [
+        "własne poziomy",
+        "edytor",
+        "poziomy",
+        "ugc",
+        "budowanie",
+        "udostępnianie",
+        "import",
+        "eksport",
+        "zweryfikowany",
+        "lamapgzlevel",
+        "geometry dash"
+      ],
+      "sections": [
+        {
+          "h": "Budowanie poziomu",
+          "body": [
+            "Zakładka POZIOMY w wyborze poziomów Geometry Dash to twoja własna kolekcja (do 60 poziomów). \"Nowy\" otwiera edytor poziomów, \"Edytuj\" wraca do istniejącego poziomu.",
+            "Po lewej jest płótno z siatką, po prawej paleta: u góry Zaznacz i Gumka, pod nimi sześć grup - Bloki, Pułapki, Wyrzutnie i kule, Portale, Prędkość i Dodatki (sekretne monety, wyzwalacz koloru). [1] do [6] wybierają grupy bezpośrednio.",
+            "- Kliknięcie lub przeciąganie stawia wybrany obiekt, [R] go obraca: kolce i półbloki w czterech kierunkach, wyrzutnie w górę lub w dół.",
+            "- Z narzędziem Zaznacz przeciąganie przesuwa obiekt, a [Del] go usuwa. Prawy przycisk zawsze kasuje; przeciąganie prawym przyciskiem, kółko myszy, strzałki lub [A]/[D] przewijają.",
+            "- Na dole widać wartości wybranego obiektu: wysokość korytarza przy portalach formy, a przy wyzwalaczu koloru cel (tło lub podłoże), kolor i czas przejścia.",
+            "- Pasek na samym dole pokazuje cały poziom w skrócie - kliknięcie przenosi w to miejsce.",
+            "[U] cofa, [Y] ponawia, [G] pokazuje lub ukrywa siatkę, [S] zapisuje. [Esc] wraca - przy niezapisanych zmianach dopiero po potwierdzeniu.",
+            "Najwyżej trzy monety na poziom. Meta ustawia się automatycznie kawałek za ostatnim obiektem."
+          ]
+        },
+        {
+          "h": "Ustawienia poziomu",
+          "body": [
+            "Zębatka otwiera ustawienia poziomu: prędkość startową (od 0,5x do 3x), formę startową, styl muzyki (Energiczny, Chiptune, Marzycielski, Mroczny lub bez muzyki), tempo w BPM oraz kolor tła i podłoża.",
+            "Nazwa i id są w pasku na górze. Id to klucz: małe litery, bez spacji, tylko a-z, 0-9, - i _ - a zarazem proponowana nazwa pliku przy udostępnianiu."
+          ]
+        },
+        {
+          "h": "Testowanie i weryfikacja",
+          "body": [
+            "\"Test\" ([Enter]) uruchamia poziom od startu, \"Stąd\" ([T]) od bieżącego miejsca - portale przed nim liczą się wtedy jako przebyte. [Esc] wraca do płótna.",
+            "Jeśli ukończysz swój poziom w teście od samego startu i bez trybu treningowego, dostaje zielony znaczek \"zweryfikowany\". Każda późniejsza zmiana obiektów, prędkości lub formy startowej go usuwa - zmiana kolorów, nazwy i muzyki nie.",
+            "W zakładce POZIOMY \"Graj\" uruchamia wybrany poziom normalnie, z własnym rekordem i licznikiem prób."
+          ]
+        },
+        {
+          "h": "Udostępnianie i import",
+          "body": [
+            "\"Udostępnij\" pyta o twoją nazwę jako twórcy i o nazwę pliku. \"Eksportuj jako\" otwiera okno zapisu, \"Do Pobranych\" zapisuje plik od razu w folderze Pobrane.",
+            "Plik ma rozszerzenie .lamapgzlevel i zawiera JSON. \"Importuj\" wczytuje go z powrotem (także .json); jeśli id jest już zajęte, automatycznie dopisywane jest -2, -3 ... Znaczek weryfikacji wędruje razem z poziomem.",
+            "Nazwa, id i twórca przechodzą przez filtr słów wszystkich 14 języków przy zapisie, eksporcie ORAZ imporcie.",
+            "Wszystko zapisuje się w ugc.json obok gry - w tym samym pliku co własne dołki do minigolfa. W wersji przeglądarkowej poziomy zostają w pamięci przeglądarki, a udostępnianie pobiera plik."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "battleship",
+      "category": "games",
+      "game": "BattleshipGame",
+      "title": "Battleship",
+      "keywords": [
+        "battleship",
+        "statki",
+        "flota",
+        "salwa",
+        "radar",
+        "ai",
+        "rozstawianie",
+        "zatapianie"
+      ],
+      "sections": [
+        {
+          "h": "Jak grać",
+          "body": [
+            "Dwie floty, każda na własnym morzu 10x10: lotniskowiec (5 pól), pancernik (4), krążownik (3), okręt podwodny (3) i niszczyciel (2). Gracze na zmianę strzelają w pole na planszy przeciwnika.",
+            "Po lewej jest duża plansza celu z radarem, po prawej twoje wody i przegląd obu flot. Biały pierścień oznacza pudło, płomienie - trafienie. Gdy wszystkie pola statku zostaną trafione, statek tonie, a jego zarys zostaje odsłonięty.",
+            "Wygrywa ten, kto pierwszy zatopi wszystkie pięć wrogich statków. Podsumowanie pokazuje potem strzały, trafienia, celność, tury i pozostałe statki obu stron."
+          ]
+        },
+        {
+          "h": "Rozstawianie floty",
+          "body": [
+            "- Przeciągnij statki myszą z doku po prawej na planszę - albo kliknij statek, przesuń go i kliknij ponownie. Ustawione statki przesuwa się tak samo.",
+            "- [R] lub prawy przycisk myszy obraca trzymany statek (albo statek pod kursorem).",
+            "- Podgląd świeci na zielono, gdy pozycja jest dozwolona, a na czerwono, gdy nie jest.",
+            "- Klawiatura: strzałki przesuwają ramkę, [Space] podnosi i odkłada statek, [Enter] bierze następny brakujący statek.",
+            "- [X] rozstawia losowo, [C] usuwa wszystkie statki. Z pełną flotą [Enter] lub \"Gotowe!\" rozpoczyna bitwę.",
+            "Ostatnie ustawienie zostanie ponownie zaproponowane w kolejnej rundzie."
+          ]
+        },
+        {
+          "h": "Zasady w ustawieniach",
+          "body": [
+            "Wszystkie trzy przełączniki zapisują się od razu i obowiązują obie strony:",
+            "- Statki mogą się stykać: WYŁ. wymaga co najmniej jednego wolnego pola wokół każdego statku, także po skosie. Strefa zakazana jest podświetlona podczas rozstawiania.",
+            "- Salwa: w każdej turze masz tyle strzałów, ile twoich statków jeszcze pływa - kto traci statki, strzela mniej.",
+            "- Kolejny strzał po trafieniu: każde trafienie oddaje strzał, więc strzelasz dalej, dopóki trafiasz."
+          ]
+        },
+        {
+          "h": "Sterowanie",
+          "body": [
+            "- Mysz: kliknij pole na planszy celu.",
+            "- Klawiatura: strzałki lub twoje klawisze ruchu celują, [Space] lub [Enter] strzela.",
+            "- Po rundzie: [Enter] = nowa runda, [S] = powrót do ustawień. [Esc] pauzuje."
+          ]
+        },
+        {
+          "h": "Poziomy AI",
+          "body": [
+            "- Łatwy strzela losowo i tylko czasem kontynuuje po trafieniu.",
+            "- Średni szuka losowo, po trafieniu sprawdza sąsiednie pola i wydłuża linie trafień aż do końca statku.",
+            "- Trudny liczy dla każdego pola, w ilu wciąż możliwych położeniach pozostałe statki mogłyby je zajmować (z uwzględnieniem zasady stykania), i strzela w najbardziej prawdopodobne. Podczas szukania używa wzoru szachownicy dopasowanego do najmniejszego pozostałego statku.",
+            "Średnio AI potrzebuje około 70 (Łatwy), 60 (Średni) i 45 strzałów (Trudny), by zatopić całą flotę - i wie tylko to, co ty też widzisz."
+          ]
+        },
+        {
+          "h": "2 graczy",
+          "body": [
+            "W trybie dla wielu graczy gracie na zmianę przy jednym komputerze. Przed rozstawianiem i przed każdą turą ekran przekazania zakrywa obie floty, aż następny gracz potwierdzi klawiszem [Enter] lub kliknięciem.",
+            "Pokazuje też, ile strzałów i trafień miał ostatni atak na twoją flotę. Wersja przeglądarkowa gra tylko przeciw AI."
+          ]
+        },
+        {
+          "h": "Punkty i osiągnięcia",
+          "body": [
+            "Każde zwycięstwo z AI to jeden punkt; rekord to najwięcej zwycięstw w jednej sesji. Tryb dla 2 graczy nie jest liczony.",
+            "- Nietknięta flota: pokonaj AI, nie tracąc ani jednego statku.",
+            "- Wielki admirał: zatop flotę trudnego AI."
+          ]
+        },
+        {
+          "h": "Wskazówki",
+          "body": [
+            "- Rozłóż statki po całej planszy i nie ustawiaj wszystkich przy krawędzi.",
+            "- Przy szukaniu wystarczy co drugie pole (szachownica) - gdy zostały już tylko długie statki, nawet co trzecie.",
+            "- Bez zasady stykania każde pole wokół zatopionego statku to na pewno woda."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "casino",
+      "category": "games",
+      "game": "CasinoGame",
+      "title": "Casino",
+      "keywords": [
+        "kasyno",
+        "casino",
+        "ruletka",
+        "automat",
+        "lama",
+        "jackpot",
+        "obroty gratis",
+        "żetony",
+        "zakłady"
+      ],
+      "sections": [
+        {
+          "h": "Bank Lamy",
+          "body": [
+            "Casino, Blackjack i Poker korzystają z tego samego konta: żetonów Lamy (start 1000). Stawki są pobierane od razu, wygrane dopisywane - wszystko jest trwale zapisywane.",
+            "Każda gra prowadzi własny bilans. Rekord Casino to najwyższy stan 1000 + bilans Casino; wygrane w Blackjacku czy Pokerze się tu nie liczą.",
+            "Przy bankructwie (mniej niż minimalna stawka) dostajesz kredyt z banku: konto wraca do 1000. Kredyty nie liczą się do żadnego bilansu; ich liczba jest widoczna w prawym górnym rogu."
+          ]
+        },
+        {
+          "h": "Ruletka - obstawianie",
+          "body": [
+            "Europejskie koło z 37 polami (0 do 36). Wartość żetonu wybierasz na dole: 1, 5, 25, 100 lub 500 (klawisze [1] do [5] lub kółko myszy).",
+            "Lewy klik stawia żeton, prawy klik go zdejmuje. Miejsce kliknięcia decyduje o zakładzie:",
+            "- Środek liczby: pojedyncza, płaci 35:1",
+            "- Krawędź między dwiema liczbami: podwójna, 17:1",
+            "- Zewnętrzna linia kolumny liczb: trójka, 11:1 (przy zerze także 0-1-2 i 0-2-3)",
+            "- Róg między czterema liczbami: czwórka, 8:1 (na zewnątrz przy zerze: 0-1-2-3)",
+            "- Róg na zewnętrznej linii między dwiema kolumnami: szóstka, 5:1",
+            "- Kolumna (2:1) i tuzin (2:1), czerwone/czarne, parzyste/nieparzyste oraz małe 1-18 / duże 19-36 (każdy 1:1)",
+            "Obok koła widać, jaki zakład jest pod myszą i ile płaci."
+          ]
+        },
+        {
+          "h": "Ruletka - kręcenie",
+          "body": [
+            "[Enter] lub ZAKRĘĆ rozpoczyna rundę: stawka zostaje pobrana, a zwycięska liczba wylosowana. Kulka zjeżdża spiralą i wpada dokładnie w to pole - [Spacja] lub kliknięcie przyspiesza.",
+            "Powtórz [R] stawia zakłady z ostatniej rundy, Podwój [D] podwaja wszystkie zakłady, Wyczyść [Backspace] opróżnia stół.",
+            "U góry widać 12 ostatnich liczb; wygrane zakłady pokazują swoją wypłatę."
+          ]
+        },
+        {
+          "h": "Automat Lamy",
+          "body": [
+            "5 bębnów, 3 rzędy, 10 linii wygrywających. Linie płacą od 3 jednakowych symboli od lewej do prawej; numery po bokach pokazują przebieg każdej linii (najechanie myszą = pokaż linię).",
+            "Stawka na linię: 1, 2, 5 lub 10 ([+]/[-] lub kółko myszy) - zawsze grasz na wszystkich 10 liniach.",
+            "- Lama = wild: zastępuje każdy symbol oprócz złotej monety. 5 lam na jednej linii to Jackpot Lamy.",
+            "- Złota moneta = scatter: 3, 4 lub 5 monet w dowolnym miejscu płaci 2, 10 lub 50 razy stawkę łączną i daje 10 obrotów gratis, w których wszystkie wygrane liczą się podwójnie. Obroty gratis można aktywować ponownie.",
+            "Tabela wygranych pokazuje wszystkie wypłaty dla aktualnej stawki. Zwrot dla gracza wynosi 96,1% - obliczony dokładnie z taśm bębnów."
+          ]
+        },
+        {
+          "h": "Automat Lamy - sterowanie",
+          "body": [
+            "[Spacja], [Enter] lub kliknięcie w bębny kręci; ponowne naciśnięcie w trakcie przyspiesza.",
+            "Autospin: [A] uruchamia 10 rund, [Shift]+[A] 25 rund (albo przycisk Auto), ponowne naciśnięcie zatrzymuje. [T] włącza turbo, [I] otwiera tabelę wygranych.",
+            "Wygrane obroty gratis są od razu zapisywane i będą kontynuowane przy następnej grze."
+          ]
+        },
+        {
+          "h": "Osiągnięcia",
+          "body": [
+            "- Kamień milowy Casino: rekord 5000",
+            "- W dziesiątkę: wygraj zakładem na pojedynczą liczbę w ruletce",
+            "- Jackpot Lamy: 5 lam na jednej linii wygrywającej"
           ]
         }
       ]

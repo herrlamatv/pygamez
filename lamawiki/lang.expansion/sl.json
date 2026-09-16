@@ -11,14 +11,16 @@
         "meni",
         "pavza",
         "celozaslonsko",
-        "stranska vrstica"
+        "stranska vrstica",
+        "več igralcev"
       ],
       "sections": [
         {
           "h": "Zagon igre",
           "body": [
             "Igro lahko zaženeš na tri načine: s seznama iger v levi stranski vrstici, iz mreže iger na začetnem zaslonu ali neposredno iz tega wikija prek predigralnega zaslona.",
-            "Pred vsako igro se prikaže predigralni zaslon: tam izbereš način (npr. za enega ali za več igralcev) ter dostopaš do možnosti in tega wikija."
+            "Pred vsako igro se prikaže predigralni zaslon: tam izbereš način (npr. za enega ali za več igralcev) ter dostopaš do možnosti in tega wikija.",
+            "Če ima igra veliko načinov ali je okno majhno, se Možnosti, Wiki in Nazaj na predigralnem zaslonu postavijo v eno vrsto - tako ostane vse vidno."
           ]
         },
         {
@@ -26,7 +28,7 @@
           "body": [
             "- [Esc] začasno ustavi in nadaljuje tekočo igro - v menijih se vrne nazaj.",
             "- [F11] vklopi in izklopi celozaslonski način.",
-            "- Zeleni gumb Nazaj v meni konča igro in shrani najboljši rezultat."
+            "- Zeleni gumb Nazaj v meni konča igro in shrani najboljši rezultat - enako velja za preklop na drugo igro prek stranske vrstice."
           ]
         },
         {
@@ -39,8 +41,9 @@
         {
           "h": "Za več igralcev",
           "body": [
-            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) in Asteroids (sodelovalni dvoboj) imajo lokalni način za 2 igralca - izbereš ga na predigralnem zaslonu.",
-            "Pri enem igralcu obe razporeditvi tipk upravljata isti lik; pri več igralcih vsaka po enega (privzeto: I1 = WASD, I2 = puščice ali IJKL - glej možnosti)."
+            "Lokalni način za 2 igralca ima 20 iger: Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus), Asteroids (sodelovalni dvoboj), Memory, Štiri v vrsto, Tankovski dvoboj, Reversi, Yahtzee, Dama, Šah, Mlin, Simon, Biljard, Minigolf, Pinball, Bowling in Battleship - izbereš ga na predigralnem zaslonu.",
+            "Pri enem igralcu obe razporeditvi tipk upravljata isti lik; pri več igralcih vsaka po enega (privzeto: I1 = WASD, I2 = puščice ali IJKL - glej možnosti).",
+            "Tetris ponuja tudi Versus proti UI; v Battleship za dva flote skrije zaslon za predajo. Spletna različica je samo za enega igralca."
           ]
         }
       ]
@@ -60,7 +63,8 @@
         "jezik",
         "design",
         "videz",
-        "tema"
+        "tema",
+        "stalne tipke"
       ],
       "sections": [
         {
@@ -75,7 +79,8 @@
           "body": [
             "Na voljo so tri prednastavitve: WASD + puščice, WASD + IJKL in puščice + WASD.",
             "Vsako posamezno tipko lahko na novo dodeliš: klikni vrstico ali potrdi z Enter, nato pritisni želeno tipko. [Esc] prekliče.",
-            "Razporeditve so ločene za igralca 1 in igralca 2 ter se shranijo trajno."
+            "Razporeditve so ločene za igralca 1 in igralca 2 ter se shranijo trajno.",
+            "Vsak igralec lahko na novo dodeli pet dejanj: gor, dol, levo, desno in dejanje. Nekatere igre imajo še stalne tipke - npr. shramba [C] in vrtenje v levo [Z] v Tetrisu ali razveljavitev [U] v 2048, šahu in Sudokuju. Delujejo le, če tipka ni dodeljena nobenemu dejanju; navajata jih namig v nastavitvah in wiki stran igre."
           ]
         },
         {
@@ -96,7 +101,7 @@
         {
           "h": "Jezik",
           "body": [
-            "Vmesnik je na voljo v nemščini, angleščini, francoščini, španščini in portugalščini. Preklopiš ga na zaslonu z možnostmi ali prek Jezik v stranski vrstici - ta wiki prav tako zamenja jezik."
+            "Vmesnik je na voljo v 14 jezikih: nemščini, angleščini, francoščini, španščini, portugalščini, poljščini, turščini, danščini, norveščini, švedščini, finščini, češčini, slovenščini in hrvaščini. Preklopiš ga na zaslonu z možnostmi ali prek Jezik v stranski vrstici - ta wiki prav tako zamenja jezik."
           ]
         }
       ]
@@ -111,30 +116,58 @@
         "rekord",
         "točke",
         "napredek",
-        "datoteke"
+        "datoteke",
+        "varnostna kopija",
+        "backup",
+        "lama žetoni",
+        "ugc"
       ],
       "sections": [
         {
           "h": "Najboljši rezultati",
           "body": [
             "Vsaka igra samodejno shrani svoj najboljši rezultat, ko se runda konča. Ob novem rekordu se pokaže zlat trak - poleg tega še dež konfetov.",
-            "Najboljše rezultate vidiš povsod: kot zvezdico na seznamu v stranski vrstici, na drsečem traku na začetnem zaslonu in v kartici stanja."
+            "Najboljše rezultate vidiš povsod: kot zvezdico na seznamu v stranski vrstici, na drsečem traku na začetnem zaslonu in v kartici stanja.",
+            "Načini brez rekorda - npr. Sprint in Ultra v Tetrisu, dnevna proga v Crossy Road ali 2048 z razveljavitvijo - ne prikažejo traku; njihove najboljše čase in dnevne najboljše rezultate igra shrani sama."
           ]
         },
         {
           "h": "Kaj se shrani kam?",
           "body": [
-            "- settings.json: zvok, glasnost, razporeditev tipk, ločljivost, FPS in možnosti iger (npr. način Snake, nastavitve Sudokuja).",
-            "- mem.json: najboljši rezultati, izbrani jezik in napredek po stopnjah Sudokuja.",
+            "- settings.json: zvok, glasnost, razporeditev tipk, ločljivost, FPS, videz in možnosti iger (npr. način Snake, DAS/ARR v Tetrisu, različica Sudokuja, pravila Battleship).",
+            "- mem.json: najboljši rezultati, izbrani jezik, dosežki in statistika - poleg tega napredek mnogih iger v lastnih razdelkih (glej spodaj).",
             "- mem-ngb.json: vizualni modi Snake (barva glave, mreža, trak).",
             "- replay.json: shranjeni posnetki minigolfa in bowlinga.",
+            "- ugc.json: tvoje lastne minigolf proge in stopnje Geometry Dash (deljene kot .lamapgzmap oziroma .lamapgzlevel).",
             "Te datoteke so neposredno v mapi igre in jih je za ponastavitev dovolj izbrisati."
+          ]
+        },
+        {
+          "h": "Napredek v mem.json",
+          "body": [
+            "Vsaka igra z napredkom ima v mem.json svoj razdelek, na primer:",
+            "- sudoku: rešene stopnje z zvezdicami in najboljšim časom, začete uganke in Sudoku dneva z nizom.",
+            "- casino: račun Lama banke - lama žetoni za Blackjack, Poker in Casino z bilanco vsake igre.",
+            "- crossy: zbrani kovanci, kupljeni liki in dnevni najboljši rezultat v Crossy Road.",
+            "- tetris: najboljši čas v Sprintu, najboljši rezultat v Ultra in bilanca Versus proti UI.",
+            "- g2048: shranjene partije 2048 in najboljši rezultati po velikosti plošče in načinu.",
+            "- chess: tvoj napredek v načinu šahovskih ugank.",
+            "- geodash: najboljši odstotek za vsako stopnjo (Običajno in Vaja), najdeni kovanci, poskusi in skoki v Geometry Dash.",
+            "- wordle: statistika po načinu, jeziku in dolžini besede, stanje besede dneva in najboljši rezultati.",
+            "Poleg tega med drugim minigolf, pinball, bowling in lamatowerdef z najboljšimi rezultati."
+          ]
+        },
+        {
+          "h": "Samodejna varnostna kopija",
+          "body": [
+            "mem.json in settings.json se zapisujeta varno pred sesutjem: najprej v začasno datoteko, nato se zamenjata v enem koraku. Prejšnja različica ostane kot mem.json.bak oziroma settings.json.bak.",
+            "Če se mem.json kdaj poškoduje, igra samodejno prebere varnostno kopijo - rekordi, dosežki in lama žetoni se tako ne izgubijo."
           ]
         },
         {
           "h": "Namig",
           "body": [
-            "Točke se shranijo le, ko izstopiš prek Nazaj v meni ali ko se runda normalno konča - ne pa, ko med igro na silo zapreš okno."
+            "Točke se shranijo ob koncu partije, ob izhodu prek Nazaj v meni, ob izbiri druge igre v stranski vrstici sredi igre in ob zapiranju zbirke. Tekočo partijo izgubiš le ob sesutju ali prisilni prekinitvi programa."
           ]
         }
       ]
@@ -201,19 +234,20 @@
         {
           "h": "Pregled",
           "body": [
-            "Zbirka zdaj spremlja tvoj napredek: 69 dosežkov in podrobna statistika vseh 38 iger. Oboje najdeš za gumbom Dosežki in statistika v stranski vrstici; med zavihkoma preklapljaš s [Tab] ali s klikom."
+            "Zbirka spremlja tvoj napredek: 107 dosežkov in podrobna statistika vseh 46 iger. Oboje najdeš za gumbom Dosežki in statistika v stranski vrstici; med zavihkoma preklapljaš s [Tab] ali s klikom."
           ]
         },
         {
           "h": "Dosežki",
           "body": [
             "Obstajajo tri kategorije:",
-            "- Splošno: cilji na ravni zbirke, kot so začete partije, preizkušene igre, skupni čas igranja, podrti rekordi in zmage - plus drobnarije, kot je Nočna sova (igranje po polnoči).",
-            "- Točkovni mejniki: en pošten ciljni rezultat na igro, prilagojen njeni točkovni lestvici.",
-            "- Posebni trenutki: šah-mat UI, KNIFFEL, ploščica 2048, Wordle v 2 poskusih in več.",
+            "- Splošno (23): cilji na ravni zbirke, kot so začete partije, preizkušene igre, skupni čas igranja, podrti rekordi in zmage - plus drobnarije, kot je Nočna sova (igranje po polnoči).",
+            "- Točkovni mejniki (37): en pošten ciljni rezultat na igro, prilagojen njeni točkovni lestvici.",
+            "- Posebni trenutki (47): šah-mat UI, KNIFFEL, ploščici 2048 in 4096, T-Spin Double in Perfect Clear v Tetrisu, 25 rešenih šahovskih ugank, tvoj prvi Killer Sudoku, zadetek posamezne številke v ruleti, lamji jackpot na igralnem avtomatu, zmaga v Battleship brez izgubljene ladje in več.",
             "Ob odklepanju se zgoraj desno pojavi zlato obvestilo s kratko fanfaro - tudi sredi igre.",
             "Obstoječi podatki štejejo: ob prvem zagonu po posodobitvi se tvoji stari rekordi samodejno upoštevajo (brez ognjemata obvestil).",
-            "Zaklenjeni dosežki kažejo vrstico napredka, odklenjeni svoj datum."
+            "Zaklenjeni dosežki kažejo vrstico napredka, odklenjeni svoj datum.",
+            "V 2048 in šahu partije z razveljavitvijo ali namigom ne štejejo za rekorde in dosežke - preizkušati smeš, šteje pa le igra brez pomoči."
           ]
         },
         {
@@ -494,31 +528,83 @@
       "game": "TetrisGame",
       "title": "Tetris",
       "keywords": [
-        "kosi",
-        "vrste",
+        "kocke",
+        "vrstice",
         "vrtenje",
+        "shramba",
+        "t-spin",
+        "šprint",
+        "ultra",
+        "maraton",
         "versus",
-        "sklad"
+        "smeti"
       ],
       "sections": [
         {
+          "h": "Načini",
+          "body": [
+            "Solo: različico izbereš v nastavitvah. Maraton je neskončen, stopnja pa se zviša vsakih 10 vrstic (začetna stopnja 1-15) - za rekord šteje samo Maraton.",
+            "- Šprint 40: čim hitreje počisti 40 vrstic; najboljši čas se shrani.",
+            "- Ultra 2:00: v dveh minutah zberi čim več točk; rekord se shrani.",
+            "Proti AI: igraš proti AI s tremi stopnjami (Lahko, Srednje, Težko). Kdor čisti vrstice, pošilja smeti na drugo stran; čigar kup prvi zadene vrh, je K.O. Izkupiček proti vsaki stopnji se shrani.",
+            "2 igralca (samo različica za PC): isto v dvoje za eno tipkovnico. Obe polji vedno dobita enako zaporedje kock."
+          ]
+        },
+        {
           "h": "Upravljanje",
           "body": [
-            "Levo/desno premika kos, gor ga zavrti, dol je mehki spust, akcijska tipka (privzeto: [Space] ) pa trdi spust."
+            "[Levo] [Desno] premikata kocko - če tipko držiš, po DAS zdrsne in nadaljuje v ritmu ARR. [Gor] zasuka v desno, [Dol] je mehki spust, akcijska tipka (privzeto: [Preslednica] ) pa kocko takoj spusti (trdi spust).",
+            "- [C] ali [Shift] da kocko v shrambo (enkrat na kocko), [Z] ali [Y] zasuka levo, [X] desno.",
+            "- 2 igralca: igralec 1 shranjuje s [Q] in suče levo z [E], igralec 2 shranjuje z desnim [Shift] in suče levo z desnim [Ctrl].",
+            "- Te stalne tipke delujejo le, če jih nisi sam dodelil nobenemu dejanju.",
+            "V Šprintu in Ultri [R] takoj začne znova. Po igri: [R] = znova, [S] = nastavitve - tipke za trdi spust namenoma ničesar ne zaženejo znova.",
+            "V nastavitvah nastaviš DAS (zamik pred neprekinjenim premikom), ARR (hitrost nato, 0 ms = takoj do roba) in senco kocke."
           ]
         },
         {
-          "h": "Načini in točkovanje",
+          "h": "Sodobna pravila",
           "body": [
-            "Polne vrste dajejo točke - več hkrati jih da veliko več. Vsakih 10 vrst se stopnja in hitrost povečata.",
-            "Versus (za več igralcev): dve polji drug ob drugem, kdor prej doseže vrh s svojim skladom, izgubi."
+            "Kocke prihajajo v vrečkah po 7: vsaka od sedmih kock se v vsaki sedmerici pojavi natanko enkrat. Predogled pokaže naslednjih 5.",
+            "Vrtenje sledi SRS: če se kocka zatakne, igra poskusi do štiri nadomestne položaje (wall kicks) - tako se kocke dajo zasukati celo okoli robov.",
+            "Na dnu kocka čaka 0,5 sekunde, preden se zaklene. Vsak premik ali zasuk čas ponastavi, največ 15-krat na isti globini.",
+            "Konec igre: nova kocka nima prostora, kocka se v celoti zaklene nad poljem ali smeti potisnejo kup čez vrh."
           ]
         },
         {
-          "h": "Namigi",
+          "h": "Točke",
           "body": [
-            "- Pusti en stolpec prazen za dolgi kos I in počisti s štirikratnimi vrstami.",
-            "- Gradi plosko: visoki stolpi se hitro prevrnejo, ko hitrost narašča."
+            "Vse vrednosti krat stopnja: Single 100 · Double 300 · Triple 500 · Tetris 800.",
+            "T-Spin: brez vrstice 400 · Single 800 · Double 1200 · Triple 1600. T-Spin Mini: 100 · 200 · 400.",
+            "- Back-to-Back: Tetris ali T-Spin takoj za drugim šteje x1,5.",
+            "- Kombo: vsako nadaljnje čiščenje zapored doda 50 x kombo x stopnja.",
+            "- Perfect Clear (povsem prazno polje): +800 / 1200 / 1800 / 2000, kot Back-to-Back Tetris +3200.",
+            "- Mehki spust da 1 točko, trdi spust 2 točki na vrstico."
+          ]
+        },
+        {
+          "h": "T-Spini",
+          "body": [
+            "T-Spin šteje, ko se kocka T zaklene po zasuku in so zasedeni vsaj trije od štirih kotov okoli njenega središča (stene in dno štejejo).",
+            "Če sta zasedena oba kota na strani, kamor kaže njen nos, je to poln T-Spin, sicer Mini. Če se T v vrzel zasuka z velikim kickom (stolpec vstran, dve vrstici navzdol), vedno šteje kot poln - tako nastane T-Spin Triple.",
+            "Obvestila nad poljem prikazujejo T-SPIN, TETRIS, BACK-TO-BACK, KOMBO in PERFECT CLEAR."
+          ]
+        },
+        {
+          "h": "Versus in smeti",
+          "body": [
+            "Napad: Double 1 · Triple 2 · Tetris 4 · T-Spin Single 2 · T-Spin Double 4 · T-Spin Triple 6 · Mini Double 1. Poleg tega +1 za Back-to-Back, od +1 do +5 za dolga komba in +10 za Perfect Clear.",
+            "Prihajajoče smeti so vidne v opozorilnem stolpcu levo od polja: rumene še čakajo, rdeče se dvignejo z naslednjo kocko, ki ne počisti vrstice - največ 8 vrstic na kocko, vsak paket s skupno luknjo.",
+            "Ko sam čistiš vrstice, tvoj napad najprej izniči čakajoče smeti; nasprotniku gre le ostanek.",
+            "Vsakih 40 sekund kocke padajo hitreje (do stopnje 12)."
+          ]
+        },
+        {
+          "h": "Namigi in dosežki",
+          "body": [
+            "- Gradi ravno in ob robu pusti prost stolpec za I - štiri vrstice hkrati prinesejo točke in napad.",
+            "- S shrambo prihrani I za Tetris ali odloži kocko, ki ne paše.",
+            "- V versusu se Back-to-Back splača: dva Tetrisa zapored pošljeta 4 + 5 vrstic.",
+            "- Dosežki: Tetris! (4 vrstice hkrati), Mojster zasuka (T-Spin Double), Čisto do zadnjega (Perfect Clear), Šprinter (Šprint 40 pod 2:00). V dvoje ni dosežkov."
           ]
         }
       ]
@@ -719,27 +805,76 @@
         "ploščice",
         "drsenje",
         "združevanje",
-        "številke"
+        "številke",
+        "poteg",
+        "razveljavi",
+        "na čas",
+        "neskončno",
+        "velikost",
+        "nadaljuj",
+        "4096"
       ],
       "sections": [
         {
-          "h": "Upravljanje in pravila",
+          "h": "Upravljanje",
           "body": [
-            "Puščice ali [W] [A] [S] [D] naenkrat potisnejo vse ploščice v eno smer. Enake številke se združijo v svojo vsoto; po vsaki potezi se pojavi nova ploščica.",
-            "Cilj je ploščica 2048 - po njej se nadaljuje v neskončnost. Izgubiš, ko poteza ni več mogoča."
+            "Puščice ali [W] [A] [S] [D] naenkrat premaknejo vse ploščice v eno smer. Z miško ali sledilno ploščico lahko tudi povlečeš: pritisni, povleci v želeno smer in spusti.",
+            "Držane tipke se ne ponavljajo - vsaka poteza je svoj pritisk. Ukazi med animacijo se zapomnijo in izvedejo takoj za njo.",
+            "[U] ali [Backspace] = razveljavi, [R] ali [N] = nova igra, [Tab] = nazaj v nastavitve. Te dodatne tipke delujejo le, če jih nisi sam dodelil kakšnemu dejanju."
           ]
         },
         {
-          "h": "Točkovanje",
+          "h": "Pravila",
           "body": [
-            "Vsako združevanje k tvojemu rezultatu doda vrednost nove ploščice."
+            "Enaki številki, ki trčita, se združita v svojo vsoto. Vsaka ploščica se v potezi združi največ enkrat: 2, 2, 4, 4 v levo da 4, 8.",
+            "Po vsaki veljavni potezi se pojavi nova ploščica - običajno 2, vsakič deseti 4. Ko ni mogoča nobena poteza več, je igre konec.",
+            "Od 4096 naprej imajo ploščice svoje barve od zelene prek modre in vijolične do škrlatne (131072); še večje so temne z zlatimi številkami."
+          ]
+        },
+        {
+          "h": "Nastavitve: velikost in način",
+          "body": [
+            "Velikost plošče od 3x3 do 8x8 - majhne plošče so zahtevne, velike puščajo prostor za dolge verige.",
+            "- Klasično: cilj je 2048. Nato te igra vpraša, ali želiš igrati naprej - [Enter] nadaljuje, [N] začne novo igro.",
+            "- Na čas: 3 minute za čim več točk. Ura se zažene ob prvi potezi, vrstica pod ploščo kaže preostali čas.",
+            "- Neskončno: brez cilja in brez prekinitev, dokler ne zmanjka potez."
+          ]
+        },
+        {
+          "h": "Razveljavitev",
+          "body": [
+            "Izbereš v nastavitvah: izklopljeno, 3 na igro ali neomejeno. Razveljavitev prekliče zadnjo potezo skupaj s točkami - tudi takoj po koncu igre.",
+            "Ko jo uporabiš, igra šteje kot igrana \"z razveljavitvijo\": ne šteje za rekord ne za dosežke ploščic, njen najboljši rezultat pa se vodi posebej."
+          ]
+        },
+        {
+          "h": "Shranjevanje in nadaljevanje",
+          "body": [
+            "Tekoča igra se samodejno shrani za vsako velikost in način - po tvojih potezah in ko zapustiš igro.",
+            "V nastavitvah se nato pojavi Nadaljuj s točkami in potezami shranjene igre. Nova igra ta posnetek zavrže."
+          ]
+        },
+        {
+          "h": "Točke, najboljši rezultati in rekord",
+          "body": [
+            "Vsako združevanje prinese vrednost nove ploščice. Informacijski stolpec kaže točke, najboljši rezultat, poteze, največjo ploščico, preostale razveljavitve in čas.",
+            "Najboljši rezultati in največja ploščica se shranijo za vsako velikost in način. Rekord igre 2048 šteje le v 4x4 Klasično brez razveljavitve."
+          ]
+        },
+        {
+          "h": "Dosežki",
+          "body": [
+            "- 2048!: ustvari ploščico 2048.",
+            "- 4096!: ustvari ploščico 4096.",
+            "Oba štejeta na ploščah do 4x4 in le brez razveljavitve - v vsakem načinu."
           ]
         },
         {
           "h": "Namigi",
           "body": [
-            "- Svojo največjo ploščico parkiraj v kotu in tega kota nikoli ne moti.",
-            "- Drsi predvsem v dveh smereh - tako ostane polje urejeno."
+            "- Parkiraj največjo ploščico v kot in se tega kota nikoli ne dotakni.",
+            "- Premikaj večinoma v dve smeri - tako plošča ostane urejena.",
+            "- V načinu na čas šteje hitrost: združuj zgodaj in drži ploščice skupaj v enem kotu."
           ]
         }
       ]
@@ -787,47 +922,72 @@
       "title": "Sudoku",
       "keywords": [
         "uganka",
-        "številke",
+        "stevilke",
         "zapiski",
         "stopnje",
         "namigi",
-        "logika"
+        "logika",
+        "killer",
+        "x-sudoku",
+        "sudoku dneva",
+        "zvezdice",
+        "razveljavi",
+        "kandidati"
       ],
       "sections": [
         {
+          "h": "Različice",
+          "body": [
+            "V nastavitvah zgoraj izbereš različico, pod njo pa težavnost. Vsaka različica ima 4 težavnosti krat 100 stalnih stopenj, vsaka z eno samo rešitvijo.",
+            "- Klasični: znani 9x9. 400 stopenj je enakih kot pred posodobitvijo - odkljukane stopnje ostanejo odkljukane.",
+            "- X-sudoku: poleg tega obe diagonali vsebujeta vsako števko natanko enkrat (diskretno označeno).",
+            "- Killer: skoraj brez danih števk, zato pa s črtkanimi kletkami. Števke v kletki dajo malo vsoto v njenem kotu in se ne ponavljajo. Lahko ima majhne kletke in več danih števk, Strokovnjak velike kletke.",
+            "- Mini 6x6: bloki 2x3 in samo števke od 1 do 6, z zelo velikimi celicami.",
+            "- Sudoku dneva ([T] ali kartica desno): ena klasična uganka na dan, za vse enaka - tudi v brskalniku. Težavnost je odvisna od dneva v tednu (ponedeljek lahko, torek in sreda normalno, četrtek, petek in nedelja težko, sobota strokovnjak). Rešuj vsak dan in gradi niz."
+          ]
+        },
+        {
           "h": "Upravljanje",
           "body": [
-            "Celico izbereš s puščičnimi tipkami, [W] [A] [S] [D] ali klikom miške - številska tipkovnica na desni deluje povsem z miško.",
-            "- [1] do [9] vnese številko (deluje tudi numerična tipkovnica).",
-            "- [0], Backspace ali desni klik izbriše.",
-            "- [N] preklopi način zapiskov, [H] da namig, [R] ponovno zažene stopnjo, [Q] odpre izbor stopenj.",
-            "- Po koncu igre [A] skrije trak in razkrije celotno rešitev."
+            "Celico izbereš s puščicami, [W] [A] [S] [D] ali klikom. Številčnica desno deluje v celoti z miško in pod vsako števko pokaže, koliko jih še manjka.",
+            "- [1] do [9] vpiše števko, [0], Delete ali desni klik zbriše.",
+            "- [U] ali [Z] razveljavi, [Y] ponovi.",
+            "- [N] preklopi zapiske, [C] samodejno vpiše vse kandidate, [H] da namig.",
+            "- [M] obarva celico z barvno oznako (stikalo \"Barvne oznake\" v nastavitvah).",
+            "- [R] začne uganko znova, [Q] odpre izbiro stopnje, [A] po koncu igre pokaže rešitev.",
+            "Vnos \"Najprej številka\" (nastavitve, tipka [I]): najprej izberi števko, nato klikni poljubno število celic ali jo vpiši s preslednico.",
+            "V nastavitvah: [1] do [4] težavnost, [V] različica, [T] sudoku dneva, [F] omejitev napak, puščice + Enter zaženejo stopnjo. Črkovne tipke delujejo le, če v možnostih niso dodeljene nobeni akciji."
           ]
         },
         {
-          "h": "Stopnje in načini",
+          "h": "Načini in točke",
           "body": [
-            "400 fiksnih stopenj: 4 težavnosti (lahko/normalno/težko/strokovno) krat 100 stopenj. Vsaka stopnja je povsod ista uganka in enolično rešljiva; rešene stopnje se odkljukajo.",
-            "Način igre določa pomoč in množitelj rezultata:",
-            "- Klasika x2.0: brez pomoči, čisto kot na papirju.",
-            "- Zapiski x1.5: poleg tega še svinčnikovi zapiski.",
-            "- Udobno x1.0: napake takoj rdeče, poudarjanje sporov, pravilni vnosi se zaklenejo.",
-            "- Pomoč x0.7: poleg tega še do 3 namigi."
+            "Način igre določa pomoč in množitelj točk:",
+            "- Klasično x2,0: brez pomoči, kot na papirju.",
+            "- Zapiski x1,5: plus zapiski s svinčnikom in samodejni kandidati.",
+            "- Udobno x1,0: napake takoj rdeče, konflikti in napačne vsote kletk označeni, pravilni vnosi se zaklenejo.",
+            "- Pomoč x0,7: dodatno do 3 namigi.",
+            "Vsak vnos se takoj preveri. Z omejitvijo 3 napak tretja napaka konča igro - razveljavitev napake ne izbriše.",
+            "Točke = (osnova različice in težavnosti minus čas, napake in namigi) krat množitelj. V rekord štejejo vse različice in sudoku dneva."
           ]
         },
         {
-          "h": "Napake in točkovanje",
+          "h": "Zvezdice in shranjena igra",
           "body": [
-            "Vsak vnos se takoj preveri glede na rešitev. Z vklopljeno omejitvijo 3 napak (nastavitve, tipka [F] ) tretja napaka konča igro.",
-            "Točke = (osnova težavnosti minus čas, napake in namigi) krat množitelj načina."
+            "Vsaka stopnja da do 3 zvezdice: 1 za rešitev, 2 brez napak in namigov, 3 dodatno pod ciljnim časom težavnosti (piše v podatkih o stopnji).",
+            "Izbira stopnje pokaže zvezdice, najboljši čas in rešene stopnje; zavihan vogal označi začete uganke.",
+            "Začete uganke se shranijo same - ob izhodu, ob vrnitvi na izbiro stopnje in redno med igro - in se naslednjič nadaljujejo. Če pri tem zamenjaš način, velja manjši množitelj.",
+            "Dosežki: \"Borec v kletki\" za prvi sudoku Killer, \"Zbiralec zvezd\" za 30 stopenj s 3 zvezdicami."
           ]
         },
         {
-          "h": "Namigi",
+          "h": "Nasveti",
           "body": [
-            "- Začni z vrsticami, stolpci in kvadrati, ki že vsebujejo veliko številk.",
-            "- Kandidate zapisuj v parih: če imata dve celici enaka kandidata, ta drugod odpadeta.",
-            "- V klasičnem načinu si vzemi čas: vsaka napaka takoj šteje, tudi brez rdeče oznake."
+            "- Začni z vrsticami, stolpci in bloki, v katerih je že veliko števk.",
+            "- Kandidate zapisuj v parih: če imata dve celici ene enote ista dva kandidata, ta izgineta iz preostanka enote.",
+            "- Killer: vsaka vrstica, stolpec in blok da 45. Če kletke ležijo skoraj v celoti v njih, preostanek izda zadnjo celico.",
+            "- Killer: nekatere vsote imajo le eno kombinacijo - 3 v dveh celicah je vedno 1+2, 17 vedno 8+9.",
+            "- X-sudoku: diagonali sta dve dodatni enoti - preveri ju zgodaj, tam se pogosto skriva prva števka."
           ]
         }
       ]
@@ -1156,7 +1316,8 @@
         "21",
         "žetoni",
         "delilec",
-        "stava"
+        "stava",
+        "lama banka"
       ],
       "sections": [
         {
@@ -1185,11 +1346,12 @@
           ]
         },
         {
-          "h": "Žetoni",
+          "h": "Lama žetoni",
           "body": [
-            "Začneš s 500 žetoni; tvoje stanje in rekord se shranita trajno in preživita vsak ponovni zagon.",
-            "Najboljši rezultat je najvišje stanje žetonov, kar si ga kdaj dosegel.",
-            "Pod 10 žetoni si na suhem: [Enter] ponovno zažene s 500 svežimi žetoni - rekord ostane."
+            "Blackjack, Poker in Casino si delijo en račun pri Lama banki: začneš s 1000 lama žetoni, stanje se trajno shrani.",
+            "Stava se odšteje takoj ob delitvi - kdor zapusti igro v teku, jo izgubi.",
+            "Rekord je najvišje stanje tvoje bilance pri blackjacku: 1000 plus vse, kar si pri blackjacku dobil in izgubil. Dobitki pri ruleti, na avtomatu ali pri pokru tu ne štejejo.",
+            "Pod 10 žetoni si v bankrotu: [Enter] vzame bančno posojilo in račun spet napolni na 1000. Posojila ne štejejo v bilanco."
           ]
         },
         {
@@ -1417,43 +1579,80 @@
         "črke",
         "zelena",
         "rumena",
-        "slovar"
+        "slovar",
+        "beseda dneva",
+        "dordle",
+        "quordle",
+        "statistika",
+        "deli",
+        "barvna slepota",
+        "dolžina besede"
       ],
       "sections": [
         {
           "h": "Kako se igra",
           "body": [
-            "Ugani skrito 5-črkovno besedo v 6 poskusih. Po vsakem ugibanju ploščice spremenijo barvo: zelena = prava črka na pravem mestu, rumena = črka se pojavi, a nekje drugje, siva = črke v besedi ni.",
-            "Ponovljene črke so pravilno obravnavane: črka je označena rumeno ali zeleno le tolikokrat, kolikor se dejansko pojavi v odgovoru.",
-            "Vsak poskus mora biti prava beseda: preveri se s seznamom besed izbranega jezika (glede na jezik 10.000 do 19.000 dovoljenih besed). Drugo je zavrnjeno: vrstica se na kratko strese in poskus se ne šteje. Rešitve so vedno pogoste besede istega jezika."
+            "Ugani skrito besedo. Po vsakem poskusu se polja obarvajo: zelena = prava črka na pravem mestu, rumena = črka je v besedi, a drugje, siva = črke ni v besedi.",
+            "Podvojene črke se obravnavajo pravilno: črka se obarva rumeno ali zeleno le tolikokrat, kolikor se res pojavi v rešitvi.",
+            "Vsak poskus mora biti prava beseda - preveri se na seznamu besed izbranega jezika in dolžine (odvisno od jezika in dolžine od 4.000 do 19.000 dovoljenih besed). Vse drugo je zavrnjeno: vrstica se na kratko strese in poskus ne šteje. Rešitve so vedno pogoste besede istega jezika - brez imen in brez žaljivih besed."
           ]
         },
         {
           "h": "Načini",
           "body": [
-            "Normalno: ugibaš lahko katero koli dovoljeno besedo - namigi so samo priporočilo.",
-            "Težko: najdene namige moraš uporabiti naprej - zelene črke ostanejo na svojem mestu, rumene se morajo spet pojaviti. Način izbereš pred začetkom."
+            "Neskončno: beseda za besedo, za vsako 6 poskusov. Prva beseda, ki je ne uganeš, konča igro.",
+            "Beseda dneva: ena beseda na dan s 6 poskusi - za vse enaka v vsakem jeziku in dolžini, na računalniku in v brskalniku. Začeta beseda dneva se shrani; nato igra pokaže rezultat, statistiko in odštevanje do naslednje besede. Niz raste le, če igraš vsak dan.",
+            "Dordle: dve besedi hkrati v 7 poskusih - vsak poskus velja za obe mreži. Tipke zaslonske tipkovnice so razdeljene: leva polovica mreža 1, desna polovica mreža 2.",
+            "Quordle: štiri besede hkrati v 9 poskusih. Tipke so razdeljene na četrtine in kažejo barve vseh štirih mrež."
+          ]
+        },
+        {
+          "h": "Nastavitve pred začetkom",
+          "body": [
+            "Pred vsako igro se prikažejo nastavitve - ob njih vidiš svojo statistiko za izbrani način in dolžino.",
+            "- Dolžina besede: 4, 5, 6 ali 7 črk, vsaka dolžina s svojimi seznami besed.",
+            "- Težki način: najdene namige je treba ponovno uporabiti - zelene črke ostanejo na mestu, rumene se morajo spet pojaviti. V Dordle in Quordle mora poskus ustrezati namigom vsaj ene nerešene mreže.",
+            "- Način za barvno slepe: oranžna namesto zelene in modra namesto rumene - tudi v deljenem rezultatu.",
+            "Vse nastavitve se takoj shranijo."
           ]
         },
         {
           "h": "Upravljanje",
           "body": [
-            "- Tipkaj črke A-Z, [Backspace] izbriše zadnjo, [Enter] preveri vrstico (le s 5 črkami).",
-            "- Uporabiš lahko tudi zaslonsko tipkovnico z miško; njene črke se pobarvajo glede na to, kar si dozdaj izvedel."
+            "- Tipkaj črke A-Z, [Backspace] izbriše zadnjo, [Enter] preveri vrstico.",
+            "- Zaslonska tipkovnica deluje tudi z miško: QWERTZ za nemščino, češčino, slovenščino in hrvaščino, AZERTY za francoščino, sicer QWERTY. Njene tipke se obarvajo glede na to, kar že veš.",
+            "- Ikona drsnikov zgoraj desno vodi nazaj v nastavitve.",
+            "- V nastavitvah: [4] do [7] ali [Levo] / [Desno] = dolžina besede, [H] = težki način, [F] = način za barvno slepe, [Enter] = začni.",
+            "- Po igri: [Enter] = znova, [C] = deli rezultat, [S] = nastavitve. [Preslednica] skrije rezultat, da si lahko ogledaš mreže."
           ]
         },
         {
-          "h": "Rezultat",
+          "h": "Točke in statistika",
           "body": [
-            "Nadaljuje se v neskončnost: vsaka rešena beseda prinese točke - manj ugibanj pomeni več (10 do 60). Takoj zatem se pojavi nova beseda.",
-            "Prva beseda, ki je NE uspeš rešiti, konča igro; točke, ki si jih nabral, so tvoj najboljši rezultat."
+            "Neskončno: vsaka rešena beseda prinese točke - manj poskusov, več točk (od 10 do 60). V rekord šteje le Neskončno s 5 črkami; druge dolžine imajo svoje najboljše rezultate.",
+            "Statistika se shranjuje ločeno za jezik, dolžino in način: odigrane igre, odstotek zmag, trenutni in najdaljši niz ter razporeditev poskusov kot stolpčni graf - stolpec tvoje zadnje rešitve zasveti."
+          ]
+        },
+        {
+          "h": "Deljenje rezultata",
+          "body": [
+            "[C] ali gumb Deli kopira rezultat v odložišče kot mrežo emojijev - brez izdaje rešitve - da ga lahko prilepiš v kateri koli klepet. Zvezdica * za rezultatom pomeni težki način."
+          ]
+        },
+        {
+          "h": "Dosežki",
+          "body": [
+            "- Jasnovidec: ugani besedo v največ 2 poskusih.",
+            "- Besedna navada: reši 7 besed dneva zapored.",
+            "- Štirikratni genij: reši vse štiri besede v Quordle."
           ]
         },
         {
           "h": "Namigi",
           "body": [
-            "- Odpri z besedo, ki ima veliko različnih, pogostih črk.",
-            "- Sive črke uporabi za izločanje, rumene črke pa premakni na novo mesto."
+            "- Začni z besedo, ki ima veliko različnih, pogostih črk.",
+            "- S sivimi črkami izločaj možnosti, rumene pa premakni na novo mesto.",
+            "- V Dordle in Quordle se splača najprej ugibati besede, ki dajo namige za več mrež hkrati."
           ]
         }
       ]
@@ -1552,7 +1751,8 @@
         "video poker",
         "menjava",
         "žetoni",
-        "blindi"
+        "blindi",
+        "lama banka"
       ],
       "sections": [
         {
@@ -1573,9 +1773,17 @@
           ]
         },
         {
-          "h": "Žetoni in roke",
+          "h": "Lama žetoni",
           "body": [
-            "Žetoni (začetek 1000) ostanejo (mem.json). Najboljši rezultat je tvoje najvišje število žetonov. Na suhem = ponovni zagon s klikom.",
+            "Igra se z lama žetoni Lama banke - skupni račun z Blackjackom in Casinom (začetek 1000, trajno shranjen).",
+            "Na začetku igre je tvoj račun na mizi kot kup žetonov; kar gre v pot, se takoj odšteje. Če mizo zapustiš sredi igre, tvoj delež pota propade - ostanek se vrne na račun.",
+            "Rekord je najvišje stanje tvoje bilance pri pokru: 1000 plus vse, kar si pri pokru dobil in izgubil. Dobitki v drugih igrah tu ne štejejo.",
+            "Bankrot (manj kot veliki blind 20, pri Video Pokru manj kot 10) = bančno posojilo s klikom, račun je spet na 1000."
+          ]
+        },
+        {
+          "h": "Kombinacije",
+          "body": [
             "Razvrstitev rok: visoka karta < par < dva para < trojka < lestvica < barva < polna hiša < štirje enaki < barvna lestvica < kraljeva barvna lestvica."
           ]
         }
@@ -1592,33 +1800,72 @@
         "mat",
         "rokada",
         "en passant",
-        "ai"
+        "ai",
+        "chess960",
+        "uganke",
+        "ura",
+        "pgn"
       ],
       "sections": [
         {
           "h": "Kako se igra",
           "body": [
             "Šah s celotnimi pravili: vse poteze figur, kratka in dolga rokada, jemanje mimogrede in promocija kmeta v damo, trdnjavo, lovca ali skakača.",
-            "Partija se konča z matom ali remijem - s patom, pravilom 50 potez, trikratno ponovitvijo položaja ali nezadostnim materialom.",
-            "V igri za enega izbereš moč in barvo v pripravi; v dvoje se izmenjujeta za istim računalnikom."
+            "Partija se konča z matom, predajo, potekom časa ali remijem - s patom, pravilom 50 potez, trikratno ponovitvijo, nezadostnim materialom ali dogovorom.",
+            "Trije načini: partija proti AI, 2 igralca za istim računalnikom (samo namizna različica) in uganke.",
+            "Ob šahovnici sta igralca z uro, pojedenimi figurami in materialnim razmerjem (npr. +2), pod njima pa seznam potez v standardnem zapisu - pomikaš ga s kolescem miške."
           ]
         },
         {
           "h": "Upravljanje",
           "body": [
-            "- Miška: klikni svojo figuro in nato ciljno polje. Mogoča polja in zadnja poteza so označeni.",
+            "- Miška: klikni svojo figuro ali jo povleci naravnost na ciljno polje. Mogoča polja, zadnja poteza in kralj v šahu so označeni.",
             "- Tipkovnica: [Puščice] ali [WASD] premikajo okvir, [Preslednica] ali [Enter] izbere in povleče.",
-            "- Ob promociji se prikažejo štiri figure - samo klikni.",
-            "- Po partiji: [Enter] nova partija, [S] nazaj v pripravo (samo za enega igralca)."
+            "- Rokada: kralja premakni na ciljno polje ali na svojo trdnjavo. Ob promociji se prikaže izbira figure.",
+            "- Gumbi: [U] ali [Backspace] razveljavi, [H] namig, [F] obrni šahovnico, [O] ponudi remi, [X] predaj.",
+            "- Po partiji: [Enter] nova partija (barvi se zamenjata), [S] nastavitve, [P] shrani partijo kot PGN."
           ]
         },
         {
-          "h": "Moči UI in točke",
+          "h": "Nastavitve: moč, ura in Chess960",
           "body": [
-            "Šest stopenj od Začetnika do Mojstra: Začetnik vleče naključno, srednje stopnje računajo eno do tri polpoteze naprej in namenoma zgrešijo, Mojster računa najgloblje in odigra jemanja do konca z iskanjem mirnih položajev.",
-            "Vsako iskanje ima časovni in vozliščni proračun, da se vmesnik nikoli ne zatakne.",
-            "Rekord šteje tvoje zmage proti UI v tej seji; način za dva igralca se ne točkuje.",
-            "Nasvet: figure razvij zgodaj, naredi rokado in trdnjavi postavi na odprte linije."
+            "Šest stopenj AI od Začetnika do Mojstra: Začetnik vleče naključno, srednje stopnje namenoma spreminjajo igro, Težko in Mojster računata z iterativnim poglabljanjem, transpozicijsko tabelo in iskanjem mirnih položajev ter poznata običajne otvoritve. AI razmišlja po majhnih koščkih na sličico - igra se nikoli ne zatika.",
+            "Ura: brez, 1+0, 3+2, 5+0 ali 10+5 (minute + sekunde, dodane na potezo). Začne teči po prvi potezi. Kdor ostane brez časa, izgubi - razen če nasprotnik sploh ne more več matirati, takrat je remi.",
+            "Chess960: ena od 960 naključnih začetnih postavitev, njena številka je nad seznamom potez. Pri rokadi kralj vseeno pristane na g ali c, trdnjava pa na f ali d; polja vmes morajo biti prosta in kralj ne sme iti skozi šah."
+          ]
+        },
+        {
+          "h": "Pomoč, remi in točke",
+          "body": [
+            "Razveljavitev proti AI vrne dve polpotezi, namig pokaže najboljšo potezo z modro puščico. Oboje naredi partijo »s pomočjo«: zmaga takrat ne šteje za rekord, statistiko in dosežke.",
+            "Ponudba remija: AI jo sprejme le, če svoj položaj oceni kvečjemu kot izenačen - sicer zavrne in novo ponudbo lahko daš šele nekaj potez pozneje.",
+            "Rekord šteje tvoje zmage brez pomoči proti AI v tej seji. Zmaga proti Mojstru (stopnja 6) odklene dosežek »Velemojster«.",
+            "Po koncu lahko partijo shraniš kot datoteko PGN (v brskalniku: prenos in odložišče) in jo predvajaš v kateremkoli šahovskem programu."
+          ]
+        },
+        {
+          "h": "V dvoje",
+          "body": [
+            "Beli in črni se izmenjujeta za istim računalnikom; ura in Chess960 delujeta kot proti AI. Z nastavitvijo »Obrni šahovnico po vsaki potezi« se šahovnica po vsaki potezi obrne k strani na potezi.",
+            "Ponudba remija vpraša nasprotnika, predaja velja za stran na potezi. Igra v dvoje se ne točkuje in je v brskalniški različici ni."
+          ]
+        },
+        {
+          "h": "Uganke",
+          "body": [
+            "200 ugank v petih stopnjah: Mat v 1, Mat v 2, Mat v 3, Taktika I in Taktika II - po 40, od lahkih do težkih. Rešene dobijo kljukico, napredek se shrani.",
+            "Najprej nasprotnik odigra svojo zadnjo potezo, nato si na vrsti ti. Napačna poteza se po kratkem opozorilu razveljavi, nasprotnikov odgovor pride sam. Pri matnih ugankah velja vsaka poteza, ki takoj matira.",
+            "- [H] pokaži rešitev (uganka takrat ne šteje kot rešena), [U] znova, [N] naslednja uganka, [M] nazaj na seznam.",
+            "25 rešenih ugank odklene dosežek »Razvozlavec«.",
+            "Vir: uganke izvirajo iz prosto uporabne zbirke ugank lichess.org (CC0) in so bile preverjene z našim lastnim pogonom - hvala, Lichess!"
+          ]
+        },
+        {
+          "h": "Nasveti",
+          "body": [
+            "- Figure razvij zgodaj, naredi rokado in trdnjavi postavi na odprte linije.",
+            "- Pri ugankah najprej išči šahe, jemanja in grožnje.",
+            "- Z uro ne razmišljaj predolgo - dodatek pri 3+2 in 10+5 reši marsikatero končnico."
           ]
         }
       ]
@@ -2256,6 +2503,380 @@
           "body": [
             "Deset kegljev so krogi s pravo maso: krogla jih zadene, oni pa podirajo drug drugega. Strike je torej rezultat fizike in ne sreče.",
             "Vsota igre je tvoj rekord; poleg tega se shrani najboljši rezultat za vsako težavnost."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crossyroad",
+      "category": "games",
+      "game": "CrossyRoadGame",
+      "title": "Crossy Road",
+      "keywords": [
+        "kokoš",
+        "cesta",
+        "reka",
+        "tiri",
+        "vlak",
+        "orel",
+        "kovanci",
+        "liki",
+        "dnevna",
+        "voxel"
+      ],
+      "sections": [
+        {
+          "h": "Upravljanje",
+          "body": [
+            "Skači polje za poljem s puščicami ali [W] [A] [S] [D]. [Preslednica], [Enter] ali klik z miško skočijo naprej.",
+            "- Če med skokom že pritisneš naslednjo smer, skočiš znova takoj po pristanku. Držanje tipke ne skače neprekinjeno.",
+            "Po koncu igre: [Enter] = še enkrat, [F] = liki, [S] = nastavitve."
+          ]
+        },
+        {
+          "h": "Trava, ceste, reke in tiri",
+          "body": [
+            "Proga nastaja neskončno vrsto za vrsto - vedno obstaja prehodna pot.",
+            "- Trava: varna, a drevesa in skale zapirajo pot.",
+            "- Ceste: avtomobili in tovornjaki te povozijo. Dlje ko prideš, hitrejši in gostejši je promet.",
+            "- Reke: stojiš lahko le na hlodih in lokvanjih. Hlodi te nosijo s seboj - kdor odplava čez rob zaslona, je izločen.",
+            "- Tiri: ko utripa rdeča opozorilna luč in zvoni zvonec, pridrvi vlak približno sekundo pozneje. Dlje te čakajo cele postaje z do 5 tiri zapored."
+          ]
+        },
+        {
+          "h": "Orel in točke",
+          "body": [
+            "Kamera se počasi pomika naprej. Kdor predolgo odlaša ali se vrne za več kot tri vrste, ga odnese orel - prej opozori rdeč rob na dnu zaslona.",
+            "Točke = najbolj oddaljena dosežena vrsta. V načinu Neskončno je to tvoj rekord (mejnik: 150 vrst).",
+            "Od vrste 50 naprej se izmenjujeta dan in noč: ponoči svetijo žarometi, vlaki in kovanci."
+          ]
+        },
+        {
+          "h": "Kovanci in liki",
+          "body": [
+            "Po progi so raztreseni kovanci, velikanski kovanec je vreden 5. Zbrani kovanci ostanejo shranjeni.",
+            "V zavihku LIKI z njimi kupiš nove like: žabo, pujska, pingvina, mačko, lisico, lamo, robota, duha in samoroga (od 25 do 250 kovancev). Kokoš je tvoja že od začetka.",
+            "- Dosežki: »Nov videz« za prvi kupljeni lik, »Tirni akrobat« za 5 tirov zapored."
+          ]
+        },
+        {
+          "h": "Načini in možnosti",
+          "body": [
+            "- Neskončno: vsak krog nova proga, šteje za rekord.",
+            "- Dnevna proga: danes enaka za vse (tudi v spletni različici), z lastnim dnevnim rekordom - ne šteje za rekord.",
+            "V nastavitvah vklopiš ali izklopiš sence [H] in menjavanje dneva in noči [N]; Levo/Desno preklaplja med tvojimi liki."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash",
+      "category": "games",
+      "game": "GeometryDashGame",
+      "title": "Geometry Dash",
+      "keywords": [
+        "geometry dash",
+        "ritem",
+        "kocka",
+        "ladja",
+        "žoga",
+        "nlp",
+        "val",
+        "portal",
+        "krogla",
+        "odskok",
+        "kovanci",
+        "zvezdice",
+        "vaja",
+        "kontrolna točka",
+        "demon",
+        "glasba",
+        "stopnja"
+      ],
+      "sections": [
+        {
+          "h": "Kako igrati",
+          "body": [
+            "Tvoj lik sam drvi v desno - ti se odločaš le, kdaj skočiti ali leteti. Bodica, jama ali čelni trk v blok: eksplozija in trenutek pozneje se že začne naslednji poskus.",
+            "Stopnja je opravljena, ko prideš do cilja. Vrstica zgoraj kaže napredek v odstotkih, desno zgoraj vidiš kovance iz tega poskusa, na začetku pa v stopnji lebdi števec poskusov.",
+            "Vsaka stopnja ima svojo glasbo; ozadje, tla in krogle utripajo v ritmu. Glasbo, vrstico napredka in samodejne kontrolne točke vklopiš in izklopiš pri izbiri stopnje pod kartico stopnje."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- [Preslednica], [Gor], [W], [Enter] ali levi gumb miške: skok ali let. Držanje šteje kot neprestano pritiskanje - kocka takrat po vsakem pristanku takoj spet skoči.",
+            "- [R] takoj začne znova, [Q] ali [Backspace] vrne na izbiro stopnje, [Esc] ustavi igro.",
+            "- [P] vklopi ali izklopi način vaje; v njem [Z] postavi kontrolno točko, [X] pa izbriše zadnjo.",
+            "- Izbira stopnje: [Levo]/[Desno] listata, [1] do [8] skočijo naravnost na stopnjo, [Enter] začne, [P] izbere Običajno ali Vajo, [M] vklopi glasbo, [Tab] preklopi na zavihek STOPNJE.",
+            "Vsak pritisk dobi časovni žig in deluje natanko v tistem koraku fizike (1/240 sekunde), v katerem se je zgodil - skok je zato natančen, tudi če se računalnik za hip zatakne."
+          ]
+        },
+        {
+          "h": "Pet oblik",
+          "body": [
+            "Portali preobrazijo tvoj lik - vsaka oblika leti po svoje:",
+            "- Kocka: pritisk = skok. Pristaja na blokih; če se vanje zaleti od spredaj, je poskusa konec.",
+            "- Ladja: drži = dviganje, spusti = spuščanje.",
+            "- Žoga: dotik na tleh obrne težnost - potem se kotali naprej po stropu.",
+            "- NLP: vsak dotik je majhen zamah s krili, tudi sredi zraka.",
+            "- Val: drži = poševno navzgor, spusti = poševno navzdol. Je drobcen, a vsak stik z blokom ga razbije.",
+            "Ladja, žoga, NLP in val letijo po hodniku med tlemi in stropom - kako visok je, določi portal."
+          ]
+        },
+        {
+          "h": "Odskoki, krogle in portali",
+          "body": [
+            "- Odskoki ležijo na tleh in delujejo ob dotiku: rumen = visok skok, roza = majhen skok, moder = obrni težnost.",
+            "- Krogle lebdijo v zraku in delujejo le, če pritisneš, medtem ko se jih dotikaš - v istih barvah. Kratek predpomnilnik oprosti za las prezgoden pritisk.",
+            "- Portali težnosti: rumen postavi svet na glavo, moder ga obrne nazaj. Portali hitrosti preklopijo na 0,5x, 1x, 2x ali 3x.",
+            "- Dodajo se še polovični bloki, majhne bodice, jame brez tal in sprožilci barve, ki prebarvajo ozadje in tla."
+          ]
+        },
+        {
+          "h": "8 stopenj",
+          "body": [
+            "- Lama Launch (Lahko, 1 zvezdica) in Neon Steps (Lahko, 2 zvezdici): skoki, odskoki, krogle in prva ladja.",
+            "- Orbit Garden (Običajno, 3 zvezdice): verige krogel, z glavo navzdol pod stropom in ladja z dvojno hitrostjo.",
+            "- Gravity Tide (Težko, 4 zvezdice) in Skyline Rush (Težko, 5 zvezdic): portali težnosti, žoga, NLP, jame in trojna hitrost.",
+            "- Crystal Caves (Težje, 7 zvezdic) in Wave Reactor (Noro, 9 zvezdic): vseh pet oblik, ozka vrata in tuneli za val.",
+            "- Lama Inferno (Demon, 10 zvezdic): trojna hitrost in vse naenkrat.",
+            "Vsaka stopnja je dokazano rešljiva, skupaj z vsemi tremi kovanci: ob gradnji jo je reševalec opravil s pravo kodo igre - in njegova rešitev deluje celo z zamikom 1/240 sekunde."
+          ]
+        },
+        {
+          "h": "Način vaje",
+          "body": [
+            "V načinu vaje po trku nadaljuješ pri zadnji kontrolni točki namesto na začetku - zeleni rombi jih označujejo v stopnji, glasba pa kar igra naprej.",
+            "Samodejne kontrolne točke nastanejo približno vsaki dve sekundi (lahko jih izklopiš), s [Z] postaviš svoje, [X] izbriše zadnjo.",
+            "Vaja ima svoj rekord in ne prinaša ne zvezdic ne kovancev."
+          ]
+        },
+        {
+          "h": "Zvezdice, kovanci in dosežki",
+          "body": [
+            "Kdor stopnjo opravi v običajnem načinu, dobi njene zvezdice. V vsaki stopnji so poleg tega skriti trije skrivni kovanci, pogosto stran od najlažje poti. Štejejo, ko stopnjo z njimi končaš - in vsak je vreden še eno zvezdico.",
+            "Tvoj rekord je skupno število zvezdic (največ 65) in lahko le raste. Za vsako stopnjo si igra zapomni najboljši odstotek v Običajnem načinu in Vaji, najdene kovance in poskuse.",
+            "- Dosežki: \"V ritmu\" za prvo opravljeno stopnjo, \"Lovec na kovance\" za vse tri kovance v stopnji, \"Premagovalec demonov\" za Lama Inferno - in mejnik pri 20 zvezdicah.",
+            "Na zavihku STOPNJE gradiš, igraš in deliš lastne stopnje - glej stran \"Lastne stopnje (Geometry Dash)\"."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash-levels",
+      "category": "games",
+      "title": "Lastne stopnje (Geometry Dash)",
+      "keywords": [
+        "lastne stopnje",
+        "urejevalnik",
+        "stopnje",
+        "ugc",
+        "gradnja",
+        "deljenje",
+        "uvoz",
+        "izvoz",
+        "preverjeno",
+        "lamapgzlevel",
+        "geometry dash"
+      ],
+      "sections": [
+        {
+          "h": "Gradnja stopnje",
+          "body": [
+            "Zavihek STOPNJE pri izbiri stopnje v Geometry Dash hrani tvojo lastno zbirko (do 60 stopenj). \"Nova\" odpre urejevalnik stopenj, \"Uredi\" nadaljuje obstoječo stopnjo.",
+            "Levo je platno z mrežo, desno paleta: zgoraj Izberi in Radirka, pod njima šest skupin - Bloki, Nevarnosti, Odskoki in krogle, Portali, Hitrost in Dodatki (skrivni kovanci, sprožilec barve). [1] do [6] izberejo skupine neposredno.",
+            "- Klik ali vlečenje postavi izbrani predmet, [R] ga zavrti: bodice in polovične bloke v štiri smeri, odskoke navzgor ali navzdol.",
+            "- Z orodjem Izberi vlečenje premakne predmet, [Del] ga izbriše. Desni klik vedno briše; vlečenje z desnim gumbom, kolešček miške, puščice ali [A]/[D] premikajo pogled.",
+            "- Spodaj so vrednosti izbranega predmeta: pri portalih oblik višina hodnika, pri sprožilcu barve cilj (ozadje ali tla), barva in trajanje prehoda.",
+            "- Trak čisto spodaj prikaže celotno stopnjo na en pogled - klik skoči na tisto mesto.",
+            "[U] razveljavi, [Y] uveljavi znova, [G] pokaže ali skrije mrežo, [S] shrani. [Esc] vodi nazaj - z neshranjenimi spremembami šele po potrditvi.",
+            "Največ trije kovanci na stopnjo. Cilj se samodejno postavi malo za zadnjim predmetom."
+          ]
+        },
+        {
+          "h": "Nastavitve stopnje",
+          "body": [
+            "Zobnik odpre nastavitve stopnje: začetna hitrost (od 0,5x do 3x), začetna oblika, glasbeni slog (Energično, Chiptune, Sanjavo, Temačno ali brez glasbe), tempo v BPM ter barva ozadja in tal.",
+            "Ime in id sta v zgornji vrstici. Id je ključ: male črke, brez presledkov, samo a-z, 0-9, - in _ - hkrati pa predlagano ime datoteke pri deljenju."
+          ]
+        },
+        {
+          "h": "Preizkus in preverjanje",
+          "body": [
+            "\"Test\" ([Enter]) zaigra stopnjo od začetka, \"Od tu\" ([T]) od trenutnega mesta - portali pred njim štejejo kot preleteni. [Esc] vodi nazaj na platno.",
+            "Če svojo stopnjo v preizkusu opraviš od začetka in brez načina vaje, dobi zeleno kljukico \"preverjeno\". Vsaka poznejša sprememba predmetov, začetne hitrosti ali oblike jo spet odstrani - barve, ime in glasba ne.",
+            "Na zavihku STOPNJE \"Igraj\" običajno zažene izbrano stopnjo, z lastnim rekordom in števcem poskusov."
+          ]
+        },
+        {
+          "h": "Deljenje in uvoz",
+          "body": [
+            "\"Deli\" vpraša po tvojem imenu kot ustvarjalca in po imenu datoteke. \"Izvozi kot\" odpre pogovorno okno za shranjevanje, \"V Prenose\" shrani datoteko naravnost v mapo Prenosi.",
+            "Datoteka ima končnico .lamapgzlevel in vsebuje JSON. \"Uvozi\" jo prebere nazaj (tudi .json); če je id že zaseden, se samodejno doda -2, -3 ... Kljukica preverjanja potuje s stopnjo.",
+            "Ime, id in ustvarjalec gredo pri shranjevanju, izvozu IN uvozu skozi filter besed vseh 14 jezikov.",
+            "Vse se shrani v ugc.json poleg igre - v isto datoteko kot lastne steze za minigolf. V brskalniški različici stopnje ostanejo v pomnilniku brskalnika, deljenje pa datoteko prenese."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "battleship",
+      "category": "games",
+      "game": "BattleshipGame",
+      "title": "Battleship",
+      "keywords": [
+        "battleship",
+        "potapljanje ladij",
+        "ladje",
+        "flota",
+        "salva",
+        "radar",
+        "ai",
+        "potopi"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Dve floti, vsaka na svojem morju 10x10: letalonosilka (5 polj), bojna ladja (4), križarka (3), podmornica (3) in rušilec (2). Igralca izmenično streljata na polje nasprotnikove plošče.",
+            "Levo je velika ciljna plošča z radarjem, desno so tvoje vode in pregled obeh flot. Bel obroč pomeni zgrešeno, plameni pomenijo zadetek. Ko so zadeta vsa polja ladje, se ladja potopi in razkrije se njen obris.",
+            "Zmaga, kdor prvi potopi vseh pet sovražnih ladij. Povzetek nato pokaže strele, zadetke, natančnost, poteze in preostale ladje obeh strani."
+          ]
+        },
+        {
+          "h": "Postavljanje flote",
+          "body": [
+            "- Z miško povleci ladje iz doka na desni na ploščo - ali klikni ladjo, jo premakni in klikni še enkrat. Postavljene ladje premikaš enako.",
+            "- [R] ali desni klik zavrti ladjo, ki jo držiš (ali ladjo pod miško).",
+            "- Predogled sveti zeleno, ko je položaj dovoljen, in rdeče, ko ni.",
+            "- Tipkovnica: puščice premikajo okvir, [Space] pobere in odloži ladjo, [Enter] vzame naslednjo manjkajočo ladjo.",
+            "- [X] postavi naključno, [C] odstrani vse ladje. S polno floto [Enter] ali \"Gremo!\" začne bitko.",
+            "Tvoja zadnja postavitev bo v naslednjem krogu spet predlagana."
+          ]
+        },
+        {
+          "h": "Pravila v nastavitvah",
+          "body": [
+            "Vsa tri stikala se shranijo takoj in veljajo za obe strani:",
+            "- Ladje se lahko dotikajo: IZKLOP zahteva vsaj eno prosto polje okoli vsake ladje, tudi diagonalno. Prepovedano območje je med postavljanjem osvetljeno.",
+            "- Salva: vsako potezo imaš toliko strelov, kolikor tvojih ladij še plava - kdor izgublja ladje, strelja manj.",
+            "- Po zadetku streljaš še enkrat: vsak zadetek vrne strel, zato streljaš naprej, dokler zadevaš."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Miška: klikni polje na ciljni plošči.",
+            "- Tipkovnica: puščice ali tvoje tipke za premikanje merijo, [Space] ali [Enter] ustreli.",
+            "- Po krogu: [Enter] = nov krog, [S] = nazaj v nastavitve. [Esc] ustavi igro."
+          ]
+        },
+        {
+          "h": "Moč AI",
+          "body": [
+            "- Lahko strelja naključno in po zadetku le včasih nadaljuje.",
+            "- Srednje išče naključno, po zadetku preizkusi sosednja polja in podaljšuje vrste zadetkov do konca ladje.",
+            "- Težko za vsako polje izračuna, v koliko še možnih položajih bi ga preostale ladje lahko pokrivale (upoštevajoč pravilo dotikanja), in strelja na najverjetnejše. Med iskanjem uporablja šahovnični vzorec, prilagojen najmanjši preostali ladji.",
+            "V povprečju AI potrebuje približno 70 (Lahko), 60 (Srednje) in 45 strelov (Težko), da potopi celo floto - in ve le tisto, kar vidiš tudi ti."
+          ]
+        },
+        {
+          "h": "2 igralca",
+          "body": [
+            "V načinu za več igralcev igrata izmenično za istim računalnikom. Pred postavljanjem in pred vsako potezo zaslon za predajo skrije obe floti, dokler naslednji igralec ne potrdi s tipko [Enter] ali klikom.",
+            "Pokaže tudi, koliko strelov in zadetkov je imel zadnji napad na tvojo floto. Spletna različica se igra le proti AI."
+          ]
+        },
+        {
+          "h": "Točke in dosežki",
+          "body": [
+            "Vsaka zmaga proti AI prinese eno točko; rekord je največ zmag v eni seji. Način za 2 igralca se ne šteje.",
+            "- Nepoškodovana flota: premagaj AI, ne da bi izgubil eno samo ladjo.",
+            "- Veliki admiral: potopi floto težke AI."
+          ]
+        },
+        {
+          "h": "Nasveti",
+          "body": [
+            "- Ladje razporedi po vsej plošči in jih ne postavi vseh ob rob.",
+            "- Pri iskanju zadošča vsako drugo polje (šahovnica) - ko ostanejo le dolge ladje, celo vsako tretje.",
+            "- Brez pravila dotikanja je vsako polje okoli potopljene ladje zagotovo voda."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "casino",
+      "category": "games",
+      "game": "CasinoGame",
+      "title": "Casino",
+      "keywords": [
+        "igralnica",
+        "casino",
+        "ruleta",
+        "avtomat",
+        "lama",
+        "jackpot",
+        "vrtljaji zastonj",
+        "žetoni",
+        "stave"
+      ],
+      "sections": [
+        {
+          "h": "Lama banka",
+          "body": [
+            "Casino, Blackjack in Poker igrajo z istim računom: lama žetoni (začetek 1000). Stave se odštejejo takoj, dobitki se pripišejo - vse se trajno shrani.",
+            "Vsaka igra vodi svojo bilanco. Rekord Casina je najvišje stanje 1000 + bilanca Casina; dobitki pri Blackjacku ali Pokru tu ne štejejo.",
+            "V bankrotu (manj od najnižje stave) dobiš bančno posojilo: račun se spet napolni na 1000. Posojila ne štejejo v nobeno bilanco; njihovo število je zgoraj desno."
+          ]
+        },
+        {
+          "h": "Ruleta - stavljenje",
+          "body": [
+            "Evropska ruleta s 37 polji (0 do 36). Vrednost žetona izbereš spodaj: 1, 5, 25, 100 ali 500 (tipke [1] do [5] ali kolešček miške).",
+            "Levi klik položi žeton, desni klik ga odstrani. Mesto klika določa stavo:",
+            "- Sredina števila: število, izplača 35:1",
+            "- Rob med dvema številoma: par, 17:1",
+            "- Zunanja črta stolpca števil: trojka, 11:1 (ob ničli tudi 0-1-2 in 0-2-3)",
+            "- Kot med štirimi števili: četverka, 8:1 (zunaj ob ničli: 0-1-2-3)",
+            "- Kot na zunanji črti med dvema stolpcema: šesterka, 5:1",
+            "- Stolpec (2:1) in ducat (2:1), rdeče/črno, sodo/liho ter nizko 1-18 / visoko 19-36 (vsaka 1:1)",
+            "Ob ruleti vidiš, katera stava je pod miško in koliko izplača."
+          ]
+        },
+        {
+          "h": "Ruleta - vrtenje",
+          "body": [
+            "[Enter] ali ZAVRTI začne krog: stava se odšteje in izžreba se zmagovalno število. Kroglica se v spirali spusti in pade natanko v to polje - [Preslednica] ali klik pospeši.",
+            "Ponovi [R] znova položi stave zadnjega kroga, Podvoji [D] podvoji vse stave, Počisti [Backspace] izprazni mizo.",
+            "Zgoraj je zadnjih 12 števil; dobitne stave pokažejo svoje izplačilo."
+          ]
+        },
+        {
+          "h": "Lama avtomat",
+          "body": [
+            "5 valjev, 3 vrste, 10 dobitnih linij. Linije izplačujejo od 3 enakih simbolov od leve proti desni; številke ob straneh kažejo, kod poteka posamezna linija (miška nad njo = prikaži linijo).",
+            "Stava na linijo: 1, 2, 5 ali 10 ([+]/[-] ali kolešček miške) - vedno se igra na vseh 10 linijah.",
+            "- Lama = divja karta: nadomesti vsak simbol razen zlatnika. 5 lam na eni liniji je Lama jackpot.",
+            "- Zlatnik = scatter: 3, 4 ali 5 zlatnikov kjerkoli izplača 2-, 10- ali 50-kratnik skupne stave in prinese 10 vrtljajev zastonj, v katerih vsi dobitki štejejo dvojno. Vrtljaje zastonj lahko sprožiš znova.",
+            "Tabela dobitkov pokaže vsa izplačila za tvojo trenutno stavo. Vračilo igralcu je 96,1 % - natančno izračunano iz trakov valjev."
+          ]
+        },
+        {
+          "h": "Lama avtomat - upravljanje",
+          "body": [
+            "[Preslednica], [Enter] ali klik na valje zavrti; ponovni pritisk med vrtenjem pospeši.",
+            "Samodejno vrtenje: [A] začne 10 krogov, [Shift]+[A] 25 krogov (ali gumb Avto), ponovni pritisk ustavi. [T] vklopi turbo, [I] odpre tabelo dobitkov.",
+            "Dobljeni vrtljaji zastonj se takoj shranijo in se nadaljujejo ob naslednji igri."
+          ]
+        },
+        {
+          "h": "Dosežki",
+          "body": [
+            "- Mejnik Casina: rekord 5000",
+            "- Polni zadetek: zmagaj s stavo na eno število pri ruleti",
+            "- Lama jackpot: 5 lam na eni dobitni liniji"
           ]
         }
       ]

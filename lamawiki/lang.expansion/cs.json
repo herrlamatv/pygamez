@@ -11,14 +11,16 @@
         "menu",
         "pauza",
         "celá obrazovka",
-        "postranní panel"
+        "postranní panel",
+        "více hráčů"
       ],
       "sections": [
         {
           "h": "Spuštění hry",
           "body": [
             "Hru můžeš spustit třemi způsoby: ze seznamu her v levém postranním panelu, z mřížky her na úvodní obrazovce nebo přímo z této wiki přes předherní obrazovku.",
-            "Před každou hrou se objeví předherní obrazovka: tam si zvol režim (např. pro jednoho nebo více hráčů) a dostaneš se k možnostem a této wiki."
+            "Před každou hrou se objeví předherní obrazovka: tam si zvol režim (např. pro jednoho nebo více hráčů) a dostaneš se k možnostem a této wiki.",
+            "Má-li hra hodně režimů nebo je okno malé, Možnosti, Wiki a Zpět se na předherní obrazovce seřadí do jedné řady - vše tak zůstane vidět."
           ]
         },
         {
@@ -26,7 +28,7 @@
           "body": [
             "- [Esc] pozastaví a znovu spustí běžící hru - v menu se vrátí zpět.",
             "- [F11] zapíná a vypíná celou obrazovku.",
-            "- Zelené tlačítko Zpět do menu ukončí hru a uloží nejlepší skóre."
+            "- Zelené tlačítko Zpět do menu ukončí hru a uloží nejlepší skóre - stejně jako přepnutí do jiné hry přes postranní panel."
           ]
         },
         {
@@ -39,8 +41,9 @@
         {
           "h": "Pro více hráčů",
           "body": [
-            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) a Asteroids (kooperativní souboj) mají místní režim pro 2 hráče - vybereš ho na předherní obrazovce.",
-            "Pro jednoho hráče ovládají obě přiřazení kláves stejnou postavu; pro více hráčů každé jednu (výchozí: P1 = WASD, P2 = šipky nebo IJKL - viz možnosti)."
+            "Místní režim pro 2 hráče má 20 her: Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus), Asteroids (kooperativní souboj), Memory, Čtyři v řadě, Tankový souboj, Reversi, Yahtzee, Dáma, Šachy, Mlýn, Simon, Kulečník, Minigolf, Pinball, Bowling a Battleship - vybereš ho na předherní obrazovce.",
+            "Pro jednoho hráče ovládají obě přiřazení kláves stejnou postavu; pro více hráčů každé jednu (výchozí: P1 = WASD, P2 = šipky nebo IJKL - viz možnosti).",
+            "Tetris navíc nabízí Versus proti AI; v Battleship ve dvou skryje flotily předávací obrazovka. Webová verze je jen pro jednoho hráče."
           ]
         }
       ]
@@ -60,7 +63,8 @@
         "jazyk",
         "design",
         "vzhled",
-        "motiv"
+        "motiv",
+        "pevné klávesy"
       ],
       "sections": [
         {
@@ -75,7 +79,8 @@
           "body": [
             "K dispozici jsou tři přednastavení: WASD + šipky, WASD + IJKL a šipky + WASD.",
             "Každou jednotlivou klávesu lze přeřadit: klikni na řádek nebo potvrď klávesou Enter, poté stiskni požadovanou klávesu. [Esc] zruší.",
-            "Přiřazení jsou oddělená pro hráče 1 a hráče 2 a ukládají se trvale."
+            "Přiřazení jsou oddělená pro hráče 1 a hráče 2 a ukládají se trvale.",
+            "Každý hráč může přeřadit pět akcí: nahoru, dolů, doleva, doprava a akce. Některé hry mají navíc pevné klávesy - např. odložení [C] a otočení doleva [Z] v Tetrisu nebo vrácení tahu [U] ve 2048, šachu a Sudoku. Fungují jen tehdy, když klávesa není přiřazena žádné akci; uvádí je nápověda v nastavení a wiki stránka hry."
           ]
         },
         {
@@ -96,7 +101,7 @@
         {
           "h": "Jazyk",
           "body": [
-            "Rozhraní je k dispozici v němčině, angličtině, francouzštině, španělštině a portugalštině. Přepneš ho na obrazovce možností nebo přes Jazyk v postranním panelu - tato wiki změní jazyk také."
+            "Rozhraní je k dispozici ve 14 jazycích: němčině, angličtině, francouzštině, španělštině, portugalštině, polštině, turečtině, dánštině, norštině, švédštině, finštině, češtině, slovinštině a chorvatštině. Přepneš ho na obrazovce možností nebo přes Jazyk v postranním panelu - tato wiki změní jazyk také."
           ]
         }
       ]
@@ -111,30 +116,58 @@
         "rekord",
         "body",
         "postup",
-        "soubory"
+        "soubory",
+        "záloha",
+        "backup",
+        "lama žetony",
+        "ugc"
       ],
       "sections": [
         {
           "h": "Nejlepší skóre",
           "body": [
             "Každá hra automaticky uloží svou nejlepší hodnotu, když skončí kolo. Nový rekord zobrazí zlatý banner - a k tomu déšť konfet.",
-            "Nejlepší hodnoty vidíš všude: jako hvězdičku v seznamu v postranním panelu, v běžícím pásu na úvodní obrazovce a ve stavové kartě."
+            "Nejlepší hodnoty vidíš všude: jako hvězdičku v seznamu v postranním panelu, v běžícím pásu na úvodní obrazovce a ve stavové kartě.",
+            "Režimy bez rekordu - třeba Sprint a Ultra v Tetrisu, denní trasa v Crossy Road nebo 2048 s vracením tahů - nezobrazují banner; jejich nejlepší časy a denní maxima si hra ukládá sama."
           ]
         },
         {
           "h": "Co se ukládá kam?",
           "body": [
-            "- settings.json: zvuk, hlasitost, přiřazení kláves, rozlišení, FPS a možnosti her (např. režim Snake, nastavení Sudoku).",
-            "- mem.json: nejlepší skóre, zvolený jazyk a postup úrovněmi Sudoku.",
+            "- settings.json: zvuk, hlasitost, přiřazení kláves, rozlišení, FPS, vzhled a možnosti her (např. režim Snake, DAS/ARR v Tetrisu, varianta Sudoku, pravidla Battleship).",
+            "- mem.json: nejlepší skóre, zvolený jazyk, úspěchy a statistiky - navíc postup mnoha her ve vlastních sekcích (viz níže).",
             "- mem-ngb.json: vizuální úpravy Snake (barva hlavy, mřížka, banner).",
             "- replay.json: uložené záznamy z minigolfu a bowlingu.",
+            "- ugc.json: tvé vlastní minigolfové jamky a levely Geometry Dash (sdílené jako .lamapgzmap nebo .lamapgzlevel).",
             "Tyto soubory leží přímo ve složce hry a pro vynulování je stačí smazat."
+          ]
+        },
+        {
+          "h": "Postup v mem.json",
+          "body": [
+            "Každá hra s postupem má v mem.json vlastní sekci, například:",
+            "- sudoku: vyřešené úrovně s hvězdami a nejlepším časem, rozehraná sudoku a Sudoku dne se sérií.",
+            "- casino: účet Lama banky - lama žetony pro Blackjack, Poker a Casino s bilancí každé hry.",
+            "- crossy: sebrané mince, koupené postavy a denní maximum v Crossy Road.",
+            "- tetris: nejlepší čas ve Sprintu, nejlepší skóre v Ultra a bilance Versus proti AI.",
+            "- g2048: uložené partie 2048 a nejlepší skóre pro každou velikost desky a režim.",
+            "- chess: tvůj postup v režimu šachových úloh.",
+            "- geodash: nejlepší procenta každého levelu (Normální a Trénink), nalezené mince, pokusy a skoky v Geometry Dash.",
+            "- wordle: statistiky podle režimu, jazyka a délky slova, stav slova dne a nejlepší výsledky.",
+            "K tomu mimo jiné minigolf, pinball, bowling a lamatowerdef s nejlepšími výsledky."
+          ]
+        },
+        {
+          "h": "Automatická záloha",
+          "body": [
+            "mem.json a settings.json se zapisují bezpečně proti pádu: nejdřív do dočasného souboru, pak se vymění jedním krokem. Předchozí verze zůstane jako mem.json.bak nebo settings.json.bak.",
+            "Pokud by se mem.json někdy poškodil, hra automaticky načte zálohu - rekordy, úspěchy ani lama žetony se tak neztratí."
           ]
         },
         {
           "h": "Tip",
           "body": [
-            "Body se uloží jen tehdy, když odejdeš přes Zpět do menu nebo když kolo normálně skončí - ne když natvrdo zavřeš okno uprostřed hry."
+            "Body se ukládají po skončení partie, při odchodu přes Zpět do menu, při výběru jiné hry v postranním panelu uprostřed hry a při ukončení sbírky. Rozehranou partii ztratíš jen při pádu nebo násilném ukončení programu."
           ]
         }
       ]
@@ -201,19 +234,20 @@
         {
           "h": "Přehled",
           "body": [
-            "Sbírka nyní sleduje tvůj postup: 69 úspěchů a podrobné statistiky všech 38 her. Obojí najdeš pod tlačítkem Úspěchy a statistiky v postranním panelu; mezi záložkami přepínáš klávesou [Tab] nebo kliknutím."
+            "Sbírka sleduje tvůj postup: 107 úspěchů a podrobné statistiky všech 46 her. Obojí najdeš pod tlačítkem Úspěchy a statistiky v postranním panelu; mezi záložkami přepínáš klávesou [Tab] nebo kliknutím."
           ]
         },
         {
           "h": "Úspěchy",
           "body": [
             "Existují tři kategorie:",
-            "- Obecné: cíle napříč sbírkou jako spuštěné partie, vyzkoušené hry, celkový herní čas, překonané rekordy a výhry - plus drobnosti jako Noční sova (hraní po půlnoci).",
-            "- Bodové milníky: jeden férový cílový počet bodů na hru, přizpůsobený její bodové škále.",
-            "- Výjimečné okamžiky: šachmat AI, KNIFFEL, dlaždice 2048, Wordle na 2 pokusy a další.",
+            "- Obecné (23): cíle napříč sbírkou jako spuštěné partie, vyzkoušené hry, celkový herní čas, překonané rekordy a výhry - plus drobnosti jako Noční sova (hraní po půlnoci).",
+            "- Bodové milníky (37): jeden férový cílový počet bodů na hru, přizpůsobený její bodové škále.",
+            "- Výjimečné okamžiky (47): šachmat AI, KNIFFEL, dlaždice 2048 a 4096, T-Spin Double a Perfect Clear v Tetrisu, 25 vyřešených šachových úloh, první Killer Sudoku, zásah jednoho čísla v ruletě, lamí jackpot na automatu, výhra v Battleship bez ztráty jediné lodi a další.",
             "Při odemčení se vpravo nahoře objeví zlaté oznámení s krátkou fanfárou - i uprostřed hry.",
             "Stará data se počítají: při prvním spuštění po aktualizaci se tvé dosavadní rekordy započítají automaticky (bez ohňostroje oznámení).",
-            "Zamčené úspěchy ukazují ukazatel postupu, odemčené své datum."
+            "Zamčené úspěchy ukazují ukazatel postupu, odemčené své datum.",
+            "Ve 2048 a v šachu se partie s vrácením tahu nebo nápovědou nepočítají do rekordů ani úspěchů - zkoušet můžeš, hodnotí se ale jen hra bez pomoci."
           ]
         },
         {
@@ -497,28 +531,80 @@
         "kostky",
         "řady",
         "otočit",
+        "odložit",
+        "t-spin",
+        "sprint",
+        "ultra",
+        "maraton",
         "versus",
-        "hromada"
+        "odpad"
       ],
       "sections": [
         {
+          "h": "Režimy",
+          "body": [
+            "Sólo: variantu vybereš v nastavení. Maraton je nekonečný a úroveň stoupá každých 10 řad (počáteční úroveň 1-15) - do rekordu se počítá jen Maraton.",
+            "- Sprint 40: smaž 40 řad co nejrychleji; nejlepší čas se uloží.",
+            "- Ultra 2:00: získej za dvě minuty co nejvíc bodů; rekord se uloží.",
+            "Proti AI: hraješ proti AI se třemi úrovněmi (Lehká, Střední, Těžká). Kdo maže řady, posílá soupeři odpadní řady; komu hromada první narazí nahoru, je K.O. Bilance proti každé úrovni se ukládá.",
+            "2 hráči (jen verze pro PC): totéž ve dvou u jedné klávesnice. Obě pole dostávají vždy stejné pořadí kostek."
+          ]
+        },
+        {
           "h": "Ovládání",
           "body": [
-            "Vlevo/vpravo posouvá kostku, nahoru ji otočí, dolů je pomalý pád a akční klávesa (výchozí: [Space] ) rychlý pád."
+            "[Vlevo] [Vpravo] posouvají kostku - při podržení se po DAS rozjede a pokračuje v rytmu ARR. [Nahoru] otáčí doprava, [Dolů] je měkký pád a akční klávesa (výchozí: [Mezerník] ) kostku okamžitě shodí (tvrdý pád).",
+            "- [C] nebo [Shift] kostku odloží (jednou za kostku), [Z] nebo [Y] otáčí doleva, [X] doprava.",
+            "- 2 hráči: hráč 1 odkládá klávesou [Q] a otáčí doleva klávesou [E], hráč 2 odkládá pravým [Shift] a otáčí doleva pravým [Ctrl].",
+            "- Tyto pevné klávesy fungují jen tehdy, když jsi je sám nepřiřadil žádné akci.",
+            "Ve Sprintu a Ultra [R] hned začne znovu. Po hře: [R] = znovu, [S] = nastavení - klávesy tvrdého pádu schválně nic nerestartují.",
+            "V nastavení upravíš DAS (prodleva před plynulým pohybem), ARR (rychlost potom, 0 ms = rovnou ke stěně) a stín kostky."
           ]
         },
         {
-          "h": "Režimy a skórování",
+          "h": "Moderní pravidla",
           "body": [
-            "Plné řady dávají body - více najednou dá mnohem víc. Každých 10 řad se zvýší úroveň a rychlost.",
-            "Versus (více hráčů): dvě plochy vedle sebe, kdo první dosáhne hromadou vrcholu, prohrává."
+            "Kostky chodí v pytlích po 7: každá ze sedmi kostek se objeví přesně jednou v každé sedmici. Náhled ukazuje dalších 5.",
+            "Otáčení se řídí SRS: když se kostka zasekne, hra zkusí až čtyři náhradní polohy (wall kicks) - kostky se tak dají otočit i kolem hran.",
+            "Na dně kostka čeká 0,5 sekundy, než se zamkne. Každý posun nebo otočení čas vynuluje, nejvýš 15krát na jedné hloubce.",
+            "Konec hry: nová kostka nemá místo, kostka se zamkne celá nad polem nebo odpad vytlačí hromadu nahoře ven."
           ]
         },
         {
-          "h": "Tipy",
+          "h": "Body",
           "body": [
-            "- Nech jeden sloupec volný pro dlouhou kostku I a čisti čtyřnásobnými řadami.",
-            "- Stavěj naplocho: vysoké věže se rychle převrátí, jak roste rychlost."
+            "Všechny hodnoty krát úroveň: Single 100 · Double 300 · Triple 500 · Tetris 800.",
+            "T-Spin: bez řady 400 · Single 800 · Double 1200 · Triple 1600. T-Spin Mini: 100 · 200 · 400.",
+            "- Back-to-Back: Tetris nebo T-Spin hned po dalším se počítá x1,5.",
+            "- Kombo: každé další smazání v řadě přidá 50 x kombo x úroveň.",
+            "- Perfect Clear (zcela prázdné pole): +800 / 1200 / 1800 / 2000, jako Back-to-Back Tetris +3200.",
+            "- Měkký pád dává 1 bod, tvrdý pád 2 body za řadu."
+          ]
+        },
+        {
+          "h": "T-Spiny",
+          "body": [
+            "T-Spin se počítá, když se kostka T zamkne po otočení a aspoň tři ze čtyř rohů kolem jejího středu jsou obsazené (stěny a dno se počítají).",
+            "Jsou-li obsazené oba rohy na straně, kam míří její špička, jde o plný T-Spin, jinak o Mini. Pokud se T do mezery otočí velkým kickem (sloupec do strany, dvě řady dolů), počítá se vždy jako plný - tak vzniká T-Spin Triple.",
+            "Nápisy nad polem ukazují T-SPIN, TETRIS, BACK-TO-BACK, KOMBO a PERFECT CLEAR."
+          ]
+        },
+        {
+          "h": "Versus a odpadní řady",
+          "body": [
+            "Útok: Double 1 · Triple 2 · Tetris 4 · T-Spin Single 2 · T-Spin Double 4 · T-Spin Triple 6 · Mini Double 1. K tomu +1 za Back-to-Back, +1 až +5 za dlouhá komba a +10 za Perfect Clear.",
+            "Přicházející odpad se ukazuje ve varovném pruhu vlevo od pole: žlutý ještě čeká, červený vyroste s tvou příští kostkou, která nesmaže řadu - nejvýš 8 řad na kostku, každá dávka se společnou dírou.",
+            "Když sám mažeš řady, tvůj útok nejdřív vyruší čekající odpad; soupeři dojde jen zbytek.",
+            "Každých 40 sekund padají kostky rychleji (až do úrovně 12)."
+          ]
+        },
+        {
+          "h": "Tipy a úspěchy",
+          "body": [
+            "- Stav naplocho a nech u okraje volný sloupec pro I - čtyři řady naráz přinášejí body i útok.",
+            "- Odložení použij k šetření I na Tetris nebo k odstavení nevhodné kostky.",
+            "- Ve versus se Back-to-Back vyplatí: dva Tetrisy za sebou pošlou 4 + 5 řad.",
+            "- Úspěchy: Tetris! (4 řady naráz), Mistr otočky (T-Spin Double), Čisťoučké (Perfect Clear), Sprinter (Sprint 40 pod 2:00). Ve dvou se úspěchy nezískávají."
           ]
         }
       ]
@@ -719,27 +805,76 @@
         "dlaždice",
         "posun",
         "sloučení",
-        "čísla"
+        "čísla",
+        "tažení",
+        "vrácení",
+        "na čas",
+        "nekonečný",
+        "velikost",
+        "pokračovat",
+        "4096"
       ],
       "sections": [
         {
-          "h": "Ovládání a pravidla",
+          "h": "Ovládání",
           "body": [
-            "Šipky nebo [W] [A] [S] [D] naráz posunou všechny dlaždice jedním směrem. Stejná čísla se sloučí do svého součtu; po každém tahu se objeví nová dlaždice.",
-            "Cílem je dlaždice 2048 - poté hra pokračuje donekonečna. Prohráváš, když už není možný žádný tah."
+            "Šipky nebo [W] [A] [S] [D] posunou všechny dlaždice najednou jedním směrem. Myší nebo touchpadem můžeš také táhnout: stiskni, táhni požadovaným směrem a pusť.",
+            "Držené klávesy se neopakují - každý tah je samostatný stisk. Vstupy během animace se zapamatují a provedou hned po ní.",
+            "[U] nebo [Backspace] = zpět, [R] nebo [N] = nová hra, [Tab] = zpět do nastavení. Tyto klávesy fungují jen tehdy, když jsi je sám nepřiřadil žádné akci."
           ]
         },
         {
-          "h": "Skórování",
+          "h": "Pravidla",
           "body": [
-            "Každé sloučení přičte hodnotu nové dlaždice k tvému skóre."
+            "Stejná čísla, která do sebe narazí, se spojí ve svůj součet. Každá dlaždice se za tah spojí nejvýš jednou: 2, 2, 4, 4 posunuté doleva dají 4, 8.",
+            "Po každém platném tahu se objeví nová dlaždice - většinou 2, jednou z deseti 4. Když už není možný žádný tah, hra končí.",
+            "Od 4096 mají dlaždice vlastní barvy od zelené přes modrou a fialovou až po karmínovou (131072); ještě větší dlaždice jsou tmavé se zlatými číslicemi."
+          ]
+        },
+        {
+          "h": "Nastavení: velikost a režim",
+          "body": [
+            "Velikost desky od 3x3 do 8x8 - malé desky jsou záludné, velké dávají prostor pro dlouhé řetězy.",
+            "- Klasický: cílem je 2048. Potom se hra zeptá, jestli chceš hrát dál - [Enter] pokračuje, [N] začne novou hru.",
+            "- Na čas: 3 minuty na co nejvíc bodů. Čas se spustí prvním tahem, pruh pod deskou ukazuje zbývající čas.",
+            "- Nekonečný: bez cíle a bez přerušení, dokud nedojdou tahy."
+          ]
+        },
+        {
+          "h": "Vracení tahů",
+          "body": [
+            "Volí se v nastavení: vypnuto, 3 za hru nebo neomezeně. Vrácení vezme zpět poslední tah i s body - i hned po konci hry.",
+            "Jakmile ho použiješ, hra se počítá jako hraná \"s vracením\": nezapočítává se do rekordu ani do úspěchů za dlaždice a její nejlepší výsledek se vede zvlášť."
+          ]
+        },
+        {
+          "h": "Ukládání a pokračování",
+          "body": [
+            "Rozehraná hra se ukládá automaticky pro každou velikost a režim - po tvých tazích a při odchodu ze hry.",
+            "V nastavení se pak objeví Pokračovat s body a tahy uložené hry. Nová hra tento záznam zahodí."
+          ]
+        },
+        {
+          "h": "Body, nejlepší výsledky a rekord",
+          "body": [
+            "Každé spojení přinese hodnotu nové dlaždice. Informační sloupec ukazuje body, nejlepší výsledek, tahy, největší dlaždici, zbývající vrácení a čas.",
+            "Nejlepší výsledky a největší dlaždice se ukládají pro každou velikost a režim. Rekord hry 2048 se počítá jen v 4x4 Klasickém bez vracení."
+          ]
+        },
+        {
+          "h": "Úspěchy",
+          "body": [
+            "- 2048!: vytvoř dlaždici 2048.",
+            "- 4096!: vytvoř dlaždici 4096.",
+            "Oba se počítají na deskách do 4x4 a jen bez vracení - v jakémkoli režimu."
           ]
         },
         {
           "h": "Tipy",
           "body": [
-            "- Zaparkuj svou největší dlaždici do rohu a ten roh nikdy neruš.",
-            "- Posunuj hlavně ve dvou směrech - udrží to plochu uspořádanou."
+            "- Zaparkuj největší dlaždici v rohu a na ten roh nikdy nesahej.",
+            "- Posouvej hlavně dvěma směry - deska tak zůstane uspořádaná.",
+            "- V režimu na čas rozhoduje rychlost: spojuj brzy a drž dlaždice pohromadě v jednom rohu."
           ]
         }
       ]
@@ -786,48 +921,73 @@
       "game": "SudokuGame",
       "title": "Sudoku",
       "keywords": [
-        "hlavolam",
-        "čísla",
-        "poznámky",
-        "úrovně",
-        "nápovědy",
-        "logika"
+        "hadanka",
+        "cisla",
+        "poznamky",
+        "urovne",
+        "napovedy",
+        "logika",
+        "killer",
+        "x-sudoku",
+        "sudoku dne",
+        "hvezdy",
+        "zpet",
+        "kandidati"
       ],
       "sections": [
         {
+          "h": "Varianty",
+          "body": [
+            "V nastavení nahoře vybereš variantu a pod ní obtížnost. Každá varianta má 4 obtížnosti krát 100 pevných úrovní, každou s jediným řešením.",
+            "- Klasické: známé 9x9. 400 úrovní je stejných jako před aktualizací - odškrtnuté úrovně zůstávají odškrtnuté.",
+            "- X-sudoku: navíc obě úhlopříčky obsahují každou číslici právě jednou (nenápadně označené).",
+            "- Killer: skoro žádné zadané číslice, místo nich čárkované klece. Číslice v kleci dají malý součet v jejím rohu a neopakují se. Lehká má malé klece a víc zadaných číslic, Expert velké klece.",
+            "- Mini 6x6: bloky 2x3 a jen číslice 1 až 6, s extra velkými políčky.",
+            "- Sudoku dne ([T] nebo karta vpravo): jedna klasická hádanka denně, pro všechny stejná - i v prohlížeči. Obtížnost závisí na dni v týdnu (pondělí lehká, úterý a středa normální, čtvrtek, pátek a neděle těžká, sobota expert). Řeš každý den a buduj sérii."
+          ]
+        },
+        {
           "h": "Ovládání",
           "body": [
-            "Políčko vyber šipkami, [W] [A] [S] [D] nebo kliknutím myši - číselná klávesnice vpravo funguje výhradně myší.",
-            "- [1] až [9] zadá číslici (funguje i numerická klávesnice).",
-            "- [0], Backspace nebo pravé kliknutí smaže.",
-            "- [N] přepíná režim poznámek, [H] dá nápovědu, [R] restartuje úroveň, [Q] otevře výběr úrovní.",
-            "- Po skončení hry [A] skryje banner a odhalí celé řešení."
+            "Políčko vybereš šipkami, [W] [A] [S] [D] nebo kliknutím. Číselník vpravo funguje celý myší a pod každou číslicí ukazuje, kolik jich ještě chybí.",
+            "- [1] až [9] zadá číslici, [0], Delete nebo pravé tlačítko maže.",
+            "- [U] nebo [Z] vrací zpět, [Y] provede znovu.",
+            "- [N] přepíná poznámky, [C] automaticky doplní všechny kandidáty, [H] dá nápovědu.",
+            "- [M] obarví políčko barevnou značkou (přepínač \"Barevné značky\" v nastavení).",
+            "- [R] začne hádanku znovu, [Q] otevře výběr úrovně, [A] po konci hry ukáže řešení.",
+            "Zadávání \"Nejdřív číslice\" (nastavení, klávesa [I]): nejdřív vyber číslici, pak klikej na libovolně mnoho políček nebo ji vlož mezerníkem.",
+            "V nastavení: [1] až [4] obtížnost, [V] varianta, [T] sudoku dne, [F] limit chyb, šipky + Enter spustí úroveň. Písmena fungují jen tehdy, když nejsou v možnostech přiřazena žádné akci."
           ]
         },
         {
-          "h": "Úrovně a režimy",
+          "h": "Režimy a body",
           "body": [
-            "400 pevných úrovní: 4 obtížnosti (lehká/normální/těžká/expert) krát 100 úrovní. Každá úroveň je všude stejný hlavolam a jednoznačně řešitelná; vyřešené úrovně se odškrtnou.",
-            "Herní režim určuje pomůcky a násobitel skóre:",
-            "- Klasika x2.0: bez pomůcek, čistě jako na papíře.",
-            "- Poznámky x1.5: k tomu tužkové poznámky.",
-            "- Komfort x1.0: chyby okamžitě červeně, zvýrazňování konfliktů, správné vklady se zamknou.",
-            "- Pomoc x0.7: navíc až 3 nápovědy."
+            "Herní režim určuje pomůcky a násobitel bodů:",
+            "- Klasika x2.0: žádné pomůcky, čisté jako na papíře.",
+            "- Poznámky x1.5: navíc poznámky tužkou a automatičtí kandidáti.",
+            "- Komfort x1.0: chyby hned červeně, konflikty a špatné součty klecí zvýrazněné, správné zápisy se zamknou.",
+            "- Asistent x0.7: navíc až 3 nápovědy.",
+            "Každý zápis se hned kontroluje. S limitem 3 chyb končí hra třetí chybou - krok zpět chybu nevymaže.",
+            "Body = (základ varianty a obtížnosti minus čas, chyby a nápovědy) krát násobitel. Do rekordu se počítají všechny varianty i sudoku dne."
           ]
         },
         {
-          "h": "Chyby a skórování",
+          "h": "Hvězdy a uložená hra",
           "body": [
-            "Každý vklad se okamžitě porovná s řešením. Se zapnutým limitem 3 chyb (nastavení, klávesa [F] ) třetí chyba ukončí hru.",
-            "Body = (základ obtížnosti mínus čas, chyby a nápovědy) krát násobitel režimu."
+            "Každá úroveň dává až 3 hvězdy: 1 za vyřešení, 2 bez chyb a nápověd, 3 navíc pod cílovým časem obtížnosti (je v informacích o úrovni).",
+            "Výběr úrovně ukazuje hvězdy, nejlepší čas a vyřešené úrovně; ohnutý roh označuje rozehrané hádanky.",
+            "Rozehrané hádanky se ukládají samy - při odchodu, při návratu do výběru úrovně a pravidelně během hry - a příště pokračují. Pokud přitom změníš režim, platí menší násobitel.",
+            "Úspěchy: \"Bojovník v kleci\" za první sudoku Killer, \"Sběratel hvězd\" za 30 úrovní se 3 hvězdami."
           ]
         },
         {
           "h": "Tipy",
           "body": [
-            "- Začni s řádky, sloupci a bloky, které už obsahují mnoho číslic.",
-            "- Kandidáty si zapisuj v párech: pokud dvě políčka sdílejí stejné dva kandidáty, jinde všude odpadnou.",
-            "- V klasickém režimu si dej načas: každá chyba se počítá okamžitě, i bez červené značky."
+            "- Začni řádky, sloupci a bloky, ve kterých už stojí hodně číslic.",
+            "- Zapisuj kandidáty ve dvojicích: mají-li dvě políčka jedné skupiny stejné dva kandidáty, zmizí ze zbytku skupiny.",
+            "- Killer: každý řádek, sloupec i blok dává 45. Leží-li v nich klece skoro celé, zbytek prozradí poslední políčko.",
+            "- Killer: některé součty mají jen jednu kombinaci - 3 ve dvou políčkách je vždy 1+2, 17 vždy 8+9.",
+            "- X-sudoku: úhlopříčky jsou dvě další skupiny - prohlédni je brzy, často se tam skrývá první číslice."
           ]
         }
       ]
@@ -1156,7 +1316,8 @@
         "21",
         "žetony",
         "krupiér",
-        "sázka"
+        "sázka",
+        "lama banka"
       ],
       "sections": [
         {
@@ -1185,11 +1346,12 @@
           ]
         },
         {
-          "h": "Žetony",
+          "h": "Lama žetony",
           "body": [
-            "Začínáš s 500 žetony; tvůj zůstatek a rekord se ukládají trvale a přežijí každý restart.",
-            "Nejlepší skóre je nejvyšší zůstatek žetonů, jakého jsi kdy dosáhl.",
-            "Pod 10 žetony jsi na mizině: [Enter] restartuje s 500 čerstvými žetony - rekord zůstává."
+            "Blackjack, Poker a Casino sdílejí jeden účet v Lama bance: začínáš s 1000 lama žetony a zůstatek se trvale ukládá.",
+            "Sázka se strhne hned při rozdání - kdo opustí rozehranou hru, přijde o ni.",
+            "Rekord je nejvyšší stav tvé bilance v blackjacku: 1000 plus vše, co jsi v blackjacku vyhrál a prohrál. Výhry v ruletě, na automatu nebo v pokeru se sem nepočítají.",
+            "Pod 10 žetony jsi na mizině: [Enter] vezme úvěr od banky a doplní účet zpět na 1000. Úvěry se do bilance nepočítají."
           ]
         },
         {
@@ -1417,43 +1579,80 @@
         "písmena",
         "zelená",
         "žlutá",
-        "slovnik"
+        "slovnik",
+        "slovo dne",
+        "dordle",
+        "quordle",
+        "statistika",
+        "sdílet",
+        "barvoslepost",
+        "délka slova"
       ],
       "sections": [
         {
           "h": "Jak hrát",
           "body": [
-            "Uhodni skryté pětipísmenné slovo do 6 pokusů. Po každém hádání dlaždice změní barvu: zelená = správné písmeno na správném místě, žlutá = písmeno se vyskytuje, ale jinde, šedá = písmeno ve slově není.",
-            "Opakující se písmena se řeší správně: písmeno se označí žlutě nebo zeleně jen tolikrát, kolikrát se skutečně vyskytuje v odpovědi.",
-            "Každý pokus musí být skutečné slovo: ověřuje se proti seznamu slov zvoleného jazyka (podle jazyka 10 000 až 19 000 povolených slov). Ostatní se odmítne: řádek se krátce zatřese a pokus se nepočítá. Řešením jsou vždy běžná slova téhož jazyka."
+            "Uhodni skryté slovo. Po každém pokusu se políčka obarví: zelená = správné písmeno na správném místě, žlutá = písmeno ve slově je, ale jinde, šedá = písmeno ve slově není.",
+            "Opakovaná písmena se počítají správně: písmeno se označí žlutě nebo zeleně jen tolikrát, kolikrát se v řešení opravdu vyskytuje.",
+            "Každý pokus musí být skutečné slovo - kontroluje se podle seznamu slov zvoleného jazyka a délky (podle jazyka a délky 4 000 až 19 000 povolených slov). Ostatní se odmítne: řádek se krátce zatřese a pokus se nepočítá. Řešením jsou vždy běžná slova stejného jazyka - bez jmen a bez urážlivých slov."
           ]
         },
         {
           "h": "Režimy",
           "body": [
-            "Normální: můžeš hádat jakékoli povolené slovo - nápovědy jsou jen doporučení.",
-            "Těžký: nalezené nápovědy musíš dál používat - zelená písmena zůstávají na místě, žlutá se musí znovu objevit. Režim vybíráš před startem."
+            "Nekonečno: slovo za slovem, na každé 6 pokusů. První slovo, které neuhodneš, hru ukončí.",
+            "Slovo dne: jedno slovo denně na 6 pokusů - pro všechny stejné v každém jazyce a délce, na PC i v prohlížeči. Rozehrané slovo dne se uloží; potom hra ukáže výsledek, statistiku a odpočet do dalšího slova. Série roste jen tehdy, když hraješ každý den.",
+            "Dordle: dvě slova naráz na 7 pokusů - každý pokus platí pro obě mřížky. Klávesy klávesnice na obrazovce jsou rozdělené: levá polovina mřížka 1, pravá polovina mřížka 2.",
+            "Quordle: čtyři slova naráz na 9 pokusů. Klávesy jsou rozdělené na čtvrtiny a ukazují barvy všech čtyř mřížek."
+          ]
+        },
+        {
+          "h": "Nastavení před startem",
+          "body": [
+            "Před každou hrou se zobrazí nastavení - vedle vidíš svou statistiku pro zvolený režim a délku.",
+            "- Délka slova: 4, 5, 6 nebo 7 písmen, každá délka s vlastními seznamy slov.",
+            "- Těžký režim: nalezené nápovědy se musí použít - zelená písmena zůstávají na místě, žlutá se musí znovu objevit. V Dordle a Quordle musí pokus odpovídat nápovědám alespoň jedné nevyřešené mřížky.",
+            "- Režim pro barvoslepé: oranžová místo zelené a modrá místo žluté - i ve sdíleném výsledku.",
+            "Všechna nastavení se ukládají okamžitě."
           ]
         },
         {
           "h": "Ovládání",
           "body": [
-            "- Piš písmena A-Z, [Backspace] smaže poslední, [Enter] zkontroluje řádek (jen s 5 písmeny).",
-            "- Můžeš také použít klávesnici na obrazovce myší; její písmena se obarví podle toho, co ses dosud dozvěděl."
+            "- Piš písmena A-Z, [Backspace] smaže poslední, [Enter] zkontroluje řádek.",
+            "- Klávesnice na obrazovce funguje i myší: QWERTZ pro němčinu, češtinu, slovinštinu a chorvatštinu, AZERTY pro francouzštinu, jinak QWERTY. Její klávesy se obarvují podle toho, co už víš.",
+            "- Ikona posuvníků vpravo nahoře vede zpět do nastavení.",
+            "- V nastavení: [4] až [7] nebo [Vlevo] / [Vpravo] = délka slova, [H] = těžký režim, [F] = režim pro barvoslepé, [Enter] = start.",
+            "- Po hře: [Enter] = znovu, [C] = sdílet výsledek, [S] = nastavení. [Mezerník] skryje výsledek, abys viděl mřížky."
           ]
         },
         {
-          "h": "Skóre",
+          "h": "Body a statistika",
           "body": [
-            "Pokračuje to donekonečna: každé vyřešené slovo dává body - méně hádání znamená více (10 až 60). Hned poté se objeví nové slovo.",
-            "První slovo, které se ti NEPODAŘÍ rozluštit, ukončí hru; body, které jsi nasbíral, jsou tvé nejlepší skóre."
+            "Nekonečno: každé uhodnuté slovo dává body - čím méně pokusů, tím víc (10 až 60). Do rekordu se počítá jen Nekonečno s 5 písmeny; ostatní délky mají vlastní nejlepší výsledky.",
+            "Statistika se ukládá zvlášť pro jazyk, délku a režim: odehrané hry, procento výher, aktuální a nejlepší série a rozložení pokusů jako sloupcový graf - sloupec tvého posledního řešení se rozsvítí."
+          ]
+        },
+        {
+          "h": "Sdílení výsledku",
+          "body": [
+            "[C] nebo tlačítko Sdílet zkopíruje výsledek do schránky jako mřížku emoji - bez prozrazení řešení - takže ho můžeš vložit do libovolného chatu. Hvězdička * za výsledkem znamená těžký režim."
+          ]
+        },
+        {
+          "h": "Úspěchy",
+          "body": [
+            "- Jasnovidec: uhodni slovo nejvýše na 2 pokusy.",
+            "- Slovní zvyk: vyřeš 7 slov dne za sebou.",
+            "- Čtyřnásobný génius: vyřeš všechna čtyři slova v Quordle."
           ]
         },
         {
           "h": "Tipy",
           "body": [
-            "- Začni slovem, které má mnoho různých, běžných písmen.",
-            "- Šedá písmena využij k vyloučení a žlutá písmena přesuň na novou pozici."
+            "- Začni slovem s mnoha různými, častými písmeny.",
+            "- Šedými písmeny vylučuj a žlutá přesouvej na nové místo.",
+            "- V Dordle a Quordle se vyplatí nejdřív hádat slova, která dají nápovědy pro více mřížek najednou."
           ]
         }
       ]
@@ -1552,7 +1751,8 @@
         "video poker",
         "draw",
         "žetony",
-        "blindy"
+        "blindy",
+        "lama banka"
       ],
       "sections": [
         {
@@ -1573,9 +1773,17 @@
           ]
         },
         {
-          "h": "Žetony a kombinace",
+          "h": "Lama žetony",
           "body": [
-            "Žetony (start 1000) zůstávají (mem.json). Nejlepší skóre je tvůj nejvyšší počet žetonů. Na mizině = restart kliknutím.",
+            "Hraje se o lama žetony z Lama banky - společný účet s Blackjackem a Casinem (start 1000, trvale ukládán).",
+            "Na začátku hry leží tvůj účet na stole jako stack; co jde do banku, se hned strhne. Pokud opustíš stůl uprostřed hry, tvůj podíl v banku propadá - zbytek se vrátí na účet.",
+            "Rekord je nejvyšší stav tvé bilance v pokeru: 1000 plus vše, co jsi v pokeru vyhrál a prohrál. Výhry v jiných hrách se sem nepočítají.",
+            "Na mizině (méně než big blind 20, ve Video Pokeru méně než 10) = úvěr od banky jedním kliknutím, účet je znovu na 1000."
+          ]
+        },
+        {
+          "h": "Kombinace",
+          "body": [
             "Pořadí kombinací: High Card < Pair < Two Pair < Three of a Kind < Straight < Flush < Full House < Four of a Kind < Straight Flush < Royal Flush."
           ]
         }
@@ -1592,33 +1800,72 @@
         "mat",
         "rošáda",
         "en passant",
-        "ai"
+        "ai",
+        "chess960",
+        "úlohy",
+        "hodiny",
+        "pgn"
       ],
       "sections": [
         {
           "h": "Jak se hraje",
           "body": [
             "Šachy s kompletními pravidly: všechny tahy figur, malá i velká rošáda, braní mimochodem a proměna pěšce na dámu, věž, střelce nebo jezdce.",
-            "Partie končí matem nebo remízou - patem, pravidlem 50 tahů, trojím opakováním pozice nebo nedostatečným materiálem.",
-            "V jednom hráči si v přípravě vybereš sílu a barvu; ve dvou se střídáte u jednoho počítače."
+            "Partie končí matem, vzdáním, překročením času nebo remízou - patem, pravidlem 50 tahů, trojím opakováním, nedostatkem materiálu nebo dohodou.",
+            "Tři režimy: partie proti AI, 2 hráči u jednoho počítače (jen na počítači) a úlohy.",
+            "Vedle šachovnice jsou hráči s hodinami, sebranými figurami a materiálovou bilancí (např. +2) a pod nimi seznam tahů ve standardní notaci - posouvá se kolečkem myši."
           ]
         },
         {
           "h": "Ovládání",
           "body": [
-            "- Myš: klikni na svou figuru a pak na cílové pole. Možná pole i poslední tah jsou zvýrazněné.",
+            "- Myš: klikni na svou figuru nebo ji přetáhni rovnou na cílové pole. Možná pole, poslední tah a král v šachu jsou zvýrazněné.",
             "- Klávesnice: [Šipky] nebo [WASD] posouvají rámeček, [Mezerník] nebo [Enter] vybere a táhne.",
-            "- Při proměně se objeví čtyři figury - stačí kliknout.",
-            "- Po partii: [Enter] nová partie, [S] zpět do přípravy (jen jeden hráč)."
+            "- Rošáda: táhni králem na cílové pole nebo na vlastní věž. Při proměně se objeví výběr figury.",
+            "- Tlačítka: [U] nebo [Backspace] zpět, [H] nápověda, [F] otočit šachovnici, [O] nabídnout remízu, [X] vzdát se.",
+            "- Po partii: [Enter] nová partie (barvy se vymění), [S] nastavení, [P] uložit partii jako PGN."
           ]
         },
         {
-          "h": "Síla AI a body",
+          "h": "Nastavení: síla, hodiny a Chess960",
           "body": [
-            "Šest úrovní od Začátečníka po Mistra: Začátečník táhne náhodně, střední úrovně počítají jeden až tři půltahy dopředu a schválně chybují, Mistr počítá nejhlouběji a dohrává braní v klidovém prohledávání.",
-            "Každé hledání má časový a uzlový limit, aby rozhraní nikdy nezamrzlo.",
-            "Skóre počítá tvá vítězství nad AI v této relaci; režim dvou hráčů se nepočítá.",
-            "Tip: rozvíjej figury brzy, rošuj a postav věže na otevřené sloupce."
+            "Šest úrovní AI od Začátečníka po Mistra: Začátečník táhne náhodně, střední úrovně schválně obměňují hru, Těžká a Mistr počítají s iterativním prohlubováním, transpoziční tabulkou a klidovým prohledáváním a znají běžná zahájení. AI přemýšlí po malých kouscích v každém snímku - hra se nikdy nezasekne.",
+            "Hodiny: bez hodin, 1+0, 3+2, 5+0 nebo 10+5 (minuty + sekundy přidané za tah). Spustí se po prvním tahu. Komu dojde čas, prohrává - pokud ale soupeř už vůbec nemůže dát mat, je to remíza.",
+            "Chess960: jedno z 960 náhodných výchozích postavení, jeho číslo je nad seznamem tahů. Při rošádě skončí král i tak na g nebo c a věž na f nebo d; pole mezi nimi musí být volná a král nesmí přejít přes šach."
+          ]
+        },
+        {
+          "h": "Pomoc, remíza a body",
+          "body": [
+            "Tah zpět vrátí proti AI dva půltahy, nápověda ukáže nejlepší tah modrou šipkou. Obojí dělá partii „s pomocí“: výhra se pak nepočítá do rekordu, statistik ani úspěchů.",
+            "Nabídka remízy: AI ji přijme, jen když svou pozici hodnotí nejvýš jako vyrovnanou - jinak odmítne a novou nabídku můžeš dát až o pár tahů později.",
+            "Skóre počítá tvá vítězství bez pomoci nad AI v této relaci. Výhra nad Mistrem (úroveň 6) odemkne úspěch „Velmistr“.",
+            "Po skončení můžeš partii uložit jako soubor PGN (v prohlížeči: stažení a schránka) a přehrát ji v jakémkoli šachovém programu."
+          ]
+        },
+        {
+          "h": "Ve dvou",
+          "body": [
+            "Bílý a černý se střídají u jednoho počítače; hodiny a Chess960 fungují jako proti AI. S volbou „Otáčet šachovnici po každém tahu“ se deska po každém tahu natočí ke straně, která je na tahu.",
+            "Nabídka remízy se ptá soupeře, vzdání platí pro stranu na tahu. Hra ve dvou se nepočítá do skóre a v prohlížečové verzi není."
+          ]
+        },
+        {
+          "h": "Úlohy",
+          "body": [
+            "200 úloh v pěti stupních: Mat 1. tahem, Mat 2. tahem, Mat 3. tahem, Taktika I a Taktika II - v každém 40, od lehkých po těžké. Vyřešené dostanou zaškrtnutí a postup se ukládá.",
+            "Nejdřív soupeř zahraje svůj poslední tah, pak jsi na řadě ty. Špatný tah se po krátkém upozornění vrátí a odpověď soupeře přijde sama. V matových úlohách platí každý tah, který dá okamžitě mat.",
+            "- [H] ukázat řešení (úloha se pak nepočítá jako vyřešená), [U] znovu, [N] další úloha, [M] zpět na seznam.",
+            "25 vyřešených úloh odemkne úspěch „Luštitel“.",
+            "Zdroj: úlohy pocházejí z volně použitelné databáze úloh lichess.org (CC0) a byly ověřeny naším vlastním enginem - díky, Lichess!"
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Rozvíjej figury brzy, rošuj a postav věže na otevřené sloupce.",
+            "- V úlohách hledej nejdřív šachy, braní a hrozby.",
+            "- S hodinami nepřemýšlej příliš dlouho - přídavek u 3+2 a 10+5 zachrání nejednu koncovku."
           ]
         }
       ]
@@ -2256,6 +2503,380 @@
           "body": [
             "Deset kuželek jsou kruhy se skutečnou hmotností: koule do nich narazí a ony porážejí jedna druhou. Strike je tedy výsledek fyziky, ne náhody.",
             "Součet hry je tvůj rekord; navíc se ukládá nejlepší výsledek pro každou obtížnost."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crossyroad",
+      "category": "games",
+      "game": "CrossyRoadGame",
+      "title": "Crossy Road",
+      "keywords": [
+        "slepice",
+        "silnice",
+        "řeka",
+        "koleje",
+        "vlak",
+        "orel",
+        "mince",
+        "postavy",
+        "denní",
+        "voxel"
+      ],
+      "sections": [
+        {
+          "h": "Ovládání",
+          "body": [
+            "Skákej políčko po políčku šipkami nebo [W] [A] [S] [D]. [Mezerník], [Enter] nebo kliknutí myší skáče dopředu.",
+            "- Když stiskneš další směr ještě ve vzduchu, skočíš hned po dopadu znovu. Držení klávesy neskáče nepřetržitě.",
+            "Po konci hry: [Enter] = znovu, [F] = postavy, [S] = nastavení."
+          ]
+        },
+        {
+          "h": "Tráva, silnice, řeky a koleje",
+          "body": [
+            "Trasa vzniká nekonečně řádek po řádku - vždy existuje schůdná cesta.",
+            "- Tráva: bezpečná, ale stromy a kameny blokují cestu.",
+            "- Silnice: auta a náklaďáky tě přejedou. Čím dál se dostaneš, tím rychlejší a hustší je provoz.",
+            "- Řeky: stát můžeš jen na kládách a leknínech. Klády tě nesou s sebou - kdo odpluje za okraj obrazovky, končí.",
+            "- Koleje: když bliká červené světlo a zvoní zvonek, přiřítí se asi o sekundu později vlak. Dál na tebe čekají celá nádraží s až 5 kolejemi za sebou."
+          ]
+        },
+        {
+          "h": "Orel a body",
+          "body": [
+            "Kamera se pomalu posouvá dopředu. Kdo se zdržuje příliš dlouho nebo couvne o víc než tři řádky, toho odnese orel - předtím varuje červený okraj dole na obrazovce.",
+            "Body = nejvzdálenější dosažený řádek. V režimu Nekonečno je to tvůj rekord (milník: 150 řádků).",
+            "Od řádku 50 se střídá den a noc: v noci svítí reflektory, vlaky a mince."
+          ]
+        },
+        {
+          "h": "Mince a postavy",
+          "body": [
+            "Po trase jsou rozházené mince, obří mince má hodnotu 5. Sebrané mince zůstávají uložené.",
+            "Na kartě POSTAVY za ně kupuješ nové postavy: žábu, prasátko, tučňáka, kočku, lišku, lamu, robota, ducha a jednorožce (25 až 250 mincí). Slepici máš od začátku.",
+            "- Úspěchy: „Nový vzhled“ za první koupenou postavu, „Kolejový akrobat“ za 5 kolejí za sebou."
+          ]
+        },
+        {
+          "h": "Režimy a možnosti",
+          "body": [
+            "- Nekonečno: každé kolo nová trasa, počítá se do rekordu.",
+            "- Denní trasa: dnes pro všechny stejná (i ve webové verzi), s vlastním denním rekordem - do rekordu se nepočítá.",
+            "V nastavení zapneš nebo vypneš stíny [H] a střídání dne a noci [N]; Vlevo/Vpravo přepíná mezi tvými postavami."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash",
+      "category": "games",
+      "game": "GeometryDashGame",
+      "title": "Geometry Dash",
+      "keywords": [
+        "geometry dash",
+        "rytmus",
+        "kostka",
+        "loď",
+        "míč",
+        "ufo",
+        "vlna",
+        "portál",
+        "koule",
+        "odraz",
+        "mince",
+        "hvězdy",
+        "trénink",
+        "checkpoint",
+        "démon",
+        "hudba",
+        "level"
+      ],
+      "sections": [
+        {
+          "h": "Jak se hraje",
+          "body": [
+            "Tvoje postavička sama uhání doprava - ty jen rozhoduješ, kdy skočit nebo letět. Bodec, jáma nebo náraz čelem do bloku: výbuch a za okamžik už začíná další pokus.",
+            "Level je hotový, když dorazíš do cíle. Lišta nahoře ukazuje postup v procentech, vpravo nahoře vidíš mince z tohoto pokusu a na startu se v levelu vznáší počítadlo pokusů.",
+            "Každý level má vlastní hudbu; pozadí, zem i koule pulzují do rytmu. Hudbu, lištu postupu a automatické checkpointy zapínáš a vypínáš ve výběru levelu pod kartou levelu."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- [Mezerník], [Nahoru], [W], [Enter] nebo levé tlačítko myši: skok nebo let. Podržení se počítá jako nepřetržité mačkání - kostka pak po každém dopadu hned znovu vyskočí.",
+            "- [R] okamžitě začne znovu, [Q] nebo [Backspace] vrátí do výběru levelu, [Esc] pozastaví hru.",
+            "- [P] zapíná a vypíná tréninkový režim; v něm [Z] položí checkpoint a [X] smaže ten poslední.",
+            "- Výběr levelu: [Vlevo]/[Vpravo] listují, [1] až [8] skočí rovnou na level, [Enter] spustí, [P] volí Normální nebo Trénink, [M] přepíná hudbu, [Tab] přejde na záložku LEVELY.",
+            "Každé stisknutí dostane časové razítko a projeví se přesně v tom kroku fyziky (1/240 sekundy), kdy nastalo - skok tak sedí, i když se počítač na chvilku zadrhne."
+          ]
+        },
+        {
+          "h": "Pět podob",
+          "body": [
+            "Portály tvou postavičku promění - každá podoba létá jinak:",
+            "- Kostka: stisk = skok. Přistává na blocích; když do nich narazí čelem, pokus končí.",
+            "- Loď: držet = stoupat, pustit = klesat.",
+            "- Míč: ťuknutí na zemi otočí gravitaci - pak se valí dál po stropě.",
+            "- UFO: každé ťuknutí je malé mávnutí křídly, i uprostřed letu.",
+            "- Vlna: držet = šikmo nahoru, pustit = šikmo dolů. Je malinká, ale sebemenší dotek bloku ji rozbije.",
+            "Loď, míč, UFO a vlna létají v koridoru mezi zemí a stropem - jak je vysoký, určuje portál."
+          ]
+        },
+        {
+          "h": "Odrazy, koule a portály",
+          "body": [
+            "- Odrazy leží na zemi a působí při dotyku: žlutý = vysoký skok, růžový = malý skok, modrý = otočit gravitaci.",
+            "- Koule se vznášejí ve vzduchu a působí jen tehdy, když stiskneš, zatímco se jich dotýkáš - ve stejných barvách. Krátká rezerva odpustí stisk o chlup dřív.",
+            "- Gravitační portály: žlutý obrátí svět vzhůru nohama, modrý ho vrátí zpět. Rychlostní portály přepnou na 0,5x, 1x, 2x nebo 3x.",
+            "- K tomu přibývají poloviční bloky, malé bodce, jámy bez země a barevné spouštěče, které přebarví pozadí a zem."
+          ]
+        },
+        {
+          "h": "8 levelů",
+          "body": [
+            "- Lama Launch (Lehký, 1 hvězda) a Neon Steps (Lehký, 2 hvězdy): skoky, odrazy, koule a první loď.",
+            "- Orbit Garden (Normální, 3 hvězdy): řetězy koulí, hlavou dolů pod stropem a loď s dvojnásobnou rychlostí.",
+            "- Gravity Tide (Těžký, 4 hvězdy) a Skyline Rush (Těžký, 5 hvězd): gravitační portály, míč, UFO, jámy a trojnásobná rychlost.",
+            "- Crystal Caves (Těžší, 7 hvězd) a Wave Reactor (Šílený, 9 hvězd): všech pět podob, úzké brány a tunely pro vlnu.",
+            "- Lama Inferno (Démon, 10 hvězd): trojnásobná rychlost a všechno najednou.",
+            "Každý level je prokazatelně zvládnutelný i se všemi třemi mincemi: při stavbě ho řešič dohrál se skutečným kódem hry - a jeho řešení funguje i při posunu o 1/240 sekundy."
+          ]
+        },
+        {
+          "h": "Tréninkový režim",
+          "body": [
+            "V tréninkovém režimu po nárazu pokračuješ od posledního checkpointu místo od startu - zelené kosočtverce je v levelu označují a hudba prostě hraje dál.",
+            "Automatické checkpointy vznikají zhruba každé dvě sekundy (lze vypnout), klávesou [Z] kladeš vlastní, [X] smaže ten poslední.",
+            "Trénink má vlastní rekord a nedává hvězdy ani mince."
+          ]
+        },
+        {
+          "h": "Hvězdy, mince a úspěchy",
+          "body": [
+            "Kdo level dokončí v normálním režimu, získá jeho hvězdy. V každém levelu jsou navíc ukryté tři tajné mince, často mimo nejsnazší cestu. Počítají se, jakmile s nimi level dokončíš - a každá má cenu další hvězdy.",
+            "Tvým rekordem je celkový počet hvězd (nejvýš 65) a může jen růst. U každého levelu si hra pamatuje nejlepší procenta v Normálním režimu a Tréninku, nalezené mince a pokusy.",
+            "- Úspěchy: \"V rytmu\" za první dokončený level, \"Lovec mincí\" za všechny tři mince z levelu, \"Přemožitel démonů\" za Lama Inferno - a milník při 20 hvězdách.",
+            "Na záložce LEVELY stavíš, hraješ a sdílíš vlastní levely - viz stránka \"Vlastní levely (Geometry Dash)\"."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash-levels",
+      "category": "games",
+      "title": "Vlastní levely (Geometry Dash)",
+      "keywords": [
+        "vlastní levely",
+        "editor",
+        "levely",
+        "ugc",
+        "stavba",
+        "sdílení",
+        "import",
+        "export",
+        "ověřeno",
+        "lamapgzlevel",
+        "geometry dash"
+      ],
+      "sections": [
+        {
+          "h": "Stavba levelu",
+          "body": [
+            "Záložka LEVELY ve výběru levelu Geometry Dash obsahuje tvou vlastní sbírku (až 60 levelů). \"Nová\" otevře editor levelů, \"Upravit\" se vrátí k existujícímu levelu.",
+            "Vlevo je plátno s mřížkou, vpravo paleta: nahoře Vybrat a Guma, pod nimi šest skupin - Bloky, Nástrahy, Odrazy a koule, Portály, Rychlost a Doplňky (tajné mince, barevný spouštěč). [1] až [6] vybírají skupiny přímo.",
+            "- Kliknutí nebo tažení položí zvolený objekt, [R] ho otočí: bodce a poloviční bloky do čtyř směrů, odrazy nahoru nebo dolů.",
+            "- S nástrojem Vybrat tažení přesune objekt a [Del] ho smaže. Pravé tlačítko maže vždy; tažení pravým tlačítkem, kolečko myši, šipky nebo [A]/[D] posouvají.",
+            "- Dole jsou hodnoty zvoleného objektu: u portálů podob výška koridoru, u barevného spouštěče cíl (pozadí nebo zem), barva a délka přechodu.",
+            "- Pruh úplně dole ukazuje celý level v přehledu - kliknutí na to místo skočí.",
+            "[U] vrací zpět, [Y] obnovuje, [G] zobrazí nebo skryje mřížku, [S] uloží. [Esc] vede zpět - s neuloženými změnami až po potvrzení.",
+            "Nejvýš tři mince na level. Cíl se automaticky umístí kousek za poslední objekt."
+          ]
+        },
+        {
+          "h": "Nastavení levelu",
+          "body": [
+            "Ozubené kolo otevře nastavení levelu: počáteční rychlost (0,5x až 3x), počáteční podobu, hudební styl (Energický, Chiptune, Snový, Temný nebo bez hudby), tempo v BPM a barvu pozadí a země.",
+            "Název a id jsou v horní liště. Id je klíč: malá písmena, bez mezer, jen a-z, 0-9, - a _ - a zároveň navržený název souboru při sdílení."
+          ]
+        },
+        {
+          "h": "Testování a ověření",
+          "body": [
+            "\"Test\" ([Enter]) spustí level od startu, \"Odsud\" ([T]) od aktuálního místa - portály před ním se pak počítají jako prolétnuté. [Esc] vrátí zpět na plátno.",
+            "Když svůj level v testu dohraješ od startu a bez tréninkového režimu, dostane zelenou fajfku \"ověřeno\". Každá pozdější změna objektů, počáteční rychlosti nebo podoby ji zase odebere - barvy, název a hudba ne.",
+            "Na záložce LEVELY spustí \"Hrát\" zvolený level normálně, s vlastním rekordem a počítadlem pokusů."
+          ]
+        },
+        {
+          "h": "Sdílení a import",
+          "body": [
+            "\"Sdílet\" se zeptá na tvé jméno jako autora a na název souboru. \"Exportovat jako\" otevře dialog uložení, \"Do Stažených\" uloží soubor rovnou do složky Stažené soubory.",
+            "Soubor má příponu .lamapgzlevel a obsahuje JSON. \"Importovat\" ho načte zpět (i .json); je-li id už obsazené, automaticky se připojí -2, -3 ... Fajfka ověření putuje s levelem.",
+            "Název, id a autor projdou při ukládání, exportu I importu slovním filtrem všech 14 jazyků.",
+            "Vše se ukládá do ugc.json vedle hry - do stejného souboru jako vlastní minigolfové dráhy. V prohlížečové verzi zůstávají levely v úložišti prohlížeče a sdílení soubor stáhne."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "battleship",
+      "category": "games",
+      "game": "BattleshipGame",
+      "title": "Battleship",
+      "keywords": [
+        "battleship",
+        "lodě",
+        "námořní bitva",
+        "flotila",
+        "salva",
+        "radar",
+        "ai",
+        "potopit"
+      ],
+      "sections": [
+        {
+          "h": "Jak se hraje",
+          "body": [
+            "Dvě flotily, každá na vlastním moři 10x10: letadlová loď (5 polí), bitevní loď (4), křižník (3), ponorka (3) a torpédoborec (2). Hráči se střídají ve střelbě na pole soupeřova plánu.",
+            "Vlevo je velký cílový plán s radarem, vpravo tvoje vlastní vody a přehled obou flotil. Bílý kruh znamená vodu, plameny zásah. Když jsou zasažena všechna pole lodi, loď se potopí a odhalí se její obrys.",
+            "Vyhrává ten, kdo jako první potopí všech pět nepřátelských lodí. Souhrn pak ukáže výstřely, zásahy, přesnost, tahy a zbývající lodě obou stran."
+          ]
+        },
+        {
+          "h": "Rozmístění flotily",
+          "body": [
+            "- Přetáhni lodě myší z doku vpravo na plán - nebo na loď klikni, přesuň ji a klikni znovu. Umístěné lodě se přesouvají stejně.",
+            "- [R] nebo pravé tlačítko myši otočí drženou loď (nebo loď pod myší).",
+            "- Náhled svítí zeleně, když je poloha povolená, a červeně, když není.",
+            "- Klávesnice: šipky posouvají rámeček, [Space] loď zvedne a položí, [Enter] vezme další chybějící loď.",
+            "- [X] rozmístí náhodně, [C] odebere všechny lodě. S kompletní flotilou spustí bitvu [Enter] nebo „Hotovo!“.",
+            "Poslední rozmístění se v dalším kole znovu nabídne."
+          ]
+        },
+        {
+          "h": "Pravidla v nastavení",
+          "body": [
+            "Všechny tři přepínače se ukládají okamžitě a platí pro obě strany:",
+            "- Lodě se smějí dotýkat: VYP vyžaduje kolem každé lodi aspoň jedno volné pole, i úhlopříčně. Zakázaná zóna je při rozmísťování zvýrazněna.",
+            "- Salva: v každém tahu máš tolik výstřelů, kolik tvých lodí ještě pluje - kdo ztrácí lodě, střílí méně.",
+            "- Po zásahu střílíš znovu: každý zásah výstřel vrátí, takže střílíš dál, dokud zasahuješ."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Myš: klikni na pole cílového plánu.",
+            "- Klávesnice: šipky nebo tvoje pohybové klávesy míří, [Space] nebo [Enter] vystřelí.",
+            "- Po kole: [Enter] = nové kolo, [S] = zpět do nastavení. [Esc] pozastaví hru."
+          ]
+        },
+        {
+          "h": "Síla AI",
+          "body": [
+            "- Lehká střílí náhodně a po zásahu jen občas pokračuje.",
+            "- Střední hledá náhodně, po zásahu zkouší sousední pole a prodlužuje řady zásahů až na konec lodi.",
+            "- Těžká spočítá pro každé pole, v kolika stále možných polohách by ho zbývající lodě mohly zakrývat (včetně pravidla dotyku), a střílí na nejpravděpodobnější. Při hledání používá šachovnicový vzor podle nejmenší zbývající lodi.",
+            "V průměru AI potřebuje asi 70 (Lehká), 60 (Střední) a 45 výstřelů (Těžká) na potopení celé flotily - a ví jen to, co vidíš i ty."
+          ]
+        },
+        {
+          "h": "2 hráči",
+          "body": [
+            "V režimu pro více hráčů se střídáte u jednoho počítače. Před rozmístěním a před každým tahem zakryje předávací obrazovka obě flotily, dokud další hráč nepotvrdí klávesou [Enter] nebo kliknutím.",
+            "Ukáže také, kolik výstřelů a zásahů měl poslední útok na tvou flotilu. Webová verze se hraje jen proti AI."
+          ]
+        },
+        {
+          "h": "Body a úspěchy",
+          "body": [
+            "Každé vítězství nad AI je jeden bod; rekord je nejvíce vítězství za jednu relaci. Režim pro 2 hráče se nepočítá.",
+            "- Nedotčená flotila: poraz AI bez ztráty jediné lodi.",
+            "- Velkoadmirál: potop flotilu těžké AI."
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Rozmísti lodě po celém plánu a nestavěj je všechny k okraji.",
+            "- Při hledání stačí každé druhé pole (šachovnice) - když zbývají jen dlouhé lodě, dokonce každé třetí.",
+            "- Bez pravidla dotyku je každé pole kolem potopené lodi zaručeně voda."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "casino",
+      "category": "games",
+      "game": "CasinoGame",
+      "title": "Casino",
+      "keywords": [
+        "kasino",
+        "casino",
+        "ruleta",
+        "automat",
+        "lama",
+        "jackpot",
+        "otočky zdarma",
+        "žetony",
+        "sázky"
+      ],
+      "sections": [
+        {
+          "h": "Lama banka",
+          "body": [
+            "Casino, Blackjack a Poker hrají se stejným účtem: lama žetony (start 1000). Sázky se strhnou hned, výhry se připíšou - vše se trvale ukládá.",
+            "Každá hra vede vlastní bilanci. Rekord Casina je nejvyšší stav 1000 + bilance Casina; výhry v Blackjacku nebo Pokeru se sem nepočítají.",
+            "Na mizině (méně než minimální sázka) dostaneš úvěr od banky: účet se doplní zpět na 1000. Úvěry se nepočítají do žádné bilance; jejich počet je vidět vpravo nahoře."
+          ]
+        },
+        {
+          "h": "Ruleta - sázení",
+          "body": [
+            "Evropská ruleta s 37 políčky (0 až 36). Hodnotu žetonu vybereš dole: 1, 5, 25, 100 nebo 500 (klávesy [1] až [5] nebo kolečko myši).",
+            "Levý klik položí žeton, pravý klik ho zase odebere. Místo kliknutí určuje sázku:",
+            "- Střed čísla: číslo, vyplácí 35:1",
+            "- Hrana mezi dvěma čísly: dvojice, 17:1",
+            "- Vnější čára sloupce čísel: trojice, 11:1 (u nuly také 0-1-2 a 0-2-3)",
+            "- Roh mezi čtyřmi čísly: čtveřice, 8:1 (vně u nuly: 0-1-2-3)",
+            "- Roh na vnější čáře mezi dvěma sloupci: šestice, 5:1",
+            "- Sloupec (2:1) a tucet (2:1), červená/černá, sudá/lichá a malá 1-18 / velká 19-36 (každá 1:1)",
+            "Vedle rulety vidíš, jaká sázka je pod myší a kolik vyplácí."
+          ]
+        },
+        {
+          "h": "Ruleta - točení",
+          "body": [
+            "[Enter] nebo ROZTOČIT spustí kolo: sázka se strhne a vylosuje se vítězné číslo. Kulička se po spirále stočí dovnitř a padne přesně do toho políčka - [Mezerník] nebo kliknutí zrychlí.",
+            "Opakovat [R] položí sázky z posledního kola znovu, Zdvojit [D] zdvojnásobí všechny sázky, Smazat [Backspace] vyklidí stůl.",
+            "Nahoře je vidět posledních 12 čísel; vyhrané sázky ukazují svou výplatu."
+          ]
+        },
+        {
+          "h": "Lama automat",
+          "body": [
+            "5 válců, 3 řady, 10 výherních linií. Linie vyplácejí od 3 stejných symbolů zleva doprava; čísla po stranách ukazují, kudy každá linie vede (najetí myší = zobrazit linii).",
+            "Sázka na linii: 1, 2, 5 nebo 10 ([+]/[-] nebo kolečko myši) - vždy se hraje na všech 10 liniích.",
+            "- Lama = žolík: nahradí každý symbol kromě zlaté mince. 5 lam na jedné linii je Lama jackpot.",
+            "- Zlatá mince = scatter: 3, 4 nebo 5 mincí kdekoli vyplatí 2, 10 nebo 50násobek celkové sázky a přinese 10 otoček zdarma, ve kterých se všechny výhry počítají dvojnásob. Otočky zdarma lze spustit znovu.",
+            "Tabulka výher ukazuje všechny výplaty pro tvou aktuální sázku. Návratnost je 96,1 % - spočítaná přesně z pásů válců."
+          ]
+        },
+        {
+          "h": "Lama automat - ovládání",
+          "body": [
+            "[Mezerník], [Enter] nebo kliknutí na válce roztočí; další stisk během točení zrychlí.",
+            "Automatické točení: [A] spustí 10 kol, [Shift]+[A] 25 kol (nebo tlačítko Auto), dalším stiskem se zastaví. [T] zapne turbo, [I] otevře tabulku výher.",
+            "Vyhrané otočky zdarma se hned uloží a pokračují při příští hře."
+          ]
+        },
+        {
+          "h": "Úspěchy",
+          "body": [
+            "- Milník Casina: rekord 5000",
+            "- Terno: vyhraj v ruletě sázkou na jediné číslo",
+            "- Lama jackpot: 5 lam na jedné výherní linii"
           ]
         }
       ]

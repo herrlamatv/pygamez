@@ -11,14 +11,16 @@
         "valikko",
         "tauko",
         "koko näyttö",
-        "sivupalkki"
+        "sivupalkki",
+        "moninpeli"
       ],
       "sections": [
         {
           "h": "Pelin aloittaminen",
           "body": [
             "Voit aloittaa pelin kolmella tavalla: vasemman sivupalkin pelilistasta, aloitusnäytön peliruudukosta tai suoraan tästä wikistä pelin esinäytön kautta.",
-            "Ennen jokaista peliä avautuu esinäyttö: valitse siellä pelitila (esim. yksin- tai moninpeli) ja pääset asetuksiin ja tähän wikiin."
+            "Ennen jokaista peliä avautuu esinäyttö: valitse siellä pelitila (esim. yksin- tai moninpeli) ja pääset asetuksiin ja tähän wikiin.",
+            "Jos pelissä on paljon tiloja tai ikkuna on pieni, Asetukset, Wiki ja Takaisin siirtyvät esinäytöllä samalle riville - näin kaikki pysyy näkyvissä."
           ]
         },
         {
@@ -26,7 +28,7 @@
           "body": [
             "- [Esc] keskeyttää ja jatkaa käynnissä olevaa peliä - valikoissa se palaa takaisin.",
             "- [F11] vaihtaa koko näytön tilaa päälle ja pois.",
-            "- Vihreä Takaisin valikkoon -painike lopettaa pelin ja tallentaa ennätyksen."
+            "- Vihreä Takaisin valikkoon -painike lopettaa pelin ja tallentaa ennätyksen - samoin siirtyminen toiseen peliin sivupalkista."
           ]
         },
         {
@@ -39,8 +41,9 @@
         {
           "h": "Moninpeli",
           "body": [
-            "Snakessa, Pongissa, Air Hockeyssa, Tic-Tac-Toessa, Tetriksessä (Versus) ja Asteroidsissa (yhteistyökaksintaistelu) on paikallinen 2 pelaajan tila - valittavissa esinäytöllä.",
-            "Yksinpelissä molemmat näppäinasettelut ohjaavat samaa hahmoa; moninpelissä kumpikin omaansa (oletus: P1 = WASD, P2 = nuolet tai IJKL - katso asetukset)."
+            "Paikallinen 2 pelaajan tila on 20 pelissä: Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus), Asteroids (yhteistyökaksintaistelu), Muistipeli, Neljän suora, Tankkikaksintaistelu, Reversi, Yatzy, Tammi, Shakki, Mylly, Simon, Biljardi, Minigolf, Pinball, Bowling ja Battleship - valittavissa esinäytöllä.",
+            "Yksinpelissä molemmat näppäinasettelut ohjaavat samaa hahmoa; moninpelissä kumpikin omaansa (oletus: P1 = WASD, P2 = nuolet tai IJKL - katso asetukset).",
+            "Tetriksessä on lisäksi Versus tekoälyä vastaan; Battleshipin kaksinpelissä luovutusnäyttö piilottaa laivastot. Selainversio on pelkkää yksinpeliä."
           ]
         }
       ]
@@ -60,7 +63,8 @@
         "kieli",
         "design",
         "ulkoasu",
-        "teema"
+        "teema",
+        "kiinteät näppäimet"
       ],
       "sections": [
         {
@@ -75,7 +79,8 @@
           "body": [
             "Käytettävissä on kolme esiasetusta: WASD + nuolet, WASD + IJKL ja nuolet + WASD.",
             "Jokaisen näppäimen voi määrittää uudelleen: napsauta riviä tai vahvista Enterillä, ja paina sitten haluamaasi näppäintä. [Esc] peruuttaa.",
-            "Asettelut ovat erilliset pelaajalle 1 ja pelaajalle 2, ja ne tallennetaan pysyvästi."
+            "Asettelut ovat erilliset pelaajalle 1 ja pelaajalle 2, ja ne tallennetaan pysyvästi.",
+            "Jokainen pelaaja voi määrittää viisi toimintoa: ylös, alas, vasen, oikea ja toiminto. Joissakin peleissä on lisäksi kiinteitä näppäimiä - esim. varasto [C] ja kierto vasemmalle [Z] Tetriksessä tai kumoa [U] 2048:ssa, shakissa ja Sudokussa. Ne toimivat vain, jos näppäintä ei ole määritetty millekään toiminnolle; pelin asetusvihje ja wikisivu kertovat, mitä ne ovat."
           ]
         },
         {
@@ -96,7 +101,7 @@
         {
           "h": "Kieli",
           "body": [
-            "Käyttöliittymä on saatavilla saksaksi, englanniksi, ranskaksi, espanjaksi ja portugaliksi. Vaihda asetusnäytöltä tai sivupalkin Language-kohdasta - myös tämä wiki vaihtaa kieltä."
+            "Käyttöliittymä on saatavilla 14 kielellä: saksaksi, englanniksi, ranskaksi, espanjaksi, portugaliksi, puolaksi, turkiksi, tanskaksi, norjaksi, ruotsiksi, suomeksi, tšekiksi, sloveeniksi ja kroatiaksi. Vaihda asetusnäytöltä tai sivupalkin Language-kohdasta - myös tämä wiki vaihtaa kieltä."
           ]
         }
       ]
@@ -111,30 +116,58 @@
         "record",
         "pisteet",
         "edistyminen",
-        "tiedostot"
+        "tiedostot",
+        "varmuuskopio",
+        "backup",
+        "laamamerkit",
+        "ugc"
       ],
       "sections": [
         {
           "h": "Ennätykset",
           "body": [
             "Jokainen peli tallentaa parhaan tuloksensa automaattisesti, kun kierros päättyy. Uudesta ennätyksestä ilmestyy kultainen banneri - ja konfettisade.",
-            "Näet parhaat tulokset kaikkialla: tähtenä sivupalkin listassa, aloitusnäytön tikkerissä ja tilakortissa."
+            "Näet parhaat tulokset kaikkialla: tähtenä sivupalkin listassa, aloitusnäytön tikkerissä ja tilakortissa.",
+            "Tilat, joissa ennätystä ei lasketa - esimerkiksi Tetriksen Sprint ja Ultra, Crossy Roadin päivän reitti tai kumoamista käyttänyt 2048 - eivät näytä banneria; peli tallentaa niiden parhaat ajat ja päivän parhaat itse."
           ]
         },
         {
           "h": "Mitä tallennetaan mihinkin?",
           "body": [
-            "- settings.json: ääni, äänenvoimakkuus, näppäinasettelut, resoluutio, FPS ja peliasetukset (esim. Snaken tila, Sudokun asetukset).",
-            "- mem.json: ennätykset, valittu kieli ja Sudokun tasoedistyminen.",
+            "- settings.json: ääni, äänenvoimakkuus, näppäinasettelut, resoluutio, FPS, ulkoasu ja peliasetukset (esim. Snaken tila, Tetriksen DAS/ARR, Sudokun muunnelma, Battleshipin säännöt).",
+            "- mem.json: ennätykset, valittu kieli, saavutukset ja tilastot - lisäksi monen pelin edistyminen omissa osioissaan (katso alla).",
             "- mem-ngb.json: Snaken visuaaliset modit (pään väri, ruudukko, banneri).",
             "- replay.json: minigolfin ja keilailun tallennetut uusinnat.",
+            "- ugc.json: omat minigolfratasi ja Geometry Dash -kenttäsi (jaetaan .lamapgzmap- tai .lamapgzlevel-tiedostoina).",
             "Nämä tiedostot ovat suoraan pelikansiossa, ja ne voi yksinkertaisesti poistaa nollaamista varten."
+          ]
+        },
+        {
+          "h": "Edistyminen mem.json-tiedostossa",
+          "body": [
+            "Jokaisella edistymistä tallentavalla pelillä on mem.json-tiedostossa oma osionsa, esimerkiksi:",
+            "- sudoku: ratkaistut tasot tähtineen ja parhaine aikoineen, kesken jääneet ruudukot sekä päivän sudoku putkineen.",
+            "- casino: Laamapankin tili - Blackjackin, Pokerin ja Casinon laamamerkit sekä kunkin pelin saldo.",
+            "- crossy: kerätyt kolikot, ostetut hahmot ja Crossy Roadin päivän paras.",
+            "- tetris: Sprintin paras aika, Ultran paras tulos ja Versus-tilasto tekoälyä vastaan.",
+            "- g2048: tallennetut 2048-pelit ja parhaat tulokset laudan koon ja tilan mukaan.",
+            "- chess: edistymisesi shakin tehtävätilassa.",
+            "- geodash: Geometry Dashin paras prosentti kentittäin (Normaali ja Harjoitus), löydetyt kolikot, yritykset ja hypyt.",
+            "- wordle: tilastot pelitilan, kielen ja sanan pituuden mukaan, päivän sanan tilanne ja parhaat tulokset.",
+            "Lisäksi muun muassa minigolf, pinball, bowling ja lamatowerdef parhaine tuloksineen."
+          ]
+        },
+        {
+          "h": "Automaattinen varmuuskopio",
+          "body": [
+            "mem.json ja settings.json kirjoitetaan kaatumisen kestävästi: ensin väliaikaiseen tiedostoon, sitten ne vaihdetaan yhdellä kertaa. Edellinen versio jää talteen nimellä mem.json.bak tai settings.json.bak.",
+            "Jos mem.json joskus vioittuu, peli lukee varmuuskopion automaattisesti - ennätykset, saavutukset ja laamamerkit eivät siis katoa."
           ]
         },
         {
           "h": "Vinkki",
           "body": [
-            "Pisteet tallennetaan vain, kun poistut Takaisin valikkoon -painikkeella tai kierros päättyy normaalisti - ei silloin, kun ikkuna suljetaan väkisin kesken pelin."
+            "Pisteet tallennetaan, kun kierros päättyy, kun poistut Takaisin valikkoon -painikkeella, kun valitset kesken pelin toisen pelin sivupalkista tai kun suljet kokoelman. Vain kaatuminen tai ohjelman väkisin lopettaminen hävittää käynnissä olevan kierroksen."
           ]
         }
       ]
@@ -201,19 +234,20 @@
         {
           "h": "Yleiskatsaus",
           "body": [
-            "Kokoelma seuraa nyt edistymistäsi: 69 saavutusta ja yksityiskohtaiset tilastot kaikista 38 pelistä. Molemmat löytyvät sivupalkin painikkeesta Saavutukset ja tilastot; välilehteä vaihdat [Tab]-näppäimellä tai klikkaamalla."
+            "Kokoelma seuraa edistymistäsi: 107 saavutusta ja yksityiskohtaiset tilastot kaikista 46 pelistä. Molemmat löytyvät sivupalkin painikkeesta Saavutukset ja tilastot; välilehteä vaihdat [Tab]-näppäimellä tai klikkaamalla."
           ]
         },
         {
           "h": "Saavutukset",
           "body": [
             "Kategorioita on kolme:",
-            "- Yleiset: koko kokoelman tavoitteita, kuten aloitetut pelikerrat, kokeillut pelit, kokonaispeliaika, rikotut ennätykset ja voitot - sekä pieniä ekstroja kuten Yökyöpeli (pelaa keskiyön jälkeen).",
-            "- Pistevirstanpylväät: yksi reilu tavoitepistemäärä peliä kohden, sovitettu pelin pisteskaalaan.",
-            "- Erityiset hetket: shakkimatti tekoälylle, KNIFFEL, 2048-laatta, Wordle 2 yrityksellä ja paljon muuta.",
+            "- Yleiset (23): koko kokoelman tavoitteita, kuten aloitetut pelikerrat, kokeillut pelit, kokonaispeliaika, rikotut ennätykset ja voitot - sekä pieniä ekstroja kuten Yökyöpeli (pelaa keskiyön jälkeen).",
+            "- Pistevirstanpylväät (37): yksi reilu tavoitepistemäärä peliä kohden, sovitettu pelin pisteskaalaan.",
+            "- Erityiset hetket (47): shakkimatti tekoälylle, KNIFFEL, 2048- ja 4096-laatta, T-Spin Double ja Perfect Clear Tetriksessä, 25 ratkaistua shakkitehtävää, ensimmäinen Killer Sudokusi, täysosuma yksittäiseen numeroon ruletissa, laamajättipotti peliautomaatissa, voitto Battleshipissä menettämättä yhtään laivaa ja paljon muuta.",
             "Avautuessa oikeaan yläkulmaan ilmestyy kultainen ilmoitus pienellä fanfaarilla - myös kesken pelin.",
             "Vanhat tiedot lasketaan: päivityksen jälkeisellä ensimmäisellä käynnistyksellä vanhat ennätyksesi hyvitetään automaattisesti (ilman ilmoitusilotulitusta).",
-            "Lukitut saavutukset näyttävät edistymispalkin, avatut päivämääränsä."
+            "Lukitut saavutukset näyttävät edistymispalkin, avatut päivämääränsä.",
+            "2048:ssa ja shakissa kumoamista tai vihjeitä käyttäneet pelit eivät kerrytä ennätyksiä eivätkä saavutuksia - kokeilla saa, mutta vain ilman apua pelatut pelit lasketaan."
           ]
         },
         {
@@ -497,28 +531,80 @@
         "palat",
         "rivit",
         "kierrä",
+        "varasto",
+        "t-spin",
+        "sprintti",
+        "ultra",
+        "maraton",
         "versus",
-        "pino"
+        "roskarivit"
       ],
       "sections": [
         {
+          "h": "Pelitilat",
+          "body": [
+            "Yksinpeli: valitse muunnelma asetuksista. Maraton jatkuu loputtomiin ja taso nousee 10 rivin välein (aloitustaso 1-15) - ennätykseen lasketaan vain Maraton.",
+            "- Sprintti 40: tyhjennä 40 riviä mahdollisimman nopeasti; paras aikasi tallennetaan.",
+            "- Ultra 2:00: kerää kahdessa minuutissa mahdollisimman paljon pisteitä; ennätyksesi tallennetaan.",
+            "Tekoälyä vastaan: pelaat kolmitasoista tekoälyä vastaan (Helppo, Keskitaso, Vaikea). Rivejä tyhjentävä lähettää roskarivejä toiselle puolelle; jonka pino ensin osuu kattoon, on tyrmätty. Tilastosi kutakin tasoa vastaan tallennetaan.",
+            "2 pelaajaa (vain PC-versio): sama kahdestaan yhdellä näppäimistöllä. Molemmat kentät saavat aina saman palajärjestyksen."
+          ]
+        },
+        {
           "h": "Ohjaus",
           "body": [
-            "Vasen/oikea liikuttaa palaa, ylös kiertää sitä, alas on pehmeä pudotus ja toimintonäppäin (oletus: [Space]) kova pudotus."
+            "[Vasen] [Oikea] siirtävät palaa - pohjassa pidettynä pala lähtee liukumaan DAS-viiveen jälkeen ja jatkaa ARR-tahdissa. [Ylös] kääntää oikealle, [Alas] on pehmeä pudotus ja toimintonäppäin (oletus: [Välilyönti] ) pudottaa palan heti (kova pudotus).",
+            "- [C] tai [Shift] siirtää palan varastoon (kerran palaa kohden), [Z] tai [Y] kääntää vasemmalle, [X] oikealle.",
+            "- 2 pelaajaa: pelaaja 1 käyttää varastoa [Q] -näppäimellä ja kääntää vasemmalle [E] -näppäimellä, pelaaja 2 käyttää varastoa oikealla [Shift] -näppäimellä ja kääntää vasemmalle oikealla [Ctrl] -näppäimellä.",
+            "- Nämä kiinteät näppäimet toimivat vain, jos et ole itse liittänyt niitä mihinkään toimintoon.",
+            "Sprintissä ja Ultrassa [R] aloittaa heti alusta. Pelin jälkeen: [R] = uudestaan, [S] = asetukset - kovan pudotuksen näppäimet eivät tarkoituksella aloita mitään uudelleen.",
+            "Asetuksissa säädät DAS-viiveen (viive ennen jatkuvaa liikettä), ARR-nopeuden (tahti sen jälkeen, 0 ms = suoraan reunaan) ja haamupalan."
           ]
         },
         {
-          "h": "Tilat ja pisteytys",
+          "h": "Modernit säännöt",
           "body": [
-            "Täydet rivit antavat pisteitä - useampi kerralla antaa paljon enemmän. Joka 10 rivin välein taso ja nopeus kasvavat.",
-            "Versus (moninpeli): kaksi lautaa vierekkäin, se jonka pino osuu huippuun ensin häviää."
+            "Palat tulevat seitsemän pussissa: jokainen seitsemästä palasta tulee tasan kerran jokaisessa seitsikossa. Esikatselu näyttää seuraavat 5.",
+            "Kääntäminen noudattaa SRS:ää: jos pala juuttuu, peli kokeilee enintään neljää vaihtoehtoista paikkaa (wall kick) - palan voi siis kääntää jopa reunojen ympäri.",
+            "Pohjalla pala odottaa 0,5 sekuntia ennen lukittumista. Jokainen siirto tai käännös nollaa ajan, enintään 15 kertaa samalla syvyydellä.",
+            "Peli päättyy, jos uudelle palalle ei ole tilaa, pala lukittuu kokonaan kentän yläpuolelle tai roskarivit työntävät pinon yli katon."
           ]
         },
         {
-          "h": "Vinkit",
+          "h": "Pisteytys",
           "body": [
-            "- Pidä yksi sarake vapaana pitkälle I-palalle ja raivaa nelinkertaisilla riveillä.",
-            "- Rakenna matalaa: korkeat tornit kaatuvat nopeasti nopeuden noustessa."
+            "Kaikki arvot kerrotaan tasolla: Single 100 · Double 300 · Triple 500 · Tetris 800.",
+            "T-Spin: ilman riviä 400 · Single 800 · Double 1200 · Triple 1600. T-Spin Mini: 100 · 200 · 400.",
+            "- Back-to-Back: Tetris tai T-Spin heti toisen perään lasketaan x1,5.",
+            "- Kombo: jokainen seuraava peräkkäinen tyhjennys tuo lisäksi 50 x kombo x taso.",
+            "- Perfect Clear (kenttä täysin tyhjä): +800 / 1200 / 1800 / 2000, Back-to-Back-Tetriksenä +3200.",
+            "- Pehmeä pudotus antaa 1 pisteen, kova pudotus 2 pistettä riviltä."
+          ]
+        },
+        {
+          "h": "T-Spinit",
+          "body": [
+            "T-Spin lasketaan, kun T-pala lukittuu käännöksen jälkeen ja vähintään kolme sen keskustaa ympäröivästä neljästä kulmasta on varattu (seinät ja pohja lasketaan mukaan).",
+            "Jos molemmat kulmat sillä puolella, jota kohti nokka osoittaa, ovat varattuja, kyse on täydestä T-Spinistä, muuten Ministä. Jos T kiertyy aukkoon isolla kickillä (sarake sivulle, kaksi riviä alas), se lasketaan aina täydeksi - näin syntyy T-Spin Triple.",
+            "Kentän yllä näkyvät ilmoitukset T-SPIN, TETRIS, BACK-TO-BACK, KOMBO ja PERFECT CLEAR."
+          ]
+        },
+        {
+          "h": "Versus ja roskarivit",
+          "body": [
+            "Hyökkäys: Double 1 · Triple 2 · Tetris 4 · T-Spin Single 2 · T-Spin Double 4 · T-Spin Triple 6 · Mini Double 1. Lisäksi +1 Back-to-Backista, +1...+5 pitkistä komboista ja +10 Perfect Clearista.",
+            "Saapuvat roskarivit näkyvät kentän vasemmalla puolella olevassa varoituspalkissa: keltaiset odottavat vielä, punaiset nousevat seuraavalla palallasi, joka ei tyhjennä rivejä - enintään 8 riviä palaa kohden, jokaisessa erässä yhteinen reikä.",
+            "Kun tyhjennät itse rivejä, hyökkäyksesi kumoaa ensin odottavat roskarivit; vain loput menevät vastustajalle.",
+            "40 sekunnin välein palat putoavat nopeammin (tasolle 12 asti)."
+          ]
+        },
+        {
+          "h": "Vinkit ja saavutukset",
+          "body": [
+            "- Rakenna tasaisesti ja pidä reunalla yksi sarake vapaana I-palalle - neljä riviä kerralla tuo pisteitä ja hyökkäystä.",
+            "- Käytä varastoa säästääksesi I-palan Tetrikseen tai siirtääksesi sopimattoman palan sivuun.",
+            "- Versuksessa Back-to-Back kannattaa: kaksi Tetristä peräkkäin lähettää 4 + 5 riviä.",
+            "- Saavutukset: Tetris! (4 riviä kerralla), Pyörähdys paikalleen (T-Spin Double), Puhtaaksi pyyhitty (Perfect Clear), Pikajuoksija (Sprintti 40 alle 2:00). Kaksinpelissä ei ole saavutuksia."
           ]
         }
       ]
@@ -719,27 +805,76 @@
         "laatat",
         "liu'uta",
         "yhdistä",
-        "numerot"
+        "numerot",
+        "pyyhkäisy",
+        "kumoa",
+        "aikahaaste",
+        "loputon",
+        "koko",
+        "jatka",
+        "4096"
       ],
       "sections": [
         {
-          "h": "Ohjaus ja säännöt",
+          "h": "Ohjaus",
           "body": [
-            "Nuolet tai [W] [A] [S] [D] liu'uttavat kaikki laatat yhteen suuntaan kerralla. Samat numerot yhdistyvät summakseen; joka siirron jälkeen ilmestyy uusi laatta.",
-            "Tavoitteena on 2048-laatta - sen jälkeen jatkuu loputtomiin. Häviät, kun yksikään siirto ei ole mahdollinen."
+            "Nuolet tai [W] [A] [S] [D] liu'uttavat kaikkia laattoja kerralla yhteen suuntaan. Hiirellä tai kosketuslevyllä voit myös pyyhkäistä: paina, vedä haluttuun suuntaan ja päästä irti.",
+            "Pohjassa pidetyt näppäimet eivät toistu - jokainen siirto on oma painalluksensa. Animaation aikana annetut komennot muistetaan ja suoritetaan heti sen jälkeen.",
+            "[U] tai [Backspace] = kumoa, [R] tai [N] = uusi peli, [Tab] = takaisin asetuksiin. Lisänäppäimet toimivat vain, jos et ole itse määrittänyt niitä millekään toiminnolle."
           ]
         },
         {
-          "h": "Pisteytys",
+          "h": "Säännöt",
           "body": [
-            "Jokainen yhdistäminen lisää uuden laatan arvon pistemäärääsi."
+            "Toisiinsa törmäävät samat luvut yhdistyvät summakseen. Jokainen laatta yhdistyy enintään kerran siirtoa kohden: 2, 2, 4, 4 vasemmalle liu'utettuna on 4, 8.",
+            "Jokaisen kelvollisen siirron jälkeen ilmestyy uusi laatta - yleensä 2, joka kymmenes kerta 4. Kun yhtään siirtoa ei voi tehdä, peli päättyy.",
+            "Laatoilla 4096:sta alkaen on omat värinsä vihreästä sinisen ja violetin kautta karmiininpunaiseen (131072); vielä suuremmat laatat ovat tummia kultaisin numeroin."
+          ]
+        },
+        {
+          "h": "Asetukset: koko ja tila",
+          "body": [
+            "Laudan koko 3x3:sta 8x8:aan - pienet laudat ovat hankalia, suuret jättävät tilaa pitkille ketjuille.",
+            "- Klassinen: tavoitteena on 2048. Sen jälkeen peli kysyy, haluatko jatkaa - [Enter] jatkaa, [N] aloittaa uuden pelin.",
+            "- Aikahaaste: 3 minuuttia mahdollisimman monelle pisteelle. Kello käynnistyy ensimmäisestä siirrosta; laudan alla oleva palkki näyttää jäljellä olevan ajan.",
+            "- Loputon: ei tavoitetta eikä keskeytyksiä, kunnes siirtoja ei enää ole."
+          ]
+        },
+        {
+          "h": "Kumoaminen",
+          "body": [
+            "Valitaan asetuksissa: pois, 3 per peli tai rajaton. Kumoaminen perii viimeisen siirron pisteineen - jopa heti pelin päätyttyä.",
+            "Heti kun käytät sitä, peli lasketaan \"kumoamisella\" pelatuksi: se ei kerrytä ennätystä eikä laattasaavutuksia, ja sen paras tulos pidetään erikseen."
+          ]
+        },
+        {
+          "h": "Tallennus ja jatkaminen",
+          "body": [
+            "Käynnissä oleva peli tallentuu automaattisesti jokaiselle koolle ja tilalle - siirtojesi jälkeen ja kun poistut pelistä.",
+            "Asetuksissa näkyy silloin Jatka tallennetun pelin pisteineen ja siirtoineen. Uusi peli hylkää tallennuksen."
+          ]
+        },
+        {
+          "h": "Pisteet, parhaat ja ennätys",
+          "body": [
+            "Jokainen yhdistäminen antaa uuden laatan arvon verran pisteitä. Tietosarake näyttää pisteet, parhaan tuloksen, siirrot, suurimman laatan, jäljellä olevat kumoamiset ja ajan.",
+            "Parhaat tulokset ja suurin laatta tallennetaan koon ja tilan mukaan. 2048:n ennätys lasketaan vain 4x4 Klassisessa ilman kumoamista."
+          ]
+        },
+        {
+          "h": "Saavutukset",
+          "body": [
+            "- 2048!: luo 2048-laatta.",
+            "- 4096!: luo 4096-laatta.",
+            "Molemmat lasketaan enintään 4x4-laudoilla ja vain ilman kumoamista - missä tahansa tilassa."
           ]
         },
         {
           "h": "Vinkit",
           "body": [
-            "- Pysäköi suurin laattasi kulmaan äläkä koskaan häiritse sitä kulmaa.",
-            "- Liu'uta pääasiassa kahteen suuntaan - se pitää laudan järjestyksessä."
+            "- Pysäköi suurin laattasi nurkkaan äläkä koskaan koske siihen nurkkaan.",
+            "- Liu'uta pääasiassa kahteen suuntaan - silloin lauta pysyy järjestyksessä.",
+            "- Aikahaasteessa nopeus ratkaisee: yhdistä ajoissa ja pidä laatat koossa yhdessä nurkassa."
           ]
         }
       ]
@@ -791,43 +926,68 @@
         "muistiinpanot",
         "tasot",
         "vihjeet",
-        "logiikka"
+        "logiikka",
+        "killer",
+        "x-sudoku",
+        "päivän",
+        "tähdet",
+        "kumoa",
+        "ehdokkaat"
       ],
       "sections": [
         {
+          "h": "Muunnelmat",
+          "body": [
+            "Asetuksissa valitset ylhäältä muunnelman ja sen alta vaikeustason. Jokaisessa muunnelmassa on 4 vaikeustasoa kertaa 100 kiinteää tasoa, ja jokaisella on yksi ratkaisu.",
+            "- Klassinen: tuttu 9x9. 400 tasoa ovat samat kuin ennen päivitystä - merkityt tasot pysyvät merkittyinä.",
+            "- X-sudoku: myös molemmilla lävistäjillä on jokainen numero tasan kerran (hienovaraisesti merkitty).",
+            "- Killer: lähes ei annettuja numeroita, sen sijaan katkoviivahäkit. Häkin numerot antavat kulmassa olevan pienen summan eivätkä toistu. Helpossa on pienet häkit ja enemmän annettuja numeroita, Asiantuntijassa isot häkit.",
+            "- Mini 6x6: 2x3-laatikot ja vain numerot 1-6, erityisen isoilla ruuduilla.",
+            "- Päivän sudoku ([T] tai oikean puolen kortti): yksi klassinen pulma päivässä, kaikille sama - myös selaimessa. Vaikeus riippuu viikonpäivästä (maanantai helppo, tiistai ja keskiviikko normaali, torstai, perjantai ja sunnuntai vaikea, lauantai asiantuntija). Ratkaise joka päivä ja kasvata putkea."
+          ]
+        },
+        {
           "h": "Ohjaus",
           "body": [
-            "Valitse ruutu nuolinäppäimillä, näppäimillä [W] [A] [S] [D] tai hiiren napsautuksella - oikean laidan numeronäppäimistö toimii kokonaan hiirellä.",
-            "- [1]-[9] syöttää numeron (myös numeronäppäimistö toimii).",
-            "- [0], Backspace tai oikea napsautus pyyhkii.",
-            "- [N] vaihtaa muistiinpanotilan, [H] antaa vihjeen, [R] aloittaa tason alusta, [Q] avaa tasonvalinnan.",
-            "- Pelin päätyttyä [A] piilottaa bannerin ja paljastaa täyden ratkaisun."
+            "Valitse ruutu nuolinäppäimillä, [W] [A] [S] [D] tai hiiren napsautuksella. Oikean laidan numeronäppäimistö toimii kokonaan hiirellä ja näyttää jokaisen numeron alla, montako niitä vielä puuttuu.",
+            "- [1]-[9] syöttää numeron, [0], Delete tai oikea napsautus pyyhkii.",
+            "- [U] tai [Z] kumoaa, [Y] tekee uudelleen.",
+            "- [N] vaihtaa muistiinpanot, [C] merkitsee kaikki ehdokkaat automaattisesti, [H] antaa vihjeen.",
+            "- [M] värittää ruudun värimerkillä (asetusten \"Värimerkit\"-kytkin).",
+            "- [R] aloittaa pulman alusta, [Q] avaa tasonvalinnan, [A] näyttää ratkaisun pelin jälkeen.",
+            "Syöttö \"Numero ensin\" (asetukset, näppäin [I]): valitse ensin numero ja napsauta sitten niin montaa ruutua kuin haluat tai aseta se välilyönnillä.",
+            "Asetuksissa: [1]-[4] vaikeus, [V] muunnelma, [T] päivän sudoku, [F] virheraja, nuolet + Enter aloittavat tason. Kirjainnäppäimet toimivat vain, jos niitä ei ole liitetty mihinkään toimintoon asetuksissa."
           ]
         },
         {
-          "h": "Tasot ja pelitilat",
+          "h": "Pelitilat ja pisteet",
           "body": [
-            "400 kiinteää tasoa: 4 vaikeustasoa (helppo/normaali/vaikea/asiantuntija) kertaa 100 tasoa. Jokainen taso on kaikkialla sama pulma ja yksikäsitteisesti ratkaistavissa; ratkaistut tasot merkitään suoritetuiksi.",
-            "Pelitila määrittää avut ja pistekertoimen:",
+            "Pelitila määrää avut ja pistekertoimen:",
             "- Klassinen x2.0: ei apuja, puhdasta kuin paperilla.",
-            "- Muistiinpanot x1.5: lisäksi lyijykynämuistiinpanot.",
-            "- Mukavuus x1.0: virheet heti punaisina, ristiriitojen korostus, oikeat syötöt lukittuvat.",
-            "- Apu x0.7: lisäksi jopa 3 vihjettä."
+            "- Muistiinpanot x1.5: lisäksi lyijykynämerkinnät ja automaattiset ehdokkaat.",
+            "- Mukavuus x1.0: virheet heti punaisina, ristiriidat ja väärät häkkisummat korostettuina, oikeat syötöt lukittuvat.",
+            "- Avustus x0.7: lisäksi jopa 3 vihjettä.",
+            "Jokainen syöttö tarkistetaan heti. 3 virheen rajalla kolmas virhe päättää pelin - kumoaminen ei poista virhettä.",
+            "Pisteet = (muunnelman ja vaikeuden perusarvo miinus aika, virheet ja vihjeet) kertaa kerroin. Kaikki muunnelmat ja päivän sudoku lasketaan ennätykseen."
           ]
         },
         {
-          "h": "Virheet ja pisteytys",
+          "h": "Tähdet ja tallennus",
           "body": [
-            "Jokainen syöttö tarkistetaan ratkaisua vastaan heti. Kun 3 virheen raja on käytössä (asetukset, näppäin [F]), kolmas virhe päättää pelin.",
-            "Pisteet = (vaikeuden perusarvo miinus aika, virheet ja vihjeet) kertaa tilan kerroin."
+            "Jokainen taso antaa enintään 3 tähteä: 1 ratkaisusta, 2 ilman virheitä ja vihjeitä, 3 lisäksi alle vaikeustason tavoiteajan (näkyy tasotiedoissa).",
+            "Tasonvalinta näyttää tähdet, parhaan ajan ja ratkaistut tasot; taitettu kulma merkitsee keskeneräiset pulmat.",
+            "Keskeneräiset pulmat tallentuvat automaattisesti - poistuessa, tasonvalintaan palatessa ja säännöllisesti pelatessa - ja jatkuvat seuraavalla kerralla. Jos vaihdat pelitilaa, pienempi kerroin jää voimaan.",
+            "Saavutukset: \"Häkkitaistelija\" ensimmäisestä Killer-sudokusta, \"Tähtien keräilijä\" 30 tasosta kolmella tähdellä."
           ]
         },
         {
           "h": "Vinkit",
           "body": [
-            "- Aloita riveistä, sarakkeista ja lohkoista, joissa on jo monta numeroa.",
-            "- Merkitse ehdokkaat pareina: jos kahdella ruudulla on samat kaksi ehdokasta, ne putoavat pois kaikkialta muualta.",
-            "- Klassisessa tilassa ota aikasi: jokainen virhe lasketaan heti, myös ilman punaista merkkiä."
+            "- Aloita riveistä, sarakkeista ja laatikoista, joissa on jo paljon numeroita.",
+            "- Merkitse ehdokkaat pareittain: jos kahdella saman yksikön ruudulla on samat kaksi ehdokasta, ne putoavat pois muualta yksiköstä.",
+            "- Killer: jokainen rivi, sarake ja laatikko on yhteensä 45. Jos häkit ovat lähes kokonaan sisällä, loppu paljastaa viimeisen ruudun.",
+            "- Killer: joillakin summilla on vain yksi yhdistelmä - 3 kahdessa ruudussa on aina 1+2, 17 aina 8+9.",
+            "- X-sudoku: lävistäjät ovat kaksi lisäyksikköä - tarkista ne aikaisin, ensimmäinen numero löytyy usein sieltä."
           ]
         }
       ]
@@ -1156,7 +1316,8 @@
         "21",
         "pelimerkit",
         "jakaja",
-        "panos"
+        "panos",
+        "laamapankki"
       ],
       "sections": [
         {
@@ -1185,11 +1346,12 @@
           ]
         },
         {
-          "h": "Pelimerkit",
+          "h": "Laamamerkit",
           "body": [
-            "Aloitat 500 pelimerkillä; saldosi ja ennätyksesi tallennetaan pysyvästi ja säilyvät jokaisen uudelleenkäynnistyksen läpi.",
-            "Ennätys on korkein pelimerkkisaldo, jonka olet koskaan saavuttanut.",
-            "Alle 10 pelimerkillä olet vararikossa: [Enter] käynnistää uudelleen 500 tuoreella pelimerkillä - ennätys säilyy."
+            "Blackjackilla, Pokerilla ja Casinolla on yhteinen tili Laamapankissa: aloitat 1000 laamamerkillä, ja saldo tallentuu pysyvästi.",
+            "Panos veloitetaan heti kun kortit jaetaan - jos poistut kesken käden, menetät sen.",
+            "Paras tulos on blackjack-saldosi korkein arvo: 1000 plus kaikki, mitä olet voittanut ja hävinnyt blackjackissa. Ruletin, automaatin tai pokerin voitot eivät lasketa tähän.",
+            "Alle 10 merkillä rahat ovat lopussa: [Enter] ottaa pankkilainan ja täyttää tilin taas 1000:een. Lainat eivät lasketa saldoon."
           ]
         },
         {
@@ -1417,43 +1579,80 @@
         "kirjaimet",
         "vihreä",
         "keltainen",
-        "sanakirja"
+        "sanakirja",
+        "päivän sana",
+        "dordle",
+        "quordle",
+        "tilastot",
+        "jaa",
+        "värisokeus",
+        "sanan pituus"
       ],
       "sections": [
         {
           "h": "Pelin kulku",
           "body": [
-            "Arvaa piilotettu 5-kirjaiminen sana 6 yrityksellä. Jokaisen arvauksen jälkeen laatat vaihtavat väriä: vihreä = oikea kirjain oikeassa paikassa, keltainen = kirjain esiintyy mutta muualla, harmaa = kirjainta ei ole sanassa.",
-            "Toistuvat kirjaimet käsitellään oikein: kirjain merkitään keltaiseksi tai vihreäksi vain niin monta kertaa kuin se todella esiintyy vastauksessa.",
-            "Jokaisen arvauksen on oltava oikea sana: se tarkistetaan valitun kielen sanalistasta (kielestä riippuen 10 000-19 000 sallittua sanaa). Muut hylätään: rivi tärähtää hetken eikä arvaus kulu. Ratkaisut ovat aina saman kielen yleisiä sanoja."
+            "Arvaa piilotettu sana. Jokaisen arvauksen jälkeen ruudut vaihtavat väriä: vihreä = oikea kirjain oikeassa kohdassa, keltainen = kirjain on sanassa mutta muualla, harmaa = kirjainta ei ole sanassa.",
+            "Kaksoiskirjaimet käsitellään oikein: kirjain merkitään keltaiseksi tai vihreäksi vain niin monta kertaa kuin se todella esiintyy ratkaisussa.",
+            "Jokaisen arvauksen on oltava oikea sana - se tarkistetaan valitun kielen ja pituuden sanalistasta (4 000-19 000 hyväksyttyä sanaa kielestä ja pituudesta riippuen). Muut hylätään: rivi tärähtää hetken, eikä arvaus lasketa. Ratkaisut ovat aina saman kielen yleisiä sanoja - ei nimiä eikä loukkaavia sanoja."
           ]
         },
         {
           "h": "Pelitilat",
           "body": [
-            "Normaali: voit arvata minkä tahansa sallitun sanan - vihjeet ovat vain suosituksia.",
-            "Vaikea: löydetyt vihjeet on käytettävä uudelleen - vihreät kirjaimet pysyvät paikallaan ja keltaisten on esiinnyttävä uudestaan. Tila valitaan ennen aloitusta."
+            "Loputon: sana toisensa perään, kuhunkin 6 arvausta. Ensimmäinen sana, jota et saa ratkaistua, päättää pelin.",
+            "Päivän sana: yksi sana päivässä 6 arvauksella - sama kaikille jokaisella kielellä ja pituudella, tietokoneella ja selaimessa. Aloitettu päivän sana tallennetaan; sen jälkeen peli näyttää tuloksen, tilastot ja laskurin seuraavaan sanaan. Putkesi kasvaa vain, jos pelaat joka päivä.",
+            "Dordle: kaksi sanaa kerralla 7 arvauksella - jokainen arvaus koskee molempia ruudukoita. Näppäimistön näppäimet on jaettu: vasen puolisko on ruudukko 1, oikea puolisko ruudukko 2.",
+            "Quordle: neljä sanaa kerralla 9 arvauksella. Näppäimet on jaettu neljään osaan ja ne näyttävät kaikkien neljän ruudukon värit."
+          ]
+        },
+        {
+          "h": "Asetukset ennen aloitusta",
+          "body": [
+            "Ennen jokaista peliä avautuu asetusnäkymä - sen vieressä näet tilastosi valitulle tilalle ja pituudelle.",
+            "- Sanan pituus: 4, 5, 6 tai 7 kirjainta, jokaisella pituudella omat sanalistat.",
+            "- Vaikea tila: löydetyt vihjeet on käytettävä uudelleen - vihreät kirjaimet pysyvät paikoillaan, keltaisten on esiinnyttävä uudelleen. Dordlessa ja Quordlessa arvauksen on sovittava ainakin yhden ratkaisemattoman ruudukon vihjeisiin.",
+            "- Värisokeustila: oranssi vihreän ja sininen keltaisen tilalla - myös jaetussa tuloksessa.",
+            "Kaikki asetukset tallentuvat heti."
           ]
         },
         {
           "h": "Ohjaus",
           "body": [
-            "- Kirjoita kirjaimia A-Z, [Backspace] poistaa viimeisen, [Enter] tarkistaa rivin (vain 5 kirjaimella).",
-            "- Voit käyttää myös näytön näppäimistöä hiirellä; sen kirjaimet värittyvät sen mukaan, mitä olet tähän mennessä oppinut."
+            "- Kirjoita kirjaimia A-Z, [Backspace] poistaa viimeisen, [Enter] tarkistaa rivin.",
+            "- Näytön näppäimistö toimii myös hiirellä: QWERTZ saksalle, tšekille, sloveenille ja kroatialle, AZERTY ranskalle, muuten QWERTY. Sen näppäimet värittyvät sen mukaan, mitä olet jo selvittänyt.",
+            "- Oikean yläkulman liukusäädinkuvake palauttaa asetusnäkymään.",
+            "- Asetuksissa: [4]-[7] tai [Vasen] / [Oikea] = sanan pituus, [H] = vaikea tila, [F] = värisokeustila, [Enter] = aloita.",
+            "- Pelin jälkeen: [Enter] = uudestaan, [C] = jaa tulos, [S] = asetukset. [Välilyönti] piilottaa tuloksen, jotta voit katsoa ruudukoita."
           ]
         },
         {
-          "h": "Pisteet",
+          "h": "Pisteet ja tilastot",
           "body": [
-            "Peli jatkuu loputtomiin: jokainen ratkaistu sana antaa pisteitä - vähemmän arvauksia tarkoittaa enemmän (10-60). Uusi sana ilmestyy heti perään.",
-            "Ensimmäinen sana, jota et onnistu murtamaan, päättää pelin; keräämäsi pisteet ovat ennätyksesi."
+            "Loputon: jokainen ratkaistu sana tuo pisteitä - mitä vähemmän arvauksia, sitä enemmän (10-60). Ennätykseen lasketaan vain Loputon 5 kirjaimella; muilla pituuksilla on omat parhaat tuloksensa.",
+            "Tilastot tallennetaan kielen, pituuden ja tilan mukaan: pelatut pelit, voittoprosentti, nykyinen ja paras putki sekä arvausten jakauma pylväskaaviona - viimeisimmän ratkaisusi pylväs syttyy."
+          ]
+        },
+        {
+          "h": "Tuloksen jakaminen",
+          "body": [
+            "[C] tai Jaa-painike kopioi tuloksesi leikepöydälle emojiruudukkona - paljastamatta ratkaisua - joten voit liittää sen mihin tahansa keskusteluun. Tuloksen perässä oleva * tarkoittaa vaikeaa tilaa."
+          ]
+        },
+        {
+          "h": "Saavutukset",
+          "body": [
+            "- Selvännäkijä: arvaa sana enintään 2 yrityksellä.",
+            "- Sanatapa: ratkaise 7 päivän sanaa peräkkäin.",
+            "- Nelinkertainen nero: ratkaise kaikki neljä sanaa Quordlessa."
           ]
         },
         {
           "h": "Vinkit",
           "body": [
-            "- Avaa sanalla, jossa on monta eri, yleistä kirjainta.",
-            "- Käytä harmaita kirjaimia asioiden poissulkemiseen ja siirrä keltaiset kirjaimet uuteen paikkaan."
+            "- Aloita sanalla, jossa on monta erilaista ja yleistä kirjainta.",
+            "- Käytä harmaita kirjaimia poissulkemiseen ja siirrä keltaiset uuteen kohtaan.",
+            "- Dordlessa ja Quordlessa kannattaa ensin arvata sanoja, jotka antavat vihjeitä usealle ruudukolle kerralla."
           ]
         }
       ]
@@ -1552,7 +1751,8 @@
         "video poker",
         "vaihto",
         "pelimerkit",
-        "blindit"
+        "blindit",
+        "laamapankki"
       ],
       "sections": [
         {
@@ -1573,9 +1773,17 @@
           ]
         },
         {
-          "h": "Pelimerkit ja kädet",
+          "h": "Laamamerkit",
           "body": [
-            "Pelimerkit (aloitus 1000) säilyvät (mem.json). Ennätys on korkein pelimerkkimääräsi. Vararikko = uudelleenkäynnistys napsautuksella.",
+            "Pelataan Laamapankin laamamerkeillä - yhteinen tili Blackjackin ja Casinon kanssa (alku 1000, tallentuu pysyvästi).",
+            "Käden alussa tilisi on pöydällä pinona; pottiin menevä osuus veloitetaan heti. Jos poistut pöydästä kesken käden, osuutesi potista menetetään - loput palaavat tilille.",
+            "Paras tulos on pokerisaldosi korkein arvo: 1000 plus kaikki, mitä olet voittanut ja hävinnyt pokerissa. Muiden pelien voitot eivät lasketa tähän.",
+            "Rahat lopussa (alle 20:n ison blindin, Video Pokerissa alle 10) = pankkilaina yhdellä klikkauksella, tilillä on taas 1000."
+          ]
+        },
+        {
+          "h": "Kädet",
+          "body": [
             "Kätten järjestys: Korkea kortti < Pari < Kaksi paria < Kolmoset < Suora < Väri < Täyskäsi < Neloset < Värisuora < Kuningasvärisuora."
           ]
         }
@@ -1592,33 +1800,72 @@
         "matti",
         "linnoitus",
         "ohestalyönti",
-        "tekoäly"
+        "tekoäly",
+        "chess960",
+        "tehtävät",
+        "shakkikello",
+        "pgn"
       ],
       "sections": [
         {
           "h": "Näin pelataan",
           "body": [
             "Shakki täysillä säännöillä: kaikki nappuloiden siirrot, lyhyt ja pitkä linnoitus, ohestalyönti sekä sotilaan korotus kuningattareksi, torniksi, lähetiksi tai ratsuksi.",
-            "Peli päättyy shakkimattiin tai tasapeliin - patti, 50 siirron sääntö, kolminkertainen toisto tai riittämätön materiaali.",
-            "Yksinpelissä valitset vahvuuden ja värin asetusnäkymässä; kaksinpelissä vuorotellaan samalla koneella."
+            "Peli päättyy shakkimattiin, luovutukseen, ajan loppumiseen tai tasapeliin - pattiin, 50 siirron sääntöön, kolminkertaiseen toistoon, riittämättömään materiaaliin tai sopimukseen.",
+            "Kolme tilaa: peli tekoälyä vastaan, 2 pelaajaa samalla koneella (vain työpöytäversio) ja tehtävät.",
+            "Laudan vieressä näkyvät pelaajat kellon, lyötyjen nappuloiden ja materiaalitasapainon (esim. +2) kanssa ja niiden alla siirtolista standardinotaatiolla - vieritä hiiren rullalla."
           ]
         },
         {
           "h": "Ohjaus",
           "body": [
-            "- Hiiri: napsauta omaa nappulaa ja sitten kohderuutua. Mahdolliset ruudut ja viimeisin siirto on korostettu.",
+            "- Hiiri: napsauta omaa nappulaa tai vedä se suoraan kohderuutuun. Mahdolliset ruudut, viimeisin siirto ja shakissa oleva kuningas on korostettu.",
             "- Näppäimistö: [Nuolet] tai [WASD] siirtävät valintakehystä, [Väli] tai [Enter] valitsee ja siirtää.",
-            "- Korotuksessa neljä nappulaa tulee näkyviin - napsauta haluamaasi.",
-            "- Pelin jälkeen: [Enter] uusi peli, [S] takaisin asetuksiin (vain yksinpeli)."
+            "- Linnoitus: siirrä kuningas kohderuutuunsa tai oman tornisi päälle. Korotuksessa näkyy nappulavalinta.",
+            "- Painikkeet: [U] tai [Backspace] peru, [H] vihje, [F] käännä lauta, [O] tarjoa tasapeliä, [X] luovuta.",
+            "- Pelin jälkeen: [Enter] uusi peli (värit vaihtuvat), [S] asetukset, [P] tallenna peli PGN-tiedostona."
           ]
         },
         {
-          "h": "Tekoälyn vahvuudet ja pisteet",
+          "h": "Asetukset: taso, kello ja Chess960",
           "body": [
-            "Kuusi tasoa Aloittelijasta Mestariin: Aloittelija siirtää sattumanvaraisesti, keskitasot laskevat yhdestä kolmeen puolisiirtoa ja mokaavat tahallaan, Mestari laskee syvimmälle ja vie lyöntisarjat loppuun rauhoittumishaulla.",
-            "Jokaisella haulla on aika- ja solmubudjetti, joten käyttöliittymä ei koskaan jumitu.",
-            "Ennätys laskee voitot tekoälyä vastaan tässä istunnossa; kaksinpeliä ei pisteytetä.",
-            "Vinkki: kehitä nappulat ajoissa, linnoita ja aseta tornit avoimille linjoille."
+            "Kuusi tekoälyn tasoa Aloittelijasta Mestariin: Aloittelija siirtää sattumanvaraisesti, keskitasot vaihtelevat peliään tahallaan, Vaikea ja Mestari laskevat iteratiivisella syvennyksellä, transpositiotaululla ja rauhoittumishaulla ja tuntevat tavalliset avaukset. Tekoäly ajattelee pieninä paloina kuva kerrallaan - peli ei koskaan nyi.",
+            "Shakkikello: ei kelloa, 1+0, 3+2, 5+0 tai 10+5 (minuutit + siirtoa kohden lisättävät sekunnit). Kello käynnistyy ensimmäisen siirron jälkeen. Jonka aika loppuu, häviää - paitsi jos vastustaja ei enää voi tehdä mattia, jolloin tulos on tasapeli.",
+            "Chess960: yksi 960 satunnaisesta alkuasemasta, sen numero näkyy siirtolistan yläpuolella. Linnoituksessa kuningas päätyy silti g- tai c-linjalle ja torni f- tai d-linjalle; välissä olevien ruutujen on oltava tyhjiä, eikä kuningas saa kulkea shakin läpi."
+          ]
+        },
+        {
+          "h": "Apu, tasapeli ja pisteet",
+          "body": [
+            "Peru ottaa tekoälyä vastaan takaisin kaksi puolisiirtoa, vihje näyttää parhaan siirron sinisenä nuolena. Molemmat tekevät pelistä \"avustetun\": voitto ei silloin kerrytä ennätystä, tilastoja eikä saavutuksia.",
+            "Tasapelin tarjous: tekoäly hyväksyy vain, jos se pitää asemaansa korkeintaan tasaisena - muuten se kieltäytyy, ja uuden tarjouksen voi tehdä vasta muutaman siirron päästä.",
+            "Ennätys laskee avuttomat voittosi tekoälyä vastaan tässä istunnossa. Voitto Mestarista (taso 6) avaa saavutuksen \"Suurmestari\".",
+            "Pelin jälkeen sen voi tallentaa PGN-tiedostoksi (selaimessa: lataus ja leikepöytä) ja pelata uudelleen missä tahansa shakkiohjelmassa."
+          ]
+        },
+        {
+          "h": "Kaksinpeli",
+          "body": [
+            "Valkoinen ja musta siirtävät vuorotellen samalla koneella; kello ja Chess960 toimivat kuten tekoälyä vastaan. Asetuksen \"Käännä lauta joka siirron jälkeen\" ansiosta lauta kääntyy aina siirtovuorossa olevan puolelle.",
+            "Tasapelin tarjous kysytään vastustajalta, luovutus koskee siirtovuorossa olevaa puolta. Kaksinpeliä ei pisteytetä, eikä sitä ole selainversiossa."
+          ]
+        },
+        {
+          "h": "Tehtävät",
+          "body": [
+            "200 tehtävää viidellä tasolla: Matti 1:ssä, Matti 2:ssa, Matti 3:ssa, Taktiikka I ja Taktiikka II - 40 kutakin, helposta vaikeaan. Ratkaistut saavat rastin, ja edistyminen tallennetaan.",
+            "Ensin vastustaja pelaa viimeisen siirtonsa, sitten on sinun vuorosi. Väärä siirto perutaan lyhyen huomautuksen jälkeen, ja vastustajan vastaus tulee itsestään. Mattitehtävissä kelpaa jokainen siirto, joka tekee heti matin.",
+            "- [H] näytä ratkaisu (tehtävää ei silloin lasketa ratkaistuksi), [U] uudelleen, [N] seuraava tehtävä, [M] takaisin listaan.",
+            "25 ratkaistua tehtävää avaa saavutuksen \"Tehtävämestari\".",
+            "Lähde: tehtävät ovat lichess.orgin vapaasti käytettävästä tehtävätietokannasta (CC0), ja ne on tarkistettu omalla moottorillamme - kiitos, Lichess!"
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Kehitä nappulat ajoissa, linnoita ja aseta tornit avoimille linjoille.",
+            "- Etsi tehtävissä ensin shakit, lyönnit ja uhkaukset.",
+            "- Kellon kanssa älä mieti liian pitkään - 3+2:n ja 10+5:n lisäaika pelastaa monta loppupeliä."
           ]
         }
       ]
@@ -2256,6 +2503,379 @@
           "body": [
             "Kymmenen keilaa ovat ympyröitä, joilla on oikea massa: pallo osuu niihin ja ne kaatavat toisiaan. Strike on siis fysiikan eikä onnen tulos.",
             "Pelin summa on ennätyksesi; lisäksi tallennetaan paras tulos kullakin vaikeustasolla."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crossyroad",
+      "category": "games",
+      "game": "CrossyRoadGame",
+      "title": "Crossy Road",
+      "keywords": [
+        "kana",
+        "tie",
+        "joki",
+        "raiteet",
+        "juna",
+        "kotka",
+        "kolikot",
+        "hahmot",
+        "päivän",
+        "voxel"
+      ],
+      "sections": [
+        {
+          "h": "Ohjaus",
+          "body": [
+            "Loikkaa ruutu kerrallaan nuolinäppäimillä tai näppäimillä [W] [A] [S] [D]. [Välilyönti], [Enter] tai hiiren napsautus loikkaa eteenpäin.",
+            "- Jos painat seuraavaa suuntaa vielä ilmassa, loikkaat uudelleen heti laskeuduttuasi. Näppäimen pitäminen pohjassa ei loikkaa jatkuvasti.",
+            "Pelin päätyttyä: [Enter] = uudelleen, [F] = hahmot, [S] = asetukset."
+          ]
+        },
+        {
+          "h": "Nurmi, tiet, joet ja raiteet",
+          "body": [
+            "Reitti syntyy loputtomasti rivi riviltä - kulkukelpoinen polku löytyy aina.",
+            "- Nurmi: turvallinen, mutta puut ja kivet tukkivat tien.",
+            "- Tiet: autot ja rekat litistävät sinut. Mitä pidemmälle pääset, sitä nopeampaa ja tiheämpää liikenne on.",
+            "- Joet: voit seistä vain tukeilla ja lumpeenlehdillä. Tukit kuljettavat sinua - jos ajelehdit ruudun reunan yli, peli päättyy.",
+            "- Raiteet: kun punainen varoitusvalo vilkkuu ja kello soi, juna saapuu noin sekunnin kuluttua. Myöhemmin vastaan tulee kokonaisia asemia, joissa on jopa 5 raidetta peräkkäin."
+          ]
+        },
+        {
+          "h": "Kotka ja pisteet",
+          "body": [
+            "Kamera etenee hitaasti. Jos vitkastelet liian kauan tai perääntyt yli kolme riviä, kotka nappaa sinut - ruudun alareunan punainen reuna varoittaa ensin.",
+            "Pisteet = kaukaisin saavutettu rivi. Loputon-tilassa se on ennätyksesi (virstanpylväs: 150 riviä).",
+            "Rivistä 50 alkaen päivä ja yö vaihtelevat: yöllä ajovalot, junat ja kolikot loistavat."
+          ]
+        },
+        {
+          "h": "Kolikot ja hahmot",
+          "body": [
+            "Kolikoita on siroteltu pitkin reittiä, jättikolikko on 5 arvoinen. Kerätyt kolikot tallentuvat pysyvästi.",
+            "HAHMOT-välilehdellä ostat niillä uusia hahmoja: sammakko, possu, pingviini, kissa, kettu, laama, robotti, aave ja yksisarvinen (25–250 kolikkoa). Kana on sinun alusta asti.",
+            "- Saavutukset: \"Uusi tyyli\" ensimmäisestä ostetusta hahmosta, \"Raidehyppijä\" viidestä raiteesta peräkkäin."
+          ]
+        },
+        {
+          "h": "Tilat ja asetukset",
+          "body": [
+            "- Loputon: joka kierroksella uusi reitti, lasketaan ennätykseen.",
+            "- Päivän reitti: tänään sama kaikille (myös selainversiossa), oma päivän ennätys - ei lasketa ennätykseen.",
+            "Asetuksissa kytket varjot [H] ja päivän ja yön vaihtelun [N] päälle tai pois; Vasen/Oikea vaihtaa hahmojesi välillä."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash",
+      "category": "games",
+      "game": "GeometryDashGame",
+      "title": "Geometry Dash",
+      "keywords": [
+        "geometry dash",
+        "rytmi",
+        "kuutio",
+        "alus",
+        "pallo",
+        "ufo",
+        "aalto",
+        "portaali",
+        "ponnahdin",
+        "kolikot",
+        "tähdet",
+        "harjoitus",
+        "tallennuspiste",
+        "demoni",
+        "musiikki",
+        "kenttä"
+      ],
+      "sections": [
+        {
+          "h": "Näin pelaat",
+          "body": [
+            "Hahmosi kiitää itsestään oikealle - sinä päätät vain, milloin hypätään tai lennetään. Piikki, kuoppa tai suora törmäys palikkaan: räjähdys, ja hetken päästä seuraava yritys alkaa jo.",
+            "Kenttä on läpäisty, kun pääset maaliin. Yläreunan palkki näyttää edistymisen prosentteina, oikeassa yläkulmassa näkyvät tämän yrityksen kolikot, ja alussa yrityslaskuri leijuu kentässä.",
+            "Jokaisella kentällä on oma musiikkinsa; tausta, maa ja pallot sykkivät tahdissa. Musiikin, edistymispalkin ja automaattiset tallennuspisteet kytket päälle ja pois kentänvalinnassa kenttäkortin alta."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- [Välilyönti], [Ylös], [W], [Enter] tai hiiren vasen painike: hyppää tai lennä. Pohjassa pitäminen lasketaan jatkuvaksi painamiseksi - kuutio hyppää silloin uudelleen heti jokaisen laskeutumisen jälkeen.",
+            "- [R] aloittaa heti alusta, [Q] tai [Backspace] palaa kentänvalintaan, [Esc] keskeyttää.",
+            "- [P] kytkee harjoitustilan; siinä [Z] asettaa tallennuspisteen ja [X] poistaa viimeisimmän.",
+            "- Kentänvalinta: [Vasen]/[Oikea] selaavat, [1]–[8] siirtyvät suoraan kenttään, [Enter] aloittaa, [P] valitsee Normaalin tai Harjoituksen, [M] kytkee musiikin, [Tab] vaihtaa KENTÄT-välilehteen.",
+            "Jokainen painallus saa aikaleiman ja vaikuttaa täsmälleen siinä fysiikka-askeleessa (1/240 sekuntia), jossa se tapahtui - hyppy osuu kohdalleen, vaikka tietokone nykäisisi hetken."
+          ]
+        },
+        {
+          "h": "Viisi muotoa",
+          "body": [
+            "Portaalit muuttavat hahmosi - jokainen muoto lentää omalla tavallaan:",
+            "- Kuutio: painallus = hyppy. Se laskeutuu palikoiden päälle; jos se törmää niiden kylkeen, yritys päättyy.",
+            "- Alus: pidä pohjassa = nouse, päästä irti = laske.",
+            "- Pallo: napautus maassa kääntää painovoiman - sitten se vierii eteenpäin katossa.",
+            "- UFO: jokainen napautus on pieni siiveniskku, myös kesken lennon.",
+            "- Aalto: pidä pohjassa = viistosti ylös, päästä irti = viistosti alas. Se on pikkuruinen, mutta pienikin kosketus palikkaan hajottaa sen.",
+            "Alus, pallo, UFO ja aalto lentävät maan ja katon välisessä käytävässä - portaali määrää, kuinka korkea se on."
+          ]
+        },
+        {
+          "h": "Ponnahtimet, pallot ja portaalit",
+          "body": [
+            "- Ponnahtimet ovat maassa ja toimivat kosketuksesta: keltainen = korkea hyppy, pinkki = pieni hyppy, sininen = käännä painovoima.",
+            "- Pallot leijuvat ilmassa ja toimivat vain, jos painat koskiessasi niitä - samoin värein. Lyhyt puskuri antaa anteeksi hieman liian aikaisen painalluksen.",
+            "- Painovoimaportaalit: keltainen kääntää maailman ylösalaisin, sininen kääntää sen takaisin. Nopeusportaalit vaihtavat nopeudeksi 0,5x, 1x, 2x tai 3x.",
+            "- Lisäksi on puolikkaita palikoita, pieniä piikkejä, pohjattomia kuoppia ja värilaukaisimia, jotka vaihtavat taustan ja maan värin."
+          ]
+        },
+        {
+          "h": "8 kenttää",
+          "body": [
+            "- Lama Launch (Helppo, 1 tähti) ja Neon Steps (Helppo, 2 tähteä): hyppyjä, ponnahtimia, palloja ja ensimmäinen alus.",
+            "- Orbit Garden (Normaali, 3 tähteä): palloketjuja, ylösalaisin katossa ja alus tuplanopeudella.",
+            "- Gravity Tide (Vaikea, 4 tähteä) ja Skyline Rush (Vaikea, 5 tähteä): painovoimaportaaleja, pallo, UFO, kuoppia ja kolminkertainen nopeus.",
+            "- Crystal Caves (Vaikeampi, 7 tähteä) ja Wave Reactor (Hullu, 9 tähteä): kaikki viisi muotoa, kapeita portteja ja aaltotunneleita.",
+            "- Lama Inferno (Demoni, 10 tähteä): kolminkertainen nopeus ja kaikki kerralla.",
+            "Jokainen kenttä on todistetusti läpäistävissä kaikkine kolmine kolikkoineen: rakennusvaiheessa ratkaisija läpäisi sen pelin oikealla koodilla - ja ratkaisu toimii jopa 1/240 sekuntia siirrettynä."
+          ]
+        },
+        {
+          "h": "Harjoitustila",
+          "body": [
+            "Harjoitustilassa jatkat törmäyksen jälkeen viimeisimmästä tallennuspisteestä etkä alusta - vihreät vinoneliöt merkitsevät ne kenttään, ja musiikki vain jatkuu.",
+            "Automaattisia tallennuspisteitä syntyy noin kahden sekunnin välein (voi kytkeä pois), [Z] asettaa omia ja [X] poistaa viimeisimmän.",
+            "Harjoituksella on oma ennätyksensä, eikä se anna tähtiä eikä kolikoita."
+          ]
+        },
+        {
+          "h": "Tähdet, kolikot ja saavutukset",
+          "body": [
+            "Kun läpäiset kentän normaalitilassa, saat sen tähdet. Lisäksi jokaiseen kenttään on piilotettu kolme salaista kolikkoa, usein helpoimman reitin ulkopuolelle. Ne lasketaan heti, kun läpäiset kentän ne mukanasi - ja jokainen on yhden lisätähden arvoinen.",
+            "Ennätyksesi on tähtien kokonaismäärä (enintään 65), ja se voi vain kasvaa. Jokaisesta kentästä peli muistaa parhaan prosentin Normaalissa ja Harjoituksessa, löydetyt kolikot ja yritykset.",
+            "- Saavutukset: \"Tahdissa\" ensimmäisestä läpäistystä kentästä, \"Kolikkometsästäjä\" kentän kaikista kolmesta kolikosta, \"Demonintappaja\" Lama Infernosta - sekä virstanpylväs 20 tähden kohdalla.",
+            "KENTÄT-välilehdellä rakennat, pelaat ja jaat omia kenttiä - katso sivu \"Omat kentät (Geometry Dash)\"."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash-levels",
+      "category": "games",
+      "title": "Omat kentät (Geometry Dash)",
+      "keywords": [
+        "omat kentät",
+        "editori",
+        "kentät",
+        "ugc",
+        "rakentaminen",
+        "jakaminen",
+        "tuonti",
+        "vienti",
+        "vahvistettu",
+        "lamapgzlevel",
+        "geometry dash"
+      ],
+      "sections": [
+        {
+          "h": "Kentän rakentaminen",
+          "body": [
+            "Geometry Dashin kentänvalinnan KENTÄT-välilehdellä on oma kokoelmasi (enintään 60 kenttää). \"Uusi\" avaa kenttäeditorin, \"Muokkaa\" jatkaa olemassa olevaa kenttää.",
+            "Vasemmalla on ruudukollinen piirtoalue, oikealla paletti: ylhäällä Valitse ja Pyyhin, niiden alla kuusi ryhmää - Palikat, Vaarat, Ponnahtimet ja pallot, Portaalit, Nopeus ja Lisät (salaiset kolikot, värilaukaisin). [1]–[6] valitsevat ryhmät suoraan.",
+            "- Napsautus tai vetäminen asettaa valitun objektin, [R] kääntää sitä: piikit ja puolikkaat palikat neljään suuntaan, ponnahtimet ylös tai alas.",
+            "- Valitse-työkalulla vetäminen siirtää objektia ja [Del] poistaa sen. Oikea napsautus poistaa aina; oikealla painikkeella vetäminen, hiiren rulla, nuolinäppäimet tai [A]/[D] vierittävät.",
+            "- Alhaalla näkyvät valitun objektin arvot: muotoportaaleilla käytävän korkeus, värilaukaisimella kohde (tausta tai maa), väri ja häivytyksen kesto.",
+            "- Aivan alimmainen kaistale näyttää koko kentän yhdellä silmäyksellä - napsautus hyppää siihen kohtaan.",
+            "[U] kumoaa, [Y] tekee uudelleen, [G] näyttää tai piilottaa ruudukon, [S] tallentaa. [Esc] palaa takaisin - tallentamattomien muutosten kanssa vasta vahvistuksen jälkeen.",
+            "Enintään kolme kolikkoa kenttää kohden. Maali asettuu automaattisesti vähän viimeisen objektin taakse."
+          ]
+        },
+        {
+          "h": "Kentän asetukset",
+          "body": [
+            "Hammasratas avaa kentän asetukset: aloitusnopeus (0,5x–3x), aloitusmuoto, musiikkityyli (Vauhdikas, Chiptune, Unelmoiva, Synkkä tai ei musiikkia), tempo BPM:nä sekä taustan ja maan väri.",
+            "Nimi ja id ovat yläreunan otsikkorivillä. Id on avain: pienet kirjaimet, ei välilyöntejä, vain a-z, 0-9, - ja _ - ja samalla jaettaessa ehdotettu tiedostonimi."
+          ]
+        },
+        {
+          "h": "Testaus ja vahvistus",
+          "body": [
+            "\"Testi\" ([Enter]) pelaa kentän alusta, \"Tästä\" ([T]) nykyisestä kohdasta - sitä edeltävät portaalit lasketaan silloin läpäistyiksi. [Esc] palaa piirtoalueelle.",
+            "Jos läpäiset kenttäsi testissä aivan alusta ja ilman harjoitustilaa, se saa vihreän \"vahvistettu\"-merkin. Jokainen myöhempi muutos objekteihin, aloitusnopeuteen tai aloitusmuotoon poistaa merkin - värit, nimi ja musiikki eivät.",
+            "KENTÄT-välilehdellä \"Pelaa\" käynnistää valitun kentän tavalliseen tapaan, omalla ennätyksellä ja yrityslaskurilla."
+          ]
+        },
+        {
+          "h": "Jakaminen ja tuonti",
+          "body": [
+            "\"Jaa\" kysyy nimeäsi tekijänä ja tiedostonimeä. \"Vie nimellä\" avaa tallennusikkunan, \"Lataukset-kansioon\" tallentaa tiedoston suoraan Lataukset-kansioon.",
+            "Tiedoston pääte on .lamapgzlevel ja se sisältää JSONia. \"Tuo\" lukee sen takaisin (myös .json); jos id on jo käytössä, perään lisätään automaattisesti -2, -3 ... Vahvistusmerkki kulkee kentän mukana.",
+            "Nimi, id ja tekijä kulkevat kaikkien 14 kielen sanasuodattimen läpi tallennettaessa, vietäessä JA tuotaessa.",
+            "Kaikki tallentuu pelin viereen tiedostoon ugc.json - samaan tiedostoon kuin omat minigolfreikäsi. Selainversiossa kentät pysyvät selaimen tallennustilassa, ja jakaminen lataa tiedoston."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "battleship",
+      "category": "games",
+      "game": "BattleshipGame",
+      "title": "Battleship",
+      "keywords": [
+        "battleship",
+        "laivanupotus",
+        "laivat",
+        "laivasto",
+        "salvo",
+        "tutka",
+        "tekoäly",
+        "upota"
+      ],
+      "sections": [
+        {
+          "h": "Näin pelataan",
+          "body": [
+            "Kaksi laivastoa, kumpikin omalla 10x10-merellään: lentotukialus (5 ruutua), taistelulaiva (4), risteilijä (3), sukellusvene (3) ja hävittäjä (2). Pelaajat ampuvat vuorotellen vastustajan laudan ruutuun.",
+            "Vasemmalla on suuri kohdelauta tutkineen, oikealla omat vetesi ja molempien laivastojen yhteenveto. Valkoinen rengas tarkoittaa ohilaukausta, liekit osumaa. Kun laivan jokaiseen ruutuun on osuttu, se uppoaa ja sen ääriviivat paljastuvat.",
+            "Se, joka upottaa ensin kaikki viisi vihollisen laivaa, voittaa. Yhteenveto näyttää sen jälkeen kummankin puolen laukaukset, osumat, osumatarkkuuden, vuorot ja jäljellä olevat laivat."
+          ]
+        },
+        {
+          "h": "Laivaston sijoittaminen",
+          "body": [
+            "- Vedä laivat hiirellä oikealla olevasta telakasta laudalle - tai klikkaa laivaa, siirrä se ja klikkaa uudelleen. Sijoitetut laivat siirretään samalla tavalla.",
+            "- [R] tai hiiren oikea painike kääntää pitelemäsi laivan (tai hiiren alla olevan laivan).",
+            "- Esikatselu hehkuu vihreänä, kun sijainti on sallittu, ja punaisena, kun ei ole.",
+            "- Näppäimistö: nuolet siirtävät kehystä, [Space] nostaa ja laskee laivan, [Enter] ottaa seuraavan puuttuvan laivan.",
+            "- [X] sijoittaa satunnaisesti, [C] poistaa kaikki laivat. Kun laivasto on täydellinen, [Enter] tai \"Valmis!\" aloittaa taistelun.",
+            "Viimeisin asetelmasi ehdotetaan uudelleen seuraavalla kierroksella."
+          ]
+        },
+        {
+          "h": "Säännöt asetuksissa",
+          "body": [
+            "Kaikki kolme kytkintä tallentuvat heti ja koskevat molempia puolia:",
+            "- Laivat saavat koskettaa toisiaan: POIS vaatii jokaisen laivan ympärille vähintään yhden vapaan ruudun, myös vinottain. Kielletty alue korostuu sijoittaessa.",
+            "- Salvo: jokaisella vuorolla saat yhtä monta laukausta kuin sinulla on laivoja pinnalla - laivoja menettänyt ampuu vähemmän.",
+            "- Osuman jälkeen ammu uudelleen: jokainen osuma antaa laukauksen takaisin, joten ammut niin kauan kuin osut."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Hiiri: klikkaa ruutua kohdelaudalla.",
+            "- Näppäimistö: nuolet tai liikenäppäimesi tähtäävät, [Space] tai [Enter] ampuu.",
+            "- Kierroksen jälkeen: [Enter] = uusi kierros, [S] = takaisin asetuksiin. [Esc] keskeyttää."
+          ]
+        },
+        {
+          "h": "Tekoälyn tasot",
+          "body": [
+            "- Helppo ampuu satunnaisesti ja jatkaa osuman jälkeen vain joskus samaan kohtaan.",
+            "- Keskitaso etsii satunnaisesti, kokeilee osuman jälkeen viereisiä ruutuja ja jatkaa osumarivejä laivan päähän asti.",
+            "- Vaikea laskee jokaiselle ruudulle, monessako yhä mahdollisessa asennossa jäljellä olevat laivat voisivat peittää sen (kosketussääntö huomioiden), ja ampuu todennäköisimpään. Etsiessään se käyttää pienimpään jäljellä olevaan laivaan sovitettua shakkiruutukuviota.",
+            "Keskimäärin tekoäly tarvitsee noin 70 (Helppo), 60 (Keskitaso) ja 45 laukausta (Vaikea) koko laivaston upottamiseen - ja se tietää vain sen, minkä sinäkin näet."
+          ]
+        },
+        {
+          "h": "2 pelaajaa",
+          "body": [
+            "Moninpelissä pelaatte vuorotellen samalla tietokoneella. Ennen sijoittamista ja ennen jokaista vuoroa luovutusnäyttö peittää molemmat laivastot, kunnes seuraava pelaaja vahvistaa [Enter]-näppäimellä tai klikkauksella.",
+            "Se kertoo myös, montako laukausta ja osumaa viimeisin hyökkäys laivastoasi vastaan sisälsi. Verkkoversiossa pelataan vain tekoälyä vastaan."
+          ]
+        },
+        {
+          "h": "Pisteet ja saavutukset",
+          "body": [
+            "Jokainen voitto tekoälyä vastaan on yksi piste; ennätys on suurin voittomäärä yhden istunnon aikana. Kahden pelaajan tilaa ei pisteytetä.",
+            "- Vahingoittumaton laivasto: voita tekoäly menettämättä yhtään laivaa.",
+            "- Suuramiraali: upota vaikean tekoälyn laivasto."
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Levitä laivasi koko laudalle äläkä asettele kaikkia reunaan.",
+            "- Etsiessä riittää joka toinen ruutu (shakkiruudukko) - kun jäljellä on vain pitkiä laivoja, jopa joka kolmas.",
+            "- Ilman kosketussääntöä jokainen upotetun laivan ympärillä oleva ruutu on varmasti vettä."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "casino",
+      "category": "games",
+      "game": "CasinoGame",
+      "title": "Casino",
+      "keywords": [
+        "kasino",
+        "casino",
+        "ruletti",
+        "peliautomaatti",
+        "laama",
+        "jackpot",
+        "ilmaiskierrokset",
+        "pelimerkit",
+        "panokset"
+      ],
+      "sections": [
+        {
+          "h": "Laamapankki",
+          "body": [
+            "Casino, Blackjack ja Poker käyttävät samaa tiliä: laamamerkkejä (alku 1000). Panokset veloitetaan heti ja voitot hyvitetään - kaikki tallentuu pysyvästi.",
+            "Jokaisella pelillä on oma saldonsa. Casinon paras tulos on 1000 + Casino-saldon korkein arvo; Blackjackin tai Pokerin voitot eivät lasketa tähän.",
+            "Kun rahat loppuvat (alle pienimmän panoksen), saat pankkilainan: tili täytetään taas 1000:een. Lainat eivät lasketa mihinkään saldoon; niiden määrä näkyy oikeassa yläkulmassa."
+          ]
+        },
+        {
+          "h": "Ruletti - panosten asettaminen",
+          "body": [
+            "Eurooppalainen ruletti, jossa 37 lokeroa (0-36). Valitse merkin arvo alhaalta: 1, 5, 25, 100 tai 500 (näppäimet [1]-[5] tai hiiren rulla).",
+            "Vasen klikkaus asettaa merkin, oikea klikkaus poistaa sen. Klikkauskohta ratkaisee panoksen:",
+            "- Numeron keskikohta: numero, maksaa 35:1",
+            "- Kahden numeron välinen reuna: jako, 17:1",
+            "- Numerosarakkeen ulkoreuna: 3 numeron rivi, 11:1 (nollan vieressä myös 0-1-2 ja 0-2-3)",
+            "- Neljän numeron välinen kulma: kulma, 8:1 (nollan ulkopuolella: 0-1-2-3)",
+            "- Kahden sarakkeen välinen kulma ulkoreunalla: 6 numeron kuusikko, 5:1",
+            "- Sarake (2:1) ja tusina (2:1), punainen/musta, parillinen/pariton sekä pieni 1-18 / suuri 19-36 (kukin 1:1)",
+            "Ruletin vieressä näkyy, mikä panos on hiiren alla ja paljonko se maksaa."
+          ]
+        },
+        {
+          "h": "Ruletti - pyöritys",
+          "body": [
+            "[Enter] tai PYÖRITÄ aloittaa kierroksen: panos veloitetaan ja voittonumero arvotaan. Kuula kiertää spiraalina sisään ja putoaa juuri siihen lokeroon - [Välilyönti] tai klikkaus nopeuttaa.",
+            "Toista [R] asettaa edellisen kierroksen panokset uudelleen, Tuplaa [D] tuplaa kaikki panokset, Tyhjennä [Backspace] tyhjentää pöydän.",
+            "Ylhäällä näkyvät 12 viimeistä numeroa; voittaneet panokset näyttävät voittonsa."
+          ]
+        },
+        {
+          "h": "Laama-automaatti",
+          "body": [
+            "5 kiekkoa, 3 riviä, 10 voittolinjaa. Linjat maksavat vähintään 3 samasta symbolista vasemmalta oikealle; reunojen numerot näyttävät, mistä kukin linja kulkee (hiiri päälle = näytä linja).",
+            "Panos per linja: 1, 2, 5 tai 10 ([+]/[-] tai hiiren rulla) - aina pelataan kaikilla 10 linjalla.",
+            "- Laama = villi: korvaa kaikki symbolit paitsi kultakolikon. 5 laamaa linjalla on Laamajackpot.",
+            "- Kultakolikko = scatter: 3, 4 tai 5 kolikkoa missä tahansa maksaa 2, 10 tai 50 kertaa kokonaispanoksen ja antaa 10 ilmaiskierrosta, joilla kaikki voitot tuplataan. Ilmaiskierrokset voi laukaista uudelleen.",
+            "Voittotaulukko näyttää kaikki voitot nykyisellä panoksellasi. Palautusprosentti on 96,1 % - laskettu tarkasti kiekkojen nauhoista."
+          ]
+        },
+        {
+          "h": "Laama-automaatti - ohjaus",
+          "body": [
+            "[Välilyönti], [Enter] tai klikkaus kiekkoihin pyörittää; uusi painallus pyörimisen aikana nopeuttaa.",
+            "Automaattipyöritys: [A] aloittaa 10 kierrosta, [Shift]+[A] 25 kierrosta (tai Auto-painike), uusi painallus pysäyttää. [T] kytkee turbon, [I] avaa voittotaulukon.",
+            "Voitetut ilmaiskierrokset tallentuvat heti ja jatkuvat seuraavalla pelikerralla."
+          ]
+        },
+        {
+          "h": "Saavutukset",
+          "body": [
+            "- Casino-virstanpylväs: paras tulos 5000",
+            "- Napakymppi: voita ruletissa yhden numeron panoksella",
+            "- Laamajackpot: 5 laamaa samalla voittolinjalla"
           ]
         }
       ]

@@ -2,26 +2,32 @@
 """
 wordle_words.py
 ===============
-Wortlisten für das Wordle-Spiel, je Sprache.
+Wortlisten für das Wordle-Spiel, je Sprache und Wortlänge (4 bis 7).
 
 - Die Listen liegen als Textdateien im Ordner ``woordlistz/`` im Projektordner::
 
-      woordlistz/<sprache>/answers.txt   Lösungswörter (geläufige Wörter)
-      woordlistz/<sprache>/allowed.txt   alle erlaubten Rateworte (Obermenge)
+      woordlistz/<sprache>/answers.txt    Lösungswörter mit 5 Buchstaben
+      woordlistz/<sprache>/allowed.txt    alle erlaubten Rateworte (Obermenge)
+      woordlistz/<sprache>/answers4.txt   ... und dasselbe für 4, 6 und 7
+      woordlistz/<sprache>/allowed4.txt       Buchstaben
 
   Erzeugt werden sie von ``woordlistz/build_wordlists.py`` aus echten
   Wörterbüchern und Häufigkeitslisten - siehe ``woordlistz/README.md``.
-- Alle Wörter sind genau 5 Buchstaben lang und verwenden nur A-Z (keine
-  Umlaute/Akzente), damit sie mit einer schlichten A-Z-Bildschirmtastatur
-  eingegeben werden können. Umlaute und Akzente sind je Sprache umgeschrieben
-  (deutsch Ä->AE, dänisch Å->AA, sonst Akzent weg).
-- ``words_for(lang)`` liefert die Lösungswörter, ``allowed_for(lang)`` die
-  Menge aller erlaubten Rateworte. Beides wird einmal je Sprache geladen und
-  gecacht; ein robuster Filter wirft stray Einträge (falsche Länge/Zeichen)
-  heraus, statt das Spiel zu stören.
-- Fehlt der Ordner (oder eine Sprache darin), greift die eingebaute
-  Notfallliste ``FALLBACK`` - so läuft das Spiel auch dann, wenn eine ältere
-  .exe ohne die Wortlisten gebaut wurde.
+- Alle Wörter verwenden nur A-Z (keine Umlaute/Akzente), damit sie mit einer
+  schlichten A-Z-Bildschirmtastatur eingegeben werden können. Umlaute und
+  Akzente sind je Sprache umgeschrieben (deutsch Ä->AE, dänisch Å->AA, sonst
+  Akzent weg).
+- ``words_for(lang, length)`` liefert die Lösungswörter (alphabetisch - das
+  Tageswort hängt an dieser Reihenfolge, die Web-Version sortiert genauso),
+  ``allowed_for(lang, length)`` die Menge aller erlaubten Rateworte. Beides
+  wird einmal je Sprache und Länge geladen und gecacht; ein robuster Filter
+  wirft stray Einträge (falsche Länge/Zeichen) heraus, statt das Spiel zu
+  stören.
+- Fehlt der Ordner (oder eine Sprache darin), greift für 5 Buchstaben die
+  eingebaute Notfallliste ``FALLBACK`` - so läuft das Spiel auch dann, wenn
+  eine ältere .exe ohne die Wortlisten gebaut wurde. Für die anderen Längen
+  gibt es keine Notfallliste; ``has_length()`` sagt dem Spiel, ob es die
+  Länge anbieten kann.
 """
 
 import os
@@ -34,6 +40,10 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 _BASES = [os.path.join(os.path.dirname(_HERE), "woordlistz")]
 if getattr(sys, "_MEIPASS", None):
     _BASES.insert(0, os.path.join(sys._MEIPASS, "woordlistz"))
+
+# Wortlängen, die das Spiel anbietet (5 = klassisches Wordle).
+LENGTHS = (4, 5, 6, 7)
+DEFAULT_LENGTH = 5
 
 # Notfall-Lösungswörter, falls die Dateien fehlen (kurze kuratierte Listen).
 FALLBACK = {
@@ -108,15 +118,26 @@ FALLBACK = {
     ],
 }
 
-_cache = {}          # sprache -> (lösungswörter, erlaubte wörter)
+_cache = {}          # (sprache, länge) -> (lösungswörter, erlaubte wörter)
 
 
-def _valid(word):
-    """True für genau 5 Großbuchstaben A-Z."""
-    return len(word) == 5 and word.isascii() and word.isalpha()
+def _valid(word, length=DEFAULT_LENGTH):
+    """True für genau 'length' Großbuchstaben A-Z."""
+    return len(word) == length and word.isascii() and word.isalpha()
 
 
-def _read_list(lang, name):
+def file_names(length):
+    """(Lösungswörter, Rateworte) als Dateinamen ohne Endung.
+
+    5 Buchstaben behalten die alten Namen (answers/allowed), die anderen
+    Längen bekommen die Zahl angehängt (answers4, allowed7 ...).
+    """
+    if length == DEFAULT_LENGTH:
+        return "answers", "allowed"
+    return f"answers{length}", f"allowed{length}"
+
+
+def _read_list(lang, name, length):
     """Liest woordlistz/<lang>/<name>.txt (leere Liste, wenn es sie nicht gibt)."""
     for base in _BASES:
         path = os.path.join(base, lang, name + ".txt")
@@ -126,7 +147,7 @@ def _read_list(lang, name):
                 seen = set()
                 for line in f:
                     word = line.strip().upper()
-                    if _valid(word) and word not in seen:
+                    if _valid(word, length) and word not in seen:
                         seen.add(word)
                         out.append(word)
             if out:
@@ -136,36 +157,47 @@ def _read_list(lang, name):
     return []
 
 
-def _load(lang):
-    """(Lösungswörter, Menge der erlaubten Rateworte) für eine Sprache."""
-    if lang in _cache:
-        return _cache[lang]
-    answers = _read_list(lang, "answers")
-    allowed = set(_read_list(lang, "allowed"))
-    if not answers:
+def _load(lang, length=DEFAULT_LENGTH):
+    """(Lösungswörter, Menge der erlaubten Rateworte) einer Sprache/Länge."""
+    key = (lang, length)
+    if key in _cache:
+        return _cache[key]
+    ans_name, all_name = file_names(length)
+    answers = _read_list(lang, ans_name, length)
+    allowed = set(_read_list(lang, all_name, length))
+    if not answers and length == DEFAULT_LENGTH:
         # Keine Dateien: Notfallliste dieser Sprache, sonst die englische.
         answers = [w for w in FALLBACK.get(lang, FALLBACK["en"]) if _valid(w)]
+    # Sortiert, damit das Tageswort (Index in dieser Liste) am PC und im
+    # Browser dasselbe ist - die Dateien sind es ohnehin schon.
+    answers = sorted(answers)
     allowed.update(answers)
-    _cache[lang] = (answers, allowed)
-    return _cache[lang]
+    _cache[key] = (answers, allowed)
+    return _cache[key]
 
 
-def words_for(lang):
-    """Lösungswörter der Sprache (groß geschrieben, nur A-Z, ohne Dubletten)."""
-    return _load(lang)[0]
+def words_for(lang, length=DEFAULT_LENGTH):
+    """Lösungswörter (groß geschrieben, nur A-Z, alphabetisch, ohne Dubletten)."""
+    return _load(lang, length)[0]
 
 
-def allowed_for(lang):
+def allowed_for(lang, length=DEFAULT_LENGTH):
     """Menge aller erlaubten Rateworte - enthält immer die Lösungswörter."""
-    return _load(lang)[1]
+    return _load(lang, length)[1]
+
+
+def has_length(lang, length):
+    """True, wenn es für Sprache und Länge Lösungswörter gibt."""
+    return bool(words_for(lang, length))
 
 
 def is_allowed(lang, word):
-    """True, wenn 'word' als Rateversuch zugelassen ist."""
-    return word.upper() in allowed_for(lang)
+    """True, wenn 'word' als Rateversuch zugelassen ist (Länge = Wortlänge)."""
+    word = word.upper()
+    return word in allowed_for(lang, len(word))
 
 
-def counts_for(lang):
+def counts_for(lang, length=DEFAULT_LENGTH):
     """(Anzahl Lösungswörter, Anzahl Rateworte) - für Anzeige/Tests."""
-    answers, allowed = _load(lang)
+    answers, allowed = _load(lang, length)
     return len(answers), len(allowed)

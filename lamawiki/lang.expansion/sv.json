@@ -11,14 +11,16 @@
         "meny",
         "paus",
         "helskärm",
-        "sidofält"
+        "sidofält",
+        "flerspelarläge"
       ],
       "sections": [
         {
           "h": "Starta ett spel",
           "body": [
             "Du kan starta ett spel på tre sätt: från spellistan i det vänstra sidofältet, från spelrutnätet på startskärmen eller direkt från denna wiki via förspelsskärmen.",
-            "Före varje spel visas förspelsskärmen: där väljer du läget (t.ex. en spelare eller flerspelarläge) och når inställningarna och denna wiki."
+            "Före varje spel visas förspelsskärmen: där väljer du läget (t.ex. en spelare eller flerspelarläge) och når inställningarna och denna wiki.",
+            "Har ett spel många lägen eller är fönstret litet, hamnar Inställningar, Wiki och Tillbaka på en gemensam rad på förspelsskärmen - så att allt syns."
           ]
         },
         {
@@ -26,7 +28,7 @@
           "body": [
             "- [Esc] pausar och återupptar det pågående spelet - i menyer går den tillbaka.",
             "- [F11] slår på och av helskärm.",
-            "- Den gröna knappen Tillbaka till menyn avslutar spelet och sparar rekordet."
+            "- Den gröna knappen Tillbaka till menyn avslutar spelet och sparar rekordet - det gör även ett byte till ett annat spel via sidofältet."
           ]
         },
         {
@@ -39,8 +41,9 @@
         {
           "h": "Flerspelarläge",
           "body": [
-            "Snake, Pong, Air Hockey, Tic-Tac-Toe, Tetris (Versus) och Asteroids (co-op-duell) har ett lokalt 2-spelarläge - valbart på förspelsskärmen.",
-            "I en spelare styr båda tangentbindningarna samma figur; i flerspelarläge en var (standard: spelare 1 = WASD, spelare 2 = piltangenter eller IJKL - se inställningar)."
+            "20 spel har ett lokalt 2-spelarläge: Snake, Pong, Air Hockey, Tre i rad, Tetris (Versus), Asteroids (co-op-duell), Memory, Fyra i rad, Tankduell, Reversi, Yatzy, Damspel, Schack, Kvarn, Simon, Biljard, Minigolf, Pinball, Bowling och Battleship - valbart på förspelsskärmen.",
+            "I en spelare styr båda tangentbindningarna samma figur; i flerspelarläge en var (standard: spelare 1 = WASD, spelare 2 = piltangenter eller IJKL - se inställningar).",
+            "Tetris har dessutom Versus mot AI:n; i Battleship för två döljer en överlämningsskärm flottorna. Webbversionen är endast för en spelare."
           ]
         }
       ]
@@ -60,7 +63,8 @@
         "språk",
         "design",
         "utseende",
-        "tema"
+        "tema",
+        "fasta tangenter"
       ],
       "sections": [
         {
@@ -75,7 +79,8 @@
           "body": [
             "Tre förinställningar finns: WASD + piltangenter, WASD + IJKL och piltangenter + WASD.",
             "Varje enskild tangent kan bindas om: klicka på en rad eller bekräfta med Enter och tryck sedan på önskad tangent. [Esc] avbryter.",
-            "Bindningarna är separata för spelare 1 och spelare 2 och sparas permanent."
+            "Bindningarna är separata för spelare 1 och spelare 2 och sparas permanent.",
+            "Varje spelare kan binda om fem handlingar: upp, ned, vänster, höger och handling. Vissa spel har dessutom fasta tangenter - t.ex. reserv [C] och rotera åt vänster [Z] i Tetris eller ångra [U] i 2048, schack och sudoku. De fungerar bara om tangenten inte är bunden till en handling; spelets inställningstips och wikisida listar dem."
           ]
         },
         {
@@ -96,7 +101,7 @@
         {
           "h": "Språk",
           "body": [
-            "Gränssnittet finns på tyska, engelska, franska, spanska och portugisiska. Byt på inställningsskärmen eller via Språk i sidofältet - denna wiki byter också språk."
+            "Gränssnittet finns på 14 språk: tyska, engelska, franska, spanska, portugisiska, polska, turkiska, danska, norska, svenska, finska, tjeckiska, slovenska och kroatiska. Byt på inställningsskärmen eller via Språk i sidofältet - denna wiki byter också språk."
           ]
         }
       ]
@@ -111,30 +116,58 @@
         "rekord",
         "poäng",
         "framsteg",
-        "filer"
+        "filer",
+        "backup",
+        "säkerhetskopia",
+        "lamamarker",
+        "ugc"
       ],
       "sections": [
         {
           "h": "Rekord",
           "body": [
             "Varje spel sparar automatiskt sitt bästa värde när en omgång slutar. Ett nytt rekord visar en gyllene banner - plus konfettiregn.",
-            "Du ser de bästa värdena överallt: som en stjärna i sidofältslistan, i tickern på startskärmen och i statuskortet."
+            "Du ser de bästa värdena överallt: som en stjärna i sidofältslistan, i tickern på startskärmen och i statuskortet.",
+            "Lägen utan rekord - t.ex. Sprint och Ultra i Tetris, dagens bana i Crossy Road eller 2048 med ångra - visar ingen banner; spelet sparar själv deras bästa tider och dagens bästa."
           ]
         },
         {
           "h": "Vad sparas var?",
           "body": [
-            "- settings.json: ljud, volym, tangentbindningar, upplösning, FPS och spelalternativ (t.ex. Snake-läge, Sudoku-inställningar).",
-            "- mem.json: rekord, det valda språket och Sudoku-nivåframstegen.",
+            "- settings.json: ljud, volym, tangentbindningar, upplösning, FPS, design och spelalternativ (t.ex. Snake-läge, DAS/ARR i Tetris, sudokuvariant, Battleship-regler).",
+            "- mem.json: rekord, det valda språket, prestationer och statistik - plus framstegen i många spel i egna sektioner (se nedan).",
             "- mem-ngb.json: Snakes visuella mods (huvudfärg, rutnät, banner).",
             "- replay.json: de sparade replayerna från minigolf och bowling.",
+            "- ugc.json: dina egna minigolfbanor och Geometry Dash-banor (delas som .lamapgzmap eller .lamapgzlevel).",
             "De här filerna ligger direkt i spelmappen och kan bara raderas för att nollställa."
+          ]
+        },
+        {
+          "h": "Framsteg i mem.json",
+          "body": [
+            "Varje spel med framsteg har en egen sektion i mem.json, till exempel:",
+            "- sudoku: lösta nivåer med stjärnor och bästa tid, påbörjade pussel och dagens sudoku med svit.",
+            "- casino: kontot i Lamabanken - lamamarkerna för Blackjack, Poker och Casino med varje spels balans.",
+            "- crossy: insamlade mynt, köpta figurer och dagens bästa i Crossy Road.",
+            "- tetris: bästa tid i Sprint, bästa poäng i Ultra och Versus-facit mot AI:n.",
+            "- g2048: sparade 2048-partier och bästa poäng per brädstorlek och läge.",
+            "- chess: dina framsteg i schackets problemläge.",
+            "- geodash: bästa procent per bana (Normal och Träning), hittade mynt, försök och hopp i Geometry Dash.",
+            "- wordle: statistik per läge, språk och ordlängd, läget för dagens ord och de bästa resultaten.",
+            "Dessutom bland annat minigolf, pinball, bowling och lamatowerdef med sina bästa resultat."
+          ]
+        },
+        {
+          "h": "Automatisk säkerhetskopia",
+          "body": [
+            "mem.json och settings.json skrivs kraschsäkert: först till en tillfällig fil, sedan byts de ut i ett enda steg. Den föregående versionen ligger kvar som mem.json.bak eller settings.json.bak.",
+            "Skulle mem.json skadas läser spelet automatiskt säkerhetskopian - rekord, prestationer och lamamarker går alltså inte förlorade."
           ]
         },
         {
           "h": "Tips",
           "body": [
-            "Poäng sparas bara när du lämnar via Tillbaka till menyn eller när omgången slutar normalt - inte när fönstret stängs hårt mitt i spelet."
+            "Poäng sparas när en omgång slutar, när du lämnar via Tillbaka till menyn, när du väljer ett annat spel i sidofältet mitt i spelet eller när du avslutar samlingen. Bara en krasch eller en tvångsavslutning av programmet gör att den pågående omgången går förlorad."
           ]
         }
       ]
@@ -201,19 +234,20 @@
         {
           "h": "Översikt",
           "body": [
-            "Samlingen håller nu koll på dina framsteg: 69 prestationer och detaljerad statistik för alla 38 spel. Båda hittar du bakom knappen Prestationer & statistik i sidofältet; växla mellan de två flikarna med [Tab] eller ett klick."
+            "Samlingen håller koll på dina framsteg: 107 prestationer och detaljerad statistik för alla 46 spel. Båda hittar du bakom knappen Prestationer & statistik i sidofältet; växla mellan de två flikarna med [Tab] eller ett klick."
           ]
         },
         {
           "h": "Prestationer",
           "body": [
             "Det finns tre kategorier:",
-            "- Allmänt: mål för hela samlingen som startade partier, testade spel, total speltid, slagna rekord och segrar - plus små extra som Nattugglan (spela efter midnatt).",
-            "- Poängmilstolpar: ett rättvist målpoäng per spel, anpassat till spelets poängskala.",
-            "- Speciella ögonblick: gör AI:n schackmatt, en KNIFFEL, 2048-brickan, en Wordle på 2 försök och mer.",
+            "- Allmänt (23): mål för hela samlingen som startade partier, testade spel, total speltid, slagna rekord och segrar - plus små extra som Nattugglan (spela efter midnatt).",
+            "- Poängmilstolpar (37): ett rättvist målpoäng per spel, anpassat till spelets poängskala.",
+            "- Speciella ögonblick (47): gör AI:n schackmatt, en KNIFFEL, 2048- och 4096-brickan, en T-Spin Double och en Perfect Clear i Tetris, 25 lösta schackproblem, ditt första Killer Sudoku, fullträff på ett enda nummer i roulette, lama-jackpotten på spelautomaten, en seger i Battleship utan att förlora ett skepp och mer.",
             "Vid upplåsning dyker en gyllene avisering upp uppe till höger med en liten fanfar - även mitt i spelet.",
             "Befintliga data räknas: vid första starten efter uppdateringen tillgodoräknas dina gamla rekord automatiskt (utan aviserings-fyrverkeri).",
-            "Låsta prestationer visar en förloppsindikator, upplåsta sitt datum."
+            "Låsta prestationer visar en förloppsindikator, upplåsta sitt datum.",
+            "I 2048 och schack räknas partier med ångra eller tips varken till rekord eller prestationer - det är fritt fram att prova, men bara partier utan hjälp räknas."
           ]
         },
         {
@@ -497,28 +531,80 @@
         "bitar",
         "rader",
         "rotera",
+        "reserv",
+        "t-spin",
+        "sprint",
+        "ultra",
+        "maraton",
         "versus",
-        "stapel"
+        "skräp"
       ],
       "sections": [
         {
+          "h": "Lägen",
+          "body": [
+            "Solo: välj variant i inställningarna. Maraton pågår i all oändlighet och nivån stiger var tionde rad (startnivå 1-15) - bara Maraton räknas till rekordet.",
+            "- Sprint 40: rensa 40 rader så snabbt som möjligt; din bästa tid sparas.",
+            "- Ultra 2:00: ta så många poäng som möjligt på två minuter; ditt rekord sparas.",
+            "Mot AI: du spelar mot en AI med tre styrkor (Lätt, Medel, Svår). Den som rensar rader skickar skräp till andra sidan; den vars stapel först når taket är K.O. Ditt facit mot varje styrka sparas.",
+            "2 spelare (bara PC-versionen): samma sak för två vid ett tangentbord. Båda planerna får alltid samma ordning av bitar."
+          ]
+        },
+        {
           "h": "Kontroller",
           "body": [
-            "Vänster/höger flyttar biten, upp roterar den, ner är mjukt fall och åtgärdstangenten (standard: [Space] ) hårt fall."
+            "[Vänster] [Höger] flyttar biten - håller du tangenten glider den efter DAS och fortsätter i ARR-takt. [Upp] roterar åt höger, [Ner] är mjukt fall och handlingstangenten (standard: [Mellanslag] ) släpper biten direkt (hårt fall).",
+            "- [C] eller [Shift] lägger biten i reserven (en gång per bit), [Z] eller [Y] roterar åt vänster, [X] åt höger.",
+            "- 2 spelare: spelare 1 lägger i reserven med [Q] och roterar åt vänster med [E], spelare 2 lägger i reserven med höger [Shift] och roterar åt vänster med höger [Ctrl].",
+            "- De fasta tangenterna fungerar bara om du inte själv har kopplat dem till en handling.",
+            "I Sprint och Ultra börjar [R] om direkt. Efter spelet: [R] = igen, [S] = inställningar - tangenterna för hårt fall startar medvetet inte om något.",
+            "I inställningarna ställer du in DAS (fördröjning före kontinuerlig rörelse), ARR (takt därefter, 0 ms = direkt till kanten) och skuggbiten."
           ]
         },
         {
-          "h": "Lägen och poäng",
+          "h": "Moderna regler",
           "body": [
-            "Fulla rader ger poäng - flera på en gång ger mycket mer. Var 10:e rad ökar nivån och hastigheten.",
-            "Versus (flerspelarläge): två brädor sida vid sida, den vars stapel når toppen först förlorar."
+            "Bitarna kommer i påsar om 7: var och en av de sju bitarna dyker upp exakt en gång per sjugrupp. Förhandsvisningen visar de nästa 5.",
+            "Rotationen följer SRS: fastnar en bit provar spelet upp till fyra alternativa lägen (wall kicks) - så kan bitar till och med vridas runt kanter.",
+            "På botten väntar en bit 0,5 sekunder innan den låses. Varje förflyttning eller rotation nollställer tiden, högst 15 gånger per djup.",
+            "Game over: den nya biten får inte plats, en bit låses helt ovanför planen eller skräp trycker ut stapeln upptill."
           ]
         },
         {
-          "h": "Tips",
+          "h": "Poäng",
           "body": [
-            "- Håll en kolumn fri för den långa I-biten och rensa med fyrdubbla rader.",
-            "- Bygg platt: höga torn välter snabbt när hastigheten stiger."
+            "Alla värden gånger nivå: Single 100 · Double 300 · Triple 500 · Tetris 800.",
+            "T-Spin: utan rad 400 · Single 800 · Double 1200 · Triple 1600. T-Spin Mini: 100 · 200 · 400.",
+            "- Back-to-Back: en Tetris eller T-Spin direkt efter en annan räknas x1,5.",
+            "- Kombo: varje ytterligare rensning i följd ger 50 x kombo x nivå extra.",
+            "- Perfect Clear (helt tom plan): +800 / 1200 / 1800 / 2000, som Back-to-Back-Tetris +3200.",
+            "- Mjukt fall ger 1 poäng, hårt fall 2 poäng per rad."
+          ]
+        },
+        {
+          "h": "T-Spins",
+          "body": [
+            "En T-Spin räknas när T-biten låses efter en rotation och minst tre av de fyra hörnen runt dess mitt är upptagna (väggar och botten räknas också).",
+            "Är båda hörnen på sidan som nosen pekar mot upptagna är det en full T-Spin, annars en Mini. Vrider sig T:et in i hålet med den stora kicken (en kolumn åt sidan, två rader ner) räknas den alltid som full - så görs en T-Spin Triple.",
+            "Meddelanden ovanför planen visar T-SPIN, TETRIS, BACK-TO-BACK, KOMBO och PERFECT CLEAR."
+          ]
+        },
+        {
+          "h": "Versus och skräp",
+          "body": [
+            "Anfall: Double 1 · Triple 2 · Tetris 4 · T-Spin Single 2 · T-Spin Double 4 · T-Spin Triple 6 · Mini Double 1. Dessutom +1 för Back-to-Back, +1 till +5 för långa kombos och +10 för ett Perfect Clear.",
+            "Inkommande skräp syns i varningsstapeln till vänster om planen: gult väntar fortfarande, rött stiger upp med din nästa bit som inte rensar rader - högst 8 rader per bit, varje laddning med ett gemensamt hål.",
+            "Rensar du själv rader tar ditt anfall först ut det väntande skräpet; bara resten går till motståndaren.",
+            "Var 40:e sekund faller bitarna snabbare (upp till nivå 12)."
+          ]
+        },
+        {
+          "h": "Tips och prestationer",
+          "body": [
+            "- Bygg platt och håll en kolumn vid kanten fri för I:et - fyra rader på en gång ger poäng och anfall.",
+            "- Använd reserven för att spara ett I till en Tetris eller parkera en bit som inte passar.",
+            "- I versus lönar sig Back-to-Back: två Tetris i rad skickar 4 + 5 rader.",
+            "- Prestationer: Tetris! (4 rader på en gång), Snurra in (T-Spin Double), Skinande rent (Perfect Clear), Sprinter (Sprint 40 under 2:00). För två spelare finns inga prestationer."
           ]
         }
       ]
@@ -719,27 +805,76 @@
         "brickor",
         "skjuta",
         "slå ihop",
-        "siffror"
+        "siffror",
+        "svep",
+        "ångra",
+        "tidsattack",
+        "oändligt",
+        "storlek",
+        "fortsätt",
+        "4096"
       ],
       "sections": [
         {
-          "h": "Kontroller och regler",
+          "h": "Kontroller",
           "body": [
-            "Piltangenterna eller [W] [A] [S] [D] skjuter alla brickor i en riktning samtidigt. Lika tal slås ihop till sin summa; efter varje drag dyker en ny bricka upp.",
-            "Målet är 2048-brickan - därefter fortsätter det oändligt. Du förlorar när inget drag är möjligt."
+            "Pilar eller [W] [A] [S] [D] skjuter alla brickor åt ett håll samtidigt. Med mus eller pekplatta kan du också svepa: tryck, dra åt önskat håll och släpp.",
+            "Nedhållna tangenter upprepas inte - varje drag är en egen knapptryckning. Tryck under en animation sparas och utförs direkt efteråt.",
+            "[U] eller [Backspace] = ångra, [R] eller [N] = nytt parti, [Tab] = tillbaka till inställningarna. Extratangenterna fungerar bara om du inte själv har gett dem en handling."
           ]
         },
         {
-          "h": "Poäng",
+          "h": "Regler",
           "body": [
-            "Varje sammanslagning lägger till den nya brickans värde till din poäng."
+            "Lika tal som krockar slås ihop till sin summa. Varje bricka slås ihop högst en gång per drag: 2, 2, 4, 4 skjutet åt vänster blir 4, 8.",
+            "Efter varje giltigt drag dyker en ny bricka upp - oftast en 2, var tionde gång en 4. När inget drag är möjligt är partiet slut.",
+            "Från 4096 får brickorna egna färger från grönt via blått och violett till karmin (131072); ännu större brickor är mörka med gyllene siffror."
+          ]
+        },
+        {
+          "h": "Inställningar: storlek och läge",
+          "body": [
+            "Brädstorlek från 3x3 till 8x8 - små brädor är kluriga, stora ger plats för långa kedjor.",
+            "- Klassiskt: målet är 2048. Sedan frågar spelet om du vill spela vidare - [Enter] fortsätter, [N] startar ett nytt parti.",
+            "- Tidsattack: 3 minuter för så många poäng som möjligt. Klockan startar vid första draget; stapeln under brädet visar återstående tid.",
+            "- Oändligt: utan mål och utan avbrott, tills inga drag återstår."
+          ]
+        },
+        {
+          "h": "Ångra",
+          "body": [
+            "Väljs i inställningarna: av, 3 per parti eller obegränsat. Ångra tar tillbaka senaste draget inklusive poäng - även direkt efter game over.",
+            "Så fort du använder det räknas partiet som spelat \"med ångra\": det räknas varken till rekordet eller till brickprestationerna, och dess bästa resultat sparas separat."
+          ]
+        },
+        {
+          "h": "Spara och fortsätta",
+          "body": [
+            "Pågående parti sparas automatiskt för varje storlek och läge - efter dina drag och när du lämnar spelet.",
+            "Inställningarna visar då Fortsätt med poäng och drag från det sparade partiet. Nytt parti kastar det sparade partiet."
+          ]
+        },
+        {
+          "h": "Poäng, bästa och rekord",
+          "body": [
+            "Varje sammanslagning ger värdet av den nya brickan. Infokolumnen visar poäng, bästa, drag, största bricka, ångringar kvar och tid.",
+            "Bästa resultat och största bricka sparas per storlek och läge. Rekordet i 2048 räknas bara i 4x4 Klassiskt utan ångra."
+          ]
+        },
+        {
+          "h": "Prestationer",
+          "body": [
+            "- 2048!: skapa 2048-brickan.",
+            "- 4096!: skapa 4096-brickan.",
+            "Båda räknas på brädor upp till 4x4 och bara utan ångra - i alla lägen."
           ]
         },
         {
           "h": "Tips",
           "body": [
-            "- Parkera din största bricka i ett hörn och stör aldrig det hörnet.",
-            "- Skjut huvudsakligen i två riktningar - det håller brädet sorterat."
+            "- Parkera din största bricka i ett hörn och rör aldrig det hörnet.",
+            "- Skjut mest åt två håll - då förblir brädet sorterat.",
+            "- I tidsattack gäller det att vara snabb: slå ihop tidigt och håll brickorna samlade i ett hörn."
           ]
         }
       ]
@@ -791,43 +926,68 @@
         "anteckningar",
         "nivåer",
         "ledtrådar",
-        "logik"
+        "logik",
+        "killer",
+        "x-sudoku",
+        "dagens",
+        "stjärnor",
+        "ångra",
+        "kandidater"
       ],
       "sections": [
         {
+          "h": "Varianter",
+          "body": [
+            "I inställningen väljer du variant överst och svårighetsgrad under. Varje variant har 4 svårighetsgrader gånger 100 fasta nivåer, var och en med en enda lösning.",
+            "- Klassisk: det välkända 9x9. De 400 nivåerna är samma som före uppdateringen - avbockade nivåer förblir avbockade.",
+            "- X-sudoku: båda diagonalerna innehåller också varje siffra exakt en gång (diskret markerade).",
+            "- Killer: nästan inga givna siffror, men streckade burar. Siffrorna i en bur ger den lilla summan i hörnet och upprepas aldrig. Lätt har små burar och fler givna siffror, Expert stora burar.",
+            "- Mini 6x6: 2x3-rutor och bara siffrorna 1 till 6, med extra stora celler.",
+            "- Dagens sudoku ([T] eller kortet till höger): ett klassiskt pussel per dag, samma för alla - även i webbläsaren. Svårighetsgraden beror på veckodagen (måndag lätt, tisdag och onsdag normal, torsdag, fredag och söndag svår, lördag expert). Lös det varje dag och bygg en svit."
+          ]
+        },
+        {
           "h": "Kontroller",
           "body": [
-            "Välj en ruta med piltangenterna, [W] [A] [S] [D] eller ett musklick - sifferpanelen till höger fungerar helt med musen.",
-            "- [1] till [9] anger en siffra (numeriskt tangentbord fungerar också).",
-            "- [0], Backspace eller högerklick raderar.",
-            "- [N] växlar anteckningsläge, [H] ger en ledtråd, [R] startar om nivån, [Q] öppnar nivåvalet.",
-            "- Efter att spelet slutar döljer [A] bannern och visar hela lösningen."
+            "Välj en ruta med piltangenterna, [W] [A] [S] [D] eller ett musklick. Sifferknapparna till höger fungerar helt med musen och visar under varje siffra hur många som fortfarande saknas.",
+            "- [1] till [9] skriver in en siffra, [0], Delete eller högerklick raderar.",
+            "- [U] eller [Z] ångrar, [Y] gör om.",
+            "- [N] slår på och av anteckningar, [C] fyller i alla kandidater automatiskt, [H] ger en ledtråd.",
+            "- [M] färgar rutan med en färgmarkör (reglaget \"Färgmarkörer\" i inställningen).",
+            "- [R] börjar om pusslet, [Q] öppnar nivåvalet, [A] visar lösningen när spelet är slut.",
+            "Inmatning \"Siffra först\" (inställning, tangent [I]): välj först en siffra, klicka sedan på hur många rutor du vill eller sätt den med mellanslag.",
+            "I inställningen: [1] till [4] svårighetsgrad, [V] variant, [T] dagens sudoku, [F] felgräns, pilar + Enter startar en nivå. Bokstavstangenterna fungerar bara om de inte är tilldelade en åtgärd i alternativen."
           ]
         },
         {
-          "h": "Nivåer och lägen",
+          "h": "Lägen och poäng",
           "body": [
-            "400 fasta nivåer: 4 svårighetsgrader (lätt/normal/svår/expert) gånger 100 nivåer. Varje nivå är samma pussel överallt och har en unik lösning; lösta nivåer bockas av.",
-            "Spelläget bestämmer hjälpmedlen och poängmultiplikatorn:",
-            "- Klassiskt x2.0: inga hjälpmedel, rent som på papper.",
-            "- Anteckningar x1.5: plus blyertsanteckningar.",
-            "- Komfort x1.0: fel blir röda direkt, konfliktmarkering, korrekta inmatningar låses fast.",
-            "- Assistent x0.7: dessutom upp till 3 ledtrådar."
+            "Spelläget bestämmer hjälpen och poängmultiplikatorn:",
+            "- Klassisk x2,0: ingen hjälp, rent som på papper.",
+            "- Anteckningar x1,5: plus blyertsanteckningar och automatiska kandidater.",
+            "- Komfort x1,0: fel genast röda, konflikter och felaktiga bursummor markerade, rätta siffror låses.",
+            "- Assistans x0,7: dessutom upp till 3 ledtrådar.",
+            "Varje inmatning kontrolleras direkt. Med 3-felsgränsen avslutar det tredje felet spelet - ångra tar inte bort ett fel.",
+            "Poäng = (grundvärde för variant och svårighetsgrad minus tid, fel och ledtrådar) gånger multiplikatorn. Alla varianter och dagens sudoku räknas till rekordet."
           ]
         },
         {
-          "h": "Fel och poäng",
+          "h": "Stjärnor och sparat spel",
           "body": [
-            "Varje inmatning kontrolleras mot lösningen direkt. Med 3-felsgränsen aktiv (inställningar, tangent [F] ) avslutar det tredje felet spelet.",
-            "Poäng = (svårighetsbas minus tid, fel och ledtrådar) gånger lägets multiplikator."
+            "Varje nivå ger upp till 3 stjärnor: 1 för att lösa den, 2 utan fel och ledtrådar, 3 dessutom under svårighetsgradens måltid (står i nivåinfon).",
+            "Nivåvalet visar stjärnor, bästa tid och lösta nivåer; ett hundöra markerar påbörjade pussel.",
+            "Påbörjade pussel sparas automatiskt - när du lämnar, när du går tillbaka till nivåvalet och regelbundet medan du spelar - och fortsätter nästa gång. Byter du läge räknas den lägre multiplikatorn.",
+            "Prestationer: \"Burkämpe\" för ditt första Killer-sudoku, \"Stjärnsamlare\" för 30 nivåer med 3 stjärnor."
           ]
         },
         {
           "h": "Tips",
           "body": [
-            "- Börja med rader, kolumner och rutor som redan innehåller många siffror.",
-            "- Anteckna kandidater i par: om två rutor delar samma två kandidater faller de bort överallt annars.",
-            "- I klassiskt läge ta det lugnt: varje misstag räknas direkt, även utan en röd markering."
+            "- Börja med rader, kolumner och rutor där det redan står många siffror.",
+            "- Anteckna kandidater i par: har två rutor i en enhet samma två kandidater, försvinner de från resten av enheten.",
+            "- Killer: varje rad, kolumn och ruta blir 45. Ligger burar nästan helt inuti avslöjar resten den sista cellen.",
+            "- Killer: vissa summor har bara en kombination - 3 i två celler är alltid 1+2, 17 alltid 8+9.",
+            "- X-sudoku: diagonalerna är två extra enheter - kolla dem tidigt, den första siffran gömmer sig ofta där."
           ]
         }
       ]
@@ -1156,7 +1316,8 @@
         "21",
         "marker",
         "dealer",
-        "insats"
+        "insats",
+        "lamabanken"
       ],
       "sections": [
         {
@@ -1185,11 +1346,12 @@
           ]
         },
         {
-          "h": "Marker",
+          "h": "Lamamarker",
           "body": [
-            "Du börjar med 500 marker; ditt saldo och rekord sparas permanent och överlever varje omstart.",
-            "Rekordet är det högsta markersaldo du någonsin nått.",
-            "Under 10 marker är du pank: [Enter] startar om med 500 nya marker - rekordet består."
+            "Blackjack, Poker och Casino delar ett konto hos Lamabanken: du börjar med 1000 lamamarker och saldot sparas permanent.",
+            "Insatsen dras så fort korten delas ut - lämnar du en pågående hand är den förlorad.",
+            "Rekordet är toppen av din blackjackbalans: 1000 plus allt du har vunnit och förlorat i blackjack. Vinster i roulett, på automaten eller i poker räknas inte här.",
+            "Under 10 marker är du pank: [Enter] tar ett banklån och fyller på kontot till 1000 igen. Lån räknas inte in i balansen."
           ]
         },
         {
@@ -1417,43 +1579,80 @@
         "bokstäver",
         "grön",
         "gul",
-        "ordlista"
+        "ordlista",
+        "dagens ord",
+        "dordle",
+        "quordle",
+        "statistik",
+        "dela",
+        "färgblind",
+        "ordlängd"
       ],
       "sections": [
         {
           "h": "Så spelar du",
           "body": [
-            "Gissa det dolda 5-bokstavsordet inom 6 försök. Efter varje gissning ändrar rutorna färg: grönt = rätt bokstav på rätt plats, gult = bokstaven finns men någon annanstans, grått = bokstaven finns inte i ordet.",
-            "Upprepade bokstäver hanteras korrekt: en bokstav markeras gul eller grön bara så många gånger som den faktiskt förekommer i svaret.",
-            "Varje gissning måste vara ett riktigt ord: den kontrolleras mot ordlistan för det valda språket (10 000 till 19 000 tillåtna gissningar beroende på språk). Annat avvisas: raden skakar till och gissningen räknas inte. Lösningarna är alltid vanliga ord på samma språk."
+            "Gissa det dolda ordet. Efter varje gissning byter rutorna färg: grön = rätt bokstav på rätt plats, gul = bokstaven finns i ordet men på en annan plats, grå = bokstaven finns inte i ordet.",
+            "Dubbla bokstäver hanteras korrekt: en bokstav blir bara gul eller grön så många gånger som den faktiskt finns i lösningen.",
+            "Varje gissning måste vara ett riktigt ord - den kontrolleras mot ordlistan för valt språk och vald längd (4 000 till 19 000 tillåtna ord beroende på språk och längd). Allt annat avvisas: raden skakar kort och gissningen räknas inte. Lösningarna är alltid vanliga ord på samma språk - utan namn och utan stötande ord."
           ]
         },
         {
           "h": "Lägen",
           "body": [
-            "Normalt: du får gissa vilket tillåtet ord som helst - ledtrådarna är bara förslag.",
-            "Svårt: hittade ledtrådar måste användas vidare - gröna bokstäver stannar kvar, gula måste dyka upp igen. Läget väljs före start."
+            "Oändlig: ett ord i taget med 6 försök vardera. Det första ordet du inte klarar avslutar spelet.",
+            "Dagens ord: ett ord om dagen med 6 försök - samma för alla på varje språk och i varje längd, på datorn och i webbläsaren. Ett påbörjat dagens ord sparas; efteråt visar spelet resultat, statistik och nedräkning till nästa ord. Din svit växer bara om du spelar varje dag.",
+            "Dordle: två ord samtidigt på 7 försök - varje gissning gäller för båda brickorna. Tangenterna på skärmtangentbordet är delade: vänster halva bricka 1, höger halva bricka 2.",
+            "Quordle: fyra ord samtidigt på 9 försök. Tangenterna är delade i fyra och visar färgerna för alla fyra brickorna."
+          ]
+        },
+        {
+          "h": "Inställningar före start",
+          "body": [
+            "Före varje spel visas inställningsskärmen - bredvid ser du din statistik för valt läge och vald längd.",
+            "- Ordlängd: 4, 5, 6 eller 7 bokstäver, varje längd med egna ordlistor.",
+            "- Svårt läge: hittade ledtrådar måste användas igen - gröna bokstäver stannar på sin plats, gula måste finnas med igen. I Dordle och Quordle måste en gissning passa ledtrådarna på minst en olöst bricka.",
+            "- Färgblindläge: orange i stället för grönt och blått i stället för gult - även i det delade resultatet.",
+            "Alla inställningar sparas direkt."
           ]
         },
         {
           "h": "Kontroller",
           "body": [
-            "- Skriv bokstäver A-Z, [Backspace] tar bort den sista, [Enter] kontrollerar raden (bara med 5 bokstäver).",
-            "- Du kan också använda skärmtangentbordet med musen; dess bokstäver färgas efter vad du har lärt dig hittills."
+            "- Skriv bokstäver A-Z, [Backspace] tar bort den sista, [Enter] kontrollerar raden.",
+            "- Skärmtangentbordet fungerar även med musen: QWERTZ för tyska, tjeckiska, slovenska och kroatiska, AZERTY för franska, annars QWERTY. Tangenterna färgas efter det du har listat ut.",
+            "- Reglage-ikonen uppe till höger tar dig tillbaka till inställningarna.",
+            "- I inställningarna: [4] till [7] eller [Vänster] / [Höger] = ordlängd, [H] = svårt läge, [F] = färgblindläge, [Enter] = starta.",
+            "- Efter spelet: [Enter] = igen, [C] = dela resultat, [S] = inställningar. [Mellanslag] döljer resultatet så att du kan titta på brickorna."
           ]
         },
         {
-          "h": "Poäng",
+          "h": "Poäng och statistik",
           "body": [
-            "Det fortsätter oändligt: varje löst ord ger poäng - färre gissningar betyder mer (10 till 60). Ett nytt ord dyker upp direkt efter.",
-            "Det första ordet du INTE lyckas knäcka avslutar spelet; poängen du samlat är ditt rekord."
+            "Oändlig: varje löst ord ger poäng - ju färre försök, desto fler (10 till 60). Bara Oändlig med 5 bokstäver räknas till rekordet; de andra längderna har egna bästa resultat.",
+            "Statistiken sparas per språk, längd och läge: spelade spel, vinstprocent, nuvarande och bästa svit samt fördelningen av försök som stapeldiagram - stapeln för din senaste lösning lyser upp."
+          ]
+        },
+        {
+          "h": "Dela resultatet",
+          "body": [
+            "[C] eller knappen Dela kopierar ditt resultat till urklipp som ett emoji-rutnät - utan att avslöja lösningen - så att du kan klistra in det i vilken chatt som helst. En * efter resultatet betyder svårt läge."
+          ]
+        },
+        {
+          "h": "Prestationer",
+          "body": [
+            "- Synsk: gissa ett ord på högst 2 försök.",
+            "- Ordvana: lös 7 dagens ord i rad.",
+            "- Fyrdubbelt geni: lös alla fyra orden i Quordle."
           ]
         },
         {
           "h": "Tips",
           "body": [
-            "- Öppna med ett ord som har många olika, vanliga bokstäver.",
-            "- Använd grå bokstäver för att utesluta och flytta gula bokstäver till en ny position."
+            "- Börja med ett ord med många olika, vanliga bokstäver.",
+            "- Använd grå bokstäver för att utesluta och flytta gula bokstäver till en ny plats.",
+            "- I Dordle och Quordle lönar det sig att först gissa ord som ger ledtrådar till flera brickor samtidigt."
           ]
         }
       ]
@@ -1552,7 +1751,8 @@
         "video poker",
         "draw",
         "marker",
-        "blinds"
+        "blinds",
+        "lamabanken"
       ],
       "sections": [
         {
@@ -1573,9 +1773,17 @@
           ]
         },
         {
-          "h": "Marker och händer",
+          "h": "Lamamarker",
           "body": [
-            "Markerna (start 1000) består (mem.json). Rekordet är ditt högsta markerantal. Pank = starta om med ett klick.",
+            "Man spelar med lamamarker från Lamabanken - ett konto som delas med Blackjack och Casino (start 1000, sparas permanent).",
+            "I början av en hand ligger ditt konto på bordet som din stack; det som går till potten dras direkt. Lämnar du bordet mitt i en hand är din del av potten förlorad - resten går tillbaka till kontot.",
+            "Rekordet är toppen av din pokerbalans: 1000 plus allt du har vunnit och förlorat i poker. Vinster i andra spel räknas inte här.",
+            "Pank (mindre än big blind på 20, i Video Poker under 10) = banklån med ett klick, kontot står åter på 1000."
+          ]
+        },
+        {
+          "h": "Händer",
+          "body": [
             "Handordning: Högt kort < Par < Två par < Triss < Stege < Färg < Kåk < Fyrtal < Färgstege < Royal flush."
           ]
         }
@@ -1592,33 +1800,72 @@
         "matt",
         "rockad",
         "en passant",
-        "ai"
+        "ai",
+        "chess960",
+        "problem",
+        "schackklocka",
+        "pgn"
       ],
       "sections": [
         {
           "h": "Så spelar du",
           "body": [
             "Schack med hela regeluppsättningen: alla pjäsers drag, kort och lång rockad, en passant och bondeförvandling med val av dam, torn, löpare eller springare.",
-            "Partiet slutar med schackmatt eller remi - genom patt, 50-dragsregeln, trefaldig upprepning eller otillräckligt material.",
-            "I enspelarläget väljer du styrka och färg i inställningsvyn; två spelare turas om vid samma dator."
+            "Partiet slutar med schackmatt, uppgivelse, förlust på tid eller remi - genom patt, 50-dragsregeln, trefaldig upprepning, otillräckligt material eller överenskommelse.",
+            "Tre lägen: parti mot AI:n, 2 spelare vid samma dator (endast på datorn) och problem.",
+            "Bredvid brädet syns spelarna med klocka, slagna pjäser och materialbalans (t.ex. +2), och under dem draglistan i standardnotation - rulla med mushjulet."
           ]
         },
         {
           "h": "Styrning",
           "body": [
-            "- Mus: klicka på en av dina pjäser och sedan på målrutan. Möjliga rutor och senaste draget är markerade.",
+            "- Mus: klicka på en av dina pjäser eller dra den direkt till målrutan. Möjliga rutor, senaste draget och en kung i schack är markerade.",
             "- Tangentbord: [Piltangenter] eller [WASD] flyttar ramen, [Mellanslag] eller [Enter] väljer och drar.",
-            "- Vid förvandling visas de fyra pjäserna - klicka bara.",
-            "- Efter partiet: [Enter] nytt parti, [S] tillbaka till inställningarna (endast enspelare)."
+            "- Rockad: flytta kungen till målrutan eller upp på ditt eget torn. Vid förvandling visas pjäsvalet.",
+            "- Knappar: [U] eller [Backspace] ångra, [H] tips, [F] vänd brädet, [O] erbjud remi, [X] ge upp.",
+            "- Efter partiet: [Enter] nytt parti (färgerna byts), [S] inställningar, [P] spara partiet som PGN."
           ]
         },
         {
-          "h": "AI-styrkor och poäng",
+          "h": "Inställningar: styrka, klocka och Chess960",
           "body": [
-            "Sex nivåer från Nybörjare till Mästare: Nybörjare drar slumpmässigt, mellannivåerna söker ett till tre halvdrag djupt och missar med flit, Mästare söker djupast och spelar slag färdigt i en lugnhetssökning.",
-            "Varje sökning har en tids- och nodbudget så att gränssnittet aldrig fryser.",
-            "Poängen räknar dina vinster mot AI:n under sessionen; tvåspelarläget räknas inte.",
-            "Tips: utveckla pjäserna tidigt, rockera och ställ tornen på öppna linjer."
+            "Sex AI-nivåer från Nybörjare till Mästare: Nybörjare drar slumpmässigt, mellannivåerna varierar sitt spel med flit, Svår och Mästare räknar med iterativ fördjupning, transpositionstabell och lugnhetssökning och kan vanliga öppningar. AI:n tänker i små bitar per bildruta - spelet hackar aldrig.",
+            "Schackklocka: ingen, 1+0, 3+2, 5+0 eller 10+5 (minuter + sekunder som läggs till per drag). Den startar efter första draget. Den som får slut på tid förlorar - utom när motståndaren inte längre kan göra matt, då blir det remi.",
+            "Chess960: en av 960 slumpade utgångsställningar, numret står ovanför draglistan. Vid rockad hamnar kungen ändå på g eller c och tornet på f eller d; rutorna emellan måste vara fria och kungen får inte passera en ruta i schack."
+          ]
+        },
+        {
+          "h": "Hjälp, remi och poäng",
+          "body": [
+            "Ångra tar tillbaka två halvdrag mot AI:n, tipset visar det bästa draget som en blå pil. Båda gör partiet \"med hjälp\": en vinst räknas då inte för rekord, statistik eller prestationer.",
+            "Erbjud remi: AI:n accepterar bara om den bedömer sin ställning som högst jämn - annars avböjer den, och du kan erbjuda igen först några drag senare.",
+            "Poängen räknar dina vinster utan hjälp mot AI:n under sessionen. En vinst mot Mästare (nivå 6) låser upp prestationen \"Stormästare\".",
+            "Efter partiet kan du spara det som PGN-fil (i webbläsaren: nedladdning och urklipp) och spela upp det i valfritt schackprogram."
+          ]
+        },
+        {
+          "h": "Två spelare",
+          "body": [
+            "Vit och svart turas om vid samma dator; klocka och Chess960 som mot AI:n. Med \"Vänd brädet efter varje drag\" i inställningarna vrids brädet mot den som står på tur.",
+            "Erbjud remi frågar motståndaren, uppgivelse gäller sidan som står på tur. Tvåspelarpartier ger inga poäng och finns inte i webbläsarversionen."
+          ]
+        },
+        {
+          "h": "Problem",
+          "body": [
+            "200 problem i fem nivåer: Matt i 1, Matt i 2, Matt i 3, Taktik I och Taktik II - 40 i varje, från lätt till svårt. Lösta problem får en bock och framstegen sparas.",
+            "Först spelar motståndaren sitt senaste drag, sedan är det din tur. Ett felaktigt drag tas tillbaka efter en kort kommentar och motståndarens svar kommer automatiskt. I mattproblem räknas varje drag som ger matt direkt.",
+            "- [H] visa lösningen (problemet räknas då inte som löst), [U] försök igen, [N] nästa problem, [M] tillbaka till listan.",
+            "25 lösta problem låser upp prestationen \"Problemlösaren\".",
+            "Källa: problemen kommer från lichess.orgs fritt användbara problemdatabas (CC0) och har kontrollerats med vår egen motor - tack, Lichess!"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Utveckla pjäserna tidigt, rockera och ställ tornen på öppna linjer.",
+            "- Leta i problem först efter schackar, slag och hot.",
+            "- Med klocka ska du inte fundera för länge - tillägget i 3+2 och 10+5 räddar många slutspel."
           ]
         }
       ]
@@ -2256,6 +2503,380 @@
           "body": [
             "De tio käglorna är cirklar med riktig massa: klotet träffar dem och de välter varandra. En strike är alltså fysik och inte tur.",
             "Spelets summa är ditt rekord; dessutom sparas bästa resultatet per svårighetsgrad."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crossyroad",
+      "category": "games",
+      "game": "CrossyRoadGame",
+      "title": "Crossy Road",
+      "keywords": [
+        "höna",
+        "väg",
+        "flod",
+        "spår",
+        "tåg",
+        "örn",
+        "mynt",
+        "figurer",
+        "dagens",
+        "voxel"
+      ],
+      "sections": [
+        {
+          "h": "Styrning",
+          "body": [
+            "Hoppa ruta för ruta med piltangenterna eller [W] [A] [S] [D]. [Mellanslag], [Enter] eller ett musklick hoppar framåt.",
+            "- Trycker du nästa riktning medan du fortfarande är i luften hoppar du igen direkt efter landningen. Att hålla ned en tangent hoppar inte oavbrutet.",
+            "Efter game over: [Enter] = igen, [F] = figurer, [S] = inställningar."
+          ]
+        },
+        {
+          "h": "Gräs, vägar, floder och spår",
+          "body": [
+            "Banan skapas oändligt rad för rad - det finns alltid en väg att gå.",
+            "- Gräs: säkert, men träd och stenar blockerar vägen.",
+            "- Vägar: bilar och lastbilar kör över dig. Ju längre du kommer, desto snabbare och tätare trafik.",
+            "- Floder: du kan bara stå på stockar och näckrosblad. Stockarna bär dig med sig - driver du ut över skärmkanten är du ute.",
+            "- Spår: när den röda varningslampan blinkar och klockan ringer kommer ett tåg ungefär en sekund senare. Längre fram väntar hela stationer med upp till 5 spår i rad."
+          ]
+        },
+        {
+          "h": "Örn och poäng",
+          "body": [
+            "Kameran kryper sakta framåt. Dröjer du för länge eller går mer än tre rader bakåt tar örnen dig - en röd kant längst ned på skärmen varnar först.",
+            "Poäng = längsta rad du nått. I läget Oändlig är det ditt rekord (milstolpe: 150 rader).",
+            "Från rad 50 växlar dag och natt: på natten lyser strålkastare, tåg och mynt."
+          ]
+        },
+        {
+          "h": "Mynt och figurer",
+          "body": [
+            "Mynt ligger utspridda längs banan, jättemyntet är värt 5. Insamlade mynt sparas permanent.",
+            "Under fliken FIGURER köper du nya figurer för dem: groda, gris, pingvin, katt, räv, lama, robot, spöke och enhörning (25 till 250 mynt). Hönan har du från början.",
+            "- Prestationer: \"Ny stil\" för den första köpta figuren, \"Spårhoppare\" för 5 spår i rad."
+          ]
+        },
+        {
+          "h": "Lägen och inställningar",
+          "body": [
+            "- Oändlig: en ny bana varje runda, räknas till rekordet.",
+            "- Dagens bana: samma för alla i dag (även i webbversionen), med eget dagsrekord - räknas inte till rekordet.",
+            "I inställningarna slår du på eller av skuggor [H] och växlingen mellan dag och natt [N]; Vänster/Höger byter mellan dina figurer."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash",
+      "category": "games",
+      "game": "GeometryDashGame",
+      "title": "Geometry Dash",
+      "keywords": [
+        "geometry dash",
+        "rytm",
+        "kub",
+        "skepp",
+        "boll",
+        "ufo",
+        "våg",
+        "portal",
+        "klot",
+        "pad",
+        "mynt",
+        "stjärnor",
+        "träning",
+        "checkpoint",
+        "demon",
+        "musik",
+        "bana"
+      ],
+      "sections": [
+        {
+          "h": "Så spelar du",
+          "body": [
+            "Din figur rusar av sig själv åt höger - du bestämmer bara när den ska hoppa eller flyga. En tagg, en grop eller rakt in i ett block: explosion, och ett ögonblick senare börjar nästa försök.",
+            "En bana är klarad när du når målet. Stapeln högst upp visar framstegen i procent, uppe till höger ser du mynten från det här försöket, och vid starten svävar försöksräknaren inne i banan.",
+            "Varje bana har sitt eget soundtrack; bakgrund, mark och klot pulserar i takt. Musik, framstegsstapel och automatiska checkpoints slår du på och av i banvalet under bankortet."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- [Mellanslag], [Upp], [W], [Enter] eller vänster musknapp: hoppa eller flyg. Att hålla in räknas som att trycka hela tiden - kuben hoppar då igen direkt efter varje landning.",
+            "- [R] börjar om direkt, [Q] eller [Backspace] går tillbaka till banvalet, [Esc] pausar.",
+            "- [P] slår på och av träningsläget; där sätter [Z] en checkpoint och [X] tar bort den senaste.",
+            "- Banval: [Vänster]/[Höger] bläddrar, [1] till [8] hoppar direkt till en bana, [Enter] startar, [P] väljer Normal eller Träning, [M] slår på och av musiken, [Tab] byter till fliken BANOR.",
+            "Varje tryck får en tidsstämpel och verkar exakt i det fysiksteg (1/240 sekund) där det hände - hoppet sitter alltså rätt även om datorn hackar en stund."
+          ]
+        },
+        {
+          "h": "De fem formerna",
+          "body": [
+            "Portaler förvandlar din figur - varje form flyger på sitt sätt:",
+            "- Kub: tryck = hopp. Den landar på block; kör den rakt in i dem är försöket slut.",
+            "- Skepp: håll = stig, släpp = sjunk.",
+            "- Boll: ett tryck på marken vänder gravitationen - sedan rullar den vidare i taket.",
+            "- UFO: varje tryck är ett litet vingslag, även mitt i luften.",
+            "- Våg: håll = snett uppåt, släpp = snett nedåt. Den är jätteliten, men minsta beröring med ett block krossar den.",
+            "Skepp, boll, UFO och våg flyger i en korridor mellan mark och tak - portalen bestämmer hur hög den är."
+          ]
+        },
+        {
+          "h": "Pads, klot och portaler",
+          "body": [
+            "- Pads ligger på marken och verkar vid beröring: gul = högt hopp, rosa = litet hopp, blå = vänd gravitationen.",
+            "- Klot svävar i luften och verkar bara om du trycker medan du rör dem - med samma färger. En kort buffert förlåter ett tryck en aning för tidigt.",
+            "- Gravitationsportaler: gul vänder världen upp och ner, blå vänder tillbaka den. Fartportaler växlar till 0,5x, 1x, 2x eller 3x.",
+            "- Dessutom finns halvblock, små taggar, gropar utan botten och färgtriggers som färgar om bakgrund och mark."
+          ]
+        },
+        {
+          "h": "De 8 banorna",
+          "body": [
+            "- Lama Launch (Lätt, 1 stjärna) och Neon Steps (Lätt, 2 stjärnor): hopp, pads, klot och det första skeppet.",
+            "- Orbit Garden (Normal, 3 stjärnor): klotkedjor, upp och ner under taket och skepp i dubbel fart.",
+            "- Gravity Tide (Svår, 4 stjärnor) och Skyline Rush (Svår, 5 stjärnor): gravitationsportaler, boll, UFO, gropar och tredubbel fart.",
+            "- Crystal Caves (Svårare, 7 stjärnor) och Wave Reactor (Vansinnig, 9 stjärnor): alla fem formerna, smala portar och vågtunnlar.",
+            "- Lama Inferno (Demon, 10 stjärnor): tredubbel fart och allt på en gång.",
+            "Varje bana går bevisligen att klara, med alla tre mynt: när den byggdes klarade en lösningsalgoritm den med spelets riktiga kod - och lösningen fungerar till och med förskjuten med 1/240 sekund."
+          ]
+        },
+        {
+          "h": "Träningsläge",
+          "body": [
+            "I träningsläget fortsätter du efter en krasch från senaste checkpoint i stället för från start - gröna romber markerar dem i banan, och musiken spelar bara vidare.",
+            "Automatiska checkpoints dyker upp ungefär varannan sekund (kan stängas av), med [Z] sätter du egna, [X] tar bort den senaste.",
+            "Träning har ett eget rekord och ger varken stjärnor eller mynt."
+          ]
+        },
+        {
+          "h": "Stjärnor, mynt och prestationer",
+          "body": [
+            "Klarar du en bana i normalt läge får du dess stjärnor. Varje bana gömmer dessutom tre hemliga mynt, ofta vid sidan av den enklaste vägen. De räknas så fort du klarar banan med dem - och vart och ett är värt en stjärna till.",
+            "Ditt rekord är ditt totala antal stjärnor (högst 65), och det kan bara växa. För varje bana minns spelet bästa procent i Normal och Träning, hittade mynt och antalet försök.",
+            "- Prestationer: \"I takt\" för din första klarade bana, \"Myntjägare\" för alla tre mynt i en bana, \"Demonbetvingare\" för Lama Inferno - plus en milstolpe vid 20 stjärnor.",
+            "I fliken BANOR bygger, spelar och delar du egna banor - se sidan \"Egna banor (Geometry Dash)\"."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geodash-levels",
+      "category": "games",
+      "title": "Egna banor (Geometry Dash)",
+      "keywords": [
+        "egna banor",
+        "editor",
+        "banor",
+        "ugc",
+        "bygga",
+        "dela",
+        "importera",
+        "exportera",
+        "verifierad",
+        "lamapgzlevel",
+        "geometry dash"
+      ],
+      "sections": [
+        {
+          "h": "Bygg en bana",
+          "body": [
+            "Fliken BANOR i banvalet för Geometry Dash rymmer din egen samling (upp till 60 banor). \"Ny\" öppnar baneditorn, \"Redigera\" tar upp en befintlig bana igen.",
+            "Till vänster ligger duken med rutnät, till höger paletten: överst Välj och Suddgummi, under dem sex grupper - Block, Faror, Pads & klot, Portaler, Fart och Extra (hemliga mynt, färgtrigger). [1] till [6] väljer grupperna direkt.",
+            "- Klicka eller dra placerar det valda objektet, [R] roterar det: taggar och halvblock i fyra riktningar, pads uppåt eller nedåt.",
+            "- Med Välj flyttar dra ett objekt och [Del] tar bort det. Ett högerklick raderar alltid; högerdra, mushjulet, piltangenterna eller [A]/[D] rullar.",
+            "- Längst ner visas värdena för det valda objektet: korridorhöjden för formportaler och för färgtriggern mål (bakgrund eller mark), färg och övergångstid.",
+            "- Remsan allra längst ner visar hela banan i överblick - ett klick hoppar dit.",
+            "[U] ångrar, [Y] gör om, [G] visar eller döljer rutnätet, [S] sparar. [Esc] går tillbaka - med osparade ändringar först efter en bekräftelse.",
+            "Högst tre mynt per bana. Målet placeras automatiskt en bit efter det sista objektet."
+          ]
+        },
+        {
+          "h": "Baninställningar",
+          "body": [
+            "Kugghjulet öppnar baninställningarna: startfart (0,5x till 3x), startform, musikstil (Drivande, Chiptune, Drömsk, Mörk eller ingen musik), tempo i BPM samt bakgrunds- och markfärg.",
+            "Namn och id står i rubrikraden överst. Id:t är nyckeln: små bokstäver, inga mellanslag, bara a-z, 0-9, - och _ - och samtidigt det föreslagna filnamnet när du delar."
+          ]
+        },
+        {
+          "h": "Testa och verifiera",
+          "body": [
+            "\"Test\" ([Enter]) spelar banan från start, \"Härifrån\" ([T]) från nuvarande ställe - portaler före det räknas då som passerade. [Esc] tar dig tillbaka till duken.",
+            "Klarar du din bana i ett test ända från start och utan träningsläge får den den gröna bocken \"verifierad\". Varje senare ändring av objekt, startfart eller startform tar bort den igen - färger, namn och musik gör det inte.",
+            "I fliken BANOR startar \"Spela\" den valda banan helt vanligt, med eget rekord och försöksräknare."
+          ]
+        },
+        {
+          "h": "Dela och importera",
+          "body": [
+            "\"Dela\" frågar efter ditt namn som skapare och efter filnamnet. \"Exportera som\" öppnar spara-dialogen, \"Till Hämtade filer\" lägger filen direkt i mappen Hämtade filer.",
+            "Filen har ändelsen .lamapgzlevel och innehåller JSON. \"Importera\" läser in den igen (även .json); är id:t redan upptaget läggs -2, -3 ... till automatiskt. Verifierad-bocken följer med.",
+            "Namn, id och skapare går igenom ordfiltret för alla 14 språk när du sparar, exporterar OCH importerar.",
+            "Allt sparas i ugc.json bredvid spelet - samma fil som dina egna minigolfhål. I webbläsarversionen stannar banorna i webbläsarens lagring och delning laddar ner filen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "battleship",
+      "category": "games",
+      "game": "BattleshipGame",
+      "title": "Battleship",
+      "keywords": [
+        "battleship",
+        "sänka skepp",
+        "skepp",
+        "flotta",
+        "salva",
+        "radar",
+        "ai",
+        "sänk"
+      ],
+      "sections": [
+        {
+          "h": "Så spelar du",
+          "body": [
+            "Två flottor, var och en på sitt eget 10x10-hav: hangarfartyg (5 rutor), slagskepp (4), kryssare (3), ubåt (3) och jagare (2). Spelarna skjuter i tur och ordning på en ruta på motståndarens bräde.",
+            "Till vänster ligger det stora målbrädet med radarn, till höger dina egna vatten och översikten över båda flottorna. En vit ring betyder miss, lågor betyder träff. När alla rutor på ett skepp är träffade sjunker det och konturen avslöjas.",
+            "Den som först sänker alla fem fientliga skepp vinner. Sammanfattningen visar sedan skott, träffar, träffprocent, drag och skepp kvar för båda sidor."
+          ]
+        },
+        {
+          "h": "Placera din flotta",
+          "body": [
+            "- Dra skeppen med musen från dockan till höger till brädet - eller klicka på ett, flytta det och klicka igen. Placerade skepp flyttas på samma sätt.",
+            "- [R] eller ett högerklick vrider skeppet du håller (eller skeppet under musen).",
+            "- Förhandsvisningen lyser grönt när placeringen är tillåten och rött när den inte är det.",
+            "- Tangentbord: pilarna flyttar ramen, [Space] plockar upp och lägger ner ett skepp, [Enter] tar nästa saknade skepp.",
+            "- [X] placerar slumpmässigt, [C] tar bort alla skepp. Med full flotta startar [Enter] eller \"Klar!\" slaget.",
+            "Din senaste uppställning föreslås igen i nästa runda."
+          ]
+        },
+        {
+          "h": "Regler i inställningarna",
+          "body": [
+            "Alla tre reglagen sparas direkt och gäller för båda sidor:",
+            "- Skepp får nudda varandra: AV kräver minst en fri ruta runt varje skepp, även diagonalt. Den spärrade zonen är markerad medan du placerar.",
+            "- Salva: varje drag får du lika många skott som du har skepp som flyter - förlorar du skepp skjuter du färre.",
+            "- Skjut igen efter en träff: varje träff ger tillbaka skottet, så du fortsätter skjuta så länge du träffar."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Mus: klicka på en ruta på målbrädet.",
+            "- Tangentbord: pilarna eller dina rörelsetangenter siktar, [Space] eller [Enter] skjuter.",
+            "- Efter en runda: [Enter] = ny runda, [S] = tillbaka till inställningarna. [Esc] pausar."
+          ]
+        },
+        {
+          "h": "AI-nivåer",
+          "body": [
+            "- Lätt skjuter slumpmässigt och följer bara ibland upp en träff.",
+            "- Medel söker slumpmässigt, provar grannrutorna efter en träff och förlänger rader av träffar till skeppets ände.",
+            "- Svår räknar för varje ruta ut i hur många fortfarande möjliga lägen de återstående skeppen kan täcka den (med beröringsregeln) och skjuter på den mest sannolika. När den söker använder den ett schackmönster anpassat till det minsta återstående skeppet.",
+            "I snitt behöver AI:n ungefär 70 (Lätt), 60 (Medel) och 45 skott (Svår) för att sänka en hel flotta - och den vet bara det du också ser."
+          ]
+        },
+        {
+          "h": "2 spelare",
+          "body": [
+            "I flerspelarläget spelar ni i tur och ordning vid samma dator. Före placeringen och före varje drag döljer en överlämningsskärm båda flottorna tills nästa spelare bekräftar med [Enter] eller ett klick.",
+            "Den visar också hur många skott och träffar den senaste attacken mot din flotta hade. Webbversionen spelar bara mot AI:n."
+          ]
+        },
+        {
+          "h": "Poäng och prestationer",
+          "body": [
+            "Varje seger mot AI:n ger en poäng; rekordet är flest segrar under en session. Läget för 2 spelare räknas inte.",
+            "- Oskadd flotta: besegra AI:n utan att förlora ett enda skepp.",
+            "- Storamiral: sänk den svåra AI:ns flotta."
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Sprid ut dina skepp över hela brädet och ställ inte upp alla längs kanten.",
+            "- När du söker räcker varannan ruta (schackmönster) - finns bara långa skepp kvar, till och med var tredje.",
+            "- Utan beröringsregeln är varje ruta runt ett sänkt skepp garanterat vatten."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "casino",
+      "category": "games",
+      "game": "CasinoGame",
+      "title": "Casino",
+      "keywords": [
+        "kasino",
+        "casino",
+        "roulett",
+        "spelautomat",
+        "lama",
+        "jackpot",
+        "gratissnurr",
+        "marker",
+        "insatser"
+      ],
+      "sections": [
+        {
+          "h": "Lamabanken",
+          "body": [
+            "Casino, Blackjack och Poker spelar med samma konto: lamamarker (start 1000). Insatser dras direkt och vinster krediteras - allt sparas permanent.",
+            "Varje spel har sin egen balans. Casinots rekord är toppen av 1000 + casinobalans; vinster i Blackjack eller Poker räknas inte här.",
+            "Är du pank (under minsta insatsen) får du ett banklån: kontot fylls på till 1000 igen. Lån räknas inte i någon balans; antalet visas uppe till höger."
+          ]
+        },
+        {
+          "h": "Roulett - placera insatser",
+          "body": [
+            "Europeiskt hjul med 37 fack (0 till 36). Välj markvärde längst ner: 1, 5, 25, 100 eller 500 (tangenterna [1] till [5] eller mushjulet).",
+            "Vänsterklick lägger en mark, högerklick tar bort den igen. Var du klickar avgör insatsen:",
+            "- Mitten av ett nummer: plein, betalar 35:1",
+            "- Kanten mellan två nummer: cheval, 17:1",
+            "- Ytterlinjen på en nummerkolumn: transversal med 3 nummer, 11:1 (vid nollan även 0-1-2 och 0-2-3)",
+            "- Hörnet mellan fyra nummer: carré, 8:1 (utanför vid nollan: 0-1-2-3)",
+            "- Hörnet på ytterlinjen mellan två kolumner: sixain med 6 nummer, 5:1",
+            "- Kolumn (2:1) och dussin (2:1), röd/svart, jämn/udda samt låg 1-18 / hög 19-36 (vardera 1:1)",
+            "Bredvid hjulet ser du vilken insats som ligger under musen och vad den betalar."
+          ]
+        },
+        {
+          "h": "Roulett - snurra",
+          "body": [
+            "[Enter] eller SNURRA startar rundan: insatsen dras och vinstnumret lottas. Kulan rullar i en spiral inåt och faller exakt i det facket - [Blanksteg] eller ett klick snabbspolar.",
+            "Upprepa [R] lägger förra rundans insatser igen, Dubbla [D] dubblar alla insatser, Rensa [Backspace] tömmer bordet.",
+            "Överst visas de senaste 12 numren; vinnande insatser visar sin utbetalning."
+          ]
+        },
+        {
+          "h": "Lamaautomat",
+          "body": [
+            "5 hjul, 3 rader, 10 vinstlinjer. Linjer betalar från 3 lika symboler från vänster till höger; siffrorna på sidorna visar var varje linje går (håll musen över = visa linjen).",
+            "Insats per linje: 1, 2, 5 eller 10 ([+]/[-] eller mushjulet) - alla 10 linjer spelas alltid.",
+            "- Lama = wild: ersätter alla symboler utom guldmyntet. 5 lamor på en linje är Lamajackpotten.",
+            "- Guldmynt = scatter: 3, 4 eller 5 mynt var som helst betalar 2, 10 eller 50 gånger totalinsatsen och ger 10 gratissnurr där alla vinster räknas dubbelt. Gratissnurr kan utlösas igen.",
+            "Vinsttabellen visar alla utbetalningar för din aktuella insats. Återbetalningen är 96,1 % - exakt uträknad från hjulremsorna."
+          ]
+        },
+        {
+          "h": "Lamaautomat - kontroller",
+          "body": [
+            "[Blanksteg], [Enter] eller ett klick på hjulen snurrar; trycker du igen under snurren snabbspolas den.",
+            "Autosnurr: [A] startar 10 rundor, [Shift]+[A] 25 rundor (eller Auto-knappen), tryck igen för att stoppa. [T] slår på turbo, [I] öppnar vinsttabellen.",
+            "Vunna gratissnurr sparas direkt och fortsätter nästa gång du spelar."
+          ]
+        },
+        {
+          "h": "Prestationer",
+          "body": [
+            "- Casino-milstolpe: rekord 5000",
+            "- Fullträff: vinn med en plein i roulett",
+            "- Lamajackpot: 5 lamor på en vinstlinje"
           ]
         }
       ]

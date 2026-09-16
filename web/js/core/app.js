@@ -584,17 +584,23 @@
         if (g.gameOver) g._wasOver = true;
         else {
           g._hsSaved = false;
-          if (g._wasOver) {
+          if (g._resumeSameGame) {
+            g._resumeSameGame = false;
+            g._wasOver = false;
+          } else if (g._wasOver) {
             g._wasOver = false;
             g._resultReported = false;
             PG.stats.gameStarted(g.highscoreKey);
           }
         }
-        if (g.gameOver) this.drawHighscoreBanner(ctx, g);
+        // Modi, die nicht in den Highscore zählen (Sprint, Übung ...), blenden ihn aus.
+        if (g.gameOver && g.showHighscoreBanner !== false) this.drawHighscoreBanner(ctx, g);
         this.manageCapture(ctx, g);
         if (g.paused) this.drawPause(ctx);
       }
 
+      // Musik gehört dem aktiven Spiel: pausiert mit ihm, endet mit ihm.
+      PG.audio.musicTick(this.current);
       PG.stats.maybeFlush();
       ui.drawFx(ctx, W, H, dt);
       if (this.errorMsg && performance.now() - this.errorAt < 6000) this.drawError(ctx);

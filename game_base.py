@@ -56,7 +56,7 @@ class InputEvent:
     WHEEL = "wheel"          # Mausrad gedreht (delta in Rasten, + = hoch)
 
     def __init__(self, kind, key=None, pos=None, button=1, delta=0, rel=None,
-                 char=None):
+                 char=None, repeat=False, code=None):
         self.kind = kind      # einer der obigen Strings
         self.key = key        # z.B. "Up", "Left", "space", "w" (Tkinter-keysym)
         self.pos = pos        # (x, y) relativ zur Spielfläche, bei Maus-Events
@@ -68,6 +68,14 @@ class InputEvent:
         # unterscheidet weder Groß-/Kleinschreibung noch kennt er Umlaute
         # ("adiaeresis"). Leer bei Steuertasten - siehe ui.TextInput.
         self.char = char
+        # True bei automatischer Tastenwiederholung des Betriebssystems (Taste
+        # wird gehalten). Spiele mit eigener Wiederholung (Tetris-DAS) oder
+        # Halten-Logik ignorieren solche Events; alle anderen bekommen sie wie
+        # bisher als ganz normale KEYDOWNs. KEYUP trägt immer den keysym des
+        # ersten Drucks (Shift dazwischen macht aus "w" kein "W").
+        self.repeat = repeat
+        # Physischer Tastencode (Tkinter-keycode), falls bekannt.
+        self.code = code
 
 
 class Game:
@@ -109,6 +117,11 @@ class Game:
     wants_escape = False
     # Pointer-Capture: True = Cursor einfangen, Spiel bekommt MOUSEREL-Events.
     capture_mouse = False
+    # Highscore-Banner bei Game Over einblenden? Spiele mit Modi, die nicht in
+    # den Highscore zählen (Sprint-Bestzeit, Übungsmodus ...), setzen das
+    # (auch als property) je nach Modus auf False. Solche Modi lassen
+    # außerdem self.score auf 0 und speichern ihre Bestwerte selbst.
+    show_highscore_banner = True
 
     def __init__(self, surface, width, height, mode="single", game_settings=None):
         self.surface = surface
@@ -165,6 +178,16 @@ class Game:
         """
         pass
 
+    def on_exit(self):
+        """Wird aufgerufen, wenn das Spiel verlassen und verworfen wird.
+
+        (Zurück zum Menü, anderes Spiel gewählt, App beendet.) Spiele räumen
+        hier auf: Musik stoppen, laufende KI-Suche abbrechen, Zwischenstand
+        speichern. Nicht aufgerufen wird es, wenn das Spiel nur kurz einem
+        Replay-Screen Platz macht und danach zurückkehrt.
+        """
+        pass
+
     # ----- Hilfsfunktionen für alle Spiele -----------------------------
 
     def draw_center_text(self, text, font, color, y_offset=0):
@@ -189,6 +212,18 @@ class Game:
         """
         players = (player,) if player else ("p1", "p2")
         return any(key == self.controls.get(p, {}).get(action) for p in players)
+
+    def key_is_free(self, key):
+        """True, wenn 'key' keiner Aktion von Spieler 1 oder 2 zugeordnet ist.
+
+        Für feste Zusatztasten (z.B. Tetris-Hold auf C): sie greifen nur, wenn
+        der Spieler dieselbe Taste nicht selbst für up/down/left/right/action
+        belegt hat - sonst hätte ein Tastendruck zwei Bedeutungen.
+        """
+        for p in ("p1", "p2"):
+            if key in self.controls.get(p, {}).values():
+                return False
+        return True
 
     def play_sound(self, name):
         """Spielt einen Soundeffekt (respektiert die Sound-Einstellung)."""
@@ -215,6 +250,25 @@ class Game:
         stats.record_result(self.highscore_key, bool(won))
         import achievements
         achievements.check_stats()
+
+    def resume_from_game_over(self):
+        """Hebt ein Game Over auf, OHNE dass eine neue Partie gezählt wird.
+
+        Normalerweise wertet main.py den Wechsel game_over True -> False als
+        Neustart (Statistik: neue Partie). Nimmt der Spieler dagegen den
+        letzten Zug zurück (z.B. Rückgängig bei 2048), geht dieselbe Partie
+        weiter - dafür diese Methode statt game_over = False verwenden.
+        """
+        self.game_over = False
+        self._resume_same_game = True
+
+    def new_round_result(self):
+        """Gibt report_result() für eine neue Runde derselben Partie wieder frei.
+
+        Für Spiele ohne Game-Over zwischen den Runden (Casino, Revanche im
+        Brettspiel): ohne diesen Aufruf zählte nur die erste Runde.
+        """
+        self._result_reported = False
 
     def ach_event(self, event_id, value=None):
         """Löst ein Erfolgs-Ereignis aus (z.B. 'kniffel_five').

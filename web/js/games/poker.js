@@ -11,9 +11,13 @@
  * - Video Poker (Jacks or Better): Solo gegen die Auszahlungstabelle. Einsatz,
  *   fünf Karten, Halten wählen, ziehen, Auszahlung nach Tabelle.
  *
- * Chips: Start 1000, bleiben über Sitzungen erhalten (PG.store, Abschnitt
- * "mem.poker"). Der Highscore ist der höchste je erreichte Chipstand (gameOver
- * wird nie gesetzt; die Sicherung erfolgt beim Menü-Rückweg). Pleite = Neustart.
+ * Lama-Chips: Blackjack, Poker und Casino teilen sich ein Konto bei der
+ * Lama-Bank (casino_bank.js, PG.store "mem.casino"). Zu Beginn einer Hand
+ * liegt der ganze Kontostand als Tischstapel im "escrow"; was in den Pot geht,
+ * ist sofort abgebucht. Wer den Tisch mitten in der Hand verlässt, verliert
+ * seinen Pot-Anteil, der Reststapel kommt zurück aufs Konto. Highscore =
+ * Höchststand von 1000 + Poker-Bilanz (gameOver wird nie gesetzt). Pleite
+ * (unter dem Big Blind bzw. 10 im Video Poker) = Bank-Kredit auf 1000.
  *
  * Vereinfachung: Bei All-In wird EIN gemeinsamer Haupt-Pot geführt (keine
  * Side-Pots) - für ein lockeres Spiel gegen die KI völlig ausreichend.
@@ -36,8 +40,7 @@
   const COL_FELT = [20, 50, 39];
   const COL_FELT_EDGE = [13, 35, 27];
 
-  const STORE_KEY = "mem.poker";
-  const START_CHIPS = 1000;
+  const bank = PG.lamabank;
   const SMALL_BLIND = 10;
   const BIG_BLIND = 20;
   const ANTE = 10;
@@ -188,9 +191,10 @@
       this.gameOver = false;
       if (!["holdem", "draw", "video"].includes(this.mode)) this.mode = "holdem";
 
-      const data = PG.store.get(STORE_KEY, {}) || {};
-      this.chips = Math.max(0, toInt(data.chips, START_CHIPS));
-      this.best = Math.max(this.chips, toInt(data.best, START_CHIPS));
+      // load() erstattet auch den Tischstapel einer abgebrochenen Hand.
+      bank.load();
+      this.chips = bank.balance();
+      this.best = bank.scoreFor("poker");
       this.score = this.best;
 
       this._readOpts();
@@ -219,8 +223,7 @@
       this._layout();
 
       this.phase = this.mode === "video" ? BET_VIDEO : PREHAND;
-      if (this.chips < BIG_BLIND && this.mode !== "video") this.phase = BROKE;
-      if (this.mode === "video" && this.chips < VIDEO_BETS[0]) this.phase = BROKE;
+      if (bank.isBroke("poker", this.mode)) this.phase = BROKE;
     }
 
     _readOpts() {
@@ -262,18 +265,18 @@
       };
     }
 
-    _save() {
-      PG.store.set(STORE_KEY, { chips: this.chips, best: this.best });
+    /** Tisch verlassen: Reststapel sofort zurück aufs Konto. */
+    destroy() {
+      bank.clearEscrow();
     }
 
-    /** Übernimmt den Table-Stack des Menschen zurück in die Bank. */
+    /** Kontostand, Highscore und Chipleader-Erfolg aus der Lama-Bank. */
     _syncChips() {
-      const me = this.players.length ? this.players[0] : null;
-      if (me) this.chips = me.stack;
-      if (this.chips > this.best) this.best = this.chips;
+      this.chips = bank.balance();
+      this.best = bank.scoreFor("poker");
       this.score = this.best;
-      this.achEvent("poker_rich", this.chips);
-      this._save();
+      // poker_rich zählt die Poker-Bilanz, nicht das gemeinsame Konto.
+      this.achEvent("poker_rich", bank.valueFor("poker"));
     }
 
     // ===================================================== Deck
@@ -290,7 +293,9 @@
 
     // ===================================================== Hand-Start
     _startHand() {
-      if (this.chips < BIG_BLIND) {
+      bank.clearEscrow();
+      this.chips = bank.balance();
+      if (bank.isBroke("poker", this.mode)) {
         this.phase = BROKE;
         this.playSound("gameover");
         return;
@@ -306,6 +311,8 @@
       for (let i = 0; i < this.nOpponents; i++) {
         this.players.push(new Player(t("poker.cpu", { n: i + 1 }), Math.max(BIG_BLIND * 20, this.chips)));
       }
+      // Der ganze Kontostand liegt jetzt als Tischstapel auf dem Tisch.
+      bank.setEscrow(this.chips);
       if (this.mode === "holdem") this._startHoldem();
       else if (this.mode === "draw") this._startDraw();
     }
@@ -338,6 +345,8 @@
 
     _post(player, amount) {
       amount = Math.min(amount, player.stack);
+      // Einsatz des Menschen sofort abbuchen (aus dem Tischstapel) + speichern.
+      if (player.isHuman && amount > 0) bank.payFromEscrow(amount, "poker");
       player.stack -= amount;
       player.roundBet += amount;
       this.pot += amount;
@@ -612,7 +621,13 @@
     _award(winners, rankTuple) {
       const share = Math.floor(this.pot / winners.length);
       const rem = this.pot - share * winners.length;
-      winners.forEach((w, i) => { w.stack += share + (i === 0 ? rem : 0); });
+      let humanWin = 0;
+      winners.forEach((w, i) => {
+        w.stack += share + (i === 0 ? rem : 0);
+        if (w.isHuman) humanWin = share + (i === 0 ? rem : 0);
+      });
+      // Tischstapel zurück aufs Konto + Pot-Anteil gutschreiben
+      bank.settleEscrow(humanWin, "poker");
       const me = this.players[0];
       const won = winners.includes(me);
       this.winAmount = won ? this.pot : 0;
@@ -632,13 +647,14 @@
 
     // ----- Video Poker --------------------------------------------------
     _videoDeal() {
-      if (this.chips < this.videoBet) {
-        this.phase = BROKE;
-        this.playSound("gameover");
+      if (!bank.debit(this.videoBet, "poker")) {
+        if (bank.isBroke("poker", "video")) {
+          this.phase = BROKE;
+          this.playSound("gameover");
+        }
         return;
       }
-      this.chips -= this.videoBet;
-      this._save();
+      this.chips = bank.balance();
       this._freshDeck();
       this.players = [new Player(t("poker.you"), this.chips, true)];
       this.players[0].hole = [0, 1, 2, 3, 4].map(() => this._draw(true));
@@ -655,10 +671,8 @@
       const [rt] = bestHand(me.hole);
       const mult = this._videoPayout(rt);
       this.winAmount = this.videoBet * mult;
-      this.chips += this.winAmount;
-      if (this.chips > this.best) this.best = this.chips;
-      this.score = this.best;
-      this._save();
+      bank.credit(this.winAmount, "poker");
+      this._syncChips();
       if (mult > 0) {
         this.msg = t("poker.video_win", { hand: t("poker.hand." + categoryKey(rt)), mult });
         this.playSound(mult >= 6 ? "win" : "point");
@@ -701,8 +715,8 @@
     handleEvent(ev) {
       if (this.phase === BROKE) {
         if (this._isConfirm(ev)) {
-          this.chips = START_CHIPS;
-          this._save();
+          bank.refillIfBroke("poker", this.mode);
+          this.chips = bank.balance();
           this.phase = this.mode === "video" ? BET_VIDEO : PREHAND;
           this.playSound("click");
         }
@@ -766,8 +780,9 @@
         p.roundBet = 0;
         p.result = null;
       }
-      if (this.mode === "video") this.phase = this.chips >= VIDEO_BETS[0] ? BET_VIDEO : BROKE;
-      else this.phase = this.chips >= BIG_BLIND ? PREHAND : BROKE;
+      this.chips = bank.balance();
+      if (bank.isBroke("poker", this.mode)) this.phase = BROKE;
+      else this.phase = this.mode === "video" ? BET_VIDEO : PREHAND;
       if (this.phase === BROKE) this.playSound("gameover");
     }
 
@@ -867,8 +882,18 @@
       else this._drawTable(ctx);
     }
 
+    /** Mitten in einer Hand liegt das Konto als Tischstapel auf dem Tisch. */
+    _hudChips() {
+      if (this.mode !== "video" && this.players.length && (this.phase === ACTING || this.phase === DRAW_SELECT)) {
+        return this.players[0].stack;
+      }
+      return this.chips;
+    }
+
     _drawTopbar(ctx) {
-      ui.text(ctx, t("poker.chips") + ": " + this.chips, 16, 12, this._big, ui.GOLD);
+      const chipsLbl = t("poker.chips") + ": " + this._hudChips();
+      // "Lama-Chips" ist in manchen Sprachen lang - Pot-Anzeige freihalten
+      ui.text(ctx, chipsLbl, 16, 12, this._big.width(chipsLbl) > this.width / 2 - 90 ? this._small : this._big, ui.GOLD);
       ui.text(ctx, t("poker.best") + ": " + this.best, 16, 40, this._small, ui.TEXT_DIM);
       ui.text(ctx, t("poker.mode." + this.mode), this.width - 16, 14, this._small, this.accent, "topright");
       if (this.pot && this.phase !== BET_VIDEO && this.phase !== PREHAND) {
@@ -1045,7 +1070,7 @@
       ui.drawPanel(ctx, new PG.Rect(cx - pw / 2, cy - 92, pw, 184), { accentTop: ui.RED });
       ui.text(ctx, t("poker.broke"), cx, cy - 42, this._huge, ui.RED, "center");
       ui.text(ctx, t("poker.best") + ": " + this.best, cx, cy + 2, this._small, ui.TEXT_DIM, "center");
-      ui.text(ctx, t("poker.broke_restart", { n: START_CHIPS }), cx, cy + 32, this._small, ui.TEXT, "center");
+      ui.text(ctx, t("poker.broke_restart", { n: bank.START_CHIPS }), cx, cy + 32, this._small, ui.TEXT, "center");
       ui.text(ctx, t("common.enter_restart"), cx, cy + 60, this._tiny, ui.TEXT_FAINT, "center");
     }
 
