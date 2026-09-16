@@ -114,6 +114,8 @@
       const logo = this.app.logo;
       let baseY, lineW;
       const v1 = ui.fx("style") === "v1"; // UI v1: kein Logo, nur Schrift
+      const v42 = ui.fx("style") === "v42";
+      ui.drawHalo(ctx, [cx, centerY], size * 2.4, ui.ACCENT); // v4.2: Schein hinter dem Logo
       if (logo && logo.complete && logo.naturalWidth && !v1) {
         const lr = new PG.Rect(0, 0, size, size);
         lr.center = [cx, centerY];
@@ -145,7 +147,7 @@
       }
       if (modern) {
         const lw2 = Math.max(72, Math.min(lineW, 180));
-        draw.rect(ctx, ui.ACCENT, [cx - lw2 / 2, baseY + 12, lw2, 2], 0, 2);
+        ui.drawGradLine(ctx, cx, baseY + 12, lw2, v42 ? 3 : 2, null, v42);
       } else if (!v1) {
         draw.rect(ctx, ui.ACCENT, [cx - lineW / 2, baseY + 12, lineW, 3], 0, 2);
       }
@@ -173,6 +175,8 @@
             draw.rect(ctx, ui.PANEL, rect, 0, rr);
             draw.rect(ctx, ui.BORDER, rect, 1, rr);
           }
+          // v4.2: feine Lichtkante oben auf der Pille
+          if (v42) draw.rect(ctx, [255, 255, 255, idx === this.hover ? 34 : 20], [rect.x + rr, rect.y + 1, rect.w - 2 * rr, 1]);
           draw.circle(ctx, accent, [rect.x + lay.padX + 4, rect.centery], 4);
           ui.text(ctx, PG.gameName(entry), rect.x + lay.padX + 14, rect.centery, lay.fnt, idx === this.hover ? ui.TEXT : ui.TEXT_DIM, "midleft");
           this.tiles.push([rect, entry]);
@@ -670,7 +674,9 @@
       const cw = Math.min(360, W - 40), ch = 210;
       const card = new PG.Rect(W / 2 - cw / 2, H / 2 - ch / 2, cw, ch);
       ui.drawPanel(ctx, card, { radius: 14 });
-      draw.rect(ctx, ui.ACCENT, [card.x, card.y, card.w, 4], 0, [14, 14, 0, 0]);
+      // v4.2: Verlaufslinie statt des deckenden Akzentbalkens
+      if (ui.fx("style") === "v42") ui.drawGradLine(ctx, card.centerx, card.y, card.w - 40, 3, null, true);
+      else draw.rect(ctx, ui.ACCENT, [card.x, card.y, card.w, 4], 0, [14, 14, 0, 0]);
       if (!ui.isModern()) draw.rect(ctx, ui.mix(ui.BORDER, ui.ACCENT, ui.pulse(2.0)), card.inflate(8, 8), 1, 16);
       const big = ui.font(42, true);
       if (ui.isModern() || ui.fx("title_grad") === false) ui.text(ctx, t("app.pause"), card.centerx, card.y + 46, big, ui.TEXT, "center");

@@ -4,9 +4,15 @@ ui.py
 =====
 Gemeinsames UI-Toolkit für alle Pygame-Screens (Menüs, Overlays, Spiele).
 
-Seit dem UI-Update gibt es NEUN wählbare Designs ("Themes"):
+Seit dem UI-Update gibt es ZEHN wählbare Designs ("Themes"):
 
-- "v41"     (Standard, "UI v4.1"): wie "modern", aber lebendiger - leicht
+- "v42"     (Standard, "UI v4.2 Midnight Glass"): tiefes Mitternachtsblau
+  mit drei weichen Farbwolken (Indigo/Türkis/Magenta) im Hintergrund,
+  feinem Filmkorn und Bedien-Elementen aus "Milchglas": leicht
+  durchscheinende Panels mit Lichtkante oben, Buttons mit Akzent-Glow und
+  einer aus der Mitte wachsenden Verlaufslinie, Titel mit Verlaufstext und
+  dreifarbigem Unterstrich.
+- "v41"     ("UI v4.1"): wie "modern", aber lebendiger - leicht
   blau-violett getönte Palette, dezentes Sternenfeld und auf dem
   Startbildschirm ein Saturn und ein Schwarzes Loch (M87-Stil: dunkler
   Kern, glühender orangener Ring) im Hintergrund.
@@ -33,7 +39,7 @@ Seit dem UI-Update gibt es NEUN wählbare Designs ("Themes"):
   ohne Rand (Auswahl nur über die Farbe), schlichte Titel ohne Linie,
   Hinweistext ohne Trennlinie. Keine Sterne, Schatten oder Übergänge.
 
-Umgeschaltet wird über set_theme("v41"/"v411"/...) - im Spiel über den
+Umgeschaltet wird über set_theme("v42"/"v41"/"v411"/...) - im Spiel über den
 Reiter "Erscheinungsbild" im Options-Screen. Da ALLE Module die Farben nur
 über ui.<NAME> (dynamisch) lesen, wirkt der Wechsel sofort überall.
 
@@ -56,6 +62,7 @@ Effekte (einmal auslösen, main.py zeichnet sie pro Frame über draw_fx):
 
 import math
 import random
+from collections import OrderedDict
 
 import pygame
 
@@ -229,6 +236,74 @@ _V41_COLORS = dict(
     TEXT_FAINT=(100, 106, 122),
 )
 
+# ---------------------------------------------------------------------------
+#  UI v4.2 "Midnight Glass" (Standard)
+# ---------------------------------------------------------------------------
+#  Dieselbe ruhige Bedien-Logik wie die Modern-Familie, aber ein deutlich
+#  tieferer, blau-violetter Hintergrund und Bedien-Elemente aus "Milchglas".
+#  Die Palette ist dunkler und satter als v4.1; ACCENT2 wechselt von Blau auf
+#  Türkis, damit die Verläufe (Indigo -> Türkis -> Magenta) Tiefe bekommen.
+_V42_COLORS = dict(
+    BG_TOP=(8, 10, 22),         # Mitternachtsblau, fast schwarz
+    BG_BOTTOM=(14, 12, 30),     # nach unten ein Hauch Violett
+    PANEL=(21, 24, 44),
+    PANEL_LIGHT=(31, 35, 62),
+    BORDER=(46, 52, 86),
+    BORDER_LIGHT=(80, 88, 130),
+    BTN=(25, 29, 52),
+    BTN_SEL=(40, 46, 86),
+    ACCENT=(122, 132, 255),     # Indigo (Primär-Akzent)
+    ACCENT2=(72, 214, 210),     # Türkis (Zweit-Akzent der Verläufe)
+    ACCENT_SOFT=(76, 84, 168),
+    GREEN=(92, 214, 150),
+    GOLD=(242, 200, 104),
+    RED=(240, 104, 128),
+    TEXT=(236, 238, 252),
+    TEXT_DIM=(156, 162, 196),
+    TEXT_FAINT=(102, 108, 146),
+)
+
+# Die drei Farbwolken ("Mesh-Gradient") im Hintergrund. Aufbau wie bei der
+# Aurora von UI v3: (Spitzenfarbe, Größe rel. max(w,h), Tempo, Phase, x, y).
+# Die Farben sind bewusst dunkel - sie werden additiv geblittet und sollen
+# den Hintergrund nur färben, nicht aufhellen.
+_V42_MESH = (
+    ((40, 36, 112), 1.00, 0.050, 0.0, 0.18, 0.20),   # Indigo, oben links
+    ((8, 62, 70),   0.95, 0.041, 2.4, 0.84, 0.78),   # Türkis, unten rechts
+    ((64, 16, 60),  0.80, 0.063, 4.1, 0.82, 0.16),   # Magenta, oben rechts
+)
+
+# fx-Schalter: alle Schlüssel der anderen Themes bleiben erhalten (menu.py
+# liest z.B. fxx["aurora"] direkt), dazu kommen die v4.2-eigenen Werte:
+#   star_count  : nur so viele Sterne zeichnen (sehr dezentes Feld)
+#   mesh/-drift : Farbwolken + Amplitude ihrer Drift
+#   grain       : Stärke des Filmkorns (0 = aus)
+#   glass_alpha : Deckkraft der Glas-Panels (0..255)
+#   grad3       : Farbstopps aller Verlaufslinien
+#   logo_halo   : weicher Schein hinter dem Logo im Startbildschirm
+_V42_FX = dict(
+    stars=True, star_bright=0.45,
+    aurora=False, shooting=False,
+    celestial=False,
+    pattern=None,
+    vignette=62,
+    title_glow=False, title_grad=False,
+    btn_glow=False, btn_arrow=False,
+    sparks=False,
+    scanline=False, trans_dur=0.24,
+    panel_radius=12, btn_radius=10,
+    shadow_alpha=80,
+    menu_bob=2,
+    style="v42",                              # eigene Glas-Zeichenpfade
+    logo_glow=False, menu_orbit=False,
+    star_count=48,
+    mesh=_V42_MESH, mesh_drift=(0.10, 0.08),
+    grain=9,
+    glass_alpha=222,
+    grad3=((122, 132, 255), (72, 214, 210), (236, 96, 196)),
+    logo_halo=True,
+)
+
 # UI v4.1.1 bis v4.1.4: identisch zu v4.1 - nur der Hintergrund ist ein
 # gekacheltes Zickzack-Muster statt Verlauf + Sternenhimmel. Die Sterne
 # entfallen deshalb (auf dem Muster wären sie nur Bildrauschen), Saturn und
@@ -300,6 +375,19 @@ _TK_V41 = dict(
     BORDER="#2e3342", GREEN="#58be84", GOLD="#e5c46a", RED="#e06c6c",
 )
 
+# UI v4.2: die Sidebar wird so dunkel wie der Pygame-Hintergrund, die Akzente
+# übernehmen Indigo und Türkis der Palette. "BACK" bleibt ein gedecktes Grün-
+# Türkis, damit sich der Zurück-Knopf weiter vom Beenden-Knopf abhebt.
+_TK_V42 = dict(
+    SIDEBAR="#0d0f1f", HEADER="#090b18", CARD="#151a2e",
+    BTN="#1a1f38", BTN_HOVER="#252c4f",
+    ACCENT="#7a84ff", ACCENT2="#48d6d2",
+    DANGER="#7e2f4a", DANGER_HOVER="#983a5a",
+    BACK="#2e5857", BACK_HOVER="#3a706e",
+    TEXT="#eceefc", TEXT_DIM="#9ca2c4", TEXT_FAINT="#666c92",
+    BORDER="#262c4a", GREEN="#5cd696", GOLD="#f2c868", RED="#f06880",
+)
+
 # UI v1: die Sidebar von Commit cb71142 - durchgehend #1c1f29, Spiele-Buttons
 # #3a4357 (Hover #4a566f), Optionen #2f3645, Beenden #a23b3b, weiße Schrift.
 _TK_V1 = dict(
@@ -332,6 +420,7 @@ _TK_V413 = dict(_TK_V41)
 _TK_V414 = dict(_TK_V41)
 
 THEMES = {
+    "v42": (_V42_COLORS, _V42_FX, _TK_V42),
     "v41": (_V41_COLORS, _V41_FX, _TK_V41),
     "v411": (_V411_COLORS, _V411_FX, _TK_V411),
     "v412": (_V412_COLORS, _V412_FX, _TK_V412),
@@ -342,17 +431,17 @@ THEMES = {
     "v2": (_V2_COLORS, _V2_FX, _TK_V2),
     "v1": (_V1_COLORS, _V1_FX, _TK_V1),
 }
-THEME_NAMES = ("v41", "v411", "v412", "v413", "v414",
+THEME_NAMES = ("v42", "v41", "v411", "v412", "v413", "v414",
                "modern", "classic", "v2", "v1")
-DEFAULT_THEME = "v41"
+DEFAULT_THEME = "v42"
 
 _theme = DEFAULT_THEME
-_fx = _V41_FX
-_tk = _TK_V41
+_fx = _V42_FX
+_tk = _TK_V42
 
 # Die Palette des aktiven Themes liegt in den Modul-Globals (BG_TOP, ACCENT,
 # ...), damit ALLE bestehenden ui.<NAME>-Zugriffe unverändert funktionieren.
-globals().update(_V41_COLORS)
+globals().update(_V42_COLORS)
 
 
 def set_theme(name):
@@ -371,19 +460,23 @@ def set_theme(name):
     _text_fx_cache.clear()
     _fade_cache.clear()
     _btn_anim.clear()
+    _glass_cache.clear()
+    _glass_px[0] = 0
+    _grain_cache.clear()
 
 
 def theme_name():
-    """Name des aktiven Themes (z.B. 'v41', 'v411', 'modern')."""
+    """Name des aktiven Themes (z.B. 'v42', 'v41', 'modern')."""
     return _theme
 
 
 def is_modern():
-    """True in der aufgeräumten Modern-Familie (UI v4, v4.1 und v4.1.x).
+    """True in der aufgeräumten Modern-Familie (UI v4, v4.1, v4.1.x, v4.2).
 
     Steuert die "cleanen" Zeichenpfade (flache Buttons/Titel/Panels ohne
     Glow und Puls). Was sich v4.1 zusätzlich gönnt (Sterne, Saturn,
-    Schwarzes Loch), regeln die fx-Schalter des Themes.
+    Schwarzes Loch), regeln die fx-Schalter des Themes; v4.2 bringt eigene
+    Glas-Zweige mit, die VOR dem Modern-Pfad greifen (siehe fx("style")).
     """
     # UI v3, v2 und v1 zeichnen über die klassischen Pfade (v2/v1 mit eigenen
     # Zweigen, siehe fx("style")).
@@ -645,6 +738,370 @@ def _glow_surface(color, size):
     return surf
 
 
+# ---------------------------------------------------------------------------
+#  Filmkorn (UI v4.2)
+# ---------------------------------------------------------------------------
+#  Ein feines, ruhiges Rauschen über dem Hintergrund und in den Glas-Flächen -
+#  es nimmt großen Verläufen das Banding und lässt das Bild "fotografisch"
+#  wirken. Ohne numpy: aus Zufallsbytes (fester Seed) werden über drei
+#  Nachschlagetabellen DREIECKIG verteilte Werte (meist nahe 0, Ausreißer
+#  selten). Gebaut wird eine 128x128-Kachel; die großen Flächen entstehen
+#  daraus zeilenweise wie beim Zickzack-Muster (draw_zigzag).
+# ---------------------------------------------------------------------------
+
+_GRAIN_TILE = 128
+_GRAIN_SEED = 0x6A1A55
+_grain_tile_cache = {}    # stärke -> (add, sub, rgba) als Kacheln
+_grain_cache = {}         # (w, h) -> (add, sub) in voller Größe (max. 2)
+
+
+def _tri_tables(strength):
+    """Tabellen Byte -> Aufhellung / Abdunklung / Glas-Alpha.
+
+    Aus einem gleichverteilten Byte wird über die Umkehrfunktion der
+    Verteilungsfunktion ein dreieckig verteilter Wert -strength..+strength.
+    """
+    up, down, alpha = bytearray(256), bytearray(256), bytearray(256)
+    for i in range(256):
+        u = (i + 0.5) / 256.0
+        if u < 0.5:
+            x = -strength * (1.0 - math.sqrt(2.0 * u))
+        else:
+            x = strength * (1.0 - math.sqrt(2.0 * (1.0 - u)))
+        up[i] = max(0, min(255, int(round(x))))
+        down[i] = max(0, min(255, int(round(-x))))
+        alpha[i] = max(0, min(255, int(round(abs(x) * 2.2))))
+    return bytes(up), bytes(down), bytes(alpha)
+
+
+def _grain_tiles(strength):
+    """Die drei Rausch-Kacheln einer Stärke (gecacht, fester Seed).
+
+    (add, sub) sind RGB-Kacheln für BLEND_RGB_ADD/-SUB, rgba trägt die
+    Stärke im Alphakanal (helle Körner weiß, dunkle schwarz) und wird in
+    den Glas-Flächen normal darübergeblittet.
+    """
+    key = max(1, int(strength))
+    tiles = _grain_tile_cache.get(key)
+    if tiles is not None:
+        return tiles
+    n = _GRAIN_TILE * _GRAIN_TILE
+    size = (_GRAIN_TILE, _GRAIN_TILE)
+    raw = random.Random(_GRAIN_SEED).randbytes(n)
+    t_up, t_down, t_alpha = _tri_tables(key)
+
+    def rgb_tile(table):
+        # Ein Kanal reicht: derselbe Wert in R, G und B (neutrales Grau).
+        chan = raw.translate(table)
+        buf = bytearray(3 * n)
+        buf[0::3] = chan
+        buf[1::3] = chan
+        buf[2::3] = chan
+        return pygame.image.frombytes(bytes(buf), size, "RGB")
+
+    col = raw.translate(bytes(0 if i < 128 else 255 for i in range(256)))
+    al = raw.translate(t_alpha)
+    buf = bytearray(4 * n)
+    buf[0::4] = col
+    buf[1::4] = col
+    buf[2::4] = col
+    buf[3::4] = al
+    tiles = (rgb_tile(t_up), rgb_tile(t_down),
+             pygame.image.frombytes(bytes(buf), size, "RGBA"))
+    if len(_grain_tile_cache) > 4:
+        _grain_tile_cache.clear()
+    _grain_tile_cache[key] = tiles
+    return tiles
+
+
+def _tile_fill(tile, w, h):
+    """Füllt (w, h) mit einer RGB-Kachel: erst eine Zeile, dann stapeln."""
+    tw, th = tile.get_size()
+    row = pygame.Surface((w, th))
+    for x in range(0, w, tw):
+        row.blit(tile, (x, 0))
+    surf = pygame.Surface((w, h))
+    for y in range(0, h, th):
+        surf.blit(row, (0, y))
+    return surf
+
+
+def _grain_surfaces(w, h):
+    """Vollflächiges Korn einer Größe als (heller, dunkler) Ebene."""
+    key = (w, h)
+    pair = _grain_cache.get(key)
+    if pair is None:
+        add, sub, _rgba = _grain_tiles(_fx.get("grain", 0))
+        if len(_grain_cache) >= 2:       # Auflösungswechsel: alte Größen weg
+            _grain_cache.clear()
+        pair = (_tile_fill(add, w, h), _tile_fill(sub, w, h))
+        _grain_cache[key] = pair
+    return pair
+
+
+# ---------------------------------------------------------------------------
+#  Glas-Flächen (UI v4.2)
+# ---------------------------------------------------------------------------
+#  Panels und Buttons sind leicht durchscheinend, haben Filmkorn, einen
+#  diagonalen Schimmer und eine Lichtkante oben. Das ist pro Frame viel zu
+#  teuer - deshalb wird JEDE Fläche genau einmal gebaut und danach nur noch
+#  geblittet. Der Cache ist ein LRU (älteste Einträge fliegen zuerst) mit
+#  zwei Bremsen: Anzahl UND Gesamtpixel. Pro Frame werden höchstens ein paar
+#  Flächen neu gebaut; wer nicht mehr drankommt, wird flach gezeichnet und
+#  ist einen Frame später dabei.
+# ---------------------------------------------------------------------------
+
+_glass_cache = OrderedDict()   # key -> Surface
+_glass_px = [0]                # Summe der Pixel im Cache
+_GLASS_MAX_ITEMS = 64
+_GLASS_MAX_PX = 6_000_000
+_GLASS_MISS_BUDGET = 8         # Neubauten je Frame
+_glass_budget = {"ms": -999, "left": _GLASS_MISS_BUDGET}
+
+
+def _glass_get(key):
+    """Gecachte Glas-Fläche (und als zuletzt benutzt markieren)."""
+    surf = _glass_cache.get(key)
+    if surf is not None:
+        _glass_cache.move_to_end(key)
+    return surf
+
+
+def _glass_allow():
+    """True, solange in diesem Frame noch Flächen gebaut werden dürfen."""
+    now = pygame.time.get_ticks()
+    if now - _glass_budget["ms"] > 12:      # neuer Frame -> Budget zurück
+        _glass_budget["ms"] = now
+        _glass_budget["left"] = _GLASS_MISS_BUDGET
+    if _glass_budget["left"] <= 0:
+        return False
+    _glass_budget["left"] -= 1
+    return True
+
+
+def _glass_put(key, surf):
+    """Legt eine Fläche in den LRU-Cache und hält dessen Grenzen ein."""
+    _glass_cache[key] = surf
+    _glass_px[0] += surf.get_width() * surf.get_height()
+    while _glass_cache and (len(_glass_cache) > _GLASS_MAX_ITEMS
+                            or (_glass_px[0] > _GLASS_MAX_PX
+                                and len(_glass_cache) > 1)):
+        _, old = _glass_cache.popitem(last=False)
+        _glass_px[0] = max(0, _glass_px[0]
+                           - old.get_width() * old.get_height())
+    return surf
+
+
+def _fit_alpha(surf):
+    """Format ans Display angleichen (nur wenn es überhaupt eines gibt)."""
+    if pygame.display.get_surface() is not None:
+        return surf.convert_alpha()
+    return surf
+
+
+def _alpha_ramp(width, color, peak, ends=0.0):
+    """Kleine 16x1-Kachel: Alpha in der Mitte 'peak', zu den Rändern 'ends'.
+
+    Wird auf die Zielbreite hochskaliert - das ergibt eine weiche Haarlinie,
+    die an beiden Enden ausläuft, ohne pro Pixel zu zeichnen.
+    """
+    base = pygame.Surface((16, 1), pygame.SRCALPHA)
+    for i in range(16):
+        f = math.sin(math.pi * (i + 0.5) / 16.0)
+        base.fill((*color, int(ends + (peak - ends) * f)), (i, 0, 1, 1))
+    return pygame.transform.smoothscale(base, (max(2, int(width)), 1))
+
+
+def _glass_overlay(w, h, radius):
+    """Die "Glas-Schicht": Korn + diagonaler Schimmer + Kanten (gecacht).
+
+    Liegt über Panels UND Buttons, ist also für beide dieselbe Fläche.
+    Gearbeitet wird mit BLEND_RGBA_MAX, weil ein normaler Blit auf eine
+    noch leere SRCALPHA-Fläche die Farben mit dem Alpha vormultipliziert -
+    der Schimmer käme dann fast schwarz heraus.
+    """
+    key = ("ov", w, h, radius)
+    surf = _glass_get(key)
+    if surf is not None:
+        return surf
+    if not _glass_allow():
+        return None
+    surf = pygame.Surface((w, h), pygame.SRCALPHA)
+
+    # 1) Filmkorn (Ausschnitt aus der gekachelten Rausch-Fläche)
+    grain = _fx.get("grain", 0)
+    if grain:
+        tile = _grain_tiles(grain)[2]
+        tw, th = tile.get_size()
+        for y in range(0, h, th):
+            for x in range(0, w, tw):
+                surf.blit(tile, (x, y), special_flags=pygame.BLEND_RGBA_MAX)
+
+    # 2) Diagonaler Schimmer: hell oben links, nach ~60 % der Diagonale weg.
+    sheen = pygame.Surface((8, 8), pygame.SRCALPHA)
+    for gy in range(8):
+        for gx in range(8):
+            d = (gx + gy) / 14.0
+            sheen.fill((255, 255, 255, int(16 * max(0.0, 1.0 - d / 0.6))),
+                       (gx, gy, 1, 1))
+    surf.blit(pygame.transform.smoothscale(sheen, (w, h)),
+              (0, 0), special_flags=pygame.BLEND_RGBA_MAX)
+
+    # 3) Lichtkante oben (1 px) und Dunkellinie unten (1 px)
+    surf.blit(_alpha_ramp(w, (255, 255, 255), 42), (0, 0),
+              special_flags=pygame.BLEND_RGBA_MAX)
+    surf.fill((0, 0, 0, 0), (0, h - 1, w, 1))
+    surf.blit(_alpha_ramp(w, (0, 0, 0), 40), (0, h - 1),
+              special_flags=pygame.BLEND_RGBA_MAX)
+
+    # 4) Ecken runden (Alpha-Maske) und Format ans Display angleichen
+    mask = pygame.Surface((w, h), pygame.SRCALPHA)
+    pygame.draw.rect(mask, (255, 255, 255, 255), (0, 0, w, h),
+                     border_radius=radius)
+    surf.blit(mask, (0, 0), special_flags=pygame.BLEND_RGBA_MIN)
+    return _glass_put(key, _fit_alpha(surf))
+
+
+def _glass_panel(w, h, radius, color, border):
+    """Leicht durchscheinende Panel-Fläche mit Rand und Glas-Schicht."""
+    key = ("panel", w, h, radius, tuple(color), tuple(border))
+    surf = _glass_get(key)
+    if surf is not None:
+        return surf
+    if not _glass_allow():
+        return None
+    surf = pygame.Surface((w, h), pygame.SRCALPHA)
+    alpha = _fx.get("glass_alpha", 222)
+    # pygame.draw ERSETZT Pixel (kein Mischen) - genau richtig, die Fläche
+    # soll die eingestellte Deckkraft bekommen und nicht aufaddieren.
+    pygame.draw.rect(surf, (*color, alpha), (0, 0, w, h), border_radius=radius)
+    pygame.draw.rect(surf, (*border, min(255, alpha + 24)), (0, 0, w, h),
+                     width=1, border_radius=radius)
+    ov = _glass_overlay(w, h, radius)
+    if ov is not None:
+        surf.blit(ov, (0, 0))
+    return _glass_put(key, _fit_alpha(surf))
+
+
+def _glass_shadow(w, h, radius, alpha):
+    """Weicher Schlagschatten: klein zeichnen, groß skalieren (gecacht)."""
+    key = ("shadow", w, h, radius, alpha)
+    surf = _glass_get(key)
+    if surf is not None:
+        return surf
+    if not _glass_allow():
+        return None
+    sw, sh = max(6, (w + 24) // 4), max(6, (h + 24) // 4)
+    small = pygame.Surface((sw, sh), pygame.SRCALPHA)
+    pygame.draw.rect(small, (0, 0, 0, alpha), (1, 1, sw - 2, sh - 2),
+                     border_radius=max(2, radius // 3))
+    surf = pygame.transform.smoothscale(small, (w + 24, h + 24))
+    return _glass_put(key, _fit_alpha(surf))
+
+
+def _glass_glow(w, h, radius, color):
+    """Weicher Akzent-Schein hinter einem ausgewählten Button (gecacht)."""
+    key = ("btnglow", w, h, radius, tuple(color))
+    surf = _glass_get(key)
+    if surf is not None:
+        return surf
+    if not _glass_allow():
+        return None
+    sw, sh = max(6, (w + 24) // 4), max(6, (h + 20) // 4)
+    small = pygame.Surface((sw, sh), pygame.SRCALPHA)
+    pygame.draw.rect(small, (*color, 78), (1, 1, sw - 2, sh - 2),
+                     border_radius=max(2, (radius + 6) // 3))
+    surf = pygame.transform.smoothscale(small, (w + 24, h + 20))
+    return _glass_put(key, _fit_alpha(surf))
+
+
+def _line_stops(accent=None):
+    """Farbstopps für Verlaufslinien (None = Theme ohne Verläufe).
+
+    Ohne 'accent' die drei Theme-Farben, mit 'accent' ein Verlauf um genau
+    diese Farbe herum (so behält jedes Spiel seine Identität).
+    """
+    g3 = _fx.get("grad3")
+    if not g3:
+        return None
+    if accent is None:
+        return g3
+    ac = tuple(accent)
+    return (mix(ac, (255, 255, 255), 0.25), ac, mix(ac, (236, 96, 196), 0.45))
+
+
+def _grad_strip(w, h, stops):
+    """Waagerechter Verlaufsstreifen über mehrere Farbstopps (gecacht)."""
+    key = ("strip", w, h, stops)
+    surf = _glass_get(key)
+    if surf is not None:
+        return surf
+    if not _glass_allow():
+        return None
+    surf = pygame.Surface((w, h))
+    seg = len(stops) - 1
+    for x in range(w):
+        f = x / max(1, w - 1) * seg
+        k = min(seg - 1, int(f))
+        pygame.draw.line(surf, mix(stops[k], stops[k + 1], f - k),
+                         (x, 0), (x, h))
+    return _glass_put(key, surf)
+
+
+def _grad_glow(w, h, stops):
+    """Verwaschene, gedimmte Fassung von _grad_strip für additives Blitten."""
+    key = ("stripglow", w, h, stops)
+    surf = _glass_get(key)
+    if surf is not None:
+        return surf
+    if not _glass_allow():
+        return None
+    sw = max(4, w // 6)
+    small = pygame.Surface((sw, 3))          # Mitte hell, oben/unten schwarz
+    seg = len(stops) - 1
+    for x in range(sw):
+        f = x / max(1, sw - 1) * seg
+        k = min(seg - 1, int(f))
+        col = mix(stops[k], stops[k + 1], f - k)
+        small.fill(tuple(int(c * 0.5) for c in col), (x, 1, 1, 1))
+    surf = pygame.transform.smoothscale(small, (w, max(4, h * 3)))
+    return _glass_put(key, surf)
+
+
+def draw_grad_line(surface, cx, y, w, h=3, accent=None, glow=False):
+    """Kurze Verlaufslinie (UI v4.2), zentriert auf cx.
+
+    Themes ohne Verläufe bekommen den schlichten Akzentbalken von früher,
+    damit derselbe Aufruf überall passt.
+    """
+    w, h = max(2, int(w)), max(1, int(h))
+    x, y = int(cx) - w // 2, int(y)
+    stops = _line_stops(accent)
+    strip = _grad_strip(w, h, stops) if stops else None
+    if strip is None:
+        pygame.draw.rect(surface, accent or ACCENT, (x, y, w, h),
+                         border_radius=2)
+        return
+    if glow:
+        g = _grad_glow(w, h, stops)
+        if g is not None:
+            surface.blit(g, (x, y - h), special_flags=pygame.BLEND_ADD)
+    surface.blit(strip, (x, y))
+
+
+def draw_halo(surface, center, size, color=None):
+    """Weicher Schein hinter einem Element (Logo). Nur in Themes mit Halo.
+
+    Die Farbe wird stark gedimmt: der Schein wird additiv geblittet und soll
+    den Hintergrund anhauchen, nicht überstrahlen.
+    """
+    if not _fx.get("logo_halo"):
+        return
+    col = color or tuple(int(c * 0.5) for c in ACCENT)
+    g = _glow_surface(tuple(col), int(size))
+    surface.blit(g, g.get_rect(center=center), special_flags=pygame.BLEND_ADD)
+
+
 # Aurora-Lichter: (Farbe(max. Helligkeit), Größe rel. zu max(w,h),
 #                  Drift-Tempo, Phase, Grundposition x/y rel.)
 _AURORA = (
@@ -654,12 +1111,17 @@ _AURORA = (
 )
 
 
-def _draw_aurora(surface, w, h, tsec):
-    """Langsam driftende, additive Licht-Flecken hinter allem."""
-    for color, size_f, spd, ph, fx_, fy in _AURORA:
+def _draw_aurora(surface, w, h, tsec, table=_AURORA, amp=(0.07, 0.06)):
+    """Langsam driftende, additive Licht-Flecken hinter allem.
+
+    'table' und 'amp' sind austauschbar: UI v3 nimmt die Aurora, UI v4.2
+    dieselbe Mechanik für seine drei Mesh-Farbwolken (siehe fx('mesh')).
+    """
+    ax, ay = amp
+    for color, size_f, spd, ph, fx_, fy in table:
         size = int(size_f * max(w, h))
-        cx = int((fx_ + 0.07 * math.sin(tsec * spd + ph)) * w)
-        cy = int((fy + 0.06 * math.cos(tsec * spd * 0.9 + ph)) * h)
+        cx = int((fx_ + ax * math.sin(tsec * spd + ph)) * w)
+        cy = int((fy + ay * math.cos(tsec * spd * 0.9 + ph)) * h)
         g = _glow_surface(color, size)
         surface.blit(g, g.get_rect(center=(cx, cy)),
                      special_flags=pygame.BLEND_ADD)
@@ -712,28 +1174,44 @@ def draw_background(surface, w, h, stars=True, aurora=None):
 
     Modern : ruhiger Verlauf + dezente Vignette, keine Bewegung.
     Classic: zusätzlich Aurora-Lichter, Sternenfeld und Sternschnuppen.
+    v4.2   : Farbwolken (Mesh), ein paar Sterne und Filmkorn darüber.
     stars=False (z.B. Options-Screen) -> auch im Classic-Theme ruhig.
     """
     _tick()
     surface.blit(_base_background(w, h), (0, 0))
+    # Die Farbwolken von v4.2 sind KEINE Deko, sondern der Hintergrund selbst -
+    # sie bleiben deshalb auch auf den ruhigen Screens (Optionen, Wiki,
+    # Fortschritt) an, die stars=False übergeben. Nur ein ausdrückliches
+    # aurora=False schaltet sie ab; entschieden wird das VOR "aurora = stars".
+    mesh_on = bool(_fx.get("mesh")) and aurora is not False
     if aurora is None:
         aurora = stars
     ticks = pygame.time.get_ticks() / 1000.0
+    if mesh_on:
+        _draw_aurora(surface, w, h, ticks, table=_fx["mesh"],
+                     amp=_fx.get("mesh_drift", (0.07, 0.06)))
     if aurora and _fx["aurora"]:
         _draw_aurora(surface, w, h, ticks)
-    if not stars or not _fx["stars"]:
-        return
-    _ensure_stars()
-    bright = _fx["star_bright"]
-    for x, y, depth, r in _stars:
-        # Langsame Drift nach oben + leichtes Funkeln über Sinus.
-        yy = (y - ticks * 0.008 * depth) % 1.0
-        tw = 0.5 + 0.5 * math.sin(ticks * (0.8 + depth) + x * 40.0)
-        c = int((40 + 70 * depth * tw) * bright)
-        surface.fill((c, c + 6, c + 18),
-                     (int(x * w), int(yy * h), r, r))
-    if _fx["shooting"]:
-        _draw_shooting_star(surface, w, h)
+    if stars and _fx["stars"]:
+        _ensure_stars()
+        bright = _fx["star_bright"]
+        # star_count begrenzt das Feld (v4.2 will nur eine Handvoll Sterne).
+        limit = _fx.get("star_count")
+        for x, y, depth, r in (_stars[:limit] if limit else _stars):
+            # Langsame Drift nach oben + leichtes Funkeln über Sinus.
+            yy = (y - ticks * 0.008 * depth) % 1.0
+            tw = 0.5 + 0.5 * math.sin(ticks * (0.8 + depth) + x * 40.0)
+            c = int((40 + 70 * depth * tw) * bright)
+            surface.fill((c, c + 6, c + 18),
+                         (int(x * w), int(yy * h), r, r))
+        if _fx["shooting"]:
+            _draw_shooting_star(surface, w, h)
+    # Filmkorn ganz zum Schluss: eine aufhellende und eine abdunkelnde
+    # Ebene - zusammen ein feines, farbneutrales Rauschen über allem.
+    if _fx.get("grain"):
+        g_add, g_sub = _grain_surfaces(w, h)
+        surface.blit(g_add, (0, 0), special_flags=pygame.BLEND_RGB_ADD)
+        surface.blit(g_sub, (0, 0), special_flags=pygame.BLEND_RGB_SUB)
 
 
 # ---------------------------------------------------------------------------
@@ -944,6 +1422,25 @@ def draw_panel(surface, rect, color=None, border=None, radius=None,
     border = border if border is not None else BORDER
     radius = radius if radius is not None else _fx["panel_radius"]
     r = pygame.Rect(rect)
+    if _fx.get("style") == "v42":
+        # UI v4.2: Milchglas - weicher Schatten, leicht durchscheinende
+        # Fläche mit Korn und Lichtkante. Beides ist gecacht; ist das
+        # Frame-Budget für neue Flächen erschöpft, wird flach gezeichnet
+        # (einen Frame später steht die Glas-Fassung im Cache).
+        if shadow and _fx["shadow_alpha"]:
+            sh = _glass_shadow(r.w, r.h, radius, _fx["shadow_alpha"])
+            if sh is not None:
+                surface.blit(sh, (r.x - 10, r.y - 7))
+        glass = _glass_panel(r.w, r.h, radius, color, border)
+        if glass is not None:
+            surface.blit(glass, r.topleft)
+        else:
+            pygame.draw.rect(surface, color, r, border_radius=radius)
+            pygame.draw.rect(surface, border, r, width=1, border_radius=radius)
+        if accent_top:
+            pygame.draw.rect(surface, accent_top,
+                             (r.x + radius, r.y, r.w - 2 * radius, 2))
+        return r
     if _fx.get("style") == "v1":
         # UI v1: flache, abgerundete Fläche - ohne Rand und ohne Schatten.
         pygame.draw.rect(surface, color, r, border_radius=radius)
@@ -1007,6 +1504,37 @@ def draw_button(surface, rect, label, fnt, selected=False, icon=None,
     r = pygame.Rect(rect)
     v = _btn_progress((r.x, r.y, r.w, r.h), selected)
     radius = _fx["btn_radius"]
+
+    if _fx.get("style") == "v42":
+        # UI v4.2: deckende Füllung, darüber dieselbe Glas-Schicht wie bei
+        # den Panels. Die Auswahl zeigt sich über einen weichen Schein
+        # dahinter und eine Verlaufslinie, die aus der Mitte herauswächst.
+        if v > 0.02:
+            glow = _glass_glow(r.w, r.h, radius, ac)
+            if glow is not None:
+                glow.set_alpha(int(255 * v))
+                surface.blit(glow, (r.x - 12, r.y - 10))
+        fill = mix(BTN, mix(BTN_SEL, ac, 0.16), v)
+        pygame.draw.rect(surface, fill, r, border_radius=radius)
+        pygame.draw.rect(surface,
+                         mix(BORDER, mix(ac, (255, 255, 255), 0.2), 0.8 * v),
+                         r, width=1, border_radius=radius)
+        ov = _glass_overlay(r.w, r.h, radius)
+        if ov is not None:
+            surface.blit(ov, r.topleft)
+        stops = _line_stops(accent)
+        if v > 0.05 and stops:
+            full = max(8, r.w - 16)
+            strip = _grad_strip(full, 2, stops)
+            if strip is not None:
+                lw = max(2, int(full * v))
+                # Teil-Blit aus der Mitte des Streifens -> die Linie wächst
+                # nach beiden Seiten, ohne pro Frame neu gebaut zu werden.
+                surface.blit(strip, (r.centerx - lw // 2, r.bottom - 6),
+                             ((full - lw) // 2, 0, lw, 2))
+        _blit_button_label(surface, r, label, fnt, mix(TEXT_DIM, TEXT, v),
+                           sub, sub_font, mix(TEXT_FAINT, TEXT_DIM, v))
+        return r
 
     if is_modern():
         fill = mix(BTN, mix(PANEL_LIGHT, ac, 0.10), v)
@@ -1143,6 +1671,24 @@ def draw_title(surface, width, title, subtitle=None, y=52, big=None,
     ac = accent or ACCENT
     cx = width // 2
 
+    if _fx.get("style") == "v42":
+        # UI v4.2: Verlaufstext mit weichem Schatten, darunter eine kurze
+        # dreifarbige Linie mit dezentem Leuchten. Die Maße sind bewusst
+        # exakt die des Modern-Pfads, damit sich kein Spiel-Layout ändert.
+        img = grad_text(big, title, top=(250, 251, 255), bottom=(200, 208, 244))
+        sh = big.render(title, True, (0, 0, 0))
+        sh.set_alpha(120)
+        surface.blit(sh, sh.get_rect(center=(cx + 2, y + 2)))
+        surface.blit(img, img.get_rect(center=(cx, y)))
+        ly = y + img.get_height() // 2 + 10
+        lw = int(max(64, min(0.6 * img.get_width(), 240)))
+        draw_grad_line(surface, cx, ly, lw, 3, accent=accent, glow=True)
+        if subtitle:
+            small = small or font(17)
+            sub = small.render(subtitle, True, TEXT_DIM)
+            surface.blit(sub, sub.get_rect(center=(cx, ly + 24)))
+        return ly
+
     if is_modern():
         img = big.render(title, True, TEXT)
         surface.blit(img, img.get_rect(center=(cx, y)))
@@ -1211,6 +1757,21 @@ def draw_title(surface, width, title, subtitle=None, y=52, big=None,
 def draw_footer(surface, width, height, text, fnt=None):
     """Fußzeile: dezente Trennlinie + Hinweistext unten."""
     fnt = fnt or font(14)
+    if _fx.get("style") == "v42":
+        # UI v4.2: statt der durchgehenden Linie eine Haarlinie, die zu
+        # beiden Enden hin ausläuft (gecacht, ein Blit pro Frame).
+        img = fnt.render(text, True, TEXT_FAINT)
+        y = height - 22
+        lw = max(40, width * 2 // 3)
+        key = ("hair", lw, tuple(BORDER_LIGHT))
+        line = _glass_get(key)
+        if line is None and _glass_allow():
+            line = _glass_put(key, _fit_alpha(_alpha_ramp(lw, BORDER_LIGHT,
+                                                          150)))
+        if line is not None:
+            surface.blit(line, (width // 2 - lw // 2, y - 12))
+        surface.blit(img, img.get_rect(center=(width // 2, y)))
+        return
     if _fx.get("style") == "v1":
         # UI v1: nur der Hinweistext, ohne Trennlinie.
         img = fnt.render(text, True, TEXT_DIM)

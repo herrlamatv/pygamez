@@ -1,27 +1,40 @@
 /* PyGameZ Web - Oberfläche rund um die Spiel-Canvas (Sidebar im Stil der
    Tkinter-Sidebar der Desktop-Version, Farben aus dem aktiven Theme). */
 
+/* Startwerte = UI v4.2 (Standard-Design). Sonst blitzen beim Laden kurz die
+   Farben des alten Designs auf, bis ui.setTheme() die Variablen setzt. */
 :root {
-  --sidebar: #13161f;
-  --header: #0f1219;
-  --card: #1a1e2a;
-  --btn: #1f2431;
-  --btn-hover: #293040;
-  --accent: #5b8def;
-  --accent2: #819bff;
+  --sidebar: #0d0f1f;
+  --header: #090b18;
+  --card: #151a2e;
+  --btn: #1a1f38;
+  --btn-hover: #252c4f;
+  --accent: #7a84ff;
+  --accent2: #48d6d2;
   --danger: #7c3540;
   --danger-hover: #934250;
   --back: #3c5a4b;
   --back-hover: #4b7060;
-  --text: #e9ebf1;
-  --text-dim: #969dac;
-  --text-faint: #646a7a;
-  --border: #2e3342;
+  --text: #eceefc;
+  --text-dim: #9ca2c4;
+  --text-faint: #666c92;
+  --border: #262c4a;
   --green: #58be84;
   --gold: #e5c46a;
   --red: #e06c6c;
   --stage: #07080c;
   --font: Bahnschrift, "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+}
+
+/* UI v4.2 "Midnight Glass": Sidebar mit Verlauf, Kopfzeile mit Farbkante */
+html[data-theme="v42"] #sidebar { background: linear-gradient(180deg, #0d0f20, #0a0b18); }
+html[data-theme="v42"] .brand {
+  position: relative; border-bottom-color: transparent;
+  background: linear-gradient(135deg, #090b18, #161a3a 60%, #1c1030);
+}
+html[data-theme="v42"] .brand::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px;
+  height: 2px; background: linear-gradient(90deg, #7a84ff, #48d6d2, #ec60c4);
 }
 
 * { box-sizing: border-box; }

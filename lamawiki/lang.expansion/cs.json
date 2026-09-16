@@ -89,7 +89,7 @@
         {
           "h": "Vzhled",
           "body": [
-            "Na kartě Vzhled vybereš jeden z devíti designů rozhraní: UI v4.1 (výchozí: jemné hvězdy, Saturn a černá díra), čtyři vzorové varianty UI v4.1.1 až v4.1.4 (jako v4.1, ale s dlaždicovým cikcak vzorem na pozadí - černá/antracitová, modrá/tmavě modrá, indigo z v4 na černé a grafitový tón z v4 na černé), UI v4 (klidný, plochý grafitový vzhled), UI v3 (klasické rozhraní s polárními světly a září), UI v2 (úplně první přepracování UI: námořnicky modrý přechod, hvězdné pole a zářící tlačítka, bez animací) a UI v1 (vzhled před přepracováním: jednobarevné pozadí, plochá tlačítka, žádné efekty).",
+            "Na kartě Vzhled vybereš jeden z deseti designů rozhraní: UI v4.2 (výchozí: Midnight Glass - hluboký půlnoční přechod s pomalu plujícími měkkými světly v indigové, tyrkysové a purpurové, jemné filmové zrno a panely jako matné sklo), UI v4.1 (jemné hvězdy, Saturn a černá díra), čtyři vzorové varianty UI v4.1.1 až v4.1.4 (jako v4.1, ale s dlaždicovým cikcak vzorem na pozadí - černá/antracitová, modrá/tmavě modrá, indigo z v4 na černé a grafitový tón z v4 na černé), UI v4 (klidný, plochý grafitový vzhled), UI v3 (klasické rozhraní s polárními světly a září), UI v2 (úplně první přepracování UI: námořnicky modrý přechod, hvězdné pole a zářící tlačítka, bez animací) a UI v1 (vzhled před přepracováním: jednobarevné pozadí, plochá tlačítka, žádné efekty).",
             "Každá karta ukazuje malý náhled. Volba platí okamžitě pro herní plochu i postranní panel a ukládá se do settings.json."
           ]
         },

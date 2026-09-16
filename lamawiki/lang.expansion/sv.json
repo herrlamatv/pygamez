@@ -89,7 +89,7 @@
         {
           "h": "Utseende",
           "body": [
-            "På fliken Utseende väljer du en av nio UI-designer: UI v4.1 (standard: diskreta stjärnor, Saturnus och ett svart hål), de fyra mönstervarianterna UI v4.1.1 till v4.1.4 (som v4.1, men med ett kaklat sicksackmönster som bakgrund - svart/antracit, blått/mörkblått, indigon från v4 på svart och grafittonen från v4 på svart), UI v4 (lugn, platt grafit-look), UI v3 (det klassiska gränssnittet med norrsken och glöd), UI v2 (den allra första UI-omarbetningen: marinblå gradient, stjärnhimmel och glödande knappar, utan animationer) och UI v1 (utseendet före UI-omarbetningen: enfärgad bakgrund, platta knappar, inga effekter).",
+            "På fliken Utseende väljer du en av tio UI-designer: UI v4.2 (standard: Midnight Glass - en djup midnattsgradient med långsamt drivande mjuka ljus i indigo, turkos och magenta, fint filmkorn och paneler som matt glas), UI v4.1 (diskreta stjärnor, Saturnus och ett svart hål), de fyra mönstervarianterna UI v4.1.1 till v4.1.4 (som v4.1, men med ett kaklat sicksackmönster som bakgrund - svart/antracit, blått/mörkblått, indigon från v4 på svart och grafittonen från v4 på svart), UI v4 (lugn, platt grafit-look), UI v3 (det klassiska gränssnittet med norrsken och glöd), UI v2 (den allra första UI-omarbetningen: marinblå gradient, stjärnhimmel och glödande knappar, utan animationer) och UI v1 (utseendet före UI-omarbetningen: enfärgad bakgrund, platta knappar, inga effekter).",
             "Varje kort visar en liten förhandsvisning. Valet gäller omedelbart för spelytan och sidofältet och sparas i settings.json."
           ]
         },

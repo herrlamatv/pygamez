@@ -40,6 +40,14 @@
     GREEN: [88, 190, 132], GOLD: [229, 196, 106], RED: [224, 108, 108],
     TEXT: [233, 235, 241], TEXT_DIM: [150, 157, 172], TEXT_FAINT: [100, 106, 122],
   };
+  // UI v4.2 "Midnight Glass": tiefblaue Nacht, Indigo/Türkis-Akzente, Milchglas-Flächen.
+  const V42 = {
+    BG_TOP: [8, 10, 22], BG_BOTTOM: [14, 12, 30], PANEL: [21, 24, 44], PANEL_LIGHT: [31, 35, 62],
+    BORDER: [46, 52, 86], BORDER_LIGHT: [80, 88, 130], BTN: [25, 29, 52], BTN_SEL: [40, 46, 86],
+    ACCENT: [122, 132, 255], ACCENT2: [72, 214, 210], ACCENT_SOFT: [76, 84, 168],
+    GREEN: [92, 214, 150], GOLD: [242, 200, 104], RED: [240, 104, 128],
+    TEXT: [236, 238, 252], TEXT_DIM: [156, 162, 196], TEXT_FAINT: [102, 108, 146],
+  };
   const FX_CLASSIC = {
     stars: true, star_bright: 1.0, aurora: true, shooting: true, celestial: false, pattern: null,
     vignette: 70, title_glow: true, btn_glow: true, btn_arrow: true, sparks: true, scanline: true,
@@ -51,6 +59,20 @@
     trans_dur: 0.22, panel_radius: 10, btn_radius: 8, shadow_alpha: 55, menu_bob: 0,
   };
   const FX_V41 = Object.assign({}, FX_MODERN, { stars: true, star_bright: 0.55, celestial: true, vignette: 48, menu_bob: 3 });
+  // Farbwolken des v4.2-Hintergrunds: [Spitzenfarbe, Größe rel. max(w,h), Tempo, Phase, x, y]
+  const V42_MESH = [
+    [[40, 36, 112], 1.00, 0.050, 0.0, 0.18, 0.20], // Indigo, oben links
+    [[8, 62, 70], 0.95, 0.041, 2.4, 0.84, 0.78],   // Türkis, unten rechts
+    [[64, 16, 60], 0.80, 0.063, 4.1, 0.82, 0.16],  // Magenta, oben rechts
+  ];
+  const FX_V42 = Object.assign({}, FX_MODERN, {
+    stars: true, star_bright: 0.45, aurora: false, shooting: false, celestial: false, pattern: null,
+    vignette: 62, title_glow: false, title_grad: false, btn_glow: false, btn_arrow: false,
+    sparks: false, scanline: false, trans_dur: 0.24, panel_radius: 12, btn_radius: 10,
+    shadow_alpha: 80, menu_bob: 2, style: "v42", logo_glow: false, menu_orbit: false,
+    star_count: 48, mesh: V42_MESH, mesh_drift: [0.10, 0.08], grain: 9, glass_alpha: 222,
+    grad3: [[122, 132, 255], [72, 214, 210], [236, 96, 196]], logo_halo: true,
+  });
   const patternFx = (pat) => Object.assign({}, FX_V41, { stars: false, star_bright: 0, vignette: 64, pattern: pat });
   // UI v2: die allererste ui.py (Commit 08739d3) - Palette fast wie v3,
   // Sternenfeld, statische Glow-Buttons, Titel mit Schatten, keine Animationen.
@@ -73,11 +95,13 @@
   });
 
   // Sidebar-Farben (CSS-Variablen) je Theme.
+  const CSS_V42 = { sidebar: "#0d0f1f", header: "#090b18", card: "#151a2e", btn: "#1a1f38", "btn-hover": "#252c4f", accent: "#7a84ff", accent2: "#48d6d2", border: "#262c4a", text: "#eceefc", "text-dim": "#9ca2c4", "text-faint": "#666c92", gold: "#f2c868" };
   const CSS_V41 = { sidebar: "#13161f", header: "#0f1219", card: "#1a1e2a", btn: "#1f2431", "btn-hover": "#293040", accent: "#5b8def", accent2: "#819bff", border: "#2e3342", text: "#e9ebf1", "text-dim": "#969dac", "text-faint": "#646a7a", gold: "#e5c46a" };
   const CSS_MODERN = { sidebar: "#14161c", header: "#101217", card: "#1b1e27", btn: "#20242e", "btn-hover": "#2a2f3b", accent: "#5b8def", accent2: "#819bff", border: "#2d323e", text: "#e9ebf1", "text-dim": "#969dac", "text-faint": "#646a7a", gold: "#e5c46a" };
   const CSS_CLASSIC = { sidebar: "#12151f", header: "#0c0f18", card: "#1a2030", btn: "#1f2636", "btn-hover": "#2c3650", accent: "#589cff", accent2: "#9b6eff", border: "#2a3147", text: "#e9edf5", "text-dim": "#98a2b8", "text-faint": "#5f6680", gold: "#f5cd64" };
 
   const THEMES = {
+    v42: [V42, FX_V42, CSS_V42],
     v41: [V41, FX_V41, CSS_V41],
     v411: [V41, patternFx([[0, 0, 0], [66, 66, 66]]), CSS_V41],
     v412: [V41, patternFx([[91, 141, 239], [64, 94, 156]]), CSS_V41],
@@ -89,20 +113,23 @@
     v1: [V1, FX_V1, { sidebar: "#1c1f29", header: "#1c1f29", card: "#252a37", btn: "#3a4357", "btn-hover": "#4a566f", accent: "#78c88c", accent2: "#5aa0f0", border: "#2f3645", text: "#ffffff", "text-dim": "#c8d0e0", "text-faint": "#8a93a8", gold: "#f0d278" }],
   };
 
-  let _theme = "v41";
-  let _fx = FX_V41;
+  let _theme = "v42";
+  let _fx = FX_V42;
 
   ui.setTheme = function (name) {
-    if (!THEMES[name]) name = "v41";
+    if (!THEMES[name]) name = "v42";
     const [colors, fx, css] = THEMES[name];
     _theme = name;
     _fx = fx;
     for (const k in colors) ui[k] = colors[k].slice();
     const root = document.documentElement.style;
     for (const k in css) root.setProperty("--" + k, css[k]);
+    // Themenname auch ans <html> hängen - style.css schaltet damit die Sidebar um.
+    document.documentElement.dataset.theme = name;
     bgCache.clear();
     celestialCache.clear();
     btnAnim.clear();
+    grainCache = null;
   };
   ui.themeName = () => _theme;
   ui.isModern = () => _theme !== "classic" && _theme !== "v2" && _theme !== "v1";
@@ -448,6 +475,44 @@
   }
   ui.makeCanvas = makeCanvas;
 
+  // ------------------------------------------------------------- Film-Korn
+  // 128x128-Kachel mit dreieckigem Rauschen (v4.2). Sie wird als Muster über
+  // Hintergrund, Panels und Buttons gelegt und liegt in ECHTEN Gerätepixeln:
+  // die Muster-Matrix hebt die Grundskalierung (pixelScale) wieder auf.
+  let grainCache = null;
+  function grainPattern(ctx) {
+    const ps = Math.max(0.5, (PG.app && PG.app.pixelScale) || 1);
+    const amp = _fx.grain || 0;
+    if (grainCache && grainCache.ps === ps && grainCache.amp === amp && grainCache.ctx === ctx) return grainCache.pat;
+    const S = 128;
+    const tile = makeCanvas(S, S);
+    const g = tile.getContext("2d");
+    const img = g.createImageData(S, S);
+    const d = img.data;
+    const rnd = new PG.Random(0x6a1a55);
+    for (let i = 0; i < S * S; i++) {
+      const o = i * 4;
+      const n = rnd.random() + rnd.random() - 1; // dreieckig um 0: feines, weiches Korn
+      const v = n > 0 ? 255 : 0;
+      d[o] = d[o + 1] = d[o + 2] = v;
+      d[o + 3] = Math.abs(n) * amp * 2;
+    }
+    g.putImageData(img, 0, 0);
+    const pat = ctx.createPattern(tile, "repeat");
+    if (pat && pat.setTransform && typeof DOMMatrix !== "undefined") pat.setTransform(new DOMMatrix().scale(1 / ps));
+    grainCache = { ps, amp, ctx, pat };
+    return pat;
+  }
+  /** Legt das Film-Korn über ein Rechteck (nur v4.2, sonst wirkungslos). */
+  function grainOver(ctx, x, y, w, h, alpha) {
+    if (!_fx.grain) return;
+    ctx.save();
+    ctx.globalAlpha = alpha == null ? 1 : alpha;
+    ctx.fillStyle = grainPattern(ctx);
+    ctx.fillRect(x, y, w, h);
+    ctx.restore();
+  }
+
   function drawZigzag(ctx, w, h, main, alt, unit) {
     // Kachel (2*unit x unit) - siehe ui.py / CSS-Muster
     const tile = makeCanvas(unit * 2 * 4, unit * 4);
@@ -513,13 +578,19 @@
     [[52, 34, 96], 0.95, 0.14, 2.1, 0.8, 0.3],
     [[16, 58, 62], 0.85, 0.08, 4.2, 0.5, 0.88],
   ];
-  function drawAurora(ctx, w, h, ts) {
+  /**
+   * Weiche Farbwolken (Aurora des Classic-Themes, Mesh-Glows von v4.2).
+   * table: Zeilen [Farbe, Größe rel. max(w,h), Tempo, Phase, x, y]
+   * amp:   [Weg in x, Weg in y] als Anteil der Fläche
+   */
+  function drawAurora(ctx, w, h, ts, table, amp) {
+    const ax = amp ? amp[0] : 0.07, ay = amp ? amp[1] : 0.06;
     ctx.save();
     ctx.globalCompositeOperation = "lighter";
-    for (const [color, sizeF, spd, ph, fx, fy] of AURORA) {
+    for (const [color, sizeF, spd, ph, fx, fy] of table || AURORA) {
       const size = sizeF * Math.max(w, h);
-      const cx = (fx + 0.07 * Math.sin(ts * spd + ph)) * w;
-      const cy = (fy + 0.06 * Math.cos(ts * spd * 0.9 + ph)) * h;
+      const cx = (fx + ax * Math.sin(ts * spd + ph)) * w;
+      const cy = (fy + ay * Math.cos(ts * spd * 0.9 + ph)) * h;
       const rg = ctx.createRadialGradient(cx, cy, 0, cx, cy, size / 2);
       rg.addColorStop(0, ui.col(color));
       rg.addColorStop(0.5, ui.col(color.map((v) => v * 0.25)));
@@ -527,6 +598,26 @@
       ctx.fillStyle = rg;
       ctx.fillRect(cx - size / 2, cy - size / 2, size, size);
     }
+    ctx.restore();
+  }
+
+  // Die v4.2-Wolken sind so weich, dass sie in einem Viertel der Auflösung
+  // gezeichnet und hochskaliert werden können - das spart pro Frame ein
+  // Vielfaches an Füllarbeit (drei bildschirmgroße Radialverläufe).
+  const meshCanvas = { c: null, w: 0, h: 0 };
+  function drawMesh(ctx, w, h, ts) {
+    const mw = Math.max(32, Math.round(w / 4)), mh = Math.max(24, Math.round(h / 4));
+    if (!meshCanvas.c || meshCanvas.w !== mw || meshCanvas.h !== mh) {
+      meshCanvas.c = makeCanvas(mw, mh);
+      meshCanvas.w = mw;
+      meshCanvas.h = mh;
+    }
+    const g = meshCanvas.c.getContext("2d");
+    g.clearRect(0, 0, mw, mh);
+    drawAurora(g, mw, mh, ts, _fx.mesh, _fx.mesh_drift);
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter"; // wie direkt gezeichnet: addiert sich zum Hintergrund
+    ctx.drawImage(meshCanvas.c, 0, 0, w, h);
     ctx.restore();
   }
 
@@ -571,19 +662,27 @@
     w = w || PG.W;
     h = h || PG.H;
     ctx.drawImage(baseBackground(w, h), 0, 0, w, h);
+    // Die v4.2-Farbwolken gehören zum Hintergrund und bleiben auch auf Screens
+    // stehen, die die Sterne abschalten (Optionen, Wiki-artige Seiten).
+    const meshOn = _fx.mesh && aurora !== false;
     if (aurora == null) aurora = starsOn;
     const ts = ui.now();
-    if (aurora && _fx.aurora) drawAurora(ctx, w, h, ts);
-    if (!starsOn || !_fx.stars) return;
-    const bright = _fx.star_bright;
-    for (const [x, y, depth, r] of stars) {
-      const yy = PG.mod(y - ts * 0.008 * depth, 1);
-      const tw = 0.5 + 0.5 * Math.sin(ts * (0.8 + depth) + x * 40);
-      const c = (40 + 70 * depth * tw) * bright;
-      ctx.fillStyle = ui.col([c, c + 6, c + 18]);
-      ctx.fillRect(Math.floor(x * w), Math.floor(yy * h), r, r);
+    if (meshOn) drawMesh(ctx, w, h, ts);
+    else if (aurora && _fx.aurora) drawAurora(ctx, w, h, ts);
+    if (starsOn && _fx.stars) {
+      const bright = _fx.star_bright;
+      const n = _fx.star_count ? Math.min(_fx.star_count, stars.length) : stars.length;
+      for (let i = 0; i < n; i++) {
+        const [x, y, depth, r] = stars[i];
+        const yy = PG.mod(y - ts * 0.008 * depth, 1);
+        const tw = 0.5 + 0.5 * Math.sin(ts * (0.8 + depth) + x * 40);
+        const c = (40 + 70 * depth * tw) * bright;
+        ctx.fillStyle = ui.col([c, c + 6, c + 18]);
+        ctx.fillRect(Math.floor(x * w), Math.floor(yy * h), r, r);
+      }
+      if (_fx.shooting) drawShootingStar(ctx, w, h);
     }
-    if (_fx.shooting) drawShootingStar(ctx, w, h);
+    grainOver(ctx, 0, 0, w, h);
   };
 
   // -------------------------------------------- Saturn + Schwarzes Loch (v4.1)
@@ -740,6 +839,36 @@
     const color = opts.color != null ? opts.color : ui.PANEL;
     const border = opts.border != null ? opts.border : ui.BORDER;
     const radius = opts.radius != null ? opts.radius : _fx.panel_radius;
+    if (_fx.style === "v42") {
+      // UI v4.2: Milchglas - zwei weiche Schattenlagen, Glasfüllung mit
+      // diagonalem Schimmer und Korn, oben eine feine Lichtkante.
+      if (opts.shadow !== false) {
+        draw.rect(ctx, [0, 0, 0, Math.round(_fx.shadow_alpha * 0.45)], [r.x - 2, r.y + 7, r.w + 4, r.h], 0, radius + 6);
+        draw.rect(ctx, [0, 0, 0, _fx.shadow_alpha], [r.x + 1, r.y + 3, r.w, r.h], 0, radius + 2);
+      }
+      ctx.save();
+      roundPath(ctx, r.x, r.y, r.w, r.h, radius);
+      ctx.clip();
+      ctx.fillStyle = ui.col(color, _fx.glass_alpha / 255);
+      ctx.fillRect(r.x, r.y, r.w, r.h);
+      const sg = ctx.createLinearGradient(r.x, r.y, r.right, r.bottom);
+      sg.addColorStop(0, "rgba(255,255,255,0.07)");
+      sg.addColorStop(0.45, "rgba(255,255,255,0.02)");
+      sg.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = sg;
+      ctx.fillRect(r.x, r.y, r.w, r.h);
+      grainOver(ctx, r.x, r.y, r.w, r.h, 0.6);
+      ctx.restore();
+      const eg = ctx.createLinearGradient(r.x, 0, r.right, 0);
+      eg.addColorStop(0, "rgba(255,255,255,0)");
+      eg.addColorStop(0.5, "rgba(255,255,255,0.22)");
+      eg.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = eg;
+      ctx.fillRect(r.x + radius * 0.6, r.y + 1, Math.max(0, r.w - radius * 1.2), 1);
+      draw.rect(ctx, typeof border === "string" || border.length > 3 ? border : [border[0], border[1], border[2], 200], r, 1, radius);
+      if (opts.accentTop) draw.rect(ctx, opts.accentTop, [r.x + radius, r.y, r.w - 2 * radius, 2]);
+      return r;
+    }
     if (_fx.style === "v1") {
       // UI v1: flache, abgerundete Fläche ohne Rand und Schatten
       draw.rect(ctx, color, r, 0, radius);
@@ -787,6 +916,34 @@
     fnt = fnt || ui.font(19);
     const v = btnProgress(r.x + "," + r.y + "," + r.w + "," + r.h, selected);
     const radius = _fx.btn_radius;
+    if (_fx.style === "v42") {
+      // UI v4.2: deckende Füllung (Buttons stehen oft über Spielfeldern),
+      // darüber Glas-Schimmer + Korn, Akzent-Glow und wachsende Verlaufslinie.
+      const fill = ui.mix(ui.BTN, ui.mix(ui.BTN_SEL, ac, 0.16), v);
+      if (v > 0.02) {
+        ctx.save();
+        ctx.shadowColor = ui.col(ac, 0.42 * v);
+        ctx.shadowBlur = 16 * v;
+        draw.rect(ctx, fill, r, 0, radius);
+        ctx.restore();
+      }
+      draw.rect(ctx, fill, r, 0, radius);
+      ctx.save();
+      roundPath(ctx, r.x, r.y, r.w, r.h, radius);
+      ctx.clip();
+      const sg = ctx.createLinearGradient(r.x, r.y, r.right, r.bottom);
+      sg.addColorStop(0, "rgba(255,255,255,0.07)");
+      sg.addColorStop(0.45, "rgba(255,255,255,0.02)");
+      sg.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = sg;
+      ctx.fillRect(r.x, r.y, r.w, r.h);
+      grainOver(ctx, r.x, r.y, r.w, r.h, 0.6);
+      ctx.restore();
+      draw.rect(ctx, ui.mix(ui.BORDER, ui.mix(ac, [255, 255, 255], 0.2), 0.8 * v), r, 1, radius);
+      if (v > 0.05) ui.drawGradLine(ctx, r.centerx, r.bottom - 6, Math.max(8, (r.w - 26) * v), 2, opts.accent || null);
+      buttonLabel(ctx, r, label, fnt, ui.mix(ui.TEXT_DIM, ui.TEXT, v), opts.sub, opts.subFont, ui.mix(ui.TEXT_FAINT, ui.TEXT_DIM, v));
+      return r;
+    }
     if (ui.isModern()) {
       const fill = ui.mix(ui.BTN, ui.mix(ui.PANEL_LIGHT, ac, 0.1), v);
       draw.rect(ctx, fill, r, 0, radius);
@@ -851,6 +1008,17 @@
     const ac = opts.accent || ui.ACCENT;
     const cx = width / 2;
     const tw = big.width(title), th = big.height;
+    if (_fx.style === "v42") {
+      // UI v4.2: heller Verlaufstitel mit dunklem Schatten, darunter die
+      // dreifarbige Verlaufslinie (Maße wie Modern - kein Layout verrutscht).
+      ui.text(ctx, title, cx + 2, y + 2, big, [0, 0, 0, 120], "center");
+      ui.gradText(ctx, title, cx, y, big, [250, 251, 255], [200, 208, 244], "center");
+      const lw = Math.max(64, Math.min(0.6 * tw, 240));
+      const ly = y + th / 2 + 10;
+      ui.drawGradLine(ctx, cx, ly, lw, 3, opts.accent || null, true);
+      if (opts.subtitle) ui.text(ctx, opts.subtitle, cx, ly + 24, opts.small || ui.font(17), ui.TEXT_DIM, "center");
+      return ly;
+    }
     if (ui.isModern()) {
       ui.text(ctx, title, cx, y, big, ui.TEXT, "center");
       const lw = Math.max(56, Math.min(tw / 2, 160));
@@ -893,6 +1061,19 @@
   /** Fußzeile: dezente Trennlinie + Hinweistext unten. */
   ui.drawFooter = function (ctx, width, height, str, fnt) {
     fnt = fnt || ui.font(14);
+    if (_fx.style === "v42") {
+      // UI v4.2: Haarlinie, die zu beiden Seiten ausläuft
+      const y42 = height - 22;
+      const x0 = width / 6, x1 = width - width / 6;
+      const lg = ctx.createLinearGradient(x0, 0, x1, 0);
+      lg.addColorStop(0, ui.col(ui.BORDER_LIGHT, 0));
+      lg.addColorStop(0.5, ui.col(ui.BORDER_LIGHT, 0.75));
+      lg.addColorStop(1, ui.col(ui.BORDER_LIGHT, 0));
+      ctx.fillStyle = lg;
+      ctx.fillRect(x0, y42 - 12, x1 - x0, 1);
+      ui.text(ctx, str, width / 2, y42, fnt, ui.TEXT_FAINT, "center");
+      return;
+    }
     if (_fx.style === "v1") {
       // UI v1: nur der Hinweistext, ohne Trennlinie
       ui.text(ctx, str, width / 2, height - 24, fnt, ui.TEXT_DIM, "center");
@@ -901,6 +1082,48 @@
     const y = height - 22;
     draw.line(ctx, ui.BORDER, [width / 6, y - 12], [width - width / 6, y - 12]);
     ui.text(ctx, str, width / 2, y, fnt, ui.TEXT_FAINT, "center");
+  };
+
+  /**
+   * Waagerechte Verlaufslinie um cx (v4.2). Ohne accent die drei Theme-Farben,
+   * mit accent eine Variante davon. Außerhalb von v4.2: schlichter Akzentbalken.
+   */
+  ui.drawGradLine = function (ctx, cx, y, w, h = 3, accent = null, glow = false) {
+    if (w <= 0 || h <= 0) return;
+    if (_fx.style !== "v42" || !_fx.grad3) {
+      draw.rect(ctx, accent || ui.ACCENT, [cx - w / 2, y, w, h], 0, Math.min(2, h / 2));
+      return;
+    }
+    const g3 = _fx.grad3;
+    const stops = accent ? [ui.mix(accent, [255, 255, 255], 0.25), accent, ui.mix(accent, g3[2], 0.45)] : g3;
+    const lg = ctx.createLinearGradient(cx - w / 2, 0, cx + w / 2, 0);
+    lg.addColorStop(0, ui.col(stops[0]));
+    lg.addColorStop(0.5, ui.col(stops[1]));
+    lg.addColorStop(1, ui.col(stops[2]));
+    ctx.save();
+    if (glow) {
+      ctx.shadowColor = ui.col(stops[1], 0.5);
+      ctx.shadowBlur = 9;
+    }
+    ctx.fillStyle = lg;
+    roundPath(ctx, cx - w / 2, y, w, h, h / 2);
+    ctx.fill();
+    ctx.restore();
+  };
+
+  /** Weicher Lichtschein hinter Logo/Symbolen (nur v4.2, sonst wirkungslos). */
+  ui.drawHalo = function (ctx, center, size, color) {
+    if (_fx.style !== "v42" || !_fx.logo_halo || size <= 0) return;
+    const c = color || ui.ACCENT;
+    const rg = ctx.createRadialGradient(center[0], center[1], 0, center[0], center[1], size / 2);
+    rg.addColorStop(0, ui.col(c, 0.22));
+    rg.addColorStop(0.45, ui.col(c, 0.08));
+    rg.addColorStop(1, ui.col(c, 0));
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    ctx.fillStyle = rg;
+    ctx.fillRect(center[0] - size / 2, center[1] - size / 2, size, size);
+    ctx.restore();
   };
 
   /**

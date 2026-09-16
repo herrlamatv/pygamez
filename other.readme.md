@@ -627,13 +627,16 @@ ou depuis l'écran de préparation. Il est organisé en **trois onglets**
   *Flèches + WASD*) et **chaque touche individuelle** des joueurs 1 et 2 est
   réassignable : choisir la ligne, appuyer sur Entrée, appuyer sur la touche
   voulue (Échap annule).
-- **Apparence** : choisir le **design de l'interface** – **UI v4.1** (par
-  défaut : comme UI v4 mais plus vivante – étoiles discrètes plus Saturne et
-  un trou noir en arrière-plan de l'écran d'accueil), **UI v4.1.1** (comme
-  v4.1, mais un **motif zigzag** en carrelage noir et anthracite à la place
-  du ciel étoilé), **UI v4.1.2** (le même motif dans les bleus de la palette
-  – bleu d'accent dominant, bleu plus sombre en fond), **UI v4.1.3** (le
-  même motif dans l'indigo d'UI v4 sur fond noir), **UI v4.1.4** (dans le
+- **Apparence** : choisir le **design de l'interface** – **UI v4.2** (par
+  défaut : Midnight Glass – dégradé nuit profonde avec des lueurs mouvantes
+  en indigo, turquoise et magenta, un fin grain de film, quelques étoiles
+  éparses et des panneaux en verre dépoli à liseré lumineux), **UI v4.1**
+  (comme UI v4 mais plus vivante – étoiles discrètes plus Saturne et un trou
+  noir en arrière-plan de l'écran d'accueil), **UI v4.1.1** (comme v4.1,
+  mais un **motif zigzag** en carrelage noir et anthracite à la place du
+  ciel étoilé), **UI v4.1.2** (le même motif dans les bleus de la palette –
+  bleu d'accent dominant, bleu plus sombre en fond), **UI v4.1.3** (le même
+  motif dans l'indigo d'UI v4 sur fond noir), **UI v4.1.4** (dans le
   graphite d'UI v4 sur fond noir), **UI v4** (un look graphite épuré, plat
   et parfaitement calme avec un seul accent indigo), **UI v3** (l'ancienne
   interface classique avec ciel étoilé, aurores et halos lumineux),
@@ -1387,22 +1390,25 @@ izquierda) o desde la pantalla previa. Está organizada en **tres pestañas**
   *Flechas + WASD*) y **cada tecla individual** de los jugadores 1 y 2 es
   reasignable: elegir fila, pulsar Enter, pulsar la tecla deseada (Esc
   cancela).
-- **Apariencia**: elegir el **diseño de la interfaz** – **UI v4.1**
-  (predeterminado: como UI v4 pero más viva – estrellas sutiles más Saturno y
-  un agujero negro en el fondo de la pantalla de inicio), **UI v4.1.1** (como
-  v4.1, pero con un **patrón de zigzag** en mosaico negro y antracita en
-  lugar del cielo estrellado), **UI v4.1.2** (el mismo patrón en los azules
-  de la paleta: azul de acento como color dominante y un azul más oscuro de
-  fondo), **UI v4.1.3** (el mismo patrón en el índigo de UI v4 sobre negro),
-  **UI v4.1.4** (en el grafito de UI v4 sobre negro), **UI v4** (un look
-  grafito limpio, plano y totalmente tranquilo con un solo acento índigo),
-  **UI v3** (la interfaz clásica anterior con cielo estrellado, auroras y
-  brillos), **UI v2** (el primer rediseño de la interfaz: degradado azul
-  marino, cielo estrellado y botones con brillo, sin animaciones) o **UI v1**
-  (el aspecto previo al rediseño: fondo oscuro liso, botones planos, sin
-  efectos). Todas las tarjetas muestran una pequeña vista previa; la elección
-  se aplica al instante a toda la interfaz (área de juego **y** barra
-  lateral) y se guarda.
+- **Apariencia**: elegir el **diseño de la interfaz** – **UI v4.2**
+  (predeterminado: Midnight Glass – degradado de medianoche profundo con
+  luces suaves que flotan lentamente en índigo, turquesa y magenta, grano de
+  película fino, estrellas dispersas y paneles de vidrio esmerilado con borde
+  de luz), **UI v4.1** (como UI v4 pero más viva – estrellas sutiles más
+  Saturno y un agujero negro en el fondo de la pantalla de inicio),
+  **UI v4.1.1** (como v4.1, pero con un **patrón de zigzag** en mosaico negro
+  y antracita en lugar del cielo estrellado), **UI v4.1.2** (el mismo patrón
+  en los azules de la paleta: azul de acento como color dominante y un azul
+  más oscuro de fondo), **UI v4.1.3** (el mismo patrón en el índigo de UI v4
+  sobre negro), **UI v4.1.4** (en el grafito de UI v4 sobre negro), **UI v4**
+  (un look grafito limpio, plano y totalmente tranquilo con un solo acento
+  índigo), **UI v3** (la interfaz clásica anterior con cielo estrellado,
+  auroras y brillos), **UI v2** (el primer rediseño de la interfaz: degradado
+  azul marino, cielo estrellado y botones con brillo, sin animaciones) o
+  **UI v1** (el aspecto previo al rediseño: fondo oscuro liso, botones
+  planos, sin efectos). Todas las tarjetas muestran una pequeña vista previa;
+  la elección se aplica al instante a toda la interfaz (área de juego **y**
+  barra lateral) y se guarda.
 
 Los ajustes se guardan de forma permanente en `settings.json`. En **un jugador**
 ambas asignaciones controlan la misma figura (estándar: WASD *y* flechas), en
@@ -2138,8 +2144,11 @@ partir do ecrã de preparação. Está organizado em **três separadores**
 - **Controlos**: **modelos** (*WASD + Setas*, *WASD + IJKL*, *Setas + WASD*) e
   **cada tecla individual** dos jogadores 1 e 2 é reatribuível: escolher a
   linha, premir Enter, premir a tecla desejada (Esc cancela).
-- **Aparência**: escolher o **design da interface** – **UI v4.1** (padrão:
-  como a UI v4, mas mais viva – estrelas subtis mais Saturno e um buraco
+- **Aparência**: escolher o **design da interface** – **UI v4.2** (padrão:
+  Midnight Glass – gradiente de meia-noite profundo com luzes suaves a
+  flutuar lentamente em índigo, turquesa e magenta, grão de filme fino,
+  estrelas esparsas e painéis de vidro fosco com aresta de luz), **UI v4.1**
+  (como a UI v4, mas mais viva – estrelas subtis mais Saturno e um buraco
   negro no fundo do ecrã inicial), **UI v4.1.1** (como a v4.1, mas com um
   **padrão ziguezague** em mosaico preto e antracite em vez do céu
   estrelado), **UI v4.1.2** (o mesmo padrão nos azuis da paleta – azul de
@@ -3001,20 +3010,23 @@ Wygląd**; przełączasz kliknięciem lub klawiszem Tab):
 - **Sterowanie**: **szablony** (*WASD + strzałki*, *WASD + IJKL*, *strzałki +
   WASD*) oraz **każdy pojedynczy klawisz** gracza 1 i gracza 2 do przypisania na
   nowo: wybierz wiersz, naciśnij Enter, naciśnij żądany klawisz (Esc anuluje).
-- **Wygląd**: wybierz **projekt interfejsu** — **UI v4.1** (domyślny: jak UI v4, ale
-  żywszy — subtelne gwiazdy oraz Saturn i czarna dziura w tle ekranu startowego),
-  **UI v4.1.1** (jak v4.1, ale zamiast rozgwieżdżonego nieba kafelkowy **wzór
-  zygzak** w czerni i antracycie), **UI v4.1.2** (ten sam wzór w niebieskich barwach
-  palety — niebieski akcent jako kolor dominujący, ciemniejszy niebieski jako tło),
-  **UI v4.1.3** (ten sam wzór w indygo z UI v4 na czerni), **UI v4.1.4** (w
-  grafitowym tonie UI v4 na czerni), **UI v4** (całkowicie spokojny, płaski wygląd
-  grafitowy z jednym akcentem indygo), **UI v3** (poprzedni klasyczny interfejs z
-  rozgwieżdżonym niebem, światłami zorzy i efektami poświaty), **UI v2** (pierwsza
-  przebudowa interfejsu: granatowy gradient, rozgwieżdżone niebo i świecące
-  przyciski, bez animacji) lub **UI v1** (wygląd sprzed przebudowy interfejsu:
-  jednolite ciemne tło, płaskie przyciski, bez efektów). Wszystkie karty pokazują
-  mały podgląd; wybór działa natychmiast na cały interfejs (obszar gry **i** pasek
-  boczny) i jest zapisywany.
+- **Wygląd**: wybierz **projekt interfejsu** — **UI v4.2** (domyślny: Midnight Glass
+  — głęboki północny gradient z powoli dryfującymi, miękkimi światłami w indygo,
+  turkusie i magencie, delikatnym ziarnem filmu, rzadkimi gwiazdami i panelami jak
+  matowe szkło ze świetlistą krawędzią), **UI v4.1** (jak UI v4, ale żywszy —
+  subtelne gwiazdy oraz Saturn i czarna dziura w tle ekranu startowego),
+  **UI v4.1.1** (jak v4.1, ale zamiast rozgwieżdżonego nieba kafelkowy
+  **wzór zygzak** w czerni i antracycie), **UI v4.1.2** (ten sam wzór w niebieskich
+  barwach palety — niebieski akcent jako kolor dominujący, ciemniejszy niebieski
+  jako tło), **UI v4.1.3** (ten sam wzór w indygo z UI v4 na czerni), **UI v4.1.4**
+  (w grafitowym tonie UI v4 na czerni), **UI v4** (całkowicie spokojny, płaski
+  wygląd grafitowy z jednym akcentem indygo), **UI v3** (poprzedni klasyczny
+  interfejs z rozgwieżdżonym niebem, światłami zorzy i efektami poświaty), **UI v2**
+  (pierwsza przebudowa interfejsu: granatowy gradient, rozgwieżdżone niebo i
+  świecące przyciski, bez animacji) lub **UI v1** (wygląd sprzed przebudowy
+  interfejsu: jednolite ciemne tło, płaskie przyciski, bez efektów). Wszystkie karty
+  pokazują mały podgląd; wybór działa natychmiast na cały interfejs (obszar gry
+  **i** pasek boczny) i jest zapisywany.
 
 Ustawienia są trwale zapisywane w `settings.json`. W trybie **jednoosobowym** oba
 przypisania sterują tą samą postacią (domyślnie: WASD *i* strzałki), w
@@ -3863,20 +3875,22 @@ Görünüm**; tıklayarak ya da Tab tuşuyla geçiş yapılır):
 - **Kontroller**: **hazır ayarlar** (*WASD + Oklar*, *WASD + IJKL*, *Oklar +
   WASD*) ve 1. ve 2. oyuncu için **her bir tuşu yeniden atama**: bir satır seçin,
   Enter'a basın, istediğiniz tuşa basın (Esc iptal eder).
-- **Görünüm**: **arayüz tasarımını** seçin – **UI v4.1** (öntanımlı: UI v4 gibi
-  ama daha canlı – ince yıldızların yanı sıra başlangıç ekranının arka planında
-  Satürn ve bir kara delik), **UI v4.1.1** (v4.1 gibi, ancak yıldızlı gökyüzü
-  yerine siyah ve antrasit renkli döşenmiş bir **zikzak deseni**),
-  **UI v4.1.2** (aynı desen paletin mavileriyle – baskın renk vurgu mavisi,
-  zemin daha koyu mavi), **UI v4.1.3** (aynı desen, siyah üzerine UI v4 çivit
-  rengi), **UI v4.1.4** (siyah üzerine UI v4 grafit tonu), **UI v4** (tek bir
-  çivit vurgusuyla tamamen sakin, düz grafit görünüm), **UI v3** (yıldızlı
-  gökyüzü, aurora ışıkları ve parıltı efektleriyle önceki klasik arayüz),
-  **UI v2** (ilk arayüz yenilemesi: lacivert geçiş, yıldızlı gökyüzü ve
-  parlayan düğmeler, hiç animasyon yok) ya da **UI v1** (arayüz yenilemesinden
-  önceki görünüm: düz koyu arka plan, düz düğmeler, efekt yok). Tüm kartlar
-  küçük bir önizleme gösterir; seçim anında tüm arayüze (oyun alanı **ve**
-  kenar çubuğu) uygulanır ve kaydedilir.
+- **Görünüm**: **arayüz tasarımını** seçin – **UI v4.2** (öntanımlı: Midnight
+  Glass – yavaşça süzülen çivit, turkuaz ve macenta ışıklarla derin gece mavisi
+  geçiş, ince film greni, seyrek yıldızlar ve ışık kenarlı buzlu cam paneller),
+  **UI v4.1** (UI v4 gibi ama daha canlı – ince yıldızların yanı sıra başlangıç
+  ekranının arka planında Satürn ve bir kara delik), **UI v4.1.1** (v4.1 gibi,
+  ancak yıldızlı gökyüzü yerine siyah ve antrasit renkli döşenmiş bir
+  **zikzak deseni**), **UI v4.1.2** (aynı desen paletin mavileriyle – baskın
+  renk vurgu mavisi, zemin daha koyu mavi), **UI v4.1.3** (aynı desen, siyah
+  üzerine UI v4 çivit rengi), **UI v4.1.4** (siyah üzerine UI v4 grafit tonu),
+  **UI v4** (tek bir çivit vurgusuyla tamamen sakin, düz grafit görünüm),
+  **UI v3** (yıldızlı gökyüzü, aurora ışıkları ve parıltı efektleriyle önceki
+  klasik arayüz), **UI v2** (ilk arayüz yenilemesi: lacivert geçiş, yıldızlı
+  gökyüzü ve parlayan düğmeler, hiç animasyon yok) ya da **UI v1** (arayüz
+  yenilemesinden önceki görünüm: düz koyu arka plan, düz düğmeler, efekt yok).
+  Tüm kartlar küçük bir önizleme gösterir; seçim anında tüm arayüze (oyun alanı
+  **ve** kenar çubuğu) uygulanır ve kaydedilir.
 
 Ayarlar kalıcı olarak `settings.json` içinde saklanır. **Tek oyuncuda** her iki
 atama da aynı karakteri kontrol eder (öntanımlı: WASD *ve* oklar), **çok
@@ -4693,19 +4707,22 @@ Styring / Udseende**; skift ved at klikke eller med Tab-tasten):
 - **Styring**: **skabeloner** (*WASD + Piletaster*, *WASD + IJKL*, *Piletaster +
   WASD*) og **omdefiner hver enkelt tast** for spiller 1 og spiller 2: vælg en
   række, tryk Enter, tryk på den ønskede tast (Esc annullerer).
-- **Udseende**: vælg **UI-designet** – **UI v4.1** (standard: som UI v4, men mere
-  levende – diskrete stjerner plus Saturn og et sort hul i startskærmens baggrund),
-  **UI v4.1.1** (som v4.1, men et fliselagt **zigzagmønster** i sort og antracit i
-  stedet for stjernehimlen), **UI v4.1.2** (samme mønster i palettens blå toner –
-  accentblå som dominerende farve, en mørkere blå som bund), **UI v4.1.3** (samme
-  mønster i UI v4's indigo på sort), **UI v4.1.4** (i UI v4's grafittone på sort),
-  **UI v4** (et fuldstændig roligt, fladt grafit-look med en enkelt indigo-accent),
-  **UI v3** (den tidligere klassiske UI med stjernehimmel, aurora-lys og
-  glød-effekter), **UI v2** (den allerførste UI-fornyelse: marineblå gradient,
-  stjernehimmel og glødende knapper, helt uden animationer) eller **UI v1** (looket
-  før UI-fornyelsen: ensfarvet mørk baggrund, flade knapper, ingen effekter). Alle
-  kort viser en lille forhåndsvisning; valget slår straks igennem på hele
-  grænsefladen (spilområde **og** sidebjælke) og gemmes.
+- **Udseende**: vælg **UI-designet** – **UI v4.2** (standard: Midnight Glass – en
+  dyb midnatsgradient med langsomt drivende bløde lys i indigo, turkis og magenta,
+  fint filmkorn, spredte stjerner og paneler som mat glas med en lys kant),
+  **UI v4.1** (som UI v4, men mere levende – diskrete stjerner plus Saturn og et
+  sort hul i startskærmens baggrund), **UI v4.1.1** (som v4.1, men et fliselagt
+  **zigzagmønster** i sort og antracit i stedet for stjernehimlen), **UI v4.1.2**
+  (samme mønster i palettens blå toner – accentblå som dominerende farve, en
+  mørkere blå som bund), **UI v4.1.3** (samme mønster i UI v4's indigo på sort),
+  **UI v4.1.4** (i UI v4's grafittone på sort), **UI v4** (et fuldstændig roligt,
+  fladt grafit-look med en enkelt indigo-accent), **UI v3** (den tidligere
+  klassiske UI med stjernehimmel, aurora-lys og glød-effekter), **UI v2** (den
+  allerførste UI-fornyelse: marineblå gradient, stjernehimmel og glødende knapper,
+  helt uden animationer) eller **UI v1** (looket før UI-fornyelsen: ensfarvet mørk
+  baggrund, flade knapper, ingen effekter). Alle kort viser en lille
+  forhåndsvisning; valget slår straks igennem på hele grænsefladen (spilområde
+  **og** sidebjælke) og gemmes.
 
 Indstillingerne gemmes permanent i `settings.json`. I **enkeltspiller** styrer
 begge tildelinger den samme figur (standard: WASD *og* piletaster), i
@@ -5517,19 +5534,22 @@ Styring / Utseende**; bytt ved å klikke eller med Tab-tasten):
 - **Styring**: **forhåndsinnstillinger** (*WASD + piler*, *WASD + IJKL*,
   *piler + WASD*) og **omdefinere hver enkelt tast** for spiller 1 og spiller 2:
   velg en rad, trykk Enter, trykk ønsket tast (Esc avbryter).
-- **Utseende**: velg **UI-design** – **UI v4.1** (standard: som UI v4 men livligere
-  – diskré stjerner pluss Saturn og et svart hull i bakgrunnen på startskjermen),
-  **UI v4.1.1** (som v4.1, men et flislagt **sikksakkmønster** i svart og antrasitt
-  i stedet for stjernehimmelen), **UI v4.1.2** (samme mønster i palettens blåtoner
-  – aksentblå som dominerende farge, en mørkere blå som bunn), **UI v4.1.3** (samme
-  mønster i indigoen fra UI v4 på svart), **UI v4.1.4** (i grafittonen fra UI v4 på
-  svart), **UI v4** (et helt rolig, flatt grafittutseende med en enkelt
-  indigo-aksent), **UI v3** (det forrige klassiske grensesnittet med stjernefelt,
-  nordlys og glødeeffekter), **UI v2** (den aller første UI-fornyelsen: marineblå
-  gradient, stjernehimmel og glødende knapper, helt uten animasjoner) eller
-  **UI v1** (utseendet før UI-fornyelsen: ensfarget mørk bakgrunn, flate knapper,
-  ingen effekter). Alle kortene viser en liten forhåndsvisning; valget slår inn
-  umiddelbart på hele grensesnittet (spillområdet **og** sidefeltet) og lagres.
+- **Utseende**: velg **UI-design** – **UI v4.2** (standard: Midnight Glass – en dyp
+  midnattsgradient med langsomt drivende myke lys i indigo, turkis og magenta, fint
+  filmkorn, spredte stjerner og paneler som matt glass med en lys kant),
+  **UI v4.1** (som UI v4 men livligere – diskré stjerner pluss Saturn og et svart
+  hull i bakgrunnen på startskjermen), **UI v4.1.1** (som v4.1, men et flislagt
+  **sikksakkmønster** i svart og antrasitt i stedet for stjernehimmelen),
+  **UI v4.1.2** (samme mønster i palettens blåtoner – aksentblå som dominerende
+  farge, en mørkere blå som bunn), **UI v4.1.3** (samme mønster i indigoen fra UI
+  v4 på svart), **UI v4.1.4** (i grafittonen fra UI v4 på svart), **UI v4** (et
+  helt rolig, flatt grafittutseende med en enkelt indigo-aksent), **UI v3** (det
+  forrige klassiske grensesnittet med stjernefelt, nordlys og glødeeffekter),
+  **UI v2** (den aller første UI-fornyelsen: marineblå gradient, stjernehimmel og
+  glødende knapper, helt uten animasjoner) eller **UI v1** (utseendet før
+  UI-fornyelsen: ensfarget mørk bakgrunn, flate knapper, ingen effekter). Alle
+  kortene viser en liten forhåndsvisning; valget slår inn umiddelbart på hele
+  grensesnittet (spillområdet **og** sidefeltet) og lagres.
 
 Innstillingene lagres permanent i `settings.json`. I **énspiller** styrer begge
 tilordningene samme figur (standard: WASD *og* piler), i **flerspiller** én hver.
@@ -6314,7 +6334,9 @@ att klicka eller med Tab-tangenten):
   växlas med Vänster/Höger.
 - **Styrning**: **förval** (*WASD + Pilar*, *WASD + IJKL*, *Pilar + WASD*) och **bind om varenda
   tangent** för spelare 1 och spelare 2: välj en rad, tryck Enter, tryck önskad tangent (Esc avbryter).
-- **Utseende**: välj **UI-design** – **UI v4.1** (standard: som UI v4 men livligare – diskreta stjärnor
+- **Utseende**: välj **UI-design** – **UI v4.2** (standard: Midnight Glass – en djup midnattsgradient
+  med långsamt drivande mjuka ljus i indigo, turkos och magenta, fint filmkorn, glesa stjärnor och
+  paneler som matt glas med en ljus kant), **UI v4.1** (som UI v4 men livligare – diskreta stjärnor
   plus Saturnus och ett svart hål i startskärmens bakgrund), **UI v4.1.1** (som v4.1, men ett kaklat
   **sicksackmönster** i svart och antracit i stället för stjärnhimlen), **UI v4.1.2** (samma mönster i
   palettens blå toner – accentblått som dominerande färg, ett mörkare blått som botten), **UI v4.1.3**
@@ -7157,20 +7179,23 @@ vaihda klikkaamalla tai Tab-näppäimellä):
 - **Ohjaus**: **esiasetukset** (*WASD + nuolet*, *WASD + IJKL*, *Nuolet + WASD*) ja
   **jokaisen yksittäisen näppäimen uudelleenmääritys** pelaajalle 1 ja pelaajalle 2:
   valitse rivi, paina Enter, paina haluttua näppäintä (Esc peruuttaa).
-- **Ulkoasu**: valitse **käyttöliittymän ulkoasu** – **UI v4.1** (oletus: kuten UI v4,
-  mutta eloisampi – hillityt tähdet sekä Saturnus ja musta aukko aloitusnäytön
-  taustalla), **UI v4.1.1** (kuten v4.1, mutta tähtitaivaan tilalla laatoitettu
-  **siksak-kuvio** mustana ja antrasiittina), **UI v4.1.2** (sama kuvio paletin
-  sinisillä – korostussininen hallitsevana värinä ja tummempi sininen pohjana),
-  **UI v4.1.3** (sama kuvio UI v4:n indigolla mustalla pohjalla), **UI v4.1.4** (UI
-  v4:n grafiittisävyllä mustalla pohjalla), **UI v4** (täysin rauhallinen, litteä
-  grafiitti-ilme yhdellä indigokorostuksella), **UI v3** (aiempi klassinen
-  käyttöliittymä tähtitaivaalla, revontulivaloilla ja hehkutehosteilla), **UI v2**
-  (ensimmäinen käyttöliittymän uudistus: laivastonsininen liukuväri, tähtitaivas ja
-  hehkuvat painikkeet, täysin ilman animaatioita) tai **UI v1** (ulkoasu ennen
-  käyttöliittymän uudistusta: yksivärinen tumma tausta, litteät painikkeet, ei
-  tehosteita). Kaikki kortit näyttävät pienen esikatselun; valinta vaikuttaa heti koko
-  käyttöliittymään (pelialue **ja** sivupalkki) ja tallennetaan.
+- **Ulkoasu**: valitse **käyttöliittymän ulkoasu** – **UI v4.2** (oletus: Midnight
+  Glass – syvä keskiyön liukuväri, jossa ajelehtii hitaasti pehmeitä valoja indigona,
+  turkoosina ja magentana, lisäksi hieno filmirae, harvat tähdet ja paneelit kuin
+  himmeää lasia valoreunalla), **UI v4.1** (kuten UI v4, mutta eloisampi – hillityt
+  tähdet sekä Saturnus ja musta aukko aloitusnäytön taustalla), **UI v4.1.1** (kuten
+  v4.1, mutta tähtitaivaan tilalla laatoitettu **siksak-kuvio** mustana ja
+  antrasiittina), **UI v4.1.2** (sama kuvio paletin sinisillä – korostussininen
+  hallitsevana värinä ja tummempi sininen pohjana), **UI v4.1.3** (sama kuvio UI v4:n
+  indigolla mustalla pohjalla), **UI v4.1.4** (UI v4:n grafiittisävyllä mustalla
+  pohjalla), **UI v4** (täysin rauhallinen, litteä grafiitti-ilme yhdellä
+  indigokorostuksella), **UI v3** (aiempi klassinen käyttöliittymä tähtitaivaalla,
+  revontulivaloilla ja hehkutehosteilla), **UI v2** (ensimmäinen käyttöliittymän
+  uudistus: laivastonsininen liukuväri, tähtitaivas ja hehkuvat painikkeet, täysin
+  ilman animaatioita) tai **UI v1** (ulkoasu ennen käyttöliittymän uudistusta:
+  yksivärinen tumma tausta, litteät painikkeet, ei tehosteita). Kaikki kortit
+  näyttävät pienen esikatselun; valinta vaikuttaa heti koko käyttöliittymään (pelialue
+  **ja** sivupalkki) ja tallennetaan.
 
 Asetukset tallennetaan pysyvästi tiedostoon `settings.json`. **Yksinpelissä** molemmat
 määritykset ohjaavat samaa hahmoa (oletus: WASD *ja* nuolet), **moninpelissä** yksi
@@ -7995,20 +8020,23 @@ Vzhled**; přepínání klikem nebo klávesou Tab):
 - **Ovládání**: **předlohy** (*WASD + šipky*, *WASD + IJKL*, *šipky + WASD*) a
   **libovolné přemapování každé klávesy** pro hráče 1 a hráče 2: zvol řádek,
   stiskni Enter, stiskni požadovanou klávesu (Esc zruší).
-- **Vzhled**: zvol **design rozhraní** – **UI v4.1** (výchozí: jako UI v4, ale
-  živější – jemné hvězdy plus Saturn a černá díra v pozadí úvodní obrazovky),
-  **UI v4.1.1** (jako v4.1, ale místo hvězdné oblohy dlaždicový **cikcak
-  vzor** v černé a antracitové), **UI v4.1.2** (stejný vzor v modrých
-  odstínech palety – akcentní modrá jako dominantní barva, tmavší modrá jako
-  podklad), **UI v4.1.3** (stejný vzor v indigu z UI v4 na černé),
-  **UI v4.1.4** (v grafitovém tónu UI v4 na černé), **UI v4** (naprosto
-  klidný, plochý grafitový vzhled s jediným indigovým akcentem), **UI v3**
-  (dřívější klasické rozhraní s hvězdnou oblohou, polárními světly a efekty
-  záře), **UI v2** (úplně první přepracování rozhraní: námořnicky modrý
-  přechod, hvězdná obloha a zářící tlačítka, zcela bez animací) nebo **UI v1**
-  (vzhled před přepracováním UI: jednobarevné tmavé pozadí, plochá tlačítka,
-  žádné efekty). Všechny karty ukazují malý náhled; volba se okamžitě projeví
-  na celém rozhraní (herní plocha **i** postranní panel) a uloží se.
+- **Vzhled**: zvol **design rozhraní** – **UI v4.2** (výchozí: Midnight Glass
+  – hluboký půlnoční přechod s pomalu plujícími měkkými světly v indigové,
+  tyrkysové a purpurové, jemné filmové zrno, řídké hvězdy a panely jako matné
+  sklo se světelným okrajem), **UI v4.1** (jako UI v4, ale živější – jemné
+  hvězdy plus Saturn a černá díra v pozadí úvodní obrazovky), **UI v4.1.1**
+  (jako v4.1, ale místo hvězdné oblohy dlaždicový **cikcak vzor** v černé a
+  antracitové), **UI v4.1.2** (stejný vzor v modrých odstínech palety –
+  akcentní modrá jako dominantní barva, tmavší modrá jako podklad),
+  **UI v4.1.3** (stejný vzor v indigu z UI v4 na černé), **UI v4.1.4** (v
+  grafitovém tónu UI v4 na černé), **UI v4** (naprosto klidný, plochý
+  grafitový vzhled s jediným indigovým akcentem), **UI v3** (dřívější klasické
+  rozhraní s hvězdnou oblohou, polárními světly a efekty záře), **UI v2**
+  (úplně první přepracování rozhraní: námořnicky modrý přechod, hvězdná obloha
+  a zářící tlačítka, zcela bez animací) nebo **UI v1** (vzhled před
+  přepracováním UI: jednobarevné tmavé pozadí, plochá tlačítka, žádné efekty).
+  Všechny karty ukazují malý náhled; volba se okamžitě projeví na celém
+  rozhraní (herní plocha **i** postranní panel) a uloží se.
 
 Nastavení se trvale ukládá do `settings.json`. V režimu **jeden hráč** obě
 přiřazení ovládají stejnou postavu (výchozí: WASD *a* šipky), ve **více hráčích**
@@ -8834,19 +8862,22 @@ Videz**; preklopiš s klikom ali s tipko Tab):
 - **Upravljanje**: **prednastavitve** (*WASD + puščice*, *WASD + IJKL*,
   *puščice + WASD*) in **preslikava vsake posamezne tipke** za igralca 1 in
   igralca 2: izberi vrstico, pritisni enter, pritisni želeno tipko (Esc prekliče).
-- **Videz**: izberi **dizajn vmesnika** – **UI v4.1** (privzeto: kot UI v4, a bolj
-  živahno – nevpadljive zvezde ter Saturn in črna luknja v ozadju začetnega
-  zaslona), **UI v4.1.1** (kot v4.1, a namesto zvezdnega neba tlakovan **cikcak
-  vzorec** v črni in antracitni), **UI v4.1.2** (isti vzorec v modrih odtenkih
-  palete – poudarna modra kot prevladujoča barva, temnejša modra kot podlaga),
-  **UI v4.1.3** (isti vzorec v indigo barvi UI v4 na črni), **UI v4.1.4** (v
-  grafitnem tonu UI v4 na črni), **UI v4** (povsem umirjen, ploski grafitni videz
-  z enim samim indigo poudarkom), **UI v3** (prejšnji klasični vmesnik z zvezdnim
-  nebom, aurorami in učinki žarenja), **UI v2** (prva prenova vmesnika: mornarsko
-  moder preliv, zvezdno nebo in žareči gumbi, povsem brez animacij) ali **UI v1**
-  (videz pred prenovo vmesnika: enobarvno temno ozadje, ploski gumbi, brez
-  učinkov). Vse kartice prikažejo majhen predogled; izbira takoj učinkuje na ves
-  vmesnik (igralno območje **in** stransko vrstico) in se shrani.
+- **Videz**: izberi **dizajn vmesnika** – **UI v4.2** (privzeto: Midnight Glass –
+  globok polnočni preliv s počasi plavajočimi mehkimi lučmi v indigo, turkizni in
+  magenta barvi, fino filmsko zrno, redke zvezde in plošče kot motno steklo s
+  svetlobnim robom), **UI v4.1** (kot UI v4, a bolj živahno – nevpadljive zvezde
+  ter Saturn in črna luknja v ozadju začetnega zaslona), **UI v4.1.1** (kot v4.1,
+  a namesto zvezdnega neba tlakovan **cikcak vzorec** v črni in antracitni),
+  **UI v4.1.2** (isti vzorec v modrih odtenkih palete – poudarna modra kot
+  prevladujoča barva, temnejša modra kot podlaga), **UI v4.1.3** (isti vzorec v
+  indigo barvi UI v4 na črni), **UI v4.1.4** (v grafitnem tonu UI v4 na črni),
+  **UI v4** (povsem umirjen, ploski grafitni videz z enim samim indigo poudarkom),
+  **UI v3** (prejšnji klasični vmesnik z zvezdnim nebom, aurorami in učinki
+  žarenja), **UI v2** (prva prenova vmesnika: mornarsko moder preliv, zvezdno nebo
+  in žareči gumbi, povsem brez animacij) ali **UI v1** (videz pred prenovo
+  vmesnika: enobarvno temno ozadje, ploski gumbi, brez učinkov). Vse kartice
+  prikažejo majhen predogled; izbira takoj učinkuje na ves vmesnik (igralno
+  območje **in** stransko vrstico) in se shrani.
 
 Nastavitve se trajno shranijo v `settings.json`. V načinu za **enega igralca** obe
 preslikavi upravljata isti lik (privzeto: WASD *in* puščice), v **večigralskem**
@@ -9673,20 +9704,22 @@ prebacuje se klikom ili tipkom Tab):
 - **Upravljanje**: **predlošci** (*WASD + Strelice*, *WASD + IJKL*,
   *Strelice + WASD*) i **preslagivanje svake pojedine tipke** za igrača 1 i igrača
   2: odaberite redak, pritisnite Enter, pritisnite željenu tipku (Esc odustaje).
-- **Izgled**: odaberite **dizajn sučelja** – **UI v4.1** (zadano: poput UI v4, ali
-  življe – suptilne zvijezde te Saturn i crna rupa u pozadini početnog zaslona),
-  **UI v4.1.1** (kao v4.1, ali umjesto zvjezdanog neba popločani **cik-cak
-  uzorak** u crnoj i antracit boji), **UI v4.1.2** (isti uzorak u plavim tonovima
-  palete – naglasna plava kao dominantna boja, tamnija plava kao podloga),
-  **UI v4.1.3** (isti uzorak u indigo boji UI v4 na crnoj), **UI v4.1.4** (u
-  grafitnom tonu UI v4 na crnoj), **UI v4** (posve smiren, plosnat grafitni izgled
-  s jednim indigo naglaskom), **UI v3** (dosadašnje klasično sučelje sa zvjezdanim
-  nebom, aurorama i sjajnim efektima), **UI v2** (prva preradba sučelja:
-  tamnoplavi prijelaz, zvjezdano nebo i svijetleći gumbi, potpuno bez animacija)
-  ili **UI v1** (izgled prije preradbe sučelja: jednobojna tamna pozadina, ravni
-  gumbi, bez efekata). Sve kartice prikazuju malu pretpreglednu sličicu; odabir se
-  odmah primjenjuje na cijelo sučelje (područje igre **i** bočnu traku) i sprema
-  se.
+- **Izgled**: odaberite **dizajn sučelja** – **UI v4.2** (zadano: Midnight Glass –
+  duboki ponoćni prijelaz s polako lebdećim mekim svjetlima u indigo, tirkiznoj i
+  magenta boji, fino filmsko zrno, rijetke zvijezde i ploče poput matiranog stakla
+  sa svjetlosnim rubom), **UI v4.1** (poput UI v4, ali življe – suptilne zvijezde
+  te Saturn i crna rupa u pozadini početnog zaslona), **UI v4.1.1** (kao v4.1, ali
+  umjesto zvjezdanog neba popločani **cik-cak uzorak** u crnoj i antracit boji),
+  **UI v4.1.2** (isti uzorak u plavim tonovima palete – naglasna plava kao
+  dominantna boja, tamnija plava kao podloga), **UI v4.1.3** (isti uzorak u indigo
+  boji UI v4 na crnoj), **UI v4.1.4** (u grafitnom tonu UI v4 na crnoj), **UI v4**
+  (posve smiren, plosnat grafitni izgled s jednim indigo naglaskom), **UI v3**
+  (dosadašnje klasično sučelje sa zvjezdanim nebom, aurorama i sjajnim efektima),
+  **UI v2** (prva preradba sučelja: tamnoplavi prijelaz, zvjezdano nebo i
+  svijetleći gumbi, potpuno bez animacija) ili **UI v1** (izgled prije preradbe
+  sučelja: jednobojna tamna pozadina, ravni gumbi, bez efekata). Sve kartice
+  prikazuju malu pretpreglednu sličicu; odabir se odmah primjenjuje na cijelo
+  sučelje (područje igre **i** bočnu traku) i sprema se.
 
 Postavke se trajno spremaju u `settings.json`. U **jednom igraču** obje dodjele
 upravljaju istim likom (zadano: WASD *i* strelice), a u **više igrača** svaka po

@@ -414,11 +414,11 @@
   };
 
   PG.THEME_NAMES = [
-    ["v41", "UI v4.1"], ["v411", "UI v4.1.1"], ["v412", "UI v4.1.2"], ["v413", "UI v4.1.3"],
+    ["v42", "UI v4.2"], ["v41", "UI v4.1"], ["v411", "UI v4.1.1"], ["v412", "UI v4.1.2"], ["v413", "UI v4.1.3"],
     ["v414", "UI v4.1.4"], ["modern", "UI v4"], ["classic", "UI v3 (Classic)"], ["v2", "UI v2"], ["v1", "UI v1"],
   ];
 
-  const GLOBAL_DEFAULTS = { theme: "v41", sound: true, volume: 0.6, haptik: false };
+  const GLOBAL_DEFAULTS = { theme: "v42", sound: true, volume: 0.6, haptik: false };
 
   const clone = (o) => JSON.parse(JSON.stringify(o));
 
@@ -435,7 +435,7 @@
       PG.store.set("settings", this.data);
     },
   };
-  if (!PG.THEME_NAMES.some((t) => t[0] === PG.settings.data.theme)) PG.settings.data.theme = "v41";
+  if (!PG.THEME_NAMES.some((t) => t[0] === PG.settings.data.theme)) PG.settings.data.theme = "v42";
 
   // -------------------------------------------------------------- Highscores
   PG.highscore = {

@@ -89,7 +89,7 @@
         {
           "h": "Aparência",
           "body": [
-            "O separador Aparência permite escolher um de nove designs: UI v4.1 (padrão: estrelas subtis, Saturno e um buraco negro), as quatro variantes com padrão UI v4.1.1 a v4.1.4 (como a v4.1, mas com um padrão ziguezague em mosaico no fundo - preto/antracite, azul/azul-escuro, o índigo da v4 sobre preto e o grafite da v4 sobre preto), UI v4 (visual grafite plano e calmo), UI v3 (a interface clássica com auroras e brilhos), UI v2 (a primeira remodelação: gradiente azul-marinho, campo de estrelas e botões com brilho, sem animações) e UI v1 (o visual antes da remodelação: fundo liso, botões planos, sem efeitos).",
+            "O separador Aparência permite escolher um de dez designs: UI v4.2 (padrão: Midnight Glass - gradiente de meia-noite profundo com luzes suaves a flutuar lentamente em índigo, turquesa e magenta, grão de filme fino e painéis de vidro fosco), UI v4.1 (estrelas subtis, Saturno e um buraco negro), as quatro variantes com padrão UI v4.1.1 a v4.1.4 (como a v4.1, mas com um padrão ziguezague em mosaico no fundo - preto/antracite, azul/azul-escuro, o índigo da v4 sobre preto e o grafite da v4 sobre preto), UI v4 (visual grafite plano e calmo), UI v3 (a interface clássica com auroras e brilhos), UI v2 (a primeira remodelação: gradiente azul-marinho, campo de estrelas e botões com brilho, sem animações) e UI v1 (o visual antes da remodelação: fundo liso, botões planos, sem efeitos).",
             "Cada cartão mostra uma pequena pré-visualização. A escolha aplica-se de imediato à área de jogo e à barra lateral e é guardada em settings.json."
           ]
         },

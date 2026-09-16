@@ -89,7 +89,7 @@
         {
           "h": "Appearance",
           "body": [
-            "The Appearance tab lets you pick one of nine UI designs: UI v4.1 (default: subtle stars plus Saturn and a black hole), the four pattern variants UI v4.1.1 to v4.1.4 (like v4.1, but with a tiled zigzag pattern as the background - black/charcoal, blue/dark blue, v4's indigo on black and v4's graphite tone on black), UI v4 (a calm, flat graphite look), UI v3 (the classic UI with aurora lights and glow), UI v2 (the very first UI rework: navy gradient, starfield and glowing buttons, no animations at all) and UI v1 (the look before the UI rework: plain background, flat buttons, no effects).",
+            "The Appearance tab lets you pick one of ten UI designs: UI v4.2 (default: Midnight Glass - a deep midnight gradient with slowly drifting glows in indigo, turquoise and magenta, fine film grain and frosted-glass panels), UI v4.1 (subtle stars plus Saturn and a black hole), the four pattern variants UI v4.1.1 to v4.1.4 (like v4.1, but with a tiled zigzag pattern as the background - black/charcoal, blue/dark blue, v4's indigo on black and v4's graphite tone on black), UI v4 (a calm, flat graphite look), UI v3 (the classic UI with aurora lights and glow), UI v2 (the very first UI rework: navy gradient, starfield and glowing buttons, no animations at all) and UI v1 (the look before the UI rework: plain background, flat buttons, no effects).",
             "Every card shows a small preview. The choice applies instantly to the game area and the sidebar and is stored in settings.json."
           ]
         },

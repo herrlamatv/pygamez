@@ -89,7 +89,7 @@
         {
           "h": "Udseende",
           "body": [
-            "Under fanen Udseende vælger du et af ni UI-designs: UI v4.1 (standard: diskrete stjerner, Saturn og et sort hul), de fire mønstervarianter UI v4.1.1 til v4.1.4 (som v4.1, men med et fliselagt zigzagmønster som baggrund - sort/antracit, blå/mørkeblå, v4's indigo på sort og v4's grafittone på sort), UI v4 (roligt, fladt grafit-look), UI v3 (den klassiske UI med aurora-lys og glød), UI v2 (den allerførste UI-fornyelse: marineblå gradient, stjernehimmel og glødende knapper, uden animationer) og UI v1 (looket før UI-fornyelsen: ensfarvet baggrund, flade knapper, ingen effekter).",
+            "Under fanen Udseende vælger du et af ti UI-designs: UI v4.2 (standard: Midnight Glass - en dyb midnatsgradient med langsomt drivende bløde lys i indigo, turkis og magenta, fint filmkorn og paneler som mat glas), UI v4.1 (diskrete stjerner, Saturn og et sort hul), de fire mønstervarianter UI v4.1.1 til v4.1.4 (som v4.1, men med et fliselagt zigzagmønster som baggrund - sort/antracit, blå/mørkeblå, v4's indigo på sort og v4's grafittone på sort), UI v4 (roligt, fladt grafit-look), UI v3 (den klassiske UI med aurora-lys og glød), UI v2 (den allerførste UI-fornyelse: marineblå gradient, stjernehimmel og glødende knapper, uden animationer) og UI v1 (looket før UI-fornyelsen: ensfarvet baggrund, flade knapper, ingen effekter).",
             "Hvert kort viser en lille forhåndsvisning. Valget gælder straks for spilområdet og sidebjælken og gemmes i settings.json."
           ]
         },

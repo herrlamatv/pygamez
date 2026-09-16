@@ -332,7 +332,8 @@ class OptionsScreen(_Screen):
                     y += step
                 panel_for(grp, head)
 
-        else:   # appearance: eine Karte je Design (v4.1 / v4.1.1 / ... / v3)
+        else:   # appearance: eine Karte je Design (10 Stück: v4.2 / v4.1 /
+                # v4.1.1 ... v4.1.4 / v4 / v3 / v2 / v1)
             # Ein bis drei Reihen - gewählt wird die Aufteilung mit der
             # größten (gedeckelten) Kartenfläche, bei Gleichstand die mit
             # weniger Reihen. Karten unter 90 px Breite werden stark
@@ -740,9 +741,21 @@ class OptionsScreen(_Screen):
                          max(40, int(r.h * 0.42)))
         self._draw_theme_preview(pv, theme)
 
-        # Name + kurze Beschreibung darunter.
-        name = ui.font(16, bold=True).render(t("options.theme_" + theme),
-                                             True, ui.TEXT)
+        # Name + kurze Beschreibung darunter. Lange Design-Namen (z.B. "UI
+        # v4.2 Midnight Glass") werden erst in Stufen kleiner gerendert und
+        # zuletzt gekürzt - sonst liefen sie auf schmalen Karten (zwei Reihen
+        # bei kleiner Auflösung) in die Nachbarkarte.
+        label = t("options.theme_" + theme)
+        max_w = r.w - 28
+        for fsize in (16, 14, 12, 11):
+            name_font = ui.font(fsize, bold=True)
+            if name_font.size(label)[0] <= max_w:
+                break
+        else:
+            while label and name_font.size(label + "...")[0] > max_w:
+                label = label[:-1]
+            label = label.rstrip() + "..."
+        name = name_font.render(label, True, ui.TEXT)
         s.blit(name, (r.x + 14, pv.bottom + 10))
         dy = pv.bottom + 14 + name.get_height()
         # So viele Beschreibungszeilen zeigen, wie unter dem Namen Platz haben
@@ -799,6 +812,20 @@ class OptionsScreen(_Screen):
         w, h = rect.w, rect.h
         pv = pygame.Surface((w, h), pygame.SRCALPHA)
 
+        def grad_bar(x, y, bar_w, bar_h, stops):
+            """Waagerechter Verlaufsbalken (Mini-Fassung der v4.2-Linien).
+
+            Gefüllt wird spaltenweise mit DECKENDEN Farben - die Vorschau ist
+            eine SRCALPHA-Fläche, halbtransparente Farben würden dort Löcher
+            hinterlassen statt sich zu mischen.
+            """
+            seg = max(1, len(stops) - 1)
+            for i in range(max(1, int(bar_w))):
+                f = i / max(1, bar_w - 1) * seg
+                k = min(seg - 1, int(f))
+                pv.fill(ui.mix(stops[k], stops[k + 1], f - k),
+                        (x + i, y, 1, bar_h))
+
         if fxx.get("pattern"):
             # v4.1.1/v4.1.2: gekacheltes Zickzack-Muster (etwas feiner als im
             # Spiel, damit in der kleinen Vorschau mehrere Reihen zu sehen sind).
@@ -810,6 +837,18 @@ class OptionsScreen(_Screen):
                 col = ui.mix(colors["BG_TOP"], colors["BG_BOTTOM"], i / 7)
                 pygame.draw.rect(pv, col, (0, h * i // 8, w, h // 8 + 1))
 
+        if fxx.get("style") == "v42" and fxx.get("mesh"):
+            # UI v4.2: die drei Farbwolken des Hintergrunds - wie bei der
+            # Aurora klein zeichnen, verwaschen und additiv darüberlegen.
+            glow = pygame.Surface((w, h))
+            for col, size_f, _spd, _ph, fx0, fy0 in fxx["mesh"]:
+                pygame.draw.circle(glow, col,
+                                   (int(fx0 * w), int(fy0 * h)),
+                                   max(6, int(size_f * h * 0.8)))
+            small = pygame.transform.smoothscale(glow, (max(1, w // 6),
+                                                        max(1, h // 6)))
+            pv.blit(pygame.transform.smoothscale(small, (w, h)), (0, 0),
+                    special_flags=pygame.BLEND_RGB_ADD)
         if fxx["aurora"]:
             # Weiche "Aurora"-Lichter (additiv, nur Classic).
             glow = pygame.Surface((w, h))
@@ -840,8 +879,12 @@ class OptionsScreen(_Screen):
         tw = int(w * 0.42)
         pygame.draw.rect(pv, colors["TEXT"], (w // 2 - tw // 2, 8, tw, 5),
                          border_radius=2)
-        pygame.draw.rect(pv, ac, (w // 2 - tw // 4, 17, tw // 2, 2),
-                         border_radius=1)
+        if fxx.get("grad3"):
+            # UI v4.2: der Unterstrich ist ein dreifarbiger Verlauf.
+            grad_bar(w // 2 - tw // 4, 17, tw // 2, 2, fxx["grad3"])
+        else:
+            pygame.draw.rect(pv, ac, (w // 2 - tw // 4, 17, tw // 2, 2),
+                             border_radius=1)
 
         # Mini-Button in der Stil-Sprache des jeweiligen Themes.
         bw, bh = int(w * 0.62), max(12, h // 4)
@@ -853,6 +896,18 @@ class OptionsScreen(_Screen):
             pygame.draw.rect(pv, ac, br, width=1, border_radius=6)
             pygame.draw.rect(pv, ac, (br.x + 4, br.centery - bh // 4, 3,
                                       bh // 2), border_radius=1)
+        elif fxx.get("style") == "v42":
+            # UI v4.2: Glas-Button - hellere Fläche, heller Rand, Lichtkante
+            # oben und ein Verlaufs-Unterstrich statt des linken Balkens.
+            pygame.draw.rect(pv, colors["BTN_SEL"], br, border_radius=6)
+            pygame.draw.rect(pv, colors["BORDER_LIGHT"], br, width=1,
+                             border_radius=6)
+            pygame.draw.rect(pv, ui.mix(colors["BTN_SEL"], (255, 255, 255),
+                                        0.18),
+                             (br.x + 5, br.y + 1, max(2, br.w - 10), 1))
+            stops = fxx.get("grad3") or (ac, ac, ac)
+            uw = max(6, int(br.w * 0.5))
+            grad_bar(br.centerx - uw // 2, br.bottom - 5, uw, 2, stops)
         else:
             pygame.draw.rect(pv, colors["BTN"], br, border_radius=5)
             pygame.draw.rect(pv, ac, br, width=1, border_radius=5)

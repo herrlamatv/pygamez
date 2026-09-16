@@ -8,6 +8,32 @@
 
 ## 🇩🇪 Deutsch
 
+### UI v4.2 „Midnight Glass“ – neues Standard-Design – 2026-09-16
+
+#### Neu
+- **UI v4.2 „Midnight Glass“** als zehntes Design im Reiter
+  **Erscheinungsbild**: ein tiefer Mitternachts-Verlauf, über den drei große,
+  weiche Lichter in Indigo, Türkis und Magenta langsam treiben, darüber ein
+  feines Filmkorn und ein paar spärliche Sterne. Panels und Buttons sehen aus
+  wie mattes Milchglas: leicht aufgehellte Flächen mit einer hellen Lichtkante
+  an der Oberkante. Unter den Titeln liegt eine Verlaufslinie, die zu den Seiten
+  hin ausläuft, und eine ebensolche Linie trennt die Sidebar von der
+  Spielfläche.
+- Dasselbe Design auch in der **Web-Version** (Einstellungen → Design) –
+  Desktop und Browser sehen identisch aus.
+- Alle Texturen – Verlauf, Lichter, Korn, Sterne, Glasflächen – werden
+  **prozedural erzeugt** und gecacht; es kommt keine einzige Bilddatei dazu.
+  Damit läuft v4.2 unverändert in der `.exe` und im Browser über `file://`.
+
+#### Geändert
+- **Neue Spieler starten mit UI v4.2** statt mit v4.1 – in der Desktop-Version
+  über `settings.json`, in der Web-Version über den Browser-Speicher. Wer schon
+  ein Design gewählt hat, behält es; **UI v4.1** bleibt samt seinen vier
+  Muster-Varianten ganz normal wählbar.
+- Name und Beschreibung der Designkarte gibt es in allen **14 Sprachen**; die
+  Standard-Markierung ist von der v4.1-Karte auf die v4.2-Karte gewandert.
+- LamaWiki (Optionen) und alle READMEs nennen jetzt **zehn Designs**.
+
 ### UI v1 & UI v2 sind zurück – 2026-09-15
 
 #### Neu
@@ -664,6 +690,31 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### UI v4.2 "Midnight Glass" – new default design – 2026-09-16
+
+#### Added
+- **UI v4.2 "Midnight Glass"** as the tenth design on the **Appearance** tab: a
+  deep midnight gradient with three large, soft glows in indigo, turquoise and
+  magenta drifting slowly across it, topped by fine film grain and a few sparse
+  stars. Panels and buttons look like frosted glass: slightly brightened
+  surfaces with a bright edge along the top. Titles sit above a gradient line
+  that fades out towards both ends, and a line like it separates the sidebar
+  from the playfield.
+- The same design in the **web version** (Settings → Design) – desktop and
+  browser look identical.
+- Every texture – gradient, glows, grain, stars, glass surfaces – is generated
+  **procedurally** and cached; not a single image file is added. v4.2 therefore
+  runs unchanged in the `.exe` and in the browser over `file://`.
+
+#### Changed
+- **New players start on UI v4.2** instead of v4.1 – via `settings.json` on the
+  desktop, via browser storage on the web. Anyone who has already picked a
+  design keeps it; **UI v4.1** and its four pattern variants stay selectable as
+  usual.
+- The design card's name and description exist in all **14 languages**; the
+  default marker has moved from the v4.1 card to the v4.2 card.
+- The LamaWiki (Options) and all READMEs now list **ten designs**.
 
 ### UI v1 & UI v2 are back – 2026-09-15
 

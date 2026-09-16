@@ -17,7 +17,7 @@ Man kann den Ordner `web/` auch 1:1 auf einen Webspace (z. B. GitHub Pages) hoch
 * Startbildschirm, Vorspiel-Screen und Pause wie in der Desktop-Version
 * Highscores, Einstellungen und Statistik werden im Browser gespeichert (localStorage)
 * 14 Sprachen (identisch zu `lang/`), LamaWiki als Hilfe (identisch zu `lamawiki/`)
-* alle 9 UI-Designs (UI v4.1, v4.1.1–v4.1.4, UI v4, UI v3 Classic, UI v2, UI v1)
+* alle 10 UI-Designs (UI v4.2 Midnight Glass (Standard), UI v4.1, v4.1.1–v4.1.4, UI v4, UI v3 Classic, UI v2, UI v1)
 * synthetisierte Soundeffekte wie in der Desktop-Version (keine Audiodateien)
 * Minigolf: eigene Bahnen bauen, als `.lamapgzmap` exportieren und importieren
 

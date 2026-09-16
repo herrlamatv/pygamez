@@ -88,6 +88,11 @@ def _apply_tk_palette():
         g[name] = tkc[key]
 
 
+def _rgb_hex(rgb):
+    """(r, g, b) -> '#rrggbb' (für die Tkinter-Seite)."""
+    return "#%02x%02x%02x" % (int(rgb[0]), int(rgb[1]), int(rgb[2]))
+
+
 def _mix_hex(c1, c2, f):
     """Mischt zwei '#rrggbb'-Farben (f = Anteil von c2, 0..1)."""
     f = max(0.0, min(1.0, f))
@@ -813,10 +818,16 @@ class App:
     def _build_header_gradient(self, parent):
         """Akzentlinie unter dem Kopf.
 
+        v4.2   : dreifarbiger Verlauf (Indigo -> Türkis -> Magenta).
         Modern : eine ruhige, einfarbige Haarlinie.
         Classic: Farbverlauf Blau -> Violett (wie bisher).
         """
         import ui
+        grad3 = ui.fx("grad3")
+        if grad3:
+            # UI v4.2: dieselben Farbstopps wie die Verlaufslinien im Spiel.
+            self._header_gradient_canvas(parent, [_rgb_hex(c) for c in grad3])
+            return
         if ui.is_modern():
             tk.Frame(parent, bg=_mix_hex(C_BORDER, C_ACCENT, 0.35),
                      height=1).pack(fill="x")
@@ -827,16 +838,24 @@ class App:
             # UI v2: durchgehende 2px-Akzentlinie (wie in Commit 08739d3).
             tk.Frame(parent, bg=C_ACCENT, height=2).pack(fill="x")
             return
+        self._header_gradient_canvas(parent, [C_ACCENT, C_ACCENT2])
+
+    @staticmethod
+    def _header_gradient_canvas(parent, stops):
+        """2px-Canvas mit einem Verlauf über beliebig viele Farbstopps."""
         grad = tk.Canvas(parent, height=2, bg=C_HEADER, bd=0,
                          highlightthickness=0)
         grad.pack(fill="x")
+        seg = max(1, len(stops) - 1)
 
         def paint(_e=None):
             grad.delete("all")
             w = max(1, grad.winfo_width())
-            n = 32
+            n = 16 * seg + 16
             for i in range(n):
-                col = _mix_hex(C_ACCENT, C_ACCENT2, i / (n - 1))
+                f = i / (n - 1) * seg
+                k = min(seg - 1, int(f))
+                col = _mix_hex(stops[k], stops[k + 1], f - k)
                 grad.create_rectangle(w * i / n, 0, w * (i + 1) / n + 1, 2,
                                       fill=col, width=0)
 
@@ -1727,6 +1746,9 @@ class App:
         center_y = max(size // 2 + 14, center_y0 - shift) + bob
         if logo is not None:
             lrect = logo.get_rect(center=(cx, center_y))
+            # UI v4.2: weicher Schein hinter dem Logo (andere Themes: nichts).
+            # Deutlich größer als das Logo - sonst verschwindet er dahinter.
+            ui.draw_halo(s, lrect.center, int(max(lrect.w, lrect.h) * 2.4))
             rad = max(12, size // 8)
             if modern or not ui.fx("logo_glow", True):
                 # Ruhige Darstellung: nur eine feine Rahmenlinie, kein Glow
@@ -1747,6 +1769,8 @@ class App:
             base_y, line_w = lrect.bottom - bob, lrect.w
         else:
             logo_font = ui.font(min(64, max(40, w // 11)), bold=True, mono=v1)
+            # Auch der Schriftzug-Fallback bekommt den v4.2-Schein.
+            ui.draw_halo(s, (cx, center_y), int(min(w, h) * 0.7))
             if modern or not ui.fx("title_grad", True):
                 img = logo_font.render("PyGameZ", True, ui.TEXT)
             else:
@@ -1774,9 +1798,13 @@ class App:
         # Akzentlinie + Untertitel (übersetzt).
         if modern:
             lw2 = max(72, min(line_w, 180))
-            self.pygame.draw.rect(s, ui.ACCENT,
-                                  (cx - lw2 // 2, base_y + 12, lw2, 2),
-                                  border_radius=2)
+            if ui.fx("grad3"):
+                # UI v4.2: dreifarbige Linie mit dezentem Leuchten.
+                ui.draw_grad_line(s, cx, base_y + 12, lw2, 3, glow=True)
+            else:
+                self.pygame.draw.rect(s, ui.ACCENT,
+                                      (cx - lw2 // 2, base_y + 12, lw2, 2),
+                                      border_radius=2)
         elif not v1:        # UI v1: keine Linie unter dem Schriftzug
             self.pygame.draw.rect(s, ui.ACCENT,
                                   (cx - line_w // 2, base_y + 12, line_w, 3),
@@ -1855,6 +1883,7 @@ class App:
         # Oben andocken (max. 36px Luft), nicht in der Fläche schweben.
         y = top + min(36, max(0, (avail - total_h) // 2))
         hover = getattr(self, "_menu_hover", None)
+        v42 = ui.fx("style") == "v42"
         self._menu_tiles = []
         for row in rows:
             row_w = sum(tw for _, tw in row) + gap * (len(row) - 1)
@@ -1880,6 +1909,12 @@ class App:
                                           border_radius=row_h // 2)
                     self.pygame.draw.rect(s, ui.BORDER, rect, 1,
                                           border_radius=row_h // 2)
+                if v42:
+                    # UI v4.2: feine Lichtkante oben - die Pillen wirken wie
+                    # die Glas-Panels, ohne dafür Flächen bauen zu müssen.
+                    self.pygame.draw.rect(
+                        s, ui.mix(ui.PANEL, (255, 255, 255), 0.10),
+                        (x + row_h // 2, y, max(2, tw - row_h), 1))
                 # Farbpunkt in der Akzentfarbe des Spiels + Name
                 self.pygame.draw.circle(s, accent,
                                         (x + pad_x + 4, rect.centery), 4)
@@ -1942,9 +1977,14 @@ class App:
         cw, ch = min(360, w - 40), 150
         card = pygame.Rect(w // 2 - cw // 2, h // 2 - ch // 2, cw, ch)
         ui.draw_panel(s, card, radius=14)
-        pygame.draw.rect(s, ui.ACCENT, (card.x, card.y, card.w, 4),
-                         border_top_left_radius=14,
-                         border_top_right_radius=14)
+        if ui.fx("grad3"):
+            # UI v4.2: schmale Verlaufslinie statt des Akzentbalkens oben.
+            ui.draw_grad_line(s, card.centerx, card.y + 1, card.w - 28, 3,
+                              glow=True)
+        else:
+            pygame.draw.rect(s, ui.ACCENT, (card.x, card.y, card.w, 4),
+                             border_top_left_radius=14,
+                             border_top_right_radius=14)
         if ui.is_modern() or not ui.fx("title_grad", True):
             img = ui.font(42, bold=True).render(t("app.pause"), True, ui.TEXT)
         else:

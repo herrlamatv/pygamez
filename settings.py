@@ -74,21 +74,23 @@ RESOLUTIONS = [
 # Auswählbare Ziel-Bildraten. Weniger FPS = weniger Last = Strom sparen.
 FPS_OPTIONS = [15, 30, 45, 60, 120]
 
-# Verfügbare UI-Designs (siehe ui.py): "v41" = UI v4.1 (Standard, clean +
-# Weltraum-Deko), "v411".."v414" = UI v4.1.1 bis v4.1.4 (v4.1 mit Zickzack-
-# Muster als Hintergrund - schwarz/anthrazit, blau/dunkelblau, v4-Indigo auf
-# Schwarz bzw. v4-Graphit auf Schwarz), "modern" = UI v4 (komplett ruhig),
-# "classic" = UI v3 (die alte UI mit Sternen/Aurora/Glow), "v2" = UI v2 (die
-# allererste ui.py: Navy-Verlauf, Sternenfeld, statische Glow-Buttons), "v1" =
-# UI v1 (der flache Look vor dem UI Rework). Wählbar im Options-Screen unter
-# "Erscheinungsbild".
-THEMES = ("v41", "v411", "v412", "v413", "v414", "modern", "classic", "v2",
-          "v1")
+# Verfügbare UI-Designs (siehe ui.py): "v42" = UI v4.2 "Midnight Glass"
+# (Standard: Mitternachtsblau, Farbwolken, Filmkorn, Glas-Panels), "v41" =
+# UI v4.1 (clean + Weltraum-Deko), "v411".."v414" = UI v4.1.1 bis v4.1.4 (v4.1
+# mit Zickzack-Muster als Hintergrund - schwarz/anthrazit, blau/dunkelblau,
+# v4-Indigo auf Schwarz bzw. v4-Graphit auf Schwarz), "modern" = UI v4
+# (komplett ruhig), "classic" = UI v3 (die alte UI mit Sternen/Aurora/Glow),
+# "v2" = UI v2 (die allererste ui.py: Navy-Verlauf, Sternenfeld, statische
+# Glow-Buttons), "v1" = UI v1 (der flache Look vor dem UI Rework). Wählbar im
+# Options-Screen unter "Erscheinungsbild".
+THEMES = ("v42", "v41", "v411", "v412", "v413", "v414", "modern", "classic",
+          "v2", "v1")
 
 DEFAULTS = {
-    # UI-Design: "v41" (Standard), "v411".."v414" (Muster-Hintergrund),
-    # "modern" (UI v4), "classic" (UI v3), "v2" (UI v2) oder "v1" (UI v1).
-    "theme": "v41",
+    # UI-Design: "v42" (Standard, "Midnight Glass"), "v41" (UI v4.1),
+    # "v411".."v414" (Muster-Hintergrund), "modern" (UI v4), "classic"
+    # (UI v3), "v2" (UI v2) oder "v1" (UI v1).
+    "theme": "v42",
     # Standardmäßig AUS (Erststart ist leise; im Willkommens-Screen/den Optionen
     # einschaltbar). Bestehende Installationen behalten ihren gespeicherten Wert.
     "sound": False,
