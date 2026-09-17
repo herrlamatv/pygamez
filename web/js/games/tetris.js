@@ -57,6 +57,28 @@
   };
   const RESTART_KEYS = ["r", "R"];
   const SETUP_KEYS = ["s", "S"];
+  const REPLAY_KEYS = ["p", "P"];
+  // Replay: Samples je Kapitel (30/s -> alle 10 s ein Schlüsselbild),
+  // Zellen-Indizes einer Feldzeile (0 = leer).
+  const REC_CHAPTER = 300;
+  const REC_KINDS = " IJLOSTZG";
+  const REC_EMPTY = new Array(10).fill(0);
+
+  /**
+   * Vorschau-Warteschlange einer Wiedergabe: im Replay kommt die Steinfolge
+   * nicht aus dem Zufallsgenerator, sondern aus der Aufnahme.
+   */
+  class RepQueue {
+    constructor(kinds = []) {
+      this.kinds = kinds.slice();
+    }
+    peek(n) {
+      return this.kinds.slice(0, n);
+    }
+    pop() {
+      return this.kinds.length ? this.kinds[0] : "I";
+    }
+  }
 
   const rgba = (c, a) => [c[0], c[1], c[2], Math.max(0, Math.min(255, Math.round(a)))];
   const easeOut = (p) => 1 - Math.pow(1 - Math.max(0, Math.min(1, p)), 3);
@@ -191,6 +213,14 @@
       this.overAt = 0;
       this.setupFocus = 0;
       this.overRects = {};
+      // Wiederholung der Runde (replay, siehe core/replay.js).
+      this.rec = null;
+      this.replay = null;
+      this.replayRequest = null;
+      this.rep = null; // gesetzt, solange nur abgespielt wird
+      this.repAt = null;
+      this.recDelta = new PG.replay.Delta();
+      this.recN = 0;
       this.state = SETUP;
       this.deco = Array.from({ length: 9 }, () => this.newDeco(true));
       this.layout();
@@ -455,6 +485,7 @@
       this.score = 0;
       this.gameOver = false;
       this.state = COUNT;
+      this.recNew();
       this.layout();
       this.playSound("select");
     }
@@ -528,6 +559,7 @@
       if (nowSec() - this.overAt < OVER_LOCK) return;
       if (ev.kind === "keydown" && !ev.repeat) {
         if (RESTART_KEYS.includes(ev.key)) this.start();
+        else if (REPLAY_KEYS.includes(ev.key) && this.replay) this.openReplay();
         else if (SETUP_KEYS.includes(ev.key)) this.toSetup();
       } else if (ev.kind === "mousedown" && ev.button === 1) {
         for (const [name, r] of Object.entries(this.overRects)) {
@@ -604,6 +636,7 @@
       for (let i = 0; i < this.boards.length; i++) this.processEvents(i);
       this.checkEnd();
       if (this.mode === "solo" && this.variant === "marathon") this.score = this.boards[0].score;
+      this.recTick(dt);
     }
 
     dasStep(pad, board, dt) {
@@ -806,6 +839,289 @@
         }
       }
       this.result = res;
+      this.recFinish();
+    }
+
+    // ===================================================== Replay-Aufnahme
+    // Tetris läuft durch - eine "Szene" ist deshalb ein KAPITEL: ihre Kopfdaten
+    // halten den vollständigen Stand beider Felder fest, die Samples danach nur
+    // noch Änderungen. Ein Sample ist je Feld
+    //   [stein, x, y, lock, zeilen, (zeile, 10 Zellen) * zeilen, block?, *block]
+    // - dasselbe Format wie in der Desktop-Version (replay.py).
+
+    recNew() {
+      this.replay = null;
+      this.recN = 0;
+      this.recDelta.reset();
+      this.rec = PG.replay.recorder("tetris", {
+        mode: this.mode, variant: this.variant, level: this.startLevel,
+        ai: this.aiLevel, ghost: !!this.ghost, boards: this.boards.length,
+      });
+      this.recChapter();
+    }
+
+    recChapter() {
+      if (!this.rec) return;
+      this.recN = 0;
+      this.recDelta.reset();
+      this.rec.scene({
+        n: this.rec.scenes.length + 1,
+        t0: Math.round(this.elapsed * 1000) / 1000,
+        boards: this.boards.map((b) => ({ rows: this.recRowsFull(b), st: this.recStat(b), p: this.recPiece(b) })),
+      });
+    }
+
+    /** Der aktive Stein als vier Zahlen. */
+    recPiece(b) {
+      const k = core.KINDS.indexOf(b.kind) + 1;
+      return [Math.max(0, k) * 8 + b.rot * 2 + (b.active ? 1 : 0), b.x, b.y, Math.trunc(b.lockTimer * 100)];
+    }
+
+    recRow(b, y) {
+      const row = new Array(COLS);
+      for (let x = 0; x < COLS; x++) {
+        const c = b.cells[y][x];
+        const i = c ? REC_KINDS.indexOf(c) : 0;
+        row[x] = i < 0 ? 0 : i;
+      }
+      return row;
+    }
+
+    /** Alle belegten Zeilen (Schlüsselbild) - leere stehen nicht drin. */
+    recRowsFull(b) {
+      const out = [];
+      for (let y = 0; y < ROWS; y++) {
+        if (!b.rows[y]) continue;
+        out.push(y, ...this.recRow(b, y));
+      }
+      return out;
+    }
+
+    /** Nur die Zeilen, die sich seit dem letzten Sample geändert haben. */
+    recRowsDelta(i, b) {
+      const out = [];
+      if (!this.recDelta.push("v" + i, b.version)) return out;
+      for (let y = 0; y < ROWS; y++) {
+        const row = b.rows[y] ? this.recRow(b, y) : REC_EMPTY;
+        if (this.recDelta.push("r" + i + ":" + y, row)) out.push(y, ...row);
+      }
+      return out;
+    }
+
+    /** Punkte, Hold, Vorschau, Müll - alles, was nicht im Feld steht. */
+    recStat(b) {
+      const nxt = b.queue.peek(5).slice();
+      while (nxt.length < 5) nxt.push("I");
+      const st = [b.score, b.lines, b.level, b.pieces,
+                  b.holdKind ? REC_KINDS.indexOf(b.holdKind) : 0, b.holdUsed ? 1 : 0];
+      for (const k of nxt.slice(0, 5)) st.push(Math.max(0, REC_KINDS.indexOf(k)));
+      st.push(b.dead ? 1 : 0, b.combo, b.b2b ? 1 : 0, b.attackSent, b.pending.length);
+      for (const [n, hole, age] of b.pending) st.push(n | 0, hole | 0, Math.trunc(age * 100));
+      return st;
+    }
+
+    recSample() {
+      const out = [];
+      this.boards.forEach((b, i) => {
+        out.push(...this.recPiece(b));
+        const rows = this.recRowsDelta(i, b);
+        out.push(rows.length / (COLS + 1), ...rows);
+        const st = this.recStat(b);
+        if (this.recDelta.push("st" + i, st)) out.push(st.length, ...st);
+        else out.push(0);
+      });
+      this.recN += 1;
+      return out;
+    }
+
+    recTick(dt) {
+      if (!this.rec) return;
+      if (this.recN >= REC_CHAPTER) this.recChapter();
+      this.rec.tick(dt, () => this.recSample());
+    }
+
+    /** Zweitzeile der Aufnahme (Ergebnis in Kurzform). */
+    recSub() {
+      const b = this.boards[0];
+      if (this.versus) {
+        const win = (this.result || {}).winner;
+        if (win == null) return t("common.draw");
+        return win === 0 ? t("tetris.res.you_win") : t("tetris.res.ai_wins");
+      }
+      if (this.variant === "sprint") return t("tetris.hud.lines") + " " + b.lines + " · " + fmtTime(this.elapsed);
+      if (this.variant === "ultra") return t("common.points", { score: b.score });
+      return t("common.points", { score: b.score }) + "  ·  " + t("tetris.hud.lines") + " " + b.lines;
+    }
+
+    recFinish() {
+      if (!this.rec) return;
+      this.rec.close(() => this.recSample(), { final: true });
+      const title = this.versus ? t("tetris.mode." + this.mode) : t("tetris.variant." + this.variant);
+      this.replay = this.rec.result({
+        title, sub: this.recSub(), score: this.boards[0].score,
+        time: Math.round(this.elapsed * 100) / 100,
+      });
+      this.rec = null;
+    }
+
+    /** Die Wiederholung ansehen (Taste P) - den Screen öffnet app.js. */
+    openReplay() {
+      if (this.replay) {
+        this.replayRequest = this.replay;
+        this.playSound("click");
+      }
+    }
+
+    // ===================================================== Replay-Wiedergabe
+    replayBegin(rep) {
+      this.rec = null;
+      this.replay = null;
+      this.replayRequest = null;
+      this.rep = rep;
+      this.repAt = null;
+      const meta = rep.meta || {};
+      if (meta.mode === "solo" || meta.mode === "versus_ai") this.mode = meta.mode;
+      this.versus = this.mode !== "solo";
+      if (VARIANTS.includes(meta.variant)) this.variant = meta.variant;
+      this.aiLevel = PG.clamp(Math.trunc(Number(meta.ai)) || 0, 0, 2);
+      this.ghost = meta.ghost !== false;
+      // Aufnahmen aus der Desktop-Version können zwei Felder haben (2 Spieler).
+      const n = Math.max(1, Math.min(2, Math.trunc(Number(meta.boards)) || (this.versus ? 2 : 1)));
+      this.versus = n > 1;
+      this.boards = [];
+      for (let i = 0; i < n; i++) {
+        const b = new core.Board(1, 1, true);
+        b.queue = new RepQueue();
+        this.boards.push(b);
+      }
+      this.pads = this.boards.map(() => new Pad());
+      this.fx = this.boards.map(() => newFx());
+      this.ai = null;
+      this.result = null;
+      this.particles = [];
+      this.callouts = [];
+      this.missiles = [];
+      this.caches = new Map();
+      this.elapsed = 0;
+      this.goT = 0;
+      this.countT = 0;
+      this.gameOver = false;
+      this.state = PLAY;
+      this.layout();
+      this.replaySeek(0, 0);
+    }
+
+    replaySeek(index, frame) {
+      const scenes = this.rep.scenes || [];
+      if (!scenes.length) return;
+      index = PG.clamp(index, 0, scenes.length - 1);
+      const sc = scenes[index];
+      const frames = sc.f || [];
+      const n = Math.max(1, frames.length);
+      frame = PG.clamp(frame, 0, n - 1);
+
+      let start;
+      if (!this.repAt || this.repAt[0] !== index || frame < this.repAt[1]) {
+        this.boards.forEach((b, i) => {
+          const head = (sc.boards || [])[i] || {};
+          b.rows = new Array(ROWS).fill(0);
+          b.cells = Array.from({ length: ROWS }, () => new Array(COLS).fill(null));
+          const flat = head.rows || [];
+          for (let k = 0; k + COLS < flat.length; k += COLS + 1) {
+            const y = flat[k] | 0;
+            if (y >= 0 && y < ROWS) this.repRow(b, y, flat.slice(k + 1, k + 1 + COLS));
+          }
+          b.version++;
+          this.repPiece(b, head.p || [0, 0, 0, 0]);
+          this.repStat(i, b, head.st || []);
+        });
+        start = 0;
+      } else {
+        start = this.repAt[1] + 1;
+      }
+      for (let k = start; k <= frame; k++) this.repApply(frames[k]);
+      this.elapsed = Number(sc.t0 || 0) + frame / (this.rep.rate || PG.replay.RATE);
+      this.score = this.boards[0].score;
+      this.repAt = [index, frame];
+    }
+
+    repRow(b, y, cells) {
+      let mask = 0;
+      for (let x = 0; x < COLS; x++) {
+        const idx = (cells[x] | 0) || 0;
+        b.cells[y][x] = idx ? REC_KINDS[idx] : null;
+        if (idx) mask |= 1 << x;
+      }
+      b.rows[y] = mask;
+    }
+
+    repPiece(b, p) {
+      const code = p[0] | 0;
+      const k = Math.floor(code / 8);
+      b.kind = k >= 1 && k <= core.KINDS.length ? core.KINDS[k - 1] : core.KINDS[0];
+      b.rot = Math.floor((code % 8) / 2);
+      b.active = !!(code % 2);
+      b.x = p[1] | 0;
+      b.y = p[2] | 0;
+      b.lockTimer = (p[3] | 0) / 100;
+      b.lowest = b.y;
+    }
+
+    repStat(i, b, st) {
+      if (!st || !st.length) return;
+      b.score = st[0] | 0;
+      b.lines = st[1] | 0;
+      b.level = st[2] | 0;
+      b.pieces = st[3] | 0;
+      b.holdKind = st[4] ? REC_KINDS[st[4] | 0] : null;
+      b.holdUsed = !!st[5];
+      b.queue.kinds = st.slice(6, 11).map((v) => REC_KINDS[v | 0]);
+      b.dead = !!st[11];
+      b.combo = st[12] | 0;
+      b.b2b = !!st[13];
+      b.attackSent = st[14] | 0;
+      b.pending = [];
+      const np = st[15] | 0;
+      let p = 16;
+      for (let k = 0; k < np; k++) {
+        b.pending.push([st[p] | 0, st[p + 1] | 0, st[p + 2] / 100]);
+        p += 3;
+      }
+      this.fx[i].koT = b.dead ? 0.8 : -1;
+    }
+
+    repApply(fr) {
+      let p = 0;
+      this.boards.forEach((b, i) => {
+        this.repPiece(b, fr.slice(p, p + 4));
+        p += 4;
+        const nrows = fr[p] | 0;
+        p += 1;
+        for (let k = 0; k < nrows; k++) {
+          const y = fr[p] | 0;
+          if (y >= 0 && y < ROWS) this.repRow(b, y, fr.slice(p + 1, p + 1 + COLS));
+          p += COLS + 1;
+        }
+        if (nrows) b.version++;
+        const kk = fr[p] | 0;
+        p += 1;
+        if (kk) {
+          this.repStat(i, b, fr.slice(p, p + kk));
+          p += kk;
+        }
+      });
+    }
+
+    replayDraw(ctx, aiming, banner) {
+      this.animT += 1 / PG.replay.RATE;
+      ui.drawBackground(ctx, this.width, this.height);
+      for (let i = 0; i < this.boards.length; i++) this.drawSide(ctx, i);
+      if (this.versus) this.drawVsHud(ctx);
+      if (banner) {
+        draw.rect(ctx, [8, 10, 16, 140], [0, 0, this.width, this.height]);
+        ui.text(ctx, t("common.game_over"), this.width / 2, this.height / 2 - 18, this.huge, this.accent, "center");
+        ui.text(ctx, this.rep.sub || "", this.width / 2, this.height / 2 + 26, this.big, ui.TEXT, "center");
+      }
     }
 
     // ===================================================== Effekte

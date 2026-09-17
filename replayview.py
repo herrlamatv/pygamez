@@ -485,6 +485,11 @@ class ReplayScreen(_Screen):
                     self._seek_now()
                 self.playing = not self.playing
                 self.play_sound("click")
+            elif k in ("s", "S") and self.pending is not None and not self.saved:
+                # Solange eine frische Aufnahme bereitliegt, gehört S dem
+                # Speichern (so steht es auf dem Chip); sonst ist es wie
+                # gewohnt die Tempo-runter-Taste von Spieler 1.
+                self._save_pending()
             elif k == "Left" or self.is_action(k, "left"):
                 self._jump_scene(-1)
             elif k == "Right" or self.is_action(k, "right"):
@@ -493,8 +498,6 @@ class ReplayScreen(_Screen):
                 self._set_speed(+1)
             elif k in ("Down", "minus", "KP_Subtract") or self.is_action(k, "down"):
                 self._set_speed(-1)
-            elif k in ("s", "S"):
-                self._save_pending()
             elif k in ("e", "E"):
                 self._export(self.rep)
         elif event.kind == InputEvent.MOUSEMOVE:

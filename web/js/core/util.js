@@ -40,6 +40,15 @@
         /* Speicher voll/gesperrt -> ohne Speichern weiterspielen */
       }
     },
+    /** Wie set(), meldet aber, ob es geklappt hat (Replay-Archiv, Speicher voll). */
+    trySet(key, value) {
+      try {
+        window.localStorage.setItem(this.prefix + key, JSON.stringify(value));
+        return true;
+      } catch (e) {
+        return false;
+      }
+    },
     remove(key) {
       try {
         window.localStorage.removeItem(this.prefix + key);
@@ -287,6 +296,26 @@
   };
   for (const code in GAME_STR) Object.assign(WEB_STR[code], GAME_STR[code]);
 
+  // Web-eigener Replay-Text: das Archiv liegt im localStorage, der voll sein
+  // kann - dafür gibt es in der Desktop-Version keine Entsprechung.
+  const REPLAY_STR = {
+    de: "Browser-Speicher voll - lösche zuerst ein Replay",
+    en: "Browser storage full - delete a replay first",
+    fr: "Stockage du navigateur plein - supprime d'abord un replay",
+    es: "Almacenamiento del navegador lleno: borra una repetición primero",
+    pt: "Armazenamento do navegador cheio - apaga primeiro um replay",
+    pl: "Pamięć przeglądarki pełna - najpierw usuń powtórkę",
+    tr: "Tarayıcı belleği dolu - önce bir tekrarı sil",
+    da: "Browserens lager er fuldt - slet et replay først",
+    no: "Nettleserens lager er fullt - slett et replay først",
+    sv: "Webbläsarens lagring är full - radera en replay först",
+    fi: "Selaimen tallennustila täynnä - poista ensin uusinta",
+    cs: "Úložiště prohlížeče je plné - nejdřív smaž záznam",
+    sl: "Shramba brskalnika je polna - najprej izbriši posnetek",
+    hr: "Pohrana preglednika je puna - prvo obriši snimku",
+  };
+  for (const code in REPLAY_STR) WEB_STR[code]["web.replay.space"] = REPLAY_STR[code];
+
   function guessLang() {
     const nav = (navigator.languages || [navigator.language || "de"]).map((l) => String(l).slice(0, 2).toLowerCase());
     for (const code of nav) {
@@ -418,7 +447,8 @@
     ["v414", "UI v4.1.4"], ["modern", "UI v4"], ["classic", "UI v3 (Classic)"], ["v2", "UI v2"], ["v1", "UI v1"],
   ];
 
-  const GLOBAL_DEFAULTS = { theme: "v42", sound: true, volume: 0.6, haptik: false };
+  const GLOBAL_DEFAULTS = { theme: "v42", sound: true, volume: 0.6, haptik: false,
+                            replay: { enabled: true } };
 
   const clone = (o) => JSON.parse(JSON.stringify(o));
 

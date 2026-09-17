@@ -192,6 +192,13 @@
       this.air = 0.0; // verbleibende Flugstrecke einer Sprungrampe
       this.msg = null;
       this.msgT = 0.0;
+      // Wiederholung der Runde (replay, siehe core/replay.js).
+      this.rec = null;
+      this.replay = null;
+      this.replayRequest = null;
+      this.rep = null; // gesetzt, solange nur abgespielt wird
+      this.repAt = null;
+      this.layoutId = 0;
 
       this.buildFonts();
       this.layout();
@@ -335,6 +342,7 @@
       this.holeIdx = 0;
       this.score = 0;
       this.gameOver = false;
+      this.recNew();
       this.startHole();
     }
 
@@ -368,6 +376,7 @@
       this.msgT = 0.0;
       this.resultKey = null;
       this.resultPts = 0;
+      this.layoutId = this.rec ? this.rec.layout(h) : 0;
       if (this.aim == null) this.aim = -Math.PI / 2;
       this.resetAim(true);
     }
@@ -636,7 +645,13 @@
       const key = ev.kind === "keydown" ? ev.key : null;
       if (key === "g" || key === "G") return this.toggleGuide();
       if (key === "z" || key === "Z") return this.toggleAutoaim();
-      if (key === "p" || key === "P") return this.togglePickup();
+      if (key === "p" || key === "P") {
+        // Am Rundenende zeigt P die Wiederholung, sonst schaltet es das
+        // Aufnehmen um (wie in der Desktop-Version).
+        if (this.state === OVER && this.replay) this.openReplay();
+        else this.togglePickup();
+        return;
+      }
       if (key === "f" || key === "F") return this.resetHole();
       if (this.state === HOLE_DONE) {
         if (key === "Return" || key === "space" || (ev.kind === "mousedown" && ev.button === 1)) this.advance();
@@ -720,6 +735,13 @@
       this.physAcc = 0.0;
       this.safe = [this.bx, this.by];
       this.trail = [];
+      if (this.rec) {
+        this.rec.scene({
+          layout: this.layoutId, hole: this.holeIdx, player: 0, n: this.strokes,
+          aim: Math.round(this.aim * 1e4) / 1e4, power: Math.round(this.power * 1e3) / 1e3,
+          mill: Math.round(this.millA * 1e3) / 1e3, move: Math.round(this.moveT * 1e3) / 1e3,
+        }, true);
+      }
       this.playSound("shoot");
       this.rumble(50);
     }
@@ -767,6 +789,7 @@
           this.physAcc -= PHYS_DT;
           if (this.vx === 0.0 && this.vy === 0.0) break;
         }
+        if (this.rec) this.rec.tick(dt, () => this.recSample());
         this.shotTime += dt;
         if (this.shotTime > MAX_SHOT_TIME) {
           this.vx = this.vy = 0.0;
@@ -1095,6 +1118,7 @@
         if (x <= this.bx && this.bx <= x + w && y <= this.by && this.by <= y + h) {
           this.vx = this.vy = 0.0;
           this.strokes += 1;
+          this.recEnd("water");
           [this.bx, this.by] = this.safe;
           this.msg = t("golf.penalty");
           this.msgT = 2.0;
@@ -1124,6 +1148,7 @@
     }
 
     afterShot() {
+      this.recEnd("stop");
       if (this.pickup && this.strokes >= MAX_STROKES) {
         this.msg = t("golf.max_strokes");
         this.msgT = 2.4;
@@ -1136,6 +1161,7 @@
 
     // ===================================================== Bahn abschließen
     holed() {
+      this.recEnd("cup");
       this.playSound(this.strokes === 1 ? "win" : "point");
       this.rumble(90);
       const [px, py] = this.project(this.cup[0], this.cup[1]);
@@ -1158,6 +1184,7 @@
       this.points += pts;
       this.resultPts = pts;
       this.resultKey = MiniGolfGame.resultKey(this.strokes, this.par, holed);
+      if (this.rec) this.rec.setLast({ final: this.strokes, result: this.resultKey, pts, holed: !!holed });
       this.score = this.points;
       this.phase = "done";
       this.state = HOLE_DONE;
@@ -1274,6 +1301,7 @@
      */
     resetHole() {
       if (this.state !== PLAY) return;
+      if (this.rec) this.rec.dropWhere({ hole: this.holeIdx, player: 0 });
       this.startHole();
       this.msg = t("golf.reset");
       this.msgT = 1.4;
@@ -1292,6 +1320,7 @@
       this.saveBest(total);
       if (total < parTotal) this.achEvent("golf_under_par");
       this.reportResult(total <= parTotal);
+      this.recFinish(total, parTotal);
       this.score = this.points;
       this.buildOverLayout();
       this.state = OVER;
@@ -1303,6 +1332,151 @@
       this.newRound();
       this.state = PLAY;
       this.playSound("click");
+    }
+
+    // ===================================================== Replay-Aufnahme
+    // Aufgezeichnet wird je Schlag die tatsächliche BAHN des Balls (flache
+    // Zahlenliste x, y, x, y ...). Die Bahn selbst liegt als Kulisse im
+    // Replay, damit die Wiederholung auch dann noch stimmt, wenn spätere
+    // Versionen die Bahnen ändern. Format wie in der Desktop-Version.
+
+    recNew() {
+      this.replay = null;
+      this.rec = PG.replay.recorder("minigolf", {
+        course: this.course, tour: this.tour, players: 1,
+      });
+    }
+
+    /** Ein Sample = die Ballposition (auf 1/100 Feldeinheit gerundet). */
+    recSample() {
+      return [Math.round(this.bx * 100) / 100, Math.round(this.by * 100) / 100];
+    }
+
+    /** Beendet die laufende Schlag-Sequenz ("cup"/"water"/"stop"). */
+    recEnd(end) {
+      if (this.rec) this.rec.close(() => this.recSample(), { end, after: this.strokes });
+    }
+
+    recFinish(total, parTotal) {
+      if (!this.rec) return;
+      const d = total - parTotal;
+      let name = t("golf.course." + this.course);
+      if (this.course === "tour") name += " " + this.tour;
+      this.replay = this.rec.result({
+        title: name,
+        sub: t("golf.final", { strokes: total, diff: d ? (d > 0 ? "+" + d : String(d)) : t("golf.even"), pts: this.points }),
+        total, par: parTotal, points: this.points,
+      });
+      this.rec = null;
+    }
+
+    /** Die Wiederholung ansehen (Taste P) - den Screen öffnet app.js. */
+    openReplay() {
+      if (this.replay) {
+        this.replayRequest = this.replay;
+        this.playSound("click");
+      }
+    }
+
+    // ===================================================== Replay-Wiedergabe
+    replayBegin(rep) {
+      this.rec = null;
+      this.replay = null;
+      this.replayRequest = null;
+      this.rep = rep;
+      // Aufnahmen aus älteren Versionen kennen weder die Bahngröße noch die
+      // neuen Hindernis-Typen - normalize() ergänzt beides.
+      this.repLayouts = (rep.layouts || []).map((lay) => gen.normalize(lay));
+      this.repAt = null;
+      const meta = rep.meta || {};
+      if (COURSES.includes(meta.course)) this.course = meta.course;
+      this.tour = Math.max(1, Math.min(gen.TOUR_COURSES, Math.trunc(Number(meta.tour)) || 1));
+      // Bahnen der Runde aus den Szenen ableiten (Reihenfolge = Spielverlauf).
+      const holes = new Map();
+      const order = [];
+      for (const sc of rep.scenes || []) {
+        const h = sc.hole | 0;
+        if (!holes.has(h)) {
+          const idx = sc.layout | 0;
+          if (idx >= 0 && idx < this.repLayouts.length) {
+            holes.set(h, this.repLayouts[idx]);
+            order.push(h);
+          }
+        }
+      }
+      this.holes = order.map((h) => holes.get(h));
+      this.repPos = new Map(order.map((h, i) => [h, i]));
+      this.card = new Array(this.holes.length).fill(0);
+      this.points = 0;
+      this.state = PLAY;
+      this.phase = "aim";
+      this.gameOver = false;
+      this.msg = null;
+      this.msgT = 0;
+      this.charging = false;
+      this.powerLock = false;
+      this.holeIdx = 0;
+      this.strokes = 0;
+      this.trail = [];
+      this.replaySeek(0, 0);
+    }
+
+    replaySeek(index, frame) {
+      const scenes = this.rep.scenes || [];
+      if (!scenes.length) return;
+      index = PG.clamp(index, 0, scenes.length - 1);
+      const sc = scenes[index];
+      const lay = sc.layout | 0;
+      if (lay >= 0 && lay < this.repLayouts.length) this.hole = this.repLayouts[lay];
+      if (this.hole.w !== this.cw || this.hole.h !== this.ch) {
+        this.cw = this.hole.w;
+        this.ch = this.hole.h;
+        this.layout();
+      }
+      this.holeIdx = this.repPos.has(sc.hole | 0) ? this.repPos.get(sc.hole | 0) : 0;
+      this.par = this.hole.par || 3;
+      this.cup = [Number(this.hole.cup[0]), Number(this.hole.cup[1])];
+      this.aim = Number(sc.aim) || 0;
+      this.power = Number(sc.power != null ? sc.power : 0.35);
+      this.resultKey = sc.result || null;
+      this.resultPts = sc.pts | 0;
+
+      const pts = sc.f || [];
+      const n = Math.max(1, Math.floor(pts.length / 2));
+      frame = PG.clamp(frame, 0, n - 1);
+      this.bx = pts[2 * frame];
+      this.by = pts[2 * frame + 1];
+      this.trail = [];
+      for (let k = Math.max(0, frame - 26); k < frame; k++) this.trail.push([pts[2 * k], pts[2 * k + 1]]);
+      const rate = this.rep.rate || PG.replay.RATE;
+      this.millA = Number(sc.mill || 0) + frame / rate;
+      this.moveT = Number(sc.move || 0) + frame / rate;
+
+      // Schlagzahl + Scorekarte aus dem bisherigen Verlauf aufbauen.
+      const last = frame >= n - 1;
+      this.strokes = last ? (sc.after != null ? sc.after : sc.n || 1) : sc.n || 1;
+      this.card = new Array(this.holes.length).fill(0);
+      this.points = 0;
+      for (const prev of scenes.slice(0, index).concat(last ? [sc] : [])) {
+        const pos = this.repPos.get(prev.hole | 0);
+        if (prev.final && pos != null) {
+          this.card[pos] = prev.final;
+          this.points += prev.pts | 0;
+        }
+      }
+      this.score = this.points;
+      this.msg = last && sc.end === "water" ? t("golf.penalty") : null;
+      this.repAt = [index, frame];
+    }
+
+    replayDraw(ctx, aiming, banner) {
+      ui.drawBackground(ctx, this.width, this.height);
+      mdraw.drawCourse(ctx, this.hole, this.view(), this.millA, this.moveT, CUP_R);
+      this.drawBall(ctx);
+      if (aiming) this.drawAim(ctx);
+      this.drawHud(ctx);
+      this.drawCard(ctx);
+      if (banner && this.resultKey) this.drawHoleDone(ctx);
     }
 
     // ===================================================== Zeichnen
@@ -1484,7 +1658,8 @@
       const labels = { next: t("golf.btn_next", { course: this.nextCourseLabel() }), again: t("golf.btn_again"), setup: t("golf.btn_setup") };
       for (const [key, rc] of this.overRects) this.btn(ctx, rc, labels[key], key === this.overRects[0][0]);
       // Tastenzeile passend zu den vorhandenen Knöpfen.
-      const hint = t(this.nextCourse() ? "golf.continue_hint" : "golf.new_round");
+      let hint = t(this.nextCourse() ? "golf.continue_hint" : "golf.new_round");
+      if (this.replay && !this.rep) hint += "  ·  " + t("golf.replay_hint");
       ui.text(ctx, hint, cx, y + this.overY.hint, this.fTiny, ui.TEXT_DIM, "center");
     }
 

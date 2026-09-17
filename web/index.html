@@ -33,6 +33,7 @@
         <button id="btn-wiki" class="tbtn" data-i18n="app.lamawiki">Wiki / Hilfe</button>
         <button id="btn-full" class="tbtn" data-i18n="web.fullscreen">Vollbild</button>
       </div>
+      <button id="btn-replays" class="tbtn" data-i18n="app.replays">Replays</button>
     </div>
 
     <div class="list-head">
@@ -49,6 +50,8 @@
         <select id="set-theme"></select></label>
       <label class="row"><span data-i18n="web.sound">Sound</span>
         <input id="set-sound" type="checkbox"></label>
+      <label class="row"><span data-i18n="options.replays">Replays aufzeichnen</span>
+        <input id="set-replay" type="checkbox"></label>
       <label><span data-i18n="web.volume">Lautstärke</span>
         <input id="set-volume" type="range" min="0" max="100" step="1"></label>
       <button id="btn-reset" class="tbtn danger" data-i18n="web.reset_scores">Highscores löschen</button>
@@ -111,6 +114,8 @@
 <script src="js/core/ui.js"></script>
 <script src="js/core/audio.js"></script>
 <script src="js/core/game.js"></script>
+<script src="js/core/replay.js"></script>
+<script src="js/core/replayview.js"></script>
 <script src="js/manifest.js"></script>
 <script src="js/core/app.js"></script>
 <!-- Die Spiele selbst lädt app.js nacheinander laut js/manifest.js -->

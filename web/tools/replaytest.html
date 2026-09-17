@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>REPLAY TEST RUNNING</title>
+<style>
+  body { margin: 0; background: #111; color: #ddd; font: 12px Consolas, monospace; }
+  canvas { display: block; width: 800px; height: 600px; }
+  pre { margin: 0; padding: 6px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<canvas id="c" width="800" height="600"></canvas>
+<pre id="result">running</pre>
+<script src="../js/lang/de.js"></script>
+<script src="../js/lang/en.js"></script>
+<script src="../js/wiki/de.js"></script>
+<script src="../js/core/util.js"></script>
+<script src="../js/core/ui.js"></script>
+<script src="../js/core/audio.js"></script>
+<script src="../js/core/game.js"></script>
+<script src="../js/core/replay.js"></script>
+<script src="../js/core/replayview.js"></script>
+<script src="../js/manifest.js"></script>
+<!-- optional: von der Desktop-Version aufgenommene Replays (Format-Prüfung) -->
+<script src="desktop_replays.js" onerror="window.PGZ_DESKTOP = null"></script>
+<script>
+/*
+ * Prüfstand für die Wiederholungen (headless Chrome, siehe tools/replay_check.js).
+ *
+ * Für jedes der sechs Spiele mit Aufzeichnung wird eine echte Partie gespielt,
+ * die Aufnahme danach vorwärts, rückwärts und in Zufallssprüngen durchgefahren
+ * und der Endzustand mit dem Original verglichen. Dazu kommen Export/Import
+ * (.lamapgzreplay) und der Replay-Screen selbst. Ergebnis als JSON in <pre>.
+ */
+(function () {
+  "use strict";
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d");
+  PG.app = {
+    pixelScale: 1, cssScale: 1, canvas, ctx,
+    resetTransform(c) { (c || ctx).setTransform(1, 0, 0, 1, 0, 0); },
+    backToMenu() {},
+  };
+  PG.audio.play = () => {};
+  PG.audio.tone = () => {};
+  const DT = 1 / 60;
+  const checks = [];
+  const errors = [];
+  window.addEventListener("error", (e) => errors.push(String(e.message)));
+
+  function check(ok, label, detail) {
+    checks.push({ ok: !!ok, label, detail: ok ? "" : String(detail == null ? "" : detail) });
+    return !!ok;
+  }
+
+  function make(id, mode) {
+    const entry = PG.gameById[id];
+    const g = new entry.cls(PG.W, PG.H, mode || "single");
+    g.ctx = ctx;
+    g.playSound = () => {};
+    g.rumble = () => {};
+    g.achEvent = () => {};
+    g.reportResult = () => {};
+    return g;
+  }
+
+  /** Fährt eine Aufnahme wie der Replay-Screen komplett durch. */
+  function playback(id, rep, label, finalCheck, mode) {
+    let inst;
+    try {
+      inst = make(id, mode);
+      inst.replayBegin(rep);
+    } catch (err) {
+      return check(false, label + ": replayBegin", err && err.stack);
+    }
+    const scenes = rep.scenes;
+    try {
+      for (let si = 0; si < scenes.length; si++) {
+        const n = Math.max(1, PG.replay.sceneLen(scenes[si]));
+        for (let fi = 0; fi < n; fi++) {
+          inst.replaySeek(si, fi);
+          ctx.save();
+          inst.replayDraw(ctx, fi === 0, !!scenes[si].final && fi === n - 1);
+          ctx.restore();
+          PG.app.resetTransform(ctx);
+        }
+      }
+    } catch (err) {
+      return check(false, label + ": Wiedergabe vorwärts", err && err.stack);
+    }
+    check(true, label + ": " + scenes.length + " Sequenzen vorwärts gezeichnet");
+
+    const rnd = new PG.Random(7);
+    try {
+      for (let i = 0; i < 40; i++) {
+        const si = Math.floor(rnd.random() * scenes.length);
+        const n = Math.max(1, PG.replay.sceneLen(scenes[si]));
+        inst.replaySeek(si, Math.floor(rnd.random() * n));
+        ctx.save();
+        inst.replayDraw(ctx, false, false);
+        ctx.restore();
+        PG.app.resetTransform(ctx);
+      }
+      for (let si = scenes.length - 1; si >= 0; si--) {
+        const n = Math.max(1, PG.replay.sceneLen(scenes[si]));
+        for (let fi = n - 1; fi >= 0; fi--) inst.replaySeek(si, fi);
+      }
+    } catch (err) {
+      return check(false, label + ": Sprünge", err && err.stack);
+    }
+    check(true, label + ": Rück- und Zufallssprünge");
+
+    if (finalCheck) {
+      const si = scenes.length - 1;
+      inst.replaySeek(si, Math.max(0, PG.replay.sceneLen(scenes[si]) - 1));
+      finalCheck(inst);
+    }
+    return true;
+  }
+
+  // ------------------------------------------------------------- Billard
+  function testBilliard() {
+    PG.rand.seed && PG.rand.seed(4);
+    const g = make("BilliardGame");
+    g.variant = "practice";
+    g.startPlay();
+    let shots = 0;
+    for (let i = 0; i < 6; i++) {
+      if (g.phase !== "aim") break;
+      g.aim = -0.3 + 0.12 * i;
+      g.power = 0.85;
+      g.strike();
+      shots++;
+      for (let k = 0; k < 1200 && g.phase === "rolling"; k++) g.update(DT);
+    }
+    g.recSnapshot();
+    const rep = g.replay;
+    if (!check(rep, "Billard: Aufnahme entstanden")) return null;
+    check(rep.scenes.length === shots, "Billard: je Stoß eine Sequenz", rep.scenes.length + " != " + shots);
+    const soll = g.balls.map((b) => [Math.round(b.x * 10) / 10, Math.round(b.y * 10) / 10, !!b.potted]);
+    playback("BilliardGame", rep, "Billard", (inst) => {
+      const ist = inst.balls.map((b) => [Math.round(b.x * 10) / 10, Math.round(b.y * 10) / 10, !!b.potted]);
+      check(JSON.stringify(ist) === JSON.stringify(soll), "Billard: Tischstand am Ende identisch",
+        JSON.stringify(ist.slice(0, 3)) + " != " + JSON.stringify(soll.slice(0, 3)));
+    });
+    return rep;
+  }
+
+  // ------------------------------------------------------------- Pinball
+  function testPinball() {
+    const g = make("PinballGame");
+    g.ballCount = 3;
+    g.startPlay();
+    for (let i = 0; i < 60000 && g.state === "play"; i++) {
+      if (g.phase === "launch") {
+        g.plunger = 1.0;
+        g.launch();
+      }
+      if (i % 37 === 0) g.flipUp.l = !g.flipUp.l;
+      if (i % 53 === 0) g.flipUp.r = !g.flipUp.r;
+      g.update(DT);
+    }
+    const rep = g.replay;
+    if (!check(rep, "Pinball: Aufnahme entstanden")) return null;
+    check(g.state === "over", "Pinball: Partie endet von allein", g.state);
+    check(rep.scenes.length === 3, "Pinball: drei Sequenzen (je Ball eine)", rep.scenes.length);
+    const soll = g.scores[0];
+    playback("PinballGame", rep, "Pinball", (inst) => {
+      check(inst.scores[0] === soll, "Pinball: Punktstand am Ende identisch", inst.scores[0] + " != " + soll);
+    });
+    return rep;
+  }
+
+  // --------------------------------------------------------------- Snake
+  function testSnake() {
+    const g = make("SnakeGame");
+    g.modeIndex = 2; // Hindernisse
+    g.view3d = false;
+    g.startPlay();
+    const safe = (cell, sn) => {
+      const [x, y] = cell;
+      if (x < 0 || y < 0 || x >= g.cols || y >= g.rows) return false;
+      const k = x + "," + y;
+      if (g.obstacles.has(k)) return false;
+      return !sn.body.slice(1).some(([bx, by]) => bx === x && by === y);
+    };
+    for (let i = 0; i < 20000 && !g.gameOver; i++) {
+      const sn = g.snakes[0];
+      const [hx, hy] = sn.body[sn.body.length - 1];
+      // Nach 150 Sekunden nicht mehr ausweichen - die Runde soll enden.
+      if (i < 9000 && g.foods.size) {
+        let best = null, bd = 1e9;
+        for (const c of g.foods.values()) {
+          const d = Math.abs(c[0] - hx) + Math.abs(c[1] - hy);
+          if (d < bd) { bd = d; best = c; }
+        }
+        const want = [];
+        if (best[0] !== hx) want.push([best[0] > hx ? 1 : -1, 0]);
+        if (best[1] !== hy) want.push([0, best[1] > hy ? 1 : -1]);
+        want.push([1, 0], [-1, 0], [0, 1], [0, -1]);
+        for (const d of want) {
+          if (d[0] === -sn.direction[0] && d[1] === -sn.direction[1]) continue;
+          if (safe([hx + d[0], hy + d[1]], sn)) { sn.nextDirection = d; break; }
+        }
+      }
+      g.update(DT);
+    }
+    const rep = g.replay;
+    if (!check(rep, "Snake: Aufnahme entstanden")) return null;
+    check(g.gameOver, "Snake: Lauf endet von allein");
+    check(rep.scenes.length >= 2, "Snake: mehrere Kapitel", rep.scenes.length);
+    check(rep.scenes.every((sc) => sc.bodies), "Snake: jedes Kapitel ist ein Schlüsselbild");
+    const sollBody = JSON.stringify(g.snakes[0].body);
+    const sollScore = g.snakes[0].score;
+    const sollApples = g.applesTotal;
+    playback("SnakeGame", rep, "Snake", (inst) => {
+      check(JSON.stringify(inst.snakes[0].body) === sollBody, "Snake: Körper am Ende identisch",
+        inst.snakes[0].body.length + " != " + g.snakes[0].body.length);
+      check(inst.snakes[0].score === sollScore, "Snake: Punkte am Ende identisch");
+      check(inst.applesTotal === sollApples, "Snake: Äpfel am Ende identisch");
+      check(!inst.snakes[0].alive, "Snake: Schlange ist im letzten Bild tot");
+    });
+    return rep;
+  }
+
+  // -------------------------------------------------------------- Tetris
+  function testTetris() {
+    const g = make("TetrisGame", "solo");
+    g.variant = "ultra";
+    g.start();
+    for (let i = 0; i < 60000 && g.state !== "finish" && g.state !== "over"; i++) {
+      const b = g.boards[0];
+      if (g.state === "play" && b.active && i % 11 === 0) {
+        if (i % 22 === 0) b.move(i % 3 === 0 ? -1 : 1);
+        else b.rotate(1);
+      }
+      if (g.state === "play" && i % 23 === 0 && b.active) g.hardDrop(0);
+      g.update(DT);
+    }
+    const rep = g.replay;
+    if (!check(rep, "Tetris: Aufnahme entstanden")) return null;
+    check(rep.scenes.every((sc) => sc.boards), "Tetris: jedes Kapitel ist ein Schlüsselbild");
+    const sollRows = JSON.stringify(g.boards[0].rows);
+    const sollScore = g.boards[0].score;
+    const sollNext = JSON.stringify(g.boards[0].queue.peek(5));
+    playback("TetrisGame", rep, "Tetris", (inst) => {
+      check(JSON.stringify(inst.boards[0].rows) === sollRows, "Tetris: Feld am Ende identisch");
+      check(inst.boards[0].score === sollScore, "Tetris: Punkte am Ende identisch");
+      check(JSON.stringify(inst.boards[0].queue.peek(5)) === sollNext, "Tetris: Vorschau am Ende identisch");
+    }, "solo");
+    return rep;
+  }
+
+  // ------------------------------------------------------------- Bowling
+  function testBowling() {
+    const g = make("BowlingGame");
+    g.startPlay();
+    for (let i = 0; i < 120000 && g.state === "play"; i++) {
+      if (g.ball === null) g.confirmStep();
+      else g.update(DT);
+    }
+    const rep = g.replay;
+    if (!check(rep, "Bowling: Aufnahme entstanden")) return null;
+    check(g.state === "over", "Bowling: Partie endet von allein", g.state);
+    const sollRolls = JSON.stringify(g.rolls);
+    playback("BowlingGame", rep, "Bowling", (inst) => {
+      check(JSON.stringify(inst.rolls) === sollRolls, "Bowling: Scorekarte am Ende identisch",
+        JSON.stringify(inst.rolls) + " != " + sollRolls);
+    });
+    return rep;
+  }
+
+  // ------------------------------------------------------------ Minigolf
+  function testMinigolf() {
+    const g = make("MiniGolfGame");
+    g.course = "classic";
+    g.startPlay();
+    for (let i = 0; i < 200000 && g.state !== "over"; i++) {
+      if (g.state === "holedone") {
+        g.advance();
+        continue;
+      }
+      if (g.state !== "play") break;
+      if (g.phase === "aim") {
+        g.aim = Math.atan2(g.cup[1] - g.by, g.cup[0] - g.bx);
+        g.power = 0.45 + 0.1 * ((i / 7) % 3);
+        g.strike();
+      } else {
+        g.update(DT);
+      }
+    }
+    const rep = g.replay;
+    if (!check(rep, "Minigolf: Aufnahme entstanden")) return null;
+    check(g.state === "over", "Minigolf: Runde endet von allein", g.state);
+    check((rep.layouts || []).length >= 1, "Minigolf: Bahnen als Kulisse gespeichert");
+    const sollCard = JSON.stringify(g.card);
+    playback("MiniGolfGame", rep, "Minigolf", (inst) => {
+      check(JSON.stringify(inst.card) === sollCard, "Minigolf: Scorekarte am Ende identisch",
+        JSON.stringify(inst.card) + " != " + sollCard);
+    });
+    return rep;
+  }
+
+  // ------------------------------------------------- Teilen + Archiv
+  function testShare(rep) {
+    const text = PG.replay.exportText(rep);
+    check(!!text, "Teilen: exportText liefert eine Datei");
+    const raw = JSON.parse(text);
+    check(raw.format === PG.replay.FORMAT, "Teilen: Umschlag mit format-Kennung");
+    check(raw.replay && raw.replay.id === rep.id, "Teilen: genau ein Replay drin");
+
+    let [ok, why, back] = PG.replay.readText(text);
+    check(ok && back.id === rep.id, "Teilen: readText liest zurück", why);
+
+    let imported;
+    [ok, why, imported] = PG.replay.importText(text, null);
+    check(ok, "Teilen: importText legt ins Archiv", why);
+    check(imported && imported.src === "file", "Teilen: importiertes Replay ist markiert");
+    check(PG.replay.isSaved(rep.game, imported.id), "Teilen: steht im Archiv");
+
+    [ok, why] = PG.replay.importText(text, null);
+    check(!ok && why === "dup", "Teilen: zweiter Import wird abgewiesen", why);
+    [ok, why] = PG.replay.importText(text, rep.game === "snake" ? "tetris" : "snake");
+    check(!ok && why === "game", "Teilen: falscher Reiter wird abgewiesen", why);
+    [ok, why] = PG.replay.importText('{"format":"pygamez.minigolf.map","map":{}}', null);
+    check(!ok && why === "format", "Teilen: Fremddatei wird abgewiesen", why);
+    [ok, why] = PG.replay.importText("{kein json", null);
+    check(!ok && why === "io", "Teilen: unlesbare Datei wird abgewiesen", why);
+
+    // Archiv voll
+    for (let i = 0; i < PG.replay.MAX_PER_GAME + 2; i++) {
+      const kopie = Object.assign({}, rep, { id: rep.game + "-voll-" + i });
+      PG.replay.saveReplay(kopie);
+    }
+    check(PG.replay.isFull(rep.game), "Teilen: Archiv läuft nicht über", PG.replay.count(rep.game));
+    [ok, why] = PG.replay.importText(text, null);
+    check(!ok && why === "full", "Teilen: Import bei vollem Archiv", why);
+    for (const r of PG.replay.loadGame(rep.game).slice()) PG.replay.deleteReplay(rep.game, r.id);
+    check(PG.replay.count(rep.game) === 0, "Teilen: Archiv wieder leer");
+  }
+
+  // ------------------------------------------------- Replay-Screen
+  function testScreen(reps) {
+    for (const rep of reps) PG.replay.saveReplay(rep);
+    try {
+      const scr = new PG.ReplayScreen(PG.app, {}, () => {});
+      for (const g of PG.replay.GAMES) {
+        scr.switchTab(g);
+        scr.draw(ctx);
+        PG.app.resetTransform(ctx);
+      }
+      check(true, "Screen: alle sechs Reiter zeichnen");
+      // Knöpfe müssen im Bild liegen und über der Liste
+      const ok = scr.btnExport.x > 0 && scr.btnImport.right <= PG.W && scr.btnImport.bottom < scr.top &&
+                 scr.tabRects.every(([r]) => r.right <= PG.W && r.bottom <= scr.top);
+      check(ok, "Screen: Reiter und Knöpfe liegen im Bild");
+      for (const rep of reps) {
+        scr.switchTab(rep.game);
+        scr.start(scr.items[0]);
+        check(scr.mode === "play" && !!scr.inst, "Screen: " + rep.game + " startet die Wiedergabe", scr.error);
+        for (let i = 0; i < 120; i++) {
+          scr.update(1 / 30);
+          scr.draw(ctx);
+          PG.app.resetTransform(ctx);
+        }
+        scr.seekRatio(0.5);
+        scr.jumpScene(1);
+        scr.draw(ctx);
+        PG.app.resetTransform(ctx);
+        scr.stop();
+      }
+      check(true, "Screen: Wiedergabe aller Spiele im Screen");
+    } catch (err) {
+      check(false, "Screen", err && err.stack);
+    }
+    for (const g of PG.replay.GAMES) {
+      for (const r of PG.replay.loadGame(g).slice()) PG.replay.deleteReplay(g, r.id);
+    }
+  }
+
+  /** Spielt Aufnahmen der Desktop-Version ab (gleiches Dateiformat?). */
+  function testDesktop() {
+    const table = window.PGZ_DESKTOP;
+    if (!table) return;
+    const CLASSES = { minigolf: "MiniGolfGame", bowling: "BowlingGame", billiard: "BilliardGame",
+      pinball: "PinballGame", snake: "SnakeGame", tetris: "TetrisGame" };
+    for (const game of PG.replay.GAMES) {
+      const text = table[game];
+      if (!text) continue;
+      const [ok, why, rep] = PG.replay.readText(text);
+      if (!check(ok && rep.game === game, "Desktop-Datei " + game + ": gelesen", why)) continue;
+      playback(CLASSES[game], rep, "Desktop-Datei " + game,
+        null, (rep.meta || {}).mode);
+    }
+  }
+
+  function finish(out) {
+    document.getElementById("result").textContent = JSON.stringify(out);
+    document.title = "REPLAY TEST DONE";
+  }
+
+  /** Lädt die Skriptdateien der sechs Spiele mit Aufzeichnung nacheinander. */
+  const NEEDED = ["MiniGolfGame", "BowlingGame", "BilliardGame", "PinballGame", "SnakeGame", "TetrisGame"];
+  const files = [];
+  for (const id of NEEDED) {
+    const entry = (window.PG_MANIFEST || []).find((m) => m.id === id);
+    if (!entry) {
+      errors.push("Manifest ohne " + id);
+      continue;
+    }
+    for (const f of entry.files) if (!files.includes(f)) files.push(f);
+  }
+  let fi = 0;
+  const loadNext = () => {
+    if (fi >= files.length) return run();
+    const sc = document.createElement("script");
+    sc.src = "../" + files[fi++];
+    sc.onload = loadNext;
+    sc.onerror = () => {
+      errors.push("Datei fehlt: " + sc.src);
+      loadNext();
+    };
+    document.body.appendChild(sc);
+  };
+  loadNext();
+
+  function run() {
+  try {
+    localStorage.clear();
+    const reps = [];
+    for (const fn of [testBilliard, testPinball, testSnake, testTetris, testBowling, testMinigolf]) {
+      const rep = fn();
+      if (rep) reps.push(rep);
+    }
+    testDesktop();
+    if (reps.length) testShare(reps[0]);
+    if (reps.length) testScreen(reps);
+    // Gegenprobe: die hier aufgenommenen Dateien kann replay_check.js mit
+    // --dump ablegen, damit die Desktop-Version sie abspielen kann.
+    const web = {};
+    for (const rep of reps) web[rep.game] = PG.replay.exportText(rep);
+    finish({ checks, errors, web });
+  } catch (err) {
+    errors.push(String((err && err.stack) || err));
+    finish({ checks, errors });
+  }
+  }
+})();
+</script>
+</body>
+</html>

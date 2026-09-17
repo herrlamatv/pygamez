@@ -901,7 +901,10 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   sie landet im Reiter des passenden Spiels und trägt dort einen kleinen Pfeil.
   Eine Datei enthält genau ein Replay und wandert wie eine Minigolf-Bahn oder
   ein Geometry-Dash-Level von Rechner zu Rechner; schon vorhandene Aufnahmen
-  werden nicht doppelt eingelesen.
+  werden nicht doppelt eingelesen. Die **Browser-Version** (`web/`) kann alles
+  davon ebenfalls - und die Dateien sind **austauschbar**: eine am PC
+  aufgenommene Runde läuft im Browser und umgekehrt. Dort liegt das Archiv im
+  Browser-Speicher, deshalb passen 5 Aufnahmen je Spiel hinein.
 
 ### Bedienung
 
@@ -2020,7 +2023,10 @@ packages) and styled like a modern game launcher:
   back in - it lands in the tab of the matching game and carries a small arrow
   there. One file holds exactly one replay and travels from machine to machine
   like a minigolf course or a Geometry Dash level; recordings that are already
-  in the archive are not imported twice.
+  in the archive are not imported twice. The **browser version** (`web/`) does
+  all of this as well - and the files are **interchangeable**: a round recorded
+  on the PC plays in the browser and vice versa. There the archive lives in
+  browser storage, so it holds 5 recordings per game.
 
 ### Controls
 

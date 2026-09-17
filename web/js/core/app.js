@@ -489,6 +489,40 @@
       this.refreshScores();
     }
 
+    /** Öffnet das Replay-Archiv (Sidebar-Knopf). */
+    openReplays() {
+      this.leaveGame();
+      PG.stats.flush();
+      this.entry = null;
+      this.current = new PG.ReplayScreen(this, {}, () => this.backToMenu());
+      this.canvas.style.cursor = "";
+      ui.beginTransition();
+      this.markActive();
+    }
+
+    /**
+     * Zeigt eine frisch aufgenommene Wiederholung (Taste P im Spiel).
+     * 'backTo' ist das Spiel, in das der Zurück-Weg führt - es bleibt dabei im
+     * Speicher stehen (Rundenende-Bildschirm), sodass Weiter/Nochmal danach
+     * ganz normal funktionieren.
+     */
+    openReplay(rep, backTo) {
+      const back = () => {
+        if (backTo) {
+          this.current = backTo;
+          this.canvas.style.cursor = "";
+          ui.beginTransition();
+          this.markActive();
+          this.canvas.focus();
+        } else this.backToMenu();
+      };
+      if (!backTo) this.leaveGame();
+      this.current = new PG.ReplayScreen(this, { pending: rep, game: rep.game }, back);
+      this.canvas.style.cursor = "";
+      ui.beginTransition();
+      this.canvas.focus();
+    }
+
     saveHighscore(g) {
       const [hs, record] = PG.highscore.update(g.highscoreKey, g.score);
       g._hsValue = hs;
@@ -550,6 +584,15 @@
       ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, W, H);
 
+      // Die Spiele mit Aufzeichnung (siehe PG.replay.GAMES) können am
+      // Rundenende die Wiederholung anfordern (Taste P); der Replay-Screen
+      // wird dann zum aktiven Screen, das Spiel bleibt dahinter stehen.
+      const wish = this.game && this.game.replayRequest;
+      if (wish) {
+        const old = this.game;
+        old.replayRequest = null;
+        this.openReplay(wish, old);
+      }
       const cur = this.current;
       const g = this.game;
       if (cur) {
@@ -1061,6 +1104,11 @@
       };
       document.getElementById("btn-wiki").onclick = () => this.openWiki(this.entry ? this.entry.id : null);
       document.getElementById("btn-full").onclick = () => this.toggleFullscreen();
+      document.getElementById("btn-replays").onclick = () => {
+        PG.audio.play("click");
+        this.openReplays();
+        this.canvas.focus();
+      };
 
       const search = document.getElementById("search");
       search.addEventListener("input", () => this.buildGameList());
@@ -1105,6 +1153,12 @@
         PG.settings.data.sound = sound.checked;
         PG.settings.save();
         PG.audio.unlock();
+        PG.audio.play("click");
+      };
+      const rep = document.getElementById("set-replay");
+      rep.checked = PG.replay.isEnabled();
+      rep.onchange = () => {
+        PG.replay.setEnabled(rep.checked);
         PG.audio.play("click");
       };
       const vol = document.getElementById("set-volume");

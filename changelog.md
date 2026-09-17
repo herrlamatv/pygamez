@@ -64,6 +64,25 @@ einem eigenen Audit.
   der Pfad steht in der Rückmeldung.
 - Neuer Erfolg **Vorführer** (ein Replay als Datei geteilt) – jetzt **108**.
 
+**Browser-Version**
+- Die Web-Fassung unter `web/` bekommt dasselbe Replay-System: `js/core/replay.js`
+  (Aufnahme, Archiv, Teilen) und `js/core/replayview.js` (Archiv-Liste und
+  Wiedergabe), dazu der Sidebar-Knopf **Replays** und der Schalter *Replays
+  aufzeichnen* in den Einstellungen.
+- Aufgezeichnet werden dieselben sechs Spiele – auch Minigolf und Bowling, die
+  es im Browser bisher gar nicht mitschnitten – mit **demselben Dateiformat**:
+  eine `.lamapgzreplay`-Datei vom PC läuft im Browser und umgekehrt. **E** lädt
+  sie herunter, **I** liest sie wieder ein.
+- Das Archiv liegt im localStorage: Platz für 5 Aufnahmen je Spiel, eine
+  Aufnahme endet nach 10 Minuten, und ein voller Browser-Speicher meldet sich,
+  statt still zu scheitern.
+- Neuer Prüfstand `web/tools/replay_check.js` (headless Chrome): spielt je Spiel
+  eine echte Partie, fährt die Aufnahme vorwärts, rückwärts und in
+  Zufallssprüngen durch, vergleicht den Endstand mit dem Original und prüft
+  Teilen, Einlesen und den Replay-Screen – dazu eingefrorene Aufnahmen der
+  Desktop-Version (`web/tools/desktop_replays.js`), damit das Dateiformat beider
+  Fassungen gleich bleibt.
+
 #### Geändert
 - Die **Reiterleiste** des Replay-Screens bricht bei sechs Spielen sauber um;
   darunter steht eine Kopfzeile mit Zähler und den Knöpfen **Teilen** und
@@ -1079,6 +1098,25 @@ reworked LamaWiki page, in both READMEs and with an audit of its own.
 - Without file dialogs (e.g. without Tk) the export goes to the **downloads
   folder**; the path is named in the feedback.
 - New achievement **Projectionist** (share a replay as a file) – **108** in total.
+
+**Browser version**
+- The web edition in `web/` gets the same replay system: `js/core/replay.js`
+  (recording, archive, sharing) and `js/core/replayview.js` (archive list and
+  playback), plus the **Replays** sidebar button and the *Record replays* switch
+  in the settings.
+- The same six games are recorded – including Minigolf and Bowling, which the
+  browser did not record at all so far – in **the same file format**: a
+  `.lamapgzreplay` file from the PC plays in the browser and vice versa. **E**
+  downloads it, **I** reads it back in.
+- The archive lives in localStorage: room for 5 recordings per game, a recording
+  stops after 10 minutes, and a full browser storage says so instead of failing
+  silently.
+- New test rig `web/tools/replay_check.js` (headless Chrome): plays a real round
+  of each game, runs the recording forwards, backwards and in random jumps,
+  compares the final state with the original and checks sharing, importing and
+  the replay screen – plus frozen recordings from the desktop version
+  (`web/tools/desktop_replays.js`), so the file format of both editions stays
+  the same.
 
 #### Changed
 - The **tab bar** of the replay screen wraps cleanly with six games; below it a

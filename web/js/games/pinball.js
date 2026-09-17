@@ -69,6 +69,8 @@
   const PHYS_DT = 1 / 60;
 
   const SETUP = "setup", PLAY = "play", OVER = "over";
+  // Länge des Zustandsblocks am Ende eines Replay-Samples (0 = unverändert).
+  const REC_STATE = 10;
   const TABLES = ["classic", "space", "lama"];
   const BALL_COUNTS = [3, 5];
 
@@ -173,6 +175,17 @@
       this.ballCount = Math.trunc(Number(gs.balls));
       if (!BALL_COUNTS.includes(this.ballCount)) this.ballCount = 3;
 
+      // Wiederholung der Partie (replay, siehe core/replay.js).
+      this.rec = null;
+      this.replay = null;
+      this.replayRequest = null;
+      this.rep = null; // gesetzt, solange nur abgespielt wird
+      this.repAt = null;
+      this.repState = null;
+      this.recOpen = false;
+      this.recStart = 0;
+      this.recDelta = new PG.replay.Delta();
+
       this.buildFonts();
       this.layout();
       this.buildSetupLayout();
@@ -236,10 +249,12 @@
       this.gameOver = false;
       this.msg = null;
       this.msgT = 0.0;
+      this.recNew();
       this.newBall();
     }
 
     newBall() {
+      this.recOpen = false;
       this.balls = [makeBall(LANE_X, 146.0)];
       this.phase = "launch";
       this.plunger = 0.0;
@@ -342,6 +357,7 @@
       if (this.state === OVER) {
         if (ev.kind === "keydown") {
           if (ev.key === "Return" || ev.key === "space") this.restart();
+          else if ((ev.key === "p" || ev.key === "P") && this.replay) this.openReplay();
           else if (ev.key === "s" || ev.key === "S") {
             this.state = SETUP;
             this.gameOver = false;
@@ -385,6 +401,7 @@
       const b = this.balls[0];
       b.vy = -(95.0 + 175.0 * Math.max(0.1, this.plunger));
       b.vx = -PG.rand.uniform(0.0, 4.0);
+      this.recScene();
       this.phase = "play";
       this.saveT = BALL_SAVE;
       this.plunger = 0.0;
@@ -455,6 +472,7 @@
 
       if (this.phase === "launch") {
         if (this.charging) this.plunger = Math.min(1.0, this.plunger + dt * 0.85);
+        this.recTick(dt);
         return;
       }
 
@@ -468,6 +486,7 @@
         this.stepBall(b, dt);
         this.unstick(b, dt);
       }
+      this.recTick(dt);
       if (!this.balls.length) {
         this.ballLost();
       } else if (this.backInLane()) {
@@ -764,7 +783,9 @@
       this.scores[this.player] += bonus;
       this.syncScore();
       this.ballsLeft[this.player] -= 1;
-      if (Math.max(...this.ballsLeft) <= 0) {
+      const last = Math.max(...this.ballsLeft) <= 0;
+      this.recClose(bonus, last);
+      if (last) {
         this.endGame();
         return;
       }
@@ -779,6 +800,7 @@
       this.syncScore();
       this.state = OVER;
       this.gameOver = true;
+      this.recFinish();
       this.playSound("gameover");
     }
 
@@ -786,6 +808,181 @@
       this.newGame();
       this.state = PLAY;
       this.playSound("click");
+    }
+
+    // ===================================================== Replay-Aufnahme
+    // Je Kugel eine Sequenz. Ein Sample enthält die Bälle (Multiball!), die
+    // Flipperstellung und - nur wenn sich etwas geändert hat - einen Block mit
+    // dem Tischzustand (Punkte, Multiplikator, Targets, Bahnen ...). Das
+    // Format ist dasselbe wie in der Desktop-Version: eine .lamapgzreplay-Datei
+    // von dort lässt sich hier abspielen und umgekehrt.
+
+    recNew() {
+      this.replay = null;
+      this.recOpen = false;
+      this.recDelta.reset();
+      this.rec = PG.replay.recorder("pinball", {
+        table: this.tableKey, balls: this.ballCount, players: 1,
+      });
+    }
+
+    recScene() {
+      if (!this.rec || this.recOpen) return;
+      this.recOpen = true;
+      this.recDelta.reset();
+      this.recStart = this.scores[this.player];
+      this.rec.scene({
+        pl: this.player,
+        ball: this.ballCount - this.ballsLeft[this.player] + 1,
+        total: this.ballCount,
+      });
+    }
+
+    /** Der Zustandsblock eines Samples (REC_STATE Zahlen). */
+    recState() {
+      const flags = (this.tilt ? 1 : 0) | (this.multiball ? 2 : 0) |
+                    (this.phase === "launch" ? 4 : 0) | (this.jackpot ? 8 : 0);
+      let tmask = 0, lmask = 0;
+      this.targetsHit.forEach((on, i) => { if (on) tmask |= 1 << i; });
+      this.lanesHit.forEach((on, i) => { if (on) lmask |= 1 << i; });
+      return [this.scores[0], this.scores[this.scores.length - 1], this.mult, tmask, lmask,
+              flags, this.locks, this.bankClears,
+              Math.trunc(this.saveT * 10), Math.trunc(this.plunger * 100)];
+    }
+
+    /** [Ballzahl, x, y, ..., Flipper links/rechts, Block?, Block]. */
+    recSample() {
+      const out = [this.balls.length];
+      for (const b of this.balls) {
+        out.push(Math.round(b.x * 10) / 10, Math.round(b.y * 10) / 10);
+      }
+      out.push(Math.round(this.flip.l * 100) / 100, Math.round(this.flip.r * 100) / 100);
+      const st = this.recState();
+      if (this.recDelta.push("st", st)) out.push(REC_STATE, ...st);
+      else out.push(0);
+      return out;
+    }
+
+    recClose(bonus, final) {
+      if (!this.rec || !this.recOpen) return;
+      this.recOpen = false;
+      this.rec.close(() => this.recSample(), {
+        bonus, final: !!final, pts: this.scores[this.player] - this.recStart,
+      });
+    }
+
+    recTick(dt) {
+      if (this.rec && this.recOpen) this.rec.tick(dt, () => this.recSample());
+    }
+
+    recFinish() {
+      if (!this.rec) return;
+      this.replay = this.rec.result({
+        title: t("pin.table." + this.tableKey),
+        sub: t("common.points", { score: this.scores[0] }),
+        score: this.scores[0], scores: this.scores.slice(), winner: -1,
+      });
+      this.rec = null;
+    }
+
+    /** Die Wiederholung ansehen (Taste P) - den Screen öffnet app.js. */
+    openReplay() {
+      if (this.replay) {
+        this.replayRequest = this.replay;
+        this.playSound("click");
+      }
+    }
+
+    // ===================================================== Replay-Wiedergabe
+    replayBegin(rep) {
+      this.rec = null;
+      this.replay = null;
+      this.replayRequest = null;
+      this.rep = rep;
+      this.repAt = null;
+      this.repState = null;
+      const meta = rep.meta || {};
+      if (TABLES.includes(meta.table)) this.tableKey = meta.table;
+      if (BALL_COUNTS.includes(Math.trunc(Number(meta.balls)))) this.ballCount = Math.trunc(Number(meta.balls));
+      this.players = Math.max(1, Math.min(2, Math.trunc(Number(meta.players)) || 1));
+      this.table = TABLE_DATA[this.tableKey];
+      this.scores = new Array(this.players).fill(0);
+      this.ballsLeft = new Array(this.players).fill(this.ballCount);
+      this.player = 0;
+      this.state = PLAY;
+      this.gameOver = false;
+      this.msg = null;
+      this.msgT = 0.0;
+      this.shake = 0.0;
+      this.flash = {};
+      this.tableCache = null;
+      this.layout();
+      this.replaySeek(0, 0);
+    }
+
+    replaySeek(index, frame) {
+      const scenes = this.rep.scenes || [];
+      if (!scenes.length) return;
+      index = PG.clamp(index, 0, scenes.length - 1);
+      const sc = scenes[index];
+      const frames = sc.f || [];
+      const n = Math.max(1, frames.length);
+      frame = PG.clamp(frame, 0, n - 1);
+      const last = frame >= n - 1;
+
+      this.player = PG.clamp(sc.pl | 0, 0, this.scores.length - 1);
+      const ball = sc.ball | 0 || 1;
+      for (let i = 0; i < this.ballsLeft.length; i++) {
+        this.ballsLeft[i] = Math.max(0, this.ballCount - ball + 1);
+      }
+      // Der Zustandsblock steht nur in Samples, in denen er sich geändert hat -
+      // beim Sprung also von vorn durch die Szene laufen.
+      let start = 0;
+      if (this.repAt && this.repAt[0] === index && frame >= this.repAt[1]) start = this.repAt[1] + 1;
+      else this.repState = null;
+      for (let k = start; k <= frame; k++) this.repApply(frames[k]);
+      this.msg = null;
+      if (last) {
+        if (sc.final) this.msg = t("common.game_over");
+        else if (sc.bonus) this.msg = t("pin.bonus", { n: sc.bonus | 0 });
+      }
+      this.repAt = [index, frame];
+    }
+
+    repApply(fr) {
+      const nb = fr[0] | 0;
+      this.balls = [];
+      for (let i = 0; i < nb; i++) this.balls.push(makeBall(fr[1 + 2 * i], fr[2 + 2 * i]));
+      const p = 1 + 2 * nb;
+      this.flip = { l: fr[p], r: fr[p + 1] };
+      this.flipUp = { l: false, r: false };
+      this.omega = { l: 0, r: 0 };
+      if (fr[p + 2] | 0) this.repState = fr.slice(p + 3, p + 3 + REC_STATE);
+      const st = this.repState;
+      if (!st) return;
+      this.scores[0] = st[0] | 0;
+      this.scores[this.scores.length - 1] = st[1] | 0;
+      this.score = this.scores[0];
+      this.mult = st[2] | 0;
+      const tmask = st[3] | 0, lmask = st[4] | 0, flags = st[5] | 0;
+      this.targetsHit = this.table.targets.map((_, i) => !!((tmask >> i) & 1));
+      this.lanesHit = this.table.lanes.map((_, i) => !!((lmask >> i) & 1));
+      this.tilt = !!(flags & 1);
+      this.multiball = !!(flags & 2);
+      this.phase = flags & 4 ? "launch" : "play";
+      this.jackpot = !!(flags & 8);
+      this.locks = st[6] | 0;
+      this.bankClears = st[7] | 0;
+      this.saveT = st[8] / 10;
+      this.plunger = st[9] / 100;
+    }
+
+    replayDraw(ctx, aiming, banner) {
+      ui.drawBackground(ctx, this.width, this.height);
+      this.drawTable(ctx);
+      this.drawHud(ctx);
+      this.drawSide(ctx);
+      if (banner) this.drawOver(ctx);
     }
 
     // ------------------------------------------------------- Hilfsfunktionen
@@ -985,7 +1182,9 @@
       ui.text(ctx, t("common.points", { score: this.scores[0] }), cx, y + 66, this.small, ui.TEXT, "center");
       const best = this.best[this.tableKey];
       if (best) ui.text(ctx, t("pin.best", { n: best }), cx, y + 88, this.tiny, ui.GOLD, "center");
-      ui.text(ctx, t("pin.new_round"), cx, y + 106, this.tiny, ui.TEXT_DIM, "center");
+      let hint = t("pin.new_round");
+      if (this.replay && !this.rep) hint += "  ·  " + t("pin.replay_hint");
+      ui.text(ctx, hint, cx, y + 106, this.tiny, ui.TEXT_DIM, "center");
     }
 
     drawSetup(ctx) {

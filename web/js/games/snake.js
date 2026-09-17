@@ -115,6 +115,8 @@
 
   const rgb = (c) => "rgb(" + (c[0] | 0) + "," + (c[1] | 0) + "," + (c[2] | 0) + ")";
   const key = (x, y) => x + "," + y;
+  // Samples je Replay-Kapitel (30/s -> alle 10 Sekunden ein Schlüsselbild).
+  const REC_CHAPTER = 300;
   const round2 = (v) => Math.round(v * 100) / 100;
   /** Python-round() auf ganze Zahlen (Banker's Rounding: 0.5 -> 0, 1.5 -> 2, 2.5 -> 2, -1.5 -> -2). */
   const pyRound = (v) => {
@@ -775,6 +777,19 @@
       this.cols = Math.floor(this.width / CELL);
       this.rows = Math.floor(this.height / CELL);
 
+      // Wiederholung der Runde (replay, siehe core/replay.js).
+      this.rec = null;
+      this.replay = null;
+      this.replayRequest = null;
+      this.rep = null; // gesetzt, solange nur abgespielt wird
+      this.repAt = null;
+      this.repState = null;
+      this.recDelta = new PG.replay.Delta();
+      this.recMoves = [];
+      this.recLast = new Map();
+      this.recLayout = 0;
+      this.recN = 0;
+
       const snk = this.opts;
       this.wrap = !!snk.wrap;
       this.bonus = !!snk.bonus_apple;
@@ -898,6 +913,7 @@
       this.shake = 0;
       this.resetRunStats();
       this.newBoard();
+      this.recNew();
       this.state = PLAY;
     }
 
@@ -1261,6 +1277,8 @@
 
       if (this.gameOver) {
         if (ev.key === "Return" || ev.key === "space") this.startPlay();
+        // Nach dem Rundenende ist P frei (Prestige geht nur im Lauf).
+        else if ((ev.key === "p" || ev.key === "P") && this.replay) this.openReplay();
         return;
       }
 
@@ -1394,6 +1412,8 @@
           break;
         }
       }
+
+      this.recTick(dt);
     }
 
     tick() {
@@ -1414,6 +1434,7 @@
           }
           if (sn.stamina <= 0) sn.boostOn = false;
         }
+        this.recMark(); // HARDCORE kann den Körper gekürzt haben
       }
     }
 
@@ -1546,6 +1567,7 @@
       }
       if (ateGold) this.golden = null;
 
+      this.recMark();
       this.checkEnd(tot);
     }
 
@@ -1757,8 +1779,288 @@
       if (this.effectsDone) return;
       this.effectsDone = true;
       this.best = Math.max(this.best, this.score);
+      this.recFinish();
       this.playSound("gameover");
       this.rumble(200);
+    }
+
+    // ===================================================== Replay-Aufnahme
+    // Snake läuft durch - deshalb ist eine "Szene" hier ein KAPITEL: ihre
+    // Kopfdaten enthalten den vollständigen Zustand (Körper, Äpfel, Punkte),
+    // die Samples danach nur noch Änderungen. Das Format ist dasselbe wie in
+    // der Desktop-Version (replay.py), die Dateien sind austauschbar.
+    //
+    // Ein Sample ist [anzahl_bewegungen, (i, kopf_x, kopf_y, länge, schritt) * n,
+    // block_länge, *block]; "schritt" ist 1, wenn wirklich ein neuer Kopf
+    // angesetzt wurde (0 = die Schlange wurde nur gekürzt).
+
+    recNew() {
+      this.replay = null;
+      this.recMoves = [];
+      this.recN = 0;
+      this.recLast = new Map();
+      this.recDelta.reset();
+      this.rec = PG.replay.recorder("snake", {
+        mode: this.modeKey, wrap: !!this.wrapActive, players: this.snakes.length,
+        cols: this.cols, rows: this.rows,
+        hardcore: !!this.hardcoreActive, view3d: !!this.view3dActive,
+      });
+      if (!this.rec) return;
+      const obs = [];
+      for (const [x, y] of this.obstacles.values()) obs.push(x, y);
+      this.recLayout = this.rec.layout({
+        cols: this.cols, rows: this.rows, obs,
+        por: this.portalPairs.map(([a, b, col]) => [a[0], a[1], b[0], b[1], col.slice()]),
+      });
+      this.recChapter();
+    }
+
+    /** Beginnt ein neues Kapitel (Schlüsselbild mit dem ganzen Zustand). */
+    recChapter() {
+      if (!this.rec) return;
+      this.recN = 0;
+      this.recMoves = [];
+      this.recDelta.reset();
+      this.rec.scene({
+        layout: this.recLayout,
+        n: this.rec.scenes.length + 1,
+        bodies: this.snakes.map((sn) => sn.body.flat()),
+        dirs: this.snakes.map((sn) => sn.direction.slice()),
+        st: this.recState(),
+      });
+    }
+
+    /** Der Zustandsblock: alles, was nicht am Körper hängt. */
+    recState() {
+      const st = [this.applesTotal, this.applesBank, this.prestige, this.compLevel,
+                  this.modeKey === "timed" ? Math.trunc(this.timeLeft * 10) : -1,
+                  Math.trunc(this.interval * 1000)];
+      const foods = [...this.foods.values()].slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+      st.push(foods.length);
+      for (const [x, y] of foods) st.push(x, y);
+      if (!this.golden) st.push(0, 0, 0, 0);
+      else st.push(1, this.golden[0], this.golden[1], Math.trunc(this.goldenTimer * 10));
+      const sp = [...this.specials.values()].slice().sort((a, b) => a.cell[0] - b.cell[0] || a.cell[1] - b.cell[1]);
+      st.push(sp.length);
+      for (const info of sp) st.push(info.cell[0], info.cell[1], info.type === "blue" ? 1 : 0, Math.trunc(info.timer * 10));
+      for (const sn of this.snakes) {
+        st.push(sn.score, sn.apples, sn.alive ? 1 : 0, sn.boostOn ? 1 : 0,
+                Math.trunc(sn.stamina * 100), Math.trunc(sn.sizeFrac * 100));
+      }
+      return st;
+    }
+
+    /**
+     * Hält Körper-Änderungen fest (nach jedem Schritt aufrufen). Ein neuer Kopf
+     * heißt "Schritt"; bleibt der Kopf stehen und nur die Länge ändert sich,
+     * wurde der Schwanz gekürzt (HARDCORE, lila Apfel).
+     */
+    recMark() {
+      if (!this.rec) return;
+      this.snakes.forEach((sn, i) => {
+        if (!sn.body.length) return;
+        const head = sn.body[sn.body.length - 1];
+        const blen = sn.body.length;
+        const prev = this.recLast.get(i);
+        if (prev && prev[0] === head[0] && prev[1] === head[1] && prev[2] === blen) return;
+        const step = !prev || prev[0] !== head[0] || prev[1] !== head[1] ? 1 : 0;
+        this.recLast.set(i, [head[0], head[1], blen]);
+        this.recMoves.push([i, head[0], head[1], blen, step]);
+      });
+    }
+
+    recSample() {
+      const out = [this.recMoves.length];
+      for (const m of this.recMoves) out.push(m[0], m[1], m[2], m[3], m[4]);
+      this.recMoves = [];
+      const st = this.recState();
+      if (this.recDelta.push("st", st)) out.push(st.length, ...st);
+      else out.push(0);
+      this.recN += 1;
+      return out;
+    }
+
+    /** Je Bild einmal: ggf. neues Kapitel beginnen, dann Sample nehmen. */
+    recTick(dt) {
+      if (!this.rec) return;
+      if (this.recN >= REC_CHAPTER && !this.recMoves.length) this.recChapter();
+      this.rec.tick(dt, () => this.recSample());
+    }
+
+    recFinish() {
+      if (!this.rec) return;
+      this.rec.close(() => this.recSample(), { final: true });
+      const sn = this.snakes[0];
+      this.replay = this.rec.result({
+        title: t("snake.mode." + this.modeKey),
+        sub: t("snake.replay_sub", { score: this.score, apples: this.applesTotal, len: sn.body.length }),
+        score: this.score, winner: -1,
+      });
+      this.rec = null;
+    }
+
+    /** Die Wiederholung ansehen (Taste P) - den Screen öffnet app.js. */
+    openReplay() {
+      if (this.replay) {
+        this.replayRequest = this.replay;
+        this.playSound("click");
+      }
+    }
+
+    // ===================================================== Replay-Wiedergabe
+    // Gezeigt wird immer die 2D-Ansicht: die 3D-Kamera hängt an der Bildrate,
+    // das Gitter dagegen ist exakt das, was aufgezeichnet wurde.
+
+    replayBegin(rep) {
+      this.rec = null;
+      this.replay = null;
+      this.replayRequest = null;
+      this.rep = rep;
+      this.repAt = null;
+      this.repState = null;
+      const meta = rep.meta || {};
+      if (MODE_KEYS.includes(meta.mode)) this.modeIndex = MODE_KEYS.indexOf(meta.mode);
+      this.wrap = !!meta.wrap;
+      this.hardcore = !!meta.hardcore;
+      this.view3d = false; // Wiedergabe immer von oben
+
+      const lay = (rep.layouts || [{}])[0] || {};
+      this.cols = Math.trunc(lay.cols || meta.cols || this.cols);
+      this.rows = Math.trunc(lay.rows || meta.rows || this.rows);
+      this.obstacles = new Map();
+      const obs = lay.obs || [];
+      for (let i = 0; i + 1 < obs.length; i += 2) this.obstacles.set(key(obs[i], obs[i + 1]), [obs[i], obs[i + 1]]);
+      this.portals = new Map();
+      this.portalPairs = [];
+      for (const e of lay.por || []) {
+        const a = [e[0], e[1]], b = [e[2], e[3]];
+        this.portals.set(key(a[0], a[1]), b);
+        this.portals.set(key(b[0], b[1]), a);
+        this.portalPairs.push([a, b, e[4]]);
+      }
+
+      this.foods = new Map();
+      this.foodAnim = new Map();
+      this.eatFx = [];
+      this.golden = null;
+      this.goldenTimer = 0;
+      this.specials = new Map();
+      this.slot = null;
+      this.floatTexts = [];
+      this.banner = null;
+      this.purplePending = null;
+      this.slotPending = null;
+      this.particles = [];
+      this.particles3d = [];
+      this.shake = 0;
+      this.timeLeft = TIMED_SECONDS;
+      this.interval = BASE_INTERVAL;
+      this.gameOver = false;
+      this.runT = 99; // keine Steuer-Hinweise im Replay
+      // Damit der REPLAY-Chip des Screens unter der Kopfzeile sitzt.
+      this.hudH = 78;
+      this.state = PLAY;
+      this.replaySeek(0, 0);
+    }
+
+    replaySeek(index, frame) {
+      const scenes = this.rep.scenes || [];
+      if (!scenes.length) return;
+      index = PG.clamp(index, 0, scenes.length - 1);
+      const sc = scenes[index];
+      const frames = sc.f || [];
+      const n = Math.max(1, frames.length);
+      frame = PG.clamp(frame, 0, n - 1);
+
+      let start;
+      if (!this.repAt || this.repAt[0] !== index || frame < this.repAt[1]) {
+        // Schlüsselbild: Schlangen und Zustand komplett neu aufbauen.
+        this.snakes = (sc.bodies || []).map((flat, i) => {
+          const body = [];
+          for (let k = 0; k + 1 < flat.length; k += 2) body.push([flat[k], flat[k + 1]]);
+          const d = (sc.dirs || [])[i] || [1, 0];
+          return new Snake(body, [d[0], d[1]]);
+        });
+        this.repState = (sc.st || []).slice();
+        this.repStateApply();
+        start = 0;
+      } else {
+        start = this.repAt[1] + 1;
+      }
+      for (let k = start; k <= frame; k++) this.repApply(frames[k]);
+      this.score = this.snakes.length ? Math.max(...this.snakes.map((sn) => sn.score)) : 0;
+      this.repAt = [index, frame];
+    }
+
+    repApply(fr) {
+      const nm = fr[0] | 0;
+      let p = 1;
+      for (let i = 0; i < nm; i++) {
+        const idx = fr[p] | 0, hx = fr[p + 1] | 0, hy = fr[p + 2] | 0, blen = fr[p + 3] | 0, step = fr[p + 4] | 0;
+        p += 5;
+        const sn = this.snakes[idx];
+        if (sn) {
+          if (step) sn.body.push([hx, hy]);
+          if (sn.body.length > blen) sn.body.splice(0, sn.body.length - blen);
+          sn.prevBody = sn.body.map((c) => c.slice());
+        }
+      }
+      const k = fr[p] | 0;
+      if (k) {
+        this.repState = fr.slice(p + 1, p + 1 + k);
+        this.repStateApply();
+      }
+    }
+
+    repStateApply() {
+      const st = this.repState;
+      if (!st || !st.length) return;
+      this.applesTotal = st[0] | 0;
+      this.applesBank = st[1] | 0;
+      this.prestige = st[2] | 0;
+      this.compLevel = st[3] | 0;
+      this.timeLeft = st[4] >= 0 ? Math.max(0, st[4] / 10) : TIMED_SECONDS;
+      this.interval = Math.max(0.001, st[5] / 1000);
+      let p = 6;
+      const nf = st[p++] | 0;
+      this.foods = new Map();
+      this.foodAnim = new Map();
+      for (let i = 0; i < nf; i++) {
+        const cell = [st[p] | 0, st[p + 1] | 0];
+        p += 2;
+        this.foods.set(key(cell[0], cell[1]), cell);
+        this.foodAnim.set(key(cell[0], cell[1]), FOOD_SPAWN_ANIM);
+      }
+      this.golden = st[p] ? [st[p + 1] | 0, st[p + 2] | 0] : null;
+      this.goldenTimer = st[p + 3] / 10;
+      p += 4;
+      const ns = st[p++] | 0;
+      this.specials = new Map();
+      for (let i = 0; i < ns; i++) {
+        const cell = [st[p] | 0, st[p + 1] | 0];
+        this.specials.set(key(cell[0], cell[1]), { cell, type: st[p + 2] ? "blue" : "purple", timer: st[p + 3] / 10 });
+        p += 4;
+      }
+      for (const sn of this.snakes) {
+        sn.score = st[p] | 0;
+        sn.apples = st[p + 1] | 0;
+        sn.alive = !!st[p + 2];
+        sn.boostOn = !!st[p + 3];
+        sn.stamina = st[p + 4] / 100;
+        sn.sizeFrac = st[p + 5] / 100;
+        p += 6;
+      }
+    }
+
+    replayDraw(ctx, aiming, banner) {
+      this.animT += 1 / PG.replay.RATE;
+      this.drawWorld2d(ctx);
+      // gameOver blendet im HUD die Fußzeilen aus (Prestige-Vorschau,
+      // Competitive-Hinweise) - in einer Wiederholung wären sie nur Lärm.
+      this.gameOver = true;
+      this.drawHud(ctx);
+      if (banner) this.drawGameOver(ctx);
+      this.gameOver = false;
     }
 
     // ----- Partikel ---------------------------------------------------------------------
@@ -2713,6 +3015,9 @@
       if (this.competitive) this.drawCenterText(ctx, t("snake.comp.result", { level: this.compLevel }), this.font, ui.GOLD, 16);
       else if (this.prestige > 0) this.drawCenterText(ctx, t("snake.prestige", { roman: PRESTIGE.roman(this.prestige) }), this.font, ui.GOLD, 16);
       this.drawCenterText(ctx, t("common.enter_restart"), this.font, ui.TEXT, 46);
+      if (this.replay && !this.rep) {
+        this.drawCenterText(ctx, t("snake.replay_hint"), this.small, ui.TEXT_DIM, 76);
+      }
     }
 
     // ----- Setup zeichnen ---------------------------------------------------------------------

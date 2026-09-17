@@ -135,6 +135,13 @@
       this.guide = !!this.opts.guide;
       this.msg = null;
       this.msgT = 0;
+      // Wiederholung der Partie (replay, siehe core/replay.js).
+      this.rec = null;
+      this.replay = null;
+      this.replayRequest = null;
+      this.rep = null; // gesetzt, solange nur abgespielt wird
+      this.repAt = null;
+      this.recPins = new Map();
       this.buildFonts();
       this.layout();
       this.buildSetupLayout();
@@ -206,6 +213,7 @@
       this.msgT = 0;
       this.rack(true);
       this.newDelivery();
+      this.recNew();
     }
 
     rack(full = true) {
@@ -311,6 +319,7 @@
       if (this.state === OVER) {
         if (ev.kind === "keydown") {
           if (ev.key === "Return" || ev.key === "space") this.restart();
+          else if ((ev.key === "p" || ev.key === "P") && this.replay) this.openReplay();
           else if (ev.key === "s" || ev.key === "S") {
             this.state = SETUP;
             this.gameOver = false;
@@ -362,6 +371,15 @@
         gutter: false, roll: 0,
       };
       this.rollT = 0;
+      if (this.rec) {
+        const pins = this.pins.map((p) => [p.num, Math.round(p.x * 10) / 10, Math.round(p.y * 10) / 10]);
+        this.recPins = new Map(pins.map((pn, i) => [i, [pn[1], pn[2], 0]]));
+        this.rec.scene({
+          player: 0, frame: this.frame, pins,
+          pos: Math.round(this.pos * 1e3) / 1e3, aim: Math.round(this.aim * 1e3) / 1e3,
+          spin: Math.round(this.spin * 1e3) / 1e3, power: Math.round(this.power * 1e3) / 1e3,
+        });
+      }
       this.playSound("shoot");
       this.rumble(80);
     }
@@ -385,6 +403,7 @@
       this.rollT += dt;
       this.stepBall(dt);
       this.stepPins(dt);
+      if (this.rec) this.rec.tick(dt, () => this.recSample());
       if (this.rollDone()) this.finishRoll();
     }
 
@@ -493,6 +512,7 @@
         this.playSound(knocked ? "point" : "hit");
       }
       this.say(t(this.resultKey, { n: knocked }), 1.8);
+      if (this.rec) this.rec.close(() => this.recSample(), { knocked, result: this.resultKey });
 
       const [done, refill] = this.frameState(frame, rolls, strike, spare);
       this.ball = null;
@@ -534,6 +554,7 @@
     }
 
     endGame() {
+      this.recFinish();
       const final = totalScore(this.rolls);
       this.score = final;
       this.saveBest(final);
@@ -588,6 +609,130 @@
       this.drawHud(ctx);
       this.drawCard(ctx);
       if (this.state === OVER) this.drawOver(ctx);
+    }
+
+    // ===================================================== Replay-Aufnahme
+    // Aufgezeichnet wird je Wurf die tatsächliche Bahn von Ball und Pins.
+    // Pins stehen nur dann in einem Sample, wenn sie sich bewegt haben - das
+    // Format ist dasselbe wie in der Desktop-Version (replay.py).
+
+    recNew() {
+      this.replay = null;
+      this.recPins = new Map();
+      this.rec = PG.replay.recorder("bowling", { diff: this.diff, players: 1 });
+    }
+
+    /** Ein Sample: Ball (x, y, Drehung) + die bewegten Pins als Deltas. */
+    recSample() {
+      const b = this.ball;
+      if (!b) return null;
+      const out = [Math.round(b.x * 10) / 10, Math.round(b.y * 10) / 10, Math.round(b.roll * 100) / 100];
+      this.pins.forEach((p, i) => {
+        const st = [Math.round(p.x * 10) / 10, Math.round(p.y * 10) / 10, p.down ? 1 : 0];
+        const prev = this.recPins.get(i);
+        if (!prev || prev[0] !== st[0] || prev[1] !== st[1] || prev[2] !== st[2]) {
+          this.recPins.set(i, st);
+          out.push(i, st[0], st[1], st[2]);
+        }
+      });
+      return out;
+    }
+
+    recFinish() {
+      if (!this.rec) return;
+      const final = totalScore(this.rolls);
+      this.replay = this.rec.result({
+        title: t("bowl.diff." + this.diff), sub: t("bowl.final", { n: final }), score: final,
+      });
+      this.rec = null;
+    }
+
+    /** Die Wiederholung ansehen (Taste P) - den Screen öffnet app.js. */
+    openReplay() {
+      if (this.replay) {
+        this.replayRequest = this.replay;
+        this.playSound("click");
+      }
+    }
+
+    // ===================================================== Replay-Wiedergabe
+    replayBegin(rep) {
+      this.rec = null;
+      this.replay = null;
+      this.replayRequest = null;
+      this.rep = rep;
+      this.repAt = null;
+      const meta = rep.meta || {};
+      if (DIFFS.includes(meta.diff)) this.diff = meta.diff;
+      this.state = PLAY;
+      this.gameOver = false;
+      this.msg = null;
+      this.msgT = 0;
+      this.manual = true;
+      this.step = STEPS.length - 1;
+      this.layout();
+      this.replaySeek(0, 0);
+    }
+
+    replaySeek(index, frame) {
+      const scenes = this.rep.scenes || [];
+      if (!scenes.length) return;
+      index = PG.clamp(index, 0, scenes.length - 1);
+      const sc = scenes[index];
+      const frames = sc.f || [];
+      const n = Math.max(1, frames.length);
+      frame = PG.clamp(frame, 0, n - 1);
+      const last = frame >= n - 1;
+
+      // Scorecard: alle abgeschlossenen Würfe bis hierher.
+      this.rolls = [];
+      for (const prev of scenes.slice(0, index).concat(last ? [sc] : [])) {
+        if (prev.knocked != null) this.rolls.push(prev.knocked | 0);
+      }
+      this.frame = sc.frame | 0;
+      this.pos = Number(sc.pos) || 0;
+      this.aim = Number(sc.aim) || 0;
+      this.spin = Number(sc.spin) || 0;
+      this.power = Number(sc.power != null ? sc.power : 0.5);
+      this.resultKey = sc.result || null;
+
+      // Pins: bei einem Sprung neu aufstellen, sonst die Deltas fortschreiben.
+      let start;
+      if (!this.repAt || this.repAt[0] !== index || frame < this.repAt[1]) {
+        this.pins = (sc.pins || []).map(([num, x, y]) => makePin(num, x, y));
+        start = 0;
+      } else {
+        start = this.repAt[1] + 1;
+      }
+      for (let k = start; k <= frame; k++) {
+        const fr = frames[k];
+        for (let j = 3; j + 3 < fr.length; j += 4) {
+          const p = this.pins[fr[j] | 0];
+          if (p) {
+            p.x = fr[j + 1];
+            p.y = fr[j + 2];
+            p.down = !!fr[j + 3];
+          }
+        }
+      }
+      const fr = frames[frame];
+      this.ball = { x: fr[0], y: fr[1], vx: 0, vy: 0, spin: 0, gutter: false, roll: fr[2] };
+      this.msg = last && sc.result ? t(sc.result, { n: sc.knocked | 0 }) : null;
+      this.score = totalScore(this.rolls);
+      this.repAt = [index, frame];
+    }
+
+    replayDraw(ctx, aiming, banner) {
+      ui.drawBackground(ctx, this.width, this.height);
+      const ball = this.ball;
+      if (aiming) this.ball = null; // Vorlauf: Standpunkt, Ziellinie, Kraft
+      this.drawLane(ctx);
+      this.drawPins(ctx);
+      if (this.ball !== null) this.drawBall(ctx);
+      else this.drawControls(ctx);
+      this.drawHud(ctx);
+      this.ball = ball;
+      this.drawCard(ctx);
     }
 
     drawLane(ctx) {
@@ -766,7 +911,9 @@
       ui.text(ctx, t("bowl.final", { n: totalScore(this.rolls) }), cx, y + 66, this.small, ui.TEXT, "center");
       const best = this.best[this.diff];
       if (best) ui.text(ctx, t("bowl.best", { n: best }), cx, y + 88, this.tiny, ui.GOLD, "center");
-      ui.text(ctx, t("bowl.new_round"), cx, y + 106, this.tiny, ui.TEXT_DIM, "center");
+      let hint = t("bowl.new_round");
+      if (this.replay && !this.rep) hint += "  ·  " + t("bowl.replay_hint");
+      ui.text(ctx, hint, cx, y + 106, this.tiny, ui.TEXT_DIM, "center");
     }
 
     drawSetup(ctx) {

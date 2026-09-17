@@ -33,14 +33,18 @@ web/
   js/core/ui.js         PG.ui (Themes/Farben/Fonts/Buttons/Panels/Partikel), PG.draw
   js/core/audio.js      PG.audio (synthetisierte Effekte wie audio.py)
   js/core/game.js       PG.Game (Basisklasse), PG.register
+  js/core/replay.js     PG.replay: Aufzeichnung, Archiv (localStorage) und Teilen (.lamapgzreplay)
+  js/core/replayview.js PG.ReplayScreen: Archiv-Liste + Wiedergabe
   js/core/app.js        Shell: Startbildschirm, Vorspiel-Screen, Loop, Eingabe, Pause, Highscore, Wiki
   js/manifest.js        Reihenfolge der Spiele + Skriptdateien je Spiel
   js/games/*.js         die Spiele
   js/games/wordle_words/<code>.js
                         Wordle-Wortlisten je Sprache, aus woordlistz/ erzeugt;
                         wird erst beim Spielstart nachgeladen (nicht im Manifest)
-  tools/                Smoke-Test (headless Chrome) + die Erzeuger für
-                        js/lang, js/wiki und js/games/wordle_words
+  tools/                Smoke-Test (headless Chrome), Replay-Prüfstand
+                        (replay_check.js + replaytest.html + desktop_replays.js)
+                        und die Erzeuger für js/lang, js/wiki und
+                        js/games/wordle_words
 ```
 
 ## Logische Fläche
@@ -183,6 +187,8 @@ PG.store.get(key, def) / PG.store.set(key, val)    // localStorage (JSON)
 PG.highscore.get(key) / update(key, score)
 PG.audio.play(name) / tone(freq, dur, wave, vol)
 PG.downloadText(filename, text) / PG.pickTextFile(accept, (text, name) => ...)   // Export/Import
+PG.replay.recorder(game, meta) / .saveReplay(rep) / .loadAll() / .exportText(rep) / .importText(text)
+PG.ReplayScreen(app, {pending, game}, onClose)   // Archiv + Wiedergabe (app.openReplays/openReplay)
 ```
 
 Sound-Namen: `click select eat bounce point shoot explode hit rotate lock line merge move gameover win powerup level`.
@@ -193,7 +199,19 @@ Sound-Namen: `click select eat bounce point shoot explode hit rotate lock line m
    wie in der Python-Datei. Nur Plattform-Bits werden ersetzt (pygame → Canvas).
 2. **Nur Einzelspieler**: Mehrspieler-Modi (2 Spieler an einer Tastatur, "duel", Hot-Seat)
    entfallen komplett. KI-Gegner bleiben. `modes` enthält nur Einzelspieler-Modi.
-3. **Replays** (replay.py) entfallen.
+3. **Replays**: Sechs Spiele zeichnen auf (Minigolf, Bowling, Billard, Pinball,
+   Snake, Tetris) - im selben Format wie die Desktop-Version, Dateien sind
+   austauschbar. Ein Spiel mit Aufzeichnung hat:
+
+   * `recNew()` / `recSample()` ... - die Aufnahme, angestoßen aus `startPlay()`,
+     `update()` und dem Rundenende (siehe `PG.replay.recorder`),
+   * `replayBegin(rep)`, `replaySeek(sceneIndex, frame)`, `replayDraw(ctx, aiming, banner)`
+     - die Wiedergabe: der Replay-Screen baut eine ganz normale Spielinstanz und
+     fährt sie Bild für Bild durch die Aufnahme,
+   * `this.replayRequest = rep` am Rundenende (Taste P) - app.js öffnet dann den
+     Replay-Screen und kehrt danach ins Spiel zurück.
+
+   Andere Spiele bleiben ohne Replays.
 4. **Texte** über `PG.t` mit den Python-Keys. Keine Keys erfinden, die es nicht gibt – für neue
    Texte `PG.addStrings` (mindestens de + en).
 5. **Nur die eigenen Dateien** anlegen/ändern (siehe Manifest). Keine Änderungen an `core/`,
@@ -204,6 +222,7 @@ Sound-Namen: `click select eat bounce point shoot explode hit rotate lock line m
 ## Smoke-Test
 
 ```
+node web/tools/replay_check.js                      # Replays: Aufnahme, Wiedergabe, Teilen
 node web/tools/smoke.js Game2048 SnakeGame           # Zufallseingaben, meldet Laufzeitfehler
 node web/tools/smoke.js Game2048 --shot              # zusätzlich Screenshot -> web/tools/shots/<id>-<mode>.png
 node web/tools/smoke.js Game2048 --shot --idle --frames 90    # Startbild ohne Eingaben

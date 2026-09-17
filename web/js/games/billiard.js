@@ -82,6 +82,15 @@
       this.view = VIEWS.includes(bs.view) ? bs.view : "2d";
       this.diff = PG.clamp(Math.trunc(Number(bs.difficulty)) || 0, 0, 2);
 
+      // Wiederholung der Partie (replay, siehe core/replay.js).
+      this.rec = null;
+      this.replay = null;
+      this.replayRequest = null;
+      this.rep = null; // gesetzt, solange nur abgespielt wird
+      this.repAt = null;
+      this.recRes = null;
+      this.recDelta = new PG.replay.Delta();
+
       this.buildFonts();
       this.tableCache = null;
       this.wins = [0, 0];
@@ -298,6 +307,7 @@
     startPlay() {
       this.setupCamera();
       this.newRack();
+      this.recNew();
       this.state = PLAY;
       this.playSound("click");
     }
@@ -315,6 +325,7 @@
       if (this.state === OVER) {
         if (ev.kind === "keydown") {
           if (ev.key === "Return" || ev.key === "space") this.restart();
+          else if ((ev.key === "p" || ev.key === "P") && this.replay) this.openReplay();
           else if (ev.key === "s" || ev.key === "S") {
             this.state = SETUP;
             this.gameOver = false;
@@ -326,6 +337,13 @@
         return;
       }
       if (this.state !== PLAY) return;
+      // Übungsmodus endet nie - dort zeigt P den bisherigen Verlauf jederzeit
+      // zwischen zwei Stößen (das Spiel läuft danach weiter).
+      if (ev.kind === "keydown" && (ev.key === "p" || ev.key === "P") &&
+          this.variant === "practice" && this.phase === "aim" && this.rec && this.rec.scenes.length) {
+        this.openReplay();
+        return;
+      }
       // Kamera drehen: rechte Maustaste HALTEN und Maus bewegen (nur Frei-
       // Ansicht) oder Q/E. Loslassen der rechten Taste beendet das Drehen.
       if (this.view === "free") {
@@ -414,7 +432,9 @@
     }
 
     humanTurn() {
-      return this.current === 0;
+      // In der Wiedergabe wird jeder Stoß wie ein eigener gezeigt (samt
+      // Ziellinie und Queue) - egal, wer ihn gespielt hat.
+      return !!this.rep || this.current === 0;
     }
 
     // ===================================================== Stoß / Physik
@@ -422,6 +442,7 @@
       const sp = MAX_SPEED * this.power;
       this.cue.vx = Math.cos(this.aim) * sp;
       this.cue.vy = Math.sin(this.aim) * sp;
+      this.recScene();
       this.phase = "rolling";
       this.shotTime = 0.0;
       this.physAcc = 0.0;
@@ -449,6 +470,7 @@
           this.physAcc -= PHYS_DT;
           this.physics(PHYS_DT);
           this.shotTime += PHYS_DT;
+          if (this.rec) this.rec.tick(PHYS_DT, () => this.recSample());
           if (this.allStopped() || this.shotTime > MAX_SHOT_TIME) this.resolveShot();
         }
       } else if (this.phase === "aim") {
@@ -577,9 +599,14 @@
 
     resolveShot() {
       this.breakDone = true;
+      // Erst die Aufnahme des Stoßes schließen (der Stand VOR dem Neueinsetzen
+      // der Weißen gehört noch zur Sequenz), dann die Regeln.
+      if (this.rec) this.rec.close(() => this.recSample());
+      this.recRes = null;
       if (this.variant === "practice") this.resolvePractice();
       else if (this.variant === "9ball") this.resolve9ball();
       else this.resolve8ball();
+      this.recResult();
       // Weiße neu einsetzen, falls versenkt
       if (this.cuePotted && this.state === PLAY) {
         this.cue.potted = false;
@@ -611,6 +638,7 @@
     }
 
     foul(msgKey) {
+      this.recRes = msgKey;
       this.msg = t(msgKey);
       this.msgT = 2.2;
       this.ballInHand = true;
@@ -764,8 +792,184 @@
     restart() {
       this.gameOver = false;
       this.newRack();
+      this.recNew();
       this.state = PLAY;
       this.playSound("click");
+    }
+
+    // ===================================================== Replay-Aufnahme
+    // Je Stoß eine Sequenz. Die Kopfdaten halten den kompletten Tisch fest
+    // (alle Kugeln mit Nummer, Ort und "versenkt"), die Samples nur noch die
+    // Kugeln, die sich seit dem letzten Bild bewegt haben.
+
+    recNew() {
+      this.replay = null;
+      this.recRes = null;
+      this.recDelta.reset();
+      this.rec = PG.replay.recorder("billiard", {
+        variant: this.variant, view: this.view, diff: this.diff, players: 1,
+      });
+    }
+
+    recScene() {
+      if (!this.rec) return;
+      this.recDelta.reset();
+      this.rec.scene({
+        pl: this.current,
+        aim: Math.round(this.aim * 1e4) / 1e4,
+        pw: Math.round(this.power * 1e3) / 1e3,
+        grp: this.group.slice(),
+        pall: this.pottedAll.slice(),
+        base: this.rackBase,
+        balls: this.balls.map((b) => [b.num, Math.round(b.x * 10) / 10, Math.round(b.y * 10) / 10, b.potted ? 1 : 0]),
+      });
+    }
+
+    recSample() {
+      const out = [];
+      this.balls.forEach((b, i) => {
+        const st = [Math.round(b.x * 10) / 10, Math.round(b.y * 10) / 10, b.potted ? 1 : 0];
+        if (this.recDelta.push(i, st)) out.push(i, st[0], st[1], st[2]);
+      });
+      return out;
+    }
+
+    recResult() {
+      if (!this.rec) return;
+      let res = this.recRes;
+      if (res == null && this.winner != null) res = this.winner === 0 ? "bil.win_you" : "bil.win_ai";
+      if (res == null) res = this.pottedShot.length ? "bil.res_pot" : "bil.res_miss";
+      this.rec.setLast({
+        res, pot: this.pottedShot.slice(), nxt: this.current,
+        final: this.winner != null, win: this.winner == null ? -1 : this.winner,
+      });
+      if (this.state === OVER) this.recFinish();
+    }
+
+    recFinish() {
+      if (!this.rec) return;
+      let sub;
+      if (this.variant === "practice") sub = t("bil.potted", { n: this.pottedAll.length });
+      else if (this.winner == null) sub = t("bil.var." + this.variant);
+      else sub = this.winner === 0 ? t("bil.win_you") : t("bil.win_ai");
+      this.replay = this.rec.result({
+        title: t("bil.var." + this.variant) + "  ·  " + t("bil.view." + this.view),
+        sub, winner: this.winner == null ? -1 : this.winner,
+      });
+      this.rec = null;
+    }
+
+    /** Zwischenstand als Wiederholung (Übungsmodus, der nie endet). */
+    recSnapshot() {
+      if (!this.rec || !this.rec.scenes.length) return;
+      this.replay = this.rec.result({
+        title: t("bil.var.practice") + "  ·  " + t("bil.view." + this.view),
+        sub: t("bil.potted", { n: this.pottedAll.length }),
+      });
+    }
+
+    /** Die Wiederholung ansehen (Taste P) - den Screen öffnet app.js. */
+    openReplay() {
+      if (this.state === PLAY) this.recSnapshot();
+      if (this.replay) {
+        this.replayRequest = this.replay;
+        this.playSound("click");
+      }
+    }
+
+    // ===================================================== Replay-Wiedergabe
+    replayBegin(rep) {
+      this.rec = null;
+      this.replay = null;
+      this.replayRequest = null;
+      this.rep = rep;
+      this.repAt = null;
+      const meta = rep.meta || {};
+      if (VARIANTS.includes(meta.variant)) this.variant = meta.variant;
+      if (VIEWS.includes(meta.view)) this.view = meta.view;
+      this.diff = PG.clamp(Math.trunc(Number(meta.diff)) || 0, 0, 2);
+      this.camYaw = this.camYawT = 0.0;
+      this.tableCache = null;
+      this.setupCamera();
+      this.state = PLAY;
+      this.gameOver = false;
+      this.msg = null;
+      this.msgT = 0.0;
+      this.winner = null;
+      this.wins = [0, 0];
+      this.replaySeek(0, 0);
+    }
+
+    replaySeek(index, frame) {
+      const scenes = this.rep.scenes || [];
+      if (!scenes.length) return;
+      index = PG.clamp(index, 0, scenes.length - 1);
+      const sc = scenes[index];
+      const frames = sc.f || [];
+      const n = Math.max(1, frames.length);
+      frame = PG.clamp(frame, 0, n - 1);
+      const last = frame >= n - 1;
+
+      this.current = sc.pl | 0;
+      this.aim = Number(sc.aim) || 0;
+      this.power = Number(sc.pw) || 0.35;
+      this.group = (sc.grp || [null, null]).slice(0, 2);
+      this.pottedAll = (sc.pall || []).slice();
+      this.rackBase = sc.base | 0;
+      this.ballInHand = false;
+      this.phase = "rolling";
+      this.winner = null;
+
+      // Kugeln: bei einem Sprung neu aufbauen, sonst die Deltas fortschreiben.
+      let start;
+      if (!this.repAt || this.repAt[0] !== index || frame < this.repAt[1]) {
+        this.balls = (sc.balls || []).map(([num, x, y, potted]) => {
+          const b = makeBall(x, y, num);
+          b.potted = !!potted;
+          return b;
+        });
+        this.cue = this.balls[0] || makeBall(0, 0, 0);
+        start = 0;
+      } else {
+        start = this.repAt[1] + 1;
+      }
+      for (let k = start; k <= frame; k++) {
+        const fr = frames[k];
+        for (let j = 0; j + 3 < fr.length; j += 4) {
+          const b = this.balls[fr[j] | 0];
+          if (b) {
+            b.x = fr[j + 1];
+            b.y = fr[j + 2];
+            b.potted = !!fr[j + 3];
+          }
+        }
+      }
+      if (last) {
+        this.pottedAll = this.pottedAll.concat(sc.pot || []);
+        this.score = this.rackBase + this.pottedAll.length;
+        if (sc.res) this.msg = t(sc.res);
+        if (sc.final) this.winner = (sc.win | 0) >= 0 ? sc.win | 0 : null;
+      } else {
+        this.msg = null;
+      }
+      this.repAt = [index, frame];
+    }
+
+    replayDraw(ctx, aiming, banner) {
+      ui.drawBackground(ctx, this.width, this.height);
+      if (this.view !== "2d") this.basis = this.camBasis();
+      this.drawTable(ctx);
+      if (aiming) {
+        // Vorlauf: der Tisch steht, Ziellinie und Queue wie beim Stoß.
+        this.phase = "aim";
+        this.drawBalls(ctx);
+        this.drawAim(ctx);
+        this.phase = "rolling";
+      } else {
+        this.drawBalls(ctx);
+      }
+      this.drawHud(ctx);
+      if (banner && this.winner != null) this.drawOver(ctx);
     }
 
     // ===================================================== KI
@@ -1040,7 +1244,9 @@
         const won = this.winner === 0;
         ui.text(ctx, won ? t("bil.win_you") : t("bil.win_ai"), cx, y + 36, this.huge, won ? this.accent : ui.TEXT_DIM, "center");
       }
-      ui.text(ctx, t("bil.new_round"), cx, y + 76, this.tiny, ui.TEXT_DIM, "center");
+      let hint = t("bil.new_round");
+      if (this.replay && !this.rep) hint += "  ·  " + t("bil.replay_hint");
+      ui.text(ctx, hint, cx, y + 76, this.tiny, ui.TEXT_DIM, "center");
     }
 
     drawSetup(ctx) {
