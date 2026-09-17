@@ -179,23 +179,27 @@
       "keywords": [
         "snimka",
         "snimanje",
-        "minigolf",
-        "kuglanje",
+        "podijeli",
+        "datoteka",
         "arhiva",
-        "spremi"
+        "snake",
+        "tetris",
+        "biljar"
       ],
       "sections": [
         {
           "h": "Što je snimka?",
           "body": [
-            "Minigolf i kuglanje snimaju svaku rundu: sprema se stvarna putanja loptice i čunjeva, sličicu po sličicu. Zato reprodukcija izgleda točno kao tvoja runda - sa stazom, HUD-om i bodovnom karticom.",
+            "Šest igara snima svoje runde: minigolf, kuglanje, biljar, fliper, Snake i Tetris. Sprema se stvarno kretanje - sličicu po sličicu, trideset puta u sekundi. Zato reprodukcija izgleda točno kao tvoja runda, s HUD-om i bodovnom karticom.",
+            "Minigolf, kuglanje, biljar i fliper imaju kratke sekvence (udarac, bacanje, udarac štapom, kugla). Snake i Tetris teku bez prekida - ondje je sekvenca dionica od deset sekundi; Snake se uvijek prikazuje odozgo, i ako si igrao u 3D-u.",
             "Snima se samo runda koja je u tijeku. Kad kreneš iznova, i snimka počinje ispočetka."
           ]
         },
         {
           "h": "Spremanje",
           "body": [
-            "Ako je runda bila dobra, na kraju pritisni [P] - snimka odmah kreće. Tipkom [S] je spremaš u arhivu, s [Esc] se vraćaš na završni zaslon.",
+            "Ako je runda bila dobra, na kraju pritisni [P] - snimka odmah kreće. Tipkom [S] je spremaš u arhivu, tipkom [E] je dijeliš kao datoteku, s [Esc] se vraćaš na završni zaslon.",
+            "Vježbovni način biljara nikad ne završava: ondje [P] između dva udarca pokazuje dosadašnji tijek, a partija se zatim nastavlja.",
             "Nespremljene snimke nestaju sa sljedećom rundom; u arhivu stane 20 snimaka po igri."
           ]
         },
@@ -204,14 +208,23 @@
           "body": [
             "Gumb Snimke u bočnoj traci otvara arhivu: jedna kartica po igri, uz rezultat, datum i trajanje svake snimke.",
             "- [Enter] pokreće, [Del] briše (pritisni dvaput), [Tab] mijenja igru.",
-            "- Tijekom reprodukcije [Razmaknica] pauzira, Lijevo/Desno skače na sljedeći udarac ili bacanje, Gore/Dolje mijenja brzinu (0,5x do 4x).",
+            "- Tijekom reprodukcije [Razmaknica] pauzira, Lijevo/Desno skače na sljedeću sekvencu, Gore/Dolje mijenja brzinu (0,5x do 4x).",
             "Klik na traku napretka skače na bilo koje mjesto."
+          ]
+        },
+        {
+          "h": "Dijeljenje kao datoteka",
+          "body": [
+            "[E] zapisuje snimku kao datoteku .lamapgzreplay - iz arhive i odmah nakon runde. U njoj je točno jedna snimka i može se proslijediti kao minigolf staza ili Geometry Dash razina.",
+            "[I] takvu datoteku ponovno učitava. Završi u kartici prave igre i ondje nosi malu strelicu - znak da dolazi izvana.",
+            "Snimka koja je već u arhivi ne uvozi se dvaput."
           ]
         },
         {
           "h": "Isključivanje",
           "body": [
             "Pri prvom pokretanju i u opcijama pod Snimanje možeš isključiti Snimaj snimke - tada se ništa ne snima.",
+            "Vrlo duge partije skraćuju se nakon dobrih pola sata; traka tada pokazuje Snimka skraćena.",
             "Snimke se nalaze u datoteci replay.json u mapi igre, razvrstane po igrama. Datoteku smiješ obrisati kad god želiš."
           ]
         }

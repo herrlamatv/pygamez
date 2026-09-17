@@ -179,22 +179,26 @@
         "repeticion",
         "replay",
         "grabacion",
-        "minigolf",
-        "bolos",
-        "archivo"
+        "compartir",
+        "archivo",
+        "snake",
+        "tetris",
+        "billar"
       ],
       "sections": [
         {
           "h": "¿Qué es una repetición?",
           "body": [
-            "El minigolf y los bolos graban cada ronda: se guarda la trayectoria real de la bola y de los bolos, imagen a imagen. Por eso la repetición se ve igual que tu ronda: con el recorrido, el HUD y la tarjeta de puntos.",
+            "Seis juegos graban sus rondas: minigolf, bolos, billar, pinball, Snake y Tetris. Se guarda el movimiento real, imagen a imagen, treinta veces por segundo. Por eso la repetición se ve igual que tu ronda, con HUD y tarjeta de puntos.",
+            "Minigolf, bolos, billar y pinball tienen secuencias cortas (golpe, tirada, tiro, bola). Snake y Tetris van de un tirón: allí una secuencia es un tramo de diez segundos; Snake se muestra siempre desde arriba, aunque hayas jugado en 3D.",
             "Solo se graba la ronda en curso. Si empiezas de nuevo, la grabación también vuelve a empezar."
           ]
         },
         {
           "h": "Guardar",
           "body": [
-            "Si la ronda ha salido bien, pulsa [P] al final: la repetición empieza enseguida. Con [S] la guardas en el archivo y con [Esc] vuelves a la pantalla final.",
+            "Si la ronda ha salido bien, pulsa [P] al final: la repetición empieza enseguida. Con [S] la guardas en el archivo, con [E] la compartes como archivo y con [Esc] vuelves a la pantalla final.",
+            "El modo de práctica del billar no termina nunca: allí [P] muestra lo ocurrido hasta ese momento entre dos tiros y luego la partida continúa.",
             "Las grabaciones sin guardar desaparecen con la siguiente ronda; en el archivo caben 20 repeticiones por juego."
           ]
         },
@@ -203,14 +207,23 @@
           "body": [
             "El botón Repeticiones de la barra lateral abre el archivo: una pestaña por juego, con resultado, fecha y duración de cada grabación.",
             "- [Intro] reproduce, [Supr] borra (pulsa dos veces), [Tab] cambia de juego.",
-            "- Durante la reproducción, [Espacio] pausa, Izq./Der. salta al siguiente golpe o tirada y Arriba/Abajo cambia la velocidad (0,5x a 4x).",
+            "- Durante la reproducción, [Espacio] pausa, Izq./Der. salta a la siguiente secuencia y Arriba/Abajo cambia la velocidad (0,5x a 4x).",
             "Un clic en la barra de progreso salta a cualquier punto."
+          ]
+        },
+        {
+          "h": "Compartir como archivo",
+          "body": [
+            "[E] escribe la grabación como archivo .lamapgzreplay, tanto desde el archivo como justo después de la ronda. Contiene exactamente una repetición y se pasa igual que un recorrido de minigolf o un nivel de Geometry Dash.",
+            "[I] vuelve a leer uno de esos archivos. Aparece en la pestaña del juego correspondiente con una pequeña flecha: la señal de que viene de fuera.",
+            "Una grabación que ya está en el archivo no se importa dos veces."
           ]
         },
         {
           "h": "Desactivar",
           "body": [
             "En el primer inicio y en las opciones, bajo Grabación, puedes desactivar Grabar repeticiones: entonces no se graba nada.",
+            "Las partidas muy largas se recortan pasada la media hora; la barra muestra entonces Grabación recortada.",
             "Las grabaciones están en replay.json, en la carpeta del juego, ordenadas por juego. Puedes borrar ese archivo cuando quieras."
           ]
         }

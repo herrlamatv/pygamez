@@ -14,10 +14,20 @@ eigene Unterkategorie::
       "bowling":  [ {replay}, ... ]
     }
 
-Aufgezeichnet werden nur Minigolf und Bowling - beides sind Spiele mit
-kurzen, in sich abgeschlossenen Sequenzen (Schlag bzw. Wurf), die man sich
-gern noch einmal anschaut. Ob überhaupt aufgezeichnet wird, steht in den
-Einstellungen (``settings.json`` -> ``replay.enabled``); abschaltbar im
+Aufgezeichnet werden sechs Spiele::
+
+    minigolf   je Szene ein Schlag
+    bowling    je Szene ein Wurf
+    billiard   je Szene ein Stoß
+    pinball    je Szene ein Ball (Kugel 1 von 3)
+    snake      je Szene ein Abschnitt (zwischen zwei Äpfeln)
+    tetris     je Szene ein Abschnitt (zwischen zwei Level-/Zeilen-Marken)
+
+Die ersten vier haben von Natur aus kurze, in sich abgeschlossene Sequenzen;
+bei Snake und Tetris läuft die Partie durch - dort dient die Szene als
+Kapitel (Schlüsselbild + Deltas), damit das Spulen schnell bleibt und die
+Fortschrittsleiste Marken bekommt. Ob überhaupt aufgezeichnet wird, steht in
+den Einstellungen (``settings.json`` -> ``replay.enabled``); abschaltbar im
 Willkommens-Screen beim ersten Start und jederzeit in den Optionen.
 
 Wie ein Replay aussieht
@@ -57,6 +67,19 @@ Verwendung im Spiel::
     if self.rec: self.rec.close(self._rec_sample, end="cup")
     ...
     self.replay = self.rec.result(title="...", sub="...")  # Rundenende
+
+Teilen
+------
+Ein Replay lässt sich als einzelne Datei weitergeben - Endung
+``.lamapgzreplay``, aufgebaut wie die Bahn-/Level-Dateien in ugc.py::
+
+    {"format": "pygamez.replay", "v": 1, "app": "PyGameZ",
+     "exported": "2026-09-17 20:10", "replay": { ...das Replay-dict... }}
+
+``export_to()`` schreibt so eine Datei, ``import_from()`` liest sie wieder
+ein und legt sie ins Archiv (mit neuer id, falls die alte schon vergeben
+ist). Beim Import wird auch ``.json`` angenommen; ein importiertes Replay
+trägt ``"src": "file"`` und bekommt im Archiv ein kleines Import-Zeichen.
 """
 
 import json
@@ -72,16 +95,28 @@ STEP = 1.0 / RATE
 # Format-Version der Dateistruktur (steht in jedem Replay).
 VERSION = 1
 
-# Spiele mit Aufzeichnung = die Unterkategorien in replay.json.
-GAMES = ("minigolf", "bowling")
+# Spiele mit Aufzeichnung = die Unterkategorien in replay.json (Reihenfolge =
+# Reiterleiste im Replay-Screen).
+GAMES = ("minigolf", "bowling", "billiard", "pinball", "snake", "tetris")
+
+# Endung einer geteilten Aufnahme. Beim Import wird auch ".json" genommen.
+EXT = ".lamapgzreplay"
+IMPORT_EXTS = (EXT, ".json")
+
+# Kennung im Dateikopf - daran erkennt der Import, dass es ein Replay ist.
+FORMAT = "pygamez.replay"
 
 # Je Spiel höchstens so viele gespeicherte Replays (danach meldet
 # save_replay() "voll" - gelöscht wird nur auf Wunsch im Replay-Screen).
 MAX_PER_GAME = 20
 
-# Sicherheitsnetz gegen Endlos-Partien: mehr Samples werden nicht
-# aufgezeichnet, die Aufnahme wird dann still verworfen.
+# Sicherheitsnetz gegen Endlos-Partien: mehr Samples (bzw. mehr einzelne
+# Zahlen) werden nicht aufgezeichnet. Die Aufnahme bricht dann ab und trägt
+# "capped" - der Replay-Screen weist darauf hin. 60000 Samples sind bei
+# 30 Samples/s gut eine halbe Stunde; die Zahlengrenze greift nur bei sehr
+# vollen Bildern (Pinball-Multiball, langer Snake-Körper).
 MAX_SAMPLES = 60000
+MAX_VALUES = 420000
 
 # In einer PyInstaller-.exe (sys.frozen) zeigt __file__ in den temporären
 # Entpack-Ordner, der beim Beenden verschwindet - dann neben der .exe.
@@ -219,6 +254,96 @@ def is_saved(game, rep_id):
     return any(r.get("id") == rep_id for r in load_game(game))
 
 
+def unique_id(wanted, game):
+    """Freie id im Archiv: hängt notfalls "-2", "-3" ... an (wie in ugc.py)."""
+    wanted = str(wanted or game or "replay")
+    if not is_saved(game, wanted):
+        return wanted
+    for n in range(2, 1000):
+        cand = "%s-%d" % (wanted, n)
+        if not is_saved(game, cand):
+            return cand
+    return wanted + "-" + time.strftime("%H%M%S")
+
+
+# ---------------------------------------------------------------------------
+#  Teilen: Export / Import (.lamapgzreplay)
+# ---------------------------------------------------------------------------
+
+def default_filename(rep):
+    """Vorgeschlagener Dateiname beim Teilen: die id plus Endung."""
+    base = str((rep or {}).get("id") or (rep or {}).get("game") or "replay")
+    keep = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
+    base = "".join(c if c in keep else "-" for c in base)[:60] or "replay"
+    return base + EXT
+
+
+def export_to(rep, path):
+    """Schreibt genau EIN Replay in seinen Umschlag. Gibt (ok, grund) zurück.
+
+    grund: "" bei Erfolg, sonst "invalid" (kaputte Aufnahme) oder "io"
+    (Datei nicht schreibbar). Gespeichert wird kompakt - eine Aufnahme ist
+    eine Rohdatei, keine zum Handbearbeiten.
+    """
+    if not _valid(rep):
+        return False, "invalid"
+    payload = {"format": FORMAT, "v": VERSION, "app": "PyGameZ",
+               "exported": time.strftime("%Y-%m-%d %H:%M"),
+               "replay": dict(rep)}
+    try:
+        folder = os.path.dirname(os.path.abspath(path))
+        if folder and not os.path.isdir(folder):
+            os.makedirs(folder, exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, separators=(",", ":"))
+        return True, ""
+    except OSError:
+        return False, "io"
+
+
+def read_file(path):
+    """Liest eine geteilte Aufnahme (ohne sie zu speichern).
+
+    Gibt (ok, grund, replay) zurück; grund: "" | "io" | "format".
+    Angenommen werden der Umschlag und - für den Notfall - ein "nacktes"
+    Replay-dict, wie es in replay.json steht.
+    """
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            raw = json.load(f)
+    except (OSError, json.JSONDecodeError, ValueError):
+        return False, "io", None
+    if not isinstance(raw, dict):
+        return False, "format", None
+    rep = raw.get("replay") if raw.get("format") == FORMAT else raw
+    if not _valid(rep):
+        return False, "format", None
+    return True, "", dict(rep)
+
+
+def import_from(path, game=None):
+    """Liest eine geteilte Aufnahme ein und legt sie ins Archiv.
+
+    'game' ist die Art, die der aufrufende Reiter erwartet - passt sie nicht,
+    gibt es "game" (None = jede Art annehmen). Gibt (ok, grund, replay)
+    zurück; grund: "" | "io" | "format" | "game" | "full" | "dup".
+    """
+    ok, why, rep = read_file(path)
+    if not ok:
+        return False, why, None
+    found = rep["game"]
+    if game is not None and found != game:
+        return False, "game", None
+    if is_full(found):
+        return False, "full", None
+    if is_saved(found, rep["id"]):
+        return False, "dup", rep
+    rep["id"] = unique_id(rep["id"], found)
+    rep["src"] = "file"
+    ok, why = save_replay(rep)
+    return (True, "", rep) if ok else (False, why, None)
+
+
 def scene_len(scene):
     """Anzahl Samples einer Szene (flach gespeicherte zählen paarweise)."""
     f = scene.get("f")
@@ -246,6 +371,41 @@ def format_duration(seconds):
 #  Aufnahme
 # ---------------------------------------------------------------------------
 
+class Delta:
+    """Kleiner Helfer für Samples, die nur Änderungen enthalten.
+
+    Bowling macht das seit jeher von Hand (Pins stehen nur im Sample, wenn
+    sie sich bewegt haben); Billard, Pinball, Snake und Tetris brauchen
+    dasselbe für Kugeln, Zellen und Felder. Verwendung::
+
+        d = replay.Delta()
+        out = []
+        for i, b in enumerate(balls):
+            st = (round(b.x, 1), round(b.y, 1), 1 if b.potted else 0)
+            if d.push(i, st):
+                out.append(i)
+                out.extend(st)
+
+    ``reset()`` beim Beginn einer Szene, damit das erste Sample wieder alles
+    enthält (eine Szene ist beim Spulen immer der Wiedereinstiegspunkt).
+    """
+
+    __slots__ = ("_prev",)
+
+    def __init__(self):
+        self._prev = {}
+
+    def reset(self):
+        self._prev = {}
+
+    def push(self, key, state):
+        """True, wenn sich 'state' seit dem letzten Mal geändert hat."""
+        if self._prev.get(key) == state:
+            return False
+        self._prev[key] = state
+        return True
+
+
 class Recorder:
     """Sammelt die Bahnkurven einer Partie im Speicher.
 
@@ -253,8 +413,10 @@ class Recorder:
     ``tick()`` nimmt im festen Raster Samples, ``close()`` beendet sie und
     ``result()`` gibt am Rundenende das fertige Replay-dict zurück.
 
-    Wächst eine Aufnahme über MAX_SAMPLES, schaltet sich der Recorder
-    still ab (``self.dead``) - lieber kein Replay als eine 20-MB-Datei.
+    Wächst eine Aufnahme über MAX_SAMPLES bzw. MAX_VALUES, hört der Recorder
+    auf mitzuschreiben (``self.full``) - das bereits Aufgezeichnete bleibt
+    erhalten und wird als "capped" gekennzeichnet, statt eine 20-MB-Datei zu
+    erzeugen.
     """
 
     def __init__(self, game, meta=None):
@@ -263,7 +425,9 @@ class Recorder:
         self.layouts = []
         self.scenes = []
         self.samples = 0
-        self.dead = False
+        self.values = 0
+        self.full = False       # Obergrenze erreicht: nichts Neues mehr
+        self.dead = False       # unbrauchbar (nie erreicht, nur Sicherheitsnetz)
         self._scene = None
         self._acc = 0.0
 
@@ -282,8 +446,12 @@ class Recorder:
     # ----- Sequenzen -----------------------------------------------------
 
     def scene(self, flat=False, **info):
-        """Beginnt eine Sequenz (Minigolf: ein Schlag, Bowling: ein Wurf)."""
-        if self.dead:
+        """Beginnt eine Sequenz (Minigolf: ein Schlag, Bowling: ein Wurf).
+
+        Bei Snake und Tetris ist eine Sequenz ein Kapitel: ihre Kopfdaten
+        enthalten den vollständigen Zustand, die Samples nur noch Deltas.
+        """
+        if self.dead or self.full:
             return
         self._scene = dict(info)
         self._scene["flat"] = bool(flat)
@@ -314,7 +482,7 @@ class Recorder:
         Läuft die Anzeige langsamer als RATE, entstehen mehrere gleiche
         Samples - die Wiedergabe hat dann dasselbe Timing wie das Original.
         """
-        if self.dead or self._scene is None:
+        if self.dead or self.full or self._scene is None:
             return
         self._acc += dt
         while self._acc >= STEP:
@@ -322,7 +490,7 @@ class Recorder:
             self._emit(sample_fn())
 
     def _emit(self, values):
-        if values is None:
+        if values is None or self.full:
             return
         sc = self._scene
         if sc["flat"]:
@@ -330,10 +498,9 @@ class Recorder:
         else:
             sc["f"].append(list(values))
         self.samples += 1
-        if self.samples > MAX_SAMPLES:
-            self.dead = True
-            self.scenes = []
-            self.layouts = []
+        self.values += len(values) + 1
+        if self.samples > MAX_SAMPLES or self.values > MAX_VALUES:
+            self.full = True
             self._scene = None
 
     def close(self, sample_fn=None, **info):
@@ -373,6 +540,8 @@ class Recorder:
         if not scenes:
             return None
         self.meta.update(meta)
+        if self.full:
+            self.meta["capped"] = True
         rep = {"v": VERSION,
                "id": "%s-%s-%d" % (self.game, time.strftime("%Y%m%d%H%M%S"),
                                    len(scenes)),

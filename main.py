@@ -1718,8 +1718,9 @@ class App:
             self._draw_menu_screen()
         else:
             game = self.current
-            # Minigolf/Bowling können am Rundenende die Wiederholung anfordern
-            # (Taste P); der Replay-Screen wird dann zum aktiven Screen.
+            # Die Spiele mit Aufzeichnung (siehe replay.GAMES) können am
+            # Rundenende die Wiederholung anfordern (Taste P); der
+            # Replay-Screen wird dann zum aktiven Screen.
             wunsch = getattr(game, "replay_request", None)
             if wunsch:
                 game.replay_request = None

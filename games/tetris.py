@@ -37,6 +37,7 @@ import time
 import pygame
 
 import audio
+import replay
 import settings as settings_mod
 import store
 import ui
@@ -80,6 +81,7 @@ KEYS_P1 = dict(hold=("q", "Q"), ccw=("e", "E"), cw=())
 KEYS_P2 = dict(hold=("Shift_R",), ccw=("Control_R",), cw=())
 RESTART_KEYS = ("r", "R")
 SETUP_KEYS = ("s", "S")
+REPLAY_KEYS = ("p", "P")
 
 
 def _rgba(color, alpha):
@@ -128,6 +130,24 @@ class _Pad:
                     self.dir = -d if other else 0
                     self.held_ms = 0.0
                     self.auto = 0
+
+
+class _RepQueue:
+    """Vorschau-Warteschlange einer Wiedergabe.
+
+    Im Replay kommt die Steinfolge nicht aus dem Zufallsgenerator,
+    sondern aus der Aufnahme - dieser Ersatz liefert sie an den
+    Zeichencode weiter (core.Board.queue).
+    """
+
+    def __init__(self, kinds=()):
+        self.kinds = list(kinds)
+
+    def peek(self, n):
+        return self.kinds[:n]
+
+    def pop(self):
+        return self.kinds[0] if self.kinds else "I"
 
 
 class _Fx:
@@ -223,6 +243,14 @@ class TetrisGame(Game):
         self.setup_focus = 0
         self.setup_hover = None
         self.over_rects = {}
+        # Wiederholung der Runde (replay, siehe replay.py).
+        self.rec = None
+        self.replay = None
+        self.replay_request = None
+        self._rep = None            # gesetzt, solange nur abgespielt wird
+        self._rep_at = None
+        self._rec_delta = replay.Delta()
+        self._rec_n = 0
         self.state = SETUP
         self._deco = [self._new_deco(True) for _ in range(9)]
         self._layout()
@@ -549,6 +577,7 @@ class TetrisGame(Game):
         self.score = 0
         self.game_over = False
         self.state = COUNT
+        self._rec_new()
         self._layout()
         self.play_sound("select")
 
@@ -639,6 +668,8 @@ class TetrisGame(Game):
         if event.kind == InputEvent.KEYDOWN and not event.repeat:
             if event.key in RESTART_KEYS:
                 self._start()
+            elif event.key in REPLAY_KEYS and self.replay is not None:
+                self._open_replay()
             elif event.key in SETUP_KEYS:
                 self._to_setup()
         elif event.kind == InputEvent.MOUSEDOWN and event.button == 1:
@@ -713,6 +744,7 @@ class TetrisGame(Game):
         self._check_end()
         if self.mode == "solo" and self.variant == "marathon":
             self.score = self.boards[0].score
+        self._rec_tick(dt)
 
     def _das(self, pad, board, dt):
         """Dauerbewegung nach DAS, danach im ARR-Takt (mehrere Schritte je Frame)."""
@@ -936,6 +968,311 @@ class TetrisGame(Game):
             if winner is not None:
                 self._confetti(winner)
         self.result = res
+        self._rec_finish()
+
+    # ===================================================== Replay-Aufnahme
+    # Tetris läuft durch - eine "Szene" ist deshalb ein KAPITEL: ihre
+    # Kopfdaten halten den vollständigen Stand beider Felder fest, die
+    # Samples danach nur noch Änderungen. Ein Sample ist je Feld::
+    #
+    #     [stein, x, y, lock,      # stein = (art+1)*8 + drehung*2 + aktiv
+    #      zeilen, (zeile, 10 Zellen) * zeilen,
+    #      block_länge, *block]    # Punkte, Hold, Vorschau, Müll ...
+    #
+    # Die Zeilen werden nur angefasst, wenn sich das Feld überhaupt geändert
+    # hat (core.Board.version) - im Normalfall kostet ein Bild sechs Zahlen.
+
+    REC_CHAPTER = 300              # Samples je Kapitel (= 10 Sekunden)
+    REC_KINDS = " IJLOSTZG"        # Index 0 = leere Zelle
+    REC_EMPTY = (0,) * COLS
+
+    def _rec_new(self):
+        """Startet die Aufzeichnung der Runde (falls Replays an sind)."""
+        self.replay = None
+        self._rec_n = 0
+        self._rec_delta.reset()
+        self.rec = replay.recorder("tetris", self.settings, meta={
+            "mode": self.mode, "variant": self.variant,
+            "level": self.start_level, "ai": self.ai_level,
+            "ghost": bool(self.ghost), "boards": len(self.boards)})
+        self._rec_chapter()
+
+    def _rec_chapter(self):
+        """Beginnt ein neues Kapitel (Schlüsselbild mit dem ganzen Stand)."""
+        if not self.rec:
+            return
+        self._rec_n = 0
+        self._rec_delta.reset()
+        self.rec.scene(n=len(self.rec.scenes) + 1, t0=round(self.elapsed, 3),
+                       boards=[{"rows": self._rec_rows_full(b),
+                                "st": list(self._rec_stat(b)),
+                                "p": list(self._rec_piece(b))}
+                               for b in self.boards])
+
+    def _rec_piece(self, b):
+        """Der aktive Stein als vier Zahlen."""
+        k = (core.KINDS.index(b.kind) + 1) if b.kind in core.KINDS else 0
+        return (k * 8 + b.rot * 2 + (1 if b.active else 0),
+                b.x, b.y, int(b.lock_timer * 100))
+
+    def _rec_row(self, b, y):
+        """Eine Feldzeile als zehn Zellen-Indizes."""
+        return tuple(self.REC_KINDS.index(c) if c in self.REC_KINDS else 0
+                     for c in (v or " " for v in b.cells[y]))
+
+    def _rec_rows_full(self, b):
+        """Alle belegten Zeilen (Schlüsselbild) - leere stehen nicht drin."""
+        out = []
+        for y in range(core.ROWS):
+            if not b.rows[y]:
+                continue
+            out.append(y)
+            out.extend(self._rec_row(b, y))
+        return out
+
+    def _rec_rows_delta(self, i, b):
+        """Nur die Zeilen, die sich seit dem letzten Sample geändert haben."""
+        out = []
+        if not self._rec_delta.push(("v", i), b.version):
+            return out
+        for y in range(core.ROWS):
+            row = self._rec_row(b, y) if b.rows[y] else self.REC_EMPTY
+            if self._rec_delta.push(("r", i, y), row):
+                out.append(y)
+                out.extend(row)
+        return out
+
+    def _rec_stat(self, b):
+        """Punkte, Hold, Vorschau, Müll - alles, was nicht im Feld steht."""
+        nxt = list(b.queue.peek(5))
+        while len(nxt) < 5:
+            nxt.append("I")
+        st = [b.score, b.lines, b.level, b.pieces,
+              self.REC_KINDS.index(b.hold_kind) if b.hold_kind else 0,
+              1 if b.hold_used else 0]
+        st += [self.REC_KINDS.index(k) for k in nxt[:5]]
+        st += [1 if b.dead else 0, b.combo, 1 if b.b2b else 0, b.attack_sent,
+               len(b.pending)]
+        for n, hole, age in b.pending:
+            st += [int(n), int(hole), int(age * 100)]
+        return tuple(st)
+
+    def _rec_sample(self):
+        """Ein Sample über alle Felder."""
+        out = []
+        for i, b in enumerate(self.boards):
+            out.extend(self._rec_piece(b))
+            rows = self._rec_rows_delta(i, b)
+            out.append(len(rows) // (COLS + 1))
+            out.extend(rows)
+            st = self._rec_stat(b)
+            if self._rec_delta.push(("st", i), st):
+                out.append(len(st))
+                out.extend(st)
+            else:
+                out.append(0)
+        self._rec_n += 1
+        return out
+
+    def _rec_tick(self, dt):
+        """Je Bild einmal: ggf. neues Kapitel beginnen, dann Sample nehmen."""
+        if not self.rec:
+            return
+        if self._rec_n >= self.REC_CHAPTER:
+            self._rec_chapter()
+        self.rec.tick(dt, self._rec_sample)
+
+    def _rec_sub(self):
+        """Zweitzeile der Aufnahme (Ergebnis in Kurzform)."""
+        b = self.boards[0]
+        if self.versus:
+            win = (self.result or {}).get("winner")
+            if win is None:
+                return t("common.draw")
+            if self.mode == "versus_ai":
+                return t("tetris.res.you_win") if win == 0 else t("tetris.res.ai_wins")
+            return t("common.player_wins", n=win + 1)
+        if self.variant == "sprint":
+            return t("tetris.hud.lines") + " %d · %s" % (b.lines,
+                                                         fmt_time(self.elapsed))
+        if self.variant == "ultra":
+            return t("common.points", score=b.score)
+        return t("common.points", score=b.score) + "  ·  " \
+            + t("tetris.hud.lines") + " %d" % b.lines
+
+    def _rec_finish(self):
+        """Rundenende: die Aufnahme als self.replay bereitlegen."""
+        if not self.rec:
+            return
+        self.rec.close(self._rec_sample, final=True)
+        title = t("tetris.mode." + self.mode)
+        if not self.versus:
+            title = t("tetris.variant." + self.variant)
+        self.replay = self.rec.result(title=title, sub=self._rec_sub(),
+                                      score=self.boards[0].score,
+                                      time=round(self.elapsed, 2))
+        self.rec = None
+
+    def _open_replay(self):
+        """Rundenende: die Wiederholung ansehen (Taste P).
+
+        Den Screen öffnet main.py - das Spiel legt nur den Wunsch ab.
+        """
+        if self.replay is not None:
+            self.replay_request = self.replay
+            self.play_sound("click")
+
+    # ===================================================== Replay-Wiedergabe
+    # Der Replay-Screen (replayview.py) baut eine ganz normale Spielinstanz
+    # und fährt sie über diese drei Methoden durch die Aufnahme - gezeichnet
+    # wird mit demselben Code wie im Spiel, inklusive Vorschau und Statistik.
+
+    def replay_begin(self, rep):
+        """Schaltet diese Instanz auf reine Wiedergabe um."""
+        self.rec = None
+        self.replay = None
+        self.replay_request = None
+        self._rep = rep
+        self._rep_at = None
+        meta = rep.get("meta") or {}
+        if meta.get("mode") in ("solo", "versus_ai", "multi"):
+            self.mode = meta["mode"]
+        self.multiplayer = self.mode == "multi"
+        self.versus = self.mode != "solo"
+        if meta.get("variant") in VARIANTS:
+            self.variant = meta["variant"]
+        self.ai_level = max(0, min(2, int(meta.get("ai", 0) or 0)))
+        self.ghost = bool(meta.get("ghost", True))
+        n = 2 if self.versus else 1
+        self.boards = [core.Board(1, 1, fixed_level=True) for _ in range(n)]
+        for b in self.boards:
+            b.queue = _RepQueue()
+        self.fx = [_Fx() for _ in self.boards]
+        self.pads = [_Pad() for _ in self.boards]
+        self.ai = None
+        self.result = None
+        self.particles = []
+        self.callouts = []
+        self.missiles = []
+        self._caches = {}
+        self.elapsed = 0.0
+        self.go_t = 0.0
+        self.count_t = 0.0
+        self.game_over = False
+        self.state = PLAY
+        self._layout()
+        self.replay_seek(0, 0)
+
+    def replay_seek(self, index, frame):
+        """Setzt beide Felder auf Kapitel 'index', Sample 'frame'."""
+        scenes = self._rep.get("scenes", [])
+        if not scenes:
+            return
+        index = max(0, min(len(scenes) - 1, index))
+        sc = scenes[index]
+        frames = sc.get("f") or []
+        n = max(1, len(frames))
+        frame = max(0, min(n - 1, frame))
+
+        if (self._rep_at is None or self._rep_at[0] != index
+                or frame < self._rep_at[1]):
+            for i, b in enumerate(self.boards):
+                head = (sc.get("boards") or [{}])[i] if i < len(sc.get("boards") or []) else {}
+                b.rows = [0] * core.ROWS
+                b.cells = [[None] * COLS for _ in range(core.ROWS)]
+                flat = head.get("rows") or []
+                for k in range(0, len(flat) - COLS, COLS + 1):
+                    y = int(flat[k])
+                    if 0 <= y < core.ROWS:
+                        self._rep_row(b, y, flat[k + 1:k + 1 + COLS])
+                b.version += 1
+                self._rep_piece(b, head.get("p") or (0, 0, 0, 0))
+                self._rep_stat(i, b, head.get("st") or [])
+            start = 0
+        else:
+            start = self._rep_at[1] + 1
+        for k in range(start, frame + 1):
+            self._rep_apply(frames[k])
+        self.elapsed = float(sc.get("t0", 0.0)) + frame / float(
+            self._rep.get("rate") or replay.RATE)
+        self.score = self.boards[0].score
+        self._rep_at = (index, frame)
+
+    def _rep_row(self, b, y, cells):
+        """Trägt zehn Zellen-Indizes in eine Feldzeile ein."""
+        mask = 0
+        for x in range(COLS):
+            idx = int(cells[x]) if x < len(cells) else 0
+            b.cells[y][x] = self.REC_KINDS[idx] if idx else None
+            if idx:
+                mask |= 1 << x
+        b.rows[y] = mask
+
+    def _rep_piece(self, b, p):
+        code = int(p[0])
+        k = code // 8
+        b.kind = core.KINDS[k - 1] if 1 <= k <= len(core.KINDS) else core.KINDS[0]
+        b.rot = (code % 8) // 2
+        b.active = bool(code % 2)
+        b.x, b.y = int(p[1]), int(p[2])
+        b.lock_timer = int(p[3]) / 100.0
+        b.lowest = b.y
+
+    def _rep_stat(self, i, b, st):
+        if not st:
+            return
+        b.score, b.lines, b.level, b.pieces = (int(v) for v in st[:4])
+        b.hold_kind = self.REC_KINDS[int(st[4])] if int(st[4]) else None
+        b.hold_used = bool(st[5])
+        b.queue.kinds = [self.REC_KINDS[int(v)] for v in st[6:11]]
+        b.dead = bool(st[11])
+        b.combo, b.b2b, b.attack_sent = int(st[12]), bool(st[13]), int(st[14])
+        b.pending = []
+        np_ = int(st[15])
+        p = 16
+        for _ in range(np_):
+            b.pending.append([int(st[p]), int(st[p + 1]), st[p + 2] / 100.0])
+            p += 3
+        self.fx[i].ko_t = 0.8 if b.dead else -1.0
+
+    def _rep_apply(self, fr):
+        """Überträgt ein Sample in beide Felder."""
+        p = 0
+        for i, b in enumerate(self.boards):
+            self._rep_piece(b, fr[p:p + 4])
+            p += 4
+            nrows = int(fr[p])
+            p += 1
+            for _ in range(nrows):
+                y = int(fr[p])
+                if 0 <= y < core.ROWS:
+                    self._rep_row(b, y, fr[p + 1:p + 1 + COLS])
+                p += COLS + 1
+            if nrows:
+                b.version += 1
+            k = int(fr[p])
+            p += 1
+            if k:
+                self._rep_stat(i, b, fr[p:p + k])
+                p += k
+
+    def replay_draw(self, aiming=False, banner=False):
+        """Zeichnet den aktuellen Replay-Stand (ohne Menü-Overlay)."""
+        s = self.surface
+        self.anim_t += 1.0 / replay.RATE
+        ui.draw_background(s, self.width, self.height)
+        for i in range(len(self.boards)):
+            self._draw_side(s, i)
+        if self.versus:
+            self._draw_vs_hud(s)
+        if banner:
+            s.blit(self._dim(140), (0, 0))
+            head = self._huge.render(t("common.game_over"), True, self.accent)
+            s.blit(head, head.get_rect(center=(self.width // 2,
+                                               self.height // 2 - 18)))
+            sub = self._big.render(self._rep.get("sub") or "", True, ui.TEXT)
+            s.blit(sub, sub.get_rect(center=(self.width // 2,
+                                             self.height // 2 + 26)))
 
     # ===================================================== Effekte
     def _tone(self, freq, dur, wave="sine", vol=0.3):
@@ -1654,8 +1991,10 @@ class TetrisGame(Game):
             r = lay[name]
             ui.draw_button(s, r, t(key), self._small, selected=(name == "again" and ready),
                            accent=self.accent)
-        hint = self._fit_render(t("tetris.res.hint"), self._tiny, ui.TEXT_FAINT,
-                                panel.w - 20)
+        hint_txt = t("tetris.res.hint")
+        if self.replay is not None and self._rep is None:
+            hint_txt += "  ·  " + t("tetris.res.replay")
+        hint = self._fit_render(hint_txt, self._tiny, ui.TEXT_FAINT, panel.w - 20)
         s.blit(hint, hint.get_rect(midbottom=(cx, panel.bottom - 10)))
 
     # ----- Setup zeichnen -----------------------------------------------------

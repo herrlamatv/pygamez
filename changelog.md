@@ -8,6 +8,82 @@
 
 ## 🇩🇪 Deutsch
 
+### Replays für Billard, Pinball, Snake & Tetris – und Teilen als Datei – 2026-09-18
+
+Die Wiederholungen gibt es jetzt in **sechs Spielen** statt zwei: **Billard**,
+**Pinball**, **Snake** und **Tetris** schneiden ihre Runden genauso mit wie
+Minigolf und Bowling. Neu ist außerdem das **Teilen**: **E** schreibt eine
+Aufnahme als `.lamapgzreplay`-Datei, **I** liest sie anderswo wieder ein. Alles
+in 14 Sprachen, mit überarbeiteter LamaWiki-Seite, in beiden READMEs und mit
+einem eigenen Audit.
+
+#### Neu
+
+**Billard**
+- Je **Stoß** eine Sequenz: Kopfdaten sind Zielwinkel, Stärke, Spieler, Gruppen
+  und der komplette Tisch; die Samples enthalten nur noch die Kugeln, die sich
+  seit dem letzten Bild bewegt haben. Der Vorlauf zeigt Ziellinie und Queue wie
+  beim echten Stoß, der Nachlauf das Ergebnis (Versenkt, Verfehlt, Foul, Sieg).
+- Am Partieende zeigt **P** die Wiederholung. Der **Übungsmodus** endet nie –
+  dort zeigt **P** zwischen zwei Stößen den bisherigen Verlauf, danach läuft die
+  Partie ganz normal weiter.
+- Abgespielt wird in der aufgezeichneten Ansicht (2D, 3D oder Frei); die
+  Kugelbahnen liegen in Tischkoordinaten und sind davon unabhängig.
+
+**Pinball**
+- Je **Kugel** eine Sequenz: Ballbahnen (auch im Multiball), Flipperstellung,
+  Drop-Targets, Rollover-Bahnen, Multiplikator, Locks, Ball-Save, Tilt und
+  Punktestand. Ein ruhiges Bild kostet sechs Zahlen – der Tischzustand steht nur
+  in Samples, in denen er sich wirklich geändert hat.
+
+**Snake**
+- Ein Lauf wird in **Kapitel** von zehn Sekunden geschnitten: jedes Kapitel ist
+  ein Schlüsselbild (Körper, Äpfel, Punkte), die Samples danach enthalten nur
+  die Änderungen – ein Schritt sind fünf Zahlen. Aufgezeichnet werden alle Modi
+  samt Hindernissen, Portalen, Goldäpfeln, Competitive-Spezialäpfeln und
+  Ausdauer; im Mehrspieler beide Schlangen.
+- Die Wiedergabe zeigt immer die **Draufsicht** – auch für Läufe in der
+  3D-Ansicht, deren Kamera an der Bildrate hängt.
+- **P** öffnet sie am Game Over; im laufenden Spiel bleibt P das Prestige.
+
+**Tetris**
+- Ebenfalls in **Kapiteln**: Feld (nur geänderte Zeilen), aktiver Stein samt
+  Lock-Delay, Hold, 5er-Vorschau, Punkte, Level, Combo, Back-to-Back und die
+  Müll-Warteschlange. Im Versus laufen **beide Felder** mit.
+- **P** öffnet die Wiederholung auf dem Ergebnis-Screen.
+
+**Teilen als Datei**
+- **E** schreibt die Aufnahme als **`.lamapgzreplay`** – im Archiv wie direkt
+  nach der Runde. Die Datei ist aufgebaut wie eine Minigolf-Bahn oder ein
+  Geometry-Dash-Level: ein Umschlag mit `format`, Version und genau einem
+  Replay.
+- **I** liest so eine Datei wieder ein. Sie landet im Reiter des passenden
+  Spiels und trägt dort einen kleinen Pfeil. Doppelte Aufnahmen, fremde Dateien
+  und ein volles Archiv werden je mit eigener Meldung abgewiesen.
+- Ohne Datei-Dialoge (z.B. ohne Tk) landet der Export im **Downloads-Ordner**;
+  der Pfad steht in der Rückmeldung.
+- Neuer Erfolg **Vorführer** (ein Replay als Datei geteilt) – jetzt **108**.
+
+#### Geändert
+- Die **Reiterleiste** des Replay-Screens bricht bei sechs Spielen sauber um;
+  darunter steht eine Kopfzeile mit Zähler und den Knöpfen **Teilen** und
+  **Einlesen**.
+- **Vor- und Nachlauf je Spiel** (`replayview.PAD`): Spiele mit Zielvorgang
+  behalten ihren Vorlauf mit Ziellinie, Snake und Tetris laufen ohne Pause
+  durch. Der Sequenz-Zähler heißt jetzt je Spiel Schlag, Wurf, Stoß, Ball oder
+  Abschnitt.
+- Der **Recorder** verwirft eine zu lange Aufnahme nicht mehr komplett, sondern
+  hört auf mitzuschreiben und kennzeichnet sie als **Aufnahme gekürzt** (Grenze:
+  60.000 Samples bzw. 420.000 Zahlen – gut eine halbe Stunde).
+- Neuer Helfer `replay.Delta` für Samples, die nur Änderungen enthalten; Billard,
+  Pinball, Snake und Tetris nutzen ihn gemeinsam.
+- Die LamaWiki-Seite **Replays** beschreibt jetzt alle sechs Spiele, die Kapitel
+  und das Teilen als Datei.
+- Neues Audit `tests/replay_audit.py`: spielt je Spiel eine echte Partie, fährt
+  die Aufnahme vorwärts, rückwärts und in Zufallssprüngen durch und vergleicht
+  Feld, Körper, Kugeln und Punkte mit dem Original – dazu Export, Import und
+  alle Abweisungsgründe.
+
 ### Arcade & Casino: 4 neue Spiele + 6 Ausbauten – 2026-09-16
 
 Das bisher größte Spiele-Update: Mit **Crossy Road**, **Geometry Dash**,
@@ -950,6 +1026,78 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Replays for Billiards, Pinball, Snake & Tetris – and sharing as a file – 2026-09-18
+
+Replays now cover **six games** instead of two: **Billiards**, **Pinball**,
+**Snake** and **Tetris** record their rounds just like Minigolf and Bowling. New
+on top of that is **sharing**: **E** writes a recording as a `.lamapgzreplay`
+file, **I** reads it back in somewhere else. All of it in 14 languages, with a
+reworked LamaWiki page, in both READMEs and with an audit of its own.
+
+#### Added
+
+**Billiards**
+- One sequence per **shot**: the header holds aim, power, player, groups and the
+  whole table; the samples only carry the balls that moved since the last frame.
+  The run-up shows the aiming line and cue just like the real shot, the run-out
+  the result (potted, no pot, foul, win).
+- At the end of a frame **P** shows the replay. The **practice mode** never ends
+  – there **P** shows what happened so far between two shots, and the frame
+  carries on afterwards.
+- Playback uses the recorded view (2D, 3D or free); the ball paths are stored in
+  table coordinates and are independent of it.
+
+**Pinball**
+- One sequence per **ball**: ball paths (multiball included), flipper positions,
+  drop targets, rollover lanes, multiplier, locks, ball save, tilt and score. A
+  quiet frame costs six numbers – the table state only appears in samples where
+  it actually changed.
+
+**Snake**
+- A run is cut into ten-second **chapters**: every chapter is a key frame (body,
+  apples, score), the samples after it only carry the changes – one step is five
+  numbers. All modes are recorded, including obstacles, portals, golden apples,
+  competitive special apples and stamina; in multiplayer both snakes.
+- Playback always shows the **top-down view** – also for runs played in the 3D
+  view, whose camera depends on the frame rate.
+- **P** opens it on game over; during a run P stays prestige.
+
+**Tetris**
+- Chapters as well: field (only changed rows), the active piece including lock
+  delay, hold, 5-piece preview, score, level, combo, back-to-back and the
+  garbage queue. In versus **both fields** are recorded.
+- **P** opens the replay on the results screen.
+
+**Sharing as a file**
+- **E** writes the recording as a **`.lamapgzreplay`** file – from the archive as
+  well as right after the round. The file is built like a minigolf course or a
+  Geometry Dash level: an envelope with `format`, version and exactly one replay.
+- **I** reads such a file back in. It lands in the tab of the matching game and
+  carries a small arrow there. Duplicates, foreign files and a full archive are
+  each rejected with their own message.
+- Without file dialogs (e.g. without Tk) the export goes to the **downloads
+  folder**; the path is named in the feedback.
+- New achievement **Projectionist** (share a replay as a file) – **108** in total.
+
+#### Changed
+- The **tab bar** of the replay screen wraps cleanly with six games; below it a
+  header row shows the counter and the **Share** and **Import** buttons.
+- **Run-up and run-out per game** (`replayview.PAD`): games with an aiming phase
+  keep their run-up with the aiming line, Snake and Tetris run on without a
+  pause. The sequence counter is now named stroke, roll, shot, ball or part
+  depending on the game.
+- The **recorder** no longer throws away an over-long recording; it stops
+  writing and marks it as **Recording trimmed** (limit: 60,000 samples or
+  420,000 numbers – a good half hour).
+- New helper `replay.Delta` for samples that only carry changes; Billiards,
+  Pinball, Snake and Tetris share it.
+- The LamaWiki page **Replays** now describes all six games, the chapters and
+  sharing as a file.
+- New audit `tests/replay_audit.py`: plays a real round of each game, runs the
+  recording forwards, backwards and in random jumps and compares field, body,
+  balls and score with the original – plus export, import and every rejection
+  reason.
 
 ### Arcade & Casino: 4 new games + 6 expansions – 2026-09-16
 

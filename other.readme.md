@@ -808,7 +808,7 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
   14 langues. Accessible via le bouton **« Wiki / Aide »** de la barre
   latérale et depuis l'écran de préparation de chaque jeu (ouvre directement sa
   page).
-- **Succès & statistiques** : **107 succès** en trois catégories (23 objectifs
+- **Succès & statistiques** : **108 succès** en trois catégories (24 objectifs
   globaux, 37 paliers de points et 47 moments spéciaux comme un échec et mat
   contre l'IA, la tuile 4096, un T-Spin Double, 25 problèmes d'échecs résolus,
   un Killer Sudoku ou le jackpot lama ; dans 2048 et aux échecs, les parties
@@ -818,11 +818,15 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
   parties, victoires, records, jeu préféré et tableau par jeu trié par temps
   de jeu. Accessible via le bouton **« Succès & statistiques »** de la barre
   latérale.
-- **Replays** : le minigolf et le bowling enregistrent chaque manche. À la fin,
-  **P** montre la rediffusion et **S** la range dans l'archive - accessible par
-  le bouton **Replays** de la barre latérale (un onglet par jeu, pause, saut de
-  séquence, vitesse 0,5x à 4x). Désactivable au premier démarrage et dans les
-  options.
+- **Replays** : six jeux enregistrent leurs parties - minigolf, bowling,
+  billard, flipper, Snake et Tetris. À la fin, **P** montre la rediffusion et
+  **S** la range dans l'archive - accessible par le bouton **Replays** de la
+  barre latérale (un onglet par jeu, pause, saut de séquence, vitesse 0,5x à
+  4x). Snake et Tetris sont découpés en chapitres de dix secondes. Désactivable
+  au premier démarrage et dans les options.
+- **Partager un replay** : **E** écrit l'enregistrement dans un fichier
+  **`.lamapgzreplay`**, **I** le relit - il arrive dans l'onglet du jeu
+  correspondant. Un fichier contient exactement un replay.
 
 ### Prise en main
 
@@ -1836,7 +1840,7 @@ extra) y pulida con aspecto de lanzador moderno:
   artículos desplazables y chips de teclas, en los 14 idiomas. Accesible por
   el botón **«Wiki / Ayuda»** de la barra lateral y desde la pantalla previa de
   cada juego (abre directamente su página).
-- **Logros y estadísticas**: **107 logros** en tres categorías (23 metas
+- **Logros y estadísticas**: **108 logros** en tres categorías (24 metas
   globales, 37 hitos de puntuación y 47 momentos especiales como un jaque mate
   a la IA, la ficha de 4096, un T-Spin Double, 25 problemas de ajedrez
   resueltos, un Killer Sudoku o el jackpot de la llama; en 2048 y Ajedrez las
@@ -1845,11 +1849,15 @@ extra) y pulida con aspecto de lanzador moderno:
   Además, una pestaña de **estadísticas**: tiempo total, partidas, victorias,
   récords, juego favorito y tabla por juego ordenada por tiempo. Accesible por
   el botón **«Logros y estadísticas»** de la barra lateral.
-- **Repeticiones**: el minigolf y los bolos graban cada ronda. Al final, **P**
-  muestra la repetición y **S** la guarda en el archivo, accesible con el botón
-  **Repeticiones** de la barra lateral (una pestaña por juego, pausa, saltos de
-  secuencia, velocidad 0,5x a 4x). Se puede desactivar en el primer inicio y en
-  las opciones.
+- **Repeticiones**: seis juegos graban sus rondas - minigolf, bolos, billar,
+  pinball, Snake y Tetris. Al final, **P** muestra la repetición y **S** la
+  guarda en el archivo, accesible con el botón **Repeticiones** de la barra
+  lateral (una pestaña por juego, pausa, saltos de secuencia, velocidad 0,5x a
+  4x). Snake y Tetris se cortan en tramos de diez segundos. Se puede desactivar
+  en el primer inicio y en las opciones.
+- **Compartir repeticiones**: **E** escribe la grabación como archivo
+  **`.lamapgzreplay`**, **I** vuelve a leerlo: aparece en la pestaña del juego
+  correspondiente. Cada archivo contiene exactamente una repetición.
 
 ### Manejo
 
@@ -2850,7 +2858,7 @@ e polida com aspeto de launcher moderno:
   categorias, artigos deslocáveis e chips de teclas, nos 14 idiomas.
   Acessível pelo botão **«Wiki / Ajuda»** da barra lateral e a partir do ecrã de
   preparação de cada jogo (abre logo a sua página).
-- **Conquistas e estatísticas**: **107 conquistas** em três categorias (23 metas
+- **Conquistas e estatísticas**: **108 conquistas** em três categorias (24 metas
   globais, 37 marcos de pontuação e 47 momentos especiais como um xeque-mate à
   IA, a peça 4096, um T-Spin Double, 25 problemas de xadrez resolvidos, um
   Killer Sudoku ou o jackpot do lama; no 2048 e no Xadrez, partidas com desfazer
@@ -2860,10 +2868,15 @@ e polida com aspeto de launcher moderno:
   partidas, vitórias, recordes, jogo favorito e tabela por jogo ordenada por
   tempo. Acessível pelo botão **«Conquistas e estatísticas»** da barra
   lateral.
-- **Replays**: o minigolfe e o bowling gravam cada ronda. No fim, **P** mostra a
-  repetição e **S** guarda-a no arquivo - acessível pelo botão **Replays** na
-  barra lateral (um separador por jogo, pausa, saltos de sequência, velocidade
-  0,5x a 4x). Pode ser desligado no primeiro arranque e nas opções.
+- **Replays**: seis jogos gravam as suas rondas - minigolfe, bowling, bilhar,
+  pinball, Snake e Tetris. No fim, **P** mostra a repetição e **S** guarda-a no
+  arquivo - acessível pelo botão **Replays** na barra lateral (um separador por
+  jogo, pausa, saltos de sequência, velocidade 0,5x a 4x). Snake e Tetris são
+  cortados em trechos de dez segundos. Pode ser desligado no primeiro arranque e
+  nas opções.
+- **Partilhar replays**: **E** escreve a gravação como ficheiro
+  **`.lamapgzreplay`**, **I** volta a lê-lo - vai para o separador do jogo certo.
+  Cada ficheiro contém exatamente um replay.
 
 ### Utilização
 
@@ -3938,7 +3951,7 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
   kategoriami, przewijanymi artykułami i chipami klawiszy, we wszystkich 14
   językach. Dostępna przez przycisk **„Wiki / Pomoc"** na pasku bocznym i z ekranu
   przygotowania każdej gry (otwiera bezpośrednio jej stronę).
-- **Osiągnięcia i statystyki**: **107 osiągnięć** w trzech kategoriach (23 cele
+- **Osiągnięcia i statystyki**: **108 osiągnięć** w trzech kategoriach (24 cele
   ogólne, 37 progów punktowych i 47 wyjątkowych momentów, jak mat SI, kafelek
   4096, T-Spin Double, 25 rozwiązanych zadań szachowych, Killer Sudoku czy
   lamowy jackpot; w 2048 i szachach partie z cofaniem lub podpowiedziami się
@@ -3947,11 +3960,15 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
   zakładka **statystyk**: łączny czas gry, rozgrywki, zwycięstwa, rekordy,
   ulubiona gra i tabela gier posortowana według czasu. Dostępne przez przycisk
   **„Osiągnięcia i statystyki"** na pasku bocznym.
-- **Powtórki**: minigolf i bowling nagrywają każdą rundę. Na końcu **P**
-  pokazuje powtórkę, a **S** zapisuje ją w archiwum - dostępnym pod przyciskiem
-  **Powtórki** na pasku bocznym (zakładka na grę, pauza, skoki między
-  sekwencjami, tempo 0,5x do 4x). Można to wyłączyć przy pierwszym starcie i w
-  opcjach.
+- **Powtórki**: sześć gier nagrywa swoje rundy - minigolf, bowling, bilard,
+  pinball, Snake i Tetris. Na końcu **P** pokazuje powtórkę, a **S** zapisuje ją
+  w archiwum - dostępnym pod przyciskiem **Powtórki** na pasku bocznym
+  (zakładka na grę, pauza, skoki między sekwencjami, tempo 0,5x do 4x). Snake i
+  Tetris dzielone są na dziesięciosekundowe odcinki. Można to wyłączyć przy
+  pierwszym starcie i w opcjach.
+- **Udostępnianie powtórek**: **E** zapisuje nagranie jako plik
+  **`.lamapgzreplay`**, **I** wczytuje je z powrotem - trafia do zakładki
+  właściwej gry. Jeden plik zawiera dokładnie jedną powtórkę.
 
 ### Obsługa
 
@@ -5032,7 +5049,7 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
   kaydırılabilir makaleler ve tuş çipleriyle, 14 dilde. Kenar çubuğundaki
   **"Wiki / Yardım"** düğmesiyle ve her oyunun oyun öncesi ekranından erişilebilir
   (doğrudan o oyunun sayfasını açar).
-- **Başarımlar ve istatistikler**: üç kategoride **107 başarım** (23 genel
+- **Başarımlar ve istatistikler**: üç kategoride **108 başarım** (24 genel
   hedef, 37 puan hedefi ve yapay zekâyı mat etmek, 4096 taşı, T-Spin Double, 25
   çözülmüş satranç bulmacası, Killer Sudoku ya da lama jackpotu gibi 47 özel an;
   2048 ve satrançta geri alma veya ipucu kullanılan oyunlar sayılmaz); açıldığında **altın bildirim ve fanfar** - oyunun
@@ -5040,10 +5057,14 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
   sekmesi: toplam süre, oyunlar, galibiyetler, rekorlar, favori oyun ve süreye
   göre sıralı oyun tablosu. Kenar çubuğundaki **"Başarımlar ve
   istatistikler"** düğmesinden ulaşılır.
-- **Tekrarlar**: minigolf ve bowling her turu kaydeder. Tur sonunda **P**
-  tekrarı gösterir, **S** onu arşive koyar - kenar çubuğundaki **Tekrarlar**
-  düğmesinden ulaşılır (oyun başına bir sekme, duraklatma, sekans atlama, hız
-  0,5x - 4x). İlk açılışta ve seçeneklerde kapatılabilir.
+- **Tekrarlar**: altı oyun turlarını kaydeder - minigolf, bowling, bilardo,
+  pinball, Snake ve Tetris. Tur sonunda **P** tekrarı gösterir, **S** onu arşive
+  koyar - kenar çubuğundaki **Tekrarlar** düğmesinden ulaşılır (oyun başına bir
+  sekme, duraklatma, sekans atlama, hız 0,5x - 4x). Snake ve Tetris on saniyelik
+  bölümlere ayrılır. İlk açılışta ve seçeneklerde kapatılabilir.
+- **Tekrarları paylaşma**: **E** kaydı **`.lamapgzreplay`** dosyası olarak yazar,
+  **I** onu geri okur - doğru oyunun sekmesine düşer. Bir dosyada tam olarak bir
+  tekrar bulunur.
 
 ### Kullanım
 
@@ -6088,7 +6109,7 @@ og stylet som en moderne spil-launcher:
   rulbare artikler og tastekap-chips, på alle 14 sprog. Nås via sidebjælkeknappen
   **»Wiki / Hjælp«** og fra hvert spils forspils-skærm (åbner det pågældende spils
   side direkte).
-- **Præstationer & statistik**: **107 præstationer** i tre kategorier (23 mål på
+- **Præstationer & statistik**: **108 præstationer** i tre kategorier (24 mål på
   tværs af samlingen, 37 point-milepæle og 47 særlige øjeblikke som skakmat mod
   AI'en, 4096-brikken, en T-Spin Double, 25 løste skakopgaver, en Killer Sudoku
   eller lama-jackpotten; i 2048 og skak tæller partier med fortryd eller hint
@@ -6097,10 +6118,15 @@ og stylet som en moderne spil-launcher:
   Dertil en **statistik**-fane: samlet spilletid, partier, sejre, rekorder,
   yndlingsspil og en tabel pr. spil sorteret efter spilletid. Nås via knappen
   **"Præstationer & statistik"** i sidepanelet.
-- **Replays**: minigolf og bowling optager hver runde. Til sidst viser **P**
-  gengivelsen, og **S** lægger den i arkivet - tilgængeligt via sidebjælkens
-  knap **Replays** (en fane pr. spil, pause, spring mellem sekvenser, tempo
-  0,5x til 4x). Kan slås fra ved første start og i indstillingerne.
+- **Replays**: seks spil optager deres runder - minigolf, bowling, billard,
+  flipper, Snake og Tetris. Til sidst viser **P** gengivelsen, og **S** lægger
+  den i arkivet - tilgængeligt via sidebjælkens knap **Replays** (en fane pr.
+  spil, pause, spring mellem sekvenser, tempo 0,5x til 4x). Snake og Tetris
+  klippes i afsnit på ti sekunder. Kan slås fra ved første start og i
+  indstillingerne.
+- **Del replays**: **E** skriver optagelsen som en **`.lamapgzreplay`**-fil,
+  **I** læser den ind igen - den havner i fanen for det rigtige spil. En fil
+  indeholder præcis ét replay.
 
 ### Betjening
 
@@ -7143,7 +7169,7 @@ pakker) og stylet som en moderne spill-launcher:
   rullbare artikler og tastekapsler, på alle 14 språk. Nåbar via sidefelt-knappen
   **«Wiki / Hjelp»** og fra hvert spills forspillskjerm (åpner spillets side
   direkte).
-- **Prestasjoner & statistikk**: **107 prestasjoner** i tre kategorier (23 mål
+- **Prestasjoner & statistikk**: **108 prestasjoner** i tre kategorier (24 mål
   på tvers av samlingen, 37 poengmilepæler og 47 spesielle øyeblikk som sjakkmatt
   mot KI-en, 4096-brikken, en T-Spin Double, 25 løste sjakkoppgaver, en Killer
   Sudoku eller lama-jackpoten; i 2048 og sjakk teller ikke partier med angre
@@ -7152,10 +7178,14 @@ pakker) og stylet som en moderne spill-launcher:
   I tillegg en **statistikk**-fane: total spilletid, partier, seire, rekorder,
   favorittspill og en tabell per spill sortert etter spilletid. Nås via
   knappen **«Prestasjoner & statistikk»** i sidefeltet.
-- **Replays**: minigolf og bowling tar opp hver runde. Til slutt viser **P**
-  opptaket, og **S** legger det i arkivet - tilgjengelig via sidefeltknappen
-  **Replays** (en fane per spill, pause, hopp mellom sekvenser, tempo 0,5x til
-  4x). Kan slås av ved første oppstart og i innstillingene.
+- **Replays**: seks spill tar opp rundene sine - minigolf, bowling, biljard,
+  flipper, Snake og Tetris. Til slutt viser **P** opptaket, og **S** legger det
+  i arkivet - tilgjengelig via sidefeltknappen **Replays** (en fane per spill,
+  pause, hopp mellom sekvenser, tempo 0,5x til 4x). Snake og Tetris deles i
+  deler på ti sekunder. Kan slås av ved første oppstart og i innstillingene.
+- **Del replays**: **E** skriver opptaket som en **`.lamapgzreplay`**-fil, **I**
+  leser den inn igjen - den havner i fanen til riktig spill. Én fil inneholder
+  nøyaktig ett replay.
 
 ### Betjening
 
@@ -8139,7 +8169,7 @@ modern spel-launcher:
   allmänna sidor - med en **sökruta**, kategorier, scrollbara artiklar och tangentchips, på alla 14
   språk. Nås via sidofältsknappen **”Wiki / Hjälp”** och från varje spels förspelsskärm (öppnar det
   spelets sida direkt).
-- **Prestationer & statistik**: **107 prestationer** i tre kategorier (23 mål
+- **Prestationer & statistik**: **108 prestationer** i tre kategorier (24 mål
   för hela samlingen, 37 poängmilstolpar och 47 speciella ögonblick som
   schackmatt mot AI:n, 4096-brickan, en T-Spin Double, 25 lösta schackproblem,
   ett Killer Sudoku eller lama-jackpotten; i 2048 och schack räknas inte partier
@@ -8148,10 +8178,14 @@ modern spel-launcher:
   automatiskt. Dessutom en **statistik**-flik: total speltid, partier, segrar,
   rekord, favoritspel och en tabell per spel sorterad efter speltid. Nås via
   knappen **”Prestationer & statistik”** i sidofältet.
-- **Replays**: minigolf och bowling spelar in varje runda. I slutet visar **P**
-  repriser och **S** lägger dem i arkivet - nås via sidofältsknappen **Replays**
-  (en flik per spel, paus, hopp mellan sekvenser, tempo 0,5x till 4x). Kan
-  stängas av vid första starten och i inställningarna.
+- **Replays**: sex spel spelar in sina rundor - minigolf, bowling, biljard,
+  flipper, Snake och Tetris. I slutet visar **P** repriser och **S** lägger dem
+  i arkivet - nås via sidofältsknappen **Replays** (en flik per spel, paus, hopp
+  mellan sekvenser, tempo 0,5x till 4x). Snake och Tetris delas i avsnitt på tio
+  sekunder. Kan stängas av vid första starten och i inställningarna.
+- **Dela replays**: **E** skriver inspelningen som en **`.lamapgzreplay`**-fil,
+  **I** läser in den igen - den hamnar i fliken för rätt spel. En fil innehåller
+  exakt en replay.
 
 ### Användning
 
@@ -9214,7 +9248,7 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
   kategorioilla, vieritettävillä artikkeleilla ja näppäinsiruilla, kaikilla 14
   kielellä. Saavutettavissa sivupalkin **"Wiki / Ohje"** -painikkeella ja jokaisen
   pelin esinäytöstä (avaa suoraan kyseisen pelin sivun).
-- **Saavutukset ja tilastot**: **107 saavutusta** kolmessa kategoriassa (23 koko
+- **Saavutukset ja tilastot**: **108 saavutusta** kolmessa kategoriassa (24 koko
   kokoelman tavoitetta, 37 pistevirstanpylvästä ja 47 erityistä hetkeä kuten
   shakkimatti tekoälylle, 4096-laatta, T-Spin Double, 25 ratkaistua
   shakkitehtävää, Killer Sudoku tai laamajättipotti; 2048:ssa ja shakissa
@@ -9223,10 +9257,15 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
   automaattisesti. Lisäksi **tilastot**-välilehti: kokonaispeliaika,
   pelikerrat, voitot, ennätykset, lempipeli ja peliajan mukaan järjestetty
   pelitaulukko. Avautuu sivupalkin painikkeesta **"Saavutukset ja tilastot"**.
-- **Uusinnat**: minigolf ja keilailu tallentavat jokaisen kierroksen. Lopuksi
-  **P** näyttää uusinnan ja **S** vie sen arkistoon, joka avautuu sivupalkin
-  painikkeesta **Uusinnat** (välilehti per peli, tauko, hypyt jaksojen välillä,
-  nopeus 0,5x - 4x). Voidaan kytkeä pois ensikäynnistyksessä ja asetuksissa.
+- **Uusinnat**: kuusi peliä tallentaa kierroksensa - minigolf, keilailu,
+  biljardi, flipperi, Snake ja Tetris. Lopuksi **P** näyttää uusinnan ja **S**
+  vie sen arkistoon, joka avautuu sivupalkin painikkeesta **Uusinnat**
+  (välilehti per peli, tauko, hypyt jaksojen välillä, nopeus 0,5x - 4x). Snake
+  ja Tetris paloitellaan kymmenen sekunnin osiin. Voidaan kytkeä pois
+  ensikäynnistyksessä ja asetuksissa.
+- **Uusintojen jakaminen**: **E** kirjoittaa tallenteen
+  **`.lamapgzreplay`**-tiedostoksi, **I** lukee sen takaisin - se päätyy oikean
+  pelin välilehdelle. Yhdessä tiedostossa on tasan yksi uusinta.
 
 ### Käyttö
 
@@ -10279,7 +10318,7 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
   kategoriemi, rolovatelnými články a čipy kláves, ve všech 14 jazycích.
   Dostupná přes tlačítko **„Wiki / Nápověda"** v postranním panelu a z přípravné
   obrazovky každé hry (otevře přímo její stránku).
-- **Úspěchy a statistiky**: **107 úspěchů** ve třech kategoriích (23 cílů
+- **Úspěchy a statistiky**: **108 úspěchů** ve třech kategoriích (24 cílů
   napříč sbírkou, 37 bodových milníků a 47 výjimečných okamžiků jako šachmat AI,
   dlaždice 4096, T-Spin Double, 25 vyřešených šachových úloh, Killer Sudoku nebo
   lamí jackpot; ve 2048 a v šachu se partie s vrácením tahu či nápovědou
@@ -10288,10 +10327,14 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
   **statistik**: celkový herní čas, partie, výhry, rekordy, oblíbená hra a
   tabulka her seřazená podle času. Dostupné tlačítkem **„Úspěchy a
   statistiky"** v postranním panelu.
-- **Záznamy**: minigolf a bowling nahrávají každé kolo. Na konci **P** ukáže
-  záznam a **S** ho uloží do archivu - dostupného tlačítkem **Záznamy** v
-  postranním panelu (karta na hru, pauza, skoky mezi sekvencemi, rychlost 0,5x
-  až 4x). Lze vypnout při prvním spuštění i v možnostech.
+- **Záznamy**: šest her nahrává svá kola - minigolf, bowling, kulečník,
+  pinball, Snake a Tetris. Na konci **P** ukáže záznam a **S** ho uloží do
+  archivu - dostupného tlačítkem **Záznamy** v postranním panelu (karta na hru,
+  pauza, skoky mezi sekvencemi, rychlost 0,5x až 4x). Snake a Tetris se dělí na
+  desetisekundové úseky. Lze vypnout při prvním spuštění i v možnostech.
+- **Sdílení záznamů**: **E** zapíše nahrávku jako soubor **`.lamapgzreplay`**,
+  **I** ji zase načte - objeví se na kartě správné hry. Jeden soubor obsahuje
+  přesně jeden záznam.
 
 ### Ovládání
 
@@ -11345,7 +11388,7 @@ oblikovan kot sodoben zaganjalnik iger:
   kategorijami, drsečimi članki in čipi tipk, v vseh 14 jezikih. Dostopen prek
   gumba **»Wiki / Pomoč«** v stranski vrstici in z predigralnega zaslona vsake
   igre (odpre neposredno njeno stran).
-- **Dosežki in statistika**: **107 dosežkov** v treh kategorijah (23 ciljev na
+- **Dosežki in statistika**: **108 dosežkov** v treh kategorijah (24 ciljev na
   ravni zbirke, 37 točkovnih mejnikov in 47 posebnih trenutkov, kot so šah-mat
   UI, ploščica 4096, T-Spin Double, 25 rešenih šahovskih ugank, Killer Sudoku ali
   lamji jackpot; v 2048 in šahu partije z razveljavitvijo ali namigom ne štejejo) z **zlatim obvestilom in fanfaro** ob
@@ -11353,10 +11396,14 @@ oblikovan kot sodoben zaganjalnik iger:
   tega zavihek **statistike**: skupni čas igranja, partije, zmage, rekordi,
   najljubša igra in tabela iger, razvrščena po času. Na voljo prek gumba
   **»Dosežki in statistika«** v stranski vrstici.
-- **Posnetki**: minigolf in bowling snemata vsak krog. Na koncu **P** pokaže
-  ponovitev, **S** pa jo shrani v arhiv - dosegljiv z gumbom **Posnetki** v
-  stranski vrstici (zavihek na igro, pavza, skoki med sekvencami, hitrost 0,5x
-  do 4x). Izklopljivo ob prvem zagonu in v možnostih.
+- **Posnetki**: šest iger snema svoje kroge - minigolf, bowling, biljard,
+  fliper, Snake in Tetris. Na koncu **P** pokaže ponovitev, **S** pa jo shrani v
+  arhiv - dosegljiv z gumbom **Posnetki** v stranski vrstici (zavihek na igro,
+  pavza, skoki med sekvencami, hitrost 0,5x do 4x). Snake in Tetris sta
+  razrezana na desetsekundne odseke. Izklopljivo ob prvem zagonu in v možnostih.
+- **Deljenje posnetkov**: **E** zapiše posnetek kot datoteko
+  **`.lamapgzreplay`**, **I** jo spet prebere - pristane v zavihku prave igre. V
+  eni datoteki je natanko en posnetek.
 
 ### Upravljanje
 
@@ -12413,7 +12460,7 @@ dotjerano poput modernog pokretača igara:
   kategorijama, člancima koji se pomiču i čipovima s tipkama, na svih 14 jezika.
   Dostupan preko gumba **„Wiki / Pomoć"** u bočnoj traci i sa zaslona pripreme
   svake igre (izravno otvara njezinu stranicu).
-- **Postignuća i statistika**: **107 postignuća** u tri kategorije (23 cilja na
+- **Postignuća i statistika**: **108 postignuća** u tri kategorije (24 cilja na
   razini kolekcije, 37 bodovnih prekretnica i 47 posebnih trenutaka poput
   šah-mata AI-ju, pločice 4096, T-Spin Doublea, 25 riješenih šahovskih zadataka,
   Killer Sudokua ili laminog jackpota; u 2048 i šahu partije s poništavanjem ili
@@ -12422,10 +12469,14 @@ dotjerano poput modernog pokretača igara:
   to kartica **statistike**: ukupno vrijeme igranja, partije, pobjede,
   rekordi, najdraža igra i tablica igara poredana po vremenu. Dostupno preko
   gumba **„Postignuća i statistika"** u bočnoj traci.
-- **Snimke**: minigolf i kuglanje snimaju svaku rundu. Na kraju **P** prikazuje
-  snimku, a **S** je sprema u arhivu - dostupnu gumbom **Snimke** u bočnoj traci
-  (kartica po igri, pauza, skokovi među sekvencama, brzina 0,5x do 4x). Može se
-  isključiti pri prvom pokretanju i u opcijama.
+- **Snimke**: šest igara snima svoje runde - minigolf, kuglanje, biljar,
+  fliper, Snake i Tetris. Na kraju **P** prikazuje snimku, a **S** je sprema u
+  arhivu - dostupnu gumbom **Snimke** u bočnoj traci (kartica po igri, pauza,
+  skokovi među sekvencama, brzina 0,5x do 4x). Snake i Tetris režu se na dionice
+  od deset sekundi. Može se isključiti pri prvom pokretanju i u opcijama.
+- **Dijeljenje snimaka**: **E** zapisuje snimku kao datoteku
+  **`.lamapgzreplay`**, **I** je ponovno učitava - završi u kartici prave igre.
+  Jedna datoteka sadrži točno jednu snimku.
 
 ### Upravljanje
 

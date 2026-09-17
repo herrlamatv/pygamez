@@ -6,9 +6,12 @@ Der Replay-Screen: Archiv und Wiedergabe der gespeicherten Wiederholungen.
 
 Zwei Ansichten in einem Screen:
 
-- Liste   : Reiter je Spiel (Minigolf/Bowling) mit allen gespeicherten
-            Replays - Titel, Ergebnis, Datum und Laufzeit. Enter spielt ab,
-            Entf löscht (zweimal drücken), Tab wechselt das Spiel.
+- Liste   : Reiter je Spiel (Minigolf, Bowling, Billard, Pinball, Snake,
+            Tetris) mit allen gespeicherten Replays - Titel, Ergebnis, Datum
+            und Laufzeit. Enter spielt ab, Entf löscht (zweimal drücken),
+            Tab wechselt das Spiel, E teilt eine Aufnahme als Datei und I
+            liest eine geteilte Datei wieder ein (".lamapgzreplay", siehe
+            replay.export_to/import_from).
 - Player  : die eigentliche Wiedergabe. Gezeichnet wird sie vom Spiel selbst:
             der Screen baut eine ganz normale Spielinstanz und fährt sie über
             ``replay_begin``/``replay_seek``/``replay_draw`` Bild für Bild
@@ -16,32 +19,45 @@ Zwei Ansichten in einem Screen:
             Wiederholung exakt aus wie die gespielte Runde - inklusive HUD
             und Scorekarte.
 
-Jede Sequenz (Minigolf: ein Schlag, Bowling: ein Wurf) bekommt einen kurzen
-Vorlauf mit Ziellinie und einen Nachlauf mit dem Ergebnis - so wirkt die
-Wiederholung wie eine Zusammenfassung und nicht wie ein abgehacktes Video.
+Jede Sequenz mit Zielvorgang (Minigolf: ein Schlag, Bowling: ein Wurf,
+Billard: ein Stoß) bekommt einen kurzen Vorlauf mit Ziellinie und einen
+Nachlauf mit dem Ergebnis - so wirkt die Wiederholung wie eine Zusammen-
+fassung und nicht wie ein abgehacktes Video. Bei Snake und Tetris läuft die
+Partie durch; dort sind die Sequenzen Kapitel und werden ohne Pause
+aneinandergehängt (siehe PAD).
 
 Der Screen wird an zwei Stellen geöffnet: über den Replays-Knopf in der
-Sidebar (Archiv) und direkt aus Minigolf/Bowling am Rundenende über die
-Taste P (dann liegt die frische, noch nicht gespeicherte Aufnahme bereit
-und kann mit S ins Archiv gelegt werden).
+Sidebar (Archiv) und direkt aus einem Spiel am Rundenende über die Taste P
+(dann liegt die frische, noch nicht gespeicherte Aufnahme bereit und kann
+mit S ins Archiv gelegt oder mit E als Datei geteilt werden).
 """
 
 import pygame
 
+import filepick
 import replay
 import ui
 from game_base import InputEvent
 from i18n import t
 from menu import _Screen
 
-# Klassennamen der Spiele mit Aufzeichnung (Reihenfolge = Reiterleiste).
-_CLASSES = {"minigolf": "MiniGolfGame", "bowling": "BowlingGame"}
+# Klassennamen der Spiele mit Aufzeichnung (Reihenfolge = replay.GAMES).
+_CLASSES = {"minigolf": "MiniGolfGame", "bowling": "BowlingGame",
+            "billiard": "BilliardGame", "pinball": "PinballGame",
+            "snake": "SnakeGame", "tetris": "TetrisGame"}
 
 # Zusatzbilder je Sequenz (in Samples, also 1/replay.RATE Sekunden):
-# Vorlauf mit Ziellinie, kurzer Nachlauf, langer Nachlauf am Bahn-/Wurfende.
-PRE = 12
-POST = 9
-POST_END = 27
+# (Vorlauf mit Ziellinie, kurzer Nachlauf, langer Nachlauf am Sequenzende).
+# Spiele, die durchlaufen, bekommen keinen Vor-/Nachlauf - sonst stockte die
+# Wiedergabe alle zehn Sekunden.
+PAD = {"minigolf": (12, 9, 27), "bowling": (12, 9, 27), "billiard": (12, 9, 27),
+       "pinball": (6, 6, 27), "snake": (0, 0, 27), "tetris": (0, 0, 27)}
+PRE, POST, POST_END = PAD["minigolf"]
+
+# Beschriftung des Sequenz-Zählers in der Bedienleiste.
+SEQ_KEYS = {"minigolf": "replay.seq_golf", "bowling": "replay.seq_bowl",
+            "billiard": "replay.seq_bil", "pinball": "replay.seq_pin",
+            "snake": "replay.seq_part", "tetris": "replay.seq_part"}
 
 # Wählbare Wiedergabe-Geschwindigkeiten.
 SPEEDS = (0.5, 1.0, 2.0, 4.0)
@@ -88,6 +104,7 @@ class ReplayScreen(_Screen):
         self.sel = 0
         self.first = 0                  # erste sichtbare Zeile
         self._tab_hover = None
+        self._btn_hover = None
         self._hover_row = None
         self._confirm = None            # id des Replays, das gelöscht werden soll
         self.toast = None
@@ -106,6 +123,7 @@ class ReplayScreen(_Screen):
         self.pi = 0                     # Bild innerhalb der Sequenz
         self.playing = True
         self.speed_idx = 1
+        self.pre, self.post, self.post_end = PAD["minigolf"]
         self._acc = 0.0
         self._sound_done = False
         self.bar_t = BAR_SHOW
@@ -147,14 +165,27 @@ class ReplayScreen(_Screen):
         self._top = 112
         self._bottom = H - 44
 
+        # Reiterleiste unter dem Untertitel; sie darf die volle Fensterbreite
+        # nutzen und bricht bei sechs Spielen auf schmalen Fenstern um.
         self._tab_font = ui.font(14, bold=True)
         self.tab_rects = []
-        tx = self._left
+        tab_right = W - 24
+        tx, ty = self._left, 94
         for key in replay.GAMES:
             label = "%s (%d)" % (game_name(key), self.counts.get(key, 0))
             tw = self._tab_font.size(label)[0] + 26
-            self.tab_rects.append((pygame.Rect(tx, 74, tw, 26), key, label))
+            if tx > self._left and tx + tw > tab_right:
+                tx, ty = self._left, ty + 30
+            self.tab_rects.append((pygame.Rect(tx, ty, tw, 26), key, label))
             tx += tw + 8
+
+        # Kopfzeile darunter: Anzahl links, Teilen-Knoepfe rechts.
+        head_y = ty + 26 + 8
+        bw = 104
+        self.btn_import = pygame.Rect(self._right - bw, head_y, bw, 24)
+        self.btn_export = pygame.Rect(self.btn_import.x - 8 - bw, head_y, bw, 24)
+        self._head_y = head_y + 12
+        self._top = head_y + 24 + 12
 
         self.rows_visible = max(1, (self._bottom - self._top) // ROW_H)
         self.row_rects = [pygame.Rect(self._left, self._top + i * ROW_H,
@@ -189,6 +220,8 @@ class ReplayScreen(_Screen):
             self.error = t("replay.broken")
             self.mode = "list"
             return
+        self.pre, self.post, self.post_end = PAD.get(rep.get("game"),
+                                                     PAD["minigolf"])
         self.lens = []
         self.starts = []
         pos = 0
@@ -196,7 +229,7 @@ class ReplayScreen(_Screen):
             n = max(1, replay.scene_len(sc))
             end = bool(sc.get("final") or sc.get("knocked") is not None)
             self.starts.append(pos)
-            length = PRE + n + (POST_END if end else POST)
+            length = self.pre + n + (self.post_end if end else self.post)
             self.lens.append(length)
             pos += length
         self.total = pos
@@ -231,10 +264,10 @@ class ReplayScreen(_Screen):
         """(bild_in_szene, aiming, banner) für den aktuellen Stand."""
         sc = self.scenes[self.si]
         n = max(1, replay.scene_len(sc))
-        if self.pi < PRE:
+        if self.pi < self.pre:
             return 0, True, False
-        if self.pi < PRE + n:
-            return self.pi - PRE, False, False
+        if self.pi < self.pre + n:
+            return self.pi - self.pre, False, False
         return n - 1, False, bool(sc.get("final"))
 
     def _seek_now(self):
@@ -268,25 +301,28 @@ class ReplayScreen(_Screen):
                 # Beim Übergang in den Nachlauf das Ergebnis hörbar machen.
                 sc = self.scenes[self.si]
                 n = max(1, replay.scene_len(sc))
-                if self.pi >= PRE + n:
+                if self.pi >= self.pre + n:
                     self._sound_done = True
                     self._result_sound(sc)
         self._seek_now()
 
     def _result_sound(self, sc):
-        key = sc.get("result") or ""
-        if sc.get("end") == "cup" or key in ("bowl.strike",):
+        key = sc.get("result") or sc.get("res") or ""
+        game = (self.rep or {}).get("game")
+        if sc.get("final") and game in ("snake", "tetris", "pinball"):
+            self.play_sound("gameover")
+        elif sc.get("end") == "cup" or key in ("bowl.strike", "bil.win_you"):
             self.play_sound("win")
         elif key in ("bowl.spare",) or sc.get("final"):
             self.play_sound("point")
-        elif sc.get("end") == "water":
+        elif sc.get("end") == "water" or key in ("bil.foul", "bil.win_ai"):
             self.play_sound("hit")
 
     def _jump_scene(self, d):
         """Eine Sequenz vor/zurück (Links/Rechts)."""
         if not self.scenes:
             return
-        if d < 0 and self.pi > PRE + 4:
+        if d < 0 and self.pi > self.pre + 4:
             self.pi = 0                     # erst an den Anfang der Sequenz
         else:
             self.si = max(0, min(len(self.scenes) - 1, self.si + d))
@@ -342,6 +378,69 @@ class ReplayScreen(_Screen):
         achievements.event("replay_first")
         achievements.event("replay_5", total)
 
+    # ----- Teilen: Export / Import ---------------------------------------
+
+    def _current(self):
+        """Das Replay, um das es gerade geht (Wiedergabe bzw. Auswahl)."""
+        if self.mode == "play":
+            return self.rep
+        return self.items[self.sel] if self.items else None
+
+    def _export(self, rep=None):
+        """Schreibt eine Aufnahme als .lamapgzreplay-Datei (Taste E).
+
+        Gibt es Datei-Dialoge, darf der Ort gewählt werden; sonst landet die
+        Datei im Downloads-Ordner (der Name steht dann in der Rückmeldung).
+        """
+        rep = rep or self._current()
+        if rep is None:
+            return
+        name = replay.default_filename(rep)
+        if filepick.available():
+            path = filepick.save_as(name, title=t("replay.export_title"),
+                                    exts=replay.IMPORT_EXTS)
+            if not path:
+                return                      # abgebrochen
+        else:
+            path = filepick.to_downloads(name)
+        ok, why = replay.export_to(rep, path)
+        if ok:
+            self._toast(t("replay.exported", file=filepick.short(path)))
+            self.play_sound("level")
+            ui.spawn_burst(self.width // 2, 24, ui.ACCENT2)
+            import achievements
+            achievements.event("replay_share")
+        else:
+            self._toast(t("replay.export_error"))
+            self.play_sound("hit")
+
+    def _import(self):
+        """Liest eine geteilte Aufnahme ein und legt sie ins Archiv (Taste I)."""
+        if not filepick.available():
+            self._toast(t("replay.no_dialog"))
+            self.play_sound("hit")
+            return
+        path = filepick.open_file(title=t("replay.import_title"),
+                                  exts=replay.IMPORT_EXTS)
+        if not path:
+            return
+        ok, why, rep = replay.import_from(path)
+        if ok:
+            self.tab = rep.get("game", self.tab)
+            self._load()
+            self._build()
+            for i, item in enumerate(self.items):
+                if item.get("id") == rep.get("id"):
+                    self.sel = i
+                    break
+            self._toast(t("replay.imported", title=rep.get("title") or ""))
+            self.play_sound("level")
+            ui.spawn_burst(self.width // 2, 24, ui.GREEN)
+        else:
+            self._toast(t("replay.import_" + (why if why in
+                                              ("dup", "full", "game") else "error")))
+            self.play_sound("hit")
+
     def _delete_selected(self):
         """Entf: löscht das gewählte Replay (zweimal drücken)."""
         if not self.items or self.mode != "list":
@@ -396,6 +495,8 @@ class ReplayScreen(_Screen):
                 self._set_speed(-1)
             elif k in ("s", "S"):
                 self._save_pending()
+            elif k in ("e", "E"):
+                self._export(self.rep)
         elif event.kind == InputEvent.MOUSEMOVE:
             self.bar_t = BAR_SHOW
         elif event.kind == InputEvent.MOUSEDOWN and event.button == 1:
@@ -443,7 +544,14 @@ class ReplayScreen(_Screen):
                     self._start(self.items[self.sel])
             elif k in ("Delete", "KP_Delete", "x", "X"):
                 self._delete_selected()
+            elif k in ("e", "E"):
+                self._export()
+            elif k in ("i", "I"):
+                self._import()
         elif event.kind == InputEvent.MOUSEMOVE:
+            self._btn_hover = ("export" if self.btn_export.collidepoint(event.pos)
+                               else "import" if self.btn_import.collidepoint(event.pos)
+                               else None)
             self._tab_hover = None
             for r, key, _ in self.tab_rects:
                 if r.collidepoint(event.pos):
@@ -454,6 +562,12 @@ class ReplayScreen(_Screen):
                     self._hover_row = i
                     self.sel = self.first + i
         elif event.kind == InputEvent.MOUSEDOWN and event.button == 1:
+            if self.btn_export.collidepoint(event.pos):
+                self._export()
+                return
+            if self.btn_import.collidepoint(event.pos):
+                self._import()
+                return
             for r, key, _ in self.tab_rects:
                 if r.collidepoint(event.pos):
                     self._switch_tab(key)
@@ -590,7 +704,10 @@ class ReplayScreen(_Screen):
         title = small.render(self.rep.get("title") or game_name(self.tab),
                              True, ui.TEXT)
         s.blit(title, (12, bar.y + 7))
-        sub = tiny.render(self.rep.get("sub") or "", True, ui.TEXT_DIM)
+        sub_txt = self.rep.get("sub") or ""
+        if (self.rep.get("meta") or {}).get("capped"):
+            sub_txt = (sub_txt + "  ·  " if sub_txt else "") + t("replay.capped")
+        sub = tiny.render(sub_txt, True, ui.TEXT_DIM)
         s.blit(sub, (12, bar.y + 26))
 
         # Mitte: Sequenz-Zähler + Zeit.
@@ -599,8 +716,7 @@ class ReplayScreen(_Screen):
                                replay.format_duration(self.total / rate))
         mid = small.render(pos_txt, True, ui.TEXT_DIM)
         s.blit(mid, mid.get_rect(midtop=(W // 2, bar.y + 7)))
-        label = t("replay.seq_golf" if self.rep.get("game") == "minigolf"
-                  else "replay.seq_bowl",
+        label = t(SEQ_KEYS.get(self.rep.get("game"), "replay.seq_part"),
                   n=self.si + 1, total=len(self.scenes))
         seq = tiny.render(label, True, accent)
         s.blit(seq, seq.get_rect(midtop=(W // 2, bar.y + 26)))
@@ -634,11 +750,15 @@ class ReplayScreen(_Screen):
                                         ui.TEXT if active else ui.TEXT_DIM)
             s.blit(img, img.get_rect(center=r.center))
 
-        # Zähler rechts oben.
+        # Kopfzeile: Anzahl links, Teilen-Knöpfe rechts.
         cnt = ui.font(13, bold=True).render(
             t("replay.count", n=len(self.items), max=replay.MAX_PER_GAME),
             True, ui.TEXT_DIM)
-        s.blit(cnt, cnt.get_rect(midright=(self._right, 87)))
+        s.blit(cnt, cnt.get_rect(midleft=(self._left, self._head_y)))
+        self._draw_btn(s, self.btn_export, t("replay.btn_export"),
+                       bool(self.items), self._btn_hover == "export")
+        self._draw_btn(s, self.btn_import, t("replay.btn_import"), True,
+                       self._btn_hover == "import")
 
         if not self.items:
             self._draw_empty()
@@ -652,6 +772,16 @@ class ReplayScreen(_Screen):
                 self._draw_scrollbar(s)
 
         ui.draw_footer(s, W, H, t("replay.hint_list"))
+
+    def _draw_btn(self, s, rect, label, on, hover):
+        """Kleiner Knopf der Kopfzeile (Teilen / Einlesen)."""
+        col = ui.PANEL_LIGHT if (on and hover) else ui.PANEL
+        pygame.draw.rect(s, col, rect, border_radius=12)
+        pygame.draw.rect(s, ui.ACCENT2 if (on and hover) else ui.BORDER, rect, 1,
+                         border_radius=12)
+        img = ui.font(12, bold=True).render(label, True,
+                                            ui.TEXT if on else ui.TEXT_FAINT)
+        s.blit(img, img.get_rect(center=rect.center))
 
     def _draw_row(self, s, rect, rep, selected):
         accent = game_accent(rep.get("game"))
@@ -671,6 +801,13 @@ class ReplayScreen(_Screen):
         title = ui.font(16, bold=True).render(rep.get("title") or "", True,
                                               ui.TEXT if selected else ui.TEXT_DIM)
         s.blit(title, (rect.x + 52, rect.y + 8))
+        if rep.get("src") == "file":
+            # Kleiner Pfeil nach unten = aus einer Datei eingelesen.
+            ax = rect.x + 58 + title.get_width()
+            ay = rect.y + 14
+            pygame.draw.line(s, ui.ACCENT2, (ax, ay), (ax, ay + 8), 2)
+            pygame.draw.polygon(s, ui.ACCENT2, [(ax - 4, ay + 6), (ax + 4, ay + 6),
+                                                (ax, ay + 11)])
         sub = ui.font(12).render(rep.get("sub") or "", True, ui.TEXT_FAINT)
         s.blit(sub, (rect.x + 52, rect.y + 28))
 

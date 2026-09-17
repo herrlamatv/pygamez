@@ -179,23 +179,27 @@
       "keywords": [
         "replay",
         "recording",
-        "minigolf",
-        "bowling",
+        "share",
+        "file",
         "archive",
+        "snake",
+        "tetris",
         "watch"
       ],
       "sections": [
         {
           "h": "What is a replay?",
           "body": [
-            "Minigolf and Bowling record every round: what is stored is the actual path of ball and pins, frame by frame. The replay therefore looks exactly like your round - with course, HUD and scorecard.",
+            "Six games record their rounds: Minigolf, Bowling, Billiards, Pinball, Snake and Tetris. What is stored is the actual motion - frame by frame, thirty times a second. The replay therefore looks exactly like your round, HUD and scorecard included.",
+            "Minigolf, Bowling, Billiards and Pinball have short sequences (stroke, roll, shot, ball). Snake and Tetris run on - there a sequence is a ten-second part; Snake is always shown from above, even if you played in 3D.",
             "Only the current round is recorded. Start a new one and the recording starts over as well."
           ]
         },
         {
           "h": "Saving",
           "body": [
-            "If the round was a good one, press [P] on the round-end screen - the replay starts right away. [S] puts it into the archive, [Esc] returns to the round-end screen.",
+            "If the round was a good one, press [P] on the round-end screen - the replay starts right away. [S] puts it into the archive, [E] shares it as a file, [Esc] returns to the round-end screen.",
+            "The Billiards practice mode never ends: there [P] shows what happened so far between two shots, and the frame carries on afterwards.",
             "Unsaved recordings are gone with the next round; the archive holds 20 replays per game."
           ]
         },
@@ -204,14 +208,23 @@
           "body": [
             "The Replays button in the sidebar opens the archive: one tab per game, with result, date and running time of every recording.",
             "- [Enter] plays, [Del] deletes (press twice), [Tab] switches the game.",
-            "- During playback [Space] pauses, Left/Right jumps to the next shot or roll, Up/Down changes the speed (0.5x to 4x).",
+            "- During playback [Space] pauses, Left/Right jumps to the next sequence, Up/Down changes the speed (0.5x to 4x).",
             "A click on the progress bar jumps to any position."
+          ]
+        },
+        {
+          "h": "Sharing as a file",
+          "body": [
+            "[E] writes the recording as a .lamapgzreplay file - from the archive as well as right after the round. It holds exactly one replay and can be passed on like a minigolf course or a Geometry Dash level.",
+            "[I] reads such a file back in. It lands in the tab of the matching game and carries a small arrow there - the sign that it came from somewhere else.",
+            "A recording that is already in the archive is not imported twice."
           ]
         },
         {
           "h": "Switching it off",
           "body": [
             "On the first start and in the options under Recording you can turn Record replays off - then nothing is captured at all.",
+            "Very long games are trimmed after roughly half an hour; the bar then shows Recording trimmed.",
             "The recordings live in replay.json in the game folder, sorted by game. You may delete that file at any time."
           ]
         }

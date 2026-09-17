@@ -22,6 +22,11 @@ Maus platzieren. V = Ansicht, nach Spielende Enter = neue Partie.
 
 Punkte (Highscore) = gewonnene Frames gegen die KI (bzw. versenkte Kugeln im
 Übungsmodus).
+
+Wiederholungen: jeder Stoß wird als eigene Sequenz aufgezeichnet (siehe
+replay.py) - Kopfdaten sind Zielwinkel, Stärke und der vollständige Stand des
+Tisches, die Samples enthalten nur noch die Kugeln, die sich seit dem letzten
+Bild bewegt haben. Am Partieende öffnet P die Wiederholung.
 """
 
 import math
@@ -29,6 +34,7 @@ import random
 
 import pygame
 
+import replay
 import settings as settings_mod
 import ui
 from game_base import Game, InputEvent, LocalizedName
@@ -110,6 +116,14 @@ class BilliardGame(Game):
         if self.view not in VIEWS:
             self.view = "2d"
         self.diff = max(0, min(2, int(bs.get("difficulty", 1))))
+
+        # Wiederholung der Partie (replay, siehe replay.py).
+        self.rec = None
+        self.replay = None
+        self.replay_request = None
+        self._rep = None                # gesetzt, solange nur abgespielt wird
+        self._rep_at = None
+        self._rec_delta = replay.Delta()
 
         self._build_fonts()
         self._over_cache = None
@@ -332,6 +346,7 @@ class BilliardGame(Game):
     def _start_play(self):
         self._setup_camera()
         self._new_rack()
+        self._rec_new()
         self.state = PLAY
         self.play_sound("click")
 
@@ -348,6 +363,8 @@ class BilliardGame(Game):
             if event.kind == InputEvent.KEYDOWN:
                 if event.key in ("Return", "space"):
                     self._restart()
+                elif event.key in ("p", "P") and self.replay is not None:
+                    self._open_replay()
                 elif event.key in ("s", "S"):
                     self.state = SETUP
                     self.game_over = False
@@ -356,6 +373,13 @@ class BilliardGame(Game):
                 self._restart()
             return
         if self.state != PLAY:
+            return
+        # Übungsmodus endet nie - dort zeigt P den bisherigen Verlauf
+        # jederzeit zwischen zwei Stößen (das Spiel läuft danach weiter).
+        if (event.kind == InputEvent.KEYDOWN and event.key in ("p", "P")
+                and self.variant == "practice" and self.phase == "aim"
+                and self.rec is not None and self.rec.scenes):
+            self._open_replay()
             return
         # Kamera drehen: rechte Maustaste HALTEN und Maus bewegen (nur Frei-
         # Ansicht). Loslassen der rechten Taste beendet das Drehen wieder.
@@ -436,13 +460,16 @@ class BilliardGame(Game):
         return True
 
     def _human_turn(self):
-        return self.multiplayer or self.current == 0
+        # In der Wiedergabe wird jeder Stoß wie ein eigener gezeigt (samt
+        # Ziellinie und Queue) - egal, wer ihn gespielt hat.
+        return self._rep is not None or self.multiplayer or self.current == 0
 
     # ===================================================== Stoß / Physik
     def _strike(self):
         sp = MAX_SPEED * self.power
         self.cue.vx = math.cos(self.aim) * sp
         self.cue.vy = math.sin(self.aim) * sp
+        self._rec_scene()
         self.phase = "rolling"
         self.shot_time = 0.0
         self.first_hit = None
@@ -465,6 +492,8 @@ class BilliardGame(Game):
         if self.phase == "rolling":
             self._physics(dt)
             self.shot_time += dt
+            if self.rec:
+                self.rec.tick(dt, self._rec_sample)
             if self._all_stopped() or self.shot_time > MAX_SHOT_TIME:
                 self._resolve_shot()
         elif self.phase == "aim":
@@ -580,12 +609,18 @@ class BilliardGame(Game):
 
     def _resolve_shot(self):
         self.break_done = True
+        # Erst die Aufnahme des Stoßes schließen (der Stand VOR dem Neu-
+        # einsetzen der Weißen gehört noch zur Sequenz), dann die Regeln.
+        if self.rec:
+            self.rec.close(self._rec_sample)
+        self._rec_res = None
         if self.variant == "practice":
             self._resolve_practice()
         elif self.variant == "9ball":
             self._resolve_9ball()
         else:
             self._resolve_8ball()
+        self._rec_result()
         # Weiße neu einsetzen, falls versenkt
         if self.cue_potted and self.state == PLAY:
             self.cue.potted = False
@@ -611,6 +646,7 @@ class BilliardGame(Game):
         self.cue.x, self.cue.y = -HW * 0.5, 0
 
     def _foul(self, msg_key):
+        self._rec_res = msg_key
         self.msg = t(msg_key)
         self.msg_t = 2.2
         self.ball_in_hand = True
@@ -761,8 +797,199 @@ class BilliardGame(Game):
     def _restart(self):
         self.game_over = False
         self._new_rack()
+        self._rec_new()
         self.state = PLAY
         self.play_sound("click")
+
+    # ===================================================== Replay-Aufnahme
+    # Je Stoß eine Sequenz. Die Kopfdaten halten den kompletten Tisch fest
+    # (alle Kugeln mit Nummer, Ort und "versenkt"), die Samples nur noch die
+    # Kugeln, die sich seit dem letzten Bild bewegt haben - beim Abstoßen
+    # sind das eine, kurz nach dem Break alle sechzehn.
+
+    def _rec_new(self):
+        """Startet die Aufzeichnung der Partie (falls Replays an sind)."""
+        self.replay = None
+        self._rec_res = None
+        self._rec_delta.reset()
+        self.rec = replay.recorder("billiard", self.settings, meta={
+            "variant": self.variant, "view": self.view, "diff": self.diff,
+            "players": 2 if self.multiplayer else 1})
+
+    def _rec_scene(self):
+        """Beginnt die Sequenz eines Stoßes (Kopfdaten = Tisch + Zielen)."""
+        if not self.rec:
+            return
+        self._rec_delta.reset()
+        self.rec.scene(pl=self.current,
+                       aim=round(self.aim, 4), pw=round(self.power, 3),
+                       grp=list(self.group), pall=list(self.potted_all),
+                       balls=[[b.num, round(b.x, 1), round(b.y, 1),
+                               1 if b.potted else 0] for b in self.balls])
+
+    def _rec_sample(self):
+        """Ein Sample: nur die Kugeln, die sich verändert haben."""
+        out = []
+        for i, b in enumerate(self.balls):
+            st = (round(b.x, 1), round(b.y, 1), 1 if b.potted else 0)
+            if self._rec_delta.push(i, st):
+                out.append(i)
+                out.extend(st)
+        return out
+
+    def _rec_result(self):
+        """Trägt das Ergebnis des Stoßes in die eben geschlossene Sequenz."""
+        if not self.rec:
+            return
+        res = self._rec_res
+        if res is None and self.winner is not None:
+            res = "bil.win_you" if self.winner == 0 else "bil.win_ai"
+        if res is None:
+            res = "bil.res_pot" if self.potted_shot else "bil.res_miss"
+        self.rec.set_last(res=res, pot=list(self.potted_shot),
+                          nxt=self.current,
+                          final=self.winner is not None,
+                          win=self.winner if self.winner is not None else -1)
+        if self.state == OVER:
+            self._rec_finish()
+
+    def _rec_finish(self):
+        """Partie-Ende: die Aufnahme als self.replay bereitlegen."""
+        if not self.rec:
+            return
+        if self.variant == "practice":
+            sub = t("bil.potted", n=len(self.potted_all))
+        elif self.winner is None:
+            sub = t("bil.var." + self.variant)
+        elif self.multiplayer:
+            sub = t("common.player_wins", n=self.winner + 1)
+        else:
+            sub = t("bil.win_you") if self.winner == 0 else t("bil.win_ai")
+        self.replay = self.rec.result(
+            title=t("bil.var." + self.variant) + "  ·  " + t("bil.view." + self.view),
+            sub=sub, winner=-1 if self.winner is None else self.winner)
+        self.rec = None
+
+    def _rec_snapshot(self):
+        """Zwischenstand als Wiederholung (Übungsmodus, der nie endet).
+
+        Die Aufnahme läuft danach weiter - der Replay-Screen kehrt ins Spiel
+        zurück, als wäre nichts gewesen.
+        """
+        if not self.rec or not self.rec.scenes:
+            return
+        self.replay = self.rec.result(
+            title=t("bil.var.practice") + "  ·  " + t("bil.view." + self.view),
+            sub=t("bil.potted", n=len(self.potted_all)))
+
+    def _open_replay(self):
+        """Die Wiederholung ansehen (Taste P).
+
+        Den Screen öffnet main.py - das Spiel legt nur den Wunsch ab.
+        """
+        if self.state == PLAY:
+            self._rec_snapshot()
+        if self.replay is not None:
+            self.replay_request = self.replay
+            self.play_sound("click")
+
+    # ===================================================== Replay-Wiedergabe
+    # Der Replay-Screen (replayview.py) baut eine ganz normale Spielinstanz
+    # und fährt sie über diese drei Methoden durch die Aufnahme.
+
+    def replay_begin(self, rep):
+        """Schaltet diese Instanz auf reine Wiedergabe um."""
+        self.rec = None
+        self.replay = None
+        self.replay_request = None
+        self._rep = rep
+        self._rep_at = None
+        meta = rep.get("meta") or {}
+        if meta.get("variant") in VARIANTS:
+            self.variant = meta["variant"]
+        if meta.get("view") in VIEWS:
+            self.view = meta["view"]
+        self.diff = max(0, min(2, int(meta.get("diff", 1) or 0)))
+        self.multiplayer = int(meta.get("players", 1) or 1) > 1
+        self.cam_yaw = self.cam_yaw_t = 0.0
+        self._setup_camera()
+        self.state = PLAY
+        self.game_over = False
+        self.msg = None
+        self.msg_t = 0.0
+        self.winner = None
+        self.wins = [0, 0]
+        self.replay_seek(0, 0)
+
+    def replay_seek(self, index, frame):
+        """Setzt Kugeln, Zielen und HUD auf Szene 'index', Sample 'frame'."""
+        scenes = self._rep.get("scenes", [])
+        if not scenes:
+            return
+        index = max(0, min(len(scenes) - 1, index))
+        sc = scenes[index]
+        frames = sc.get("f") or []
+        n = max(1, len(frames))
+        frame = max(0, min(n - 1, frame))
+        last = (frame >= n - 1)
+
+        self.current = int(sc.get("pl", 0))
+        self.aim = float(sc.get("aim", 0.0))
+        self.power = float(sc.get("pw", 0.35))
+        self.group = list(sc.get("grp", [None, None]))[:2] or [None, None]
+        self.potted_all = list(sc.get("pall", []))
+        self.ball_in_hand = False
+        self.phase = "rolling"
+        self.winner = None
+
+        # Kugeln: bei einem Sprung neu aufbauen, sonst die Deltas fortschreiben.
+        if (self._rep_at is None or self._rep_at[0] != index
+                or frame < self._rep_at[1]):
+            self.balls = [_Ball(float(b[1]), float(b[2]), int(b[0]))
+                          for b in sc.get("balls", [])]
+            for b, src in zip(self.balls, sc.get("balls", [])):
+                b.potted = bool(src[3])
+            self.cue = self.balls[0] if self.balls else _Ball(0.0, 0.0, 0)
+            start = 0
+        else:
+            start = self._rep_at[1] + 1
+        for k in range(start, frame + 1):
+            fr = frames[k]
+            for j in range(0, len(fr) - 3, 4):
+                i = int(fr[j])
+                if 0 <= i < len(self.balls):
+                    b = self.balls[i]
+                    b.x, b.y = float(fr[j + 1]), float(fr[j + 2])
+                    b.potted = bool(fr[j + 3])
+        if last:
+            self.potted_all = list(self.potted_all) + list(sc.get("pot", []))
+            if sc.get("res"):
+                self.msg = t(sc["res"])
+            if sc.get("final"):
+                win = int(sc.get("win", -1))
+                self.winner = win if win >= 0 else None
+        else:
+            self.msg = None
+        self._rep_at = (index, frame)
+
+    def replay_draw(self, aiming=False, banner=False):
+        """Zeichnet den aktuellen Replay-Stand (ohne Menü-Overlay)."""
+        s = self.surface
+        ui.draw_background(s, self.width, self.height)
+        if self.view != "2d":
+            self._basis = self._cam_basis()
+        self._draw_table(s)
+        if aiming:
+            # Vorlauf: der Tisch steht, Ziellinie und Queue wie beim Stoß.
+            self.phase = "aim"
+            self._draw_balls(s)
+            self._draw_aim(s)
+            self.phase = "rolling"
+        else:
+            self._draw_balls(s)
+        self._draw_hud(s)
+        if banner and self.winner is not None:
+            self._draw_over(s)
 
     # ===================================================== KI
     def _ai_legal_targets(self):
@@ -1043,7 +1270,10 @@ class BilliardGame(Game):
             head = self._huge.render(t("bil.win_you") if won else t("bil.win_ai"),
                                      True, self.accent if won else ui.TEXT_DIM)
         s.blit(head, head.get_rect(center=(cx, y + 36)))
-        hint = self._tiny.render(t("bil.new_round"), True, ui.TEXT_DIM)
+        hint_txt = t("bil.new_round")
+        if self.replay is not None and self._rep is None:
+            hint_txt += "  ·  " + t("bil.replay_hint")
+        hint = self._tiny.render(hint_txt, True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(cx, y + 76)))
 
     def _draw_setup(self, s):

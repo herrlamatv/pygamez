@@ -179,23 +179,27 @@
       "keywords": [
         "replay",
         "inspelning",
-        "minigolf",
-        "bowling",
+        "dela",
+        "fil",
         "arkiv",
-        "spara"
+        "snake",
+        "tetris",
+        "biljard"
       ],
       "sections": [
         {
           "h": "Vad är en replay?",
           "body": [
-            "Minigolf och bowling spelar in varje runda: det som sparas är bollens och käglornas faktiska bana, bild för bild. Därför ser repriser ut precis som din runda - med bana, HUD och poängkort.",
+            "Sex spel spelar in sina rundor: minigolf, bowling, biljard, flipper, Snake och Tetris. Det som sparas är den faktiska rörelsen - bild för bild, trettio gånger i sekunden. Därför ser repriser ut precis som din runda, med HUD och poängkort.",
+            "Minigolf, bowling, biljard och flipper har korta sekvenser (slag, kast, stöt, kula). Snake och Tetris rullar på - där är en sekvens ett avsnitt på tio sekunder; Snake visas alltid uppifrån, även om du spelade i 3D.",
             "Bara den pågående rundan spelas in. Börjar du om startar även inspelningen om."
           ]
         },
         {
           "h": "Spara",
           "body": [
-            "Var rundan bra trycker du på [P] i slutet - replayen startar direkt. Med [S] lägger du den i arkivet, med [Esc] kommer du tillbaka till slutskärmen.",
+            "Var rundan bra trycker du på [P] i slutet - replayen startar direkt. Med [S] lägger du den i arkivet, med [E] delar du den som fil, med [Esc] kommer du tillbaka till slutskärmen.",
+            "Biljardens övningsläge tar aldrig slut: där visar [P] förloppet så långt mellan två stötar, och sedan fortsätter partiet.",
             "Osparade inspelningar försvinner med nästa runda; arkivet rymmer 20 replays per spel."
           ]
         },
@@ -204,14 +208,23 @@
           "body": [
             "Knappen Replays i sidofältet öppnar arkivet: en flik per spel med resultat, datum och speltid för varje inspelning.",
             "- [Enter] spelar upp, [Del] raderar (tryck två gånger), [Tab] byter spel.",
-            "- Under uppspelning pausar [Mellanslag], Vänster/Höger hoppar till nästa slag eller kast, Upp/Ner ändrar tempot (0,5x till 4x).",
+            "- Under uppspelning pausar [Mellanslag], Vänster/Höger hoppar till nästa sekvens, Upp/Ner ändrar tempot (0,5x till 4x).",
             "Ett klick på förloppsraden hoppar till valfritt ställe."
+          ]
+        },
+        {
+          "h": "Dela som fil",
+          "body": [
+            "[E] skriver inspelningen som en .lamapgzreplay-fil - både från arkivet och direkt efter rundan. Den innehåller exakt en replay och kan skickas vidare som en minigolfbana eller en Geometry Dash-nivå.",
+            "[I] läser in en sådan fil igen. Den hamnar i fliken för rätt spel och får en liten pil där - tecknet på att den kommer utifrån.",
+            "En inspelning som redan finns i arkivet importeras inte två gånger."
           ]
         },
         {
           "h": "Stänga av",
           "body": [
             "Vid första starten och i inställningarna under Inspelning kan du stänga av Spela in replays - då spelas ingenting in.",
+            "Mycket långa partier kortas av efter en dryg halvtimme; raden visar då Inspelningen är avkortad.",
             "Inspelningarna ligger i replay.json i spelmappen, sorterade efter spel. Filen får du radera när du vill."
           ]
         }

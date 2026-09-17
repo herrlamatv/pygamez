@@ -179,23 +179,27 @@
       "keywords": [
         "tekrar",
         "kayit",
-        "minigolf",
-        "bowling",
+        "paylas",
+        "dosya",
         "arsiv",
-        "izle"
+        "snake",
+        "tetris",
+        "bilardo"
       ],
       "sections": [
         {
           "h": "Tekrar nedir?",
           "body": [
-            "Minigolf ve bowling her turu kaydeder: topun ve lobutların gerçek yolu kare kare saklanır. Bu yüzden tekrar tıpkı oynadığın tur gibi görünür - parkur, HUD ve skor kartıyla birlikte.",
+            "Altı oyun turlarını kaydeder: minigolf, bowling, bilardo, pinball, Snake ve Tetris. Gerçek hareket saklanır - kare kare, saniyede otuz kez. Bu yüzden tekrar tıpkı oynadığın tur gibi görünür, HUD ve skor kartıyla birlikte.",
+            "Minigolf, bowling, bilardo ve pinball kısa sekanslardan oluşur (vuruş, atış, istaka vuruşu, top). Snake ve Tetris ise kesintisiz akar: orada bir sekans on saniyelik bir bölümdür; Snake her zaman yukarıdan gösterilir, 3B oynamış olsan bile.",
             "Yalnızca oynanan tur kaydedilir. Yeniden başlarsan kayıt da baştan başlar."
           ]
         },
         {
           "h": "Kaydetme",
           "body": [
-            "Tur iyi geçtiyse tur sonunda [P] tuşuna bas - tekrar hemen başlar. [S] onu arşive koyar, [Esc] tur sonu ekranına döner.",
+            "Tur iyi geçtiyse tur sonunda [P] tuşuna bas - tekrar hemen başlar. [S] onu arşive koyar, [E] dosya olarak paylaşır, [Esc] tur sonu ekranına döner.",
+            "Bilardonun alıştırma modu hiç bitmez: orada [P] iki vuruş arasında o ana kadarki akışı gösterir, sonra parti devam eder.",
             "Kaydedilmeyen çekimler bir sonraki turda kaybolur; arşive oyun başına 20 tekrar sığar."
           ]
         },
@@ -204,14 +208,23 @@
           "body": [
             "Kenar çubuğundaki Tekrarlar düğmesi arşivi açar: her oyun için bir sekme, her kaydın sonucu, tarihi ve süresi.",
             "- [Enter] oynatır, [Del] siler (iki kez bas), [Tab] oyunu değiştirir.",
-            "- Oynatma sırasında [Boşluk] duraklatır, Sol/Sağ bir sonraki vuruşa veya atışa atlar, Yukarı/Aşağı hızı değiştirir (0,5x - 4x).",
+            "- Oynatma sırasında [Boşluk] duraklatır, Sol/Sağ bir sonraki sekansa atlar, Yukarı/Aşağı hızı değiştirir (0,5x - 4x).",
             "İlerleme çubuğuna tıklamak istediğin yere atlar."
+          ]
+        },
+        {
+          "h": "Dosya olarak paylaşma",
+          "body": [
+            "[E] kaydı .lamapgzreplay dosyası olarak yazar - hem arşivden hem de turun hemen ardından. İçinde tam olarak bir tekrar bulunur ve bir minigolf parkuru ya da Geometry Dash bölümü gibi paylaşılabilir.",
+            "[I] böyle bir dosyayı geri okur. Dosya doğru oyunun sekmesine düşer ve orada küçük bir ok taşır - başka yerden geldiğinin işareti.",
+            "Arşivde zaten bulunan bir kayıt ikinci kez alınmaz."
           ]
         },
         {
           "h": "Kapatma",
           "body": [
             "İlk açılışta ve seçeneklerde Kayıt altında Tekrarları kaydet kapatılabilir - o zaman hiçbir şey kaydedilmez.",
+            "Çok uzun partiler yarım saati geçince kısaltılır; çubukta o zaman Kayıt kısaltıldı yazar.",
             "Kayıtlar oyun klasöründeki replay.json dosyasında, oyunlara göre sıralı durur. Bu dosyayı istediğin zaman silebilirsin."
           ]
         }

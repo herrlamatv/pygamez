@@ -179,23 +179,27 @@
       "keywords": [
         "uusinta",
         "tallenne",
-        "minigolf",
-        "keilailu",
+        "jaa",
+        "tiedosto",
         "arkisto",
-        "tallenna"
+        "snake",
+        "tetris",
+        "biljardi"
       ],
       "sections": [
         {
           "h": "Mikä on uusinta?",
           "body": [
-            "Minigolf ja keilailu tallentavat jokaisen kierroksen: talteen menee pallon ja keilojen todellinen rata, ruutu ruudulta. Siksi uusinta näyttää täsmälleen samalta kuin kierroksesi - ratoineen, HUD-tietoineen ja tuloskortteineen.",
+            "Kuusi peliä tallentaa kierroksensa: minigolf, keilailu, biljardi, flipperi, Snake ja Tetris. Talteen menee todellinen liike - ruutu ruudulta, kolmekymmentä kertaa sekunnissa. Siksi uusinta näyttää täsmälleen samalta kuin kierroksesi, HUD ja tuloskortti mukaan lukien.",
+            "Minigolfissa, keilailussa, biljardissa ja flipperissä jaksot ovat lyhyitä (lyönti, heitto, lyönti, pallo). Snake ja Tetris juoksevat yhtenä pötkönä - niissä jakso on kymmenen sekunnin osa; Snake näytetään aina ylhäältä, vaikka olisit pelannut 3D-näkymässä.",
             "Vain käynnissä oleva kierros tallentuu. Jos aloitat alusta, myös tallennus alkaa alusta."
           ]
         },
         {
           "h": "Tallentaminen",
           "body": [
-            "Jos kierros oli hyvä, paina lopuksi [P] - uusinta käynnistyy heti. Näppäin [S] vie sen arkistoon, [Esc] palaa loppuruutuun.",
+            "Jos kierros oli hyvä, paina lopuksi [P] - uusinta käynnistyy heti. Näppäin [S] vie sen arkistoon, [E] jakaa sen tiedostona, [Esc] palaa loppuruutuun.",
+            "Biljardin harjoittelutila ei lopu koskaan: siellä [P] näyttää tähänastisen kulun kahden lyönnin välissä, minkä jälkeen peli jatkuu.",
             "Tallentamattomat otokset katoavat seuraavan kierroksen myötä; arkistoon mahtuu 20 uusintaa per peli."
           ]
         },
@@ -204,14 +208,23 @@
           "body": [
             "Sivupalkin Uusinnat-painike avaa arkiston: yksi välilehti per peli, mukana jokaisen tallenteen tulos, päiväys ja kesto.",
             "- [Enter] toistaa, [Del] poistaa (paina kahdesti), [Tab] vaihtaa pelin.",
-            "- Toiston aikana [Välilyönti] pysäyttää, Vasen/Oikea hyppää seuraavaan lyöntiin tai heittoon, Ylös/Alas muuttaa nopeutta (0,5x - 4x).",
+            "- Toiston aikana [Välilyönti] pysäyttää, Vasen/Oikea hyppää seuraavaan jaksoon, Ylös/Alas muuttaa nopeutta (0,5x - 4x).",
             "Edistymispalkin napsautus hyppää mihin tahansa kohtaan."
+          ]
+        },
+        {
+          "h": "Jakaminen tiedostona",
+          "body": [
+            "[E] kirjoittaa tallenteen .lamapgzreplay-tiedostoksi - sekä arkistosta että heti kierroksen jälkeen. Siinä on tasan yksi uusinta, ja sen voi antaa eteenpäin kuin minigolfradan tai Geometry Dash -kentän.",
+            "[I] lukee tällaisen tiedoston takaisin. Se päätyy oikean pelin välilehdelle ja saa siellä pienen nuolen - merkin siitä, että se tuli muualta.",
+            "Tallennetta, joka on jo arkistossa, ei tuoda toista kertaa."
           ]
         },
         {
           "h": "Käytöstä poisto",
           "body": [
             "Ensikäynnistyksessä ja asetuksissa kohdassa Tallennus voi kytkeä Tallenna uusinnat pois - silloin mitään ei tallenneta.",
+            "Hyvin pitkät pelit katkaistaan reilun puolen tunnin jälkeen; palkki näyttää silloin Tallenne katkaistu.",
             "Tallenteet ovat pelikansion replay.json-tiedostossa peleittäin lajiteltuina. Tiedoston saa poistaa milloin tahansa."
           ]
         }

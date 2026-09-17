@@ -110,6 +110,11 @@ Einzelspieler.
 #### Feature-Details je Spiel
 
 **Snake**
+- **NEU - Replay der Runde**: Jeder Lauf wird mitgeschnitten - am Game Over
+  zeigt **P** die Wiederholung (immer von oben, auch wenn du in 3D gespielt
+  hast), **S** legt sie ins Archiv, **E** teilt sie als `.lamapgzreplay`-Datei.
+  Aufgezeichnet werden Körper, Äpfel, Gold- und Spezialäpfel, Punkte und
+  Ausdauer - in Kapiteln von zehn Sekunden, damit das Spulen flott bleibt.
 - **NEU - 3D-Ansicht** (Taste **V** im Setup oder Klick auf *Ansicht*): Das
   Spielfeld wird als Echtzeit-3D-Szene gerendert - eine **Verfolgerkamera**
   schwebt hinter der Schlange, gelenkt wird **relativ zur Blickrichtung**
@@ -207,6 +212,10 @@ Einzelspieler.
   (feuert Laser), **P/Esc** = Pause.
 
 **Tetris**
+- **NEU - Replay der Partie**: Jede Runde wird mitgeschnitten - nach dem
+  Ergebnis zeigt **P** die Wiederholung mit Feld, Vorschau, Hold, Müllbalken und
+  Statistik (im Versus beide Felder), **S** legt sie ins Archiv, **E** teilt sie
+  als `.lamapgzreplay`-Datei.
 - **Moderne Guideline-Regeln**: 10x20-Feld, Steine im **7er-Beutel**,
   **SRS-Drehsystem** mit echten Wall Kicks (auch für den I-Stein), Drehen in
   beide Richtungen, **Halten** (einmal pro Stein), **Vorschau auf 5 Steine**,
@@ -559,6 +568,10 @@ Explosions-Effekte, Highscore.
   gespeichert. Steuerung per Maus oder Tasten 1-9.
 
 **Billard**
+- **NEU - Replay der Partie**: Jeder Stoß wird als eigene Sequenz aufgezeichnet
+  - mit Zielwinkel, Stärke und der Bahn aller Kugeln. Am Partieende zeigt **P**
+  die Wiederholung (im Übungsmodus jederzeit zwischen zwei Stößen), **S** legt
+  sie ins Archiv, **E** teilt sie als `.lamapgzreplay`-Datei.
 - **8-Ball**, **9-Ball** und ein regelfreier **Übungsmodus**, gegen die KI (mit
   Zielhilfe) oder **zu zweit lokal**.
 - **Drei frei wählbare Ansichten**: klassische **2D-Draufsicht**, feste
@@ -693,6 +706,10 @@ Explosions-Effekte, Highscore.
   Sammlung über die fünfte Kurswahl **Eigene**.
 
 **Pinball**
+- **NEU - Replay der Partie**: Je Kugel eine Sequenz - Ballbahnen (auch im
+  Multiball), Flipperstellung, Drop-Targets, Bahnen, Multiplikator und
+  Punktestand. Am Partieende zeigt **P** die Wiederholung, **S** legt sie ins
+  Archiv, **E** teilt sie als `.lamapgzreplay`-Datei.
 - **Drei Tische**: *Classic* (drei Pop-Bumper, eine Target-Bank), *Space* (vier
   Bumper im Karo, zwei Banks) und *Lama* (offenes Feld, sechs Targets im Bogen);
   3 oder 5 Bälle je Partie, zu zweit im Wechsel Ball für Ball.
@@ -854,7 +871,7 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   scrollbaren Artikeln und Tastenkappen-Chips, in allen 14 Sprachen.
   Erreichbar über den Sidebar-Button **„Wiki / Hilfe"** und aus dem
   Vorspiel-Screen jedes Spiels (öffnet direkt dessen Seite).
-- **Erfolge & Statistiken**: **107 Erfolge** in drei Kategorien - 23
+- **Erfolge & Statistiken**: **108 Erfolge** in drei Kategorien - 24
   sammlungsweite Ziele (Partien, Spielzeit, Rekorde, Siege …), 37
   **Punkte-Meilensteine** und 47 **besondere Momente** (Schachmatt gegen die KI,
   KNIFFEL, die 4096er-Kachel, ein T-Spin Double, 25 gelöste Schachrätsel, ein
@@ -866,13 +883,25 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   Gesamtspielzeit, Partien, Siegen, Rekorden, Lieblingsspiel und einer nach
   Spielzeit sortierten **Pro-Spiel-Tabelle** (Klick auf eine Zeile öffnet das
   Spiel). Erreichbar über den Sidebar-Button **„Erfolge & Statistik"**.
-- **Replays**: Minigolf und Bowling zeichnen jede Runde auf - gespeichert wird
-  die tatsächliche Bahn von Ball und Pins, Bild für Bild, nicht die Eingabe.
-  Am Rundenende zeigt **P** die Wiederholung, **S** legt sie ins Archiv; der
-  Sidebar-Button **„Replays"** öffnet es jederzeit wieder (ein Reiter je Spiel,
-  Pause, Sprung zum nächsten Schlag bzw. Wurf, Tempo 0,5x bis 4x, klickbare
-  Fortschrittsleiste, Löschen per Entf). Je Spiel passen 20 Aufnahmen ins
-  Archiv; abschaltbar beim ersten Start und in den Optionen.
+- **Replays**: **sechs Spiele** zeichnen ihre Runden auf - **Minigolf**,
+  **Bowling**, **Billard**, **Pinball**, **Snake** und **Tetris**. Gespeichert
+  wird die tatsächliche Bewegung, Bild für Bild (30 Samples je Sekunde), nicht
+  die Eingabe; die Wiederholung sieht deshalb exakt aus wie die gespielte Runde,
+  samt HUD und Scorekarte. Bei Minigolf, Bowling, Billard und Pinball ist eine
+  Sequenz ein Schlag, Wurf, Stoß bzw. Ball; Snake und Tetris laufen durch und
+  werden in **Kapitel** von zehn Sekunden geschnitten (Schlüsselbild +
+  Änderungen, damit das Spulen flott bleibt). Am Rundenende zeigt **P** die
+  Wiederholung, **S** legt sie ins Archiv; der Sidebar-Button **„Replays"**
+  öffnet es jederzeit wieder (ein Reiter je Spiel, Pause, Sprung zur nächsten
+  Sequenz, Tempo 0,5x bis 4x, klickbare Fortschrittsleiste, Löschen per Entf).
+  Je Spiel passen 20 Aufnahmen ins Archiv; abschaltbar beim ersten Start und in
+  den Optionen.
+- **Replays teilen**: **E** schreibt eine Aufnahme als **`.lamapgzreplay`**-Datei
+  (im Archiv wie direkt nach der Runde), **I** liest so eine Datei wieder ein -
+  sie landet im Reiter des passenden Spiels und trägt dort einen kleinen Pfeil.
+  Eine Datei enthält genau ein Replay und wandert wie eine Minigolf-Bahn oder
+  ein Geometry-Dash-Level von Rechner zu Rechner; schon vorhandene Aufnahmen
+  werden nicht doppelt eingelesen.
 
 ### Bedienung
 
@@ -950,8 +979,8 @@ store.py             Zentrale Speicherdatei mem.json (Abschnitte: mem, highscore
 stats.py             Spielerstatistiken (Partien, Spielzeit, Siege, Rekorde) je Spiel
 achievements.py      Erfolge: Definitionen, Freischalt-Logik, Toast-Einblendung
 progress.py          Erfolge-&-Statistik-Screen (zwei Reiter, scrollbar)
-replay.py            Aufzeichnung & Archiv der Wiederholungen (replay.json)
-replayview.py        Replay-Screen: Archiv-Liste und Wiedergabe
+replay.py            Aufzeichnung, Archiv & Teilen der Wiederholungen (replay.json, .lamapgzreplay)
+replayview.py        Replay-Screen: Archiv-Liste, Wiedergabe, Teilen/Einlesen
 ugc.py               Eigene Inhalte (Minigolf-Bahnen, Geometry-Dash-Level): Speicher, Prüfung, Export/Import (ugc.json)
 swear.py             Wortfilter für Namen und ids (lang/swear/*.yml, alle 14 Sprachen)
 filepick.py          Datei-Dialoge ("Exportieren als ...", "Importieren") und Downloads-Ordner
@@ -1218,6 +1247,11 @@ pre-game screen (*Single-player / Multiplayer*); Tetris additionally offers
 #### Feature details per game
 
 **Snake**
+- **NEW - Replay of the run**: every run is recorded - on game over **P** shows
+  the replay (always from above, even if you played in 3D), **S** puts it into
+  the archive, **E** shares it as a `.lamapgzreplay` file. Stored are body,
+  apples, golden and special apples, score and stamina - in ten-second chapters
+  so seeking stays quick.
 - **NEW - 3D view** (key **V** in setup or click *View*): the board is rendered
   as a real-time 3D scene - a **chase camera** floats behind the snake and
   steering is **relative to the view** (left/right = turn, two quick presses =
@@ -1312,6 +1346,10 @@ pre-game screen (*Single-player / Multiplayer*); Tetris additionally offers
   (fires laser), **P/Esc** = pause.
 
 **Tetris**
+- **NEW - Replay of the game**: every round is recorded - after the results
+  screen **P** shows the replay with field, preview, hold, garbage bar and stats
+  (both fields in versus), **S** puts it into the archive, **E** shares it as a
+  `.lamapgzreplay` file.
 - **Modern Guideline rules**: 10x20 field, pieces from a **7-bag**, the **SRS
   rotation system** with real wall kicks (including the I piece), rotation in
   both directions, **hold** (once per piece), a **5-piece preview**, ghost piece
@@ -1658,6 +1696,10 @@ explosion effects, high score.
   the mouse or number keys 1-9.
 
 **Billiards**
+- **NEW - Replay of the frame**: every shot is recorded as its own sequence -
+  with aim, power and the path of all balls. At the end **P** shows the replay
+  (in practice mode at any time between two shots), **S** puts it into the
+  archive, **E** shares it as a `.lamapgzreplay` file.
 - **8-ball**, **9-ball** and a rules-free **practice** mode, versus the AI (with
   aim assist) or **two players locally**.
 - **Three freely selectable views**: classic **2D top-down**, a fixed **3D
@@ -1789,6 +1831,10 @@ explosion effects, high score.
   collection via the fifth course option **Custom**.
 
 **Pinball**
+- **NEW - Replay of the game**: one sequence per ball - ball paths (multiball
+  included), flipper positions, drop targets, lanes, multiplier and score. At
+  the end **P** shows the replay, **S** puts it into the archive, **E** shares it
+  as a `.lamapgzreplay` file.
 - **Three tables**: *Classic* (three pop bumpers, one target bank), *Space*
   (four bumpers in a diamond, two banks) and *Lama* (open playfield, six targets
   in an arc); 3 or 5 balls per game, alternating ball by ball in two-player mode.
@@ -1945,7 +1991,7 @@ packages) and styled like a modern game launcher:
   scrollable articles and keycap chips, in all 14 languages. Reachable via
   the **"Wiki / Help"** sidebar button and from every game's pre-game screen
   (opens that game's page directly).
-- **Achievements & statistics**: **107 achievements** in three categories - 23
+- **Achievements & statistics**: **108 achievements** in three categories - 24
   collection-wide goals (games played, play time, records, wins …), 37 **score
   milestones** and 47 **special moments** (checkmating the AI, a YAHTZEE, the
   4096 tile, a T-Spin Double, 25 solved chess puzzles, a Killer Sudoku, the
@@ -1957,13 +2003,24 @@ packages) and styled like a modern game launcher:
   time, games, wins, records, favourite game and a **per-game table** sorted
   by play time (clicking a row opens that game). Reachable via the
   **"Achievements & Stats"** sidebar button.
-- **Replays**: Minigolf and Bowling record every round - what is stored is the
-  actual path of ball and pins, frame by frame, not the input. At the end of a
+- **Replays**: **six games** record their rounds - **Minigolf**, **Bowling**,
+  **Billiards**, **Pinball**, **Snake** and **Tetris**. What is stored is the
+  actual motion, frame by frame (30 samples per second), not the input; the
+  replay therefore looks exactly like the round you played, HUD and scorecard
+  included. In Minigolf, Bowling, Billiards and Pinball a sequence is a stroke,
+  roll, shot or ball; Snake and Tetris run on and are cut into ten-second
+  **chapters** (key frame + changes, so seeking stays quick). At the end of a
   round **P** shows the replay and **S** puts it into the archive; the sidebar
   button **"Replays"** opens it again at any time (one tab per game, pause, jump
-  to the next shot or roll, speed 0.5x to 4x, clickable progress bar, delete
-  with Del). The archive holds 20 recordings per game; it can be switched off on
-  the first start and in the options.
+  to the next sequence, speed 0.5x to 4x, clickable progress bar, delete with
+  Del). The archive holds 20 recordings per game; it can be switched off on the
+  first start and in the options.
+- **Sharing replays**: **E** writes a recording as a **`.lamapgzreplay`** file
+  (from the archive as well as right after the round), **I** reads such a file
+  back in - it lands in the tab of the matching game and carries a small arrow
+  there. One file holds exactly one replay and travels from machine to machine
+  like a minigolf course or a Geometry Dash level; recordings that are already
+  in the archive are not imported twice.
 
 ### Controls
 
@@ -2038,8 +2095,8 @@ store.py             Central save file mem.json (sections: mem, highscores, stat
 stats.py             Player statistics (plays, play time, wins, records) per game
 achievements.py      Achievements: definitions, unlock logic, toast overlay
 progress.py          Achievements & statistics screen (two tabs, scrollable)
-replay.py            Recording & archive of the replays (replay.json)
-replayview.py        Replay screen: archive list and playback
+replay.py            Recording, archive & sharing of replays (replay.json, .lamapgzreplay)
+replayview.py        Replay screen: archive list, playback, share/import
 ugc.py               Custom content (minigolf holes, Geometry Dash levels): storage, checks, export/import (ugc.json)
 swear.py             Word filter for names and ids (lang/swear/*.yml, all 14 languages)
 filepick.py          File dialogs ("Export as ...", "Import") and the Downloads folder

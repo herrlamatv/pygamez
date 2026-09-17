@@ -179,23 +179,27 @@
       "keywords": [
         "posnetek",
         "snemanje",
-        "minigolf",
-        "bowling",
+        "deli",
+        "datoteka",
         "arhiv",
-        "shrani"
+        "snake",
+        "tetris",
+        "biljard"
       ],
       "sections": [
         {
           "h": "Kaj je posnetek?",
           "body": [
-            "Minigolf in bowling snemata vsak krog: shrani se dejanska pot žogice in kegljev, sličico za sličico. Zato je ponovitev videti natanko tako kot tvoj krog - s progo, HUD in rezultatsko kartico.",
+            "Šest iger snema svoje kroge: minigolf, bowling, biljard, fliper, Snake in Tetris. Shrani se dejansko gibanje - sličico za sličico, tridesetkrat na sekundo. Zato je ponovitev videti natanko tako kot tvoj krog, skupaj s HUD in rezultatsko kartico.",
+            "Minigolf, bowling, biljard in fliper imajo kratke sekvence (udarec, met, udarec s tacom, krogla). Snake in Tetris tečeta brez prekinitve - tam je sekvenca desetsekundni odsek; Snake je vedno prikazan od zgoraj, tudi če si igral v 3D.",
             "Snema se samo tekoči krog. Če začneš znova, se tudi snemanje začne od začetka."
           ]
         },
         {
           "h": "Shranjevanje",
           "body": [
-            "Če je bil krog dober, na koncu pritisni [P] - posnetek se takoj zažene. S tipko [S] ga shraniš v arhiv, z [Esc] se vrneš na zaključni zaslon.",
+            "Če je bil krog dober, na koncu pritisni [P] - posnetek se takoj zažene. S tipko [S] ga shraniš v arhiv, z [E] ga deliš kot datoteko, z [Esc] se vrneš na zaključni zaslon.",
+            "Vadbeni način biljarda se nikoli ne konča: tam [P] med dvema udarcema pokaže dosedanji potek, nato se partija nadaljuje.",
             "Neshranjeni posnetki izginejo z naslednjim krogom; v arhiv gre 20 posnetkov na igro."
           ]
         },
@@ -204,14 +208,23 @@
           "body": [
             "Gumb Posnetki v stranski vrstici odpre arhiv: en zavihek na igro, z rezultatom, datumom in trajanjem vsakega posnetka.",
             "- [Enter] predvaja, [Del] izbriše (pritisni dvakrat), [Tab] zamenja igro.",
-            "- Med predvajanjem [Preslednica] zaustavi, Levo/Desno skoči na naslednji udarec ali met, Gor/Dol spremeni hitrost (0,5x do 4x).",
+            "- Med predvajanjem [Preslednica] zaustavi, Levo/Desno skoči na naslednjo sekvenco, Gor/Dol spremeni hitrost (0,5x do 4x).",
             "Klik na vrstico napredka skoči na poljubno mesto."
+          ]
+        },
+        {
+          "h": "Deljenje kot datoteka",
+          "body": [
+            "[E] zapiše posnetek kot datoteko .lamapgzreplay - iz arhiva in tudi takoj po krogu. V njej je natanko en posnetek in jo lahko podaš naprej kot minigolf progo ali stopnjo Geometry Dash.",
+            "[I] tako datoteko spet prebere. Pristane v zavihku prave igre in tam nosi majhno puščico - znak, da prihaja od drugod.",
+            "Posnetek, ki je že v arhivu, se ne uvozi dvakrat."
           ]
         },
         {
           "h": "Izklop",
           "body": [
             "Ob prvem zagonu in v možnostih pod Snemanje lahko izklopiš Snemaj posnetke - takrat se ne posname nič.",
+            "Zelo dolge partije se po dobre pol ure skrajšajo; vrstica takrat pokaže Posnetek skrajšan.",
             "Posnetki so v datoteki replay.json v mapi igre, razvrščeni po igrah. Datoteko lahko kadar koli izbrišeš."
           ]
         }

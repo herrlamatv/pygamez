@@ -19,6 +19,10 @@ Automat geht auf TILT: die Flipper sind bis zum Ballverlust tot.
 Punkte: Bumper, Slingshots, Targets und Bahnen zählen mit dem aktuellen
 Multiplikator (bis x5). Drei gefangene Bälle im Saucer starten den
 **Multiball** samt Jackpot. Der Highscore ist die Punktzahl einer Partie.
+
+Wiederholungen: aufgezeichnet wird je Kugel eine Sequenz (siehe replay.py) -
+Ballbahnen, Flipperstellung und der Tischzustand (Targets, Bahnen, Multi-
+plikator, Punkte). Am Partieende öffnet P die Wiederholung.
 """
 
 import math
@@ -26,6 +30,7 @@ import random
 
 import pygame
 
+import replay
 import settings as settings_mod
 import store
 import ui
@@ -174,6 +179,17 @@ class PinballGame(Game):
         if self.ball_count not in BALL_COUNTS:
             self.ball_count = 3
 
+        # Wiederholung der Partie (replay, siehe replay.py).
+        self.rec = None
+        self.replay = None
+        self.replay_request = None
+        self._rep = None                # gesetzt, solange nur abgespielt wird
+        self._rep_at = None
+        self._rep_state = None
+        self._rec_open = False
+        self._rec_delta = replay.Delta()
+        self._rec_start = 0
+
         self._build_fonts()
         self._layout()
         self._build_setup_layout()
@@ -238,9 +254,11 @@ class PinballGame(Game):
         self.game_over = False
         self.msg = None
         self.msg_t = 0.0
+        self._rec_new()
         self._new_ball()
 
     def _new_ball(self):
+        self._rec_open = False
         self.balls = [_Ball(LANE_X, 146.0)]
         self.phase = "launch"
         self.plunger = 0.0
@@ -325,6 +343,8 @@ class PinballGame(Game):
             if event.kind == InputEvent.KEYDOWN:
                 if event.key in ("Return", "space"):
                     self._restart()
+                elif event.key in ("p", "P") and self.replay is not None:
+                    self._open_replay()
                 elif event.key in ("s", "S"):
                     self.state = SETUP
                     self.game_over = False
@@ -373,6 +393,7 @@ class PinballGame(Game):
         b = self.balls[0]
         b.vy = -(95.0 + 175.0 * max(0.10, self.plunger))
         b.vx = -random.uniform(0.0, 4.0)
+        self._rec_scene()
         self.phase = "play"
         self.save_t = BALL_SAVE
         self.plunger = 0.0
@@ -426,6 +447,7 @@ class PinballGame(Game):
         if self.phase == "launch":
             if self.charging:
                 self.plunger = min(1.0, self.plunger + dt * 0.85)
+            self._rec_tick(dt)
             return
 
         if self.save_t > 0:
@@ -438,6 +460,7 @@ class PinballGame(Game):
                 continue
             self._step_ball(b, dt)
             self._unstick(b, dt)
+        self._rec_tick(dt)
         if not self.balls:
             self._ball_lost()
         elif self._back_in_lane():
@@ -695,7 +718,9 @@ class PinballGame(Game):
         self.scores[self.player] += bonus
         self._sync_score()
         self.balls_left[self.player] -= 1
-        if max(self.balls_left) <= 0:
+        last = max(self.balls_left) <= 0
+        self._rec_close(bonus, last)
+        if last:
             self._end_game()
             return
         # Nächster Spieler mit verbleibenden Bällen
@@ -719,12 +744,211 @@ class PinballGame(Game):
         self._sync_score()
         self.state = OVER
         self.game_over = True
+        self._rec_finish()
         self.play_sound("gameover")
 
     def _restart(self):
         self._new_game()
         self.state = PLAY
         self.play_sound("click")
+
+    # ===================================================== Replay-Aufnahme
+    # Je Kugel eine Sequenz. Ein Sample enthält die Bälle (Multiball!), die
+    # Flipperstellung und - nur wenn sich etwas geändert hat - einen Block
+    # mit dem Tischzustand (Punkte, Multiplikator, Targets, Bahnen ...).
+    # Damit kostet ein ruhiges Bild ganze sechs Zahlen.
+
+    # Länge des Zustandsblocks am Ende eines Samples (0 = unverändert).
+    REC_STATE = 10
+
+    def _rec_new(self):
+        """Startet die Aufzeichnung der Partie (falls Replays an sind)."""
+        self.replay = None
+        self._rec_open = False
+        self._rec_delta.reset()
+        self.rec = replay.recorder("pinball", self.settings, meta={
+            "table": self.table_key, "balls": self.ball_count,
+            "players": 2 if self.multiplayer else 1})
+
+    def _rec_scene(self):
+        """Beginnt die Sequenz einer Kugel (beim ersten Abschuss)."""
+        if not self.rec or self._rec_open:
+            return
+        self._rec_open = True
+        self._rec_delta.reset()
+        self._rec_start = self.scores[self.player]
+        self.rec.scene(pl=self.player,
+                       ball=self.ball_count - self.balls_left[self.player] + 1,
+                       total=self.ball_count)
+
+    def _rec_state(self):
+        """Der Zustandsblock eines Samples (REC_STATE Zahlen)."""
+        flags = ((1 if self.tilt else 0) | (2 if self.multiball else 0)
+                 | (4 if self.phase == "launch" else 0)
+                 | (8 if self.jackpot else 0))
+        tmask = sum(1 << i for i, on in enumerate(self.targets_hit) if on)
+        lmask = sum(1 << i for i, on in enumerate(self.lanes_hit) if on)
+        return (self.scores[0], self.scores[-1], self.mult, tmask, lmask,
+                flags, self.locks, self.bank_clears,
+                int(self.save_t * 10), int(self.plunger * 100))
+
+    def _rec_sample(self):
+        """[Ballzahl, x, y, ..., Flipper links/rechts, Block?, Block]."""
+        out = [len(self.balls)]
+        for b in self.balls:
+            out.append(round(b.x, 1))
+            out.append(round(b.y, 1))
+        out.append(round(self.flip_l, 2))
+        out.append(round(self.flip_r, 2))
+        st = self._rec_state()
+        if self._rec_delta.push("st", st):
+            out.append(self.REC_STATE)
+            out.extend(st)
+        else:
+            out.append(0)
+        return out
+
+    def _rec_close(self, bonus, final):
+        """Beendet die Sequenz einer Kugel (Bonus ist schon gutgeschrieben)."""
+        if not self.rec or not self._rec_open:
+            return
+        self._rec_open = False
+        self.rec.close(self._rec_sample, bonus=bonus, final=bool(final),
+                       pts=self.scores[self.player] - self._rec_start)
+
+    def _rec_tick(self, dt):
+        if self.rec and self._rec_open:
+            self.rec.tick(dt, self._rec_sample)
+
+    def _rec_finish(self):
+        """Partie-Ende: die Aufnahme als self.replay bereitlegen."""
+        if not self.rec:
+            return
+        if self.multiplayer:
+            sub = (t("common.draw") if self.winner is None
+                   else t("common.player_wins", n=self.winner + 1))
+        else:
+            sub = t("common.points", score=self.scores[0])
+        self.replay = self.rec.result(
+            title=t("pin.table." + self.table_key),
+            sub=sub, score=self.scores[0],
+            scores=list(self.scores),
+            winner=-1 if self.winner is None else self.winner)
+        self.rec = None
+
+    def _open_replay(self):
+        """Partie-Ende: die Wiederholung ansehen (Taste P).
+
+        Den Screen öffnet main.py - das Spiel legt nur den Wunsch ab.
+        """
+        if self.replay is not None:
+            self.replay_request = self.replay
+            self.play_sound("click")
+
+    # ===================================================== Replay-Wiedergabe
+    # Der Replay-Screen (replayview.py) baut eine ganz normale Spielinstanz
+    # und fährt sie über diese drei Methoden durch die Aufnahme.
+
+    def replay_begin(self, rep):
+        """Schaltet diese Instanz auf reine Wiedergabe um."""
+        self.rec = None
+        self.replay = None
+        self.replay_request = None
+        self._rep = rep
+        self._rep_at = None
+        meta = rep.get("meta") or {}
+        if meta.get("table") in TABLES:
+            self.table_key = meta["table"]
+        if int(meta.get("balls", 3) or 3) in BALL_COUNTS:
+            self.ball_count = int(meta["balls"])
+        self.players = max(1, min(2, int(meta.get("players", 1) or 1)))
+        self.multiplayer = self.players > 1
+        self.table = TABLE_DATA[self.table_key]
+        self.scores = [0] * self.players
+        self.balls_left = [self.ball_count] * self.players
+        win = int(meta.get("winner", -1))
+        self.winner = win if win >= 0 else None
+        self.state = PLAY
+        self.game_over = False
+        self.msg = None
+        self.msg_t = 0.0
+        self.shake = 0.0
+        self.flash = {}
+        self._layout()
+        self.replay_seek(0, 0)
+
+    def replay_seek(self, index, frame):
+        """Setzt Bälle, Flipper und Tisch auf Szene 'index', Sample 'frame'."""
+        scenes = self._rep.get("scenes", [])
+        if not scenes:
+            return
+        index = max(0, min(len(scenes) - 1, index))
+        sc = scenes[index]
+        frames = sc.get("f") or []
+        n = max(1, len(frames))
+        frame = max(0, min(n - 1, frame))
+        last = (frame >= n - 1)
+
+        self.player = min(self.players - 1, max(0, int(sc.get("pl", 0))))
+        ball = int(sc.get("ball", 1))
+        for i in range(self.players):
+            self.balls_left[i] = max(0, self.ball_count - ball + 1)
+        # Der Zustandsblock steht nur in Samples, in denen er sich geändert
+        # hat - beim Sprung also von vorn durch die Szene laufen.
+        start = 0 if (self._rep_at is None or self._rep_at[0] != index
+                      or frame < self._rep_at[1]) else self._rep_at[1] + 1
+        if start == 0:
+            self._rep_state = None
+        for k in range(start, frame + 1):
+            self._rep_apply(frames[k])
+        self.msg = None
+        if last:
+            if sc.get("final"):
+                self.msg = t("common.game_over")
+            elif sc.get("bonus"):
+                self.msg = t("pin.bonus", n=int(sc["bonus"]))
+        self._rep_at = (index, frame)
+
+    def _rep_apply(self, fr):
+        """Überträgt ein Sample in den Spielzustand."""
+        nb = int(fr[0])
+        self.balls = [_Ball(float(fr[1 + 2 * i]), float(fr[2 + 2 * i]))
+                      for i in range(nb)]
+        p = 1 + 2 * nb
+        self.flip_l = float(fr[p])
+        self.flip_r = float(fr[p + 1])
+        if int(fr[p + 2]):
+            self._rep_state = [float(v) for v in fr[p + 3:p + 3 + self.REC_STATE]]
+        st = self._rep_state
+        if not st:
+            return
+        self.scores[0] = int(st[0])
+        self.scores[-1] = int(st[1])
+        self.score = self.scores[0]
+        self.mult = int(st[2])
+        tmask, lmask, flags = int(st[3]), int(st[4]), int(st[5])
+        self.targets_hit = [bool(tmask >> i & 1)
+                            for i in range(len(self.table["targets"]))]
+        self.lanes_hit = [bool(lmask >> i & 1)
+                          for i in range(len(self.table["lanes"]))]
+        self.tilt = bool(flags & 1)
+        self.multiball = bool(flags & 2)
+        self.phase = "launch" if flags & 4 else "play"
+        self.jackpot = bool(flags & 8)
+        self.locks = int(st[6])
+        self.bank_clears = int(st[7])
+        self.save_t = st[8] / 10.0
+        self.plunger = st[9] / 100.0
+
+    def replay_draw(self, aiming=False, banner=False):
+        """Zeichnet den aktuellen Replay-Stand (ohne Menü-Overlay)."""
+        s = self.surface
+        ui.draw_background(s, self.width, self.height)
+        self._draw_table(s)
+        self._draw_hud(s)
+        self._draw_side(s)
+        if banner:
+            self._draw_over(s)
 
     # ------------------------------------------------------- Hilfsfunktionen
     def _award(self, points, message=None):
@@ -943,7 +1167,10 @@ class PinballGame(Game):
         if best:
             b = self._tiny.render(t("pin.best", n=best), True, ui.GOLD)
             s.blit(b, b.get_rect(center=(cx, y + 88)))
-        hint = self._tiny.render(t("pin.new_round"), True, ui.TEXT_DIM)
+        hint_txt = t("pin.new_round")
+        if self.replay is not None and self._rep is None:
+            hint_txt += "  ·  " + t("pin.replay_hint")
+        hint = self._tiny.render(hint_txt, True, ui.TEXT_DIM)
         s.blit(hint, hint.get_rect(center=(cx, y + 106)))
 
     def _draw_setup(self, s):

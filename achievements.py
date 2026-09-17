@@ -68,6 +68,7 @@ GENERAL = [
     ("painter",     "heart",  None,       None),
     ("replay_first", "star",  None,       None),
     ("replay_5",    "gem",    None,       5),
+    ("replay_share", "heart", None,       None),
 ]
 
 # Beschreibungs-Vorlagen der zählbaren Erfolge: stat -> i18n-Schlüssel

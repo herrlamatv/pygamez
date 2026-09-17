@@ -179,23 +179,27 @@
       "keywords": [
         "powtorka",
         "nagranie",
-        "minigolf",
-        "bowling",
+        "udostepnij",
+        "plik",
         "archiwum",
-        "zapis"
+        "snake",
+        "tetris",
+        "bilard"
       ],
       "sections": [
         {
           "h": "Czym jest powtórka?",
           "body": [
-            "Minigolf i bowling nagrywają każdą rundę: zapisywany jest rzeczywisty tor piłki i kręgli, klatka po klatce. Dlatego powtórka wygląda dokładnie tak jak twoja runda - z torem, HUD-em i kartą wyników.",
+            "Sześć gier nagrywa swoje rundy: minigolf, bowling, bilard, pinball, Snake i Tetris. Zapisywany jest rzeczywisty ruch - klatka po klatce, trzydzieści razy na sekundę. Dlatego powtórka wygląda dokładnie tak jak twoja runda, razem z HUD-em i kartą wyników.",
+            "Minigolf, bowling, bilard i pinball mają krótkie sekwencje (uderzenie, rzut, zagranie, kula). Snake i Tetris idą bez przerwy - tam sekwencja to dziesięciosekundowy odcinek; Snake pokazywany jest zawsze z góry, nawet jeśli grałeś w 3D.",
             "Nagrywana jest tylko bieżąca runda. Gdy zaczniesz od nowa, nagranie też rusza od początku."
           ]
         },
         {
           "h": "Zapisywanie",
           "body": [
-            "Jeśli runda była udana, naciśnij na końcu [P] - powtórka od razu ruszy. Klawisz [S] zapisuje ją w archiwum, [Esc] wraca do ekranu końcowego.",
+            "Jeśli runda była udana, naciśnij na końcu [P] - powtórka od razu ruszy. Klawisz [S] zapisuje ją w archiwum, [E] udostępnia jako plik, [Esc] wraca do ekranu końcowego.",
+            "Bilardowy tryb ćwiczeń nigdy się nie kończy: tam [P] pokazuje dotychczasowy przebieg między dwoma uderzeniami, a potem partia toczy się dalej.",
             "Niezapisane nagrania znikają wraz z kolejną rundą; w archiwum mieści się 20 powtórek na grę."
           ]
         },
@@ -204,14 +208,23 @@
           "body": [
             "Przycisk Powtórki na pasku bocznym otwiera archiwum: jedna zakładka na grę, a w niej wynik, data i czas trwania każdego nagrania.",
             "- [Enter] odtwarza, [Del] usuwa (naciśnij dwa razy), [Tab] zmienia grę.",
-            "- Podczas odtwarzania [Spacja] pauzuje, Lewo/Prawo przeskakuje do kolejnego uderzenia lub rzutu, Góra/Dół zmienia tempo (0,5x do 4x).",
+            "- Podczas odtwarzania [Spacja] pauzuje, Lewo/Prawo przeskakuje do kolejnej sekwencji, Góra/Dół zmienia tempo (0,5x do 4x).",
             "Kliknięcie na pasku postępu przenosi w dowolne miejsce."
+          ]
+        },
+        {
+          "h": "Udostępnianie jako plik",
+          "body": [
+            "[E] zapisuje nagranie jako plik .lamapgzreplay - zarówno z archiwum, jak i zaraz po rundzie. Zawiera dokładnie jedną powtórkę i można go przekazać dalej jak tor minigolfa albo poziom Geometry Dash.",
+            "[I] wczytuje taki plik z powrotem. Trafia on do zakładki właściwej gry i ma tam małą strzałkę - znak, że pochodzi skądinąd.",
+            "Nagranie, które już jest w archiwum, nie zostanie wczytane po raz drugi."
           ]
         },
         {
           "h": "Wyłączanie",
           "body": [
             "Przy pierwszym uruchomieniu i w opcjach w sekcji Nagrywanie można wyłączyć Nagrywaj powtórki - wtedy nic nie jest zapisywane.",
+            "Bardzo długie partie są skracane po dobrej półgodzinie; pasek pokazuje wtedy Nagranie skrócone.",
             "Nagrania leżą w pliku replay.json w folderze gry, posortowane według gier. Możesz go skasować w dowolnej chwili."
           ]
         }

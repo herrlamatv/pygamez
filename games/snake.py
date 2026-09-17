@@ -55,6 +55,7 @@ import highscore
 import i18n
 import ngb
 import prestige
+import replay
 import settings as settings_mod
 import ui
 from game_base import Game, InputEvent
@@ -243,6 +244,19 @@ class SnakeGame(Game):
         self._tiny = ui.font(13)
         self.highscore = highscore.load_highscores().get(self.highscore_key, 0)
 
+        # Wiederholung der Runde (replay, siehe replay.py).
+        self.rec = None
+        self.replay = None
+        self.replay_request = None
+        self._rep = None                # gesetzt, solange nur abgespielt wird
+        self._rep_at = None
+        self._rep_state = None
+        self._rec_delta = replay.Delta()
+        self._rec_moves = []
+        self._rec_last = {}
+        self._rec_layout = 0
+        self._rec_n = 0
+
         self.particles = []
         self.anim_t = 0.0
         self._ngb_menu = None          # aktives Personalisierungs-Menü (oder None)
@@ -371,6 +385,7 @@ class SnakeGame(Game):
         self._shake = 0.0
         self._reset_run_stats()
         self._new_board()
+        self._rec_new()
         self.state = PLAY
 
     # ----- Modus-Layout (Hindernisse / Portale / Zeit) ------------------
@@ -750,6 +765,9 @@ class SnakeGame(Game):
         if self.game_over:
             if event.key in ("Return", "space"):
                 self._start_play()
+            elif event.key in ("p", "P") and self.replay is not None:
+                # Nach dem Rundenende ist P frei (Prestige geht nur im Lauf).
+                self._open_replay()
             return
 
         # Boost aktivieren, solange die Taste gehalten wird
@@ -899,6 +917,8 @@ class SnakeGame(Game):
                 self._timer = 0.0
                 break
 
+        self._rec_tick(dt)
+
     def _tick(self):
         alive = [i for i, sn in enumerate(self.snakes) if sn.alive]
         # Unterschritt 0: alle bewegen sich einmal
@@ -920,6 +940,7 @@ class SnakeGame(Game):
                         self._hardcore_boost_cost(sn)   # Boost frisst Länge
                 if sn.stamina <= 0:
                     sn.boost_on = False
+            self._rec_mark()          # HARDCORE kann den Körper gekürzt haben
 
     def _hardcore_boost_cost(self, sn):
         """HARDCORE: jeder Boost-Schritt kostet Länge.
@@ -1053,6 +1074,7 @@ class SnakeGame(Game):
         if ate_gold:
             self.golden = None
 
+        self._rec_mark(movers)
         self._check_end(tot)
 
     def _eat_food(self, sn):
@@ -1288,8 +1310,323 @@ class SnakeGame(Game):
             return
         self._effects_done = True
         self.highscore = max(self.highscore, self.score)
+        self._rec_finish()
         self.play_sound("gameover")
         self.rumble(200)
+
+    # ===================================================== Replay-Aufnahme
+    # Snake läuft durch - deshalb ist eine "Szene" hier ein KAPITEL: ihre
+    # Kopfdaten enthalten den vollständigen Zustand (Körper, Äpfel, Punkte),
+    # die Samples danach nur noch Änderungen. Alle REC_CHAPTER Samples
+    # beginnt ein neues Kapitel; das hält das Spulen schnell und setzt in
+    # der Fortschrittsleiste alle paar Sekunden eine Marke.
+    #
+    # Ein Sample ist::
+    #
+    #     [anzahl_bewegungen, (i, kopf_x, kopf_y, länge, schritt) * n,
+    #      block_länge, *block]
+    #
+    # "schritt" ist 1, wenn wirklich ein neuer Kopf angesetzt wurde (0 =
+    # die Schlange wurde nur gekürzt, z.B. durch HARDCORE oder eine Wette).
+    # Der Block steht nur in Samples, in denen sich etwas geändert hat.
+
+    REC_CHAPTER = 300              # Samples je Kapitel (= 10 Sekunden)
+
+    def _rec_new(self):
+        """Startet die Aufzeichnung der Runde (falls Replays an sind)."""
+        self.replay = None
+        self._rec_moves = []
+        self._rec_n = 0
+        self._rec_last = {}
+        self._rec_delta.reset()
+        self.rec = replay.recorder("snake", self.settings, meta={
+            "mode": self.mode_key, "wrap": bool(self.wrap_active),
+            "players": len(self.snakes), "cols": self.cols, "rows": self.rows,
+            "hardcore": bool(self.hardcore_active),
+            "view3d": bool(self.view3d_active)})
+        if not self.rec:
+            return
+        self._rec_layout = self.rec.layout({
+            "cols": self.cols, "rows": self.rows,
+            "obs": [v for cell in sorted(self.obstacles) for v in cell],
+            "por": [[a[0], a[1], b[0], b[1], list(col)]
+                    for (a, b, col) in self.portal_pairs]})
+        self._rec_chapter()
+
+    def _rec_chapter(self):
+        """Beginnt ein neues Kapitel (Schlüsselbild mit dem ganzen Zustand)."""
+        if not self.rec:
+            return
+        self._rec_n = 0
+        self._rec_moves = []
+        self._rec_delta.reset()
+        self.rec.scene(layout=self._rec_layout,
+                       n=len(self.rec.scenes) + 1,
+                       bodies=[[v for cell in sn.body for v in cell]
+                               for sn in self.snakes],
+                       dirs=[list(sn.direction) for sn in self.snakes],
+                       st=list(self._rec_state()))
+
+    def _rec_state(self):
+        """Der Zustandsblock: alles, was nicht am Körper hängt."""
+        st = [self.apples_total, self.apples_bank, self.prestige,
+              self.comp_level,
+              int(self.time_left * 10) if self.mode_key == "timed" else -1,
+              int(self.interval * 1000)]
+        foods = sorted(self.foods)
+        st.append(len(foods))
+        for (x, y) in foods:
+            st += [x, y]
+        if self.golden is None:
+            st += [0, 0, 0, 0]
+        else:
+            st += [1, self.golden[0], self.golden[1], int(self.golden_timer * 10)]
+        sp = sorted(self.specials.items())
+        st.append(len(sp))
+        for (x, y), info in sp:
+            st += [x, y, 1 if info.get("type") == "blue" else 0,
+                   int(info.get("timer", 0) * 10)]
+        for sn in self.snakes:
+            st += [sn.score, sn.apples, 1 if sn.alive else 0,
+                   1 if sn.boost_on else 0, int(sn.stamina * 100),
+                   int(sn.size_frac * 100)]
+        return tuple(st)
+
+    def _rec_mark(self, movers=()):
+        """Hält Körper-Änderungen fest (nach jedem Schritt aufrufen).
+
+        Ein neuer Kopf heißt "Schritt" (beim Abspielen wird eine Zelle
+        angesetzt); bleibt der Kopf stehen und nur die Länge ändert sich,
+        wurde der Schwanz gekürzt (HARDCORE, lila Apfel) - dann darf beim
+        Abspielen nichts angesetzt werden. 'movers' dient nur der Lesbarkeit
+        an den Aufrufstellen: ein echter Schritt ändert immer den Kopf.
+        """
+        if not self.rec:
+            return
+        for i, sn in enumerate(self.snakes):
+            if not sn.body:
+                continue
+            head, blen = sn.body[-1], len(sn.body)
+            prev = self._rec_last.get(i)
+            if prev == (head, blen):
+                continue
+            self._rec_last[i] = (head, blen)
+            self._rec_moves.append((i, head[0], head[1], blen,
+                                    1 if (prev is None or prev[0] != head) else 0))
+
+    def _rec_sample(self):
+        """Ein Sample: die gesammelten Bewegungen + ggf. der Zustandsblock."""
+        out = [len(self._rec_moves)]
+        for m in self._rec_moves:
+            out.extend(m)
+        self._rec_moves = []
+        st = self._rec_state()
+        if self._rec_delta.push("st", st):
+            out.append(len(st))
+            out.extend(st)
+        else:
+            out.append(0)
+        self._rec_n += 1
+        return out
+
+    def _rec_tick(self, dt):
+        """Je Bild einmal: ggf. neues Kapitel beginnen, dann Sample nehmen."""
+        if not self.rec:
+            return
+        if self._rec_n >= self.REC_CHAPTER and not self._rec_moves:
+            self._rec_chapter()
+        self.rec.tick(dt, self._rec_sample)
+
+    def _rec_finish(self):
+        """Rundenende: die Aufnahme als self.replay bereitlegen."""
+        if not self.rec:
+            return
+        self.rec.close(self._rec_sample, final=True)
+        if self.multiplayer:
+            sub = (i18n.t("common.draw") if self.winner is None
+                   else i18n.t("common.player_wins", n=self.winner + 1))
+        else:
+            sub = i18n.t("snake.replay_sub", score=self.score,
+                         apples=self.apples_total,
+                         len=len(self.snakes[0].body))
+        self.replay = self.rec.result(
+            title=i18n.t("snake.mode." + self.mode_key),
+            sub=sub, score=self.score,
+            winner=-1 if self.winner is None else self.winner)
+        self.rec = None
+
+    def _open_replay(self):
+        """Rundenende: die Wiederholung ansehen (Taste P).
+
+        Den Screen öffnet main.py - das Spiel legt nur den Wunsch ab.
+        """
+        if self.replay is not None:
+            self.replay_request = self.replay
+            self.play_sound("click")
+
+    # ===================================================== Replay-Wiedergabe
+    # Der Replay-Screen (replayview.py) baut eine ganz normale Spielinstanz
+    # und fährt sie über diese drei Methoden durch die Aufnahme. Gezeigt wird
+    # immer die 2D-Ansicht: die 3D-Kamera hängt an der Bildrate, das Gitter
+    # dagegen ist exakt das, was aufgezeichnet wurde.
+
+    def replay_begin(self, rep):
+        """Schaltet diese Instanz auf reine Wiedergabe um."""
+        self.rec = None
+        self.replay = None
+        self.replay_request = None
+        self._rep = rep
+        self._rep_at = None
+        self._rep_state = None
+        meta = rep.get("meta") or {}
+        if meta.get("mode") in MODE_KEYS:
+            self.mode_index = MODE_KEYS.index(meta["mode"])
+        self.wrap = bool(meta.get("wrap", False))
+        self.hardcore = bool(meta.get("hardcore", False))
+        self.view3d = False                 # Wiedergabe immer von oben
+        self.multiplayer = int(meta.get("players", 1) or 1) > 1
+
+        layouts = rep.get("layouts") or [{}]
+        lay = layouts[0] if layouts else {}
+        self.cols = int(lay.get("cols") or meta.get("cols") or self.cols)
+        self.rows = int(lay.get("rows") or meta.get("rows") or self.rows)
+        obs = lay.get("obs") or []
+        self.obstacles = {(int(obs[i]), int(obs[i + 1]))
+                          for i in range(0, len(obs) - 1, 2)}
+        self.portals = {}
+        self.portal_pairs = []
+        for entry in lay.get("por") or []:
+            a = (int(entry[0]), int(entry[1]))
+            b = (int(entry[2]), int(entry[3]))
+            self.portals[a] = b
+            self.portals[b] = a
+            self.portal_pairs.append((a, b, tuple(entry[4])))
+
+        self.foods = set()
+        self._food_anim = {}
+        self._eat_fx = []
+        self.golden = None
+        self.golden_timer = 0.0
+        self.specials = {}
+        self.slot = None
+        self.float_texts = []
+        self._banner = None
+        self._purple_pending = None
+        self._slot_pending = None
+        self.particles = []
+        self.particles3d = []
+        self._shake = 0.0
+        self.time_left = TIMED_SECONDS
+        self.interval = BASE_INTERVAL
+        self.game_over = False
+        win = int(meta.get("winner", -1))
+        self.winner = win if win >= 0 else None
+        self._run_t = 99.0                  # keine Steuer-Hinweise im Replay
+        # Damit der REPLAY-Chip des Screens unter der Kopfzeile sitzt
+        # (replayview._chip_y fragt hud_h ab; Snake zeichnet oben links
+        # Punkte, Äpfel und ggf. die Prestige-Zeile).
+        self.hud_h = 78
+        self.state = PLAY
+        self.replay_seek(0, 0)
+
+    def replay_seek(self, index, frame):
+        """Setzt Schlangen, Äpfel und HUD auf Kapitel 'index', Sample 'frame'."""
+        scenes = self._rep.get("scenes", [])
+        if not scenes:
+            return
+        index = max(0, min(len(scenes) - 1, index))
+        sc = scenes[index]
+        frames = sc.get("f") or []
+        n = max(1, len(frames))
+        frame = max(0, min(n - 1, frame))
+
+        if (self._rep_at is None or self._rep_at[0] != index
+                or frame < self._rep_at[1]):
+            # Schlüsselbild: Schlangen und Zustand komplett neu aufbauen.
+            self.snakes = []
+            dirs = sc.get("dirs") or []
+            for i, flat in enumerate(sc.get("bodies") or []):
+                body = [(int(flat[k]), int(flat[k + 1]))
+                        for k in range(0, len(flat) - 1, 2)]
+                d = dirs[i] if i < len(dirs) else (1, 0)
+                self.snakes.append(_Snake(body, (int(d[0]), int(d[1])),
+                                          "p1" if i == 0 else "p2"))
+            self._rep_state = list(sc.get("st") or [])
+            self._rep_state_apply()
+            start = 0
+        else:
+            start = self._rep_at[1] + 1
+        for k in range(start, frame + 1):
+            self._rep_apply(frames[k])
+        self.score = max([sn.score for sn in self.snakes] or [0])
+        self._rep_at = (index, frame)
+
+    def _rep_apply(self, fr):
+        """Überträgt ein Sample in den Spielzustand."""
+        nm = int(fr[0])
+        p = 1
+        for _ in range(nm):
+            i, hx, hy, blen, step = (int(v) for v in fr[p:p + 5])
+            p += 5
+            if 0 <= i < len(self.snakes):
+                sn = self.snakes[i]
+                if step:
+                    sn.body.append((hx, hy))
+                if len(sn.body) > blen:
+                    del sn.body[:len(sn.body) - blen]
+                sn.prev_body = list(sn.body)
+        k = int(fr[p])
+        if k:
+            self._rep_state = [int(v) for v in fr[p + 1:p + 1 + k]]
+            self._rep_state_apply()
+
+    def _rep_state_apply(self):
+        """Überträgt den Zustandsblock (Äpfel, Punkte, Ausdauer ...)."""
+        st = self._rep_state
+        if not st:
+            return
+        self.apples_total, self.apples_bank = int(st[0]), int(st[1])
+        self.prestige, self.comp_level = int(st[2]), int(st[3])
+        self.time_left = max(0.0, st[4] / 10.0) if st[4] >= 0 else TIMED_SECONDS
+        self.interval = max(0.001, st[5] / 1000.0)
+        p = 6
+        nf = int(st[p])
+        p += 1
+        self.foods = {(int(st[p + 2 * i]), int(st[p + 2 * i + 1]))
+                      for i in range(nf)}
+        p += 2 * nf
+        self._food_anim = {cell: FOOD_SPAWN_ANIM for cell in self.foods}
+        self.golden = (int(st[p + 1]), int(st[p + 2])) if st[p] else None
+        self.golden_timer = st[p + 3] / 10.0
+        p += 4
+        ns = int(st[p])
+        p += 1
+        self.specials = {}
+        for i in range(ns):
+            cell = (int(st[p]), int(st[p + 1]))
+            self.specials[cell] = {"type": "blue" if st[p + 2] else "purple",
+                                   "timer": st[p + 3] / 10.0}
+            p += 4
+        for sn in self.snakes:
+            sn.score = int(st[p])
+            sn.apples = int(st[p + 1])
+            sn.alive = bool(st[p + 2])
+            sn.boost_on = bool(st[p + 3])
+            sn.stamina = st[p + 4] / 100.0
+            sn.size_frac = st[p + 5] / 100.0
+            p += 6
+
+    def replay_draw(self, aiming=False, banner=False):
+        """Zeichnet den aktuellen Replay-Stand (ohne Menü-Overlay)."""
+        self.anim_t += 1.0 / replay.RATE
+        self._draw_world_2d()
+        # game_over blendet im HUD die Fußzeilen aus (Prestige-Vorschau,
+        # Competitive-Hinweise) - in einer Wiederholung wären sie nur Lärm.
+        self.game_over = True
+        self._draw_hud()
+        if banner:
+            self._draw_game_over()
+        self.game_over = False
 
     # ----- Partikel -----------------------------------------------------
     def _spawn_particles(self, cell, color, n):
@@ -2366,6 +2703,7 @@ class SnakeGame(Game):
             self.draw_center_text(i18n.t("snake.apples_pp", a0=a0, a1=a1),
                                   self.font, ui.TEXT_DIM, 14)
             self.draw_center_text(i18n.t("common.enter_restart"), self.font, ui.TEXT, 48)
+            self._draw_replay_hint(78)
             return
 
         titel = i18n.t("snake.time_up") \
@@ -2382,6 +2720,14 @@ class SnakeGame(Game):
                 i18n.t("snake.prestige", roman=prestige.roman(self.prestige)),
                 self.font, ui.GOLD, 16)
         self.draw_center_text(i18n.t("common.enter_restart"), self.font, ui.TEXT, 46)
+        self._draw_replay_hint(76)
+
+    def _draw_replay_hint(self, dy):
+        """Hinweis auf die Wiederholung (nur wenn es eine gibt)."""
+        if self.replay is None or self._rep is not None:
+            return
+        self.draw_center_text(i18n.t("snake.replay_hint"), self._small,
+                              ui.TEXT_DIM, dy)
 
     # ----- Setup zeichnen ----------------------------------------------
     def _draw_setup(self):
