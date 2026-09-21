@@ -166,6 +166,7 @@ class TankDuelGame(Game):
     def _start_match(self):
         self.rounds = [0, 0]
         self.game_over = False
+        self.new_round_result()   # Revanche: Duell-Ergebnis wieder freigeben
         self._arena_cycle = [k for k in ("open", "cross", "pillars", "maze")]
         random.shuffle(self._arena_cycle)
         self._start_round()
@@ -361,6 +362,10 @@ class TankDuelGame(Game):
                         self.play_sound("bounce")
                     else:
                         tk["alive"] = False
+                        # Erfolg: Treffer über die Bande (Geschoss abgeprallt).
+                        if (b["bounces"] >= 1 and i != b["owner"]
+                                and (self.multiplayer or b["owner"] == 0)):
+                            self.ach_event("tanks_bank")
                         self._round_over(1 - i)
                     break
             if not hit:
@@ -545,6 +550,7 @@ class TankDuelGame(Game):
             self.report_result(True)
         elif self.multiplayer:
             self.play_sound("win")
+            self.report_duel(winner)   # Duell-Bilanz fortschreiben
         else:
             self.play_sound("gameover")
             self.report_result(False)
@@ -672,8 +678,9 @@ class TankDuelGame(Game):
         pr = max(3, self.hud_h // 9)      # Runden-Punkte ("Pips") als Kreise
         gap = 2 * pr + 6
         for i, col in ((0, COL_P1), (1, COL_P2)):
-            name = t("common.player1") if i == 0 else \
-                (t("common.player2") if self.multiplayer else t("common.ai"))
+            # Profilnamen im HUD (rechts steht im Einzelspieler die KI).
+            name = self.pname(0)[:8] if i == 0 else \
+                (self.pname(1)[:8] if self.multiplayer else t("common.ai"))
             img = self._small.render(name, True, col)
             if i == 0:
                 s.blit(img, img.get_rect(midleft=(12, cy)))
@@ -714,8 +721,9 @@ class TankDuelGame(Game):
         cx, cy = self.width // 2, self.height // 2
         winner = 0 if self.rounds[0] >= ROUNDS_TO_WIN else 1
         if self.multiplayer:
-            head = self._huge.render(t("common.player_wins", n=winner + 1),
-                                     True, COL_P1 if winner == 0 else COL_P2)
+            head = self._huge.render(
+                t("common.player_wins_name", name=self.pname(winner)[:10]),
+                True, COL_P1 if winner == 0 else COL_P2)
         else:
             key = "tank.match_win" if winner == 0 else "common.game_over"
             head = self._huge.render(t(key), True,

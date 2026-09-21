@@ -624,6 +624,8 @@ class BowlingGame(Game):
         if self.multiplayer:
             s0, s1 = total_score(self.rolls[0]), total_score(self.rolls[1])
             self.winner = 0 if s0 > s1 else (1 if s1 > s0 else None)
+            if self.winner is not None:
+                self.report_duel(self.winner)
         else:
             self.report_result(final >= 100)
         self._rec_finish(final)
@@ -964,7 +966,8 @@ class BowlingGame(Game):
         if self.msg:
             mid, col = self.msg, ui.GOLD
         elif self.multiplayer:
-            mid = t("common.player1" if self.player == 0 else "common.player2")
+            # Profilname des Spielers am Zug (gekürzt für die schmale Leiste)
+            mid = self.pname(self.player)[:10]
             col = self.accent
         else:
             mid, col = t("bowl.step." + self._step_name()) if self.ball is None \
@@ -1047,7 +1050,8 @@ class BowlingGame(Game):
         if self.multiplayer:
             head = self._huge.render(
                 t("common.draw") if self.winner is None
-                else t("common.player_wins", n=self.winner + 1), True, self.accent)
+                else t("common.player_wins_name", name=self.pname(self.winner)),
+                True, self.accent)
         else:
             head = self._huge.render(t("bowl.game_done"), True, self.accent)
         s.blit(head, head.get_rect(center=(cx, y + 32)))

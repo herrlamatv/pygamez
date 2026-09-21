@@ -364,6 +364,8 @@ class FlappyGame(Game):
 
     def _finish(self):
         self.game_over = True
+        # Erfolg: Gold-Marke (40 Punkte) am Ende der Partie melden
+        self.ach_event("flappy_gold", self.score)
         self.new_best = self.score > self.highscore
         self.highscore = max(self.highscore, self.score)
         self._over_t = self.anim_t

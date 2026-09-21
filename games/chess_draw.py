@@ -373,7 +373,14 @@ class ChessDraw:
             if color == self.human_color:
                 return t("chess.you")
             return "%s · %s" % (t("common.ai"), t("chess.diff." + ("lvl%d" % self.diff)))
-        return t("chess.white") if color == ce.WHITE else t("chess.black")
+        # Mehrspieler: Farbe bleibt stehen, davor/dahinter der Profilname
+        # ("Weiß · Lama"). Ohne eigenes Profil bleibt es bei der Farbe.
+        seat = 0 if color == ce.WHITE else 1
+        base = t("chess.white") if color == ce.WHITE else t("chess.black")
+        who = self.pname(seat)
+        if who != t("common.player%d" % (seat + 1)):
+            return "%s · %s" % (base, who)
+        return base
 
     def _draw_player(self, s, rect, color):
         active = self.state == "play" and self.pos.side == color

@@ -199,6 +199,7 @@ class MemoryGame(Game):
 
     # ===================================================== Spielaufbau
     def _new_game(self):
+        self.new_round_result()     # neue Runde: Duell-Bilanz wieder freigeben
         self.score = 0
         self.game_over = False
         _key, cols, rows, base = SIZES[self.size_idx]
@@ -331,12 +332,18 @@ class MemoryGame(Game):
         if self.multiplayer:
             winner = max(self.pairs)
             self.score = winner * 100
+            if self.pairs[0] != self.pairs[1]:
+                # Duell-Bilanz der Profile: mehr Paare = Sieg
+                self.report_duel(0 if self.pairs[0] > self.pairs[1] else 1)
         else:
             self.score = max(100, self.base - 15 * self.moves
                              - 2 * int(self.elapsed))
             # Perfekt = jedes Paar im ersten Anlauf gefunden.
             if self.moves == len(self.cards) // 2:
                 self.ach_event("memory_perfect")
+        # Erfolg: 4x4-Feld in unter 30 Sekunden aufgedeckt
+        if self.size_idx == 0 and self.elapsed < 30.0:
+            self.ach_event("memory_swift")
         self.game_over = True
         self.play_sound("win")
         self.rumble(200)
@@ -423,15 +430,17 @@ class MemoryGame(Game):
                          (self.width, self.hud_h))
         cy = self.hud_h // 2
         if self.multiplayer:
+            # Profilnamen im HUD (gekürzt, damit die drei Blöcke nicht kollidieren)
+            n1, n2 = self.pname(0)[:10], self.pname(1)[:10]
             p1 = self._small.render(
-                t("common.player1") + "  " + t("mem.player_pairs", n=self.pairs[0]),
+                n1 + "  " + t("mem.player_pairs", n=self.pairs[0]),
                 True, COL_P1 if self.turn == 0 else ui.TEXT_DIM)
             s.blit(p1, p1.get_rect(midleft=(12, cy)))
             p2 = self._small.render(
-                t("mem.player_pairs", n=self.pairs[1]) + "  " + t("common.player2"),
+                t("mem.player_pairs", n=self.pairs[1]) + "  " + n2,
                 True, COL_P2 if self.turn == 1 else ui.TEXT_DIM)
             s.blit(p2, p2.get_rect(midright=(self.width - 12, cy)))
-            who = t("common.player1") if self.turn == 0 else t("common.player2")
+            who = n1 if self.turn == 0 else n2
             mid = self._small.render(t("mem.turn", name=who), True, self.accent)
             s.blit(mid, mid.get_rect(center=(self.width // 2, cy)))
         else:
@@ -458,8 +467,9 @@ class MemoryGame(Game):
                 head = self._huge.render(t("common.draw"), True, ui.TEXT_DIM)
             else:
                 n = 1 if self.pairs[0] > self.pairs[1] else 2
-                head = self._huge.render(t("common.player_wins", n=n), True,
-                                         COL_P1 if n == 1 else COL_P2)
+                head = self._huge.render(
+                    t("common.player_wins_name", name=self.pname(n - 1)[:10]),
+                    True, COL_P1 if n == 1 else COL_P2)
             sub = self.font.render(f"{self.pairs[0]} : {self.pairs[1]}", True,
                                    ui.TEXT)
         else:

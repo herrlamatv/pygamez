@@ -62,6 +62,7 @@ class TicTacToeGame(Game):
         self.score = 0
         self.wins_x = 0
         self.wins_o = 0
+        self.streak = 0           # Siege in Folge gegen die KI (ttt_unbeaten)
         self.game_over = False
         self.state = SETUP
 
@@ -175,6 +176,7 @@ class TicTacToeGame(Game):
     # ===== Runde vorbereiten ============================================
 
     def _start_run(self):
+        self.streak = 0
         self.n = self.size
         self.k = win_length(self.n)
         self._max_depth = {3: 9, 4: 4, 5: 3}.get(self.n, 2)  # Suchtiefe für Hard
@@ -191,6 +193,7 @@ class TicTacToeGame(Game):
         self.win_cells = None
         self.ai_timer = 0.0
         self.game_over = False
+        self.new_round_result()   # neue Runde: Duell-Ergebnis wieder freigeben
         self._layout_board()
 
     def _layout_board(self):
@@ -307,6 +310,12 @@ class TicTacToeGame(Game):
         self.game_over = True     # damit main.py den Highscore speichert
         if not self.multiplayer and self.winner in (HUMAN, AI):
             self.report_result(self.winner == HUMAN)
+        if not self.multiplayer:
+            # Erfolg: drei Siege in Folge gegen die KI (Remis bricht die Serie).
+            self.streak = self.streak + 1 if self.winner == HUMAN else 0
+            self.ach_event("ttt_unbeaten", self.streak)
+        elif self.winner in (HUMAN, AI):
+            self.report_duel(0 if self.winner == HUMAN else 1)
         if self.winner == "Unentschieden":
             self.play_sound("point")
         elif not self.multiplayer and self.winner == AI:
@@ -549,8 +558,9 @@ class TicTacToeGame(Game):
         s.blit(stand, (self.width - stand.get_width() - 10, 8))
         if self.state == PLAY:
             if self.multiplayer:
-                zug = i18n.t("ttt.turn_p1") if self.current == HUMAN \
-                    else i18n.t("ttt.turn_p2")
+                # Profilnamen statt "Spieler 1/2" anzeigen.
+                zug = i18n.t("common.player_turn_name",
+                             name=self.pname(0 if self.current == HUMAN else 1))
             else:
                 zug = i18n.t("ttt.turn_you") if self.current == HUMAN \
                     else i18n.t("ttt.turn_ai")
@@ -565,10 +575,9 @@ class TicTacToeGame(Game):
         if self.winner == "Unentschieden":
             msg, farbe = i18n.t("common.draw"), ui.GOLD
         elif self.multiplayer:
-            if self.winner == HUMAN:
-                msg, farbe = i18n.t("ttt.win_p1"), COL_X
-            else:
-                msg, farbe = i18n.t("ttt.win_p2"), COL_O
+            i = 0 if self.winner == HUMAN else 1
+            msg = i18n.t("common.player_wins_name", name=self.pname(i)[:10])
+            farbe = COL_X if i == 0 else COL_O
         elif self.winner == HUMAN:
             msg, farbe = i18n.t("ttt.win_you"), ui.GREEN
         else:

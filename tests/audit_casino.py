@@ -292,14 +292,22 @@ hs = {"blackjack": 6000, "poker": 1400, "casino": 0, "snake": 99}
 fresh_mem({"mem": {"lang": "de"}, "highscores": dict(hs),
            "blackjack": {"chips": 3200, "best": 5000}, "poker": {"chips": 800, "best": 1500}})
 d = lamabank.load()
-raw = json.load(open(MEM, encoding="utf-8"))
+
+
+def mem_sections():
+    """Abschnitte des aktiven Profils aus der Rohdatei (players/<id>)."""
+    raw = json.load(open(MEM, encoding="utf-8"))
+    return raw["players"][raw["profiles"]["active"]]
+
+
+raw = mem_sections()
 check(d["chips"] == 3200 and d["migrated"], "(8) Migration: Konto = max(Blackjack, Poker)")
 check(lamabank.score_for("blackjack") == 6000 and lamabank.score_for("poker") == 1500
       and lamabank.score_for("casino") == 1000, "(8) Migration: Bestwerte übernommen (Highscore falls höher)")
 check(raw["highscores"] == hs and raw["blackjack"] == {"chips": 3200, "best": 5000}
       and raw["poker"] == {"chips": 800, "best": 1500}, "(8) highscores/alte Abschnitte unverändert")
 lamabank.load()
-check(json.load(open(MEM, encoding="utf-8"))["highscores"] == hs and lamabank.balance() == 3200,
+check(mem_sections()["highscores"] == hs and lamabank.balance() == 3200,
       "(8) erneutes Laden migriert nicht nochmal")
 fresh_mem({"highscores": {}})
 lamabank.load()

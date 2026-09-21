@@ -298,3 +298,17 @@ html, body {
   .modal { padding: 10px; }
   #wiki-nav { width: 150px; flex-basis: 150px; }
 }
+
+/* Profil-Chip unter den Werkzeug-Knöpfen: wer spielt gerade, und auf welchem Level. */
+.profile-chip {
+  margin-top: 6px;
+  padding: 4px 8px;
+  border: 1px solid var(--border, #2a3147);
+  border-radius: 999px;
+  font-size: 11px;
+  color: var(--text-dim, #969eb2);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -642,10 +642,9 @@ def audit_save_resume():
           and cg["points"] == 0 and cg["moves"] == 0 and cg["time_left"] == g48.TIME_LIMIT
           and len(cg["stack"]) == 1 and cg["stack"][0]["slides"] == [],
           "kaputte Spielstände werden verworfen bzw. bereinigt")
-    raw = store.load()
-    raw["g2048"] = {"best": {"4-classic": "viel", "9-classic": 5}, "saves": {"4-classic": bad},
-                    "top_tile": True}
-    store.save(raw)
+    # Abschnitte liegen seit dem Profil-Update unter players/<profil-id>.
+    store.save_section("g2048", {"best": {"4-classic": "viel", "9-classic": 5},
+                                 "saves": {"4-classic": bad}, "top_tile": True})
     z = make()
     check(z.data["best"] == {} and z.data["saves"] == {} and z.data["top_tile"] == 0,
           "mem.json-Section mit Unsinn lädt als leerer Stand")

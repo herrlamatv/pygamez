@@ -277,6 +277,7 @@ class ReversiGame(Game):
     def _restart(self):
         self.starter = 1 - self.starter
         self.game_over = False
+        self.new_round_result()   # Revanche: Duell-Ergebnis wieder freigeben
         self._new_round()
         self.state = PLAY
         self.play_sound("click")
@@ -306,7 +307,7 @@ class ReversiGame(Game):
         self_moves = _legal_moves(self.board, self.player + 1)
         if self_moves:
             self.moves = self_moves
-            who = t("common.player2") if other == 1 else t("common.player1")
+            who = self.pname(1) if other == 1 else self.pname(0)
             self.msg = t("rev.pass", name=who)
             self.msg_t = 1.4
             self.play_sound("select")
@@ -336,6 +337,11 @@ class ReversiGame(Game):
                     self.report_result(False)
             else:
                 self.play_sound("win")
+                # Duell-Bilanz der beiden Profile fortschreiben.
+                self.report_duel(self.winner)
+            # Erfolg: Der Verlierer hat keinen einzigen Stein mehr auf dem Brett.
+            if min(a, b) == 0 and (self.multiplayer or self.winner == 0):
+                self.ach_event("reversi_sweep")
         else:
             self.play_sound("select")
         self.game_over = True     # main.py speichert den Score einmalig
@@ -549,7 +555,7 @@ class ReversiGame(Game):
             elif not self.multiplayer:
                 mid = t("rev.your_turn")
             else:
-                who = t("common.player1") if self.player == 0 else t("common.player2")
+                who = self.pname(0) if self.player == 0 else self.pname(1)
                 mid = t("rev.turn", name=who)
             img = self._small.render(mid, True, self.accent)
             s.blit(img, img.get_rect(center=(self.width // 2, cy)))
@@ -577,8 +583,9 @@ class ReversiGame(Game):
             s.blit(head, head.get_rect(midtop=(cx, yy)))
         elif self.multiplayer:
             # Siegtext in Theme-Farbe (lesbar), Stein-Symbol zeigt die Farbe.
-            head = self._huge.render(t("common.player_wins", n=self.winner + 1),
-                                     True, ui.TEXT)
+            head = self._huge.render(
+                t("common.player_wins_name", name=self.pname(self.winner)[:10]),
+                True, ui.TEXT)
             ri = max(8, hh // 3)
             x0 = cx - (head.get_width() + 2 * ri + 14) // 2
             cyc = yy + hh // 2

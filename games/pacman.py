@@ -267,6 +267,7 @@ class PacmanGame(Game):
         self.mode_timer = SCHEDULE[0][0]
         self.fright_timer = 0.0
         self.ghost_combo = 0
+        self.fright_eaten = 0      # Geister pro Kraftpille (für den Erfolg)
         self.freeze = 0.0
         self.state = READY
         self.ready_timer = ready_time
@@ -583,6 +584,7 @@ class PacmanGame(Game):
     def _frighten(self):
         self.fright_timer = self._fright_time()
         self.ghost_combo = 0
+        self.fright_eaten = 0
         for g in self.ghosts:
             if g.state == "maze":
                 g.frightened = True
@@ -611,6 +613,9 @@ class PacmanGame(Game):
     def _eat_ghost(self, g, gx, gy):
         pts = 200 * (2 ** self.ghost_combo)
         self.ghost_combo = min(self.ghost_combo + 1, 3)
+        self.fright_eaten += 1
+        if self.fright_eaten >= 4:
+            self.ach_event("pac_ghosts")   # Erfolg: alle 4 Geister pro Kraftpille
         self.score += pts
         g.state = "eyes"
         g.frightened = False

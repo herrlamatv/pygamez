@@ -649,6 +649,8 @@ class InvadersGame(Game):
                               18 if a["kind"] == "boss" else 8)
         self.play_sound("explode")
         if a["kind"] == "boss":
+            # Erfolg: Boss abgeschossen
+            self.ach_event("inv_boss")
             self.rumble(220)
             self._drop_powerup(a["cx"], a["cy"], force=True)
         elif random.random() < POWERUP_CHANCE:

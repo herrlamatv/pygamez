@@ -336,9 +336,20 @@ def delete_map(map_id, game="minigolf"):
 # ---------------------------------------------------------------------------
 
 def last_author():
-    """Zuletzt benutzter Creator-Name (leer, wenn noch keiner gesetzt ist)."""
+    """Zuletzt benutzter Creator-Name.
+
+    Ist noch keiner gesetzt, schlägt der Name des aktiven Spielerprofils vor -
+    wer eine Bahn baut, hat seinen Namen damit schon im Feld stehen.
+    """
     a = _read_raw().get("author")
-    return a if isinstance(a, str) else ""
+    if isinstance(a, str) and a:
+        return a
+    try:
+        import profiles
+        name = profiles.name_of()
+        return name if swear.is_clean(name) else ""
+    except Exception:
+        return ""
 
 
 def set_last_author(name):

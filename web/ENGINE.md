@@ -35,6 +35,14 @@ web/
   js/core/game.js       PG.Game (Basisklasse), PG.register
   js/core/replay.js     PG.replay: Aufzeichnung, Archiv (localStorage) und Teilen (.lamapgzreplay)
   js/core/replayview.js PG.ReplayScreen: Archiv-Liste + Wiedergabe
+  js/core/achdefs.js    Erfolgs-/Rang-Definitionen, erzeugt aus achievements.py + levels.py
+                        (python devtools/export_achievements.py - NICHT von Hand ändern)
+  js/core/profiles.js   PG.profiles: Spielerprofile (eigener Speicher-Prefix je Profil)
+  js/core/stats.js      PG.stats: Statistik im Format der Datei stats.pgzlamastats
+  js/core/ach.js        PG.ach: Erfolge, Seltenheit, Level/Ränge, Toasts, Abzeichen
+  js/core/charts.js     PG.charts: Balken, Linien, Kalender-Heatmap, Ringe, Tooltip
+  js/core/progressview.js PG.ProgressScreen: Erfolge & Statistik (fünf Reiter)
+  js/core/profileview.js  PG.ProfileScreen + PG.LevelIntroScreen
   js/core/app.js        Shell: Startbildschirm, Vorspiel-Screen, Loop, Eingabe, Pause, Highscore, Wiki
   js/manifest.js        Reihenfolge der Spiele + Skriptdateien je Spiel
   js/games/*.js         die Spiele
@@ -183,8 +191,14 @@ new PG.Rect(x,y,w,h)                  // x,y,w,h,left,right,top,bottom,centerx,c
                                       // collidepoint(x,y|[x,y]), colliderect, contains, inflate, inflateIp,
                                       // move, moveIp, union, clamp, copy
 PG.clamp, PG.lerp, PG.dist, PG.sign, PG.mod (Python-Modulo!), PG.radians, PG.degrees, PG.TAU
-PG.store.get(key, def) / PG.store.set(key, val)    // localStorage (JSON)
+PG.store.get(key, def) / PG.store.set(key, val)    // localStorage (JSON), automatisch je Profil
+                                      // gerätweit bleiben nur lang, settings, profiles
 PG.highscore.get(key) / update(key, score)
+PG.profiles.activeId() / all() / nameOf(id) / switchTo(id) / create(name, icon, color)
+PG.stats.gameStarted(key) / addPlaytime(key, dt) / recordResult(key, won) / scoreResult(key, score, record)
+PG.stats.totals() / daysMap() / events({limit}) / seriesOf(key) / exportText() / importText(text)
+PG.ach.event("id" [, wert]) / onHighscore(key, score) / checkStats() / drawToasts(ctx, dt)
+PG.charts.bars/line/calendarHeat/donut/clockRing/tooltip(ctx, rect, ...)
 PG.audio.play(name) / tone(freq, dur, wave, vol)
 PG.downloadText(filename, text) / PG.pickTextFile(accept, (text, name) => ...)   // Export/Import
 PG.replay.recorder(game, meta) / .saveReplay(rep) / .loadAll() / .exportText(rep) / .importText(text)
@@ -223,6 +237,7 @@ Sound-Namen: `click select eat bounce point shoot explode hit rotate lock line m
 
 ```
 node web/tools/replay_check.js                      # Replays: Aufnahme, Wiedergabe, Teilen
+node web/tools/progress_check.js                   # Erfolge, Statistik, Profile, alle fünf Reiter
 node web/tools/smoke.js Game2048 SnakeGame           # Zufallseingaben, meldet Laufzeitfehler
 node web/tools/smoke.js Game2048 --shot              # zusätzlich Screenshot -> web/tools/shots/<id>-<mode>.png
 node web/tools/smoke.js Game2048 --shot --idle --frames 90    # Startbild ohne Eingaben

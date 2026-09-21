@@ -173,6 +173,108 @@
       ]
     },
     {
+      "id": "profiles",
+      "category": "general",
+      "title": "Pelaajaprofiilit",
+      "keywords": [
+        "profiili",
+        "profiilit",
+        "pelaaja",
+        "vaihto",
+        "moninpeli",
+        "vieras",
+        "taso"
+      ],
+      "sections": [
+        {
+          "h": "Yleiskatsaus",
+          "body": [
+            "Useita pelaajia yhdellä laitteella: jokaisella profiililla on omat ennätykset, saavutukset, taso, tilastot, laamapelimerkit ja tallennukset.",
+            "Sivupalkin Profiilit-painike näyttää kaikki; yläpuolinen kortti kertoo, kuka pelaa, tason ja XP-palkin kera.",
+            "Yhteisiä ovat vain laitteen asetukset (tarkkuus, ääni, näppäimet, teema) ja käyttöliittymän kieli.",
+            "Profiileja voi olla enintään kahdeksan."
+          ]
+        },
+        {
+          "h": "Luonti ja vaihto",
+          "body": [
+            "Uusi profiili: kirjoita nimi, valitse kuvake ja väri, tallenna. Nimi kulkee sanasuodattimen läpi ja voi olla 14 merkkiä.",
+            "Napsauta Pelaa (tai Enter) vaihtaaksesi - siitä lähtien pisteet, ajat ja saavutukset kirjataan sille profiilille.",
+            "Näppäimet: Enter vaihtaa, N luo, F2 nimeää, Del poistaa, Esc palaa.",
+            "Poisto vie myös profiilin tiedot; viimeinen profiili jää aina."
+          ]
+        },
+        {
+          "h": "Moninpeli ja kaksintaistelut",
+          "body": [
+            "Kun aloitat moninpelin, kokoelma kysyy ensin pelaajan 2 profiilin - tai pelaat vieraana.",
+            "Pelissä näkyvät profiilien nimet Pelaaja 1/2 -tekstien sijaan.",
+            "Jokainen moninpeliottelu kirjautuu keskinäisiin otteluihin: Profiilit-välilehti näyttää, kuka on voittanut kenet ja kuinka usein.",
+            "Siellä on myös laitteen tulostaulu: millä profiililla on kunkin pelin paras tulos."
+          ]
+        },
+        {
+          "h": "Tallennus",
+          "body": [
+            "Profiilit ovat mem.json-tiedostossa kohdassa players/<id>; tilastot ovat stats.pgzlamastats-tiedostossa. Molemmat pelin (tai .exe:n) vieressä.",
+            "Päivityksen jälkeisellä ensikäynnistyksellä vanha tallennus siirtyy profiiliin 1 - mitään ei katoa.",
+            "Uusinnat ja omat radat säilyvät kaikille, mutta niissä lukee ne tehneen profiilin nimi."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "category": "general",
+      "title": "Tilastot ja kaaviot",
+      "keywords": [
+        "tilastot",
+        "kaavio",
+        "kalenteri",
+        "peliaika",
+        "historia",
+        "putki",
+        "kooste"
+      ],
+      "sections": [
+        {
+          "h": "Yleiskatsaus",
+          "body": [
+            "Kokoelma pitää kirjaa: peliaika, kierrokset, voitot, ennätykset, pelipäivät, pistekäyrät ja jokainen saavutus - aikaleimoineen.",
+            "Kaikki löytyy sivupalkin Saavutukset ja tilastot -painikkeen takaa, viidellä välilehdellä (Tab tai klikkaus vaihtaa).",
+            "Vain aktiivinen peliaika lasketaan; tauot ja valikot eivät. Jokaisella profiililla on omat tilastot."
+          ]
+        },
+        {
+          "h": "Viisi välilehteä",
+          "body": [
+            "- Saavutukset: kaikki luokittain, harvinaisuus, pisteet, päiväys tai edistymispalkki. Ylhäällä taso, arvo ja XP-palkki; suodatin näyttää vain avatut tai avaamattomat.",
+            "- Tilastot: koontikortit, kymmenen eniten pelattua peliä pylväinä, voitto/tappio-rengas ja kaikkien pelien taulukko.",
+            "- Kalenteri: pelipäivien kartta (mitä tummempi, sitä pidempään), nykyinen ja pisin putki, viikonpäivät ja vuorokaudenaika.",
+            "- Historia: kaikki aikaleimoilla - saavutukset, ennätykset, tasonnousut, kaksintaistelut - sekä yhden pelin pistekäyrä.",
+            "- Profiilit: jokainen profiili tasoineen ja peliaikoineen, laitteen tulostaulu ja keskinäiset ottelut."
+          ]
+        },
+        {
+          "h": "Kooste ja kaaviot",
+          "body": [
+            "Kalenterin yllä on PyGameZ-koosteesi: paras päivä, suosikkiaika, pisin yhtäjaksoinen pelisessio, suosikkipeli ja harvinaisin saavutuksesi.",
+            "Kaikki kaaviot reagoivat hiireen: vie osoitin päälle, niin pieni laatikko kertoo päivän, peliajan ja kierrokset.",
+            "Ennätykset näkyvät pistekäyrällä kultaisina pisteinä."
+          ]
+        },
+        {
+          "h": "Tiedosto ja jakaminen",
+          "body": [
+            "Kaikki tilastot ovat tiedostossa stats.pgzlamastats pelin vieressä - tavallista JSONia, yksi lohko profiilia kohden.",
+            "Kalenteri-välilehdellä (tai näppäimillä E ja I) voit viedä ja lukea sen takaisin; verkkoversio lukee saman tiedoston.",
+            "Tuonnissa valitset, lasketaanko arvot nykyiseen profiiliin.",
+            "Jotta tiedosto ei kasva loputtomiin, historia (4000 merkintää), pistekäyrät (250 per peli) ja kalenteri (noin kolme vuotta) on rajattu; summat säilyvät."
+          ]
+        }
+      ]
+    },
+    {
       "id": "replays",
       "category": "general",
       "title": "Uusinnat",
@@ -233,48 +335,59 @@
     {
       "id": "achievements",
       "category": "general",
-      "title": "Saavutukset ja tilastot",
+      "title": "Saavutukset, harvinaisuus ja taso",
       "keywords": [
         "saavutukset",
-        "tilastot",
-        "edistyminen",
-        "ennätys",
-        "voitot",
-        "peliaika",
-        "virstanpylväs"
+        "harvinaisuus",
+        "pisteet",
+        "taso",
+        "arvo",
+        "virstanpylväs",
+        "edistyminen"
       ],
       "sections": [
         {
           "h": "Yleiskatsaus",
           "body": [
-            "Kokoelma seuraa edistymistäsi: 107 saavutusta ja yksityiskohtaiset tilastot kaikista 46 pelistä. Molemmat löytyvät sivupalkin painikkeesta Saavutukset ja tilastot; välilehteä vaihdat [Tab]-näppäimellä tai klikkaamalla."
+            "250 saavutusta kaikissa 46 pelissä - ensimmäisestä käynnistyksestä Tetriksen Perfect Cleariin.",
+            "Jokaisella saavutuksella on harvinaisuus ja siten pistearvo; summa on tasosi.",
+            "Löytyvät Saavutukset ja tilastot -painikkeen takaa, Saavutukset-välilehdeltä. Suodatin piilottaa avatut tai avaamattomat."
           ]
         },
         {
-          "h": "Saavutukset",
+          "h": "Viisi luokkaa",
           "body": [
-            "Kategorioita on kolme:",
-            "- Yleiset (23): koko kokoelman tavoitteita, kuten aloitetut pelikerrat, kokeillut pelit, kokonaispeliaika, rikotut ennätykset ja voitot - sekä pieniä ekstroja kuten Yökyöpeli (pelaa keskiyön jälkeen).",
-            "- Pistevirstanpylväät (37): yksi reilu tavoitepistemäärä peliä kohden, sovitettu pelin pisteskaalaan.",
-            "- Erityiset hetket (47): shakkimatti tekoälylle, KNIFFEL, 2048- ja 4096-laatta, T-Spin Double ja Perfect Clear Tetriksessä, 25 ratkaistua shakkitehtävää, ensimmäinen Killer Sudokusi, täysosuma yksittäiseen numeroon ruletissa, laamajättipotti peliautomaatissa, voitto Battleshipissä menettämättä yhtään laivaa ja paljon muuta.",
-            "Avautuessa oikeaan yläkulmaan ilmestyy kultainen ilmoitus pienellä fanfaarilla - myös kesken pelin.",
-            "Vanhat tiedot lasketaan: päivityksen jälkeisellä ensimmäisellä käynnistyksellä vanhat ennätyksesi hyvitetään automaattisesti (ilman ilmoitusilotulitusta).",
-            "Lukitut saavutukset näyttävät edistymispalkin, avatut päivämääränsä.",
-            "2048:ssa ja shakissa kumoamista tai vihjeitä käyttäneet pelit eivät kerrytä ennätyksiä eivätkä saavutuksia - kokeilla saa, mutta vain ilman apua pelatut pelit lasketaan."
+            "- Yleiset: koko kokoelman tavoitteet - kierrokset, kokeillut pelit, peliaika, ennätykset, voitot, pelipäivät, putket, taso ja kaksintaistelut. Lisäksi yökyöpeli, maraton tai viikonloppupelaaja.",
+            "- Pistevirstanpylväät: reilu tavoitepistemäärä kullekin pelille.",
+            "- Mestaritasot: toinen, selvästi korkeampi raja - vain peleissä, joiden pisteillä ei ole kattoa.",
+            "- Vakiokävijä: 25 kierrosta yhtä peliä. Löytyy kaikille 46 pelille.",
+            "- Erityiset hetket: šakkimatti, Yatzy, 4096-laatta, hole-in-one, hattutemppu ilmakiekossa, neljä haamua yhdellä voimapillerillä ja paljon muuta."
           ]
         },
         {
-          "h": "Tilastot",
+          "h": "Harvinaisuus ja pisteet",
           "body": [
-            "Ylhäällä kortit kokoavat kaiken: kokonaispeliaika, pelikerrat, voitot, rikotut ennätykset, kokeillut pelit ja saavutuslaskurisi - sekä lempipelisi (eniten peliaikaa).",
-            "Alla taulukko listaa jokaisen pelatun pelin pelikertoineen, aikoineen, voittoineen ja ennätyksineen, järjestettynä peliajan mukaan. Rivin klikkaus avaa pelin suoraan.",
-            "Vain aktiivinen peliaika lasketaan - tauot ja valikot eivät. Voitot kirjaavat pelit, joissa on selkeä voitto/tappio (lauta-, kortti- ja pulmapelit) yksinpelissä."
+            "Viisi tasoa, viisi pistearvoa: tavallinen 10, harvinainen 25, eeppinen 60, legendaarinen 150, myyttinen 300.",
+            "Väri näkyy merkissä, rivin vasemmassa raidassa ja avausilmoituksessa.",
+            "Legendaariset ja myyttiset saavutukset juhlitaan konfetein.",
+            "Välilehden oikeassa yläkulmassa näkyy, montako kutakin tasoa on jo avattu."
+          ]
+        },
+        {
+          "h": "Taso ja arvot",
+          "body": [
+            "Saavutuspisteet muodostavat tasosi: taso 2 maksaa 20 pistettä, jokainen seuraava 8 enemmän kuin edellinen.",
+            "Muutaman tason välein arvo vaihtuu - Laamanpoikasesta Pistemetsästäjän ja Mestarilaaman kautta Tähtilaamaan (14 arvoa).",
+            "Taso ja arvo näkyvät sivupalkissa, saavutusvälilehden otsikossa ja jokaisella tasonnousulla omana ilmoituksena fanfaarin kera.",
+            "Päivityksen jälkeisellä ensikäynnistyksellä aiemmat saavutukset lasketaan heti - kortti näyttää aloitustasosi."
           ]
         },
         {
           "h": "Tallennus",
           "body": [
-            "Kaikki tallentuu paikallisesti mem.json-tiedostoon (osiot stats ja achievements) yhdessä kielen ja ennätysten kanssa. Tiedoston poistaminen nollaa myös saavutukset ja tilastot."
+            "Avatut saavutukset ovat mem.json-tiedostossa oman profiilin kohdalla; pisteet, taso ja historia stats.pgzlamastats-tiedostossa.",
+            "Jokainen profiili kerää omansa - vaihda profiilia, niin näet omat saavutuksesi.",
+            "2048:ssa ja shakissa kumoamisella tai vihjeellä pelatut kierrokset eivät kelpaa ennätykseen eivätkä saavutuksiin."
           ]
         }
       ]

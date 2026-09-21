@@ -568,6 +568,7 @@ class BattleshipGame(Game):
                 self.play_sound("gameover")
                 self.report_result(False)
         else:
+            self.report_duel(winner)
             self.play_sound("win")
         self.game_over = True     # main.py speichert den Score einmalig
 
@@ -1491,7 +1492,8 @@ class BattleshipGame(Game):
 
     def _pname(self, p):
         if self.multiplayer:
-            return t("common.player1") if p == 0 else t("common.player2")
+            # Profilname des Sitzplatzes (gekürzt - HUD und Tabelle sind eng)
+            return self.pname(p)[:10]
         return t("bs.you") if p == 0 else t("common.ai")
 
     def _fit(self, font, text, maxw, color):
@@ -1781,7 +1783,7 @@ class BattleshipGame(Game):
         cx = rect.centerx
         y = rect.top + 14
         if self.multiplayer:
-            head = t("common.player_wins", n=(self.winner or 0) + 1)
+            head = t("common.player_wins_name", name=self._pname(self.winner or 0))
             col = COL_P1 if self.winner == 0 else COL_P2
         elif self.winner == 0:
             head, col = t("bs.win_you"), ui.GOLD

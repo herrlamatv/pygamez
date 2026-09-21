@@ -173,6 +173,108 @@
       ]
     },
     {
+      "id": "profiles",
+      "category": "general",
+      "title": "Profili igralcev",
+      "keywords": [
+        "profil",
+        "profili",
+        "igralec",
+        "preklop",
+        "večigralski",
+        "gost",
+        "stopnja"
+      ],
+      "sections": [
+        {
+          "h": "Pregled",
+          "body": [
+            "Več igralcev na eni napravi: vsak profil ima svoje rekorde, dosežke, stopnjo, statistiko, lamine žetone in shranjene igre.",
+            "Gumb Profili v stranski vrstici prikaže vse; kartica nad njim pove, kdo igra, s stopnjo in vrstico XP.",
+            "Skupne ostanejo le nastavitve naprave (ločljivost, zvok, tipke, videz) in jezik.",
+            "Mogočih je do osem profilov."
+          ]
+        },
+        {
+          "h": "Ustvarjanje in preklop",
+          "body": [
+            "Nov profil: vnesi ime, izberi ikono in barvo, shrani. Ime gre skozi besedni filter in ima največ 14 znakov.",
+            "Klikni Igraj (ali Enter) za preklop - od tedaj gredo točke, čas in dosežki temu profilu.",
+            "Tipke: Enter preklopi, N ustvari, F2 preimenuje, Del izbriše, Esc se vrne.",
+            "Z brisanjem profila izginejo tudi njegovi podatki; zadnji profil vedno ostane."
+          ]
+        },
+        {
+          "h": "Večigralski način in dvoboji",
+          "body": [
+            "Ko zaženeš večigralski način, te igra najprej vpraša za profil drugega igralca - ali pa igraš kot gost.",
+            "V igri se namesto Igralec 1/2 izpišeta imeni profilov.",
+            "Vsaka večigralska partija gre v medsebojne dvoboje: zavihek Profili pokaže, kdo je koga kolikokrat premagal.",
+            "Tam je tudi lestvica naprave: kateri profil ima v posamezni igri najboljši rezultat."
+          ]
+        },
+        {
+          "h": "Shranjevanje",
+          "body": [
+            "Profili so v mem.json pod players/<id>; statistika v stats.pgzlamastats. Obe datoteki sta poleg igre (ali poleg .exe).",
+            "Ob prvem zagonu po posodobitvi se dosedanji napredek preseli v profil 1 - nič se ne izgubi.",
+            "Posnetki in lastne steze ostanejo vsem, nosijo pa ime profila, ki jih je ustvaril."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "category": "general",
+      "title": "Statistika in grafi",
+      "keywords": [
+        "statistika",
+        "graf",
+        "koledar",
+        "čas igranja",
+        "zgodovina",
+        "niz",
+        "pregled"
+      ],
+      "sections": [
+        {
+          "h": "Pregled",
+          "body": [
+            "Zbirka vodi evidenco: čas igranja, partije, zmage, rekordi, dnevi igranja, krivulje točk in vsak dosežek - s časovnim žigom.",
+            "Vse je za gumbom Dosežki in statistika, razporejeno na pet zavihkov (Tab ali klik preklopi).",
+            "Šteje le aktivni čas igranja; premori in meniji ne. Vsak profil ima svojo statistiko."
+          ]
+        },
+        {
+          "h": "Pet zavihkov",
+          "body": [
+            "- Dosežki: vse po kategorijah, z redkostjo, točkami, datumom ali vrstico napredka. Zgoraj stopnja, čin in vrstica XP; filter pokaže le odprte ali odklenjene.",
+            "- Statistika: pregledne kartice, deset največkrat igranih iger kot stolpci, obroč zmag/porazov in tabela vseh iger.",
+            "- Koledar: zemljevid dni igranja (temnejše pomeni dlje), trenutni in najdaljši niz, dnevi v tednu in čas dneva.",
+            "- Zgodovina: vse s časovnim žigom - dosežki, rekordi, napredovanja, dvoboji - in krivulja točk ene igre.",
+            "- Profili: vsak profil s stopnjo in časom, lestvica naprave in medsebojni dvoboji."
+          ]
+        },
+        {
+          "h": "Pregled in grafi",
+          "body": [
+            "Nad koledarjem je tvoj PyGameZ pregled: najboljši dan, najljubši čas, najdaljša seja brez premora, najljubša igra in tvoj najredkejši dosežek.",
+            "Vsi grafi se odzivajo na miško: postavi kazalec nanje in okence pove datum, čas igranja in partije.",
+            "Rekordi so na krivulji točk zlate pike."
+          ]
+        },
+        {
+          "h": "Datoteka in izmenjava",
+          "body": [
+            "Vsa statistika je v datoteki stats.pgzlamastats poleg igre - navaden JSON, en blok na profil.",
+            "V zavihku Koledar (ali s tipkama E in I) jo lahko izvoziš in znova prebereš; spletna različica bere isto datoteko.",
+            "Pri uvozu izbereš, ali se vrednosti prištejejo trenutnemu profilu.",
+            "Da datoteka ne raste v nedogled, so zgodovina (4000 vnosov), krivulje točk (250 na igro) in koledar (okoli tri leta) omejeni; vsote ostanejo."
+          ]
+        }
+      ]
+    },
+    {
       "id": "replays",
       "category": "general",
       "title": "Posnetki",
@@ -233,48 +335,59 @@
     {
       "id": "achievements",
       "category": "general",
-      "title": "Dosežki in statistika",
+      "title": "Dosežki, redkost in stopnja",
       "keywords": [
         "dosežki",
-        "statistika",
-        "napredek",
-        "rekord",
-        "zmage",
-        "čas igranja",
-        "mejnik"
+        "redkost",
+        "točke",
+        "stopnja",
+        "čin",
+        "mejnik",
+        "napredek"
       ],
       "sections": [
         {
           "h": "Pregled",
           "body": [
-            "Zbirka spremlja tvoj napredek: 107 dosežkov in podrobna statistika vseh 46 iger. Oboje najdeš za gumbom Dosežki in statistika v stranski vrstici; med zavihkoma preklapljaš s [Tab] ali s klikom."
+            "250 dosežkov v vseh 46 igrah - od prvega zagona do Perfect Clear v Tetrisu.",
+            "Vsak dosežek ima redkost in s tem vrednost v točkah; vsota da tvojo stopnjo.",
+            "Najdeš jih za gumbom Dosežki in statistika, zavihek Dosežki. Filter skrije odklenjene ali odprte."
           ]
         },
         {
-          "h": "Dosežki",
+          "h": "Pet kategorij",
           "body": [
-            "Obstajajo tri kategorije:",
-            "- Splošno (23): cilji na ravni zbirke, kot so začete partije, preizkušene igre, skupni čas igranja, podrti rekordi in zmage - plus drobnarije, kot je Nočna sova (igranje po polnoči).",
-            "- Točkovni mejniki (37): en pošten ciljni rezultat na igro, prilagojen njeni točkovni lestvici.",
-            "- Posebni trenutki (47): šah-mat UI, KNIFFEL, ploščici 2048 in 4096, T-Spin Double in Perfect Clear v Tetrisu, 25 rešenih šahovskih ugank, tvoj prvi Killer Sudoku, zadetek posamezne številke v ruleti, lamji jackpot na igralnem avtomatu, zmaga v Battleship brez izgubljene ladje in več.",
-            "Ob odklepanju se zgoraj desno pojavi zlato obvestilo s kratko fanfaro - tudi sredi igre.",
-            "Obstoječi podatki štejejo: ob prvem zagonu po posodobitvi se tvoji stari rekordi samodejno upoštevajo (brez ognjemata obvestil).",
-            "Zaklenjeni dosežki kažejo vrstico napredka, odklenjeni svoj datum.",
-            "V 2048 in šahu partije z razveljavitvijo ali namigom ne štejejo za rekorde in dosežke - preizkušati smeš, šteje pa le igra brez pomoči."
+            "- Splošno: cilji čez vso zbirko - partije, preizkušene igre, čas igranja, rekordi, zmage, dnevi igranja, nizi, stopnja in dvoboji. Zraven dodatki, kot so nočna sova, maraton ali vikend igralec.",
+            "- Točkovni mejniki: pošteno ciljno število točk za vsako igro.",
+            "- Mojstrske stopnje: druga, precej višja meja - le za igre z odprtim točkovanjem.",
+            "- Redni gost: 25 partij ene igre. Obstaja za vseh 46 iger.",
+            "- Posebni trenutki: šahmat, Yahtzee, ploščica 4096, luknja z enim udarcem, hat-trick v zračnem hokeju, štirje duhovi z eno tableto in še več."
           ]
         },
         {
-          "h": "Statistika",
+          "h": "Redkost in točke",
           "body": [
-            "Zgoraj kartice povzamejo vse: skupni čas igranja, partije, zmage, podrte rekorde, preizkušene igre in števec dosežkov - plus tvojo najljubšo igro (največ časa).",
-            "Spodaj tabela našteje vsako igrano igro s partijami, časom, zmagami in rekordom, razvrščeno po času igranja. Klik na vrstico odpre igro neposredno.",
-            "Šteje samo aktivni čas igranja - premori in meniji ne. Zmage beležijo igre z jasnim izidom zmaga/poraz (namizne, karte in miselne) v enoigralskem načinu."
+            "Pet stopenj, pet vrednosti: pogost 10, redek 25, epski 60, legendaren 150, mitski 300.",
+            "Barva je na znački, v progi levo od vrstice in v obvestilu ob odklepu.",
+            "Legendarni in mitski dosežki se proslavijo s konfeti.",
+            "Zgoraj desno v zavihku piše, koliko jih imaš po posamezni stopnji."
+          ]
+        },
+        {
+          "h": "Stopnja in čini",
+          "body": [
+            "Točke dosežkov dajo stopnjo: stopnja 2 stane 20 točk, vsaka naslednja 8 več kot prejšnja.",
+            "Vsakih nekaj stopenj se zamenja čin - od Lamjega mladiča prek Lovca točk in Mojstrske lame do Zvezdne lame (14 činov).",
+            "Stopnja in čin sta v stranski vrstici, v glavi zavihka Dosežki in ob vsakem napredovanju kot lastno obvestilo s fanfaro.",
+            "Ob prvem zagonu po posodobitvi se dosedanji dosežki upoštevajo takoj - kartica pokaže tvojo začetno stopnjo."
           ]
         },
         {
           "h": "Shranjevanje",
           "body": [
-            "Vse je shranjeno lokalno v mem.json (razdelka stats in achievements) skupaj z jezikom in rekordi. Če datoteko izbrišeš, se ponastavijo tudi dosežki in statistika."
+            "Odklenjeni dosežki so v mem.json pri svojem profilu; točke, stopnja in zgodovina v stats.pgzlamastats.",
+            "Vsak profil zbira zase - ob preklopu vidiš svoje dosežke.",
+            "V igri 2048 in šahu partije z razveljavitvijo ali namigom ne štejejo ne za rekord ne za dosežke."
           ]
         }
       ]

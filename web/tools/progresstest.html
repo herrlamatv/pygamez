@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>PROGRESS TEST RUNNING</title>
+<style>
+  body { margin: 0; background: #111; color: #ddd; font: 12px Consolas, monospace; }
+  canvas { display: block; width: 800px; height: 600px; }
+  pre { margin: 0; padding: 6px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<canvas id="c" width="800" height="600"></canvas>
+<pre id="result">running</pre>
+<script src="../js/lang/de.js"></script>
+<script src="../js/lang/en.js"></script>
+<script src="../js/lang/cs.js"></script>
+<script src="../js/lang/tr.js"></script>
+<script src="../js/core/util.js"></script>
+<script src="../js/core/achdefs.js"></script>
+<script src="../js/games/ugc.js"></script>
+<script src="../js/core/profiles.js"></script>
+<script src="../js/core/stats.js"></script>
+<script src="../js/core/ach.js"></script>
+<script src="../js/core/charts.js"></script>
+<script src="../js/core/ui.js"></script>
+<script src="../js/core/audio.js"></script>
+<script src="../js/core/game.js"></script>
+<script src="../js/core/progressview.js"></script>
+<script src="../js/core/profileview.js"></script>
+<script>
+/*
+ * Prüfstand für Erfolge, Statistik und Profile der Web-Version
+ * (headless Chrome, siehe tools/progress_check.js).
+ *
+ * Geprüft werden: Profil-Anlegen/-Wechsel samt Datentrennung, die Migration
+ * eines alten Speicherstands, das Freischalten von Erfolgen mit Punkten und
+ * Level, die Statistik-Datei (Export/Import im .pgzlamastats-Format) sowie
+ * das fehlerfreie Zeichnen aller fünf Reiter in mehreren Sprachen.
+ */
+(function () {
+  "use strict";
+
+  const checks = [];
+  const errors = [];
+  const ctx = document.getElementById("c").getContext("2d");
+
+  function check(ok, label, detail) {
+    checks.push({ ok: !!ok, label, detail: ok ? "" : String(detail == null ? "" : detail) });
+  }
+
+  window.addEventListener("error", (e) => errors.push(e.message));
+
+  // --- Vorbereitung: sauberer Speicher mit ALTEM Stand (vor dem Update) ----
+  window.localStorage.clear();
+  window.localStorage.setItem("pygamez.lang", JSON.stringify("de"));
+  window.localStorage.setItem("pygamez.highscores", JSON.stringify({ snake: 640, tetris: 12000 }));
+  window.localStorage.setItem("pygamez.stats", JSON.stringify({
+    snake: { played: 30, wins: 2, losses: 1, time: 1800, records: 3 },
+    tetris: { played: 4, wins: 0, losses: 0, time: 600, records: 1 },
+    _events: { tile_2048: 1 },
+  }));
+
+  // Ein paar Spiele registrieren (die Screens brauchen Namen und Farben).
+  const GAMES = [["SnakeGame", "snake", "Snake"], ["TetrisGame", "tetris", "Tetris"],
+    ["PongGame", "pong", "Pong"], ["Game2048", "2048", "2048"]];
+  class Dummy extends PG.Game {
+    update() {}
+    draw() {}
+    handleEvent() {}
+  }
+  for (const [id, key, name] of GAMES) {
+    PG.register(class extends Dummy {}, { id, key, name });
+  }
+
+  const app = {
+    entries: PG.games.slice(),
+    canvas: { style: {}, focus() {} },
+    openPreGame() {},
+    backToMenu() {},
+    refreshProfile() {},
+    markActive() {},
+  };
+  PG.app = app;
+
+  // --- Profile & Migration ------------------------------------------------
+  const pid = PG.profiles.init();
+  check(pid === "p1", "Erstes Profil angelegt", pid);
+  check(PG.store.get("highscores", {}).snake === 640, "Alte Highscores ins Profil übernommen",
+    JSON.stringify(PG.store.get("highscores", {})));
+  check(window.localStorage.getItem("pygamez.highscores") === null,
+    "Alter Schlüssel ohne Profil-Prefix ist weg");
+  check(PG.stats.get("snake").plays === 30 && PG.stats.get("snake").time === 1800,
+    "Alte Statistik übernommen (played -> plays)", JSON.stringify(PG.stats.get("snake")));
+
+  // --- Erfolge, Punkte, Level --------------------------------------------
+  const [added, level, points] = PG.ach.backfillSilent();
+  check(added > 0 && points > 0 && level >= 1, "Stiller Abgleich vergibt Punkte",
+    `neu=${added} level=${level} punkte=${points}`);
+  const un = PG.ach.unlocked();
+  check(!!un.score_snake, "Punkte-Meilenstein aus Highscore freigeschaltet");
+  check(!!un.regular_snake, "Stammgast-Erfolg (25 Partien) freigeschaltet");
+  check(!!un.tile_2048, "Altes Erfolgs-Ereignis (_events) übernommen");
+  // Der Prüfstand registriert nur vier Spiele; die Meilenstein-, Meister- und
+  // Stammgast-Familien entstehen je Spiel, deshalb hier die kleinere Zahl.
+  check(PG.ach.counts()[1] >= 140, "Alle Erfolge vorhanden", PG.ach.counts().join("/"));
+  const sumPoints = PG.ach.totalPoints();
+  check(sumPoints === PG.stats.levelOf()[1], "Punkte = Summe der Erfolge",
+    `${sumPoints} vs ${PG.stats.levelOf()[1]}`);
+  check(PG.ach.levelFor(0) === 1 && PG.ach.levelFor(20) === 2 && PG.ach.levelFor(468) === 10,
+    "Level-Kurve wie in levels.py",
+    [PG.ach.levelFor(0), PG.ach.levelFor(20), PG.ach.levelFor(468)].join(","));
+
+  // Neuer Erfolg -> Toast steht an
+  PG.stats.gameStarted("pong");
+  PG.stats.addPlaytime("pong", 42);
+  PG.stats.scoreResult("pong", 7, true);
+  PG.ach.onHighscore("pong", 7);
+  check(!!PG.ach.unlocked().score_pong, "Erfolg nach Rekord freigeschaltet");
+  const evs = PG.stats.events({ limit: 5 });
+  check(evs.some((e) => e.k === "ach") && evs.some((e) => e.k === "rec"),
+    "Verlauf enthält Erfolg und Rekord mit Zeitstempel", JSON.stringify(evs.slice(0, 2)));
+  check(Object.keys(PG.stats.daysMap()).length > 0, "Spieltag eingetragen");
+  check(PG.stats.hoursList().some((v) => v > 0), "Tageszeit-Profil gefüllt");
+  PG.stats.endSession();
+  check(PG.stats.totals().longest >= 42, "Längste Sitzung gemerkt", PG.stats.totals().longest);
+
+  // --- Zweites Profil: Daten sind getrennt --------------------------------
+  const [p2, err] = PG.profiles.create("Alpaka", "star", 2);
+  check(p2 === "p2" && !err, "Zweites Profil angelegt", err);
+  PG.profiles.switchTo(p2);
+  check(PG.profiles.activeId() === "p2", "Profilwechsel aktiv");
+  check(Object.keys(PG.highscore.all()).length === 0, "Neues Profil startet ohne Highscores",
+    JSON.stringify(PG.highscore.all()));
+  check(PG.ach.counts()[0] === 0, "Neues Profil startet ohne Erfolge", PG.ach.counts()[0]);
+  PG.stats.gameStarted("snake");
+  PG.stats.recordDuel("pong", "p1", true);
+  check(PG.stats.duelTotal() === 1, "Duell-Bilanz geschrieben");
+  PG.profiles.switchTo("p1");
+  check(PG.highscore.get("snake") === 640, "Zurück im ersten Profil: Highscore wieder da");
+  check(PG.ach.counts()[0] > 0, "Zurück im ersten Profil: Erfolge wieder da");
+
+  // Namensprüfung
+  check(PG.profiles.checkName("") === "empty", "Leerer Name wird abgelehnt");
+  check(PG.profiles.checkName("Alpaka") === "dup", "Doppelter Name wird abgelehnt");
+  check(PG.profiles.checkName("Lamafreund") === "", "Normaler Name geht durch");
+
+  // --- Export / Import ----------------------------------------------------
+  const text = PG.stats.exportText();
+  const doc = JSON.parse(text);
+  check(doc.format === "pygamez.stats" && doc.profiles && doc.profiles.p1,
+    "Export hat das .pgzlamastats-Format", Object.keys(doc));
+  const playsBefore = PG.stats.get("snake").plays;
+  const [ok, reason] = PG.stats.importText(text, { target: "p1", merge: true });
+  check(ok, "Import angenommen", reason);
+  // Mit target="p1" fließen ALLE Profile der Datei in dieses eine Profil -
+  // die Partien beider Profile landen also zusammen im Zielprofil.
+  check(PG.stats.get("snake").plays >= playsBefore * 2,
+    "Import addiert beim Zusammenführen", `${PG.stats.get("snake").plays} vs ${playsBefore}`);
+  check(PG.stats.importText("{kaputt", {})[1] === "io", "Kaputte Datei wird abgewiesen");
+  check(PG.stats.importText('{"format":"anderes"}', {})[1] === "format", "Fremdes Format wird abgewiesen");
+
+  // --- Screens zeichnen (alle Reiter, mehrere Sprachen) -------------------
+  const TABS = ["achievements", "stats", "calendar", "timeline", "profiles"];
+  for (const lang of ["de", "en", "cs", "tr"]) {
+    PG.setLang(lang);
+    let drawn = 0;
+    try {
+      for (const tab of TABS) {
+        const screen = new PG.ProgressScreen(app, () => {}, tab);
+        screen.handleEvent({ kind: "mousemove", pos: [400, 300] });
+        screen.draw(ctx);
+        screen.scroll = 99999;
+        screen.clampScroll();
+        screen.draw(ctx);
+        drawn++;
+      }
+      const prof = new PG.ProfileScreen(app, () => {});
+      prof.draw(ctx);
+      prof.newProfile();
+      prof.draw(ctx);
+      prof.editor = null;
+      prof.editProfile("p1");
+      prof.draw(ctx);
+      prof.editor = null;
+      const intro = new PG.LevelIntroScreen(app, () => {});
+      intro.draw(ctx);
+      drawn++;
+    } catch (e) {
+      errors.push(lang + ": " + e.message);
+    }
+    check(drawn === TABS.length + 1, `Screens zeichnen (${lang})`, drawn);
+  }
+  PG.setLang("de");
+
+  // Toast-Zeichnung (Erfolg + Level) darf nicht stolpern
+  try {
+    PG.ach.event("night_owl");
+    for (let i = 0; i < 300; i++) PG.ach.drawToasts(ctx, 0.016);
+    check(true, "Erfolgs-Toast gezeichnet");
+  } catch (e) {
+    check(false, "Erfolgs-Toast gezeichnet", e.message);
+  }
+
+  // Diagramme einzeln (Randfälle: leer, ein Wert)
+  try {
+    PG.charts.bars(ctx, new PG.Rect(10, 10, 200, 80), []);
+    PG.charts.bars(ctx, new PG.Rect(10, 10, 200, 80), [5], { labels: ["A"], fmt: String });
+    PG.charts.line(ctx, new PG.Rect(10, 10, 200, 80), [3], { fmt: String });
+    PG.charts.calendarHeat(ctx, new PG.Rect(10, 10, 400, 120), {});
+    PG.charts.donut(ctx, [100, 100], 40, [[0, [255, 0, 0]]]);
+    PG.charts.clockRing(ctx, [100, 100], 40, new Array(24).fill(0));
+    PG.charts.tooltip(ctx, [700, 500], ["Test", "Zeile"]);
+    check(true, "Diagramme halten Randfälle aus");
+  } catch (e) {
+    check(false, "Diagramme halten Randfälle aus", e.message);
+  }
+
+  document.getElementById("result").textContent = JSON.stringify({ checks, errors });
+  document.title = "PROGRESS TEST DONE";
+})();
+</script>
+</body>
+</html>

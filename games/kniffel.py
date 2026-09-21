@@ -114,6 +114,7 @@ class KniffelGame(Game):
 
     # ===================================================== Aufbau / Reset
     def reset(self):
+        self.new_round_result()     # neue Partie: Duell-Bilanz wieder freigeben
         self.score = 0
         self.game_over = False
         self.nplayers = 2 if self.multiplayer else 1
@@ -285,10 +286,16 @@ class KniffelGame(Game):
             t0 = _grand_total(self.cards[0])
             t1 = _grand_total(self.cards[1])
             self.winner = 0 if t0 > t1 else (1 if t1 > t0 else None)
+            if self.winner is not None:
+                self.report_duel(self.winner)   # Duell-Bilanz der Profile
+            best = max(t0, t1)
             self.play_sound("win" if self.winner is not None else "select")
         else:
             self.score = _grand_total(self.cards[0])
+            best = self.score
             self.play_sound("win")
+        # Erfolg: 300 Punkte Gesamtsumme im vollen Block
+        self.ach_event("kniffel_grand", best)
 
     # ===================================================== Update
     def update(self, dt):
@@ -317,7 +324,7 @@ class KniffelGame(Game):
         pygame.draw.line(s, COL_BTN_BORDER, (0, self.hud_h), (self.width, self.hud_h))
         cy = self.hud_h // 2
         if self.multiplayer:
-            who = t("common.player1") if self.player == 0 else t("common.player2")
+            who = self.pname(self.player)     # Profilname statt "Spieler 1/2"
             col = COL_P1 if self.player == 0 else COL_P2
             img = self._big.render(t("kn.turn", name=who), True, col)
         else:
@@ -335,7 +342,8 @@ class KniffelGame(Game):
         # Spaltenköpfe bei Mehrspieler
         if self.multiplayer:
             for p in range(2):
-                lbl = self._tiny.render(t("common.player%d" % (p + 1)), True,
+                # Profilname als Spaltenkopf (schmale Spalte -> gekürzt)
+                lbl = self._tiny.render(self.pname(p)[:9], True,
                                         COL_P1 if p == 0 else COL_P2)
                 s.blit(lbl, lbl.get_rect(center=(self.val_x[p] + self.col_w // 2,
                                                  self.card_top - 1)))
@@ -456,8 +464,9 @@ class KniffelGame(Game):
                 head = self._huge.render(t("common.draw"), True, COL_DIM)
             else:
                 col = COL_P1 if self.winner == 0 else COL_P2
-                head = self._huge.render(t("common.player_wins", n=self.winner + 1),
-                                         True, col)
+                head = self._huge.render(
+                    t("common.player_wins_name", name=self.pname(self.winner)),
+                    True, col)
             s.blit(head, head.get_rect(center=(cx, cy - 40)))
             sub = self._small.render(
                 f"{_grand_total(self.cards[0])} : {_grand_total(self.cards[1])}",

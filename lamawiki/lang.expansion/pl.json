@@ -173,6 +173,108 @@
       ]
     },
     {
+      "id": "profiles",
+      "category": "general",
+      "title": "Profile graczy",
+      "keywords": [
+        "profil",
+        "profile",
+        "gracz",
+        "zmiana",
+        "wieloosobowy",
+        "gość",
+        "poziom"
+      ],
+      "sections": [
+        {
+          "h": "Przegląd",
+          "body": [
+            "Kilku graczy na jednym urządzeniu: każdy profil ma własne rekordy, osiągnięcia, poziom, statystyki, żetony lamy i zapisy gier.",
+            "Przycisk Profile na pasku bocznym pokazuje wszystkie; karta nad nim mówi, kto gra, z poziomem i paskiem XP.",
+            "Wspólne pozostają tylko ustawienia urządzenia (rozdzielczość, dźwięk, klawisze, motyw) i język.",
+            "Możliwych jest do ośmiu profili."
+          ]
+        },
+        {
+          "h": "Tworzenie i zmiana",
+          "body": [
+            "Nowy profil: wpisz imię, wybierz ikonę i kolor, zapisz. Imię przechodzi przez filtr słów i ma najwyżej 14 znaków.",
+            "Kliknij Graj (lub Enter), aby zmienić profil - od tej chwili punkty, czas i osiągnięcia trafiają do niego.",
+            "Klawisze: Enter zmienia, N tworzy, F2 zmienia nazwę, Del usuwa, Esc wraca.",
+            "Usunięcie profilu usuwa też jego dane; ostatni profil zawsze zostaje."
+          ]
+        },
+        {
+          "h": "Tryb wieloosobowy i pojedynki",
+          "body": [
+            "Po uruchomieniu trybu wieloosobowego gra pyta najpierw o profil gracza 2 - albo grasz jako gość.",
+            "W grze widać imiona profili zamiast Gracz 1/2.",
+            "Każda rozgrywka trafia do bilansu pojedynków: karta Profile pokazuje, kto kogo i ile razy pokonał.",
+            "Jest tam też ranking urządzenia: który profil ma najlepszy wynik w danej grze."
+          ]
+        },
+        {
+          "h": "Zapis",
+          "body": [
+            "Profile są w mem.json w players/<id>; statystyki w stats.pgzlamastats. Oba pliki leżą obok gry (albo obok .exe).",
+            "Przy pierwszym uruchomieniu po aktualizacji dotychczasowy zapis trafia do profilu 1 - nic nie ginie.",
+            "Powtórki i własne plansze zostają dla wszystkich, ale noszą imię profilu, który je stworzył."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "category": "general",
+      "title": "Statystyki i wykresy",
+      "keywords": [
+        "statystyki",
+        "wykres",
+        "kalendarz",
+        "czas gry",
+        "historia",
+        "seria",
+        "podsumowanie"
+      ],
+      "sections": [
+        {
+          "h": "Przegląd",
+          "body": [
+            "Kolekcja prowadzi rejestr: czas gry, rozgrywki, zwycięstwa, rekordy, dni z grą, krzywe punktów i każde osiągnięcie - ze znacznikiem czasu.",
+            "Wszystko kryje się pod przyciskiem Osiągnięcia i statystyki, w pięciu kartach (Tab lub kliknięcie zmienia).",
+            "Liczy się tylko aktywny czas gry; pauzy i menu nie. Każdy profil ma własne statystyki."
+          ]
+        },
+        {
+          "h": "Pięć kart",
+          "body": [
+            "- Osiągnięcia: wszystko według kategorii, z rzadkością, punktami, datą lub paskiem postępu. U góry poziom, ranga i pasek XP; filtr pokazuje tylko zdobyte lub pozostałe.",
+            "- Statystyki: karty podsumowania, dziesięć najczęściej granych gier na słupkach, pierścień zwycięstw/porażek i tabela wszystkich gier.",
+            "- Kalendarz: mapa dni z grą (im ciemniej, tym dłużej), obecna i najdłuższa seria, dni tygodnia i pora dnia.",
+            "- Historia: wszystko ze znacznikiem czasu - osiągnięcia, rekordy, awanse, pojedynki - plus krzywa punktów jednej gry.",
+            "- Profile: każdy profil z poziomem i czasem gry, ranking urządzenia i bilans pojedynków."
+          ]
+        },
+        {
+          "h": "Podsumowanie i wykresy",
+          "body": [
+            "Nad kalendarzem jest twoje podsumowanie PyGameZ: najlepszy dzień, ulubiona pora, najdłuższa sesja bez przerwy, ulubiona gra i najrzadsze osiągnięcie.",
+            "Wszystkie wykresy reagują na mysz: najedź, a mały dymek poda datę, czas gry i liczbę rozgrywek.",
+            "Rekordy są na krzywej punktów złotymi kropkami."
+          ]
+        },
+        {
+          "h": "Plik i wymiana",
+          "body": [
+            "Wszystkie statystyki są w pliku stats.pgzlamastats obok gry - zwykły JSON, jeden blok na profil.",
+            "W karcie Kalendarz (albo klawiszami E i I) możesz je wyeksportować i wczytać; wersja webowa czyta ten sam plik.",
+            "Przy imporcie wybierasz, czy wartości doliczyć do bieżącego profilu.",
+            "Aby plik nie rósł bez końca, historia (4000 wpisów), krzywe punktów (250 na grę) i kalendarz (około trzy lata) są ograniczone; sumy zostają."
+          ]
+        }
+      ]
+    },
+    {
       "id": "replays",
       "category": "general",
       "title": "Powtórki",
@@ -233,48 +335,59 @@
     {
       "id": "achievements",
       "category": "general",
-      "title": "Osiągnięcia i statystyki",
+      "title": "Osiągnięcia, rzadkość i poziom",
       "keywords": [
         "osiągnięcia",
-        "statystyki",
-        "postęp",
-        "rekord",
-        "zwycięstwa",
-        "czas gry",
-        "próg"
+        "rzadkość",
+        "punkty",
+        "poziom",
+        "ranga",
+        "próg",
+        "postęp"
       ],
       "sections": [
         {
           "h": "Przegląd",
           "body": [
-            "Kolekcja śledzi twoje postępy: 107 osiągnięć i szczegółowe statystyki wszystkich 46 gier. Znajdziesz je pod przyciskiem Osiągnięcia i statystyki na pasku bocznym; zakładki przełączasz [Tab] lub kliknięciem."
+            "250 osiągnięć we wszystkich 46 grach - od pierwszego startu po Perfect Clear w Tetrisie.",
+            "Każde osiągnięcie ma rzadkość, a więc wartość punktową; suma daje twój poziom.",
+            "Znajdziesz je pod przyciskiem Osiągnięcia i statystyki, karta Osiągnięcia. Filtr ukrywa zdobyte lub pozostałe."
           ]
         },
         {
-          "h": "Osiągnięcia",
+          "h": "Pięć kategorii",
           "body": [
-            "Są trzy kategorie:",
-            "- Ogólne (23): cele dla całej kolekcji, np. rozpoczęte rozgrywki, wypróbowane gry, łączny czas gry, pobite rekordy i zwycięstwa - plus smaczki jak Nocny marek (granie po północy).",
-            "- Progi punktowe (37): jeden uczciwy cel punktowy na grę, dopasowany do jej skali.",
-            "- Wyjątkowe momenty (47): mat na SI, KNIFFEL, kafelki 2048 i 4096, T-Spin Double i Perfect Clear w Tetrisie, 25 rozwiązanych zadań szachowych, pierwsze Killer Sudoku, trafienie pojedynczej liczby w ruletce, lamowy jackpot na automacie, wygrana w Battleship bez utraty statku i więcej.",
-            "Przy odblokowaniu w prawym górnym rogu pojawia się złote powiadomienie z krótką fanfarą - nawet w trakcie gry.",
-            "Stare dane się liczą: przy pierwszym uruchomieniu po aktualizacji dotychczasowe rekordy zostają zaliczone automatycznie (bez fajerwerków powiadomień).",
-            "Zablokowane osiągnięcia pokazują pasek postępu, odblokowane - datę.",
-            "W 2048 i szachach partie z cofaniem ruchu lub podpowiedziami nie liczą się do rekordów ani osiągnięć - próbować wolno, oceniana jest tylko gra bez pomocy."
+            "- Ogólne: cele całej kolekcji - rozgrywki, wypróbowane gry, czas, rekordy, zwycięstwa, dni z grą, serie, poziom i pojedynki. Do tego dodatki: nocny marek, maraton, weekendowy gracz.",
+            "- Progi punktowe: uczciwy wynik docelowy dla każdej gry.",
+            "- Poziomy mistrzowskie: druga, znacznie wyższa poprzeczka - tylko dla gier z otwartą punktacją.",
+            "- Bywalec: 25 rozgrywek jednej gry. Jest dla wszystkich 46 gier.",
+            "- Wyjątkowe chwile: mat, generał w kościach, kafelek 4096, hole-in-one, hat-trick w air hockey, cztery duchy z jednej pigułki i wiele więcej."
           ]
         },
         {
-          "h": "Statystyki",
+          "h": "Rzadkość i punkty",
           "body": [
-            "U góry karty podsumowują wszystko: łączny czas gry, rozgrywki, zwycięstwa, pobite rekordy, wypróbowane gry i licznik osiągnięć - plus ulubiona gra (najwięcej czasu).",
-            "Poniżej tabela wymienia każdą zagraną grę z liczbą rozgrywek, czasem, zwycięstwami i rekordem, posortowaną według czasu gry. Kliknięcie wiersza otwiera daną grę.",
-            "Liczy się tylko aktywny czas gry - pauzy i menu nie. Zwycięstwa rejestrują gry z jasnym wynikiem (planszowe, karciane i logiczne) w trybie jednoosobowym."
+            "Pięć stopni, pięć wartości: zwykły 10, rzadki 25, epicki 60, legendarny 150, mityczny 300.",
+            "Kolor widać w odznace, w pasku po lewej stronie wiersza i w powiadomieniu przy odblokowaniu.",
+            "Legendarne i mityczne osiągnięcia świętują konfetti.",
+            "W prawym górnym rogu karty widać, ile masz z każdego stopnia."
+          ]
+        },
+        {
+          "h": "Poziom i rangi",
+          "body": [
+            "Punkty osiągnięć dają poziom: poziom 2 kosztuje 20 punktów, każdy kolejny o 8 więcej niż poprzedni.",
+            "Co kilka poziomów zmienia się ranga - od Małej lamy przez Łowcę punktów i Mistrza lam po Gwiezdną lamę (14 rang).",
+            "Poziom i ranga widnieją na pasku bocznym, w nagłówku karty Osiągnięcia i przy każdym awansie jako osobne powiadomienie z fanfarą.",
+            "Przy pierwszym uruchomieniu po aktualizacji dotychczasowe osiągnięcia liczą się od razu - karta pokazuje twój poziom startowy."
           ]
         },
         {
           "h": "Zapis",
           "body": [
-            "Wszystko jest zapisywane lokalnie w mem.json (sekcje stats i achievements), razem z językiem i rekordami. Usunięcie pliku resetuje też osiągnięcia i statystyki."
+            "Zdobyte osiągnięcia są w mem.json przy swoim profilu; punkty, poziom i historia w stats.pgzlamastats.",
+            "Każdy profil zbiera dla siebie - po zmianie widzisz własne osiągnięcia.",
+            "W 2048 i szachach partie z cofnięciem lub podpowiedzią nie liczą się ani do rekordu, ani do osiągnięć."
           ]
         }
       ]

@@ -131,6 +131,11 @@ class Game:
         # Spielmodus + Einstellungen (Tastenbelegung, Sound, Haptik)
         self.mode = mode
         self.multiplayer = (mode == "multi")
+
+        # Profile der beiden Sitzplätze: None = aktives Profil (Spieler 1)
+        # bzw. Gast (Spieler 2). main.py setzt den zweiten Platz, wenn im
+        # Vorspiel-Screen ein Profil für Spieler 2 gewählt wurde.
+        self.player_ids = [None, None]
         self.settings = game_settings or settings_mod.load_settings()
         self.controls = self.settings.get("controls", settings_mod.DEFAULT_CONTROLS)
 
@@ -269,6 +274,66 @@ class Game:
         Brettspiel): ohne diesen Aufruf zählte nur die erste Runde.
         """
         self._result_reported = False
+        self._duel_reported = False
+
+    # ----- Spielerprofile (Namen im HUD, Duell-Bilanz) -------------------
+
+    def pname(self, index=0):
+        """Anzeigename eines Sitzplatzes ("Lama" statt "Spieler 1").
+
+        Ohne Profil (oder wenn etwas schiefgeht) kommt wie bisher
+        t("common.player1/2") zurück - Spiele können den Namen also überall
+        dort einsetzen, wo bisher der feste Text stand.
+        """
+        try:
+            import profiles
+            pid = self.player_ids[index]
+            if pid is None and index == 0:
+                pid = profiles.active_id()
+            if pid is not None and pid != profiles.GUEST:
+                return profiles.name_of(pid)
+        except Exception:
+            pass
+        return i18n.t("common.player%d" % (index + 1))
+
+    def pcolor(self, index=0):
+        """Profilfarbe eines Sitzplatzes (Rückfall: Akzentfarbe des Spiels)."""
+        try:
+            import profiles
+            pid = self.player_ids[index]
+            if pid is None and index == 0:
+                pid = profiles.active_id()
+            if pid is not None and pid != profiles.GUEST:
+                return profiles.color_rgb(pid)
+        except Exception:
+            pass
+        return self.accent if index == 0 else ui.ACCENT2
+
+    def report_duel(self, winner):
+        """Meldet den Sieger eines lokalen Duells (0 = Spieler 1, 1 = Spieler 2).
+
+        Schreibt die Kopf-an-Kopf-Bilanz beider Profile in die Statistik
+        (stats.pgzlamastats) - die Einzelspieler-Zahlen (wins/losses) bleiben
+        davon unberührt. Pro Partie zählt nur der erste Aufruf;
+        ``new_round_result()`` gibt ihn für die nächste Runde frei.
+        """
+        if self.is_menu or not self.multiplayer:
+            return
+        if getattr(self, "_duel_reported", False):
+            return
+        self._duel_reported = True
+        try:
+            import profiles
+            import stats
+            p1 = self.player_ids[0] or profiles.active_id()
+            p2 = self.player_ids[1] or profiles.GUEST
+            stats.record_duel(self.highscore_key, p2, winner == 0, pid=p1)
+            if p2 != profiles.GUEST:
+                stats.record_duel(self.highscore_key, p1, winner == 1, pid=p2)
+            import achievements
+            achievements.check_stats()
+        except Exception:
+            pass
 
     def ach_event(self, event_id, value=None):
         """Löst ein Erfolgs-Ereignis aus (z.B. 'kniffel_five').

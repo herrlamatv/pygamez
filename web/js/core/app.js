@@ -350,6 +350,10 @@
     // ----- Laden ---------------------------------------------------------
     start() {
       document.documentElement.lang = PG.lang;
+      // Profil auflösen (und beim ersten Mal den alten Stand übernehmen),
+      // bevor irgendetwas Highscores, Statistik oder Erfolge liest.
+      PG.profiles.init();
+      this.backfill = PG.ach.backfillSilent();
       this.applyDomI18n();
       this.bindUi();
       this.bindInput();
@@ -453,6 +457,7 @@
         g.ctx = this.ctx;
         this.current = g;
         PG.stats.gameStarted(entry.meta.key);
+        PG.ach.onGameStarted(entry.meta.key);
       } catch (err) {
         console.error(err);
         this.showError(err);
@@ -480,6 +485,7 @@
 
     backToMenu() {
       this.leaveGame();
+      PG.stats.endSession();
       PG.stats.flush();
       this.entry = null;
       this.current = new HomeScreen(this);
@@ -487,6 +493,47 @@
       ui.beginTransition();
       this.markActive();
       this.refreshScores();
+    }
+
+    /** Öffnet den Erfolge-&-Statistik-Screen (Sidebar-Knopf). */
+    openProgress(tab) {
+      this.leaveGame();
+      PG.stats.endSession();
+      PG.stats.flush();
+      this.entry = null;
+      this.current = new PG.ProgressScreen(this, () => this.backToMenu(), tab);
+      this.canvas.style.cursor = "";
+      ui.beginTransition();
+      this.markActive();
+    }
+
+    /** Öffnet die Profilverwaltung (mehrere Spieler an einem Gerät). */
+    openProfiles() {
+      this.leaveGame();
+      PG.stats.endSession();
+      PG.stats.flush();
+      this.entry = null;
+      this.current = new PG.ProfileScreen(this, () => this.backToMenu());
+      this.canvas.style.cursor = "";
+      ui.beginTransition();
+      this.markActive();
+    }
+
+    /** Nach Profilwechsel/-änderung: Erfolge nachrechnen, Anzeige auffrischen. */
+    refreshProfile() {
+      PG.ach.backfillSilent();
+      this.refreshScores();
+      this.updateProfileChip();
+    }
+
+    /** Name und Level des aktiven Profils im Kopf der Seitenleiste. */
+    updateProfileChip() {
+      const el = document.getElementById("profile-chip");
+      if (!el) return;
+      const pid = PG.profiles.activeId();
+      const [level] = PG.stats.levelOf(pid);
+      el.textContent = `${PG.profiles.nameOf(pid)} · ${PG.t("level.short")} ${level}`;
+      el.style.borderColor = PG.profiles.colorHex(pid);
     }
 
     /** Öffnet das Replay-Archiv (Sidebar-Knopf). */
@@ -528,6 +575,10 @@
       g._hsValue = hs;
       g._hsRecord = record;
       if (record) PG.stats.recordBroken(g.highscoreKey);
+      // Punkteverlauf der Partie festhalten (Grundlage der Diagramme).
+      PG.stats.scoreResult(g.highscoreKey, g.score, record);
+      PG.ach.onHighscore(g.highscoreKey, hs);
+      PG.ach.checkStats();
       this.refreshScores();
     }
 
@@ -599,7 +650,10 @@
         try {
           if (!cur.paused && !cur.gameOver) {
             cur.update(dt);
-            if (g) PG.stats.addPlaytime(g.highscoreKey, dt);
+            if (g) {
+              PG.stats.addPlaytime(g.highscoreKey, dt);
+              if (PG.stats.sessionTime() >= 3600) PG.ach.onPlaytime(PG.stats.sessionTime());
+            }
           }
         } catch (err) {
           this.reportLoopError(err);
@@ -634,6 +688,7 @@
             g._wasOver = false;
             g._resultReported = false;
             PG.stats.gameStarted(g.highscoreKey);
+            PG.ach.onGameStarted(g.highscoreKey);
           }
         }
         // Modi, die nicht in den Highscore zählen (Sprint, Übung ...), blenden ihn aus.
@@ -646,6 +701,8 @@
       PG.audio.musicTick(this.current);
       PG.stats.maybeFlush();
       ui.drawFx(ctx, W, H, dt);
+      // Erfolgs-/Level-Einblendung über allem - auch mitten im Spiel.
+      PG.ach.drawToasts(ctx, dt);
       if (this.errorMsg && performance.now() - this.errorAt < 6000) this.drawError(ctx);
       if (ts - this.statusAt > 200) {
         this.statusAt = ts;
@@ -1109,6 +1166,17 @@
         this.openReplays();
         this.canvas.focus();
       };
+      document.getElementById("btn-progress").onclick = () => {
+        PG.audio.play("click");
+        this.openProgress();
+        this.canvas.focus();
+      };
+      document.getElementById("btn-profiles").onclick = () => {
+        PG.audio.play("click");
+        this.openProfiles();
+        this.canvas.focus();
+      };
+      this.updateProfileChip();
 
       const search = document.getElementById("search");
       search.addEventListener("input", () => this.buildGameList());
@@ -1132,6 +1200,9 @@
         this.buildGameList();
         if (this.current instanceof PreGameScreen) this.current = new PreGameScreen(this, this.current.entry);
         else if (this.current instanceof HomeScreen) this.current = new HomeScreen(this);
+        else if (this.current instanceof PG.ProgressScreen) this.current = new PG.ProgressScreen(this, () => this.backToMenu(), this.current.tab);
+        else if (this.current instanceof PG.ProfileScreen) this.current = new PG.ProfileScreen(this, () => this.backToMenu());
+        this.updateProfileChip();
         if (!this.wikiOpen()) this.canvas.focus();
         this.updateStatus(true);
       };

@@ -380,6 +380,7 @@ class SnakeGame(Game):
         self.game_over = False
         self.winner = None
         self._effects_done = False
+        self.new_round_result()   # neue Partie: Duell-Ergebnis wieder freigeben
         self.particles = []
         self.particles3d = []
         self._shake = 0.0
@@ -1080,6 +1081,9 @@ class SnakeGame(Game):
     def _eat_food(self, sn):
         gain = random.randint(1, 2) if self.bonus else 1
         sn.grow += gain * prestige.blocks_per_apple(self.prestige)
+        # Erfolg: die Schlange ist auf 50 Segmente angewachsen.
+        if self._snake_size(sn) >= 50:
+            self.ach_event("snake_long")
         sn.stamina = min(STAMINA_MAX, sn.stamina + 0.12)
         sn.apples += gain
         if self.multiplayer:
@@ -1309,6 +1313,9 @@ class SnakeGame(Game):
         if self._effects_done:
             return
         self._effects_done = True
+        # Duell-Bilanz der beiden Profile fortschreiben (nur mit Sieger).
+        if self.multiplayer and self.winner is not None:
+            self.report_duel(self.winner)
         self.highscore = max(self.highscore, self.score)
         self._rec_finish()
         self.play_sound("gameover")
@@ -1444,7 +1451,8 @@ class SnakeGame(Game):
         self.rec.close(self._rec_sample, final=True)
         if self.multiplayer:
             sub = (i18n.t("common.draw") if self.winner is None
-                   else i18n.t("common.player_wins", n=self.winner + 1))
+                   else i18n.t("common.player_wins_name",
+                               name=self.pname(self.winner)))
         else:
             sub = i18n.t("snake.replay_sub", score=self.score,
                          apples=self.apples_total,
@@ -2489,8 +2497,11 @@ class SnakeGame(Game):
             s.blit(timg, timg.get_rect(midtop=(self.width // 2, 50)))
 
         if self.multiplayer:
-            p1 = self.font.render(f"P1: {self.snakes[0].score}", True, SNAKE_COLORS[0][1])
-            p2 = self.font.render(f"P2: {self.snakes[1].score}", True, SNAKE_COLORS[1][1])
+            # Profilnamen statt "P1"/"P2" (in den Ecken knapp -> gekürzt).
+            p1 = self.font.render(f"{self.pname(0)[:6]}: {self.snakes[0].score}",
+                                  True, SNAKE_COLORS[0][1])
+            p2 = self.font.render(f"{self.pname(1)[:6]}: {self.snakes[1].score}",
+                                  True, SNAKE_COLORS[1][1])
             s.blit(p1, (10, 8))
             s.blit(p2, (self.width - p2.get_width() - 10, 8))
             self._draw_boost_bar(10, self.height - 22, 150, self.snakes[0], 0)
@@ -2696,7 +2707,8 @@ class SnakeGame(Game):
             if self.winner is None:
                 text, farbe = i18n.t("common.draw"), ui.TEXT
             else:
-                text = i18n.t("common.player_wins", n=self.winner + 1)
+                text = i18n.t("common.player_wins_name",
+                              name=self.pname(self.winner)[:10])
                 farbe = SNAKE_COLORS[self.winner][1]
             self.draw_center_text(text, self.big_font, farbe, -30)
             a0, a1 = self.snakes[0].apples, self.snakes[1].apples

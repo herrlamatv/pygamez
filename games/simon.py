@@ -220,6 +220,7 @@ class SimonGame(Game):
         self._layout()
         self.state = PLAY
         self.game_over = False
+        self.new_round_result()   # neue Partie: Duell-Ergebnis freigeben
         self.score = 0
         self.lit_pad = None
         self.lit_t = 0.0
@@ -343,6 +344,8 @@ class SimonGame(Game):
             if self.input_i >= len(self.expected):
                 # Runde geschafft
                 self.score = len(self.seq)
+                # Erfolg: Sequenzlänge 20 fehlerfrei wiederholt.
+                self.ach_event("simon_20", self.score)
                 self.play_sound("point")
                 self.seq.append(random.randrange(self.pads))
                 self._begin_round()
@@ -377,6 +380,7 @@ class SimonGame(Game):
         else:
             # Vertippt -> aktueller Spieler verliert
             self.winner = 1 - self.turn_player
+            self.report_duel(self.winner)   # Duell-Bilanz fortschreiben
             self.play_sound("gameover")
             self.state = OVER
             self.game_over = True
@@ -422,11 +426,12 @@ class SimonGame(Game):
         pygame.draw.line(s, ui.BORDER, (0, self.hud_h), (self.width, self.hud_h))
         cy = self.hud_h // 2
         if self.mode == "duel":
-            left = self._small.render(t("common.player1"), True,
+            # Profilnamen der beiden Sitzplätze (im schmalen HUD gekürzt).
+            left = self._small.render(self.pname(0)[:8], True,
                                       self.accent if self.turn_player == 0
                                       else ui.TEXT_DIM)
             s.blit(left, left.get_rect(midleft=(14, cy)))
-            right = self._small.render(t("common.player2"), True,
+            right = self._small.render(self.pname(1)[:8], True,
                                        self.accent if self.turn_player == 1
                                        else ui.TEXT_DIM)
             s.blit(right, right.get_rect(midright=(self.width - 14, cy)))
@@ -460,8 +465,9 @@ class SimonGame(Game):
         pygame.draw.line(s, self.accent, (0, y + 107), (self.width, y + 107))
         cx = self.width // 2
         if self.mode == "duel":
-            head = self._huge.render(t("common.player_wins", n=self.winner + 1),
-                                     True, self.accent)
+            head = self._huge.render(
+                t("common.player_wins_name", name=self.pname(self.winner)[:10]),
+                True, self.accent)
             sub = self._small.render(t("simon.duel_len", n=len(self.seq)),
                                      True, ui.TEXT)
         else:

@@ -243,6 +243,9 @@ class BubbleShooterGame(Game):
             dropped = self._drop_floating()
             if dropped:
                 self.score += dropped * 20
+            # Erfolg: zehn Blasen mit einem Schuss (Treffer + Nachrutscher)
+            if len(cluster) + dropped >= 10:
+                self.ach_event("bubble_chain")
         # Feld leer? Bonus + Nachfüllen
         if not any(c is not None for rr in self.grid for c in rr):
             self.score += 500

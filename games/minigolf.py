@@ -410,6 +410,7 @@ class MiniGolfGame(Game):
         return out
 
     def _new_round(self):
+        self.new_round_result()     # neue Runde: Duell-Bilanz wieder freigeben
         self.holes = self._round_holes()
         self.players = 2 if self.multiplayer else 1
         self.cards = [[0] * len(self.holes) for _ in range(self.players)]
@@ -1441,6 +1442,8 @@ class MiniGolfGame(Game):
         if self.multiplayer:
             t0, t1 = sum(self.cards[0]), sum(self.cards[1])
             self.winner = 0 if t0 < t1 else (1 if t1 < t0 else None)
+            if self.winner is not None:
+                self.report_duel(self.winner)   # Duell-Bilanz der Profile
         else:
             self.winner = None
             self.report_result(total <= par_total)
@@ -1703,8 +1706,8 @@ class MiniGolfGame(Game):
         elif self.msg:
             mid = self.msg
         elif self.multiplayer:
-            mid = t("golf.turn",
-                    name=t("common.player1" if self.player == 0 else "common.player2"))
+            # Profilname des Spielers am Zug (gekürzt, HUD ist schmal)
+            mid = t("golf.turn", name=self.pname(self.player)[:10])
         else:
             mid = t("golf.strokes", n=self.strokes)
         img = self._small.render(mid, True, col)
@@ -1758,6 +1761,15 @@ class MiniGolfGame(Game):
         pygame.draw.rect(s, col, (x - 5, cy - 1, 11, 8), border_radius=2)
         pygame.draw.rect(s, ui.PANEL, (x - 1, cy + 2, 2, 3))
 
+    def _card_head(self, p):
+        """Spaltenkopf der Scorekarte: 2 Zeichen des Profilnamens.
+
+        Die Spalte ist nur rund 20 px breit - ohne eigenes Profil bleibt es
+        deshalb bei der schlichten Spielernummer.
+        """
+        name = self.pname(p)
+        return name[:2] if name != t("common.player%d" % (p + 1)) else str(p + 1)
+
     def _draw_card(self, s):
         """Scorekarte rechts: Bahn, Par und Schläge je Spieler."""
         x, w = self.card_x, self.card_w
@@ -1772,9 +1784,11 @@ class MiniGolfGame(Game):
         s.blit(self._card.render(t("golf.card_hole"), True, ui.TEXT_DIM),
                (x + 8, cy))
         s.blit(self._card.render(t("golf.card_par"), True, ui.TEXT_DIM), (par_x, cy))
-        s.blit(self._card.render("1", True, self.accent), (me_x, cy))
+        s.blit(self._card.render(self._card_head(0), True, self.accent),
+               (me_x, cy))
         if self.multiplayer:
-            s.blit(self._card.render("2", True, ui.GOLD), (p2_x, cy))
+            s.blit(self._card.render(self._card_head(1), True, ui.GOLD),
+                   (p2_x, cy))
         cy += line + 2
         for i, hole in enumerate(self.holes):
             active = (i == self.hole_idx)
@@ -1837,7 +1851,8 @@ class MiniGolfGame(Game):
         if self.multiplayer:
             head = self._huge.render(
                 t("common.draw") if self.winner is None
-                else t("common.player_wins", n=self.winner + 1), True, self.accent)
+                else t("common.player_wins_name",
+                       name=self.pname(self.winner)[:10]), True, self.accent)
         else:
             head = self._huge.render(t("golf.round_done"), True, self.accent)
         s.blit(head, head.get_rect(center=(cx, y + self.over_y["head"])))

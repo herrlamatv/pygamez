@@ -173,6 +173,108 @@
       ]
     },
     {
+      "id": "profiles",
+      "category": "general",
+      "title": "Profily hráčů",
+      "keywords": [
+        "profil",
+        "profily",
+        "hráč",
+        "přepnutí",
+        "více hráčů",
+        "host",
+        "úroveň"
+      ],
+      "sections": [
+        {
+          "h": "Přehled",
+          "body": [
+            "Více hráčů na jednom zařízení: každý profil má vlastní rekordy, úspěchy, úroveň, statistiky, lama žetony a uložené hry.",
+            "Tlačítko Profily v postranním panelu je ukáže všechny; karta nad ním říká, kdo hraje, s úrovní a pruhem XP.",
+            "Společná zůstávají jen nastavení zařízení (rozlišení, zvuk, klávesy, vzhled) a jazyk.",
+            "Možných je až osm profilů."
+          ]
+        },
+        {
+          "h": "Vytvoření a přepnutí",
+          "body": [
+            "Nový profil: zadej jméno, vyber ikonu a barvu, ulož. Jméno projde slovním filtrem a může mít 14 znaků.",
+            "Klikni na Hrát (nebo Enter) a přepneš - od té chvíle se body, čas i úspěchy počítají tomuto profilu.",
+            "Klávesy: Enter přepne, N vytvoří, F2 přejmenuje, Del smaže, Esc se vrátí.",
+            "Smazáním profilu zmizí i jeho data; poslední profil zůstává vždy."
+          ]
+        },
+        {
+          "h": "Více hráčů a souboje",
+          "body": [
+            "Když spustíš režim pro více hráčů, hra se nejdřív zeptá na profil druhého hráče - nebo hraješ jako host.",
+            "Ve hře pak místo Hráč 1/2 stojí jména profilů.",
+            "Každá partie se zapíše do vzájemných soubojů: záložka Profily ukazuje, kdo koho kolikrát porazil.",
+            "Je tam i žebříček zařízení: který profil drží v které hře nejlepší výsledek."
+          ]
+        },
+        {
+          "h": "Ukládání",
+          "body": [
+            "Profily jsou v mem.json pod players/<id>; statistika v stats.pgzlamastats. Oba soubory leží vedle hry (nebo vedle .exe).",
+            "Při prvním spuštění po aktualizaci se dosavadní postup přesune do profilu 1 - nic se neztratí.",
+            "Záznamy a vlastní dráhy zůstávají všem, nesou ale jméno profilu, který je pořídil."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "category": "general",
+      "title": "Statistiky a grafy",
+      "keywords": [
+        "statistika",
+        "graf",
+        "kalendář",
+        "herní čas",
+        "historie",
+        "série",
+        "přehled"
+      ],
+      "sections": [
+        {
+          "h": "Přehled",
+          "body": [
+            "Sbírka si vede záznamy: herní čas, partie, výhry, rekordy, herní dny, křivky bodů a každý úspěch - s časovým razítkem.",
+            "Vše je za tlačítkem Úspěchy a statistiky, rozdělené do pěti záložek (Tab nebo klik přepíná).",
+            "Počítá se jen aktivní herní čas; pauzy a menu ne. Každý profil má vlastní statistiku."
+          ]
+        },
+        {
+          "h": "Pět záložek",
+          "body": [
+            "- Úspěchy: vše podle kategorií, se vzácností, body, datem nebo ukazatelem postupu. Nahoře úroveň, hodnost a pruh XP; filtr ukáže jen získané nebo zbývající.",
+            "- Statistiky: přehledové karty, deset nejhranějších her jako pruhy, kolečko výher/proher a tabulka všech her.",
+            "- Kalendář: mapa herních dnů (čím tmavší, tím déle), aktuální a nejdelší série, dny v týdnu a denní doba.",
+            "- Historie: vše s časovým razítkem - úspěchy, rekordy, nové úrovně, souboje - a křivka bodů jedné hry.",
+            "- Profily: každý profil s úrovní a časem, žebříček zařízení a vzájemné souboje."
+          ]
+        },
+        {
+          "h": "Ohlédnutí a grafy",
+          "body": [
+            "Nad kalendářem je tvůj PyGameZ přehled: nejlepší den, oblíbený čas, nejdelší sezení v kuse, oblíbená hra a tvůj nejvzácnější úspěch.",
+            "Všechny grafy reagují na myš: najeď na ně a malé okénko ukáže datum, herní čas a partie.",
+            "Rekordy jsou na křivce bodů zlaté tečky."
+          ]
+        },
+        {
+          "h": "Soubor a sdílení",
+          "body": [
+            "Všechny statistiky jsou v souboru stats.pgzlamastats vedle hry - běžný JSON, jeden blok na profil.",
+            "V záložce Kalendář (nebo klávesami E a I) je můžeš exportovat a zase načíst; webová verze čte stejný soubor.",
+            "Při importu vybereš, zda se hodnoty přičtou k aktuálnímu profilu.",
+            "Aby soubor nerostl donekonečna, jsou historie (4000 záznamů), křivky bodů (250 na hru) a kalendář (asi tři roky) omezené; součty zůstávají."
+          ]
+        }
+      ]
+    },
+    {
       "id": "replays",
       "category": "general",
       "title": "Záznamy",
@@ -233,48 +335,59 @@
     {
       "id": "achievements",
       "category": "general",
-      "title": "Úspěchy a statistiky",
+      "title": "Úspěchy, vzácnost a úroveň",
       "keywords": [
         "úspěchy",
-        "statistiky",
-        "postup",
-        "rekord",
-        "výhry",
-        "herní čas",
-        "milník"
+        "vzácnost",
+        "body",
+        "úroveň",
+        "hodnost",
+        "meta",
+        "postup"
       ],
       "sections": [
         {
           "h": "Přehled",
           "body": [
-            "Sbírka sleduje tvůj postup: 107 úspěchů a podrobné statistiky všech 46 her. Obojí najdeš pod tlačítkem Úspěchy a statistiky v postranním panelu; mezi záložkami přepínáš klávesou [Tab] nebo kliknutím."
+            "250 úspěchů napříč všemi 46 hrami - od prvního spuštění po Perfect Clear v Tetrisu.",
+            "Každý úspěch má vzácnost a tím i bodovou hodnotu; součet dává tvoji úroveň.",
+            "Najdeš je za tlačítkem Úspěchy a statistiky, záložka Úspěchy. Filtr skryje získané nebo zbývající."
           ]
         },
         {
-          "h": "Úspěchy",
+          "h": "Pět kategorií",
           "body": [
-            "Existují tři kategorie:",
-            "- Obecné (23): cíle napříč sbírkou jako spuštěné partie, vyzkoušené hry, celkový herní čas, překonané rekordy a výhry - plus drobnosti jako Noční sova (hraní po půlnoci).",
-            "- Bodové milníky (37): jeden férový cílový počet bodů na hru, přizpůsobený její bodové škále.",
-            "- Výjimečné okamžiky (47): šachmat AI, KNIFFEL, dlaždice 2048 a 4096, T-Spin Double a Perfect Clear v Tetrisu, 25 vyřešených šachových úloh, první Killer Sudoku, zásah jednoho čísla v ruletě, lamí jackpot na automatu, výhra v Battleship bez ztráty jediné lodi a další.",
-            "Při odemčení se vpravo nahoře objeví zlaté oznámení s krátkou fanfárou - i uprostřed hry.",
-            "Stará data se počítají: při prvním spuštění po aktualizaci se tvé dosavadní rekordy započítají automaticky (bez ohňostroje oznámení).",
-            "Zamčené úspěchy ukazují ukazatel postupu, odemčené své datum.",
-            "Ve 2048 a v šachu se partie s vrácením tahu nebo nápovědou nepočítají do rekordů ani úspěchů - zkoušet můžeš, hodnotí se ale jen hra bez pomoci."
+            "- Obecné: cíle napříč sbírkou - partie, vyzkoušené hry, herní čas, rekordy, výhry, herní dny, série, úroveň a souboje. K tomu extra jako noční sova, maraton nebo víkendový hráč.",
+            "- Bodové mety: spravedlivý cílový počet bodů pro každou hru.",
+            "- Mistrovské stupně: druhá, výrazně vyšší meta - jen pro hry s otevřeným bodováním.",
+            "- Stálý host: 25 partií jedné hry. Existuje pro všech 46 her.",
+            "- Zvláštní okamžiky: šachmat, Yahtzee, dlaždice 4096, hole-in-one, hattrick v air hockeyi, čtyři duchové po jedné pilulce a mnoho dalšího."
           ]
         },
         {
-          "h": "Statistiky",
+          "h": "Vzácnost a body",
           "body": [
-            "Nahoře karty shrnují vše: celkový herní čas, partie, výhry, překonané rekordy, vyzkoušené hry a počítadlo úspěchů - plus tvou oblíbenou hru (nejvíce času).",
-            "Níže tabulka vypisuje každou hranou hru s partiemi, časem, výhrami a rekordem, seřazenou podle herního času. Kliknutí na řádek otevře přímo danou hru.",
-            "Počítá se jen aktivní herní čas - pauzy a menu ne. Výhry zaznamenávají hry s jasným výsledkem výhra/prohra (deskové, karetní a logické) v singleplayeru."
+            "Pět stupňů, pět bodových hodnot: běžný 10, vzácný 25, epický 60, legendární 150, mýtický 300.",
+            "Barva je na odznaku, v proužku vlevo od řádku a v upozornění při získání.",
+            "Legendární a mýtické úspěchy slaví konfetami.",
+            "Vpravo nahoře v záložce vidíš, kolik jich z které skupiny máš."
+          ]
+        },
+        {
+          "h": "Úroveň a hodnosti",
+          "body": [
+            "Body za úspěchy dávají úroveň: úroveň 2 stojí 20 bodů, každá další o 8 bodů víc než předchozí.",
+            "Po pár úrovních se mění hodnost - od Lama mláděte přes Lovce bodů a Mistrovskou lamu až po Hvězdnou lamu (14 hodností).",
+            "Úroveň a hodnost stojí v postranním panelu, v hlavičce záložky Úspěchy a při každém postupu jako vlastní upozornění s fanfárou.",
+            "Při prvním spuštění po aktualizaci se dosavadní úspěchy počítají hned - karta ukáže tvoji startovní úroveň."
           ]
         },
         {
           "h": "Ukládání",
           "body": [
-            "Vše je uloženo lokálně v mem.json (sekce stats a achievements) spolu s jazykem a rekordy. Smazáním souboru se vynulují i úspěchy a statistiky."
+            "Získané úspěchy jsou v mem.json u daného profilu; body, úroveň a historie v stats.pgzlamastats.",
+            "Každý profil sbírá sám za sebe - po přepnutí vidíš vlastní úspěchy.",
+            "Ve 2048 a v šachu se partie se zpět nebo s nápovědou nepočítají ani do rekordu, ani do úspěchů."
           ]
         }
       ]

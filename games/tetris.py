@@ -240,6 +240,7 @@ class TetrisGame(Game):
         self.elapsed = 0.0
         self.go_t = 0.0
         self.over_at = 0.0
+        self._prev_four = False     # letzte Räumung war ein Tetris? (tetris_b2b)
         self.setup_focus = 0
         self.setup_hover = None
         self.over_rects = {}
@@ -576,6 +577,8 @@ class TetrisGame(Game):
         self.result = None
         self.score = 0
         self.game_over = False
+        self._prev_four = False    # letzte Räumung war ein Tetris? (für tetris_b2b)
+        self.new_round_result()    # Revanche: Duell-Ergebnis wieder freigeben
         self.state = COUNT
         self._rec_new()
         self._layout()
@@ -866,6 +869,11 @@ class TetrisGame(Game):
         if human and not self.multiplayer:
             if lines == 4:
                 self.ach_event("tetris_four")
+                # Erfolg: zwei Tetris direkt hintereinander (ohne andere Räumung).
+                if self._prev_four:
+                    self.ach_event("tetris_b2b")
+            if lines:
+                self._prev_four = lines == 4
             if spin == "full" and lines == 2:
                 self.ach_event("tetris_tspin")
             if info["pc"]:
@@ -965,6 +973,8 @@ class TetrisGame(Game):
                 rec[0 if winner == 0 else 1] += 1
                 self._save_best()
                 self.report_result(winner == 0)
+            elif self.multiplayer and winner is not None:
+                self.report_duel(winner)   # Duell-Bilanz fortschreiben
             if winner is not None:
                 self._confetti(winner)
         self.result = res
@@ -1091,7 +1101,7 @@ class TetrisGame(Game):
                 return t("common.draw")
             if self.mode == "versus_ai":
                 return t("tetris.res.you_win") if win == 0 else t("tetris.res.ai_wins")
-            return t("common.player_wins", n=win + 1)
+            return t("common.player_wins_name", name=self.pname(win))
         if self.variant == "sprint":
             return t("tetris.hud.lines") + " %d · %s" % (b.lines,
                                                          fmt_time(self.elapsed))
@@ -1746,7 +1756,8 @@ class TetrisGame(Game):
                 name = t("tetris.player.you") if i == 0 else \
                     t("tetris.player.ai", level=t("tetris.ai.%d" % self.ai_level))
             else:
-                name = t("common.player1") if i == 0 else t("common.player2")
+                # Profilnamen über dem Feld (enges HUD -> gekürzt).
+                name = self.pname(i)[:8]
             text = "%s   %d" % (name, self.wins[i])
             img = self._fit_render(text, self._f_value, col, L["next"].right - L["hold"].x)
             s.blit(img, img.get_rect(midbottom=(field.centerx, field.y - 6)))
@@ -1904,7 +1915,7 @@ class TetrisGame(Game):
             title = t("tetris.res.you_win") if w == 0 else t("tetris.res.ai_wins")
             color = COL_P1 if w == 0 else COL_P2
         else:
-            title = t("common.player_wins", n=w + 1)
+            title = t("common.player_wins_name", name=self.pname(w)[:10])
             color = COL_P1 if w == 0 else COL_P2
         table = [(t("tetris.stat.lines"), str(st[0]["lines"]), str(st[1]["lines"])),
                  (t("tetris.stat.attack"), str(st[0]["attack"]), str(st[1]["attack"])),
@@ -1964,9 +1975,11 @@ class TetrisGame(Game):
                 s.blit(vi, vi.get_rect(topright=(right, y)))
                 y += lay["row_h"]
         else:
+            # Spaltenköpfe: im Duell die Profilnamen (schmale Spalte -> gekürzt).
             head = [(t("tetris.player.you") if self.mode == "versus_ai"
-                     else "P1", COL_P1),
-                    (t("common.ai") if self.mode == "versus_ai" else "P2", COL_P2)]
+                     else self.pname(0)[:6], COL_P1),
+                    (t("common.ai") if self.mode == "versus_ai"
+                     else self.pname(1)[:6], COL_P2)]
             colw = max([self._small_b.size(h)[0] for h, _c in head]
                        + [self._small_b.size(v)[0] for _l, a, b in lay["table"]
                           for v in (a, b)]) + 22

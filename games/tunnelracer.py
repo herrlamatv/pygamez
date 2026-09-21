@@ -415,6 +415,9 @@ class TunnelRacerGame(Game):
         # Tempo
         if self.mode == "endless":
             v = min(75.0, 26.0 + 10.0 * (self.z / 1000.0))
+            # Erfolg: die Höchstgeschwindigkeit des Tunnels erreicht.
+            if v >= 75.0:
+                self.ach_event("tunnel_far")
         else:
             progress = self.z / max(1.0, self.length)
             v = self.base_speed * (1.0 + 0.15 * progress)

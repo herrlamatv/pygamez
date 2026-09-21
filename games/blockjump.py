@@ -749,6 +749,7 @@ class BlockJumpGame(Game):
         self.checkpoint = self.spawn
         self.level_time = 0.0
         self.coins_level = 0
+        self._deaths_level = 0     # Stürze in diesem Level (Erfolg)
         self._clear_t = 0.0
         self._cam_pos = (self.px, self.py + EYE_H, self.pz)
         self._cam_look = (self.px, self.py + EYE_H, self.pz + 1.0)
@@ -1036,12 +1037,16 @@ class BlockJumpGame(Game):
         bonus = max(0, int((par - self.level_time) * 15))
         self.score += 1000 + bonus
         self._last_bonus = bonus
+        # Erfolg: Level geschafft, ohne einmal abzustürzen
+        if self._deaths_level == 0:
+            self.ach_event("bj_deathless")
         self.state = CLEAR
         self._clear_t = 1.8
         self.play_sound("win")
 
     def _die(self):
         self.lives -= 1
+        self._deaths_level += 1
         self.play_sound("gameover")
         if self.lives <= 0:
             self.state = GAMEOVER

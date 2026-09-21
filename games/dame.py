@@ -504,6 +504,9 @@ class DameGame(Game):
         self.step_options = set()
         if move["caps"]:
             self.play_sound("lock")
+            # Erfolg: Mehrfachsprung über drei oder mehr Steine
+            if len(move["caps"]) >= 3:
+                self.ach_event("dame_multi")
         else:
             self.play_sound("move")
         if promoted:
@@ -552,6 +555,7 @@ class DameGame(Game):
                 self.play_sound("gameover")
                 self.report_result(False)
         else:
+            self.report_duel(winner)
             self.play_sound("win")
         self.game_over = True                    # main.py sichert den Score
 
@@ -768,8 +772,8 @@ class DameGame(Game):
             elif not self.multiplayer:
                 mid = t("dame.your_turn")
             else:
-                who = t("common.player1") if self.player == 0 else t("common.player2")
-                mid = t("dame.turn", name=who)
+                # Profilname des Spielers am Zug (gekürzt für die HUD-Leiste)
+                mid = t("dame.turn", name=self.pname(self.player)[:8])
             img = self._small.render(mid, True, self.accent)
             s.blit(img, img.get_rect(center=(self.width // 2, cy)))
             if self.forced:
@@ -779,8 +783,9 @@ class DameGame(Game):
     def _draw_over(self, s):
         cx = self.width // 2
         if self.multiplayer:
-            head = self._huge.render(t("common.player_wins", n=self.winner + 1),
-                                     True, COL_P0 if self.winner == 0 else COL_P1)
+            head = self._huge.render(
+                t("common.player_wins_name", name=self.pname(self.winner)[:10]),
+                True, COL_P0 if self.winner == 0 else COL_P1)
         else:
             key = "dame.win_you" if self.winner == 0 else "dame.win_ai"
             head = self._huge.render(t(key), True,

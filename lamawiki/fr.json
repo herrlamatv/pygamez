@@ -172,6 +172,108 @@
       ]
     },
     {
+      "id": "profiles",
+      "category": "general",
+      "title": "Profils de joueur",
+      "keywords": [
+        "profil",
+        "profils",
+        "joueur",
+        "changer",
+        "multijoueur",
+        "invité",
+        "niveau"
+      ],
+      "sections": [
+        {
+          "h": "Aperçu",
+          "body": [
+            "Plusieurs joueurs sur un appareil : chaque profil a ses propres records, succès, niveau, statistiques, jetons lama et sauvegardes.",
+            "Le bouton Profils dans la barre latérale les liste tous ; la carte au-dessus montre qui joue, avec le niveau et la barre d'XP.",
+            "Seuls les réglages de l'appareil (résolution, son, touches, thème) et la langue sont partagés.",
+            "Jusqu'à huit profils sont possibles."
+          ]
+        },
+        {
+          "h": "Créer et changer",
+          "body": [
+            "Nouveau profil : saisis un nom, choisis une icône et une couleur, enregistre. Le nom passe par le filtre de mots et fait 14 caractères au plus.",
+            "Clique sur Jouer (ou Entrée) pour changer - dès lors, points, temps et succès vont à ce profil.",
+            "Touches : Entrée change, N crée, F2 renomme, Suppr supprime, Esc revient.",
+            "Supprimer un profil supprime aussi ses données ; le dernier profil reste toujours."
+          ]
+        },
+        {
+          "h": "Multijoueur et duels",
+          "body": [
+            "Quand tu lances un mode multijoueur, la collection demande d'abord quel profil est le joueur 2 - ou tu joues en invité.",
+            "En jeu, les noms de profil remplacent Joueur 1/2.",
+            "Chaque partie multijoueur alimente le face-à-face : l'onglet Profils montre qui a battu qui, et combien de fois.",
+            "On y trouve aussi le classement de l'appareil : quel profil détient le meilleur score de chaque jeu."
+          ]
+        },
+        {
+          "h": "Sauvegarde",
+          "body": [
+            "Tous les profils sont dans mem.json sous players/<id> ; les statistiques dans stats.pgzlamastats. Les deux fichiers sont à côté du jeu (ou de l'.exe).",
+            "Au premier lancement après la mise à jour, ta sauvegarde passe dans le profil 1 - rien n'est perdu.",
+            "Les replays et les parcours faits maison restent accessibles à tous, avec le nom du profil qui les a créés."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "category": "general",
+      "title": "Statistiques et graphiques",
+      "keywords": [
+        "statistiques",
+        "graphique",
+        "calendrier",
+        "temps de jeu",
+        "historique",
+        "série",
+        "bilan"
+      ],
+      "sections": [
+        {
+          "h": "Aperçu",
+          "body": [
+            "La collection tient les comptes : temps de jeu, parties, victoires, records, jours joués, courbes de points et chaque succès - avec horodatage.",
+            "Tout se trouve derrière le bouton Succès et statistiques, réparti sur cinq onglets (Tab ou clic pour changer).",
+            "Seul le temps de jeu actif compte ; pauses et menus ne comptent pas. Chaque profil a ses propres statistiques."
+          ]
+        },
+        {
+          "h": "Les cinq onglets",
+          "body": [
+            "- Succès : tout par catégorie, avec rareté, points, date ou barre de progression. Niveau, rang et barre d'XP en haut ; un filtre n'affiche que les succès ouverts ou obtenus.",
+            "- Statistiques : cartes de synthèse, les dix jeux les plus joués en barres, un anneau victoires/défaites et le tableau de tous les jeux.",
+            "- Calendrier : la carte des jours joués (plus c'est foncé, plus tu as joué), série en cours et record, jours de la semaine et heure.",
+            "- Historique : tout avec horodatage - succès, records, niveaux, duels - plus la courbe de points d'un jeu.",
+            "- Profils : chaque profil avec niveau et temps de jeu, le classement de l'appareil et le face-à-face."
+          ]
+        },
+        {
+          "h": "Bilan et graphiques",
+          "body": [
+            "Au-dessus du calendrier, ton bilan PyGameZ : meilleur jour, heure préférée, plus longue session d'affilée, jeu préféré et ton succès le plus rare.",
+            "Tous les graphiques réagissent à la souris : survole et une petite bulle indique date, temps de jeu et parties.",
+            "Les records apparaissent en points dorés sur la courbe."
+          ]
+        },
+        {
+          "h": "Fichier et partage",
+          "body": [
+            "Toutes les statistiques sont dans le fichier stats.pgzlamastats à côté du jeu - du JSON ordinaire, un bloc par profil.",
+            "Dans l'onglet Calendrier (ou avec E et I) tu peux l'exporter et le relire ; la version web lit le même fichier.",
+            "À l'import, tu choisis si les valeurs s'ajoutent au profil actuel.",
+            "Pour que le fichier ne grossisse pas sans fin, l'historique (4000 entrées), les courbes (250 par jeu) et le calendrier (environ trois ans) sont limités ; les totaux restent."
+          ]
+        }
+      ]
+    },
+    {
       "id": "replays",
       "category": "general",
       "title": "Replays",
@@ -232,48 +334,59 @@
     {
       "id": "achievements",
       "category": "general",
-      "title": "Succès & statistiques",
+      "title": "Succès, rareté et niveau",
       "keywords": [
         "succès",
-        "statistiques",
-        "progression",
-        "record",
-        "victoires",
-        "temps de jeu",
-        "palier"
+        "rareté",
+        "points",
+        "niveau",
+        "rang",
+        "palier",
+        "progression"
       ],
       "sections": [
         {
           "h": "Aperçu",
           "body": [
-            "La collection suit ta progression : 107 succès et des statistiques détaillées sur les 46 jeux. Tu trouves les deux derrière le bouton Succès & statistiques de la barre latérale ; passe d'un onglet à l'autre avec [Tab] ou d'un clic."
+            "250 succès dans les 46 jeux - du premier lancement au Perfect Clear dans Tetris.",
+            "Chaque succès a une rareté, donc une valeur en points ; la somme donne ton niveau.",
+            "Bouton Succès et statistiques, onglet Succès. Un filtre masque les succès obtenus ou restants."
           ]
         },
         {
-          "h": "Succès",
+          "h": "Les cinq catégories",
           "body": [
-            "Il existe trois catégories :",
-            "- Général (23) : des objectifs globaux comme les parties lancées, les jeux essayés, le temps de jeu total, les records battus et les victoires - plus quelques extras comme l'Oiseau de nuit (jouer après minuit).",
-            "- Paliers de points (37) : un score cible équitable par jeu, adapté à son barème.",
-            "- Moments spéciaux (47) : mettre l'IA échec et mat, un YAMS, les tuiles 2048 et 4096, un T-Spin Double et un Perfect Clear à Tetris, 25 problèmes d'échecs résolus, ton premier Killer Sudoku, un plein à la roulette, le jackpot lama à la machine à sous, une victoire à Battleship sans perdre un navire et plus encore.",
-            "Au déblocage, une notification dorée apparaît en haut à droite avec une petite fanfare - même en pleine partie.",
-            "L'existant compte : au premier lancement après la mise à jour, tes anciens records sont crédités automatiquement (sans feu d'artifice de notifications).",
-            "Les succès verrouillés affichent une barre de progression, les débloqués leur date.",
-            "Dans 2048 et aux échecs, les parties jouées avec annulation ou indices ne comptent ni pour les records ni pour les succès - essayer est permis, seules les parties sans aide sont évaluées."
+            "- Général : objectifs d'ensemble - parties, jeux essayés, temps de jeu, records, victoires, jours joués, séries, niveau et duels. Plus des extras : oiseau de nuit, marathon, joueur du week-end.",
+            "- Paliers de points : un score cible équitable par jeu.",
+            "- Niveaux maîtres : le second palier, bien plus haut - seulement pour les jeux au score illimité.",
+            "- Habitué : 25 parties d'un même jeu. Existe pour chacun des 46 jeux.",
+            "- Moments particuliers : échec et mat, un Yams, la tuile 4096, un trou en un, un coup du chapeau au air hockey, quatre fantômes d'une seule pastille et bien plus."
           ]
         },
         {
-          "h": "Statistiques",
+          "h": "Rareté et points",
           "body": [
-            "En haut, des cartes résument tout : temps de jeu total, parties, victoires, records battus, jeux essayés et ton compteur de succès - plus ton jeu préféré (le plus joué).",
-            "En dessous, un tableau liste chaque jeu joué avec parties, temps, victoires et record, trié par temps de jeu. Un clic sur une ligne ouvre directement le jeu.",
-            "Seul le temps de jeu actif compte - pauses et menus ne tournent pas. Les victoires sont suivies par les jeux à issue claire (plateau, cartes, réflexion) en solo."
+            "Cinq raretés, cinq valeurs : commun 10, rare 25, épique 60, légendaire 150, mythique 300.",
+            "La couleur se voit sur l'insigne, sur la bande à gauche de la ligne et dans la notification.",
+            "Les succès légendaires et mythiques arrivent avec des confettis.",
+            "En haut à droite de l'onglet : combien tu en as par rareté."
+          ]
+        },
+        {
+          "h": "Niveau et rangs",
+          "body": [
+            "Les points de succès donnent ton niveau : le niveau 2 coûte 20 points, chaque niveau suivant 8 de plus que le précédent.",
+            "Tous les quelques niveaux, le rang change - de Petit lama à Lama stellaire, en passant par Chasseur de points et Maître lama (14 rangs).",
+            "Niveau et rang s'affichent dans la barre latérale, en tête de l'onglet Succès et, à chaque passage de niveau, dans une notification avec fanfare.",
+            "Au premier lancement après la mise à jour, tes succès comptent immédiatement - une carte montre ton niveau de départ."
           ]
         },
         {
           "h": "Sauvegarde",
           "body": [
-            "Tout est stocké localement dans mem.json (sections stats et achievements), avec la langue et les records. Supprimer le fichier réinitialise aussi succès et statistiques."
+            "Les succès obtenus sont dans mem.json avec leur profil ; points, niveau et historique dans stats.pgzlamastats.",
+            "Chaque profil collectionne pour lui-même - change de profil et tu vois tes propres succès.",
+            "Dans 2048 et aux échecs, les parties avec annulation ou indice ne comptent ni pour le record ni pour les succès."
           ]
         }
       ]

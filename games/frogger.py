@@ -420,6 +420,8 @@ class FroggerGame(Game):
         if self.fly is not None and self.fly["bay"] == bay:
             self.score += 200
             self.fly = None
+            # Erfolg: Bonus-Fliege in der Bucht eingesammelt
+            self.ach_event("frog_fly")
             self.play_sound("powerup")
         self.play_sound("point")
         if all(self.bays_done):

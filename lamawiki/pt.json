@@ -172,6 +172,108 @@
       ]
     },
     {
+      "id": "profiles",
+      "category": "general",
+      "title": "Perfis de jogador",
+      "keywords": [
+        "perfil",
+        "perfis",
+        "jogador",
+        "mudar",
+        "multijogador",
+        "convidado",
+        "nível"
+      ],
+      "sections": [
+        {
+          "h": "Visão geral",
+          "body": [
+            "Vários jogadores num dispositivo: cada perfil tem os seus recordes, conquistas, nível, estatísticas, fichas de lhama e jogos guardados.",
+            "O botão Perfis na barra lateral mostra todos; o cartão acima indica quem está a jogar, com nível e barra de XP.",
+            "Só as definições do dispositivo (resolução, som, teclas, tema) e o idioma são partilhados.",
+            "São possíveis até oito perfis."
+          ]
+        },
+        {
+          "h": "Criar e mudar",
+          "body": [
+            "Novo perfil: escreve um nome, escolhe ícone e cor, guarda. O nome passa pelo filtro de palavras e pode ter 14 caracteres.",
+            "Carrega em Jogar (ou Enter) para mudar: a partir daí, pontos, tempo e conquistas vão para esse perfil.",
+            "Teclas: Enter muda, N cria, F2 renomeia, Del apaga, Esc volta.",
+            "Apagar um perfil apaga também os seus dados; o último perfil fica sempre."
+          ]
+        },
+        {
+          "h": "Multijogador e duelos",
+          "body": [
+            "Ao iniciar um modo multijogador, é perguntado primeiro que perfil joga como jogador 2 - ou jogas como convidado.",
+            "No jogo aparecem os nomes dos perfis em vez de Jogador 1/2.",
+            "Cada partida multijogador entra no confronto direto: o separador Perfis mostra quem ganhou a quem e quantas vezes.",
+            "Ali está também a classificação do dispositivo: que perfil tem o melhor resultado em cada jogo."
+          ]
+        },
+        {
+          "h": "Armazenamento",
+          "body": [
+            "Os perfis ficam em mem.json em players/<id>; as estatísticas em stats.pgzlamastats. Ambos ao lado do jogo (ou do .exe).",
+            "No primeiro arranque após a atualização o teu progresso passa para o perfil 1 - nada se perde.",
+            "As repetições e os campos criados continuam para todos, com o nome do perfil que os fez."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "category": "general",
+      "title": "Estatísticas e gráficos",
+      "keywords": [
+        "estatísticas",
+        "gráfico",
+        "calendário",
+        "tempo",
+        "histórico",
+        "sequência",
+        "resumo"
+      ],
+      "sections": [
+        {
+          "h": "Visão geral",
+          "body": [
+            "A coleção regista tudo: tempo de jogo, partidas, vitórias, recordes, dias jogados, curvas de pontos e cada conquista, com data e hora.",
+            "Está tudo atrás do botão Conquistas e estatísticas, em cinco separadores (Tab ou clique para mudar).",
+            "Só conta o tempo de jogo ativo; pausas e menus não. Cada perfil tem as suas estatísticas."
+          ]
+        },
+        {
+          "h": "Os cinco separadores",
+          "body": [
+            "- Conquistas: tudo por categoria, com raridade, pontos, data ou barra de progresso. Em cima ficam nível, patente e barra de XP; um filtro mostra só pendentes ou obtidas.",
+            "- Estatísticas: cartões de resumo, os dez jogos mais jogados em barras, um anel de vitórias/derrotas e a tabela de todos os jogos.",
+            "- Calendário: o mapa dos dias jogados (quanto mais escuro, mais tempo), sequência atual e melhor, dias da semana e período do dia.",
+            "- Histórico: tudo com data e hora - conquistas, recordes, subidas de nível, duelos - e a curva de pontos de um jogo.",
+            "- Perfis: cada perfil com nível e tempo, a classificação do dispositivo e o confronto direto."
+          ]
+        },
+        {
+          "h": "Resumo e gráficos",
+          "body": [
+            "Por cima do calendário está o teu resumo PyGameZ: melhor dia, hora favorita, sessão mais longa seguida, jogo favorito e a tua conquista mais rara.",
+            "Todos os gráficos reagem ao rato: passa por cima e uma caixinha indica data, tempo e partidas.",
+            "Os recordes aparecem como pontos dourados na curva."
+          ]
+        },
+        {
+          "h": "Ficheiro e partilha",
+          "body": [
+            "Todas as estatísticas estão no ficheiro stats.pgzlamastats ao lado do jogo - JSON normal, um bloco por perfil.",
+            "No separador Calendário (ou com E e I) podes exportá-lo e voltar a lê-lo; a versão web lê o mesmo ficheiro.",
+            "Ao importar escolhes se os valores são somados ao perfil atual.",
+            "Para o ficheiro não crescer sem fim, o histórico (4000 entradas), as curvas (250 por jogo) e o calendário (cerca de três anos) têm limite; os totais ficam."
+          ]
+        }
+      ]
+    },
+    {
       "id": "replays",
       "category": "general",
       "title": "Replays",
@@ -232,48 +334,59 @@
     {
       "id": "achievements",
       "category": "general",
-      "title": "Conquistas e estatísticas",
+      "title": "Conquistas, raridade e nível",
       "keywords": [
         "conquistas",
-        "estatísticas",
-        "progresso",
-        "recorde",
-        "vitórias",
-        "tempo de jogo",
-        "marco"
+        "raridade",
+        "pontos",
+        "nível",
+        "patente",
+        "marco",
+        "progresso"
       ],
       "sections": [
         {
           "h": "Visão geral",
           "body": [
-            "A coleção acompanha o teu progresso: 107 conquistas e estatísticas detalhadas dos 46 jogos. Ambas estão atrás do botão Conquistas e estatísticas na barra lateral; muda de separador com [Tab] ou com um clique."
+            "250 conquistas nos 46 jogos - do primeiro arranque ao Perfect Clear no Tetris.",
+            "Cada conquista tem uma raridade e com ela um valor em pontos; a soma é o teu nível.",
+            "Estão atrás do botão Conquistas e estatísticas, separador Conquistas. Um filtro esconde as pendentes ou as obtidas."
           ]
         },
         {
-          "h": "Conquistas",
+          "h": "As cinco categorias",
           "body": [
-            "Há três categorias:",
-            "- Geral (23): metas globais como partidas iniciadas, jogos experimentados, tempo total de jogo, recordes batidos e vitórias - mais extras como a Coruja noturna (jogar depois da meia-noite).",
-            "- Marcos de pontuação (37): uma pontuação-alvo justa por jogo, ajustada à sua escala.",
-            "- Momentos especiais (47): dar xeque-mate à IA, um YAHTZEE, as peças 2048 e 4096, um T-Spin Double e um Perfect Clear no Tetris, 25 problemas de xadrez resolvidos, o teu primeiro Killer Sudoku, um pleno na roleta, o jackpot do lama na slot machine, uma vitória no Battleship sem perder um navio e mais.",
-            "Ao desbloquear aparece um aviso dourado no canto superior direito com uma pequena fanfarra - mesmo a meio do jogo.",
-            "O que já existe conta: no primeiro arranque após a atualização, os teus recordes antigos são creditados automaticamente (sem fogo de artifício de avisos).",
-            "Conquistas bloqueadas mostram uma barra de progresso; desbloqueadas, a sua data.",
-            "No 2048 e no Xadrez, partidas com desfazer ou dicas não contam para recordes nem conquistas - experimentar é permitido, só conta o que jogas sem ajuda."
+            "- Geral: metas de toda a coleção - partidas, jogos experimentados, tempo, recordes, vitórias, dias jogados, sequências, nível e duelos. Mais extras como coruja noturna, maratona ou jogador de fim de semana.",
+            "- Marcos de pontos: uma pontuação-alvo justa por jogo.",
+            "- Níveis mestre: a segunda marca, bem mais alta, só para jogos com pontuação sem limite.",
+            "- Frequentador: 25 partidas de um jogo. Existe para os 46 jogos.",
+            "- Momentos especiais: xeque-mate, um Yahtzee, a peça 4096, um hole-in-one, um hat-trick no air hockey, quatro fantasmas com uma pílula e muito mais."
           ]
         },
         {
-          "h": "Estatísticas",
+          "h": "Raridade e pontos",
           "body": [
-            "Em cima, cartões resumem tudo: tempo total, partidas, vitórias, recordes batidos, jogos experimentados e a tua contagem de conquistas - mais o teu jogo favorito (mais tempo jogado).",
-            "Por baixo, uma tabela lista cada jogo jogado com partidas, tempo, vitórias e recorde, ordenada por tempo de jogo. Um clique numa linha abre logo esse jogo.",
-            "Só conta o tempo de jogo ativo - pausas e menus não somam. As vitórias são registadas pelos jogos com resultado claro (tabuleiro, cartas e puzzles) a um jogador."
+            "Cinco raridades, cinco valores: comum 10, raro 25, épico 60, lendário 150, mítico 300.",
+            "A cor aparece no emblema, na faixa à esquerda da linha e no aviso ao desbloquear.",
+            "As conquistas lendárias e míticas chegam com confetes.",
+            "No canto superior direito do separador vês quantas tens de cada raridade."
           ]
         },
         {
-          "h": "Guardar",
+          "h": "Nível e patentes",
           "body": [
-            "Tudo fica guardado localmente em mem.json (secções stats e achievements), junto com o idioma e os recordes. Apagar o ficheiro também repõe conquistas e estatísticas."
+            "Os pontos de conquista dão o teu nível: o nível 2 custa 20 pontos e cada nível seguinte 8 mais que o anterior.",
+            "A cada poucos níveis muda a patente - de Filhote de lhama a Lhama estelar, passando por Caçador de pontos e Lhama mestre (14 patentes).",
+            "Nível e patente aparecem na barra lateral, no cabeçalho do separador Conquistas e, a cada subida, num aviso próprio com fanfarra.",
+            "No primeiro arranque após a atualização as tuas conquistas contam logo - um cartão mostra o teu nível inicial."
+          ]
+        },
+        {
+          "h": "Armazenamento",
+          "body": [
+            "As conquistas obtidas estão em mem.json com o seu perfil; pontos, nível e histórico em stats.pgzlamastats.",
+            "Cada perfil junta as suas - ao mudar vês as tuas próprias conquistas.",
+            "No 2048 e no xadrez, partidas com anular ou dica não contam para recorde nem para conquistas."
           ]
         }
       ]

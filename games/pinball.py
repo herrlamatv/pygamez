@@ -252,6 +252,7 @@ class PinballGame(Game):
         self.winner = None
         self.score = 0
         self.game_over = False
+        self.new_round_result()   # neue Partie: Duell-Ergebnis wieder freigeben
         self.msg = None
         self.msg_t = 0.0
         self._rec_new()
@@ -739,6 +740,8 @@ class PinballGame(Game):
         if self.multiplayer:
             s0, s1 = self.scores
             self.winner = 0 if s0 > s1 else (1 if s1 > s0 else None)
+            if self.winner is not None:
+                self.report_duel(self.winner)   # Duell-Bilanz fortschreiben
         else:
             self.report_result(self.scores[0] >= self.best.get(self.table_key, 0))
         self._sync_score()
@@ -826,7 +829,8 @@ class PinballGame(Game):
             return
         if self.multiplayer:
             sub = (t("common.draw") if self.winner is None
-                   else t("common.player_wins", n=self.winner + 1))
+                   else t("common.player_wins_name",
+                          name=self.pname(self.winner)))
         else:
             sub = t("common.points", score=self.scores[0])
         self.replay = self.rec.result(
@@ -1099,7 +1103,8 @@ class PinballGame(Game):
         elif self.phase == "launch":
             mid, col = t("pin.launch"), ui.TEXT_DIM
         elif self.multiplayer:
-            mid = t("common.player1" if self.player == 0 else "common.player2")
+            # Profilname des Spielers, der gerade an der Kugel ist.
+            mid = self.pname(self.player)[:10]
             col = ui.TEXT_DIM
         else:
             mid, col = t("pin.mult", n=self.mult), ui.TEXT_DIM
@@ -1137,7 +1142,8 @@ class PinballGame(Game):
             cy += 6
             for i in range(self.players):
                 col = self.accent if i == self.player else ui.TEXT_DIM
-                s.blit(self._tiny.render("P%d" % (i + 1), True, col), (x + 8, cy))
+                # Profilname in der schmalen Spalte (hart gekürzt).
+                s.blit(self._tiny.render(self.pname(i)[:6], True, col), (x + 8, cy))
                 v = self._tiny.render(str(self.scores[i]), True, col)
                 s.blit(v, v.get_rect(topright=(x + w - 8, cy)))
                 cy += self._tiny.get_height() + 4
@@ -1156,7 +1162,8 @@ class PinballGame(Game):
         if self.multiplayer:
             head = self._huge.render(
                 t("common.draw") if self.winner is None
-                else t("common.player_wins", n=self.winner + 1), True, self.accent)
+                else t("common.player_wins_name",
+                       name=self.pname(self.winner)[:10]), True, self.accent)
         else:
             head = self._huge.render(t("common.game_over"), True, self.accent)
         s.blit(head, head.get_rect(center=(cx, y + 32)))

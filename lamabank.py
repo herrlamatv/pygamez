@@ -121,20 +121,36 @@ def _save():
         store.save_section(SECTION, _data)
 
 
+def _legacy_sections():
+    """Die für die Migration nötigen Abschnitte des AKTIVEN Profils."""
+    return {"highscores": store.load_section("highscores"),
+            "blackjack": store.load_section("blackjack"),
+            "poker": store.load_section("poker")}
+
+
+def reset_cache():
+    """Vergisst das geladene Konto (nach einem Profilwechsel)."""
+    global _data
+    _data = None
+
+
+store.on_switch(reset_cache)
+
+
 def load():
     """Liest das Konto frisch aus mem.json (Migration + escrow-Erstattung).
 
     Aufrufen beim Start/Reset eines Chip-Spiels. Liefert den Stand als dict.
+    Die Abschnitte gehören seit dem Profil-Update zum aktiven Profil.
     """
     global _data
-    full = store.load()
-    raw = full.get(SECTION)
+    raw = store.load_section(SECTION)
     changed = False
     if isinstance(raw, dict) and raw.get("migrated") is True:
         _data = _clean(raw)
         changed = _data != raw
     else:
-        _data = _migrate(full)
+        _data = _migrate(_legacy_sections())
         changed = True
     if _data["escrow"] > 0:
         # Abgebrochene Poker-Hand: der Tischstapel kommt zurück aufs Konto.

@@ -803,9 +803,11 @@ class App:
         self._build_game_buttons()
 
         # Erfolge: bereits Erreichtes aus Bestandsdaten (alte Highscores/
-        # Statistiken) ohne Toast-Parade anrechnen.
+        # Statistiken) ohne Toast-Parade anrechnen. Das Ergebnis speist die
+        # einmalige "Dein Startlevel"-Karte beim ersten Start nach dem Update.
         import achievements
-        achievements.backfill_silent()
+        self._backfill = achievements.backfill_silent()
+        self._update_profile_card()
 
         # Sidebar-Breite/Fenster-Mindesthöhe an den tatsächlichen Bedarf koppeln.
         self._fit_sidebar()
@@ -822,6 +824,8 @@ class App:
         # Willkommens-Screen zeigen (Auflösung/Sound/Sprache einrichten).
         if not i18n.has_language():
             self.open_welcome()
+        else:
+            self._maybe_show_level_intro()
 
         # Game-Loop über die Tkinter-Schleife starten
         self.root.after(0, self._loop)
@@ -948,6 +952,7 @@ class App:
                                     font=("Segoe UI", 9))
         self._header_sub.pack(pady=(0, 10))
         self._build_header_gradient(menu)
+        self._build_profile_card(menu)
 
         # --- Status-Karte unten ----------------------------------------------
         # (Der untere Block wird VOR der Spieleliste gepackt: bottom-Widgets
@@ -999,6 +1004,7 @@ class App:
         for key, cmd, icon in (("fullscreen", self.toggle_fullscreen, "⛶"),
                                ("language", self.open_language, "🌐"),
                                ("options", self.open_options, "⚙"),
+                               ("profiles", self.open_profiles, "👤"),
                                ("progress", self.open_progress, "🏆"),
                                ("lamawiki", self.open_lamawiki, "📖"),
                                ("replays", self.open_replays, "🎬")):
@@ -1024,6 +1030,86 @@ class App:
 
         self.game_list = GameList(menu, self)
         self.game_list.pack(fill="both", expand=True, padx=12)
+
+    def _build_profile_card(self, parent):
+        """Karte oben in der Sidebar: wer spielt gerade, Level und XP-Balken.
+
+        Ein Klick öffnet die Profilverwaltung - so ist der Profilwechsel
+        genau einen Klick entfernt.
+        """
+        card = tk.Frame(parent, bg=C_CARD, highlightbackground=C_BORDER,
+                        highlightthickness=1, cursor="hand2")
+        card.pack(fill="x", padx=12, pady=(10, 2))
+        self._profile_card = card
+
+        row = tk.Frame(card, bg=C_CARD)
+        row.pack(fill="x", padx=8, pady=(6, 2))
+        self._profile_dot = tk.Canvas(row, width=22, height=22, bg=C_CARD,
+                                      bd=0, highlightthickness=0)
+        self._profile_dot.pack(side="left", padx=(0, 8))
+        names = tk.Frame(row, bg=C_CARD)
+        names.pack(side="left", fill="x", expand=True)
+        self._profile_name_var = tk.StringVar(value="")
+        self._profile_rank_var = tk.StringVar(value="")
+        tk.Label(names, textvariable=self._profile_name_var, fg=C_TEXT,
+                 bg=C_CARD, font=("Segoe UI", 10, "bold"),
+                 anchor="w").pack(fill="x")
+        tk.Label(names, textvariable=self._profile_rank_var, fg=C_TEXT_DIM,
+                 bg=C_CARD, font=("Segoe UI", 8), anchor="w").pack(fill="x")
+        self._profile_bar = tk.Canvas(card, height=5, bg=C_CARD, bd=0,
+                                      highlightthickness=0)
+        self._profile_bar.pack(fill="x", padx=8, pady=(0, 7))
+
+        def open_profiles(_e=None):
+            self._sound_click()
+            self.open_profiles()
+
+        for widget in (card, row, names, self._profile_dot, self._profile_bar):
+            widget.bind("<Button-1>", open_profiles)
+        for child in names.winfo_children():
+            child.bind("<Button-1>", open_profiles)
+        self._profile_bar.bind("<Configure>",
+                               lambda _e: self._draw_profile_bar())
+        self._update_profile_card()
+
+    def _update_profile_card(self):
+        """Frischt Name, Rang und XP-Balken der Profil-Karte auf."""
+        if getattr(self, "_profile_card", None) is None:
+            return
+        import levels
+        import profiles
+        pid = profiles.active_id()
+        level, points = profiles.level_of(pid)
+        self._profile_name_var.set(profiles.name_of(pid))
+        self._profile_rank_var.set("%s %d  ·  %s"
+                                   % (t("level.short"), level,
+                                      levels.rank_title(level)))
+        color = profiles.color_hex(pid)
+        cv = self._profile_dot
+        cv.delete("all")
+        cv.create_oval(2, 2, 20, 20, fill=_mix_hex(C_CARD, color, 0.45),
+                       outline=color, width=2)
+        initial = (profiles.name_of(pid) or "?")[:1].upper()
+        cv.create_text(11, 11, text=initial, fill=C_TEXT,
+                       font=("Segoe UI", 9, "bold"))
+        self._profile_points = points
+        self._draw_profile_bar()
+
+    def _draw_profile_bar(self):
+        """Zeichnet den XP-Balken (Fortschritt im aktuellen Level)."""
+        cv = getattr(self, "_profile_bar", None)
+        if cv is None:
+            return
+        import levels
+        import profiles
+        _level, in_level, need = levels.progress(profiles.level_of()[1])
+        w = max(1, cv.winfo_width())
+        cv.delete("all")
+        cv.create_rectangle(0, 0, w, 5, fill=C_BTN, width=0)
+        fill = int(w * min(1.0, in_level / max(1, need)))
+        if fill > 0:
+            cv.create_rectangle(0, 0, fill, 5,
+                                fill=profiles.color_hex(), width=0)
 
     def _fit_sidebar(self):
         """Passt die Sidebar-Breite an die Inhalte an.
@@ -1383,13 +1469,18 @@ class App:
         self.show_screen(PreGameScreen(self.canvas, self.game_w, self.game_h,
                                        self, game_cls))
 
-    def launch_game(self, game_cls, mode):
-        """Startet das eigentliche Spiel im gewählten Modus mit den Einstellungen."""
+    def launch_game(self, game_cls, mode, p2=None):
+        """Startet das eigentliche Spiel im gewählten Modus mit den Einstellungen.
+
+        'p2' ist die Profil-id für Spieler 2 (lokaler Mehrspieler); None
+        bedeutet Gast bzw. Einzelspieler.
+        """
         # Erst das alte Spiel/den Vorspiel-Screen verabschieden, dann das neue
         # bauen (sein reset() darf z.B. schon Musik starten).
         self._switch_current(None)
         game = game_cls(self.canvas, self.game_w, self.game_h,
                         mode=mode, game_settings=self.settings)
+        game.player_ids = [None, p2]
         game.paused = False
         self._switch_current(game)
         self.game_list.set_active(game_cls)
@@ -1450,11 +1541,50 @@ class App:
                                         self, on_close=self.back_to_menu,
                                         page_id=page_id))
 
-    def open_progress(self):
+    def open_progress(self, tab=None):
         """Öffnet den Erfolge-&-Statistik-Screen im Spielbereich."""
         from progress import ProgressScreen
-        self.show_screen(ProgressScreen(self.canvas, self.game_w, self.game_h,
-                                        self, on_close=self.back_to_menu))
+        screen = ProgressScreen(self.canvas, self.game_w, self.game_h,
+                                self, on_close=self.back_to_menu)
+        if tab:
+            screen.set_tab(tab)
+        self.show_screen(screen)
+
+    def _maybe_show_level_intro(self):
+        """Einmalig nach dem Update: "Dein Startlevel" aus den Bestandsdaten.
+
+        Bestandsspieler haben beim ersten Start nach dem Erfolgs-Update
+        sofort viele Erfolge und ein Level - statt einer Toast-Parade gibt es
+        eine ruhige Karte mit Punkten, Rang und den seltensten Stücken.
+        """
+        import store
+        flags = store.load_section("progress")
+        if flags.get("intro_seen"):
+            return
+        _new, level, points = getattr(self, "_backfill", (0, 1, 0))
+        flags["intro_seen"] = True
+        store.save_section("progress", flags)
+        if points <= 0:
+            return          # Neues Profil: nichts zu feiern, nichts zu zeigen.
+        from profileview import LevelIntroScreen
+        self.show_screen(LevelIntroScreen(self.canvas, self.game_w,
+                                          self.game_h, self,
+                                          on_close=self.back_to_menu))
+
+    def open_profiles(self):
+        """Öffnet die Profilverwaltung (mehrere Spieler an einem Gerät)."""
+        from profileview import ProfileScreen
+        self.show_screen(ProfileScreen(self.canvas, self.game_w, self.game_h,
+                                       self, on_close=self.back_to_menu))
+
+    def refresh_profile(self):
+        """Nach Profilwechsel/-änderung: Sidebar, Highscores, Ticker auffrischen."""
+        import achievements
+        achievements.backfill_silent()
+        self.game_list.refresh_scores()
+        self._ticker_key = None
+        self._ticker_band = None
+        self._update_profile_card()
 
     def open_replays(self):
         """Öffnet das Replay-Archiv im Spielbereich (Sidebar-Knopf)."""
@@ -1499,6 +1629,8 @@ class App:
         self._build_game_buttons()
         if self.current is not None and not getattr(self.current, "is_menu", False):
             self.game_list.set_active(type(self.current))
+        # Rang-Text der Profil-Karte ist übersetzt -> neu setzen.
+        self._update_profile_card()
         # Neue Beschriftungen können breiter/schmaler sein -> Sidebar anpassen.
         self._fit_sidebar()
 
@@ -1583,6 +1715,7 @@ class App:
             self._highscore_speichern(self.current)
         # Gesammelte Spielzeit sofort sichern (sonst erst beim nächsten Flush).
         import stats
+        stats.end_session()
         stats.flush()
         self._switch_current(None)
         self.status_var.set(t("app.no_game"))
@@ -1607,6 +1740,8 @@ class App:
         import achievements
         if rekord:
             stats.record_broken(game.highscore_key)
+        # Punkteverlauf der Partie festhalten (Grundlage der Diagramme).
+        stats.score_result(game.highscore_key, game.score, rekord)
         achievements.on_highscore(game.highscore_key, hs)
         achievements.check_stats()
 
@@ -1732,6 +1867,9 @@ class App:
                 # Statistik: aktive Spielzeit sammeln (nicht in Menü-Screens).
                 if not is_menu_screen:
                     stats.add_playtime(game.highscore_key, dt)
+                    # Marathon-Erfolg: eine Stunde am Stück in einem Spiel.
+                    if stats.session_time() >= 3600:
+                        achievements.on_playtime(stats.session_time())
             game.draw()
 
             if game.paused:
@@ -1760,6 +1898,7 @@ class App:
                 elif getattr(game, "_was_over", False) and not is_menu_screen:
                     game._was_over = False
                     game._result_reported = False
+                    game._duel_reported = False
                     stats.game_started(game.highscore_key)
                     achievements.on_game_started(game.highscore_key)
 
@@ -2200,6 +2339,7 @@ class App:
                 pass
         try:
             import stats
+            stats.end_session()
             stats.flush()
         except Exception:
             pass

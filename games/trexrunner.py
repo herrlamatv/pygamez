@@ -354,6 +354,9 @@ class TRexRunnerGame(Game):
         if self.state == RUN and self.score >= self._next_flip:
             self.night_target = 1.0 - self.night_target
             self._next_flip += 250
+            # Erfolg: der Nachtabschnitt der Strecke ist erreicht.
+            if self.night_target > 0:
+                self.ach_event("trex_night")
         self.night += (self.night_target - self.night) * min(1.0, dt * 1.4)
 
     def _die(self):

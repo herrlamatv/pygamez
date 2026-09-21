@@ -25,9 +25,20 @@
   // ---------------------------------------------------------------- Speicher
   PG.store = {
     prefix: "pygamez.",
+    // Gerätweite Schlüssel: Sprache, Einstellungen und die Profilverwaltung
+    // selbst. Alles andere (Highscores, Statistik, Spielstände, Replays)
+    // gehört zum aktiven Profil und bekommt dessen Prefix - genau wie in der
+    // Desktop-Version die Abschnitte unter players/<id> liegen.
+    shared: ["lang", "settings", "profiles"],
+    profile: "", // aktive Profil-id (PG.profiles setzt sie beim Start)
+    key(name) {
+      const base = String(name).split(".")[0];
+      if (!this.profile || this.shared.indexOf(base) >= 0) return this.prefix + name;
+      return this.prefix + this.profile + "." + name;
+    },
     get(key, def) {
       try {
-        const raw = window.localStorage.getItem(this.prefix + key);
+        const raw = window.localStorage.getItem(this.key(key));
         return raw == null ? def : JSON.parse(raw);
       } catch (e) {
         return def;
@@ -35,7 +46,7 @@
     },
     set(key, value) {
       try {
-        window.localStorage.setItem(this.prefix + key, JSON.stringify(value));
+        window.localStorage.setItem(this.key(key), JSON.stringify(value));
       } catch (e) {
         /* Speicher voll/gesperrt -> ohne Speichern weiterspielen */
       }
@@ -43,7 +54,7 @@
     /** Wie set(), meldet aber, ob es geklappt hat (Replay-Archiv, Speicher voll). */
     trySet(key, value) {
       try {
-        window.localStorage.setItem(this.prefix + key, JSON.stringify(value));
+        window.localStorage.setItem(this.key(key), JSON.stringify(value));
         return true;
       } catch (e) {
         return false;
@@ -51,7 +62,7 @@
     },
     remove(key) {
       try {
-        window.localStorage.removeItem(this.prefix + key);
+        window.localStorage.removeItem(this.key(key));
       } catch (e) {}
     },
   };
@@ -499,44 +510,8 @@
     },
   };
 
-  // ---------------------------------------------------------------- Statistik
-  PG.stats = {
-    _data: null,
-    _dirty: false,
-    _last: 0,
-    get data() {
-      if (!this._data) {
-        const d = PG.store.get("stats", {});
-        this._data = d && typeof d === "object" ? d : {};
-      }
-      return this._data;
-    },
-    entry(key) {
-      const d = this.data;
-      if (!d[key]) d[key] = { played: 0, wins: 0, losses: 0, time: 0, records: 0 };
-      return d[key];
-    },
-    gameStarted(key) { this.entry(key).played++; this._dirty = true; },
-    recordResult(key, won) { this.entry(key)[won ? "wins" : "losses"]++; this._dirty = true; this.flush(); },
-    recordBroken(key) { this.entry(key).records++; this._dirty = true; },
-    addPlaytime(key, dt) { this.entry(key).time += dt; this._dirty = true; },
-    event(id, value) {
-      const ev = this.data._events || (this.data._events = {});
-      const old = ev[id];
-      ev[id] = value == null ? (old || 0) + 1 : Math.max(Number(old) || 0, Number(value) || 0);
-      this._dirty = true;
-    },
-    maybeFlush() {
-      const now = performance.now();
-      if (this._dirty && now - this._last > 5000) this.flush();
-    },
-    flush() {
-      if (!this._dirty) return;
-      this._last = performance.now();
-      this._dirty = false;
-      PG.store.set("stats", this.data);
-    },
-  };
+  // Die Statistik (PG.stats) steht seit dem Statistik-Update in
+  // js/core/stats.js - gleiches Datenmodell wie stats.pgzlamastats.
 
   // ------------------------------------------------------------------ Datei
   /** Bietet Text als Download an (z.B. Export von Minigolf-Bahnen). */

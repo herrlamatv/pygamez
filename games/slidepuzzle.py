@@ -197,6 +197,9 @@ class SlidingPuzzleGame(Game):
         self.state = SOLVED
         self.game_over = True                # main.py speichert den Highscore
         self.report_result(True)
+        # Erfolg: 4x4 mit weniger als 100 Zügen gelöst.
+        if n == 4 and self.moves < 100:
+            self.ach_event("slide_swift")
         self.play_sound("win")
 
     # ===================================================== Update

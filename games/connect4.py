@@ -273,6 +273,12 @@ class ConnectFourGame(Game):
         self.winner = winner
         self.state = OVER
         if winner is not None:
+            # Erfolg: Sieg mit einer diagonalen Viererreihe (Reihe UND Spalte
+            # ändern sich - waagerecht/senkrecht bleibt eines davon gleich)
+            if cells and (self.multiplayer or winner == 0) \
+                    and len({r for r, _ in cells}) > 1 \
+                    and len({c for _, c in cells}) > 1:
+                self.ach_event("c4_diagonal")
             self.wins[winner] += 1
             if not self.multiplayer:
                 if winner == 0:
@@ -283,6 +289,7 @@ class ConnectFourGame(Game):
                     self.play_sound("gameover")
                     self.report_result(False)
             else:
+                self.report_duel(winner)
                 self.play_sound("win")
         self.game_over = True     # main.py speichert den Score einmalig
 
@@ -460,8 +467,9 @@ class ConnectFourGame(Game):
         pygame.draw.line(s, ui.BORDER, (0, self.hud_h),
                          (self.width, self.hud_h))
         cy = self.hud_h // 2
-        n1 = t("common.player1") if self.multiplayer else t("c4.score_sp")
-        n2 = t("common.player2") if self.multiplayer else t("common.ai")
+        # Profilnamen in der HUD-Leiste (gekürzt, damit die Zeile nicht kollidiert)
+        n1 = self.pname(0)[:8] if self.multiplayer else t("c4.score_sp")
+        n2 = self.pname(1)[:8] if self.multiplayer else t("common.ai")
         img = self._small.render(f"{n1}: {self.wins[0]}", True, COL_P1)
         s.blit(img, img.get_rect(midleft=(12, cy)))
         img = self._small.render(f"{self.wins[1]} :{n2}", True, COL_P2)
@@ -471,8 +479,7 @@ class ConnectFourGame(Game):
             if not self.multiplayer and self.player == 1:
                 mid = t("c4.ai_thinks")
             else:
-                who = t("common.player1") if self.player == 0 \
-                    else t("common.player2")
+                who = self.pname(self.player)[:8]   # Profilname, gekürzt
                 mid = t("c4.turn", name=who)
             img = self._small.render(mid, True,
                                      self._disc_color(self.player))
@@ -498,8 +505,8 @@ class ConnectFourGame(Game):
             head = self._huge.render(t("common.draw"), True, ui.TEXT_DIM)
         elif self.multiplayer:
             head = self._huge.render(
-                t("common.player_wins", n=self.winner + 1), True,
-                self._disc_color(self.winner))
+                t("common.player_wins_name", name=self.pname(self.winner)[:10]),
+                True, self._disc_color(self.winner))
         else:
             key = "c4.win_you" if self.winner == 0 else "c4.win_ai"
             head = self._huge.render(t(key), True,

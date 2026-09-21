@@ -126,6 +126,7 @@ class MinesweeperGame(Game):
         self.numbers = {}          # (x,y) -> Anzahl Nachbarminen
         self.revealed = set()
         self.flags = {}            # (x,y) -> 1 = Flagge, 2 = Fragezeichen
+        self.flag_used = False     # wurde in dieser Partie je eine Flagge gesetzt?
         self.first_click = True
         self.exploded = None       # die Zelle, die hochgegangen ist
         self.won = False
@@ -294,6 +295,7 @@ class MinesweeperGame(Game):
         zustand = self.flags.get(cell, 0)
         if zustand == 0:
             self.flags[cell] = 1
+            self.flag_used = True
         elif zustand == 1 and self.qmarks:
             self.flags[cell] = 2
         else:
@@ -368,6 +370,8 @@ class MinesweeperGame(Game):
             return
         self.game_over = True
         self.won = True
+        if not self.flag_used:
+            self.ach_event("mine_noflag")   # Erfolg: Sieg ganz ohne Flagge
         # Restliche Minen automatisch flaggen
         for m in self.mines:
             self.flags[m] = 1

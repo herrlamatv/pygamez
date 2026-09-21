@@ -174,6 +174,108 @@
       ]
     },
     {
+      "id": "profiles",
+      "category": "general",
+      "title": "Spielerprofile",
+      "keywords": [
+        "profil",
+        "profile",
+        "spieler",
+        "wechseln",
+        "mehrspieler",
+        "gast",
+        "level"
+      ],
+      "sections": [
+        {
+          "h": "Überblick",
+          "body": [
+            "Mehrere Spieler an einem Gerät: jedes Profil hat eigene Highscores, Erfolge, Level, Statistiken, Lama-Chips und Spielstände.",
+            "Der Knopf Profile in der Sidebar zeigt alle Profile; die Karte darüber zeigt, wer gerade spielt, mit Level und XP-Balken.",
+            "Gemeinsam bleiben nur die Geräte-Einstellungen (Auflösung, Ton, Tastenbelegung, Design) und die Sprache der Oberfläche.",
+            "Bis zu acht Profile sind möglich."
+          ]
+        },
+        {
+          "h": "Anlegen & Wechseln",
+          "body": [
+            "Neues Profil: Name eingeben, Symbol und Farbe wählen, speichern. Der Name geht durch den Wortfilter und darf höchstens 14 Zeichen haben.",
+            "Ein Klick auf Spielen (oder Enter) wechselt das Profil - ab dann zählen alle Punkte, Zeiten und Erfolge dorthin.",
+            "Tasten im Screen: Enter wechselt, N legt an, F2 benennt um, Entf löscht, Esc geht zurück.",
+            "Beim Löschen verschwinden auch die Daten des Profils; das letzte Profil bleibt immer bestehen."
+          ]
+        },
+        {
+          "h": "Mehrspieler & Duelle",
+          "body": [
+            "Startest du einen Mehrspieler-Modus, fragt die Sammlung zuerst nach dem Profil für Spieler 2 - oder du spielst als Gast.",
+            "Im Spiel stehen dann die Profilnamen statt Spieler 1/2.",
+            "Jede Mehrspieler-Partie landet in der Duell-Bilanz: Der Reiter Profile im Fortschritt-Screen zeigt, wer gegen wen wie oft gewonnen hat.",
+            "Dort steht auch die Geräte-Bestenliste: welches Profil je Spiel den besten Wert hält."
+          ]
+        },
+        {
+          "h": "Speicherung",
+          "body": [
+            "Alle Profile stehen in mem.json unter players/<id>; die Statistik liegt in stats.pgzlamastats. Beides liegt neben dem Spiel (bzw. neben der .exe).",
+            "Beim ersten Start nach dem Update wandert dein bisheriger Spielstand automatisch in Profil 1 - es geht nichts verloren.",
+            "Replays und selbstgebaute Bahnen bleiben für alle da, tragen aber den Namen des Profils, das sie aufgenommen bzw. gebaut hat."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "category": "general",
+      "title": "Statistik & Diagramme",
+      "keywords": [
+        "statistik",
+        "diagramm",
+        "kalender",
+        "spielzeit",
+        "verlauf",
+        "serie",
+        "rückblick"
+      ],
+      "sections": [
+        {
+          "h": "Überblick",
+          "body": [
+            "Die Sammlung führt Buch: Spielzeit, Partien, Siege, Rekorde, Spieltage, Punkteverläufe und jeden freigeschalteten Erfolg - mit Zeitstempel.",
+            "Alles steht im Knopf Erfolge & Statistik in der Sidebar, verteilt auf fünf Reiter (Tab oder Klick wechselt).",
+            "Gezählt wird nur aktive Spielzeit; Pausen und Menüs laufen nicht mit. Jedes Profil hat seine eigene Statistik."
+          ]
+        },
+        {
+          "h": "Die fünf Reiter",
+          "body": [
+            "- Erfolge: alle Erfolge nach Kategorie, mit Seltenheit, Punktwert, Datum oder Fortschrittsbalken. Oben stehen Level, Rang und XP-Balken; ein Filter zeigt nur Offene oder Freigeschaltete.",
+            "- Statistiken: Übersichtskarten, die zehn meistgespielten Spiele als Balken, ein Ring für Sieg/Niederlage und die Tabelle aller Spiele.",
+            "- Kalender: die Spieltage-Karte (je dunkler, desto länger gespielt), aktuelle und längste Serie, Wochentage und Tageszeit.",
+            "- Verlauf: alles mit Zeitstempel - Erfolge, Rekorde, Level-Aufstiege, Duelle - dazu der Punkteverlauf eines Spiels als Linie.",
+            "- Profile: alle Profile mit Level und Spielzeit, die Geräte-Bestenliste und die Duell-Bilanz."
+          ]
+        },
+        {
+          "h": "Rückblick & Diagramme",
+          "body": [
+            "Über dem Kalender steht dein PyGameZ-Rückblick: stärkster Tag, Lieblingszeit, längste Sitzung am Stück, Lieblingsspiel und dein seltenster Erfolg.",
+            "Alle Diagramme reagieren auf die Maus: Zeiger drauf, und ein kleiner Kasten nennt Datum, Spielzeit und Partien.",
+            "Rekorde sind im Punkteverlauf als goldene Punkte markiert."
+          ]
+        },
+        {
+          "h": "Datei & Austausch",
+          "body": [
+            "Alle Statistiken stehen in der Datei stats.pgzlamastats neben dem Spiel - ganz normales JSON, ein Block je Profil.",
+            "Im Kalender-Reiter (oder mit E und I) kannst du sie exportieren und wieder einlesen; die Web-Version liest dieselbe Datei.",
+            "Beim Import wählst du, ob die Werte zum aktuellen Profil dazugezählt werden.",
+            "Damit die Datei nicht endlos wächst, sind Verlauf (4000 Einträge), Punktverläufe (250 je Spiel) und Kalender (rund drei Jahre) begrenzt; Summen bleiben erhalten."
+          ]
+        }
+      ]
+    },
+    {
       "id": "replays",
       "category": "general",
       "title": "Replays",
@@ -234,49 +336,59 @@
     {
       "id": "achievements",
       "category": "general",
-      "title": "Erfolge & Statistiken",
+      "title": "Erfolge, Seltenheit & Level",
       "keywords": [
         "erfolge",
         "achievements",
-        "statistik",
-        "fortschritt",
-        "rekord",
-        "siege",
-        "spielzeit",
+        "seltenheit",
+        "punkte",
+        "level",
+        "rang",
         "meilenstein"
       ],
       "sections": [
         {
           "h": "Überblick",
           "body": [
-            "Die Sammlung zählt deinen Fortschritt: 107 Erfolge und ausführliche Statistiken über alle 46 Spiele. Beides erreichst du über den Knopf Erfolge & Statistik in der Sidebar; die zwei Reiter wechselst du mit [Tab] oder per Klick."
+            "250 Erfolge über alle 46 Spiele - vom ersten Spielstart bis zum Perfect Clear in Tetris.",
+            "Jeder Erfolg hat eine Seltenheitsstufe und damit einen Punktwert; die Summe ergibt dein Level.",
+            "Zu finden über den Knopf Erfolge & Statistik in der Sidebar, Reiter Erfolge. Ein Filter blendet Offene oder Freigeschaltete aus."
           ]
         },
         {
-          "h": "Erfolge",
+          "h": "Die fünf Kategorien",
           "body": [
-            "Es gibt drei Kategorien:",
-            "- Allgemein (23): sammlungsweite Ziele wie gestartete Partien, ausprobierte Spiele, Gesamtspielzeit, gebrochene Rekorde und Siege - dazu kleine Extras wie die Nachteule (nach Mitternacht spielen).",
-            "- Punkte-Meilensteine (37): eine faire Ziel-Punktzahl je Spiel, abgestimmt auf dessen Punkteskala.",
-            "- Besondere Momente (47): Schachmatt gegen die KI, KNIFFEL, die 2048er- und 4096er-Kachel, ein T-Spin Double und ein Perfect Clear in Tetris, 25 gelöste Schachrätsel, das erste Killer-Sudoku, ein Roulette-Volltreffer, der Lama-Jackpot am Slot, ein Sieg bei Schiffe versenken ohne verlorenes Schiff und mehr.",
-            "Beim Freischalten erscheint oben rechts eine goldene Einblendung mit kleiner Fanfare - auch mitten im Spiel.",
-            "Bestandsdaten zählen: Beim ersten Start nach dem Update werden vorhandene Highscores automatisch angerechnet (ohne Einblendungs-Feuerwerk).",
-            "Noch gesperrte Erfolge zeigen einen Fortschrittsbalken, freigeschaltete ihr Datum.",
-            "In 2048 und Schach zählen Partien mit Rückgängig bzw. Hinweis nicht für Highscore und Erfolge - ausprobieren ist erlaubt, gewertet wird nur ohne Hilfe."
+            "- Allgemein: sammlungsweite Ziele - Partien, ausprobierte Spiele, Spielzeit, Rekorde, Siege, Spieltage, Tagesserien, Level und Duelle. Dazu Extras wie Nachteule, Marathon oder Wochenendspieler.",
+            "- Punkte-Meilensteine: eine faire Zielpunktzahl je Spiel.",
+            "- Meister-Stufen: die zweite, deutlich höhere Punktmarke - nur für Spiele, deren Punktzahl nach oben offen ist.",
+            "- Stammgast: 25 Partien in einem Spiel. Gibt es für jedes der 46 Spiele.",
+            "- Besondere Momente: Schachmatt, KNIFFEL, die 4096er-Kachel, ein Hole-in-One, ein Hattrick im Air Hockey, vier Geister mit einer Kraftpille und vieles mehr."
           ]
         },
         {
-          "h": "Statistiken",
+          "h": "Seltenheit & Punkte",
           "body": [
-            "Oben fassen Karten alles zusammen: Gesamtspielzeit, Partien, Siege, gebrochene Rekorde, ausprobierte Spiele und dein Erfolgs-Stand - plus dein Lieblingsspiel (meiste Spielzeit).",
-            "Darunter listet eine Tabelle jedes gespielte Spiel mit Partien, Zeit, Siegen und Bestwert, sortiert nach Spielzeit. Ein Klick auf eine Zeile springt direkt zum Spiel.",
-            "Gezählt wird nur aktive Spielzeit - Pausen und Menüs laufen nicht mit. Siege erfassen die Spiele mit klarem Gewonnen/Verloren (Brett-, Karten- und Rätselspiele) im Einzelspieler."
+            "Fünf Stufen, fünf Punktwerte: Gewöhnlich 10, Selten 25, Episch 60, Legendär 150, Mythisch 300.",
+            "Die Farbe steckt im Abzeichen, im Streifen links neben der Zeile und in der Einblendung beim Freischalten.",
+            "Legendäre und mythische Erfolge feiern mit Konfetti.",
+            "Rechts oben im Reiter steht, wie viele Erfolge je Stufe schon offen sind."
+          ]
+        },
+        {
+          "h": "Level & Ränge",
+          "body": [
+            "Erfolgspunkte ergeben dein Level: Level 2 kostet 20 Punkte, jede weitere Stufe 8 Punkte mehr als die vorige.",
+            "Alle paar Level wechselt der Rang - von Lama-Küken über Punktejäger und Meisterlama bis zum Sternenlama (14 Ränge).",
+            "Level und Rang stehen in der Sidebar, im Kopf des Erfolge-Reiters und bei jedem Aufstieg als eigene Einblendung mit Fanfare.",
+            "Beim ersten Start nach dem Update zählen deine bisherigen Erfolge sofort - eine Karte zeigt dein Startlevel."
           ]
         },
         {
           "h": "Speicherung",
           "body": [
-            "Alles liegt lokal in mem.json (Abschnitte stats und achievements), zusammen mit Sprache und Highscores. Löschst du die Datei, sind auch Erfolge und Statistiken zurückgesetzt."
+            "Freigeschaltete Erfolge stehen in mem.json beim jeweiligen Profil; Punkte, Level und der Verlauf liegen in stats.pgzlamastats.",
+            "Jedes Profil sammelt für sich - wer wechselt, sieht seine eigenen Erfolge.",
+            "In 2048 und Schach zählen Partien mit Rückgängig bzw. Hinweis weder für Highscore noch für Erfolge."
           ]
         }
       ]

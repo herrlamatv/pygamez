@@ -96,18 +96,33 @@ def _clamp_color(c, fallback):
         return tuple(fallback)
 
 
+def reset_cache():
+    """Vergisst die geladene Kosmetik (nach einem Profilwechsel)."""
+    global _state
+    _state = None
+
+
+def _read_legacy():
+    """Liest die frühere Datei mem-ngb.json (nur noch für die Migration)."""
+    try:
+        with open(_FILE, "r", encoding="utf-8") as f:
+            raw = json.load(f)
+            return raw if isinstance(raw, dict) else {}
+    except (OSError, json.JSONDecodeError, ValueError):
+        return {}
+
+
 def _load():
     global _state
     if _state is not None:
         return _state
-    data = {}
-    try:
-        with open(_FILE, "r", encoding="utf-8") as f:
-            raw = json.load(f)
-            if isinstance(raw, dict):
-                data = raw
-    except (OSError, json.JSONDecodeError, ValueError):
-        data = {}
+    import store
+    store.on_switch(reset_cache)
+    # Seit dem Profil-Update liegt die Kosmetik je Profil im Abschnitt "ngb";
+    # ein alter mem-ngb.json-Stand wird einmalig übernommen.
+    data = store.load_section("ngb")
+    if not data:
+        data = _read_legacy()
 
     hid = data.get("head_id", DEFAULT_HEAD_ID)
     if hid not in _HEAD_IDS:
@@ -144,19 +159,16 @@ def _load():
 
 def _save():
     st = _load()
-    try:
-        with open(_FILE, "w", encoding="utf-8") as f:
-            json.dump({"head_id": st["head_id"],
-                       "head_custom": list(st["head_custom"]),
-                       "grid_id": st["grid_id"],
-                       "grid_custom": [list(st["grid_custom"][0]),
-                                       list(st["grid_custom"][1])],
-                       "banner_on": st["banner_on"],
-                       "banner_size": round(st["banner_size"], 3),
-                       "banner_opacity": round(st["banner_opacity"], 3)},
-                      f, ensure_ascii=False, indent=2)
-    except OSError:
-        pass
+    import store
+    store.save_section("ngb", {
+        "head_id": st["head_id"],
+        "head_custom": list(st["head_custom"]),
+        "grid_id": st["grid_id"],
+        "grid_custom": [list(st["grid_custom"][0]),
+                        list(st["grid_custom"][1])],
+        "banner_on": st["banner_on"],
+        "banner_size": round(st["banner_size"], 3),
+        "banner_opacity": round(st["banner_opacity"], 3)})
 
 
 # ===================================================== Öffentliche API (Kopf)

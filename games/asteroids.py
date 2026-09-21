@@ -391,6 +391,8 @@ class AsteroidsGame(Game):
             self.banner_t = 2.0
             self._pending_wave = True
             self.play_sound("level")
+            if self.wave >= 10:      # Welle 10 erreicht -> Erfolg
+                self.ach_event("ast_wave10")
 
         # Nachlauf nach dem letzten Tod, dann Game Over
         if self._ending > 0:
@@ -485,6 +487,8 @@ class AsteroidsGame(Game):
         if self.multiplayer:
             s0, s1 = self.ships[0].score, self.ships[1].score
             self.winner = 0 if s0 > s1 else (1 if s1 > s0 else None)
+            if self.winner is not None:
+                self.report_duel(self.winner)
             self.play_sound("win")
         else:
             self.play_sound("gameover")
@@ -860,10 +864,13 @@ class AsteroidsGame(Game):
             if self.winner is None:
                 text, farbe = t("common.draw"), COL_TEXT
             else:
-                text = t("common.player_wins", n=self.winner + 1)
+                text = t("common.player_wins_name",
+                         name=self.pname(self.winner)[:10])
                 farbe = self.ships[self.winner].color
             self.draw_center_text(text, self.big_font, farbe, -50)
-            stand = f"P1: {self.ships[0].score}    P2: {self.ships[1].score}"
+            # Endstand mit den Profilnamen (gekürzt, damit die Zeile passt)
+            stand = (f"{self.pname(0)[:8]}: {self.ships[0].score}    "
+                     f"{self.pname(1)[:8]}: {self.ships[1].score}")
             self.draw_center_text(stand, self.font, COL_TEXT, -6)
         else:
             self.draw_center_text(t("common.game_over"), self.big_font,

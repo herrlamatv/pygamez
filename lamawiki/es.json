@@ -172,6 +172,108 @@
       ]
     },
     {
+      "id": "profiles",
+      "category": "general",
+      "title": "Perfiles de jugador",
+      "keywords": [
+        "perfil",
+        "perfiles",
+        "jugador",
+        "cambiar",
+        "multijugador",
+        "invitado",
+        "nivel"
+      ],
+      "sections": [
+        {
+          "h": "Resumen",
+          "body": [
+            "Varios jugadores en un dispositivo: cada perfil tiene sus propios récords, logros, nivel, estadísticas, fichas de llama y partidas guardadas.",
+            "El botón Perfiles de la barra lateral los muestra todos; la tarjeta superior indica quién juega, con nivel y barra de XP.",
+            "Solo se comparten los ajustes del dispositivo (resolución, sonido, teclas, diseño) y el idioma.",
+            "Se admiten hasta ocho perfiles."
+          ]
+        },
+        {
+          "h": "Crear y cambiar",
+          "body": [
+            "Perfil nuevo: escribe un nombre, elige icono y color, guarda. El nombre pasa por el filtro de palabras y admite 14 caracteres.",
+            "Pulsa Jugar (o Enter) para cambiar: a partir de ahí, puntos, tiempo y logros van a ese perfil.",
+            "Teclas: Enter cambia, N crea, F2 renombra, Supr borra, Esc vuelve.",
+            "Al borrar un perfil se borran sus datos; el último perfil siempre permanece."
+          ]
+        },
+        {
+          "h": "Multijugador y duelos",
+          "body": [
+            "Al iniciar un modo multijugador, primero se pregunta qué perfil juega como jugador 2, o puedes jugar como invitado.",
+            "En el juego aparecen los nombres de perfil en lugar de Jugador 1/2.",
+            "Cada partida multijugador alimenta el cara a cara: la pestaña Perfiles muestra quién ganó a quién y cuántas veces.",
+            "Allí está también la clasificación del dispositivo: qué perfil tiene el mejor resultado de cada juego."
+          ]
+        },
+        {
+          "h": "Almacenamiento",
+          "body": [
+            "Los perfiles están en mem.json bajo players/<id>; las estadísticas en stats.pgzlamastats. Ambos junto al juego (o al .exe).",
+            "En el primer arranque tras la actualización tu partida pasa al perfil 1: no se pierde nada.",
+            "Las repeticiones y los campos propios siguen disponibles para todos, con el nombre del perfil que los creó."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "category": "general",
+      "title": "Estadísticas y gráficos",
+      "keywords": [
+        "estadísticas",
+        "gráfico",
+        "calendario",
+        "tiempo",
+        "historial",
+        "racha",
+        "resumen"
+      ],
+      "sections": [
+        {
+          "h": "Resumen",
+          "body": [
+            "La colección lleva la cuenta: tiempo, partidas, victorias, récords, días jugados, curvas de puntos y cada logro, con fecha y hora.",
+            "Todo está tras el botón Logros y estadísticas de la barra lateral, repartido en cinco pestañas (Tab o clic para cambiar).",
+            "Solo cuenta el tiempo de juego activo; pausas y menús no. Cada perfil tiene sus estadísticas."
+          ]
+        },
+        {
+          "h": "Las cinco pestañas",
+          "body": [
+            "- Logros: todo por categoría, con rareza, puntos, fecha o barra de progreso. Arriba, nivel, rango y barra de XP; un filtro muestra solo pendientes o conseguidos.",
+            "- Estadísticas: tarjetas resumen, los diez juegos más jugados en barras, un anillo de victorias/derrotas y la tabla de todos los juegos.",
+            "- Calendario: el mapa de días jugados (cuanto más oscuro, más tiempo), racha actual y mejor racha, días de la semana y franja del día.",
+            "- Historial: todo con fecha y hora - logros, récords, subidas de nivel, duelos - y la curva de puntos de un juego.",
+            "- Perfiles: cada perfil con nivel y tiempo, la clasificación del dispositivo y el cara a cara."
+          ]
+        },
+        {
+          "h": "Resumen y gráficos",
+          "body": [
+            "Sobre el calendario está tu resumen de PyGameZ: mejor día, hora favorita, sesión más larga seguida, juego favorito y tu logro más raro.",
+            "Todos los gráficos reaccionan al ratón: pasa por encima y una cajita indica fecha, tiempo y partidas.",
+            "Los récords aparecen como puntos dorados en la curva."
+          ]
+        },
+        {
+          "h": "Archivo e intercambio",
+          "body": [
+            "Todas las estadísticas están en el archivo stats.pgzlamastats junto al juego: JSON normal, un bloque por perfil.",
+            "En la pestaña Calendario (o con E e I) puedes exportarlo y volver a cargarlo; la versión web lee el mismo archivo.",
+            "Al importar eliges si los valores se suman al perfil actual.",
+            "Para que el archivo no crezca sin fin, el historial (4000 entradas), las curvas (250 por juego) y el calendario (unos tres años) están limitados; los totales se mantienen."
+          ]
+        }
+      ]
+    },
+    {
       "id": "replays",
       "category": "general",
       "title": "Repeticiones",
@@ -232,48 +334,59 @@
     {
       "id": "achievements",
       "category": "general",
-      "title": "Logros y estadísticas",
+      "title": "Logros, rareza y nivel",
       "keywords": [
         "logros",
-        "estadísticas",
-        "progreso",
-        "récord",
-        "victorias",
-        "tiempo de juego",
-        "hito"
+        "rareza",
+        "puntos",
+        "nivel",
+        "rango",
+        "hito",
+        "progreso"
       ],
       "sections": [
         {
           "h": "Resumen",
           "body": [
-            "La colección registra tu progreso: 107 logros y estadísticas detalladas de los 46 juegos. Ambos están tras el botón Logros y estadísticas de la barra lateral; cambia de pestaña con [Tab] o con un clic."
+            "250 logros en los 46 juegos, desde tu primera partida hasta un Perfect Clear en Tetris.",
+            "Cada logro tiene una rareza y con ella un valor en puntos; la suma es tu nivel.",
+            "Están tras el botón Logros y estadísticas, pestaña Logros. Un filtro oculta los pendientes o los conseguidos."
           ]
         },
         {
-          "h": "Logros",
+          "h": "Las cinco categorías",
           "body": [
-            "Hay tres categorías:",
-            "- General (23): metas globales como partidas iniciadas, juegos probados, tiempo total de juego, récords batidos y victorias, más extras como el Búho nocturno (jugar después de medianoche).",
-            "- Hitos de puntuación (37): una puntuación objetivo justa por juego, ajustada a su escala.",
-            "- Momentos especiales (47): dar jaque mate a la IA, un YAHTZEE, las fichas de 2048 y 4096, un T-Spin Double y un Perfect Clear en Tetris, 25 problemas de ajedrez resueltos, tu primer Killer Sudoku, un pleno en la ruleta, el jackpot de la llama en la tragaperras, una victoria en Battleship sin perder ningún barco y más.",
-            "Al desbloquear aparece un aviso dorado arriba a la derecha con una pequeña fanfarria, incluso en plena partida.",
-            "Lo existente cuenta: en el primer arranque tras la actualización se acreditan automáticamente tus récords antiguos (sin fuegos artificiales de avisos).",
-            "Los logros bloqueados muestran una barra de progreso; los desbloqueados, su fecha.",
-            "En 2048 y Ajedrez, las partidas con deshacer o pistas no cuentan para récords ni logros: probar está permitido, solo se puntúa lo que juegas sin ayuda."
+            "- General: metas de toda la colección: partidas, juegos probados, tiempo, récords, victorias, días jugados, rachas, nivel y duelos. Más extras como búho nocturno, maratón o jugador de fin de semana.",
+            "- Hitos de puntos: una puntuación objetivo justa por juego.",
+            "- Niveles maestros: la segunda marca, mucho más alta, solo para juegos con puntuación abierta.",
+            "- Habitual: 25 partidas de un juego. Existe para los 46 juegos.",
+            "- Momentos especiales: jaque mate, un Yahtzee, la ficha 4096, un hoyo en uno, un hat-trick en air hockey, cuatro fantasmas con una pastilla y mucho más."
           ]
         },
         {
-          "h": "Estadísticas",
+          "h": "Rareza y puntos",
           "body": [
-            "Arriba, unas tarjetas lo resumen todo: tiempo total, partidas, victorias, récords batidos, juegos probados y tu recuento de logros, además de tu juego favorito (más tiempo jugado).",
-            "Debajo, una tabla lista cada juego jugado con partidas, tiempo, victorias y récord, ordenada por tiempo de juego. Un clic en una fila abre directamente ese juego.",
-            "Solo cuenta el tiempo de juego activo: pausas y menús no suman. Las victorias las registran los juegos con resultado claro (tablero, cartas y puzles) en un jugador."
+            "Cinco rarezas, cinco valores: común 10, raro 25, épico 60, legendario 150, mítico 300.",
+            "El color aparece en la insignia, en la franja a la izquierda de la fila y en el aviso al desbloquear.",
+            "Los logros legendarios y míticos llegan con confeti.",
+            "Arriba a la derecha de la pestaña ves cuántos llevas de cada rareza."
           ]
         },
         {
-          "h": "Guardado",
+          "h": "Nivel y rangos",
           "body": [
-            "Todo se guarda localmente en mem.json (secciones stats y achievements), junto con el idioma y los récords. Si borras el archivo, también se reinician logros y estadísticas."
+            "Los puntos de logro dan tu nivel: el nivel 2 cuesta 20 puntos y cada nivel siguiente 8 más que el anterior.",
+            "Cada pocos niveles cambia el rango: de Cría de llama a Llama estelar, pasando por Cazapuntos y Llama maestra (14 rangos).",
+            "Nivel y rango salen en la barra lateral, en la cabecera de la pestaña Logros y, al subir, en un aviso propio con fanfarria.",
+            "En el primer arranque tras la actualización tus logros cuentan enseguida: una tarjeta muestra tu nivel inicial."
+          ]
+        },
+        {
+          "h": "Almacenamiento",
+          "body": [
+            "Los logros conseguidos están en mem.json con su perfil; puntos, nivel e historial en stats.pgzlamastats.",
+            "Cada perfil colecciona por su cuenta: al cambiar ves tus propios logros.",
+            "En 2048 y ajedrez, las partidas con deshacer o pista no cuentan ni para el récord ni para los logros."
           ]
         }
       ]

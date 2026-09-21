@@ -173,6 +173,108 @@
       ]
     },
     {
+      "id": "profiles",
+      "category": "general",
+      "title": "Spillerprofiler",
+      "keywords": [
+        "profil",
+        "profiler",
+        "spiller",
+        "skift",
+        "flerspiller",
+        "gæst",
+        "niveau"
+      ],
+      "sections": [
+        {
+          "h": "Overblik",
+          "body": [
+            "Flere spillere på én enhed: hver profil har sine egne rekorder, præstationer, niveau, statistikker, lama-chips og gemte spil.",
+            "Knappen Profiler i sidebjælken viser dem alle; kortet ovenover viser, hvem der spiller, med niveau og XP-bjælke.",
+            "Kun enhedens indstillinger (opløsning, lyd, taster, tema) og sproget deles.",
+            "Op til otte profiler er mulige."
+          ]
+        },
+        {
+          "h": "Opret og skift",
+          "body": [
+            "Ny profil: skriv et navn, vælg ikon og farve, gem. Navnet går gennem ordfilteret og må fylde 14 tegn.",
+            "Klik Spil (eller Enter) for at skifte - derfra tæller point, tid og præstationer for den profil.",
+            "Taster: Enter skifter, N opretter, F2 omdøber, Del sletter, Esc går tilbage.",
+            "Sletning fjerner også profilens data; den sidste profil bliver altid."
+          ]
+        },
+        {
+          "h": "Flerspiller og dueller",
+          "body": [
+            "Når du starter en flerspiller-tilstand, spørger samlingen først, hvilken profil der er spiller 2 - eller du spiller som gæst.",
+            "I spillet står profilnavnene i stedet for Spiller 1/2.",
+            "Hver flerspiller-kamp tæller i det indbyrdes opgør: fanen Profiler viser, hvem der har slået hvem hvor ofte.",
+            "Der står også enhedens rangliste: hvilken profil har den bedste score i hvert spil."
+          ]
+        },
+        {
+          "h": "Lagring",
+          "body": [
+            "Profilerne står i mem.json under players/<id>; statistikken i stats.pgzlamastats. Begge ligger ved siden af spillet (eller .exe-filen).",
+            "Ved første start efter opdateringen flytter din hidtidige status til profil 1 - intet går tabt.",
+            "Replays og egne baner er der for alle, men bærer navnet på den profil, der lavede dem."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "category": "general",
+      "title": "Statistik og diagrammer",
+      "keywords": [
+        "statistik",
+        "diagram",
+        "kalender",
+        "spilletid",
+        "historik",
+        "stime",
+        "tilbageblik"
+      ],
+      "sections": [
+        {
+          "h": "Overblik",
+          "body": [
+            "Samlingen fører regnskab: spilletid, runder, sejre, rekorder, spilledage, pointkurver og hver præstation - med tidsstempel.",
+            "Det hele ligger bag knappen Præstationer og statistik, fordelt på fem faneblade (Tab eller klik skifter).",
+            "Kun aktiv spilletid tæller; pauser og menuer gør ikke. Hver profil har sin egen statistik."
+          ]
+        },
+        {
+          "h": "De fem faneblade",
+          "body": [
+            "- Præstationer: alt efter kategori, med sjældenhed, point, dato eller statuslinje. Øverst niveau, rang og XP-bjælke; et filter viser kun åbne eller opnåede.",
+            "- Statistik: oversigtskort, de ti mest spillede spil som bjælker, en ring for sejre/nederlag og tabellen over alle spil.",
+            "- Kalender: kortet over spilledage (jo mørkere, jo længere), aktuel og længste stime, ugedage og tidspunkt.",
+            "- Historik: alt med tidsstempel - præstationer, rekorder, nye niveauer, dueller - plus et spils pointkurve.",
+            "- Profiler: hver profil med niveau og spilletid, enhedens rangliste og det indbyrdes opgør."
+          ]
+        },
+        {
+          "h": "Tilbageblik og diagrammer",
+          "body": [
+            "Over kalenderen står dit PyGameZ-tilbageblik: bedste dag, yndlingstid, længste session i træk, yndlingsspil og din sjældneste præstation.",
+            "Alle diagrammer reagerer på musen: hold over, og en lille boks nævner dato, spilletid og runder.",
+            "Rekorder er gyldne prikker på pointkurven."
+          ]
+        },
+        {
+          "h": "Fil og deling",
+          "body": [
+            "Al statistik står i filen stats.pgzlamastats ved siden af spillet - almindelig JSON, én blok pr. profil.",
+            "I fanebladet Kalender (eller med E og I) kan du eksportere og indlæse den igen; webudgaven læser samme fil.",
+            "Ved import vælger du, om værdierne lægges til den aktuelle profil.",
+            "For at filen ikke vokser uendeligt er historik (4000 poster), pointkurver (250 pr. spil) og kalender (cirka tre år) begrænset; summerne bliver."
+          ]
+        }
+      ]
+    },
+    {
       "id": "replays",
       "category": "general",
       "title": "Replays",
@@ -233,48 +335,59 @@
     {
       "id": "achievements",
       "category": "general",
-      "title": "Præstationer & statistik",
+      "title": "Præstationer, sjældenhed og niveau",
       "keywords": [
         "præstationer",
-        "statistik",
-        "fremskridt",
-        "rekord",
-        "sejre",
-        "spilletid",
-        "milepæl"
+        "sjældenhed",
+        "point",
+        "niveau",
+        "rang",
+        "milepæl",
+        "fremgang"
       ],
       "sections": [
         {
           "h": "Overblik",
           "body": [
-            "Samlingen holder styr på dine fremskridt: 107 præstationer og detaljeret statistik for alle 46 spil. Begge dele finder du bag knappen Præstationer & statistik i sidepanelet; skift mellem de to faner med [Tab] eller et klik."
+            "250 præstationer på tværs af alle 46 spil - fra den første start til et Perfect Clear i Tetris.",
+            "Hver præstation har en sjældenhed og dermed en pointværdi; summen giver dit niveau.",
+            "Findes bag knappen Præstationer og statistik, fanebladet Præstationer. Et filter skjuler åbne eller opnåede."
           ]
         },
         {
-          "h": "Præstationer",
+          "h": "De fem kategorier",
           "body": [
-            "Der er tre kategorier:",
-            "- Generelt (23): mål på tværs af samlingen som startede partier, prøvede spil, samlet spilletid, slåede rekorder og sejre - plus små ekstra som Natuglen (spil efter midnat).",
-            "- Point-milepæle (37): ét fair målscore pr. spil, tilpasset spillets pointskala.",
-            "- Særlige øjeblikke (47): sæt AI'en skakmat, en KNIFFEL, 2048- og 4096-brikken, en T-Spin Double og et Perfect Clear i Tetris, 25 løste skakopgaver, din første Killer Sudoku, fuldtræffer på et enkelt tal i roulette, lama-jackpotten på spilleautomaten, en sejr i Battleship uden at miste et skib og mere.",
-            "Ved oplåsning dukker en gylden notifikation op øverst til højre med en lille fanfare - selv midt i spillet.",
-            "Eksisterende data tæller: ved første start efter opdateringen godskrives dine gamle rekorder automatisk (uden notifikations-fyrværkeri).",
-            "Låste præstationer viser en statuslinje, oplåste deres dato.",
-            "I 2048 og skak tæller partier med fortryd eller hint hverken til highscore eller præstationer - det er fint at prøve sig frem, men kun partier uden hjælp tæller."
+            "- Generelt: mål på tværs af samlingen - runder, prøvede spil, spilletid, rekorder, sejre, spilledage, stimer, niveau og dueller. Plus ekstra som natteugle, maraton eller weekendspiller.",
+            "- Pointmilepæle: en fair målscore for hvert spil.",
+            "- Mesterniveauer: det andet, meget højere mærke - kun for spil med åben score.",
+            "- Fast gæst: 25 runder i ét spil. Findes for alle 46 spil.",
+            "- Særlige øjeblikke: skakmat, en Yahtzee, 4096-brikken, hole-in-one, et hattrick i air hockey, fire spøgelser på én kraftpille og meget mere."
           ]
         },
         {
-          "h": "Statistik",
+          "h": "Sjældenhed og point",
           "body": [
-            "Øverst opsummerer kort det hele: samlet spilletid, partier, sejre, slåede rekorder, prøvede spil og din præstationstæller - plus dit yndlingsspil (mest spilletid).",
-            "Nedenunder viser en tabel hvert spillet spil med partier, tid, sejre og rekord, sorteret efter spilletid. Et klik på en række åbner spillet direkte.",
-            "Kun aktiv spilletid tæller - pauser og menuer tæller ikke med. Sejre registreres af spil med et klart vundet/tabt-udfald (bræt-, kort- og puslespil) i singleplayer."
+            "Fem trin, fem pointværdier: almindelig 10, sjælden 25, episk 60, legendarisk 150, mytisk 300.",
+            "Farven ses på emblemet, i striben til venstre for rækken og i notifikationen.",
+            "Legendariske og mytiske præstationer fejres med konfetti.",
+            "Øverst til højre i fanebladet står, hvor mange du har af hver slags."
+          ]
+        },
+        {
+          "h": "Niveau og rang",
+          "body": [
+            "Præstationspoint giver dit niveau: niveau 2 koster 20 point, hvert næste 8 mere end det forrige.",
+            "Hver par niveauer skifter rangen - fra Lamaunge over Pointjæger og Mesterlama til Stjernelama (14 rang).",
+            "Niveau og rang står i sidebjælken, i toppen af præstationsfanen og ved hvert nyt niveau som sin egen notifikation med fanfare.",
+            "Ved første start efter opdateringen tæller dine hidtidige præstationer straks - et kort viser dit startniveau."
           ]
         },
         {
           "h": "Lagring",
           "body": [
-            "Alt gemmes lokalt i mem.json (afsnittene stats og achievements) sammen med sprog og rekorder. Sletter du filen, nulstilles præstationer og statistik også."
+            "Opnåede præstationer står i mem.json ved profilen; point, niveau og historik i stats.pgzlamastats.",
+            "Hver profil samler for sig selv - skifter du, ser du dine egne præstationer.",
+            "I 2048 og skak tæller partier med fortryd eller tip hverken for rekord eller præstationer."
           ]
         }
       ]

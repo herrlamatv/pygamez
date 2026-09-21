@@ -390,6 +390,8 @@ class DoodleGame(Game):
         rise = self.start_y - (self.cam_y + self.height * 0.42)
         self.max_rise = max(self.max_rise, rise)
         self.score = max(self.score, int(self.max_rise / 4))
+        if self.score >= 10000:      # Erfolg: 10.000 Punkte erreicht
+            self.ach_event("doodle_high")
 
     def _fill_platforms(self):
         """Erzeugt Plattformen nach oben, bis genug über der Kamera liegen.

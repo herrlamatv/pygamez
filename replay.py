@@ -547,6 +547,7 @@ class Recorder:
                                    len(scenes)),
                "game": self.game,
                "date": time.strftime("%Y-%m-%d %H:%M"),
+               "by": _player_name(),
                "title": title,
                "sub": sub,
                "rate": RATE,
@@ -555,6 +556,15 @@ class Recorder:
         if self.layouts:
             rep["layouts"] = self.layouts
         return rep
+
+
+def _player_name():
+    """Profilname für die Aufnahme (leer, wenn es keine Profile gibt)."""
+    try:
+        import profiles
+        return profiles.name_of()
+    except Exception:
+        return ""
 
 
 def recorder(game, settings=None, meta=None):

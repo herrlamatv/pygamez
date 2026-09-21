@@ -174,6 +174,7 @@ class AirHockeyGame(Game):
         self.particles = []
         self.trail = []                       # letzte Puck-Positionen
         self._over_t = 0.0
+        self._streak = 0                      # eigene Tore in Folge (Erfolg)
 
         qh = self.height / 2
         self.mallets = {
@@ -586,6 +587,11 @@ class AirHockeyGame(Game):
         self.play_sound("point")
         self.rumble(150)
 
+        # Hattrick: drei eigene Tore in Folge, ohne Gegentreffer dazwischen
+        self._streak = self._streak + 1 if by == "p1" else 0
+        if self._streak == 3:
+            self.ach_event("air_hattrick")
+
         if self.goals[by] >= self.win_goals:
             self.game_over = True
             self.winner = by
@@ -594,6 +600,7 @@ class AirHockeyGame(Game):
             self.play_sound("win" if gewonnen else "gameover")
             if not self.multiplayer:
                 self.report_result(by == "p1")
+            self.report_duel(0 if by == "p1" else 1)
             self.rumble(250)
             return
         # Anspiel beim Spieler, der das Tor kassiert hat
@@ -760,8 +767,9 @@ class AirHockeyGame(Game):
         g2 = self.big_font.render(str(self.goals["p2"]), True, COL_P2)
         s.blit(g1, g1.get_rect(midtop=(self.cx - 70, y0)))
         s.blit(g2, g2.get_rect(midtop=(self.cx + 70, y0)))
-        links = "P1" if self.multiplayer else t("ah.you")
-        rechts = "P2" if self.multiplayer else t("ah.ai")
+        # Im Mehrspieler die Profilnamen (gekürzt, das HUD ist schmal)
+        links = self.pname(0)[:6] if self.multiplayer else t("ah.you")
+        rechts = self.pname(1)[:6] if self.multiplayer else t("ah.ai")
         ly = y0 + self.big_font.get_height() + 2
         l1 = self._small.render(links, True, COL_P1)
         l2 = self._small.render(rechts, True, COL_P2)
@@ -802,7 +810,9 @@ class AirHockeyGame(Game):
         s = self.surface
         s.blit(self._dim(), (0, 0))
         if self.multiplayer:
-            text = t("common.player_wins", n=1 if self.winner == "p1" else 2)
+            # Name gekürzt: der Siegtext steht in der größten Schrift
+            text = t("common.player_wins_name",
+                     name=self.pname(0 if self.winner == "p1" else 1)[:9])
             farbe = COL_P1 if self.winner == "p1" else COL_P2
         else:
             gewonnen = self.winner == "p1"

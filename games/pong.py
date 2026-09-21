@@ -61,6 +61,7 @@ class PongGame(Game):
     def reset(self):
         self.score = 0            # = Punkte des linken Spielers (P1)
         self.game_over = False
+        self.new_round_result()   # Revanche: Duell-Ergebnis wieder freigeben
 
         self.player_y = self.height / 2 - PADDLE_H / 2
         self.ai_y = self.height / 2 - PADDLE_H / 2
@@ -102,6 +103,7 @@ class PongGame(Game):
         """Setzt den Ball in die Mitte und gibt ihm eine Startrichtung."""
         self.ball_x = self.width / 2 - BALL_SIZE / 2
         self.ball_y = self.height / 2 - BALL_SIZE / 2
+        self.rally = 0               # Schläge im laufenden Ballwechsel
         winkel = random.uniform(-0.35, 0.35)
         richtung = -1 if toward_player else 1
         self.ball_vx = richtung * BALL_START_SPEED
@@ -234,6 +236,10 @@ class PongGame(Game):
             self.ball_x = paddle.left - BALL_SIZE
         self.play_sound("bounce")
         self.rumble(60)
+        # Erfolg: 20 Schläge in einem einzigen Ballwechsel.
+        self.rally += 1
+        if self.rally >= 20:
+            self.ach_event("pong_rally")
 
     def _nach_punkt(self, toward_player):
         if self.player_score >= WIN_SCORE or self.ai_score >= WIN_SCORE:
@@ -241,6 +247,12 @@ class PongGame(Game):
             self.play_sound("win" if self.player_score > self.ai_score else "gameover")
             if not self.multiplayer:
                 self.report_result(self.player_score > self.ai_score)
+                # Erfolg: Match gegen die KI ohne ein einziges Gegentor gewonnen.
+                if self.player_score > self.ai_score and self.ai_score == 0:
+                    self.ach_event("pong_shutout")
+            else:
+                # Duell-Bilanz der beiden Profile fortschreiben.
+                self.report_duel(0 if self.player_score > self.ai_score else 1)
             self.rumble(200)
         else:
             self._serve(toward_player=toward_player)
@@ -270,8 +282,9 @@ class PongGame(Game):
         s.blit(ps, ps.get_rect(topright=(self.width // 2 - 44, 16)))
         s.blit(ais, (self.width // 2 + 44, 16))
 
-        links = "P1" if self.multiplayer else t("pong.you")
-        rechts = "P2" if self.multiplayer else t("pong.ai")
+        # Im Mehrspieler die Profilnamen zeigen (im engen HUD gekürzt).
+        links = self.pname(0)[:6] if self.multiplayer else t("pong.you")
+        rechts = self.pname(1)[:6] if self.multiplayer else t("pong.ai")
         s.blit(self.font.render(links, True, COL_P1), (34, 12))
         r_img = self.font.render(rechts, True, rechts_farbe)
         s.blit(r_img, (self.width - r_img.get_width() - 34, 12))
@@ -282,7 +295,7 @@ class PongGame(Game):
         if self.game_over:
             if self.multiplayer:
                 sieger = 1 if self.player_score > self.ai_score else 2
-                text = t("common.player_wins", n=sieger)
+                text = t("common.player_wins_name", name=self.pname(sieger - 1))
                 farbe = COL_P1 if sieger == 1 else COL_P2
             else:
                 gewonnen = self.player_score > self.ai_score

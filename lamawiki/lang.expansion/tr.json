@@ -173,6 +173,108 @@
       ]
     },
     {
+      "id": "profiles",
+      "category": "general",
+      "title": "Oyuncu profilleri",
+      "keywords": [
+        "profil",
+        "profiller",
+        "oyuncu",
+        "geçiş",
+        "çok oyunculu",
+        "misafir",
+        "seviye"
+      ],
+      "sections": [
+        {
+          "h": "Genel bakış",
+          "body": [
+            "Tek cihazda birden çok oyuncu: her profilin kendi rekorları, başarımları, seviyesi, istatistikleri, lama çipleri ve kayıtları vardır.",
+            "Kenar çubuğundaki Profiller düğmesi hepsini gösterir; üstündeki kart kimin oynadığını, seviyeyi ve XP çubuğunu gösterir.",
+            "Yalnızca cihaz ayarları (çözünürlük, ses, tuşlar, tema) ve arayüz dili ortaktır.",
+            "En fazla sekiz profil mümkündür."
+          ]
+        },
+        {
+          "h": "Oluştur ve geç",
+          "body": [
+            "Yeni profil: bir ad yaz, simge ve renk seç, kaydet. Ad kelime filtresinden geçer ve en fazla 14 karakter olabilir.",
+            "Oyna'ya (veya Enter) bas ve geçiş yap - artık tüm puanlar, süreler ve başarımlar o profile yazılır.",
+            "Tuşlar: Enter geçer, N oluşturur, F2 adlandırır, Del siler, Esc geri döner.",
+            "Profil silinince verileri de silinir; son profil her zaman kalır."
+          ]
+        },
+        {
+          "h": "Çok oyunculu ve düellolar",
+          "body": [
+            "Çok oyunculu bir mod başlattığında önce 2. oyuncunun profili sorulur - ya da misafir olarak oynarsın.",
+            "Oyunda Oyuncu 1/2 yerine profil adları görünür.",
+            "Her çok oyunculu maç karşılaşma bilançosuna girer: Profiller sekmesi kimin kimi kaç kez yendiğini gösterir.",
+            "Orada ayrıca cihaz sıralaması vardır: her oyunda en iyi skoru hangi profil tutuyor."
+          ]
+        },
+        {
+          "h": "Kayıt",
+          "body": [
+            "Profiller mem.json içinde players/<id> altındadır; istatistikler stats.pgzlamastats dosyasında. İkisi de oyunun (ya da .exe'nin) yanındadır.",
+            "Güncellemeden sonraki ilk açılışta mevcut kaydın profil 1'e taşınır - hiçbir şey kaybolmaz.",
+            "Tekrarlar ve kendi sahaların herkese açık kalır, ama onları yapan profilin adını taşır."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "category": "general",
+      "title": "İstatistikler ve grafikler",
+      "keywords": [
+        "istatistik",
+        "grafik",
+        "takvim",
+        "süre",
+        "geçmiş",
+        "seri",
+        "özet"
+      ],
+      "sections": [
+        {
+          "h": "Genel bakış",
+          "body": [
+            "Koleksiyon kayıt tutar: oynama süresi, oyunlar, galibiyetler, rekorlar, oyun günleri, puan eğrileri ve her başarım - zaman damgasıyla.",
+            "Hepsi kenar çubuğundaki Başarımlar ve istatistikler düğmesinin ardında, beş sekmede (Tab ya da tıklama geçer).",
+            "Yalnızca etkin oyun süresi sayılır; duraklatma ve menüler sayılmaz. Her profilin kendi istatistiği vardır."
+          ]
+        },
+        {
+          "h": "Beş sekme",
+          "body": [
+            "- Başarımlar: kategoriye göre hepsi; nadirlik, puan, tarih ya da ilerleme çubuğu. Üstte seviye, rütbe ve XP çubuğu; filtre yalnızca açık ya da kapalı olanları gösterir.",
+            "- İstatistikler: özet kartları, en çok oynanan on oyun çubuk olarak, galibiyet/yenilgi halkası ve tüm oyunların tablosu.",
+            "- Takvim: oyun günleri haritası (koyulaştıkça daha uzun), güncel ve en iyi seri, haftanın günleri ve günün saati.",
+            "- Geçmiş: zaman damgalı her şey - başarımlar, rekorlar, seviye atlamaları, düellolar - ve bir oyunun puan eğrisi.",
+            "- Profiller: seviyesi ve süresiyle her profil, cihaz sıralaması ve karşılaşma bilançosu."
+          ]
+        },
+        {
+          "h": "Özet ve grafikler",
+          "body": [
+            "Takvimin üstünde PyGameZ özetin var: en iyi gün, favori saat, aralıksız en uzun oturum, favori oyun ve en nadir başarımın.",
+            "Tüm grafikler fareye tepki verir: üzerine gel, küçük bir kutu tarihi, süreyi ve oyun sayısını söyler.",
+            "Rekorlar puan eğrisinde altın noktalarla işaretlidir."
+          ]
+        },
+        {
+          "h": "Dosya ve paylaşım",
+          "body": [
+            "Tüm istatistikler oyunun yanındaki stats.pgzlamastats dosyasındadır - sıradan JSON, profil başına bir blok.",
+            "Takvim sekmesinde (ya da E ve I ile) dışa aktarıp geri okuyabilirsin; web sürümü aynı dosyayı okur.",
+            "İçe aktarırken değerlerin mevcut profile eklenip eklenmeyeceğini seçersin.",
+            "Dosya sonsuza dek büyümesin diye geçmiş (4000 kayıt), puan eğrileri (oyun başına 250) ve takvim (yaklaşık üç yıl) sınırlıdır; toplamlar kalır."
+          ]
+        }
+      ]
+    },
+    {
       "id": "replays",
       "category": "general",
       "title": "Tekrarlar",
@@ -233,48 +335,59 @@
     {
       "id": "achievements",
       "category": "general",
-      "title": "Başarımlar ve istatistikler",
+      "title": "Başarımlar, nadirlik ve seviye",
       "keywords": [
         "başarımlar",
-        "istatistikler",
-        "ilerleme",
-        "rekor",
-        "galibiyet",
-        "oyun süresi",
-        "kilometre taşı"
+        "nadirlik",
+        "puan",
+        "seviye",
+        "rütbe",
+        "kilometre taşı",
+        "ilerleme"
       ],
       "sections": [
         {
           "h": "Genel bakış",
           "body": [
-            "Koleksiyon ilerlemeni takip ediyor: 107 başarım ve 46 oyunun tamamı için ayrıntılı istatistikler. İkisine de kenar çubuğundaki Başarımlar ve istatistikler düğmesinden ulaşırsın; sekmeler arasında [Tab] veya tıklamayla geçersin."
+            "46 oyunun tamamında 250 başarım - ilk oyundan Tetris'teki Perfect Clear'a kadar.",
+            "Her başarımın bir nadirliği, dolayısıyla puan değeri vardır; toplam seviyeni verir.",
+            "Kenar çubuğundaki Başarımlar ve istatistikler düğmesi, Başarımlar sekmesi. Filtre açık ya da kapalı olanları gizler."
           ]
         },
         {
-          "h": "Başarımlar",
+          "h": "Beş kategori",
           "body": [
-            "Üç kategori var:",
-            "- Genel (23): başlatılan oyunlar, denenen oyunlar, toplam oyun süresi, kırılan rekorlar ve galibiyetler gibi koleksiyon geneli hedefler - artı Gece kuşu (gece yarısından sonra oynamak) gibi küçük sürprizler.",
-            "- Puan kilometre taşları (37): her oyun için puan ölçeğine göre ayarlanmış adil bir hedef puan.",
-            "- Özel anlar (47): yapay zekâyı mat etmek, KNIFFEL, 2048 ve 4096 taşları, Tetris'te T-Spin Double ve Perfect Clear, çözülmüş 25 satranç bulmacası, ilk Killer Sudoku'n, rulette tek sayıya tam isabet, slot makinesinde lama jackpotu, Battleship'te tek gemi kaybetmeden zafer ve daha fazlası.",
-            "Bir başarım açıldığında sağ üstte altın rengi bir bildirim ve kısa bir fanfar belirir - oyunun ortasında bile.",
-            "Mevcut veriler sayılır: güncellemeden sonraki ilk açılışta eski rekorların otomatik olarak işlenir (bildirim havai fişekleri olmadan).",
-            "Kilitli başarımlar ilerleme çubuğu, açılanlar tarihlerini gösterir.",
-            "2048 ve satrançta geri alma veya ipucu kullanılan oyunlar rekorlara ve başarımlara sayılmaz - denemek serbest, yalnızca yardımsız oyunlar değerlendirilir."
+            "- Genel: koleksiyon geneli hedefler - oyunlar, denenen oyunlar, süre, rekorlar, galibiyetler, oyun günleri, günlük seriler, seviye ve düellolar. Ayrıca gece kuşu, maraton, hafta sonu oyuncusu gibi ekstralar.",
+            "- Puan kilometre taşları: her oyun için adil bir hedef puan.",
+            "- Usta seviyeleri: çok daha yüksek ikinci eşik - yalnızca puanı sınırsız oyunlarda.",
+            "- Müdavim: bir oyunda 25 parti. 46 oyunun hepsinde var.",
+            "- Özel anlar: şah mat, Yahtzee, 4096 karosu, hole-in-one, air hockey'de hat-trick, tek güç hapıyla dört hayalet ve dahası."
           ]
         },
         {
-          "h": "İstatistikler",
+          "h": "Nadirlik ve puanlar",
           "body": [
-            "Üstte kartlar her şeyi özetler: toplam oyun süresi, oyunlar, galibiyetler, kırılan rekorlar, denenen oyunlar ve başarım sayacın - artı favori oyunun (en çok süre).",
-            "Altında bir tablo, oynadığın her oyunu oyun sayısı, süre, galibiyet ve rekorla listeler; oyun süresine göre sıralıdır. Bir satıra tıklamak doğrudan o oyunu açar.",
-            "Sadece aktif oyun süresi sayılır - duraklatma ve menüler saymaz. Galibiyetler, net kazan/kaybet sonucu olan oyunlarda (masa, kart ve bulmaca) tek oyunculuda kaydedilir."
+            "Beş kademe, beş puan değeri: yaygın 10, nadir 25, destansı 60, efsanevi 150, mitik 300.",
+            "Renk rozette, satırın solundaki şeritte ve açılış bildiriminde görünür.",
+            "Efsanevi ve mitik başarımlar konfetiyle kutlanır.",
+            "Sekmenin sağ üstünde her kademeden kaç tane açtığın yazar."
           ]
         },
         {
-          "h": "Kaydetme",
+          "h": "Seviye ve rütbeler",
           "body": [
-            "Her şey yerel olarak mem.json dosyasında saklanır (stats ve achievements bölümleri), dil ve rekorlarla birlikte. Dosyayı silersen başarımlar ve istatistikler de sıfırlanır."
+            "Başarım puanları seviyeni belirler: 2. seviye 20 puan, her yeni seviye bir öncekinden 8 puan fazla.",
+            "Birkaç seviyede bir rütbe değişir - Lama Yavrusu'ndan Puan Avcısı ve Usta Lama üzerinden Yıldız Lama'ya (14 rütbe).",
+            "Seviye ve rütbe kenar çubuğunda, Başarımlar sekmesinin başında ve her yükselişte kendi bildiriminde fanfarla görünür.",
+            "Güncellemeden sonraki ilk açılışta mevcut başarımların hemen sayılır - bir kart başlangıç seviyeni gösterir."
+          ]
+        },
+        {
+          "h": "Kayıt",
+          "body": [
+            "Açılan başarımlar mem.json içinde ilgili profilde durur; puanlar, seviye ve geçmiş stats.pgzlamastats dosyasındadır.",
+            "Her profil kendi için toplar - geçiş yapınca kendi başarımlarını görürsün.",
+            "2048 ve satraçta geri alma ya da ipucu kullanılan partiler ne rekora ne başarımlara sayılır."
           ]
         }
       ]

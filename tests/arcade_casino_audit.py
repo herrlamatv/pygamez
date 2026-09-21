@@ -241,10 +241,30 @@ def audit_languages():
     check(not missing, "jedes Spiel hat eine Wiki-Seite", missing)
     import achievements
     ach_keys = []
-    for sid, _icon, _key, _target in achievements.SPECIALS:
-        ach_keys += ["ach.%s.name" % sid, "ach.%s.desc" % sid]
+    for entry in achievements.SPECIALS:
+        ach_keys += ["ach.%s.name" % entry[0], "ach.%s.desc" % entry[0]]
+    for entry in achievements.GENERAL:
+        sid, _icon, stat, _target, _rarity = entry
+        ach_keys.append("ach.%s.name" % sid)
+        if not stat:
+            ach_keys.append("ach.%s.desc" % sid)
+    ach_keys += ["ach.master.name", "ach.regular.name", "ach.regular.desc"]
     miss = [k for k in ach_keys if k not in base]
-    check(not miss, "alle Spezial-Erfolge übersetzt", miss)
+    check(not miss, "alle Erfolge übersetzt", miss)
+    # Seltenheitsstufen: jede Definition trägt eine gültige Stufe, und die
+    # Punktwerte steigen von "common" bis "mythic" an.
+    bad = [e[0] for e in list(achievements.GENERAL) + list(achievements.SPECIALS)
+           if e[4] not in achievements.RARITY]
+    check(not bad, "Seltenheitsstufen gültig", bad)
+    pts = [achievements.RARITY[r]["points"] for r in achievements.RARITY_ORDER]
+    check(pts == sorted(pts) and len(set(pts)) == len(pts),
+          "Punktwerte der Stufen steigen an", pts)
+    ids = [e[0] for e in achievements.GENERAL] + [e[0] for e in achievements.SPECIALS]
+    check(len(ids) == len(set(ids)), "Erfolgs-ids eindeutig")
+    import levels
+    curve = [levels.level_for(p) for p in (0, 20, 468, 5000)]
+    check(curve == [1, 2, 10, levels.level_for(5000)] and curve == sorted(curve),
+          "Level-Kurve steigt monoton", curve)
 
 
 # ---------------------------------------------------------------- Vorspiel-Screen

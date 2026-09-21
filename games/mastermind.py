@@ -214,6 +214,8 @@ class MastermindGame(Game):
             self.score += pts
             self.solved_count += 1
             self.state = SOLVED
+            if used <= 3:
+                self.ach_event("master_three")   # Erfolg: Code in max. 3 Versuchen
             self.report_result(True)
             self.play_sound("win")
         elif self.row >= self.max_rows:

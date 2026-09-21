@@ -173,6 +173,108 @@
       ]
     },
     {
+      "id": "profiles",
+      "category": "general",
+      "title": "Player profiles",
+      "keywords": [
+        "profile",
+        "profiles",
+        "player",
+        "switch",
+        "multiplayer",
+        "guest",
+        "level"
+      ],
+      "sections": [
+        {
+          "h": "Overview",
+          "body": [
+            "Several players on one device: every profile has its own high scores, achievements, level, statistics, llama chips and saved games.",
+            "The Profiles button in the sidebar lists them all; the card above it shows who is playing, with level and XP bar.",
+            "Only the device settings (resolution, sound, key bindings, theme) and the interface language are shared.",
+            "Up to eight profiles are possible."
+          ]
+        },
+        {
+          "h": "Create & switch",
+          "body": [
+            "New profile: type a name, pick an icon and a colour, save. The name goes through the word filter and may be 14 characters long.",
+            "Click Play (or press Enter) to switch - from then on every point, minute and achievement goes to that profile.",
+            "Keys on the screen: Enter switches, N creates, F2 renames, Del deletes, Esc goes back.",
+            "Deleting a profile deletes its data too; the last profile always stays."
+          ]
+        },
+        {
+          "h": "Multiplayer & duels",
+          "body": [
+            "When you start a multiplayer mode, the collection first asks which profile plays as player 2 - or you play as a guest.",
+            "In game the profile names appear instead of Player 1/2.",
+            "Every multiplayer match goes into the head-to-head record: the Profiles tab of the progress screen shows who beat whom how often.",
+            "It also holds the device leaderboard: which profile holds the best score in each game."
+          ]
+        },
+        {
+          "h": "Storage",
+          "body": [
+            "All profiles live in mem.json under players/<id>; the statistics are in stats.pgzlamastats. Both sit next to the game (or next to the .exe).",
+            "On the first start after the update your existing save moves into profile 1 - nothing is lost.",
+            "Replays and self-made courses stay available to everyone, but carry the name of the profile that recorded or built them."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "category": "general",
+      "title": "Statistics & charts",
+      "keywords": [
+        "statistics",
+        "chart",
+        "calendar",
+        "playtime",
+        "history",
+        "streak",
+        "recap"
+      ],
+      "sections": [
+        {
+          "h": "Overview",
+          "body": [
+            "The collection keeps track: playtime, rounds, wins, records, days played, score curves and every unlocked achievement - with a timestamp.",
+            "It all lives behind the Achievements & statistics button in the sidebar, spread over five tabs (Tab or click switches).",
+            "Only active playtime counts; pauses and menus do not. Every profile has its own statistics."
+          ]
+        },
+        {
+          "h": "The five tabs",
+          "body": [
+            "- Achievements: everything by category, with rarity, points, date or a progress bar. Level, rank and XP bar sit on top; a filter shows only open or unlocked ones.",
+            "- Statistics: summary cards, the ten most played games as bars, a ring for wins/losses and the table of all games.",
+            "- Calendar: the days-played map (the darker, the longer), current and best streak, weekdays and time of day.",
+            "- History: everything with a timestamp - achievements, records, level-ups, duels - plus one game's score curve as a line.",
+            "- Profiles: every profile with level and playtime, the device leaderboard and the head-to-head record."
+          ]
+        },
+        {
+          "h": "Recap & charts",
+          "body": [
+            "Above the calendar sits your PyGameZ recap: best day, favourite time, longest session in one go, favourite game and your rarest achievement.",
+            "All charts react to the mouse: hover and a small box names the date, playtime and rounds.",
+            "Records are marked as golden dots in the score curve."
+          ]
+        },
+        {
+          "h": "File & sharing",
+          "body": [
+            "All statistics live in the file stats.pgzlamastats next to the game - ordinary JSON, one block per profile.",
+            "On the calendar tab (or with E and I) you can export and re-import it; the web version reads the same file.",
+            "On import you choose whether the values are added to the current profile.",
+            "So the file cannot grow forever, history (4000 entries), score curves (250 per game) and calendar (about three years) are capped; the totals stay."
+          ]
+        }
+      ]
+    },
+    {
       "id": "replays",
       "category": "general",
       "title": "Replays",
@@ -233,49 +335,59 @@
     {
       "id": "achievements",
       "category": "general",
-      "title": "Achievements & Statistics",
+      "title": "Achievements, rarity & level",
       "keywords": [
         "achievements",
-        "statistics",
-        "stats",
-        "progress",
-        "record",
-        "wins",
-        "play time",
-        "milestone"
+        "rarity",
+        "points",
+        "level",
+        "rank",
+        "milestone",
+        "progress"
       ],
       "sections": [
         {
           "h": "Overview",
           "body": [
-            "The collection tracks your progress: 107 achievements and detailed statistics across all 46 games. Both live behind the Achievements & Stats button in the sidebar; switch between the two tabs with [Tab] or a click."
+            "250 achievements across all 46 games - from your first start to a Perfect Clear in Tetris.",
+            "Every achievement has a rarity and therefore a point value; the sum is your level.",
+            "Find them behind the Achievements & statistics button, tab Achievements. A filter hides open or unlocked ones."
           ]
         },
         {
-          "h": "Achievements",
+          "h": "The five categories",
           "body": [
-            "There are three categories:",
-            "- General (23): collection-wide goals such as games started, games tried, total play time, records broken and wins - plus little extras like the Night Owl (play after midnight).",
-            "- Score milestones (37): one fair target score per game, tuned to its scoring scale.",
-            "- Special moments (47): checkmating the AI, a YAHTZEE, the 2048 and 4096 tiles, a T-Spin Double and a Perfect Clear in Tetris, 25 solved chess puzzles, your first Killer Sudoku, a straight-up hit in roulette, the llama jackpot on the slot machine, a Battleship win without losing a ship and more.",
-            "Unlocking shows a golden toast in the top-right corner with a little fanfare - even mid-game.",
-            "Existing data counts: on the first launch after the update, your old high scores are credited automatically (without the toast fireworks).",
-            "Locked achievements show a progress bar, unlocked ones their date.",
-            "In 2048 and Chess, games using undo or hints don't count toward high scores and achievements - trying things out is fine, only unassisted games are scored."
+            "- General: collection-wide goals - rounds, games tried, playtime, records, wins, days played, daily streaks, level and duels. Plus extras like night owl, marathon or weekend player.",
+            "- Score milestones: a fair target score for each game.",
+            "- Master tiers: the second, much higher mark - only for games whose score is open-ended.",
+            "- Regular: 25 rounds of one game. Exists for each of the 46 games.",
+            "- Special moments: checkmate, a Yahtzee, the 4096 tile, a hole-in-one, an air hockey hat-trick, four ghosts on one power pill and much more."
           ]
         },
         {
-          "h": "Statistics",
+          "h": "Rarity & points",
           "body": [
-            "Cards at the top sum everything up: total play time, games played, wins, records broken, games tried and your achievement count - plus your favourite game (most play time).",
-            "Below, a table lists every game you have played with plays, time, wins and best score, sorted by play time. Clicking a row jumps straight to that game.",
-            "Only active play time counts - pauses and menus don't. Wins are tracked by games with a clear win/lose outcome (board, card and puzzle games) in single-player."
+            "Five tiers, five point values: common 10, rare 25, epic 60, legendary 150, mythic 300.",
+            "The colour shows in the badge, in the stripe left of the row and in the pop-up when it unlocks.",
+            "Legendary and mythic achievements celebrate with confetti.",
+            "The top right of the tab shows how many of each tier you already have."
           ]
         },
         {
-          "h": "Saving",
+          "h": "Level & ranks",
           "body": [
-            "Everything is stored locally in mem.json (sections stats and achievements), together with your language and high scores. Deleting the file also resets achievements and statistics."
+            "Achievement points make your level: level 2 costs 20 points, each further level 8 more than the one before.",
+            "Every few levels the rank changes - from Llama Chick through Point Hunter and Master Llama to Star Llama (14 ranks).",
+            "Level and rank appear in the sidebar, in the header of the achievements tab and, on every level-up, as its own pop-up with a fanfare.",
+            "On the first start after the update your existing achievements count right away - a card shows your starting level."
+          ]
+        },
+        {
+          "h": "Storage",
+          "body": [
+            "Unlocked achievements live in mem.json with their profile; points, level and the history are in stats.pgzlamastats.",
+            "Every profile collects for itself - switch and you see your own achievements.",
+            "In 2048 and chess, rounds with undo or hints count neither for the high score nor for achievements."
           ]
         }
       ]

@@ -947,6 +947,9 @@ class SolitaireGame(Game):
             self.game_over = True
             self.report_result(True)
             self.ach_event("solitaire_win")
+            # Erfolg: Partie in weniger als drei Minuten gewonnen.
+            if self.elapsed < 180:
+                self.ach_event("solitaire_fast")
             self.play_sound("win")
             self.rumble(220)
 

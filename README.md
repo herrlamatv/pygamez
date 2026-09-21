@@ -871,18 +871,30 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   scrollbaren Artikeln und Tastenkappen-Chips, in allen 14 Sprachen.
   Erreichbar über den Sidebar-Button **„Wiki / Hilfe"** und aus dem
   Vorspiel-Screen jedes Spiels (öffnet direkt dessen Seite).
-- **Erfolge & Statistiken**: **108 Erfolge** in drei Kategorien - 24
-  sammlungsweite Ziele (Partien, Spielzeit, Rekorde, Siege …), 37
-  **Punkte-Meilensteine** und 47 **besondere Momente** (Schachmatt gegen die KI,
-  KNIFFEL, die 4096er-Kachel, ein T-Spin Double, 25 gelöste Schachrätsel, ein
-  Killer-Sudoku, der Lama-Jackpot am Slot, ein Sieg bei Schiffe versenken ohne
-  verlorenes Schiff …). In 2048 und Schach zählen Partien mit Rückgängig bzw.
-  Hinweis nicht für Highscore und Erfolge. Beim Freischalten erscheint ein
-  **goldener Toast mit Fanfare** - auch mitten im Spiel; alte Highscores werden
-  beim ersten Start automatisch angerechnet. Dazu ein **Statistik-Reiter** mit
-  Gesamtspielzeit, Partien, Siegen, Rekorden, Lieblingsspiel und einer nach
-  Spielzeit sortierten **Pro-Spiel-Tabelle** (Klick auf eine Zeile öffnet das
-  Spiel). Erreichbar über den Sidebar-Button **„Erfolge & Statistik"**.
+- **Erfolge, Seltenheit & Level**: **250 Erfolge** in fünf Kategorien - 60
+  sammlungsweite Ziele (Partien, Spielzeit, Rekorde, Siege, Spieltage,
+  Tagesserien, Duelle …), 37 **Punkte-Meilensteine**, 30 **Meister-Stufen**
+  (die zweite, deutlich höhere Punktmarke), für jedes Spiel einen
+  **Stammgast**-Erfolg (25 Partien) und 77 **besondere Momente** (Schachmatt,
+  KNIFFEL, die 4096er-Kachel, Hole-in-One, Hattrick im Air Hockey, vier Geister
+  mit einer Kraftpille …). Jeder Erfolg hat eine **Seltenheitsstufe**
+  (gewöhnlich 10 bis mythisch 300 Punkte); die Punkte ergeben dein **Level**
+  mit 14 **Rängen** vom Lama-Küken bis zum Sternenlama. Freischalten zeigt eine
+  Einblendung in der Farbe der Stufe, ein Aufstieg eine eigene mit Fanfare.
+- **Statistik mit Diagrammen**: fünf Reiter - Erfolge (mit Filter, Punkten und
+  XP-Balken), Statistiken (Karten, Top-10-Balken, Sieg/Niederlage-Ring,
+  Tabelle), **Kalender** (Spieltage-Karte, Serien, Wochentage, Tageszeit),
+  **Verlauf** (alles mit Zeitstempel, dazu der Punkteverlauf je Spiel als
+  Linie) und **Profile** (Geräte-Bestenliste, Duell-Bilanz). Obendrauf der
+  **PyGameZ-Rückblick** mit stärkstem Tag, Lieblingszeit und längster Sitzung.
+  Alles liegt in der Datei **`stats.pgzlamastats`** und lässt sich exportieren,
+  weitergeben und wieder einlesen - auch zwischen Desktop und Web-Version.
+- **Spielerprofile**: mehrere Spieler an einem Gerät, jeder mit eigenen
+  Highscores, Erfolgen, Level, Statistiken, Chips und Spielständen (bis zu
+  acht). Der Knopf **„Profile"** legt an, benennt um und wechselt; im
+  Mehrspieler wählst du vor der Partie das Profil für Spieler 2 (oder spielst
+  als Gast), im Spiel stehen dann die Namen statt „Spieler 1/2", und jede
+  Partie landet in der **Duell-Bilanz**.
 - **Replays**: **sechs Spiele** zeichnen ihre Runden auf - **Minigolf**,
   **Bowling**, **Billard**, **Pinball**, **Snake** und **Tetris**. Gespeichert
   wird die tatsächliche Bewegung, Bild für Bild (30 Samples je Sekunde), nicht
@@ -978,10 +990,14 @@ settings.py          Einstellungen (Sound/Haptik/Tastenbelegung/Spiel-Optionen m
 audio.py             Prozedurale Soundeffekte, Musik-Schleifen + Gamepad-Rumble
 menu.py              Sprach-, Vorspiel- (Modus) und Options-Screen (Sound/Steuerung)
 highscore.py         Laden/Speichern der Highscores (Abschnitt in mem.json)
-store.py             Zentrale Speicherdatei mem.json (Abschnitte: mem, highscores, stats, achievements + Spielstände), atomar mit .bak-Sicherung
-stats.py             Spielerstatistiken (Partien, Spielzeit, Siege, Rekorde) je Spiel
-achievements.py      Erfolge: Definitionen, Freischalt-Logik, Toast-Einblendung
-progress.py          Erfolge-&-Statistik-Screen (zwei Reiter, scrollbar)
+store.py             Zentrale Speicherdatei mem.json (gerätweit: mem; je Profil: highscores, achievements + Spielstände), atomar mit .bak-Sicherung
+profiles.py          Spielerprofile: anlegen, wechseln, umbenennen, Namensprüfung, Farbe/Symbol
+stats.py             Statistik in stats.pgzlamastats: Summen, Spieltage, Tageszeit, Punkteverläufe, Verlauf, Duelle, Export/Import
+achievements.py      Erfolge: Definitionen, Seltenheitsstufen, Freischalt-Logik, Toast-Einblendung
+levels.py            Levelsystem: Erfolgspunkte -> Level und 14 Ränge
+charts.py            Diagramme für die Statistik-Screens (Balken, Linien, Kalender-Heatmap, Ringe, Tooltip)
+progress.py          Erfolge-&-Statistik-Screen (fünf Reiter, scrollbar)
+profileview.py       Profil-Screen, Spieler-2-Auswahl und die Startlevel-Karte
 replay.py            Aufzeichnung, Archiv & Teilen der Wiederholungen (replay.json, .lamapgzreplay)
 replayview.py        Replay-Screen: Archiv-Liste, Wiedergabe, Teilen/Einlesen
 ugc.py               Eigene Inhalte (Minigolf-Bahnen, Geometry-Dash-Level): Speicher, Prüfung, Export/Import (ugc.json)
@@ -989,7 +1005,7 @@ swear.py             Wortfilter für Namen und ids (lang/swear/*.yml, alle 14 Sp
 filepick.py          Datei-Dialoge ("Exportieren als ...", "Importieren") und Downloads-Ordner
 prestige.py          Prestige-System für Snake
 competitive.py       Kennzahlen für den Competitive-Modus von Snake (Level, Slot, Wett-Äpfel)
-ngb.py               Visuelle Personalisierung ("Mods"): Kopffarbe + Koordinaten-Raster + Menü (mem-ngb.json)
+ngb.py               Visuelle Personalisierung ("Mods"): Kopffarbe + Koordinaten-Raster + Menü (Abschnitt ngb je Profil)
 lamabank.py          Lama-Bank: gemeinsames Chip-Konto von Blackjack, Poker und Casino (Abschnitt casino in mem.json)
 seedrand.py          Zufallsgenerator mit bitgleichen Zahlen in Python und Browser (Tagesmodi, neue Rätsel)
 i18n.py              Übersetzungs-Engine (lädt lang/*.json, t("schlüssel"))
@@ -1994,18 +2010,29 @@ packages) and styled like a modern game launcher:
   scrollable articles and keycap chips, in all 14 languages. Reachable via
   the **"Wiki / Help"** sidebar button and from every game's pre-game screen
   (opens that game's page directly).
-- **Achievements & statistics**: **108 achievements** in three categories - 24
-  collection-wide goals (games played, play time, records, wins …), 37 **score
-  milestones** and 47 **special moments** (checkmating the AI, a YAHTZEE, the
-  4096 tile, a T-Spin Double, 25 solved chess puzzles, a Killer Sudoku, the
-  llama jackpot on the slot, a Battleship win without losing a ship …). In 2048
-  and Chess, games using undo or hints don't count toward high scores and
-  achievements. Unlocking shows a **golden
-  toast with a fanfare** - even mid-game; old high scores are credited
-  automatically on first launch. Plus a **statistics tab** with total play
-  time, games, wins, records, favourite game and a **per-game table** sorted
-  by play time (clicking a row opens that game). Reachable via the
-  **"Achievements & Stats"** sidebar button.
+- **Achievements, rarity & level**: **250 achievements** in five categories -
+  60 collection-wide goals (rounds, playtime, records, wins, days played, daily
+  streaks, duels …), 37 **score milestones**, 30 **master tiers** (the second,
+  much higher mark), a **regular** achievement for every game (25 rounds) and
+  77 **special moments** (checkmate, a Yahtzee, the 4096 tile, a hole-in-one, an
+  air hockey hat-trick, four ghosts on one power pill …). Every achievement has
+  a **rarity** (common 10 up to mythic 300 points); the points make your
+  **level** with 14 **ranks** from Llama Chick to Star Llama. Unlocking shows a
+  pop-up in the rarity's colour, a level-up its own one with a fanfare.
+- **Statistics with charts**: five tabs - Achievements (with filter, points and
+  XP bar), Statistics (cards, top-10 bars, win/loss ring, table), **Calendar**
+  (days-played map, streaks, weekdays, time of day), **History** (everything
+  with a timestamp, plus each game's score curve) and **Profiles** (device
+  leaderboard, head-to-head record). On top of that the **PyGameZ recap** with
+  your best day, favourite time and longest session. It all lives in the file
+  **`stats.pgzlamastats`** and can be exported, shared and read back in - also
+  between the desktop and the web version.
+- **Player profiles**: several players on one device, each with their own high
+  scores, achievements, level, statistics, chips and saved games (up to eight).
+  The **"Profiles"** button creates, renames and switches; in multiplayer you
+  pick player 2's profile before the match (or play as a guest), the names then
+  replace "Player 1/2" in game, and every match goes into the
+  **head-to-head record**.
 - **Replays**: **six games** record their rounds - **Minigolf**, **Bowling**,
   **Billiards**, **Pinball**, **Snake** and **Tetris**. What is stored is the
   actual motion, frame by frame (30 samples per second), not the input; the
@@ -2097,10 +2124,14 @@ settings.py          Load/save settings (sound/haptics/key bindings/game options
 audio.py             Procedural sound effects, music loops + gamepad rumble
 menu.py              Language, pre-game (mode) and options screen (sound/controls)
 highscore.py         Load/save high scores (section in mem.json)
-store.py             Central save file mem.json (sections: mem, highscores, stats, achievements + game progress), atomic with .bak backup
-stats.py             Player statistics (plays, play time, wins, records) per game
-achievements.py      Achievements: definitions, unlock logic, toast overlay
-progress.py          Achievements & statistics screen (two tabs, scrollable)
+store.py             Central save file mem.json (device-wide: mem; per profile: highscores, achievements + game progress), atomic with .bak backup
+profiles.py          Player profiles: create, switch, rename, name check, colour/icon
+stats.py             Statistics in stats.pgzlamastats: totals, days played, time of day, score curves, history, duels, export/import
+achievements.py      Achievements: definitions, rarity tiers, unlock logic, toast overlay
+levels.py            Level system: achievement points -> level and 14 ranks
+charts.py            Charts for the statistics screens (bars, lines, calendar heatmap, rings, tooltip)
+progress.py          Achievements & statistics screen (five tabs, scrollable)
+profileview.py       Profile screen, player 2 picker and the starting-level card
 replay.py            Recording, archive & sharing of replays (replay.json, .lamapgzreplay)
 replayview.py        Replay screen: archive list, playback, share/import
 ugc.py               Custom content (minigolf holes, Geometry Dash levels): storage, checks, export/import (ugc.json)
@@ -2108,7 +2139,7 @@ swear.py             Word filter for names and ids (lang/swear/*.yml, all 14 lan
 filepick.py          File dialogs ("Export as ...", "Import") and the Downloads folder
 prestige.py          Prestige system for Snake
 competitive.py       Tuning for Snake's Competitive mode (levels, slot machine, gamble apples)
-ngb.py               Visual personalization ("mods"): head color + coordinate grid + menu (mem-ngb.json)
+ngb.py               Visual personalization ("mods"): head color + coordinate grid + menu (section ngb per profile)
 lamabank.py          Llama Bank: shared chip account of Blackjack, Poker and Casino (section casino in mem.json)
 seedrand.py          Random generator with bit-identical numbers in Python and the browser (daily modes, new puzzles)
 i18n.py              Translation engine (loads lang/*.json, t("key"))

@@ -8,6 +8,105 @@
 
 ## 🇩🇪 Deutsch
 
+### Erfolge 2.0, Statistik-Diagramme & Spielerprofile – 2026-09-21
+
+Das größte Update für alles, was zählt: **250 Erfolge** (statt 108) mit
+**Seltenheitsstufen** und **Erfolgspunkten**, daraus ein **Levelsystem** mit
+14 Rängen, ein Statistik-Screen mit **fünf Reitern und echten Diagrammen** –
+und **Spielerprofile**, damit mehrere Leute an einem Gerät getrennt sammeln
+können. Alle Statistik-Daten liegen jetzt in einer eigenen Datei
+`stats.pgzlamastats`, die sich weitergeben lässt. Alles in 14 Sprachen, mit
+drei LamaWiki-Seiten, beiden READMEs, eigenem Audit – und die Web-Version zieht
+komplett mit.
+
+#### Neu
+
+**Erfolge, Seltenheit & Level**
+- **250 Erfolge** in fünf Kategorien: 60 allgemeine Ziele, 37 Punkte-Meilensteine,
+  30 **Meister-Stufen** (die zweite, deutlich höhere Punktmarke je Spiel), für
+  jedes der 46 Spiele einen **Stammgast**-Erfolg (25 Partien) und 77 besondere
+  Momente – darunter 30 neue: Riesenschlange (Länge 50), Zu-null-Sieg im Pong,
+  Hattrick im Air Hockey, Boss bei Invaders, Goldmedaille bei Flappy,
+  Nachtlauf beim T-Rex, Dreifachsprung bei Dame, Zwickmühle bei Mühle,
+  Bandenschuss beim Panzer-Duell, Code in drei Versuchen bei Mastermind, vier
+  Geister mit einer Kraftpille, Minesweeper ohne Flaggen, zwei Tetris in Folge
+  und mehr.
+- Fünf **Seltenheitsstufen** mit Punktwert: gewöhnlich 10, selten 25, episch 60,
+  legendär 150, mythisch 300. Die Farbe steckt im Abzeichen, im Streifen der
+  Erfolgszeile und in der Einblendung; legendäre und mythische Stücke bekommen
+  Konfetti.
+- **Levelsystem**: Punkte ergeben das Level (Level 2 kostet 20 Punkte, jede
+  weitere Stufe 8 mehr als die vorige), dazu **14 Ränge** vom Lama-Küken bis zum
+  Sternenlama. Ein Aufstieg zeigt eine eigene Einblendung mit Fanfare; Level,
+  Rang und XP-Balken stehen in der Sidebar und im Fortschritt-Screen.
+- Beim ersten Start nach dem Update zählen alte Highscores und Statistiken
+  sofort – eine einmalige Karte zeigt **dein Startlevel** samt deiner seltensten
+  Erfolge, statt einer Toast-Parade.
+
+**Statistik mit Diagrammen**
+- Der Fortschritt-Screen hat jetzt **fünf Reiter**: Erfolge (mit Filter, Punkten
+  und Level-Kopfzeile), Statistiken (Karten, Top-10-Balken der Spielzeit,
+  Sieg/Niederlage-Ring, Tabelle), **Kalender**, **Verlauf** und **Profile**.
+- **Kalender**: Spieltage als Heatmap (je dunkler, desto länger gespielt),
+  aktuelle und längste Tagesserie, Wochentags-Balken und ein Tageszeit-Ring.
+- **Verlauf**: alles mit Zeitstempel – Erfolge (mit Seltenheit und Punkten),
+  Rekorde, Level-Aufstiege und Duelle – dazu der **Punkteverlauf je Spiel** als
+  Linie mit goldenen Rekord-Marken.
+- **Rückblick**: stärkster Tag, Lieblingszeit, längste Sitzung am Stück,
+  Lieblingsspiel und dein seltenster Erfolg.
+- Alle Diagramme haben Tooltips; die neuen Zeichen-Bausteine stehen in
+  `charts.py` (Balken, Linien, Kalender, Ringe, Tageszeit, Tooltip).
+
+**Spielerprofile**
+- Bis zu **acht Profile** an einem Gerät, jedes mit eigenen Highscores,
+  Erfolgen, Level, Statistiken, Lama-Chips und Spielständen. Gemeinsam bleiben
+  nur Auflösung, Ton, Tastenbelegung, Design und die Sprache.
+- Neuer Sidebar-Knopf **„Profile"** plus eine Karte im Kopf, die zeigt, wer
+  gerade spielt (Avatar, Name, Level, XP-Balken). Anlegen, umbenennen, Symbol
+  und Farbe wählen, wechseln, löschen – der Name läuft durch den Wortfilter.
+- **Mehrspieler**: vor der Partie wählt Spieler 2 sein Profil (oder spielt als
+  Gast); im Spiel stehen die Profilnamen statt „Spieler 1/2".
+- **Duell-Bilanz** und **Geräte-Bestenliste** im Profile-Reiter: wer hat gegen
+  wen wie oft gewonnen, und wer hält je Spiel den Bestwert.
+
+**Statistik-Datei `stats.pgzlamastats`**
+- Alle Statistiken (aller Profile) stehen jetzt in einer eigenen JSON-Datei
+  neben dem Spiel – mit Kopfzeile wie bei Replays und Bahnen.
+- **Export/Import** im Kalender-Reiter (oder mit **E** und **I**); die
+  Web-Version liest und schreibt dieselbe Datei.
+- Gegen unbegrenztes Wachstum sind Verlauf (4000 Einträge), Punktverläufe (250
+  je Spiel) und Kalender (rund drei Jahre) gedeckelt – die Summen bleiben.
+
+**Web-Version**
+- Zieht komplett mit: Erfolge samt Seltenheit und Level, alle fünf Reiter mit
+  denselben Diagrammen, Profile (eigener Speicher-Prefix je Profil) und der
+  Austausch der `.pgzlamastats`-Datei.
+- Die Definitionen erzeugt `devtools/export_achievements.py` direkt aus
+  `achievements.py` – Desktop und Browser können nicht auseinanderlaufen; ein
+  Test prüft das.
+
+#### Geändert
+
+- `mem.json` hat eine neue Struktur: gerätweit bleibt nur `mem` (Sprache),
+  alles andere liegt unter `players/<profil-id>`. Der bisherige Spielstand
+  wandert beim ersten Start automatisch in Profil 1.
+- Der alte `stats`-Abschnitt der `mem.json` zieht in die neue Statistik-Datei um
+  (inklusive Erfolgs-Zeitstempeln als Verlauf).
+- Die Snake-Kosmetik aus `mem-ngb.json` gehört jetzt zum Profil.
+- Replays und selbstgebaute Bahnen bleiben gerätweit, tragen aber den
+  Profilnamen; der Bahn-Editor schlägt ihn als Autor vor.
+- Neue LamaWiki-Seiten **Spielerprofile** und **Statistik & Diagramme**, die
+  Seite **Erfolge** ist überarbeitet – in allen 14 Sprachen.
+
+#### Behoben
+
+- Die Lama-Bank las ihre Abschnitte noch an den Profilen vorbei – sie geht jetzt
+  ebenfalls über den Profil-Speicher.
+- Nach einem Neustart aus dem Game Over heraus zählte ein zweites Duell nicht
+  mehr; der Riegel wird jetzt zusammen mit dem Sieg/Niederlage-Riegel freigegeben.
+
+---
+
 ### Replays für Billard, Pinball, Snake & Tetris – und Teilen als Datei – 2026-09-18
 
 Die Wiederholungen gibt es jetzt in **sechs Spielen** statt zwei: **Billard**,
@@ -1045,6 +1144,102 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Achievements 2.0, statistics charts & player profiles – 2026-09-21
+
+The biggest update yet for everything that counts: **250 achievements** (up from
+108) with **rarity tiers** and **achievement points**, a **level system** with 14
+ranks on top, a statistics screen with **five tabs and real charts** – and
+**player profiles** so that several people can collect separately on one device.
+All statistics now live in their own file `stats.pgzlamastats`, which can be
+handed around. Everything in 14 languages, with three LamaWiki pages, both
+READMEs, its own audit – and the web version comes along in full.
+
+#### New
+
+**Achievements, rarity & level**
+- **250 achievements** in five categories: 60 general goals, 37 score
+  milestones, 30 **master tiers** (the second, much higher mark per game), a
+  **regular** achievement for each of the 46 games (25 rounds) and 77 special
+  moments – 30 of them new: giant snake (length 50), a shutout in Pong, an air
+  hockey hat-trick, the Invaders boss, a Flappy gold medal, the T-Rex night run,
+  a triple jump in draughts, a double mill in Nine Men's Morris, a bank shot in
+  the tank duel, cracking Mastermind in three guesses, four ghosts on one power
+  pill, Minesweeper without flags, two Tetrises in a row and more.
+- Five **rarity tiers** with points: common 10, rare 25, epic 60, legendary 150,
+  mythic 300. The colour shows in the badge, in the stripe of the row and in the
+  pop-up; legendary and mythic ones get confetti.
+- **Level system**: points make the level (level 2 costs 20 points, each further
+  level 8 more than the one before), plus **14 ranks** from Llama Chick to Star
+  Llama. A level-up gets its own pop-up with a fanfare; level, rank and XP bar
+  appear in the sidebar and in the progress screen.
+- On the first start after the update old high scores and statistics count right
+  away – a one-off card shows **your starting level** and your rarest
+  achievements instead of a parade of pop-ups.
+
+**Statistics with charts**
+- The progress screen now has **five tabs**: Achievements (with filter, points
+  and level header), Statistics (cards, top-10 playtime bars, win/loss ring,
+  table), **Calendar**, **History** and **Profiles**.
+- **Calendar**: days played as a heatmap (the darker, the longer), current and
+  longest daily streak, weekday bars and a time-of-day ring.
+- **History**: everything with a timestamp – achievements (with rarity and
+  points), records, level-ups and duels – plus each game's **score curve** as a
+  line with golden record markers.
+- **Recap**: best day, favourite time, longest session in one go, favourite game
+  and your rarest achievement.
+- All charts have tooltips; the new drawing blocks live in `charts.py` (bars,
+  lines, calendar, rings, clock, tooltip).
+
+**Player profiles**
+- Up to **eight profiles** on one device, each with their own high scores,
+  achievements, level, statistics, llama chips and saved games. Only resolution,
+  sound, key bindings, theme and the language stay shared.
+- New sidebar button **"Profiles"** plus a card at the top showing who is playing
+  (avatar, name, level, XP bar). Create, rename, pick icon and colour, switch,
+  delete – the name goes through the word filter.
+- **Multiplayer**: before the match player 2 picks their profile (or plays as a
+  guest); in game the profile names replace "Player 1/2".
+- **Head-to-head record** and **device leaderboard** in the Profiles tab: who
+  beat whom how often, and who holds the best score in each game.
+
+**Statistics file `stats.pgzlamastats`**
+- All statistics (of all profiles) now live in their own JSON file next to the
+  game – with a header like replays and courses.
+- **Export/import** on the calendar tab (or with **E** and **I**); the web
+  version reads and writes the same file.
+- To stop it growing forever, history (4000 entries), score curves (250 per
+  game) and calendar (about three years) are capped – the totals stay.
+
+**Web version**
+- Comes along in full: achievements with rarity and level, all five tabs with
+  the same charts, profiles (their own storage prefix each) and the exchange of
+  the `.pgzlamastats` file.
+- The definitions are generated by `devtools/export_achievements.py` straight
+  from `achievements.py` – desktop and browser cannot drift apart; a test checks
+  it.
+
+#### Changed
+
+- `mem.json` has a new structure: only `mem` (language) stays device-wide,
+  everything else lives under `players/<profile id>`. Your existing save moves
+  into profile 1 on the first start.
+- The old `stats` section of `mem.json` moves into the new statistics file
+  (including achievement timestamps as history).
+- The Snake cosmetics from `mem-ngb.json` now belong to the profile.
+- Replays and self-made courses stay device-wide but carry the profile name; the
+  course editor suggests it as the author.
+- New LamaWiki pages **Player profiles** and **Statistics & charts**, the
+  **Achievements** page has been rewritten – in all 14 languages.
+
+#### Fixed
+
+- The llama bank still read its sections past the profiles – it now goes through
+  the profile storage as well.
+- After restarting straight from game over a second duel no longer counted; the
+  lock is now released together with the win/loss lock.
+
+---
 
 ### Replays for Billiards, Pinball, Snake & Tetris – and sharing as a file – 2026-09-18
 

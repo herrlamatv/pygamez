@@ -34,6 +34,11 @@
         <button id="btn-full" class="tbtn" data-i18n="web.fullscreen">Vollbild</button>
       </div>
       <button id="btn-replays" class="tbtn" data-i18n="app.replays">Replays</button>
+      <div class="tb-row">
+        <button id="btn-progress" class="tbtn" data-i18n="app.progress">Erfolge &amp; Statistiken</button>
+        <button id="btn-profiles" class="tbtn" data-i18n="app.profiles">Profile</button>
+      </div>
+      <div id="profile-chip" class="profile-chip"></div>
     </div>
 
     <div class="list-head">
@@ -111,11 +116,19 @@
 
 <!-- Engine -->
 <script src="js/core/util.js"></script>
+<script src="js/core/achdefs.js"></script>
+<script src="js/games/ugc.js"></script>
+<script src="js/core/profiles.js"></script>
+<script src="js/core/stats.js"></script>
+<script src="js/core/ach.js"></script>
+<script src="js/core/charts.js"></script>
 <script src="js/core/ui.js"></script>
 <script src="js/core/audio.js"></script>
 <script src="js/core/game.js"></script>
 <script src="js/core/replay.js"></script>
 <script src="js/core/replayview.js"></script>
+<script src="js/core/progressview.js"></script>
+<script src="js/core/profileview.js"></script>
 <script src="js/manifest.js"></script>
 <script src="js/core/app.js"></script>
 <!-- Die Spiele selbst lädt app.js nacheinander laut js/manifest.js -->

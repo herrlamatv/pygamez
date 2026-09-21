@@ -817,7 +817,12 @@ class ReplayScreen(_Screen):
         dur = ui.font(13, bold=True).render(
             replay.format_duration(replay.duration(rep)), True, accent)
         s.blit(dur, dur.get_rect(topright=(rect.right - 14, rect.y + 8)))
-        date = ui.font(11).render(rep.get("date") or "", True, ui.TEXT_FAINT)
+        # Datum, davor (wenn bekannt) das Profil, das die Runde gespielt hat.
+        stamp = rep.get("date") or ""
+        by = rep.get("by") or ""
+        if by:
+            stamp = "%s  ·  %s" % (by, stamp)
+        date = ui.font(11).render(stamp, True, ui.TEXT_FAINT)
         s.blit(date, date.get_rect(topright=(rect.right - 14, rect.y + 28)))
 
         if self._confirm == rep.get("id"):

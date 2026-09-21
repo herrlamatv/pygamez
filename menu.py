@@ -98,14 +98,13 @@ class PreGameScreen(_Screen):
         if modes:
             for mode_key, label_key in modes:
                 self.buttons.append(
-                    (t(label_key),
-                     lambda m=mode_key: self.app.launch_game(self.game_cls, m)))
+                    (t(label_key), lambda m=mode_key: self._start(m)))
         else:
             self.buttons.append((t("pregame.single"),
-                                 lambda: self.app.launch_game(self.game_cls, "single")))
+                                 lambda: self._start("single")))
             if getattr(self.game_cls, "supports_multiplayer", False):
                 self.buttons.append((t("pregame.multi"),
-                                     lambda: self.app.launch_game(self.game_cls, "multi")))
+                                     lambda: self._start("multi")))
         self.buttons.append((t("pregame.options"), self._open_options))
         self.buttons.append((t("pregame.lamawiki"), self._open_lamawiki))
         self.buttons.append((t("pregame.back"), self.app.back_to_menu))
@@ -170,6 +169,25 @@ class PreGameScreen(_Screen):
             if fnt.size(label)[0] <= room:
                 return fnt
         return ui.font(11)
+
+    def _start(self, mode):
+        """Startet den gewählten Modus - im Mehrspieler erst die Profilwahl.
+
+        Gibt es außer dem aktiven Profil noch weitere, darf Spieler 2 vorher
+        sein Profil wählen (oder als Gast spielen); sonst geht es wie bisher
+        direkt los.
+        """
+        if mode == "multi":
+            import profiles
+            if profiles.count() > 1:
+                from profileview import PlayerPickScreen
+                self.app.show_screen(PlayerPickScreen(
+                    self.surface, self.width, self.height, self.app,
+                    on_pick=lambda pid: self.app.launch_game(
+                        self.game_cls, mode, p2=pid),
+                    on_cancel=self._reopen, game_cls=self.game_cls))
+                return
+        self.app.launch_game(self.game_cls, mode)
 
     def _open_options(self):
         opts = OptionsScreen(self.surface, self.width, self.height, self.app,

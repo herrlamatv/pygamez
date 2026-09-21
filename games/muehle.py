@@ -95,6 +95,17 @@ def _forms_mill(board, point, val):
     return False
 
 
+def _double_mill(board, val):
+    """Zwickmühle: zwei geschlossene eigene Mühlen teilen sich einen Punkt."""
+    for p in range(24):
+        if board[p] != val:
+            continue
+        if sum(1 for m in _MILLS_AT[p]
+               if all(board[q] == val for q in m)) >= 2:
+            return True
+    return False
+
+
 def _removable(board, opp):
     """Entfernbare Gegnersteine: bevorzugt solche außerhalb von Mühlen."""
     in_mill = set()
@@ -258,6 +269,7 @@ class MuehleGame(Game):
                                       size + 2 * pad, size + 2 * pad)
 
     def _new_round(self):
+        self.new_round_result()     # Revanche: Duell-Bilanz wieder freigeben
         self.board = [0] * 24
         self.placed = [0, 0]
         self.player = self.starter
@@ -419,6 +431,8 @@ class MuehleGame(Game):
             self.mill_spots = [m for m in _MILLS_AT[p]
                                if all(self.board[q] == val for q in m)]
             self.mill_t = 0.0       # Anzeige gehört jetzt dem Menschen
+            if _double_mill(self.board, val):
+                self.ach_event("muehle_double")   # Erfolg: Zwickmühle gebaut
             self.removable = _removable(self.board, opp)
             if self.removable:
                 self.remove_mode = True
@@ -462,6 +476,7 @@ class MuehleGame(Game):
                 self.play_sound("gameover")
                 self.report_result(False)
         else:
+            self.report_duel(self.winner)   # Duell-Bilanz der Profile
             self.play_sound("win")
         self.game_over = True
 

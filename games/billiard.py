@@ -608,6 +608,9 @@ class BilliardGame(Game):
                 if not b.potted and b.num != 0 and lo <= b.num <= hi]
 
     def _resolve_shot(self):
+        # Erfolg: beim Anstoß (erster Stoß der Partie) eine Kugel versenkt
+        if not self.break_done and self.potted_shot:
+            self.ach_event("billiard_break")
         self.break_done = True
         # Erst die Aufnahme des Stoßes schließen (der Stand VOR dem Neu-
         # einsetzen der Weißen gehört noch zur Sequenz), dann die Regeln.
@@ -791,6 +794,7 @@ class BilliardGame(Game):
                     self.play_sound("gameover")
                     self.report_result(False)
             else:
+                self.report_duel(self.winner)
                 self.play_sound("win")
         self.game_over = True
 
@@ -862,7 +866,8 @@ class BilliardGame(Game):
         elif self.winner is None:
             sub = t("bil.var." + self.variant)
         elif self.multiplayer:
-            sub = t("common.player_wins", n=self.winner + 1)
+            sub = t("common.player_wins_name",
+                    name=self.pname(self.winner)[:10])
         else:
             sub = t("bil.win_you") if self.winner == 0 else t("bil.win_ai")
         self.replay = self.rec.result(
@@ -1239,8 +1244,9 @@ class BilliardGame(Game):
         elif not self.multiplayer and self.current == 1:
             mid = t("bil.ai_turn")
         else:
-            who = (t("common.player1") if self.current == 0 else t("common.player2")) \
-                if self.multiplayer else t("bil.you")
+            # Profilname des Spielers am Zug (gekürzt - die HUD-Leiste ist schmal)
+            who = self.pname(self.current)[:10] if self.multiplayer \
+                else t("bil.you")
             g = self.group[self.current]
             if g:
                 who += " (" + t("bil.grp." + g) + ")"
@@ -1263,8 +1269,9 @@ class BilliardGame(Game):
             head = self._huge.render(t("bil.potted", n=len(self.potted_all)),
                                      True, self.accent)
         elif self.multiplayer:
-            head = self._huge.render(t("common.player_wins", n=self.winner + 1),
-                                     True, self.accent)
+            head = self._huge.render(
+                t("common.player_wins_name", name=self.pname(self.winner)[:10]),
+                True, self.accent)
         else:
             won = self.winner == 0
             head = self._huge.render(t("bil.win_you") if won else t("bil.win_ai"),

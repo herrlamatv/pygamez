@@ -808,16 +808,30 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
   14 langues. Accessible via le bouton **« Wiki / Aide »** de la barre
   latérale et depuis l'écran de préparation de chaque jeu (ouvre directement sa
   page).
-- **Succès & statistiques** : **108 succès** en trois catégories (24 objectifs
-  globaux, 37 paliers de points et 47 moments spéciaux comme un échec et mat
-  contre l'IA, la tuile 4096, un T-Spin Double, 25 problèmes d'échecs résolus,
-  un Killer Sudoku ou le jackpot lama ; dans 2048 et aux échecs, les parties
-  avec annulation ou indices ne comptent pas) avec **notification dorée et fanfare**
-  au déblocage - même en pleine partie ; les anciens records sont crédités
-  automatiquement. Plus un onglet **Statistiques** : temps de jeu total,
-  parties, victoires, records, jeu préféré et tableau par jeu trié par temps
-  de jeu. Accessible via le bouton **« Succès & statistiques »** de la barre
-  latérale.
+- **Succès, rareté et niveau** : **250 succès** en cinq catégories - 60
+  objectifs globaux (parties, temps de jeu, records, victoires, jours joués,
+  séries, duels …), 37 **paliers de points**, 30 **niveaux maîtres** (le second
+  palier, bien plus haut), un succès **Habitué** par jeu (25 parties) et 77
+  **moments particuliers** (échec et mat, un Yams, la tuile 4096, un trou en un,
+  un coup du chapeau au air hockey …). Chaque succès a une **rareté** (commun 10
+  jusqu'à mythique 300 points) ; les points donnent ton **niveau** avec 14
+  **rangs**, de Petit lama à Lama stellaire. Le déblocage affiche une
+  notification de la couleur de la rareté, un passage de niveau la sienne avec
+  fanfare.
+- **Statistiques et graphiques** : cinq onglets - Succès (filtre, points, barre
+  d'XP), Statistiques (cartes, top 10 en barres, anneau victoires/défaites,
+  tableau), **Calendrier** (carte des jours joués, séries, jours de la semaine,
+  heures), **Historique** (tout avec horodatage, plus la courbe de points) et
+  **Profils** (classement de l'appareil, face-à-face). En prime le **bilan
+  PyGameZ** : meilleur jour, heure préférée, plus longue session. Tout est dans
+  le fichier **`stats.pgzlamastats`**, exportable, partageable et relisible -
+  entre la version bureau et la version web aussi.
+- **Profils de joueur** : plusieurs joueurs sur un appareil, chacun avec ses
+  records, succès, niveau, statistiques, jetons et sauvegardes (huit au plus).
+  Le bouton **« Profils »** crée, renomme et change ; en multijoueur tu choisis
+  le profil du joueur 2 avant la partie (ou tu joues en invité), les noms
+  remplacent « Joueur 1/2 » en jeu, et chaque partie alimente le
+  **face-à-face**.
 - **Replays** : six jeux enregistrent leurs parties - minigolf, bowling,
   billard, flipper, Snake et Tetris. À la fin, **P** montre la rediffusion et
   **S** la range dans l'archive - accessible par le bouton **Replays** de la
@@ -1840,15 +1854,28 @@ extra) y pulida con aspecto de lanzador moderno:
   artículos desplazables y chips de teclas, en los 14 idiomas. Accesible por
   el botón **«Wiki / Ayuda»** de la barra lateral y desde la pantalla previa de
   cada juego (abre directamente su página).
-- **Logros y estadísticas**: **108 logros** en tres categorías (24 metas
-  globales, 37 hitos de puntuación y 47 momentos especiales como un jaque mate
-  a la IA, la ficha de 4096, un T-Spin Double, 25 problemas de ajedrez
-  resueltos, un Killer Sudoku o el jackpot de la llama; en 2048 y Ajedrez las
-  partidas con deshacer o pistas no cuentan) con **aviso dorado y fanfarria** al desbloquear,
-  incluso en plena partida; los récords antiguos se acreditan automáticamente.
-  Además, una pestaña de **estadísticas**: tiempo total, partidas, victorias,
-  récords, juego favorito y tabla por juego ordenada por tiempo. Accesible por
-  el botón **«Logros y estadísticas»** de la barra lateral.
+- **Logros, rareza y nivel**: **250 logros** en cinco categorías: 60 metas
+  globales (partidas, tiempo, récords, victorias, días jugados, rachas,
+  duelos …), 37 **hitos de puntos**, 30 **niveles maestros** (la segunda marca,
+  mucho más alta), un logro **Habitual** por juego (25 partidas) y 77 **momentos
+  especiales** (jaque mate, un Yahtzee, la ficha 4096, un hoyo en uno, un
+  hat-trick en air hockey …). Cada logro tiene una **rareza** (común 10 hasta
+  mítico 300 puntos); los puntos dan tu **nivel** con 14 **rangos**, de Cría de
+  llama a Llama estelar. Al desbloquear aparece un aviso del color de la rareza;
+  al subir de nivel, uno propio con fanfarria.
+- **Estadísticas con gráficos**: cinco pestañas: Logros (filtro, puntos, barra
+  de XP), Estadísticas (tarjetas, top 10 en barras, anillo de victorias, tabla),
+  **Calendario** (mapa de días jugados, rachas, días de la semana, franjas),
+  **Historial** (todo con fecha y hora, más la curva de puntos) y **Perfiles**
+  (clasificación del dispositivo, cara a cara). Además el **resumen PyGameZ**:
+  mejor día, hora favorita y sesión más larga. Todo vive en el archivo
+  **`stats.pgzlamastats`** y se puede exportar, compartir y volver a leer,
+  también entre la versión de escritorio y la web.
+- **Perfiles de jugador**: varios jugadores en un dispositivo, cada uno con sus
+  récords, logros, nivel, estadísticas, fichas y partidas (hasta ocho). El botón
+  **«Perfiles»** crea, renombra y cambia; en multijugador eliges el perfil del
+  jugador 2 antes de la partida (o juegas como invitado), los nombres sustituyen
+  a «Jugador 1/2» y cada partida alimenta el **cara a cara**.
 - **Repeticiones**: seis juegos graban sus rondas - minigolf, bolos, billar,
   pinball, Snake y Tetris. Al final, **P** muestra la repetición y **S** la
   guarda en el archivo, accesible con el botón **Repeticiones** de la barra
@@ -2858,16 +2885,28 @@ e polida com aspeto de launcher moderno:
   categorias, artigos deslocáveis e chips de teclas, nos 14 idiomas.
   Acessível pelo botão **«Wiki / Ajuda»** da barra lateral e a partir do ecrã de
   preparação de cada jogo (abre logo a sua página).
-- **Conquistas e estatísticas**: **108 conquistas** em três categorias (24 metas
-  globais, 37 marcos de pontuação e 47 momentos especiais como um xeque-mate à
-  IA, a peça 4096, um T-Spin Double, 25 problemas de xadrez resolvidos, um
-  Killer Sudoku ou o jackpot do lama; no 2048 e no Xadrez, partidas com desfazer
-  ou dicas não contam) com **aviso dourado e fanfarra** ao
-  desbloquear - mesmo a meio do jogo; os recordes antigos são creditados
-  automaticamente. Além disso, um separador de **estatísticas**: tempo total,
-  partidas, vitórias, recordes, jogo favorito e tabela por jogo ordenada por
-  tempo. Acessível pelo botão **«Conquistas e estatísticas»** da barra
-  lateral.
+- **Conquistas, raridade e nível**: **250 conquistas** em cinco categorias - 60
+  metas globais (partidas, tempo, recordes, vitórias, dias jogados, sequências,
+  duelos …), 37 **marcos de pontos**, 30 **níveis mestre** (a segunda marca, bem
+  mais alta), uma conquista **Frequentador** por jogo (25 partidas) e 77
+  **momentos especiais** (xeque-mate, um Yahtzee, a peça 4096, um hole-in-one,
+  um hat-trick no air hockey …). Cada conquista tem uma **raridade** (comum 10
+  até mítico 300 pontos); os pontos dão o teu **nível** com 14 **patentes**, de
+  Filhote de lhama a Lhama estelar. Ao desbloquear surge um aviso na cor da
+  raridade; ao subir de nível, um próprio com fanfarra.
+- **Estatísticas com gráficos**: cinco separadores - Conquistas (filtro, pontos,
+  barra de XP), Estatísticas (cartões, top 10 em barras, anel de vitórias,
+  tabela), **Calendário** (mapa dos dias jogados, sequências, dias da semana,
+  períodos), **Histórico** (tudo com data e hora, mais a curva de pontos) e
+  **Perfis** (classificação do dispositivo, confronto direto). Ainda o **resumo
+  PyGameZ**: melhor dia, hora favorita e sessão mais longa. Tudo fica no ficheiro
+  **`stats.pgzlamastats`** e pode ser exportado, partilhado e lido de novo -
+  também entre a versão de computador e a web.
+- **Perfis de jogador**: vários jogadores num dispositivo, cada um com os seus
+  recordes, conquistas, nível, estatísticas, fichas e jogos guardados (até oito).
+  O botão **«Perfis»** cria, renomeia e muda; no multijogador escolhes o perfil
+  do jogador 2 antes da partida (ou jogas como convidado), os nomes substituem
+  «Jogador 1/2» e cada partida entra no **confronto direto**.
 - **Replays**: seis jogos gravam as suas rondas - minigolfe, bowling, bilhar,
   pinball, Snake e Tetris. No fim, **P** mostra a repetição e **S** guarda-a no
   arquivo - acessível pelo botão **Replays** na barra lateral (um separador por
@@ -3951,15 +3990,28 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
   kategoriami, przewijanymi artykułami i chipami klawiszy, we wszystkich 14
   językach. Dostępna przez przycisk **„Wiki / Pomoc"** na pasku bocznym i z ekranu
   przygotowania każdej gry (otwiera bezpośrednio jej stronę).
-- **Osiągnięcia i statystyki**: **108 osiągnięć** w trzech kategoriach (24 cele
-  ogólne, 37 progów punktowych i 47 wyjątkowych momentów, jak mat SI, kafelek
-  4096, T-Spin Double, 25 rozwiązanych zadań szachowych, Killer Sudoku czy
-  lamowy jackpot; w 2048 i szachach partie z cofaniem lub podpowiedziami się
-  nie liczą) ze **złotym powiadomieniem i fanfarą** przy odblokowaniu -
-  nawet w trakcie gry; stare rekordy są zaliczane automatycznie. Do tego
-  zakładka **statystyk**: łączny czas gry, rozgrywki, zwycięstwa, rekordy,
-  ulubiona gra i tabela gier posortowana według czasu. Dostępne przez przycisk
-  **„Osiągnięcia i statystyki"** na pasku bocznym.
+- **Osiągnięcia, rzadkość i poziom**: **250 osiągnięć** w pięciu kategoriach -
+  60 celów całej kolekcji (rozgrywki, czas gry, rekordy, zwycięstwa, dni z grą,
+  serie, pojedynki …), 37 **progów punktowych**, 30 **poziomów mistrzowskich**
+  (druga, znacznie wyższa poprzeczka), osiągnięcie **Bywalec** dla każdej gry
+  (25 rozgrywek) i 77 **wyjątkowych chwil** (mat, generał, kafelek 4096,
+  hole-in-one, hat-trick w air hockey …). Każde osiągnięcie ma **rzadkość**
+  (zwykły 10 aż po mityczny 300 punktów); punkty dają **poziom** z 14 **rangami**
+  od Małej lamy po Gwiezdną lamę. Odblokowanie pokazuje powiadomienie w kolorze
+  rzadkości, awans - własne z fanfarą.
+- **Statystyki z wykresami**: pięć kart - Osiągnięcia (filtr, punkty, pasek XP),
+  Statystyki (karty, top 10 na słupkach, pierścień zwycięstw, tabela),
+  **Kalendarz** (mapa dni z grą, serie, dni tygodnia, pory dnia), **Historia**
+  (wszystko ze znacznikiem czasu plus krzywa punktów) i **Profile** (ranking
+  urządzenia, bilans pojedynków). Do tego **podsumowanie PyGameZ**: najlepszy
+  dzień, ulubiona pora i najdłuższa sesja. Wszystko leży w pliku
+  **`stats.pgzlamastats`** - można je wyeksportować, przekazać i wczytać, także
+  między wersją na komputer a webową.
+- **Profile graczy**: kilku graczy na jednym urządzeniu, każdy z własnymi
+  rekordami, osiągnięciami, poziomem, statystykami, żetonami i zapisami (do
+  ośmiu). Przycisk **„Profile"** tworzy, zmienia nazwę i przełącza; w trybie
+  wieloosobowym wybierasz profil gracza 2 przed partią (albo grasz jako gość),
+  imiona zastępują „Gracz 1/2", a każda partia trafia do **bilansu pojedynków**.
 - **Powtórki**: sześć gier nagrywa swoje rundy - minigolf, bowling, bilard,
   pinball, Snake i Tetris. Na końcu **P** pokazuje powtórkę, a **S** zapisuje ją
   w archiwum - dostępnym pod przyciskiem **Powtórki** na pasku bocznym
@@ -5049,14 +5101,28 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
   kaydırılabilir makaleler ve tuş çipleriyle, 14 dilde. Kenar çubuğundaki
   **"Wiki / Yardım"** düğmesiyle ve her oyunun oyun öncesi ekranından erişilebilir
   (doğrudan o oyunun sayfasını açar).
-- **Başarımlar ve istatistikler**: üç kategoride **108 başarım** (24 genel
-  hedef, 37 puan hedefi ve yapay zekâyı mat etmek, 4096 taşı, T-Spin Double, 25
-  çözülmüş satranç bulmacası, Killer Sudoku ya da lama jackpotu gibi 47 özel an;
-  2048 ve satrançta geri alma veya ipucu kullanılan oyunlar sayılmaz); açıldığında **altın bildirim ve fanfar** - oyunun
-  ortasında bile; eski rekorlar otomatik sayılır. Ayrıca bir **istatistik**
-  sekmesi: toplam süre, oyunlar, galibiyetler, rekorlar, favori oyun ve süreye
-  göre sıralı oyun tablosu. Kenar çubuğundaki **"Başarımlar ve
-  istatistikler"** düğmesinden ulaşılır.
+- **Başarımlar, nadirlik ve seviye**: beş kategoride **250 başarım** - 60 genel
+  hedef (oyunlar, süre, rekorlar, galibiyetler, oyun günleri, seriler,
+  düellolar …), 37 **puan kilometre taşı**, 30 **usta seviyesi** (çok daha
+  yüksek ikinci eşik), her oyun için bir **Müdavim** başarımı (25 parti) ve 77
+  **özel an** (şah mat, Yahtzee, 4096 karosu, hole-in-one, air hockey'de
+  hat-trick …). Her başarımın bir **nadirliği** vardır (yaygın 10'dan mitik
+  300 puana); puanlar, Lama Yavrusu'ndan Yıldız Lama'ya 14 **rütbeli**
+  **seviyeni** oluşturur. Açılışta nadirlik renginde bir bildirim, seviye
+  atlayınca fanfarlı kendi bildirimi görünür.
+- **Grafikli istatistikler**: beş sekme - Başarımlar (filtre, puan, XP çubuğu),
+  İstatistikler (kartlar, ilk 10 çubuk, galibiyet halkası, tablo), **Takvim**
+  (oyun günleri haritası, seriler, haftanın günleri, günün saati), **Geçmiş**
+  (zaman damgalı her şey ve puan eğrisi) ve **Profiller** (cihaz sıralaması,
+  karşılaşma bilançosu). Üstüne **PyGameZ özeti**: en iyi gün, favori saat ve en
+  uzun oturum. Hepsi **`stats.pgzlamastats`** dosyasındadır; dışa aktarılabilir,
+  paylaşılabilir ve geri okunabilir - masaüstü ile web sürümü arasında da.
+- **Oyuncu profilleri**: tek cihazda birden çok oyuncu, her biri kendi
+  rekorları, başarımları, seviyesi, istatistikleri, çipleri ve kayıtlarıyla (en
+  fazla sekiz). **"Profiller"** düğmesi oluşturur, adlandırır ve geçiş yapar; çok
+  oyunculuda maçtan önce 2. oyuncunun profilini seçersin (ya da misafir
+  oynarsın), oyunda adlar "Oyuncu 1/2" yerine geçer ve her maç **karşılaşma
+  bilançosuna** girer.
 - **Tekrarlar**: altı oyun turlarını kaydeder - minigolf, bowling, bilardo,
   pinball, Snake ve Tetris. Tur sonunda **P** tekrarı gösterir, **S** onu arşive
   koyar - kenar çubuğundaki **Tekrarlar** düğmesinden ulaşılır (oyun başına bir
@@ -6109,15 +6175,28 @@ og stylet som en moderne spil-launcher:
   rulbare artikler og tastekap-chips, på alle 14 sprog. Nås via sidebjælkeknappen
   **»Wiki / Hjælp«** og fra hvert spils forspils-skærm (åbner det pågældende spils
   side direkte).
-- **Præstationer & statistik**: **108 præstationer** i tre kategorier (24 mål på
-  tværs af samlingen, 37 point-milepæle og 47 særlige øjeblikke som skakmat mod
-  AI'en, 4096-brikken, en T-Spin Double, 25 løste skakopgaver, en Killer Sudoku
-  eller lama-jackpotten; i 2048 og skak tæller partier med fortryd eller hint
-  ikke) med **gylden notifikation og fanfare**
-  ved oplåsning - selv midt i spillet; gamle rekorder godskrives automatisk.
-  Dertil en **statistik**-fane: samlet spilletid, partier, sejre, rekorder,
-  yndlingsspil og en tabel pr. spil sorteret efter spilletid. Nås via knappen
-  **"Præstationer & statistik"** i sidepanelet.
+- **Præstationer, sjældenhed og niveau**: **250 præstationer** i fem kategorier
+  - 60 mål på tværs af samlingen (runder, spilletid, rekorder, sejre,
+  spilledage, stimer, dueller …), 37 **pointmilepæle**, 30 **mesterniveauer**
+  (det andet, meget højere mærke), en **Fast gæst**-præstation pr. spil (25
+  runder) og 77 **særlige øjeblikke** (skakmat, en Yahtzee, 4096-brikken,
+  hole-in-one, hattrick i air hockey …). Hver præstation har en **sjældenhed**
+  (almindelig 10 op til mytisk 300 point); pointene giver dit **niveau** med 14
+  **rang** fra Lamaunge til Stjernelama. Ved oplåsning vises en notifikation i
+  sjældenhedens farve, ved nyt niveau sin egen med fanfare.
+- **Statistik med diagrammer**: fem faneblade - Præstationer (filter, point,
+  XP-bjælke), Statistik (kort, top 10 som bjælker, sejrsring, tabel),
+  **Kalender** (kort over spilledage, stimer, ugedage, tidspunkter),
+  **Historik** (alt med tidsstempel plus pointkurven) og **Profiler** (enhedens
+  rangliste, indbyrdes opgør). Oveni **PyGameZ-tilbageblikket**: bedste dag,
+  yndlingstid og længste session. Det hele ligger i filen
+  **`stats.pgzlamastats`** og kan eksporteres, deles og indlæses igen - også
+  mellem computer- og webudgaven.
+- **Spillerprofiler**: flere spillere på én enhed, hver med egne rekorder,
+  præstationer, niveau, statistik, chips og gemte spil (op til otte). Knappen
+  **"Profiler"** opretter, omdøber og skifter; i flerspiller vælger du spiller
+  2's profil før kampen (eller spiller som gæst), navnene erstatter "Spiller
+  1/2" i spillet, og hver kamp tæller i det **indbyrdes opgør**.
 - **Replays**: seks spil optager deres runder - minigolf, bowling, billard,
   flipper, Snake og Tetris. Til sidst viser **P** gengivelsen, og **S** lægger
   den i arkivet - tilgængeligt via sidebjælkens knap **Replays** (en fane pr.
@@ -7169,15 +7248,28 @@ pakker) og stylet som en moderne spill-launcher:
   rullbare artikler og tastekapsler, på alle 14 språk. Nåbar via sidefelt-knappen
   **«Wiki / Hjelp»** og fra hvert spills forspillskjerm (åpner spillets side
   direkte).
-- **Prestasjoner & statistikk**: **108 prestasjoner** i tre kategorier (24 mål
-  på tvers av samlingen, 37 poengmilepæler og 47 spesielle øyeblikk som sjakkmatt
-  mot KI-en, 4096-brikken, en T-Spin Double, 25 løste sjakkoppgaver, en Killer
-  Sudoku eller lama-jackpoten; i 2048 og sjakk teller ikke partier med angre
-  eller hint) med **gyllent varsel og fanfare**
-  ved opplåsing - selv midt i spillet; gamle rekorder godskrives automatisk.
-  I tillegg en **statistikk**-fane: total spilletid, partier, seire, rekorder,
-  favorittspill og en tabell per spill sortert etter spilletid. Nås via
-  knappen **«Prestasjoner & statistikk»** i sidefeltet.
+- **Prestasjoner, sjeldenhet og nivå**: **250 prestasjoner** i fem kategorier -
+  60 mål på tvers av samlingen (runder, spilletid, rekorder, seire, spilledager,
+  rekker, dueller …), 37 **poengmilepæler**, 30 **mesternivåer** (det andre,
+  mye høyere merket), en **Fast gjest**-prestasjon per spill (25 runder) og 77
+  **spesielle øyeblikk** (sjakkmatt, en Yatzy, 4096-brikken, hole-in-one,
+  hattrick i air hockey …). Hver prestasjon har en **sjeldenhet** (vanlig 10 opp
+  til mytisk 300 poeng); poengene gir **nivået** ditt med 14 **rang** fra
+  Lamaunge til Stjernelama. Opplåsning vises som varsel i sjeldenhetens farge,
+  nytt nivå med sitt eget og en fanfare.
+- **Statistikk med diagrammer**: fem faner - Prestasjoner (filter, poeng,
+  XP-linje), Statistikk (kort, topp 10 som søyler, seiersring, tabell),
+  **Kalender** (kart over spilledager, rekker, ukedager, tid på dagen),
+  **Historikk** (alt med tidsstempel pluss poengkurven) og **Profiler** (enhetens
+  rangering, innbyrdes oppgjør). I tillegg **PyGameZ-tilbakeblikket**: beste dag,
+  favorittid og lengste økt. Alt ligger i filen **`stats.pgzlamastats`** og kan
+  eksporteres, deles og leses inn igjen - også mellom PC- og nettversjonen.
+- **Spillerprofiler**: flere spillere på én enhet, hver med egne rekorder,
+  prestasjoner, nivå, statistikk, sjetonger og lagrede spill (opptil åtte).
+  Knappen **«Profiler»** oppretter, gir nytt navn og bytter; i flerspiller velger
+  du profilen til spiller 2 før kampen (eller spiller som gjest), navnene
+  erstatter «Spiller 1/2» i spillet, og hver kamp teller i det **innbyrdes
+  oppgjøret**.
 - **Replays**: seks spill tar opp rundene sine - minigolf, bowling, biljard,
   flipper, Snake og Tetris. Til slutt viser **P** opptaket, og **S** legger det
   i arkivet - tilgjengelig via sidefeltknappen **Replays** (en fane per spill,
@@ -8169,15 +8261,27 @@ modern spel-launcher:
   allmänna sidor - med en **sökruta**, kategorier, scrollbara artiklar och tangentchips, på alla 14
   språk. Nås via sidofältsknappen **”Wiki / Hjälp”** och från varje spels förspelsskärm (öppnar det
   spelets sida direkt).
-- **Prestationer & statistik**: **108 prestationer** i tre kategorier (24 mål
-  för hela samlingen, 37 poängmilstolpar och 47 speciella ögonblick som
-  schackmatt mot AI:n, 4096-brickan, en T-Spin Double, 25 lösta schackproblem,
-  ett Killer Sudoku eller lama-jackpotten; i 2048 och schack räknas inte partier
-  med ångra eller tips) med **gyllene avisering och fanfar**
-  vid upplåsning - även mitt i spelet; gamla rekord tillgodoräknas
-  automatiskt. Dessutom en **statistik**-flik: total speltid, partier, segrar,
-  rekord, favoritspel och en tabell per spel sorterad efter speltid. Nås via
-  knappen **”Prestationer & statistik”** i sidofältet.
+- **Prestationer, sällsynthet och nivå**: **250 prestationer** i fem kategorier
+  - 60 mål för hela samlingen (omgångar, speltid, rekord, segrar, speldagar,
+  sviter, dueller …), 37 **poängmilstolpar**, 30 **mästarnivåer** (den andra,
+  mycket högre gränsen), en **Stammis**-prestation per spel (25 omgångar) och 77
+  **särskilda ögonblick** (schackmatt, en Yatzy, 4096-brickan, hole-in-one,
+  hattrick i air hockey …). Varje prestation har en **sällsynthet** (vanlig 10
+  upp till mytisk 300 poäng); poängen ger din **nivå** med 14 **rang** från
+  Lamaunge till Stjärnlama. Upplåsning visar en notis i sällsynthetens färg, en
+  ny nivå en egen med fanfar.
+- **Statistik med diagram**: fem flikar - Prestationer (filter, poäng,
+  XP-mätare), Statistik (kort, topp 10 som staplar, segerring, tabell),
+  **Kalender** (karta över speldagar, sviter, veckodagar, tid på dygnet),
+  **Historik** (allt med tidsstämpel plus poängkurvan) och **Profiler** (enhetens
+  topplista, inbördes möten). Dessutom **PyGameZ-återblicken**: bästa dagen,
+  favorittid och längsta passet. Allt finns i filen **`stats.pgzlamastats`** och
+  går att exportera, dela och läsa in igen - även mellan dator- och webbversionen.
+- **Spelarprofiler**: flera spelare på en enhet, var och en med egna rekord,
+  prestationer, nivå, statistik, marker och sparfiler (upp till åtta). Knappen
+  **”Profiler”** skapar, byter namn och byter profil; i flerspelarläge väljer du
+  spelare 2:s profil före matchen (eller spelar som gäst), namnen ersätter
+  ”Spelare 1/2” i spelet, och varje match räknas i **inbördes möten**.
 - **Replays**: sex spel spelar in sina rundor - minigolf, bowling, biljard,
   flipper, Snake och Tetris. I slutet visar **P** repriser och **S** lägger dem
   i arkivet - nås via sidofältsknappen **Replays** (en flik per spel, paus, hopp
@@ -9248,15 +9352,30 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
   kategorioilla, vieritettävillä artikkeleilla ja näppäinsiruilla, kaikilla 14
   kielellä. Saavutettavissa sivupalkin **"Wiki / Ohje"** -painikkeella ja jokaisen
   pelin esinäytöstä (avaa suoraan kyseisen pelin sivun).
-- **Saavutukset ja tilastot**: **108 saavutusta** kolmessa kategoriassa (24 koko
-  kokoelman tavoitetta, 37 pistevirstanpylvästä ja 47 erityistä hetkeä kuten
-  shakkimatti tekoälylle, 4096-laatta, T-Spin Double, 25 ratkaistua
-  shakkitehtävää, Killer Sudoku tai laamajättipotti; 2048:ssa ja shakissa
-  kumoamista tai vihjeitä käyttäneitä pelejä ei lasketa); avautuessa **kultainen
-  ilmoitus ja fanfaari** - myös kesken pelin; vanhat ennätykset hyvitetään
-  automaattisesti. Lisäksi **tilastot**-välilehti: kokonaispeliaika,
-  pelikerrat, voitot, ennätykset, lempipeli ja peliajan mukaan järjestetty
-  pelitaulukko. Avautuu sivupalkin painikkeesta **"Saavutukset ja tilastot"**.
+- **Saavutukset, harvinaisuus ja taso**: **250 saavutusta** viidessä luokassa -
+  60 koko kokoelman tavoitetta (kierrokset, peliaika, ennätykset, voitot,
+  pelipäivät, putket, kaksintaistelut …), 37 **pistevirstanpylvästä**, 30
+  **mestaritasoa** (toinen, selvästi korkeampi raja), **Vakiokävijä**-saavutus
+  jokaiselle pelille (25 kierrosta) ja 77 **erityistä hetkeä** (šakkimatti,
+  Yatzy, 4096-laatta, hole-in-one, hattutemppu ilmakiekossa …). Jokaisella
+  saavutuksella on **harvinaisuus** (tavallinen 10 aina myyttiseen 300
+  pisteeseen); pisteet muodostavat **tasosi** ja 14 **arvoa** Laamanpoikasesta
+  Tähtilaamaan. Avaus näyttää ilmoituksen harvinaisuuden värissä, tasonnousu
+  oman fanfaarin kera.
+- **Tilastot ja kaaviot**: viisi välilehteä - Saavutukset (suodatin, pisteet,
+  XP-palkki), Tilastot (kortit, top 10 pylväinä, voittorengas, taulukko),
+  **Kalenteri** (pelipäivien kartta, putket, viikonpäivät, vuorokaudenaika),
+  **Historia** (kaikki aikaleimoilla sekä pistekäyrä) ja **Profiilit** (laitteen
+  tulostaulu, keskinäiset ottelut). Päälle **PyGameZ-kooste**: paras päivä,
+  suosikkiaika ja pisin pelisessio. Kaikki on tiedostossa
+  **`stats.pgzlamastats`**, jonka voi viedä, jakaa ja lukea takaisin - myös
+  työpöytä- ja verkkoversion välillä.
+- **Pelaajaprofiilit**: useita pelaajia yhdellä laitteella, kullakin omat
+  ennätykset, saavutukset, taso, tilastot, pelimerkit ja tallennukset (enintään
+  kahdeksan). **”Profiilit”**-painike luo, nimeää ja vaihtaa; moninpelissä
+  valitset pelaajan 2 profiilin ennen ottelua (tai pelaat vieraana), nimet
+  korvaavat pelissä ”Pelaaja 1/2”, ja jokainen ottelu kirjautuu **keskinäisiin
+  otteluihin**.
 - **Uusinnat**: kuusi peliä tallentaa kierroksensa - minigolf, keilailu,
   biljardi, flipperi, Snake ja Tetris. Lopuksi **P** näyttää uusinnan ja **S**
   vie sen arkistoon, joka avautuu sivupalkin painikkeesta **Uusinnat**
@@ -10318,15 +10437,27 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
   kategoriemi, rolovatelnými články a čipy kláves, ve všech 14 jazycích.
   Dostupná přes tlačítko **„Wiki / Nápověda"** v postranním panelu a z přípravné
   obrazovky každé hry (otevře přímo její stránku).
-- **Úspěchy a statistiky**: **108 úspěchů** ve třech kategoriích (24 cílů
-  napříč sbírkou, 37 bodových milníků a 47 výjimečných okamžiků jako šachmat AI,
-  dlaždice 4096, T-Spin Double, 25 vyřešených šachových úloh, Killer Sudoku nebo
-  lamí jackpot; ve 2048 a v šachu se partie s vrácením tahu či nápovědou
-  nepočítají) se **zlatým oznámením a fanfárou** při odemčení - i
-  uprostřed hry; staré rekordy se započítají automaticky. K tomu záložka
-  **statistik**: celkový herní čas, partie, výhry, rekordy, oblíbená hra a
-  tabulka her seřazená podle času. Dostupné tlačítkem **„Úspěchy a
-  statistiky"** v postranním panelu.
+- **Úspěchy, vzácnost a úroveň**: **250 úspěchů** v pěti kategoriích - 60 cílů
+  napříč sbírkou (partie, herní čas, rekordy, výhry, herní dny, série,
+  souboje …), 37 **bodových met**, 30 **mistrovských stupňů** (druhá, výrazně
+  vyšší meta), úspěch **Stálý host** pro každou hru (25 partií) a 77
+  **zvláštních okamžiků** (šachmat, Yahtzee, dlaždice 4096, hole-in-one,
+  hattrick v air hockeyi …). Každý úspěch má **vzácnost** (běžný 10 až mýtický
+  300 bodů); body dávají tvoji **úroveň** se 14 **hodnostmi** od Lama mláděte po
+  Hvězdnou lamu. Získání ukáže upozornění v barvě vzácnosti, postup o úroveň
+  vlastní s fanfárou.
+- **Statistiky s grafy**: pět záložek - Úspěchy (filtr, body, pruh XP),
+  Statistiky (karty, top 10 jako pruhy, kolečko výher, tabulka), **Kalendář**
+  (mapa herních dnů, série, dny v týdnu, denní doba), **Historie** (vše s
+  časovým razítkem a křivka bodů) a **Profily** (žebříček zařízení, vzájemné
+  souboje). K tomu **PyGameZ přehled**: nejlepší den, oblíbený čas a nejdelší
+  sezení. Vše je v souboru **`stats.pgzlamastats`** a dá se exportovat, předat i
+  znovu načíst - také mezi počítačovou a webovou verzí.
+- **Profily hráčů**: více hráčů na jednom zařízení, každý s vlastními rekordy,
+  úspěchy, úrovní, statistikami, žetony a uloženými hrami (až osm). Tlačítko
+  **„Profily"** zakládá, přejmenovává a přepíná; ve hře více hráčů vybereš před
+  partií profil druhého hráče (nebo hraješ jako host), jména nahradí „Hráč 1/2"
+  a každá partie se zapíše do **vzájemných soubojů**.
 - **Záznamy**: šest her nahrává svá kola - minigolf, bowling, kulečník,
   pinball, Snake a Tetris. Na konci **P** ukáže záznam a **S** ho uloží do
   archivu - dostupného tlačítkem **Záznamy** v postranním panelu (karta na hru,
@@ -11388,14 +11519,27 @@ oblikovan kot sodoben zaganjalnik iger:
   kategorijami, drsečimi članki in čipi tipk, v vseh 14 jezikih. Dostopen prek
   gumba **»Wiki / Pomoč«** v stranski vrstici in z predigralnega zaslona vsake
   igre (odpre neposredno njeno stran).
-- **Dosežki in statistika**: **108 dosežkov** v treh kategorijah (24 ciljev na
-  ravni zbirke, 37 točkovnih mejnikov in 47 posebnih trenutkov, kot so šah-mat
-  UI, ploščica 4096, T-Spin Double, 25 rešenih šahovskih ugank, Killer Sudoku ali
-  lamji jackpot; v 2048 in šahu partije z razveljavitvijo ali namigom ne štejejo) z **zlatim obvestilom in fanfaro** ob
-  odklepanju - tudi sredi igre; stari rekordi se upoštevajo samodejno. Poleg
-  tega zavihek **statistike**: skupni čas igranja, partije, zmage, rekordi,
-  najljubša igra in tabela iger, razvrščena po času. Na voljo prek gumba
-  **»Dosežki in statistika«** v stranski vrstici.
+- **Dosežki, redkost in stopnja**: **250 dosežkov** v petih kategorijah - 60
+  ciljev čez vso zbirko (partije, čas igranja, rekordi, zmage, dnevi igranja,
+  nizi, dvoboji …), 37 **točkovnih mejnikov**, 30 **mojstrskih stopenj** (druga,
+  precej višja meja), dosežek **Redni gost** za vsako igro (25 partij) in 77
+  **posebnih trenutkov** (šahmat, Yahtzee, ploščica 4096, luknja z enim
+  udarcem, hat-trick v zračnem hokeju …). Vsak dosežek ima **redkost** (pogost 10
+  do mitski 300 točk); točke dajo **stopnjo** s 14 **čini** od Lamjega mladiča do
+  Zvezdne lame. Odklep pokaže obvestilo v barvi redkosti, napredovanje svoje s
+  fanfaro.
+- **Statistika z grafi**: pet zavihkov - Dosežki (filter, točke, vrstica XP),
+  Statistika (kartice, top 10 kot stolpci, obroč zmag, tabela), **Koledar**
+  (zemljevid dni igranja, nizi, dnevi v tednu, čas dneva), **Zgodovina** (vse s
+  časovnim žigom in krivulja točk) ter **Profili** (lestvica naprave, medsebojni
+  dvoboji). Povrhu **PyGameZ pregled**: najboljši dan, najljubši čas in
+  najdaljša seja. Vse je v datoteki **`stats.pgzlamastats`**, ki jo lahko
+  izvoziš, deliš in znova prebereš - tudi med namizno in spletno različico.
+- **Profili igralcev**: več igralcev na eni napravi, vsak s svojimi rekordi,
+  dosežki, stopnjo, statistiko, žetoni in shranjenimi igrami (do osem). Gumb
+  **»Profili«** ustvari, preimenuje in preklopi; v večigralskem načinu pred
+  partijo izbereš profil drugega igralca (ali igraš kot gost), imeni zamenjata
+  »Igralec 1/2«, vsaka partija pa gre v **medsebojne dvoboje**.
 - **Posnetki**: šest iger snema svoje kroge - minigolf, bowling, biljard,
   fliper, Snake in Tetris. Na koncu **P** pokaže ponovitev, **S** pa jo shrani v
   arhiv - dosegljiv z gumbom **Posnetki** v stranski vrstici (zavihek na igro,
@@ -12460,15 +12604,28 @@ dotjerano poput modernog pokretača igara:
   kategorijama, člancima koji se pomiču i čipovima s tipkama, na svih 14 jezika.
   Dostupan preko gumba **„Wiki / Pomoć"** u bočnoj traci i sa zaslona pripreme
   svake igre (izravno otvara njezinu stranicu).
-- **Postignuća i statistika**: **108 postignuća** u tri kategorije (24 cilja na
-  razini kolekcije, 37 bodovnih prekretnica i 47 posebnih trenutaka poput
-  šah-mata AI-ju, pločice 4096, T-Spin Doublea, 25 riješenih šahovskih zadataka,
-  Killer Sudokua ili laminog jackpota; u 2048 i šahu partije s poništavanjem ili
-  savjetom ne računaju se) sa **zlatnom obavijesti i fanfarom** pri
-  otključavanju - čak i usred igre; stari rekordi priznaju se automatski. Uz
-  to kartica **statistike**: ukupno vrijeme igranja, partije, pobjede,
-  rekordi, najdraža igra i tablica igara poredana po vremenu. Dostupno preko
-  gumba **„Postignuća i statistika"** u bočnoj traci.
+- **Postignuća, rijetkost i razina**: **250 postignuća** u pet kategorija - 60
+  ciljeva kroz cijelu zbirku (partije, vrijeme igranja, rekordi, pobjede, dani
+  igranja, nizovi, dvoboji …), 37 **bodovnih prekretnica**, 30 **majstorskih
+  razina** (druga, znatno viša granica), postignuće **Stalni gost** za svaku igru
+  (25 partija) i 77 **posebnih trenutaka** (šah-mat, Yahtzee, pločica 4096, rupa
+  iz jednog udarca, hat-trick u air hockeyju …). Svako postignuće ima
+  **rijetkost** (uobičajen 10 do mitski 300 bodova); bodovi daju **razinu** s 14
+  **činova** od Mlade lame do Zvjezdane lame. Otključavanje prikazuje obavijest u
+  boji rijetkosti, napredovanje vlastitu s fanfarom.
+- **Statistika s grafikonima**: pet kartica - Postignuća (filtar, bodovi, XP
+  traka), Statistika (kartice, top 10 kao stupci, prsten pobjeda, tablica),
+  **Kalendar** (karta dana igranja, nizovi, dani u tjednu, doba dana),
+  **Povijest** (sve s vremenskom oznakom i krivulja bodova) i **Profili**
+  (ljestvica uređaja, međusobni dvoboji). Povrh toga **PyGameZ pregled**:
+  najbolji dan, omiljeno vrijeme i najduža sesija. Sve je u datoteci
+  **`stats.pgzlamastats`** koju možeš izvesti, podijeliti i ponovno učitati -
+  i između stolne i web verzije.
+- **Profili igrača**: više igrača na jednom uređaju, svaki s vlastitim
+  rekordima, postignućima, razinom, statistikom, žetonima i spremljenim igrama
+  (do osam). Gumb **„Profili"** stvara, preimenuje i mijenja; u igri za više
+  igrača prije partije biraš profil drugog igrača (ili igraš kao gost), imena
+  zamjenjuju „Igrač 1/2", a svaka partija ulazi u **međusobne dvoboje**.
 - **Snimke**: šest igara snima svoje runde - minigolf, kuglanje, biljar,
   fliper, Snake i Tetris. Na kraju **P** prikazuje snimku, a **S** je sprema u
   arhivu - dostupnu gumbom **Snimke** u bočnoj traci (kartica po igri, pauza,

@@ -343,6 +343,7 @@ class ChessGame(ChessDraw, Game):
 
     # ===================================================== Partie aufbauen
     def _new_game(self):
+        self.new_round_result()     # neue Partie: Duell-Bilanz wieder freigeben
         self._abort_jobs()
         if self.c960 and self.mode in ("single", "multi"):
             self.c960_n = random.randint(0, 959)
@@ -1084,6 +1085,8 @@ class ChessGame(ChessDraw, Game):
         if self.mode == "multi":
             if winner is not None:
                 self.wins[winner] += 1
+                # Weiß = Sitzplatz 1, Schwarz = Sitzplatz 2
+                self.report_duel(0 if winner == ce.WHITE else 1)
                 self.play_sound("win")
             else:
                 self.play_sound("select")
@@ -1112,7 +1115,8 @@ class ChessGame(ChessDraw, Game):
             you = t("chess.you")
             white, black = (you, ai) if self.human_color == ce.WHITE else (ai, you)
         else:
-            white, black = t("common.player1"), t("common.player2")
+            # Mehrspieler: Profilnamen in die PGN-Kopfzeilen
+            white, black = self.pname(0), self.pname(1)
         tags = [("Event", "PyGameZ"), ("Site", "PyGameZ"),
                 ("Date", time.strftime("%Y.%m.%d")), ("Round", "-"),
                 ("White", white), ("Black", black), ("Result", res)]
