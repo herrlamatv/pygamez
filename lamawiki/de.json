@@ -2719,7 +2719,10 @@
         "checkpoint",
         "dämon",
         "musik",
-        "level"
+        "level",
+        "weitere",
+        "als vorlage",
+        "vorlage"
       ],
       "sections": [
         {
@@ -2736,7 +2739,7 @@
             "- [Leertaste], [Hoch], [W], [Enter] oder linke Maustaste: springen bzw. fliegen. Halten zählt als Dauerdrücken - der Würfel springt dann bei jeder Landung sofort wieder ab.",
             "- [R] startet sofort neu, [Q] oder [Rücktaste] führt zurück zur Levelauswahl, [Esc] pausiert.",
             "- [P] schaltet den Übungsmodus um; darin setzt [Z] einen Checkpoint und [X] löscht den letzten.",
-            "- Levelauswahl: [Links]/[Rechts] blättern, [1] bis [8] springen direkt zu einem Level, [Enter] startet, [P] wählt Normal oder Übung, [M] schaltet die Musik, [Tab] wechselt zum Reiter LEVELS.",
+            "- Levelauswahl: [Links]/[Rechts] blättern, [1] bis [9] und [0] springen direkt zu Level 1 bis 10, [Pos1]/[Ende] an den Anfang oder ans Ende, [Enter] startet, [P] wählt Normal oder Übung, [M] schaltet die Musik, [Tab] wechselt zwischen SPIEL, WEITERE und LEVELS.",
             "Jeder Druck bekommt einen Zeitstempel und wirkt genau in dem Physik-Schritt (1/240 Sekunde), in dem er passiert ist - der Absprung sitzt also auch dann, wenn der Rechner kurz ruckelt."
           ]
         },
@@ -2762,14 +2765,24 @@
           ]
         },
         {
-          "h": "Die 8 Level",
+          "h": "Die 16 Level",
           "body": [
-            "- Lama Launch (Leicht, 1 Stern) und Neon Steps (Leicht, 2 Sterne): Sprünge, Pads, Orbs und das erste Schiff.",
-            "- Orbit Garden (Normal, 3 Sterne): Orb-Ketten, kopfüber an der Decke, Schiff mit doppeltem Tempo.",
-            "- Gravity Tide (Schwer, 4 Sterne) und Skyline Rush (Schwer, 5 Sterne): Schwerkraft-Portale, Ball, UFO, Gruben und dreifaches Tempo.",
-            "- Crystal Caves (Schwerer, 7 Sterne) und Wave Reactor (Wahnsinnig, 9 Sterne): alle fünf Formen, enge Tore und Wellen-Tunnel.",
-            "- Lama Inferno (Dämon, 10 Sterne): dreifaches Tempo und alles auf einmal.",
+            "- Lama Launch, Neon Steps und Pixel Sprint (Leicht, 1-2 Sterne): Sprünge, Pads, Orbs und das erste Schiff.",
+            "- Orbit Garden und Moss Temple (Normal, je 3 Sterne): Orb-Ketten und ruhige Passagen kopfüber an der Decke.",
+            "- Gravity Tide, Magnet Fields, Skyline Rush und Hangar Run (Schwer, 4-5 Sterne): Schwerkraft-Portale, Ball, UFO und enge Schiff-Tore bei doppeltem Tempo.",
+            "- Crystal Caves, Strobe City und Frost Relay (Schwerer, 6-7 Sterne): alle fünf Formen, Rhythmus-Passagen und viele Farbwechsel.",
+            "- Wave Reactor und Turbine Core (Wahnsinnig, je 9 Sterne): die Welle im engen Tunnel.",
+            "- Lama Inferno und Lama Eclipse (Dämon, je 10 Sterne): dreifaches Tempo und alles auf einmal.",
             "Jedes Level ist nachweislich schaffbar, samt allen drei Münzen: Beim Bauen hat ein Solver es mit dem echten Spiel-Code gelöst - und seine Lösung klappt sogar mit 1/240 Sekunde Versatz."
+          ]
+        },
+        {
+          "h": "Weitere: 80 Level in Kategorien",
+          "body": [
+            "Der Reiter WEITERE ist eine Bibliothek mit 80 zusätzlichen Leveln in zehn Kategorien: Einstieg, Rhythmus, Münzen, Schiff, UFO, Ball, Schwerkraft, Tempo, Welle und Dämon.",
+            "Oben wählst du die Kategorie, darunter suchst du im Namen. Jede Zeile zeigt Schwierigkeit, Länge, gefundene Münzen und deinen Bestwert; \"Zufall\" wirft dir eins aus der Auswahl vor.",
+            "Auch diese Level sind vom Solver bewiesen - Ziel und alle drei Münzen sind schaffbar. Sie führen ihren eigenen Fortschritt, geben aber keine Sterne und keine Erfolge: die bleiben der Kampagne.",
+            "\"Als Vorlage\" kopiert das gewählte Level zu deinen eigenen - dort baust du es um. Mehr dazu auf der Seite \"Eigene Level (Geometry Dash)\"."
           ]
         },
         {
@@ -2784,7 +2797,7 @@
           "h": "Sterne, Münzen & Erfolge",
           "body": [
             "Wer ein Level im Normalmodus schafft, bekommt seine Sterne. Außerdem sind in jedem Level drei geheime Münzen versteckt, oft abseits des einfachsten Wegs. Sie zählen, sobald du das Level mit ihnen beendest - und jede ist einen weiteren Stern wert.",
-            "Dein Highscore sind die Sterne gesamt (höchstens 65), er kann nur wachsen. Je Level merkt sich das Spiel die Bestwerte in Prozent für Normal und Übung, die gefundenen Münzen und die Versuche.",
+            "Dein Highscore sind die Sterne gesamt (höchstens 135), er kann nur wachsen. Je Level merkt sich das Spiel die Bestwerte in Prozent für Normal und Übung, die gefundenen Münzen und die Versuche.",
             "- Erfolge: \"Im Takt\" für das erste geschaffte Level, \"Münzjäger\" für alle drei Münzen eines Levels, \"Dämonenbezwinger\" für Lama Inferno - und ein Meilenstein bei 20 Sternen.",
             "Im Reiter LEVELS baust, spielst und teilst du eigene Level - mehr dazu auf der Seite \"Eigene Level (Geometry Dash)\"."
           ]
@@ -2806,13 +2819,15 @@
         "exportieren",
         "verifiziert",
         "lamapgzlevel",
-        "geometry dash"
+        "geometry dash",
+        "vorlage",
+        "weitere"
       ],
       "sections": [
         {
           "h": "Level bauen",
           "body": [
-            "Im Reiter LEVELS der Geometry-Dash-Levelauswahl liegt deine eigene Sammlung (bis zu 60 Level). \"Neu\" öffnet den Level-Editor, \"Bearbeiten\" nimmt ein vorhandenes Level wieder auf.",
+            "Im Reiter LEVELS der Geometry-Dash-Levelauswahl liegt deine eigene Sammlung (bis zu 60 Level). \"Neu\" fragt zuerst nach einer Vorlage, \"Bearbeiten\" nimmt ein vorhandenes Level wieder auf.",
             "Links liegt die Leinwand mit Raster, rechts die Palette: oben Auswählen und Radierer, darunter sechs Gruppen - Blöcke, Gefahren, Pads & Orbs, Portale, Tempo und Extras (geheime Münzen, Farb-Trigger). [1] bis [6] wählen die Gruppen direkt.",
             "- Klicken oder Ziehen setzt das gewählte Objekt, [R] dreht es: Stacheln und Halbblöcke in vier Richtungen, Pads nach oben oder unten.",
             "- Mit Auswählen verschiebt Ziehen ein Objekt, [Entf] löscht es. Ein Rechtsklick löscht immer; Rechts-Ziehen, das Mausrad, die Pfeiltasten oder [A]/[D] scrollen.",
@@ -2820,6 +2835,15 @@
             "- Die Leiste ganz unten zeigt das ganze Level im Überblick - ein Klick springt an die Stelle.",
             "[U] macht rückgängig, [Y] stellt wieder her, [G] blendet das Raster ein und aus, [S] speichert. [Esc] führt zurück - mit ungespeicherten Änderungen erst nach einer Bestätigung.",
             "Höchstens drei Münzen je Level. Das Ziel liegt automatisch ein Stück hinter dem letzten Objekt."
+          ]
+        },
+        {
+          "h": "Vorlagen",
+          "body": [
+            "Jedes neue Level beginnt mit einer Vorlage: \"Leer\" fängt bei null an, die anderen elf bringen ein fertiges Gerüst mit - Einstieg, Sprünge, Pads & Orbs, Schiff, Welle, Ball, UFO, Schwerkraft, Tempo, Münzen und Dämon.",
+            "Eine Vorlage bringt ihre Objekte, Farben, Musik und ihr Starttempo mit. Weil alle Vorlagen vom Solver durchgespielt wurden, trägt die Kopie sofort das grüne Häkchen - bis du etwas änderst.",
+            "Auch fertige Level lassen sich kopieren: Im Reiter WEITERE legt \"Als Vorlage\" das gewählte Level als eigenes an, samt Objekten, Farben und Musik.",
+            "Eine Kopie ist ein ganz normales eigenes Level: umbauen, testen, speichern, spielen und teilen."
           ]
         },
         {

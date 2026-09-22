@@ -8,6 +8,78 @@
 
 ## 🇩🇪 Deutsch
 
+### Geometry Dash: 16 Level, Bibliothek mit 80 Leveln & Vorlagen – 2026-09-22
+
+Geometry Dash bekommt doppelt so viele Kampagnen-Level, eine durchsuchbare
+**Bibliothek mit 80 weiteren Leveln** in zehn Kategorien und **12 Vorlagen**
+für eigene Level. Jedes neue Level – auch jedes der 80 – ist vom Solver mit dem
+echten Spiel-Code durchgespielt worden, samt allen drei Münzen und mit einem
+Schritt Versatz nach vorn und hinten. Alles in 14 Sprachen, mit überarbeiteten
+Wiki-Seiten, beiden READMEs, erweitertem Audit – und die Web-Version zieht
+komplett mit.
+
+#### Neu
+
+**Kampagne: 8 → 16 Level**
+- Acht handgebaute Level füllen die Kurve von *Leicht* bis *Dämon*: **Pixel
+  Sprint**, **Moss Temple**, **Magnet Fields**, **Hangar Run**, **Strobe
+  City**, **Frost Relay**, **Turbine Core** und der zweite Dämon **Lama
+  Eclipse**.
+- Damit sind **135 Sterne** zu holen (87 Level-Sterne + 48 Münzen) statt 65.
+- Die Punktreihe unter der Level-Karte ist jetzt ein **Fenster**: höchstens
+  zehn Punkte, die Reihe wandert mit der Auswahl, darunter steht „Level n / m“.
+  **[1]**–**[9]** springen zu Level 1–9, **[0]** zu Level 10, **[Pos1]**/
+  **[Ende]** an den Anfang oder ans Ende.
+
+**Reiter „Weitere“: 80 Level in 10 Kategorien**
+- Neuer dritter Reiter neben SPIEL und LEVELS: **Einstieg, Rhythmus, Münzen,
+  Schiff, UFO, Ball, Schwerkraft, Tempo, Welle, Dämon** – je acht Level.
+- **Suchfeld** über Namen, id und Kategorie, Kategorie-Leiste, Zufallsknopf und
+  eine Zeile „x / 80 Level · n geschafft“. Jede Zeile zeigt Schwierigkeit,
+  Länge, gefundene Münzen und den eigenen Bestwert.
+- Eigener Fortschritt je Level (Schlüssel `x:<id>` im Abschnitt `geodash`):
+  Bestwert, Münzen und Versuche zählen, **Sterne und Erfolge bleiben der
+  Kampagne** – so bleibt die Sternskala aussagekräftig.
+- **[Tab]** wechselt durch alle drei Reiter, der zuletzt benutzte Reiter und die
+  Kategorie werden gemerkt.
+
+**Vorlagen für eigene Level**
+- „Neu“ öffnet jetzt eine **Vorlagen-Auswahl** mit 12 Kacheln: *Leer*,
+  Einstieg, Sprünge, Pads & Orbs, Schiff, Welle, Ball, UFO, Schwerkraft, Tempo,
+  Münzen, Dämon.
+- Eine Vorlage bringt Objekte, Farben, Musik und Starttempo mit – und weil der
+  Solver jede durchgespielt hat, trägt die Kopie sofort das Häkchen
+  **„verifiziert“**, bis man etwas ändert.
+- **„Als Vorlage“** im Reiter *Weitere* kopiert jedes fertige Level in die
+  eigenen Level; dort lässt es sich umbauen, testen, speichern und spielen.
+
+**Erzeuger, Beweise und Tests**
+- Neu: `devtools/geodash_sections.py` (20 Bausteine nach den Maßen der echten
+  Physik) und `devtools/build_geodash_extra.py` – deterministisch, mit Beweisen
+  in `devtools/geodash_extra_proofs.json`.
+- Münzen liegen **auf der bewiesenen Bahn**: erst wird das Level ohne Münzen
+  gelöst, dann werden drei Münzen auf den nachgespielten Weg gesetzt und der
+  Beweis noch einmal geprüft.
+- `tests/audit_geodash.py` prüft zusätzlich: Bibliothek (Desktop-JSON == Web-
+  Index == Web-Volldaten), jeden Beweis bei −1/0/+1 Schritt Versatz, alle
+  Kategorien, die Vorlagen samt Abzeichen, Filter und Suche, „Als Vorlage“
+  sowie Kategorie-Leiste, Suchfeld und Vorlagen-Auswahl in 5 Auflösungen ×
+  14 Sprachen.
+
+**Web**
+- Der Browser bekommt dieselben drei Reiter, dieselbe Bibliothek und dieselben
+  Vorlagen. Die **Volldaten der 80 Level werden erst beim Öffnen des Reiters
+  nachgeladen** (`geodash_extra.js`), der kleine Index kommt mit dem Spiel.
+
+#### Geändert
+
+- `settings.json`: `geodash.last_level` reicht jetzt bis 199, dazu die neuen
+  Werte `last_tab` und `last_cat`.
+- Die Wiki-Seiten **Geometry Dash** und **Eigene Level (Geometry Dash)** wurden
+  in allen 14 Sprachen überarbeitet (16 Level, Bibliothek, Vorlagen).
+
+---
+
 ### Erfolge 2.0, Statistik-Diagramme & Spielerprofile – 2026-09-21
 
 Das größte Update für alles, was zählt: **250 Erfolge** (statt 108) mit
@@ -1144,6 +1216,75 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Geometry Dash: 16 levels, a library of 80 and templates – 2026-09-22
+
+Geometry Dash gets twice as many campaign levels, a searchable **library of 80
+more levels** in ten categories and **12 templates** for your own levels. Every
+new level – all 80 of them included – was played through by the solver with the
+real game code, all three coins included and with a one-step shift in both
+directions. Everything in 14 languages, with reworked wiki pages, both READMEs,
+an extended audit – and the web version comes along in full.
+
+#### New
+
+**Campaign: 8 → 16 levels**
+- Eight hand-built levels fill the curve from *Easy* to *Demon*: **Pixel
+  Sprint**, **Moss Temple**, **Magnet Fields**, **Hangar Run**, **Strobe
+  City**, **Frost Relay**, **Turbine Core** and the second demon **Lama
+  Eclipse**.
+- That makes **135 stars** to collect (87 level stars + 48 coins) instead of 65.
+- The dot row below the level card is a **window** now: ten dots at most, the
+  row follows your selection and "Level n / m" sits underneath. **[1]**–**[9]**
+  jump to levels 1–9, **[0]** to level 10, **[Home]**/**[End]** to the first or
+  last one.
+
+**"More" tab: 80 levels in 10 categories**
+- A new third tab next to PLAY and LEVELS: **starter, rhythm, coins, ship, UFO,
+  ball, gravity, speed, wave, demon** – eight levels each.
+- A **search field** over name, id and category, a category bar, a random button
+  and a line "x / 80 levels · n cleared". Every row shows difficulty, length,
+  the coins you found and your own best run.
+- Its own progress per level (key `x:<id>` in the `geodash` section): best runs,
+  coins and attempts are kept, **stars and achievements stay with the
+  campaign** – that keeps the star scale meaningful.
+- **[Tab]** cycles all three tabs; the last tab and category are remembered.
+
+**Templates for your own levels**
+- "New" now opens a **template picker** with 12 tiles: *empty*, starter, jumps,
+  pads & orbs, ship, wave, ball, UFO, gravity, speed, coins, demon.
+- A template brings its objects, colors, music and start speed along – and since
+  the solver played each one through, the copy carries the **"verified"** check
+  mark right away, until you change something.
+- **"As template"** in the *More* tab copies any finished level into your own
+  levels, where you can rebuild, test, save and play it.
+
+**Builders, proofs and tests**
+- New: `devtools/geodash_sections.py` (20 building blocks measured against the
+  real physics) and `devtools/build_geodash_extra.py` – deterministic, with
+  proofs in `devtools/geodash_extra_proofs.json`.
+- Coins sit **on the proven path**: the level is solved without coins first,
+  then three coins are placed on the replayed trajectory and the proof is
+  verified again.
+- `tests/audit_geodash.py` additionally checks the library (desktop JSON == web
+  index == web full data), every proof at a −1/0/+1 step shift, all categories,
+  the templates including their badge, filtering and search, "as template", plus
+  the category bar, the search field and the template picker across 5
+  resolutions × 14 languages.
+
+**Web**
+- The browser gets the same three tabs, the same library and the same templates.
+  The **full data of the 80 levels is loaded on demand** when the tab is opened
+  (`geodash_extra.js`); the small index ships with the game.
+
+#### Changed
+
+- `settings.json`: `geodash.last_level` now goes up to 199, plus the new values
+  `last_tab` and `last_cat`.
+- The wiki pages **Geometry Dash** and **Your own levels (Geometry Dash)** were
+  reworked in all 14 languages (16 levels, library, templates).
+
+---
 
 ### Achievements 2.0, statistics charts & player profiles – 2026-09-21
 

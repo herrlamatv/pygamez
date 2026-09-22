@@ -2717,7 +2717,10 @@
         "kontrolna točka",
         "demon",
         "glazba",
-        "razina"
+        "razina",
+        "više",
+        "kao predložak",
+        "odaberi"
       ],
       "sections": [
         {
@@ -2734,7 +2737,7 @@
             "- [Razmaknica], [Gore], [W], [Enter] ili lijeva tipka miša: skok ili let. Držanje se računa kao neprestano pritiskanje - kocka tada nakon svakog doskoka odmah ponovno skače.",
             "- [R] odmah počinje ispočetka, [Q] ili [Backspace] vraća na odabir razine, [Esc] pauzira.",
             "- [P] uključuje i isključuje način vježbe; u njemu [Z] postavlja kontrolnu točku, a [X] briše posljednju.",
-            "- Odabir razine: [Lijevo]/[Desno] listaju, [1] do [8] skaču ravno na razinu, [Enter] pokreće, [P] bira Normalno ili Vježbu, [M] uključuje glazbu, [Tab] prelazi na karticu RAZINE.",
+            "- Odabir razine: [Lijevo]/[Desno] listaju, [1] do [9] i [0] skaču ravno na razine 1 do 10, [Home]/[End] na prvu ili zadnju, [Enter] pokreće, [P] bira Normalno ili Vježbu, [M] uključuje glazbu, [Tab] kruži između IGRA, VIŠE i RAZINE.",
             "Svaki pritisak dobiva vremenski žig i djeluje točno u onom koraku fizike (1/240 sekunde) u kojem se dogodio - skok je zato precizan čak i kad računalo na tren zapne."
           ]
         },
@@ -2760,14 +2763,24 @@
           ]
         },
         {
-          "h": "8 razina",
+          "h": "16 razina",
           "body": [
-            "- Lama Launch (Lako, 1 zvjezdica) i Neon Steps (Lako, 2 zvjezdice): skokovi, odskoci, kugle i prvi brod.",
-            "- Orbit Garden (Normalno, 3 zvjezdice): lanci kugli, naglavačke ispod stropa i brod dvostrukom brzinom.",
-            "- Gravity Tide (Teško, 4 zvjezdice) i Skyline Rush (Teško, 5 zvjezdica): portali gravitacije, lopta, NLO, jame i trostruka brzina.",
-            "- Crystal Caves (Teže, 7 zvjezdica) i Wave Reactor (Ludo, 9 zvjezdica): svih pet oblika, uska vrata i tuneli za val.",
-            "- Lama Inferno (Demon, 10 zvjezdica): trostruka brzina i sve odjednom.",
+            "- Lama Launch, Neon Steps i Pixel Sprint (Lako, 1-2 zvjezdice): skokovi, odskoci, kugle i prvi brod.",
+            "- Orbit Garden i Moss Temple (Normalno, po 3 zvjezdice): lanci kugli i mirni dijelovi naopako uz strop.",
+            "- Gravity Tide, Magnet Fields, Skyline Rush i Hangar Run (Teško, 4-5 zvjezdica): gravitacijski portali, lopta, NLO i uska brodska vrata pri dvostrukoj brzini.",
+            "- Crystal Caves, Strobe City i Frost Relay (Teže, 6-7 zvjezdica): svih pet oblika, ritmični dijelovi i mnogo promjena boja.",
+            "- Wave Reactor i Turbine Core (Ludo, po 9 zvjezdica): val u uskom tunelu.",
+            "- Lama Inferno i Lama Eclipse (Demon, po 10 zvjezdica): trostruka brzina i sve odjednom.",
             "Svaka razina je dokazano prolazna, zajedno sa sva tri novčića: pri izradi ju je rješavač prešao pravim kodom igre - a njegovo rješenje radi čak i s pomakom od 1/240 sekunde."
+          ]
+        },
+        {
+          "h": "Više: 80 razina po kategorijama",
+          "body": [
+            "Kartica VIŠE knjižnica je s 80 dodatnih razina u deset kategorija: početak, ritam, novčići, brod, NLO, lopta, gravitacija, brzina, val i demon.",
+            "Gore biraš kategoriju, ispod tražiš po imenu. Svaki redak pokazuje težinu, duljinu, pronađene novčiće i tvoj najbolji pokušaj; \"Nasumično\" ti jednu izbaci iz odabira.",
+            "I te su razine dokazane rješavačem: cilj i sva tri novčića su dostižni. Vode vlastiti napredak, ali ne daju zvjezdice ni postignuća - to ostaje kampanji.",
+            "\"Kao predložak\" kopira odabranu razinu među tvoje vlastite, gdje je preradiš. Više na stranici \"Vlastite razine (Geometry Dash)\"."
           ]
         },
         {
@@ -2782,7 +2795,7 @@
           "h": "Zvjezdice, novčići i postignuća",
           "body": [
             "Tko prijeđe razinu u normalnom načinu, dobiva njezine zvjezdice. U svakoj razini skrivena su i tri tajna novčića, često izvan najlakšeg puta. Računaju se čim s njima završiš razinu - a svaki vrijedi još jednu zvjezdicu.",
-            "Tvoj rekord je ukupan broj zvjezdica (najviše 65) i može samo rasti. Za svaku razinu igra pamti najbolji postotak u Normalnom načinu i Vježbi, pronađene novčiće i pokušaje.",
+            "Tvoj rekord je ukupan broj zvjezdica (najviše 135) i može samo rasti. Za svaku razinu igra pamti najbolji postotak u Normalnom načinu i Vježbi, pronađene novčiće i pokušaje.",
             "- Postignuća: \"U ritmu\" za prvu prijeđenu razinu, \"Lovac na novčiće\" za sva tri novčića u razini, \"Ubojica demona\" za Lama Inferno - i prekretnica kod 20 zvjezdica.",
             "Na kartici RAZINE gradiš, igraš i dijeliš vlastite razine - pogledaj stranicu \"Vlastite razine (Geometry Dash)\"."
           ]
@@ -2804,13 +2817,15 @@
         "izvoz",
         "potvrđeno",
         "lamapgzlevel",
-        "geometry dash"
+        "geometry dash",
+        "odaberi",
+        "više"
       ],
       "sections": [
         {
           "h": "Gradnja razine",
           "body": [
-            "Kartica RAZINE u odabiru razina igre Geometry Dash sadrži tvoju vlastitu zbirku (do 60 razina). \"Nova\" otvara uređivač razina, \"Uredi\" nastavlja postojeću razinu.",
+            "Kartica RAZINE u odabiru razina igre Geometry Dash sadrži tvoju vlastitu zbirku (do 60 razina). \"Nova\" najprije pita za predložak, \"Uredi\" nastavlja postojeću razinu.",
             "Lijevo je platno s mrežom, desno paleta: gore Odaberi i Gumica, ispod njih šest skupina - Blokovi, Opasnosti, Odskoci i kugle, Portali, Brzina i Dodaci (tajni novčići, okidač boje). [1] do [6] biraju skupine izravno.",
             "- Klik ili povlačenje postavlja odabrani objekt, [R] ga okreće: šiljke i polublokove u četiri smjera, odskoke gore ili dolje.",
             "- S alatom Odaberi povlačenje pomiče objekt, a [Del] ga briše. Desni klik uvijek briše; povlačenje desnom tipkom, kotačić miša, strelice ili [A]/[D] pomiču prikaz.",
@@ -2818,6 +2833,15 @@
             "- Traka na samom dnu pokazuje cijelu razinu u pregledu - klik skače na to mjesto.",
             "[U] poništava, [Y] ponavlja, [G] prikazuje ili skriva mrežu, [S] sprema. [Esc] vodi natrag - s nespremljenim promjenama tek nakon potvrde.",
             "Najviše tri novčića po razini. Cilj se automatski postavlja malo iza posljednjeg objekta."
+          ]
+        },
+        {
+          "h": "Predlošci",
+          "body": [
+            "Svaka nova razina počinje predloškom: \"Prazno\" kreće od nule, preostalih jedanaest donosi gotov kostur - početak, skokovi, odskoci i kugle, brod, val, lopta, NLO, gravitacija, brzina, novčići i demon.",
+            "Predložak donosi svoje objekte, boje, glazbu i početnu brzinu. Budući da je rješavač prošao svaki predložak, kopija odmah nosi zelenu kvačicu - dok nešto ne promijeniš.",
+            "I gotove se razine mogu kopirati: u kartici VIŠE \"Kao predložak\" dodaje odabranu razinu među tvoje, zajedno s objektima, bojama i glazbom.",
+            "Kopija je sasvim obična vlastita razina: preradi, testiraj, spremi, igraj i dijeli."
           ]
         },
         {

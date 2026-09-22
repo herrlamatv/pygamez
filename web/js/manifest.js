@@ -47,7 +47,9 @@ window.PG_MANIFEST = [
   { id: "PinballGame", files: ["js/games/pinball.js"] },
   { id: "BowlingGame", files: ["js/games/bowling.js"] },
   { id: "CrossyRoadGame", files: ["js/games/seedrand.js", "js/games/crossyroad_models.js", "js/games/crossyroad_world.js", "js/games/crossyroad.js"] },
-  { id: "GeometryDashGame", files: ["js/games/seedrand.js", "js/games/ugc.js", "js/games/geodash_core.js", "js/games/geodash_levels.js", "js/games/geodash_draw.js", "js/games/geodash_music.js", "js/games/geodash_edit.js", "js/games/geodash.js"] },
+  // geodash_extra.js (Volldaten der Bibliothek) fehlt hier mit Absicht: es wird
+  // erst beim Öffnen des Reiters "Weitere" nachgeladen (geodash_extra_ui.js).
+  { id: "GeometryDashGame", files: ["js/games/seedrand.js", "js/games/ugc.js", "js/games/geodash_core.js", "js/games/geodash_levels.js", "js/games/geodash_extra_index.js", "js/games/geodash_templates.js", "js/games/geodash_draw.js", "js/games/geodash_music.js", "js/games/geodash_edit.js", "js/games/geodash_extra_ui.js", "js/games/geodash.js"] },
   { id: "BattleshipGame", files: ["js/games/battleship.js"] },
   { id: "CasinoGame", files: ["js/games/cards.js", "js/games/casino_bank.js", "js/games/casino_logic.js", "js/games/casino_draw.js", "js/games/casino.js"] },
 ];

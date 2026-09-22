@@ -9,6 +9,7 @@
  * Python-Test (tests/audit_geodash.py) vergleicht sie mit seinen eigenen.
  *
  *   node web/tools/geodash_replay.js                  # alle eingebauten Level
+ *   node web/tools/geodash_replay.js --extra          # die Bibliothek (80)
  *   node web/tools/geodash_replay.js --cases f.json   # eigene Fälle:
  *        [{"id": "...", "level": {...}, "toggles": [..], "every": 250,
  *          "start": null | Startblock}, ...]
@@ -40,12 +41,11 @@ function play(level, toggles, every, start) {
 
 const out = {};
 let failed = 0;
-if (casesIdx >= 0) {
-  const cases = JSON.parse(fs.readFileSync(args[casesIdx + 1], "utf8"));
-  for (const c of cases) out[c.id] = play(c.level, c.toggles || [], c.every || 0, c.start || null);
-} else {
-  const levels = JSON.parse(fs.readFileSync(path.join(ROOT, "games", "levels", "geodash.json"), "utf8")).levels;
-  const proofs = JSON.parse(fs.readFileSync(path.join(ROOT, "devtools", "geodash_proofs.json"), "utf8"));
+
+/** Alle Level einer Datei mit ihren gespeicherten Lösungen nachspielen. */
+function runSet(levelFile, proofFile, every) {
+  const levels = JSON.parse(fs.readFileSync(path.join(ROOT, levelFile), "utf8")).levels;
+  const proofs = JSON.parse(fs.readFileSync(path.join(ROOT, proofFile), "utf8"));
   for (const level of levels) {
     const proof = proofs[level.id];
     if (!proof) {
@@ -53,12 +53,22 @@ if (casesIdx >= 0) {
       failed++;
       continue;
     }
-    const r = play(level, proof.toggles, 500, null);
+    const r = play(level, proof.toggles, every, null);
     const all = (1 << r.coinCount) - 1;
     r.ok = !!r.won && !r.dead && r.coins === all && r.hash === proof.hash;
     if (!r.ok) failed++;
     out[level.id] = r;
   }
+}
+
+if (casesIdx >= 0) {
+  const cases = JSON.parse(fs.readFileSync(args[casesIdx + 1], "utf8"));
+  for (const c of cases) out[c.id] = play(c.level, c.toggles || [], c.every || 0, c.start || null);
+} else if (args.includes("--extra")) {
+  // Die Bibliothek: 80 Level, Beweise aus dem eigenen Erzeuger
+  runSet("games/levels/geodash_extra.json", "devtools/geodash_extra_proofs.json", 0);
+} else {
+  runSet("games/levels/geodash.json", "devtools/geodash_proofs.json", 500);
 }
 process.stdout.write(JSON.stringify(out));
 process.exit(failed ? 1 : 0);

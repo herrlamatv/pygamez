@@ -2716,7 +2716,10 @@
         "tallennuspiste",
         "demoni",
         "musiikki",
-        "kenttä"
+        "kenttä",
+        "lisää",
+        "pohjaksi",
+        "valitse"
       ],
       "sections": [
         {
@@ -2733,7 +2736,7 @@
             "- [Välilyönti], [Ylös], [W], [Enter] tai hiiren vasen painike: hyppää tai lennä. Pohjassa pitäminen lasketaan jatkuvaksi painamiseksi - kuutio hyppää silloin uudelleen heti jokaisen laskeutumisen jälkeen.",
             "- [R] aloittaa heti alusta, [Q] tai [Backspace] palaa kentänvalintaan, [Esc] keskeyttää.",
             "- [P] kytkee harjoitustilan; siinä [Z] asettaa tallennuspisteen ja [X] poistaa viimeisimmän.",
-            "- Kentänvalinta: [Vasen]/[Oikea] selaavat, [1]–[8] siirtyvät suoraan kenttään, [Enter] aloittaa, [P] valitsee Normaalin tai Harjoituksen, [M] kytkee musiikin, [Tab] vaihtaa KENTÄT-välilehteen.",
+            "- Kentänvalinta: [Vasen]/[Oikea] selaavat, [1]-[9] ja [0] siirtyvät suoraan kenttiin 1-10, [Home]/[End] ensimmäiseen tai viimeiseen, [Enter] aloittaa, [P] valitsee Normaalin tai Harjoituksen, [M] kytkee musiikin, [Tab] kiertää PELI, LISÄÄ ja KENTÄT.",
             "Jokainen painallus saa aikaleiman ja vaikuttaa täsmälleen siinä fysiikka-askeleessa (1/240 sekuntia), jossa se tapahtui - hyppy osuu kohdalleen, vaikka tietokone nykäisisi hetken."
           ]
         },
@@ -2759,14 +2762,24 @@
           ]
         },
         {
-          "h": "8 kenttää",
+          "h": "16 kenttää",
           "body": [
-            "- Lama Launch (Helppo, 1 tähti) ja Neon Steps (Helppo, 2 tähteä): hyppyjä, ponnahtimia, palloja ja ensimmäinen alus.",
-            "- Orbit Garden (Normaali, 3 tähteä): palloketjuja, ylösalaisin katossa ja alus tuplanopeudella.",
-            "- Gravity Tide (Vaikea, 4 tähteä) ja Skyline Rush (Vaikea, 5 tähteä): painovoimaportaaleja, pallo, UFO, kuoppia ja kolminkertainen nopeus.",
-            "- Crystal Caves (Vaikeampi, 7 tähteä) ja Wave Reactor (Hullu, 9 tähteä): kaikki viisi muotoa, kapeita portteja ja aaltotunneleita.",
-            "- Lama Inferno (Demoni, 10 tähteä): kolminkertainen nopeus ja kaikki kerralla.",
+            "- Lama Launch, Neon Steps ja Pixel Sprint (Helppo, 1-2 tähteä): hyppyjä, ponnahtimia, palloja ja ensimmäinen alus.",
+            "- Orbit Garden ja Moss Temple (Normaali, 3 tähteä kumpikin): palloketjuja ja rauhallisia pätkiä ylösalaisin katossa.",
+            "- Gravity Tide, Magnet Fields, Skyline Rush ja Hangar Run (Vaikea, 4-5 tähteä): painovoimaportaaleja, pallo, UFO ja ahtaita alusportteja kaksinkertaisella vauhdilla.",
+            "- Crystal Caves, Strobe City ja Frost Relay (Vaikeampi, 6-7 tähteä): kaikki viisi muotoa, rytmipätkiä ja runsaasti värinvaihtoja.",
+            "- Wave Reactor ja Turbine Core (Hullu, 9 tähteä kumpikin): aalto ahtaassa tunnelissa.",
+            "- Lama Inferno ja Lama Eclipse (Demoni, 10 tähteä kumpikin): kolminkertainen vauhti ja kaikki yhtä aikaa.",
             "Jokainen kenttä on todistetusti läpäistävissä kaikkine kolmine kolikkoineen: rakennusvaiheessa ratkaisija läpäisi sen pelin oikealla koodilla - ja ratkaisu toimii jopa 1/240 sekuntia siirrettynä."
+          ]
+        },
+        {
+          "h": "Lisää: 80 kenttää kategorioissa",
+          "body": [
+            "LISÄÄ-välilehti on kirjasto, jossa on 80 lisäkenttää kymmenessä kategoriassa: aloitus, rytmi, kolikot, alus, UFO, pallo, painovoima, vauhti, aalto ja demoni.",
+            "Ylhäältä valitset kategorian, sen alta haet nimellä. Jokainen rivi näyttää vaikeuden, pituuden, löytyneet kolikot ja parhaan tuloksesi; \"Satunnainen\" heittää eteesi yhden valikoimasta.",
+            "Myös nämä kentät on todistettu ratkaisijalla: maali ja kaikki kolme kolikkoa ovat saavutettavissa. Niillä on oma edistyminen, mutta ne eivät anna tähtiä eivätkä saavutuksia - ne kuuluvat kampanjalle.",
+            "\"Pohjaksi\" kopioi valitun kentän omiin kenttiisi, joissa voit muokata sen uusiksi. Lisää sivulla \"Omat kentät (Geometry Dash)\"."
           ]
         },
         {
@@ -2781,7 +2794,7 @@
           "h": "Tähdet, kolikot ja saavutukset",
           "body": [
             "Kun läpäiset kentän normaalitilassa, saat sen tähdet. Lisäksi jokaiseen kenttään on piilotettu kolme salaista kolikkoa, usein helpoimman reitin ulkopuolelle. Ne lasketaan heti, kun läpäiset kentän ne mukanasi - ja jokainen on yhden lisätähden arvoinen.",
-            "Ennätyksesi on tähtien kokonaismäärä (enintään 65), ja se voi vain kasvaa. Jokaisesta kentästä peli muistaa parhaan prosentin Normaalissa ja Harjoituksessa, löydetyt kolikot ja yritykset.",
+            "Ennätyksesi on tähtien kokonaismäärä (enintään 135), ja se voi vain kasvaa. Jokaisesta kentästä peli muistaa parhaan prosentin Normaalissa ja Harjoituksessa, löydetyt kolikot ja yritykset.",
             "- Saavutukset: \"Tahdissa\" ensimmäisestä läpäistystä kentästä, \"Kolikkometsästäjä\" kentän kaikista kolmesta kolikosta, \"Demonintappaja\" Lama Infernosta - sekä virstanpylväs 20 tähden kohdalla.",
             "KENTÄT-välilehdellä rakennat, pelaat ja jaat omia kenttiä - katso sivu \"Omat kentät (Geometry Dash)\"."
           ]
@@ -2803,13 +2816,15 @@
         "vienti",
         "vahvistettu",
         "lamapgzlevel",
-        "geometry dash"
+        "geometry dash",
+        "valitse",
+        "lisää"
       ],
       "sections": [
         {
           "h": "Kentän rakentaminen",
           "body": [
-            "Geometry Dashin kentänvalinnan KENTÄT-välilehdellä on oma kokoelmasi (enintään 60 kenttää). \"Uusi\" avaa kenttäeditorin, \"Muokkaa\" jatkaa olemassa olevaa kenttää.",
+            "Geometry Dashin kentänvalinnan KENTÄT-välilehdellä on oma kokoelmasi (enintään 60 kenttää). \"Uusi\" kysyy ensin pohjaa, \"Muokkaa\" jatkaa olemassa olevaa kenttää.",
             "Vasemmalla on ruudukollinen piirtoalue, oikealla paletti: ylhäällä Valitse ja Pyyhin, niiden alla kuusi ryhmää - Palikat, Vaarat, Ponnahtimet ja pallot, Portaalit, Nopeus ja Lisät (salaiset kolikot, värilaukaisin). [1]–[6] valitsevat ryhmät suoraan.",
             "- Napsautus tai vetäminen asettaa valitun objektin, [R] kääntää sitä: piikit ja puolikkaat palikat neljään suuntaan, ponnahtimet ylös tai alas.",
             "- Valitse-työkalulla vetäminen siirtää objektia ja [Del] poistaa sen. Oikea napsautus poistaa aina; oikealla painikkeella vetäminen, hiiren rulla, nuolinäppäimet tai [A]/[D] vierittävät.",
@@ -2817,6 +2832,15 @@
             "- Aivan alimmainen kaistale näyttää koko kentän yhdellä silmäyksellä - napsautus hyppää siihen kohtaan.",
             "[U] kumoaa, [Y] tekee uudelleen, [G] näyttää tai piilottaa ruudukon, [S] tallentaa. [Esc] palaa takaisin - tallentamattomien muutosten kanssa vasta vahvistuksen jälkeen.",
             "Enintään kolme kolikkoa kenttää kohden. Maali asettuu automaattisesti vähän viimeisen objektin taakse."
+          ]
+        },
+        {
+          "h": "Pohjat",
+          "body": [
+            "Jokainen uusi kenttä alkaa pohjasta: \"Tyhjä\" aloittaa tyhjästä, muut yksitoista tuovat valmiin rungon - aloitus, hypyt, pads & pallot, alus, aalto, pallo, UFO, painovoima, vauhti, kolikot ja demoni.",
+            "Pohja tuo mukanaan esineensä, värinsä, musiikkinsa ja aloitusnopeutensa. Koska ratkaisija pelasi jokaisen pohjan läpi, kopiossa on heti vihreä merkki - kunnes muutat jotain.",
+            "Myös valmiit kentät voi kopioida: LISÄÄ-välilehdellä \"Pohjaksi\" lisää valitun kentän omiisi esineineen, väreineen ja musiikkeineen.",
+            "Kopio on aivan tavallinen oma kenttä: muokkaa, testaa, tallenna, pelaa ja jaa."
           ]
         },
         {

@@ -2717,7 +2717,10 @@
         "kontrolna točka",
         "demon",
         "glasba",
-        "stopnja"
+        "stopnja",
+        "več",
+        "kot predloga",
+        "izberi"
       ],
       "sections": [
         {
@@ -2734,7 +2737,7 @@
             "- [Preslednica], [Gor], [W], [Enter] ali levi gumb miške: skok ali let. Držanje šteje kot neprestano pritiskanje - kocka takrat po vsakem pristanku takoj spet skoči.",
             "- [R] takoj začne znova, [Q] ali [Backspace] vrne na izbiro stopnje, [Esc] ustavi igro.",
             "- [P] vklopi ali izklopi način vaje; v njem [Z] postavi kontrolno točko, [X] pa izbriše zadnjo.",
-            "- Izbira stopnje: [Levo]/[Desno] listata, [1] do [8] skočijo naravnost na stopnjo, [Enter] začne, [P] izbere Običajno ali Vajo, [M] vklopi glasbo, [Tab] preklopi na zavihek STOPNJE.",
+            "- Izbira stopnje: [Levo]/[Desno] listata, [1] do [9] in [0] skočijo naravnost na stopnje 1 do 10, [Home]/[End] na prvo ali zadnjo, [Enter] začne, [P] izbere Običajno ali Vajo, [M] vklopi glasbo, [Tab] kroži med IGRA, VEČ in STOPNJE.",
             "Vsak pritisk dobi časovni žig in deluje natanko v tistem koraku fizike (1/240 sekunde), v katerem se je zgodil - skok je zato natančen, tudi če se računalnik za hip zatakne."
           ]
         },
@@ -2760,14 +2763,24 @@
           ]
         },
         {
-          "h": "8 stopenj",
+          "h": "16 stopenj",
           "body": [
-            "- Lama Launch (Lahko, 1 zvezdica) in Neon Steps (Lahko, 2 zvezdici): skoki, odskoki, krogle in prva ladja.",
-            "- Orbit Garden (Običajno, 3 zvezdice): verige krogel, z glavo navzdol pod stropom in ladja z dvojno hitrostjo.",
-            "- Gravity Tide (Težko, 4 zvezdice) in Skyline Rush (Težko, 5 zvezdic): portali težnosti, žoga, NLP, jame in trojna hitrost.",
-            "- Crystal Caves (Težje, 7 zvezdic) in Wave Reactor (Noro, 9 zvezdic): vseh pet oblik, ozka vrata in tuneli za val.",
-            "- Lama Inferno (Demon, 10 zvezdic): trojna hitrost in vse naenkrat.",
+            "- Lama Launch, Neon Steps in Pixel Sprint (Lahko, 1-2 zvezdici): skoki, odskoki, krogle in prva ladja.",
+            "- Orbit Garden in Moss Temple (Običajno, po 3 zvezdice): verige krogel in mirni odseki na glavo pod stropom.",
+            "- Gravity Tide, Magnet Fields, Skyline Rush in Hangar Run (Težko, 4-5 zvezdic): težnostni portali, žoga, NLP in ozka ladijska vrata pri dvojni hitrosti.",
+            "- Crystal Caves, Strobe City in Frost Relay (Težje, 6-7 zvezdic): vseh pet oblik, ritmični odseki in veliko menjav barv.",
+            "- Wave Reactor in Turbine Core (Noro, po 9 zvezdic): val v ozkem predoru.",
+            "- Lama Inferno in Lama Eclipse (Demon, po 10 zvezdic): trojna hitrost in vse hkrati.",
             "Vsaka stopnja je dokazano rešljiva, skupaj z vsemi tremi kovanci: ob gradnji jo je reševalec opravil s pravo kodo igre - in njegova rešitev deluje celo z zamikom 1/240 sekunde."
+          ]
+        },
+        {
+          "h": "Več: 80 stopenj po kategorijah",
+          "body": [
+            "Zavihek VEČ je knjižnica z 80 dodatnimi stopnjami v desetih kategorijah: začetek, ritem, kovanci, ladja, NLP, žoga, težnost, hitrost, val in demon.",
+            "Zgoraj izbereš kategorijo, pod njo iščeš po imenu. Vsaka vrstica kaže težavnost, dolžino, najdene kovance in tvoj najboljši poskus; \"Naključno\" ti eno kar vrže pred oči.",
+            "Tudi te stopnje je dokazal reševalnik: cilj in vsi trije kovanci so dosegljivi. Vodijo svoj napredek, a ne dajo zvezdic in ne dosežkov - ti ostanejo kampanji.",
+            "\"Kot predloga\" kopira izbrano stopnjo med tvoje lastne, kjer jo predelaš. Več na strani \"Lastne stopnje (Geometry Dash)\"."
           ]
         },
         {
@@ -2782,7 +2795,7 @@
           "h": "Zvezdice, kovanci in dosežki",
           "body": [
             "Kdor stopnjo opravi v običajnem načinu, dobi njene zvezdice. V vsaki stopnji so poleg tega skriti trije skrivni kovanci, pogosto stran od najlažje poti. Štejejo, ko stopnjo z njimi končaš - in vsak je vreden še eno zvezdico.",
-            "Tvoj rekord je skupno število zvezdic (največ 65) in lahko le raste. Za vsako stopnjo si igra zapomni najboljši odstotek v Običajnem načinu in Vaji, najdene kovance in poskuse.",
+            "Tvoj rekord je skupno število zvezdic (največ 135) in lahko le raste. Za vsako stopnjo si igra zapomni najboljši odstotek v Običajnem načinu in Vaji, najdene kovance in poskuse.",
             "- Dosežki: \"V ritmu\" za prvo opravljeno stopnjo, \"Lovec na kovance\" za vse tri kovance v stopnji, \"Premagovalec demonov\" za Lama Inferno - in mejnik pri 20 zvezdicah.",
             "Na zavihku STOPNJE gradiš, igraš in deliš lastne stopnje - glej stran \"Lastne stopnje (Geometry Dash)\"."
           ]
@@ -2804,13 +2817,15 @@
         "izvoz",
         "preverjeno",
         "lamapgzlevel",
-        "geometry dash"
+        "geometry dash",
+        "izberi",
+        "več"
       ],
       "sections": [
         {
           "h": "Gradnja stopnje",
           "body": [
-            "Zavihek STOPNJE pri izbiri stopnje v Geometry Dash hrani tvojo lastno zbirko (do 60 stopenj). \"Nova\" odpre urejevalnik stopenj, \"Uredi\" nadaljuje obstoječo stopnjo.",
+            "Zavihek STOPNJE pri izbiri stopnje v Geometry Dash hrani tvojo lastno zbirko (do 60 stopenj). \"Nova\" najprej vpraša po predlogi, \"Uredi\" nadaljuje obstoječo stopnjo.",
             "Levo je platno z mrežo, desno paleta: zgoraj Izberi in Radirka, pod njima šest skupin - Bloki, Nevarnosti, Odskoki in krogle, Portali, Hitrost in Dodatki (skrivni kovanci, sprožilec barve). [1] do [6] izberejo skupine neposredno.",
             "- Klik ali vlečenje postavi izbrani predmet, [R] ga zavrti: bodice in polovične bloke v štiri smeri, odskoke navzgor ali navzdol.",
             "- Z orodjem Izberi vlečenje premakne predmet, [Del] ga izbriše. Desni klik vedno briše; vlečenje z desnim gumbom, kolešček miške, puščice ali [A]/[D] premikajo pogled.",
@@ -2818,6 +2833,15 @@
             "- Trak čisto spodaj prikaže celotno stopnjo na en pogled - klik skoči na tisto mesto.",
             "[U] razveljavi, [Y] uveljavi znova, [G] pokaže ali skrije mrežo, [S] shrani. [Esc] vodi nazaj - z neshranjenimi spremembami šele po potrditvi.",
             "Največ trije kovanci na stopnjo. Cilj se samodejno postavi malo za zadnjim predmetom."
+          ]
+        },
+        {
+          "h": "Predloge",
+          "body": [
+            "Vsaka nova stopnja se začne s predlogo: \"Prazno\" začne povsem na novo, drugih enajst prinese gotovo ogrodje - začetek, skoki, odskoki in krogle, ladja, val, žoga, NLP, težnost, hitrost, kovanci in demon.",
+            "Predloga prinese svoje predmete, barve, glasbo in začetno hitrost. Ker je reševalnik prešel vsako predlogo, ima kopija takoj zeleno kljukico - dokler česa ne spremeniš.",
+            "Kopirati je mogoče tudi gotove stopnje: v zavihku VEČ \"Kot predloga\" doda izbrano stopnjo med tvoje, skupaj s predmeti, barvami in glasbo.",
+            "Kopija je čisto navadna lastna stopnja: predelaj, preizkusi, shrani, igraj in deli."
           ]
         },
         {

@@ -2717,7 +2717,10 @@
         "kontrol noktası",
         "iblis",
         "müzik",
-        "bölüm"
+        "bölüm",
+        "daha fazla",
+        "şablon yap",
+        "şablon"
       ],
       "sections": [
         {
@@ -2734,7 +2737,7 @@
             "- [Boşluk], [Yukarı], [W], [Enter] veya sol fare tuşu: zıpla ya da uç. Basılı tutmak sürekli basmak sayılır - küp her inişten hemen sonra yeniden zıplar.",
             "- [R] anında yeniden başlatır, [Q] veya [Backspace] bölüm seçimine döner, [Esc] duraklatır.",
             "- [P] antrenman modunu açıp kapatır; bu modda [Z] kontrol noktası koyar, [X] sonuncuyu siler.",
-            "- Bölüm seçimi: [Sol]/[Sağ] bölümler arasında gezer, [1] ile [8] arası doğrudan bir bölüme geçer, [Enter] başlatır, [P] Normal ya da Antrenman seçer, [M] müziği açıp kapatır, [Tab] BÖLÜMLER sekmesine geçer.",
+            "- Bölüm seçimi: [Sol]/[Sağ] gezinir, [1] ile [9] ve [0] doğrudan 1-10. bölümlere atlar, [Home]/[End] ilkine ya da sonuncusuna gider, [Enter] başlatır, [P] Normal ya da Antrenman seçer, [M] müziği açıp kapatır, [Tab] OYUN, DAHA FAZLA ve BÖLÜMLER arasında döner.",
             "Her basış bir zaman damgası alır ve tam olarak gerçekleştiği fizik adımında (saniyenin 1/240'ı) etki eder - bilgisayar bir anlığına takılsa bile zıplama tam yerinde olur."
           ]
         },
@@ -2760,14 +2763,24 @@
           ]
         },
         {
-          "h": "8 bölüm",
+          "h": "16 bölüm",
           "body": [
-            "- Lama Launch (Kolay, 1 yıldız) ve Neon Steps (Kolay, 2 yıldız): zıplamalar, pedler, küreler ve ilk gemi.",
-            "- Orbit Garden (Normal, 3 yıldız): küre zincirleri, tavanda baş aşağı ve iki kat hızda gemi.",
-            "- Gravity Tide (Zor, 4 yıldız) ve Skyline Rush (Zor, 5 yıldız): yerçekimi portalları, top, UFO, çukurlar ve üç kat hız.",
-            "- Crystal Caves (Daha zor, 7 yıldız) ve Wave Reactor (Çılgın, 9 yıldız): beş biçimin hepsi, dar kapılar ve dalga tünelleri.",
-            "- Lama Inferno (İblis, 10 yıldız): üç kat hız ve hepsi bir arada.",
+            "- Lama Launch, Neon Steps ve Pixel Sprint (Kolay, 1-2 yıldız): zıplamalar, pedler, küreler ve ilk gemi.",
+            "- Orbit Garden ve Moss Temple (Normal, üçer yıldız): küre zincirleri ve tavanda baş aşağı sakin bölümler.",
+            "- Gravity Tide, Magnet Fields, Skyline Rush ve Hangar Run (Zor, 4-5 yıldız): yerçekimi portalları, top, UFO ve çift hızda dar gemi kapıları.",
+            "- Crystal Caves, Strobe City ve Frost Relay (Daha zor, 6-7 yıldız): beş formun tamamı, ritim bölümleri ve bol renk değişimi.",
+            "- Wave Reactor ve Turbine Core (Çılgın, dokuzar yıldız): dar tünelde dalga.",
+            "- Lama Inferno ve Lama Eclipse (İblis, onar yıldız): üç kat hız ve her şey bir arada.",
             "Her bölümün, üç altının tamamıyla birlikte geçilebildiği kanıtlanmıştır: yapım sırasında bir çözücü onu gerçek oyun koduyla bitirdi - ve çözümü saniyenin 1/240'ı kadar kaydırıldığında bile işe yarıyor."
+          ]
+        },
+        {
+          "h": "Daha fazla: kategorilere ayrılmış 80 bölüm",
+          "body": [
+            "DAHA FAZLA sekmesi, on kategoriye ayrılmış 80 ek bölümden oluşan bir kütüphanedir: başlangıç, ritim, altınlar, gemi, UFO, top, yerçekimi, hız, dalga ve iblis.",
+            "Üstte kategoriyi seçer, altında adıyla ararsın. Her satır zorluğu, uzunluğu, bulduğun altınları ve en iyi derecen gösterir; \"Rastgele\" seçimden birini önüne atar.",
+            "Bu bölümler de çözücüyle kanıtlanmıştır: bitiş ve üç altının tamamı ulaşılabilir. Kendi ilerlemelerini tutarlar ama yıldız ve başarım vermezler - onlar kampanyaya özel.",
+            "\"Şablon yap\", seçili bölümü kendi bölümlerine kopyalar; orada onu yeniden kurabilirsin. Ayrıntılar \"Kendi bölümlerin (Geometry Dash)\" sayfasında."
           ]
         },
         {
@@ -2782,7 +2795,7 @@
           "h": "Yıldızlar, altınlar ve başarımlar",
           "body": [
             "Bir bölümü normal modda bitirirsen yıldızlarını kazanırsın. Her bölümde ayrıca çoğu zaman en kolay yolun dışında kalan üç gizli altın saklıdır. Bölümü onlarla bitirdiğin anda sayılırlar - ve her biri bir yıldız daha değerindedir.",
-            "Rekorun toplam yıldız sayındır (en fazla 65) ve yalnızca artabilir. Oyun her bölüm için Normal ve Antrenman'daki en iyi yüzdeyi, bulunan altınları ve denemeleri saklar.",
+            "Rekorun toplam yıldız sayındır (en fazla 135) ve yalnızca artabilir. Oyun her bölüm için Normal ve Antrenman'daki en iyi yüzdeyi, bulunan altınları ve denemeleri saklar.",
             "- Başarımlar: ilk tamamlanan bölüm için \"Ritimde\", bir bölümün üç altını için \"Altın avcısı\", Lama Inferno için \"İblis avcısı\" - ve 20 yıldızda bir kilometre taşı.",
             "BÖLÜMLER sekmesinde kendi bölümlerini kurar, oynar ve paylaşırsın - \"Kendi bölümlerin (Geometry Dash)\" sayfasına bak."
           ]
@@ -2804,13 +2817,15 @@
         "dışa aktarmak",
         "doğrulandı",
         "lamapgzlevel",
-        "geometry dash"
+        "geometry dash",
+        "şablon",
+        "daha fazla"
       ],
       "sections": [
         {
           "h": "Bölüm kurmak",
           "body": [
-            "Geometry Dash bölüm seçimindeki BÖLÜMLER sekmesinde kendi koleksiyonun durur (en fazla 60 bölüm). \"Yeni\" bölüm editörünü açar, \"Düzenle\" mevcut bir bölümü yeniden açar.",
+            "Geometry Dash bölüm seçimindeki BÖLÜMLER sekmesinde kendi koleksiyonun durur (en fazla 60 bölüm). \"Yeni\" önce bir şablon sorar, \"Düzenle\" mevcut bir bölüme geri döner.",
             "Solda ızgaralı tuval, sağda palet vardır: üstte Seç ve Silgi, altında altı grup - Bloklar, Tehlikeler, Pedler ve küreler, Portallar, Hız ve Ekstralar (gizli altınlar, renk tetikleyici). [1] ile [6] arası grupları doğrudan seçer.",
             "- Tıklamak ya da sürüklemek seçili nesneyi yerleştirir, [R] onu döndürür: dikenler ve yarım bloklar dört yöne, pedler yukarı ya da aşağı.",
             "- Seç aracıyla sürüklemek bir nesneyi taşır, [Del] siler. Sağ tık her zaman siler; sağ tuşla sürüklemek, fare tekerleği, yön tuşları veya [A]/[D] görünümü kaydırır.",
@@ -2818,6 +2833,15 @@
             "- En alttaki şerit tüm bölümü bir bakışta gösterir - bir tıklama o noktaya atlar.",
             "[U] geri alır, [Y] yineler, [G] ızgarayı gösterir ya da gizler, [S] kaydeder. [Esc] geri döner - kaydedilmemiş değişiklikler varsa ancak onaydan sonra.",
             "Bölüm başına en fazla üç altın. Bitiş otomatik olarak son nesnenin biraz arkasına yerleşir."
+          ]
+        },
+        {
+          "h": "Şablonlar",
+          "body": [
+            "Her yeni bölüm bir şablonla başlar: \"Boş\" sıfırdan başlar, diğer on bir tanesi hazır bir iskelet getirir - başlangıç, zıplamalar, pedler ve küreler, gemi, dalga, top, UFO, yerçekimi, hız, altınlar ve iblis.",
+            "Şablon; nesnelerini, renklerini, müziğini ve başlangıç hızını da getirir. Çözücü her şablonu baştan sona oynadığı için kopya hemen yeşil işareti taşır - sen bir şeyi değiştirene kadar.",
+            "Bitmiş bölümler de kopyalanır: DAHA FAZLA sekmesinde \"Şablon yap\", seçili bölümü nesneleri, renkleri ve müziğiyle birlikte kendi bölümlerine ekler.",
+            "Kopya, sıradan bir kendi bölümündür: yeniden kur, dene, kaydet, oyna ve paylaş."
           ]
         },
         {

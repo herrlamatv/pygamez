@@ -2717,7 +2717,10 @@
         "sjekkpunkt",
         "demon",
         "musikk",
-        "bane"
+        "bane",
+        "mer",
+        "som mal",
+        "velg"
       ],
       "sections": [
         {
@@ -2734,7 +2737,7 @@
             "- [Mellomrom], [Opp], [W], [Enter] eller venstre museknapp: hopp eller fly. Å holde inne teller som å trykke hele tiden - kuben hopper da igjen rett etter hver landing.",
             "- [R] starter på nytt med en gang, [Q] eller [Backspace] går tilbake til banevalget, [Esc] pauser.",
             "- [P] slår treningsmodus av og på; der setter [Z] et sjekkpunkt og [X] fjerner det siste.",
-            "- Banevalg: [Venstre]/[Høyre] blar, [1] til [8] hopper rett til en bane, [Enter] starter, [P] velger Normal eller Trening, [M] slår musikken av og på, [Tab] bytter til fanen BANER.",
+            "- Banevalg: [Venstre]/[Høyre] blar, [1] til [9] og [0] hopper rett til bane 1 til 10, [Home]/[End] til den første eller siste, [Enter] starter, [P] velger Normal eller Trening, [M] slår musikken av og på, [Tab] veksler mellom SPILL, MER og BANER.",
             "Hvert trykk får et tidsstempel og virker nøyaktig i det fysikksteget (1/240 sekund) der det skjedde - hoppet sitter altså riktig selv om maskinen hakker et øyeblikk."
           ]
         },
@@ -2760,14 +2763,24 @@
           ]
         },
         {
-          "h": "De 8 banene",
+          "h": "De 16 banene",
           "body": [
-            "- Lama Launch (Lett, 1 stjerne) og Neon Steps (Lett, 2 stjerner): hopp, pads, kuler og det første skipet.",
-            "- Orbit Garden (Normal, 3 stjerner): kulekjeder, opp ned under taket og skip i dobbel fart.",
-            "- Gravity Tide (Vanskelig, 4 stjerner) og Skyline Rush (Vanskelig, 5 stjerner): tyngdekraftportaler, ball, UFO, groper og tredobbel fart.",
-            "- Crystal Caves (Vanskeligere, 7 stjerner) og Wave Reactor (Vanvittig, 9 stjerner): alle fem formene, trange porter og bølgetunneler.",
-            "- Lama Inferno (Demon, 10 stjerner): tredobbel fart og alt på en gang.",
+            "- Lama Launch, Neon Steps og Pixel Sprint (Lett, 1-2 stjerner): hopp, pads, kuler og det første skipet.",
+            "- Orbit Garden og Moss Temple (Normal, 3 stjerner hver): kulekjeder og rolige strekk opp ned under taket.",
+            "- Gravity Tide, Magnet Fields, Skyline Rush og Hangar Run (Vanskelig, 4-5 stjerner): tyngdeportaler, kule, UFO og trange skipsporter i dobbel fart.",
+            "- Crystal Caves, Strobe City og Frost Relay (Vanskeligere, 6-7 stjerner): alle fem former, rytmiske strekk og mange fargeskift.",
+            "- Wave Reactor og Turbine Core (Vanvittig, 9 stjerner hver): bølgen i en trang tunnel.",
+            "- Lama Inferno og Lama Eclipse (Demon, 10 stjerner hver): tredobbel fart og alt på én gang.",
             "Hver bane kan bevislig klares, med alle tre myntene: da den ble bygget, klarte en løsningsalgoritme den med spillets ekte kode - og løsningen fungerer til og med forskjøvet med 1/240 sekund."
+          ]
+        },
+        {
+          "h": "Mer: 80 baner i kategorier",
+          "body": [
+            "Fanen MER er et bibliotek med 80 ekstra baner i ti kategorier: start, rytme, mynter, skip, UFO, kule, tyngdekraft, fart, bølge og demon.",
+            "Øverst velger du kategori, under søker du i navnet. Hver linje viser vanskegrad, lengde, funne mynter og din beste runde; \"Tilfeldig\" kaster en av utvalget til deg.",
+            "Også disse banene er bevist av løsningsprogrammet: målet og alle tre myntene kan nås. De har sin egen framgang, men gir verken stjerner eller bragder - det beholder kampanjen.",
+            "\"Som mal\" kopierer den valgte banen til dine egne baner, der du kan bygge den om. Mer på siden \"Egne baner (Geometry Dash)\"."
           ]
         },
         {
@@ -2782,7 +2795,7 @@
           "h": "Stjerner, mynter og prestasjoner",
           "body": [
             "Klarer du en bane i normal modus, får du stjernene. Hver bane skjuler dessuten tre hemmelige mynter, ofte utenfor den enkleste veien. De teller så snart du fullfører banen med dem - og hver er verdt en stjerne til.",
-            "Rekorden din er det samlede antallet stjerner (høyst 65), og den kan bare vokse. For hver bane husker spillet beste prosent i Normal og Trening, myntene du har funnet og forsøkene.",
+            "Rekorden din er det samlede antallet stjerner (høyst 135), og den kan bare vokse. For hver bane husker spillet beste prosent i Normal og Trening, myntene du har funnet og forsøkene.",
             "- Prestasjoner: \"I takt\" for første klarte bane, \"Myntjeger\" for alle tre myntene i en bane, \"Demonbeseirer\" for Lama Inferno - pluss en milepæl ved 20 stjerner.",
             "I fanen BANER bygger, spiller og deler du dine egne baner - se siden \"Egne baner (Geometry Dash)\"."
           ]
@@ -2804,13 +2817,15 @@
         "eksportere",
         "verifisert",
         "lamapgzlevel",
-        "geometry dash"
+        "geometry dash",
+        "velg",
+        "mer"
       ],
       "sections": [
         {
           "h": "Bygg en bane",
           "body": [
-            "Fanen BANER i banevalget til Geometry Dash inneholder din egen samling (opptil 60 baner). \"Ny\" åpner baneeditoren, \"Rediger\" tar opp igjen en eksisterende bane.",
+            "Fanen BANER i banevalget til Geometry Dash inneholder din egen samling (opptil 60 baner). \"Ny\" spør først etter en mal, \"Rediger\" tar opp igjen en eksisterende bane.",
             "Til venstre ligger lerretet med rutenett, til høyre paletten: øverst Velg og Viskelær, under dem seks grupper - Blokker, Farer, Pads & kuler, Portaler, Fart og Ekstra (hemmelige mynter, farge-trigger). [1] til [6] velger gruppene direkte.",
             "- Klikk eller dra plasserer det valgte objektet, [R] roterer det: pigger og halvblokker i fire retninger, pads opp eller ned.",
             "- Med Velg flytter dra et objekt, og [Del] sletter det. Et høyreklikk sletter alltid; høyredra, musehjulet, piltastene eller [A]/[D] ruller.",
@@ -2818,6 +2833,15 @@
             "- Stripen helt nederst viser hele banen i oversikt - et klikk hopper dit.",
             "[U] angrer, [Y] gjør om, [G] viser eller skjuler rutenettet, [S] lagrer. [Esc] går tilbake - med ulagrede endringer først etter en bekreftelse.",
             "Høyst tre mynter per bane. Målet plasseres automatisk et stykke bak det siste objektet."
+          ]
+        },
+        {
+          "h": "Maler",
+          "body": [
+            "Hver ny bane begynner med en mal: \"Tom\" starter fra bunnen, de elleve andre tar med et ferdig skjelett - start, hopp, pads & kuler, skip, bølge, kule, UFO, tyngdekraft, fart, mynter og demon.",
+            "En mal tar med objektene, fargene, musikken og startfarten sin. Siden løsningsprogrammet har spilt gjennom hver mal, bærer kopien den grønne haken med en gang - helt til du endrer noe.",
+            "Ferdige baner kan også kopieres: i fanen MER legger \"Som mal\" den valgte banen til dine egne, med objekter, farger og musikk.",
+            "En kopi er en helt vanlig egen bane: bygg om, test, lagre, spill og del."
           ]
         },
         {

@@ -2717,7 +2717,10 @@
         "checkpoint",
         "demon",
         "musik",
-        "bana"
+        "bana",
+        "mer",
+        "som mall",
+        "välj"
       ],
       "sections": [
         {
@@ -2734,7 +2737,7 @@
             "- [Mellanslag], [Upp], [W], [Enter] eller vänster musknapp: hoppa eller flyg. Att hålla in räknas som att trycka hela tiden - kuben hoppar då igen direkt efter varje landning.",
             "- [R] börjar om direkt, [Q] eller [Backspace] går tillbaka till banvalet, [Esc] pausar.",
             "- [P] slår på och av träningsläget; där sätter [Z] en checkpoint och [X] tar bort den senaste.",
-            "- Banval: [Vänster]/[Höger] bläddrar, [1] till [8] hoppar direkt till en bana, [Enter] startar, [P] väljer Normal eller Träning, [M] slår på och av musiken, [Tab] byter till fliken BANOR.",
+            "- Banval: [Vänster]/[Höger] bläddrar, [1] till [9] och [0] hoppar direkt till bana 1 till 10, [Home]/[End] till den första eller sista, [Enter] startar, [P] väljer Normal eller Träning, [M] slår på och av musiken, [Tab] växlar mellan SPEL, MER och BANOR.",
             "Varje tryck får en tidsstämpel och verkar exakt i det fysiksteg (1/240 sekund) där det hände - hoppet sitter alltså rätt även om datorn hackar en stund."
           ]
         },
@@ -2760,14 +2763,24 @@
           ]
         },
         {
-          "h": "De 8 banorna",
+          "h": "De 16 banorna",
           "body": [
-            "- Lama Launch (Lätt, 1 stjärna) och Neon Steps (Lätt, 2 stjärnor): hopp, pads, klot och det första skeppet.",
-            "- Orbit Garden (Normal, 3 stjärnor): klotkedjor, upp och ner under taket och skepp i dubbel fart.",
-            "- Gravity Tide (Svår, 4 stjärnor) och Skyline Rush (Svår, 5 stjärnor): gravitationsportaler, boll, UFO, gropar och tredubbel fart.",
-            "- Crystal Caves (Svårare, 7 stjärnor) och Wave Reactor (Vansinnig, 9 stjärnor): alla fem formerna, smala portar och vågtunnlar.",
-            "- Lama Inferno (Demon, 10 stjärnor): tredubbel fart och allt på en gång.",
+            "- Lama Launch, Neon Steps och Pixel Sprint (Lätt, 1-2 stjärnor): hopp, pads, klot och det första skeppet.",
+            "- Orbit Garden och Moss Temple (Normal, 3 stjärnor vardera): klotkedjor och lugna sträckor upp och ner i taket.",
+            "- Gravity Tide, Magnet Fields, Skyline Rush och Hangar Run (Svår, 4-5 stjärnor): gravitationsportaler, boll, UFO och trånga skeppsportar i dubbel fart.",
+            "- Crystal Caves, Strobe City och Frost Relay (Svårare, 6-7 stjärnor): alla fem former, rytmiska sträckor och många färgbyten.",
+            "- Wave Reactor och Turbine Core (Vansinnig, 9 stjärnor vardera): vågen i en trång tunnel.",
+            "- Lama Inferno och Lama Eclipse (Demon, 10 stjärnor vardera): tredubbel fart och allt på en gång.",
             "Varje bana går bevisligen att klara, med alla tre mynt: när den byggdes klarade en lösningsalgoritm den med spelets riktiga kod - och lösningen fungerar till och med förskjuten med 1/240 sekund."
+          ]
+        },
+        {
+          "h": "Mer: 80 banor i kategorier",
+          "body": [
+            "Fliken MER är ett bibliotek med 80 extra banor i tio kategorier: start, rytm, mynt, skepp, UFO, boll, gravitation, fart, våg och demon.",
+            "Överst väljer du kategori, under söker du i namnet. Varje rad visar svårighet, längd, hittade mynt och ditt bästa försök; \"Slumpa\" slänger fram en ur urvalet.",
+            "Även dessa banor är bevisade av lösaren: målet och alla tre mynt går att nå. De har egen framgång men ger varken stjärnor eller bedrifter - det stannar hos kampanjen.",
+            "\"Som mall\" kopierar den valda banan till dina egna banor, där du bygger om den. Mer på sidan \"Egna banor (Geometry Dash)\"."
           ]
         },
         {
@@ -2782,7 +2795,7 @@
           "h": "Stjärnor, mynt och prestationer",
           "body": [
             "Klarar du en bana i normalt läge får du dess stjärnor. Varje bana gömmer dessutom tre hemliga mynt, ofta vid sidan av den enklaste vägen. De räknas så fort du klarar banan med dem - och vart och ett är värt en stjärna till.",
-            "Ditt rekord är ditt totala antal stjärnor (högst 65), och det kan bara växa. För varje bana minns spelet bästa procent i Normal och Träning, hittade mynt och antalet försök.",
+            "Ditt rekord är ditt totala antal stjärnor (högst 135), och det kan bara växa. För varje bana minns spelet bästa procent i Normal och Träning, hittade mynt och antalet försök.",
             "- Prestationer: \"I takt\" för din första klarade bana, \"Myntjägare\" för alla tre mynt i en bana, \"Demonbetvingare\" för Lama Inferno - plus en milstolpe vid 20 stjärnor.",
             "I fliken BANOR bygger, spelar och delar du egna banor - se sidan \"Egna banor (Geometry Dash)\"."
           ]
@@ -2804,13 +2817,15 @@
         "exportera",
         "verifierad",
         "lamapgzlevel",
-        "geometry dash"
+        "geometry dash",
+        "välj",
+        "mer"
       ],
       "sections": [
         {
           "h": "Bygg en bana",
           "body": [
-            "Fliken BANOR i banvalet för Geometry Dash rymmer din egen samling (upp till 60 banor). \"Ny\" öppnar baneditorn, \"Redigera\" tar upp en befintlig bana igen.",
+            "Fliken BANOR i banvalet för Geometry Dash rymmer din egen samling (upp till 60 banor). \"Ny\" frågar först efter en mall, \"Redigera\" tar upp en befintlig bana igen.",
             "Till vänster ligger duken med rutnät, till höger paletten: överst Välj och Suddgummi, under dem sex grupper - Block, Faror, Pads & klot, Portaler, Fart och Extra (hemliga mynt, färgtrigger). [1] till [6] väljer grupperna direkt.",
             "- Klicka eller dra placerar det valda objektet, [R] roterar det: taggar och halvblock i fyra riktningar, pads uppåt eller nedåt.",
             "- Med Välj flyttar dra ett objekt och [Del] tar bort det. Ett högerklick raderar alltid; högerdra, mushjulet, piltangenterna eller [A]/[D] rullar.",
@@ -2818,6 +2833,15 @@
             "- Remsan allra längst ner visar hela banan i överblick - ett klick hoppar dit.",
             "[U] ångrar, [Y] gör om, [G] visar eller döljer rutnätet, [S] sparar. [Esc] går tillbaka - med osparade ändringar först efter en bekräftelse.",
             "Högst tre mynt per bana. Målet placeras automatiskt en bit efter det sista objektet."
+          ]
+        },
+        {
+          "h": "Mallar",
+          "body": [
+            "Varje ny bana börjar med en mall: \"Tom\" startar från noll, de andra elva har ett färdigt skelett - start, hopp, pads & klot, skepp, våg, boll, UFO, gravitation, fart, mynt och demon.",
+            "En mall tar med sina objekt, färger, musik och startfart. Eftersom lösaren spelat igenom varje mall bär kopian den gröna bocken direkt - tills du ändrar något.",
+            "Färdiga banor går också att kopiera: i fliken MER lägger \"Som mall\" den valda banan bland dina egna, med objekt, färger och musik.",
+            "En kopia är en helt vanlig egen bana: bygg om, testa, spara, spela och dela."
           ]
         },
         {

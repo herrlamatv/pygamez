@@ -2714,7 +2714,10 @@
         "checkpoint",
         "demónio",
         "música",
-        "nível"
+        "nível",
+        "mais",
+        "como modelo",
+        "escolhe"
       ],
       "sections": [
         {
@@ -2731,7 +2734,7 @@
             "- [Espaço], [Cima], [W], [Enter] ou botão esquerdo do rato: saltar ou voar. Manter premido conta como premir sem parar - o cubo volta a saltar logo após cada aterragem.",
             "- [R] recomeça de imediato, [Q] ou [Backspace] volta à escolha de níveis, [Esc] pausa.",
             "- [P] liga ou desliga o modo treino; nele [Z] coloca um ponto de controlo e [X] apaga o último.",
-            "- Escolha de níveis: [Esquerda]/[Direita] mudam de nível, [1] a [8] saltam diretamente para um, [Enter] começa, [P] escolhe Normal ou Treino, [M] liga a música, [Tab] muda para o separador NÍVEIS.",
+            "- Escolha de níveis: [Esquerda]/[Direita] mudam de nível, [1] a [9] e [0] saltam diretamente para os níveis 1 a 10, [Home]/[End] para o primeiro ou o último, [Enter] começa, [P] escolhe Normal ou Treino, [M] liga a música, [Tab] alterna entre JOGO, MAIS e NÍVEIS.",
             "Cada toque recebe uma marca temporal e atua exatamente no passo de física (1/240 de segundo) em que aconteceu - o salto sai certo mesmo que o computador engasgue por um momento."
           ]
         },
@@ -2757,14 +2760,24 @@
           ]
         },
         {
-          "h": "Os 8 níveis",
+          "h": "Os 16 níveis",
           "body": [
-            "- Lama Launch (Fácil, 1 estrela) e Neon Steps (Fácil, 2 estrelas): saltos, plataformas, orbes e a primeira nave.",
-            "- Orbit Garden (Normal, 3 estrelas): cadeias de orbes, de cabeça para baixo no teto e nave a velocidade dupla.",
-            "- Gravity Tide (Difícil, 4 estrelas) e Skyline Rush (Difícil, 5 estrelas): portais de gravidade, bola, OVNI, buracos e velocidade tripla.",
-            "- Crystal Caves (Mais difícil, 7 estrelas) e Wave Reactor (Insano, 9 estrelas): as cinco formas, portas estreitas e túneis de onda.",
-            "- Lama Inferno (Demónio, 10 estrelas): velocidade tripla e tudo ao mesmo tempo.",
+            "- Lama Launch, Neon Steps e Pixel Sprint (Fácil, 1-2 estrelas): saltos, plataformas, orbes e a primeira nave.",
+            "- Orbit Garden e Moss Temple (Normal, 3 estrelas cada): correntes de orbes e trechos calmos de cabeça para baixo no teto.",
+            "- Gravity Tide, Magnet Fields, Skyline Rush e Hangar Run (Difícil, 4-5 estrelas): portais de gravidade, bola, OVNI e portas de nave apertadas ao dobro da velocidade.",
+            "- Crystal Caves, Strobe City e Frost Relay (Mais difícil, 6-7 estrelas): as cinco formas, trechos ritmados e muitas mudanças de cor.",
+            "- Wave Reactor e Turbine Core (Insano, 9 estrelas cada): a onda num túnel estreito.",
+            "- Lama Inferno e Lama Eclipse (Demónio, 10 estrelas cada): velocidade tripla e tudo ao mesmo tempo.",
             "Cada nível é comprovadamente possível, incluindo as três moedas: ao construí-lo, um solucionador completou-o com o verdadeiro código do jogo - e a solução funciona até com 1/240 de segundo de desvio."
+          ]
+        },
+        {
+          "h": "Mais: 80 níveis por categorias",
+          "body": [
+            "O separador MAIS é uma biblioteca com 80 níveis extra em dez categorias: início, ritmo, moedas, nave, OVNI, bola, gravidade, velocidade, onda e demónio.",
+            "Em cima escolhes a categoria, por baixo procuras pelo nome. Cada linha mostra dificuldade, comprimento, as moedas encontradas e a tua melhor marca; \"Aleatório\" atira-te um da seleção.",
+            "Também estes níveis estão provados pelo solucionador: a meta e as três moedas são alcançáveis. Têm o seu próprio progresso, mas não dão estrelas nem proezas - isso fica para a campanha.",
+            "\"Como modelo\" copia o nível escolhido para os teus próprios níveis, onde o podes transformar. Mais na página \"Níveis próprios (Geometry Dash)\"."
           ]
         },
         {
@@ -2779,7 +2792,7 @@
           "h": "Estrelas, moedas e conquistas",
           "body": [
             "Se concluíres um nível no modo normal, ganhas as suas estrelas. Cada nível esconde ainda três moedas secretas, muitas vezes fora do caminho mais fácil. Contam assim que terminas o nível com elas - e cada uma vale mais uma estrela.",
-            "O teu recorde é o total de estrelas (no máximo 65) e só pode crescer. Para cada nível o jogo guarda a melhor percentagem em Normal e Treino, as moedas encontradas e as tentativas.",
+            "O teu recorde é o total de estrelas (no máximo 135) e só pode crescer. Para cada nível o jogo guarda a melhor percentagem em Normal e Treino, as moedas encontradas e as tentativas.",
             "- Conquistas: \"No ritmo\" pelo primeiro nível concluído, \"Caçador de moedas\" pelas três moedas de um nível, \"Caçador de demónios\" por Lama Inferno - e um marco às 20 estrelas.",
             "No separador NÍVEIS constróis, jogas e partilhas os teus próprios níveis - vê a página \"Níveis próprios (Geometry Dash)\"."
           ]
@@ -2801,13 +2814,15 @@
         "exportar",
         "verificado",
         "lamapgzlevel",
-        "geometry dash"
+        "geometry dash",
+        "escolhe",
+        "mais"
       ],
       "sections": [
         {
           "h": "Criar um nível",
           "body": [
-            "O separador NÍVEIS da escolha de níveis do Geometry Dash guarda a tua própria coleção (até 60 níveis). \"Novo\" abre o editor de níveis, \"Editar\" retoma um nível existente.",
+            "O separador NÍVEIS da escolha de níveis do Geometry Dash guarda a tua própria coleção (até 60 níveis). \"Novo\" pede primeiro um modelo, \"Editar\" retoma um nível existente.",
             "À esquerda fica a tela com grelha, à direita a paleta: em cima Selecionar e Borracha, por baixo seis grupos - Blocos, Perigos, Plataformas e orbes, Portais, Velocidade e Extras (moedas secretas, gatilho de cor). [1] a [6] escolhem os grupos diretamente.",
             "- Clicar ou arrastar coloca o objeto escolhido, [R] roda-o: espinhos e meios blocos em quatro direções, plataformas para cima ou para baixo.",
             "- Com Selecionar, arrastar move um objeto e [Del] apaga-o. O clique direito apaga sempre; arrastar com o botão direito, a roda do rato, as setas ou [A]/[D] deslocam a vista.",
@@ -2815,6 +2830,15 @@
             "- A faixa mesmo em baixo mostra o nível inteiro de relance - um clique salta para esse ponto.",
             "[U] anula, [Y] refaz, [G] mostra ou esconde a grelha, [S] guarda. [Esc] volta atrás - com alterações por guardar, só depois de confirmar.",
             "No máximo três moedas por nível. A meta fica automaticamente um pouco depois do último objeto."
+          ]
+        },
+        {
+          "h": "Modelos",
+          "body": [
+            "Cada nível novo começa com um modelo: \"Vazio\" começa do zero e os outros onze trazem uma estrutura pronta - início, saltos, pads e orbes, nave, onda, bola, OVNI, gravidade, velocidade, moedas e demónio.",
+            "Um modelo traz os seus objetos, cores, música e velocidade inicial. Como o solucionador jogou todos os modelos, a cópia leva logo o visto verde - até mudares alguma coisa.",
+            "Também os níveis prontos se copiam: no separador MAIS, \"Como modelo\" junta o nível escolhido aos teus, com objetos, cores e música.",
+            "Uma cópia é um nível teu como outro qualquer: transforma, testa, guarda, joga e partilha."
           ]
         },
         {

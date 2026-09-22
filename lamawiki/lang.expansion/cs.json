@@ -2717,7 +2717,10 @@
         "checkpoint",
         "démon",
         "hudba",
-        "level"
+        "level",
+        "další",
+        "jako šablona",
+        "vyber"
       ],
       "sections": [
         {
@@ -2734,7 +2737,7 @@
             "- [Mezerník], [Nahoru], [W], [Enter] nebo levé tlačítko myši: skok nebo let. Podržení se počítá jako nepřetržité mačkání - kostka pak po každém dopadu hned znovu vyskočí.",
             "- [R] okamžitě začne znovu, [Q] nebo [Backspace] vrátí do výběru levelu, [Esc] pozastaví hru.",
             "- [P] zapíná a vypíná tréninkový režim; v něm [Z] položí checkpoint a [X] smaže ten poslední.",
-            "- Výběr levelu: [Vlevo]/[Vpravo] listují, [1] až [8] skočí rovnou na level, [Enter] spustí, [P] volí Normální nebo Trénink, [M] přepíná hudbu, [Tab] přejde na záložku LEVELY.",
+            "- Výběr levelu: [Vlevo]/[Vpravo] listují, [1] až [9] a [0] skočí rovnou na level 1 až 10, [Home]/[End] na první nebo poslední, [Enter] spustí, [P] volí Normální nebo Trénink, [M] přepíná hudbu, [Tab] střídá HRA, DALŠÍ a LEVELY.",
             "Každé stisknutí dostane časové razítko a projeví se přesně v tom kroku fyziky (1/240 sekundy), kdy nastalo - skok tak sedí, i když se počítač na chvilku zadrhne."
           ]
         },
@@ -2760,14 +2763,24 @@
           ]
         },
         {
-          "h": "8 levelů",
+          "h": "16 levelů",
           "body": [
-            "- Lama Launch (Lehký, 1 hvězda) a Neon Steps (Lehký, 2 hvězdy): skoky, odrazy, koule a první loď.",
-            "- Orbit Garden (Normální, 3 hvězdy): řetězy koulí, hlavou dolů pod stropem a loď s dvojnásobnou rychlostí.",
-            "- Gravity Tide (Těžký, 4 hvězdy) a Skyline Rush (Těžký, 5 hvězd): gravitační portály, míč, UFO, jámy a trojnásobná rychlost.",
-            "- Crystal Caves (Těžší, 7 hvězd) a Wave Reactor (Šílený, 9 hvězd): všech pět podob, úzké brány a tunely pro vlnu.",
-            "- Lama Inferno (Démon, 10 hvězd): trojnásobná rychlost a všechno najednou.",
+            "- Lama Launch, Neon Steps a Pixel Sprint (Lehký, 1-2 hvězdy): skoky, odrazy, koule a první loď.",
+            "- Orbit Garden a Moss Temple (Normální, po 3 hvězdách): řetězy koulí a klidné úseky hlavou dolů u stropu.",
+            "- Gravity Tide, Magnet Fields, Skyline Rush a Hangar Run (Těžký, 4-5 hvězd): gravitační portály, míč, UFO a těsné brány lodi při dvojnásobné rychlosti.",
+            "- Crystal Caves, Strobe City a Frost Relay (Těžší, 6-7 hvězd): všech pět forem, rytmické úseky a spousta změn barev.",
+            "- Wave Reactor a Turbine Core (Šílený, po 9 hvězdách): vlna v úzkém tunelu.",
+            "- Lama Inferno a Lama Eclipse (Démon, po 10 hvězdách): trojnásobná rychlost a všechno najednou.",
             "Každý level je prokazatelně zvládnutelný i se všemi třemi mincemi: při stavbě ho řešič dohrál se skutečným kódem hry - a jeho řešení funguje i při posunu o 1/240 sekundy."
+          ]
+        },
+        {
+          "h": "Další: 80 levelů v kategoriích",
+          "body": [
+            "Záložka DALŠÍ je knihovna 80 levelů navíc v deseti kategoriích: začátek, rytmus, mince, loď, UFO, míč, gravitace, rychlost, vlna a démon.",
+            "Nahoře vybereš kategorii, pod ní hledáš podle jména. Každý řádek ukazuje obtížnost, délku, nalezené mince a tvůj nejlepší pokus; \"Náhodně\" ti jeden z výběru hodí rovnou.",
+            "I tyhle levely jsou ověřené řešičem: cíl i všechny tři mince jsou dosažitelné. Vedou si vlastní postup, ale nedávají hvězdy ani úspěchy - ty zůstávají kampani.",
+            "\"Jako šablona\" zkopíruje vybraný level mezi tvé vlastní, kde si ho přestavíš. Víc na stránce \"Vlastní levely (Geometry Dash)\"."
           ]
         },
         {
@@ -2782,7 +2795,7 @@
           "h": "Hvězdy, mince a úspěchy",
           "body": [
             "Kdo level dokončí v normálním režimu, získá jeho hvězdy. V každém levelu jsou navíc ukryté tři tajné mince, často mimo nejsnazší cestu. Počítají se, jakmile s nimi level dokončíš - a každá má cenu další hvězdy.",
-            "Tvým rekordem je celkový počet hvězd (nejvýš 65) a může jen růst. U každého levelu si hra pamatuje nejlepší procenta v Normálním režimu a Tréninku, nalezené mince a pokusy.",
+            "Tvým rekordem je celkový počet hvězd (nejvýš 135) a může jen růst. U každého levelu si hra pamatuje nejlepší procenta v Normálním režimu a Tréninku, nalezené mince a pokusy.",
             "- Úspěchy: \"V rytmu\" za první dokončený level, \"Lovec mincí\" za všechny tři mince z levelu, \"Přemožitel démonů\" za Lama Inferno - a milník při 20 hvězdách.",
             "Na záložce LEVELY stavíš, hraješ a sdílíš vlastní levely - viz stránka \"Vlastní levely (Geometry Dash)\"."
           ]
@@ -2804,13 +2817,15 @@
         "export",
         "ověřeno",
         "lamapgzlevel",
-        "geometry dash"
+        "geometry dash",
+        "vyber",
+        "další"
       ],
       "sections": [
         {
           "h": "Stavba levelu",
           "body": [
-            "Záložka LEVELY ve výběru levelu Geometry Dash obsahuje tvou vlastní sbírku (až 60 levelů). \"Nová\" otevře editor levelů, \"Upravit\" se vrátí k existujícímu levelu.",
+            "Záložka LEVELY ve výběru levelu Geometry Dash obsahuje tvou vlastní sbírku (až 60 levelů). \"Nová\" se nejdřív zeptá na šablonu, \"Upravit\" se vrátí k existujícímu levelu.",
             "Vlevo je plátno s mřížkou, vpravo paleta: nahoře Vybrat a Guma, pod nimi šest skupin - Bloky, Nástrahy, Odrazy a koule, Portály, Rychlost a Doplňky (tajné mince, barevný spouštěč). [1] až [6] vybírají skupiny přímo.",
             "- Kliknutí nebo tažení položí zvolený objekt, [R] ho otočí: bodce a poloviční bloky do čtyř směrů, odrazy nahoru nebo dolů.",
             "- S nástrojem Vybrat tažení přesune objekt a [Del] ho smaže. Pravé tlačítko maže vždy; tažení pravým tlačítkem, kolečko myši, šipky nebo [A]/[D] posouvají.",
@@ -2818,6 +2833,15 @@
             "- Pruh úplně dole ukazuje celý level v přehledu - kliknutí na to místo skočí.",
             "[U] vrací zpět, [Y] obnovuje, [G] zobrazí nebo skryje mřížku, [S] uloží. [Esc] vede zpět - s neuloženými změnami až po potvrzení.",
             "Nejvýš tři mince na level. Cíl se automaticky umístí kousek za poslední objekt."
+          ]
+        },
+        {
+          "h": "Šablony",
+          "body": [
+            "Každý nový level začíná šablonou: \"Prázdný\" začíná od nuly, zbylých jedenáct přináší hotovou kostru - začátek, skoky, odrazy a koule, loď, vlna, míč, UFO, gravitace, rychlost, mince a démon.",
+            "Šablona si nese své objekty, barvy, hudbu i počáteční rychlost. Protože řešič prošel každou šablonu, kopie má zelenou fajfku hned - dokud něco nezměníš.",
+            "Kopírovat jdou i hotové levely: v záložce DALŠÍ přidá \"Jako šablona\" vybraný level mezi tvé vlastní i s objekty, barvami a hudbou.",
+            "Kopie je úplně běžný vlastní level: přestav, otestuj, ulož, hraj a sdílej."
           ]
         },
         {

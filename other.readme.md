@@ -88,7 +88,7 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Pinball**     | 1 / 2 joueurs | Flipper avec 3 tables : bumpers, slingshots, cibles, couloirs L-A-M-A, multibille avec jackpot, sauvegarde de bille, secousse & tilt |
 | **Bowling**     | 1 / 2 joueurs | 10 frames avec la vraie règle strike/spare, physique des quilles, effet hook et piste en perspective, 3 difficultés |
 | **Crossy Road** | 1 joueur      | Sauter sans fin par-dessus prés, routes, rivières et voies ferrées en style voxel isométrique : jour/nuit, aigle, 10 personnages à acheter, parcours du jour |
-| **Geometry Dash** | 1 joueur    | Plateforme rythmique avec cube, vaisseau, boule, OVNI et onde : 8 niveaux de Facile à Démon avec 3 pièces secrètes chacun, mode entraînement, bande-son par niveau ; **éditeur de niveaux** avec partage en `.lamapgzlevel` |
+| **Geometry Dash** | 1 joueur    | Plateforme rythmique avec cube, vaisseau, boule, OVNI et onde : 16 niveaux de Facile à Démon avec 3 pièces secrètes chacun, mode entraînement, bande-son par niveau, plus une bibliothèque de **80 autres niveaux** en 10 catégories avec recherche et 12 modèles ; **éditeur de niveaux** avec partage en `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 joueurs | Bataille navale 10x10 : flotte placée par glisser-déposer, 3 règles au choix (contact, salve, rejouer), IA à 3 niveaux ou duel local avec écran de passation |
 | **Casino**      | 1 joueur      | Roulette européenne avec toutes les mises classiques et Machine Lama (5 rouleaux, 10 lignes, wild, tours gratuits) ; un seul compte de jetons Lama avec le Blackjack et le Poker |
 
@@ -705,10 +705,15 @@ bouclier, amélioration d'arme), effets d'explosion, meilleur score.
   boule, OVNI et onde -, plus des portails de forme, de gravité et de vitesse
   (0,5x à 3x), des **tremplins et orbes** jaunes/roses/bleus, demi-blocs, pics,
   fosses et déclencheurs de couleur.
-- **8 niveaux intégrés** de *Facile* à *Démon* (« Lama Inferno ») avec **3 pièces
+- **16 niveaux intégrés** de *Facile* à *Démon* (« Lama Inferno ») avec **3 pièces
   secrètes** chacun. Chaque niveau est prouvé faisable : lors de sa création, un
   solveur l'a terminé avec le vrai code du jeu - pièces comprises, et même décalé
   de 1/240 de seconde.
+- **Onglet « Plus » : 80 niveaux en 10 catégories** (débuts, rythme, pièces,
+  vaisseau, OVNI, boule, gravité, vitesse, onde, démon) avec **champ de
+  recherche**, bouton hasard et progression propre à chaque niveau. Eux aussi
+  sont prouvés par le solveur - l'arrivée et les trois pièces. Les étoiles et les
+  succès restent réservés à la campagne.
 - **Physique précise** : calcul en virgule fixe à pas fixe de 240 Hz ; chaque
   appui agit exactement dans le pas où il a eu lieu - identique à toute cadence
   d'images et au bit près dans le navigateur.
@@ -719,7 +724,7 @@ bouclier, amélioration d'arme), effets d'explosion, meilleur score.
   avec **M**).
 - **Étoiles et pièces** : termine un niveau en mode normal pour gagner ses
   étoiles, chaque pièce vaut une étoile de plus ; le record est le **total
-  d'étoiles** (65 au maximum). Records par niveau, pièces, tentatives et sauts
+  d'étoiles** (135 au maximum). Records par niveau, pièces, tentatives et sauts
   sont dans la section `geodash` de `mem.json`.
 - **Éditeur de niveaux** dans l'onglet **NIVEAUX** : toile quadrillée, palette de
   6 groupes (blocs, dangers, tremplins et orbes, portails, vitesse, extras),
@@ -728,6 +733,11 @@ bouclier, amélioration d'arme), effets d'explosion, meilleur score.
   couleurs). La coche **« vérifié »** n'apparaît qu'une fois ton propre niveau
   réussi. **Partager** écrit un fichier `.lamapgzlevel`, **Importer** le relit ;
   les niveaux sont stockés dans `ugc.json` à côté de tes trous de minigolf.
+- **Modèles** : « Nouveau » demande d'abord l'un des **12 modèles** (vide,
+  débuts, sauts, tremplins et orbes, vaisseau, onde, boule, OVNI, gravité,
+  vitesse, pièces, démon). Ils apportent objets, couleurs, musique et - comme le
+  solveur les a joués - la coche « vérifié ». Dans l'onglet **Plus**, **« Comme
+  modèle »** copie n'importe quel niveau terminé dans les tiens.
 
 **Battleship**
 - **Bataille navale en 10x10** avec porte-avions (5 cases), cuirassé (4),
@@ -945,7 +955,8 @@ devtools/            Outils de développement (non inclus dans la .exe)
   build_chess_puzzles.py     Construit les 200 problèmes d'échecs depuis la base de problèmes Lichess (CC0)
   build_sudoku_killer.py     Génère les 400 Killer Sudokus à solution unique
   build_crossyroad_models.py Écrit les modèles voxel de Crossy Road pour la version web
-  build_geodash_levels.py    Construit les 8 niveaux de Geometry Dash et prouve avec le solveur que chacun est faisable, pièces comprises
+  build_geodash_levels.py    Construit les 16 niveaux de Geometry Dash et prouve avec le solveur que chacun est faisable, pièces comprises
+  build_geodash_extra.py     Construit la bibliothèque (80 niveaux en 10 catégories) et les 12 modèles, chacun prouvé par le solveur
   build_geodash_solver.py    Solveur utilisant le vrai code de pas (solutions dans geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -962,10 +973,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Données de niveaux : snake-comp.json, chess-puzzles.json (+ README des sources), sudoku-killer.json, geodash.json
+  levels/              Données de niveaux : snake-comp.json, chess-puzzles.json (+ README des sources), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Audit global (saisie, seedrand Python = JS, sauvegarde, fichiers de langue, écrans de préparation) + tous les audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
@@ -1172,7 +1183,7 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Pinball**     | 1 / 2 jugadores | Máquina de pinball con 3 mesas: bumpers, slingshots, dianas, carriles L-A-M-A, multibola con jackpot, salvabolas, empujón y tilt |
 | **Bowling**     | 1 / 2 jugadores | 10 frames con la puntuación oficial de strike/spare, física real de bolos, efecto hook y pista en perspectiva, 3 dificultades |
 | **Crossy Road** | 1 jugador       | Saltar sin fin por praderas, carreteras, ríos y vías de tren con estilo vóxel isométrico: día/noche, águila, 10 personajes comprables, ruta del día |
-| **Geometry Dash** | 1 jugador     | Plataformas rítmico con cubo, nave, bola, OVNI y onda: 8 niveles de Fácil a Demonio con 3 monedas secretas cada uno, modo práctica, banda sonora por nivel; **editor de niveles** con compartir como `.lamapgzlevel` |
+| **Geometry Dash** | 1 jugador     | Plataformas rítmico con cubo, nave, bola, OVNI y onda: 16 niveles de Fácil a Demonio con 3 monedas secretas cada uno, modo práctica, banda sonora por nivel, más una biblioteca de **80 niveles adicionales** en 10 categorías con búsqueda y 12 plantillas; **editor de niveles** con compartir como `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 jugadores | Batalla naval 10x10: flota colocada arrastrando, 3 reglas opcionales (contacto, salva, repetir disparo), IA de 3 niveles o duelo local con pantalla de relevo |
 | **Casino**      | 1 jugador       | Ruleta europea con todas las apuestas clásicas y Máquina Llama (5 rodillos, 10 líneas, comodín, tiradas gratis); una sola cuenta de fichas Llama con Blackjack y Póker |
 
@@ -1752,10 +1763,15 @@ arma), efectos de explosión, récord.
   además de portales de forma, gravedad y velocidad (0,5x a 3x), **plataformas y
   orbes** amarillos/rosas/azules, medios bloques, pinchos, fosos y activadores de
   color.
-- **8 niveles incluidos** de *Fácil* a *Demonio* («Lama Inferno») con **3
+- **16 niveles incluidos** de *Fácil* a *Demonio* («Lama Inferno») con **3
   monedas secretas** cada uno. Cada nivel es superable de forma demostrada: al
   crearlo, un solucionador lo completó con el código real del juego, monedas
   incluidas e incluso desplazado 1/240 de segundo.
+- **Pestaña «Más»: 80 niveles en 10 categorías** (inicio, ritmo, monedas, nave,
+  OVNI, bola, gravedad, velocidad, onda, demonio) con **campo de búsqueda**,
+  botón al azar y progreso propio en cada nivel. También están demostrados por el
+  solucionador: la meta y las tres monedas. Las estrellas y los logros quedan
+  para la campaña.
 - **Física precisa**: cálculo en coma fija con paso fijo de 240 Hz; cada pulsación
   actúa exactamente en el paso en que ocurrió, igual con cualquier tasa de
   fotogramas e idéntica bit a bit en el navegador.
@@ -1765,7 +1781,7 @@ arma), efectos de explosión, récord.
   suelo y orbes laten al ritmo (la música se apaga con **M**).
 - **Estrellas y monedas**: al superar un nivel en modo normal ganas sus
   estrellas, y cada moneda vale una estrella más; el récord es el **total de
-  estrellas** (65 como máximo). Mejores marcas por nivel, monedas, intentos y
+  estrellas** (135 como máximo). Mejores marcas por nivel, monedas, intentos y
   saltos se guardan en la sección `geodash` de `mem.json`.
 - **Editor de niveles** en la pestaña **NIVELES**: lienzo con cuadrícula, paleta
   de 6 grupos (bloques, peligros, plataformas y orbes, portales, velocidad,
@@ -1775,6 +1791,11 @@ arma), efectos de explosión, récord.
   tu propio nivel. **Compartir** escribe un archivo `.lamapgzlevel` e **Importar**
   lo vuelve a leer; los niveles se guardan en `ugc.json` junto a tus hoyos de
   minigolf.
+- **Plantillas**: «Nuevo» pide primero una de las **12 plantillas** (vacía,
+  inicio, saltos, pads y orbes, nave, onda, bola, OVNI, gravedad, velocidad,
+  monedas, demonio). Traen objetos, colores, música y - por haberlas jugado el
+  solucionador - la marca «verificado». En la pestaña **Más**, **«Como
+  plantilla»** copia cualquier nivel terminado a los tuyos.
 
 **Battleship**
 - **Batalla naval de 10x10** con portaaviones (5 casillas), acorazado (4),
@@ -1988,7 +2009,8 @@ devtools/            Herramientas de desarrollo (no se incluyen en el .exe)
   build_chess_puzzles.py     Genera los 200 problemas de ajedrez a partir de la base de problemas de Lichess (CC0)
   build_sudoku_killer.py     Genera los 400 Killer Sudokus con solución única
   build_crossyroad_models.py Escribe los modelos vóxel de Crossy Road para la versión web
-  build_geodash_levels.py    Construye los 8 niveles de Geometry Dash y demuestra con el solucionador que todos son superables, monedas incluidas
+  build_geodash_levels.py    Construye los 16 niveles de Geometry Dash y demuestra con el solucionador que todos son superables, monedas incluidas
+  build_geodash_extra.py     Construye la biblioteca (80 niveles en 10 categorías) y las 12 plantillas, todas demostradas por el solucionador
   build_geodash_solver.py    Solucionador con el código de paso real (soluciones en geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -2005,10 +2027,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Datos de niveles: snake-comp.json, chess-puzzles.json (+ README de fuentes), sudoku-killer.json, geodash.json
+  levels/              Datos de niveles: snake-comp.json, chess-puzzles.json (+ README de fuentes), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Auditoría general (entrada, seedrand Python = JS, guardado, archivos de idioma, pantallas previas) + todos los audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
@@ -2209,7 +2231,7 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Pinball**     | 1 / 2 jogadores | Máquina de pinball com 3 mesas: bumpers, slingshots, alvos, corredores L-A-M-A, multibola com jackpot, salva-bolas, empurrão e tilt |
 | **Bowling**     | 1 / 2 jogadores | 10 frames com a pontuação oficial de strike/spare, física real dos pinos, efeito hook e pista em perspetiva, 3 dificuldades |
 | **Crossy Road** | 1 jogador       | Saltar sem fim por relvados, estradas, rios e linhas de comboio em estilo voxel isométrico: dia/noite, águia, 10 personagens para comprar, percurso do dia |
-| **Geometry Dash** | 1 jogador     | Plataformas rítmico com cubo, nave, bola, OVNI e onda: 8 níveis de Fácil a Demónio com 3 moedas secretas cada, modo treino, banda sonora por nível; **editor de níveis** com partilha como `.lamapgzlevel` |
+| **Geometry Dash** | 1 jogador     | Plataformas rítmico com cubo, nave, bola, OVNI e onda: 16 níveis de Fácil a Demónio com 3 moedas secretas cada, modo treino, banda sonora por nível, mais uma biblioteca de **80 níveis adicionais** em 10 categorias com procura e 12 modelos; **editor de níveis** com partilha como `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 jogadores | Batalha naval 10x10: frota posicionada arrastando, 3 regras opcionais (tocar, salva, voltar a disparar), IA com 3 níveis ou duelo local com ecrã de passagem |
 | **Casino**      | 1 jogador       | Roleta europeia com todas as apostas clássicas e Máquina Lama (5 rolos, 10 linhas, wild, rodadas grátis); uma só conta de fichas Lama com o Blackjack e o Póquer |
 
@@ -2784,10 +2806,15 @@ melhoria de arma), efeitos de explosão, recorde.
   onda -, mais portais de forma, gravidade e velocidade (0,5x a 3x),
   **plataformas e orbes** amarelos/rosa/azuis, meios blocos, espinhos, buracos e
   gatilhos de cor.
-- **8 níveis incluídos** de *Fácil* a *Demónio* («Lama Inferno») com **3 moedas
+- **16 níveis incluídos** de *Fácil* a *Demónio* («Lama Inferno») com **3 moedas
   secretas** cada. Cada nível é comprovadamente possível: ao construí-lo, um
   solucionador completou-o com o verdadeiro código do jogo - com todas as moedas
   e até com 1/240 de segundo de desvio.
+- **Separador «Mais»: 80 níveis em 10 categorias** (início, ritmo, moedas, nave,
+  OVNI, bola, gravidade, velocidade, onda, demónio) com **campo de procura**,
+  botão aleatório e progresso próprio em cada nível. Também estes estão provados
+  pelo solucionador: a meta e as três moedas. As estrelas e as proezas ficam para
+  a campanha.
 - **Física precisa**: cálculo em vírgula fixa com passo fixo de 240 Hz; cada
   toque atua exatamente no passo em que aconteceu - igual a qualquer taxa de
   fotogramas e idêntico bit a bit no navegador.
@@ -2797,7 +2824,7 @@ melhoria de arma), efeitos de explosão, recorde.
   fundo, chão e orbes pulsam ao ritmo (música desligável com **M**).
 - **Estrelas e moedas**: quem conclui um nível no modo normal ganha as suas
   estrelas, e cada moeda vale mais uma estrela; o recorde é o **total de
-  estrelas** (no máximo 65). Melhores valores por nível, moedas, tentativas e
+  estrelas** (no máximo 135). Melhores valores por nível, moedas, tentativas e
   saltos ficam na secção `geodash` do `mem.json`.
 - **Editor de níveis** no separador **NÍVEIS**: tela com grelha, paleta com 6
   grupos (blocos, perigos, plataformas e orbes, portais, velocidade, extras),
@@ -2807,6 +2834,11 @@ melhoria de arma), efeitos de explosão, recorde.
   o teu próprio nível. **Partilhar** escreve um ficheiro `.lamapgzlevel` e
   **Importar** volta a lê-lo; os níveis ficam em `ugc.json`, ao lado dos teus
   buracos de minigolfe.
+- **Modelos**: «Novo» pede primeiro um dos **12 modelos** (vazio, início,
+  saltos, pads e orbes, nave, onda, bola, OVNI, gravidade, velocidade, moedas,
+  demónio). Trazem objetos, cores, música e - por terem sido jogados pelo
+  solucionador - o visto «verificado». No separador **Mais**, **«Como modelo»**
+  copia qualquer nível pronto para os teus.
 
 **Battleship**
 - **Batalha naval em 10x10** com porta-aviões (5 casas), couraçado (4), cruzador
@@ -3017,7 +3049,8 @@ devtools/            Ferramentas de desenvolvimento (não incluídas no .exe)
   build_chess_puzzles.py     Gera os 200 problemas de xadrez a partir da base de problemas do Lichess (CC0)
   build_sudoku_killer.py     Gera os 400 Killer Sudokus com solução única
   build_crossyroad_models.py Escreve os modelos voxel do Crossy Road para a versão web
-  build_geodash_levels.py    Constrói os 8 níveis do Geometry Dash e prova com o solucionador que cada um é possível, moedas incluídas
+  build_geodash_levels.py    Constrói os 16 níveis do Geometry Dash e prova com o solucionador que cada um é possível, moedas incluídas
+  build_geodash_extra.py     Constrói a biblioteca (80 níveis em 10 categorias) e os 12 modelos, todos provados pelo solucionador
   build_geodash_solver.py    Solucionador com o verdadeiro código de passo (soluções em geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -3034,10 +3067,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Dados de níveis: snake-comp.json, chess-puzzles.json (+ README das fontes), sudoku-killer.json, geodash.json
+  levels/              Dados de níveis: snake-comp.json, chess-puzzles.json (+ README das fontes), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Auditoria geral (entrada, seedrand Python = JS, gravação, ficheiros de idioma, ecrãs de preparação) + todos os audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
@@ -3237,7 +3270,7 @@ krok po kroku znajduje się na samym dole w sekcji
 | **Pinball**     | 1 / 2 graczy    | Automat do flipera z 3 stołami: bumpery, slingshoty, cele, tory L-A-M-A, multiball z jackpotem, ratunek kuli, potrącenie i tilt |
 | **Bowling**     | 1 / 2 graczy    | 10 frame'ów z oficjalną punktacją strike/spare, prawdziwą fizyką kręgli, hookiem i torem w perspektywie, 3 poziomy trudności |
 | **Crossy Road** | 1 gracz       | Niekończące się skoki przez łąki, ulice, rzeki i tory w izometrycznym stylu voxel: dzień/noc, orzeł, 10 postaci do kupienia, trasa dnia |
-| **Geometry Dash** | 1 gracz       | Rytmiczna platformówka z kostką, statkiem, kulą, UFO i falą: 8 poziomów od Łatwego do Demona, w każdym 3 sekretne monety, tryb treningu, soundtrack dla każdego poziomu; **edytor poziomów** z udostępnianiem jako `.lamapgzlevel` |
+| **Geometry Dash** | 1 gracz       | Rytmiczna platformówka z kostką, statkiem, kulą, UFO i falą: 16 poziomów od Łatwego do Demona, w każdym 3 sekretne monety, tryb treningu, soundtrack dla każdego poziomu, do tego biblioteka **80 kolejnych poziomów** w 10 kategoriach z wyszukiwaniem i 12 szablonów; **edytor poziomów** z udostępnianiem jako `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 graczy  | Bitwa morska 10x10: rozstawianie floty przeciąganiem, 3 przełączniki zasad (stykanie, salwa, ponowny strzał), SI z 3 poziomami lub lokalny pojedynek z ekranem przekazania |
 | **Casino**      | 1 gracz       | Ruletka europejska ze wszystkimi klasycznymi zakładami i Automat Lamy (5 bębnów, 10 linii, dziki symbol, darmowe spiny); jedno konto żetonów Lamy z Blackjackiem i Pokerem |
 
@@ -3893,10 +3926,15 @@ jednoosobowa.
   kiedy skoczyć lub lecieć. **Pięć form** — kostka, statek, kula, UFO i fala — do
   tego portale formy, grawitacji i prędkości (0,5x do 3x), żółte/różowe/niebieskie
   **wyrzutnie i kule**, półbloki, kolce, doły i wyzwalacze kolorów.
-- **8 wbudowanych poziomów** od *Łatwego* do *Demona* („Lama Inferno"), w każdym
+- **16 wbudowanych poziomów** od *Łatwego* do *Demona* („Lama Inferno"), w każdym
   **3 sekretne monety**. Udowodniono, że każdy poziom da się przejść: przy budowie
   solver ukończył go prawdziwym kodem gry — razem ze wszystkimi monetami, nawet
   przesunięty o 1/240 sekundy.
+- **Zakładka „Więcej": 80 poziomów w 10 kategoriach** (start, rytm, monety,
+  statek, UFO, kula, grawitacja, prędkość, fala, demon) z **polem wyszukiwania**,
+  przyciskiem losowania i własnym postępem każdego poziomu. One też są
+  potwierdzone przez solver - meta i wszystkie trzy monety. Gwiazdki i osiągnięcia
+  zostają przy kampanii.
 - **Precyzyjna fizyka**: obliczenia stałoprzecinkowe ze stałym krokiem 240 Hz;
   każde wciśnięcie działa dokładnie w kroku, w którym nastąpiło — tak samo przy
   każdej liczbie klatek i bit w bit tak samo w przeglądarce.
@@ -3906,7 +3944,7 @@ jednoosobowa.
   podłoże i kule pulsują w rytm (muzykę wyłącza **M**).
 - **Gwiazdki i monety**: kto ukończy poziom w trybie normalnym, dostaje jego
   gwiazdki, a każda moneta jest warta kolejną; rekord to **suma gwiazdek**
-  (najwyżej 65). Najlepsze wyniki poziomów, monety, próby i skoki są w sekcji
+  (najwyżej 135). Najlepsze wyniki poziomów, monety, próby i skoki są w sekcji
   `geodash` pliku `mem.json`.
 - **Edytor poziomów** w zakładce **POZIOMY**: płótno z siatką, paleta z 6 grupami
   (bloki, zagrożenia, wyrzutnie i kule, portale, prędkość, dodatki), obracanie,
@@ -3915,6 +3953,11 @@ jednoosobowa.
   Znaczek **„zweryfikowany"** pojawia się dopiero, gdy sam przejdziesz swój
   poziom. **Udostępnij** zapisuje plik `.lamapgzlevel`, **Import** wczytuje go z
   powrotem; poziomy trafiają do `ugc.json` obok własnych dołków do minigolfa.
+- **Szablony**: „Nowy" pyta najpierw o jeden z **12 szablonów** (pusty, start,
+  skoki, wyrzutnie i kule, statek, fala, kula, UFO, grawitacja, prędkość, monety,
+  demon). Przynoszą obiekty, kolory, muzykę i - jako przejście solvera - znaczek
+  „zweryfikowano". W zakładce **Więcej** **„Jako szablon"** kopiuje dowolny
+  gotowy poziom do twoich.
 
 **Battleship**
 - **Bitwa morska 10x10** z lotniskowcem (5 pól), pancernikiem (4), krążownikiem
@@ -4121,7 +4164,8 @@ devtools/            Narzędzia deweloperskie (nie trafiają do .exe)
   build_chess_puzzles.py     Buduje 200 zadań szachowych z bazy zadań Lichess (CC0)
   build_sudoku_killer.py     Generuje 400 Killer Sudoku z jednoznacznym rozwiązaniem
   build_crossyroad_models.py Zapisuje modele voxel Crossy Road dla wersji przeglądarkowej
-  build_geodash_levels.py    Buduje 8 poziomów Geometry Dash i solverem dowodzi, że każdy da się przejść razem z monetami
+  build_geodash_levels.py    Buduje 16 poziomów Geometry Dash i solverem dowodzi, że każdy da się przejść razem z monetami
+  build_geodash_extra.py     Buduje bibliotekę (80 poziomów w 10 kategoriach) i 12 szablonów, każdy potwierdzony solverem
   build_geodash_solver.py    Solver korzystający z prawdziwego kodu kroku (rozwiązania w geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -4138,10 +4182,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Dane poziomów: snake-comp.json, chess-puzzles.json (+ README ze źródłami), sudoku-killer.json, geodash.json
+  levels/              Dane poziomów: snake-comp.json, chess-puzzles.json (+ README ze źródłami), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Audyt całościowy (wejście, seedrand Python = JS, zapis, pliki językowe, ekrany przygotowania) + wszystkie audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
@@ -4343,7 +4387,7 @@ yoksa sistemdeki Python'ı. Ayrıntılı, adım adım bir kılavuz en altta
 | **Pinball**     | 1 / 2 oyuncu | 3 masalı pinball makinesi: bumperlar, slingshotlar, hedefler, L-A-M-A şeritleri, jackpotlu multiball, top koruma, sarsma ve tilt |
 | **Bowling**     | 1 / 2 oyuncu | Resmî strike/spare puanlamasıyla 10 frame, gerçek labut fiziği, hook efekti ve perspektifli pist, 3 zorluk |
 | **Crossy Road** | 1 oyuncu     | İzometrik voksel görünümde çayırlar, yollar, nehirler ve raylar üzerinden sonsuz zıplama: gece/gündüz, kartal, satın alınabilen 10 karakter, günün parkuru |
-| **Geometry Dash** | 1 oyuncu    | Küp, gemi, top, UFO ve dalgalı ritim platform oyunu: Kolay'dan İblis'e her birinde 3 gizli altın olan 8 bölüm, antrenman modu, bölüm başına müzik; `.lamapgzlevel` olarak paylaşımlı **bölüm editörü** |
+| **Geometry Dash** | 1 oyuncu    | Küp, gemi, top, UFO ve dalgalı ritim platform oyunu: Kolay'dan İblis'e her birinde 3 gizli altın olan 16 bölüm, antrenman modu, bölüm başına müzik, ayrıca 10 kategoride aranabilen **80 bölümlük** kütüphane ve 12 şablon; `.lamapgzlevel` olarak paylaşımlı **bölüm editörü** |
 | **Battleship**  | 1 / 2 oyuncu | 10x10 deniz savaşı: sürükle-bırak filo yerleşimi, 3 kural anahtarı (temas, salvo, tekrar ateş), 3 seviyeli yapay zekâ ya da devir ekranlı yerel düello |
 | **Casino**      | 1 oyuncu     | Tüm klasik bahislerle Avrupa ruleti ve Lama Slotu (5 makara, 10 hat, joker, bedava dönüşler); Blackjack ve Poker ile tek bir Lama çipi hesabı |
 
@@ -5006,9 +5050,13 @@ patlama efektleri, yüksek skor.
   portalları (0,5x ile 3x arası), sarı/pembe/mavi **pedler ve küreler**, yarım
   bloklar, dikenler, çukurlar ve renk tetikleyicileri.
 - *Kolay*'dan *İblis*'e (“Lama Inferno”) her birinde **3 gizli altın** bulunan
-  **8 hazır bölüm**. Her bölümün geçilebildiği kanıtlanmıştır: yapım sırasında bir
+  **16 hazır bölüm**. Her bölümün geçilebildiği kanıtlanmıştır: yapım sırasında bir
   çözücü onu gerçek oyun koduyla bitirdi - tüm altınlarla ve saniyenin 1/240'ı
   kadar kaydırıldığında bile.
+- **„Daha fazla" sekmesi: 10 kategoride 80 bölüm** (başlangıç, ritim, altınlar,
+  gemi, UFO, top, yerçekimi, hız, dalga, iblis); **arama alanı**, rastgele düğmesi
+  ve her bölüm için ayrı ilerleme. Bunlar da çözücüyle kanıtlanmıştır - bitiş ve
+  üç altının tamamı. Yıldızlar ve başarımlar kampanyaya özel kalır.
 - **Hassas fizik**: sabit 240 Hz adımlı sabit noktalı hesaplama; her basış tam
   olarak gerçekleştiği adımda etki eder - her kare hızında aynı, tarayıcıda bit bit
   aynı.
@@ -5027,6 +5075,11 @@ patlama efektleri, yüksek skor.
   işareti ancak kendi bölümünü geçtiğinde gelir. **Paylaş** bir `.lamapgzlevel`
   dosyası yazar, **İçe aktar** onu geri okur; bölümler kendi minigolf
   parkurlarının yanında `ugc.json` içinde saklanır.
+- **Şablonlar**: „Yeni" önce **12 şablondan** birini sorar (boş, başlangıç,
+  zıplamalar, pedler ve küreler, gemi, dalga, top, UFO, yerçekimi, hız, altınlar,
+  iblis). Nesneleri, renkleri, müziği ve - çözücü baştan sona oynadığı için -
+  „doğrulandı" işaretini de getirirler. **Daha fazla** sekmesinde **„Şablon
+  yap"**, bitmiş her bölümü kendi bölümlerine kopyalar.
 
 **Battleship**
 - Uçak gemisi (5 kare), zırhlı (4), kruvazör (3), denizaltı (3) ve muhrip (2) ile
@@ -5229,7 +5282,8 @@ devtools/            Geliştirici araçları (.exe'ye paketlenmez)
   build_chess_puzzles.py     200 satranç bulmacasını Lichess bulmaca veritabanından (CC0) oluşturur
   build_sudoku_killer.py     Tek çözümlü 400 Killer Sudoku üretir
   build_crossyroad_models.py Crossy Road voksel modellerini web sürümü için yazar
-  build_geodash_levels.py    8 Geometry Dash bölümünü oluşturur ve her birinin altınlarla birlikte geçilebildiğini çözücüyle kanıtlar
+  build_geodash_levels.py    16 Geometry Dash bölümünü oluşturur ve her birinin altınlarla birlikte geçilebildiğini çözücüyle kanıtlar
+  build_geodash_extra.py     Kütüphaneyi (10 kategoride 80 bölüm) ve 12 şablonu oluşturur, her birini çözücüyle kanıtlar
   build_geodash_solver.py    Gerçek adım koduyla çalışan çözücü (çözümler geodash_proofs.json içinde)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -5246,10 +5300,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Seviye verileri: snake-comp.json, chess-puzzles.json (+ kaynak README), sudoku-killer.json, geodash.json
+  levels/              Seviye verileri: snake-comp.json, chess-puzzles.json (+ kaynak README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Genel denetim (giriş, seedrand Python = JS, kayıt, dil dosyaları, oyun öncesi ekranları) + tüm audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
@@ -5446,7 +5500,7 @@ nederst under **[Installationsguide](#installationsguide)**.
 | **Pinball**     | 1 / 2 spillere | Flippermaskine med 3 borde: bumpere, slingshots, mål, L-A-M-A-baner, multiball med jackpot, kugleredning, puf & tilt |
 | **Bowling**     | 1 / 2 spillere | 10 frames med officiel strike/spare-optælling, ægte keglefysik, hook-skrue og bane i perspektiv, 3 sværhedsgrader |
 | **Crossy Road** | 1 spiller     | Endeløse hop over enge, veje, floder og togskinner i isometrisk voxel-look: dag/nat, ørn, 10 figurer at købe, dagens rute |
-| **Geometry Dash** | 1 spiller   | Rytme-platformspil med terning, skib, bold, UFO og bølge: 8 baner fra Let til Dæmon med 3 hemmelige mønter hver, træningstilstand, soundtrack pr. bane; **baneeditor** med deling som `.lamapgzlevel` |
+| **Geometry Dash** | 1 spiller   | Rytme-platformspil med terning, skib, bold, UFO og bølge: 16 baner fra Let til Dæmon med 3 hemmelige mønter hver, træningstilstand, soundtrack pr. bane, dertil et bibliotek med **80 baner mere** i 10 kategorier med søgning og 12 skabeloner; **baneeditor** med deling som `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 spillere | Søslag på 10x10: flåden placeres med træk og slip, 3 regelkontakter (berøring, salve, skyd igen), AI med 3 styrker eller lokal duel med overdragelsesskærm |
 | **Casino**      | 1 spiller     | Europæisk roulette med alle klassiske indsatser og Lama-slot (5 hjul, 10 gevinstlinjer, wild, gratisspil); én lama-chip-konto sammen med Blackjack og Poker |
 
@@ -6082,10 +6136,14 @@ eksplosionseffekter, highscore.
   der hoppes eller flyves. **Fem former** - terning, skib, bold, UFO og bølge -
   plus form-, tyngdekraft- og fartportaler (0,5x til 3x), gule/lyserøde/blå
   **pads og kugler**, halvblokke, pigge, gruber og farvetriggere.
-- **8 indbyggede baner** fra *Let* til *Dæmon* (»Lama Inferno«) med **3
+- **16 indbyggede baner** fra *Let* til *Dæmon* (»Lama Inferno«) med **3
   hemmelige mønter** hver. Hver bane kan beviseligt klares: da den blev bygget,
   løste en løsningsalgoritme den med spillets rigtige kode - inklusive alle mønter
   og endda forskudt med 1/240 sekund.
+- **Fanen "Mere": 80 baner i 10 kategorier** (start, rytme, mønter, skib, UFO,
+  kugle, tyngdekraft, fart, bølge, dæmon) med **søgefelt**, tilfældig-knap og
+  egen fremgang for hver bane. Også de er bevist af løsningsprogrammet - målet og
+  alle tre mønter. Stjerner og bedrifter bliver ved kampagnen.
 - **Præcis fysik**: fastkommaberegning med fast 240 Hz-skridt; hvert tryk virker
   præcis i det skridt, hvor det skete - ens ved enhver billedhastighed og
   bit-identisk i browseren.
@@ -6095,7 +6153,7 @@ eksplosionseffekter, highscore.
   kugler pulserer i takt (musikken slås fra med **M**).
 - **Stjerner og mønter**: klarer du en bane i normal tilstand, får du dens
   stjerner, og hver mønt er en ekstra stjerne værd; highscoren er det **samlede
-  antal stjerner** (højst 65). Bedste resultater pr. bane, mønter, forsøg og hop
+  antal stjerner** (højst 135). Bedste resultater pr. bane, mønter, forsøg og hop
   ligger i afsnittet `geodash` i `mem.json`.
 - **Baneeditor** under fanen **BANER**: lærred med gitter, palet med 6 grupper
   (blokke, farer, pads og kugler, portaler, fart, ekstra), drejning,
@@ -6104,6 +6162,11 @@ eksplosionseffekter, highscore.
   **»verificeret«** kommer først, når du selv har klaret din bane. **Del**
   skriver en `.lamapgzlevel`-fil, **Import** læser den ind igen; banerne gemmes i
   `ugc.json` ved siden af dine egne minigolfbaner.
+- **Skabeloner**: "Ny" spørger først om en af **12 skabeloner** (tom, start,
+  hop, pads og kugler, skib, bølge, kugle, UFO, tyngdekraft, fart, mønter,
+  dæmon). De tager objekter, farver og musik med - og fordi løsningsprogrammet
+  har spillet dem igennem, også fluebenet "verificeret". I fanen **Mere**
+  kopierer **"Som skabelon"** enhver færdig bane over i dine egne.
 
 **Battleship**
 - **Søslag på 10x10** med hangarskib (5 felter), slagskib (4), krydser (3),
@@ -6306,7 +6369,8 @@ devtools/            Udviklerværktøjer (pakkes ikke med i .exe'en)
   build_chess_puzzles.py     Bygger de 200 skakopgaver ud fra Lichess' opgavedatabase (CC0)
   build_sudoku_killer.py     Genererer de 400 entydigt løsbare Killer Sudokuer
   build_crossyroad_models.py Skriver voxel-modellerne til Crossy Road til webversionen
-  build_geodash_levels.py    Bygger de 8 Geometry Dash-baner og beviser med løsningsalgoritmen, at hver kan klares inkl. mønter
+  build_geodash_levels.py    Bygger de 16 Geometry Dash-baner og beviser med løsningsalgoritmen, at hver kan klares inkl. mønter
+  build_geodash_extra.py     Bygger biblioteket (80 baner i 10 kategorier) og de 12 skabeloner, hver bevist af løsningsprogrammet
   build_geodash_solver.py    Løsningsalgoritme med spillets rigtige skridt-kode (løsninger i geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -6323,10 +6387,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Banedata: snake-comp.json, chess-puzzles.json (+ kilde-README), sudoku-killer.json, geodash.json
+  levels/              Banedata: snake-comp.json, chess-puzzles.json (+ kilde-README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Samlet audit (input, seedrand Python = JS, gemning, sprogfiler, forspils-skærme) + alle audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
@@ -6523,7 +6587,7 @@ nederst under **[Installasjonsveiledning](#installasjonsveiledning)**.
 | **Pinball**     | 1 / 2 spillere | Flipperautomat med 3 bord: bumpere, slingshots, mål, L-A-M-A-baner, multiball med jackpot, kuleredning, dytt & tilt |
 | **Bowling**     | 1 / 2 spillere | 10 frames med offisiell strike/spare-telling, ekte kjeglefysikk, hook-skru og bane i perspektiv, 3 vanskelighetsgrader |
 | **Crossy Road** | 1 spiller     | Endeløse hopp over gress, veier, elver og togspor i isometrisk voxel-stil: dag/natt, ørn, 10 figurer å kjøpe, dagens rute |
-| **Geometry Dash** | 1 spiller   | Rytme-plattformspill med kube, skip, ball, UFO og bølge: 8 baner fra Lett til Demon med 3 hemmelige mynter hver, treningsmodus, lydspor per bane; **baneeditor** med deling som `.lamapgzlevel` |
+| **Geometry Dash** | 1 spiller   | Rytme-plattformspill med kube, skip, ball, UFO og bølge: 16 baner fra Lett til Demon med 3 hemmelige mynter hver, treningsmodus, lydspor per bane, i tillegg et bibliotek med **80 baner til** i 10 kategorier med søk og 12 maler; **baneeditor** med deling som `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 spillere | Sjøslag på 10x10: flåten plasseres med dra og slipp, 3 regelbrytere (berøring, salve, skyt igjen), KI med 3 nivåer eller lokal duell med overleveringsskjerm |
 | **Casino**      | 1 spiller     | Europeisk rulett med alle klassiske innsatser og Lama-automat (5 hjul, 10 gevinstlinjer, wild, gratisspinn); én konto med lama-sjetonger sammen med Blackjack og Poker |
 
@@ -7153,10 +7217,14 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   bare når det skal hoppes eller flys. **Fem former** – kube, skip, ball, UFO og
   bølge – pluss form-, tyngdekraft- og fartsportaler (0,5x til 3x),
   gule/rosa/blå **pads og kuler**, halvblokker, pigger, groper og fargetriggere.
-- **8 innebygde baner** fra *Lett* til *Demon* («Lama Inferno») med **3 hemmelige
+- **16 innebygde baner** fra *Lett* til *Demon* («Lama Inferno») med **3 hemmelige
   mynter** hver. Hver bane kan bevislig klares: da den ble bygget, løste en
   løsningsalgoritme den med spillets ekte kode – med alle myntene og til og med
   forskjøvet med 1/240 sekund.
+- **Fanen "Mer": 80 baner i 10 kategorier** (start, rytme, mynter, skip, UFO,
+  kule, tyngdekraft, fart, bølge, demon) med **søkefelt**, tilfeldig-knapp og egen
+  framgang for hver bane. Også de er bevist av løsningsprogrammet - målet og alle
+  tre myntene. Stjerner og bragder blir igjen hos kampanjen.
 - **Presis fysikk**: fastkommaberegning med fast 240 Hz-steg; hvert trykk virker
   nøyaktig i steget der det skjedde – likt ved enhver bildefrekvens og
   bit-identisk i nettleseren.
@@ -7166,7 +7234,7 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   kuler pulserer i takt (musikken slås av med **M**).
 - **Stjerner og mynter**: klarer du en bane i normal modus, får du stjernene, og
   hver mynt er verdt en stjerne til; rekorden er det **samlede antallet stjerner**
-  (høyst 65). Beste resultater per bane, mynter, forsøk og hopp ligger i
+  (høyst 135). Beste resultater per bane, mynter, forsøk og hopp ligger i
   seksjonen `geodash` i `mem.json`.
 - **Baneeditor** i fanen **BANER**: lerret med rutenett, palett med 6 grupper
   (blokker, farer, pads og kuler, portaler, fart, ekstra), rotering, angre/gjør
@@ -7175,6 +7243,11 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   først når du selv har klart banen din. **Del** skriver en `.lamapgzlevel`-fil,
   **Import** leser den inn igjen; banene lagres i `ugc.json` ved siden av dine
   egne minigolfbaner.
+- **Maler**: "Ny" spør først etter en av **12 maler** (tom, start, hopp, pads og
+  kuler, skip, bølge, kule, UFO, tyngdekraft, fart, mynter, demon). De tar med
+  objekter, farger og musikk - og fordi løsningsprogrammet har spilt dem gjennom,
+  også haken "verifisert". I fanen **Mer** kopierer **"Som mal"** hvilken som
+  helst ferdig bane til dine egne.
 
 **Battleship**
 - **Sjøslag på 10x10** med hangarskip (5 ruter), slagskip (4), krysser (3),
@@ -7376,7 +7449,8 @@ devtools/            Utviklerverktøy (pakkes ikke inn i .exe-filen)
   build_chess_puzzles.py     Bygger de 200 sjakkoppgavene fra Lichess' oppgavedatabase (CC0)
   build_sudoku_killer.py     Genererer de 400 entydig løsbare Killer Sudokuene
   build_crossyroad_models.py Skriver voxel-modellene til Crossy Road for nettversjonen
-  build_geodash_levels.py    Bygger de 8 Geometry Dash-banene og beviser med løsningsalgoritmen at hver kan klares, mynter inkludert
+  build_geodash_levels.py    Bygger de 16 Geometry Dash-banene og beviser med løsningsalgoritmen at hver kan klares, mynter inkludert
+  build_geodash_extra.py     Bygger biblioteket (80 baner i 10 kategorier) og de 12 malene, hver bevist av løsningsprogrammet
   build_geodash_solver.py    Løsningsalgoritme med spillets ekte stegkode (løsninger i geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -7393,10 +7467,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Nivådata: snake-comp.json, chess-puzzles.json (+ kilde-README), sudoku-killer.json, geodash.json
+  levels/              Nivådata: snake-comp.json, chess-puzzles.json (+ kilde-README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Samlet revisjon (input, seedrand Python = JS, lagring, språkfiler, forspillskjermer) + alle audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
@@ -7594,7 +7668,7 @@ under **[Installationsguide](#installationsguide)**.
 | **Pinball**     | 1 / 2 spelare | Flipperspel med 3 bord: bumpers, slingshots, mål, L-A-M-A-banor, multiboll med jackpot, bollräddning, knuff & tilt |
 | **Bowling**     | 1 / 2 spelare | 10 frames med officiell strike/spare-räkning, äkta kägelfysik, skruv och bana i perspektiv, 3 svårighetsgrader |
 | **Crossy Road** | 1 spelare     | Oändliga hopp över ängar, vägar, floder och järnvägsspår i isometrisk voxelstil: dag/natt, örn, 10 figurer att köpa, dagens bana |
-| **Geometry Dash** | 1 spelare   | Rytmplattformspel med kub, skepp, boll, UFO och våg: 8 banor från Lätt till Demon med 3 hemliga mynt var, träningsläge, soundtrack per bana; **baneditor** med delning som `.lamapgzlevel` |
+| **Geometry Dash** | 1 spelare   | Rytmplattformspel med kub, skepp, boll, UFO och våg: 16 banor från Lätt till Demon med 3 hemliga mynt var, träningsläge, soundtrack per bana, plus ett bibliotek med **80 banor till** i 10 kategorier med sökning och 12 mallar; **baneditor** med delning som `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 spelare | Sjöslag på 10x10: flottan placeras med dra och släpp, 3 regelreglage (beröring, salva, skjut igen), AI med 3 nivåer eller lokal duell med överlämningsskärm |
 | **Casino**      | 1 spelare     | Europeisk roulette med alla klassiska insatser och Lamaautomat (5 hjul, 10 vinstlinjer, wild, gratissnurr); ett gemensamt konto med lamamarker för Blackjack och Poker |
 
@@ -8181,9 +8255,13 @@ explosionseffekter, topplista.
   ska hoppa eller flyga. **Fem former** - kub, skepp, boll, UFO och våg - plus form-,
   gravitations- och fartportaler (0,5x till 3x), gula/rosa/blå **pads och klot**,
   halvblock, spikar, gropar och färgtriggers.
-- **8 inbyggda banor** från *Lätt* till *Demon* (”Lama Inferno”) med **3 hemliga mynt**
+- **16 inbyggda banor** från *Lätt* till *Demon* (”Lama Inferno”) med **3 hemliga mynt**
   var. Varje bana går bevisligen att klara: när den byggdes löste en lösningsalgoritm den
   med spelets riktiga kod - med alla mynt och till och med förskjuten med 1/240 sekund.
+- **Fliken "Mer": 80 banor i 10 kategorier** (start, rytm, mynt, skepp, UFO,
+  boll, gravitation, fart, våg, demon) med **sökfält**, slumpknapp och egen
+  framgång för varje bana. Även de är bevisade av lösaren - målet och alla tre
+  mynt. Stjärnor och bedrifter stannar hos kampanjen.
 - **Exakt fysik**: fixpunktsberäkning med fast 240 Hz-steg; varje tryck verkar exakt i det
   steg där det skedde - likadant vid varje bildfrekvens och bitidentiskt i webbläsaren.
 - **Träningsläge** (**P**) med automatiska och egna kontrollpunkter (**Z** sätter, **X**
@@ -8191,7 +8269,7 @@ explosionseffekter, topplista.
   Varje bana har sitt **eget soundtrack** - bakgrund, mark och klot pulserar i takt
   (musiken stängs av med **M**).
 - **Stjärnor och mynt**: klarar du en bana i normalt läge får du dess stjärnor, och varje
-  mynt är värt en stjärna till; rekordet är det **totala antalet stjärnor** (högst 65).
+  mynt är värt en stjärna till; rekordet är det **totala antalet stjärnor** (högst 135).
   Bästa resultat per bana, mynt, försök och hopp sparas i sektionen `geodash` i
   `mem.json`.
 - **Baneditor** i fliken **BANOR**: rutnätsduk, palett med 6 grupper (block, faror, pads och
@@ -8200,6 +8278,11 @@ explosionseffekter, topplista.
   Bocken **”verifierad”** kommer först när du själv har klarat din bana. **Dela** skriver
   en `.lamapgzlevel`-fil och **Importera** läser in den igen; banorna sparas i `ugc.json`
   bredvid dina egna minigolfbanor.
+- **Mallar**: "Ny" frågar först efter en av **12 mallar** (tom, start, hopp,
+  pads och klot, skepp, våg, boll, UFO, gravitation, fart, mynt, demon). De tar
+  med objekt, färger och musik - och eftersom lösaren spelat igenom dem även
+  bocken "verifierad". I fliken **Mer** kopierar **"Som mall"** vilken färdig
+  bana som helst till dina egna.
 
 **Battleship**
 - **Sjöslag på 10x10** med hangarfartyg (5 rutor), slagskepp (4), kryssare (3), ubåt (3) och
@@ -8382,7 +8465,8 @@ devtools/            Utvecklarverktyg (packas inte in i .exe-filen)
   build_chess_puzzles.py     Bygger de 200 schackproblemen från Lichess problemdatabas (CC0)
   build_sudoku_killer.py     Genererar de 400 entydigt lösbara Killer Sudokun
   build_crossyroad_models.py Skriver Crossy Roads voxelmodeller för webbversionen
-  build_geodash_levels.py    Bygger de 8 Geometry Dash-banorna och bevisar med lösningsalgoritmen att varje bana går att klara, mynt inräknade
+  build_geodash_levels.py    Bygger de 16 Geometry Dash-banorna och bevisar med lösningsalgoritmen att varje bana går att klara, mynt inräknade
+  build_geodash_extra.py     Bygger biblioteket (80 banor i 10 kategorier) och de 12 mallarna, var och en bevisad av lösaren
   build_geodash_solver.py    Lösningsalgoritm med spelets riktiga stegkod (lösningar i geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -8399,10 +8483,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Nivådata: snake-comp.json, chess-puzzles.json (+ käll-README), sudoku-killer.json, geodash.json
+  levels/              Nivådata: snake-comp.json, chess-puzzles.json (+ käll-README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Övergripande granskning (inmatning, seedrand Python = JS, sparande, språkfiler, förspelsskärmar) + alla audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
@@ -8596,7 +8680,7 @@ ohje löytyy aivan alhaalta kohdasta **[Asennusopas](#asennusopas)**.
 | **Pinball**     | 1 / 2 pelaajaa | Flipperiautomaatti kolmella pöydällä: puskurit, slingshotit, maalit, L-A-M-A-kaistat, multiball ja jackpot, pallonpelastus, töytäisy ja tilt |
 | **Bowling**     | 1 / 2 pelaajaa | 10 framea virallisella strike/spare-laskennalla, aito keilafysiikka, hook-kierre ja perspektiivinen rata, 3 vaikeustasoa |
 | **Crossy Road** | 1 pelaaja     | Loputonta hyppimistä niittyjen, teiden, jokien ja rautateiden yli isometrisessä vokselityylissä: päivä/yö, kotka, 10 ostettavaa hahmoa, päivän reitti |
-| **Geometry Dash** | 1 pelaaja   | Rytmitasohyppely kuutiolla, aluksella, pallolla, UFOlla ja aallolla: 8 kenttää Helposta Demoniin, kussakin 3 salaista kolikkoa, harjoitustila, oma soundtrack; **kenttäeditori** ja jakaminen `.lamapgzlevel`-tiedostona |
+| **Geometry Dash** | 1 pelaaja   | Rytmitasohyppely kuutiolla, aluksella, pallolla, UFOlla ja aallolla: 16 kenttää Helposta Demoniin, kussakin 3 salaista kolikkoa, harjoitustila, oma soundtrack, lisäksi kirjasto, jossa **80 kenttää lisää** 10 kategoriassa hakuineen, ja 12 pohjaa; **kenttäeditori** ja jakaminen `.lamapgzlevel`-tiedostona |
 | **Battleship**  | 1 / 2 pelaajaa | Meritaistelu 10x10: laivaston sijoitus vetämällä, 3 sääntökytkintä (kosketus, salvo, uusi laukaus), tekoäly 3 tasolla tai paikallinen kaksintaistelu luovutusnäytöllä |
 | **Casino**      | 1 pelaaja     | Eurooppalainen ruletti kaikilla klassisilla panoksilla ja Laama-automaatti (5 rullaa, 10 voittolinjaa, jokeri, ilmaiskierrokset); yksi laamamerkkitili Blackjackin ja Pokerin kanssa |
 
@@ -9256,10 +9340,15 @@ räjähdystehosteet, ennätys.
   hypätään tai lennetään. **Viisi muotoa** – kuutio, alus, pallo, UFO ja aalto –
   sekä muoto-, painovoima- ja nopeusportaalit (0,5x–3x), keltaiset/pinkit/siniset
   **ponnahtimet ja pallot**, puolikaspalikat, piikit, kuopat ja värilaukaisimet.
-- **8 valmista kenttää** *Helposta* *Demoniin* ("Lama Inferno"), kussakin **3
+- **16 valmista kenttää** *Helposta* *Demoniin* ("Lama Inferno"), kussakin **3
   salaista kolikkoa**. Jokainen kenttä on todistetusti läpäistävissä:
   rakennusvaiheessa ratkaisija läpäisi sen pelin oikealla koodilla – kaikkine
   kolikkoineen ja jopa 1/240 sekuntia siirrettynä.
+- **"Lisää"-välilehti: 80 kenttää 10 kategoriassa** (aloitus, rytmi, kolikot,
+  alus, UFO, pallo, painovoima, vauhti, aalto, demoni); **hakukenttä**,
+  satunnaispainike ja oma edistyminen jokaisessa kentässä. Nekin on todistettu
+  ratkaisijalla - maali ja kaikki kolme kolikkoa. Tähdet ja saavutukset jäävät
+  kampanjalle.
 - **Tarkka fysiikka**: kiintolukulaskenta kiinteällä 240 Hz:n askeleella; jokainen
   painallus vaikuttaa juuri siinä askeleessa, jossa se tapahtui – sama millä
   tahansa kuvataajuudella ja bitilleen sama selaimessa.
@@ -9269,7 +9358,7 @@ räjähdystehosteet, ennätys.
   maa ja pallot sykkivät tahdissa (musiikin saa pois **M**:llä).
 - **Tähdet ja kolikot**: kun läpäiset kentän normaalitilassa, saat sen tähdet, ja
   jokainen kolikko on yhden lisätähden arvoinen; ennätys on **tähtien
-  kokonaismäärä** (enintään 65). Kenttäkohtaiset parhaat, kolikot, yritykset ja
+  kokonaismäärä** (enintään 135). Kenttäkohtaiset parhaat, kolikot, yritykset ja
   hypyt tallentuvat `mem.json`-tiedoston osioon `geodash`.
 - **Kenttäeditori** **KENTÄT**-välilehdellä: ruudukkopohja, 6 ryhmän paletti
   (palikat, vaarat, ponnahtimet ja pallot, portaalit, nopeus, lisät), kääntö,
@@ -9278,6 +9367,11 @@ räjähdystehosteet, ennätys.
   **"Varmistettu"**-merkki tulee vasta, kun olet itse läpäissyt kenttäsi.
   **Jaa** kirjoittaa `.lamapgzlevel`-tiedoston ja **Tuo** lukee sen takaisin;
   kentät tallentuvat `ugc.json`-tiedostoon omien minigolfratojen viereen.
+- **Pohjat**: "Uusi" kysyy ensin yhtä **12 pohjasta** (tyhjä, aloitus, hypyt,
+  pads ja pallot, alus, aalto, pallo, UFO, painovoima, vauhti, kolikot, demoni).
+  Ne tuovat esineet, värit, musiikin ja - koska ratkaisija pelasi ne läpi - myös
+  merkinnän "vahvistettu". **Lisää**-välilehdellä **"Pohjaksi"** kopioi minkä
+  tahansa valmiin kentän omiisi.
 
 **Battleship**
 - **Meritaistelu 10x10-ruudukolla**: lentotukialus (5 ruutua), taistelulaiva (4),
@@ -9484,7 +9578,8 @@ devtools/            Kehitystyökalut (eivät tule .exe-tiedostoon)
   build_chess_puzzles.py     Rakentaa 200 shakkitehtävää Lichessin tehtävätietokannasta (CC0)
   build_sudoku_killer.py     Luo 400 yksiselitteisesti ratkeavaa Killer Sudokua
   build_crossyroad_models.py Kirjoittaa Crossy Roadin vokselimallit selainversiota varten
-  build_geodash_levels.py    Rakentaa 8 Geometry Dash -kenttää ja todistaa ratkaisijalla, että jokainen on läpäistävissä kolikoineen
+  build_geodash_levels.py    Rakentaa 16 Geometry Dash -kenttää ja todistaa ratkaisijalla, että jokainen on läpäistävissä kolikoineen
+  build_geodash_extra.py     Rakentaa kirjaston (80 kenttää 10 kategoriassa) ja 12 pohjaa, jokaisen ratkaisijalla todistettuna
   build_geodash_solver.py    Ratkaisija pelin oikealla askelkoodilla (ratkaisut tiedostossa geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -9501,10 +9596,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Tasodata: snake-comp.json, chess-puzzles.json (+ lähde-README), sudoku-killer.json, geodash.json
+  levels/              Tasodata: snake-comp.json, chess-puzzles.json (+ lähde-README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Kokonaistarkastus (syöte, seedrand Python = JS, tallennus, kielitiedostot, esinäytöt) + kaikki audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
@@ -9701,7 +9796,7 @@ existuje, jinak systémový Python. Podrobný návod krok za krokem je úplně d
 | **Pinball**     | 1 / 2 hráči | Pinballový automat se 3 stoly: bumpery, slingshoty, terče, dráhy L-A-M-A, multiball s jackpotem, záchrana koule, šťouch a tilt |
 | **Bowling**     | 1 / 2 hráči | 10 framů s oficiálním počítáním strike/spare, skutečnou fyzikou kuželek, hookem a dráhou v perspektivě, 3 obtížnosti |
 | **Crossy Road** | 1 hráč        | Nekonečné skákání přes louky, silnice, řeky a koleje v izometrickém voxelovém stylu: den/noc, orel, 10 postav ke koupi, denní trasa |
-| **Geometry Dash** | 1 hráč      | Rytmická plošinovka s kostkou, lodí, míčem, UFO a vlnou: 8 levelů od Lehkého po Démona, v každém 3 tajné mince, tréninkový režim, soundtrack pro každý level; **editor levelů** se sdílením jako `.lamapgzlevel` |
+| **Geometry Dash** | 1 hráč      | Rytmická plošinovka s kostkou, lodí, míčem, UFO a vlnou: 16 levelů od Lehkého po Démona, v každém 3 tajné mince, tréninkový režim, soundtrack pro každý level, k tomu knihovna **80 dalších levelů** v 10 kategoriích s hledáním a 12 šablon; **editor levelů** se sdílením jako `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 hráči   | Námořní bitva 10x10: rozmístění flotily přetažením, 3 přepínače pravidel (dotyk, salva, střelba znovu), AI se 3 úrovněmi nebo lokální duel s předávací obrazovkou |
 | **Casino**      | 1 hráč        | Evropská ruleta se všemi klasickými sázkami a Lama automat (5 válců, 10 výherních linií, divoký symbol, volné otočky); jeden účet lama žetonů s Blackjackem a Pokerem |
 
@@ -10342,10 +10437,14 @@ zbraně), efekty explozí, nejlepší skóre.
   tom, kdy skočit nebo letět. **Pět podob** - kostka, loď, míč, UFO a vlna - k
   tomu portály podoby, gravitace a rychlosti (0,5x až 3x), žluté/růžové/modré
   **odrazy a koule**, poloviční bloky, bodáky, jámy a barevné spouštěče.
-- **8 vestavěných levelů** od *Lehkého* po *Démona* („Lama Inferno"), v každém **3
+- **16 vestavěných levelů** od *Lehkého* po *Démona* („Lama Inferno"), v každém **3
   tajné mince**. Každý level je prokazatelně zvládnutelný: při stavbě ho řešič
   dohrál se skutečným kódem hry - se všemi mincemi a dokonce i při posunu o
   1/240 sekundy.
+- **Záložka „Další": 80 levelů v 10 kategoriích** (začátek, rytmus, mince, loď,
+  UFO, míč, gravitace, rychlost, vlna, démon) s **polem pro hledání**, tlačítkem
+  náhody a vlastním postupem u každého levelu. I ty jsou ověřené řešičem - cíl i
+  všechny tři mince. Hvězdy a úspěchy zůstávají kampani.
 - **Přesná fyzika**: výpočty s pevnou řádovou čárkou v pevném kroku 240 Hz;
   každý stisk působí přesně v kroku, ve kterém nastal - stejně při jakékoli
   snímkové frekvenci a bitově shodně v prohlížeči.
@@ -10355,7 +10454,7 @@ zbraně), efekty explozí, nejlepší skóre.
   země i koule pulzují do rytmu (hudbu vypneš klávesou **M**).
 - **Hvězdy a mince**: kdo level dokončí v normálním režimu, získá jeho hvězdy, a
   každá mince má cenu další hvězdy; rekordem je **celkový počet hvězd** (nejvýš
-  65). Nejlepší výsledky levelů, mince, pokusy a skoky jsou v sekci `geodash`
+  135). Nejlepší výsledky levelů, mince, pokusy a skoky jsou v sekci `geodash`
   souboru `mem.json`.
 - **Editor levelů** na záložce **LEVELY**: plátno s mřížkou, paleta se 6 skupinami
   (bloky, nebezpečí, odrazy a koule, portály, rychlost, doplňky), otáčení,
@@ -10364,6 +10463,11 @@ zbraně), efekty explozí, nejlepší skóre.
   přibude, až když svůj level sám dohraješ. **Sdílet** zapíše soubor
   `.lamapgzlevel`, **Import** ho zase načte; levely se ukládají do `ugc.json`
   vedle vlastních minigolfových jamek.
+- **Šablony**: „Nová" se nejdřív zeptá na jednu z **12 šablon** (prázdná,
+  začátek, skoky, odrazy a koule, loď, vlna, míč, UFO, gravitace, rychlost,
+  mince, démon). Nesou si objekty, barvy, hudbu a - protože je řešič prošel - i
+  fajfku „ověřeno". V záložce **Další** zkopíruje **„Jako šablona"** libovolný
+  hotový level mezi tvé.
 
 **Battleship**
 - **Námořní bitva 10x10** s letadlovou lodí (5 polí), bitevní lodí (4), křižníkem
@@ -10565,7 +10669,8 @@ devtools/            Vývojářské nástroje (nebalí se do .exe)
   build_chess_puzzles.py     Sestaví 200 šachových úloh z databáze úloh Lichess (CC0)
   build_sudoku_killer.py     Vygeneruje 400 Killer Sudoku s jediným řešením
   build_crossyroad_models.py Zapíše voxelové modely Crossy Road pro webovou verzi
-  build_geodash_levels.py    Sestaví 8 levelů Geometry Dash a řešičem dokáže, že každý je zvládnutelný i s mincemi
+  build_geodash_levels.py    Sestaví 16 levelů Geometry Dash a řešičem dokáže, že každý je zvládnutelný i s mincemi
+  build_geodash_extra.py     Staví knihovnu (80 levelů v 10 kategoriích) a 12 šablon, každou ověřenou řešičem
   build_geodash_solver.py    Řešič se skutečným kódem kroku (řešení v geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -10582,10 +10687,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Data úrovní: snake-comp.json, chess-puzzles.json (+ README se zdroji), sudoku-killer.json, geodash.json
+  levels/              Data úrovní: snake-comp.json, chess-puzzles.json (+ README se zdroji), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Celkový audit (vstup, seedrand Python = JS, ukládání, jazykové soubory, přípravné obrazovky) + všechny audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
@@ -10784,7 +10889,7 @@ obstaja, sicer sistemski Python. Na dnu dokumenta je podroben vodnik po korakih:
 | **Pinball**     | 1 / 2 igralca | Pinball avtomat s 3 mizami: odbijači, slingshoti, tarče, steze L-A-M-A, multiball z jackpotom, rešitev krogle, sunek in tilt |
 | **Bowling**     | 1 / 2 igralca | 10 framov z uradnim štetjem strike/spare, pravo fiziko kegljev, hookom in stezo v perspektivi, 3 težavnosti |
 | **Crossy Road** | 1 igralec     | Neskončno skakanje čez travnike, ceste, reke in tire v izometričnem voksel slogu: dan/noč, orel, 10 likov za nakup, dnevna proga |
-| **Geometry Dash** | 1 igralec   | Ritmična ploščadna igra s kocko, ladjo, žogo, NLP in valom: 8 stopenj od Lahke do Demona s po 3 skrivnimi kovanci, način vaje, glasba za vsako stopnjo; **urejevalnik stopenj** z deljenjem kot `.lamapgzlevel` |
+| **Geometry Dash** | 1 igralec   | Ritmična ploščadna igra s kocko, ladjo, žogo, NLP in valom: 16 stopenj od Lahke do Demona s po 3 skrivnimi kovanci, način vaje, glasba za vsako stopnjo, poleg tega knjižnica z **80 dodatnimi stopnjami** v 10 kategorijah z iskanjem in 12 predlog; **urejevalnik stopenj** z deljenjem kot `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 igralca | Pomorska bitka 10x10: postavitev flote z vlečenjem, 3 stikala pravil (dotik, salva, ponovni strel), UI s 3 jakostmi ali lokalni dvoboj z zaslonom za predajo |
 | **Casino**      | 1 igralec     | Evropska ruleta z vsemi klasičnimi stavami in Lama avtomat (5 kolutov, 10 dobitnih linij, divji simbol, brezplačni vrtljaji); en račun lama žetonov z Blackjackom in Pokrom |
 
@@ -11423,10 +11528,14 @@ nadgradnja orožja), učinki eksplozij, rekord.
   ali leteti. **Pet oblik** - kocka, ladja, žoga, NLP in val - poleg tega portali
   oblike, težnosti in hitrosti (0,5x do 3x), rumeni/roza/modri **odskoki in
   krogle**, polbloki, konice, jame in barvni sprožilci.
-- **8 vgrajenih stopenj** od *Lahko* do *Demon* (»Lama Inferno«) s po **3
+- **16 vgrajenih stopenj** od *Lahko* do *Demon* (»Lama Inferno«) s po **3
   skrivnimi kovanci**. Vsaka stopnja je dokazano rešljiva: ob gradnji jo je
   reševalec opravil s pravo kodo igre - z vsemi kovanci in celo z zamikom 1/240
   sekunde.
+- **Zavihek »Več«: 80 stopenj v 10 kategorijah** (začetek, ritem, kovanci, ladja,
+  NLP, žoga, težnost, hitrost, val, demon) s **poljem za iskanje**, gumbom za
+  naključje in lastnim napredkom pri vsaki stopnji. Tudi te je dokazal
+  reševalnik - cilj in vsi trije kovanci. Zvezdice in dosežki ostanejo kampanji.
 - **Natančna fizika**: računanje s stalno vejico v stalnem koraku 240 Hz; vsak
   pritisk učinkuje natanko v koraku, v katerem se je zgodil - enako pri vsaki
   hitrosti sličic in bitno enako v brskalniku.
@@ -11436,7 +11545,7 @@ nadgradnja orožja), učinki eksplozij, rekord.
   ozadje, tla in krogle utripajo v ritmu (glasbo izklopiš z **M**).
 - **Zvezdice in kovanci**: kdor stopnjo opravi v običajnem načinu, dobi njene
   zvezdice, vsak kovanec pa je vreden še eno zvezdico; rekord je **skupno število
-  zvezdic** (največ 65). Najboljši rezultati stopenj, kovanci, poskusi in skoki so
+  zvezdic** (največ 135). Najboljši rezultati stopenj, kovanci, poskusi in skoki so
   v razdelku `geodash` v `mem.json`.
 - **Urejevalnik stopenj** v zavihku **STOPNJE**: platno z mrežo, paleta s 6
   skupinami (bloki, nevarnosti, odskoki in krogle, portali, hitrost, dodatki),
@@ -11445,6 +11554,11 @@ nadgradnja orožja), učinki eksplozij, rekord.
   Kljukica **»preverjeno«** se pojavi šele, ko svojo stopnjo sam opraviš.
   **Deli** zapiše datoteko `.lamapgzlevel`, **Uvozi** jo spet prebere; stopnje se
   shranijo v `ugc.json` poleg lastnih minigolf prog.
+- **Predloge**: »Nova« najprej vpraša po eni od **12 predlog** (prazna, začetek,
+  skoki, odskoki in krogle, ladja, val, žoga, NLP, težnost, hitrost, kovanci,
+  demon). Prinesejo predmete, barve, glasbo in - ker jih je reševalnik prešel -
+  tudi kljukico »preverjeno«. V zavihku **Več** **»Kot predloga«** kopira
+  katero koli dokončano stopnjo med tvoje.
 
 **Battleship**
 - **Pomorska bitka 10x10** z letalonosilko (5 polj), bojno ladjo (4), križarko
@@ -11647,7 +11761,8 @@ devtools/            Razvijalska orodja (ne pakirajo se v .exe)
   build_chess_puzzles.py     Zgradi 200 šahovskih ugank iz baze ugank Lichess (CC0)
   build_sudoku_killer.py     Ustvari 400 Killer Sudokujev z enolično rešitvijo
   build_crossyroad_models.py Zapiše voksel modele Crossy Road za spletno različico
-  build_geodash_levels.py    Zgradi 8 stopenj Geometry Dash in z reševalcem dokaže, da je vsaka rešljiva skupaj s kovanci
+  build_geodash_levels.py    Zgradi 16 stopenj Geometry Dash in z reševalcem dokaže, da je vsaka rešljiva skupaj s kovanci
+  build_geodash_extra.py     Zgradi knjižnico (80 stopenj v 10 kategorijah) in 12 predlog, vsako dokazano z reševalnikom
   build_geodash_solver.py    Reševalec s pravo kodo koraka (rešitve v geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -11664,10 +11779,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Podatki o ravneh: snake-comp.json, chess-puzzles.json (+ README z viri), sudoku-killer.json, geodash.json
+  levels/              Podatki o ravneh: snake-comp.json, chess-puzzles.json (+ README z viri), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Celovita revizija (vnos, seedrand Python = JS, shranjevanje, jezikovne datoteke, predigralni zasloni) + vsi audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
@@ -11863,7 +11978,7 @@ dnu pod **[Vodič za instalaciju](#vodič-za-instalaciju)**.
 | **Pinball**     | 1 / 2 igrača | Pinball automat s 3 stola: odbojnici, slingshotovi, mete, staze L-A-M-A, multiball s jackpotom, spašavanje kugle, gurkanje i tilt |
 | **Bowling**     | 1 / 2 igrača | 10 frameova sa službenim brojanjem strike/spare, pravom fizikom čunjeva, hookom i stazom u perspektivi, 3 težine |
 | **Crossy Road** | 1 igrač       | Beskonačno skakanje preko livada, cesta, rijeka i tračnica u izometrijskom voxel stilu: dan/noć, orao, 10 likova za kupnju, dnevna staza |
-| **Geometry Dash** | 1 igrač     | Ritmička platformska igra s kockom, brodom, loptom, NLO-om i valom: 8 razina od Lako do Demon s po 3 tajna novčića, način vježbe, glazba za svaku razinu; **uređivač razina** s dijeljenjem kao `.lamapgzlevel` |
+| **Geometry Dash** | 1 igrač     | Ritmička platformska igra s kockom, brodom, loptom, NLO-om i valom: 16 razina od Lako do Demon s po 3 tajna novčića, način vježbe, glazba za svaku razinu, uz to knjižnica s **80 dodatnih razina** u 10 kategorija s pretragom i 12 predložaka; **uređivač razina** s dijeljenjem kao `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 igrača  | Pomorska bitka 10x10: raspoređivanje flote povlačenjem, 3 prekidača pravila (dodir, salva, ponovni hitac), AI s 3 razine ili lokalni dvoboj sa zaslonom za predaju |
 | **Casino**      | 1 igrač       | Europski rulet sa svim klasičnim ulozima i Lama automat (5 valjaka, 10 dobitnih linija, džoker, besplatne vrtnje); jedan račun lama žetona s Blackjackom i Pokerom |
 
@@ -12510,9 +12625,13 @@ nadogradnja oružja), efekti eksplozije, rekord.
   skočiti ili letjeti. **Pet oblika** - kocka, brod, lopta, NLO i val - uz to
   portali oblika, gravitacije i brzine (0,5x do 3x), žuti/ružičasti/plavi
   **odskoci i kugle**, polublokovi, šiljci, jame i okidači boja.
-- **8 ugrađenih razina** od *Lako* do *Demon* („Lama Inferno") s po **3 tajna
+- **16 ugrađenih razina** od *Lako* do *Demon* („Lama Inferno") s po **3 tajna
   novčića**. Svaka razina dokazano je prolazna: pri izradi ju je rješavač prešao
   pravim kodom igre - sa svim novčićima, čak i s pomakom od 1/240 sekunde.
+- **Kartica „Više": 80 razina u 10 kategorija** (početak, ritam, novčići, brod,
+  NLO, lopta, gravitacija, brzina, val, demon) s **poljem za pretragu**, gumbom
+  za nasumičan odabir i vlastitim napretkom svake razine. I one su dokazane
+  rješavačem - cilj i sva tri novčića. Zvjezdice i postignuća ostaju kampanji.
 - **Precizna fizika**: računanje s nepomičnim zarezom u stalnom koraku od 240 Hz;
   svaki pritisak djeluje točno u koraku u kojem se dogodio - jednako pri svakoj
   brzini sličica i bitovno jednako u pregledniku.
@@ -12522,7 +12641,7 @@ nadogradnja oružja), efekti eksplozije, rekord.
   pozadina, tlo i kugle pulsiraju u ritmu (glazba se isključuje tipkom **M**).
 - **Zvjezdice i novčići**: tko prijeđe razinu u normalnom načinu, dobiva njezine
   zvjezdice, a svaki novčić vrijedi još jednu; rekord je **ukupan broj
-  zvjezdica** (najviše 65). Najbolji rezultati po razini, novčići, pokušaji i
+  zvjezdica** (najviše 135). Najbolji rezultati po razini, novčići, pokušaji i
   skokovi nalaze se u odjeljku `geodash` u `mem.json`.
 - **Uređivač razina** na kartici **RAZINE**: platno s mrežom, paleta sa 6 skupina
   (blokovi, opasnosti, odskoci i kugle, portali, brzina, dodaci), okretanje,
@@ -12531,6 +12650,11 @@ nadogradnja oružja), efekti eksplozije, rekord.
   **„provjereno"** dolazi tek kada sami prijeđete svoju razinu. **Podijeli**
   zapisuje datoteku `.lamapgzlevel`, **Uvoz** je ponovno učitava; razine se
   spremaju u `ugc.json` uz vlastite minigolf staze.
+- **Predlošci**: „Nova" najprije pita za jedan od **12 predložaka** (prazan,
+  početak, skokovi, odskoci i kugle, brod, val, lopta, NLO, gravitacija, brzina,
+  novčići, demon). Donose objekte, boje, glazbu i - budući da ih je rješavač
+  prošao - kvačicu „provjereno". U kartici **Više** **„Kao predložak"** kopira
+  bilo koju gotovu razinu među tvoje.
 
 **Battleship**
 - **Pomorska bitka 10x10** s nosačem zrakoplova (5 polja), bojnim brodom (4),
@@ -12732,7 +12856,8 @@ devtools/            Razvojni alati (ne pakiraju se u .exe)
   build_chess_puzzles.py     Gradi 200 šahovskih zadataka iz Lichess baze zadataka (CC0)
   build_sudoku_killer.py     Generira 400 Killer Sudokua s jedinstvenim rješenjem
   build_crossyroad_models.py Zapisuje voxel modele Crossy Roada za web-inačicu
-  build_geodash_levels.py    Gradi 8 razina Geometry Dasha i rješavačem dokazuje da je svaka prolazna zajedno s novčićima
+  build_geodash_levels.py    Gradi 16 razina Geometry Dasha i rješavačem dokazuje da je svaka prolazna zajedno s novčićima
+  build_geodash_extra.py     Gradi knjižnicu (80 razina u 10 kategorija) i 12 predložaka, svaki dokazan rješavačem
   build_geodash_solver.py    Rješavač sa stvarnim kodom koraka (rješenja u geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -12749,10 +12874,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Podaci razina: snake-comp.json, chess-puzzles.json (+ README s izvorima), sudoku-killer.json, geodash.json
+  levels/              Podaci razina: snake-comp.json, chess-puzzles.json (+ README s izvorima), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Cjelovita provjera (unos, seedrand Python = JS, spremanje, jezične datoteke, zasloni pripreme) + svi audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py

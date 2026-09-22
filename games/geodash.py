@@ -58,11 +58,17 @@ from . import geodash_draw as gdraw
 from . import geodash_music as music
 
 SELECT, PLAY, COMPLETE, EDIT = "select", "play", "complete", "edit"
-TABS = ("play", "levels")
+TABS = ("play", "extra", "levels")
 DIFF_KEYS = ("easy", "normal", "hard", "harder", "insane", "demon")
 
-LEVELS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                           "levels", "geodash.json")
+_LEVEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "levels")
+LEVELS_FILE = os.path.join(_LEVEL_DIR, "geodash.json")
+EXTRA_FILE = os.path.join(_LEVEL_DIR, "geodash_extra.json")
+TEMPLATES_FILE = os.path.join(_LEVEL_DIR, "geodash_templates.json")
+
+# Höchstens so viele Punkte unter der Level-Karte; bei mehr Leveln wandert
+# das Fenster mit der Auswahl mit (sonst reicht die Reihe über den Rand).
+DOTS_MAX = 10
 
 DEATH_PAUSE = 0.85           # Sekunden Explosion bis zum nächsten Versuch
 AUTO_CHECK_STEPS = 2 * core.HZ
@@ -88,6 +94,27 @@ def load_builtin_levels():
         "length": 110})]
 
 
+def _load_level_file(path):
+    """Liest eine Level-Datei (Liste normalisierter Level; leer bei Fehler)."""
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return [core.normalize_level(d) for d in data.get("levels", [])
+                if isinstance(d, dict) and d.get("id")]
+    except (OSError, ValueError):
+        return []
+
+
+def load_extra_levels():
+    """Die Level-Bibliothek des Reiters "Weitere" (games/levels/geodash_extra.json)."""
+    return _load_level_file(EXTRA_FILE)
+
+
+def load_templates():
+    """Die Vorlagen für eigene Level (games/levels/geodash_templates.json)."""
+    return _load_level_file(TEMPLATES_FILE)
+
+
 def total_coins_mask(mask):
     return bin(int(mask) & 7).count("1")
 
@@ -111,8 +138,10 @@ class GeometryDashGame(Game):
         self.music_on = bool(gs.get("music", True))
         self.show_bar = bool(gs.get("progress_bar", True))
         self.auto_cp = bool(gs.get("auto_checkpoints", True))
-        self.setup_tab = "play"
+        tab = gs.get("last_tab", "play")
+        self.setup_tab = tab if tab in TABS else "play"
         self.lists = None            # LEVELS-Reiter (geodash_edit.LevelList)
+        self.extra = None            # WEITERE-Reiter (geodash_extra.ExtraList)
         self.editor = None
         self._test = None            # Test-Spielen aus dem Editor
         self.renderer = gdraw.Renderer()
@@ -157,15 +186,17 @@ class GeometryDashGame(Game):
         self._layout()
         if self.lists is not None:
             self.lists.layout()
+        if self.extra is not None:
+            self.extra.layout()
         if self.editor is not None:
             self.editor.layout()
 
     @property
     def wants_escape(self):
-        """ESC heißt im Editor, im LEVELS-Reiter, beim Test-Spielen und auf
-        dem Ergebnis-Bildschirm "zurück" - sonst Pause."""
+        """ESC heißt im Editor, in den Listen-Reitern, beim Test-Spielen und
+        auf dem Ergebnis-Bildschirm "zurück" - sonst Pause."""
         return (self.state in (EDIT, COMPLETE) or self._test is not None
-                or (self.state == SELECT and self.setup_tab == "levels"))
+                or (self.state == SELECT and self.setup_tab != "play"))
 
     def on_exit(self):
         audio.music_stop(self)
@@ -227,6 +258,10 @@ class GeometryDashGame(Game):
             return ""
         if self.cur_kind == "main":
             return self.cur["id"]
+        if self.cur_kind == "extra":
+            # Die Bibliothek hat eigene ids ("x-ship-03"), aber einen eigenen
+            # Namensraum - so kollidiert sie nie mit der Kampagne.
+            return "x:" + str(self.cur.get("id", ""))
         return "ugc:" + str(self.cur.get("id", ""))
 
     # ===================================================== Level starten
@@ -594,6 +629,17 @@ class GeometryDashGame(Game):
             if new_mask == 7:
                 self.ach_event("gd_coins")
             self.score = self.total_stars()
+        elif self.cur_kind == "extra" and not self.practice:
+            # Die Bibliothek führt ihren eigenen Fortschritt: Bestwert und
+            # Münzen je Level, aber keine Kampagnen-Sterne und keine Erfolge.
+            key = self._best_key()
+            old_mask = self.coins.get(key, 0)
+            new_mask = old_mask | s.coins
+            info["new_coins"] = total_coins_mask(new_mask) - total_coins_mask(old_mask)
+            info["first"] = bool(new_record)
+            if new_mask != old_mask:
+                self.coins[key] = new_mask
+                self._dirty = True
         elif self.cur_kind == "test" and self._test is not None:
             if self._test.get("verify") and not self.practice and not self.start_block:
                 info["verified"] = True
@@ -636,10 +682,15 @@ class GeometryDashGame(Game):
         sh = self._small.get_height()
         th = self._tiny.get_height()
         tab_h = max(22, min(30, h // 15), sh + 10)
-        tab_w = min(max(150, w // 6), (w - 40) // 2)
+        n_tabs = len(TABS)
+        gap_t = 8
+        tab_w = min(max(110, w // (n_tabs + 2)),
+                    (w - 40 - gap_t * (n_tabs - 1)) // n_tabs)
         tab_y = int(h * 0.20)
-        self.tab_rects = [pygame.Rect(cx - tab_w - 4, tab_y, tab_w, tab_h),
-                          pygame.Rect(cx + 4, tab_y, tab_w, tab_h)]
+        total_t = n_tabs * tab_w + gap_t * (n_tabs - 1)
+        self.tab_rects = [
+            pygame.Rect(cx - total_t // 2 + i * (tab_w + gap_t), tab_y,
+                        tab_w, tab_h) for i in range(n_tabs)]
         self.tab_bottom = tab_y + tab_h
         foot = th * 2 + 14
         bh = max(24, min(40, h // 14), sh + 14)
@@ -675,14 +726,30 @@ class GeometryDashGame(Game):
         if tab not in TABS or tab == self.setup_tab:
             return
         self.setup_tab = tab
-        if tab == "levels":
-            from . import geodash_edit as edit
-            if self.lists is None:
-                self.lists = edit.LevelList(self)
-            else:
-                self.lists.layout()
-                self.lists.reload()
+        panel = self._panel(build=True)
+        if panel is not None:
+            panel.layout()
+            panel.reload()
+        self._save_setting("last_tab", tab)
         self.play_sound("click")
+
+    def _panel(self, build=False):
+        """Die Liste des aktiven Reiters (oder None beim Karussell).
+
+        'build' legt sie bei Bedarf an - beide Listen entstehen erst, wenn
+        man ihren Reiter zum ersten Mal öffnet.
+        """
+        if self.setup_tab == "levels":
+            if self.lists is None and build:
+                from . import geodash_edit as edit
+                self.lists = edit.LevelList(self)
+            return self.lists
+        if self.setup_tab == "extra":
+            if self.extra is None and build:
+                from . import geodash_extra as extra
+                self.extra = extra.ExtraList(self)
+            return self.extra
+        return None
 
     def _handle_select(self, event):
         if event.kind == InputEvent.MOUSEDOWN:
@@ -691,16 +758,15 @@ class GeometryDashGame(Game):
                     self._set_tab(TABS[i])
                     return
         elif event.kind == InputEvent.KEYDOWN and event.key in ("Tab", "ISO_Left_Tab"):
-            self._set_tab("levels" if self.setup_tab == "play" else "play")
+            step = -1 if event.key == "ISO_Left_Tab" else 1
+            self._set_tab(TABS[(TABS.index(self.setup_tab) + step) % len(TABS)])
             return
-        if self.setup_tab == "levels":
+        panel = self._panel(build=True)
+        if panel is not None:
             if event.kind == InputEvent.KEYDOWN and event.key == "Escape":
                 self._set_tab("play")
                 return
-            if self.lists is None:
-                from . import geodash_edit as edit
-                self.lists = edit.LevelList(self)
-            self.lists.handle(event)
+            panel.handle(event)
             return
         if event.kind == InputEvent.KEYDOWN:
             k = event.key
@@ -708,10 +774,15 @@ class GeometryDashGame(Game):
                 self._step_level(-1)
             elif k == "Right" or self.is_action(k, "right"):
                 self._step_level(1)
-            elif k in ("1", "2", "3", "4", "5", "6", "7", "8", "9"):
-                i = int(k) - 1
+            elif k in ("1", "2", "3", "4", "5", "6", "7", "8", "9", "0"):
+                # [1]-[9] springen auf Level 1-9, [0] auf Level 10.
+                i = 9 if k == "0" else int(k) - 1
                 if i < len(self.levels):
                     self._step_level(i - self.sel)
+            elif k == "Home":
+                self._step_level(-self.sel)
+            elif k == "End":
+                self._step_level(len(self.levels) - 1 - self.sel)
             elif k in ("Return", "space", "KP_Enter"):
                 self._play_selected()
             elif k in ("p", "P"):
@@ -740,9 +811,10 @@ class GeometryDashGame(Game):
                     if rc.collidepoint(pos):
                         self._toggle_option(key)
                         return
+                first = self._dots_first()
                 for i, rc in enumerate(self._dot_rects()):
                     if rc.collidepoint(pos):
-                        self._step_level(i - self.sel)
+                        self._step_level(first + i - self.sel)
                         return
         elif event.kind == InputEvent.WHEEL:
             self._step_level(-1 if event.delta > 0 else 1)
@@ -774,8 +846,16 @@ class GeometryDashGame(Game):
         self._test = None
         self.start_level(self.levels[self.sel], "main")
 
-    def _dot_rects(self):
+    def _dots_first(self):
+        """Erster Punkt der Reihe - bei vielen Leveln wandert das Fenster mit."""
         n = len(self.levels)
+        if n <= DOTS_MAX:
+            return 0
+        return max(0, min(self.sel - DOTS_MAX // 2, n - DOTS_MAX))
+
+    def _dot_rects(self):
+        """Trefferflächen der Punktreihe (höchstens DOTS_MAX Stück)."""
+        n = min(len(self.levels), DOTS_MAX)
         r = max(4, self.height // 110)
         gap = r * 4
         x0 = self.width // 2 - (n - 1) * gap // 2
@@ -795,6 +875,8 @@ class GeometryDashGame(Game):
         panel = pygame.Rect((w - pw) // 2, (h - ph) // 2, pw, ph)
         keys = ["again", "select"]
         if self.cur_kind == "main" and self.levels and self.sel < len(self.levels) - 1:
+            keys.append("next")
+        if self.cur_kind == "extra" and self.extra is not None and self.extra.has_next():
             keys.append("next")
         if self.cur_kind == "test":
             keys = ["again", "editor"]
@@ -832,6 +914,8 @@ class GeometryDashGame(Game):
                 self.sel += 1
                 self._save_setting("last_level", self.sel)
                 self.start_level(self.levels[self.sel], "main")
+            elif self.cur_kind == "extra" and self.extra is not None:
+                self.extra.play_next()
         elif key == "editor":
             self._back_to_editor()
         else:
@@ -839,6 +923,8 @@ class GeometryDashGame(Game):
                 self.setup_tab = "levels"
                 if self.lists is not None:
                     self.lists.reload()
+            elif self.cur_kind == "extra":
+                self.setup_tab = "extra"
             self._leave_to_select()
 
     # ===================================================== Eigene Level
@@ -852,9 +938,15 @@ class GeometryDashGame(Game):
     def set_grid_snap(self, on):
         self._save_setting("grid", bool(on))
 
-    def ugc_new_level(self):
+    def ugc_new_level(self, template=None):
+        """Neues eigenes Level - leer oder aus einer Vorlage.
+
+        Eine Vorlage bringt ihre Objekte, Farben, Musik und (weil sie vom
+        Solver bewiesen ist) ihr Verifiziert-Abzeichen mit; sobald man etwas
+        ändert, fällt das Abzeichen wie gewohnt weg.
+        """
         from . import geodash_edit as edit
-        self.ugc_edit(edit.new_level())
+        self.ugc_edit(edit.new_level(template=template))
 
     def ugc_edit(self, m):
         from . import geodash_edit as edit
@@ -1102,16 +1194,15 @@ class GeometryDashGame(Game):
         cx = w // 2
         title = self._huge.render(t("gd.title"), True, self.accent)
         s.blit(title, title.get_rect(center=(cx, int(h * 0.085))))
-        sub_key = "gd.subtitle" if self.setup_tab == "play" else "gd.ugc.subtitle"
+        sub_key = {"play": "gd.subtitle", "extra": "gd.more.subtitle",
+                   "levels": "gd.ugc.subtitle"}.get(self.setup_tab, "gd.subtitle")
         sub = self._small.render(t(sub_key), True, ui.TEXT_DIM)
         s.blit(sub, sub.get_rect(center=(cx, int(h * 0.155))))
         for i, rc in enumerate(self.tab_rects):
             self._btn(s, rc, t("gd.tab_" + TABS[i]), self.setup_tab == TABS[i])
-        if self.setup_tab == "levels":
-            if self.lists is None:
-                from . import geodash_edit as edit
-                self.lists = edit.LevelList(self)
-            self.lists.draw(s)
+        panel = self._panel(build=True)
+        if panel is not None:
+            panel.draw(s)
             return
         self._draw_card(s)
         for i, rc in enumerate(self.arrow_rects):
@@ -1122,10 +1213,21 @@ class GeometryDashGame(Game):
             pts = [(rc.centerx - d * m * 0.6, rc.centery - m), (rc.centerx + d * m * 0.8, rc.centery),
                    (rc.centerx - d * m * 0.6, rc.centery + m)]
             pygame.draw.polygon(s, self.accent, pts)
-        for i, rc in enumerate(self._dot_rects()):
-            on = i == self.sel
+        first = self._dots_first()
+        rects = self._dot_rects()
+        for i, rc in enumerate(rects):
+            idx = first + i
+            on = idx == self.sel
+            # Am Rand kleinere Punkte: dort geht die Reihe noch weiter.
+            edge = (i == 0 and first > 0) or \
+                   (i == len(rects) - 1 and first + len(rects) < len(self.levels))
             col = self.accent if on else ui.BORDER_LIGHT
-            pygame.draw.circle(s, col, rc.center, rc.w // 2 - 2 if on else rc.w // 2 - 4)
+            r = rc.w // 2 - (2 if on else 4) - (1 if edge else 0)
+            pygame.draw.circle(s, col, rc.center, max(2, r))
+        if len(self.levels) > DOTS_MAX:
+            num = self._tiny.render(t("gd.level_of", n=self.sel + 1,
+                                      max=len(self.levels)), True, ui.TEXT_DIM)
+            s.blit(num, num.get_rect(midtop=(cx, self.dots_y + rects[0].h)))
         self._btn(s, self.mode_rects[0], t("gd.mode.normal"), not self.practice)
         self._btn(s, self.mode_rects[1], t("gd.mode.practice"), self.practice)
         pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=9)

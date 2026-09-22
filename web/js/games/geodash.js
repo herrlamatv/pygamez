@@ -22,7 +22,10 @@
   const music = PG.gdMusic;
 
   const SELECT = "select", PLAY = "play", COMPLETE = "complete", EDIT = "edit";
-  const TABS = ["play", "levels"];
+  const TABS = ["play", "extra", "levels"];
+  // Höchstens so viele Punkte unter der Level-Karte; bei mehr Leveln wandert
+  // das Fenster mit der Auswahl mit (sonst reicht die Reihe über den Rand).
+  const DOTS_MAX = 10;
   const DIFF_KEYS = ["easy", "normal", "hard", "harder", "insane", "demon"];
   const DEATH_PAUSE = 0.85;
   const AUTO_CHECK_STEPS = 2 * core.HZ;
@@ -61,8 +64,9 @@
       this.musicOn = !!this.opts.music;
       this.showBar = !!this.opts.progress_bar;
       this.autoCp = !!this.opts.auto_checkpoints;
-      this.setupTab = "play";
-      this.lists = null;
+      this.setupTab = TABS.includes(this.opts.last_tab) ? this.opts.last_tab : "play";
+      this.lists = null;            // LEVELS-Reiter (gdEdit.LevelList)
+      this.extra = null;            // WEITERE-Reiter (gdExtraUI.ExtraList)
       this.editor = null;
       this.test = null;
       this.t = 0;
@@ -87,7 +91,7 @@
     }
 
     get wantsEscape() {
-      return this.state === EDIT || this.state === COMPLETE || !!this.test || (this.state === SELECT && this.setupTab === "levels");
+      return this.state === EDIT || this.state === COMPLETE || !!this.test || (this.state === SELECT && this.setupTab !== "play");
     }
 
     saveSetting(key, value) {
@@ -143,7 +147,11 @@
 
     bestKey() {
       if (!this.cur) return "";
-      return this.curKind === "main" ? this.cur.id : "ugc:" + (this.cur.id || "");
+      if (this.curKind === "main") return this.cur.id;
+      // Die Bibliothek hat eigene ids ("x-ship-03"), aber einen eigenen
+      // Namensraum - so kollidiert sie nie mit der Kampagne.
+      if (this.curKind === "extra") return "x:" + (this.cur.id || "");
+      return "ugc:" + (this.cur.id || "");
     }
 
     // ===================================================== Level starten
@@ -299,7 +307,8 @@
       }
       if (this.state === SELECT) {
         this.cardAnim = Math.max(0, this.cardAnim - dt * 4);
-        if (this.setupTab === "levels" && this.lists) this.lists.update(dt);
+        const panel = this.panel(false);
+        if (panel && panel.update) panel.update(dt);
         return;
       }
       if (this.state === COMPLETE) {
@@ -465,6 +474,18 @@
         }
         if (newMask === 7) this.achEvent("gd_coins");
         this.score = this.totalStars();
+      } else if (this.curKind === "extra" && !this.practice) {
+        // Die Bibliothek führt ihren eigenen Fortschritt: Bestwert und Münzen
+        // je Level, aber keine Kampagnen-Sterne und keine Erfolge.
+        const key = this.bestKey();
+        const oldMask = this.coins[key] || 0;
+        const newMask = oldMask | s.coins;
+        info.newCoins = coinsOf(newMask) - coinsOf(oldMask);
+        info.first = !!newRecord;
+        if (newMask !== oldMask) {
+          this.coins[key] = newMask;
+          this.dirty = true;
+        }
       } else if (this.curKind === "test" && this.test && this.test.verify && !this.practice && !this.startBlock) {
         info.verified = true;
         if (this.editor) this.editor.markVerified();
@@ -504,9 +525,11 @@
       // Höhen wachsen mit der Schrift
       const sh = this.fSmall.getHeight(), th = this.fTiny.getHeight();
       const tabH = Math.max(22, Math.min(30, Math.floor(h / 15)), sh + 10);
-      const tabW = Math.min(Math.max(150, Math.floor(w / 6)), (w - 40) >> 1);
+      const nTabs = TABS.length, gapT = 8;
+      const tabW = Math.min(Math.max(110, Math.floor(w / (nTabs + 2))), Math.floor((w - 40 - gapT * (nTabs - 1)) / nTabs));
       const tabY = Math.trunc(h * 0.2);
-      this.tabRects = [R(cx - tabW - 4, tabY, tabW, tabH), R(cx + 4, tabY, tabW, tabH)];
+      const totalT = nTabs * tabW + gapT * (nTabs - 1);
+      this.tabRects = TABS.map((_, i) => R(cx - (totalT >> 1) + i * (tabW + gapT), tabY, tabW, tabH));
       this.tabBottom = tabY + tabH;
       const foot = th * 2 + 14;
       const bh = Math.max(24, Math.min(40, Math.floor(h / 14)), sh + 14);
@@ -536,11 +559,26 @@
     setTab(tab) {
       if (!TABS.includes(tab) || tab === this.setupTab) return;
       this.setupTab = tab;
-      if (tab === "levels") {
-        if (!this.lists) this.lists = new PG.gdEdit.LevelList(this);
-        else this.lists.reload();
+      const panel = this.panel(true);
+      if (panel) {
+        panel.layout();
+        panel.reload();
       }
+      this.saveSetting("last_tab", tab);
       this.playSound("click");
+    }
+
+    /** Die Liste des aktiven Reiters (oder null beim Karussell). */
+    panel(build) {
+      if (this.setupTab === "levels") {
+        if (!this.lists && build) this.lists = new PG.gdEdit.LevelList(this);
+        return this.lists;
+      }
+      if (this.setupTab === "extra") {
+        if (!this.extra && build) this.extra = new PG.gdExtraUI.ExtraList(this);
+        return this.extra;
+      }
+      return null;
     }
 
     handleSelect(ev) {
@@ -549,21 +587,25 @@
           if (this.tabRects[i].collidepoint(ev.pos)) return this.setTab(TABS[i]);
         }
       } else if (ev.kind === "keydown" && (ev.key === "Tab" || ev.key === "ISO_Left_Tab")) {
-        return this.setTab(this.setupTab === "play" ? "levels" : "play");
+        const step = ev.key === "ISO_Left_Tab" ? -1 : 1;
+        return this.setTab(TABS[PG.mod(TABS.indexOf(this.setupTab) + step, TABS.length)]);
       }
-      if (this.setupTab === "levels") {
+      const panel = this.panel(true);
+      if (panel) {
         if (ev.kind === "keydown" && ev.key === "Escape") return this.setTab("play");
-        if (!this.lists) this.lists = new PG.gdEdit.LevelList(this);
-        return this.lists.handle(ev);
+        return panel.handle(ev);
       }
       if (ev.kind === "keydown") {
         const k = ev.key;
         if (k === "Left" || this.isAction(k, "left")) this.stepLevel(-1);
         else if (k === "Right" || this.isAction(k, "right")) this.stepLevel(1);
-        else if (/^[1-9]$/.test(k)) {
-          const i = Number(k) - 1;
+        else if (/^[0-9]$/.test(k)) {
+          // [1]-[9] springen auf Level 1-9, [0] auf Level 10.
+          const i = k === "0" ? 9 : Number(k) - 1;
           if (i < this.levels.length) this.stepLevel(i - this.sel);
-        } else if (k === "Return" || k === "space" || k === "KP_Enter") this.playSelected();
+        } else if (k === "Home") this.stepLevel(-this.sel);
+        else if (k === "End") this.stepLevel(this.levels.length - 1 - this.sel);
+        else if (k === "Return" || k === "space" || k === "KP_Enter") this.playSelected();
         else if (k === "p" || k === "P") {
           this.practice = !this.practice;
           this.playSound("select");
@@ -585,8 +627,9 @@
           }
         } else {
           for (const [key, rc] of Object.entries(this.optRects)) if (rc.collidepoint(p)) return this.toggleOption(key);
+          const first = this.dotsFirst();
           this.dotRects().forEach((rc, i) => {
-            if (rc.collidepoint(p)) this.stepLevel(i - this.sel);
+            if (rc.collidepoint(p)) this.stepLevel(first + i - this.sel);
           });
         }
       } else if (ev.kind === "wheel") this.stepLevel(ev.delta > 0 ? -1 : 1);
@@ -621,8 +664,15 @@
       this.startLevel(this.levels[this.sel], "main");
     }
 
-    dotRects() {
+    /** Erster Punkt der Reihe - bei vielen Leveln wandert das Fenster mit. */
+    dotsFirst() {
       const n = this.levels.length;
+      if (n <= DOTS_MAX) return 0;
+      return Math.max(0, Math.min(this.sel - (DOTS_MAX >> 1), n - DOTS_MAX));
+    }
+
+    dotRects() {
+      const n = Math.min(this.levels.length, DOTS_MAX);
       const r = Math.max(4, Math.floor(this.height / 110));
       const gap = r * 4;
       const x0 = (this.width >> 1) - Math.floor(((n - 1) * gap) / 2);
@@ -641,6 +691,7 @@
       const panel = R((w - pw) / 2, (h - ph) / 2, pw, ph);
       let keys = ["again", "select"];
       if (this.curKind === "main" && this.sel < this.levels.length - 1) keys.push("next");
+      if (this.curKind === "extra" && this.extra && this.extra.hasNext()) keys.push("next");
       if (this.curKind === "test") keys = ["again", "editor"];
       const gap = 8;
       const bw = Math.floor((pw - 30 - gap * (keys.length - 1)) / keys.length);
@@ -668,13 +719,13 @@
           this.sel++;
           this.saveSetting("last_level", this.sel);
           this.startLevel(this.levels[this.sel], "main");
-        }
+        } else if (this.curKind === "extra" && this.extra) this.extra.playNext();
       } else if (key === "editor") this.backToEditor();
       else {
         if (this.curKind === "ugc") {
           this.setupTab = "levels";
           if (this.lists) this.lists.reload();
-        }
+        } else if (this.curKind === "extra") this.setupTab = "extra";
         this.leaveToSelect();
       }
     }
@@ -688,8 +739,9 @@
       this.saveSetting("grid", !!on);
     }
 
-    ugcNewLevel() {
-      this.ugcEdit(PG.gdEdit.newLevel());
+    /** Neues eigenes Level - leer oder aus einer Vorlage (mit Abzeichen). */
+    ugcNewLevel(template) {
+      this.ugcEdit(PG.gdEdit.newLevel("", "", null, template || null));
     }
 
     ugcEdit(m) {
@@ -883,12 +935,11 @@
     drawSelect(ctx) {
       const w = this.width, h = this.height, cx = w >> 1;
       ui.text(ctx, t("gd.title"), cx, Math.trunc(h * 0.085), this.fHuge, this.accent, "center");
-      ui.text(ctx, t(this.setupTab === "play" ? "gd.subtitle" : "gd.ugc.subtitle"), cx, Math.trunc(h * 0.155), this.fSmall, ui.TEXT_DIM, "center");
+      const subKey = { play: "gd.subtitle", extra: "gd.more.subtitle", levels: "gd.ugc.subtitle" }[this.setupTab] || "gd.subtitle";
+      ui.text(ctx, t(subKey), cx, Math.trunc(h * 0.155), this.fSmall, ui.TEXT_DIM, "center");
       this.tabRects.forEach((rc, i) => this.btn(ctx, rc, t("gd.tab_" + TABS[i]), this.setupTab === TABS[i]));
-      if (this.setupTab === "levels") {
-        if (!this.lists) this.lists = new PG.gdEdit.LevelList(this);
-        return this.lists.draw(ctx);
-      }
+      const panel = this.panel(true);
+      if (panel) return panel.draw(ctx);
       this.drawCard(ctx);
       this.arrowRects.forEach((rc, i) => {
         draw.rect(ctx, ui.BTN, rc, 0, rc.w >> 2);
@@ -896,10 +947,17 @@
         const d = i === 0 ? -1 : 1, m = rc.w >> 2;
         draw.polygon(ctx, this.accent, [[rc.centerx - d * m * 0.6, rc.centery - m], [rc.centerx + d * m * 0.8, rc.centery], [rc.centerx - d * m * 0.6, rc.centery + m]]);
       });
-      this.dotRects().forEach((rc, i) => {
-        const on = i === this.sel;
-        draw.circle(ctx, on ? this.accent : ui.BORDER_LIGHT, [rc.centerx, rc.centery], on ? rc.w / 2 - 2 : rc.w / 2 - 4);
+      const first = this.dotsFirst(), dots = this.dotRects();
+      dots.forEach((rc, i) => {
+        const on = first + i === this.sel;
+        // Am Rand kleinere Punkte: dort geht die Reihe noch weiter.
+        const edge = (i === 0 && first > 0) || (i === dots.length - 1 && first + dots.length < this.levels.length);
+        const r = rc.w / 2 - (on ? 2 : 4) - (edge ? 1 : 0);
+        draw.circle(ctx, on ? this.accent : ui.BORDER_LIGHT, [rc.centerx, rc.centery], Math.max(2, r));
       });
+      if (this.levels.length > DOTS_MAX) {
+        ui.text(ctx, t("gd.level_of", { n: this.sel + 1, max: this.levels.length }), cx, this.dotsY + dots[0].h, this.fTiny, ui.TEXT_DIM, "midtop");
+      }
       this.btn(ctx, this.modeRects[0], t("gd.mode.normal"), !this.practice);
       this.btn(ctx, this.modeRects[1], t("gd.mode.practice"), this.practice);
       draw.rect(ctx, ui.BTN_SEL, this.startRect, 0, 9);

@@ -21,7 +21,10 @@
   "sudoku": {
     "difficulty": 0,
     "fail_limit": true,
-    "last_level": {}
+    "last_level": {},
+    "variant": "classic",
+    "input": "cell",
+    "colors": false
   },
   "frogger": {
     "difficulty": "normal"
@@ -73,7 +76,10 @@
   },
   "chess": {
     "difficulty": 2,
-    "color": "white"
+    "color": "white",
+    "clock": "none",
+    "chess960": false,
+    "flip": false
   },
   "muehle": {
     "difficulty": 1,
@@ -115,6 +121,48 @@
   },
   "replay": {
     "enabled": true
+  },
+  "tetris": {
+    "das": 170,
+    "arr": 50,
+    "ghost": true,
+    "solo": "marathon",
+    "ai_level": 1,
+    "start_level": 1
+  },
+  "g2048": {
+    "size": 4,
+    "mode": "classic",
+    "undo": "limited"
+  },
+  "wordle": {
+    "length": 5,
+    "hard": false,
+    "colorblind": false
+  },
+  "crossy": {
+    "shadows": true,
+    "daynight": true
+  },
+  "geodash": {
+    "music": true,
+    "auto_checkpoints": true,
+    "progress_bar": true,
+    "grid": true,
+    "last_level": 0,
+    "last_tab": "extra",
+    "last_cat": "ship"
+  },
+  "battleship": {
+    "difficulty": 1,
+    "touch": true,
+    "salvo": false,
+    "extra_shot": false
+  },
+  "casino": {
+    "roulette_chip": 5,
+    "line_bet": 1,
+    "turbo": false
   },
   "controls": {
     "p1": {

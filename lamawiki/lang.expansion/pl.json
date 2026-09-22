@@ -2716,7 +2716,10 @@
         "checkpoint",
         "demon",
         "muzyka",
-        "poziom"
+        "poziom",
+        "więcej",
+        "jako szablon",
+        "wybierz"
       ],
       "sections": [
         {
@@ -2733,7 +2736,7 @@
             "- [Spacja], [Góra], [W], [Enter] lub lewy przycisk myszy: skok albo lot. Przytrzymanie działa jak ciągłe wciskanie - kostka odbija się wtedy od razu po każdym lądowaniu.",
             "- [R] od razu zaczyna od nowa, [Q] lub [Backspace] wraca do wyboru poziomu, [Esc] pauzuje.",
             "- [P] włącza i wyłącza tryb treningowy; w nim [Z] stawia punkt kontrolny, a [X] usuwa ostatni.",
-            "- Wybór poziomu: [Lewo]/[Prawo] przełączają poziomy, [1] do [8] przechodzą prosto do poziomu, [Enter] startuje, [P] wybiera Normalny lub Trening, [M] przełącza muzykę, [Tab] przechodzi do zakładki POZIOMY.",
+            "- Wybór poziomu: [Lewo]/[Prawo] przełączają poziomy, [1] do [9] i [0] przechodzą prosto do poziomów 1-10, [Home]/[End] na początek albo koniec, [Enter] startuje, [P] wybiera Normalny lub Trening, [M] przełącza muzykę, [Tab] krąży między GRA, WIĘCEJ i POZIOMY.",
             "Każde wciśnięcie dostaje znacznik czasu i działa dokładnie w tym kroku fizyki (1/240 sekundy), w którym nastąpiło - skok wychodzi więc idealnie, nawet gdy komputer na chwilę przytnie."
           ]
         },
@@ -2759,14 +2762,24 @@
           ]
         },
         {
-          "h": "8 poziomów",
+          "h": "16 poziomów",
           "body": [
-            "- Lama Launch (Łatwy, 1 gwiazdka) i Neon Steps (Łatwy, 2 gwiazdki): skoki, wyrzutnie, kule i pierwszy statek.",
-            "- Orbit Garden (Normalny, 3 gwiazdki): łańcuchy kul, do góry nogami pod sufitem, statek z podwójną prędkością.",
-            "- Gravity Tide (Trudny, 4 gwiazdki) i Skyline Rush (Trudny, 5 gwiazdek): portale grawitacji, kula, UFO, doły i potrójna prędkość.",
-            "- Crystal Caves (Trudniejszy, 7 gwiazdek) i Wave Reactor (Szalony, 9 gwiazdek): wszystkie pięć form, wąskie bramy i tunele fali.",
-            "- Lama Inferno (Demon, 10 gwiazdek): potrójna prędkość i wszystko naraz.",
+            "- Lama Launch, Neon Steps i Pixel Sprint (Łatwy, 1-2 gwiazdki): skoki, wyrzutnie, kule i pierwszy statek.",
+            "- Orbit Garden i Moss Temple (Normalny, po 3 gwiazdki): łańcuchy kul i spokojne fragmenty do góry nogami pod sufitem.",
+            "- Gravity Tide, Magnet Fields, Skyline Rush i Hangar Run (Trudny, 4-5 gwiazdek): portale grawitacji, kula, UFO i ciasne bramki statku przy podwójnej prędkości.",
+            "- Crystal Caves, Strobe City i Frost Relay (Trudniejszy, 6-7 gwiazdek): wszystkie pięć form, rytmiczne fragmenty i wiele zmian kolorów.",
+            "- Wave Reactor i Turbine Core (Szalony, po 9 gwiazdek): fala w wąskim tunelu.",
+            "- Lama Inferno i Lama Eclipse (Demon, po 10 gwiazdek): potrójna prędkość i wszystko naraz.",
             "Udowodniono, że każdy poziom da się przejść razem ze wszystkimi trzema monetami: przy budowie solver ukończył go prawdziwym kodem gry - a jego rozwiązanie działa nawet przesunięte o 1/240 sekundy."
+          ]
+        },
+        {
+          "h": "Więcej: 80 poziomów w kategoriach",
+          "body": [
+            "Zakładka WIĘCEJ to biblioteka 80 dodatkowych poziomów w dziesięciu kategoriach: start, rytm, monety, statek, UFO, kula, grawitacja, prędkość, fala i demon.",
+            "U góry wybierasz kategorię, niżej szukasz po nazwie. Każdy wiersz pokazuje trudność, długość, zebrane monety i twój najlepszy wynik; \"Losowo\" podrzuca ci jeden z wyboru.",
+            "Te poziomy też są potwierdzone przez solver: meta i wszystkie trzy monety są osiągalne. Mają własny postęp, ale nie dają gwiazdek ani osiągnięć - te zostają przy kampanii.",
+            "\"Jako szablon\" kopiuje wybrany poziom do twoich własnych, gdzie możesz go przerobić. Więcej na stronie \"Własne poziomy (Geometry Dash)\"."
           ]
         },
         {
@@ -2781,7 +2794,7 @@
           "h": "Gwiazdki, monety i osiągnięcia",
           "body": [
             "Kto ukończy poziom w trybie normalnym, dostaje jego gwiazdki. W każdym poziomie ukryte są też trzy sekretne monety, często z dala od najłatwiejszej drogi. Liczą się, gdy ukończysz z nimi poziom - a każda jest warta kolejną gwiazdkę.",
-            "Twój rekord to suma gwiazdek (najwyżej 65) i może tylko rosnąć. Dla każdego poziomu gra zapamiętuje najlepszy wynik procentowy w trybie Normalnym i Treningu, znalezione monety oraz liczbę prób.",
+            "Twój rekord to suma gwiazdek (najwyżej 135) i może tylko rosnąć. Dla każdego poziomu gra zapamiętuje najlepszy wynik procentowy w trybie Normalnym i Treningu, znalezione monety oraz liczbę prób.",
             "- Osiągnięcia: \"W rytmie\" za pierwszy ukończony poziom, \"Łowca monet\" za wszystkie trzy monety z poziomu, \"Pogromca demonów\" za Lama Inferno - oraz kamień milowy przy 20 gwiazdkach.",
             "W zakładce POZIOMY budujesz, grasz i udostępniasz własne poziomy - zobacz stronę \"Własne poziomy (Geometry Dash)\"."
           ]
@@ -2803,13 +2816,15 @@
         "eksport",
         "zweryfikowany",
         "lamapgzlevel",
-        "geometry dash"
+        "geometry dash",
+        "wybierz",
+        "więcej"
       ],
       "sections": [
         {
           "h": "Budowanie poziomu",
           "body": [
-            "Zakładka POZIOMY w wyborze poziomów Geometry Dash to twoja własna kolekcja (do 60 poziomów). \"Nowy\" otwiera edytor poziomów, \"Edytuj\" wraca do istniejącego poziomu.",
+            "Zakładka POZIOMY w wyborze poziomów Geometry Dash to twoja własna kolekcja (do 60 poziomów). \"Nowy\" pyta najpierw o szablon, \"Edytuj\" wraca do istniejącego poziomu.",
             "Po lewej jest płótno z siatką, po prawej paleta: u góry Zaznacz i Gumka, pod nimi sześć grup - Bloki, Pułapki, Wyrzutnie i kule, Portale, Prędkość i Dodatki (sekretne monety, wyzwalacz koloru). [1] do [6] wybierają grupy bezpośrednio.",
             "- Kliknięcie lub przeciąganie stawia wybrany obiekt, [R] go obraca: kolce i półbloki w czterech kierunkach, wyrzutnie w górę lub w dół.",
             "- Z narzędziem Zaznacz przeciąganie przesuwa obiekt, a [Del] go usuwa. Prawy przycisk zawsze kasuje; przeciąganie prawym przyciskiem, kółko myszy, strzałki lub [A]/[D] przewijają.",
@@ -2817,6 +2832,15 @@
             "- Pasek na samym dole pokazuje cały poziom w skrócie - kliknięcie przenosi w to miejsce.",
             "[U] cofa, [Y] ponawia, [G] pokazuje lub ukrywa siatkę, [S] zapisuje. [Esc] wraca - przy niezapisanych zmianach dopiero po potwierdzeniu.",
             "Najwyżej trzy monety na poziom. Meta ustawia się automatycznie kawałek za ostatnim obiektem."
+          ]
+        },
+        {
+          "h": "Szablony",
+          "body": [
+            "Każdy nowy poziom zaczyna się od szablonu: \"Pusty\" startuje od zera, pozostałych jedenaście przynosi gotowy szkielet - start, skoki, wyrzutnie i kule, statek, fala, kula, UFO, grawitacja, prędkość, monety i demon.",
+            "Szablon przynosi swoje obiekty, kolory, muzykę i prędkość startową. Ponieważ solver przeszedł każdy szablon, kopia od razu nosi zielony znaczek - dopóki czegoś nie zmienisz.",
+            "Gotowe poziomy też da się kopiować: w zakładce WIĘCEJ \"Jako szablon\" dodaje wybrany poziom do twoich, razem z obiektami, kolorami i muzyką.",
+            "Kopia to zwykły własny poziom: przerabiaj, testuj, zapisuj, graj i udostępniaj."
           ]
         },
         {

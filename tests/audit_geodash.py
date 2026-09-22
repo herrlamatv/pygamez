@@ -9,37 +9,45 @@ Kern      (1) Festkomma-Physik: Würfel springt/landet/prallt, Stachel, Grube,
               Portale samt Korridor, Münzen, Start "ab Block x";
               normalize_level räumt kaputte Daten auf, content_hash ignoriert
               Farben, aber keine Objekte.
-Level     (2) 8 eingebaute Level (Leicht -> Dämon), JSON == Build-Skript ==
+Level     (2) 16 eingebaute Level (Leicht -> Dämon), JSON == Build-Skript ==
               web/js/games/geodash_levels.js; Solver-Beweis je Level: Ziel +
               alle 3 Münzen, auch mit -1/+1 Schritt Versatz, Entscheidungen im
               5-Schritt-Raster, Mindest-Drück-/Loslass-Dauer; der Solver löst
               ein frisches Stück Level selbst.
-Web       (3) Python == JavaScript: web/tools/geodash_replay.js spielt die
-              Lösungen und Zufalls-Eingaben (auch Test-Level mit allen
-              Objektarten, Start ab Block x) nach - Zustands-Hashes gleich;
+Bibliothek(3) Reiter "Weitere": 80 Level in 10 Kategorien und 12 Vorlagen -
+              Desktop-JSON == Web-Index == Web-Volldaten, je Level ein Beweis
+              (Ziel + 3 Münzen bei -1/0/+1 Versatz), Vorlagen verifiziert, alle
+              neuen Texte in 14 Sprachen, Kopieren als Vorlage legt ein eigenes
+              Level mit Abzeichen an.
+Web       (4) Python == JavaScript: web/tools/geodash_replay.js spielt die
+              Lösungen (Kampagne und Bibliothek) und Zufalls-Eingaben (auch
+              Test-Level mit allen Objektarten, Start ab Block x) nach -
+              Zustands-Hashes gleich;
               Soundtrack-Noten gleich; Level-Datei Desktop -> Web -> Desktop.
-Eingabe   (4) Akkumulator + Zeitstempel: echte Tastendrücke über update() bei
+Eingabe   (5) Akkumulator + Zeitstempel: echte Tastendrücke über update() bei
               15/30/60/144/50 FPS schaffen die Level; bei 15/30/60/120 FPS
               ist der Endzustand bitgleich mit dem Kern; Tastenwiederholung
               zählt nicht als Druck.
-Spiel     (5) Tod -> Versuch +1 und Neustart, Bestwert %, [R]/[Q]/[P]/[Z]/[X],
+Spiel     (6) Tod -> Versuch +1 und Neustart, Bestwert %, Reiter "Weitere"
+              (filtern, suchen, spielen, eigener Fortschritt unter "x:<id>"),
+              [R]/[Q]/[P]/[Z]/[X],
               Übungsmodus mit Auto-Checkpoints (Neustart am Checkpoint, kein
               Stern), Sterne/Münzen/Erfolge gd_first/gd_coins/gd_demon, Score =
               Sterne gesamt (wächst nur), mem.json-Section "geodash" überlebt
               Neuladen und kaputte Daten, Settings-Section "geodash",
               Registrierung (ALL_GAMES, Erfolge, Wiki, Manifest).
-Editor    (6) Setzen aller Objektarten, Drehen, Werte, Undo/Redo, Rechtsklick,
+Editor    (7) Setzen aller Objektarten, Drehen, Werte, Undo/Redo, Rechtsklick,
               Speichern (Fehlerfälle), Teilen als .lamapgzlevel und Import
               (id -2), "Verifiziert" nur nach eigenem Durchlauf vom Start und
               weg nach einer Änderung.
-ugc       (7) ugc.py bleibt für Minigolf 100 % kompatibel zur Fassung aus git
+ugc       (8) ugc.py bleibt für Minigolf 100 % kompatibel zur Fassung aus git
               HEAD (Laden, Speichern, Löschen, Export, Import mit/ohne
               Umschlag, Dateiinhalt), Arten sind sauber getrennt.
-Layout    (8) Levelauswahl, LEVELS-Reiter, Teilen-Dialog, Editor, Einstellungen,
+Layout    (9) Levelauswahl, LEVELS-Reiter, Teilen-Dialog, Editor, Einstellungen,
               Ergebnis-Panel und HUD: 5 Auflösungen x 14 Sprachen im Bild, ohne
               Überlappung, Texte passen; alle Screens zeichnen fehlerfrei
               (v4.2: 14 Sprachen, v1: de+fi), Auflösungswechsel im Spiel.
-Leistung  (9) 1280x960: Frame-Zeit (update + draw) über Lama Inferno und im
+Leistung (10) 1280x960: Frame-Zeit (update + draw) über Lama Inferno und im
               Editor.
 
 Aufruf aus dem Repo-Root:  python tests/audit_geodash.py
@@ -102,6 +110,7 @@ from games import geodash as gd
 from games import geodash_core as core
 from games import geodash_draw as gdraw
 from games import geodash_edit as edit
+from games import geodash_extra as extra_ui
 from games import geodash_music as music
 
 import build_geodash_levels as build
@@ -115,6 +124,16 @@ TMP = tempfile.mkdtemp(prefix="audit-geodash-")
 EXPORT_PATH = os.path.join(HERE, "_audit-geodash-export.lamapgzlevel")
 PROOFS = json.load(open(os.path.join(REPO, "devtools", "geodash_proofs.json"), encoding="utf-8"))
 LEVELS = gd.load_builtin_levels()
+EXTRA = gd.load_extra_levels()
+TEMPLATES = gd.load_templates()
+EXTRA_PROOFS = json.load(open(os.path.join(REPO, "devtools", "geodash_extra_proofs.json"),
+                              encoding="utf-8"))
+# Erwartungswerte (nicht aus den Daten abgeleitet - sie sollen ja geprüft
+# werden): 16 Kampagnen-Level, 87 Sterne + 48 Münzen, 80 Level + 12 Vorlagen.
+N_LEVELS = 16
+MAX_STARS = 135
+N_EXTRA = 80
+N_TEMPLATES = 12
 
 
 def check(ok, label, detail=""):
@@ -333,13 +352,13 @@ def audit_levels():
     print("\nEingebaute Level + Solver-Beweis")
     built = [fn() for fn in build.LEVELS]
     raw = json.load(open(gd.LEVELS_FILE, encoding="utf-8"))["levels"]
-    check(len(LEVELS) == 8 and json.dumps(raw, sort_keys=True) == json.dumps(built, sort_keys=True),
-          "8 Level, games/levels/geodash.json == Build-Skript")
+    check(len(LEVELS) == N_LEVELS and json.dumps(raw, sort_keys=True) == json.dumps(built, sort_keys=True),
+          "%d Level, games/levels/geodash.json == Build-Skript" % N_LEVELS)
     diffs = [d["difficulty"] for d in LEVELS]
     check(diffs == sorted(diffs) and diffs[0] == 0 and diffs[-1] == 5
-          and len({d["id"] for d in LEVELS}) == 8
-          and sum(d["stars"] + 3 for d in LEVELS) == 65,
-          "Schwierigkeit steigt (Leicht -> Dämon), ids eindeutig, 65 Sterne möglich")
+          and len({d["id"] for d in LEVELS}) == N_LEVELS
+          and sum(d["stars"] + 3 for d in LEVELS) == MAX_STARS,
+          "Schwierigkeit steigt (Leicht -> Dämon), ids eindeutig, %d Sterne möglich" % MAX_STARS)
     js = open(os.path.join(REPO, "web", "js", "games", "geodash_levels.js"), encoding="utf-8").read()
     body = js[js.index("window.PG.gdLevels = ") + len("window.PG.gdLevels = "):js.rindex(";\n})();")]
     check(json.dumps(json.loads(body), sort_keys=True) == json.dumps(raw, sort_keys=True),
@@ -364,6 +383,96 @@ def audit_levels():
     tg, info = solver.solve(piece, need_coins=True, max_nodes=200000, time_limit=60)
     ok = tg is not None and all(solver.verify(piece, tg, sh)[0] for sh in (-1, 0, 1))
     check(ok, "Solver löst ein frisches Level-Stück robust (%.1f s)" % (time.time() - t0), info)
+
+
+def _js_value(path, name):
+    """Den JSON-Wert aus einer erzeugten Datei 'window.PG.<name> = ...;' lesen."""
+    js = open(os.path.join(REPO, "web", "js", "games", path), encoding="utf-8").read()
+    head = "window.PG.%s = " % name
+    value, _end = json.JSONDecoder().raw_decode(js, js.index(head) + len(head))
+    return value
+
+
+def audit_library():
+    print("\nBibliothek (Weitere) + Vorlagen")
+    ids = [d["id"] for d in EXTRA]
+    cats = {d.get("category") for d in EXTRA}
+    check(len(EXTRA) == N_EXTRA and len(set(ids)) == N_EXTRA
+          and cats == set(extra_ui.CATS) - {"all"},
+          "%d Level, ids eindeutig, alle 10 Kategorien belegt" % N_EXTRA,
+          sorted(cats))
+    check(all(core.Level(d).coin_count == 3 for d in EXTRA),
+          "jedes Level der Bibliothek hat genau 3 Münzen")
+    check(all(0 <= int(d.get("difficulty", 0)) <= 5 and d.get("name") for d in EXTRA)
+          and not ({d["id"] for d in EXTRA} & {d["id"] for d in LEVELS}),
+          "Schwierigkeit 0-5, Namen gesetzt, keine id-Kollision mit der Kampagne")
+
+    # Desktop-JSON == Web-Index == Web-Volldaten
+    index = _js_value("geodash_extra_index.js", "gdExtraIndex")
+    full = _js_value("geodash_extra.js", "gdExtra")
+    same_index = ([i["id"] for i in index] == ids
+                  and all(i["cat"] == d["category"] and i["name"] == d["name"]
+                          and i["difficulty"] == d["difficulty"]
+                          and i["length"] == core.level_length(d)
+                          for i, d in zip(index, EXTRA)))
+    same_full = (sorted(full) == sorted(ids)
+                 and all(json.dumps(core.normalize_level(full[d["id"]]), sort_keys=True)
+                         == json.dumps(d, sort_keys=True) for d in EXTRA))
+    check(same_index and same_full,
+          "games/levels/geodash_extra.json == Web-Index == Web-Volldaten")
+
+    # Beweise: jedes Level ist mit -1/0/+1 Schritt Versatz schaffbar
+    bad = []
+    for d in EXTRA:
+        pr = EXTRA_PROOFS.get(d["id"])
+        if not pr or pr.get("content") != core.content_hash(d):
+            bad.append(d["id"] + " (kein Beweis)")
+            continue
+        lv = core.Level(d)
+        if not all(solver.verify(lv, pr["toggles"], sh)[0] for sh in (-1, 0, 1)):
+            bad.append(d["id"])
+    check(not bad, "jedes Level der Bibliothek ist bewiesen schaffbar (Ziel + 3 Münzen)",
+          bad[:5])
+
+    # Vorlagen
+    tpl_ids = [d.get("tpl") for d in TEMPLATES]
+    check(len(TEMPLATES) == N_TEMPLATES and len(set(tpl_ids)) == N_TEMPLATES
+          and tpl_ids[0] == "empty" and not TEMPLATES[0]["objects"],
+          "%d Vorlagen, erste Kachel ist leer" % N_TEMPLATES, tpl_ids)
+    unver = [d["id"] for d in TEMPLATES[1:] if not edit.is_verified(d)]
+    check(not unver, "alle gefüllten Vorlagen sind verifiziert (Solver-Beweis)", unver)
+    check(json.dumps(_js_value("geodash_templates.js", "gdTemplates"), sort_keys=True)
+          == json.dumps(TEMPLATES, sort_keys=True),
+          "games/levels/geodash_templates.json == web/js/games/geodash_templates.js")
+    # Texte: Vorlagen, Kategorien und die neuen Zeilen in ALLEN 14 Sprachen
+    keys = ["gd.tab_extra", "gd.more.subtitle", "gd.more.search", "gd.more.count",
+            "gd.more.done", "gd.more.empty", "gd.more.loading", "gd.level_of",
+            "gd.coins_of", "gd.tpl.title", "gd.tpl.hint"]
+    keys += ["gd.more.btn_" + k for k in extra_ui.BUTTONS]
+    keys += ["gd.more.cat." + k for k in extra_ui.CATS]
+    keys += [k for d in TEMPLATES
+             for k in ("gd.tpl." + d["tpl"], "gd.tpl." + d["tpl"] + ".desc")]
+    missing = []
+    for code, _name in i18n.AVAILABLE:
+        i18n.set_language(code, persist=False)
+        missing += ["%s/%s" % (code, k) for k in keys if i18n.t(k) == k]
+    i18n.set_language("de", persist=False)
+    check(not missing, "alle neuen Texte (%d) in 14 Sprachen vorhanden" % len(keys),
+          missing[:4])
+
+    # Aus einer Vorlage wird ein eigenes Level - mit Abzeichen, bis man es ändert
+    wipe_files()
+    tpl = TEMPLATES[4]
+    m = edit.new_level(template=tpl)
+    ok, _why = ugc.save_map(m, "geodash")
+    same = (len(m["objects"]) == len(tpl["objects"]) and m["speed"] == tpl["speed"]
+            and m["music"] == tpl["music"] and m.get("from") == tpl["id"])
+    check(ok and same and edit.is_verified(m) and m["name"] and m["id"],
+          "Vorlage -> eigenes Level: Objekte, Farben, Musik, Abzeichen, Name/id gesetzt")
+    m2 = dict(m)
+    m2["objects"] = m["objects"][:-1]
+    check(not edit.is_verified(m2), "nach einer Änderung ist das Abzeichen weg")
+    wipe_files()
 
 
 # ====================================================================== Web
@@ -412,7 +521,24 @@ def audit_web():
                 and r.get("contentHash") == core.content_hash(d)):
             bad.append(d["id"])
     check(res.returncode == 0 and not bad,
-          "8 Lösungen: Zwischen-Hashes alle 500 Schritte + Endzustand identisch", bad)
+          "%d Lösungen: Zwischen-Hashes alle 500 Schritte + Endzustand identisch"
+          % N_LEVELS, bad)
+    # Die Bibliothek: alle 80 Level mit ihren Beweisen, Endzustand vergleichen
+    res_x = node([os.path.join("web", "tools", "geodash_replay.js"), "--extra"])
+    try:
+        out_x = json.loads(res_x.stdout)
+    except ValueError:
+        out_x = {}
+    bad_x = []
+    for d in EXTRA:
+        r = out_x.get(d["id"], {})
+        s_py, _ = core.run_toggles(core.Level(d), EXTRA_PROOFS[d["id"]]["toggles"])
+        if not (r.get("ok") and r.get("state") == core.state_str(s_py)
+                and r.get("contentHash") == core.content_hash(d)):
+            bad_x.append(d["id"])
+    check(res_x.returncode == 0 and not bad_x and len(out_x) == N_EXTRA,
+          "Bibliothek: %d Lösungen im Browser bitgleich (Ziel + 3 Münzen)" % N_EXTRA,
+          bad_x[:5])
     # Eigene Fälle: Zufalls-Eingaben auf allen Leveln, Test-Level, Start ab Block x
     rng = random.Random(7)
     cases = []
@@ -633,8 +759,9 @@ def audit_game():
     print("\nSpielablauf, Fortschritt, Speicher")
     wipe_files()
     g = new_game()
-    check(g.state == gd.SELECT and g.score == 0 and g.total_stars() == 0 and g.max_stars() == 65,
-          "Start: Levelauswahl, 0 von 65 Sternen")
+    check(g.state == gd.SELECT and g.score == 0 and g.total_stars() == 0
+          and g.max_stars() == MAX_STARS and len(g.levels) == N_LEVELS,
+          "Start: Levelauswahl, 0 von %d Sternen (%d Level)" % (MAX_STARS, N_LEVELS))
     key(g, "Right")
     key(g, "3")
     check(g.sel == 2 and g.settings["geodash"]["last_level"] == 2, "Levelauswahl: Pfeile/Ziffern, gemerkt")
@@ -706,12 +833,16 @@ def audit_game():
           and "gd_first" not in g.events, "zweiter Sieg: keine doppelten Sterne, Score wächst nicht")
     g._complete_action("next")
     check(g.state == gd.PLAY and g.cur["id"] == "neon-steps" and g.sel == 1, "\"Nächstes\" startet Level 2")
-    g.start_level(LEVELS[7], "main")
+    inferno = next(i for i, d in enumerate(LEVELS) if d["id"] == "lama-inferno")
+    g.sel = inferno
+    g.start_level(LEVELS[inferno], "main")
     press_play(g, PROOFS["lama-inferno"]["toggles"], 60)
-    check("gd_demon" in g.events and g.score == 4 + 10 + 3, "Lama Inferno: gd_demon, Score 17")
+    stars_inferno = LEVELS[inferno]["stars"]
+    check("gd_demon" in g.events and g.score == 4 + stars_inferno + 3,
+          "Lama Inferno: gd_demon, Score %d" % (4 + stars_inferno + 3))
     g.on_exit()
     g2 = new_game()
-    check(g2.score == 17 and g2.best["lama-inferno"] == [100, 0] and g2.coins["lama-launch"] == 7
+    check(g2.score == 4 + stars_inferno + 3 and g2.best["lama-inferno"] == [100, 0] and g2.coins["lama-launch"] == 7
           and g2.attempts["lama-launch"] >= 5 and g2.jumps > 0,
           "mem.json-Section geodash: Bestwerte, Münzen, Versuche überleben Neuladen")
     data = store.load_section("geodash")
@@ -730,14 +861,55 @@ def audit_game():
         g._toggle_option(k)
     gs = g.settings["geodash"]
     merged = settings_mod._merge_defaults({"geodash": {"music": False, "progress_bar": 0, "grid": False,
-                                                       "last_level": 99, "auto_checkpoints": False}})
+                                                       "last_level": 999, "auto_checkpoints": False,
+                                                       "last_tab": "gibtsnicht", "last_cat": "ship"}})
     check(gs["music"] is False and gs["progress_bar"] is False and gs["auto_checkpoints"] is False
           and merged["geodash"] == {"music": False, "auto_checkpoints": False, "progress_bar": True,
-                                    "grid": False, "last_level": 7},
+                                    "grid": False, "last_level": 199, "last_tab": "play",
+                                    "last_cat": "ship"},
           "Optionen landen in settings.geodash, Prüfregeln greifen", merged.get("geodash"))
     check(g.wants_escape is False and (g._set_tab("levels") or g.wants_escape),
-          "ESC: Levelauswahl pausiert, LEVELS-Reiter/Editor/Test/Ergebnis heißen \"zurück\"")
+          "ESC: Levelauswahl pausiert, Listen-Reiter/Editor/Test/Ergebnis heißen \"zurück\"")
     g._set_tab("play")
+
+    # Reiter "Weitere": filtern, suchen, spielen - eigener Fortschritt
+    wipe_files()
+    g = new_game(w=800, h=600)
+    g._set_tab("extra")
+    ex = g.extra
+    n_all = len(ex.view)
+    ex._set_cat("ship")
+    n_ship = len(ex.view)
+    ex.query.set_text(EXTRA[0]["name"].split()[0].lower())
+    ex._set_cat("all")
+    n_query = len(ex.view)
+    ex.query.set_text("")
+    ex._set_cat("all")
+    ex._filter()
+    check(n_all == N_EXTRA and n_ship == 8 and 0 < n_query < N_EXTRA
+          and g.settings["geodash"]["last_tab"] == "extra"
+          and g.settings["geodash"]["last_cat"] == "all",
+          "Weitere: %d Level, Kategorie/Suche filtern, Reiter und Kategorie gemerkt"
+          % N_EXTRA, (n_all, n_ship, n_query))
+    lid = EXTRA[0]["id"]
+    ex.sel = ex.view.index(0)
+    ex._action("play")
+    started = g.cur["id"] == lid and g.cur_kind == "extra" and g._best_key() == "x:" + lid
+    press_play(g, EXTRA_PROOFS[lid]["toggles"], 60)
+    info = g.complete_info
+    check(started and g.state == gd.COMPLETE and info["stars"] == 0
+          and info["new_coins"] == 3 and g.best["x:" + lid] == [100, 0]
+          and g.coins["x:" + lid] == 7 and g.score == 0 and not g.events,
+          "Bibliothek: Bestwert und Münzen unter \"x:<id>\", aber keine Sterne/Erfolge",
+          (info, g.events))
+    check("next" in dict(g._complete_buttons()[1]) and (g._complete_action("next") or True)
+          and g.cur["id"] == EXTRA[1]["id"],
+          "\"Nächstes\" spielt das nächste Level der Liste")
+    g._leave_to_select()
+    check(g.state == gd.SELECT and g.setup_tab == "extra" and ex.done_count() == 1,
+          "zurück in die Bibliothek, Zähler \"geschafft\" stimmt")
+    wipe_files()
+    g = new_game(w=800, h=600)
 
     # Registrierung
     import achievements
@@ -762,13 +934,16 @@ def audit_game():
     check(all(wiki_ok), "LamaWiki: Seiten geodash + geodash-levels in allen 14 Sprachen")
     man = open(os.path.join(REPO, "web", "js", "manifest.js"), encoding="utf-8").read()
     line = next((ln for ln in man.splitlines() if '"GeometryDashGame"' in ln), "")
-    need = ["seedrand.js", "ugc.js", "geodash_core.js", "geodash_levels.js", "geodash_draw.js",
-            "geodash_music.js", "geodash_edit.js", "geodash.js"]
+    need = ["seedrand.js", "ugc.js", "geodash_core.js", "geodash_levels.js",
+            "geodash_extra_index.js", "geodash_templates.js", "geodash_draw.js",
+            "geodash_music.js", "geodash_edit.js", "geodash_extra_ui.js", "geodash.js"]
     pos = [line.find("js/games/" + n) for n in need]
     golf = next((ln for ln in man.splitlines() if '"MiniGolfGame"' in ln), "")
+    # Die Volldaten der Bibliothek werden nachgeladen, nicht mitgeladen.
     check(all(p >= 0 for p in pos) and pos == sorted(pos)
+          and "js/games/geodash_extra.js" not in line
           and 0 <= golf.find("ugc.js") < golf.find("minigolf_edit.js"),
-          "web/js/manifest.js lädt alle Geometry-Dash-Module (und ugc.js vor dem Minigolf-Editor)")
+          "web/js/manifest.js lädt alle Geometry-Dash-Module (Bibliothek-Volldaten erst bei Bedarf)")
 
     # Musik
     t0 = time.perf_counter()
@@ -791,8 +966,13 @@ def audit_editor():
     g = new_game(w=800, h=600)
     g._set_tab("levels")
     g.lists.handle(InputEvent(InputEvent.KEYDOWN, key="n"))
+    picker_open = g.lists.picker is not None and len(g.lists.picker) == N_TEMPLATES
+    # Erste Kachel ist "Leer" - damit landet man wie früher im leeren Editor.
+    g.lists.handle(InputEvent(InputEvent.KEYDOWN, key="Return"))
     ed = g.editor
-    check(g.state == gd.EDIT and ed is not None and g.wants_escape, "LEVELS-Reiter: [N] öffnet den Editor")
+    check(picker_open and g.state == gd.EDIT and ed is not None and not ed.objects
+          and g.wants_escape,
+          "LEVELS-Reiter: [N] öffnet die Vorlagen-Auswahl, \"Leer\" den leeren Editor")
     x = 6
     for group, kinds in edit.GROUPS:
         ed._pick_group(group)
@@ -1086,6 +1266,29 @@ def audit_layout():
               and all(lists.share_rect.contains(r) for r in share) and overlap(share) is None
               and inside(lists.share_rect, w, h),
               "%4dx%d LEVELS-Reiter + Teilen-Dialog" % (w, h))
+        ex = extra_ui.ExtraList(g)
+        cats = list(ex.cat_rects.values())
+        ebtn = list(ex.btn_rects.values())
+        check(all(inside(r, w, h) for r in cats + ebtn + [ex.search_rect])
+              and overlap(cats) is None and overlap(ebtn) is None
+              and max(r.bottom for r in cats) <= ex.search_rect.top
+              and ex.search_rect.bottom <= ex.list_top
+              and ex.list_bottom < min(r.top for r in ebtn)
+              and ex.list_bottom + 2 + ex.tiny.get_height() <= min(r.top for r in ebtn)
+              and ex.rows_visible >= 3 and min(r.top for r in cats) >= g.tab_bottom,
+              "%4dx%d Weitere: Kategorien, Suchfeld, Liste, Knöpfe" % (w, h),
+              (overlap(cats), ex.rows_visible))
+        g._set_tab("levels")
+        g.lists.picker = gd.load_templates()
+        box, tiles = g.lists._pick_rects()
+        check(inside(box, w, h) and len(tiles) == N_TEMPLATES
+              and all(box.contains(r) for r in tiles) and overlap(tiles) is None
+              and min(r.top for r in tiles) >= box.y + g.lists.fnt.get_height() + 8
+              and max(r.bottom for r in tiles) <= box.bottom - g.lists.tiny.get_height() - 6,
+              "%4dx%d Vorlagen-Auswahl: %d Kacheln im Rahmen" % (w, h, N_TEMPLATES),
+              (box, overlap(tiles)))
+        g.lists.picker = None
+        g._set_tab("play")
         ed = edit.LevelEditor(g, edit.new_level("x", "x", ""))
         head = [ed.back_rect, ed.name_rect, ed.id_rect, ed.save_rect] + list(ed.edit_rects.values())
         pal = [r for _, r in ed.tool_rects] + [r for _, r in ed.group_rects]
@@ -1161,7 +1364,7 @@ def audit_layout():
                 (T("gd.mode.practice"), g.mode_rects[1].w - 12, sm),
                 (T("common.start"), g.start_rect.w - 10, (g._btn_font, g._small)),
                 (T("gd.select_hint"), w - 16, (g._tiny, ui.font(max(10, h // 48)))),
-                (T("gd.total_stars", n=65, max=65), w - 40, ti),
+                (T("gd.total_stars", n=MAX_STARS, max=MAX_STARS), w - 40, ti),
                 (T("gd.practice_hud"), w - 20, ti),
                 (T("gd.test_hud"), w - 20, ti),
                 (T("gd.new_best", pct=99), w - 20, (ui.font(int(max(18, h // 14) * 1.25), bold=True),)),
@@ -1204,6 +1407,34 @@ def audit_layout():
                 y += 3 * (g._small.get_height() + 2) + 6 + 2 * max(8, h // 40) + 8 + g._small.get_height()
                 if y > rects[0][1].top - 2:
                     too_long.append("%s: Ergebnis-Inhalt %d > Knöpfe %d" % (code, y, rects[0][1].top))
+            # Weitere: Kategorien, Knöpfe, Zähler, Zeilen
+            xt = (ex.tiny,)
+            tests.append((T("gd.more.subtitle"), w - 20, (g._small,)))
+            for k_, rc in ex.cat_rects.items():
+                tests.append((T("gd.more.cat." + k_), rc.w - 8, xt))
+            for k_, rc in ex.btn_rects.items():
+                tests.append((T("gd.more.btn_" + k_), rc.w - 8, xt))
+            line = (T("gd.more.count", n=N_EXTRA, max=N_EXTRA) + "   ·   "
+                    + T("gd.more.done", n=N_EXTRA, max=N_EXTRA))
+            tests.append((line, w - 24, xt))
+            tests.append((T("gd.more.empty"), w - 48 - 16, (ex.fnt, ex.tiny)))
+            tests.append((T("gd.more.loading"), w - 20, xt))
+            tests.append((T("gd.more.search"), ex.search_rect.w - 16, (ex.fnt,)))
+            tests.append((T("gd.level_of", n=N_LEVELS, max=N_LEVELS), w - 20, ti))
+            # Zeile der Bibliothek: Kategorie, Schwierigkeit, Länge, Münzen
+            row_w = ex.list_w - 90
+            for d in EXTRA[:12] + EXTRA[-4:]:
+                sub = "  ·  ".join((T("gd.more.cat." + d["category"]),
+                                    T("gd.diff." + gd.DIFF_KEYS[d["difficulty"]]),
+                                    T("gd.ugc.length", n=core.level_length(d))))
+                sub += "  ·  " + T("gd.coins_of", n=3, max=3)
+                tests.append((sub, row_w, xt))
+                tests.append((d["name"], row_w, (ex.fnt,)))
+            # Vorlagen-Auswahl
+            tests.append((T("gd.tpl.title"), box.w - 28, (g.lists.fnt,)))
+            tests.append((T("gd.tpl.hint"), box.w - 20, (g.lists.tiny,)))
+            for d in TEMPLATES:
+                tests.append((T("gd.tpl." + d["tpl"]), tiles[0].w - 24, (g.lists.tiny,)))
             # LEVELS-Reiter + Teilen
             lt = (lists.tiny,)
             for k_, rc in lists.btn_rects.items():
@@ -1425,7 +1656,8 @@ if __name__ == "__main__":
     try:
         if REGISTERED is not None:
             check(REGISTERED, "GeometryDashGame ist in games.ALL_GAMES registriert")
-        for part in ("core", "levels", "web", "input", "game", "editor", "ugc", "layout", "performance"):
+        for part in ("core", "levels", "library", "web", "input", "game", "editor",
+                     "ugc", "layout", "performance"):
             if only is None or part in only:
                 globals()["audit_" + part]()
     finally:

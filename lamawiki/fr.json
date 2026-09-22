@@ -2716,7 +2716,10 @@
         "checkpoint",
         "démon",
         "musique",
-        "niveau"
+        "niveau",
+        "plus",
+        "comme modèle",
+        "choisir"
       ],
       "sections": [
         {
@@ -2733,7 +2736,7 @@
             "- [Espace], [Haut], [W], [Entrée] ou clic gauche : sauter ou voler. Maintenir compte comme un appui continu - le cube ressaute alors dès chaque atterrissage.",
             "- [R] recommence aussitôt, [Q] ou [Retour] ramène à la sélection des niveaux, [Échap] met en pause.",
             "- [P] active ou coupe le mode entraînement ; [Z] y pose un point de contrôle et [X] retire le dernier.",
-            "- Sélection des niveaux : [Gauche]/[Droite] font défiler, [1] à [8] vont directement à un niveau, [Entrée] lance, [P] choisit Normal ou Entraînement, [M] coupe la musique, [Tab] passe à l'onglet NIVEAUX.",
+            "- Sélection des niveaux : [Gauche]/[Droite] font défiler, [1] à [9] et [0] vont directement aux niveaux 1 à 10, [Début]/[Fin] au premier ou au dernier, [Entrée] lance, [P] choisit Normal ou Entraînement, [M] coupe la musique, [Tab] fait tourner JEU, PLUS et NIVEAUX.",
             "Chaque appui reçoit un horodatage et agit exactement dans le pas physique (1/240 de seconde) où il a eu lieu - le saut part donc au bon moment même si l'ordinateur saccade un instant."
           ]
         },
@@ -2759,14 +2762,24 @@
           ]
         },
         {
-          "h": "Les 8 niveaux",
+          "h": "Les 16 niveaux",
           "body": [
-            "- Lama Launch (Facile, 1 étoile) et Neon Steps (Facile, 2 étoiles) : sauts, tremplins, orbes et le premier vaisseau.",
-            "- Orbit Garden (Normal, 3 étoiles) : chaînes d'orbes, la tête en bas au plafond, vaisseau à vitesse double.",
-            "- Gravity Tide (Difficile, 4 étoiles) et Skyline Rush (Difficile, 5 étoiles) : portails de gravité, boule, OVNI, fosses et vitesse triple.",
-            "- Crystal Caves (Plus difficile, 7 étoiles) et Wave Reactor (Démentiel, 9 étoiles) : les cinq formes, portes étroites et tunnels d'onde.",
-            "- Lama Inferno (Démon, 10 étoiles) : vitesse triple et tout à la fois.",
+            "- Lama Launch, Neon Steps et Pixel Sprint (Facile, 1-2 étoiles) : sauts, tremplins, orbes et le premier vaisseau.",
+            "- Orbit Garden et Moss Temple (Normal, 3 étoiles chacun) : chaînes d'orbes et passages tranquilles la tête en bas.",
+            "- Gravity Tide, Magnet Fields, Skyline Rush et Hangar Run (Difficile, 4-5 étoiles) : portails de gravité, boule, OVNI et portes de vaisseau serrées à double vitesse.",
+            "- Crystal Caves, Strobe City et Frost Relay (Plus difficile, 6-7 étoiles) : les cinq formes, des passages rythmés et beaucoup de changements de couleur.",
+            "- Wave Reactor et Turbine Core (Démentiel, 9 étoiles chacun) : l'onde dans un tunnel étroit.",
+            "- Lama Inferno et Lama Eclipse (Démon, 10 étoiles chacun) : triple vitesse et tout à la fois.",
             "Chaque niveau est prouvé faisable, y compris les trois pièces : lors de sa création, un solveur l'a terminé avec le vrai code du jeu - et sa solution fonctionne même décalée de 1/240 de seconde."
+          ]
+        },
+        {
+          "h": "Plus : 80 niveaux par catégories",
+          "body": [
+            "L'onglet PLUS est une bibliothèque de 80 niveaux supplémentaires en dix catégories : débuts, rythme, pièces, vaisseau, OVNI, boule, gravité, vitesse, onde et démon.",
+            "Choisis la catégorie en haut, cherche par nom juste en dessous. Chaque ligne indique la difficulté, la longueur, les pièces trouvées et ton meilleur score ; \"Au hasard\" t'en propose un au hasard.",
+            "Ces niveaux aussi sont prouvés par le solveur : l'arrivée et les trois pièces sont atteignables. Ils ont leur propre progression, mais ne donnent ni étoiles ni succès - cela reste réservé à la campagne.",
+            "\"Comme modèle\" copie le niveau choisi dans tes propres niveaux, où tu peux le transformer. Plus de détails sur la page \"Niveaux personnels (Geometry Dash)\"."
           ]
         },
         {
@@ -2781,7 +2794,7 @@
           "h": "Étoiles, pièces et succès",
           "body": [
             "Termine un niveau en mode normal et tu gagnes ses étoiles. Chaque niveau cache aussi trois pièces secrètes, souvent à l'écart du chemin le plus simple. Elles comptent dès que tu finis le niveau avec elles - et chacune vaut une étoile de plus.",
-            "Ton meilleur score est le total de tes étoiles (65 au maximum), et il ne peut que grandir. Pour chaque niveau, le jeu retient le meilleur pourcentage en Normal et en Entraînement, les pièces trouvées et les tentatives.",
+            "Ton meilleur score est le total de tes étoiles (135 au maximum), et il ne peut que grandir. Pour chaque niveau, le jeu retient le meilleur pourcentage en Normal et en Entraînement, les pièces trouvées et les tentatives.",
             "- Succès : \"En rythme\" pour ton premier niveau réussi, \"Chasseur de pièces\" pour les trois pièces d'un niveau, \"Tueur de démons\" pour Lama Inferno - plus un palier à 20 étoiles.",
             "Dans l'onglet NIVEAUX, tu crées, joues et partages tes propres niveaux - voir la page \"Niveaux personnels (Geometry Dash)\"."
           ]
@@ -2803,13 +2816,15 @@
         "exporter",
         "vérifié",
         "lamapgzlevel",
-        "geometry dash"
+        "geometry dash",
+        "choisir",
+        "plus"
       ],
       "sections": [
         {
           "h": "Créer un niveau",
           "body": [
-            "L'onglet NIVEAUX de la sélection de Geometry Dash contient ta propre collection (jusqu'à 60 niveaux). \"Nouveau\" ouvre l'éditeur de niveaux, \"Modifier\" reprend un niveau existant.",
+            "L'onglet NIVEAUX de la sélection de Geometry Dash contient ta propre collection (jusqu'à 60 niveaux). \"Nouveau\" demande d'abord un modèle, \"Modifier\" reprend un niveau existant.",
             "À gauche se trouve le canevas avec sa grille, à droite la palette : Sélection et Gomme en haut, puis six groupes - Blocs, Pièges, Tremplins & orbes, Portails, Vitesse et Extras (pièces secrètes, déclencheur couleur). [1] à [6] choisissent directement les groupes.",
             "- Cliquer ou glisser pose l'objet choisi, [R] le fait tourner : piques et demi-blocs dans quatre directions, tremplins vers le haut ou le bas.",
             "- Avec Sélection, glisser déplace un objet et [Suppr] le supprime. Un clic droit efface toujours ; glisser avec le clic droit, la molette, les flèches ou [A]/[D] font défiler.",
@@ -2817,6 +2832,15 @@
             "- La bande tout en bas montre tout le niveau d'un coup d'œil - un clic saute à cet endroit.",
             "[U] annule, [Y] rétablit, [G] affiche ou masque la grille, [S] enregistre. [Échap] revient en arrière - avec des modifications non enregistrées, seulement après confirmation.",
             "Trois pièces au maximum par niveau. L'arrivée se place automatiquement un peu après le dernier objet."
+          ]
+        },
+        {
+          "h": "Modèles",
+          "body": [
+            "Chaque nouveau niveau part d'un modèle : \"Vide\" commence de zéro, les onze autres apportent une structure toute prête - débuts, sauts, tremplins & orbes, vaisseau, onde, boule, OVNI, gravité, vitesse, pièces et démon.",
+            "Un modèle apporte ses objets, ses couleurs, sa musique et sa vitesse de départ. Comme le solveur a joué tous les modèles, la copie porte aussitôt la coche verte - jusqu'à ta première modification.",
+            "Les niveaux terminés se copient aussi : dans l'onglet PLUS, \"Comme modèle\" ajoute le niveau choisi à tes propres niveaux, objets, couleurs et musique compris.",
+            "Une copie est un niveau comme les autres : à transformer, tester, enregistrer, jouer et partager."
           ]
         },
         {

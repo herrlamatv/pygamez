@@ -654,9 +654,437 @@ def lvl_lama_inferno():
                   "length": 524}, L)
 
 
-LEVELS = [lvl_lama_launch, lvl_neon_steps, lvl_orbit_garden, lvl_gravity_tide,
-          lvl_skyline_rush, lvl_crystal_caves, lvl_wave_reactor,
-          lvl_lama_inferno]
+
+# ---------------------------------------------------------------------------
+#  Level 9 - Pixel Sprint (Leicht, 2 Sterne)
+# ---------------------------------------------------------------------------
+
+def lvl_pixel_sprint():
+    L = LB()
+    # Aufwaermen mit einzelnen Stacheln, dann die erste Treppe
+    L.spikes(18)
+    L.spikes(28, 2)
+    L.blocks(40, 0, 3, 1).blocks(43, 0, 3, 2)
+    L.coin(48, 4)
+    L.spikes(56)
+    L.pit(66, 4)
+    L.spikes(78, 2)
+    # Pad auf die Hochebene
+    L.colors(88, (90, 200, 120), (40, 130, 70))
+    L.o("pad_y", 92)
+    L.blocks(94, 3, 10, 1)
+    L.spikes(99, 1, 4)
+    L.coin(104, 6)
+    L.spikes(114, 2)
+    L.blocks(124, 0, 3, 1)
+    L.spikes(127, 2)
+    # Orb ueber dem Stachelbett
+    L.spikes(138, 4)
+    L.o("orb_y", 139, 2)
+    L.spikes(152, 2)
+    L.colors(160, (255, 180, 60), (180, 120, 20))
+    # Schiff: weite Tore zum Eingewoehnen
+    L.o("p_ship", 168, 1)
+    L.gate(184, 3, 8)
+    L.gate(202, 1, 6)
+    L.gate(220, 4, 9)
+    L.coin(228, 6)
+    L.gate(238, 2, 7)
+    L.funnel(256, 0, 10, 3, "p_cube")
+    L.colors(258, (90, 200, 120), (40, 130, 70))
+    # Finale am Boden
+    L.spikes(270, 2)
+    L.blocks(280, 0, 3, 1)
+    L.spikes(283, 2)
+    L.o("pad_p", 294)
+    L.spikes(296)
+    L.spikes(306, 2)
+    L.pit(316, 4)
+    L.spikes(328, 2)
+    return level({"id": "pixel-sprint", "name": "Pixel Sprint", "difficulty": 0,
+                  "stars": 2, "speed": 1, "mode": 0, "bg": [90, 200, 120],
+                  "ground": [40, 130, 70], "music": "chip", "bpm": 132,
+                  "length": 348}, L)
+
+
+# ---------------------------------------------------------------------------
+#  Level 10 - Moss Temple (Normal, 3 Sterne)
+# ---------------------------------------------------------------------------
+
+def lvl_moss_temple():
+    L = LB()
+    L.spikes(18, 2)
+    L.blocks(30, 0, 3, 1)
+    L.spikes(33, 2)
+    # Orb-Kette ueber zwei Betten
+    L.spikes(44, 4)
+    L.o("orb_y", 45, 2)
+    L.coin(47, 5)
+    L.spikes(58, 4)
+    L.o("orb_y", 59, 3)
+    L.spikes(72, 2)
+    # Kopfueber durch den Tempel
+    L.colors(80, (60, 140, 90), (30, 90, 60))
+    L.o("g_flip", 88, 1)
+    L.roof(84, 40, 7)
+    L.spikes(93, 28)
+    L.spikes(100, 1, 6, 2)
+    L.spikes(110, 2, 6, 2)
+    L.coin(114, 4)
+    L.spikes(120, 1, 6, 2)
+    L.o("g_norm", 124, 5)
+    L.spikes(138, 2)
+    L.o("pad_p", 148)
+    L.spikes(150)
+    L.colors(158, (140, 190, 80), (80, 120, 40))
+    # UFO ueber den Baumkronen
+    L.o("p_ufo", 166, 1, 0, 9)
+    L.gate(182, 2, 5, 9)
+    L.gate(198, 4, 7, 9)
+    L.gate(214, 1, 4, 9)
+    L.coin(222, 6)
+    L.gate(230, 3, 6, 9)
+    L.funnel(246, 0, 9, 3, "p_cube")
+    L.colors(248, (60, 140, 90), (30, 90, 60))
+    L.spikes(262, 2)
+    L.blocks(272, 0, 3, 1)
+    L.spikes(275, 2)
+    L.spikes(286, 3)
+    L.o("orb_y", 287, 3)
+    L.spikes(300, 2)
+    L.pit(310, 4)
+    L.spikes(322, 2)
+    return level({"id": "moss-temple", "name": "Moss Temple", "difficulty": 1,
+                  "stars": 3, "speed": 1, "mode": 0, "bg": [60, 140, 90],
+                  "ground": [30, 90, 60], "music": "dream", "bpm": 124,
+                  "length": 342}, L)
+
+
+# ---------------------------------------------------------------------------
+#  Level 11 - Magnet Fields (Schwer, 4 Sterne)
+# ---------------------------------------------------------------------------
+
+def lvl_magnet_fields():
+    L = LB()
+    L.spikes(18, 2)
+    L.spikes(28, 2)
+    # Erster Wechsel an die Decke
+    L.colors(36, (70, 90, 200), (40, 50, 130))
+    L.o("g_flip", 44, 1)
+    L.roof(40, 34, 7)
+    L.spikes(49, 24)
+    L.spikes(56, 1, 6, 2)
+    L.spikes(64, 2, 6, 2)
+    L.coin(68, 4)
+    L.o("g_norm", 72, 5)
+    L.spikes(86, 2)
+    # Blaues Pad: rauf und wieder runter
+    L.o("pad_b", 96, 0)
+    L.roof(94, 26, 6)
+    L.spikes(99, 20)
+    L.spikes(104, 1, 5, 2)
+    L.spikes(112, 2, 5, 2)
+    L.o("pad_b", 118, 5, 2)
+    L.spikes(130, 2)
+    # Ball im niedrigen Korridor
+    L.colors(138, (200, 120, 240), (130, 60, 170))
+    L.o("p_ball", 146, 1, 0, 7)
+    L.spikes(158, 3)
+    L.spikes(170, 3, 6, 2)
+    L.coin(176, 3)
+    L.spikes(182, 3)
+    L.spikes(194, 3, 6, 2)
+    L.o("pad_b", 206, 0)
+    L.spikes(210, 4)
+    L.funnel(224, 0, 7, 3, "p_cube")
+    L.colors(226, (70, 90, 200), (40, 50, 130))
+    L.spikes(240, 2)
+    L.blocks(250, 0, 3, 1)
+    L.spikes(253, 2)
+    L.o("orb_b", 266, 3)
+    L.roof(264, 22, 6)
+    L.spikes(269, 16)
+    L.spikes(274, 2, 5, 2)
+    L.coin(280, 3)
+    L.o("orb_b", 284, 4)
+    L.spikes(296, 2)
+    L.pit(306, 5)
+    L.spikes(320, 3)
+    return level({"id": "magnet-fields", "name": "Magnet Fields",
+                  "difficulty": 2, "stars": 4, "speed": 1, "mode": 0,
+                  "bg": [70, 90, 200], "ground": [40, 50, 130],
+                  "music": "drive", "bpm": 134, "length": 344}, L)
+
+
+# ---------------------------------------------------------------------------
+#  Level 12 - Hangar Run (Schwer, 5 Sterne)
+# ---------------------------------------------------------------------------
+
+def lvl_hangar_run():
+    L = LB()
+    L.spikes(22, 2)
+    L.blocks(34, 0, 3, 1)
+    L.spikes(37, 2)
+    L.pit(48, 5)
+    L.spikes(62, 3)
+    L.o("pad_y", 74)
+    L.blocks(80, 3, 12, 1)
+    L.coin(88, 5)
+    L.spikes(100, 2)
+    # Hangar: enge Tore bei doppeltem Tempo
+    L.colors(102, (0, 160, 200), (0, 100, 130))
+    L.o("s_fast", 108, 1)
+    L.o("p_ship", 116, 1)
+    L.gate(134, 2, 6)
+    L.gate(156, 5, 9)
+    L.gate(178, 1, 5)
+    L.coin(188, 8)
+    L.gate(200, 4, 8)
+    L.gate(222, 2, 6)
+    L.funnel(244, 0, 10, 3, "p_cube")
+    L.colors(246, (60, 200, 220), (20, 120, 150))
+    # Zwischenstueck am Boden
+    L.spikes(262, 2)
+    L.blocks(276, 0, 4, 1)
+    L.spikes(280, 2)
+    L.o("orb_y", 296, 2)
+    L.spikes(294, 4)
+    L.spikes(312, 3)
+    # Zweiter Hangar, engere Tore
+    L.colors(322, (0, 160, 200), (0, 100, 130))
+    L.o("p_ship", 330, 1)
+    L.gate(348, 3, 6)
+    L.gate(370, 1, 4)
+    L.coin(380, 2)
+    L.gate(392, 5, 8)
+    L.gate(414, 2, 5)
+    L.funnel(436, 0, 10, 3, "p_cube", speed="s_norm")
+    L.colors(442, (60, 200, 220), (20, 120, 150))
+    L.spikes(458, 2)
+    L.blocks(470, 0, 3, 1)
+    L.spikes(473, 2)
+    L.spikes(486, 3)
+    return level({"id": "hangar-run", "name": "Hangar Run", "difficulty": 2,
+                  "stars": 5, "speed": 2, "mode": 0, "bg": [0, 160, 200],
+                  "ground": [0, 100, 130], "music": "chip", "bpm": 148,
+                  "length": 506}, L)
+
+
+# ---------------------------------------------------------------------------
+#  Level 13 - Strobe City (Schwerer, 6 Sterne)
+# ---------------------------------------------------------------------------
+
+def lvl_strobe_city():
+    L = LB()
+    L.spikes(22, 2)
+    L.spikes(36, 3)
+    L.colors(44, (255, 80, 160), (170, 40, 110))
+    L.blocks(50, 0, 3, 1)
+    L.spikes(53, 2)
+    L.colors(62, (255, 200, 60), (180, 140, 20))
+    L.pit(66, 5)
+    L.spikes(80, 3)
+    L.colors(88, (120, 80, 255), (70, 40, 170))
+    L.o("pad_p", 94)
+    L.spikes(96)
+    L.spikes(110, 3)
+    L.o("orb_y", 111, 2)
+    L.coin(114, 5)
+    L.colors(122, (255, 80, 160), (170, 40, 110))
+    L.spikes(130, 3)
+    L.blocks(144, 0, 4, 1)
+    L.spikes(148, 3)
+    # UFO durch die Leuchtreklame
+    L.colors(160, (60, 220, 255), (20, 130, 170))
+    L.o("p_ufo", 168, 1, 0, 9)
+    L.gate(186, 2, 5, 9)
+    L.gate(204, 5, 8, 9)
+    L.coin(212, 1)
+    L.gate(222, 1, 4, 9)
+    L.gate(240, 4, 7, 9)
+    L.funnel(258, 0, 9, 3, "p_cube")
+    L.colors(262, (255, 200, 60), (180, 140, 20))
+    L.spikes(276, 3)
+    L.o("pad_y", 290)
+    L.blocks(296, 3, 12, 1)
+    L.spikes(302, 1, 4)
+    L.coin(306, 5)
+    L.spikes(320, 3)
+    L.colors(324, (120, 80, 255), (70, 40, 170))
+    L.spikes(332, 2)
+    L.blocks(344, 0, 3, 1)
+    L.spikes(347, 3)
+    L.pit(360, 5)
+    L.spikes(376, 3)
+    return level({"id": "strobe-city", "name": "Strobe City", "difficulty": 3,
+                  "stars": 6, "speed": 2, "mode": 0, "bg": [255, 80, 160],
+                  "ground": [170, 40, 110], "music": "drive", "bpm": 162,
+                  "length": 396}, L)
+
+
+# ---------------------------------------------------------------------------
+#  Level 14 - Frost Relay (Schwerer, 7 Sterne)
+# ---------------------------------------------------------------------------
+
+def lvl_frost_relay():
+    L = LB()
+    L.spikes(22, 2)
+    L.blocks(36, 0, 3, 1)
+    L.spikes(39, 2)
+    L.spikes(52, 3)
+    L.o("orb_y", 53, 2)
+    L.coin(56, 5)
+    # Ball
+    L.colors(64, (120, 200, 255), (50, 120, 180))
+    L.o("p_ball", 72, 1, 0, 7)
+    L.spikes(86, 3)
+    L.spikes(100, 3, 6, 2)
+    L.spikes(114, 3)
+    L.o("pad_b", 128, 0)
+    L.spikes(132, 5)
+    L.spikes(146, 3, 6, 2)
+    L.funnel(160, 0, 7, 3, "p_ufo", 9)
+    # UFO
+    L.colors(164, (180, 230, 255), (90, 140, 190))
+    L.gate(180, 2, 5, 9)
+    L.gate(198, 5, 8, 9)
+    L.coin(206, 1)
+    L.gate(216, 1, 4, 9)
+    L.gate(234, 3, 6, 9)
+    L.funnel(252, 0, 9, 3, "p_ball", 7)
+    # Ball, zweite Runde
+    L.colors(256, (120, 200, 255), (50, 120, 180))
+    L.spikes(268, 3)
+    L.spikes(282, 4, 6, 2)
+    L.coin(288, 3)
+    L.spikes(296, 3)
+    L.funnel(312, 0, 7, 3, "p_cube")
+    L.colors(316, (180, 230, 255), (90, 140, 190))
+    L.spikes(330, 3)
+    L.blocks(344, 0, 4, 1)
+    L.spikes(348, 2)
+    L.o("orb_y", 364, 2)
+    L.spikes(362, 4)
+    L.spikes(380, 3)
+    return level({"id": "frost-relay", "name": "Frost Relay", "difficulty": 3,
+                  "stars": 7, "speed": 2, "mode": 0, "bg": [120, 200, 255],
+                  "ground": [50, 120, 180], "music": "dream", "bpm": 138,
+                  "length": 400}, L)
+
+
+# ---------------------------------------------------------------------------
+#  Level 15 - Turbine Core (Wahnsinn, 9 Sterne)
+# ---------------------------------------------------------------------------
+
+def lvl_turbine_core():
+    L = LB()
+    L.spikes(22, 2)
+    L.spikes(36, 3)
+    L.blocks(50, 0, 3, 1)
+    L.spikes(53, 2)
+    L.o("orb_y", 68, 2)
+    L.spikes(66, 4)
+    L.coin(70, 5)
+    L.spikes(84, 3)
+    # Welle im Turbinenschacht
+    L.colors(94, (255, 140, 0), (170, 80, 0))
+    L.o("p_wave", 102, 1, 0, 8)
+    L.tunnel(112, zigzag(4, 2, 6, 40, 3), 2, 8)
+    L.tunnel(154, zigzag(4, 2, 6, 34, 2), 2, 8)
+    L.funnel(192, 0, 8, 3, "p_cube")
+    L.colors(196, (255, 90, 40), (170, 40, 10))
+    L.spikes(210, 3)
+    L.o("pad_y", 224)
+    L.blocks(226, 3, 12, 1)
+    L.coin(234, 5)
+    L.spikes(244, 3)
+    # Schiff durch die Kuehlrippen
+    L.colors(254, (255, 140, 0), (170, 80, 0))
+    L.o("p_ship", 262, 1)
+    L.gate(280, 2, 6)
+    L.gate(302, 5, 9)
+    L.gate(324, 1, 5)
+    L.coin(334, 8)
+    L.gate(346, 4, 8)
+    L.funnel(368, 0, 10, 3, "p_wave", 8)
+    # Welle, enger
+    L.colors(372, (255, 200, 40), (180, 130, 0))
+    L.tunnel(384, zigzag(4, 2, 6, 36, 2), 2, 8)
+    L.funnel(424, 0, 8, 3, "p_cube")
+    L.colors(428, (255, 90, 40), (170, 40, 10))
+    L.spikes(442, 3)
+    L.blocks(456, 0, 4, 1)
+    L.spikes(460, 3)
+    L.spikes(474, 3)
+    return level({"id": "turbine-core", "name": "Turbine Core", "difficulty": 4,
+                  "stars": 9, "speed": 2, "mode": 0, "bg": [255, 140, 0],
+                  "ground": [170, 80, 0], "music": "drive", "bpm": 166,
+                  "length": 494}, L)
+
+
+# ---------------------------------------------------------------------------
+#  Level 16 - Lama Eclipse (Daemon, 10 Sterne)
+# ---------------------------------------------------------------------------
+
+def lvl_lama_eclipse():
+    L = LB()
+    L.spikes(26, 3)
+    L.blocks(42, 0, 3, 1)
+    L.spikes(45, 3)
+    L.pit(60, 5)
+    L.spikes(78, 3)
+    L.o("orb_y", 94, 2)
+    L.spikes(92, 5)
+    L.coin(96, 5)
+    L.spikes(112, 3)
+    # Schiff
+    L.colors(124, (40, 0, 80), (20, 0, 40))
+    L.o("p_ship", 132, 1)
+    L.gate(152, 3, 6)
+    L.gate(176, 1, 4)
+    L.gate(200, 5, 8)
+    L.gate(224, 2, 5)
+    L.funnel(248, 0, 10, 3, "p_ball", 7)
+    # Ball
+    L.colors(252, (120, 0, 60), (70, 0, 30))
+    L.spikes(266, 3)
+    L.spikes(282, 4, 6, 2)
+    L.coin(288, 3)
+    L.spikes(298, 3)
+    L.o("pad_b", 314, 0)
+    L.spikes(318, 5)
+    L.funnel(334, 0, 7, 3, "p_wave", 8)
+    # Welle
+    L.colors(338, (200, 40, 40), (120, 20, 20))
+    L.tunnel(350, zigzag(4, 2, 6, 40, 2), 2, 8)
+    L.funnel(394, 0, 8, 3, "p_ufo", 9)
+    # UFO
+    L.colors(398, (40, 0, 80), (20, 0, 40))
+    L.gate(414, 2, 5, 9)
+    L.gate(434, 5, 8, 9)
+    L.coin(442, 1)
+    L.gate(454, 1, 4, 9)
+    L.funnel(474, 0, 9, 3, "p_cube")
+    # Finale
+    L.colors(478, (120, 0, 60), (70, 0, 30))
+    L.spikes(494, 3)
+    L.blocks(510, 0, 4, 1)
+    L.spikes(514, 3)
+    L.pit(528, 5)
+    L.spikes(546, 3)
+    return level({"id": "lama-eclipse", "name": "Lama Eclipse", "difficulty": 5,
+                  "stars": 10, "speed": 2, "mode": 0, "bg": [40, 0, 80],
+                  "ground": [20, 0, 40], "music": "dark", "bpm": 180,
+                  "length": 566}, L)
+
+
+LEVELS = [lvl_lama_launch, lvl_neon_steps, lvl_pixel_sprint,
+          lvl_orbit_garden, lvl_moss_temple,
+          lvl_gravity_tide, lvl_magnet_fields, lvl_skyline_rush,
+          lvl_hangar_run,
+          lvl_crystal_caves, lvl_strobe_city, lvl_frost_relay,
+          lvl_wave_reactor, lvl_turbine_core,
+          lvl_lama_inferno, lvl_lama_eclipse]
 
 
 

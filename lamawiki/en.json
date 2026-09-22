@@ -2717,7 +2717,10 @@
         "checkpoint",
         "demon",
         "music",
-        "level"
+        "level",
+        "more",
+        "as template",
+        "choose"
       ],
       "sections": [
         {
@@ -2734,7 +2737,7 @@
             "- [Space], [Up], [W], [Enter] or the left mouse button: jump or fly. Holding counts as pressing continuously - the cube then jumps again right after every landing.",
             "- [R] restarts instantly, [Q] or [Backspace] returns to the level select, [Esc] pauses.",
             "- [P] toggles practice mode; there [Z] places a checkpoint and [X] removes the last one.",
-            "- Level select: [Left]/[Right] browse, [1] to [8] jump straight to a level, [Enter] starts, [P] picks Normal or Practice, [M] toggles the music, [Tab] switches to the LEVELS tab.",
+            "- Level select: [Left]/[Right] browse, [1] to [9] and [0] jump straight to levels 1 to 10, [Home]/[End] to the first or last one, [Enter] starts, [P] picks Normal or Practice, [M] toggles the music, [Tab] cycles PLAY, MORE and LEVELS.",
             "Every press gets a timestamp and takes effect in exactly the physics step (1/240 second) in which it happened - so your jump lands right even when the computer stutters for a moment."
           ]
         },
@@ -2760,14 +2763,24 @@
           ]
         },
         {
-          "h": "The 8 levels",
+          "h": "The 16 levels",
           "body": [
-            "- Lama Launch (Easy, 1 star) and Neon Steps (Easy, 2 stars): jumps, pads, orbs and the first ship.",
-            "- Orbit Garden (Normal, 3 stars): orb chains, upside down on the ceiling, a ship at double speed.",
-            "- Gravity Tide (Hard, 4 stars) and Skyline Rush (Hard, 5 stars): gravity portals, ball, UFO, pits and triple speed.",
-            "- Crystal Caves (Harder, 7 stars) and Wave Reactor (Insane, 9 stars): all five forms, narrow gates and wave tunnels.",
-            "- Lama Inferno (Demon, 10 stars): triple speed and everything at once.",
+            "- Lama Launch, Neon Steps and Pixel Sprint (Easy, 1-2 stars): jumps, pads, orbs and the first ship.",
+            "- Orbit Garden and Moss Temple (Normal, 3 stars each): orb chains and calm stretches upside down on the ceiling.",
+            "- Gravity Tide, Magnet Fields, Skyline Rush and Hangar Run (Hard, 4-5 stars): gravity portals, ball, UFO and tight ship gates at double speed.",
+            "- Crystal Caves, Strobe City and Frost Relay (Harder, 6-7 stars): all five forms, rhythm passages and plenty of colour changes.",
+            "- Wave Reactor and Turbine Core (Insane, 9 stars each): the wave in a narrow tunnel.",
+            "- Lama Inferno and Lama Eclipse (Demon, 10 stars each): triple speed and everything at once.",
             "Every level is provably beatable, including all three coins: while building them a solver beat each one with the real game code - and its solution even works when shifted by 1/240 second."
+          ]
+        },
+        {
+          "h": "More: 80 levels in categories",
+          "body": [
+            "The MORE tab is a library of 80 extra levels in ten categories: starter, rhythm, coins, ship, UFO, ball, gravity, speed, wave and demon.",
+            "Pick a category at the top and search by name below it. Every row shows difficulty, length, the coins you found and your best run; \"Random\" throws one of the current selection at you.",
+            "These levels are solver-proven too - the goal and all three coins are reachable. They keep their own progress, but hand out no stars and no achievements: those stay with the campaign.",
+            "\"As template\" copies the chosen level into your own levels, where you can rebuild it. More on the page \"Custom levels (Geometry Dash)\"."
           ]
         },
         {
@@ -2782,7 +2795,7 @@
           "h": "Stars, coins & achievements",
           "body": [
             "Beat a level in normal mode and you earn its stars. Each level also hides three secret coins, often off the easiest path. They count once you finish the level with them - and each one is worth another star.",
-            "Your high score is your total number of stars (65 at most), and it can only grow. For every level the game remembers the best percentage in Normal and Practice, the coins found and the attempts.",
+            "Your high score is your total number of stars (135 at most), and it can only grow. For every level the game remembers the best percentage in Normal and Practice, the coins found and the attempts.",
             "- Achievements: \"On the Beat\" for your first completed level, \"Coin Hunter\" for all three coins of a level, \"Demon Slayer\" for Lama Inferno - plus a milestone at 20 stars.",
             "In the LEVELS tab you build, play and share your own levels - see the page \"Custom levels (Geometry Dash)\"."
           ]
@@ -2804,13 +2817,15 @@
         "export",
         "verified",
         "lamapgzlevel",
-        "geometry dash"
+        "geometry dash",
+        "choose",
+        "more"
       ],
       "sections": [
         {
           "h": "Building a level",
           "body": [
-            "The LEVELS tab on the Geometry Dash level select holds your own collection (up to 60 levels). \"New\" opens the level editor, \"Edit\" picks up an existing level again.",
+            "The LEVELS tab on the Geometry Dash level select holds your own collection (up to 60 levels). \"New\" asks for a template first, \"Edit\" picks up an existing level again.",
             "The canvas with its grid sits on the left, the palette on the right: Select and Eraser at the top, below them six groups - Blocks, Hazards, Pads & orbs, Portals, Speed and Extras (secret coins, color trigger). [1] to [6] pick the groups directly.",
             "- Clicking or dragging places the chosen object, [R] rotates it: spikes and half blocks in four directions, pads up or down.",
             "- With Select, dragging moves an object and [Del] removes it. A right-click always erases; right-dragging, the mouse wheel, the arrow keys or [A]/[D] scroll.",
@@ -2818,6 +2833,15 @@
             "- The strip at the very bottom shows the whole level at a glance - a click jumps to that spot.",
             "[U] undoes, [Y] redoes, [G] shows or hides the grid, [S] saves. [Esc] goes back - with unsaved changes only after a confirmation.",
             "At most three coins per level. The finish is placed automatically a little behind the last object."
+          ]
+        },
+        {
+          "h": "Templates",
+          "body": [
+            "Every new level starts from a template: \"Empty\" begins from scratch, the other eleven bring a ready-made frame - starter, jumps, pads & orbs, ship, wave, ball, UFO, gravity, speed, coins and demon.",
+            "A template brings its objects, colours, music and start speed along. Because a solver played every template through, the copy carries the green check right away - until you change something.",
+            "Finished levels can be copied as well: in the MORE tab, \"As template\" adds the chosen level to your own, objects, colours and music included.",
+            "A copy is an ordinary level of your own: rebuild it, test it, save it, play it and share it."
           ]
         },
         {

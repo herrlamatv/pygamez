@@ -192,9 +192,11 @@ DEFAULTS = {
     "crossy": {"shadows": True, "daynight": True},
     # Geometry Dash: Level-Musik an/aus, automatische Checkpoints im
     # Übungsmodus an/aus, Fortschrittsbalken an/aus, Rasterfang im Editor,
-    # zuletzt gewähltes eingebautes Level (0-7)
+    # zuletzt gewähltes Kampagnen-Level, zuletzt geöffneter Reiter und
+    # Kategorie im Reiter "Weitere"
     "geodash": {"music": True, "auto_checkpoints": True, "progress_bar": True,
-                "grid": True, "last_level": 0},
+                "grid": True, "last_level": 0, "last_tab": "play",
+                "last_cat": "all"},
     # Battleship / Schiffe versenken: KI-Stärke (0-2), Schiffe dürfen sich
     # berühren, Salven-Modus, nach Treffer nochmal schießen
     "battleship": {"difficulty": 1, "touch": True, "salvo": False,
@@ -228,7 +230,9 @@ SCHEMAS = {
     "wordle": {"length": (int, 4, 7), "hard": bool, "colorblind": bool},
     "crossy": {"shadows": bool, "daynight": bool},
     "geodash": {"music": bool, "auto_checkpoints": bool, "progress_bar": bool,
-                "grid": bool, "last_level": (int, 0, 7)},
+                "grid": bool, "last_level": (int, 0, 199),
+                "last_tab": ("choice", ("play", "extra", "levels")),
+                "last_cat": (str, 12)},
     "battleship": {"difficulty": (int, 0, 2), "touch": bool, "salvo": bool,
                    "extra_shot": bool},
     "casino": {"roulette_chip": ("choice", (1, 5, 25, 100, 500)),

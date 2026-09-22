@@ -86,15 +86,38 @@ def layer_of(kind):
     return LAYER_MAIN
 
 
-def new_level(name="", level_id="", author=None):
-    """Frisches, leeres Level (Kopfdaten wie bei den Minigolf-Maps)."""
+def new_level(name="", level_id="", author=None, template=None):
+    """Frisches Level (Kopfdaten wie bei den Minigolf-Maps).
+
+    Mit 'template' (einem Level-Dict aus games/levels/geodash_templates.json)
+    startet man nicht bei null, sondern mit dessen Objekten, Farben und Musik -
+    zum Umbauen und Weiterbauen.
+    """
     now = time.strftime("%Y-%m-%d %H:%M")
-    return core.normalize_level({
-        "v": 1, "id": level_id, "name": name,
-        "author": ugc.last_author() if author is None else author,
-        "created": now, "edited": now, "speed": 1, "mode": core.CUBE,
-        "bg": list(core.DEFAULT_BG), "ground": list(core.DEFAULT_GROUND),
-        "music": "drive", "objects": []})
+    m = {"v": 1, "id": level_id, "name": name,
+         "author": ugc.last_author() if author is None else author,
+         "created": now, "edited": now, "speed": 1, "mode": core.CUBE,
+         "bg": list(core.DEFAULT_BG), "ground": list(core.DEFAULT_GROUND),
+         "music": "drive", "objects": []}
+    if isinstance(template, dict):
+        for key in ("speed", "mode", "bg", "ground", "music", "length"):
+            if key in template:
+                m[key] = template[key]
+        m["objects"] = [list(o) for o in template.get("objects", ())]
+        m["from"] = template.get("id", "")
+        if not m["name"]:
+            # Vorschlag, damit "Speichern" sofort klappt - umbenennen geht ja.
+            tid = template.get("tpl", "")
+            m["name"] = (t("gd.tpl." + tid) if tid else
+                         template.get("name", ""))[:ugc.MAX_NAME]
+        if not m["id"]:
+            m["id"] = ugc.unique_id(ugc.slug(m["name"]) or "level", GAME)
+    m = core.normalize_level(m)
+    if isinstance(template, dict) and template.get("verified"):
+        # Vorlagen sind vom Solver bewiesen - das Abzeichen kommt mit und
+        # fällt weg, sobald jemand etwas ändert (content_hash).
+        m["verified"] = core.content_hash(m)
+    return m
 
 
 def is_verified(m):
@@ -210,6 +233,8 @@ class LevelList:
         self.f_file = ui.TextInput(maxlen=ugc.MAX_ID, charset=ui.TextInput.ID_CHARS)
         self.focus = 0
         self.err = ""
+        self.picker = None           # Vorlagen-Auswahl (Liste von Leveln)
+        self.pick_sel = 0
         self.reload()
         self.layout()
 
@@ -286,6 +311,8 @@ class LevelList:
 
     # ----- Eingabe ------------------------------------------------------
     def handle(self, event):
+        if self.picker is not None:
+            return self._handle_picker(event)
         if self.share is not None:
             return self._handle_share(event)
         g = self.game
@@ -345,7 +372,7 @@ class LevelList:
             if ugc.is_full(GAME):
                 self._toast(t("gd.ugc.err.full", max=ugc.max_items(GAME)))
                 return
-            g.ugc_new_level()
+            self._open_picker()
             return
         if key == "import":
             self._do_import()
@@ -369,6 +396,108 @@ class LevelList:
             self.reload()
             self._toast(t("gd.ugc.deleted"))
             g.play_sound("click")
+
+    # ----- Vorlagen -----------------------------------------------------
+    def _open_picker(self):
+        """Vorlagen-Auswahl öffnen: leer oder ein fertiges Gerüst."""
+        from .geodash import load_templates
+        self.picker = load_templates()
+        self.pick_sel = 0
+        self.game.play_sound("click")
+
+    def _pick_rects(self):
+        """Kacheln der Vorlagen-Auswahl (auch für den Layout-Test)."""
+        g = self.game
+        w, h = g.width, g.height
+        n = len(self.picker or ())
+        cols = 4 if w >= 760 else 3
+        rows = max(1, (n + cols - 1) // cols)
+        pw = min(w - 30, max(420, int(w * 0.8)))
+        th = self.tiny.get_height()
+        cell_h = max(46, min(88, h // 7), th * 3 + 14)
+        head = self.fnt.get_height() + 12
+        foot = th + 18
+        ph = min(h - 16, head + rows * (cell_h + 8) + foot)
+        box = pygame.Rect((w - pw) // 2, (h - ph) // 2, pw, ph)
+        gap = 8
+        cw = (pw - 24 - gap * (cols - 1)) / float(cols)
+        rects = []
+        for i in range(n):
+            r, c = divmod(i, cols)
+            rects.append(pygame.Rect(int(box.x + 12 + c * (cw + gap)),
+                                     int(box.y + head + r * (cell_h + gap)),
+                                     int(cw), cell_h))
+        return box, rects
+
+    def _handle_picker(self, event):
+        n = len(self.picker or ())
+        if event.kind == InputEvent.KEYDOWN:
+            k = event.key
+            if k in ("Escape", "BackSpace"):
+                self.picker = None
+            elif k in ("Left", "Up"):
+                self.pick_sel = (self.pick_sel - 1) % max(1, n)
+            elif k in ("Right", "Down"):
+                self.pick_sel = (self.pick_sel + 1) % max(1, n)
+            elif k in ("Return", "space", "KP_Enter"):
+                self._use_template(self.pick_sel)
+            return True
+        if event.kind == InputEvent.MOUSEDOWN:
+            _box, rects = self._pick_rects()
+            for i, rc in enumerate(rects):
+                if rc.collidepoint(event.pos):
+                    self.pick_sel = i
+                    self._use_template(i)
+                    return True
+            self.picker = None
+            return True
+        return True
+
+    def _use_template(self, i):
+        tpl = None
+        if self.picker and 0 <= i < len(self.picker):
+            tpl = self.picker[i]
+            if not tpl.get("objects"):
+                tpl = None            # die erste Kachel ist "leeres Level"
+        self.picker = None
+        self.game.ugc_new_level(template=tpl)
+
+    def _draw_picker(self, s):
+        g = self.game
+        box, rects = self._pick_rects()
+        overlay = pygame.Surface((g.width, g.height), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 150))
+        s.blit(overlay, (0, 0))
+        ui.draw_panel(s, box, color=ui.PANEL_LIGHT, radius=12)
+        title = self.fnt.render(t("gd.tpl.title"), True, ui.TEXT)
+        s.blit(title, (box.x + 14, box.y + 6))
+        for i, rc in enumerate(rects):
+            tpl = self.picker[i]
+            tid = tpl.get("tpl", "")
+            sel = (i == self.pick_sel)
+            pygame.draw.rect(s, ui.PANEL if not sel else ui.BTN_SEL, rc,
+                             border_radius=7)
+            pygame.draw.rect(s, g.accent if sel else ui.BORDER, rc,
+                             2 if sel else 1, border_radius=7)
+            bg = tuple(tpl.get("bg", core.DEFAULT_BG))
+            pygame.draw.rect(s, bg, (rc.x + 4, rc.y + 4, 4, rc.h - 8),
+                             border_radius=2)
+            name = self.tiny.render(t("gd.tpl." + tid), True, ui.TEXT)
+            s.blit(name, (rc.x + 12, rc.y + 5))
+            desc = t("gd.tpl." + tid + ".desc")
+            img = self.tiny.render(desc, True, ui.TEXT_DIM)
+            if img.get_width() > rc.w - 16:
+                kurz = desc
+                while len(kurz) > 3 and self.tiny.size(kurz + "...")[0] > rc.w - 16:
+                    kurz = kurz[:-1]
+                img = self.tiny.render(kurz + "...", True, ui.TEXT_DIM)
+            s.blit(img, (rc.x + 12, rc.y + 7 + name.get_height()))
+            if tpl.get("objects"):
+                cnt = self.tiny.render(
+                    t("gd.ugc.objects", n=len(tpl["objects"])), True, ui.TEXT_FAINT)
+                s.blit(cnt, cnt.get_rect(bottomright=(rc.right - 8, rc.bottom - 4)))
+        hint = self.tiny.render(t("gd.tpl.hint"), True, ui.TEXT_FAINT)
+        s.blit(hint, hint.get_rect(midbottom=(box.centerx, box.bottom - 6)))
 
     # ----- Teilen -------------------------------------------------------
     def _open_share(self, m):
@@ -510,6 +639,8 @@ class LevelList:
             s.blit(img, img.get_rect(center=r.center))
         if self.share is not None:
             self._draw_share(s)
+        if self.picker is not None:
+            self._draw_picker(s)
 
     def _draw_empty(self, s):
         g = self.game

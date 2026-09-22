@@ -94,7 +94,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Pinball**     | 1 / 2 Spieler   | Flipperautomat mit 3 Tischen: Pop-Bumper, Slingshots, Drop-Targets, L-A-M-A-Bahnen, Multiball mit Jackpot, Ball-Save, Nudge & Tilt |
 | **Bowling**     | 1 / 2 Spieler   | 10 Frames mit offizieller Strike-/Spare-Wertung, echter Pin-Physik, Hook-Effet und perspektivischer Bahnansicht, 3 Schwierigkeiten |
 | **Crossy Road** | 1 Spieler       | Endlos über Wiesen, Straßen, Flüsse und Gleise hüpfen im isometrischen Voxel-Look: Tag/Nacht-Wechsel, Adler, 10 kaufbare Figuren, Tagesstrecke |
-| **Geometry Dash** | 1 Spieler     | Rhythmus-Plattformer mit Würfel, Schiff, Ball, UFO und Welle: 8 Level von Leicht bis Dämon mit je 3 geheimen Münzen, Übungsmodus, Soundtrack je Level; **Level-Editor** mit Teilen als `.lamapgzlevel` |
+| **Geometry Dash** | 1 Spieler     | Rhythmus-Plattformer mit Würfel, Schiff, Ball, UFO und Welle: 16 Level von Leicht bis Dämon mit je 3 geheimen Münzen, dazu eine Bibliothek aus **80 weiteren Leveln** in 10 Kategorien mit Suche, Übungsmodus, Soundtrack je Level; **Level-Editor** mit 12 Vorlagen und Teilen als `.lamapgzlevel` |
 | **Schiffe versenken** | 1 / 2 Spieler | 10x10-Seeschlacht: Flotte per Drag & Drop aufstellen, 3 Regel-Schalter (Berühren, Salve, Nochmal schießen), KI mit 3 Stärken oder lokales Duell mit Übergabe-Bildschirm |
 | **Casino**      | 1 Spieler       | Europäisches Roulette mit allen klassischen Wetten und Lama-Slot (5 Walzen, 10 Linien, Wild, Freispiele); ein Lama-Chip-Konto mit Blackjack und Poker |
 
@@ -772,10 +772,14 @@ Explosions-Effekte, Highscore.
   UFO und Welle -, dazu Form-, Schwerkraft- und Tempo-Portale (0,5x bis 3x),
   gelbe/pinke/blaue **Pads und Orbs**, Halbblöcke, Stacheln, Gruben und
   Farb-Trigger.
-- **8 eingebaute Level** von *Leicht* bis *Dämon* („Lama Inferno") mit je **3
-  geheimen Münzen**. Jedes Level ist nachweislich schaffbar: Ein Solver hat es beim
-  Bauen mit dem echten Spiel-Code gelöst - samt allen Münzen und sogar mit
-  1/240 Sekunde Versatz.
+- **16 eingebaute Level** von *Leicht* bis *Dämon* („Lama Inferno", „Lama
+  Eclipse") mit je **3 geheimen Münzen**. Jedes Level ist nachweislich schaffbar:
+  Ein Solver hat es beim Bauen mit dem echten Spiel-Code gelöst - samt allen
+  Münzen und sogar mit 1/240 Sekunde Versatz.
+- **Reiter „Weitere": 80 Level in 10 Kategorien** (Einstieg, Rhythmus, Münzen,
+  Schiff, UFO, Ball, Schwerkraft, Tempo, Welle, Dämon) mit **Suchfeld**,
+  Zufallsknopf und eigenem Fortschritt je Level. Auch sie sind alle vom Solver
+  bewiesen - Ziel und alle drei Münzen. Sterne und Erfolge bleiben der Kampagne.
 - **Präzise Physik**: Festkomma-Rechnung im festen 240-Hz-Takt; jeder Druck wirkt
   genau in dem Schritt, in dem er passiert ist - bei jeder Bildrate gleich und im
   Browser bitgleich.
@@ -785,8 +789,8 @@ Explosions-Effekte, Highscore.
   Boden und Orbs pulsieren im Takt (Musik mit **M** abschaltbar).
 - **Sterne & Münzen**: Wer ein Level im Normalmodus schafft, bekommt seine Sterne,
   jede Münze ist einen weiteren Stern wert; der Highscore sind die **Sterne
-  gesamt** (höchstens 65). Bestwerte je Level, Münzen, Versuche und Sprünge stehen
-  im Abschnitt `geodash` von `mem.json`.
+  gesamt** (höchstens 135). Bestwerte je Level, Münzen, Versuche und Sprünge
+  stehen im Abschnitt `geodash` von `mem.json`.
 - **Level-Editor** im Reiter **LEVELS**: Raster-Leinwand, Palette mit 6 Gruppen
   (Blöcke, Gefahren, Pads & Orbs, Portale, Tempo, Extras), Drehen, Undo/Redo,
   Übersichtsleiste, **Test ab Start oder ab hier** und Level-Einstellungen
@@ -794,6 +798,11 @@ Explosions-Effekte, Highscore.
   gibt es erst, wenn du dein Level selbst geschafft hast. **Teilen** schreibt eine
   `.lamapgzlevel`-Datei, **Import** liest sie wieder ein; gespeichert wird in
   `ugc.json` neben den eigenen Minigolf-Bahnen.
+- **Vorlagen**: „Neu" fragt zuerst nach einer von **12 Vorlagen** (Leer,
+  Einstieg, Sprünge, Pads & Orbs, Schiff, Welle, Ball, UFO, Schwerkraft, Tempo,
+  Münzen, Dämon). Sie bringen Objekte, Farben, Musik und - weil vom Solver
+  durchgespielt - das Häkchen „verifiziert" mit. Im Reiter **Weitere** kopiert
+  **„Als Vorlage"** jedes fertige Level in die eigenen zum Umbauen.
 
 **Schiffe versenken**
 - **10x10-Seeschlacht** mit Flugzeugträger (5 Felder), Schlachtschiff (4),
@@ -1025,7 +1034,8 @@ devtools/            Werkzeuge für Entwickler (werden nicht in die .exe gepackt
   build_chess_puzzles.py     Baut die 200 Schachrätsel aus der Lichess-Rätseldatenbank (CC0)
   build_sudoku_killer.py     Erzeugt die 400 eindeutig lösbaren Killer-Sudokus
   build_crossyroad_models.py Schreibt die Voxel-Modelle von Crossy Road für die Web-Version
-  build_geodash_levels.py    Baut die 8 Geometry-Dash-Level und beweist per Solver, dass jedes samt Münzen schaffbar ist
+  build_geodash_levels.py    Baut die 16 Geometry-Dash-Kampagnenlevel und beweist per Solver, dass jedes samt Münzen schaffbar ist
+  build_geodash_extra.py     Baut die Bibliothek (80 Level in 10 Kategorien) und die 12 Vorlagen, jedes vom Solver bewiesen
   build_geodash_solver.py    Solver mit dem echten Schritt-Code (Lösungen in geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -1042,10 +1052,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Level-Daten: snake-comp.json, chess-puzzles.json (+ Quellen-README), sudoku-killer.json, geodash.json
+  levels/              Level-Daten: snake-comp.json, chess-puzzles.json (+ Quellen-README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Gesamt-Audit (Eingabe, seedrand Python = JS, Speichern, Sprachdateien, Vorspiel-Screens) + alle audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
@@ -1250,7 +1260,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Pinball**     | 1 / 2 players   | Pinball machine with 3 tables: pop bumpers, slingshots, drop targets, L-A-M-A lanes, multiball with jackpot, ball save, nudge & tilt |
 | **Bowling**     | 1 / 2 players   | 10 frames with official strike/spare scoring, real pin physics, hook spin and a perspective lane view, 3 difficulties |
 | **Crossy Road** | 1 player        | Hop endlessly across grass, roads, rivers and railway tracks in an isometric voxel look: day/night cycle, eagle, 10 unlockable characters, Daily Route |
-| **Geometry Dash** | 1 player      | Rhythm platformer with cube, ship, ball, UFO and wave: 8 levels from Easy to Demon with 3 secret coins each, practice mode, a soundtrack per level; **level editor** with sharing as `.lamapgzlevel` |
+| **Geometry Dash** | 1 player      | Rhythm platformer with cube, ship, ball, UFO and wave: 16 levels from Easy to Demon with 3 secret coins each, plus a library of **80 more levels** in 10 searchable categories, practice mode, a soundtrack per level; **level editor** with 12 templates and sharing as `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 players   | 10x10 naval battle: drag & drop fleet deployment, 3 rule toggles (touching, salvo, fire again), AI with 3 strengths or a local duel with a handover screen |
 | **Casino**      | 1 player        | European roulette with all classic bets and the Llama Slot (5 reels, 10 lines, wild, free spins); one llama-chip account shared with Blackjack and Poker |
 
@@ -1914,10 +1924,14 @@ explosion effects, high score.
   is when to jump or fly. **Five forms** - cube, ship, ball, UFO and wave - plus
   form, gravity and speed portals (0.5x to 3x), yellow/pink/blue **pads and
   orbs**, half blocks, spikes, pits and color triggers.
-- **8 built-in levels** from *Easy* to *Demon* ("Lama Inferno") with **3 secret
-  coins** each. Every level is provably beatable: while building them a solver
-  beat each one with the real game code - including all coins, and even when
-  shifted by 1/240 second.
+- **16 built-in levels** from *Easy* to *Demon* ("Lama Inferno", "Lama Eclipse")
+  with **3 secret coins** each. Every level is provably beatable: while building
+  them a solver beat each one with the real game code - including all coins, and
+  even when shifted by 1/240 second.
+- **"More" tab: 80 levels in 10 categories** (starter, rhythm, coins, ship, UFO,
+  ball, gravity, speed, wave, demon) with a **search field**, a random button and
+  its own per-level progress. They are solver-proven as well - goal and all three
+  coins. Stars and achievements stay with the campaign.
 - **Precise physics**: fixed-point math at a fixed 240 Hz step; every press takes
   effect in exactly the step in which it happened - identical at any frame rate
   and bit-identical in the browser.
@@ -1926,7 +1940,7 @@ explosion effects, high score.
   (**R**). Every level has its **own soundtrack** - background, ground and orbs
   pulse to the beat (music can be turned off with **M**).
 - **Stars & coins**: beat a level in normal mode to earn its stars, and every
-  coin is worth another star; the high score is your **total stars** (65 at
+  coin is worth another star; the high score is your **total stars** (135 at
   most). Per-level bests, coins, attempts and jumps are stored in the `geodash`
   section of `mem.json`.
 - **Level editor** in the **LEVELS** tab: grid canvas, a palette with 6 groups
@@ -1936,6 +1950,11 @@ explosion effects, high score.
   mark only appears once you have beaten your own level. **Share** writes a
   `.lamapgzlevel` file and **Import** reads it back; levels are stored in
   `ugc.json` next to your custom minigolf holes.
+- **Templates**: "New" asks for one of **12 templates** first (empty, starter,
+  jumps, pads & orbs, ship, wave, ball, UFO, gravity, speed, coins, demon). They
+  carry their objects, colors, music and - having been played through by the
+  solver - the "verified" check mark. In the **More** tab, **"As template"**
+  copies any finished level into your own for rebuilding.
 
 **Battleship**
 - **10x10 naval battle** with a carrier (5 cells), battleship (4), cruiser (3),
@@ -2159,7 +2178,8 @@ devtools/            Developer tools (not bundled into the .exe)
   build_chess_puzzles.py     Builds the 200 chess puzzles from the Lichess puzzle database (CC0)
   build_sudoku_killer.py     Generates the 400 uniquely solvable Killer Sudokus
   build_crossyroad_models.py Writes the Crossy Road voxel models for the web version
-  build_geodash_levels.py    Builds the 8 Geometry Dash levels and proves with the solver that each is beatable, coins included
+  build_geodash_levels.py    Builds the 16 Geometry Dash campaign levels and proves with the solver that each is beatable, coins included
+  build_geodash_extra.py     Builds the library (80 levels in 10 categories) and the 12 templates, each proven by the solver
   build_geodash_solver.py    Solver using the real step code (solutions in geodash_proofs.json)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
@@ -2176,10 +2196,10 @@ games/
   lamatowerdefense.py  minigolf.py  minigolf_gen.py
   minigolf_draw.py  minigolf_edit.py  pinball.py  bowling.py
   crossyroad.py  crossyroad_world.py  crossyroad_draw.py
-  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_music.py
+  geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
-  levels/              Level data: snake-comp.json, chess-puzzles.json (+ source README), sudoku-killer.json, geodash.json
+  levels/              Level data: snake-comp.json, chess-puzzles.json (+ source README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Overall audit (input, seedrand Python = JS, saving, language files, pre-game screens) + all audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py

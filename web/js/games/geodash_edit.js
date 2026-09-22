@@ -55,12 +55,32 @@
   const defaultParam = (kind) => (core.PARAMS[kind] || []).map((p) => p[0]);
   const rotatable = (kind) => core.ROTATE_ALL.includes(kind) || core.ROTATE_FLIP.includes(kind);
 
-  function newLevel(name = "", id = "", author = null) {
+  /**
+   * Frisches Level. Mit 'template' (einem Eintrag aus PG.gdTemplates) startet
+   * man nicht bei null, sondern mit dessen Objekten, Farben und Musik - zum
+   * Umbauen und Weiterbauen.
+   */
+  function newLevel(name = "", id = "", author = null, template = null) {
     const now = ugc.stamp();
-    return core.normalizeLevel({
+    const m = {
       v: 1, id, name, author: author === null ? ugc.lastAuthor() : author, created: now, edited: now,
       speed: 1, mode: core.CUBE, bg: core.DEFAULT_BG.slice(), ground: core.DEFAULT_GROUND.slice(), music: "drive", objects: [],
-    });
+    };
+    if (template && typeof template === "object") {
+      for (const key of ["speed", "mode", "bg", "ground", "music", "length"]) if (key in template) m[key] = template[key];
+      m.objects = (template.objects || []).map((o) => o.slice());
+      m.from = template.id || "";
+      if (!m.name) {
+        // Vorschlag, damit "Speichern" sofort klappt - umbenennen geht ja.
+        m.name = String(template.tpl ? t("gd.tpl." + template.tpl) : template.name || "").slice(0, ugc.MAX_NAME);
+      }
+      if (!m.id) m.id = ugc.uniqueId(ugc.slug(m.name) || "level", GAME);
+    }
+    const out = core.normalizeLevel(m);
+    // Vorlagen sind vom Solver bewiesen - das Abzeichen kommt mit und fällt
+    // weg, sobald jemand etwas ändert (contentHash).
+    if (template && template.verified) out.verified = core.contentHash(out);
+    return out;
   }
 
   function isVerified(m) {
@@ -133,6 +153,8 @@
       this.toastT = 0;
       this.confirm = "";
       this.share = null;
+      this.picker = null;          // Vorlagen-Auswahl (Liste aus PG.gdTemplates)
+      this.pickSel = 0;
       this.fAuthor = new ui.TextInput("", ugc.MAX_AUTHOR);
       this.fFile = new ui.TextInput("", ugc.MAX_ID, ui.TextInput.ID_CHARS);
       this.focus = 0;
@@ -212,6 +234,7 @@
     }
 
     handle(ev) {
+      if (this.picker) return this.handlePicker(ev);
       if (this.share) return this.handleShare(ev);
       const g = this.game;
       if (ev.kind === "keydown") {
@@ -252,7 +275,7 @@
       if (key !== "delete") this.confirm = "";
       if (key === "new") {
         if (ugc.isFull(GAME)) return this.setToast(t("gd.ugc.err.full", { max: ugc.maxItems(GAME) }));
-        return g.ugcNewLevel();
+        return this.openPicker();
       }
       if (key === "import") return this.doImport();
       const m = this.selected();
@@ -272,6 +295,91 @@
         this.setToast(t("gd.ugc.deleted"));
         g.playSound("click");
       }
+    }
+
+    // ----- Vorlagen -------------------------------------------------------
+    /** Vorlagen-Auswahl oeffnen: leer oder ein fertiges Geruest. */
+    openPicker() {
+      this.picker = (PG.gdTemplates || []).map((d) => core.normalizeLevel(d));
+      this.pickSel = 0;
+      this.game.playSound("click");
+    }
+
+    /** Kacheln der Vorlagen-Auswahl (auch fuer den Layout-Test). */
+    pickRects() {
+      const g = this.game, w = g.width, h = g.height;
+      const n = (this.picker || []).length;
+      const cols = w >= 760 ? 4 : 3;
+      const rows = Math.max(1, Math.ceil(n / cols));
+      const pw = Math.min(w - 30, Math.max(420, Math.trunc(w * 0.8)));
+      const th = this.tiny.getHeight();
+      const cellH = Math.max(46, Math.min(88, Math.floor(h / 7)), th * 3 + 14);
+      const head = this.fnt.getHeight() + 12;
+      const foot = th + 18;
+      const ph = Math.min(h - 16, head + rows * (cellH + 8) + foot);
+      const box = R((w - pw) / 2, (h - ph) / 2, pw, ph);
+      const gap = 8;
+      const cw = (pw - 24 - gap * (cols - 1)) / cols;
+      const rects = [];
+      for (let i = 0; i < n; i++) {
+        const r = Math.floor(i / cols), c = i % cols;
+        rects.push(R(box.x + 12 + c * (cw + gap), box.y + head + r * (cellH + gap), cw, cellH));
+      }
+      return [box, rects];
+    }
+
+    handlePicker(ev) {
+      const n = (this.picker || []).length;
+      if (ev.kind === "keydown") {
+        const k = ev.key;
+        if (k === "Escape" || k === "BackSpace") this.picker = null;
+        else if (k === "Left" || k === "Up") this.pickSel = PG.mod(this.pickSel - 1, Math.max(1, n));
+        else if (k === "Right" || k === "Down") this.pickSel = PG.mod(this.pickSel + 1, Math.max(1, n));
+        else if (k === "Return" || k === "space" || k === "KP_Enter") this.useTemplate(this.pickSel);
+        return;
+      }
+      if (ev.kind === "mousedown") {
+        const rects = this.pickRects()[1];
+        for (let i = 0; i < rects.length; i++) {
+          if (rects[i].collidepoint(ev.pos)) {
+            this.pickSel = i;
+            return this.useTemplate(i);
+          }
+        }
+        this.picker = null;
+      }
+    }
+
+    useTemplate(i) {
+      let tpl = null;
+      if (this.picker && i >= 0 && i < this.picker.length) {
+        tpl = this.picker[i];
+        if (!tpl.objects || !tpl.objects.length) tpl = null;   // erste Kachel: leeres Level
+      }
+      this.picker = null;
+      this.game.ugcNewLevel(tpl);
+    }
+
+    drawPicker(ctx) {
+      const g = this.game;
+      const [box, rects] = this.pickRects();
+      draw.rect(ctx, [0, 0, 0, 150], R(0, 0, g.width, g.height), 0, 0);
+      ui.drawPanel(ctx, box, { color: ui.PANEL_LIGHT, radius: 12 });
+      ui.text(ctx, t("gd.tpl.title"), box.x + 14, box.y + 6, this.fnt, ui.TEXT);
+      rects.forEach((rc, i) => {
+        const tpl = this.picker[i];
+        const tid = tpl.tpl || "";
+        const sel = i === this.pickSel;
+        draw.rect(ctx, sel ? ui.BTN_SEL : ui.PANEL, rc, 0, 7);
+        draw.rect(ctx, sel ? g.accent : ui.BORDER, rc, sel ? 2 : 1, 7);
+        draw.rect(ctx, tpl.bg || core.DEFAULT_BG, R(rc.x + 4, rc.y + 4, 4, rc.h - 8), 0, 2);
+        ui.text(ctx, t("gd.tpl." + tid), rc.x + 12, rc.y + 5, this.tiny, ui.TEXT);
+        ui.text(ctx, fit(this.tiny, t("gd.tpl." + tid + ".desc"), rc.w - 16), rc.x + 12, rc.y + 7 + this.tiny.getHeight(), this.tiny, ui.TEXT_DIM);
+        if (tpl.objects && tpl.objects.length) {
+          ui.text(ctx, t("gd.ugc.objects", { n: tpl.objects.length }), rc.right - 8, rc.bottom - 4, this.tiny, ui.TEXT_FAINT, "bottomright");
+        }
+      });
+      ui.text(ctx, fit(this.tiny, t("gd.tpl.hint"), box.w - 20), box.centerx, box.bottom - 6, this.tiny, ui.TEXT_FAINT, "midbottom");
     }
 
     openShare(m) {
@@ -403,6 +511,7 @@
         ui.text(ctx, this.toast, r.centerx, r.centery, this.tiny, ui.TEXT, "center");
       }
       if (this.share) this.drawShare(ctx);
+      if (this.picker) this.drawPicker(ctx);
     }
 
     drawEmpty(ctx) {
