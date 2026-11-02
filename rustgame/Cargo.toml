@@ -1,0 +1,56 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/rustgame-core",
+    "crates/rustgame-display",
+    "crates/rustgame-math",
+    "crates/rustgame-mixer",
+    "crates/rustgame-sprite",
+    "crates/rustgame-font",
+]
+# `vendor/` liegt im Workspace-Ordner, gehoert aber nicht dazu - sonst
+# faesst `cargo test/clippy --workspace` fremden Quelltext an.
+exclude = ["vendor"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+# **1.88, und die Zahl ist gemessen, nicht geschaetzt.**
+#
+# Hier stand 1.75, und das war seit einer Weile nicht mehr wahr: eigener
+# Kode benutzt `div_ceil` (1.73) und `iter::repeat_n` (1.82), und mit dem
+# reinen Rust-Dekodierer fuer OPUS (`opus-pure`) kommt 1.88 dazu. Eine
+# Mindestfassung, die niemand nachprueft, ist eine Zusage ins Blaue -
+# `cargo` prueft sie nur fuer **Abhaengigkeiten**, nicht fuer den eigenen
+# Kode, und so faellt es jahrelang nicht auf.
+rust-version = "1.88"
+authors = ["herrlamatv"]
+# pygame-ce steht unter LGPL 2.1. Diese Nachbildung orientiert sich eng an
+# seinem Verhalten, deshalb dieselbe Lizenz - damit ist die Frage geklaert,
+# egal ob das Ergebnis je veroeffentlicht wird.
+license = "LGPL-2.1"
+description = "rustgame - pygame-ce in Rust nachgebaut"
+
+[workspace.dependencies]
+rustgame-core = { path = "crates/rustgame-core" }
+rustgame-math = { path = "crates/rustgame-math" }
+rustgame-mixer = { path = "crates/rustgame-mixer" }
+
+# Der Blit-Kern ist der heisseste Pfad und liegt im eigenen Workspace -
+# ohne das waere der Debug-Build unbrauchbar langsam.
+[profile.dev.package.rustgame-core]
+opt-level = 3
+
+[profile.dev]
+opt-level = 1
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+
+# **skrifa mit zwei Zeilen mehr**, siehe `vendor/README.md`: FreeTypes
+# Schwarzweiss-Rasterer braucht `scan_control`/`scan_type` nach `prep`, und
+# skrifa haelt beides privat.
+[patch.crates-io]
+skrifa = { path = "vendor/skrifa" }

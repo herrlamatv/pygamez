@@ -1,0 +1,32 @@
+[package]
+name = "rustgame-display"
+version.workspace = true
+edition.workspace = true
+# Ohne diese Zeile schlaegt clippy APIs vor, die es in 1.75 nicht gibt.
+rust-version.workspace = true
+license.workspace = true
+description = "Fenster und Ereignisse fuer rustgame: display, event, key, mouse"
+
+[dependencies]
+# `pygame.camera` - siehe `kamera.rs`. Spricht unter Windows mit Media
+# Foundation, unter Linux mit V4L2, unter macOS mit AVFoundation, alles
+# hinter einer sicheren Schnittstelle. `input-native` waehlt den Treiber
+# der Plattform; `decoding` braucht es, weil Kameras MJPEG liefern und
+# `get_image()` ein Bild herausgeben muss, nicht einen Datenstrom.
+nokhwa = { version = "0.10.11", default-features = false, features = ["input-native", "decoding"] }
+# Die Anzeigeflaeche - siehe `Screen`. Ein `RwLock`, weil `RefCell` viele
+# Leser erlaubt und ein `Mutex` daraus einen Fehler gemacht haette, den es
+# vorher nicht gab.
+parking_lot = "0.12.5"
+rustgame-core.workspace = true
+# Nur wegen `mixer.set_endevent`. Die Tonkiste sammelt ihre Endereignisse
+# selbst und bietet unter `ereignis::set_senke` einen Rueckruf an; ohne
+# jemanden, der ihn setzt, bleibt `set_endevent` wirkungslos. Das tut
+# `display::init()` - die Richtung stimmt, denn `rustgame-mixer` haengt
+# nicht an dieser Kiste (Ton braucht kein Fenster), andersherum waere es
+# ein Ring.
+rustgame-mixer.workspace = true
+sysinfo = { version = "0.38.4", default-features = false, features = ["system"] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+minifb = { version = "0.27", default-features = false, features = ["x11", "wayland"] }

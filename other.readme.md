@@ -982,6 +982,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Audits headless par jeu
   newgames_audit.py  blockjump_audit.py
+rust/                La version Rust (.exe autonome, voir rust/README.md)
+  ENGINE.md            Contrat de portage : comment un jeu passe de Python à Rust
+  crates/pgz-core/     Couche de données sans graphismes (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Fenêtre, rendu, saisie, son, trait Game (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    Les jeux portés
+  crates/pygamez/      Le programme : menu, barre latérale, écrans
+  tools/export_defs.py Génère les données de base (46 jeux, 250 succès, 10 thèmes) depuis les sources Python
+  tools/audit.py       Banc d'essai : traductions, liste des jeux, conventions
+rust.output/         Sortie de compilation de la version Rust (rust.output/release/pygamez.exe)
 ```
 
 La langue choisie est enregistrée dans `mem.json` (dans la section `mem`, à
@@ -2036,6 +2046,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Auditorías headless por juego
   newgames_audit.py  blockjump_audit.py
+rust/                La versión en Rust (.exe independiente, véase rust/README.md)
+  ENGINE.md            Contrato de portado: cómo pasa un juego de Python a Rust
+  crates/pgz-core/     Capa de datos sin gráficos (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Ventana, dibujo, entrada, sonido, trait Game (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    Los juegos portados
+  crates/pygamez/      El programa: menú, barra lateral, pantallas
+  tools/export_defs.py Genera los datos maestros (46 juegos, 250 logros, 10 temas) desde las fuentes Python
+  tools/audit.py       Banco de pruebas: traducciones, lista de juegos, convenciones
+rust.output/         Salida de compilación de la versión Rust (rust.output/release/pygamez.exe)
 ```
 
 El idioma elegido se guarda en `mem.json` (en la sección `mem`, junto a la
@@ -3076,6 +3096,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Auditorias headless por jogo
   newgames_audit.py  blockjump_audit.py
+rust/                A versão em Rust (.exe autónomo, ver rust/README.md)
+  ENGINE.md            Contrato de portabilidade: como um jogo passa de Python para Rust
+  crates/pgz-core/     Camada de dados sem gráficos (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Janela, desenho, entrada, som, trait Game (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    Os jogos portados
+  crates/pygamez/      O programa: menu, barra lateral, ecrãs
+  tools/export_defs.py Gera os dados base (46 jogos, 250 conquistas, 10 temas) a partir das fontes Python
+  tools/audit.py       Bancada de testes: traduções, lista de jogos, convenções
+rust.output/         Saída de compilação da versão Rust (rust.output/release/pygamez.exe)
 ```
 
 O idioma escolhido é guardado em `mem.json` (na secção `mem`, junto à secção
@@ -4191,6 +4221,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Audyty headless dla każdej gry
   newgames_audit.py  blockjump_audit.py
+rust/                Wersja w Ruscie (samodzielny .exe, zob. rust/README.md)
+  ENGINE.md            Umowa portowania: jak gra trafia z Pythona do Rusta
+  crates/pgz-core/     Warstwa danych bez grafiki (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Okno, rysowanie, sterowanie, dźwięk, trait Game (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    Przeniesione gry
+  crates/pygamez/      Program: menu, panel boczny, ekrany
+  tools/export_defs.py Generuje dane bazowe (46 gier, 250 osiągnięć, 10 motywów) ze źródeł Pythona
+  tools/audit.py       Stanowisko testowe: tłumaczenia, lista gier, konwencje
+rust.output/         Wynik kompilacji wersji Rust (rust.output/release/pygamez.exe)
 ```
 
 Wybrany język jest zapisywany w `mem.json` (w sekcji `mem`, obok sekcji
@@ -5309,6 +5349,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Oyun başına headless denetimler
   newgames_audit.py  blockjump_audit.py
+rust/                Rust sürümü (bağımsız .exe, bkz. rust/README.md)
+  ENGINE.md            Taşıma sözleşmesi: bir oyun Python'dan Rust'a nasıl geçer
+  crates/pgz-core/     Grafiksiz veri katmanı (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Pencere, çizim, giriş, ses, Game trait'i (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    Taşınan oyunlar
+  crates/pygamez/      Program: menü, yan çubuk, ekranlar
+  tools/export_defs.py Ana verileri (46 oyun, 250 başarım, 10 tema) Python kaynaklarından üretir
+  tools/audit.py       Test tezgâhı: çeviriler, oyun listesi, kurallar
+rust.output/         Rust sürümünün derleme çıktısı (rust.output/release/pygamez.exe)
 ```
 
 Seçilen dil `mem.json` içinde (aynı dosyadaki `highscores` bölümünün yanındaki
@@ -6396,6 +6446,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless-audits pr. spil
   newgames_audit.py  blockjump_audit.py
+rust/                Rust-udgaven (selvstændig .exe, se rust/README.md)
+  ENGINE.md            Porteringskontrakt: hvordan et spil kommer fra Python til Rust
+  crates/pgz-core/     Datalag uden grafik (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Vindue, tegning, input, lyd, Game-trait (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    De porterede spil
+  crates/pygamez/      Programmet: menu, sidepanel, skærme
+  tools/export_defs.py Danner stamdata (46 spil, 250 bedrifter, 10 temaer) ud fra Python-kilderne
+  tools/audit.py       Prøvebænk: oversættelser, spilliste, konventioner
+rust.output/         Byggeresultat af Rust-udgaven (rust.output/release/pygamez.exe)
 ```
 
 Det valgte sprog gemmes i `mem.json` (i afsnittet `mem`, ved siden af afsnittet
@@ -7476,6 +7536,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless-revisjoner per spill
   newgames_audit.py  blockjump_audit.py
+rust/                Rust-utgaven (frittstående .exe, se rust/README.md)
+  ENGINE.md            Porteringskontrakt: hvordan et spill går fra Python til Rust
+  crates/pgz-core/     Datalag uten grafikk (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Vindu, tegning, inndata, lyd, Game-trait (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    De porterte spillene
+  crates/pygamez/      Programmet: meny, sidefelt, skjermer
+  tools/export_defs.py Lager grunndata (46 spill, 250 prestasjoner, 10 temaer) fra Python-kildene
+  tools/audit.py       Prøvebenk: oversettelser, spilliste, konvensjoner
+rust.output/         Byggeresultat av Rust-utgaven (rust.output/release/pygamez.exe)
 ```
 
 Det valgte språket lagres i `mem.json` (i `mem`-delen, ved siden av
@@ -8492,6 +8562,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless-granskningar per spel
   newgames_audit.py  blockjump_audit.py
+rust/                Rust-versionen (fristående .exe, se rust/README.md)
+  ENGINE.md            Porteringskontrakt: hur ett spel går från Python till Rust
+  crates/pgz-core/     Datalager utan grafik (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Fönster, ritning, inmatning, ljud, Game-trait (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    De porterade spelen
+  crates/pygamez/      Programmet: meny, sidopanel, skärmar
+  tools/export_defs.py Skapar stamdata (46 spel, 250 utmärkelser, 10 teman) från Python-källorna
+  tools/audit.py       Provbänk: översättningar, spellista, konventioner
+rust.output/         Byggresultat av Rust-versionen (rust.output/release/pygamez.exe)
 ```
 
 Det valda språket sparas i `mem.json` (i avsnittet `mem`, bredvid avsnittet `highscores` i samma fil)
@@ -9605,6 +9685,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless-tarkastukset peleittäin
   newgames_audit.py  blockjump_audit.py
+rust/                Rust-versio (itsenäinen .exe, ks. rust/README.md)
+  ENGINE.md            Siirtosopimus: miten peli siirtyy Pythonista Rustiin
+  crates/pgz-core/     Datakerros ilman grafiikkaa (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Ikkuna, piirto, syöte, ääni, Game-trait (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    Siirretyt pelit
+  crates/pygamez/      Ohjelma: valikko, sivupalkki, näkymät
+  tools/export_defs.py Luo perustiedot (46 peliä, 250 saavutusta, 10 teemaa) Python-lähteistä
+  tools/audit.py       Koepenkki: käännökset, pelilista, käytännöt
+rust.output/         Rust-version käännöstulos (rust.output/release/pygamez.exe)
 ```
 
 Valittu kieli tallennetaan tiedostoon `mem.json` (osioon `mem`, saman tiedoston osion
@@ -10696,6 +10786,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless audity pro jednotlivé hry
   newgames_audit.py  blockjump_audit.py
+rust/                Verze v Rustu (samostatné .exe, viz rust/README.md)
+  ENGINE.md            Smlouva o portování: jak se hra dostane z Pythonu do Rustu
+  crates/pgz-core/     Datová vrstva bez grafiky (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Okno, kreslení, vstup, zvuk, trait Game (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    Portované hry
+  crates/pygamez/      Program: nabídka, postranní panel, obrazovky
+  tools/export_defs.py Vytvoří základní data (46 her, 250 úspěchů, 10 vzhledů) ze zdrojů v Pythonu
+  tools/audit.py       Zkušebna: překlady, seznam her, konvence
+rust.output/         Výstup sestavení verze v Rustu (rust.output/release/pygamez.exe)
 ```
 
 Zvolený jazyk se ukládá do `mem.json` (v sekci `mem`, vedle sekce `highscores`
@@ -11788,6 +11888,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless revizije za posamezne igre
   newgames_audit.py  blockjump_audit.py
+rust/                Različica v Rustu (samostojni .exe, glej rust/README.md)
+  ENGINE.md            Pogodba o prenosu: kako igra pride iz Pythona v Rust
+  crates/pgz-core/     Podatkovna plast brez grafike (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Okno, risanje, vnos, zvok, trait Game (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    Prenesene igre
+  crates/pygamez/      Program: meni, stranska vrstica, zasloni
+  tools/export_defs.py Ustvari osnovne podatke (46 iger, 250 dosežkov, 10 videzov) iz virov v Pythonu
+  tools/audit.py       Preizkuševalnica: prevodi, seznam iger, dogovori
+rust.output/         Rezultat gradnje različice v Rustu (rust.output/release/pygamez.exe)
 ```
 
 Izbrani jezik se shrani v `mem.json` (v razdelku `mem`, poleg razdelka
@@ -12883,6 +12993,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless provjere po igri
   newgames_audit.py  blockjump_audit.py
+rust/                Inačica u Rustu (samostalni .exe, vidi rust/README.md)
+  ENGINE.md            Ugovor o prenošenju: kako igra dolazi iz Pythona u Rust
+  crates/pgz-core/     Podatkovni sloj bez grafike (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Prozor, crtanje, unos, zvuk, trait Game (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    Prenesene igre
+  crates/pygamez/      Program: izbornik, bočna traka, zasloni
+  tools/export_defs.py Stvara osnovne podatke (46 igara, 250 postignuća, 10 tema) iz Python izvora
+  tools/audit.py       Ispitni stol: prijevodi, popis igara, konvencije
+rust.output/         Rezultat gradnje inačice u Rustu (rust.output/release/pygamez.exe)
 ```
 
 Odabrani jezik sprema se u `mem.json` (u odjeljku `mem`, uz odjeljak `highscores` u

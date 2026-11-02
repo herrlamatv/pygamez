@@ -1,0 +1,70 @@
+# Diese Kiste steht **bewusst ausserhalb** des Workspace (eigene
+# [workspace]-Tabelle unten). Grund: `extension-module` bindet absichtlich
+# kein libpython ein - damit laesst sich zwar ein Python-Modul bauen, aber
+# kein Testprogramm mehr linken. Waere die Kiste Mitglied, wuerde
+# `cargo test --workspace` fuer den ganzen Rest scheitern.
+#
+# Bauen:
+#   cd rustgame/crates/rustgame-py
+#   cargo build --release
+#   copy ..\..\..\rustgame.output\release\rustgame_py.dll rustgame_py.pyd
+[workspace]
+
+[package]
+name = "rustgame-py"
+version = "0.1.0"
+edition = "2021"
+license = "LGPL-2.1"
+description = "Python-Huelle fuer rustgame - import rustgame_py as pygame"
+
+[lib]
+name = "rustgame_py"
+crate-type = ["cdylib"]
+
+[dependencies]
+rustgame-core = { path = "../rustgame-core" }
+# Fenster, Ereignisse, Tastatur, Maus - und die 448 erzeugten Konstanten,
+# ohne die `pygame.K_SPACE` und `pygame.QUIT` nicht gingen.
+rustgame-display = { path = "../rustgame-display" }
+# Schrift. Die Kiste ist fertig (kein "Noch nicht umgesetzt" mehr im Kopf),
+# also ist `pygame.font` hier mit drin.
+rustgame-font = { path = "../rustgame-font" }
+# Vektoren und Masken - `pygame.math` und `pygame.mask`.
+rustgame-math = { path = "../rustgame-math" }
+
+# Ton - `pygame.mixer`, `pygame.mixer_music`. Hier stand lange, diese
+# Kiste uebersetze nicht und fehle deshalb mit Absicht. Das stimmte
+# einmal und stimmt nicht mehr (81 Tests gruen); der Vermerk aber blieb
+# stehen und hat die Luecke gedeckt, statt sie zu zeigen.
+rustgame-mixer = { path = "../rustgame-mixer" }
+
+# **`rustgame-sprite` steht hier mit Absicht nicht.**
+#
+# `figur.rs` ist keine Huelle um die Kiste, sondern eine Uebertragung von
+# `pygame/sprite.py`. Der Grund ist eine einzige gemessene Zeile:
+# `self.rect.x += 1`. Python macht daraus
+# `tmp = self.rect; tmp.x = tmp.x + 1` und schreibt nichts zurueck - das
+# wirkt nur, wenn `sprite.rect` **jedes Mal dasselbe** Python-Objekt ist.
+# Ein Zugriff, der aus dem Kern ein frisches `PyRect` baut, macht die
+# haeufigste Zeile jedes pygame-Spiels wirkungslos.
+#
+# Die Kiste bleibt die Rust-eigene Sprite-Welt und wird vom Workspace
+# mitgeprueft (`cargo test --workspace`, 44 Tests). Sie hier als
+# unbenutzte Abhaengigkeit stehen zu lassen waere genau die Art von
+# Zeile, die spaeter jemand fuer eine Aussage haelt.
+
+# abi3-py311: ein einziges Modul laeuft auf jedem Python ab 3.11 - auch auf
+# der 3.14.4 dieser venv. Nachgeprueft mit einem Hallo-Welt-Modul, bevor
+# hier eine Zeile entstanden ist; der im Plan vorgesehene Rueckfall auf
+# Python 3.12/3.13 ist damit hinfaellig.
+pyo3 = { version = "0.26", features = ["abi3-py311", "extension-module", "multiple-pymethods"] }
+# Die Flaeche in der Huelle - siehe `flaeche::Geteilt`. Ein `RwLock`, weil
+# `PySurface::leihen` einen Waechter mit der Lebensdauer von `&self`
+# herausgeben muss; mit zwei Stufen (`ReentrantMutex<RefCell<..>>` wie im
+# Kern) leiht der innere `Ref` vom aeusseren Waechter und nicht von
+# `&self`. Daran haengt, dass Flaechen den Faden wechseln duerfen.
+parking_lot = "0.12.5"
+
+# Dieselbe skrifa wie im Workspace - siehe `rustgame/vendor/README.md`.
+[patch.crates-io]
+skrifa = { path = "../../vendor/skrifa" }

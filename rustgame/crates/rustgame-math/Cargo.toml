@@ -1,0 +1,11 @@
+[package]
+name = "rustgame-math"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Vektoren und Masken fuer rustgame: pygame.math und pygame.mask"
+
+[dependencies]
+# Nur die Maske braucht ihn - Vektoren kommen ohne aus.
+rustgame-core.workspace = true

@@ -1,0 +1,10 @@
+# Alle Build-Ergebnisse landen NEBEN dem rustgame/-Ordner in rustgame.output/ -
+# so bleibt der Quelltext-Ordner frei von Build-Muell, genau wie bei rust/.
+#
+#   rustgame.output/debug/     (cargo build)
+#   rustgame.output/release/   (cargo build --release)
+#
+# Pfade in .cargo/config.toml loest Cargo relativ zum Ordner auf, der das
+# .cargo-Verzeichnis enthaelt (also relativ zu rustgame/).
+[build]
+target-dir = "../rustgame.output"

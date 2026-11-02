@@ -1,0 +1,45 @@
+[package]
+name = "rustgame-font"
+version.workspace = true
+edition.workspace = true
+# Ohne diese Zeile schlaegt clippy APIs vor, die es in 1.75 nicht gibt.
+rust-version.workspace = true
+license.workspace = true
+description = "Text fuer rustgame: Gegenstueck zu pygame.font, ueber fontdue"
+
+[dependencies]
+rustgame-core.workspace = true
+fontdue = "0.9"
+# fontdue rastert, liest aber nur die alte kern-Tabelle und rundet Vorschuebe
+# anders als FreeType. Die Metriken (ascent/descent/height/linesize), die
+# Vorschuebe und das GPOS-Kerning kommen deshalb direkt aus den Tabellen -
+# ttf-parser steckt ohnehin schon unter fontdue.
+ttf-parser = { version = "0.25", default-features = false, features = [
+    "std",
+    "opentype-layout",
+] }
+# FreeTypes TrueType-Hinting (Bytecode-Interpreter v40) in reinem Rust,
+# `#![forbid(unsafe_code)]`. SDL_ttf laedt jede Glyphe gehintet, und ohne
+# Hinting liegen Ober- und Unterkanten auf halben Zeilen - siehe
+# `src/hinting.rs`. Gerastert wird mit der Uebertragung von FreeTypes
+# `ftgrays.c` in `src/ftgrays.rs`.
+skrifa = "0.48"
+# HarfBuzz' Formung in reinem Rust (`#![forbid(unsafe_code)]`), vom
+# HarfBuzz-Team, auf demselben `read-fonts` wie `skrifa`. SDL_ttf setzt jede
+# Zeile mit `hb_shape`; gebraucht wird hier nur die Glyphenfolge nach GSUB
+# (Ligaturen, `calt`, `rvrn`) - siehe `src/gestalt.rs`.
+harfrust = "0.14"
+
+[target.'cfg(windows)'.dependencies]
+# Die Schriftliste steht in der Registry. Gelesen wurde sie mit `reg query`,
+# und dessen Ausgabe ist die OEM-Codepage, nicht UTF-8: aus
+# "Lucida Sans Typewriter Schraeg" (mit ae) wurde `lucidasanstypewriterschrg`.
+# pygame liest mit `winreg` direkt Unicode. `windows-registry` ist Microsofts
+# sichere Schnittstelle dazu - `#![forbid(unsafe_code)]` bleibt.
+windows-registry = "0.6"
+
+[dev-dependencies]
+png = "0.17"
+# Die Pruefungen in tests/ sind eigene Kisten und sehen die normalen
+# Abhaengigkeiten nicht - Surface und Color muessen hier noch einmal stehen.
+rustgame-core.workspace = true

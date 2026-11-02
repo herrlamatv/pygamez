@@ -1,0 +1,37 @@
+[package]
+name = "rustgame-mixer"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Ton fuer rustgame: Gegenstueck zu pygame.mixer, ueber rodio"
+
+[dependencies]
+rustgame-core.workspace = true
+# `flac` ist claxon, `mp3` ist symphonia - beide reines Rust, wie alles
+# hier. Die Kiste bringt sie von Haus aus mit; wir hatten sie nur mit
+# `default-features = false` mit abgeschaltet. Acht Tests in
+# `mixer_music_test.py` haengen daran.
+rodio = { version = "0.20", default-features = false, features = [
+    "wav",
+    "vorbis",
+    "flac",
+    "mp3",
+] }
+symphonia-codec-wavpack = "0.1.1"
+symphonia-core = "0.6"
+xmrs = "0.15"
+xmrsplayer = "0.15"
+opus-pure = "0.2.2"
+# `pygame.midi` - siehe `midi.rs`. Spricht unter Windows mit WinMM, unter
+# Linux mit ALSA, unter macOS mit CoreMIDI. Hier stand lange der Vermerk,
+# MIDI braeuchte PortMidi und das ginge nur ueber FFI - dieselbe
+# Verwechslung wie bei `system.get_total_ram`: `unsafe` braucht irgendwer,
+# aber nicht dieses Programm.
+midir = "0.11.0"
+
+[target.'cfg(windows)'.dependencies]
+# Wohin der `Microsoft MIDI Mapper` fuehrt, steht in der Registry
+# (`HKCU\...\Multimedia\MIDIMap`, Wert `szPname`) - siehe `midi.rs`.
+# Dieselbe sichere Schnittstelle wie in `rustgame-font`.
+windows-registry = "0.6"

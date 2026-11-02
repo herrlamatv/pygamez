@@ -1,0 +1,1114 @@
+{
+  "pygame": "2.5.7",
+  "sdl": "2.32.10",
+  "plattform": "Windows-11-10.0.26200-SP0",
+  "faelle": [
+    {
+      "name": "fill_einfach",
+      "gruppe": "surface",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "fill_rect",
+      "gruppe": "surface",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "fill_rect_ragt_raus",
+      "gruppe": "surface",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_add",
+      "gruppe": "blend",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_sub",
+      "gruppe": "blend",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_mult",
+      "gruppe": "blend",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_min",
+      "gruppe": "blend",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_max",
+      "gruppe": "blend",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_rgba_add",
+      "gruppe": "blend",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_rgba_sub",
+      "gruppe": "blend",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_rgba_mult",
+      "gruppe": "blend",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_rgba_min",
+      "gruppe": "blend",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_rgba_max",
+      "gruppe": "blend",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_alpha_standard",
+      "gruppe": "blend",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_flaechen_alpha",
+      "gruppe": "blend",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_versetzt",
+      "gruppe": "blend",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_teilweise_draussen",
+      "gruppe": "blend",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_negativ_versetzt",
+      "gruppe": "blend",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "blit_mit_clip",
+      "gruppe": "blend",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rect_gefuellt",
+      "gruppe": "draw_rect",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rect_umriss_1",
+      "gruppe": "draw_rect",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rect_umriss_3",
+      "gruppe": "draw_rect",
+      "size": [
+        20,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rect_radius_gefuellt",
+      "gruppe": "draw_rect",
+      "size": [
+        11,
+        11
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rect_radius_umriss",
+      "gruppe": "draw_rect",
+      "size": [
+        24,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rect_radius_gross",
+      "gruppe": "draw_rect",
+      "size": [
+        20,
+        20
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rect_radius_zu_gross",
+      "gruppe": "draw_rect",
+      "size": [
+        20,
+        20
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rect_breite_groesser_als_rect",
+      "gruppe": "draw_rect",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rect_leer",
+      "gruppe": "draw_rect",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rect_alpha",
+      "gruppe": "draw_rect",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "circle_gefuellt",
+      "gruppe": "draw_circle",
+      "size": [
+        13,
+        13
+      ],
+      "tol": 0
+    },
+    {
+      "name": "circle_umriss_1",
+      "gruppe": "draw_circle",
+      "size": [
+        13,
+        13
+      ],
+      "tol": 0
+    },
+    {
+      "name": "circle_umriss_2",
+      "gruppe": "draw_circle",
+      "size": [
+        21,
+        21
+      ],
+      "tol": 0
+    },
+    {
+      "name": "circle_radius_0",
+      "gruppe": "draw_circle",
+      "size": [
+        9,
+        9
+      ],
+      "tol": 0
+    },
+    {
+      "name": "circle_radius_1",
+      "gruppe": "draw_circle",
+      "size": [
+        9,
+        9
+      ],
+      "tol": 0
+    },
+    {
+      "name": "circle_am_rand",
+      "gruppe": "draw_circle",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "ellipse_gefuellt",
+      "gruppe": "draw_ellipse",
+      "size": [
+        20,
+        14
+      ],
+      "tol": 0
+    },
+    {
+      "name": "ellipse_umriss",
+      "gruppe": "draw_ellipse",
+      "size": [
+        20,
+        14
+      ],
+      "tol": 0
+    },
+    {
+      "name": "ellipse_flach",
+      "gruppe": "draw_ellipse",
+      "size": [
+        20,
+        6
+      ],
+      "tol": 0
+    },
+    {
+      "name": "line_waagerecht",
+      "gruppe": "draw_line",
+      "size": [
+        16,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "line_senkrecht",
+      "gruppe": "draw_line",
+      "size": [
+        8,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "line_schraeg",
+      "gruppe": "draw_line",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "line_dick",
+      "gruppe": "draw_line",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "line_dick_schraeg",
+      "gruppe": "draw_line",
+      "size": [
+        20,
+        20
+      ],
+      "tol": 0
+    },
+    {
+      "name": "line_punkt",
+      "gruppe": "draw_line",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "polygon_dreieck",
+      "gruppe": "draw_polygon",
+      "size": [
+        20,
+        20
+      ],
+      "tol": 0
+    },
+    {
+      "name": "polygon_umriss",
+      "gruppe": "draw_polygon",
+      "size": [
+        20,
+        20
+      ],
+      "tol": 0
+    },
+    {
+      "name": "polygon_viereck",
+      "gruppe": "draw_polygon",
+      "size": [
+        20,
+        20
+      ],
+      "tol": 0
+    },
+    {
+      "name": "polygon_konkav",
+      "gruppe": "draw_polygon",
+      "size": [
+        24,
+        24
+      ],
+      "tol": 0
+    },
+    {
+      "name": "lines_offen",
+      "gruppe": "draw_line",
+      "size": [
+        20,
+        20
+      ],
+      "tol": 0
+    },
+    {
+      "name": "lines_geschlossen",
+      "gruppe": "draw_line",
+      "size": [
+        20,
+        20
+      ],
+      "tol": 0
+    },
+    {
+      "name": "arc_halb",
+      "gruppe": "draw_arc",
+      "size": [
+        20,
+        20
+      ],
+      "tol": 0
+    },
+    {
+      "name": "arc_dick",
+      "gruppe": "draw_arc",
+      "size": [
+        24,
+        24
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aaline_schraeg",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aaline_halbe_pixel",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aaline_steil",
+      "gruppe": "draw_aa",
+      "size": [
+        8,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aaline_dick_gerade",
+      "gruppe": "draw_aa",
+      "size": [
+        14,
+        10
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aaline_dick_ungerade",
+      "gruppe": "draw_aa",
+      "size": [
+        14,
+        10
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aaline_breite_null",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aaline_ueber_den_rand",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aaline_clip",
+      "gruppe": "draw_aa",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aaline_clip_dick",
+      "gruppe": "draw_aa",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aaline_auf_farbe",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aaline_alpha",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aalines_offen",
+      "gruppe": "draw_aa",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aalines_geschlossen",
+      "gruppe": "draw_aa",
+      "size": [
+        14,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aalines_zwei_punkte",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aalines_knick",
+      "gruppe": "draw_aa",
+      "size": [
+        20,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aacircle_duenn",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aacircle_gefuellt",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aacircle_dick",
+      "gruppe": "draw_aa",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aacircle_r1",
+      "gruppe": "draw_aa",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aacircle_gross",
+      "gruppe": "draw_aa",
+      "size": [
+        32,
+        32
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aacircle_am_rand",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aacircle_auf_farbe",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "aacircle_alpha",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "flood_fill_kreis",
+      "gruppe": "draw_aa",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "flood_fill_wand",
+      "gruppe": "draw_aa",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "flood_fill_diagonal",
+      "gruppe": "draw_aa",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "flood_fill_clip",
+      "gruppe": "draw_aa",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "flood_fill_alpha",
+      "gruppe": "draw_aa",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "scale_hoch",
+      "gruppe": "transform",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "scale_runter",
+      "gruppe": "transform",
+      "size": [
+        4,
+        4
+      ],
+      "tol": 0
+    },
+    {
+      "name": "smoothscale_runter",
+      "gruppe": "transform",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "smoothscale_hoch",
+      "gruppe": "transform",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "smoothscale_krumm",
+      "gruppe": "transform",
+      "size": [
+        6,
+        11
+      ],
+      "tol": 0
+    },
+    {
+      "name": "flip_waagerecht",
+      "gruppe": "transform",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "flip_senkrecht",
+      "gruppe": "transform",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rotate_90",
+      "gruppe": "transform",
+      "size": [
+        8,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rotate_180",
+      "gruppe": "transform",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rotate_45",
+      "gruppe": "transform",
+      "size": [
+        14,
+        14
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rotate_schraeg",
+      "gruppe": "transform",
+      "size": [
+        15,
+        11
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rotate_rueckwaerts",
+      "gruppe": "transform",
+      "size": [
+        15,
+        15
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rotate_ueber_voll",
+      "gruppe": "transform",
+      "size": [
+        10,
+        11
+      ],
+      "tol": 0
+    },
+    {
+      "name": "scale_by_halb",
+      "gruppe": "transform",
+      "size": [
+        8,
+        6
+      ],
+      "tol": 0
+    },
+    {
+      "name": "scale_by_krumm",
+      "gruppe": "transform",
+      "size": [
+        15,
+        4
+      ],
+      "tol": 0
+    },
+    {
+      "name": "smoothscale_by_klein",
+      "gruppe": "transform",
+      "size": [
+        4,
+        15
+      ],
+      "tol": 0
+    },
+    {
+      "name": "scale2x_muster",
+      "gruppe": "transform",
+      "size": [
+        14,
+        10
+      ],
+      "tol": 0
+    },
+    {
+      "name": "scale2x_formen",
+      "gruppe": "transform",
+      "size": [
+        20,
+        20
+      ],
+      "tol": 0
+    },
+    {
+      "name": "grayscale_muster",
+      "gruppe": "transform",
+      "size": [
+        12,
+        10
+      ],
+      "tol": 0
+    },
+    {
+      "name": "invert_muster",
+      "gruppe": "transform",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "laplacian_kanten",
+      "gruppe": "transform",
+      "size": [
+        13,
+        9
+      ],
+      "tol": 0
+    },
+    {
+      "name": "laplacian_rand",
+      "gruppe": "transform",
+      "size": [
+        5,
+        5
+      ],
+      "tol": 0
+    },
+    {
+      "name": "box_blur_r2",
+      "gruppe": "transform",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "box_blur_ohne_rand",
+      "gruppe": "transform",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "gaussian_blur_r2",
+      "gruppe": "transform",
+      "size": [
+        16,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "gaussian_blur_r0_ist_schwarz",
+      "gruppe": "transform",
+      "size": [
+        8,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "hsl_ton",
+      "gruppe": "transform",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "hsl_hell_voll",
+      "gruppe": "transform",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "hsl_saettigung_weg",
+      "gruppe": "transform",
+      "size": [
+        12,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "chop_mitte",
+      "gruppe": "transform",
+      "size": [
+        9,
+        6
+      ],
+      "tol": 0
+    },
+    {
+      "name": "chop_negativ_waechst",
+      "gruppe": "transform",
+      "size": [
+        10,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "pixelate_3",
+      "gruppe": "transform",
+      "size": [
+        15,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "pixelate_gross",
+      "gruppe": "transform",
+      "size": [
+        12,
+        9
+      ],
+      "tol": 0
+    },
+    {
+      "name": "solid_overlay_ohne_alpha_ist_leer",
+      "gruppe": "transform",
+      "size": [
+        10,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "solid_overlay_alpha",
+      "gruppe": "transform",
+      "size": [
+        10,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "solid_overlay_keep_alpha",
+      "gruppe": "transform",
+      "size": [
+        10,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rotozoom_90",
+      "gruppe": "transform",
+      "size": [
+        8,
+        12
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rotozoom_45",
+      "gruppe": "transform",
+      "size": [
+        16,
+        16
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rotozoom_schraeg_klein",
+      "gruppe": "transform",
+      "size": [
+        10,
+        8
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rotozoom_nur_zoom",
+      "gruppe": "transform",
+      "size": [
+        18,
+        14
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rotozoom_zoom_runter",
+      "gruppe": "transform",
+      "size": [
+        6,
+        4
+      ],
+      "tol": 0
+    },
+    {
+      "name": "rotozoom_rueckwaerts",
+      "gruppe": "transform",
+      "size": [
+        20,
+        20
+      ],
+      "tol": 0
+    },
+    {
+      "name": "grayscale_mit_alpha",
+      "gruppe": "transform",
+      "size": [
+        10,
+        8
+      ],
+      "tol": 0
+    }
+  ]
+}

@@ -8,6 +8,88 @@
 
 ## 🇩🇪 Deutsch
 
+### PyGameZ in Rust: eigenständige 3-MB-.exe – 2026-09-23
+
+PyGameZ gibt es jetzt ein drittes Mal: als **Rust-Programm** in `rust/`. Kein
+Python daneben, kein pygame, keine Laufzeitumgebung – eine einzige Datei von
+**3,1 MB** statt der 25,7 MB großen PyInstaller-.exe. Die Spielstände sind
+dieselben: wer in Python spielt und danach in Rust startet, findet seine
+Highscores, Erfolge und Profile wieder.
+
+#### Neu
+
+**Der Unterbau ist vollständig**
+- **10 UI-Designs** (v4.2 „Midnight Glass“ bis zurück zu v1) mit denselben
+  Paletten und Effekt-Schaltern wie in Python – Sterne, Farbwolken, Glas-Panels,
+  Zickzack-Muster, Vignette, Titel-Glow.
+- **14 Sprachen**, fest in die .exe eingebacken. Daneben liegen nur die Dateien,
+  die auch geschrieben werden.
+- **Spielerprofile** mit Level, 14 Rängen, Symbol und Farbe; **250 Erfolge** in
+  fünf Kategorien mit Seltenheitsstufen und Punkten; **Statistik** mit Partien,
+  Spielzeit, Siegen, Rekorden, Tagesserie und Kalender.
+- **17 Soundeffekte**, beim Start aus Frequenz, Dauer und Wellenform
+  synthetisiert – genau die Werte aus `audio.py`, keine Klangdateien.
+- **Wortfilter** in allen 14 Sprachen für Profilnamen.
+- Bildschirme: Sprachauswahl, Menü, Vorbereitung mit Spieler-2-Wahl, Spiel mit
+  Pause und Highscore-Banner, Optionen mit drei Reitern, Erfolge & Statistik,
+  Profilverwaltung.
+
+**Zehn Spiele portiert**
+- **Snake** (alle fünf Modi, Boost, Goldäpfel), **Pong**, **Breakout**,
+  **Tetris**, **2048**, **Minesweeper**, **Tic-Tac-Toe**, **Vier gewinnt**,
+  **Flappy** und **Memory** – mit der Spiellogik, den Konstanten und den
+  KI-Stufen der Python-Vorlagen.
+- Die restlichen 36 Spiele folgen; die Seitenleiste zeigt den Stand als
+  „10 / 46“.
+
+**Werkzeuge**
+- `rust/tools/export_defs.py` liest `games/__init__.py`, `ui.GAME_COLORS` und
+  `achievements.py` aus und erzeugt daraus die Rust-Stammdaten: 46 Spiele,
+  250 Erfolge, 10 Designs. Nichts wird abgetippt, nichts läuft auseinander.
+- `rust/tools/audit.py` prüft, was kein Einzeltest sehen kann: ob jeder
+  benutzte Übersetzungsschlüssel in allen 14 Sprachen steht, ob Platzhalter
+  auch gefüllt werden, ob jedes Spiel in den Stammdaten bekannt ist und ob die
+  erzeugte Datei noch zu den Python-Quellen passt.
+- **Prüfstand im Programm selbst**: `PYGAMEZ_SHOT=… PYGAMEZ_GAME=all` startet
+  jedes portierte Spiel nacheinander und legt je einen Screenshot ab – der
+  schnellste Weg, nach einer Engine-Änderung alles zu prüfen. Dazu Schalter für
+  Bildschirm, Design, Sprache und vorab gedrückte Tasten.
+- `rust/ENGINE.md` ist der Portierungs-Vertrag für die nächsten Spiele, das
+  Gegenstück zu `web/ENGINE.md`.
+
+#### Geändert
+
+- **Ein Fenster statt zwei.** Die Python-Fassung bettet pygame über
+  `SDL_WINDOWID` in ein Tkinter-Fenster ein – daher läuft die Eingabe dort durch
+  Tkinter. In Rust wird die Seitenleiste einfach mitgezeichnet.
+- **Kein Zwischenpuffer.** Die logische Spielfläche kommt über eine Kamera mit
+  Sichtfenster ins Fenster statt über eine Textur: ein Kopiervorgang je Bild
+  weniger, und das Bild bleibt scharf.
+- **Die Tastennamen bleiben.** `"Up"`, `"space"`, `"Return"`, `"w"` – dieselben
+  Tkinter-Namen wie in Python, damit eine bestehende `settings.json` unverändert
+  passt.
+- **Eigene Tastenwiederholung** (450 ms, dann alle 45 ms) statt der des
+  Betriebssystems – auf jedem Rechner gleich.
+- Die Build-Ausgabe liegt in **`rust.output/`**, nicht im Quelltext-Ordner.
+
+#### Behoben
+
+- Der Wortfilter hätte in Rust beinahe harmlose Namen beanstandet: ohne
+  Wortgrenzen steckt in „Pi**ck a ga**me“ ein slawisches Schimpfwort. Er prüft
+  jetzt Wort für Wort und zieht nur dann den ganzen Text zusammen, wenn er
+  gesperrt geschrieben ist („b-a-s-t-a-r-d“) – dieselbe Regel, die in Python
+  die `\b` in den Mustern leisten.
+- Der erklärende Kopf der Filterlisten (`lang/swear/*.yml`) besteht selbst aus
+  `#`-Zeilen und wäre fast als Wortliste gelesen worden; gezählt werden jetzt
+  nur Kommentare direkt unter einem Muster.
+
+#### Bekannte Lücken
+
+Gegenüber der Python-Fassung fehlen: Replays, LamaWiki, eigene Bahnen,
+Lama-Bank, Prestige, Competitive, Personalisierung, Gamepad-Vibration,
+Musikschleifen, Pointer-Capture und die Statistik-Diagramme. Die Statistik
+selbst gibt es – nur ohne gezeichnete Kurven.
+
 ### Geometry Dash: 16 Level, Bibliothek mit 80 Leveln & Vorlagen – 2026-09-22
 
 Geometry Dash bekommt doppelt so viele Kampagnen-Level, eine durchsuchbare
@@ -1216,6 +1298,85 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### PyGameZ in Rust: a standalone 3 MB .exe – 2026-09-23
+
+PyGameZ now exists a third time: as a **Rust program** in `rust/`. No Python
+alongside it, no pygame, no runtime — a single file of **3.1 MB** instead of the
+25.7 MB PyInstaller .exe. The save files are the same ones: play in Python, then
+start the Rust build, and your high scores, achievements and profiles are all
+still there.
+
+#### New
+
+**The groundwork is complete**
+- **10 UI themes** (v4.2 "Midnight Glass" back to v1) with the same palettes and
+  effect switches as in Python — stars, colour clouds, glass panels, zigzag
+  patterns, vignette, title glow.
+- **14 languages**, baked into the .exe. The only files next to it are the ones
+  that actually get written.
+- **Player profiles** with level, 14 ranks, icon and colour; **250 achievements**
+  in five categories with rarity tiers and points; **statistics** covering games
+  played, play time, wins, records, day streak and calendar.
+- **17 sound effects**, synthesised at startup from frequency, duration and
+  waveform — exactly the values from `audio.py`, no audio files.
+- **Word filter** in all 14 languages for profile names.
+- Screens: language picker, menu, pre-game with player 2 selection, gameplay
+  with pause and high-score banner, options with three tabs, achievements &
+  statistics, profile management.
+
+**Ten games ported**
+- **Snake** (all five modes, boost, golden apples), **Pong**, **Breakout**,
+  **Tetris**, **2048**, **Minesweeper**, **Tic-Tac-Toe**, **Connect Four**,
+  **Flappy** and **Memory** — carrying over the game logic, the constants and
+  the AI levels of their Python originals.
+- The remaining 36 games will follow; the sidebar shows the state as "10 / 46".
+
+**Tools**
+- `rust/tools/export_defs.py` reads `games/__init__.py`, `ui.GAME_COLORS` and
+  `achievements.py` and generates the Rust master data from them: 46 games,
+  250 achievements, 10 themes. Nothing is typed twice, nothing drifts apart.
+- `rust/tools/audit.py` checks what no single test can see: whether every
+  translation key in use exists in all 14 languages, whether placeholders
+  actually get filled, whether every game is known to the master data, and
+  whether the generated file still matches the Python sources.
+- **A test bench inside the program**: `PYGAMEZ_SHOT=… PYGAMEZ_GAME=all` starts
+  every ported game in turn and saves a screenshot of each — the fastest way to
+  check everything after an engine change. Plus switches for screen, theme,
+  language and keys to press beforehand.
+- `rust/ENGINE.md` is the porting contract for the games still to come, the
+  counterpart to `web/ENGINE.md`.
+
+#### Changed
+
+- **One window instead of two.** The Python version embeds pygame into a Tkinter
+  window via `SDL_WINDOWID` — which is why input goes through Tkinter there. In
+  Rust the sidebar is simply drawn along with everything else.
+- **No intermediate buffer.** The logical play area reaches the window through a
+  camera with a viewport rather than a texture: one copy per frame less, and the
+  image stays sharp.
+- **Key names stay the same.** `"Up"`, `"space"`, `"Return"`, `"w"` — the same
+  Tkinter names as in Python, so an existing `settings.json` fits unchanged.
+- **Own key repeat** (450 ms, then every 45 ms) instead of the operating
+  system's — identical on every machine.
+- Build output goes to **`rust.output/`**, not into the source folder.
+
+#### Fixed
+
+- The word filter nearly rejected harmless names in Rust: without word
+  boundaries, "Pi**ck a ga**me" contains a Slavic swear word. It now checks word
+  by word and only collapses the whole text when it is written spaced out
+  ("b-a-s-t-a-r-d") — the same rule the `\b` in the Python patterns provide.
+- The explanatory header of the filter lists (`lang/swear/*.yml`) consists of
+  `#` lines itself and was almost read as a word list; only comments directly
+  below a pattern now count.
+
+#### Known gaps
+
+Compared to the Python version these are missing: replays, LamaWiki, custom
+courses, the Llama Bank, prestige, competitive mode, personalisation, gamepad
+rumble, music loops, pointer capture and the statistics charts. The statistics
+themselves are there — just without drawn curves.
 
 ### Geometry Dash: 16 levels, a library of 80 and templates – 2026-09-22
 

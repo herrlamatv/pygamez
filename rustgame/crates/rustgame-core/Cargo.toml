@@ -1,0 +1,49 @@
+[package]
+name = "rustgame-core"
+version.workspace = true
+edition.workspace = true
+# Ohne diese Zeile schlaegt clippy APIs vor, die es in 1.75 nicht gibt.
+rust-version.workspace = true
+license.workspace = true
+description = "Kern von rustgame: Surface, Rect, Color, Blit, Zeichnen - ohne Fenster, ohne SDL"
+
+[dependencies]
+# `image::load`/`image::save` koennen PNG. pygame holt sich das ueber
+# SDL_image; hier uebernimmt es diese Kiste - dieselbe Aufgabe, ohne C.
+png = "0.17"
+# WebP (VP8 und VP8L) - reines Rust. Fuenf Tests in `transform_test.py`
+# laden `examples/data/chimp.webp`, bevor sie ueberhaupt etwas pruefen.
+image-webp = "0.2"
+# JPEG lesen und schreiben, beides reines Rust. Die kleinen Formate
+# (PNM, QOI, TGA, PCX) stehen von Hand in `formate.rs` - sie sind klein
+# genug, dass eine Kiste mehr Abhaengigkeit als Ersparnis waere.
+zune-jpeg = "0.4"
+jpeg-encoder = "0.6"
+# GIF liest `src/gifsdl.rs` selbst - SDL_images eigener LZW-Leser, nicht
+# die Kiste `gif` (Runde 19: Rahmengroesse, Tafel, Teilbilder, Saetze).
+# TIFF - reines Rust. Drei Weichzeichner-Tests in `transform_test.py`
+# laden `examples/data/peppers3.tif`, bevor sie etwas pruefen.
+tiff = "0.11"
+# LZW - fuer TIFF mit Farbtafel, das die `tiff`-Kiste nicht liest.
+# `gif` bringt dieselbe Kiste schon mit; hier steht sie noch einmal
+# ausdruecklich, weil `formate.rs` sie selbst aufruft.
+weezl = "0.1"
+# SVG - **ein Vektorzeichner**, und deshalb die groesste Kiste hier.
+# `usvg` liest und rechnet das Dokument aus, `resvg` rastert es, beide
+# reines Rust. Ohne sie gibt `image.load("x.svg")` einen Fehler, und drei
+# Tests in `image_test.py` haengen daran (`test_load_extended` und
+# zweimal `test_load_sized_svg`).
+resvg = { version = "0.45", default-features = false }
+xcf-rs = "0.5.0"
+bytemuck = "1.25.2"
+# Der gemeinsame Pixelspeicher - siehe `surface::Shared`. **Nicht** aus
+# Bequemlichkeit: `ReentrantMutex<RefCell<..>>` gibt es in `std` nicht
+# (`std::sync::ReentrantLock` ist bis Rust 1.98 unstabil), und ein
+# gewoehnlicher `Mutex` haengt da, wo ein `RefCell` abbricht - diese Kiste
+# sperrt beim Selbstblit dieselbe Sperre zweimal. Kostet nichts Neues im
+# Baum: `midir` bringt sie ohnehin mit.
+parking_lot = "0.12.5"
+
+[dev-dependencies]
+# Fuer die Vergleiche gegen die goldenen Referenzbilder aus echtem pygame.
+png = "0.17"

@@ -1,0 +1,11 @@
+[package]
+name = "rustgame-sprite"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Sprites und Gruppen fuer rustgame: Gegenstueck zu pygame.sprite"
+
+[dependencies]
+rustgame-core.workspace = true
+rustgame-math.workspace = true

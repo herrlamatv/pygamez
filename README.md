@@ -1061,6 +1061,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless-Audits je Spiel
   newgames_audit.py  blockjump_audit.py
+/rust/                Die Rust-Fassung (eigenständige .exe, siehe rust/README.md)
+  ENGINE.md            Portierungs-Vertrag: wie ein Spiel von Python nach Rust kommt
+  crates/pgz-core/     Datenschicht ohne Grafik (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Fenster, Zeichnen, Eingabe, Ton, Game-Trait (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    Die portierten Spiele
+  crates/pygamez/      Das Programm: Menü, Seitenleiste, Bildschirme
+  tools/export_defs.py Erzeugt die Stammdaten (46 Spiele, 250 Erfolge, 10 Designs) aus den Python-Quellen
+  tools/audit.py       Prüfstand: Übersetzungen, Spieleliste, Konventionen
+rust.output/         Build-Ausgabe der Rust-Fassung (rust.output/release/pygamez.exe)
 ```
 
 Die gewählte Sprache wird in `mem.json` gespeichert (im Abschnitt `mem`, neben
@@ -2205,6 +2215,16 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless audits per game
   newgames_audit.py  blockjump_audit.py
+rust/                The Rust version (standalone .exe, see rust/README.md)
+  ENGINE.md            Porting contract: how a game moves from Python to Rust
+  crates/pgz-core/     Data layer without graphics (store, settings, i18n, profiles,
+                       highscore, levels, stats, achievements, seedrand, swear)
+  crates/pgz-engine/   Window, drawing, input, sound, Game trait (ui.py + audio.py + game_base.py)
+  crates/pgz-games/    The ported games
+  crates/pygamez/      The program: menu, sidebar, screens
+  tools/export_defs.py Generates the master data (46 games, 250 achievements, 10 themes) from the Python sources
+  tools/audit.py       Test bench: translations, game list, conventions
+rust.output/         Build output of the Rust version (rust.output/release/pygamez.exe)
 ```
 
 The chosen language is stored in `mem.json` (in the `mem` section, next to the
