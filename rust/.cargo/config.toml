@@ -1,0 +1,10 @@
+# Alle Build-Ergebnisse (auch die fertige .exe) landen NEBEN dem rust/-Ordner
+# in rust.output/ - so bleibt der Quelltext-Ordner frei von Build-Muell.
+#
+#   rust.output/debug/pygamez.exe     (cargo build)
+#   rust.output/release/pygamez.exe   (cargo build --release)
+#
+# Pfadangaben in .cargo/config.toml loest Cargo relativ zum Ordner auf, der
+# das .cargo-Verzeichnis enthaelt (also relativ zu rust/).
+[build]
+target-dir = "../rust.output"

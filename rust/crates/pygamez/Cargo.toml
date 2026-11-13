@@ -1,0 +1,17 @@
+[package]
+name = "pygamez"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "PyGameZ - das Programm: Fenster, Seitenleiste, Menue und Bildschirme"
+
+[dependencies]
+pgz-core = { workspace = true }
+pgz-engine = { workspace = true }
+pgz-games = { workspace = true }
+rustgame-core = { workspace = true }
+rustgame-display = { workspace = true }
+rustgame-font = { workspace = true }
+serde_json = { workspace = true }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+minifb = { version = "0.27", default-features = false }

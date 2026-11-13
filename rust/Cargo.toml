@@ -1,0 +1,51 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/pgz-core",
+    "crates/pgz-engine",
+    "crates/pgz-games",
+    "crates/pygamez",
+]
+
+[workspace.package]
+version = "0.2.0"
+edition = "2021"
+rust-version = "1.88"
+authors = ["herrlamatv"]
+# rustgame steht unter LGPL 2.1 (uebertragene C-Quellen aus pygame/SDL) und
+# wird hier fest eingebunden - deshalb dieselbe Lizenz.
+license = "LGPL-2.1"
+description = "PyGameZ - die Spielesammlung, in Rust auf rustgame"
+
+[workspace.dependencies]
+pgz-core = { path = "crates/pgz-core" }
+pgz-engine = { path = "crates/pgz-engine" }
+pgz-games = { path = "crates/pgz-games" }
+rustgame-core = { path = "../rustgame/crates/rustgame-core" }
+rustgame-display = { path = "../rustgame/crates/rustgame-display" }
+rustgame-font = { path = "../rustgame/crates/rustgame-font" }
+rustgame-mixer = { path = "../rustgame/crates/rustgame-mixer" }
+rustgame-math = { path = "../rustgame/crates/rustgame-math" }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+
+# Software-Renderer: ohne Optimierung ist ein Debug-Bau zu langsam fuer
+# 60 Bilder je Sekunde. Fremde Kisten (rustgame, Schrift, Ton) laufen deshalb
+# auch im Debug-Modus optimiert.
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.dev]
+opt-level = 1
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+strip = true
+
+# rustgame-font braucht skrifa mit den Zusaetzen aus rustgame/vendor/skrifa
+# (gestreckter Interpreter, scan_control) - ohne den Abzug waere der Text
+# nicht mehr pixelgleich zu pygame.
+[patch.crates-io]
+skrifa = { path = "../rustgame/vendor/skrifa" }

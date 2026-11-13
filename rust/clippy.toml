@@ -1,0 +1,8 @@
+# serde_json mit "preserve_order": Map::remove ist dort ein swap_remove und
+# zieht den LETZTEN Eintrag an die frei gewordene Stelle. Pythons dict.pop /
+# del laesst die Reihenfolge stehen - und die Reihenfolge landet in den
+# gespeicherten Dateien (ugc.json, mem.json, Statistik, geteilte Level).
+disallowed-methods = [
+    { path = "serde_json::Map::remove", reason = "swap_remove - fuer dict.pop shift_remove nehmen" },
+    { path = "serde_json::Map::remove_entry", reason = "swap_remove_entry - shift_remove_entry nehmen" },
+]
