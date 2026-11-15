@@ -147,7 +147,7 @@
           "body": [
             "Hvert spil med fremskridt har sit eget afsnit i mem.json, for eksempel:",
             "- sudoku: løste niveauer med stjerner og bedste tid, påbegyndte opgaver og dagens sudoku med stime.",
-            "- casino: kontoen i Lama-banken - lama-chips til Blackjack, Poker og Casino med hvert spils balance.",
+            "- casino: kontoen i Lama-banken - lama-chips til Blackjack, Poker, Casino og Lama Crossing med hvert spils balance plus en påbegyndt krydsning i Lama Crossing.",
             "- crossy: indsamlede mønter, købte figurer og dagens bedste i Crossy Road.",
             "- tetris: bedste tid i Sprint, bedste score i Ultra og Versus-regnskabet mod AI'en.",
             "- g2048: gemte 2048-partier og bedste score pr. brætstørrelse og tilstand.",
@@ -349,7 +349,7 @@
         {
           "h": "Overblik",
           "body": [
-            "250 præstationer på tværs af alle 46 spil - fra den første start til et Perfect Clear i Tetris.",
+            "256 præstationer på tværs af alle 47 spil - fra den første start til et Perfect Clear i Tetris.",
             "Hver præstation har en sjældenhed og dermed en pointværdi; summen giver dit niveau.",
             "Findes bag knappen Præstationer og statistik, fanebladet Præstationer. Et filter skjuler åbne eller opnåede."
           ]
@@ -360,7 +360,7 @@
             "- Generelt: mål på tværs af samlingen - runder, prøvede spil, spilletid, rekorder, sejre, spilledage, stimer, niveau og dueller. Plus ekstra som natteugle, maraton eller weekendspiller.",
             "- Pointmilepæle: en fair målscore for hvert spil.",
             "- Mesterniveauer: det andet, meget højere mærke - kun for spil med åben score.",
-            "- Fast gæst: 25 runder i ét spil. Findes for alle 46 spil.",
+            "- Fast gæst: 25 runder i ét spil. Findes for alle 47 spil.",
             "- Særlige øjeblikke: skakmat, en Yahtzee, 4096-brikken, hole-in-one, et hattrick i air hockey, fire spøgelser på én kraftpille og meget mere."
           ]
         },
@@ -3029,6 +3029,97 @@
             "- Casino-milepæl: highscore 5000",
             "- Plet: vind med en plein i roulette",
             "- Lama-jackpot: 5 lamaer på én gevinstlinje"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrossing",
+      "category": "games",
+      "game": "LamaCrossingGame",
+      "title": "Lama Crossing",
+      "keywords": [
+        "lama",
+        "crossing",
+        "krydsning",
+        "udbetal",
+        "multiplikator",
+        "chips",
+        "lama-banken",
+        "bro",
+        "flod",
+        "is",
+        "indsats",
+        "risiko"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Lamaen krydser skridt for skridt en hængebro, en flod eller en tilfrossen sø. Hvert skridt, der holder, hæver multiplikatoren - et fejltrin koster indsatsen.",
+            "Vælg din indsats (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 eller 10000 lama-chips) og tryk START: Indsatsen trækkes, og lamaen tager det første skridt.",
+            "Efter hvert vellykket skridt bestemmer du: VIDERE eller UDBETAL - så får du indsatsen gange den aktuelle multiplikator. På den anden bred udbetales der automatisk, med konfetti.",
+            "Efter udbetalingen afslører spillet, ved hvilket skridt det ville være gået galt. Øverst til højre står historikken for de sidste 12 runder."
+          ]
+        },
+        {
+          "h": "Sværhedsgrader",
+          "body": [
+            "Fire niveauer - vælges før hver runde med knapperne i bjælken nederst eller med [1] til [4]:",
+            "- Let: 20 skridt, risiko 1/12 pr. skridt (ca. 8 %), op til ×5,52",
+            "- Middel: 16 skridt, risiko 1/7 (ca. 14 %), op til ×11,42",
+            "- Svær: 13 skridt, risiko 1/4 (25 %), op til ×40,82",
+            "- Ekstrem: 10 skridt, risiko 2/5 (40 %), op til ×160,42",
+            "Multiplikatorerne står i faste tabeller og er beregnet, så enhver strategi i længden giver omkring 97 % af indsatsen tilbage - uanset ved hvilket skridt du udbetaler. Husets fordel er altså cirka 3 %."
+          ]
+        },
+        {
+          "h": "Tre verdener",
+          "body": [
+            "Verdenen er ren grafik og ændrer ikke chancerne. Skift med verdensknapperne øverst til venstre eller med [W]:",
+            "- Hængebro: planker over en kløft - ved et fejltrin knækker planken, og lamaen styrter ned.",
+            "- Flod: trædesten i vandet - stenen glider væk, og det siger plask.",
+            "- Issø: isflager på den tilfrosne sø - revnerne breder sig, og så brister flagen.",
+            "I alle verdener bærer lamaen et halstørklæde i spillets accentfarve."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- [Mellemrum], [Højre] eller klik på næste skridt: START eller næste skridt",
+            "- [Enter] eller [C]: udbetal (før en runde virker [Enter] som START)",
+            "- [Op] / [Ned], [+] / [-] eller musehjul: skift indsats",
+            "- [1] til [4]: sværhedsgrad, [W]: skift verden",
+            "Indsats, sværhedsgrad og verden kan kun ændres mellem runderne. Verden, sværhedsgrad og den sidste indsats gemmes i settings.json (afsnittet lamacrossing)."
+          ]
+        },
+        {
+          "h": "Lama-chips",
+          "body": [
+            "Lama Crossing spiller med den fælles konto i Lama-banken - sammen med Blackjack, Poker og Casino (start 1000, gemt i mem.json).",
+            "Highscoren er toppen af 1000 + din Lama Crossing-balance; gevinster i Blackjack, Poker eller Casino tæller ikke her.",
+            "Under 10 chips er du fallit: [Enter] eller et klik tager et banklån og fylder kontoen op til 1000 igen. Lån tæller ikke med i balancen.",
+            "Det er sikkert at stoppe midt i en krydsning: Indsats, sværhedsgrad og skridt gemmes, og ved næste start fortsætter du præcis dér."
+          ]
+        },
+        {
+          "h": "Præstationer",
+          "body": [
+            "- Lama Crossing-stamgæst: 25 runder",
+            "- Milepæl: highscore 3000",
+            "- Lama Crossing-mester: highscore 10000",
+            "- Den anden bred (sjælden): Få lamaen helt over til den anden bred i Lama Crossing",
+            "- Stålnerver (episk): Udbetal ved ×10 eller mere i Lama Crossing",
+            "- Linedans (legendarisk): Klar en hel krydsning på Ekstrem i Lama Crossing"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Hvert skridt trækkes på ny - en stribe fejltrin siger intet om det næste.",
+            "- Helt over kommer man cirka hver 6. runde på Let, hver 12. på Middel, hver 42. på Svær og kun hver 165. på Ekstrem.",
+            "- Til Stålnerver (×10) er 9 skridt nok på Svær (×12,91) og kun 5 på Ekstrem (×12,47); på Middel lykkes det først på den anden bred (×11,42), på Let aldrig.",
+            "- Bestem på forhånd, ved hvilken multiplikator du udbetaler - og hold dig til det. Med den faste tilbagebetaling er ingen strategi bedre end en anden, kun mere eller mindre risikabel."
           ]
         }
       ]

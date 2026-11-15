@@ -522,6 +522,7 @@ GAME_COLORS = {
     "BowlingGame": "#4a7de0",
     "CrossyRoadGame": "#e8e25a", "GeometryDashGame": "#b9f23a",
     "BattleshipGame": "#3a78b5", "CasinoGame": "#d6336c",
+    "LamaCrossingGame": "#19a7ce",
 }
 
 # Schriftname mit Fallback-Kette (SysFont probiert der Reihe nach durch).

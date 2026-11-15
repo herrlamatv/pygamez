@@ -146,7 +146,7 @@
           "body": [
             "Cada jogo com progresso tem a sua própria secção no mem.json, por exemplo:",
             "- sudoku: níveis resolvidos com estrelas e melhor tempo, puzzles começados e o Sudoku do dia com a sua série.",
-            "- casino: a conta do Banco Lama - as fichas Lama do Blackjack, Póquer e Casino com o saldo de cada jogo.",
+            "- casino: a conta do Banco Lama - as fichas Lama do Blackjack, Póquer, Casino e Lama Crossing com o saldo de cada jogo, mais uma travessia de Lama Crossing a meio.",
             "- crossy: moedas apanhadas, personagens comprados e o melhor do dia no Crossy Road.",
             "- tetris: melhor tempo no Sprint, melhor pontuação no Ultra e o balanço do Versus contra a IA.",
             "- g2048: partidas guardadas do 2048 e melhores pontuações por tamanho de tabuleiro e modo.",
@@ -348,7 +348,7 @@
         {
           "h": "Visão geral",
           "body": [
-            "250 conquistas nos 46 jogos - do primeiro arranque ao Perfect Clear no Tetris.",
+            "256 conquistas nos 47 jogos - do primeiro arranque ao Perfect Clear no Tetris.",
             "Cada conquista tem uma raridade e com ela um valor em pontos; a soma é o teu nível.",
             "Estão atrás do botão Conquistas e estatísticas, separador Conquistas. Um filtro esconde as pendentes ou as obtidas."
           ]
@@ -359,7 +359,7 @@
             "- Geral: metas de toda a coleção - partidas, jogos experimentados, tempo, recordes, vitórias, dias jogados, sequências, nível e duelos. Mais extras como coruja noturna, maratona ou jogador de fim de semana.",
             "- Marcos de pontos: uma pontuação-alvo justa por jogo.",
             "- Níveis mestre: a segunda marca, bem mais alta, só para jogos com pontuação sem limite.",
-            "- Frequentador: 25 partidas de um jogo. Existe para os 46 jogos.",
+            "- Frequentador: 25 partidas de um jogo. Existe para os 47 jogos.",
             "- Momentos especiais: xeque-mate, um Yahtzee, a peça 4096, um hole-in-one, um hat-trick no air hockey, quatro fantasmas com uma pílula e muito mais."
           ]
         },
@@ -3024,6 +3024,97 @@
             "- Marco do Casino: recorde 5000",
             "- Em cheio: ganhar com um pleno na roleta",
             "- Jackpot Lama: 5 lamas numa linha de prémio"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrossing",
+      "category": "games",
+      "game": "LamaCrossingGame",
+      "title": "Lama Crossing",
+      "keywords": [
+        "lama",
+        "crossing",
+        "travessia",
+        "levantar",
+        "multiplicador",
+        "fichas",
+        "banco lama",
+        "ponte",
+        "rio",
+        "gelo",
+        "aposta",
+        "risco"
+      ],
+      "sections": [
+        {
+          "h": "Como se joga",
+          "body": [
+            "A lama atravessa passo a passo uma ponte suspensa, um rio ou um lago gelado. Cada passo que aguenta faz subir o multiplicador - um passo em falso custa a aposta.",
+            "Escolhe a aposta (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ou 10000 fichas Lama) e carrega em VAI: a aposta é debitada e a lama dá o primeiro passo.",
+            "Depois de cada passo conseguido decides: AVANÇAR outra vez ou LEVANTAR - recebes então a aposta vezes o multiplicador atual. Na outra margem o prémio é levantado automaticamente, com confetes.",
+            "Depois de levantar, o jogo revela em que passo teria corrido mal. Em cima à direita aparece o histórico das últimas 12 rondas."
+          ]
+        },
+        {
+          "h": "Dificuldades",
+          "body": [
+            "Quatro níveis - escolhidos antes de cada ronda com os botões da barra de baixo ou com [1] a [4]:",
+            "- Fácil: 20 passos, risco de 1/12 por passo (cerca de 8 %), até ×5,52",
+            "- Médio: 16 passos, risco de 1/7 (cerca de 14 %), até ×11,42",
+            "- Difícil: 13 passos, risco de 1/4 (25 %), até ×40,82",
+            "- Extremo: 10 passos, risco de 2/5 (40 %), até ×160,42",
+            "Os multiplicadores estão em tabelas fixas, calculadas para que qualquer estratégia devolva a longo prazo cerca de 97 % do apostado - seja qual for o passo em que levantas. A vantagem da casa ronda, portanto, os 3 %."
+          ]
+        },
+        {
+          "h": "Três mundos",
+          "body": [
+            "O mundo é só visual e não muda as probabilidades. Muda-se com os botões de mundo em cima à esquerda ou com [W]:",
+            "- Ponte suspensa: tábuas sobre um desfiladeiro - num passo em falso a tábua parte-se e a lama cai.",
+            "- Rio: pedras na água - a pedra escorrega e splash!",
+            "- Lago gelado: placas de gelo sobre o lago gelado - as fissuras alastram e a placa parte-se.",
+            "Em todos os mundos a lama usa um cachecol na cor de destaque do jogo."
+          ]
+        },
+        {
+          "h": "Controlos",
+          "body": [
+            "- [Espaço], [Direita] ou clique no passo seguinte: VAI ou passo seguinte",
+            "- [Enter] ou [C]: levantar (antes de uma ronda, [Enter] funciona como VAI)",
+            "- [Cima] / [Baixo], [+] / [-] ou roda do rato: mudar a aposta",
+            "- [1] a [4]: dificuldade, [W]: mudar de mundo",
+            "A aposta, a dificuldade e o mundo só mudam entre rondas. O mundo, a dificuldade e a última aposta ficam guardados no settings.json (secção lamacrossing)."
+          ]
+        },
+        {
+          "h": "Fichas Lama",
+          "body": [
+            "O Lama Crossing joga com a conta comum do Banco Lama - junto com o Blackjack, o Póquer e o Casino (início 1000, guardado no mem.json).",
+            "O recorde é o máximo de 1000 + o teu saldo no Lama Crossing; ganhos no Blackjack, no Póquer ou no Casino não contam aqui.",
+            "Abaixo de 10 fichas estás falido: [Enter] ou um clique pede um empréstimo ao banco e repõe a conta em 1000. Os empréstimos não contam para o saldo.",
+            "Parar a meio da travessia é seguro: a aposta, a dificuldade e o passo ficam guardados, e no próximo arranque continuas exatamente aí."
+          ]
+        },
+        {
+          "h": "Conquistas",
+          "body": [
+            "- Frequentador de Lama Crossing: 25 partidas",
+            "- Marco: recorde 3000",
+            "- Mestre de Lama Crossing: recorde 10000",
+            "- A outra margem (raro): Leva a lama até à outra margem em Lama Crossing",
+            "- Nervos de aço (épico): Levanta com ×10 ou mais em Lama Crossing",
+            "- Equilibrista (lendário): Completa uma travessia inteira no Extremo em Lama Crossing"
+          ]
+        },
+        {
+          "h": "Dicas",
+          "body": [
+            "- Cada passo é sorteado de novo - uma série de passos em falso não diz nada sobre o seguinte.",
+            "- Chega-se ao fim mais ou menos em 1 de cada 6 rondas no Fácil, 1 em 12 no Médio, 1 em 42 no Difícil e só 1 em 165 no Extremo.",
+            "- Para Nervos de aço (×10) bastam 9 passos no Difícil (×12,91) e só 5 no Extremo (×12,47); no Médio só se consegue na outra margem (×11,42) e no Fácil nunca.",
+            "- Decide antes em que multiplicador vais levantar - e cumpre. Com o retorno fixo nenhuma estratégia é melhor do que outra, só mais ou menos arriscada."
           ]
         }
       ]

@@ -530,6 +530,17 @@ def _draw_icon(cv, cx, cy, name, color, bg):
             cv.create_line(cx + dx * 4, cy + dy * 4, cx + dx * 8, cy + dy * 8,
                            fill=color, width=1)
         cv.create_oval(cx + 3, cy - 8, cx + 7, cy - 4, fill=color, outline="")
+    elif name == "LamaCrossingGame":
+        # Hängebrücke (Seil + Planken) mit Lama-Kopf darüber
+        cv.create_line(cx - 10, cy + 2, cx, cy + 5, cx + 10, cy + 2, fill=color,
+                       width=1)
+        for dx in (-7, -2, 3, 8):
+            cv.create_rectangle(cx + dx - 2, cy + 5, cx + dx + 1, cy + 8,
+                                fill=color, outline="")
+        cv.create_rectangle(cx - 3, cy - 7, cx, cy + 1, fill=color, outline="")
+        cv.create_oval(cx - 4, cy - 10, cx + 4, cy - 5, fill=color, outline="")
+        cv.create_polygon(cx - 3, cy - 9, cx - 2, cy - 12, cx, cy - 9,
+                          fill=color, outline="")
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))

@@ -1,6 +1,6 @@
 //! icons.rs
 //! ========
-//! Die 46 Mini-Piktogramme der Spieleliste - `main._draw_icon`.
+//! Die 47 Mini-Piktogramme der Spieleliste - `main._draw_icon`.
 //!
 //! In Python zeichnet sie ein Tk-Canvas (`create_oval`, `create_line`,
 //! `create_polygon` ...). Hier zeichnet rustgame dieselben Formen mit
@@ -409,6 +409,16 @@ pub fn draw_icon(s: &mut Surface, cx: i32, cy: i32, name: &str, color: Color, bg
                 line(s, c, &[(cx + dx * 4, cy + dy * 4), (cx + dx * 8, cy + dy * 8)], 1, false);
             }
             oval(s, c, cx + 3, cy - 8, cx + 7, cy - 4);
+        }
+        "LamaCrossingGame" => {
+            // Haengebruecke (Seil + Planken) mit Lama-Kopf darueber
+            line(s, c, &[(cx - 10, cy + 2), (cx, cy + 5), (cx + 10, cy + 2)], 1, false);
+            for dx in [-7, -2, 3, 8] {
+                rect(s, c, cx + dx - 2, cy + 5, cx + dx + 1, cy + 8);
+            }
+            rect(s, c, cx - 3, cy - 7, cx, cy + 1);
+            oval(s, c, cx - 4, cy - 10, cx + 4, cy - 5);
+            poly(s, c, &[(cx - 3, cy - 9), (cx - 2, cy - 12), (cx, cy - 9)]);
         }
         _ => {
             let first: String = name.chars().take(1).collect();

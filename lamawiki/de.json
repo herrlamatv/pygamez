@@ -148,7 +148,7 @@
           "body": [
             "Jedes Spiel mit Fortschritt hat in mem.json einen eigenen Abschnitt, zum Beispiel:",
             "- sudoku: gelöste Level mit Sternen und Bestzeit, angefangene Rätsel und das Tages-Sudoku samt Serie.",
-            "- casino: das Konto der Lama-Bank - die Lama-Chips für Blackjack, Poker und Casino mit der Bilanz jedes Spiels.",
+            "- casino: das Konto der Lama-Bank - die Lama-Chips für Blackjack, Poker, Casino und Lama Crossing mit der Bilanz jedes Spiels, dazu eine angefangene Überquerung von Lama Crossing.",
             "- crossy: gesammelte Münzen, gekaufte Figuren und der Tagesbestwert von Crossy Road.",
             "- tetris: Bestzeit im Sprint, Bestwert im Ultra und die Versus-Bilanz gegen die KI.",
             "- g2048: gespeicherte Partien und Bestwerte von 2048 je Brettgröße und Modus.",
@@ -350,7 +350,7 @@
         {
           "h": "Überblick",
           "body": [
-            "250 Erfolge über alle 46 Spiele - vom ersten Spielstart bis zum Perfect Clear in Tetris.",
+            "256 Erfolge über alle 47 Spiele - vom ersten Spielstart bis zum Perfect Clear in Tetris.",
             "Jeder Erfolg hat eine Seltenheitsstufe und damit einen Punktwert; die Summe ergibt dein Level.",
             "Zu finden über den Knopf Erfolge & Statistik in der Sidebar, Reiter Erfolge. Ein Filter blendet Offene oder Freigeschaltete aus."
           ]
@@ -361,7 +361,7 @@
             "- Allgemein: sammlungsweite Ziele - Partien, ausprobierte Spiele, Spielzeit, Rekorde, Siege, Spieltage, Tagesserien, Level und Duelle. Dazu Extras wie Nachteule, Marathon oder Wochenendspieler.",
             "- Punkte-Meilensteine: eine faire Zielpunktzahl je Spiel.",
             "- Meister-Stufen: die zweite, deutlich höhere Punktmarke - nur für Spiele, deren Punktzahl nach oben offen ist.",
-            "- Stammgast: 25 Partien in einem Spiel. Gibt es für jedes der 46 Spiele.",
+            "- Stammgast: 25 Partien in einem Spiel. Gibt es für jedes der 47 Spiele.",
             "- Besondere Momente: Schachmatt, KNIFFEL, die 4096er-Kachel, ein Hole-in-One, ein Hattrick im Air Hockey, vier Geister mit einer Kraftpille und vieles mehr."
           ]
         },
@@ -3030,6 +3030,97 @@
             "- Casino-Meilenstein: Highscore 5000",
             "- Volltreffer: beim Roulette mit einem Plein gewinnen",
             "- Lama-Jackpot: 5 Lamas auf einer Gewinnlinie"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrossing",
+      "category": "games",
+      "game": "LamaCrossingGame",
+      "title": "Lama Crossing",
+      "keywords": [
+        "lama",
+        "crossing",
+        "mut",
+        "auszahlen",
+        "multiplikator",
+        "chips",
+        "lama-bank",
+        "brücke",
+        "fluss",
+        "eissee",
+        "einsatz",
+        "risiko"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Das Lama überquert Schritt für Schritt eine Hängebrücke, einen Fluss oder einen Eissee. Jeder Schritt, der hält, hebt den Multiplikator - ein Fehltritt kostet den Einsatz.",
+            "Einsatz wählen (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 oder 10000 Lama-Chips) und LOS drücken: Der Einsatz wird abgebucht, das Lama macht den ersten Schritt.",
+            "Nach jedem geschafften Schritt entscheidest du: WEITER wagen oder AUSZAHLEN - dann bekommst du Einsatz mal aktuellem Multiplikator. Am anderen Ufer wird automatisch ausgezahlt, mit Konfetti.",
+            "Nach dem Auszahlen verrät das Spiel, bei welchem Schritt es schiefgegangen wäre. Oben rechts steht der Verlauf der letzten 12 Runden."
+          ]
+        },
+        {
+          "h": "Schwierigkeiten",
+          "body": [
+            "Vier Stufen - vor jeder Runde mit den Knöpfen in der unteren Leiste oder mit [1] bis [4] wählbar:",
+            "- Leicht: 20 Schritte, Risiko 1/12 je Schritt (ca. 8 %), bis ×5,52",
+            "- Mittel: 16 Schritte, Risiko 1/7 (ca. 14 %), bis ×11,42",
+            "- Schwer: 13 Schritte, Risiko 1/4 (25 %), bis ×40,82",
+            "- Extrem: 10 Schritte, Risiko 2/5 (40 %), bis ×160,42",
+            "Die Multiplikatoren stehen in festen Tabellen und sind so berechnet, dass jede Strategie auf Dauer rund 97 % des Einsatzes zurückgibt - egal, bei welchem Schritt du auszahlst. Der Hausvorteil liegt also bei etwa 3 %."
+          ]
+        },
+        {
+          "h": "Drei Welten",
+          "body": [
+            "Die Welt ist reine Optik und ändert nichts an den Chancen. Gewechselt wird mit den Welt-Knöpfen oben links oder mit [W]:",
+            "- Hängebrücke: Planken über einer Schlucht - beim Fehltritt bricht die Planke und das Lama stürzt ab.",
+            "- Fluss: Trittsteine im Wasser - der Stein rutscht weg, und es macht Platsch.",
+            "- Eissee: Eisschollen auf dem gefrorenen See - Risse breiten sich aus, dann bricht die Scholle ein.",
+            "In jeder Welt trägt das Lama einen Schal in der Akzentfarbe des Spiels."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- [Leertaste], [Rechts] oder Klick auf den nächsten Schritt: LOS bzw. nächster Schritt",
+            "- [Enter] oder [C]: auszahlen (vor der Runde startet [Enter] wie LOS)",
+            "- [Hoch] / [Runter], [+] / [-] oder Mausrad: Einsatz ändern",
+            "- [1] bis [4]: Schwierigkeit, [W]: Welt wechseln",
+            "Einsatz, Schwierigkeit und Welt lassen sich nur zwischen den Runden ändern. Welt, Schwierigkeit und der letzte Einsatz bleiben in settings.json gespeichert (Abschnitt lamacrossing)."
+          ]
+        },
+        {
+          "h": "Lama-Chips",
+          "body": [
+            "Lama Crossing spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker und Casino (Start 1000, gespeichert in mem.json).",
+            "Der Highscore ist der Höchststand von 1000 + Lama-Crossing-Bilanz; Gewinne bei Blackjack, Poker oder im Casino zählen hier nicht.",
+            "Unter 10 Chips bist du pleite: [Enter] oder ein Klick nimmt einen Bank-Kredit und füllt das Konto wieder auf 1000 auf. Kredite zählen nicht zur Bilanz.",
+            "Mitten in der Überquerung aufhören ist sicher: Einsatz, Schwierigkeit und Schritt werden gespeichert, beim nächsten Start geht es genau dort weiter."
+          ]
+        },
+        {
+          "h": "Erfolge",
+          "body": [
+            "- Lama Crossing-Stammgast: 25 Partien",
+            "- Meilenstein: Highscore 3000",
+            "- Lama Crossing-Meister: Highscore 10000",
+            "- Am anderen Ufer (selten): Bring das Lama bei Lama Crossing einmal ganz ans andere Ufer",
+            "- Nervenstark (episch): Zahle bei Lama Crossing mit ×10 oder mehr aus",
+            "- Drahtseilakt (legendär): Schaffe bei Lama Crossing eine ganze Überquerung auf Extrem"
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Jeder Schritt wird neu ausgelost - eine Serie von Fehltritten sagt nichts über den nächsten Schritt.",
+            "- Ganz hinüber kommt man auf Leicht etwa in jeder 6. Runde, auf Mittel in jeder 12., auf Schwer in jeder 42. und auf Extrem nur in jeder 165.",
+            "- Für Nervenstark (×10) reichen auf Schwer 9 Schritte (×12,91) und auf Extrem schon 5 (×12,47); auf Mittel klappt es erst am anderen Ufer (×11,42), auf Leicht gar nicht.",
+            "- Leg vorher fest, bei welchem Multiplikator du auszahlst - und bleib dabei. Wegen der festen Quote ist keine Strategie besser als eine andere, nur mehr oder weniger riskant."
           ]
         }
       ]

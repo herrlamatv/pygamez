@@ -195,6 +195,7 @@ MILESTONES = {
     "crossy": 150,         # 150 Reihen weit gehüpft
     "geodash": 20,         # 20 Sterne (Level-Sterne + Münzen)
     "casino": 5000,        # Casino-Bilanz auf 5000 Chips gebracht
+    "lamacrossing": 3000,  # Lama-Crossing-Bilanz auf 3000 Chips gebracht
 }
 
 # Zweite Punktstufe ("{Spiel}-Meister"). Nur für Spiele, deren Punktzahl
@@ -232,6 +233,7 @@ MASTERS = {
     "crossy": 400,
     "geodash": 45,
     "casino": 15000,
+    "lamacrossing": 10000,
 }
 
 # Besondere Momente: (id, icon, highscore_key, target, rarity).
@@ -318,6 +320,10 @@ SPECIALS = [
     ("mine_noflag",    "flag",  "minesweeper", None,  "epic"),      # Sieg ohne Flaggen
     ("memory_swift",   "clock", "memory",      None,  "rare"),      # 4x4 unter 30 s
     ("tetris_b2b",     "gem",   "tetris",      None,  "epic"),      # zwei Tetris in Folge
+    # --- Lama Crossing -----------------------------------------------------
+    ("lcr_other_side", "flag",  "lamacrossing", None, "rare"),      # einmal ganz hinüber
+    ("lcr_brave",      "bolt",  "lamacrossing", None, "epic"),      # bei x10 oder mehr ausgezahlt
+    ("lcr_extreme",    "crown", "lamacrossing", None, "legendary"), # Extrem ganz geschafft
 ]
 
 _unlocked = None      # {id: "YYYY-MM-DD HH:MM"} (In-Memory-Kopie)

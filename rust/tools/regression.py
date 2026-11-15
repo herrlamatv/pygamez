@@ -132,6 +132,16 @@ LAEUFE = {
                 # Editor -> Bibliothek -> Teilen (Downloads) -> Import (ohne Dialog: Hinweis)
                 ("normal", 820, "ISO_Left_Tab _ n _ Right Right Return _ _ 3 @150:250 @190:250 r @230:300 u y g 5 @300:250 "
                                 "@330:250:3 s Return _ _ _ _ Escape Escape @320:450 _ _ Return _ _ _ _ @527:450 _ _ _ _", 12)],
+    # Lama Crossing: Bruecke (Schritte + Auszahlen + Aufloesung), Fluss auf Extrem
+    # mit hoeherem Einsatz (Fehltritte), Eis per Maus (Welt, Stufe, LOS, naechster
+    # Schritt, AUSZAHLEN), Pleite mit 1000er-Einsatz + Kredit
+    "lamacrossing": [("single", 900, "space _ space _ space _ Return " + wdh("_", 12) + " "
+                                     + wdh("space _", 7), 25),
+                     ("single", 900, "w 4 Up Up Up " + wdh("space _", 6) + " " + wdh("_", 12) + " "
+                                     + wdh("space _", 5), 22),
+                     ("single", 700, "~87:56 @87:56 @383:406 Down @111:454 @587:454 _ @300:250 _ ~463:454 @463:454 "
+                                     + wdh("_", 10), 25),
+                     ("single", 900, "Up Up Up Up Up Up 4 " + wdh("space _ _", 8) + " " + wdh("_", 6) + " Return _ _", 25)],
     "minigolf": [("single", 900, "Return _ _ _ Up Up Up space _ _ _ _ _ _ _ _ _ _ _ _ g z Down space", 20),
                  ("single", 700, "3 Right Right Return _ _ <300:200 _ _ _ >300:200 _ _ _ _ _ _ f", 15),
                  # Editor -> Speichern -> Bibliothek -> Teilen (Downloads) -> Import
@@ -153,6 +163,7 @@ BILDSCHIRME = [
     ("screen:progress:profiles", 60, "~200:300 Down Next Tab Right Left", 2, True),
     ("screen:wiki", 80, "s n a _ k e _ BackSpace ~100:150 @100:150 Next _ Escape _ t e t r i s Down Next", 1, False),
     ("screen:wiki:snake", 40, "Next Next Down ~100:200 Up Prior", 2, False),
+    ("screen:wiki:lamacrossing", 60, "Down Down Next Down", 3, False),
     ("screen:replays", 40, "Left Left Tab Right", 3, False),
     ("screen:menu", 90, "~320:330 _ _ ~150:360 _ _ ~480:300", 4, True),
     ("screen:menu", 60, "~320:330 _ ~150:360", 4, "classic"),

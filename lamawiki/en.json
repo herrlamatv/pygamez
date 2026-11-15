@@ -147,7 +147,7 @@
           "body": [
             "Every game with progress has its own section in mem.json, for example:",
             "- sudoku: solved levels with stars and best times, puzzles in progress and the Daily Sudoku with its streak.",
-            "- casino: the Llama Bank account - the llama chips for Blackjack, Poker and Casino with each game's balance.",
+            "- casino: the Llama Bank account - the llama chips for Blackjack, Poker, Casino and Lama Crossing with each game's balance, plus a Lama Crossing round in progress.",
             "- crossy: collected coins, bought characters and the Crossy Road daily best.",
             "- tetris: best Sprint time, best Ultra score and the Versus record against the AI.",
             "- g2048: saved 2048 games and best scores per board size and mode.",
@@ -349,7 +349,7 @@
         {
           "h": "Overview",
           "body": [
-            "250 achievements across all 46 games - from your first start to a Perfect Clear in Tetris.",
+            "256 achievements across all 47 games - from your first start to a Perfect Clear in Tetris.",
             "Every achievement has a rarity and therefore a point value; the sum is your level.",
             "Find them behind the Achievements & statistics button, tab Achievements. A filter hides open or unlocked ones."
           ]
@@ -360,7 +360,7 @@
             "- General: collection-wide goals - rounds, games tried, playtime, records, wins, days played, daily streaks, level and duels. Plus extras like night owl, marathon or weekend player.",
             "- Score milestones: a fair target score for each game.",
             "- Master tiers: the second, much higher mark - only for games whose score is open-ended.",
-            "- Regular: 25 rounds of one game. Exists for each of the 46 games.",
+            "- Regular: 25 rounds of one game. Exists for each of the 47 games.",
             "- Special moments: checkmate, a Yahtzee, the 4096 tile, a hole-in-one, an air hockey hat-trick, four ghosts on one power pill and much more."
           ]
         },
@@ -3028,6 +3028,97 @@
             "- Casino milestone: highscore 5000",
             "- Bullseye: win with a straight-up bet in roulette",
             "- Llama Jackpot: 5 llamas on one payline"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrossing",
+      "category": "games",
+      "game": "LamaCrossingGame",
+      "title": "Lama Crossing",
+      "keywords": [
+        "llama",
+        "crossing",
+        "cash out",
+        "multiplier",
+        "chips",
+        "llama bank",
+        "bridge",
+        "river",
+        "ice",
+        "bet",
+        "risk",
+        "push your luck"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "The llama crosses a rope bridge, a river or a frozen lake step by step. Every step that holds raises the multiplier - a misstep loses your bet.",
+            "Pick a bet (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 or 10000 llama chips) and press GO: the bet is taken and the llama makes its first step.",
+            "After every successful step you decide: risk the NEXT step or CASH OUT - then you get your bet times the current multiplier. Reaching the far bank cashes out automatically, with confetti.",
+            "After you cash out, the game reveals at which step it would have gone wrong. The top right shows the history of the last 12 rounds."
+          ]
+        },
+        {
+          "h": "Difficulties",
+          "body": [
+            "Four levels - chosen before each round with the buttons in the bottom bar or with [1] to [4]:",
+            "- Easy: 20 steps, risk 1/12 per step (about 8%), up to ×5.52",
+            "- Medium: 16 steps, risk 1/7 (about 14%), up to ×11.42",
+            "- Hard: 13 steps, risk 1/4 (25%), up to ×40.82",
+            "- Extreme: 10 steps, risk 2/5 (40%), up to ×160.42",
+            "The multipliers are fixed tables, calculated so that every strategy returns about 97% of the stake in the long run - no matter at which step you cash out. The house edge is therefore about 3%."
+          ]
+        },
+        {
+          "h": "Three worlds",
+          "body": [
+            "The world is purely cosmetic and doesn't change the odds. Switch it with the world buttons top left or with [W]:",
+            "- Rope bridge: planks over a canyon - on a misstep the plank breaks and the llama falls.",
+            "- River: stepping stones in the water - the stone slips away with a splash.",
+            "- Ice lake: ice floes on the frozen lake - cracks spread, then the floe breaks.",
+            "In every world the llama wears a scarf in the game's accent colour."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- [Space], [Right] or a click on the next step: GO or next step",
+            "- [Enter] or [C]: cash out (before a round, [Enter] works like GO)",
+            "- [Up] / [Down], [+] / [-] or mouse wheel: change the bet",
+            "- [1] to [4]: difficulty, [W]: switch world",
+            "Bet, difficulty and world can only be changed between rounds. World, difficulty and your last bet are saved in settings.json (section lamacrossing)."
+          ]
+        },
+        {
+          "h": "Llama chips",
+          "body": [
+            "Lama Crossing plays with the shared Llama Bank account - together with Blackjack, Poker and Casino (start 1000, stored in mem.json).",
+            "The highscore is the peak of 1000 + your Lama Crossing balance; wins at Blackjack, Poker or the Casino don't count here.",
+            "Below 10 chips you are broke: [Enter] or a click takes a bank loan and fills your account back up to 1000. Loans don't count towards the balance.",
+            "Stopping mid-crossing is safe: bet, difficulty and step are saved, and the next start continues exactly there."
+          ]
+        },
+        {
+          "h": "Achievements",
+          "body": [
+            "- Lama Crossing regular: 25 rounds",
+            "- Milestone: highscore 3000",
+            "- Lama Crossing master: highscore 10000",
+            "- Other Side (rare): Get the llama all the way across in Lama Crossing",
+            "- Nerves of Steel (epic): Cash out at ×10 or more in Lama Crossing",
+            "- Tightrope Walk (legendary): Complete a full crossing on Extreme in Lama Crossing"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Every step is drawn afresh - a run of missteps says nothing about the next step.",
+            "- You get all the way across in about every 6th round on Easy, every 12th on Medium, every 42nd on Hard and only every 165th on Extreme.",
+            "- For Nerves of Steel (×10), 9 steps are enough on Hard (×12.91) and just 5 on Extreme (×12.47); on Medium it only happens at the far bank (×11.42), on Easy never.",
+            "- Decide beforehand at which multiplier you will cash out - and stick to it. Thanks to the fixed return no strategy is better than another, only more or less risky."
           ]
         }
       ]

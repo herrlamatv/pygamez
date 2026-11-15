@@ -3,7 +3,7 @@ name = "pgz-games"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
-description = "Die 46 Spiele von PyGameZ, aus der Python-Vorlage uebertragen"
+description = "Die 47 Spiele von PyGameZ, aus der Python-Vorlage uebertragen"
 
 [dependencies]
 indexmap = "2"

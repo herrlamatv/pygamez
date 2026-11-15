@@ -21,10 +21,16 @@ pub const SECTION: &str = "casino";
 /// Startkapital (und Wert nach einem Bank-Kredit).
 pub const START_CHIPS: i64 = 1000;
 /// Die Spiele mit eigener Bilanz.
-pub const GAMES: [&str; 3] = ["blackjack", "poker", "casino"];
+pub const GAMES: [&str; 4] = ["blackjack", "poker", "casino", "lamacrossing"];
 
-const MIN_BET: [(&str, i64); 5] =
-    [("blackjack", 10), ("poker", 20), ("poker:video", 10), ("casino", 1), ("casino:slots", 10)];
+const MIN_BET: [(&str, i64); 6] = [
+    ("blackjack", 10),
+    ("poker", 20),
+    ("poker:video", 10),
+    ("casino", 1),
+    ("casino:slots", 10),
+    ("lamacrossing", 10),
+];
 
 static DATA: Mutex<Option<Map<String, Value>>> = Mutex::new(None);
 

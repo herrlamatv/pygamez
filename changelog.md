@@ -8,6 +8,80 @@
 
 ## 🇩🇪 Deutsch
 
+### Lama Crossing – 2026-11-15
+
+Spiel Nr. 47 ist ein neues Mut-Spiel mit Lama-Chips: **Lama Crossing**. Das Lama
+überquert Schritt für Schritt eine Hängebrücke, einen Fluss oder einen Eissee –
+jeder Schritt, der hält, hebt den Multiplikator, ein Fehltritt kostet den
+Einsatz, und ausgezahlt werden kann nach jedem Schritt. Dazu kommen **6 neue
+Erfolge** – jetzt **256** insgesamt. Alles in 14 Sprachen, mit LamaWiki-Seite,
+in beiden READMEs und in der Web-Version.
+
+#### Neu
+
+**Lama Crossing** (Spiel Nr. 47, im Menü nach Casino)
+- Einsatz wählen (10, 20, 50 … bis 10000 Lama-Chips), **LOS** drücken: Der
+  Einsatz wird abgebucht, das Lama macht den ersten Schritt. Nach jedem
+  geschafften Schritt heißt es **WEITER** oder **AUSZAHLEN**; wer das andere
+  Ufer erreicht, bekommt automatisch ausgezahlt – mit Konfetti.
+- **4 Schwierigkeiten**: Leicht (20 Schritte, Risiko 1/12, bis ×5,52), Mittel
+  (16, 1/7, bis ×11,42), Schwer (13, 1/4, bis ×40,82) und Extrem (10, 2/5, bis
+  ×160,42).
+- **Auszahlungsquote rund 97 %**: Die Multiplikatoren stehen als feste
+  Ganzzahl-Tabellen in `games/lamacrossing_logic.py`
+  (`m_k = floor(0.97 / (1 - p)^k * 100) / 100`). Damit bringt jede Strategie
+  „bei Schritt k auszahlen“ im Schnitt dasselbe – der Hausvorteil liegt bei etwa
+  3 %.
+- **3 Welten** (nur Optik; Knöpfe oben links oder **W**): Hängebrücke über der
+  Schlucht (die Planke bricht, das Lama stürzt ab), Trittsteine im Fluss (der
+  Stein rutscht weg, Platsch) und Eisschollen auf dem gefrorenen See (Risse
+  breiten sich aus, die Scholle bricht ein). Das Lama trägt einen Schal in der
+  Akzentfarbe des Spiels.
+- **Auflösung nach dem Auszahlen**: Das Spiel zeigt, bei welchem Schritt es
+  schiefgegangen wäre – oder dass alles gehalten hätte. Oben rechts steht der
+  **Verlauf der letzten 12 Runden**.
+- **Fortsetzen nach dem Verlassen**: Einsatz, Schwierigkeit und Schritt einer
+  laufenden Überquerung werden sofort gespeichert; der nächste Start macht genau
+  dort weiter.
+- **Lama-Bank**: dasselbe Konto wie Blackjack, Poker und Casino (Abschnitt
+  `casino` in `mem.json`). Highscore = Höchststand von 1000 +
+  Lama-Crossing-Bilanz; unter 10 Chips gibt es einen Bank-Kredit auf 1000.
+  Replays gibt es – wie bei allen Chip-Spielen – nicht.
+- Steuerung: Leertaste/→/Klick auf den nächsten Schritt = LOS bzw. weiter,
+  Enter/C = auszahlen, ↑/↓/+/-/Mausrad = Einsatz, 1–4 = Schwierigkeit, W = Welt.
+  Welt, Schwierigkeit und letzter Einsatz stehen im Abschnitt `lamacrossing` der
+  `settings.json`.
+
+**6 neue Erfolge** (jetzt 256)
+- **Lama Crossing-Stammgast** (25 Partien), ein Meilenstein von **3000** und
+  Meister **10000**.
+- **Am anderen Ufer** (selten): das Lama einmal ganz ans andere Ufer bringen.
+- **Nervenstark** (episch): mit ×10 oder mehr auszahlen.
+- **Drahtseilakt** (legendär): eine ganze Überquerung auf Extrem schaffen.
+- Insgesamt jetzt 60 allgemeine Erfolge, 38 Meilensteine, 31 Meister-Stufen, 80
+  besondere Momente und 47 Stammgast-Erfolge; höchstens **10020 Erfolgspunkte**
+  (bisher 9690), das entspricht Level **49** (bisher 48).
+
+**Web**
+- Lama Crossing läuft auch in der Web-Version – mit denselben Tabellen, Welten
+  und Erfolgen.
+
+**Tests**
+- Neu: `tests/audit_lamacrossing.py` – Tabellen und Quote je Strategie,
+  Monte-Carlo-Probe der Fehltritte, Web-Logik = Python, Lama-Bank (Abbuchen,
+  Auszahlen, Pleite, Kredit), Fortsetzen nach dem Verlassen, Erfolge, Tasten und
+  Einstellungen sowie das Layout in 5 Auflösungen × 14 Sprachen × 3 Welten.
+
+#### Geändert
+
+- LamaWiki: neue Seite **Lama Crossing** in allen 14 Sprachen; *Erfolge,
+  Seltenheit & Level* (256 Erfolge, 47 Spiele) und *Speichern & Highscores*
+  (Lama-Bank) aktualisiert.
+- Beide READMEs: 47 Spiele, neue Tabellenzeile, Feature-Abschnitt,
+  Projektstruktur und Erfolgszahlen.
+
+---
+
 ### PyGameZ in Rust: eigenständige 3-MB-.exe – 2026-09-23
 
 PyGameZ gibt es jetzt ein drittes Mal: als **Rust-Programm** in `rust/`. Kein
@@ -1298,6 +1372,76 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Lama Crossing – 2026-11-15
+
+Game no. 47 is a new push-your-luck game with llama chips: **Lama Crossing**.
+The llama crosses a rope bridge, a river or a frozen lake step by step – every
+step that holds raises the multiplier, a misstep loses the bet, and you can cash
+out after any step. On top of that come **6 new achievements** – **256** in
+total. Everything in 14 languages, with a LamaWiki page, in both READMEs and in
+the web version.
+
+#### New
+
+**Lama Crossing** (game no. 47, in the menu after Casino)
+- Pick a bet (10, 20, 50 … up to 10000 llama chips) and press **GO**: the bet is
+  taken and the llama makes its first step. After every step that holds it's
+  **NEXT** or **CASH OUT**; reaching the far bank cashes out automatically –
+  with confetti.
+- **4 difficulties**: Easy (20 steps, risk 1/12, up to ×5.52), Medium (16, 1/7,
+  up to ×11.42), Hard (13, 1/4, up to ×40.82) and Extreme (10, 2/5, up to
+  ×160.42).
+- **About 97% return**: the multipliers are fixed integer tables in
+  `games/lamacrossing_logic.py` (`m_k = floor(0.97 / (1 - p)^k * 100) / 100`),
+  so every "cash out at step k" strategy pays the same on average – the house
+  edge is about 3%.
+- **3 worlds** (cosmetic only; buttons top left or **W**): a rope bridge over a
+  canyon (the plank breaks and the llama falls), stepping stones in a river (the
+  stone slips away, splash) and ice floes on a frozen lake (cracks spread, the
+  floe breaks). The llama wears a scarf in the game's accent colour.
+- **Reveal after cashing out**: the game shows at which step it would have gone
+  wrong – or that everything would have held. The top right shows the **history
+  of the last 12 rounds**.
+- **Resume after leaving**: bet, difficulty and step of a crossing in progress
+  are saved immediately; the next start continues exactly there.
+- **Llama Bank**: the same account as Blackjack, Poker and Casino (section
+  `casino` in `mem.json`). High score = peak of 1000 + Lama Crossing balance;
+  below 10 chips you get a bank loan back up to 1000. Like all chip games, it
+  has no replays.
+- Controls: Space/→/click on the next step = GO or next step, Enter/C = cash
+  out, ↑/↓/+/-/mouse wheel = bet, 1–4 = difficulty, W = world. World, difficulty
+  and last bet are stored in the `lamacrossing` section of `settings.json`.
+
+**6 new achievements** (now 256)
+- **Lama Crossing regular** (25 rounds), a **3000** milestone and a **10000**
+  master tier.
+- **Other Side** (rare): get the llama all the way across.
+- **Nerves of Steel** (epic): cash out at ×10 or more.
+- **Tightrope Walk** (legendary): complete a full crossing on Extreme.
+- That makes 60 general achievements, 38 milestones, 31 master tiers, 80 special
+  moments and 47 regulars; at most **10020 achievement points** (was 9690),
+  which is level **49** (was 48).
+
+**Web**
+- Lama Crossing also runs in the web version – with the same tables, worlds and
+  achievements.
+
+**Tests**
+- New: `tests/audit_lamacrossing.py` – tables and return per strategy, a Monte
+  Carlo check of the missteps, web logic = Python, the Llama Bank (debit,
+  payout, going broke, loan), resuming after leaving, achievements, keys and
+  settings, plus the layout in 5 resolutions × 14 languages × 3 worlds.
+
+#### Changed
+
+- LamaWiki: new **Lama Crossing** page in all 14 languages; *Achievements,
+  rarity & level* (256 achievements, 47 games) and *Saving & high scores* (Llama
+  Bank) updated.
+- Both READMEs: 47 games, a new table row, a feature section, the project
+  structure and the achievement counts.
+
+---
 
 ### PyGameZ in Rust: a standalone 3 MB .exe – 2026-09-23
 

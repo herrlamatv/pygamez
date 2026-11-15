@@ -53,6 +53,9 @@ pub mod hangman;
 pub mod invaders;
 pub mod kniffel;
 pub mod labyrinth;
+pub mod lamacrossing;
+pub mod lamacrossing_draw;
+pub mod lamacrossing_logic;
 pub mod lamatowerdefense;
 pub mod mastermind;
 pub mod maze_gen;
@@ -136,5 +139,6 @@ pub fn all_games() -> Vec<GameInfo> {
         geodash::INFO,
         battleship::INFO,
         casino::INFO,
+        lamacrossing::INFO,
     ]
 }

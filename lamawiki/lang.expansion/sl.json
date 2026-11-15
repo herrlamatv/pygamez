@@ -147,7 +147,7 @@
           "body": [
             "Vsaka igra z napredkom ima v mem.json svoj razdelek, na primer:",
             "- sudoku: rešene stopnje z zvezdicami in najboljšim časom, začete uganke in Sudoku dneva z nizom.",
-            "- casino: račun Lama banke - lama žetoni za Blackjack, Poker in Casino z bilanco vsake igre.",
+            "- casino: račun Lama banke - lama žetoni za Blackjack, Poker, Casino in Lama Crossing z bilanco vsake igre ter začetim prehodom v Lama Crossing.",
             "- crossy: zbrani kovanci, kupljeni liki in dnevni najboljši rezultat v Crossy Road.",
             "- tetris: najboljši čas v Sprintu, najboljši rezultat v Ultra in bilanca Versus proti UI.",
             "- g2048: shranjene partije 2048 in najboljši rezultati po velikosti plošče in načinu.",
@@ -349,7 +349,7 @@
         {
           "h": "Pregled",
           "body": [
-            "250 dosežkov v vseh 46 igrah - od prvega zagona do Perfect Clear v Tetrisu.",
+            "256 dosežkov v vseh 47 igrah - od prvega zagona do Perfect Clear v Tetrisu.",
             "Vsak dosežek ima redkost in s tem vrednost v točkah; vsota da tvojo stopnjo.",
             "Najdeš jih za gumbom Dosežki in statistika, zavihek Dosežki. Filter skrije odklenjene ali odprte."
           ]
@@ -360,7 +360,7 @@
             "- Splošno: cilji čez vso zbirko - partije, preizkušene igre, čas igranja, rekordi, zmage, dnevi igranja, nizi, stopnja in dvoboji. Zraven dodatki, kot so nočna sova, maraton ali vikend igralec.",
             "- Točkovni mejniki: pošteno ciljno število točk za vsako igro.",
             "- Mojstrske stopnje: druga, precej višja meja - le za igre z odprtim točkovanjem.",
-            "- Redni gost: 25 partij ene igre. Obstaja za vseh 46 iger.",
+            "- Redni gost: 25 partij ene igre. Obstaja za vseh 47 iger.",
             "- Posebni trenutki: šahmat, Yahtzee, ploščica 4096, luknja z enim udarcem, hat-trick v zračnem hokeju, štirje duhovi z eno tableto in še več."
           ]
         },
@@ -3027,6 +3027,97 @@
             "- Mejnik Casina: rekord 5000",
             "- Polni zadetek: zmagaj s stavo na eno število pri ruleti",
             "- Lama jackpot: 5 lam na eni dobitni liniji"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrossing",
+      "category": "games",
+      "game": "LamaCrossingGame",
+      "title": "Lama Crossing",
+      "keywords": [
+        "lama",
+        "crossing",
+        "prehod",
+        "izplačaj",
+        "množitelj",
+        "žetoni",
+        "lama banka",
+        "most",
+        "reka",
+        "led",
+        "stava",
+        "tveganje"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Lama korak za korakom prečka viseči most, reko ali zamrznjeno jezero. Vsak korak, ki zdrži, dvigne množitelj - en napačen korak stane stavo.",
+            "Izberi stavo (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ali 10000 lama žetonov) in pritisni START: stava se odšteje in lama naredi prvi korak.",
+            "Po vsakem uspešnem koraku se odločiš: NAPREJ ali IZPLAČAJ - takrat dobiš stavo, pomnoženo s trenutnim množiteljem. Na drugem bregu se dobitek izplača samodejno, s konfeti.",
+            "Po izplačilu igra razkrije, pri katerem koraku bi šlo narobe. Zgoraj desno je zgodovina zadnjih 12 krogov."
+          ]
+        },
+        {
+          "h": "Težavnosti",
+          "body": [
+            "Štiri stopnje - izbereš jih pred vsakim krogom z gumbi v spodnji vrstici ali s tipkami [1] do [4]:",
+            "- Lahko: 20 korakov, tveganje 1/12 na korak (pribl. 8 %), do ×5,52",
+            "- Srednje: 16 korakov, tveganje 1/7 (pribl. 14 %), do ×11,42",
+            "- Težko: 13 korakov, tveganje 1/4 (25 %), do ×40,82",
+            "- Ekstremno: 10 korakov, tveganje 2/5 (40 %), do ×160,42",
+            "Množitelji so v stalnih tabelah in izračunani tako, da vsaka strategija dolgoročno vrne približno 97 % stave - ne glede na to, pri katerem koraku izplačaš. Prednost igralnice je torej okoli 3 %."
+          ]
+        },
+        {
+          "h": "Trije svetovi",
+          "body": [
+            "Svet spremeni le videz, ne možnosti. Zamenjaš ga z gumbi svetov zgoraj levo ali s tipko [W]:",
+            "- Viseči most: deske nad sotesko - ob napačnem koraku se deska zlomi in lama pade.",
+            "- Reka: kamni v vodi - kamen zdrsne in lama čofne v vodo.",
+            "- Zamrznjeno jezero: ledene plošče na zamrznjenem jezeru - razpoke se širijo, nato se plošča prelomi.",
+            "V vsakem svetu nosi lama šal v barvi poudarka igre."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- [Preslednica], [Desno] ali klik na naslednji korak: START ali naslednji korak",
+            "- [Enter] ali [C]: izplačaj (pred krogom [Enter] deluje kot START)",
+            "- [Gor] / [Dol], [+] / [-] ali kolesce miške: spremeni stavo",
+            "- [1] do [4]: težavnost, [W]: zamenjaj svet",
+            "Stavo, težavnost in svet lahko spremeniš le med krogi. Svet, težavnost in zadnja stava se shranijo v settings.json (razdelek lamacrossing)."
+          ]
+        },
+        {
+          "h": "Lama žetoni",
+          "body": [
+            "Lama Crossing igra s skupnim računom Lama banke - skupaj z Blackjackom, Pokrom in Casinom (začetek 1000, shranjeno v mem.json).",
+            "Rekord je najvišje stanje 1000 + tvoje bilance v Lama Crossing; dobitki pri Blackjacku, Pokru ali Casinu tu ne štejejo.",
+            "Pod 10 žetoni si v bankrotu: [Enter] ali klik vzame bančno posojilo in račun spet napolni na 1000. Posojila ne štejejo v bilanco.",
+            "Prenehati sredi prehoda je varno: stava, težavnost in korak se shranijo, ob naslednjem zagonu pa nadaljuješ natanko tam."
+          ]
+        },
+        {
+          "h": "Dosežki",
+          "body": [
+            "- Redni gost igre Lama Crossing: 25 partij",
+            "- Mejnik: rekord 3000",
+            "- Mojster igre Lama Crossing: rekord 10000",
+            "- Drugi breg (redek): Spravi lamo v Lama Crossing čisto na drugi breg",
+            "- Jeklene živce (epski): Izplačaj v Lama Crossing pri ×10 ali več",
+            "- Hoja po vrvi (legendaren): Opravi v Lama Crossing cel prehod na ekstremni težavnosti"
+          ]
+        },
+        {
+          "h": "Nasveti",
+          "body": [
+            "- Vsak korak se izžreba na novo - niz napačnih korakov ne pove ničesar o naslednjem.",
+            "- Čisto na drugi breg prideš približno v vsakem 6. krogu na Lahko, v vsakem 12. na Srednje, v vsakem 42. na Težko in le v vsakem 165. na Ekstremno.",
+            "- Za Jeklene živce (×10) zadošča na Težko 9 korakov (×12,91) in na Ekstremno že 5 (×12,47); na Srednje uspe šele na drugem bregu (×11,42), na Lahko nikoli.",
+            "- Vnaprej se odloči, pri katerem množitelju boš izplačal - in se tega drži. Zaradi stalnega vračila nobena strategija ni boljša od druge, le bolj ali manj tvegana."
           ]
         }
       ]

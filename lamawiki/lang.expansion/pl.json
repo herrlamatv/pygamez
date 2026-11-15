@@ -147,7 +147,7 @@
           "body": [
             "Każda gra z postępami ma w mem.json własną sekcję, na przykład:",
             "- sudoku: rozwiązane poziomy z gwiazdkami i najlepszym czasem, rozpoczęte łamigłówki oraz Sudoku dnia z serią.",
-            "- casino: konto Banku Lamy - żetony Lamy dla Blackjacka, Pokera i Casino wraz z bilansem każdej gry.",
+            "- casino: konto Banku Lamy - żetony Lamy dla Blackjacka, Pokera, Casino i Lama Crossing wraz z bilansem każdej gry oraz rozpoczętą przeprawą w Lama Crossing.",
             "- crossy: zebrane monety, kupione postacie i najlepszy wynik dnia w Crossy Road.",
             "- tetris: najlepszy czas w Sprincie, najlepszy wynik w Ultra i bilans pojedynków z SI.",
             "- g2048: zapisane partie 2048 i najlepsze wyniki dla każdego rozmiaru planszy i trybu.",
@@ -349,7 +349,7 @@
         {
           "h": "Przegląd",
           "body": [
-            "250 osiągnięć we wszystkich 46 grach - od pierwszego startu po Perfect Clear w Tetrisie.",
+            "256 osiągnięć we wszystkich 47 grach - od pierwszego startu po Perfect Clear w Tetrisie.",
             "Każde osiągnięcie ma rzadkość, a więc wartość punktową; suma daje twój poziom.",
             "Znajdziesz je pod przyciskiem Osiągnięcia i statystyki, karta Osiągnięcia. Filtr ukrywa zdobyte lub pozostałe."
           ]
@@ -360,7 +360,7 @@
             "- Ogólne: cele całej kolekcji - rozgrywki, wypróbowane gry, czas, rekordy, zwycięstwa, dni z grą, serie, poziom i pojedynki. Do tego dodatki: nocny marek, maraton, weekendowy gracz.",
             "- Progi punktowe: uczciwy wynik docelowy dla każdej gry.",
             "- Poziomy mistrzowskie: druga, znacznie wyższa poprzeczka - tylko dla gier z otwartą punktacją.",
-            "- Bywalec: 25 rozgrywek jednej gry. Jest dla wszystkich 46 gier.",
+            "- Bywalec: 25 rozgrywek jednej gry. Jest dla wszystkich 47 gier.",
             "- Wyjątkowe chwile: mat, generał w kościach, kafelek 4096, hole-in-one, hat-trick w air hockey, cztery duchy z jednej pigułki i wiele więcej."
           ]
         },
@@ -3026,6 +3026,97 @@
             "- Kamień milowy Casino: rekord 5000",
             "- W dziesiątkę: wygraj zakładem na pojedynczą liczbę w ruletce",
             "- Jackpot Lamy: 5 lam na jednej linii wygrywającej"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrossing",
+      "category": "games",
+      "game": "LamaCrossingGame",
+      "title": "Lama Crossing",
+      "keywords": [
+        "lama",
+        "crossing",
+        "przeprawa",
+        "wypłata",
+        "mnożnik",
+        "żetony",
+        "bank lamy",
+        "most",
+        "rzeka",
+        "lód",
+        "stawka",
+        "ryzyko"
+      ],
+      "sections": [
+        {
+          "h": "Jak grać",
+          "body": [
+            "Lama krok po kroku przechodzi przez most linowy, rzekę albo zamarznięte jezioro. Każdy krok, który wytrzyma, podnosi mnożnik - jeden fałszywy krok kosztuje stawkę.",
+            "Wybierz stawkę (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 lub 10000 żetonów Lamy) i naciśnij START: stawka zostaje pobrana, a lama robi pierwszy krok.",
+            "Po każdym udanym kroku decydujesz: DALEJ albo WYPŁAĆ - wtedy dostajesz stawkę razy aktualny mnożnik. Na drugim brzegu wygrana jest wypłacana automatycznie, z konfetti.",
+            "Po wypłacie gra pokazuje, na którym kroku by się nie udało. W prawym górnym rogu widać historię 12 ostatnich rund."
+          ]
+        },
+        {
+          "h": "Poziomy trudności",
+          "body": [
+            "Cztery poziomy - do wyboru przed każdą rundą przyciskami na dolnym pasku lub klawiszami [1] do [4]:",
+            "- Łatwy: 20 kroków, ryzyko 1/12 na krok (ok. 8%), do ×5,52",
+            "- Średni: 16 kroków, ryzyko 1/7 (ok. 14%), do ×11,42",
+            "- Trudny: 13 kroków, ryzyko 1/4 (25%), do ×40,82",
+            "- Ekstremalny: 10 kroków, ryzyko 2/5 (40%), do ×160,42",
+            "Mnożniki są zapisane w stałych tabelach i policzone tak, że każda strategia na dłuższą metę zwraca ok. 97% stawki - niezależnie od tego, na którym kroku wypłacasz. Przewaga kasyna wynosi więc ok. 3%."
+          ]
+        },
+        {
+          "h": "Trzy światy",
+          "body": [
+            "Świat zmienia tylko wygląd, nie szanse. Zmieniasz go przyciskami świata w lewym górnym rogu lub klawiszem [W]:",
+            "- Most linowy: deski nad kanionem - przy fałszywym kroku deska pęka, a lama spada.",
+            "- Rzeka: kamienie w wodzie - kamień się usuwa i plusk!",
+            "- Lodowe jezioro: kry na zamarzniętym jeziorze - rozchodzą się pęknięcia, potem kra się załamuje.",
+            "W każdym świecie lama nosi szalik w kolorze akcentu gry."
+          ]
+        },
+        {
+          "h": "Sterowanie",
+          "body": [
+            "- [Spacja], [Prawo] lub kliknięcie następnego kroku: START albo następny krok",
+            "- [Enter] lub [C]: wypłata (przed rundą [Enter] działa jak START)",
+            "- [Góra] / [Dół], [+] / [-] lub kółko myszy: zmiana stawki",
+            "- [1] do [4]: poziom trudności, [W]: zmiana świata",
+            "Stawkę, poziom trudności i świat można zmieniać tylko między rundami. Świat, poziom trudności i ostatnia stawka są zapisywane w settings.json (sekcja lamacrossing)."
+          ]
+        },
+        {
+          "h": "Żetony Lamy",
+          "body": [
+            "Lama Crossing gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem i Casino (start 1000, zapis w mem.json).",
+            "Rekord to najwyższy stan 1000 + twojego bilansu w Lama Crossing; wygrane w Blackjacku, Pokerze czy Casino się tu nie liczą.",
+            "Poniżej 10 żetonów jesteś bankrutem: [Enter] lub kliknięcie bierze kredyt z banku i uzupełnia konto do 1000. Kredyty nie liczą się do bilansu.",
+            "Przerwanie w połowie przeprawy jest bezpieczne: stawka, poziom trudności i krok są zapisywane, a przy następnym starcie grasz dokładnie od tego miejsca."
+          ]
+        },
+        {
+          "h": "Osiągnięcia",
+          "body": [
+            "- Bywalec Lama Crossing: 25 rozgrywek",
+            "- Kamień milowy: rekord 3000",
+            "- Mistrz Lama Crossing: rekord 10000",
+            "- Drugi brzeg (rzadki): Przeprowadź lamę na drugi brzeg w Lama Crossing",
+            "- Stalowe nerwy (epicki): Wypłać przy ×10 lub więcej w Lama Crossing",
+            "- Na linie (legendarny): Ukończ całą przeprawę na poziomie Ekstremalnym w Lama Crossing"
+          ]
+        },
+        {
+          "h": "Wskazówki",
+          "body": [
+            "- Każdy krok jest losowany od nowa - seria fałszywych kroków nic nie mówi o następnym.",
+            "- Na drugi brzeg dochodzi się mniej więcej w co 6. rundzie na poziomie Łatwym, w co 12. na Średnim, w co 42. na Trudnym i tylko w co 165. na Ekstremalnym.",
+            "- Do Stalowych nerwów (×10) wystarczy 9 kroków na Trudnym (×12,91) i tylko 5 na Ekstremalnym (×12,47); na Średnim udaje się to dopiero na drugim brzegu (×11,42), na Łatwym wcale.",
+            "- Ustal z góry, przy jakim mnożniku wypłacasz - i trzymaj się tego. Przy stałym zwrocie żadna strategia nie jest lepsza od innej, tylko mniej lub bardziej ryzykowna."
           ]
         }
       ]

@@ -147,7 +147,7 @@
           "body": [
             "Svaka igra s napretkom ima u mem.json vlastiti odjeljak, na primjer:",
             "- sudoku: riješene razine sa zvjezdicama i najboljim vremenom, započete zagonetke i Sudoku dana s nizom.",
-            "- casino: račun Lama banke - lama žetoni za Blackjack, Poker i Casino s bilancom svake igre.",
+            "- casino: račun Lama banke - lama žetoni za Blackjack, Poker, Casino i Lama Crossing s bilancom svake igre te započeti prijelaz u Lama Crossingu.",
             "- crossy: skupljeni novčići, kupljeni likovi i dnevni najbolji rezultat u Crossy Roadu.",
             "- tetris: najbolje vrijeme u Sprintu, najbolji rezultat u Ultri i bilanca Versusa protiv AI-ja.",
             "- g2048: spremljene partije 2048 i najbolji rezultati po veličini ploče i načinu.",
@@ -349,7 +349,7 @@
         {
           "h": "Pregled",
           "body": [
-            "250 postignuća u svih 46 igara - od prvog pokretanja do Perfect Cleara u Tetrisu.",
+            "256 postignuća u svih 47 igara - od prvog pokretanja do Perfect Cleara u Tetrisu.",
             "Svako postignuće ima rijetkost i time bodovnu vrijednost; zbroj daje tvoju razinu.",
             "Nalaze se iza gumba Postignuća i statistika, kartica Postignuća. Filtar skriva otključana ili preostala."
           ]
@@ -360,7 +360,7 @@
             "- Općenito: ciljevi kroz cijelu zbirku - partije, isprobane igre, vrijeme, rekordi, pobjede, dani igranja, nizovi, razina i dvoboji. Uz dodatke poput noćne ptice, maratona ili vikend igrača.",
             "- Bodovne prekretnice: pošten ciljni rezultat za svaku igru.",
             "- Majstorske razine: druga, znatno viša granica - samo za igre s otvorenim bodovanjem.",
-            "- Stalni gost: 25 partija jedne igre. Postoji za svih 46 igara.",
+            "- Stalni gost: 25 partija jedne igre. Postoji za svih 47 igara.",
             "- Posebni trenuci: šah-mat, Yahtzee, pločica 4096, rupa iz jednog udarca, hat-trick u air hockeyju, četiri duha jednom pilulom i još mnogo toga."
           ]
         },
@@ -3027,6 +3027,97 @@
             "- Prekretnica Casina: rekord 5000",
             "- Pun pogodak: pobijedi okladom na jedan broj na ruletu",
             "- Lama jackpot: 5 lama na jednoj dobitnoj liniji"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrossing",
+      "category": "games",
+      "game": "LamaCrossingGame",
+      "title": "Lama Crossing",
+      "keywords": [
+        "lama",
+        "crossing",
+        "prijelaz",
+        "isplati",
+        "množitelj",
+        "žetoni",
+        "lama banka",
+        "most",
+        "rijeka",
+        "led",
+        "ulog",
+        "rizik"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Lama korak po korak prelazi viseći most, rijeku ili zaleđeno jezero. Svaki korak koji izdrži podiže množitelj - jedan pogrešan korak košta ulog.",
+            "Odaberi ulog (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ili 10000 lama žetona) i pritisni KRENI: ulog se skida, a lama radi prvi korak.",
+            "Nakon svakog uspješnog koraka odlučuješ: DALJE ili ISPLATI - tada dobivaš ulog pomnožen trenutnim množiteljem. Na drugoj obali dobitak se isplaćuje automatski, uz konfete.",
+            "Nakon isplate igra otkriva na kojem bi koraku pošlo po zlu. Gore desno je povijest zadnjih 12 krugova."
+          ]
+        },
+        {
+          "h": "Težine",
+          "body": [
+            "Četiri razine - biraju se prije svakog kruga gumbima u donjoj traci ili tipkama [1] do [4]:",
+            "- Lako: 20 koraka, rizik 1/12 po koraku (oko 8 %), do ×5,52",
+            "- Srednje: 16 koraka, rizik 1/7 (oko 14 %), do ×11,42",
+            "- Teško: 13 koraka, rizik 1/4 (25 %), do ×40,82",
+            "- Ekstremno: 10 koraka, rizik 2/5 (40 %), do ×160,42",
+            "Množitelji su u fiksnim tablicama i izračunani tako da svaka strategija dugoročno vraća oko 97 % uloga - bez obzira na kojem koraku isplatiš. Prednost kuće je dakle oko 3 %."
+          ]
+        },
+        {
+          "h": "Tri svijeta",
+          "body": [
+            "Svijet mijenja samo izgled, ne i šanse. Mijenja se gumbima svjetova gore lijevo ili tipkom [W]:",
+            "- Viseći most: daske nad kanjonom - pri pogrešnom koraku daska pukne i lama padne.",
+            "- Rijeka: kamenje u vodi - kamen isklizne i lama pljusne u vodu.",
+            "- Zaleđeno jezero: sante leda na zaleđenom jezeru - pukotine se šire, a zatim santa pukne.",
+            "U svakom svijetu lama nosi šal u boji naglaska igre."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- [Razmaknica], [Desno] ili klik na sljedeći korak: KRENI ili sljedeći korak",
+            "- [Enter] ili [C]: isplata (prije kruga [Enter] radi kao KRENI)",
+            "- [Gore] / [Dolje], [+] / [-] ili kotačić miša: promjena uloga",
+            "- [1] do [4]: težina, [W]: promjena svijeta",
+            "Ulog, težina i svijet mogu se mijenjati samo između krugova. Svijet, težina i zadnji ulog spremaju se u settings.json (odjeljak lamacrossing)."
+          ]
+        },
+        {
+          "h": "Lama žetoni",
+          "body": [
+            "Lama Crossing igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom i Casinom (početak 1000, spremljeno u mem.json).",
+            "Rekord je najviše stanje 1000 + tvoje bilance u Lama Crossingu; dobici u Blackjacku, Pokeru ili Casinu ovdje se ne računaju.",
+            "Ispod 10 žetona si bankrot: [Enter] ili klik uzima bankovni kredit i ponovno puni račun na 1000. Krediti se ne računaju u bilancu.",
+            "Prekinuti usred prijelaza je sigurno: ulog, težina i korak se spremaju, a pri sljedećem pokretanju nastavljaš točno ondje."
+          ]
+        },
+        {
+          "h": "Postignuća",
+          "body": [
+            "- Stalni gost igre Lama Crossing: 25 partija",
+            "- Prekretnica: rekord 3000",
+            "- Majstor igre Lama Crossing: rekord 10000",
+            "- Druga obala (rijedak): Prevedi lamu u Lama Crossingu sve do druge obale",
+            "- Čelični živci (epski): Isplati u Lama Crossingu pri ×10 ili više",
+            "- Hod po užetu (legendaran): Završi u Lama Crossingu cijeli prijelaz na ekstremnoj težini"
+          ]
+        },
+        {
+          "h": "Savjeti",
+          "body": [
+            "- Svaki se korak izvlači iznova - niz pogrešnih koraka ne govori ništa o sljedećem.",
+            "- Sve do druge obale stiže se otprilike u svakom 6. krugu na Lako, u svakom 12. na Srednje, u svakom 42. na Teško i tek u svakom 165. na Ekstremno.",
+            "- Za Čelične živce (×10) na Teško je dovoljno 9 koraka (×12,91), a na Ekstremno već 5 (×12,47); na Srednje uspijeva tek na drugoj obali (×11,42), na Lako nikad.",
+            "- Unaprijed odluči pri kojem ćeš množitelju isplatiti - i drži se toga. Zbog fiksnog povrata nijedna strategija nije bolja od druge, samo više ili manje rizična."
           ]
         }
       ]

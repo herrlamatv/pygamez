@@ -147,7 +147,7 @@
           "body": [
             "İlerlemesi olan her oyunun mem.json içinde kendi bölümü vardır, örneğin:",
             "- sudoku: yıldızları ve en iyi süreleriyle çözülmüş seviyeler, yarım kalan bulmacalar ve serisiyle birlikte Günün Sudokusu.",
-            "- casino: Lama Bankası hesabı - Blackjack, Poker ve Casino için Lama çipleri ve her oyunun bakiyesi.",
+            "- casino: Lama Bankası hesabı - Blackjack, Poker, Casino ve Lama Crossing için Lama çipleri, her oyunun bakiyesi ve Lama Crossing'de yarım kalan geçiş.",
             "- crossy: toplanan jetonlar, satın alınan karakterler ve Crossy Road'un günlük en iyisi.",
             "- tetris: Sprint'te en iyi süre, Ultra'da en iyi skor ve yapay zekâya karşı Versus bilançosu.",
             "- g2048: kaydedilmiş 2048 oyunları ve tahta boyutu ile moda göre en iyi skorlar.",
@@ -349,7 +349,7 @@
         {
           "h": "Genel bakış",
           "body": [
-            "46 oyunun tamamında 250 başarım - ilk oyundan Tetris'teki Perfect Clear'a kadar.",
+            "47 oyunun tamamında 256 başarım - ilk oyundan Tetris'teki Perfect Clear'a kadar.",
             "Her başarımın bir nadirliği, dolayısıyla puan değeri vardır; toplam seviyeni verir.",
             "Kenar çubuğundaki Başarımlar ve istatistikler düğmesi, Başarımlar sekmesi. Filtre açık ya da kapalı olanları gizler."
           ]
@@ -360,7 +360,7 @@
             "- Genel: koleksiyon geneli hedefler - oyunlar, denenen oyunlar, süre, rekorlar, galibiyetler, oyun günleri, günlük seriler, seviye ve düellolar. Ayrıca gece kuşu, maraton, hafta sonu oyuncusu gibi ekstralar.",
             "- Puan kilometre taşları: her oyun için adil bir hedef puan.",
             "- Usta seviyeleri: çok daha yüksek ikinci eşik - yalnızca puanı sınırsız oyunlarda.",
-            "- Müdavim: bir oyunda 25 parti. 46 oyunun hepsinde var.",
+            "- Müdavim: bir oyunda 25 parti. 47 oyunun hepsinde var.",
             "- Özel anlar: şah mat, Yahtzee, 4096 karosu, hole-in-one, air hockey'de hat-trick, tek güç hapıyla dört hayalet ve dahası."
           ]
         },
@@ -3027,6 +3027,97 @@
             "- Casino kilometre taşı: rekor 5000",
             "- Tam isabet: rulette tek sayıya oynayıp kazan",
             "- Lama Jackpotu: bir kazanç hattında 5 lama"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrossing",
+      "category": "games",
+      "game": "LamaCrossingGame",
+      "title": "Lama Crossing",
+      "keywords": [
+        "lama",
+        "crossing",
+        "geçiş",
+        "çek",
+        "çarpan",
+        "çip",
+        "lama bankası",
+        "köprü",
+        "nehir",
+        "buz",
+        "bahis",
+        "risk"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Lama bir asma köprüyü, bir nehri ya da donmuş bir gölü adım adım geçer. Sağlam çıkan her adım çarpanı yükseltir - tek bir yanlış adım bahse mal olur.",
+            "Bahsini seç (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 veya 10000 Lama çipi) ve BAŞLA'ya bas: bahis düşülür ve lama ilk adımını atar.",
+            "Başarılı her adımdan sonra sen karar verirsin: İLERLE ya da ÇEK - o zaman bahsinin güncel çarpanla çarpımı hesabına geçer. Karşı kıyıda kazanç otomatik olarak çekilir, konfetiyle.",
+            "Çektikten sonra oyun, işin hangi adımda ters gideceğini gösterir. Sağ üstte son 12 turun geçmişi durur."
+          ]
+        },
+        {
+          "h": "Zorluklar",
+          "body": [
+            "Dört seviye - her turdan önce alt çubuktaki düğmelerle ya da [1] ile [4] tuşlarıyla seçilir:",
+            "- Kolay: 20 adım, adım başına 1/12 risk (yaklaşık %8), ×5,52'ye kadar",
+            "- Orta: 16 adım, 1/7 risk (yaklaşık %14), ×11,42'ye kadar",
+            "- Zor: 13 adım, 1/4 risk (%25), ×40,82'ye kadar",
+            "- Aşırı: 10 adım, 2/5 risk (%40), ×160,42'ye kadar",
+            "Çarpanlar sabit tablolarda durur ve her stratejinin uzun vadede bahsin yaklaşık %97'sini geri vereceği şekilde hesaplanmıştır - hangi adımda çektiğin fark etmez. Kasa avantajı yani yaklaşık %3'tür."
+          ]
+        },
+        {
+          "h": "Üç dünya",
+          "body": [
+            "Dünya yalnızca görünüşü değiştirir, şansları değil. Sol üstteki dünya düğmeleriyle ya da [W] ile değiştirilir:",
+            "- Asma köprü: bir kanyonun üzerinde tahtalar - yanlış adımda tahta kırılır ve lama düşer.",
+            "- Nehir: suda basamak taşları - taş kayar ve lama suya düşer.",
+            "- Buz gölü: donmuş gölün üzerinde buz kütleleri - çatlaklar yayılır, sonra buz kırılır.",
+            "Her dünyada lama, oyunun vurgu renginde bir atkı takar."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- [Boşluk], [Sağ] veya sıradaki adıma tık: BAŞLA ya da sonraki adım",
+            "- [Enter] veya [C]: çek (turdan önce [Enter] BAŞLA gibi çalışır)",
+            "- [Yukarı] / [Aşağı], [+] / [-] veya fare tekerleği: bahsi değiştir",
+            "- [1] ile [4]: zorluk, [W]: dünyayı değiştir",
+            "Bahis, zorluk ve dünya yalnızca turlar arasında değiştirilebilir. Dünya, zorluk ve son bahis settings.json içinde saklanır (lamacrossing bölümü)."
+          ]
+        },
+        {
+          "h": "Lama Çipleri",
+          "body": [
+            "Lama Crossing, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker ve Casino ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
+            "Rekor, 1000 + Lama Crossing bakiyenin ulaştığı en yüksek değerdir; Blackjack, Poker veya Casino kazançları burada sayılmaz.",
+            "10 çipin altında iflas edersin: [Enter] ya da bir tık bankadan kredi alır ve hesabını yeniden 1000'e tamamlar. Krediler bakiyeye sayılmaz.",
+            "Geçişin ortasında bırakmak güvenlidir: bahis, zorluk ve adım kaydedilir, bir sonraki başlangıçta tam oradan devam edersin."
+          ]
+        },
+        {
+          "h": "Başarımlar",
+          "body": [
+            "- Lama Crossing müdavimi: 25 parti",
+            "- Kilometre taşı: rekor 3000",
+            "- Lama Crossing ustası: rekor 10000",
+            "- Karşı kıyı (nadir): Lama Crossing'de lamayı karşı kıyıya kadar geçir",
+            "- Çelik sinirler (destansı): Lama Crossing'de ×10 veya üzerinde çek",
+            "- İp cambazı (efsanevi): Lama Crossing'de Aşırı zorlukta tam bir geçiş yap"
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Her adım yeniden çekilir - art arda gelen yanlış adımlar bir sonraki adım hakkında hiçbir şey söylemez.",
+            "- Karşı kıyıya Kolay'da yaklaşık her 6 turda bir, Orta'da 12 turda bir, Zor'da 42 turda bir ve Aşırı'da yalnızca 165 turda bir varılır.",
+            "- Çelik sinirler (×10) için Zor'da 9 adım (×12,91), Aşırı'da yalnızca 5 adım (×12,47) yeter; Orta'da ancak karşı kıyıda (×11,42) olur, Kolay'da hiç olmaz.",
+            "- Hangi çarpanda çekeceğine önceden karar ver ve buna sadık kal. Sabit geri ödeme sayesinde hiçbir strateji diğerinden iyi değildir, yalnızca daha az ya da daha çok risklidir."
           ]
         }
       ]

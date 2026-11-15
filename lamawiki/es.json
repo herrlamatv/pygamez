@@ -146,7 +146,7 @@
           "body": [
             "Cada juego con progreso tiene su propia sección en mem.json, por ejemplo:",
             "- sudoku: niveles resueltos con estrellas y mejor tiempo, sudokus empezados y el Sudoku del día con su racha.",
-            "- casino: la cuenta del Banco Llama, es decir, las fichas Llama de Blackjack, Póker y Casino con el balance de cada juego.",
+            "- casino: la cuenta del Banco Llama, es decir, las fichas Llama de Blackjack, Póker, Casino y Lama Crossing con el balance de cada juego, además de una travesía de Lama Crossing a medias.",
             "- crossy: monedas recogidas, personajes comprados y la mejor marca del día de Crossy Road.",
             "- tetris: mejor tiempo en Sprint, mejor puntuación en Ultra y el balance del Versus contra la IA.",
             "- g2048: partidas guardadas de 2048 y mejores puntuaciones por tamaño de tablero y modo.",
@@ -348,7 +348,7 @@
         {
           "h": "Resumen",
           "body": [
-            "250 logros en los 46 juegos, desde tu primera partida hasta un Perfect Clear en Tetris.",
+            "256 logros en los 47 juegos, desde tu primera partida hasta un Perfect Clear en Tetris.",
             "Cada logro tiene una rareza y con ella un valor en puntos; la suma es tu nivel.",
             "Están tras el botón Logros y estadísticas, pestaña Logros. Un filtro oculta los pendientes o los conseguidos."
           ]
@@ -359,7 +359,7 @@
             "- General: metas de toda la colección: partidas, juegos probados, tiempo, récords, victorias, días jugados, rachas, nivel y duelos. Más extras como búho nocturno, maratón o jugador de fin de semana.",
             "- Hitos de puntos: una puntuación objetivo justa por juego.",
             "- Niveles maestros: la segunda marca, mucho más alta, solo para juegos con puntuación abierta.",
-            "- Habitual: 25 partidas de un juego. Existe para los 46 juegos.",
+            "- Habitual: 25 partidas de un juego. Existe para los 47 juegos.",
             "- Momentos especiales: jaque mate, un Yahtzee, la ficha 4096, un hoyo en uno, un hat-trick en air hockey, cuatro fantasmas con una pastilla y mucho más."
           ]
         },
@@ -3026,6 +3026,98 @@
             "- Hito del Casino: récord 5000",
             "- Diana: ganar con un pleno en la ruleta",
             "- Jackpot Llama: 5 llamas en una línea de premio"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrossing",
+      "category": "games",
+      "game": "LamaCrossingGame",
+      "title": "Lama Crossing",
+      "keywords": [
+        "llama",
+        "lama",
+        "crossing",
+        "travesía",
+        "cobrar",
+        "multiplicador",
+        "fichas",
+        "banco llama",
+        "puente",
+        "río",
+        "hielo",
+        "apuesta",
+        "riesgo"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "La llama cruza paso a paso un puente colgante, un río o un lago helado. Cada paso que aguanta sube el multiplicador; un paso en falso cuesta la apuesta.",
+            "Elige tu apuesta (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 o 10000 fichas Llama) y pulsa VAMOS: se descuenta la apuesta y la llama da el primer paso.",
+            "Tras cada paso superado decides: AVANZAR otra vez o COBRAR; entonces recibes la apuesta por el multiplicador actual. En la otra orilla se cobra automáticamente, con confeti.",
+            "Después de cobrar, el juego revela en qué paso habría salido mal. Arriba a la derecha se ve el historial de las últimas 12 rondas."
+          ]
+        },
+        {
+          "h": "Dificultades",
+          "body": [
+            "Cuatro niveles, que se eligen antes de cada ronda con los botones de la barra inferior o con [1] a [4]:",
+            "- Fácil: 20 pasos, riesgo de 1/12 por paso (aprox. 8 %), hasta ×5,52",
+            "- Medio: 16 pasos, riesgo de 1/7 (aprox. 14 %), hasta ×11,42",
+            "- Difícil: 13 pasos, riesgo de 1/4 (25 %), hasta ×40,82",
+            "- Extremo: 10 pasos, riesgo de 2/5 (40 %), hasta ×160,42",
+            "Los multiplicadores están en tablas fijas, calculadas para que cualquier estrategia devuelva a la larga cerca del 97 % de lo apostado, cobres en el paso que cobres. La ventaja de la casa ronda, por tanto, el 3 %."
+          ]
+        },
+        {
+          "h": "Tres mundos",
+          "body": [
+            "El mundo es solo estético y no cambia las probabilidades. Se cambia con los botones de mundo arriba a la izquierda o con [W]:",
+            "- Puente colgante: tablones sobre un cañón; con un paso en falso el tablón se rompe y la llama cae.",
+            "- Río: piedras en el agua; la piedra resbala y ¡chapuzón!",
+            "- Lago helado: placas de hielo sobre el lago; las grietas se extienden y la placa se rompe.",
+            "En todos los mundos la llama lleva una bufanda del color de acento del juego."
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- [Espacio], [Derecha] o clic en el siguiente paso: VAMOS o siguiente paso",
+            "- [Enter] o [C]: cobrar (antes de una ronda, [Enter] funciona como VAMOS)",
+            "- [Arriba] / [Abajo], [+] / [-] o rueda del ratón: cambiar la apuesta",
+            "- [1] a [4]: dificultad, [W]: cambiar de mundo",
+            "La apuesta, la dificultad y el mundo solo se pueden cambiar entre rondas. El mundo, la dificultad y la última apuesta se guardan en settings.json (sección lamacrossing)."
+          ]
+        },
+        {
+          "h": "Fichas Llama",
+          "body": [
+            "Lama Crossing juega con la cuenta común del Banco Llama, junto con Blackjack, Póker y Casino (inicio 1000, guardado en mem.json).",
+            "El récord es el máximo de 1000 + tu balance de Lama Crossing; las ganancias en Blackjack, Póker o Casino no cuentan aquí.",
+            "Con menos de 10 fichas estás sin fichas: [Enter] o un clic pide un préstamo al banco y deja tu cuenta de nuevo en 1000. Los préstamos no cuentan para el balance.",
+            "Dejarlo a mitad de la travesía es seguro: la apuesta, la dificultad y el paso se guardan, y al volver sigues exactamente ahí."
+          ]
+        },
+        {
+          "h": "Logros",
+          "body": [
+            "- Habitual de Lama Crossing: 25 partidas",
+            "- Hito: récord 3000",
+            "- Maestro de Lama Crossing: récord 10000",
+            "- La otra orilla (raro): Lleva a la llama hasta la otra orilla en Lama Crossing",
+            "- Nervios de acero (épico): Cobra con ×10 o más en Lama Crossing",
+            "- Equilibrista (legendario): Completa una travesía entera en Extremo en Lama Crossing"
+          ]
+        },
+        {
+          "h": "Consejos",
+          "body": [
+            "- Cada paso se sortea de nuevo: una racha de pasos en falso no dice nada del siguiente.",
+            "- Se llega hasta el final más o menos en 1 de cada 6 rondas en Fácil, 1 de cada 12 en Medio, 1 de cada 42 en Difícil y solo 1 de cada 165 en Extremo.",
+            "- Para Nervios de acero (×10) bastan 9 pasos en Difícil (×12,91) y solo 5 en Extremo (×12,47); en Medio solo se consigue en la otra orilla (×11,42) y en Fácil nunca.",
+            "- Decide antes en qué multiplicador vas a cobrar y cúmplelo. Con el retorno fijo ninguna estrategia es mejor que otra, solo más o menos arriesgada."
           ]
         }
       ]

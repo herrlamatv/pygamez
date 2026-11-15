@@ -1,11 +1,11 @@
 /*
  * casino_bank.js - Lama-Bank: gemeinsames Chip-Konto (Port von lamabank.py)
  * ==========================================================================
- * Blackjack, Poker und Casino setzen dieselben Lama-Chips. Gespeichert wird im
+ * Blackjack, Poker, Casino und Lama Crossing setzen dieselben Lama-Chips. Gespeichert wird im
  * localStorage unter "pygamez.mem.casino" im gleichen Format wie der
  * mem.json-Abschnitt "casino" der Desktop-Version:
  *
- *   {chips, ledger: {blackjack, poker, casino}, peak: {...}, escrow, refills,
+ *   {chips, ledger: {blackjack, poker, casino, lamacrossing}, peak: {...}, escrow, refills,
  *    migrated, extra}
  *
  * - Einsatz sofort abbuchen + speichern (Hand verlassen = Einsatz weg).
@@ -21,8 +21,8 @@
 
   const KEY = "mem.casino";
   const START_CHIPS = 1000;
-  const GAMES = ["blackjack", "poker", "casino"];
-  const MIN_BET = { blackjack: 10, poker: 20, "poker:video": 10, casino: 1, "casino:slots": 10 };
+  const GAMES = ["blackjack", "poker", "casino", "lamacrossing"];
+  const MIN_BET = { blackjack: 10, poker: 20, "poker:video": 10, casino: 1, "casino:slots": 10, lamacrossing: 10 };
 
   let data = null;
 

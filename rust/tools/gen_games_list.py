@@ -1,4 +1,4 @@
-"""Schreibt pgz-games/src/lib.rs: alle 46 Spiele in ALL_GAMES-Reihenfolge,
+"""Schreibt pgz-games/src/lib.rs: alle 47 Spiele in ALL_GAMES-Reihenfolge,
 eingetragen ist, wessen Modul schon existiert."""
 import os
 import sys

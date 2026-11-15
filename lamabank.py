@@ -45,17 +45,19 @@ import store
 
 SECTION = "casino"
 START_CHIPS = 1000
-GAMES = ("blackjack", "poker", "casino")
+GAMES = ("blackjack", "poker", "casino", "lamacrossing")
 
 # Mindesteinsatz je Spiel bzw. "spiel:modus" (Pleite-Regel).
 #   Blackjack: kleinster Chip 10 · Poker: Big Blind 20 (Hold'em und Draw),
-#   Video Poker 10 · Roulette: 1er-Chip · Lama-Slot: 10 Linien x 1
+#   Video Poker 10 · Roulette: 1er-Chip · Lama-Slot: 10 Linien x 1 ·
+#   Lama Crossing: kleinste Einsatzstufe 10
 MIN_BET = {
     "blackjack": 10,
     "poker": 20,
     "poker:video": 10,
     "casino": 1,
     "casino:slots": 10,
+    "lamacrossing": 10,
 }
 
 _data = None          # zuletzt geladener Stand (Cache - draw() liest pro Frame)

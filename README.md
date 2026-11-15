@@ -15,7 +15,7 @@ If web is blocked, you can try  [web2](https://downgit.github.io/#/home?url=http
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Sechsundvierzig
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Siebenundvierzig
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** – **14 Sprachen** (Deutsch / English / Français / Español /
@@ -98,6 +98,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Geometry Dash** | 1 Spieler     | Rhythmus-Plattformer mit Würfel, Schiff, Ball, UFO und Welle: 16 Level von Leicht bis Dämon mit je 3 geheimen Münzen, dazu eine Bibliothek aus **80 weiteren Leveln** in 10 Kategorien mit Suche, Übungsmodus, Soundtrack je Level; **Level-Editor** mit 12 Vorlagen und Teilen als `.lamapgzlevel` |
 | **Schiffe versenken** | 1 / 2 Spieler | 10x10-Seeschlacht: Flotte per Drag & Drop aufstellen, 3 Regel-Schalter (Berühren, Salve, Nochmal schießen), KI mit 3 Stärken oder lokales Duell mit Übergabe-Bildschirm |
 | **Casino**      | 1 Spieler       | Europäisches Roulette mit allen klassischen Wetten und Lama-Slot (5 Walzen, 10 Linien, Wild, Freispiele); ein Lama-Chip-Konto mit Blackjack und Poker |
+| **Lama Crossing** | 1 Spieler       | Mut-Spiel mit Lama-Chips: Schritt für Schritt über Hängebrücke, Fluss oder Eissee, nach jedem Schritt auszahlen oder weiter wagen; 4 Schwierigkeiten bis ×160, Auszahlungsquote ~97 % |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)**, **Memory (Duell)**,
@@ -845,6 +846,36 @@ Explosions-Effekte, Highscore.
   Erfolge **Volltreffer** (Plein beim Roulette) und **Lama-Jackpot** (5 Lamas
   auf einer Linie).
 
+**Lama Crossing**
+- **Mut-Spiel mit Lama-Chips**: Einsatz wählen (10 bis 10000), **LOS** drücken -
+  das Lama überquert Schritt für Schritt eine Schlucht, einen Fluss oder einen
+  Eissee. Jeder Schritt, der hält, hebt den **Multiplikator**, ein Fehltritt
+  kostet den Einsatz. Nach jedem Schritt heißt es **WEITER** oder **AUSZAHLEN**;
+  am anderen Ufer wird automatisch ausgezahlt - mit Konfetti.
+- **4 Schwierigkeiten**: Leicht (20 Schritte, Risiko 1/12, bis ×5,52), Mittel
+  (16, 1/7, bis ×11,42), Schwer (13, 1/4, bis ×40,82) und Extrem (10, 2/5, bis
+  ×160,42). Die Multiplikatoren stehen als feste Ganzzahl-Tabellen in
+  `lamacrossing_logic.py` und sind so berechnet, dass **jede Auszahl-Strategie
+  rund 97 % zurückgibt** - egal, wann man aussteigt.
+- **3 Welten** (nur Optik, Taste **W**): **Hängebrücke** über der Schlucht (die
+  Planke bricht, das Lama stürzt ab), **Trittsteine im Fluss** (der Stein
+  rutscht weg, Platsch) und **Eisschollen auf dem gefrorenen See** (Risse
+  breiten sich aus, die Scholle bricht ein). Das Lama trägt einen Schal in der
+  Akzentfarbe des Spiels.
+- **Auflösung**: Nach dem Auszahlen zeigt das Spiel, bei welchem Schritt es
+  schiefgegangen wäre; oben rechts steht der Verlauf der letzten 12 Runden.
+- **Lama-Bank**: dasselbe Konto wie Blackjack, Poker und Casino. Der Highscore
+  ist der Höchststand von 1000 + Lama-Crossing-Bilanz, unter 10 Chips gibt es
+  einen **Bank-Kredit** auf 1000. Wer mitten in der Überquerung geht, verliert
+  nichts: Einsatz, Schwierigkeit und Schritt werden gespeichert, der nächste
+  Start macht genau dort weiter.
+- Bedienung: **Leertaste**/**→**/Klick auf den nächsten Schritt = LOS bzw.
+  weiter, **Enter**/**C** = auszahlen, **↑**/**↓**/**+**/**-**/Mausrad =
+  Einsatz, **1-4** = Schwierigkeit; Welt, Schwierigkeit und letzter Einsatz
+  stehen im Abschnitt `lamacrossing` der `settings.json`. Erfolge **Am anderen
+  Ufer**, **Nervenstark** (Auszahlung ab ×10) und **Drahtseilakt** (Extrem ganz
+  geschafft) sowie ein Meilenstein von 3000 und Meister 10000.
+
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
@@ -870,7 +901,7 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   den bisherigen Rekord als Chip an. Bei vielen Modi und kleiner Auflösung rückt
   er **kompakt** zusammen: Optionen, Wiki und Zurück stehen dann in einer Reihe,
   die Schrift passt sich an - nichts läuft mehr aus dem Bild.
-- **Einheitlicher Spiel-Look**: alle 46 Spiele nutzen dieselbe Theme-Palette und
+- **Einheitlicher Spiel-Look**: alle 47 Spiele nutzen dieselbe Theme-Palette und
   -Schrift wie das Menü - HUDs, Setup-Screens und Overlays folgen dem in den
   Optionen gewählten Design (v4.1 / v4 / Classic), die Spielfelder behalten ihre
   Identitätsfarben. Auflösungswechsel mitten im Spiel übernimmt jedes Spiel
@@ -881,11 +912,11 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   scrollbaren Artikeln und Tastenkappen-Chips, in allen 14 Sprachen.
   Erreichbar über den Sidebar-Button **„Wiki / Hilfe"** und aus dem
   Vorspiel-Screen jedes Spiels (öffnet direkt dessen Seite).
-- **Erfolge, Seltenheit & Level**: **250 Erfolge** in fünf Kategorien - 60
+- **Erfolge, Seltenheit & Level**: **256 Erfolge** in fünf Kategorien - 60
   sammlungsweite Ziele (Partien, Spielzeit, Rekorde, Siege, Spieltage,
-  Tagesserien, Duelle …), 37 **Punkte-Meilensteine**, 30 **Meister-Stufen**
+  Tagesserien, Duelle …), 38 **Punkte-Meilensteine**, 31 **Meister-Stufen**
   (die zweite, deutlich höhere Punktmarke), für jedes Spiel einen
-  **Stammgast**-Erfolg (25 Partien) und 77 **besondere Momente** (Schachmatt,
+  **Stammgast**-Erfolg (25 Partien) und 80 **besondere Momente** (Schachmatt,
   KNIFFEL, die 4096er-Kachel, Hole-in-One, Hattrick im Air Hockey, vier Geister
   mit einer Kraftpille …). Jeder Erfolg hat eine **Seltenheitsstufe**
   (gewöhnlich 10 bis mythisch 300 Punkte); die Punkte ergeben dein **Level**
@@ -1016,7 +1047,7 @@ filepick.py          Datei-Dialoge ("Exportieren als ...", "Importieren") und Do
 prestige.py          Prestige-System für Snake
 competitive.py       Kennzahlen für den Competitive-Modus von Snake (Level, Slot, Wett-Äpfel)
 ngb.py               Visuelle Personalisierung ("Mods"): Kopffarbe + Koordinaten-Raster + Menü (Abschnitt ngb je Profil)
-lamabank.py          Lama-Bank: gemeinsames Chip-Konto von Blackjack, Poker und Casino (Abschnitt casino in mem.json)
+lamabank.py          Lama-Bank: gemeinsames Chip-Konto von Blackjack, Poker, Casino und Lama Crossing (Abschnitt casino in mem.json)
 seedrand.py          Zufallsgenerator mit bitgleichen Zahlen in Python und Browser (Tagesmodi, neue Rätsel)
 i18n.py              Übersetzungs-Engine (lädt lang/*.json, t("schlüssel"))
 lang/
@@ -1056,11 +1087,12 @@ games/
   geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   levels/              Level-Daten: snake-comp.json, chess-puzzles.json (+ Quellen-README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Gesamt-Audit (Eingabe, seedrand Python = JS, Speichern, Sprachdateien, Vorspiel-Screens) + alle audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
-  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless-Audits je Spiel
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless-Audits je Spiel
   newgames_audit.py  blockjump_audit.py
 /rust/                Die Rust-Fassung (eigenständige .exe, siehe rust/README.md)
   ENGINE.md            Portierungs-Vertrag: wie ein Spiel von Python nach Rust kommt
@@ -1069,7 +1101,7 @@ tests/
   crates/pgz-engine/   Fenster, Zeichnen, Eingabe, Ton, Game-Trait (ui.py + audio.py + game_base.py)
   crates/pgz-games/    Die portierten Spiele
   crates/pygamez/      Das Programm: Menü, Seitenleiste, Bildschirme
-  tools/export_defs.py Erzeugt die Stammdaten (46 Spiele, 250 Erfolge, 10 Designs) aus den Python-Quellen
+  tools/export_defs.py Erzeugt die Stammdaten (47 Spiele, 256 Erfolge, 10 Designs) aus den Python-Quellen
   tools/audit.py       Prüfstand: Übersetzungen, Spieleliste, Konventionen
 rust.output/         Build-Ausgabe der Rust-Fassung (rust.output/release/pygamez.exe)
 ```
@@ -1191,7 +1223,7 @@ Spielen neben sich an.
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Forty-six
+**Pygame** is embedded as the game display inside the Tkinter window. Forty-seven
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** – **14 languages** (German / English / French / Spanish /
@@ -1274,6 +1306,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Geometry Dash** | 1 player      | Rhythm platformer with cube, ship, ball, UFO and wave: 16 levels from Easy to Demon with 3 secret coins each, plus a library of **80 more levels** in 10 searchable categories, practice mode, a soundtrack per level; **level editor** with 12 templates and sharing as `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 players   | 10x10 naval battle: drag & drop fleet deployment, 3 rule toggles (touching, salvo, fire again), AI with 3 strengths or a local duel with a handover screen |
 | **Casino**      | 1 player        | European roulette with all classic bets and the Llama Slot (5 reels, 10 lines, wild, free spins); one llama-chip account shared with Blackjack and Poker |
+| **Lama Crossing** | 1 player        | Push-your-luck game with llama chips: step by step across a rope bridge, river or ice lake, cash out after any step or keep going; 4 difficulties up to ×160, ~97% return |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
@@ -2005,6 +2038,34 @@ explosion effects, high score.
   achievements **Bullseye** (straight-up win at roulette) and **Llama Jackpot**
   (5 llamas on one line).
 
+**Lama Crossing**
+- **Push-your-luck game with llama chips**: pick a bet (10 to 10000), press
+  **GO** - the llama crosses a canyon, a river or a frozen lake step by step.
+  Every step that holds raises the **multiplier**, a misstep loses the bet.
+  After each step it's **NEXT** or **CASH OUT**; reaching the far bank cashes
+  out automatically - with confetti.
+- **4 difficulties**: Easy (20 steps, risk 1/12, up to ×5.52), Medium (16, 1/7,
+  up to ×11.42), Hard (13, 1/4, up to ×40.82) and Extreme (10, 2/5, up to
+  ×160.42). The multipliers are fixed integer tables in `lamacrossing_logic.py`,
+  calculated so that **every cash-out strategy returns about 97%** - no matter
+  when you stop.
+- **3 worlds** (cosmetic only, key **W**): a **rope bridge** over a canyon (the
+  plank breaks and the llama falls), **stepping stones in a river** (the stone
+  slips away, splash) and **ice floes on a frozen lake** (cracks spread, the
+  floe breaks). The llama wears a scarf in the game's accent colour.
+- **Reveal**: after you cash out, the game shows at which step it would have
+  gone wrong; the top right shows the history of the last 12 rounds.
+- **Llama Bank**: the same account as Blackjack, Poker and Casino. The high
+  score is the peak of 1000 + Lama Crossing balance, and below 10 chips you get
+  a **bank loan** back up to 1000. Leaving mid-crossing costs nothing: bet,
+  difficulty and step are saved, and the next start resumes exactly there.
+- Controls: **Space**/**→**/click on the next step = GO or next step,
+  **Enter**/**C** = cash out, **↑**/**↓**/**+**/**-**/mouse wheel = bet, **1-4**
+  = difficulty; world, difficulty and last bet are stored in the `lamacrossing`
+  section of `settings.json`. Achievements **Other Side**, **Nerves of Steel**
+  (cash out at ×10 or more) and **Tightrope Walk** (full crossing on Extreme),
+  plus a 3000 milestone and a 10000 master tier.
+
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
 
@@ -2030,7 +2091,7 @@ packages) and styled like a modern game launcher:
   the previous record as a chip. With many modes at a small resolution it
   becomes **compact**: Options, Wiki and Back move into one row and the font
   adapts - nothing runs off-screen any more.
-- **Unified in-game look**: all 46 games share the menu's theme palette and
+- **Unified in-game look**: all 47 games share the menu's theme palette and
   font - HUDs, setup screens and overlays follow the design chosen in the
   options (v4.1 / v4 / Classic), while each playfield keeps its identity
   colours. Every game now handles mid-game resolution changes cleanly, and
@@ -2040,11 +2101,11 @@ packages) and styled like a modern game launcher:
   scrollable articles and keycap chips, in all 14 languages. Reachable via
   the **"Wiki / Help"** sidebar button and from every game's pre-game screen
   (opens that game's page directly).
-- **Achievements, rarity & level**: **250 achievements** in five categories -
+- **Achievements, rarity & level**: **256 achievements** in five categories -
   60 collection-wide goals (rounds, playtime, records, wins, days played, daily
-  streaks, duels …), 37 **score milestones**, 30 **master tiers** (the second,
+  streaks, duels …), 38 **score milestones**, 31 **master tiers** (the second,
   much higher mark), a **regular** achievement for every game (25 rounds) and
-  77 **special moments** (checkmate, a Yahtzee, the 4096 tile, a hole-in-one, an
+  80 **special moments** (checkmate, a Yahtzee, the 4096 tile, a hole-in-one, an
   air hockey hat-trick, four ghosts on one power pill …). Every achievement has
   a **rarity** (common 10 up to mythic 300 points); the points make your
   **level** with 14 **ranks** from Llama Chick to Star Llama. Unlocking shows a
@@ -2170,7 +2231,7 @@ filepick.py          File dialogs ("Export as ...", "Import") and the Downloads 
 prestige.py          Prestige system for Snake
 competitive.py       Tuning for Snake's Competitive mode (levels, slot machine, gamble apples)
 ngb.py               Visual personalization ("mods"): head color + coordinate grid + menu (section ngb per profile)
-lamabank.py          Llama Bank: shared chip account of Blackjack, Poker and Casino (section casino in mem.json)
+lamabank.py          Llama Bank: shared chip account of Blackjack, Poker, Casino and Lama Crossing (section casino in mem.json)
 seedrand.py          Random generator with bit-identical numbers in Python and the browser (daily modes, new puzzles)
 i18n.py              Translation engine (loads lang/*.json, t("key"))
 lang/
@@ -2210,11 +2271,12 @@ games/
   geodash.py  geodash_core.py  geodash_draw.py  geodash_edit.py  geodash_extra.py  geodash_music.py
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
+  lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   levels/              Level data: snake-comp.json, chess-puzzles.json (+ source README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Overall audit (input, seedrand Python = JS, saving, language files, pre-game screens) + all audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
-  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py   Headless audits per game
+  audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless audits per game
   newgames_audit.py  blockjump_audit.py
 rust/                The Rust version (standalone .exe, see rust/README.md)
   ENGINE.md            Porting contract: how a game moves from Python to Rust
@@ -2223,7 +2285,7 @@ rust/                The Rust version (standalone .exe, see rust/README.md)
   crates/pgz-engine/   Window, drawing, input, sound, Game trait (ui.py + audio.py + game_base.py)
   crates/pgz-games/    The ported games
   crates/pygamez/      The program: menu, sidebar, screens
-  tools/export_defs.py Generates the master data (46 games, 250 achievements, 10 themes) from the Python sources
+  tools/export_defs.py Generates the master data (47 games, 256 achievements, 10 themes) from the Python sources
   tools/audit.py       Test bench: translations, game list, conventions
 rust.output/         Build output of the Rust version (rust.output/release/pygamez.exe)
 ```

@@ -52,4 +52,5 @@ window.PG_MANIFEST = [
   { id: "GeometryDashGame", files: ["js/games/seedrand.js", "js/games/ugc.js", "js/games/geodash_core.js", "js/games/geodash_levels.js", "js/games/geodash_extra_index.js", "js/games/geodash_templates.js", "js/games/geodash_draw.js", "js/games/geodash_music.js", "js/games/geodash_edit.js", "js/games/geodash_extra_ui.js", "js/games/geodash.js"] },
   { id: "BattleshipGame", files: ["js/games/battleship.js"] },
   { id: "CasinoGame", files: ["js/games/cards.js", "js/games/casino_bank.js", "js/games/casino_logic.js", "js/games/casino_draw.js", "js/games/casino.js"] },
+  { id: "LamaCrossingGame", files: ["js/games/casino_bank.js", "js/games/casino_logic.js", "js/games/casino_draw.js", "js/games/lamacrossing_logic.js", "js/games/lamacrossing_draw.js", "js/games/lamacrossing.js"] },
 ];

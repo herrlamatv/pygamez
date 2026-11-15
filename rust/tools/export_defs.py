@@ -4,7 +4,7 @@ rust/tools/export_defs.py
 =========================
 Erzeugt ``rust/crates/pgz-core/src/defs.rs`` aus den Python-Quellen.
 
-Damit die Rust-Fassung exakt dieselben 46 Spiele, Akzentfarben und 250
+Damit die Rust-Fassung exakt dieselben 47 Spiele, Akzentfarben und 256
 Erfolge kennt wie die Python-Fassung, werden diese Tabellen nicht von Hand
 abgetippt, sondern hier ausgelesen und als Rust-Konstanten geschrieben -
 genauso, wie ``devtools/export_achievements.py`` es fuer die Web-Version tut.

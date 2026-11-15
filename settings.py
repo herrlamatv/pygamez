@@ -204,6 +204,8 @@ DEFAULTS = {
     # Casino: Chipwert am Roulette-Tisch, Einsatz je Gewinnlinie am
     # Spielautomaten, Turbo-Walzen an/aus
     "casino": {"roulette_chip": 5, "line_bet": 1, "turbo": False},
+    # Lama Crossing: Welt (nur Optik), Schwierigkeit, zuletzt gewählter Einsatz
+    "lamacrossing": {"world": "bridge", "difficulty": "medium", "bet": 10},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -237,6 +239,9 @@ SCHEMAS = {
                    "extra_shot": bool},
     "casino": {"roulette_chip": ("choice", (1, 5, 25, 100, 500)),
                "line_bet": ("choice", (1, 2, 5, 10)), "turbo": bool},
+    "lamacrossing": {"world": ("choice", ("bridge", "river", "ice")),
+                     "difficulty": ("choice", ("easy", "medium", "hard", "extreme")),
+                     "bet": ("choice", (10, 20, 50, 100, 200, 500, 1000, 2500, 5000, 10000))},
 }
 
 _INVALID = object()

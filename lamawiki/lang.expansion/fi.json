@@ -147,7 +147,7 @@
           "body": [
             "Jokaisella edistymistä tallentavalla pelillä on mem.json-tiedostossa oma osionsa, esimerkiksi:",
             "- sudoku: ratkaistut tasot tähtineen ja parhaine aikoineen, kesken jääneet ruudukot sekä päivän sudoku putkineen.",
-            "- casino: Laamapankin tili - Blackjackin, Pokerin ja Casinon laamamerkit sekä kunkin pelin saldo.",
+            "- casino: Laamapankin tili - Blackjackin, Pokerin, Casinon ja Lama Crossingin laamamerkit sekä kunkin pelin saldo ja Lama Crossingin kesken jäänyt ylitys.",
             "- crossy: kerätyt kolikot, ostetut hahmot ja Crossy Roadin päivän paras.",
             "- tetris: Sprintin paras aika, Ultran paras tulos ja Versus-tilasto tekoälyä vastaan.",
             "- g2048: tallennetut 2048-pelit ja parhaat tulokset laudan koon ja tilan mukaan.",
@@ -349,7 +349,7 @@
         {
           "h": "Yleiskatsaus",
           "body": [
-            "250 saavutusta kaikissa 46 pelissä - ensimmäisestä käynnistyksestä Tetriksen Perfect Cleariin.",
+            "256 saavutusta kaikissa 47 pelissä - ensimmäisestä käynnistyksestä Tetriksen Perfect Cleariin.",
             "Jokaisella saavutuksella on harvinaisuus ja siten pistearvo; summa on tasosi.",
             "Löytyvät Saavutukset ja tilastot -painikkeen takaa, Saavutukset-välilehdeltä. Suodatin piilottaa avatut tai avaamattomat."
           ]
@@ -360,7 +360,7 @@
             "- Yleiset: koko kokoelman tavoitteet - kierrokset, kokeillut pelit, peliaika, ennätykset, voitot, pelipäivät, putket, taso ja kaksintaistelut. Lisäksi yökyöpeli, maraton tai viikonloppupelaaja.",
             "- Pistevirstanpylväät: reilu tavoitepistemäärä kullekin pelille.",
             "- Mestaritasot: toinen, selvästi korkeampi raja - vain peleissä, joiden pisteillä ei ole kattoa.",
-            "- Vakiokävijä: 25 kierrosta yhtä peliä. Löytyy kaikille 46 pelille.",
+            "- Vakiokävijä: 25 kierrosta yhtä peliä. Löytyy kaikille 47 pelille.",
             "- Erityiset hetket: šakkimatti, Yatzy, 4096-laatta, hole-in-one, hattutemppu ilmakiekossa, neljä haamua yhdellä voimapillerillä ja paljon muuta."
           ]
         },
@@ -3026,6 +3026,98 @@
             "- Casino-virstanpylväs: paras tulos 5000",
             "- Napakymppi: voita ruletissa yhden numeron panoksella",
             "- Laamajackpot: 5 laamaa samalla voittolinjalla"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrossing",
+      "category": "games",
+      "game": "LamaCrossingGame",
+      "title": "Lama Crossing",
+      "keywords": [
+        "laama",
+        "lama",
+        "crossing",
+        "ylitys",
+        "kotiuta",
+        "kerroin",
+        "merkit",
+        "laamapankki",
+        "silta",
+        "joki",
+        "jää",
+        "panos",
+        "riski"
+      ],
+      "sections": [
+        {
+          "h": "Näin pelataan",
+          "body": [
+            "Laama ylittää askel kerrallaan riippusillan, joen tai jäätyneen järven. Jokainen kestävä askel nostaa kerrointa - yksi harha-askel vie panoksen.",
+            "Valitse panos (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 tai 10000 laamamerkkiä) ja paina ALOITA: panos veloitetaan ja laama ottaa ensimmäisen askeleen.",
+            "Jokaisen onnistuneen askeleen jälkeen päätät: ETEENPÄIN vai KOTIUTA - silloin saat panoksen kerrottuna nykyisellä kertoimella. Toisella rannalla voitto kotiutetaan automaattisesti, konfettien kera.",
+            "Kotiutuksen jälkeen peli paljastaa, millä askeleella olisi käynyt huonosti. Oikeassa yläkulmassa näkyy 12 viimeisen kierroksen historia."
+          ]
+        },
+        {
+          "h": "Vaikeustasot",
+          "body": [
+            "Neljä tasoa - valitaan ennen jokaista kierrosta alapalkin painikkeilla tai näppäimillä [1] - [4]:",
+            "- Helppo: 20 askelta, riski 1/12 per askel (n. 8 %), jopa ×5,52",
+            "- Keskitaso: 16 askelta, riski 1/7 (n. 14 %), jopa ×11,42",
+            "- Vaikea: 13 askelta, riski 1/4 (25 %), jopa ×40,82",
+            "- Äärimmäinen: 10 askelta, riski 2/5 (40 %), jopa ×160,42",
+            "Kertoimet ovat kiinteissä taulukoissa, ja ne on laskettu niin, että jokainen strategia palauttaa pitkällä aikavälillä noin 97 % panoksesta - riippumatta siitä, millä askeleella kotiutat. Talon etu on siis noin 3 %."
+          ]
+        },
+        {
+          "h": "Kolme maailmaa",
+          "body": [
+            "Maailma on pelkkää ulkoasua eikä muuta todennäköisyyksiä. Vaihda sitä vasemman yläkulman maailmapainikkeilla tai näppäimellä [W]:",
+            "- Riippusilta: lankkuja rotkon yllä - harha-askeleella lankku katkeaa ja laama putoaa.",
+            "- Joki: astinkiviä vedessä - kivi lipsahtaa alta, ja laama molskahtaa veteen.",
+            "- Jäinen järvi: jäälauttoja jäätyneellä järvellä - halkeamat leviävät, sitten lautta murtuu.",
+            "Jokaisessa maailmassa laamalla on kaulahuivi pelin korostusvärissä."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- [Välilyönti], [Oikea] tai klikkaus seuraavaan askeleeseen: ALOITA tai seuraava askel",
+            "- [Enter] tai [C]: kotiuta (ennen kierrosta [Enter] toimii kuten ALOITA)",
+            "- [Ylös] / [Alas], [+] / [-] tai hiiren rulla: vaihda panosta",
+            "- [1] - [4]: vaikeustaso, [W]: vaihda maailmaa",
+            "Panosta, vaikeustasoa ja maailmaa voi vaihtaa vain kierrosten välissä. Maailma, vaikeustaso ja viimeisin panos tallentuvat tiedostoon settings.json (osio lamacrossing)."
+          ]
+        },
+        {
+          "h": "Laamamerkit",
+          "body": [
+            "Lama Crossing pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin ja Casinon kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
+            "Paras tulos on 1000 + Lama Crossing -saldosi korkein arvo; Blackjackin, Pokerin tai Casinon voitot eivät lasketa tähän.",
+            "Alle 10 merkillä rahat ovat lopussa: [Enter] tai klikkaus ottaa pankkilainan ja täyttää tilin taas 1000:een. Lainat eivät lasketa saldoon.",
+            "Kesken ylityksen lopettaminen on turvallista: panos, vaikeustaso ja askel tallentuvat, ja seuraavalla käynnistyskerralla jatkat täsmälleen siitä."
+          ]
+        },
+        {
+          "h": "Saavutukset",
+          "body": [
+            "- Lama Crossing-vakiopelaaja: 25 kierrosta",
+            "- Virstanpylväs: paras tulos 3000",
+            "- Lama Crossing-mestari: paras tulos 10000",
+            "- Toinen ranta (harvinainen): Vie laama Lama Crossingissa toiselle rannalle asti",
+            "- Teräshermot (eeppinen): Kotiuta Lama Crossingissa kertoimella ×10 tai enemmän",
+            "- Nuorallatanssi (legendaarinen): Tee Lama Crossingissa koko ylitys Äärimmäisellä tasolla"
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Jokainen askel arvotaan uudelleen - harha-askelten sarja ei kerro mitään seuraavasta.",
+            "- Perille asti pääsee Helpolla suunnilleen joka 6. kierroksella, Keskitasolla joka 12., Vaikealla joka 42. ja Äärimmäisellä vain joka 165. kierroksella.",
+            "- Teräshermoihin (×10) riittää Vaikealla 9 askelta (×12,91) ja Äärimmäisellä jo 5 (×12,47); Keskitasolla se onnistuu vasta toisella rannalla (×11,42), Helpolla ei koskaan.",
+            "- Päätä etukäteen, millä kertoimella kotiutat - ja pidä siitä kiinni. Kiinteän palautuksen ansiosta mikään strategia ei ole toista parempi, vain enemmän tai vähemmän riskialtis."
           ]
         }
       ]

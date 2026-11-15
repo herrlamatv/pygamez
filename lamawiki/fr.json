@@ -146,7 +146,7 @@
           "body": [
             "Chaque jeu avec une progression a sa propre section dans mem.json, par exemple :",
             "- sudoku : niveaux résolus avec étoiles et meilleur temps, grilles commencées et le Sudoku du jour avec sa série.",
-            "- casino : le compte de la Banque Lama - les jetons Lama du Blackjack, du Poker et du Casino avec le bilan de chaque jeu.",
+            "- casino : le compte de la Banque Lama - les jetons Lama du Blackjack, du Poker, du Casino et de Lama Crossing avec le bilan de chaque jeu, plus une traversée de Lama Crossing en cours.",
             "- crossy : pièces collectées, personnages achetés et meilleur score du jour de Crossy Road.",
             "- tetris : meilleur temps en Sprint, meilleur score en Ultra et bilan du duel contre l'IA.",
             "- g2048 : parties de 2048 sauvegardées et meilleurs scores par taille de plateau et par mode.",
@@ -348,7 +348,7 @@
         {
           "h": "Aperçu",
           "body": [
-            "250 succès dans les 46 jeux - du premier lancement au Perfect Clear dans Tetris.",
+            "256 succès dans les 47 jeux - du premier lancement au Perfect Clear dans Tetris.",
             "Chaque succès a une rareté, donc une valeur en points ; la somme donne ton niveau.",
             "Bouton Succès et statistiques, onglet Succès. Un filtre masque les succès obtenus ou restants."
           ]
@@ -359,7 +359,7 @@
             "- Général : objectifs d'ensemble - parties, jeux essayés, temps de jeu, records, victoires, jours joués, séries, niveau et duels. Plus des extras : oiseau de nuit, marathon, joueur du week-end.",
             "- Paliers de points : un score cible équitable par jeu.",
             "- Niveaux maîtres : le second palier, bien plus haut - seulement pour les jeux au score illimité.",
-            "- Habitué : 25 parties d'un même jeu. Existe pour chacun des 46 jeux.",
+            "- Habitué : 25 parties d'un même jeu. Existe pour chacun des 47 jeux.",
             "- Moments particuliers : échec et mat, un Yams, la tuile 4096, un trou en un, un coup du chapeau au air hockey, quatre fantômes d'une seule pastille et bien plus."
           ]
         },
@@ -3026,6 +3026,97 @@
             "- Palier Casino : record 5000",
             "- En plein dans le mille : gagner avec un plein à la roulette",
             "- Jackpot Lama : 5 lamas sur une ligne gagnante"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrossing",
+      "category": "games",
+      "game": "LamaCrossingGame",
+      "title": "Lama Crossing",
+      "keywords": [
+        "lama",
+        "crossing",
+        "traversée",
+        "encaisser",
+        "multiplicateur",
+        "jetons",
+        "banque lama",
+        "pont",
+        "rivière",
+        "glace",
+        "mise",
+        "risque"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Le lama traverse pas à pas un pont suspendu, une rivière ou un lac gelé. Chaque pas qui tient fait monter le multiplicateur - un faux pas coûte la mise.",
+            "Choisis ta mise (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ou 10000 jetons Lama) et appuie sur GO : la mise est débitée et le lama fait son premier pas.",
+            "Après chaque pas réussi, tu décides : AVANCER encore ou ENCAISSER - tu reçois alors ta mise multipliée par le multiplicateur actuel. Sur l'autre rive, le gain est encaissé automatiquement, avec des confettis.",
+            "Après l'encaissement, le jeu révèle à quel pas tout aurait lâché. En haut à droite s'affiche l'historique des 12 dernières manches."
+          ]
+        },
+        {
+          "h": "Difficultés",
+          "body": [
+            "Quatre niveaux - à choisir avant chaque manche avec les boutons de la barre du bas ou avec [1] à [4] :",
+            "- Facile : 20 pas, risque de 1/12 par pas (env. 8 %), jusqu'à ×5,52",
+            "- Moyen : 16 pas, risque de 1/7 (env. 14 %), jusqu'à ×11,42",
+            "- Difficile : 13 pas, risque de 1/4 (25 %), jusqu'à ×40,82",
+            "- Extrême : 10 pas, risque de 2/5 (40 %), jusqu'à ×160,42",
+            "Les multiplicateurs sont des tables fixes, calculées pour que chaque stratégie rende à la longue environ 97 % de la mise - peu importe le pas où tu encaisses. L'avantage de la maison est donc d'environ 3 %."
+          ]
+        },
+        {
+          "h": "Trois mondes",
+          "body": [
+            "Le monde ne change que le décor, pas les chances. Change-le avec les boutons de monde en haut à gauche ou avec [W] :",
+            "- Pont suspendu : des planches au-dessus d'un canyon - au faux pas, la planche casse et le lama tombe.",
+            "- Rivière : des pierres de gué dans l'eau - la pierre se dérobe, et plouf !",
+            "- Lac gelé : des plaques de glace sur le lac gelé - des fissures s'étendent, puis la plaque cède.",
+            "Dans chaque monde, le lama porte une écharpe dans la couleur d'accent du jeu."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- [Espace], [Droite] ou clic sur le pas suivant : GO ou pas suivant",
+            "- [Entrée] ou [C] : encaisser (avant une manche, [Entrée] fonctionne comme GO)",
+            "- [Haut] / [Bas], [+] / [-] ou molette : changer la mise",
+            "- [1] à [4] : difficulté, [W] : changer de monde",
+            "La mise, la difficulté et le monde ne se changent qu'entre deux manches. Le monde, la difficulté et la dernière mise sont sauvegardés dans settings.json (section lamacrossing)."
+          ]
+        },
+        {
+          "h": "Jetons Lama",
+          "body": [
+            "Lama Crossing joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker et le Casino (départ 1000, sauvegardé dans mem.json).",
+            "Le record est le plus haut niveau de 1000 + ton bilan à Lama Crossing ; les gains au Blackjack, au Poker ou au Casino ne comptent pas ici.",
+            "Sous 10 jetons tu es fauché : [Entrée] ou un clic prend un prêt de la banque et remet ton compte à 1000. Les prêts ne comptent pas dans le bilan.",
+            "Arrêter en pleine traversée ne coûte rien : la mise, la difficulté et le pas sont sauvegardés, et la partie reprend exactement là au prochain lancement."
+          ]
+        },
+        {
+          "h": "Succès",
+          "body": [
+            "- Habitué de Lama Crossing : 25 parties",
+            "- Palier : record 3000",
+            "- Maître de Lama Crossing : record 10000",
+            "- L'autre rive (rare) : Fais traverser le lama jusqu'au bout dans Lama Crossing",
+            "- Nerfs d'acier (épique) : Encaisse à ×10 ou plus dans Lama Crossing",
+            "- Funambule (légendaire) : Réussis une traversée complète en Extrême dans Lama Crossing"
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Chaque pas est tiré à nouveau - une série de faux pas ne dit rien du pas suivant.",
+            "- On arrive tout au bout environ une manche sur 6 en Facile, une sur 12 en Moyen, une sur 42 en Difficile et seulement une sur 165 en Extrême.",
+            "- Pour Nerfs d'acier (×10), 9 pas suffisent en Difficile (×12,91) et 5 en Extrême (×12,47) ; en Moyen, il faut atteindre l'autre rive (×11,42), en Facile c'est impossible.",
+            "- Fixe à l'avance le multiplicateur auquel tu encaisses - et tiens-t'y. Avec le taux fixe, aucune stratégie n'est meilleure qu'une autre, seulement plus ou moins risquée."
           ]
         }
       ]

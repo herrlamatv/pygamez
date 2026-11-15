@@ -1,6 +1,6 @@
 # PyGameZ in Rust
 
-Die komplette Spielesammlung PyGameZ – alle **46 Spiele**, das Programm mit
+Die komplette Spielesammlung PyGameZ – alle **47 Spiele**, das Programm mit
 Seitenleiste, Menü und Vorspiel-Bildschirmen, Profile, Erfolge & Statistik,
 LamaWiki und Replay-Archiv – als natives Rust-Programm auf
 [rustgame](../rustgame), dem pixelgenauen Nachbau von pygame-ce.
@@ -36,9 +36,9 @@ anderer Datenordner wählen.
 
 | Paket | Inhalt |
 |---|---|
-| `crates/pgz-core` | Daten ohne Grafik: Speicher, Profile, Sprachen (14), Einstellungen, Highscores, Erfolge (250), Statistik, Level, Replays, Wortfilter, Lama-Bank, erzeugte Stammdaten (`defs.rs`) |
+| `crates/pgz-core` | Daten ohne Grafik: Speicher, Profile, Sprachen (14), Einstellungen, Highscores, Erfolge (256), Statistik, Level, Replays, Wortfilter, Lama-Bank, erzeugte Stammdaten (`defs.rs`) |
 | `crates/pgz-engine` | Python-Semantik (`py`: Zufall bitgleich zu CPython, `//`/`%`/`round`/`hypot` wie Python), pygame-Fassade (`pg`), `ui.py` (10 Designs), Audio, Erfolgs-Einblendungen, Dateidialoge, `Game`-Trait |
-| `crates/pgz-games` | Die 46 Spiele, je Datei eine Vorlage aus `games/` (plus Hilfsmodule wie `tetris_core`, `chess_engine`, `geodash_core`, `minigolf_edit`) |
+| `crates/pgz-games` | Die 47 Spiele, je Datei eine Vorlage aus `games/` (plus Hilfsmodule wie `tetris_core`, `chess_engine`, `geodash_core`, `minigolf_edit`) |
 | `crates/pygamez` | Das Programm: Fenster, Seitenleiste, Startbildschirm, Vorspiel/Optionen/Sprache/Willkommen, Profile, Erfolge & Statistik (mit Diagrammen), LamaWiki, Replay-Archiv und -Player |
 
 `crates/pgz-games/src/lib.rs` wird von `tools/gen_games_list.py` geschrieben
@@ -67,7 +67,7 @@ Python-Umgebung des Projekts (`.venv\Scripts\python.exe`).
   Zeitstempel der Wanduhr werden dabei nur in den Ziffern maskiert.
   `--nur-bild` schaltet das ab.
 * **`regression.py [--aufloesung WxH] [--sprache xx] [spiel ...|screens]`** –
-  feste Ereignisfolgen für alle 46 Spiele (mehrere Modi je Spiel) und alle
+  feste Ereignisfolgen für alle 47 Spiele (mehrere Modi je Spiel) und alle
   Bildschirme; nach Änderungen an `py.rs`, `ui.rs`, `pg.rs` oder der App
   immer laufen lassen. Mit `--aufloesung` in jeder Stufe der
   Auflösungsliste (480×360 bis 1280×960), mit `--sprache` in jeder der
@@ -113,9 +113,9 @@ Datenordner.
 
 ## Stand
 
-* **46/46 Spiele** pixelgleich, dazu alle Bildschirme der App,
+* **47/47 Spiele** pixelgleich, dazu alle Bildschirme der App,
   Startbildschirm (alle 10 Designs), Pause-Overlay und Highscore-Banner.
-* Gesamt-Regression (144 Läufe: alle Spiele in mehreren Modi und alle
+* Gesamt-Regression (150 Läufe: alle Spiele in mehreren Modi und alle
   Bildschirme) ohne Abweichung in Bild **und** gespeicherten Daten – in
   allen 14 Sprachen und in jeder Stufe der Auflösungsliste von 480×360 bis
   1280×960. Dazu gehören Teilen/Export (Schach-PGN, Minigolf-Bahn,
