@@ -3044,6 +3044,9 @@
         "množitelj",
         "žetoni",
         "lama banka",
+        "cesta",
+        "promet",
+        "avtomobili",
         "most",
         "reka",
         "led",
@@ -3054,40 +3057,51 @@
         {
           "h": "Kako se igra",
           "body": [
-            "Lama korak za korakom prečka viseči most, reko ali zamrznjeno jezero. Vsak korak, ki zdrži, dvigne množitelj - en napačen korak stane stavo.",
-            "Izberi stavo (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ali 10000 lama žetonov) in pritisni START: stava se odšteje in lama naredi prvi korak.",
-            "Po vsakem uspešnem koraku se odločiš: NAPREJ ali IZPLAČAJ - takrat dobiš stavo, pomnoženo s trenutnim množiteljem. Na drugem bregu se dobitek izplača samodejno, s konfeti.",
-            "Po izplačilu igra razkrije, pri katerem koraku bi šlo narobe. Zgoraj desno je zgodovina zadnjih 12 krogov."
+            "Lama pas za pasom prečka cesto, viseči most, reko ali zamrznjeno jezero. Vsak prehojen pas dvigne množitelj - če lamo kaj zadene, je stava izgubljena.",
+            "Izberi stavo (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ali 10000 lama žetonov) in pritisni START: stava se odšteje in lama stopi na prvi pas.",
+            "Po vsakem prehojenem pasu se odločiš: NAPREJ ali IZPLAČAJ - takrat dobiš stavo, pomnoženo s trenutnim množiteljem (zaokroženo navzdol). Na drugi strani se dobitek izplača samodejno, s konfeti.",
+            "Zgoraj desno je zgodovina zadnjih 12 krogov."
+          ]
+        },
+        {
+          "h": "Ovire in pravi trenutek",
+          "body": [
+            "V vsakem svetu se nekaj približuje in pravi trenutek moraš ujeti sam: na cesti po vsakem pasu vozijo avtomobili in tovornjaki, na visečem mostu skozi most padajo skale, po reki proti tebi plava naplavljen les, na jezeru pa proti tebi drsijo ledeni bloki.",
+            "Če pritisneš START ali NAPREJ, ko je na naslednjem pasu ovira, lamo povozi ali zadene in obleži sploščena - stava je izgubljena. Zato počakaj na vrzel.",
+            "Pas, na katerem lama stoji, je zaščiten: na cesti se spusti zapornica in avtomobili se ustavijo pred lamo, v drugih svetovih ovire na tvojem pasu izginejo. Na pravo vrzel lahko torej mirno počakaš.",
+            "Višja kot je težavnost, gostejši in hitrejši je promet.",
+            "Poleg tega ima vsak pas naključno tveganje, ki ga niti popolna izbira trenutka ne prepreči: na cesti se nenadoma pojavi divjak za volanom, na mostu se zlomi deska, na reki zdrsne kamen, na jezeru pa se udre led."
           ]
         },
         {
           "h": "Težavnosti",
           "body": [
             "Štiri stopnje - izbereš jih pred vsakim krogom z gumbi v spodnji vrstici ali s tipkami [1] do [4]:",
-            "- Lahko: 20 korakov, tveganje 1/12 na korak (pribl. 8 %), do ×5,52",
-            "- Srednje: 16 korakov, tveganje 1/7 (pribl. 14 %), do ×11,42",
-            "- Težko: 13 korakov, tveganje 1/4 (25 %), do ×40,82",
-            "- Ekstremno: 10 korakov, tveganje 2/5 (40 %), do ×160,42",
-            "Množitelji so v stalnih tabelah in izračunani tako, da vsaka strategija dolgoročno vrne približno 97 % stave - ne glede na to, pri katerem koraku izplačaš. Prednost igralnice je torej okoli 3 %."
+            "- Lahko: 22 pasov, tveganje 1/12 na pas (pribl. 8 %), do ×6,57",
+            "- Srednje: 20 pasov, tveganje 1/6 (pribl. 17 %), do ×37,18",
+            "- Težko: 18 pasov, tveganje 3/10 (30 %), do ×595,67",
+            "- Ekstremno: 15 pasov, tveganje 1/2 (50 %), do ×31.784,96 - vsak pas podvoji množitelj: ×1,94, ×3,88, ×7,76 …",
+            "Množitelji so v stalnih tabelah in izračunani tako, da ob dobri izbiri trenutka vsaka strategija dolgoročno vrne približno 97 % stave - ne glede na to, pri katerem pasu izplačaš. Prednost igralnice je torej okoli 3 %."
           ]
         },
         {
-          "h": "Trije svetovi",
+          "h": "Štirje svetovi",
           "body": [
-            "Svet spremeni le videz, ne možnosti. Zamenjaš ga z gumbi svetov zgoraj levo ali s tipko [W]:",
-            "- Viseči most: deske nad sotesko - ob napačnem koraku se deska zlomi in lama pade.",
-            "- Reka: kamni v vodi - kamen zdrsne in lama čofne v vodo.",
-            "- Zamrznjeno jezero: ledene plošče na zamrznjenem jezeru - razpoke se širijo, nato se plošča prelomi.",
+            "Zamenjaš ga s štirimi gumbi svetov zgoraj levo ali s tipko [W]; svet ne spremeni možnosti:",
+            "- Cesta (privzeto): ulica od zgoraj, s pločniki. Lama jo prečka pas za pasom po koščkih prehoda za pešce, medtem ko mimo vozijo avtomobili in tovornjaki - in občasno divjak za volanom.",
+            "- Viseči most: deske nad sotesko, padajoče skale - če se deska zlomi, lama pade.",
+            "- Reka: kamni v vodi, plavajoč naplavljen les - če kamen zdrsne, lama čofne v vodo.",
+            "- Zamrznjeno jezero: ledene plošče na zamrznjenem jezeru, drseči ledeni bloki - razpoke se širijo, nato se plošča prelomi.",
             "V vsakem svetu nosi lama šal v barvi poudarka igre."
           ]
         },
         {
           "h": "Upravljanje",
           "body": [
-            "- [Preslednica], [Desno] ali klik na naslednji korak: START ali naslednji korak",
+            "- [Preslednica], [Desno] ali klik na naslednji pas: START ali NAPREJ - najbolje, ko je pas prost",
             "- [Enter] ali [C]: izplačaj (pred krogom [Enter] deluje kot START)",
             "- [Gor] / [Dol], [+] / [-] ali kolesce miške: spremeni stavo",
-            "- [1] do [4]: težavnost, [W]: zamenjaj svet",
+            "- [1] do [4]: težavnost, [W]: zamenjaj svet (cesta, viseči most, reka, zamrznjeno jezero)",
             "Stavo, težavnost in svet lahko spremeniš le med krogi. Svet, težavnost in zadnja stava se shranijo v settings.json (razdelek lamacrossing)."
           ]
         },
@@ -3097,7 +3111,7 @@
             "Lama Crossing igra s skupnim računom Lama banke - skupaj z Blackjackom, Pokrom in Casinom (začetek 1000, shranjeno v mem.json).",
             "Rekord je najvišje stanje 1000 + tvoje bilance v Lama Crossing; dobitki pri Blackjacku, Pokru ali Casinu tu ne štejejo.",
             "Pod 10 žetoni si v bankrotu: [Enter] ali klik vzame bančno posojilo in račun spet napolni na 1000. Posojila ne štejejo v bilanco.",
-            "Prenehati sredi prehoda je varno: stava, težavnost in korak se shranijo, ob naslednjem zagonu pa nadaljuješ natanko tam."
+            "Prenehati sredi prehoda je varno: stava, težavnost in pas se shranijo, ob naslednjem zagonu pa nadaljuješ natanko tam."
           ]
         },
         {
@@ -3108,15 +3122,16 @@
             "- Mojster igre Lama Crossing: rekord 10000",
             "- Drugi breg (redek): Spravi lamo v Lama Crossing čisto na drugi breg",
             "- Jeklene živce (epski): Izplačaj v Lama Crossing pri ×10 ali več",
-            "- Hoja po vrvi (legendaren): Opravi v Lama Crossing cel prehod na ekstremni težavnosti"
+            "- Hoja po vrvi (legendaren): Izplačaj v Lama Crossing na ekstremni težavnosti pri ×100 ali več"
           ]
         },
         {
           "h": "Nasveti",
           "body": [
-            "- Vsak korak se izžreba na novo - niz napačnih korakov ne pove ničesar o naslednjem.",
-            "- Čisto na drugi breg prideš približno v vsakem 6. krogu na Lahko, v vsakem 12. na Srednje, v vsakem 42. na Težko in le v vsakem 165. na Ekstremno.",
-            "- Za Jeklene živce (×10) zadošča na Težko 9 korakov (×12,91) in na Ekstremno že 5 (×12,47); na Srednje uspe šele na drugem bregu (×11,42), na Lahko nikoli.",
+            "- Ne mudi se: na svojem pasu je lama na varnem. Opazuj naslednji pas in stopi naprej šele, ko pride prava vrzel.",
+            "- Vsak pas se izžreba na novo - niz porazov ne pove ničesar o naslednjem.",
+            "- Ob dobri izbiri trenutka prideš čisto na drugo stran približno v vsakem 7. krogu na Lahko, v vsakem 38. na Srednje, v vsakem 614. na Težko in le v enem od 32.768 na Ekstremno.",
+            "- Za Jeklene živce (×10) zadoščajo na Ekstremno 4 pasovi (×15,52), na Težko 7 (×11,77) in na Srednje 13 (×10,37); na Lahko nikoli (največ ×6,57). Za Hojo po vrvi (×100 na Ekstremno) potrebuješ 7 pasov (×124,16) - to uspe približno v vsakem 128. krogu.",
             "- Vnaprej se odloči, pri katerem množitelju boš izplačal - in se tega drži. Zaradi stalnega vračila nobena strategija ni boljša od druge, le bolj ali manj tvegana."
           ]
         }

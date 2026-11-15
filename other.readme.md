@@ -91,7 +91,7 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Geometry Dash** | 1 joueur    | Plateforme rythmique avec cube, vaisseau, boule, OVNI et onde : 16 niveaux de Facile à Démon avec 3 pièces secrètes chacun, mode entraînement, bande-son par niveau, plus une bibliothèque de **80 autres niveaux** en 10 catégories avec recherche et 12 modèles ; **éditeur de niveaux** avec partage en `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 joueurs | Bataille navale 10x10 : flotte placée par glisser-déposer, 3 règles au choix (contact, salve, rejouer), IA à 3 niveaux ou duel local avec écran de passation |
 | **Casino**      | 1 joueur      | Roulette européenne avec toutes les mises classiques et Machine Lama (5 rouleaux, 10 lignes, wild, tours gratuits) ; un seul compte de jetons Lama avec le Blackjack et le Poker |
-| **Lama Crossing** | 1 joueur      | Jeu de nerfs avec jetons Lama : traverser pas à pas un pont suspendu, une rivière ou un lac gelé, encaisser après chaque pas ou continuer ; 4 difficultés jusqu'à ×160, taux de retour ~97 % |
+| **Lama Crossing** | 1 joueur      | Jeu de nerfs avec jetons Lama : voie par voie à travers route, pont suspendu, rivière ou lac gelé, guetter les trous dans la circulation, encaisser après chaque voie ; 4 difficultés jusqu'à ×31 784, retour ~97 % |
 
 **Le multijoueur (2 joueurs en local)** est disponible pour **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duel
@@ -783,33 +783,44 @@ bouclier, amélioration d'arme), effets d'explosion, meilleur score.
 
 **Lama Crossing**
 - **Jeu de nerfs avec jetons Lama** : choisis ta mise (10 à 10000), appuie sur
-  **GO** - le lama traverse pas à pas un canyon, une rivière ou un lac gelé.
-  Chaque pas qui tient fait monter le **multiplicateur**, un faux pas coûte la
-  mise. Après chaque pas, c'est **AVANCER** ou **ENCAISSER** ; sur l'autre rive,
-  le gain est encaissé automatiquement - avec des confettis.
-- **4 difficultés** : Facile (20 pas, risque 1/12, jusqu'à ×5,52), Moyen (16,
-  1/7, jusqu'à ×11,42), Difficile (13, 1/4, jusqu'à ×40,82) et Extrême (10, 2/5,
-  jusqu'à ×160,42). Les multiplicateurs sont des tables d'entiers fixes dans
-  `lamacrossing_logic.py`, calculées pour que **chaque stratégie d'encaissement
-  rende environ 97 %** - peu importe quand on s'arrête.
-- **3 mondes** (décor uniquement, touche **W**) : **pont suspendu** au-dessus du
-  canyon (la planche casse, le lama tombe), **pierres de gué dans la rivière**
-  (la pierre se dérobe, plouf) et **plaques de glace sur le lac gelé** (les
-  fissures s'étendent, la plaque cède). Le lama porte une écharpe dans la
-  couleur d'accent du jeu.
-- **Révélation** : après l'encaissement, le jeu montre à quel pas tout aurait
-  lâché ; en haut à droite s'affiche l'historique des 12 dernières manches.
+  **GO** - le lama traverse voie par voie une route, un canyon, une rivière ou
+  un lac gelé. Chaque voie franchie fait monter le **multiplicateur**, se faire
+  prendre coûte la mise. Après chaque voie, c'est **AVANCER** ou **ENCAISSER** ;
+  de l'autre côté, le gain est encaissé automatiquement - avec des confettis.
+- **Obstacles et timing** : sur la route, voitures et camions roulent sur chaque
+  voie, sur le pont suspendu des rochers tombent à travers le pont, sur la
+  rivière du bois flotté dérive vers toi et sur le lac gelé des blocs de glace
+  glissent vers toi. Partir alors que la voie suivante est occupée, c'est se
+  faire renverser ou percuter et rester **aplati** - attends donc une ouverture.
+  La voie où se tient le lama est protégée (sur la route, une barrière s'abaisse
+  et les voitures s'arrêtent ; ailleurs, les obstacles y disparaissent). Plus le
+  niveau est élevé, plus la circulation est dense et rapide.
+- **4 difficultés** : Facile (22 voies, risque 1/12, jusqu'à ×6,57), Moyen (20,
+  1/6, jusqu'à ×37,18), Difficile (18, 3/10, jusqu'à ×595,67) et Extrême (15,
+  1/2, jusqu'à ×31 784,96 - chaque voie double). Le risque aléatoire par voie
+  s'ajoute à la circulation : un **chauffard** qui surgit sur la route, une
+  planche qui casse, une pierre qui se dérobe ou de la glace qui cède. Les
+  multiplicateurs sont des tables d'entiers fixes dans `lamacrossing_logic.py`,
+  calculées pour que **chaque stratégie d'encaissement rende environ 97 % avec
+  un bon timing** - peu importe quand on s'arrête.
+- **4 mondes** (boutons en haut à gauche, touche **W**) : la **route** vue du
+  dessus avec trottoirs et tronçons de passage piéton (par défaut), le **pont
+  suspendu** au-dessus du canyon, les **pierres de gué dans la rivière** et les
+  **plaques de glace sur le lac gelé**. Le lama porte une écharpe dans la
+  couleur d'accent du jeu ; en haut à droite s'affiche l'historique des 12
+  dernières manches.
 - **Banque Lama** : le même compte que le Blackjack, le Poker et le Casino. Le
   record est le plus haut niveau de 1000 + bilan de Lama Crossing, et sous 10
   jetons tu reçois un **crédit bancaire** qui remonte le compte à 1000. Quitter
-  en pleine traversée ne coûte rien : mise, difficulté et pas sont sauvegardés,
-  le prochain lancement reprend exactement là.
-- Commandes : **Espace**/**→**/clic sur le pas suivant = GO ou avancer,
-  **Entrée**/**C** = encaisser, **↑**/**↓**/**+**/**-**/molette = mise, **1-4**
-  = difficulté ; monde, difficulté et dernière mise sont dans la section
-  `lamacrossing` de `settings.json`. Succès **L'autre rive**, **Nerfs d'acier**
-  (encaisser à ×10 ou plus) et **Funambule** (traversée complète en Extrême),
-  plus un palier à 3000 et un niveau maître à 10000.
+  en pleine traversée ne coûte rien : mise, difficulté et voie sont
+  sauvegardées, le prochain lancement reprend exactement là.
+- Commandes : **Espace**/**→**/clic sur la voie suivante = GO ou avancer (dès
+  que la voie est libre), **Entrée**/**C** = encaisser,
+  **↑**/**↓**/**+**/**-**/molette = mise, **1-4** = difficulté, **W** = monde ;
+  monde, difficulté et dernière mise sont dans la section `lamacrossing` de
+  `settings.json`. Succès **L'autre rive**, **Nerfs d'acier** (encaisser à ×10
+  ou plus) et **Funambule** (encaisser à ×100 ou plus en Extrême), plus un
+  palier à 3000 et un niveau maître à 10000.
 
 Les meilleurs scores sont enregistrés dans la section `highscores` de
 `mem.json` (à côté du code) – avec la langue (section `mem`).
@@ -1228,7 +1239,7 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Geometry Dash** | 1 jugador     | Plataformas rítmico con cubo, nave, bola, OVNI y onda: 16 niveles de Fácil a Demonio con 3 monedas secretas cada uno, modo práctica, banda sonora por nivel, más una biblioteca de **80 niveles adicionales** en 10 categorías con búsqueda y 12 plantillas; **editor de niveles** con compartir como `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 jugadores | Batalla naval 10x10: flota colocada arrastrando, 3 reglas opcionales (contacto, salva, repetir disparo), IA de 3 niveles o duelo local con pantalla de relevo |
 | **Casino**      | 1 jugador       | Ruleta europea con todas las apuestas clásicas y Máquina Llama (5 rodillos, 10 líneas, comodín, tiradas gratis); una sola cuenta de fichas Llama con Blackjack y Póker |
-| **Lama Crossing** | 1 jugador       | Juego de nervios con fichas Llama: cruzar paso a paso un puente colgante, un río o un lago helado, cobrar tras cada paso o seguir; 4 dificultades hasta ×160, retorno ~97 % |
+| **Lama Crossing** | 1 jugador       | Juego de nervios con fichas Llama: cruzar carril a carril una calle, un puente colgante, un río o un lago helado esquivando el tráfico, cobrar tras cada carril; 4 dificultades hasta ×31.784, retorno ~97 % |
 
 **El multijugador (2 jugadores en local)** está disponible en **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
@@ -1883,32 +1894,43 @@ arma), efectos de explosión, récord.
 
 **Lama Crossing**
 - **Juego de nervios con fichas Llama**: elige tu apuesta (10 a 10000) y pulsa
-  **VAMOS**: la llama cruza paso a paso un cañón, un río o un lago helado. Cada
-  paso que aguanta sube el **multiplicador**, un paso en falso cuesta la
-  apuesta. Tras cada paso toca elegir **AVANZAR** o **COBRAR**; en la otra
-  orilla se cobra automáticamente, con confeti.
-- **4 dificultades**: Fácil (20 pasos, riesgo 1/12, hasta ×5,52), Medio (16,
-  1/7, hasta ×11,42), Difícil (13, 1/4, hasta ×40,82) y Extremo (10, 2/5, hasta
-  ×160,42). Los multiplicadores son tablas fijas de enteros en
-  `lamacrossing_logic.py`, calculadas para que **cualquier estrategia de cobro
-  devuelva cerca del 97 %**, pares cuando pares.
-- **3 mundos** (solo estéticos, tecla **W**): **puente colgante** sobre el cañón
-  (el tablón se rompe y la llama cae), **piedras en el río** (la piedra resbala,
-  chapuzón) y **placas de hielo en el lago helado** (las grietas se extienden y
-  la placa se rompe). La llama lleva una bufanda del color de acento del juego.
-- **Revelación**: después de cobrar, el juego muestra en qué paso habría salido
-  mal; arriba a la derecha aparece el historial de las últimas 12 rondas.
+  **VAMOS**: la llama cruza carril a carril una calle, un cañón, un río o un
+  lago helado. Cada carril superado sube el **multiplicador**; si algo alcanza a
+  la llama, se pierde la apuesta. Tras cada carril toca elegir **AVANZAR** o
+  **COBRAR**; al llegar al otro lado se cobra automáticamente, con confeti.
+- **Obstáculos y timing**: en la calle circulan coches y camiones por cada
+  carril, en el puente colgante caen rocas a través del puente, en el río flotan
+  troncos hacia ti y en el lago helado se deslizan bloques de hielo. Si sales
+  con el siguiente carril ocupado, la llama acaba atropellada o golpeada y queda
+  **aplastada**, así que espera un hueco. El carril en el que está la llama está
+  protegido (en la calle baja una barrera y los coches se detienen; en los demás
+  mundos los obstáculos desaparecen de él). Los niveles altos traen tráfico más
+  denso y rápido.
+- **4 dificultades**: Fácil (22 carriles, riesgo 1/12, hasta ×6,57), Medio (20,
+  1/6, hasta ×37,18), Difícil (18, 3/10, hasta ×595,67) y Extremo (15, 1/2,
+  hasta ×31.784,96; cada carril duplica). El riesgo aleatorio por carril se suma
+  al tráfico: un **conductor temerario** que aparece de repente en la calle, un
+  tablón que se rompe, una piedra que resbala o hielo que cede. Los
+  multiplicadores son tablas fijas de enteros en `lamacrossing_logic.py`,
+  calculadas para que **cualquier estrategia de cobro devuelva cerca del 97 %
+  con buen timing**, pares cuando pares.
+- **4 mundos** (botones arriba a la izquierda, tecla **W**): la **calle** vista
+  desde arriba con aceras y tramos de paso de cebra (predeterminado), el
+  **puente colgante** sobre el cañón, las **piedras en el río** y las **placas
+  de hielo en el lago helado**. La llama lleva una bufanda del color de acento
+  del juego; arriba a la derecha aparece el historial de las últimas 12 rondas.
 - **Banco Llama**: la misma cuenta que Blackjack, Póker y Casino. El récord es
   el máximo de 1000 + balance de Lama Crossing, y con menos de 10 fichas recibes
   un **préstamo del banco** hasta 1000. Salir a mitad de la travesía no cuesta
-  nada: apuesta, dificultad y paso se guardan, y el siguiente inicio continúa
+  nada: apuesta, dificultad y carril se guardan, y el siguiente inicio continúa
   justo ahí.
-- Controles: **Espacio**/**→**/clic en el siguiente paso = VAMOS o avanzar,
-  **Enter**/**C** = cobrar, **↑**/**↓**/**+**/**-**/rueda = apuesta, **1-4** =
-  dificultad; mundo, dificultad y última apuesta se guardan en la sección
-  `lamacrossing` de `settings.json`. Logros **La otra orilla**, **Nervios de
-  acero** (cobrar con ×10 o más) y **Equilibrista** (travesía completa en
-  Extremo), además de un hito de 3000 y un nivel maestro de 10000.
+- Controles: **Espacio**/**→**/clic en el siguiente carril = VAMOS o avanzar (en
+  cuanto el carril esté libre), **Enter**/**C** = cobrar,
+  **↑**/**↓**/**+**/**-**/rueda = apuesta, **1-4** = dificultad, **W** = mundo;
+  mundo, dificultad y última apuesta se guardan en la sección `lamacrossing` de
+  `settings.json`. Logros **La otra orilla**, **Nervios de acero** (cobrar con
+  ×10 o más) y **Equilibrista** (cobrar con ×100 o más en Extremo), además de un
+  hito de 3000 y un nivel maestro de 10000.
 
 Los récords se guardan en la sección `highscores` de `mem.json` (junto al
 código) – junto con el idioma (sección `mem`).
@@ -2317,7 +2339,7 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Geometry Dash** | 1 jogador     | Plataformas rítmico com cubo, nave, bola, OVNI e onda: 16 níveis de Fácil a Demónio com 3 moedas secretas cada, modo treino, banda sonora por nível, mais uma biblioteca de **80 níveis adicionais** em 10 categorias com procura e 12 modelos; **editor de níveis** com partilha como `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 jogadores | Batalha naval 10x10: frota posicionada arrastando, 3 regras opcionais (tocar, salva, voltar a disparar), IA com 3 níveis ou duelo local com ecrã de passagem |
 | **Casino**      | 1 jogador       | Roleta europeia com todas as apostas clássicas e Máquina Lama (5 rolos, 10 linhas, wild, rodadas grátis); uma só conta de fichas Lama com o Blackjack e o Póquer |
-| **Lama Crossing** | 1 jogador       | Jogo de nervos com fichas Lama: atravessar passo a passo uma ponte suspensa, um rio ou um lago gelado, levantar após cada passo ou continuar; 4 dificuldades até ×160, retorno ~97 % |
+| **Lama Crossing** | 1 jogador       | Jogo de nervos com fichas Lama: atravessar faixa a faixa uma estrada, uma ponte suspensa, um rio ou um lago gelado a desviar do trânsito, levantar após cada faixa; 4 dificuldades até ×31.784, retorno ~97 % |
 
 **O multijogador (2 jogadores em local)** está disponível em **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
@@ -2966,32 +2988,43 @@ melhoria de arma), efeitos de explosão, recorde.
 
 **Lama Crossing**
 - **Jogo de nervos com fichas Lama**: escolhe a aposta (10 a 10000) e carrega em
-  **VAI** - a lama atravessa passo a passo um desfiladeiro, um rio ou um lago
-  gelado. Cada passo que aguenta faz subir o **multiplicador**, um passo em
-  falso custa a aposta. Depois de cada passo é **AVANÇAR** ou **LEVANTAR**; na
-  outra margem o prémio é levantado automaticamente - com confetes.
-- **4 dificuldades**: Fácil (20 passos, risco 1/12, até ×5,52), Médio (16, 1/7,
-  até ×11,42), Difícil (13, 1/4, até ×40,82) e Extremo (10, 2/5, até ×160,42).
-  Os multiplicadores são tabelas fixas de inteiros em `lamacrossing_logic.py`,
+  **VAI** - a lama atravessa faixa a faixa uma estrada, um desfiladeiro, um rio
+  ou um lago gelado. Cada faixa conseguida faz subir o **multiplicador**; se a
+  lama for apanhada, perde-se a aposta. Depois de cada faixa é **AVANÇAR** ou
+  **LEVANTAR**; do outro lado o prémio é levantado automaticamente - com
+  confetes.
+- **Obstáculos e timing**: na estrada passam carros e camiões em cada faixa, na
+  ponte suspensa caem pedregulhos através da ponte, no rio vêm troncos à deriva
+  e no lago gelado deslizam blocos de gelo. Se avançares com a faixa seguinte
+  ocupada, a lama é atropelada ou atingida e fica **espalmada** no chão - por
+  isso, espera por uma abertura. A faixa onde a lama está é protegida (na
+  estrada baixa uma cancela e os carros param; nos outros mundos os obstáculos
+  desaparecem dela). Níveis mais altos trazem trânsito mais denso e rápido.
+- **4 dificuldades**: Fácil (22 faixas, risco 1/12, até ×6,57), Médio (20, 1/6,
+  até ×37,18), Difícil (18, 3/10, até ×595,67) e Extremo (15, 1/2, até
+  ×31.784,96 - cada faixa duplica). O risco aleatório por faixa soma-se ao
+  trânsito: um **carro a alta velocidade** que surge de repente na estrada, uma
+  tábua que se parte, uma pedra que escorrega ou gelo que cede. Os
+  multiplicadores são tabelas fixas de inteiros em `lamacrossing_logic.py`,
   calculadas para que **qualquer estratégia de levantamento devolva cerca de
-  97 %** - seja quando for que se pare.
-- **3 mundos** (só visual, tecla **W**): **ponte suspensa** sobre o desfiladeiro
-  (a tábua parte-se e a lama cai), **pedras no rio** (a pedra escorrega, splash)
-  e **placas de gelo no lago gelado** (as fissuras alastram e a placa parte-se).
-  A lama usa um cachecol na cor de destaque do jogo.
-- **Revelação**: depois de levantar, o jogo mostra em que passo teria corrido
-  mal; em cima à direita aparece o histórico das últimas 12 rondas.
+  97 % com bom timing** - seja quando for que se pare.
+- **4 mundos** (botões em cima à esquerda, tecla **W**): a **estrada** vista de
+  cima, com passeios e troços de passadeira (predefinido), a **ponte suspensa**
+  sobre o desfiladeiro, as **pedras no rio** e as **placas de gelo no lago
+  gelado**. A lama usa um cachecol na cor de destaque do jogo; em cima à direita
+  aparece o histórico das últimas 12 rondas.
 - **Banco Lama**: a mesma conta do Blackjack, do Póquer e do Casino. O recorde é
   o máximo de 1000 + saldo do Lama Crossing, e abaixo de 10 fichas recebes um
   **crédito do banco** até 1000. Sair a meio da travessia não custa nada:
-  aposta, dificuldade e passo ficam guardados, e o próximo arranque continua
+  aposta, dificuldade e faixa ficam guardadas, e o próximo arranque continua
   exatamente aí.
-- Controlos: **Espaço**/**→**/clique no passo seguinte = VAI ou avançar,
-  **Enter**/**C** = levantar, **↑**/**↓**/**+**/**-**/roda do rato = aposta,
-  **1-4** = dificuldade; mundo, dificuldade e última aposta ficam na secção
-  `lamacrossing` do `settings.json`. Conquistas **A outra margem**, **Nervos de
-  aço** (levantar com ×10 ou mais) e **Equilibrista** (travessia completa no
-  Extremo), mais um marco de 3000 e um nível mestre de 10000.
+- Controlos: **Espaço**/**→**/clique na faixa seguinte = VAI ou avançar (assim
+  que a faixa estiver livre), **Enter**/**C** = levantar,
+  **↑**/**↓**/**+**/**-**/roda do rato = aposta, **1-4** = dificuldade, **W** =
+  mundo; mundo, dificuldade e última aposta ficam na secção `lamacrossing` do
+  `settings.json`. Conquistas **A outra margem**, **Nervos de aço** (levantar
+  com ×10 ou mais) e **Equilibrista** (levantar com ×100 ou mais no Extremo),
+  mais um marco de 3000 e um nível mestre de 10000.
 
 Os recordes são guardados na secção `highscores` de `mem.json` (junto ao
 código) – juntamente com o idioma (secção `mem`).
@@ -3397,7 +3430,7 @@ krok po kroku znajduje się na samym dole w sekcji
 | **Geometry Dash** | 1 gracz       | Rytmiczna platformówka z kostką, statkiem, kulą, UFO i falą: 16 poziomów od Łatwego do Demona, w każdym 3 sekretne monety, tryb treningu, soundtrack dla każdego poziomu, do tego biblioteka **80 kolejnych poziomów** w 10 kategoriach z wyszukiwaniem i 12 szablonów; **edytor poziomów** z udostępnianiem jako `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 graczy  | Bitwa morska 10x10: rozstawianie floty przeciąganiem, 3 przełączniki zasad (stykanie, salwa, ponowny strzał), SI z 3 poziomami lub lokalny pojedynek z ekranem przekazania |
 | **Casino**      | 1 gracz       | Ruletka europejska ze wszystkimi klasycznymi zakładami i Automat Lamy (5 bębnów, 10 linii, dziki symbol, darmowe spiny); jedno konto żetonów Lamy z Blackjackiem i Pokerem |
-| **Lama Crossing** | 1 gracz       | Gra na nerwy z żetonami Lamy: krok po kroku przez most linowy, rzekę lub lodowe jezioro, po każdym kroku wypłata albo dalej; 4 poziomy trudności do ×160, zwrot ~97% |
+| **Lama Crossing** | 1 gracz       | Gra na nerwy z żetonami Lamy: pas po pasie przez ulicę, most linowy, rzekę lub lodowe jezioro, z wyczuciem luk w ruchu, po każdym pasie wypłata albo dalej; 4 poziomy trudności do ×31 784, zwrot ~97% |
 
 **Tryb wieloosobowy (2 graczy lokalnie)** jest dostępny w grach **Snake**, **Pong**,
 **Air Hockey**, **Kółko i krzyżyk**, **Tetris (Versus)**, **Asteroids (pojedynek
@@ -4125,32 +4158,43 @@ jednoosobowa.
 
 **Lama Crossing**
 - **Gra na nerwy z żetonami Lamy**: wybierz stawkę (10 do 10000) i naciśnij
-  **START** - lama krok po kroku przechodzi przez kanion, rzekę albo zamarznięte
-  jezioro. Każdy krok, który wytrzyma, podnosi **mnożnik**, fałszywy krok
-  kosztuje stawkę. Po każdym kroku wybierasz **DALEJ** albo **WYPŁAĆ**; na
-  drugim brzegu wygrana jest wypłacana automatycznie - z konfetti.
-- **4 poziomy trudności**: Łatwy (20 kroków, ryzyko 1/12, do ×5,52), Średni (16,
-  1/7, do ×11,42), Trudny (13, 1/4, do ×40,82) i Ekstremalny (10, 2/5, do
-  ×160,42). Mnożniki to stałe tabele liczb całkowitych w
-  `lamacrossing_logic.py`, policzone tak, że **każda strategia wypłaty zwraca
-  ok. 97%** - niezależnie od tego, kiedy się zatrzymasz.
-- **3 światy** (tylko wygląd, klawisz **W**): **most linowy** nad kanionem
-  (deska pęka, lama spada), **kamienie w rzece** (kamień się usuwa, plusk) i
-  **kry na zamarzniętym jeziorze** (pęknięcia się rozchodzą, kra się załamuje).
-  Lama nosi szalik w kolorze akcentu gry.
-- **Odsłona**: po wypłacie gra pokazuje, na którym kroku by się nie udało; w
-  prawym górnym rogu widać historię 12 ostatnich rund.
+  **START** - lama pas po pasie przechodzi przez ulicę, kanion, rzekę albo
+  zamarznięte jezioro. Każdy pokonany pas podnosi **mnożnik**, a gdy coś
+  dopadnie lamę, stawka przepada. Po każdym pasie wybierasz **DALEJ** albo
+  **WYPŁAĆ**; po drugiej stronie wygrana jest wypłacana automatycznie - z
+  konfetti.
+- **Przeszkody i timing**: na ulicy każdym pasem jadą samochody i ciężarówki, na
+  moście linowym przez most spadają głazy, na rzece płyną w twoją stronę pnie, a
+  na jeziorze suną bloki lodu. Jeśli ruszysz, gdy następny pas jest zajęty, lama
+  zostaje przejechana lub trafiona i leży **płasko** - czekaj więc na lukę. Pas,
+  na którym stoi lama, jest chroniony (na ulicy opuszcza się szlaban i samochody
+  stają, w innych światach przeszkody tam znikają). Wyższe poziomy to gęstszy i
+  szybszy ruch.
+- **4 poziomy trudności**: Łatwy (22 pasy, ryzyko 1/12, do ×6,57), Średni (20,
+  1/6, do ×37,18), Trudny (18, 3/10, do ×595,67) i Ekstremalny (15, 1/2, do
+  ×31 784,96 - każdy pas podwaja). Losowe ryzyko na każdym pasie dochodzi do
+  ruchu: nagle pojawiający się **pirat drogowy** na ulicy, pękająca deska,
+  usuwający się kamień albo załamujący się lód. Mnożniki to stałe tabele liczb
+  całkowitych w `lamacrossing_logic.py`, policzone tak, że **każda strategia
+  wypłaty przy dobrym timingu zwraca ok. 97%** - niezależnie od tego, kiedy się
+  zatrzymasz.
+- **4 światy** (przyciski w lewym górnym rogu, klawisz **W**): **ulica**
+  widziana z góry, z chodnikami i kawałkami przejścia dla pieszych (domyślna),
+  **most linowy** nad kanionem, **kamienie w rzece** i **kry na zamarzniętym
+  jeziorze**. Lama nosi szalik w kolorze akcentu gry; w prawym górnym rogu widać
+  historię 12 ostatnich rund.
 - **Bank Lamy**: to samo konto co Blackjack, Poker i Casino. Rekord to najwyższy
   stan 1000 + bilansu Lama Crossing, a poniżej 10 żetonów dostajesz **kredyt
   bankowy** do 1000. Wyjście w połowie przeprawy nic nie kosztuje: stawka,
-  poziom trudności i krok są zapisywane, a następny start zaczyna dokładnie w
-  tym miejscu.
-- Sterowanie: **Spacja**/**→**/kliknięcie następnego kroku = START lub dalej,
-  **Enter**/**C** = wypłata, **↑**/**↓**/**+**/**-**/kółko myszy = stawka,
-  **1-4** = poziom trudności; świat, poziom trudności i ostatnia stawka są w
-  sekcji `lamacrossing` pliku `settings.json`. Osiągnięcia **Drugi brzeg**,
-  **Stalowe nerwy** (wypłata przy ×10 lub więcej) i **Na linie** (cała przeprawa
-  na Ekstremalnym) oraz próg 3000 i poziom mistrzowski 10000.
+  poziom trudności i pas są zapisywane, a następny start zaczyna dokładnie w tym
+  miejscu.
+- Sterowanie: **Spacja**/**→**/kliknięcie następnego pasa = START lub dalej (gdy
+  pas jest wolny), **Enter**/**C** = wypłata, **↑**/**↓**/**+**/**-**/kółko
+  myszy = stawka, **1-4** = poziom trudności, **W** = świat; świat, poziom
+  trudności i ostatnia stawka są w sekcji `lamacrossing` pliku `settings.json`.
+  Osiągnięcia **Drugi brzeg**, **Stalowe nerwy** (wypłata przy ×10 lub więcej) i
+  **Na linie** (wypłata przy ×100 lub więcej na Ekstremalnym) oraz próg 3000 i
+  poziom mistrzowski 10000.
 
 Rekordy są przechowywane w sekcji `highscores` pliku `mem.json` (obok kodu) —
 razem z językiem (sekcja `mem`).
@@ -4555,7 +4599,7 @@ yoksa sistemdeki Python'ı. Ayrıntılı, adım adım bir kılavuz en altta
 | **Geometry Dash** | 1 oyuncu    | Küp, gemi, top, UFO ve dalgalı ritim platform oyunu: Kolay'dan İblis'e her birinde 3 gizli altın olan 16 bölüm, antrenman modu, bölüm başına müzik, ayrıca 10 kategoride aranabilen **80 bölümlük** kütüphane ve 12 şablon; `.lamapgzlevel` olarak paylaşımlı **bölüm editörü** |
 | **Battleship**  | 1 / 2 oyuncu | 10x10 deniz savaşı: sürükle-bırak filo yerleşimi, 3 kural anahtarı (temas, salvo, tekrar ateş), 3 seviyeli yapay zekâ ya da devir ekranlı yerel düello |
 | **Casino**      | 1 oyuncu     | Tüm klasik bahislerle Avrupa ruleti ve Lama Slotu (5 makara, 10 hat, joker, bedava dönüşler); Blackjack ve Poker ile tek bir Lama çipi hesabı |
-| **Lama Crossing** | 1 oyuncu     | Lama çipleriyle cesaret oyunu: asma köprü, nehir ya da buz gölü üzerinden adım adım geç, her adımdan sonra çek ya da devam et; ×160'a kadar 4 zorluk, ~%97 geri ödeme |
+| **Lama Crossing** | 1 oyuncu     | Lama çipleriyle cesaret oyunu: yol, asma köprü, nehir ya da buz gölü üzerinden şerit şerit geç, trafikteki boşlukları kolla, her şeritten sonra çek ya da devam et; en fazla ×31.784, 4 zorluk, ~%97 geri ödeme |
 
 **Çok oyunculu (2 oyuncu yerel)** şu oyunlarda mevcuttur: **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (ortaklaşa
@@ -5286,32 +5330,40 @@ patlama efektleri, yüksek skor.
 
 **Lama Crossing**
 - **Lama çipleriyle cesaret oyunu**: bahsini seç (10 ile 10000 arası),
-  **BAŞLA**'ya bas - lama bir kanyonu, bir nehri ya da donmuş bir gölü adım adım
-  geçer. Sağlam çıkan her adım **çarpanı** yükseltir, yanlış bir adım bahse mal
-  olur. Her adımdan sonra **İLERLE** ya da **ÇEK**; karşı kıyıda kazanç otomatik
-  olarak çekilir - konfetiyle.
-- **4 zorluk**: Kolay (20 adım, 1/12 risk, ×5,52'ye kadar), Orta (16, 1/7,
-  ×11,42'ye kadar), Zor (13, 1/4, ×40,82'ye kadar) ve Aşırı (10, 2/5, ×160,42'ye
-  kadar). Çarpanlar `lamacrossing_logic.py` içinde sabit tam sayı tablolarıdır
-  ve **her çekme stratejisi yaklaşık %97 geri verecek** şekilde hesaplanmıştır -
-  ne zaman durduğun fark etmez.
-- **3 dünya** (yalnızca görünüm, **W** tuşu): kanyon üzerinde **asma köprü**
-  (tahta kırılır, lama düşer), **nehirde basamak taşları** (taş kayar, lama suya
-  düşer) ve **donmuş gölde buz kütleleri** (çatlaklar yayılır, buz kırılır).
-  Lama, oyunun vurgu renginde bir atkı takar.
-- **Açıklama**: çektikten sonra oyun, işin hangi adımda ters gideceğini
-  gösterir; sağ üstte son 12 turun geçmişi durur.
+  **BAŞLA**'ya bas - lama bir yolu, bir kanyonu, bir nehri ya da donmuş bir gölü
+  şerit şerit geçer. Geçilen her şerit **çarpanı** yükseltir, lamaya bir şey
+  çarparsa bahis gider. Her şeritten sonra **İLERLE** ya da **ÇEK**; karşı
+  tarafta kazanç otomatik olarak çekilir - konfetiyle.
+- **Engeller ve zamanlama**: yolda her şeritte arabalar ve kamyonlar geçer, asma
+  köprüde kayalar köprünün içinden düşer, nehirde sürüklenen kütükler sana doğru
+  gelir, buz gölünde buz blokları kayar. Sıradaki şerit doluyken yürürsen lamayı
+  araba ezer ya da bir şey çarpar ve lama **yassı** kalır - o yüzden bir boşluk
+  bekle. Lamanın durduğu şerit korunur (yolda bir bariyer iner ve arabalar
+  durur, diğer dünyalarda engeller orada kaybolur). Yüksek zorluklar daha yoğun
+  ve hızlı trafik getirir.
+- **4 zorluk**: Kolay (22 şerit, 1/12 risk, en fazla ×6,57), Orta (20, 1/6, en
+  fazla ×37,18), Zor (18, 3/10, en fazla ×595,67) ve Aşırı (15, 1/2, en fazla
+  ×31.784,96 - her şerit ikiye katlar). Şerit başına rastgele risk trafiğe
+  eklenir: yolda aniden çıkan **çok hızlı bir araba**, kırılan bir tahta, kayan
+  bir taş ya da çöken buz. Çarpanlar `lamacrossing_logic.py` içinde sabit tam
+  sayı tablolarıdır ve **iyi zamanlamayla her çekme stratejisi yaklaşık %97 geri
+  verecek** şekilde hesaplanmıştır - ne zaman durduğun fark etmez.
+- **4 dünya** (sol üstteki düğmeler, **W** tuşu): yukarıdan görülen, kaldırımlı
+  ve yaya geçidi parçalı **yol** (varsayılan), kanyon üzerinde **asma köprü**,
+  **nehirde basamak taşları** ve **donmuş gölde buz kütleleri**. Lama, oyunun
+  vurgu renginde bir atkı takar; sağ üstte son 12 turun geçmişi durur.
 - **Lama Bankası**: Blackjack, Poker ve Casino ile aynı hesap. Rekor, 1000 +
   Lama Crossing bakiyesinin en yüksek değeridir; 10 çipin altında hesabı 1000'e
   tamamlayan bir **banka kredisi** gelir. Geçişin ortasında çıkmak hiçbir şeye
-  mal olmaz: bahis, zorluk ve adım kaydedilir, bir sonraki başlangıç tam oradan
+  mal olmaz: bahis, zorluk ve şerit kaydedilir, bir sonraki başlangıç tam oradan
   devam eder.
-- Kontroller: **Boşluk**/**→**/sıradaki adıma tık = BAŞLA ya da ilerle,
-  **Enter**/**C** = çek, **↑**/**↓**/**+**/**-**/fare tekerleği = bahis, **1-4**
-  = zorluk; dünya, zorluk ve son bahis `settings.json` içindeki `lamacrossing`
-  bölümünde durur. **Karşı kıyı**, **Çelik sinirler** (×10 veya üzerinde çekmek)
-  ve **İp cambazı** (Aşırı'da tam geçiş) başarımları, ayrıca 3000 kilometre taşı
-  ve 10000 usta seviyesi.
+- Kontroller: **Boşluk**/**→**/sıradaki şeride tık = BAŞLA ya da ilerle (şerit
+  boşalınca), **Enter**/**C** = çek, **↑**/**↓**/**+**/**-**/fare tekerleği =
+  bahis, **1-4** = zorluk, **W** = dünya; dünya, zorluk ve son bahis
+  `settings.json` içindeki `lamacrossing` bölümünde durur. **Karşı kıyı**,
+  **Çelik sinirler** (×10 veya üzerinde çekmek) ve **İp cambazı** (Aşırı'da ×100
+  veya üzerinde çekmek) başarımları, ayrıca 3000 kilometre taşı ve 10000 usta
+  seviyesi.
 
 Yüksek skorlar `mem.json` dosyasının `highscores` bölümünde (kodun yanında) - dil
 ile birlikte (`mem` bölümü) saklanır.
@@ -5709,7 +5761,7 @@ nederst under **[Installationsguide](#installationsguide)**.
 | **Geometry Dash** | 1 spiller   | Rytme-platformspil med terning, skib, bold, UFO og bølge: 16 baner fra Let til Dæmon med 3 hemmelige mønter hver, træningstilstand, soundtrack pr. bane, dertil et bibliotek med **80 baner mere** i 10 kategorier med søgning og 12 skabeloner; **baneeditor** med deling som `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 spillere | Søslag på 10x10: flåden placeres med træk og slip, 3 regelkontakter (berøring, salve, skyd igen), AI med 3 styrker eller lokal duel med overdragelsesskærm |
 | **Casino**      | 1 spiller     | Europæisk roulette med alle klassiske indsatser og Lama-slot (5 hjul, 10 gevinstlinjer, wild, gratisspil); én lama-chip-konto sammen med Blackjack og Poker |
-| **Lama Crossing** | 1 spiller     | Nervespil med lama-chips: skridt for skridt over hængebro, flod eller issø, udbetal efter hvert skridt eller fortsæt; 4 sværhedsgrader op til ×160, ~97 % tilbagebetaling |
+| **Lama Crossing** | 1 spiller     | Nervespil med lama-chips: bane for bane over vej, hængebro, flod eller issø, ram hullerne i trafikken, udbetal efter hver bane eller fortsæt; 4 sværhedsgrader op til ×31.784, ~97 % tilbagebetaling |
 
 **Multiplayer (2 spillere lokalt)** findes til **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op-duel)**,
@@ -6413,31 +6465,41 @@ eksplosionseffekter, highscore.
 
 **Lama Crossing**
 - **Nervespil med lama-chips**: vælg indsats (10 til 10000), tryk **START** -
-  lamaen krydser skridt for skridt en kløft, en flod eller en tilfrossen sø.
-  Hvert skridt, der holder, hæver **multiplikatoren**, et fejltrin koster
-  indsatsen. Efter hvert skridt hedder det **VIDERE** eller **UDBETAL**; på den
-  anden bred udbetales der automatisk - med konfetti.
-- **4 sværhedsgrader**: Let (20 skridt, risiko 1/12, op til ×5,52), Middel (16,
-  1/7, op til ×11,42), Svær (13, 1/4, op til ×40,82) og Ekstrem (10, 2/5, op til
-  ×160,42). Multiplikatorerne er faste heltalstabeller i
-  `lamacrossing_logic.py`, beregnet så **enhver udbetalingsstrategi giver
-  omkring 97 % tilbage** - uanset hvornår man stopper.
-- **3 verdener** (kun grafik, tast **W**): **hængebro** over kløften (planken
-  knækker, lamaen styrter ned), **trædesten i floden** (stenen glider væk,
-  plask) og **isflager på den tilfrosne sø** (revnerne breder sig, flagen
-  brister). Lamaen bærer et halstørklæde i spillets accentfarve.
-- **Afsløring**: efter udbetalingen viser spillet, ved hvilket skridt det ville
-  være gået galt; øverst til højre står historikken for de sidste 12 runder.
+  lamaen krydser bane for bane en vej, en kløft, en flod eller en tilfrossen sø.
+  Hver klaret bane hæver **multiplikatoren**; bliver lamaen ramt, er indsatsen
+  tabt. Efter hver bane hedder det **VIDERE** eller **UDBETAL**; på den anden
+  side udbetales der automatisk - med konfetti.
+- **Forhindringer og timing**: På vejen kører biler og lastbiler ned ad hver
+  bane, på hængebroen styrter klippeblokke ned gennem broen, i floden driver
+  drivtømmer mod dig, og på issøen glider isblokke. Går du, mens næste bane er
+  optaget, bliver lamaen kørt ned eller ramt og ligger **fladt** - vent altså på
+  et hul. Banen, som lamaen står på, er beskyttet (på vejen sænker en bom sig,
+  og bilerne stopper; ellers forsvinder forhindringerne dér). Højere niveauer
+  giver tættere og hurtigere trafik.
+- **4 sværhedsgrader**: Let (22 baner, risiko 1/12, op til ×6,57), Middel (20,
+  1/6, op til ×37,18), Svær (18, 3/10, op til ×595,67) og Ekstrem (15, 1/2, op
+  til ×31.784,96 - hver bane fordobler). Den tilfældige risiko pr. bane kommer
+  oven i trafikken: en **vanvidsbilist**, der pludselig dukker op på vejen, en
+  planke, der knækker, en sten, der glider væk, eller is, der brister.
+  Multiplikatorerne er faste heltalstabeller i `lamacrossing_logic.py`, beregnet
+  så **enhver udbetalingsstrategi med god timing giver omkring 97 % tilbage** -
+  uanset hvornår man stopper.
+- **4 verdener** (knapper øverst til venstre, tast **W**): **vejen** set ovenfra
+  med fortove og stykker af fodgængerovergang (standard), **hængebroen** over
+  kløften, **trædesten i floden** og **isflager på den tilfrosne sø**. Lamaen
+  bærer et halstørklæde i spillets accentfarve; øverst til højre står
+  historikken for de sidste 12 runder.
 - **Lama-banken**: samme konto som Blackjack, Poker og Casino. Highscoren er
   toppen af 1000 + Lama Crossing-balancen, og under 10 chips får du et
   **banklån** op til 1000. Det koster intet at gå midt i en krydsning: Indsats,
-  sværhedsgrad og skridt gemmes, og næste start fortsætter præcis dér.
-- Styring: **Mellemrum**/**→**/klik på næste skridt = START eller videre,
-  **Enter**/**C** = udbetal, **↑**/**↓**/**+**/**-**/musehjul = indsats, **1-4**
-  = sværhedsgrad; verden, sværhedsgrad og sidste indsats står i afsnittet
-  `lamacrossing` i `settings.json`. Præstationerne **Den anden bred**,
-  **Stålnerver** (udbetal ved ×10 eller mere) og **Linedans** (hel krydsning på
-  Ekstrem) samt en milepæl på 3000 og et mesterniveau på 10000.
+  sværhedsgrad og bane gemmes, og næste start fortsætter præcis dér.
+- Styring: **Mellemrum**/**→**/klik på næste bane = START eller videre (når
+  banen er fri), **Enter**/**C** = udbetal, **↑**/**↓**/**+**/**-**/musehjul =
+  indsats, **1-4** = sværhedsgrad, **W** = verden; verden, sværhedsgrad og
+  sidste indsats står i afsnittet `lamacrossing` i `settings.json`.
+  Præstationerne **Den anden bred**, **Stålnerver** (udbetal ved ×10 eller mere)
+  og **Linedans** (udbetal ved ×100 eller mere på Ekstrem) samt en milepæl på
+  3000 og et mesterniveau på 10000.
 
 Highscores gemmes i afsnittet `highscores` i `mem.json` (ved siden af koden) –
 sammen med sproget (afsnittet `mem`).
@@ -6836,7 +6898,7 @@ nederst under **[Installasjonsveiledning](#installasjonsveiledning)**.
 | **Geometry Dash** | 1 spiller   | Rytme-plattformspill med kube, skip, ball, UFO og bølge: 16 baner fra Lett til Demon med 3 hemmelige mynter hver, treningsmodus, lydspor per bane, i tillegg et bibliotek med **80 baner til** i 10 kategorier med søk og 12 maler; **baneeditor** med deling som `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 spillere | Sjøslag på 10x10: flåten plasseres med dra og slipp, 3 regelbrytere (berøring, salve, skyt igjen), KI med 3 nivåer eller lokal duell med overleveringsskjerm |
 | **Casino**      | 1 spiller     | Europeisk rulett med alle klassiske innsatser og Lama-automat (5 hjul, 10 gevinstlinjer, wild, gratisspinn); én konto med lama-sjetonger sammen med Blackjack og Poker |
-| **Lama Crossing** | 1 spiller     | Nervespill med lama-sjetonger: steg for steg over hengebro, elv eller islagt innsjø, ta ut etter hvert steg eller fortsett; 4 vanskelighetsgrader opptil ×160, ~97 % tilbakebetaling |
+| **Lama Crossing** | 1 spiller     | Nervespill med lama-sjetonger: felt for felt over vei, hengebro, elv eller islagt innsjø, finn lukene i trafikken, ta ut etter hvert felt eller fortsett; 4 vanskelighetsgrader opptil ×31 784, ~97 % tilbakebetaling |
 
 **Flerspiller (2 spillere lokalt)** er tilgjengelig for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids
@@ -7536,32 +7598,42 @@ våpenoppgradering), eksplosjonseffekter, rekord.
 
 **Lama Crossing**
 - **Nervespill med lama-sjetonger**: velg innsats (10 til 10000), trykk
-  **START** - lamaen krysser en kløft, en elv eller en islagt innsjø steg for
-  steg. Hvert steg som holder, øker **multiplikatoren**, et feiltrinn koster
-  innsatsen. Etter hvert steg er det **VIDERE** eller **TA UT**; på den andre
-  siden tas gevinsten ut automatisk - med konfetti.
-- **4 vanskelighetsgrader**: Lett (20 steg, risiko 1/12, opptil ×5,52), Middels
-  (16, 1/7, opptil ×11,42), Vanskelig (13, 1/4, opptil ×40,82) og Ekstrem (10,
-  2/5, opptil ×160,42). Multiplikatorene er faste heltallstabeller i
-  `lamacrossing_logic.py`, regnet ut slik at **enhver uttaksstrategi gir rundt
-  97 % tilbake** - uansett når man stopper.
-- **3 verdener** (bare utseende, tast **W**): **hengebro** over kløften (planken
-  brekker, lamaen faller), **tråkkesteiner i elva** (steinen glipper, plask) og
-  **isflak på den frosne innsjøen** (sprekkene sprer seg, flaket brister).
-  Lamaen har et skjerf i spillets aksentfarge.
-- **Avsløring**: etter uttaket viser spillet på hvilket steg det ville ha gått
-  galt; øverst til høyre står historikken for de siste 12 rundene.
+  **START** - lamaen krysser en vei, en kløft, en elv eller en islagt innsjø
+  felt for felt. Hvert felt du klarer, øker **multiplikatoren**; blir lamaen
+  truffet, er innsatsen tapt. Etter hvert felt er det **VIDERE** eller **TA
+  UT**; på den andre siden tas gevinsten ut automatisk - med konfetti.
+- **Hindringer og timing**: På veien kjører biler og lastebiler nedover hvert
+  felt, på hengebroen styrter steinblokker ned gjennom broen, i elva driver
+  drivved mot deg, og på innsjøen sklir isblokker. Går du mens neste felt er
+  opptatt, blir lamaen påkjørt eller truffet og ligger **flat** - vent derfor på
+  en luke. Feltet lamaen står i, er beskyttet (på veien senkes en bom og bilene
+  stopper, ellers forsvinner hindringene der). Høyere nivåer gir tettere og
+  raskere trafikk.
+- **4 vanskelighetsgrader**: Lett (22 felt, risiko 1/12, opptil ×6,57), Middels
+  (20, 1/6, opptil ×37,18), Vanskelig (18, 3/10, opptil ×595,67) og Ekstrem (15,
+  1/2, opptil ×31 784,96 - hvert felt dobler). Den tilfeldige risikoen per felt
+  kommer i tillegg til trafikken: en **råkjører** som plutselig dukker opp på
+  veien, en planke som brekker, en stein som glipper, eller is som brister.
+  Multiplikatorene er faste heltallstabeller i `lamacrossing_logic.py`, regnet
+  ut slik at **enhver uttaksstrategi med god timing gir rundt 97 % tilbake** -
+  uansett når man stopper.
+- **4 verdener** (knapper øverst til venstre, tast **W**): **veien** sett
+  ovenfra med fortau og biter av fotgjengerovergang (standard), **hengebroen**
+  over kløften, **tråkkesteiner i elva** og **isflak på den frosne innsjøen**.
+  Lamaen har et skjerf i spillets aksentfarge; øverst til høyre står historikken
+  for de siste 12 rundene.
 - **Lama-banken**: samme konto som Blackjack, Poker og Casino. Toppscoren er
   høyeste nivå av 1000 + Lama Crossing-balansen, og under 10 sjetonger får du et
   **banklån** opp til 1000. Det koster ingenting å gå midt i en kryssing:
-  Innsats, vanskelighetsgrad og steg lagres, og neste start fortsetter nøyaktig
+  Innsats, vanskelighetsgrad og felt lagres, og neste start fortsetter nøyaktig
   der.
-- Kontroller: **Mellomrom**/**→**/klikk på neste steg = START eller videre,
-  **Enter**/**C** = ta ut, **↑**/**↓**/**+**/**-**/musehjul = innsats, **1-4** =
-  vanskelighetsgrad; verden, vanskelighetsgrad og siste innsats står i seksjonen
-  `lamacrossing` i `settings.json`. Prestasjonene **Den andre siden**, **Nerver
-  av stål** (ta ut ved ×10 eller mer) og **Linedans** (hel kryssing på Ekstrem)
-  samt en milepæl på 3000 og et mesternivå på 10000.
+- Kontroller: **Mellomrom**/**→**/klikk på neste felt = START eller videre (når
+  feltet er ledig), **Enter**/**C** = ta ut, **↑**/**↓**/**+**/**-**/musehjul =
+  innsats, **1-4** = vanskelighetsgrad, **W** = verden; verden,
+  vanskelighetsgrad og siste innsats står i seksjonen `lamacrossing` i
+  `settings.json`. Prestasjonene **Den andre siden**, **Nerver av stål** (ta ut
+  ved ×10 eller mer) og **Linedans** (ta ut ved ×100 eller mer på Ekstrem) samt
+  en milepæl på 3000 og et mesternivå på 10000.
 
 Rekordene lagres i `highscores`-delen av `mem.json` (ved siden av koden) – sammen
 med språket (delen `mem`).
@@ -7958,7 +8030,7 @@ under **[Installationsguide](#installationsguide)**.
 | **Geometry Dash** | 1 spelare   | Rytmplattformspel med kub, skepp, boll, UFO och våg: 16 banor från Lätt till Demon med 3 hemliga mynt var, träningsläge, soundtrack per bana, plus ett bibliotek med **80 banor till** i 10 kategorier med sökning och 12 mallar; **baneditor** med delning som `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 spelare | Sjöslag på 10x10: flottan placeras med dra och släpp, 3 regelreglage (beröring, salva, skjut igen), AI med 3 nivåer eller lokal duell med överlämningsskärm |
 | **Casino**      | 1 spelare     | Europeisk roulette med alla klassiska insatser och Lamaautomat (5 hjul, 10 vinstlinjer, wild, gratissnurr); ett gemensamt konto med lamamarker för Blackjack och Poker |
-| **Lama Crossing** | 1 spelare     | Nervspel med lamamarker: steg för steg över hängbro, flod eller isbelagd sjö, ta ut efter varje steg eller fortsätt; 4 svårighetsgrader upp till ×160, ~97 % återbetalning |
+| **Lama Crossing** | 1 spelare     | Nervspel med lamamarker: fil för fil över väg, hängbro, flod eller isbelagd sjö, pricka luckorna i trafiken, ta ut efter varje fil eller fortsätt; 4 svårighetsgrader upp till ×31 784, ~97 % återbetalning |
 
 **Flerspelarläge (2 spelare lokalt)** finns för **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op-duell)**,
@@ -8605,31 +8677,40 @@ explosionseffekter, topplista.
 
 **Lama Crossing**
 - **Nervspel med lamamarker**: välj insats (10 till 10000), tryck **START** -
-  laman tar sig steg för steg över en ravin, en flod eller en isbelagd sjö.
-  Varje steg som håller höjer **multiplikatorn**, ett felsteg kostar insatsen.
-  Efter varje steg gäller **VIDARE** eller **TA UT**; på andra stranden tas
-  vinsten ut automatiskt - med konfetti.
-- **4 svårighetsgrader**: Lätt (20 steg, risk 1/12, upp till ×5,52), Medel (16,
-  1/7, upp till ×11,42), Svår (13, 1/4, upp till ×40,82) och Extrem (10, 2/5,
-  upp till ×160,42). Multiplikatorerna är fasta heltalstabeller i
-  `lamacrossing_logic.py`, beräknade så att **varje uttagsstrategi ger tillbaka
-  ungefär 97 %** - oavsett när man slutar.
-- **3 världar** (bara utseende, tangent **W**): **hängbro** över ravinen
-  (plankan går av, laman faller), **stenar i floden** (stenen glider undan,
-  plask) och **isflak på den frusna sjön** (sprickorna sprider sig, flaket
-  brister). Laman bär en halsduk i spelets accentfärg.
-- **Avslöjande**: efter uttaget visar spelet vid vilket steg det skulle ha gått
-  snett; uppe till höger syns historiken för de senaste 12 rundorna.
+  laman tar sig fil för fil över en väg, en ravin, en flod eller en isbelagd
+  sjö. Varje fil du klarar höjer **multiplikatorn**; blir laman träffad är
+  insatsen förlorad. Efter varje fil gäller **VIDARE** eller **TA UT**; på andra
+  sidan tas vinsten ut automatiskt - med konfetti.
+- **Hinder och timing**: på vägen kör bilar och lastbilar längs varje fil, på
+  hängbron rasar stenblock ner genom bron, i floden driver drivved mot dig och
+  på sjön glider isblock. Går du medan nästa fil är upptagen blir laman överkörd
+  eller träffad och ligger **platt** - vänta alltså på en lucka. Filen som laman
+  står i är skyddad (på vägen sänks en bom och bilarna stannar, annars
+  försvinner hindren där). Högre nivåer ger tätare och snabbare trafik.
+- **4 svårighetsgrader**: Lätt (22 filer, risk 1/12, upp till ×6,57), Medel (20,
+  1/6, upp till ×37,18), Svår (18, 3/10, upp till ×595,67) och Extrem (15, 1/2,
+  upp till ×31 784,96 - varje fil fördubblar). Den slumpmässiga risken per fil
+  kommer ovanpå trafiken: en **fartdåre** som plötsligt dyker upp på vägen, en
+  planka som går av, en sten som glider undan eller is som brister.
+  Multiplikatorerna är fasta heltalstabeller i `lamacrossing_logic.py`,
+  beräknade så att **varje uttagsstrategi med bra timing ger tillbaka ungefär
+  97 %** - oavsett när man slutar.
+- **4 världar** (knappar uppe till vänster, tangent **W**): **vägen** sedd
+  ovanifrån med trottoarer och bitar av övergångsställe (standard), **hängbron**
+  över ravinen, **stenar i floden** och **isflak på den frusna sjön**. Laman bär
+  en halsduk i spelets accentfärg; uppe till höger syns historiken för de
+  senaste 12 rundorna.
 - **Lamabanken**: samma konto som Blackjack, Poker och Casino. Rekordet är
   toppen av 1000 + Lama Crossing-balansen, och under 10 marker får du ett
   **banklån** upp till 1000. Det kostar ingenting att gå mitt i en överfart:
-  insats, svårighetsgrad och steg sparas, och nästa start fortsätter precis där.
-- Kontroller: **Blanksteg**/**→**/klick på nästa steg = START eller vidare,
-  **Enter**/**C** = ta ut, **↑**/**↓**/**+**/**-**/mushjul = insats, **1-4** =
-  svårighetsgrad; värld, svårighetsgrad och senaste insats står i sektionen
-  `lamacrossing` i `settings.json`. Prestationerna **Andra stranden**,
-  **Stålnerver** (ta ut vid ×10 eller mer) och **Lindans** (hel överfart på
-  Extrem) samt en milstolpe på 3000 och en mästarnivå på 10000.
+  insats, svårighetsgrad och fil sparas, och nästa start fortsätter precis där.
+- Kontroller: **Blanksteg**/**→**/klick på nästa fil = START eller vidare (när
+  filen är fri), **Enter**/**C** = ta ut, **↑**/**↓**/**+**/**-**/mushjul =
+  insats, **1-4** = svårighetsgrad, **W** = värld; värld, svårighetsgrad och
+  senaste insats står i sektionen `lamacrossing` i `settings.json`.
+  Prestationerna **Andra stranden**, **Stålnerver** (ta ut vid ×10 eller mer)
+  och **Lindans** (ta ut vid ×100 eller mer på Extrem) samt en milstolpe på 3000
+  och en mästarnivå på 10000.
 
 Topplistorna sparas i avsnittet `highscores` i `mem.json` (bredvid koden) – tillsammans med
 språket (avsnittet `mem`).
@@ -9010,7 +9091,7 @@ ohje löytyy aivan alhaalta kohdasta **[Asennusopas](#asennusopas)**.
 | **Geometry Dash** | 1 pelaaja   | Rytmitasohyppely kuutiolla, aluksella, pallolla, UFOlla ja aallolla: 16 kenttää Helposta Demoniin, kussakin 3 salaista kolikkoa, harjoitustila, oma soundtrack, lisäksi kirjasto, jossa **80 kenttää lisää** 10 kategoriassa hakuineen, ja 12 pohjaa; **kenttäeditori** ja jakaminen `.lamapgzlevel`-tiedostona |
 | **Battleship**  | 1 / 2 pelaajaa | Meritaistelu 10x10: laivaston sijoitus vetämällä, 3 sääntökytkintä (kosketus, salvo, uusi laukaus), tekoäly 3 tasolla tai paikallinen kaksintaistelu luovutusnäytöllä |
 | **Casino**      | 1 pelaaja     | Eurooppalainen ruletti kaikilla klassisilla panoksilla ja Laama-automaatti (5 rullaa, 10 voittolinjaa, jokeri, ilmaiskierrokset); yksi laamamerkkitili Blackjackin ja Pokerin kanssa |
-| **Lama Crossing** | 1 pelaaja     | Hermopeli laamamerkeillä: askel kerrallaan riippusillan, joen tai jäisen järven yli, kotiuta jokaisen askeleen jälkeen tai jatka; 4 vaikeustasoa jopa ×160, palautus ~97 % |
+| **Lama Crossing** | 1 pelaaja     | Hermopeli laamamerkeillä: kaista kerrallaan tien, riippusillan, joen tai jäisen järven yli, ajoita raot liikenteessä, kotiuta jokaisen kaistan jälkeen tai jatka; 4 vaikeustasoa jopa ×31 784, palautus ~97 % |
 
 **Moninpeli (2 pelaajaa paikallisesti)** on saatavilla peleihin **Snake**,
 **Pong**, **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids
@@ -9742,33 +9823,43 @@ räjähdystehosteet, ennätys.
 
 **Lama Crossing**
 - **Hermopeli laamamerkeillä**: valitse panos (10–10000) ja paina **ALOITA** -
-  laama ylittää askel kerrallaan rotkon, joen tai jäätyneen järven. Jokainen
-  kestävä askel nostaa **kerrointa**, harha-askel vie panoksen. Jokaisen
-  askeleen jälkeen valitaan **ETEENPÄIN** tai **KOTIUTA**; toisella rannalla
-  voitto kotiutetaan automaattisesti - konfettien kera.
-- **4 vaikeustasoa**: Helppo (20 askelta, riski 1/12, jopa ×5,52), Keskitaso
-  (16, 1/7, jopa ×11,42), Vaikea (13, 1/4, jopa ×40,82) ja Äärimmäinen (10, 2/5,
-  jopa ×160,42). Kertoimet ovat kiinteitä kokonaislukutaulukoita tiedostossa
-  `lamacrossing_logic.py`, ja ne on laskettu niin, että **jokainen
-  kotiutusstrategia palauttaa noin 97 %** - riippumatta siitä, milloin lopettaa.
-- **3 maailmaa** (vain ulkoasu, näppäin **W**): **riippusilta** rotkon yllä
-  (lankku katkeaa, laama putoaa), **astinkivet joessa** (kivi lipsahtaa,
-  molskis) ja **jäälautat jäätyneellä järvellä** (halkeamat leviävät, lautta
-  murtuu). Laamalla on kaulahuivi pelin korostusvärissä.
-- **Paljastus**: kotiutuksen jälkeen peli näyttää, millä askeleella olisi käynyt
-  huonosti; oikeassa yläkulmassa näkyy 12 viimeisen kierroksen historia.
+  laama ylittää kaista kerrallaan tien, rotkon, joen tai jäätyneen järven.
+  Jokainen selvitetty kaista nostaa **kerrointa**; jos laamaan osuu jotain,
+  panos menee. Jokaisen kaistan jälkeen valitaan **ETEENPÄIN** tai **KOTIUTA**;
+  toisella puolella voitto kotiutetaan automaattisesti - konfettien kera.
+- **Esteet ja ajoitus**: tiellä autot ja rekat ajavat jokaista kaistaa pitkin,
+  riippusillalla kivenlohkareita putoaa sillan läpi, joessa ajopuut ajelehtivat
+  kohti ja jäisellä järvellä liukuu jäälohkareita. Jos lähdet, kun seuraava
+  kaista on varattu, laama jää alle tai siihen osuu, ja se jää makaamaan
+  **litteänä** - odota siis rakoa. Kaista, jolla laama seisoo, on suojattu
+  (tiellä puomi laskeutuu ja autot pysähtyvät, muualla esteet katoavat siltä).
+  Korkeammat tasot tuovat tiheämmän ja nopeamman liikenteen.
+- **4 vaikeustasoa**: Helppo (22 kaistaa, riski 1/12, jopa ×6,57), Keskitaso
+  (20, 1/6, jopa ×37,18), Vaikea (18, 3/10, jopa ×595,67) ja Äärimmäinen (15,
+  1/2, jopa ×31 784,96 - jokainen kaista tuplaa). Kaistakohtainen satunnainen
+  riski tulee liikenteen päälle: tiellä yllättäen ilmestyvä **hurjastelija**,
+  katkeava lankku, alta lipsahtava kivi tai pettävä jää. Kertoimet ovat
+  kiinteitä kokonaislukutaulukoita tiedostossa `lamacrossing_logic.py`, ja ne on
+  laskettu niin, että **jokainen kotiutusstrategia palauttaa hyvällä
+  ajoituksella noin 97 %** - riippumatta siitä, milloin lopettaa.
+- **4 maailmaa** (painikkeet vasemmassa yläkulmassa, näppäin **W**): ylhäältä
+  nähty **tie** jalkakäytävineen ja suojatien paloineen (oletus),
+  **riippusilta** rotkon yllä, **astinkivet joessa** ja **jäälautat jäätyneellä
+  järvellä**. Laamalla on kaulahuivi pelin korostusvärissä; oikeassa yläkulmassa
+  näkyy 12 viimeisen kierroksen historia.
 - **Laamapankki**: sama tili kuin Blackjackilla, Pokerilla ja Casinolla. Paras
   tulos on 1000 + Lama Crossing -saldon korkein arvo, ja alle 10 merkillä saat
   **pankkilainan** 1000:een. Kesken ylityksen lähteminen ei maksa mitään: panos,
-  vaikeustaso ja askel tallentuvat, ja seuraava käynnistys jatkaa täsmälleen
+  vaikeustaso ja kaista tallentuvat, ja seuraava käynnistys jatkaa täsmälleen
   siitä.
-- Ohjaus: **Välilyönti**/**→**/klikkaus seuraavaan askeleeseen = ALOITA tai
-  eteenpäin, **Enter**/**C** = kotiuta, **↑**/**↓**/**+**/**-**/hiiren rulla =
-  panos, **1-4** = vaikeustaso; maailma, vaikeustaso ja viimeisin panos ovat
-  tiedoston `settings.json` osiossa `lamacrossing`. Saavutukset **Toinen
-  ranta**, **Teräshermot** (kotiutus kertoimella ×10 tai enemmän) ja
-  **Nuorallatanssi** (koko ylitys Äärimmäisellä) sekä virstanpylväs 3000 ja
-  mestaritaso 10000.
+- Ohjaus: **Välilyönti**/**→**/klikkaus seuraavaan kaistaan = ALOITA tai
+  eteenpäin (kun kaista on vapaa), **Enter**/**C** = kotiuta,
+  **↑**/**↓**/**+**/**-**/hiiren rulla = panos, **1-4** = vaikeustaso, **W** =
+  maailma; maailma, vaikeustaso ja viimeisin panos ovat tiedoston
+  `settings.json` osiossa `lamacrossing`. Saavutukset **Toinen ranta**,
+  **Teräshermot** (kotiutus kertoimella ×10 tai enemmän) ja **Nuorallatanssi**
+  (kotiutus kertoimella ×100 tai enemmän Äärimmäisellä) sekä virstanpylväs 3000
+  ja mestaritaso 10000.
 
 Ennätykset tallennetaan tiedoston `mem.json` osioon `highscores` (koodin vieressä)
 – yhdessä kielen kanssa (osio `mem`).
@@ -10168,7 +10259,7 @@ existuje, jinak systémový Python. Podrobný návod krok za krokem je úplně d
 | **Geometry Dash** | 1 hráč      | Rytmická plošinovka s kostkou, lodí, míčem, UFO a vlnou: 16 levelů od Lehkého po Démona, v každém 3 tajné mince, tréninkový režim, soundtrack pro každý level, k tomu knihovna **80 dalších levelů** v 10 kategoriích s hledáním a 12 šablon; **editor levelů** se sdílením jako `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 hráči   | Námořní bitva 10x10: rozmístění flotily přetažením, 3 přepínače pravidel (dotyk, salva, střelba znovu), AI se 3 úrovněmi nebo lokální duel s předávací obrazovkou |
 | **Casino**      | 1 hráč        | Evropská ruleta se všemi klasickými sázkami a Lama automat (5 válců, 10 výherních linií, divoký symbol, volné otočky); jeden účet lama žetonů s Blackjackem a Pokerem |
-| **Lama Crossing** | 1 hráč        | Hra o nervy s lama žetony: krok za krokem přes visutý most, řeku nebo zamrzlé jezero, po každém kroku vybrat výhru, nebo pokračovat; 4 obtížnosti až ×160, návratnost ~97 % |
+| **Lama Crossing** | 1 hráč        | Hra o nervy s lama žetony: pruh po pruhu přes silnici, visutý most, řeku nebo zamrzlé jezero, chytat mezery v provozu, po každém pruhu vybrat výhru, nebo pokračovat; 4 obtížnosti až ×31 784, návratnost ~97 % |
 
 **Více hráčů (2 hráči lokálně)** je k dispozici pro **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (kooperativní
@@ -10878,31 +10969,40 @@ zbraně), efekty explozí, nejlepší skóre.
 
 **Lama Crossing**
 - **Hra o nervy s lama žetony**: vyber sázku (10 až 10000), stiskni **START** -
-  lama krok za krokem přechází kaňon, řeku nebo zamrzlé jezero. Každý krok,
-  který vydrží, zvedne **násobitel**, chybný krok stojí sázku. Po každém kroku
-  volíš **DÁL**, nebo **VYPLATIT**; na druhém břehu se výhra vyplatí
-  automaticky - s konfetami.
-- **4 obtížnosti**: Lehká (20 kroků, riziko 1/12, až ×5,52), Střední (16, 1/7,
-  až ×11,42), Těžká (13, 1/4, až ×40,82) a Extrémní (10, 2/5, až ×160,42).
-  Násobitele jsou pevné celočíselné tabulky v `lamacrossing_logic.py`, spočítané
-  tak, aby **každá strategie výplaty vracela asi 97 %** - bez ohledu na to, kdy
+  lama pruh po pruhu přechází silnici, kaňon, řeku nebo zamrzlé jezero. Každý
+  zvládnutý pruh zvedne **násobitel**, a když lamu něco zasáhne, sázka je pryč.
+  Po každém pruhu volíš **DÁL**, nebo **VYPLATIT**; na druhé straně se výhra
+  vyplatí automaticky - s konfetami.
+- **Překážky a načasování**: na silnici jezdí každým pruhem auta a náklaďáky, na
+  visutém mostě padají mostem balvany, na řece k tobě plují kmeny a na jezeře
+  kloužou ledové bloky. Když vyrazíš, zatímco je další pruh obsazený, lamu něco
+  přejede nebo zasáhne a zůstane ležet **placatá** - počkej tedy na mezeru.
+  Pruh, ve kterém lama stojí, je chráněný (na silnici se spustí závora a auta
+  zastaví, jinde tam překážky zmizí). Vyšší obtížnosti znamenají hustší a
+  rychlejší provoz.
+- **4 obtížnosti**: Lehká (22 pruhů, riziko 1/12, až ×6,57), Střední (20, 1/6,
+  až ×37,18), Těžká (18, 3/10, až ×595,67) a Extrémní (15, 1/2, až ×31 784,96 -
+  každý pruh zdvojnásobí). Náhodné riziko na každém pruhu se přičítá k provozu:
+  **pirát silnic**, který se náhle objeví na silnici, praskající prkno,
+  ujíždějící kámen nebo prolamující se led. Násobitele jsou pevné celočíselné
+  tabulky v `lamacrossing_logic.py`, spočítané tak, aby **každá strategie
+  výplaty při dobrém načasování vracela asi 97 %** - bez ohledu na to, kdy
   přestaneš.
-- **3 světy** (jen vzhled, klávesa **W**): **visutý most** nad kaňonem (prkno
-  praskne, lama spadne), **kameny v řece** (kámen ujede, šplouch) a **kry na
-  zamrzlém jezeře** (praskliny se rozbíhají, kra se prolomí). Lama nosí šálu v
-  akcentní barvě hry.
-- **Odhalení**: po výplatě hra ukáže, na kterém kroku by se to pokazilo; vpravo
-  nahoře je historie posledních 12 kol.
+- **4 světy** (tlačítka vlevo nahoře, klávesa **W**): **silnice** při pohledu
+  shora s chodníky a kousky přechodu pro chodce (výchozí), **visutý most** nad
+  kaňonem, **kameny v řece** a **kry na zamrzlém jezeře**. Lama nosí šálu v
+  akcentní barvě hry; vpravo nahoře je historie posledních 12 kol.
 - **Lama banka**: stejný účet jako Blackjack, Poker a Casino. Rekord je nejvyšší
   stav 1000 + bilance Lama Crossing a pod 10 žetony dostaneš **bankovní úvěr**
-  do 1000. Odejít uprostřed přechodu nic nestojí: sázka, obtížnost i krok se
+  do 1000. Odejít uprostřed přechodu nic nestojí: sázka, obtížnost i pruh se
   uloží a další spuštění pokračuje přesně tam.
-- Ovládání: **Mezerník**/**→**/kliknutí na další krok = START nebo dál,
-  **Enter**/**C** = vyplatit, **↑**/**↓**/**+**/**-**/kolečko myši = sázka,
-  **1-4** = obtížnost; svět, obtížnost a poslední sázka jsou v sekci
-  `lamacrossing` souboru `settings.json`. Úspěchy **Druhý břeh**, **Ocelové
-  nervy** (výplata při ×10 nebo více) a **Provazochodec** (celý přechod na
-  Extrémní), k tomu milník 3000 a mistrovský stupeň 10000.
+- Ovládání: **Mezerník**/**→**/kliknutí na další pruh = START nebo dál (jakmile
+  je pruh volný), **Enter**/**C** = vyplatit, **↑**/**↓**/**+**/**-**/kolečko
+  myši = sázka, **1-4** = obtížnost, **W** = svět; svět, obtížnost a poslední
+  sázka jsou v sekci `lamacrossing` souboru `settings.json`. Úspěchy **Druhý
+  břeh**, **Ocelové nervy** (výplata při ×10 nebo více) a **Provazochodec**
+  (výplata při ×100 nebo více na Extrémní), k tomu milník 3000 a mistrovský
+  stupeň 10000.
 
 Nejlepší skóre se ukládají do sekce `highscores` souboru `mem.json` (vedle
 kódu) – spolu s jazykem (sekce `mem`).
@@ -11301,7 +11401,7 @@ obstaja, sicer sistemski Python. Na dnu dokumenta je podroben vodnik po korakih:
 | **Geometry Dash** | 1 igralec   | Ritmična ploščadna igra s kocko, ladjo, žogo, NLP in valom: 16 stopenj od Lahke do Demona s po 3 skrivnimi kovanci, način vaje, glasba za vsako stopnjo, poleg tega knjižnica z **80 dodatnimi stopnjami** v 10 kategorijah z iskanjem in 12 predlog; **urejevalnik stopenj** z deljenjem kot `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 igralca | Pomorska bitka 10x10: postavitev flote z vlečenjem, 3 stikala pravil (dotik, salva, ponovni strel), UI s 3 jakostmi ali lokalni dvoboj z zaslonom za predajo |
 | **Casino**      | 1 igralec     | Evropska ruleta z vsemi klasičnimi stavami in Lama avtomat (5 kolutov, 10 dobitnih linij, divji simbol, brezplačni vrtljaji); en račun lama žetonov z Blackjackom in Pokrom |
-| **Lama Crossing** | 1 igralec     | Igra živcev z lama žetoni: korak za korakom čez viseči most, reko ali zamrznjeno jezero, po vsakem koraku izplačaj ali nadaljuj; 4 težavnosti do ×160, vračilo ~97 % |
+| **Lama Crossing** | 1 igralec     | Igra živcev z lama žetoni: pas za pasom čez cesto, viseči most, reko ali zamrznjeno jezero, ujemi vrzeli v prometu, po vsakem pasu izplačaj ali nadaljuj; 4 težavnosti do ×31.784, vračilo ~97 % |
 
 **Večigralski način (2 igralca lokalno)** je na voljo za igre **Snake**,
 **Pong**, **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**,
@@ -12010,31 +12110,40 @@ nadgradnja orožja), učinki eksplozij, rekord.
 
 **Lama Crossing**
 - **Igra živcev z lama žetoni**: izberi stavo (10 do 10000), pritisni
-  **START** - lama korak za korakom prečka sotesko, reko ali zamrznjeno jezero.
-  Vsak korak, ki zdrži, dvigne **množitelj**, napačen korak stane stavo. Po
-  vsakem koraku izbereš **NAPREJ** ali **IZPLAČAJ**; na drugem bregu se dobitek
-  izplača samodejno - s konfeti.
-- **4 težavnosti**: Lahko (20 korakov, tveganje 1/12, do ×5,52), Srednje (16,
-  1/7, do ×11,42), Težko (13, 1/4, do ×40,82) in Ekstremno (10, 2/5, do
-  ×160,42). Množitelji so stalne celoštevilske tabele v `lamacrossing_logic.py`,
-  izračunane tako, da **vsaka strategija izplačila vrne približno 97 %** - ne
-  glede na to, kdaj nehaš.
-- **3 svetovi** (samo videz, tipka **W**): **viseči most** nad sotesko (deska se
-  zlomi, lama pade), **kamni v reki** (kamen zdrsne, čof) in **ledene plošče na
-  zamrznjenem jezeru** (razpoke se širijo, plošča se prelomi). Lama nosi šal v
-  barvi poudarka igre.
-- **Razkritje**: po izplačilu igra pokaže, pri katerem koraku bi šlo narobe;
-  zgoraj desno je zgodovina zadnjih 12 krogov.
+  **START** - lama pas za pasom prečka cesto, sotesko, reko ali zamrznjeno
+  jezero. Vsak prehojen pas dvigne **množitelj**; če lamo kaj zadene, je stava
+  izgubljena. Po vsakem pasu izbereš **NAPREJ** ali **IZPLAČAJ**; na drugi
+  strani se dobitek izplača samodejno - s konfeti.
+- **Ovire in pravi trenutek**: na cesti po vsakem pasu vozijo avtomobili in
+  tovornjaki, na visečem mostu skozi most padajo skale, po reki proti tebi plava
+  naplavljen les, na jezeru pa drsijo ledeni bloki. Če stopiš naprej, ko je
+  naslednji pas zaseden, lamo povozi ali zadene in obleži **sploščena** - zato
+  počakaj na vrzel. Pas, na katerem stoji lama, je zaščiten (na cesti se spusti
+  zapornica in avtomobili se ustavijo, drugje ovire tam izginejo). Višje stopnje
+  prinesejo gostejši in hitrejši promet.
+- **4 težavnosti**: Lahko (22 pasov, tveganje 1/12, do ×6,57), Srednje (20, 1/6,
+  do ×37,18), Težko (18, 3/10, do ×595,67) in Ekstremno (15, 1/2, do
+  ×31.784,96 - vsak pas podvoji). Naključno tveganje na vsakem pasu pride poleg
+  prometa: **divjak za volanom**, ki se nenadoma pojavi na cesti, deska, ki se
+  zlomi, kamen, ki zdrsne, ali led, ki se udre. Množitelji so stalne
+  celoštevilske tabele v `lamacrossing_logic.py`, izračunane tako, da **vsaka
+  strategija izplačila ob dobri izbiri trenutka vrne približno 97 %** - ne glede
+  na to, kdaj nehaš.
+- **4 svetovi** (gumbi zgoraj levo, tipka **W**): **cesta** od zgoraj s pločniki
+  in koščki prehoda za pešce (privzeto), **viseči most** nad sotesko, **kamni v
+  reki** in **ledene plošče na zamrznjenem jezeru**. Lama nosi šal v barvi
+  poudarka igre; zgoraj desno je zgodovina zadnjih 12 krogov.
 - **Lama banka**: isti račun kot Blackjack, Poker in Casino. Rekord je najvišje
   stanje 1000 + bilance Lama Crossing, pod 10 žetoni pa dobiš **bančni kredit**
-  do 1000. Oditi sredi prehoda nič ne stane: stava, težavnost in korak se
+  do 1000. Oditi sredi prehoda nič ne stane: stava, težavnost in pas se
   shranijo, naslednji zagon pa nadaljuje natanko tam.
-- Upravljanje: **Preslednica**/**→**/klik na naslednji korak = START ali naprej,
-  **Enter**/**C** = izplačaj, **↑**/**↓**/**+**/**-**/kolesce miške = stava,
-  **1-4** = težavnost; svet, težavnost in zadnja stava so v razdelku
-  `lamacrossing` datoteke `settings.json`. Dosežki **Drugi breg**, **Jeklene
-  živce** (izplačilo pri ×10 ali več) in **Hoja po vrvi** (cel prehod na
-  Ekstremno) ter mejnik 3000 in mojstrska stopnja 10000.
+- Upravljanje: **Preslednica**/**→**/klik na naslednji pas = START ali naprej
+  (ko je pas prost), **Enter**/**C** = izplačaj, **↑**/**↓**/**+**/**-**/kolesce
+  miške = stava, **1-4** = težavnost, **W** = svet; svet, težavnost in zadnja
+  stava so v razdelku `lamacrossing` datoteke `settings.json`. Dosežki **Drugi
+  breg**, **Jeklene živce** (izplačilo pri ×10 ali več) in **Hoja po vrvi**
+  (izplačilo pri ×100 ali več na Ekstremno) ter mejnik 3000 in mojstrska stopnja
+  10000.
 
 Rekordi se shranijo v razdelku `highscores` datoteke `mem.json` (poleg kode) –
 skupaj z jezikom (razdelek `mem`).
@@ -12430,7 +12539,7 @@ dnu pod **[Vodič za instalaciju](#vodič-za-instalaciju)**.
 | **Geometry Dash** | 1 igrač     | Ritmička platformska igra s kockom, brodom, loptom, NLO-om i valom: 16 razina od Lako do Demon s po 3 tajna novčića, način vježbe, glazba za svaku razinu, uz to knjižnica s **80 dodatnih razina** u 10 kategorija s pretragom i 12 predložaka; **uređivač razina** s dijeljenjem kao `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 igrača  | Pomorska bitka 10x10: raspoređivanje flote povlačenjem, 3 prekidača pravila (dodir, salva, ponovni hitac), AI s 3 razine ili lokalni dvoboj sa zaslonom za predaju |
 | **Casino**      | 1 igrač       | Europski rulet sa svim klasičnim ulozima i Lama automat (5 valjaka, 10 dobitnih linija, džoker, besplatne vrtnje); jedan račun lama žetona s Blackjackom i Pokerom |
-| **Lama Crossing** | 1 igrač       | Igra živaca s lama žetonima: korak po korak preko visećeg mosta, rijeke ili zaleđenog jezera, nakon svakog koraka isplati ili nastavi; 4 težine do ×160, povrat ~97 % |
+| **Lama Crossing** | 1 igrač       | Igra živaca s lama žetonima: traku po traku preko ceste, visećeg mosta, rijeke ili zaleđenog jezera, hvataj praznine u prometu, nakon svake trake isplati ili nastavi; 4 težine do ×31.784, povrat ~97 % |
 
 **Više igrača (2 igrača lokalno)** dostupno je za **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (kooperativni
@@ -13146,31 +13255,39 @@ nadogradnja oružja), efekti eksplozije, rekord.
 
 **Lama Crossing**
 - **Igra živaca s lama žetonima**: odaberi ulog (10 do 10000), pritisni
-  **KRENI** - lama korak po korak prelazi kanjon, rijeku ili zaleđeno jezero.
-  Svaki korak koji izdrži podiže **množitelj**, pogrešan korak košta ulog. Nakon
-  svakog koraka biraš **DALJE** ili **ISPLATI**; na drugoj obali dobitak se
-  isplaćuje automatski - uz konfete.
-- **4 težine**: Lako (20 koraka, rizik 1/12, do ×5,52), Srednje (16, 1/7, do
-  ×11,42), Teško (13, 1/4, do ×40,82) i Ekstremno (10, 2/5, do ×160,42).
-  Množitelji su fiksne cjelobrojne tablice u `lamacrossing_logic.py`, izračunane
-  tako da **svaka strategija isplate vraća oko 97 %** - bez obzira na to kada
-  staneš.
-- **3 svijeta** (samo izgled, tipka **W**): **viseći most** nad kanjonom (daska
-  pukne, lama padne), **kamenje u rijeci** (kamen isklizne, pljus) i **sante
-  leda na zaleđenom jezeru** (pukotine se šire, santa pukne). Lama nosi šal u
-  boji naglaska igre.
-- **Otkrivanje**: nakon isplate igra pokazuje na kojem bi koraku pošlo po zlu;
-  gore desno je povijest zadnjih 12 krugova.
+  **KRENI** - lama traku po traku prelazi cestu, kanjon, rijeku ili zaleđeno
+  jezero. Svaka svladana traka podiže **množitelj**; ako lamu nešto pogodi, ulog
+  je izgubljen. Nakon svake trake biraš **DALJE** ili **ISPLATI**; na drugoj
+  strani dobitak se isplaćuje automatski - uz konfete.
+- **Prepreke i pravi trenutak**: na cesti svakom trakom voze automobili i
+  kamioni, na visećem mostu kroz most padaju gromade, rijekom prema tebi pluta
+  naplavljeno drvo, a jezerom klize ledeni blokovi. Kreneš li dok je sljedeća
+  traka zauzeta, lamu nešto pregazi ili pogodi i ostane ležati **spljoštena** -
+  zato pričekaj da se otvori prolaz. Traka na kojoj lama stoji je zaštićena (na
+  cesti se spusti rampa i automobili stanu, drugdje prepreke ondje nestanu).
+  Više težine donose gušći i brži promet.
+- **4 težine**: Lako (22 trake, rizik 1/12, do ×6,57), Srednje (20, 1/6, do
+  ×37,18), Teško (18, 3/10, do ×595,67) i Ekstremno (15, 1/2, do ×31.784,96 -
+  svaka traka udvostručuje). Slučajni rizik po traci dolazi uz promet: **divljak
+  za volanom** koji iznenada naleti na cesti, daska koja pukne, kamen koji
+  isklizne ili led koji popusti. Množitelji su fiksne cjelobrojne tablice u
+  `lamacrossing_logic.py`, izračunane tako da **svaka strategija isplate uz
+  dobar tajming vraća oko 97 %** - bez obzira na to kada staneš.
+- **4 svijeta** (gumbi gore lijevo, tipka **W**): **cesta** gledana odozgo s
+  nogostupima i komadićima pješačkog prijelaza (zadano), **viseći most** nad
+  kanjonom, **kamenje u rijeci** i **sante leda na zaleđenom jezeru**. Lama nosi
+  šal u boji naglaska igre; gore desno je povijest zadnjih 12 krugova.
 - **Lama banka**: isti račun kao Blackjack, Poker i Casino. Rekord je najviše
   stanje 1000 + bilance Lama Crossinga, a ispod 10 žetona dobivaš **bankovni
-  kredit** do 1000. Izlazak usred prijelaza ništa ne košta: ulog, težina i korak
+  kredit** do 1000. Izlazak usred prijelaza ništa ne košta: ulog, težina i traka
   se spremaju, a sljedeće pokretanje nastavlja točno ondje.
-- Upravljanje: **Razmaknica**/**→**/klik na sljedeći korak = KRENI ili dalje,
-  **Enter**/**C** = isplati, **↑**/**↓**/**+**/**-**/kotačić miša = ulog,
-  **1-4** = težina; svijet, težina i zadnji ulog nalaze se u odjeljku
-  `lamacrossing` datoteke `settings.json`. Postignuća **Druga obala**, **Čelični
-  živci** (isplata pri ×10 ili više) i **Hod po užetu** (cijeli prijelaz na
-  Ekstremno) te prekretnica 3000 i majstorska razina 10000.
+- Upravljanje: **Razmaknica**/**→**/klik na sljedeću traku = KRENI ili dalje
+  (kad je traka slobodna), **Enter**/**C** = isplati,
+  **↑**/**↓**/**+**/**-**/kotačić miša = ulog, **1-4** = težina, **W** = svijet;
+  svijet, težina i zadnji ulog nalaze se u odjeljku `lamacrossing` datoteke
+  `settings.json`. Postignuća **Druga obala**, **Čelični živci** (isplata pri
+  ×10 ili više) i **Hod po užetu** (isplata pri ×100 ili više na Ekstremno) te
+  prekretnica 3000 i majstorska razina 10000.
 
 Rekordi se spremaju u odjeljak `highscores` datoteke `mem.json` (uz kôd) – zajedno
 s jezikom (odjeljak `mem`).

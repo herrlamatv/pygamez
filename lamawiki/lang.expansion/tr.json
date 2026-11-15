@@ -3044,6 +3044,10 @@
         "çarpan",
         "çip",
         "lama bankası",
+        "yol",
+        "trafik",
+        "arabalar",
+        "zamanlama",
         "köprü",
         "nehir",
         "buz",
@@ -3054,40 +3058,51 @@
         {
           "h": "Nasıl oynanır",
           "body": [
-            "Lama bir asma köprüyü, bir nehri ya da donmuş bir gölü adım adım geçer. Sağlam çıkan her adım çarpanı yükseltir - tek bir yanlış adım bahse mal olur.",
-            "Bahsini seç (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 veya 10000 Lama çipi) ve BAŞLA'ya bas: bahis düşülür ve lama ilk adımını atar.",
-            "Başarılı her adımdan sonra sen karar verirsin: İLERLE ya da ÇEK - o zaman bahsinin güncel çarpanla çarpımı hesabına geçer. Karşı kıyıda kazanç otomatik olarak çekilir, konfetiyle.",
-            "Çektikten sonra oyun, işin hangi adımda ters gideceğini gösterir. Sağ üstte son 12 turun geçmişi durur."
+            "Lama bir yolu, bir asma köprüyü, bir nehri ya da donmuş bir gölü şerit şerit geçer. Geçilen her şerit çarpanı yükseltir - lamaya bir şey çarparsa bahis gider.",
+            "Bahsini seç (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 veya 10000 Lama çipi) ve BAŞLA'ya bas: bahis düşülür ve lama ilk şeride adım atar.",
+            "Geçilen her şeritten sonra sen karar verirsin: İLERLE ya da ÇEK - o zaman bahsinin güncel çarpanla çarpımı (aşağı yuvarlanarak) hesabına geçer. Karşı tarafta kazanç otomatik olarak çekilir, konfetiyle.",
+            "Sağ üstte son 12 turun geçmişi durur."
+          ]
+        },
+        {
+          "h": "Engeller ve zamanlama",
+          "body": [
+            "Her dünyada bir şey yaklaşır ve doğru anı yakalaman gerekir: yolda her şeritte arabalar ve kamyonlar geçer, asma köprüde kayalar köprünün içinden düşer, nehirde sürüklenen kütükler sana doğru gelir ve buz gölünde buz blokları sana doğru kayar.",
+            "Sıradaki şeritte bir engel varken BAŞLA ya da İLERLE'ye basarsan lamayı araba ezer ya da bir şey çarpar ve lama yerde yassı kalır - bahis kaybedilir. Yani bir boşluk bekle.",
+            "Lamanın durduğu şerit korunur: yolda bir bariyer iner ve arabalar lamanın önünde durur, diğer dünyalarda senin şeridindeki engeller kaybolur. Doğru boşluğu sakince bekleyebilirsin.",
+            "Zorluk ne kadar yüksekse trafik o kadar yoğun ve hızlıdır.",
+            "Bunun üstüne her şeritte, kusursuz zamanlamanın bile önleyemediği rastgele bir risk vardır: yolda aniden çok hızlı bir araba çıkagelir, köprüde tahta kırılır, nehirde taş kayar ve buz gölünde buz çöker."
           ]
         },
         {
           "h": "Zorluklar",
           "body": [
             "Dört seviye - her turdan önce alt çubuktaki düğmelerle ya da [1] ile [4] tuşlarıyla seçilir:",
-            "- Kolay: 20 adım, adım başına 1/12 risk (yaklaşık %8), ×5,52'ye kadar",
-            "- Orta: 16 adım, 1/7 risk (yaklaşık %14), ×11,42'ye kadar",
-            "- Zor: 13 adım, 1/4 risk (%25), ×40,82'ye kadar",
-            "- Aşırı: 10 adım, 2/5 risk (%40), ×160,42'ye kadar",
-            "Çarpanlar sabit tablolarda durur ve her stratejinin uzun vadede bahsin yaklaşık %97'sini geri vereceği şekilde hesaplanmıştır - hangi adımda çektiğin fark etmez. Kasa avantajı yani yaklaşık %3'tür."
+            "- Kolay: 22 şerit, şerit başına 1/12 risk (yaklaşık %8), en fazla ×6,57",
+            "- Orta: 20 şerit, 1/6 risk (yaklaşık %17), en fazla ×37,18",
+            "- Zor: 18 şerit, 3/10 risk (%30), en fazla ×595,67",
+            "- Aşırı: 15 şerit, 1/2 risk (%50), en fazla ×31.784,96 - her şerit çarpanı ikiye katlar: ×1,94, ×3,88, ×7,76 …",
+            "Çarpanlar sabit tablolarda durur ve iyi zamanlamayla her stratejinin uzun vadede bahsin yaklaşık %97'sini geri vereceği şekilde hesaplanmıştır - hangi şeritte çektiğin fark etmez. Kasa avantajı yani yaklaşık %3'tür."
           ]
         },
         {
-          "h": "Üç dünya",
+          "h": "Dört dünya",
           "body": [
-            "Dünya yalnızca görünüşü değiştirir, şansları değil. Sol üstteki dünya düğmeleriyle ya da [W] ile değiştirilir:",
-            "- Asma köprü: bir kanyonun üzerinde tahtalar - yanlış adımda tahta kırılır ve lama düşer.",
-            "- Nehir: suda basamak taşları - taş kayar ve lama suya düşer.",
-            "- Buz gölü: donmuş gölün üzerinde buz kütleleri - çatlaklar yayılır, sonra buz kırılır.",
+            "Sol üstteki dört dünya düğmesiyle ya da [W] ile değiştirilir; dünya şansları değiştirmez:",
+            "- Yol (varsayılan): yukarıdan görülen, kaldırımlı bir cadde. Lama, yaya geçidi parçaları üzerinden şerit şerit karşıya geçer; arabalar ve kamyonlar geçip gider - arada bir de çok hızlı bir araba.",
+            "- Asma köprü: bir kanyonun üzerinde tahtalar, düşen kayalar - tahta kırılırsa lama düşer.",
+            "- Nehir: suda basamak taşları, sürüklenen kütükler - taş kayarsa lama suya düşer.",
+            "- Buz gölü: donmuş gölün üzerinde buz kütleleri, kayan buz blokları - çatlaklar yayılır, sonra buz kırılır.",
             "Her dünyada lama, oyunun vurgu renginde bir atkı takar."
           ]
         },
         {
           "h": "Kontroller",
           "body": [
-            "- [Boşluk], [Sağ] veya sıradaki adıma tık: BAŞLA ya da sonraki adım",
+            "- [Boşluk], [Sağ] veya sıradaki şeride tık: BAŞLA ya da İLERLE - en iyisi şerit boşken",
             "- [Enter] veya [C]: çek (turdan önce [Enter] BAŞLA gibi çalışır)",
             "- [Yukarı] / [Aşağı], [+] / [-] veya fare tekerleği: bahsi değiştir",
-            "- [1] ile [4]: zorluk, [W]: dünyayı değiştir",
+            "- [1] ile [4]: zorluk, [W]: dünyayı değiştir (yol, asma köprü, nehir, buz gölü)",
             "Bahis, zorluk ve dünya yalnızca turlar arasında değiştirilebilir. Dünya, zorluk ve son bahis settings.json içinde saklanır (lamacrossing bölümü)."
           ]
         },
@@ -3097,7 +3112,7 @@
             "Lama Crossing, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker ve Casino ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
             "Rekor, 1000 + Lama Crossing bakiyenin ulaştığı en yüksek değerdir; Blackjack, Poker veya Casino kazançları burada sayılmaz.",
             "10 çipin altında iflas edersin: [Enter] ya da bir tık bankadan kredi alır ve hesabını yeniden 1000'e tamamlar. Krediler bakiyeye sayılmaz.",
-            "Geçişin ortasında bırakmak güvenlidir: bahis, zorluk ve adım kaydedilir, bir sonraki başlangıçta tam oradan devam edersin."
+            "Geçişin ortasında bırakmak güvenlidir: bahis, zorluk ve şerit kaydedilir, bir sonraki başlangıçta tam oradan devam edersin."
           ]
         },
         {
@@ -3108,15 +3123,16 @@
             "- Lama Crossing ustası: rekor 10000",
             "- Karşı kıyı (nadir): Lama Crossing'de lamayı karşı kıyıya kadar geçir",
             "- Çelik sinirler (destansı): Lama Crossing'de ×10 veya üzerinde çek",
-            "- İp cambazı (efsanevi): Lama Crossing'de Aşırı zorlukta tam bir geçiş yap"
+            "- İp cambazı (efsanevi): Lama Crossing'de Aşırı zorlukta ×100 veya üzerinde çek"
           ]
         },
         {
           "h": "İpuçları",
           "body": [
-            "- Her adım yeniden çekilir - art arda gelen yanlış adımlar bir sonraki adım hakkında hiçbir şey söylemez.",
-            "- Karşı kıyıya Kolay'da yaklaşık her 6 turda bir, Orta'da 12 turda bir, Zor'da 42 turda bir ve Aşırı'da yalnızca 165 turda bir varılır.",
-            "- Çelik sinirler (×10) için Zor'da 9 adım (×12,91), Aşırı'da yalnızca 5 adım (×12,47) yeter; Orta'da ancak karşı kıyıda (×11,42) olur, Kolay'da hiç olmaz.",
+            "- Acele etme: kendi şeridinde lama güvendedir. Sıradaki şeridi izle ve ancak gerçek bir boşluk gelince yürü.",
+            "- Her şerit yeniden çekilir - art arda gelen kayıplar bir sonraki şerit hakkında hiçbir şey söylemez.",
+            "- İyi zamanlamayla karşıya Kolay'da yaklaşık her 7 turda bir, Orta'da 38 turda bir, Zor'da 614 turda bir ve Aşırı'da yalnızca 32.768 turda bir varılır.",
+            "- Çelik sinirler (×10) için Aşırı'da 4 şerit (×15,52), Zor'da 7 (×11,77) ve Orta'da 13 şerit (×10,37) yeter; Kolay'da hiç olmaz (en fazla ×6,57). İp cambazı (Aşırı'da ×100) için 7 şerit (×124,16) gerekir - bu yaklaşık 128 turda bir olur.",
             "- Hangi çarpanda çekeceğine önceden karar ver ve buna sadık kal. Sabit geri ödeme sayesinde hiçbir strateji diğerinden iyi değildir, yalnızca daha az ya da daha çok risklidir."
           ]
         }

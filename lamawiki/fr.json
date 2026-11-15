@@ -3043,6 +3043,10 @@
         "multiplicateur",
         "jetons",
         "banque lama",
+        "route",
+        "circulation",
+        "voitures",
+        "timing",
         "pont",
         "rivière",
         "glace",
@@ -3053,40 +3057,51 @@
         {
           "h": "Comment jouer",
           "body": [
-            "Le lama traverse pas à pas un pont suspendu, une rivière ou un lac gelé. Chaque pas qui tient fait monter le multiplicateur - un faux pas coûte la mise.",
-            "Choisis ta mise (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ou 10000 jetons Lama) et appuie sur GO : la mise est débitée et le lama fait son premier pas.",
-            "Après chaque pas réussi, tu décides : AVANCER encore ou ENCAISSER - tu reçois alors ta mise multipliée par le multiplicateur actuel. Sur l'autre rive, le gain est encaissé automatiquement, avec des confettis.",
-            "Après l'encaissement, le jeu révèle à quel pas tout aurait lâché. En haut à droite s'affiche l'historique des 12 dernières manches."
+            "Le lama traverse voie par voie une route, un pont suspendu, une rivière ou un lac gelé. Chaque voie franchie fait monter le multiplicateur - si le lama se fait prendre, la mise est perdue.",
+            "Choisis ta mise (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ou 10000 jetons Lama) et appuie sur GO : la mise est débitée et le lama s'engage sur la première voie.",
+            "Après chaque voie franchie, tu décides : AVANCER encore ou ENCAISSER - tu reçois alors ta mise multipliée par le multiplicateur actuel (arrondie à l'entier inférieur). De l'autre côté, le gain est encaissé automatiquement, avec des confettis.",
+            "En haut à droite s'affiche l'historique des 12 dernières manches."
+          ]
+        },
+        {
+          "h": "Obstacles et timing",
+          "body": [
+            "Dans chaque monde, quelque chose arrive et il faut bien choisir son moment : sur la route, voitures et camions roulent sur chaque voie, sur le pont suspendu des rochers tombent à travers le pont, sur la rivière du bois flotté dérive vers toi et sur le lac gelé des blocs de glace glissent vers toi.",
+            "Si tu appuies sur GO ou AVANCER alors qu'un obstacle est sur la voie suivante, le lama se fait renverser ou percuter et reste aplati - la mise est perdue. Attends donc une ouverture.",
+            "La voie où se trouve le lama est protégée : sur la route, une barrière s'abaisse et les voitures s'arrêtent devant le lama ; dans les autres mondes, les obstacles disparaissent de ta voie. Tu peux donc attendre tranquillement la bonne ouverture.",
+            "Plus la difficulté est élevée, plus la circulation est dense et rapide.",
+            "En plus, chaque voie comporte un risque aléatoire que même un timing parfait n'évite pas : sur la route surgit soudain un chauffard, sur le pont la planche casse, sur la rivière la pierre se dérobe et sur le lac gelé la glace cède."
           ]
         },
         {
           "h": "Difficultés",
           "body": [
             "Quatre niveaux - à choisir avant chaque manche avec les boutons de la barre du bas ou avec [1] à [4] :",
-            "- Facile : 20 pas, risque de 1/12 par pas (env. 8 %), jusqu'à ×5,52",
-            "- Moyen : 16 pas, risque de 1/7 (env. 14 %), jusqu'à ×11,42",
-            "- Difficile : 13 pas, risque de 1/4 (25 %), jusqu'à ×40,82",
-            "- Extrême : 10 pas, risque de 2/5 (40 %), jusqu'à ×160,42",
-            "Les multiplicateurs sont des tables fixes, calculées pour que chaque stratégie rende à la longue environ 97 % de la mise - peu importe le pas où tu encaisses. L'avantage de la maison est donc d'environ 3 %."
+            "- Facile : 22 voies, risque de 1/12 par voie (env. 8 %), jusqu'à ×6,57",
+            "- Moyen : 20 voies, risque de 1/6 (env. 17 %), jusqu'à ×37,18",
+            "- Difficile : 18 voies, risque de 3/10 (30 %), jusqu'à ×595,67",
+            "- Extrême : 15 voies, risque de 1/2 (50 %), jusqu'à ×31 784,96 - chaque voie double le multiplicateur : ×1,94, ×3,88, ×7,76 …",
+            "Les multiplicateurs sont des tables fixes, calculées pour qu'avec un bon timing chaque stratégie rende à la longue environ 97 % de la mise - peu importe la voie où tu encaisses. L'avantage de la maison est donc d'environ 3 %."
           ]
         },
         {
-          "h": "Trois mondes",
+          "h": "Quatre mondes",
           "body": [
-            "Le monde ne change que le décor, pas les chances. Change-le avec les boutons de monde en haut à gauche ou avec [W] :",
-            "- Pont suspendu : des planches au-dessus d'un canyon - au faux pas, la planche casse et le lama tombe.",
-            "- Rivière : des pierres de gué dans l'eau - la pierre se dérobe, et plouf !",
-            "- Lac gelé : des plaques de glace sur le lac gelé - des fissures s'étendent, puis la plaque cède.",
+            "Change de monde avec les quatre boutons en haut à gauche ou avec [W] ; le monde ne change pas les chances :",
+            "- Route (par défaut) : une rue vue du dessus, avec des trottoirs. Le lama traverse voie par voie sur des tronçons de passage piéton pendant que voitures et camions passent - et parfois un chauffard.",
+            "- Pont suspendu : des planches au-dessus d'un canyon, des rochers qui tombent - si la planche casse, le lama tombe.",
+            "- Rivière : des pierres de gué dans l'eau, du bois flotté qui dérive vers toi - si la pierre se dérobe, plouf !",
+            "- Lac gelé : des plaques de glace sur le lac gelé, des blocs de glace qui glissent vers toi - des fissures s'étendent, puis la plaque cède.",
             "Dans chaque monde, le lama porte une écharpe dans la couleur d'accent du jeu."
           ]
         },
         {
           "h": "Commandes",
           "body": [
-            "- [Espace], [Droite] ou clic sur le pas suivant : GO ou pas suivant",
+            "- [Espace], [Droite] ou clic sur la voie suivante : GO ou AVANCER - de préférence quand la voie est libre",
             "- [Entrée] ou [C] : encaisser (avant une manche, [Entrée] fonctionne comme GO)",
             "- [Haut] / [Bas], [+] / [-] ou molette : changer la mise",
-            "- [1] à [4] : difficulté, [W] : changer de monde",
+            "- [1] à [4] : difficulté, [W] : changer de monde (route, pont suspendu, rivière, lac gelé)",
             "La mise, la difficulté et le monde ne se changent qu'entre deux manches. Le monde, la difficulté et la dernière mise sont sauvegardés dans settings.json (section lamacrossing)."
           ]
         },
@@ -3096,7 +3111,7 @@
             "Lama Crossing joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker et le Casino (départ 1000, sauvegardé dans mem.json).",
             "Le record est le plus haut niveau de 1000 + ton bilan à Lama Crossing ; les gains au Blackjack, au Poker ou au Casino ne comptent pas ici.",
             "Sous 10 jetons tu es fauché : [Entrée] ou un clic prend un prêt de la banque et remet ton compte à 1000. Les prêts ne comptent pas dans le bilan.",
-            "Arrêter en pleine traversée ne coûte rien : la mise, la difficulté et le pas sont sauvegardés, et la partie reprend exactement là au prochain lancement."
+            "Arrêter en pleine traversée ne coûte rien : la mise, la difficulté et la voie sont sauvegardées, et la partie reprend exactement là au prochain lancement."
           ]
         },
         {
@@ -3107,15 +3122,16 @@
             "- Maître de Lama Crossing : record 10000",
             "- L'autre rive (rare) : Fais traverser le lama jusqu'au bout dans Lama Crossing",
             "- Nerfs d'acier (épique) : Encaisse à ×10 ou plus dans Lama Crossing",
-            "- Funambule (légendaire) : Réussis une traversée complète en Extrême dans Lama Crossing"
+            "- Funambule (légendaire) : Encaisse à ×100 ou plus en Extrême dans Lama Crossing"
           ]
         },
         {
           "h": "Astuces",
           "body": [
-            "- Chaque pas est tiré à nouveau - une série de faux pas ne dit rien du pas suivant.",
-            "- On arrive tout au bout environ une manche sur 6 en Facile, une sur 12 en Moyen, une sur 42 en Difficile et seulement une sur 165 en Extrême.",
-            "- Pour Nerfs d'acier (×10), 9 pas suffisent en Difficile (×12,91) et 5 en Extrême (×12,47) ; en Moyen, il faut atteindre l'autre rive (×11,42), en Facile c'est impossible.",
+            "- Rien ne presse : sur sa voie, le lama est en sécurité. Observe la voie suivante et ne pars que quand une vraie ouverture arrive.",
+            "- Chaque voie est tirée à nouveau - une série de défaites ne dit rien de la voie suivante.",
+            "- Avec un bon timing, on arrive tout au bout environ une manche sur 7 en Facile, une sur 38 en Moyen, une sur 614 en Difficile et seulement une sur 32 768 en Extrême.",
+            "- Pour Nerfs d'acier (×10), 4 voies suffisent en Extrême (×15,52), 7 en Difficile (×11,77) et 13 en Moyen (×10,37) ; en Facile c'est impossible (au plus ×6,57). Funambule (×100 en Extrême) demande 7 voies (×124,16) - environ une manche sur 128.",
             "- Fixe à l'avance le multiplicateur auquel tu encaisses - et tiens-t'y. Avec le taux fixe, aucune stratégie n'est meilleure qu'une autre, seulement plus ou moins risquée."
           ]
         }

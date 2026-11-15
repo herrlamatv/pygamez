@@ -3044,6 +3044,10 @@
         "kerroin",
         "merkit",
         "laamapankki",
+        "tie",
+        "liikenne",
+        "autot",
+        "ajoitus",
         "silta",
         "joki",
         "jää",
@@ -3054,40 +3058,51 @@
         {
           "h": "Näin pelataan",
           "body": [
-            "Laama ylittää askel kerrallaan riippusillan, joen tai jäätyneen järven. Jokainen kestävä askel nostaa kerrointa - yksi harha-askel vie panoksen.",
-            "Valitse panos (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 tai 10000 laamamerkkiä) ja paina ALOITA: panos veloitetaan ja laama ottaa ensimmäisen askeleen.",
-            "Jokaisen onnistuneen askeleen jälkeen päätät: ETEENPÄIN vai KOTIUTA - silloin saat panoksen kerrottuna nykyisellä kertoimella. Toisella rannalla voitto kotiutetaan automaattisesti, konfettien kera.",
-            "Kotiutuksen jälkeen peli paljastaa, millä askeleella olisi käynyt huonosti. Oikeassa yläkulmassa näkyy 12 viimeisen kierroksen historia."
+            "Laama ylittää kaista kerrallaan tien, riippusillan, joen tai jäätyneen järven. Jokainen selvitetty kaista nostaa kerrointa - jos laamaan osuu jotain, panos menee.",
+            "Valitse panos (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 tai 10000 laamamerkkiä) ja paina ALOITA: panos veloitetaan ja laama astuu ensimmäiselle kaistalle.",
+            "Jokaisen selvitetyn kaistan jälkeen päätät: ETEENPÄIN vai KOTIUTA - silloin saat panoksen kerrottuna nykyisellä kertoimella (alaspäin pyöristettynä). Toisella puolella voitto kotiutetaan automaattisesti, konfettien kera.",
+            "Oikeassa yläkulmassa näkyy 12 viimeisen kierroksen historia."
+          ]
+        },
+        {
+          "h": "Esteet ja ajoitus",
+          "body": [
+            "Joka maailmassa jokin tulee kohti, ja lähtö on ajoitettava oikein: tiellä autot ja rekat ajavat jokaista kaistaa pitkin, riippusillalla kivenlohkareita putoaa sillan läpi, joessa ajopuut ajelehtivat sinua kohti ja jäisellä järvellä jäälohkareet liukuvat sinua kohti.",
+            "Jos painat ALOITA tai ETEENPÄIN, kun seuraavalla kaistalla on este, laama jää alle tai siihen osuu, ja se jää makaamaan litteänä - panos menetetään. Odota siis rakoa.",
+            "Kaista, jolla laama seisoo, on suojattu: tiellä puomi laskeutuu ja autot pysähtyvät laaman eteen, muissa maailmoissa esteet katoavat omalta kaistaltasi. Voit siis odottaa rauhassa sopivaa rakoa.",
+            "Mitä korkeampi vaikeustaso, sitä tiheämpi ja nopeampi liikenne.",
+            "Lisäksi jokaisella kaistalla on satunnainen riski, jota täydellinenkään ajoitus ei estä: tiellä ilmestyy yllättäen hurjastelija, sillalla lankku katkeaa, joessa kivi lipsahtaa ja järvellä jää pettää."
           ]
         },
         {
           "h": "Vaikeustasot",
           "body": [
             "Neljä tasoa - valitaan ennen jokaista kierrosta alapalkin painikkeilla tai näppäimillä [1] - [4]:",
-            "- Helppo: 20 askelta, riski 1/12 per askel (n. 8 %), jopa ×5,52",
-            "- Keskitaso: 16 askelta, riski 1/7 (n. 14 %), jopa ×11,42",
-            "- Vaikea: 13 askelta, riski 1/4 (25 %), jopa ×40,82",
-            "- Äärimmäinen: 10 askelta, riski 2/5 (40 %), jopa ×160,42",
-            "Kertoimet ovat kiinteissä taulukoissa, ja ne on laskettu niin, että jokainen strategia palauttaa pitkällä aikavälillä noin 97 % panoksesta - riippumatta siitä, millä askeleella kotiutat. Talon etu on siis noin 3 %."
+            "- Helppo: 22 kaistaa, riski 1/12 per kaista (n. 8 %), jopa ×6,57",
+            "- Keskitaso: 20 kaistaa, riski 1/6 (n. 17 %), jopa ×37,18",
+            "- Vaikea: 18 kaistaa, riski 3/10 (30 %), jopa ×595,67",
+            "- Äärimmäinen: 15 kaistaa, riski 1/2 (50 %), jopa ×31 784,96 - jokainen kaista tuplaa kertoimen: ×1,94, ×3,88, ×7,76 …",
+            "Kertoimet ovat kiinteissä taulukoissa, ja ne on laskettu niin, että hyvällä ajoituksella jokainen strategia palauttaa pitkällä aikavälillä noin 97 % panoksesta - riippumatta siitä, millä kaistalla kotiutat. Talon etu on siis noin 3 %."
           ]
         },
         {
-          "h": "Kolme maailmaa",
+          "h": "Neljä maailmaa",
           "body": [
-            "Maailma on pelkkää ulkoasua eikä muuta todennäköisyyksiä. Vaihda sitä vasemman yläkulman maailmapainikkeilla tai näppäimellä [W]:",
-            "- Riippusilta: lankkuja rotkon yllä - harha-askeleella lankku katkeaa ja laama putoaa.",
-            "- Joki: astinkiviä vedessä - kivi lipsahtaa alta, ja laama molskahtaa veteen.",
-            "- Jäinen järvi: jäälauttoja jäätyneellä järvellä - halkeamat leviävät, sitten lautta murtuu.",
+            "Vaihda vasemman yläkulman neljällä maailmapainikkeella tai näppäimellä [W]; maailma ei muuta todennäköisyyksiä:",
+            "- Tie (oletus): ylhäältä nähty katu jalkakäytävineen. Laama ylittää sen kaista kerrallaan suojatien paloja pitkin, kun autot ja rekat ajavat ohi - ja silloin tällöin hurjastelija.",
+            "- Riippusilta: lankkuja rotkon yllä, kivenlohkareita putoaa - jos lankku katkeaa, laama putoaa.",
+            "- Joki: astinkiviä vedessä, ajopuita ajelehtii kohti - jos kivi lipsahtaa alta, laama molskahtaa veteen.",
+            "- Jäinen järvi: jäälauttoja jäätyneellä järvellä, jäälohkareita liukuu kohti - halkeamat leviävät, sitten lautta murtuu.",
             "Jokaisessa maailmassa laamalla on kaulahuivi pelin korostusvärissä."
           ]
         },
         {
           "h": "Ohjaus",
           "body": [
-            "- [Välilyönti], [Oikea] tai klikkaus seuraavaan askeleeseen: ALOITA tai seuraava askel",
+            "- [Välilyönti], [Oikea] tai klikkaus seuraavaan kaistaan: ALOITA tai ETEENPÄIN - mieluiten kun kaista on vapaa",
             "- [Enter] tai [C]: kotiuta (ennen kierrosta [Enter] toimii kuten ALOITA)",
             "- [Ylös] / [Alas], [+] / [-] tai hiiren rulla: vaihda panosta",
-            "- [1] - [4]: vaikeustaso, [W]: vaihda maailmaa",
+            "- [1] - [4]: vaikeustaso, [W]: vaihda maailmaa (tie, riippusilta, joki, jäinen järvi)",
             "Panosta, vaikeustasoa ja maailmaa voi vaihtaa vain kierrosten välissä. Maailma, vaikeustaso ja viimeisin panos tallentuvat tiedostoon settings.json (osio lamacrossing)."
           ]
         },
@@ -3097,7 +3112,7 @@
             "Lama Crossing pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin ja Casinon kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
             "Paras tulos on 1000 + Lama Crossing -saldosi korkein arvo; Blackjackin, Pokerin tai Casinon voitot eivät lasketa tähän.",
             "Alle 10 merkillä rahat ovat lopussa: [Enter] tai klikkaus ottaa pankkilainan ja täyttää tilin taas 1000:een. Lainat eivät lasketa saldoon.",
-            "Kesken ylityksen lopettaminen on turvallista: panos, vaikeustaso ja askel tallentuvat, ja seuraavalla käynnistyskerralla jatkat täsmälleen siitä."
+            "Kesken ylityksen lopettaminen on turvallista: panos, vaikeustaso ja kaista tallentuvat, ja seuraavalla käynnistyskerralla jatkat täsmälleen siitä."
           ]
         },
         {
@@ -3108,15 +3123,16 @@
             "- Lama Crossing-mestari: paras tulos 10000",
             "- Toinen ranta (harvinainen): Vie laama Lama Crossingissa toiselle rannalle asti",
             "- Teräshermot (eeppinen): Kotiuta Lama Crossingissa kertoimella ×10 tai enemmän",
-            "- Nuorallatanssi (legendaarinen): Tee Lama Crossingissa koko ylitys Äärimmäisellä tasolla"
+            "- Nuorallatanssi (legendaarinen): Kotiuta Lama Crossingissa Äärimmäisellä tasolla kertoimella ×100 tai enemmän"
           ]
         },
         {
           "h": "Vinkit",
           "body": [
-            "- Jokainen askel arvotaan uudelleen - harha-askelten sarja ei kerro mitään seuraavasta.",
-            "- Perille asti pääsee Helpolla suunnilleen joka 6. kierroksella, Keskitasolla joka 12., Vaikealla joka 42. ja Äärimmäisellä vain joka 165. kierroksella.",
-            "- Teräshermoihin (×10) riittää Vaikealla 9 askelta (×12,91) ja Äärimmäisellä jo 5 (×12,47); Keskitasolla se onnistuu vasta toisella rannalla (×11,42), Helpolla ei koskaan.",
+            "- Ei kiirettä: omalla kaistallaan laama on turvassa. Tarkkaile seuraavaa kaistaa ja lähde vasta, kun tulee kunnon rako.",
+            "- Jokainen kaista arvotaan uudelleen - tappioiden sarja ei kerro mitään seuraavasta.",
+            "- Hyvällä ajoituksella perille asti pääsee Helpolla suunnilleen joka 7. kierroksella, Keskitasolla joka 38., Vaikealla joka 614. ja Äärimmäisellä vain kerran 32 768 kierroksessa.",
+            "- Teräshermoihin (×10) riittää Äärimmäisellä 4 kaistaa (×15,52), Vaikealla 7 (×11,77) ja Keskitasolla 13 (×10,37); Helpolla ei koskaan (enintään ×6,57). Nuorallatanssiin (×100 Äärimmäisellä) tarvitaan 7 kaistaa (×124,16) - se onnistuu suunnilleen joka 128. kierroksella.",
             "- Päätä etukäteen, millä kertoimella kotiutat - ja pidä siitä kiinni. Kiinteän palautuksen ansiosta mikään strategia ei ole toista parempi, vain enemmän tai vähemmän riskialtis."
           ]
         }

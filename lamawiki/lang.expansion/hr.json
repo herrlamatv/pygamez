@@ -3044,6 +3044,9 @@
         "množitelj",
         "žetoni",
         "lama banka",
+        "cesta",
+        "promet",
+        "automobili",
         "most",
         "rijeka",
         "led",
@@ -3054,40 +3057,51 @@
         {
           "h": "Kako se igra",
           "body": [
-            "Lama korak po korak prelazi viseći most, rijeku ili zaleđeno jezero. Svaki korak koji izdrži podiže množitelj - jedan pogrešan korak košta ulog.",
-            "Odaberi ulog (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ili 10000 lama žetona) i pritisni KRENI: ulog se skida, a lama radi prvi korak.",
-            "Nakon svakog uspješnog koraka odlučuješ: DALJE ili ISPLATI - tada dobivaš ulog pomnožen trenutnim množiteljem. Na drugoj obali dobitak se isplaćuje automatski, uz konfete.",
-            "Nakon isplate igra otkriva na kojem bi koraku pošlo po zlu. Gore desno je povijest zadnjih 12 krugova."
+            "Lama traku po traku prelazi cestu, viseći most, rijeku ili zaleđeno jezero. Svaka svladana traka podiže množitelj - ako lamu nešto pogodi, ulog je izgubljen.",
+            "Odaberi ulog (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ili 10000 lama žetona) i pritisni KRENI: ulog se skida, a lama stupa na prvu traku.",
+            "Nakon svake svladane trake odlučuješ: DALJE ili ISPLATI - tada dobivaš ulog pomnožen trenutnim množiteljem (zaokruženo naniže). Na drugoj strani dobitak se isplaćuje automatski, uz konfete.",
+            "Gore desno je povijest zadnjih 12 krugova."
+          ]
+        },
+        {
+          "h": "Prepreke i pravi trenutak",
+          "body": [
+            "U svakom svijetu nešto dolazi i moraš uhvatiti pravi trenutak: na cesti svakom trakom voze automobili i kamioni, na visećem mostu kroz most padaju gromade, rijekom prema tebi pluta naplavljeno drvo, a jezerom prema tebi klize ledeni blokovi.",
+            "Pritisneš li KRENI ili DALJE dok je na sljedećoj traci prepreka, lamu nešto pregazi ili pogodi i ostane ležati spljoštena - ulog je izgubljen. Zato pričekaj da se otvori prolaz.",
+            "Traka na kojoj lama stoji je zaštićena: na cesti se spusti rampa i automobili stanu ispred lame, u ostalim svjetovima prepreke na tvojoj traci nestanu. Na pravi prolaz zato možeš mirno pričekati.",
+            "Što je težina viša, promet je gušći i brži.",
+            "Osim toga svaka traka nosi slučajni rizik koji ni savršen tajming ne sprječava: na cesti iznenada naleti divljak za volanom, na mostu pukne daska, u rijeci isklizne kamen, a na jezeru pukne led."
           ]
         },
         {
           "h": "Težine",
           "body": [
             "Četiri razine - biraju se prije svakog kruga gumbima u donjoj traci ili tipkama [1] do [4]:",
-            "- Lako: 20 koraka, rizik 1/12 po koraku (oko 8 %), do ×5,52",
-            "- Srednje: 16 koraka, rizik 1/7 (oko 14 %), do ×11,42",
-            "- Teško: 13 koraka, rizik 1/4 (25 %), do ×40,82",
-            "- Ekstremno: 10 koraka, rizik 2/5 (40 %), do ×160,42",
-            "Množitelji su u fiksnim tablicama i izračunani tako da svaka strategija dugoročno vraća oko 97 % uloga - bez obzira na kojem koraku isplatiš. Prednost kuće je dakle oko 3 %."
+            "- Lako: 22 trake, rizik 1/12 po traci (oko 8 %), do ×6,57",
+            "- Srednje: 20 traka, rizik 1/6 (oko 17 %), do ×37,18",
+            "- Teško: 18 traka, rizik 3/10 (30 %), do ×595,67",
+            "- Ekstremno: 15 traka, rizik 1/2 (50 %), do ×31.784,96 - svaka traka udvostručuje množitelj: ×1,94, ×3,88, ×7,76 …",
+            "Množitelji su u fiksnim tablicama i izračunani tako da uz dobar tajming svaka strategija dugoročno vraća oko 97 % uloga - bez obzira na kojoj traci isplatiš. Prednost kuće je dakle oko 3 %."
           ]
         },
         {
-          "h": "Tri svijeta",
+          "h": "Četiri svijeta",
           "body": [
-            "Svijet mijenja samo izgled, ne i šanse. Mijenja se gumbima svjetova gore lijevo ili tipkom [W]:",
-            "- Viseći most: daske nad kanjonom - pri pogrešnom koraku daska pukne i lama padne.",
-            "- Rijeka: kamenje u vodi - kamen isklizne i lama pljusne u vodu.",
-            "- Zaleđeno jezero: sante leda na zaleđenom jezeru - pukotine se šire, a zatim santa pukne.",
+            "Mijenja se s četiri gumba svjetova gore lijevo ili tipkom [W]; svijet ne mijenja šanse:",
+            "- Cesta (zadano): ulica gledana odozgo, s nogostupima. Lama je prelazi traku po traku po komadićima pješačkog prijelaza dok prolaze automobili i kamioni - a ponekad i divljak za volanom.",
+            "- Viseći most: daske nad kanjonom, gromade padaju - ako daska pukne, lama padne.",
+            "- Rijeka: kamenje u vodi, naplavljeno drvo pluta prema tebi - ako kamen isklizne, lama pljusne u vodu.",
+            "- Zaleđeno jezero: sante leda na zaleđenom jezeru, ledeni blokovi klize prema tebi - pukotine se šire, a zatim santa pukne.",
             "U svakom svijetu lama nosi šal u boji naglaska igre."
           ]
         },
         {
           "h": "Upravljanje",
           "body": [
-            "- [Razmaknica], [Desno] ili klik na sljedeći korak: KRENI ili sljedeći korak",
+            "- [Razmaknica], [Desno] ili klik na sljedeću traku: KRENI ili DALJE - najbolje kad je traka slobodna",
             "- [Enter] ili [C]: isplata (prije kruga [Enter] radi kao KRENI)",
             "- [Gore] / [Dolje], [+] / [-] ili kotačić miša: promjena uloga",
-            "- [1] do [4]: težina, [W]: promjena svijeta",
+            "- [1] do [4]: težina, [W]: promjena svijeta (cesta, viseći most, rijeka, zaleđeno jezero)",
             "Ulog, težina i svijet mogu se mijenjati samo između krugova. Svijet, težina i zadnji ulog spremaju se u settings.json (odjeljak lamacrossing)."
           ]
         },
@@ -3097,7 +3111,7 @@
             "Lama Crossing igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom i Casinom (početak 1000, spremljeno u mem.json).",
             "Rekord je najviše stanje 1000 + tvoje bilance u Lama Crossingu; dobici u Blackjacku, Pokeru ili Casinu ovdje se ne računaju.",
             "Ispod 10 žetona si bankrot: [Enter] ili klik uzima bankovni kredit i ponovno puni račun na 1000. Krediti se ne računaju u bilancu.",
-            "Prekinuti usred prijelaza je sigurno: ulog, težina i korak se spremaju, a pri sljedećem pokretanju nastavljaš točno ondje."
+            "Prekinuti usred prijelaza je sigurno: ulog, težina i traka se spremaju, a pri sljedećem pokretanju nastavljaš točno ondje."
           ]
         },
         {
@@ -3108,15 +3122,16 @@
             "- Majstor igre Lama Crossing: rekord 10000",
             "- Druga obala (rijedak): Prevedi lamu u Lama Crossingu sve do druge obale",
             "- Čelični živci (epski): Isplati u Lama Crossingu pri ×10 ili više",
-            "- Hod po užetu (legendaran): Završi u Lama Crossingu cijeli prijelaz na ekstremnoj težini"
+            "- Hod po užetu (legendaran): Isplati u Lama Crossingu na ekstremnoj težini pri ×100 ili više"
           ]
         },
         {
           "h": "Savjeti",
           "body": [
-            "- Svaki se korak izvlači iznova - niz pogrešnih koraka ne govori ništa o sljedećem.",
-            "- Sve do druge obale stiže se otprilike u svakom 6. krugu na Lako, u svakom 12. na Srednje, u svakom 42. na Teško i tek u svakom 165. na Ekstremno.",
-            "- Za Čelične živce (×10) na Teško je dovoljno 9 koraka (×12,91), a na Ekstremno već 5 (×12,47); na Srednje uspijeva tek na drugoj obali (×11,42), na Lako nikad.",
+            "- Ne žuri: na svojoj traci lama je sigurna. Prati sljedeću traku i kreni tek kad se otvori pravi prolaz.",
+            "- Svaka se traka izvlači iznova - niz poraza ne govori ništa o sljedećoj.",
+            "- Uz dobar tajming do kraja se stiže otprilike u svakom 7. krugu na Lako, u svakom 38. na Srednje, u svakom 614. na Teško i samo u jednom od 32.768 na Ekstremno.",
+            "- Za Čelične živce (×10) dovoljne su na Ekstremno 4 trake (×15,52), na Teško 7 (×11,77) i na Srednje 13 (×10,37); na Lako nikad (najviše ×6,57). Za Hod po užetu (×100 na Ekstremno) trebaš 7 traka (×124,16) - to uspijeva otprilike u svakom 128. krugu.",
             "- Unaprijed odluči pri kojem ćeš množitelju isplatiti - i drži se toga. Zbog fiksnog povrata nijedna strategija nije bolja od druge, samo više ili manje rizična."
           ]
         }

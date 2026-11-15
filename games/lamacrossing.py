@@ -2,26 +2,34 @@
 """
 lamacrossing.py
 ===============
-Lama Crossing - Mut-Spiel mit Lama-Chips: Das Lama überquert Schritt für
-Schritt eine Hängebrücke, einen Fluss oder einen Eissee. Jeder geschaffte
-Schritt hebt den Multiplikator; ein Fehltritt (Planke bricht, Stein rutscht
-weg, Scholle bricht ein) kostet den Einsatz. Auszahlen geht nach jedem
-Schritt, am anderen Ufer wird automatisch ausgezahlt.
+Lama Crossing - Mut-Spiel mit Lama-Chips: Das Lama überquert Spur für Spur
+eine Straße, eine Hängebrücke, einen Fluss oder einen Eissee. Jede geschaffte
+Spur hebt den Multiplikator; Auszahlen geht nach jeder Spur, am anderen Ufer
+wird automatisch ausgezahlt.
 
-- 4 Schwierigkeiten (Leicht 20 Schritte / Mittel 16 / Schwer 13 / Extrem 10),
-  Risiko und Multiplikatoren in ``lamacrossing_logic.py`` (Quote ~97 %).
-- 3 Welten (nur Optik): Hängebrücke über der Schlucht, Steine im Fluss,
-  Eisschollen auf dem See - jede mit eigener Fehltritt-Animation.
-- Nach dem Auszahlen zeigt das Spiel, wo es schiefgegangen wäre.
-- Verlauf der letzten Runden oben rechts.
+Zwei Gefahren:
+
+- **Hindernisse** (Timing): Auf jeder Spur kommen Autos und Laster (Straße),
+  Felsbrocken (Brücke), Treibholz (Fluss) bzw. Eisblöcke (Eissee). Wer losgeht,
+  während auf der Zielspur eins kommt, wird überfahren bzw. getroffen und liegt
+  platt da. Die Spur, auf der das Lama sicher steht, ist geschützt (Straße:
+  Bake, die Autos halten an; sonst verschwinden die Hindernisse dort).
+- **Zufall** je Spur (``lamacrossing_logic.RISK``): Auf der Straße rast dann ein
+  Raser heran, sonst bricht die Planke, rutscht der Stein weg bzw. bricht das
+  Eis. Bei perfektem Timing bleibt die Quote ~97 %.
+
+- 4 Schwierigkeiten (Leicht 22 Spuren bis x6,57 ... Extrem 15 Spuren bis
+  x31.784,96), dichterer und schnellerer Verkehr auf den schweren Stufen.
+- 4 Welten (Straße = Standard), Verlauf der letzten Runden oben rechts.
 
 Lama-Chips: gemeinsames Konto der Lama-Bank (``lamabank.py``) mit Blackjack,
-Poker und Casino. Der Einsatz wird bei "LOS" abgebucht, jeder Schritt sofort
-gezogen und gespeichert: Wer mitten in der Überquerung geht, macht beim
-nächsten Start genau dort weiter. Highscore = Höchststand von 1000 +
-Lama-Crossing-Bilanz; ``game_over`` wird nie gesetzt.
+Poker und Casino. Der Einsatz wird bei "LOS" abgebucht; eine geschaffte Spur
+wird beim Landen gespeichert, ein Zufalls-Fehltritt sofort: Wer mitten in der
+Überquerung geht, macht beim nächsten Start auf der letzten sicheren Spur
+weiter. Highscore = Höchststand von 1000 + Lama-Crossing-Bilanz;
+``game_over`` wird nie gesetzt.
 
-Steuerung: Leertaste/→/Klick auf den nächsten Schritt = weiter (bzw. LOS),
+Steuerung: Leertaste/→/Klick auf die nächste Spur = weiter (bzw. LOS),
 Enter/C = auszahlen, ↑/↓/+/-/Mausrad = Einsatz, 1-4 = Schwierigkeit,
 W = Welt wechseln.
 """
@@ -47,6 +55,7 @@ IDLE, HOP, WAIT, FALL, CASHED, GOAL = "idle", "hop", "wait", "fall", "cashed", "
 HOP_T = 0.36          # Dauer eines Sprungs
 FALL_T = 1.25         # Fehltritt-Animation
 RESULT_T = 3.2        # Ergebnis-Anzeige, danach zurück ans Startufer
+FADE_T = 0.25         # Hindernisse auf einer gesperrten Spur blenden aus
 
 
 class LamaCrossingGame(Game):
@@ -59,8 +68,8 @@ class LamaCrossingGame(Game):
         self.game_over = False
         lamabank.load()
         self.rng = random.Random()
-        world = self._opt("world", "bridge")
-        self.world = world if world in L.WORLDS else "bridge"
+        world = self._opt("world", "road")
+        self.world = world if world in L.WORLDS else "road"
         diff = self._opt("difficulty", "medium")
         self.diff = diff if diff in L.DIFFS else "medium"
         bet = self._opt("bet", L.BETS[0])
@@ -73,8 +82,8 @@ class LamaCrossingGame(Game):
         self.state = IDLE
         self.hop = None
         self.outcome = None
-        self.broken = 0               # Nummer des gebrochenen Schritts
-        self.reveal = None            # nach dem Auszahlen: dort wäre es passiert
+        self.fall_kind = "break"      # "break" = Zufall (Planke, Stein, Eis), "hit" = platt
+        self.broken = 0               # Nummer der Spur des Fehltritts
         self.fall_t = 0.0
         self.res_t = 0.0
         self.result = None            # (Titel, Untertitel, Farbe)
@@ -102,6 +111,7 @@ class LamaCrossingGame(Game):
             self._say(t("lcr.resumed"))
         else:
             self._clamp_bet()
+        self._init_traffic()
         self.cam = self._cam_target()
         self.score = lamabank.score_for(KEY)
         self._check_broke()
@@ -109,6 +119,7 @@ class LamaCrossingGame(Game):
     def on_surface_changed(self):
         D.clear_cache()
         self._layout()
+        self._init_traffic()
         self.cam = self._cam_target()
 
     def _layout(self):
@@ -151,7 +162,7 @@ class LamaCrossingGame(Game):
         pad = int(22 * max(0.7, k))
         go_w = max(self.f_btn.size(t("lcr.go"))[0], self.f_btn.size(t("lcr.step"))[0]) + pad
         go_w = max(go_w, int(110 * k))
-        cash_w = self.f_btn.size(t("lcr.cashout") + " 1000000")[0] + pad
+        cash_w = self.f_btn.size(t("lcr.cashout") + " 999999999")[0] + pad
         room = W - m - (self.r_plus.right + m) - max(4, int(8 * k))
         if go_w + cash_w > room:
             f = room / (go_w + cash_w)
@@ -166,7 +177,8 @@ class LamaCrossingGame(Game):
         self.r_diffs = [pygame.Rect(x0 + i * (bw + 6), bar_y, bw, bar_h) for i in range(4)]
         # Welt-Knöpfe oben links
         wb = max(26, int(36 * k))
-        self.r_worlds = [pygame.Rect(m + i * (wb + 4), self.hud_h + m, wb, wb) for i in range(3)]
+        self.r_worlds = [pygame.Rect(m + i * (wb + 4), self.hud_h + m, wb, wb)
+                         for i in range(len(L.WORLDS))]
 
     # ===================================================== Einstellungen
     def _opt(self, key, default):
@@ -223,7 +235,7 @@ class LamaCrossingGame(Game):
         return L.steps(self.diff)
 
     def _tile_x(self, i):
-        """Weltkoordinate x der Schritt-Mitte (0 = Startufer, n+1 = Zielufer)."""
+        """Weltkoordinate x der Spur-Mitte (0 = Startufer, n+1 = Zielufer)."""
         return int(self.width * 0.22) + i * self.gap
 
     def _tile_y(self, i):
@@ -242,6 +254,8 @@ class LamaCrossingGame(Game):
             return x, y - math.sin(math.pi * p) * self.hop_h, "hop"
         x, y = self._tile_x(self.step), self._tile_y(self.step)
         if self.state == FALL:
+            if self.fall_kind == "hit":
+                return x, y, "flat"
             f = self.fall_t
             if self.world == "bridge":
                 return x, y + 0.5 * 1500 * self.k * f * f, "fall"
@@ -259,9 +273,109 @@ class LamaCrossingGame(Game):
         hi = max(0, self._tile_x(n + 1) + int(self.gap * 1.3) - self.width)
         return max(0.0, min(float(hi), lx - self.width * 0.32))
 
+    # ===================================================== Verkehr
+    def _horizon(self):
+        """Oberkante der Hindernis-Bahn: Horizont (Fluss/Eis) bzw. über der Szene."""
+        if self.world == "river":
+            return self.path_y - int(self.height * 0.10)
+        if self.world == "ice":
+            return self.path_y - int(self.height * 0.08)
+        return self.scene.y - int(self.gap * 1.5)
+
+    def _obs_size(self, y):
+        """Größe eines Hindernisses auf Höhe y (Fluss/Eis perspektivisch)."""
+        if self.world in ("river", "ice"):
+            top = self._horizon()
+            f = max(0.0, min(1.0, (y - top) / max(1, self.height - top)))
+            return int(self.gap * (0.45 + 0.80 * f))
+        return self.gap
+
+    def _target_y(self):
+        """Höhe der Treffer-Mitte des Lamas."""
+        return self.path_y - self.llama_n * 0.35
+
+    def _init_traffic(self):
+        """Jede Spur 1..n: festes Tempo, Startzeit zufällig versetzt."""
+        v_lo, v_hi, gap_lo, gap_hi = L.TRAFFIC[self.diff]
+        self.lanes = [dict(v=0.0, t=0.0, obs=[], closed=False)]
+        for i in range(1, self._n() + 1):
+            v = self.rng.uniform(v_lo, v_hi) * self.k
+            tm = self.rng.uniform(0, gap_hi)
+            self.lanes.append(dict(v=v, t=tm, obs=[], closed=i <= self.step and self.state != IDLE))
+
+    def _spawn_obstacle(self, lane, kind, v, y=None):
+        if y is None:
+            top = self._horizon()
+            size = self._obs_size(top)
+            y = top if self.world in ("river", "ice") else top - D.obstacle_len(self.world, kind, size) / 2
+        lane["obs"].append(dict(y=y, v=v, kind=kind, stop=None, fade=None))
+
+    def _update_traffic(self, dt):
+        v_lo, v_hi, gap_lo, gap_hi = L.TRAFFIC[self.diff]
+        f = L.SPEED_F[self.world]
+        H = self.height
+        for i in range(1, len(self.lanes)):
+            lane = self.lanes[i]
+            alive = []
+            for o in lane["obs"]:
+                ny = o["y"] + o["v"] * f * dt
+                if o["stop"] is not None and ny >= o["stop"]:
+                    ny = max(o["y"], o["stop"])
+                o["y"] = ny
+                if o["fade"] is not None:
+                    o["fade"] -= dt
+                if (o["fade"] is None or o["fade"] > 0) and \
+                        o["y"] - D.obstacle_len(self.world, o["kind"], self._obs_size(o["y"])) / 2 <= H:
+                    alive.append(o)
+            lane["obs"] = alive
+            lane["t"] -= dt
+            if lane["t"] <= 0 and not lane["closed"]:
+                kind = self.rng.randrange(4)
+                lane["t"] = self.rng.uniform(gap_lo, gap_hi)
+                self._spawn_obstacle(lane, kind, lane["v"])
+
+    def _hit(self, b):
+        """Steht auf Spur b gerade ein Hindernis dort, wo das Lama landet?"""
+        if not 1 <= b < len(self.lanes):
+            return False
+        ty = self._target_y()
+        reach = self.llama_n * 0.3
+        for o in self.lanes[b]["obs"]:
+            if o["fade"] is not None:
+                continue
+            olen = D.obstacle_len(self.world, o["kind"], self._obs_size(o["y"]))
+            if L.hit_test(o["y"], olen, ty, reach):
+                return True
+        return False
+
+    def _close_lane(self, b):
+        """Spur b sicher erreicht: keine neuen Hindernisse, die kommenden halten an
+        (Straße) bzw. blenden aus."""
+        if not 1 <= b < len(self.lanes):
+            return
+        lane = self.lanes[b]
+        lane["closed"] = True
+        ty = self._target_y()
+        for o in lane["obs"]:
+            if o["y"] >= ty:
+                continue                      # schon vorbei
+            if self.world == "road":
+                olen = D.obstacle_len(self.world, o["kind"], self.gap)
+                stop = self.path_y - self.llama_n - olen / 2 - 6 * self.k
+                o["stop"] = max(stop, o["y"])   # davor anhalten bzw. sofort, wenn schon näher
+            elif o["fade"] is None:
+                o["fade"] = FADE_T
+
+    def _open_lanes(self):
+        for i in range(1, len(self.lanes)):
+            lane = self.lanes[i]
+            lane["closed"] = False
+            for o in lane["obs"]:
+                o["stop"] = None
+
     # ===================================================== Ablauf
     def _go(self):
-        """LOS (vor der Runde) bzw. WEITER (auf einem Schritt)."""
+        """LOS (vor der Runde) bzw. WEITER (auf einer Spur)."""
         if self.state == IDLE:
             if self.broke:
                 return
@@ -273,35 +387,28 @@ class LamaCrossingGame(Game):
                 return
             self.round = {"bet": self.bet, "diff": self.diff, "step": 0}
             self.step = 0
-            self.reveal = None
             self.play_sound("select")
             self._step()
         elif self.state == WAIT:
             self._step()
 
     def _step(self):
-        n = self._n()
         k = self.step + 1
         bet = self.round["bet"]
         if L.roll(self.rng, self.diff):
-            if k >= n:
-                self.win = L.payout(bet, self.diff, n)
-                lamabank.credit(self.win, KEY)
-                self.pending += self.win
-                self.hist = (self.hist + [L.mult(self.diff, n)])[-L.HISTORY:]
-                self.round = None
-                self.outcome = "goal"
-            else:
-                self.round["step"] = k
-                self.outcome = "ok"
+            self.outcome = "ok"
         else:
+            # Zufalls-Fehltritt: sofort verbucht (Verlassen hilft nicht)
             self.hist = (self.hist + [0])[-L.HISTORY:]
             self.round = None
             self.outcome = "fail"
             self.broken = k
             self.lost = bet
-        self._save_extra()
-        self.score = lamabank.score_for(KEY)
+            self._save_extra()
+            if self.world == "road":
+                # Raser: trifft genau bei der Landung
+                v = L.TRAFFIC[self.diff][1] * L.RASER_F * self.k
+                self._spawn_obstacle(self.lanes[k], 0, v, self._target_y() - v * HOP_T)
         self.hop = {"a": self.step, "b": k, "t": 0.0}
         self.state = HOP
         self.play_sound("move")
@@ -325,33 +432,63 @@ class LamaCrossingGame(Game):
             self.play_sound("level")
             self.rumble(220)
             self.ach_event("lcr_other_side")
-            if self.diff == "extreme":
+            if self.diff == "extreme" and mult >= L.EXTREME_MULT:
                 self.ach_event("lcr_extreme")
             if mult >= L.BRAVE_MULT:
                 self.ach_event("lcr_brave")
             return
         if self.outcome == "fail":
-            self.hop = None
-            self.state = FALL
-            self.fall_t = 0.0
-            self.res_t = 0.0
-            self.shake = 0.35
-            self.result = (t("lcr.fall." + self.world), t("lcr.lost", n=self.lost), ui.RED)
-            self._spawn_fail(x, y)
-            self.play_sound("hit")
-            self.rumble(260)
+            self._fall("hit" if self.world == "road" else "break",
+                       t("lcr.fall." + self.world), x, y)
             return
+        if self._hit(b):
+            # ins Hindernis gelaufen: Einsatz weg
+            self.lost = self.round["bet"]
+            self.hist = (self.hist + [0])[-L.HISTORY:]
+            self.round = None
+            self.broken = b
+            self._save_extra()
+            self._fall("hit", t("lcr.hit." + self.world), x, y)
+            return
+        self._close_lane(b)
         self._dust(x, y)
-        if self.outcome == "goal":
-            # letzter Schritt geschafft: weiter ans Zielufer hüpfen
+        self.score = lamabank.score_for(KEY)
+        if b >= n:
+            # letzte Spur geschafft: auszahlen, dann ans Zielufer hüpfen
+            bet = self.round["bet"]
+            self.win = L.payout(bet, self.diff, n)
+            lamabank.credit(self.win, KEY)
+            self.pending += self.win
+            self.hist = (self.hist + [L.mult(self.diff, n)])[-L.HISTORY:]
+            self.round = None
+            self._save_extra()
+            self.score = lamabank.score_for(KEY)
             self.hop = {"a": b, "b": b + 1, "t": 0.0}
             self.play_sound("point")
             return
+        self.round["step"] = b
+        self._save_extra()
         self.hop = None
         self.state = WAIT
         self.play_sound("point")
         self._popup(x - self.cam, y - self.llama_n - 10 * self.k,
                     self._fmt(L.mult(self.diff, b)), ui.GREEN, 0.9)
+
+    def _fall(self, kind, title, x, y):
+        """Runde verloren: Zufall (break) oder Treffer (hit, platt)."""
+        self.hop = None
+        self.state = FALL
+        self.fall_kind = kind
+        self.fall_t = 0.0
+        self.res_t = 0.0
+        self.shake = 0.35
+        self.result = (title, t("lcr.lost", n=self.lost), ui.RED)
+        if kind == "hit":
+            self._spawn_hit(x, y)
+        else:
+            self._spawn_fail(x, y)
+        self.play_sound("hit")
+        self.rumble(260)
 
     def _cash_out(self):
         if self.state != WAIT or self.round is None or self.step < 1:
@@ -362,12 +499,11 @@ class LamaCrossingGame(Game):
         lamabank.credit(self.win, KEY)
         self.hist = (self.hist + [mult])[-L.HISTORY:]
         self.round = None
-        self.reveal = L.next_break(self.rng, self.diff, self.step)
         self._save_extra()
         self.score = lamabank.score_for(KEY)
         self.state = CASHED
         self.res_t = 0.0
-        sub = t("lcr.reveal", n=self.reveal) if self.reveal is not None else t("lcr.reveal_none")
+        sub = f"{self._fmt(mult)}   ·   {t('cas.bet')}: {bet}"
         self.result = (t("lcr.cashed", n=self.win), sub, ui.GOLD)
         x, y = self._tile_x(self.step), self._tile_y(self.step)
         self._popup(x - self.cam, y - self.llama_n - 10 * self.k, "+%d" % self.win)
@@ -376,16 +512,18 @@ class LamaCrossingGame(Game):
         self.play_sound("win")
         if mult >= L.BRAVE_MULT:
             self.ach_event("lcr_brave")
+        if self.diff == "extreme" and mult >= L.EXTREME_MULT:
+            self.ach_event("lcr_extreme")
 
     def _to_idle(self):
         self.state = IDLE
         self.step = 0
         self.hop = None
         self.result = None
-        self.reveal = None
         self.outcome = None
         self.broken = 0
         self.ripples = []
+        self._open_lanes()
         self._dust(self._tile_x(0), self._tile_y(0))
         self._clamp_bet()
         self._check_broke()
@@ -407,6 +545,7 @@ class LamaCrossingGame(Game):
             return
         self.diff = L.DIFFS[i]
         self._set_opt("difficulty", self.diff)
+        self._init_traffic()
         self.cam = self._cam_target()
         self.play_sound("click")
 
@@ -416,6 +555,7 @@ class LamaCrossingGame(Game):
         self.world = L.WORLDS[i]
         self._set_opt("world", self.world)
         self.particles = []
+        self._init_traffic()
         self.play_sound("click")
 
     # ===================================================== Effekte
@@ -432,7 +572,8 @@ class LamaCrossingGame(Game):
             self.particles = self.particles[-220:]
 
     def _dust(self, x, y):
-        col = {"bridge": (196, 160, 120), "river": (200, 230, 246), "ice": (240, 248, 255)}[self.world]
+        col = {"road": (180, 180, 186), "bridge": (196, 160, 120), "river": (200, 230, 246),
+               "ice": (240, 248, 255)}[self.world]
         self._spawn(x, y, 8, col, 90, True, 3.0, 0.45, 260)
 
     def _spawn_fail(self, x, y):
@@ -447,6 +588,13 @@ class LamaCrossingGame(Game):
             self._spawn(x, y, 14, (232, 246, 255), 200, True, 3.0, 0.9, 800)
             self._spawn(x, y + 8 * self.k, 14, (150, 206, 236), 240, True, 3.0, 0.8, 900)
             self.ripples.append(dict(x=x, y=y + 14 * self.k, t=-0.3))
+
+    def _spawn_hit(self, x, y):
+        """Treffer: Staub/Trümmer je Welt, Wolle fliegt."""
+        col = {"road": (120, 120, 128), "bridge": (140, 130, 120), "river": (214, 238, 250),
+               "ice": (232, 246, 255)}[self.world]
+        self._spawn(x, y - self.llama_n * 0.3, 14, col, 240, False, 3.4, 0.8, 500)
+        self._spawn(x, y - self.llama_n * 0.3, 10, (250, 244, 230), 180, False, 3.0, 1.0, 200)
 
     def _coin_shower(self, n=40):
         W = self.width
@@ -559,6 +707,7 @@ class LamaCrossingGame(Game):
                 self.toast = None
         self.shake = max(0.0, self.shake - dt)
         self._update_fx(dt)
+        self._update_traffic(dt)
         tgt = self._cam_target()
         self.cam += (tgt - self.cam) * min(1.0, dt * 6.0)
         if abs(tgt - self.cam) < 0.5:
@@ -605,16 +754,22 @@ class LamaCrossingGame(Game):
         W, H = self.width, self.height
         bg = D.background(self.world, W, H, self.path_y)
         s.blit(bg, (0, 0))
-        far = D.far_layer(self.world, W, H, self.path_y)
-        off = -int(self.cam * 0.18) % W
-        s.blit(far, (off - W, 0))
-        s.blit(far, (off, 0))
+        if self.world != "road":
+            far = D.far_layer(self.world, W, H, self.path_y)
+            off = -int(self.cam * 0.18) % W
+            s.blit(far, (off - W, 0))
+            s.blit(far, (off, 0))
         ox = -self.cam
         if self.shake > 0:
             ox += math.sin(self.time * 70) * 6 * self.k * self.shake / 0.35
         self._draw_water(s, ox)
         self._draw_world(s, ox)
-        self._draw_llama(s, ox)
+        flat = self.state == FALL and self.fall_kind == "hit"
+        if flat:
+            self._draw_flat(s, ox)
+        self._draw_obstacles(s, ox)
+        if not flat:
+            self._draw_llama(s, ox)
         self._draw_particles(s, ox)
         if self.world == "ice":
             self._draw_snow(s, 1)
@@ -654,7 +809,7 @@ class LamaCrossingGame(Game):
                 x = (i * 211 + ox * 0.9) % (W + 80) - 40
                 y = self.path_y + int(40 * k) + (i % 3) * int(26 * k)
                 pygame.draw.line(s, (40, 92, 124), (x, y), (x + 40 * k, y), max(1, int(2 * k)))
-        else:
+        elif self.world == "bridge":
             # ein paar Vögel über der Schlucht
             for i in range(3):
                 x = (i * 300 + self.time * 25 * k) % (W + 100) - 50
@@ -677,16 +832,20 @@ class LamaCrossingGame(Game):
         H = self.height
         xl = self._tile_x(0) + self.gap * 0.42 + ox
         xr = self._tile_x(n + 1) - self.gap * 0.42 + ox
+        if self.world == "road":
+            xs = [self._tile_x(i) - self.gap / 2 + ox for i in range(2, n + 1)]
+            xs = [x for x in xs if -10 <= x <= self.width + 10]
+            D.draw_lanes(s, xs, self.scene.y, H, k, self.time)
         if self.world == "bridge":
             pts = [(xl, self.path_y)]
             for i in range(1, n + 1):
-                if self.state == FALL and i == self.broken:
+                if self.state == FALL and self.fall_kind == "break" and i == self.broken:
                     continue
                 pts.append((self._tile_x(i) + ox, self._tile_y(i) + 4 * k))
             pts.append((xr, self.path_y))
             D.draw_ropes(s, pts, k)
-        D.draw_bank(s, self.world, xl, -1, self.path_y, H, k)
-        D.draw_bank(s, self.world, xr, 1, self.path_y, H, k)
+        D.draw_bank(s, self.world, xl, -1, self.path_y, H, k, 0)
+        D.draw_bank(s, self.world, xr, 1, self.path_y, H, k, 0)
         self._draw_goal_flag(s, ox)
         cur = self.step if self.state in (WAIT, HOP, FALL, CASHED, GOAL) else 0
         for i in range(1, n + 1):
@@ -694,7 +853,7 @@ class LamaCrossingGame(Game):
             if cx < -self.gap or cx > self.width + self.gap:
                 continue
             y = self._tile_y(i)
-            if self.state == FALL and i == self.broken:
+            if self.state == FALL and self.fall_kind == "break" and i == self.broken:
                 self._draw_broken_tile(s, cx, y, i)
             else:
                 if self.state == WAIT and i == self.step + 1:
@@ -703,9 +862,36 @@ class LamaCrossingGame(Game):
                     col = ui.mix(CD.COL_GOLD, (255, 255, 255), 0.3 * ui.pulse(3.0, 0.0, 1.0))
                     pygame.draw.ellipse(s, col, glow, max(1, int(2 * k)))
                 D.draw_tile(s, self.world, cx, y, self.tw, k, self.time, i)
-                if self.state == CASHED and self.reveal == i:
-                    self._draw_cross(s, cx, y)
             self._draw_label(s, cx, y, i, cur)
+
+    def _draw_obstacles(self, s, ox):
+        """Hindernisse aller sichtbaren Spuren, auf der Straße Baken auf gesperrten Spuren."""
+        top = self._horizon()
+        fade_in = 20 * self.k
+        for i in range(1, len(self.lanes)):
+            cx = self._tile_x(i) + ox
+            if cx < -self.gap or cx > self.width + self.gap:
+                continue
+            lane = self.lanes[i]
+            if self.world == "road" and lane["closed"]:
+                D.draw_barrier(s, cx, self.path_y - self.llama_n - 2 * self.k, int(self.gap * 0.7), self.k)
+            for o in lane["obs"]:
+                alpha = 255
+                if o["fade"] is not None:
+                    alpha = int(255 * max(0.0, o["fade"]) / FADE_T)
+                if self.world in ("river", "ice") and o["y"] - top < fade_in:
+                    alpha = min(alpha, int(255 * max(0.0, o["y"] - top) / fade_in))
+                if alpha > 0:
+                    D.draw_obstacle(s, self.world, cx, o["y"], self._obs_size(o["y"]), o["kind"], alpha)
+
+    def _draw_flat(self, s, ox):
+        """Das überfahrene Lama: platt auf seiner Spur (auf der Straße mit Reifenspuren)."""
+        x = self._tile_x(self.step) + ox
+        y = self._tile_y(self.step)
+        img = D.flat_llama(self.llama_n, self.accent)
+        s.blit(img, img.get_rect(midbottom=(int(x), int(y + 2 * self.k))))
+        if self.world == "road":
+            D.draw_tire_marks(s, x, y - img.get_height() / 2, self.gap * 0.5, self.k)
 
     def _draw_goal_flag(self, s, ox):
         k = self.k
@@ -748,21 +934,11 @@ class LamaCrossingGame(Game):
             dx = (-1 if side == 0 else 1) * (6 + 40 * g) * k
             s.blit(piece, (cx - lx + side * half + dx, y - int(self.tw * 0.2) + drop))
 
-    def _draw_cross(self, s, cx, y):
-        """Markiert den Schritt, an dem es nach dem Auszahlen schiefgegangen wäre."""
-        d = self.tw * 0.22
-        c = (cx, y + self.tw * 0.10)
-        w = max(2, int(3 * self.k))
-        pygame.draw.line(s, ui.RED, (c[0] - d, c[1] - d * 0.6), (c[0] + d, c[1] + d * 0.6), w)
-        pygame.draw.line(s, ui.RED, (c[0] - d, c[1] + d * 0.6), (c[0] + d, c[1] - d * 0.6), w)
-
     def _draw_label(self, s, cx, y, i, cur):
-        """Multiplikator-Schild unter einem Schritt."""
+        """Multiplikator-Schild unter einer Spur."""
         txt = self._fmt(L.mult(self.diff, i))
         if self.state == FALL and i == self.broken:
             fg, bg = (255, 255, 255), ui.RED
-        elif self.state == CASHED and self.reveal == i:
-            fg, bg = (255, 220, 220), (120, 30, 40)
         elif i <= cur:
             fg, bg = (230, 255, 236), (40, 120, 72)
         elif i == cur + 1:

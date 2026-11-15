@@ -11,53 +11,65 @@
 ### Lama Crossing – 2026-11-15
 
 Spiel Nr. 47 ist ein neues Mut-Spiel mit Lama-Chips: **Lama Crossing**. Das Lama
-überquert Schritt für Schritt eine Hängebrücke, einen Fluss oder einen Eissee –
-jeder Schritt, der hält, hebt den Multiplikator, ein Fehltritt kostet den
-Einsatz, und ausgezahlt werden kann nach jedem Schritt. Dazu kommen **6 neue
-Erfolge** – jetzt **256** insgesamt. Alles in 14 Sprachen, mit LamaWiki-Seite,
-in beiden READMEs und in der Web-Version.
+überquert Spur für Spur eine Straße, eine Hängebrücke, einen Fluss oder einen
+Eissee – jede geschaffte Spur hebt den Multiplikator, ausgezahlt werden kann
+nach jeder Spur. Noch am selben Tag kam **Version 2.0** dazu: eine **Straße mit
+Autos und Lastwagen** als neue Standard-Welt, Hindernisse in allen Welten und
+längere, härtere Tabellen bis **×31.784,96**. Verlieren fühlt sich jetzt
+wirklich wie Verlieren an – und nicht mehr so, als hätte es von Anfang an
+festgestanden. Dazu kommen **6 neue Erfolge** – jetzt **256** insgesamt. Alles
+in 14 Sprachen, mit LamaWiki-Seite, in beiden READMEs und in der Web-Version.
 
 #### Neu
 
 **Lama Crossing** (Spiel Nr. 47, im Menü nach Casino)
 - Einsatz wählen (10, 20, 50 … bis 10000 Lama-Chips), **LOS** drücken: Der
-  Einsatz wird abgebucht, das Lama macht den ersten Schritt. Nach jedem
-  geschafften Schritt heißt es **WEITER** oder **AUSZAHLEN**; wer das andere
-  Ufer erreicht, bekommt automatisch ausgezahlt – mit Konfetti.
-- **4 Schwierigkeiten**: Leicht (20 Schritte, Risiko 1/12, bis ×5,52), Mittel
-  (16, 1/7, bis ×11,42), Schwer (13, 1/4, bis ×40,82) und Extrem (10, 2/5, bis
-  ×160,42).
+  Einsatz wird abgebucht, das Lama betritt die erste Spur. Nach jeder
+  geschafften Spur heißt es **WEITER** oder **AUSZAHLEN**; wer das andere Ende
+  erreicht, bekommt automatisch ausgezahlt – mit Konfetti.
+- **4 Welten** (Knöpfe oben links oder **W**): die **Straße** als Standard – von
+  oben gesehen, mit Gehwegen, das Lama geht über Zebrastreifen-Stücke Spur für
+  Spur hinüber –, die Hängebrücke über der Schlucht, Trittsteine im Fluss und
+  Eisschollen auf dem gefrorenen See. Das Lama trägt einen Schal in der
+  Akzentfarbe des Spiels.
+- **Hindernisse, die man abpassen muss**: Autos und Lastwagen fahren jede Spur
+  der Straße entlang, Felsbrocken stürzen durch die Hängebrücke, Treibholz
+  treibt im Fluss heran, Eisblöcke rutschen über den Eissee. Wer LOS oder WEITER
+  drückt, während ein Hindernis in der nächsten Spur ist, wird überfahren bzw.
+  getroffen und liegt platt da – also auf eine Lücke warten. Die Spur, auf der
+  das Lama steht, ist geschützt: Auf der Straße senkt sich eine Schranke und die
+  Autos halten vor dem Lama, in den anderen Welten verschwinden die Hindernisse
+  dort. Höhere Schwierigkeiten bringen dichteren, schnelleren Verkehr.
+- **Zufallsrisiko je Spur**: Auch bei perfektem Timing kann es schiefgehen – auf
+  der Straße taucht plötzlich ein Raser auf, auf der Brücke bricht die Planke,
+  im Fluss rutscht der Stein weg, auf dem Eissee bricht das Eis ein.
+- **4 Schwierigkeiten**: Leicht (22 Spuren, Risiko 1/12, bis ×6,57), Mittel (20,
+  1/6, bis ×37,18), Schwer (18, 3/10, bis ×595,67) und Extrem (15, 1/2, bis
+  ×31.784,96 – jede Spur verdoppelt: ×1,94, ×3,88, ×7,76 …).
 - **Auszahlungsquote rund 97 %**: Die Multiplikatoren stehen als feste
   Ganzzahl-Tabellen in `games/lamacrossing_logic.py`
   (`m_k = floor(0.97 / (1 - p)^k * 100) / 100`). Damit bringt jede Strategie
-  „bei Schritt k auszahlen“ im Schnitt dasselbe – der Hausvorteil liegt bei etwa
-  3 %.
-- **3 Welten** (nur Optik; Knöpfe oben links oder **W**): Hängebrücke über der
-  Schlucht (die Planke bricht, das Lama stürzt ab), Trittsteine im Fluss (der
-  Stein rutscht weg, Platsch) und Eisschollen auf dem gefrorenen See (Risse
-  breiten sich aus, die Scholle bricht ein). Das Lama trägt einen Schal in der
-  Akzentfarbe des Spiels.
-- **Auflösung nach dem Auszahlen**: Das Spiel zeigt, bei welchem Schritt es
-  schiefgegangen wäre – oder dass alles gehalten hätte. Oben rechts steht der
-  **Verlauf der letzten 12 Runden**.
-- **Fortsetzen nach dem Verlassen**: Einsatz, Schwierigkeit und Schritt einer
+  „bei Spur k auszahlen“ bei sauberem Timing im Schnitt dasselbe – der
+  Hausvorteil liegt bei etwa 3 %.
+- Oben rechts steht der **Verlauf der letzten 12 Runden**.
+- **Fortsetzen nach dem Verlassen**: Einsatz, Schwierigkeit und Spur einer
   laufenden Überquerung werden sofort gespeichert; der nächste Start macht genau
   dort weiter.
 - **Lama-Bank**: dasselbe Konto wie Blackjack, Poker und Casino (Abschnitt
   `casino` in `mem.json`). Highscore = Höchststand von 1000 +
   Lama-Crossing-Bilanz; unter 10 Chips gibt es einen Bank-Kredit auf 1000.
   Replays gibt es – wie bei allen Chip-Spielen – nicht.
-- Steuerung: Leertaste/→/Klick auf den nächsten Schritt = LOS bzw. weiter,
-  Enter/C = auszahlen, ↑/↓/+/-/Mausrad = Einsatz, 1–4 = Schwierigkeit, W = Welt.
-  Welt, Schwierigkeit und letzter Einsatz stehen im Abschnitt `lamacrossing` der
-  `settings.json`.
+- Steuerung: Leertaste/→/Klick auf die nächste Spur = LOS bzw. weiter (wenn die
+  Spur frei ist), Enter/C = auszahlen, ↑/↓/+/-/Mausrad = Einsatz, 1–4 =
+  Schwierigkeit, W = Welt. Welt, Schwierigkeit und letzter Einsatz stehen im
+  Abschnitt `lamacrossing` der `settings.json`.
 
 **6 neue Erfolge** (jetzt 256)
 - **Lama Crossing-Stammgast** (25 Partien), ein Meilenstein von **3000** und
   Meister **10000**.
 - **Am anderen Ufer** (selten): das Lama einmal ganz ans andere Ufer bringen.
 - **Nervenstark** (episch): mit ×10 oder mehr auszahlen.
-- **Drahtseilakt** (legendär): eine ganze Überquerung auf Extrem schaffen.
+- **Drahtseilakt** (legendär): auf Extrem bei ×100 oder mehr auszahlen.
 - Insgesamt jetzt 60 allgemeine Erfolge, 38 Meilensteine, 31 Meister-Stufen, 80
   besondere Momente und 47 Stammgast-Erfolge; höchstens **10020 Erfolgspunkte**
   (bisher 9690), das entspricht Level **49** (bisher 48).
@@ -70,10 +82,31 @@ in beiden READMEs und in der Web-Version.
 - Neu: `tests/audit_lamacrossing.py` – Tabellen und Quote je Strategie,
   Monte-Carlo-Probe der Fehltritte, Web-Logik = Python, Lama-Bank (Abbuchen,
   Auszahlen, Pleite, Kredit), Fortsetzen nach dem Verlassen, Erfolge, Tasten und
-  Einstellungen sowie das Layout in 5 Auflösungen × 14 Sprachen × 3 Welten.
+  Einstellungen sowie das Layout in 5 Auflösungen × 14 Sprachen × 4 Welten.
 
 #### Geändert
 
+**Lama Crossing 2.0** (noch am selben Tag)
+- **Straße als neue Standard-Welt**: eine Straße voller Autos und Lastwagen, die
+  das Lama Spur für Spur über Zebrastreifen-Stücke überquert.
+- **Hindernisse in allen Welten**: Neben dem Verkehr auf der Straße gibt es
+  Felsbrocken auf der Hängebrücke, Treibholz im Fluss und Eisblöcke auf dem
+  Eissee. Das Timing entscheidet mit: Wer zu früh losgeht, verliert.
+- **Verlieren fühlt sich wie Verlieren an**: Wer erwischt wird, sieht es
+  kommen – das Lama wird überfahren oder getroffen und liegt platt da.
+- **Nichts wirkt mehr vorherbestimmt**: Man sieht die Hindernisse kommen und
+  entscheidet selbst, wann man losgeht. Die Anzeige nach dem Auszahlen, bei
+  welchem Schritt es schiefgegangen wäre, ist entfernt – sie ließ Niederlagen
+  wirken, als hätten sie von Anfang an festgestanden.
+- **Härtere, längere Tabellen**: 22, 20, 18 und 15 Spuren mit Risiko 1/12, 1/6,
+  3/10 und 1/2; auf Extrem verdoppelt jede Spur den Multiplikator – bis
+  ×31.784,96.
+- **Drahtseilakt** verlangt jetzt eine Auszahlung bei ×100 oder mehr auf Extrem
+  statt einer ganzen Überquerung.
+- Neue Texte in allen 14 Sprachen: Welt Straße, „Überfahren!“, Treffer-Meldungen
+  je Welt und der Hinweis „weiter, wenn die Spur frei ist“.
+
+**Dokumentation**
 - LamaWiki: neue Seite **Lama Crossing** in allen 14 Sprachen; *Erfolge,
   Seltenheit & Level* (256 Erfolge, 47 Spiele) und *Speichern & Highscores*
   (Lama-Bank) aktualisiert.
@@ -1376,49 +1409,62 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 ### Lama Crossing – 2026-11-15
 
 Game no. 47 is a new push-your-luck game with llama chips: **Lama Crossing**.
-The llama crosses a rope bridge, a river or a frozen lake step by step – every
-step that holds raises the multiplier, a misstep loses the bet, and you can cash
-out after any step. On top of that come **6 new achievements** – **256** in
-total. Everything in 14 languages, with a LamaWiki page, in both READMEs and in
-the web version.
+The llama crosses a road, a rope bridge, a river or a frozen lake lane by lane –
+every lane you make raises the multiplier, and you can cash out after any lane.
+**Version 2.0** followed the same day: a **road with cars and trucks** as the
+new default world, obstacles in every world and longer, harder tables up to
+**×31,784.96**. Losing now really feels like losing – and no longer as if it had
+been settled from the start. On top of that come **6 new achievements** –
+**256** in total. Everything in 14 languages, with a LamaWiki page, in both
+READMEs and in the web version.
 
 #### New
 
 **Lama Crossing** (game no. 47, in the menu after Casino)
 - Pick a bet (10, 20, 50 … up to 10000 llama chips) and press **GO**: the bet is
-  taken and the llama makes its first step. After every step that holds it's
-  **NEXT** or **CASH OUT**; reaching the far bank cashes out automatically –
+  taken and the llama steps into the first lane. After every lane you make it's
+  **NEXT** or **CASH OUT**; reaching the other side cashes out automatically –
   with confetti.
-- **4 difficulties**: Easy (20 steps, risk 1/12, up to ×5.52), Medium (16, 1/7,
-  up to ×11.42), Hard (13, 1/4, up to ×40.82) and Extreme (10, 2/5, up to
-  ×160.42).
+- **4 worlds** (buttons top left or **W**): the **road** as the default – a
+  street seen from above with sidewalks, where the llama crosses lane by lane
+  over zebra-crossing pieces – plus a rope bridge over a canyon, stepping stones
+  in a river and ice floes on a frozen lake. The llama wears a scarf in the
+  game's accent colour.
+- **Obstacles you have to time**: cars and trucks drive down every lane of the
+  road, boulders crash through the rope bridge, driftwood floats down the river
+  and ice blocks slide across the ice lake. Press GO or NEXT while an obstacle
+  is in the next lane and the llama gets run over or hit and lies flat – so wait
+  for a gap. The lane the llama stands in is protected: on the road a barrier
+  drops and the cars stop in front of the llama, in the other worlds the
+  obstacles there vanish. Higher difficulties bring denser, faster traffic.
+- **Random risk per lane**: even with perfect timing it can go wrong – on the
+  road a speeder suddenly appears, on the bridge the plank breaks, on the river
+  the stone slips away, on the ice lake the ice breaks.
+- **4 difficulties**: Easy (22 lanes, risk 1/12, up to ×6.57), Medium (20, 1/6,
+  up to ×37.18), Hard (18, 3/10, up to ×595.67) and Extreme (15, 1/2, up to
+  ×31,784.96 – every lane doubles: ×1.94, ×3.88, ×7.76 …).
 - **About 97% return**: the multipliers are fixed integer tables in
   `games/lamacrossing_logic.py` (`m_k = floor(0.97 / (1 - p)^k * 100) / 100`),
-  so every "cash out at step k" strategy pays the same on average – the house
-  edge is about 3%.
-- **3 worlds** (cosmetic only; buttons top left or **W**): a rope bridge over a
-  canyon (the plank breaks and the llama falls), stepping stones in a river (the
-  stone slips away, splash) and ice floes on a frozen lake (cracks spread, the
-  floe breaks). The llama wears a scarf in the game's accent colour.
-- **Reveal after cashing out**: the game shows at which step it would have gone
-  wrong – or that everything would have held. The top right shows the **history
-  of the last 12 rounds**.
-- **Resume after leaving**: bet, difficulty and step of a crossing in progress
+  so with clean timing every "cash out at lane k" strategy pays the same on
+  average – the house edge is about 3%.
+- The top right shows the **history of the last 12 rounds**.
+- **Resume after leaving**: bet, difficulty and lane of a crossing in progress
   are saved immediately; the next start continues exactly there.
 - **Llama Bank**: the same account as Blackjack, Poker and Casino (section
   `casino` in `mem.json`). High score = peak of 1000 + Lama Crossing balance;
   below 10 chips you get a bank loan back up to 1000. Like all chip games, it
   has no replays.
-- Controls: Space/→/click on the next step = GO or next step, Enter/C = cash
-  out, ↑/↓/+/-/mouse wheel = bet, 1–4 = difficulty, W = world. World, difficulty
-  and last bet are stored in the `lamacrossing` section of `settings.json`.
+- Controls: Space/→/click on the next lane = GO or next lane (when the lane is
+  clear), Enter/C = cash out, ↑/↓/+/-/mouse wheel = bet, 1–4 = difficulty, W =
+  world. World, difficulty and last bet are stored in the `lamacrossing` section
+  of `settings.json`.
 
 **6 new achievements** (now 256)
 - **Lama Crossing regular** (25 rounds), a **3000** milestone and a **10000**
   master tier.
 - **Other Side** (rare): get the llama all the way across.
 - **Nerves of Steel** (epic): cash out at ×10 or more.
-- **Tightrope Walk** (legendary): complete a full crossing on Extreme.
+- **Tightrope Walk** (legendary): cash out at ×100 or more on Extreme.
 - That makes 60 general achievements, 38 milestones, 31 master tiers, 80 special
   moments and 47 regulars; at most **10020 achievement points** (was 9690),
   which is level **49** (was 48).
@@ -1431,10 +1477,30 @@ the web version.
 - New: `tests/audit_lamacrossing.py` – tables and return per strategy, a Monte
   Carlo check of the missteps, web logic = Python, the Llama Bank (debit,
   payout, going broke, loan), resuming after leaving, achievements, keys and
-  settings, plus the layout in 5 resolutions × 14 languages × 3 worlds.
+  settings, plus the layout in 5 resolutions × 14 languages × 4 worlds.
 
 #### Changed
 
+**Lama Crossing 2.0** (the same day)
+- **The road is the new default world**: a street full of cars and trucks that
+  the llama crosses lane by lane over zebra-crossing pieces.
+- **Obstacles in every world**: besides the traffic on the road there are
+  boulders on the rope bridge, driftwood on the river and ice blocks on the ice
+  lake. Timing matters – go too early and you lose.
+- **Losing feels like losing**: when you get caught, you see it coming – the
+  llama is run over or hit and lies flat.
+- **Nothing feels predetermined any more**: you watch the obstacles coming and
+  decide yourself when to go. The note after cashing out that told you at which
+  step it would have gone wrong is gone – it made losses look as if they had
+  been settled from the start.
+- **Harder, longer tables**: 22, 20, 18 and 15 lanes with risk 1/12, 1/6, 3/10
+  and 1/2; on Extreme every lane doubles the multiplier – up to ×31,784.96.
+- **Tightrope Walk** now asks for a cash-out at ×100 or more on Extreme instead
+  of a full crossing.
+- New texts in all 14 languages: the road world, "Run over!", hit messages per
+  world and the hint "go when the lane is clear".
+
+**Documentation**
 - LamaWiki: new **Lama Crossing** page in all 14 languages; *Achievements,
   rarity & level* (256 achievements, 47 games) and *Saving & high scores* (Llama
   Bank) updated.

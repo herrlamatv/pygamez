@@ -3047,6 +3047,10 @@
         "multiplikator",
         "chips",
         "lama-bank",
+        "straße",
+        "verkehr",
+        "autos",
+        "timing",
         "brücke",
         "fluss",
         "eissee",
@@ -3057,40 +3061,51 @@
         {
           "h": "So wird gespielt",
           "body": [
-            "Das Lama überquert Schritt für Schritt eine Hängebrücke, einen Fluss oder einen Eissee. Jeder Schritt, der hält, hebt den Multiplikator - ein Fehltritt kostet den Einsatz.",
-            "Einsatz wählen (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 oder 10000 Lama-Chips) und LOS drücken: Der Einsatz wird abgebucht, das Lama macht den ersten Schritt.",
-            "Nach jedem geschafften Schritt entscheidest du: WEITER wagen oder AUSZAHLEN - dann bekommst du Einsatz mal aktuellem Multiplikator. Am anderen Ufer wird automatisch ausgezahlt, mit Konfetti.",
-            "Nach dem Auszahlen verrät das Spiel, bei welchem Schritt es schiefgegangen wäre. Oben rechts steht der Verlauf der letzten 12 Runden."
+            "Das Lama überquert Spur für Spur eine Straße, eine Hängebrücke, einen Fluss oder einen Eissee. Jede geschaffte Spur hebt den Multiplikator - wird das Lama erwischt, ist der Einsatz weg.",
+            "Einsatz wählen (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 oder 10000 Lama-Chips) und LOS drücken: Der Einsatz wird abgebucht, das Lama betritt die erste Spur.",
+            "Nach jeder geschafften Spur entscheidest du: WEITER wagen oder AUSZAHLEN - dann bekommst du Einsatz mal aktuellem Multiplikator (abgerundet auf ganze Chips). Am anderen Ende wird automatisch ausgezahlt, mit Konfetti.",
+            "Oben rechts steht der Verlauf der letzten 12 Runden."
+          ]
+        },
+        {
+          "h": "Hindernisse & Timing",
+          "body": [
+            "In jeder Welt ist etwas unterwegs, das du abpassen musst: Auf der Straße fahren Autos und Lastwagen jede Spur entlang, auf der Hängebrücke stürzen Felsbrocken durch die Brücke, im Fluss treibt Treibholz auf dich zu und auf dem Eissee rutschen Eisblöcke heran.",
+            "Drückst du LOS oder WEITER, während ein Hindernis in der nächsten Spur ist, wird das Lama überfahren oder getroffen und liegt platt da - der Einsatz ist verloren. Warte also auf eine Lücke.",
+            "Die Spur, auf der das Lama gerade steht, ist geschützt: Auf der Straße senkt sich eine Schranke und die Autos halten vor dem Lama, in den anderen Welten verschwinden Hindernisse auf deiner Spur. Du kannst also in Ruhe auf die passende Lücke warten.",
+            "Je höher die Schwierigkeit, desto dichter und schneller ist der Verkehr.",
+            "Dazu kommt auf jeder Spur ein zufälliges Risiko, gegen das auch perfektes Timing nicht hilft: Auf der Straße taucht plötzlich ein Raser auf, auf der Brücke bricht die Planke, im Fluss rutscht der Stein weg und auf dem Eissee bricht das Eis ein."
           ]
         },
         {
           "h": "Schwierigkeiten",
           "body": [
             "Vier Stufen - vor jeder Runde mit den Knöpfen in der unteren Leiste oder mit [1] bis [4] wählbar:",
-            "- Leicht: 20 Schritte, Risiko 1/12 je Schritt (ca. 8 %), bis ×5,52",
-            "- Mittel: 16 Schritte, Risiko 1/7 (ca. 14 %), bis ×11,42",
-            "- Schwer: 13 Schritte, Risiko 1/4 (25 %), bis ×40,82",
-            "- Extrem: 10 Schritte, Risiko 2/5 (40 %), bis ×160,42",
-            "Die Multiplikatoren stehen in festen Tabellen und sind so berechnet, dass jede Strategie auf Dauer rund 97 % des Einsatzes zurückgibt - egal, bei welchem Schritt du auszahlst. Der Hausvorteil liegt also bei etwa 3 %."
+            "- Leicht: 22 Spuren, Risiko 1/12 je Spur (ca. 8 %), bis ×6,57",
+            "- Mittel: 20 Spuren, Risiko 1/6 (ca. 17 %), bis ×37,18",
+            "- Schwer: 18 Spuren, Risiko 3/10 (30 %), bis ×595,67",
+            "- Extrem: 15 Spuren, Risiko 1/2 (50 %), bis ×31.784,96 - jede Spur verdoppelt den Multiplikator: ×1,94, ×3,88, ×7,76 …",
+            "Die Multiplikatoren stehen in festen Tabellen und sind so berechnet, dass jede Strategie bei sauberem Timing auf Dauer rund 97 % des Einsatzes zurückgibt - egal, bei welcher Spur du auszahlst. Der Hausvorteil liegt also bei etwa 3 %."
           ]
         },
         {
-          "h": "Drei Welten",
+          "h": "Vier Welten",
           "body": [
-            "Die Welt ist reine Optik und ändert nichts an den Chancen. Gewechselt wird mit den Welt-Knöpfen oben links oder mit [W]:",
-            "- Hängebrücke: Planken über einer Schlucht - beim Fehltritt bricht die Planke und das Lama stürzt ab.",
-            "- Fluss: Trittsteine im Wasser - der Stein rutscht weg, und es macht Platsch.",
-            "- Eissee: Eisschollen auf dem gefrorenen See - Risse breiten sich aus, dann bricht die Scholle ein.",
+            "Gewechselt wird mit den vier Welt-Knöpfen oben links oder mit [W]; an den Chancen ändert die Welt nichts:",
+            "- Straße (Standard): eine Straße von oben gesehen, mit Gehwegen. Das Lama geht über Zebrastreifen-Stücke Spur für Spur hinüber, Autos und Lastwagen fahren vorbei - und ab und zu ein Raser.",
+            "- Hängebrücke: Planken über einer Schlucht, Felsbrocken stürzen herab - bricht die Planke, stürzt das Lama ab.",
+            "- Fluss: Trittsteine im Wasser, Treibholz treibt heran - rutscht der Stein weg, macht es Platsch.",
+            "- Eissee: Eisschollen auf dem gefrorenen See, Eisblöcke rutschen heran - Risse breiten sich aus, dann bricht die Scholle ein.",
             "In jeder Welt trägt das Lama einen Schal in der Akzentfarbe des Spiels."
           ]
         },
         {
           "h": "Steuerung",
           "body": [
-            "- [Leertaste], [Rechts] oder Klick auf den nächsten Schritt: LOS bzw. nächster Schritt",
+            "- [Leertaste], [Rechts] oder Klick auf die nächste Spur: LOS bzw. WEITER - am besten, wenn die Spur frei ist",
             "- [Enter] oder [C]: auszahlen (vor der Runde startet [Enter] wie LOS)",
             "- [Hoch] / [Runter], [+] / [-] oder Mausrad: Einsatz ändern",
-            "- [1] bis [4]: Schwierigkeit, [W]: Welt wechseln",
+            "- [1] bis [4]: Schwierigkeit, [W]: Welt wechseln (Straße, Hängebrücke, Fluss, Eissee)",
             "Einsatz, Schwierigkeit und Welt lassen sich nur zwischen den Runden ändern. Welt, Schwierigkeit und der letzte Einsatz bleiben in settings.json gespeichert (Abschnitt lamacrossing)."
           ]
         },
@@ -3100,7 +3115,7 @@
             "Lama Crossing spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker und Casino (Start 1000, gespeichert in mem.json).",
             "Der Highscore ist der Höchststand von 1000 + Lama-Crossing-Bilanz; Gewinne bei Blackjack, Poker oder im Casino zählen hier nicht.",
             "Unter 10 Chips bist du pleite: [Enter] oder ein Klick nimmt einen Bank-Kredit und füllt das Konto wieder auf 1000 auf. Kredite zählen nicht zur Bilanz.",
-            "Mitten in der Überquerung aufhören ist sicher: Einsatz, Schwierigkeit und Schritt werden gespeichert, beim nächsten Start geht es genau dort weiter."
+            "Mitten in der Überquerung aufhören ist sicher: Einsatz, Schwierigkeit und Spur werden gespeichert, beim nächsten Start geht es genau dort weiter."
           ]
         },
         {
@@ -3111,15 +3126,16 @@
             "- Lama Crossing-Meister: Highscore 10000",
             "- Am anderen Ufer (selten): Bring das Lama bei Lama Crossing einmal ganz ans andere Ufer",
             "- Nervenstark (episch): Zahle bei Lama Crossing mit ×10 oder mehr aus",
-            "- Drahtseilakt (legendär): Schaffe bei Lama Crossing eine ganze Überquerung auf Extrem"
+            "- Drahtseilakt (legendär): Zahle bei Lama Crossing auf Extrem bei ×100 oder mehr aus"
           ]
         },
         {
           "h": "Tipps",
           "body": [
-            "- Jeder Schritt wird neu ausgelost - eine Serie von Fehltritten sagt nichts über den nächsten Schritt.",
-            "- Ganz hinüber kommt man auf Leicht etwa in jeder 6. Runde, auf Mittel in jeder 12., auf Schwer in jeder 42. und auf Extrem nur in jeder 165.",
-            "- Für Nervenstark (×10) reichen auf Schwer 9 Schritte (×12,91) und auf Extrem schon 5 (×12,47); auf Mittel klappt es erst am anderen Ufer (×11,42), auf Leicht gar nicht.",
+            "- Kein Grund zur Eile: Auf seiner Spur ist das Lama sicher. Behalte die nächste Spur im Blick und geh erst los, wenn eine echte Lücke kommt.",
+            "- Jede Spur wird neu ausgelost - eine Serie von Pleiten sagt nichts über die nächste Spur.",
+            "- Ganz hinüber kommt man bei sauberem Timing auf Leicht etwa in jeder 7. Runde, auf Mittel in jeder 38., auf Schwer in jeder 614. und auf Extrem nur in einer von 32.768.",
+            "- Für Nervenstark (×10) reichen auf Extrem 4 Spuren (×15,52), auf Schwer 7 (×11,77) und auf Mittel 13 (×10,37); auf Leicht klappt es nie (höchstens ×6,57). Für Drahtseilakt (×100 auf Extrem) brauchst du 7 Spuren (×124,16) - das gelingt etwa in jeder 128. Runde.",
             "- Leg vorher fest, bei welchem Multiplikator du auszahlst - und bleib dabei. Wegen der festen Quote ist keine Strategie besser als eine andere, nur mehr oder weniger riskant."
           ]
         }

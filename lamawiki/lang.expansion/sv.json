@@ -3044,6 +3044,10 @@
         "multiplikator",
         "marker",
         "lamabanken",
+        "väg",
+        "trafik",
+        "bilar",
+        "timing",
         "bro",
         "flod",
         "is",
@@ -3054,40 +3058,51 @@
         {
           "h": "Så spelar du",
           "body": [
-            "Laman tar sig steg för steg över en hängbro, en flod eller en isbelagd sjö. Varje steg som håller höjer multiplikatorn - ett felsteg kostar insatsen.",
-            "Välj insats (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 eller 10000 lamamarker) och tryck START: insatsen dras och laman tar första steget.",
-            "Efter varje lyckat steg bestämmer du: VIDARE eller TA UT - då får du insatsen gånger aktuell multiplikator. På andra stranden tas vinsten ut automatiskt, med konfetti.",
-            "När du har tagit ut visar spelet vid vilket steg det skulle ha gått snett. Uppe till höger syns historiken för de senaste 12 rundorna."
+            "Laman tar sig fil för fil över en väg, en hängbro, en flod eller en isbelagd sjö. Varje fil du klarar höjer multiplikatorn - blir laman träffad är insatsen förlorad.",
+            "Välj insats (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 eller 10000 lamamarker) och tryck START: insatsen dras och laman går ut i första filen.",
+            "Efter varje klarad fil bestämmer du: VIDARE eller TA UT - då får du insatsen gånger aktuell multiplikator (avrundat nedåt). På andra sidan tas vinsten ut automatiskt, med konfetti.",
+            "Uppe till höger syns historiken för de senaste 12 rundorna."
+          ]
+        },
+        {
+          "h": "Hinder och timing",
+          "body": [
+            "I varje värld kommer det något som du måste tajma: på vägen kör bilar och lastbilar längs varje fil, på hängbron rasar stenblock ner genom bron, i floden driver drivved mot dig och på sjön glider isblock mot dig.",
+            "Trycker du START eller VIDARE medan det finns ett hinder i nästa fil blir laman överkörd eller träffad och ligger platt - insatsen är förlorad. Vänta alltså på en lucka.",
+            "Filen som laman står i är skyddad: på vägen sänks en bom och bilarna stannar framför laman; i de andra världarna försvinner hinder i din fil. Du kan alltså lugnt vänta på rätt lucka.",
+            "Ju högre svårighetsgrad, desto tätare och snabbare trafik.",
+            "Dessutom har varje fil en slumpmässig risk som inte ens perfekt timing skyddar mot: på vägen dyker plötsligt en fartdåre upp, på bron går plankan av, i floden glider stenen undan och på sjön brister isen."
           ]
         },
         {
           "h": "Svårighetsgrader",
           "body": [
             "Fyra nivåer - väljs före varje runda med knapparna i listen längst ner eller med [1] till [4]:",
-            "- Lätt: 20 steg, risk 1/12 per steg (ca 8 %), upp till ×5,52",
-            "- Medel: 16 steg, risk 1/7 (ca 14 %), upp till ×11,42",
-            "- Svår: 13 steg, risk 1/4 (25 %), upp till ×40,82",
-            "- Extrem: 10 steg, risk 2/5 (40 %), upp till ×160,42",
-            "Multiplikatorerna står i fasta tabeller och är beräknade så att varje strategi i längden ger tillbaka ungefär 97 % av insatsen - oavsett vid vilket steg du tar ut. Husets fördel är alltså cirka 3 %."
+            "- Lätt: 22 filer, risk 1/12 per fil (ca 8 %), upp till ×6,57",
+            "- Medel: 20 filer, risk 1/6 (ca 17 %), upp till ×37,18",
+            "- Svår: 18 filer, risk 3/10 (30 %), upp till ×595,67",
+            "- Extrem: 15 filer, risk 1/2 (50 %), upp till ×31 784,96 - varje fil fördubblar multiplikatorn: ×1,94, ×3,88, ×7,76 …",
+            "Multiplikatorerna står i fasta tabeller och är beräknade så att varje strategi med bra timing i längden ger tillbaka ungefär 97 % av insatsen - oavsett vid vilken fil du tar ut. Husets fördel är alltså cirka 3 %."
           ]
         },
         {
-          "h": "Tre världar",
+          "h": "Fyra världar",
           "body": [
-            "Världen är bara utseende och ändrar inte chanserna. Byt med världsknapparna uppe till vänster eller med [W]:",
-            "- Hängbro: plankor över en ravin - vid ett felsteg går plankan av och laman faller.",
-            "- Flod: stenar i vattnet - stenen glider undan, och det blir ett plask.",
-            "- Isbelagd sjö: isflak på den frusna sjön - sprickorna sprider sig, sedan brister flaket.",
+            "Byt med de fyra världsknapparna uppe till vänster eller med [W]; världen ändrar inte chanserna:",
+            "- Väg (standard): en gata sedd ovanifrån, med trottoarer. Laman går fil för fil över på bitar av övergångsställe medan bilar och lastbilar kör förbi - och då och då en fartdåre.",
+            "- Hängbro: plankor över en ravin, stenblock rasar ner - går plankan av faller laman.",
+            "- Flod: stenar i vattnet, drivved driver mot dig - glider stenen undan blir det ett plask.",
+            "- Isbelagd sjö: isflak på den frusna sjön, isblock glider mot dig - sprickorna sprider sig, sedan brister flaket.",
             "I alla världar bär laman en halsduk i spelets accentfärg."
           ]
         },
         {
           "h": "Kontroller",
           "body": [
-            "- [Blanksteg], [Höger] eller klick på nästa steg: START eller nästa steg",
+            "- [Blanksteg], [Höger] eller klick på nästa fil: START eller VIDARE - helst när filen är fri",
             "- [Enter] eller [C]: ta ut (före en runda fungerar [Enter] som START)",
             "- [Upp] / [Ner], [+] / [-] eller mushjulet: ändra insats",
-            "- [1] till [4]: svårighetsgrad, [W]: byt värld",
+            "- [1] till [4]: svårighetsgrad, [W]: byt värld (väg, hängbro, flod, isbelagd sjö)",
             "Insats, svårighetsgrad och värld kan bara ändras mellan rundorna. Värld, svårighetsgrad och senaste insats sparas i settings.json (sektionen lamacrossing)."
           ]
         },
@@ -3097,7 +3112,7 @@
             "Lama Crossing spelar med det gemensamma kontot hos Lamabanken - tillsammans med Blackjack, Poker och Casino (start 1000, sparas i mem.json).",
             "Rekordet är toppen av 1000 + din Lama Crossing-balans; vinster i Blackjack, Poker eller Casino räknas inte här.",
             "Under 10 marker är du pank: [Enter] eller ett klick tar ett banklån och fyller på kontot till 1000 igen. Lån räknas inte in i balansen.",
-            "Det är säkert att sluta mitt i en överfart: insats, svårighetsgrad och steg sparas, och nästa gång fortsätter du precis där."
+            "Det är säkert att sluta mitt i en överfart: insats, svårighetsgrad och fil sparas, och nästa gång fortsätter du precis där."
           ]
         },
         {
@@ -3108,15 +3123,16 @@
             "- Lama Crossing-mästare: rekord 10000",
             "- Andra stranden (sällsynt): Få lamat hela vägen över i Lama Crossing",
             "- Stålnerver (episk): Ta ut vid ×10 eller mer i Lama Crossing",
-            "- Lindans (legendarisk): Klara en hel överfart på Extrem i Lama Crossing"
+            "- Lindans (legendarisk): Ta ut vid ×100 eller mer på Extrem i Lama Crossing"
           ]
         },
         {
           "h": "Tips",
           "body": [
-            "- Varje steg lottas på nytt - en rad felsteg säger ingenting om nästa.",
-            "- Hela vägen över kommer man ungefär var 6:e runda på Lätt, var 12:e på Medel, var 42:a på Svår och bara var 165:e på Extrem.",
-            "- För Stålnerver (×10) räcker 9 steg på Svår (×12,91) och bara 5 på Extrem (×12,47); på Medel lyckas det först på andra stranden (×11,42), på Lätt aldrig.",
+            "- Ingen brådska: i sin egen fil är laman säker. Håll koll på nästa fil och gå först när en riktig lucka kommer.",
+            "- Varje fil lottas på nytt - en rad förluster säger ingenting om nästa.",
+            "- Med bra timing kommer man hela vägen över ungefär var 7:e runda på Lätt, var 38:e på Medel, var 614:e på Svår och bara i en av 32 768 på Extrem.",
+            "- För Stålnerver (×10) räcker 4 filer på Extrem (×15,52), 7 på Svår (×11,77) och 13 på Medel (×10,37); på Lätt aldrig (högst ×6,57). Lindans (×100 på Extrem) kräver 7 filer (×124,16) - det lyckas ungefär var 128:e runda.",
             "- Bestäm i förväg vid vilken multiplikator du tar ut - och håll dig till det. Med den fasta återbetalningen är ingen strategi bättre än en annan, bara mer eller mindre riskabel."
           ]
         }

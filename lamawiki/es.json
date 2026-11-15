@@ -3044,6 +3044,10 @@
         "multiplicador",
         "fichas",
         "banco llama",
+        "calle",
+        "tráfico",
+        "coches",
+        "timing",
         "puente",
         "río",
         "hielo",
@@ -3054,40 +3058,51 @@
         {
           "h": "Cómo se juega",
           "body": [
-            "La llama cruza paso a paso un puente colgante, un río o un lago helado. Cada paso que aguanta sube el multiplicador; un paso en falso cuesta la apuesta.",
-            "Elige tu apuesta (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 o 10000 fichas Llama) y pulsa VAMOS: se descuenta la apuesta y la llama da el primer paso.",
-            "Tras cada paso superado decides: AVANZAR otra vez o COBRAR; entonces recibes la apuesta por el multiplicador actual. En la otra orilla se cobra automáticamente, con confeti.",
-            "Después de cobrar, el juego revela en qué paso habría salido mal. Arriba a la derecha se ve el historial de las últimas 12 rondas."
+            "La llama cruza carril a carril una calle, un puente colgante, un río o un lago helado. Cada carril superado sube el multiplicador; si algo alcanza a la llama, se pierde la apuesta.",
+            "Elige tu apuesta (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 o 10000 fichas Llama) y pulsa VAMOS: se descuenta la apuesta y la llama entra en el primer carril.",
+            "Tras cada carril superado decides: AVANZAR otra vez o COBRAR; entonces recibes la apuesta por el multiplicador actual (redondeado hacia abajo). Al llegar al otro lado se cobra automáticamente, con confeti.",
+            "Arriba a la derecha se ve el historial de las últimas 12 rondas."
+          ]
+        },
+        {
+          "h": "Obstáculos y timing",
+          "body": [
+            "En cada mundo se acerca algo y tienes que elegir bien el momento: en la calle circulan coches y camiones por cada carril, en el puente colgante caen rocas a través del puente, en el río flotan troncos hacia ti y en el lago helado se deslizan bloques de hielo hacia ti.",
+            "Si pulsas VAMOS o AVANZAR mientras hay un obstáculo en el siguiente carril, la llama acaba atropellada o golpeada y queda aplastada en el suelo; la apuesta se pierde. Así que espera un hueco.",
+            "El carril en el que está la llama está protegido: en la calle baja una barrera y los coches se detienen delante de la llama; en los demás mundos, los obstáculos de tu carril desaparecen. Puedes esperar con calma el hueco adecuado.",
+            "Cuanto más alta la dificultad, más denso y rápido es el tráfico.",
+            "Además, cada carril tiene un riesgo aleatorio que ni el timing perfecto evita: en la calle aparece de repente un conductor temerario, en el puente se rompe el tablón, en el río resbala la piedra y en el lago helado se rompe el hielo."
           ]
         },
         {
           "h": "Dificultades",
           "body": [
             "Cuatro niveles, que se eligen antes de cada ronda con los botones de la barra inferior o con [1] a [4]:",
-            "- Fácil: 20 pasos, riesgo de 1/12 por paso (aprox. 8 %), hasta ×5,52",
-            "- Medio: 16 pasos, riesgo de 1/7 (aprox. 14 %), hasta ×11,42",
-            "- Difícil: 13 pasos, riesgo de 1/4 (25 %), hasta ×40,82",
-            "- Extremo: 10 pasos, riesgo de 2/5 (40 %), hasta ×160,42",
-            "Los multiplicadores están en tablas fijas, calculadas para que cualquier estrategia devuelva a la larga cerca del 97 % de lo apostado, cobres en el paso que cobres. La ventaja de la casa ronda, por tanto, el 3 %."
+            "- Fácil: 22 carriles, riesgo de 1/12 por carril (aprox. 8 %), hasta ×6,57",
+            "- Medio: 20 carriles, riesgo de 1/6 (aprox. 17 %), hasta ×37,18",
+            "- Difícil: 18 carriles, riesgo de 3/10 (30 %), hasta ×595,67",
+            "- Extremo: 15 carriles, riesgo de 1/2 (50 %), hasta ×31.784,96; cada carril duplica el multiplicador: ×1,94, ×3,88, ×7,76 …",
+            "Los multiplicadores están en tablas fijas, calculadas para que, con buen timing, cualquier estrategia devuelva a la larga cerca del 97 % de lo apostado, cobres en el carril que cobres. La ventaja de la casa ronda, por tanto, el 3 %."
           ]
         },
         {
-          "h": "Tres mundos",
+          "h": "Cuatro mundos",
           "body": [
-            "El mundo es solo estético y no cambia las probabilidades. Se cambia con los botones de mundo arriba a la izquierda o con [W]:",
-            "- Puente colgante: tablones sobre un cañón; con un paso en falso el tablón se rompe y la llama cae.",
-            "- Río: piedras en el agua; la piedra resbala y ¡chapuzón!",
-            "- Lago helado: placas de hielo sobre el lago; las grietas se extienden y la placa se rompe.",
+            "Se cambia con los cuatro botones de mundo arriba a la izquierda o con [W]; el mundo no cambia las probabilidades:",
+            "- Calle (predeterminado): una calle vista desde arriba, con aceras. La llama cruza carril a carril por tramos de paso de cebra mientras pasan coches y camiones, y de vez en cuando un conductor temerario.",
+            "- Puente colgante: tablones sobre un cañón y rocas que caen; si el tablón se rompe, la llama cae.",
+            "- Río: piedras en el agua y troncos a la deriva; si la piedra resbala, ¡chapuzón!",
+            "- Lago helado: placas de hielo sobre el lago y bloques de hielo que se deslizan; las grietas se extienden y la placa se rompe.",
             "En todos los mundos la llama lleva una bufanda del color de acento del juego."
           ]
         },
         {
           "h": "Controles",
           "body": [
-            "- [Espacio], [Derecha] o clic en el siguiente paso: VAMOS o siguiente paso",
+            "- [Espacio], [Derecha] o clic en el siguiente carril: VAMOS o AVANZAR, mejor cuando el carril está libre",
             "- [Enter] o [C]: cobrar (antes de una ronda, [Enter] funciona como VAMOS)",
             "- [Arriba] / [Abajo], [+] / [-] o rueda del ratón: cambiar la apuesta",
-            "- [1] a [4]: dificultad, [W]: cambiar de mundo",
+            "- [1] a [4]: dificultad, [W]: cambiar de mundo (calle, puente colgante, río, lago helado)",
             "La apuesta, la dificultad y el mundo solo se pueden cambiar entre rondas. El mundo, la dificultad y la última apuesta se guardan en settings.json (sección lamacrossing)."
           ]
         },
@@ -3097,7 +3112,7 @@
             "Lama Crossing juega con la cuenta común del Banco Llama, junto con Blackjack, Póker y Casino (inicio 1000, guardado en mem.json).",
             "El récord es el máximo de 1000 + tu balance de Lama Crossing; las ganancias en Blackjack, Póker o Casino no cuentan aquí.",
             "Con menos de 10 fichas estás sin fichas: [Enter] o un clic pide un préstamo al banco y deja tu cuenta de nuevo en 1000. Los préstamos no cuentan para el balance.",
-            "Dejarlo a mitad de la travesía es seguro: la apuesta, la dificultad y el paso se guardan, y al volver sigues exactamente ahí."
+            "Dejarlo a mitad de la travesía es seguro: la apuesta, la dificultad y el carril se guardan, y al volver sigues exactamente ahí."
           ]
         },
         {
@@ -3108,15 +3123,16 @@
             "- Maestro de Lama Crossing: récord 10000",
             "- La otra orilla (raro): Lleva a la llama hasta la otra orilla en Lama Crossing",
             "- Nervios de acero (épico): Cobra con ×10 o más en Lama Crossing",
-            "- Equilibrista (legendario): Completa una travesía entera en Extremo en Lama Crossing"
+            "- Equilibrista (legendario): Cobra con ×100 o más en Extremo en Lama Crossing"
           ]
         },
         {
           "h": "Consejos",
           "body": [
-            "- Cada paso se sortea de nuevo: una racha de pasos en falso no dice nada del siguiente.",
-            "- Se llega hasta el final más o menos en 1 de cada 6 rondas en Fácil, 1 de cada 12 en Medio, 1 de cada 42 en Difícil y solo 1 de cada 165 en Extremo.",
-            "- Para Nervios de acero (×10) bastan 9 pasos en Difícil (×12,91) y solo 5 en Extremo (×12,47); en Medio solo se consigue en la otra orilla (×11,42) y en Fácil nunca.",
+            "- No hay prisa: en su carril la llama está a salvo. Observa el siguiente carril y sal solo cuando llegue un hueco de verdad.",
+            "- Cada carril se sortea de nuevo: una racha de derrotas no dice nada del siguiente.",
+            "- Con buen timing se llega hasta el final más o menos en 1 de cada 7 rondas en Fácil, 1 de cada 38 en Medio, 1 de cada 614 en Difícil y solo 1 de cada 32.768 en Extremo.",
+            "- Para Nervios de acero (×10) bastan 4 carriles en Extremo (×15,52), 7 en Difícil (×11,77) y 13 en Medio (×10,37); en Fácil nunca (como mucho ×6,57). Para Equilibrista (×100 en Extremo) hacen falta 7 carriles (×124,16), más o menos 1 de cada 128 rondas.",
             "- Decide antes en qué multiplicador vas a cobrar y cúmplelo. Con el retorno fijo ninguna estrategia es mejor que otra, solo más o menos arriesgada."
           ]
         }

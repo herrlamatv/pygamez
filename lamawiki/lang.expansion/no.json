@@ -3044,6 +3044,10 @@
         "multiplikator",
         "sjetonger",
         "lama-banken",
+        "vei",
+        "trafikk",
+        "biler",
+        "timing",
         "bro",
         "elv",
         "is",
@@ -3054,40 +3058,51 @@
         {
           "h": "Slik spiller du",
           "body": [
-            "Lamaen krysser en hengebro, en elv eller en islagt innsjø steg for steg. Hvert steg som holder, øker multiplikatoren - et feiltrinn koster innsatsen.",
-            "Velg innsats (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 eller 10000 lama-sjetonger) og trykk START: Innsatsen trekkes, og lamaen tar det første steget.",
-            "Etter hvert vellykket steg bestemmer du: VIDERE eller TA UT - da får du innsatsen ganger den aktuelle multiplikatoren. På den andre siden tas gevinsten ut automatisk, med konfetti.",
-            "Når du har tatt ut, viser spillet på hvilket steg det ville ha gått galt. Øverst til høyre står historikken for de siste 12 rundene."
+            "Lamaen krysser en vei, en hengebro, en elv eller en islagt innsjø felt for felt. Hvert felt du klarer, øker multiplikatoren - blir lamaen truffet, er innsatsen tapt.",
+            "Velg innsats (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 eller 10000 lama-sjetonger) og trykk START: Innsatsen trekkes, og lamaen går ut i det første feltet.",
+            "Etter hvert felt du klarer, bestemmer du: VIDERE eller TA UT - da får du innsatsen ganger den aktuelle multiplikatoren (rundet ned). På den andre siden tas gevinsten ut automatisk, med konfetti.",
+            "Øverst til høyre står historikken for de siste 12 rundene."
+          ]
+        },
+        {
+          "h": "Hindringer og timing",
+          "body": [
+            "I hver verden kommer det noe du må time: På veien kjører biler og lastebiler nedover hvert felt, på hengebroen styrter steinblokker ned gjennom broen, i elva driver drivved mot deg, og på innsjøen sklir isblokker mot deg.",
+            "Trykker du START eller VIDERE mens det er en hindring i neste felt, blir lamaen påkjørt eller truffet og ligger flat - innsatsen er tapt. Vent derfor på en luke.",
+            "Feltet lamaen står i, er beskyttet: På veien senkes en bom, og bilene stopper foran lamaen; i de andre verdenene forsvinner hindringer i feltet ditt. Du kan altså vente rolig på riktig luke.",
+            "Jo høyere vanskelighetsgrad, desto tettere og raskere trafikk.",
+            "I tillegg har hvert felt en tilfeldig risiko som selv perfekt timing ikke hindrer: På veien dukker det plutselig opp en råkjører, på broen brekker planken, i elva glipper steinen, og på innsjøen brister isen."
           ]
         },
         {
           "h": "Vanskelighetsgrader",
           "body": [
             "Fire nivåer - velges før hver runde med knappene i linjen nederst eller med [1] til [4]:",
-            "- Lett: 20 steg, risiko 1/12 per steg (ca. 8 %), opptil ×5,52",
-            "- Middels: 16 steg, risiko 1/7 (ca. 14 %), opptil ×11,42",
-            "- Vanskelig: 13 steg, risiko 1/4 (25 %), opptil ×40,82",
-            "- Ekstrem: 10 steg, risiko 2/5 (40 %), opptil ×160,42",
-            "Multiplikatorene står i faste tabeller og er regnet ut slik at enhver strategi i lengden gir tilbake rundt 97 % av innsatsen - uansett hvilket steg du tar ut på. Husets fordel er altså omtrent 3 %."
+            "- Lett: 22 felt, risiko 1/12 per felt (ca. 8 %), opptil ×6,57",
+            "- Middels: 20 felt, risiko 1/6 (ca. 17 %), opptil ×37,18",
+            "- Vanskelig: 18 felt, risiko 3/10 (30 %), opptil ×595,67",
+            "- Ekstrem: 15 felt, risiko 1/2 (50 %), opptil ×31 784,96 - hvert felt dobler multiplikatoren: ×1,94, ×3,88, ×7,76 …",
+            "Multiplikatorene står i faste tabeller og er regnet ut slik at enhver strategi med god timing i lengden gir tilbake rundt 97 % av innsatsen - uansett hvilket felt du tar ut på. Husets fordel er altså omtrent 3 %."
           ]
         },
         {
-          "h": "Tre verdener",
+          "h": "Fire verdener",
           "body": [
-            "Verdenen er bare utseende og endrer ikke sjansene. Bytt med verdensknappene øverst til venstre eller med [W]:",
-            "- Hengebro: planker over en kløft - ved et feiltrinn brekker planken, og lamaen faller.",
-            "- Elv: tråkkesteiner i vannet - steinen glipper, og det sier plask.",
-            "- Islagt innsjø: isflak på den frosne innsjøen - sprekkene sprer seg, så brister flaket.",
+            "Bytt med de fire verdensknappene øverst til venstre eller med [W]; verdenen endrer ikke sjansene:",
+            "- Vei (standard): en gate sett ovenfra, med fortau. Lamaen går felt for felt over på biter av fotgjengerovergang mens biler og lastebiler kjører forbi - og nå og da en råkjører.",
+            "- Hengebro: planker over en kløft, steinblokker styrter ned - brekker planken, faller lamaen.",
+            "- Elv: tråkkesteiner i vannet, drivved driver mot deg - glipper steinen, sier det plask.",
+            "- Islagt innsjø: isflak på den frosne innsjøen, isblokker sklir mot deg - sprekkene sprer seg, så brister flaket.",
             "I alle verdener har lamaen et skjerf i spillets aksentfarge."
           ]
         },
         {
           "h": "Kontroller",
           "body": [
-            "- [Mellomrom], [Høyre] eller klikk på neste steg: START eller neste steg",
+            "- [Mellomrom], [Høyre] eller klikk på neste felt: START eller VIDERE - helst når feltet er ledig",
             "- [Enter] eller [C]: ta ut (før en runde virker [Enter] som START)",
             "- [Opp] / [Ned], [+] / [-] eller musehjulet: endre innsats",
-            "- [1] til [4]: vanskelighetsgrad, [W]: bytt verden",
+            "- [1] til [4]: vanskelighetsgrad, [W]: bytt verden (vei, hengebro, elv, islagt innsjø)",
             "Innsats, vanskelighetsgrad og verden kan bare endres mellom rundene. Verden, vanskelighetsgrad og siste innsats lagres i settings.json (seksjonen lamacrossing)."
           ]
         },
@@ -3097,7 +3112,7 @@
             "Lama Crossing spiller med den felles kontoen i Lama-banken - sammen med Blackjack, Poker og Casino (start 1000, lagret i mem.json).",
             "Toppscoren er høyeste nivå av 1000 + Lama Crossing-balansen din; gevinster i Blackjack, Poker eller Casino teller ikke her.",
             "Under 10 sjetonger er du blakk: [Enter] eller et klikk tar et banklån og fyller kontoen opp til 1000 igjen. Lån teller ikke i balansen.",
-            "Det er trygt å slutte midt i en kryssing: Innsats, vanskelighetsgrad og steg lagres, og neste gang fortsetter du nøyaktig der."
+            "Det er trygt å slutte midt i en kryssing: Innsats, vanskelighetsgrad og felt lagres, og neste gang fortsetter du nøyaktig der."
           ]
         },
         {
@@ -3108,15 +3123,16 @@
             "- Lama Crossing-mester: toppscore 10000",
             "- Den andre siden (sjelden): Få lamaen helt over til den andre siden i Lama Crossing",
             "- Nerver av stål (episk): Ta ut ved ×10 eller mer i Lama Crossing",
-            "- Linedans (legendarisk): Fullfør en hel kryssing på Ekstrem i Lama Crossing"
+            "- Linedans (legendarisk): Ta ut ved ×100 eller mer på Ekstrem i Lama Crossing"
           ]
         },
         {
           "h": "Tips",
           "body": [
-            "- Hvert steg trekkes på nytt - en rekke feiltrinn sier ingenting om det neste.",
-            "- Helt over kommer man omtrent hver 6. runde på Lett, hver 12. på Middels, hver 42. på Vanskelig og bare hver 165. på Ekstrem.",
-            "- Til Nerver av stål (×10) holder det med 9 steg på Vanskelig (×12,91) og bare 5 på Ekstrem (×12,47); på Middels skjer det først på den andre siden (×11,42), på Lett aldri.",
+            "- Ingen grunn til å stresse: I sitt eget felt er lamaen trygg. Følg med på neste felt, og gå først når det kommer en ordentlig luke.",
+            "- Hvert felt trekkes på nytt - en rekke tap sier ingenting om det neste.",
+            "- Med god timing kommer man helt over omtrent hver 7. runde på Lett, hver 38. på Middels, hver 614. på Vanskelig og bare i én av 32 768 på Ekstrem.",
+            "- Til Nerver av stål (×10) holder det med 4 felt på Ekstrem (×15,52), 7 på Vanskelig (×11,77) og 13 på Middels (×10,37); på Lett aldri (høyst ×6,57). Linedans (×100 på Ekstrem) krever 7 felt (×124,16) - det klarer man omtrent hver 128. runde.",
             "- Bestem på forhånd hvilken multiplikator du tar ut på - og hold deg til det. Med fast tilbakebetaling er ingen strategi bedre enn en annen, bare mer eller mindre risikabel."
           ]
         }

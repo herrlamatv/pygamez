@@ -3041,6 +3041,10 @@
         "multiplicador",
         "fichas",
         "banco lama",
+        "estrada",
+        "trânsito",
+        "carros",
+        "timing",
         "ponte",
         "rio",
         "gelo",
@@ -3051,40 +3055,51 @@
         {
           "h": "Como se joga",
           "body": [
-            "A lama atravessa passo a passo uma ponte suspensa, um rio ou um lago gelado. Cada passo que aguenta faz subir o multiplicador - um passo em falso custa a aposta.",
-            "Escolhe a aposta (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ou 10000 fichas Lama) e carrega em VAI: a aposta é debitada e a lama dá o primeiro passo.",
-            "Depois de cada passo conseguido decides: AVANÇAR outra vez ou LEVANTAR - recebes então a aposta vezes o multiplicador atual. Na outra margem o prémio é levantado automaticamente, com confetes.",
-            "Depois de levantar, o jogo revela em que passo teria corrido mal. Em cima à direita aparece o histórico das últimas 12 rondas."
+            "A lama atravessa faixa a faixa uma estrada, uma ponte suspensa, um rio ou um lago gelado. Cada faixa conseguida faz subir o multiplicador - se a lama for apanhada, a aposta perde-se.",
+            "Escolhe a aposta (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ou 10000 fichas Lama) e carrega em VAI: a aposta é debitada e a lama entra na primeira faixa.",
+            "Depois de cada faixa conseguida decides: AVANÇAR outra vez ou LEVANTAR - recebes então a aposta vezes o multiplicador atual (arredondado para baixo). Do outro lado o prémio é levantado automaticamente, com confetes.",
+            "Em cima à direita aparece o histórico das últimas 12 rondas."
+          ]
+        },
+        {
+          "h": "Obstáculos e timing",
+          "body": [
+            "Em cada mundo vem alguma coisa e tens de escolher bem o momento: na estrada passam carros e camiões em cada faixa, na ponte suspensa caem pedregulhos através da ponte, no rio vêm troncos à deriva na tua direção e no lago gelado deslizam blocos de gelo na tua direção.",
+            "Se carregares em VAI ou AVANÇAR enquanto há um obstáculo na faixa seguinte, a lama é atropelada ou atingida e fica espalmada no chão - a aposta perde-se. Por isso, espera por uma abertura.",
+            "A faixa onde a lama está é protegida: na estrada baixa uma cancela e os carros param à frente da lama; nos outros mundos os obstáculos na tua faixa desaparecem. Podes, portanto, esperar com calma pela abertura certa.",
+            "Quanto mais alta a dificuldade, mais denso e rápido é o trânsito.",
+            "Além disso, cada faixa tem um risco aleatório que nem o timing perfeito evita: na estrada surge de repente um carro a alta velocidade, na ponte a tábua parte-se, no rio a pedra escorrega e no lago gelado o gelo parte-se."
           ]
         },
         {
           "h": "Dificuldades",
           "body": [
             "Quatro níveis - escolhidos antes de cada ronda com os botões da barra de baixo ou com [1] a [4]:",
-            "- Fácil: 20 passos, risco de 1/12 por passo (cerca de 8 %), até ×5,52",
-            "- Médio: 16 passos, risco de 1/7 (cerca de 14 %), até ×11,42",
-            "- Difícil: 13 passos, risco de 1/4 (25 %), até ×40,82",
-            "- Extremo: 10 passos, risco de 2/5 (40 %), até ×160,42",
-            "Os multiplicadores estão em tabelas fixas, calculadas para que qualquer estratégia devolva a longo prazo cerca de 97 % do apostado - seja qual for o passo em que levantas. A vantagem da casa ronda, portanto, os 3 %."
+            "- Fácil: 22 faixas, risco de 1/12 por faixa (cerca de 8 %), até ×6,57",
+            "- Médio: 20 faixas, risco de 1/6 (cerca de 17 %), até ×37,18",
+            "- Difícil: 18 faixas, risco de 3/10 (30 %), até ×595,67",
+            "- Extremo: 15 faixas, risco de 1/2 (50 %), até ×31.784,96 - cada faixa duplica o multiplicador: ×1,94, ×3,88, ×7,76 …",
+            "Os multiplicadores estão em tabelas fixas, calculadas para que, com bom timing, qualquer estratégia devolva a longo prazo cerca de 97 % do apostado - seja qual for a faixa em que levantas. A vantagem da casa ronda, portanto, os 3 %."
           ]
         },
         {
-          "h": "Três mundos",
+          "h": "Quatro mundos",
           "body": [
-            "O mundo é só visual e não muda as probabilidades. Muda-se com os botões de mundo em cima à esquerda ou com [W]:",
-            "- Ponte suspensa: tábuas sobre um desfiladeiro - num passo em falso a tábua parte-se e a lama cai.",
-            "- Rio: pedras na água - a pedra escorrega e splash!",
-            "- Lago gelado: placas de gelo sobre o lago gelado - as fissuras alastram e a placa parte-se.",
+            "Muda-se com os quatro botões de mundo em cima à esquerda ou com [W]; o mundo não muda as probabilidades:",
+            "- Estrada (predefinido): uma rua vista de cima, com passeios. A lama atravessa faixa a faixa por troços de passadeira enquanto passam carros e camiões - e de vez em quando um carro a alta velocidade.",
+            "- Ponte suspensa: tábuas sobre um desfiladeiro, pedregulhos a cair - se a tábua se partir, a lama cai.",
+            "- Rio: pedras na água, troncos à deriva - se a pedra escorregar, splash!",
+            "- Lago gelado: placas de gelo sobre o lago gelado, blocos de gelo a deslizar - as fissuras alastram e a placa parte-se.",
             "Em todos os mundos a lama usa um cachecol na cor de destaque do jogo."
           ]
         },
         {
           "h": "Controlos",
           "body": [
-            "- [Espaço], [Direita] ou clique no passo seguinte: VAI ou passo seguinte",
+            "- [Espaço], [Direita] ou clique na faixa seguinte: VAI ou AVANÇAR - de preferência com a faixa livre",
             "- [Enter] ou [C]: levantar (antes de uma ronda, [Enter] funciona como VAI)",
             "- [Cima] / [Baixo], [+] / [-] ou roda do rato: mudar a aposta",
-            "- [1] a [4]: dificuldade, [W]: mudar de mundo",
+            "- [1] a [4]: dificuldade, [W]: mudar de mundo (estrada, ponte suspensa, rio, lago gelado)",
             "A aposta, a dificuldade e o mundo só mudam entre rondas. O mundo, a dificuldade e a última aposta ficam guardados no settings.json (secção lamacrossing)."
           ]
         },
@@ -3094,7 +3109,7 @@
             "O Lama Crossing joga com a conta comum do Banco Lama - junto com o Blackjack, o Póquer e o Casino (início 1000, guardado no mem.json).",
             "O recorde é o máximo de 1000 + o teu saldo no Lama Crossing; ganhos no Blackjack, no Póquer ou no Casino não contam aqui.",
             "Abaixo de 10 fichas estás falido: [Enter] ou um clique pede um empréstimo ao banco e repõe a conta em 1000. Os empréstimos não contam para o saldo.",
-            "Parar a meio da travessia é seguro: a aposta, a dificuldade e o passo ficam guardados, e no próximo arranque continuas exatamente aí."
+            "Parar a meio da travessia é seguro: a aposta, a dificuldade e a faixa ficam guardadas, e no próximo arranque continuas exatamente aí."
           ]
         },
         {
@@ -3105,15 +3120,16 @@
             "- Mestre de Lama Crossing: recorde 10000",
             "- A outra margem (raro): Leva a lama até à outra margem em Lama Crossing",
             "- Nervos de aço (épico): Levanta com ×10 ou mais em Lama Crossing",
-            "- Equilibrista (lendário): Completa uma travessia inteira no Extremo em Lama Crossing"
+            "- Equilibrista (lendário): Levanta com ×100 ou mais no Extremo em Lama Crossing"
           ]
         },
         {
           "h": "Dicas",
           "body": [
-            "- Cada passo é sorteado de novo - uma série de passos em falso não diz nada sobre o seguinte.",
-            "- Chega-se ao fim mais ou menos em 1 de cada 6 rondas no Fácil, 1 em 12 no Médio, 1 em 42 no Difícil e só 1 em 165 no Extremo.",
-            "- Para Nervos de aço (×10) bastam 9 passos no Difícil (×12,91) e só 5 no Extremo (×12,47); no Médio só se consegue na outra margem (×11,42) e no Fácil nunca.",
+            "- Não há pressa: na sua faixa a lama está em segurança. Observa a faixa seguinte e só avança quando vier uma abertura a sério.",
+            "- Cada faixa é sorteada de novo - uma série de derrotas não diz nada sobre a seguinte.",
+            "- Com bom timing chega-se ao fim mais ou menos em 1 de cada 7 rondas no Fácil, 1 em 38 no Médio, 1 em 614 no Difícil e só 1 em 32.768 no Extremo.",
+            "- Para Nervos de aço (×10) bastam 4 faixas no Extremo (×15,52), 7 no Difícil (×11,77) e 13 no Médio (×10,37); no Fácil nunca (no máximo ×6,57). Para Equilibrista (×100 no Extremo) são precisas 7 faixas (×124,16) - mais ou menos 1 em cada 128 rondas.",
             "- Decide antes em que multiplicador vais levantar - e cumpre. Com o retorno fixo nenhuma estratégia é melhor do que outra, só mais ou menos arriscada."
           ]
         }

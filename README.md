@@ -98,7 +98,7 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Geometry Dash** | 1 Spieler     | Rhythmus-Plattformer mit Würfel, Schiff, Ball, UFO und Welle: 16 Level von Leicht bis Dämon mit je 3 geheimen Münzen, dazu eine Bibliothek aus **80 weiteren Leveln** in 10 Kategorien mit Suche, Übungsmodus, Soundtrack je Level; **Level-Editor** mit 12 Vorlagen und Teilen als `.lamapgzlevel` |
 | **Schiffe versenken** | 1 / 2 Spieler | 10x10-Seeschlacht: Flotte per Drag & Drop aufstellen, 3 Regel-Schalter (Berühren, Salve, Nochmal schießen), KI mit 3 Stärken oder lokales Duell mit Übergabe-Bildschirm |
 | **Casino**      | 1 Spieler       | Europäisches Roulette mit allen klassischen Wetten und Lama-Slot (5 Walzen, 10 Linien, Wild, Freispiele); ein Lama-Chip-Konto mit Blackjack und Poker |
-| **Lama Crossing** | 1 Spieler       | Mut-Spiel mit Lama-Chips: Schritt für Schritt über Hängebrücke, Fluss oder Eissee, nach jedem Schritt auszahlen oder weiter wagen; 4 Schwierigkeiten bis ×160, Auszahlungsquote ~97 % |
+| **Lama Crossing** | 1 Spieler       | Mut-Spiel mit Lama-Chips: Spur für Spur über Straße, Hängebrücke, Fluss oder Eissee, Lücken im Verkehr abpassen, nach jeder Spur auszahlen; 4 Schwierigkeiten bis ×31.784, Quote ~97 % |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)**, **Memory (Duell)**,
@@ -848,33 +848,43 @@ Explosions-Effekte, Highscore.
 
 **Lama Crossing**
 - **Mut-Spiel mit Lama-Chips**: Einsatz wählen (10 bis 10000), **LOS** drücken -
-  das Lama überquert Schritt für Schritt eine Schlucht, einen Fluss oder einen
-  Eissee. Jeder Schritt, der hält, hebt den **Multiplikator**, ein Fehltritt
-  kostet den Einsatz. Nach jedem Schritt heißt es **WEITER** oder **AUSZAHLEN**;
-  am anderen Ufer wird automatisch ausgezahlt - mit Konfetti.
-- **4 Schwierigkeiten**: Leicht (20 Schritte, Risiko 1/12, bis ×5,52), Mittel
-  (16, 1/7, bis ×11,42), Schwer (13, 1/4, bis ×40,82) und Extrem (10, 2/5, bis
-  ×160,42). Die Multiplikatoren stehen als feste Ganzzahl-Tabellen in
-  `lamacrossing_logic.py` und sind so berechnet, dass **jede Auszahl-Strategie
-  rund 97 % zurückgibt** - egal, wann man aussteigt.
-- **3 Welten** (nur Optik, Taste **W**): **Hängebrücke** über der Schlucht (die
-  Planke bricht, das Lama stürzt ab), **Trittsteine im Fluss** (der Stein
-  rutscht weg, Platsch) und **Eisschollen auf dem gefrorenen See** (Risse
-  breiten sich aus, die Scholle bricht ein). Das Lama trägt einen Schal in der
-  Akzentfarbe des Spiels.
-- **Auflösung**: Nach dem Auszahlen zeigt das Spiel, bei welchem Schritt es
-  schiefgegangen wäre; oben rechts steht der Verlauf der letzten 12 Runden.
+  das Lama überquert Spur für Spur eine Straße, eine Schlucht, einen Fluss oder
+  einen Eissee. Jede geschaffte Spur hebt den **Multiplikator**, wer erwischt
+  wird, verliert den Einsatz. Nach jeder Spur heißt es **WEITER** oder
+  **AUSZAHLEN**; am anderen Ende wird automatisch ausgezahlt - mit Konfetti.
+- **Hindernisse & Timing**: Auf der Straße fahren Autos und Lastwagen jede Spur
+  entlang, auf der Hängebrücke stürzen Felsbrocken durch die Brücke, im Fluss
+  treibt Treibholz heran und auf dem Eissee rutschen Eisblöcke. Wer losgeht,
+  während die nächste Spur belegt ist, wird überfahren oder getroffen und liegt
+  **platt** da - also auf eine Lücke warten. Die Spur, auf der das Lama steht,
+  ist geschützt (auf der Straße senkt sich eine Schranke und die Autos halten
+  an, sonst verschwinden die Hindernisse dort). Höhere Stufen bringen dichteren,
+  schnelleren Verkehr.
+- **4 Schwierigkeiten**: Leicht (22 Spuren, Risiko 1/12, bis ×6,57), Mittel (20,
+  1/6, bis ×37,18), Schwer (18, 3/10, bis ×595,67) und Extrem (15, 1/2, bis
+  ×31.784,96 - jede Spur verdoppelt). Das Zufallsrisiko je Spur kommt zum
+  Verkehr dazu: ein plötzlicher **Raser** auf der Straße, eine brechende Planke,
+  ein wegrutschender Stein oder einbrechendes Eis. Die Multiplikatoren stehen
+  als feste Ganzzahl-Tabellen in `lamacrossing_logic.py` und sind so berechnet,
+  dass **jede Auszahl-Strategie bei sauberem Timing rund 97 % zurückgibt** -
+  egal, wann man aussteigt.
+- **4 Welten** (Knöpfe oben links, Taste **W**): die **Straße** von oben mit
+  Gehwegen und Zebrastreifen-Stücken (Standard), die **Hängebrücke** über der
+  Schlucht, **Trittsteine im Fluss** und **Eisschollen auf dem gefrorenen See**.
+  Das Lama trägt einen Schal in der Akzentfarbe des Spiels; oben rechts steht
+  der Verlauf der letzten 12 Runden.
 - **Lama-Bank**: dasselbe Konto wie Blackjack, Poker und Casino. Der Highscore
   ist der Höchststand von 1000 + Lama-Crossing-Bilanz, unter 10 Chips gibt es
   einen **Bank-Kredit** auf 1000. Wer mitten in der Überquerung geht, verliert
-  nichts: Einsatz, Schwierigkeit und Schritt werden gespeichert, der nächste
-  Start macht genau dort weiter.
-- Bedienung: **Leertaste**/**→**/Klick auf den nächsten Schritt = LOS bzw.
-  weiter, **Enter**/**C** = auszahlen, **↑**/**↓**/**+**/**-**/Mausrad =
-  Einsatz, **1-4** = Schwierigkeit; Welt, Schwierigkeit und letzter Einsatz
-  stehen im Abschnitt `lamacrossing` der `settings.json`. Erfolge **Am anderen
-  Ufer**, **Nervenstark** (Auszahlung ab ×10) und **Drahtseilakt** (Extrem ganz
-  geschafft) sowie ein Meilenstein von 3000 und Meister 10000.
+  nichts: Einsatz, Schwierigkeit und Spur werden gespeichert, der nächste Start
+  macht genau dort weiter.
+- Bedienung: **Leertaste**/**→**/Klick auf die nächste Spur = LOS bzw. weiter
+  (sobald die Spur frei ist), **Enter**/**C** = auszahlen,
+  **↑**/**↓**/**+**/**-**/Mausrad = Einsatz, **1-4** = Schwierigkeit, **W** =
+  Welt; Welt, Schwierigkeit und letzter Einsatz stehen im Abschnitt
+  `lamacrossing` der `settings.json`. Erfolge **Am anderen Ufer**,
+  **Nervenstark** (Auszahlung ab ×10) und **Drahtseilakt** (auf Extrem ab ×100
+  auszahlen) sowie ein Meilenstein von 3000 und Meister 10000.
 
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
@@ -1306,7 +1316,7 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Geometry Dash** | 1 player      | Rhythm platformer with cube, ship, ball, UFO and wave: 16 levels from Easy to Demon with 3 secret coins each, plus a library of **80 more levels** in 10 searchable categories, practice mode, a soundtrack per level; **level editor** with 12 templates and sharing as `.lamapgzlevel` |
 | **Battleship**  | 1 / 2 players   | 10x10 naval battle: drag & drop fleet deployment, 3 rule toggles (touching, salvo, fire again), AI with 3 strengths or a local duel with a handover screen |
 | **Casino**      | 1 player        | European roulette with all classic bets and the Llama Slot (5 reels, 10 lines, wild, free spins); one llama-chip account shared with Blackjack and Poker |
-| **Lama Crossing** | 1 player        | Push-your-luck game with llama chips: step by step across a rope bridge, river or ice lake, cash out after any step or keep going; 4 difficulties up to ×160, ~97% return |
+| **Lama Crossing** | 1 player        | Push-your-luck game with llama chips: lane by lane across a road, rope bridge, river or ice lake, time the gaps in the traffic, cash out after any lane; 4 difficulties up to ×31,784, ~97% return |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
@@ -2040,31 +2050,40 @@ explosion effects, high score.
 
 **Lama Crossing**
 - **Push-your-luck game with llama chips**: pick a bet (10 to 10000), press
-  **GO** - the llama crosses a canyon, a river or a frozen lake step by step.
-  Every step that holds raises the **multiplier**, a misstep loses the bet.
-  After each step it's **NEXT** or **CASH OUT**; reaching the far bank cashes
-  out automatically - with confetti.
-- **4 difficulties**: Easy (20 steps, risk 1/12, up to ×5.52), Medium (16, 1/7,
-  up to ×11.42), Hard (13, 1/4, up to ×40.82) and Extreme (10, 2/5, up to
-  ×160.42). The multipliers are fixed integer tables in `lamacrossing_logic.py`,
-  calculated so that **every cash-out strategy returns about 97%** - no matter
-  when you stop.
-- **3 worlds** (cosmetic only, key **W**): a **rope bridge** over a canyon (the
-  plank breaks and the llama falls), **stepping stones in a river** (the stone
-  slips away, splash) and **ice floes on a frozen lake** (cracks spread, the
-  floe breaks). The llama wears a scarf in the game's accent colour.
-- **Reveal**: after you cash out, the game shows at which step it would have
-  gone wrong; the top right shows the history of the last 12 rounds.
+  **GO** - the llama crosses a road, a canyon, a river or a frozen lake lane by
+  lane. Every lane you make raises the **multiplier**, getting caught loses the
+  bet. After each lane it's **NEXT** or **CASH OUT**; reaching the other side
+  cashes out automatically - with confetti.
+- **Obstacles & timing**: on the road cars and trucks drive down every lane, on
+  the rope bridge boulders crash through the bridge, on the river driftwood
+  floats towards you and on the ice lake ice blocks slide your way. Step out
+  while the next lane is occupied and the llama gets run over or hit and lies
+  **flat** - so wait for a gap. The lane the llama stands in is protected (on
+  the road a barrier drops and the cars stop, elsewhere the obstacles there
+  vanish). Higher levels mean denser, faster traffic.
+- **4 difficulties**: Easy (22 lanes, risk 1/12, up to ×6.57), Medium (20, 1/6,
+  up to ×37.18), Hard (18, 3/10, up to ×595.67) and Extreme (15, 1/2, up to
+  ×31,784.96 - every lane doubles). The random risk per lane comes on top of the
+  traffic: a sudden **speeder** on the road, a breaking plank, a slipping stone
+  or breaking ice. The multipliers are fixed integer tables in
+  `lamacrossing_logic.py`, calculated so that **every cash-out strategy returns
+  about 97% with clean timing** - no matter when you stop.
+- **4 worlds** (buttons top left, key **W**): the **road** seen from above with
+  sidewalks and zebra-crossing pieces (default), the **rope bridge** over a
+  canyon, **stepping stones in a river** and **ice floes on a frozen lake**. The
+  llama wears a scarf in the game's accent colour; the top right shows the
+  history of the last 12 rounds.
 - **Llama Bank**: the same account as Blackjack, Poker and Casino. The high
   score is the peak of 1000 + Lama Crossing balance, and below 10 chips you get
   a **bank loan** back up to 1000. Leaving mid-crossing costs nothing: bet,
-  difficulty and step are saved, and the next start resumes exactly there.
-- Controls: **Space**/**→**/click on the next step = GO or next step,
-  **Enter**/**C** = cash out, **↑**/**↓**/**+**/**-**/mouse wheel = bet, **1-4**
-  = difficulty; world, difficulty and last bet are stored in the `lamacrossing`
-  section of `settings.json`. Achievements **Other Side**, **Nerves of Steel**
-  (cash out at ×10 or more) and **Tightrope Walk** (full crossing on Extreme),
-  plus a 3000 milestone and a 10000 master tier.
+  difficulty and lane are saved, and the next start resumes exactly there.
+- Controls: **Space**/**→**/click on the next lane = GO or next lane (once the
+  lane is clear), **Enter**/**C** = cash out, **↑**/**↓**/**+**/**-**/mouse
+  wheel = bet, **1-4** = difficulty, **W** = world; world, difficulty and last
+  bet are stored in the `lamacrossing` section of `settings.json`. Achievements
+  **Other Side**, **Nerves of Steel** (cash out at ×10 or more) and **Tightrope
+  Walk** (cash out at ×100 or more on Extreme), plus a 3000 milestone and a
+  10000 master tier.
 
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).

@@ -39,6 +39,15 @@ def wdh(muster, n):
     return " ".join([muster] * n)
 
 
+def spur(tokens):
+    """'_*20 space _*3 Return' -> '_ _ ... space _ _ _ Return' (fuer Abstand 0,
+    z.B. Bot-Spuren mit genauen Bildnummern)."""
+    out = []
+    for k in tokens.split():
+        out.append(wdh("_", int(k[2:])) if k.startswith("_*") else k)
+    return " ".join(out)
+
+
 # spiel: [(modus, bilder, tokens, abstand), ...]
 LAEUFE = {
     "pong": [("single", 600, "Return " + wdh("+Up _ -Up +Down _ -Down", 8), 12),
@@ -132,16 +141,28 @@ LAEUFE = {
                 # Editor -> Bibliothek -> Teilen (Downloads) -> Import (ohne Dialog: Hinweis)
                 ("normal", 820, "ISO_Left_Tab _ n _ Right Right Return _ _ 3 @150:250 @190:250 r @230:300 u y g 5 @300:250 "
                                 "@330:250:3 s Return _ _ _ _ Escape Escape @320:450 _ _ Return _ _ _ _ @527:450 _ _ _ _", 12)],
-    # Lama Crossing: Bruecke (Schritte + Auszahlen + Aufloesung), Fluss auf Extrem
-    # mit hoeherem Einsatz (Fehltritte), Eis per Maus (Welt, Stufe, LOS, naechster
-    # Schritt, AUSZAHLEN), Pleite mit 1000er-Einsatz + Kredit
-    "lamacrossing": [("single", 900, "space _ space _ space _ Return " + wdh("_", 12) + " "
-                                     + wdh("space _", 7), 25),
-                     ("single", 900, "w 4 Up Up Up " + wdh("space _", 6) + " " + wdh("_", 12) + " "
-                                     + wdh("space _", 5), 22),
-                     ("single", 700, "~87:56 @87:56 @383:406 Down @111:454 @587:454 _ @300:250 _ ~463:454 @463:454 "
-                                     + wdh("_", 10), 25),
-                     ("single", 900, "Up Up Up Up Up Up 4 " + wdh("space _ _", 8) + " " + wdh("_", 6) + " Return _ _", 25)],
+    # Lama Crossing 2.0 (Spuren aus bots/bot_lamacrossing.py im Python-Pruefstand,
+    # 640x480, Startwert 7): Strasse/Mittel - Raser (Zufalls-Fehltritt) auf Spur 1, dann
+    # 5 Spuren durch den Verkehr + Auszahlen (Baken, haltende Autos); Raser
+    # genau bei der Landung; Schwer - ins Auto gelaufen (platt + Reifenspuren);
+    # Bruecke bis die Planke bricht; Fluss mit 50er-Einsatz - vom Treibholz
+    # erwischt; Eis per Maus (Welt, Stufe, Einsatz +, LOS, naechste Spur,
+    # AUSZAHLEN); Eis bis zum Einbrechen (Risse); Pleite mit 1000er-Einsatz auf
+    # Extrem (Raser) + Kredit; Steinschlag auf der Bruecke, Eisblock auf dem See
+    "lamacrossing": [("single", 560, spur("_*20 space _*289 space _*21 space _*21 space _*47 space _*21 space "
+                                          "_*31 Return"), 0),
+                     ("single", 46, spur("_*20 space"), 0),
+                     ("single", 140, spur("_*10 3 _*50 space"), 0),
+                     ("single", 290, spur("_*10 w _*10 " + wdh("space _*21", 9) + " space"), 0),
+                     ("single", 200, spur("_*10 w w Up Up _*10 space _*21 space _*21 space _*56 space"), 0),
+                     ("single", 200, spur("_*6 ~119:56 _*4 @119:56 _*6 @383:406 _*6 @111:454 _*6 ~587:454 _*4 "
+                                          "@587:454 _*21 @301:242 _*21 @308:242 _*47 @299:242 _*27 ~457:454 "
+                                          "_*5 @457:454"), 0),
+                     ("single", 305, spur("_*10 w w w _*27 space _*21 space _*31 space _*30 space _*21 space "
+                                          "_*39 space _*21 space _*21 space _*37 space"), 0),
+                     ("single", 400, spur("_*10 Up Up Up Up Up Up 4 _*10 space _*21 space _*319 Return"), 0),
+                     ("single", 110, spur("_*10 w _*66 space"), 0),
+                     ("single", 160, spur("_*10 w w w Up _*26 space _*89 space"), 0)],
     "minigolf": [("single", 900, "Return _ _ _ Up Up Up space _ _ _ _ _ _ _ _ _ _ _ _ g z Down space", 20),
                  ("single", 700, "3 Right Right Return _ _ <300:200 _ _ _ >300:200 _ _ _ _ _ _ f", 15),
                  # Editor -> Speichern -> Bibliothek -> Teilen (Downloads) -> Import

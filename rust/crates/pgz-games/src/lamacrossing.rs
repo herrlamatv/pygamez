@@ -1,15 +1,21 @@
 //! lamacrossing.rs
 //! ===============
 //! Lama Crossing - Mut-Spiel mit Lama-Chips, uebertragen aus
-//! `games/lamacrossing.py`. Das Lama ueberquert Schritt fuer Schritt eine
-//! Haengebruecke, einen Fluss oder einen Eissee; jeder geschaffte Schritt hebt
-//! den Multiplikator, ein Fehltritt kostet den Einsatz. Auszahlen nach jedem
-//! Schritt, am anderen Ufer automatisch. Regeln: [`crate::lamacrossing_logic`],
-//! Zeichnen: [`crate::lamacrossing_draw`].
+//! `games/lamacrossing.py` (2.0). Das Lama ueberquert Spur fuer Spur eine
+//! Strasse, eine Haengebruecke, einen Fluss oder einen Eissee; jede geschaffte
+//! Spur hebt den Multiplikator. Auszahlen nach jeder Spur, am anderen Ufer
+//! automatisch. Regeln: [`crate::lamacrossing_logic`], Zeichnen:
+//! [`crate::lamacrossing_draw`].
+//!
+//! Zwei Gefahren: Hindernisse (Timing - wer losgeht, waehrend auf der Zielspur
+//! eins kommt, liegt platt da; die Spur, auf der das Lama steht, ist
+//! geschuetzt) und der Zufall je Spur (Strasse: ein Raser, sonst bricht die
+//! Planke, rutscht der Stein weg bzw. bricht das Eis).
 //!
 //! Konto: gemeinsame Lama-Bank (mit Blackjack, Poker, Casino). Einsatz bei LOS
-//! abbuchen, jeder Schritt wird sofort gezogen und gespeichert - wer mitten in
-//! der Ueberquerung geht, macht beim naechsten Start dort weiter.
+//! abbuchen; eine geschaffte Spur wird beim Landen gespeichert, ein Zufalls-
+//! Fehltritt sofort - wer mitten in der Ueberquerung geht, macht beim
+//! naechsten Start auf der letzten sicheren Spur weiter.
 
 use std::f64::consts::{PI, TAU};
 
@@ -25,6 +31,26 @@ const KEY: &str = "lamacrossing";
 const HOP_T: f64 = 0.36;
 const FALL_T: f64 = 1.25;
 const RESULT_T: f64 = 3.2;
+/// Hindernisse auf einer gesperrten Spur blenden aus.
+const FADE_T: f64 = 0.25;
+
+/// Pythons `max(a, b)` fuer Gleitkommazahlen (bei Gleichstand das erste).
+fn pmax(a: f64, b: f64) -> f64 {
+    if b > a {
+        b
+    } else {
+        a
+    }
+}
+
+/// Pythons `min(a, b)` fuer Gleitkommazahlen (bei Gleichstand das erste).
+fn pmin(a: f64, b: f64) -> f64 {
+    if b < a {
+        b
+    } else {
+        a
+    }
+}
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 enum State {
@@ -41,7 +67,13 @@ enum Outcome {
     None,
     Ok,
     Fail,
-    Goal,
+}
+
+/// `fall_kind`: "break" = Zufall (Planke, Stein, Eis), "hit" = platt.
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum FallKind {
+    Break,
+    Hit,
 }
 
 #[derive(Clone, Copy)]
@@ -49,6 +81,24 @@ struct Hop {
     a: i32,
     b: i32,
     t: f64,
+}
+
+/// Ein Hindernis (`dict(y, v, kind, stop, fade)`).
+struct Obs {
+    y: f64,
+    v: f64,
+    kind: i32,
+    stop: Option<f64>,
+    fade: Option<f64>,
+}
+
+/// Eine Spur (`dict(v, t, obs, closed)`): festes Tempo, Zeit bis zum
+/// naechsten Hindernis.
+struct Lane {
+    v: f64,
+    t: f64,
+    obs: Vec<Obs>,
+    closed: bool,
 }
 
 struct Particle {
@@ -101,8 +151,9 @@ pub struct LamaCrossingGame {
     state: State,
     hop: Option<Hop>,
     outcome: Outcome,
+    fall_kind: FallKind,
     broken: i32,
-    reveal: Option<i32>,
+    lanes: Vec<Lane>,
     fall_t: f64,
     res_t: f64,
     result: Option<(String, String, Color)>,
@@ -158,7 +209,7 @@ impl LamaCrossingGame {
         let mut g = LamaCrossingGame {
             b,
             rng: py::Random::new(0),
-            world: "bridge".into(),
+            world: "road".into(),
             diff: "medium".into(),
             bet: 10,
             hist: Vec::new(),
@@ -167,8 +218,9 @@ impl LamaCrossingGame {
             state: State::Idle,
             hop: None,
             outcome: Outcome::None,
+            fall_kind: FallKind::Break,
             broken: 0,
-            reveal: None,
+            lanes: Vec::new(),
             fall_t: 0.0,
             res_t: 0.0,
             result: None,
@@ -264,7 +316,7 @@ impl LamaCrossingGame {
         let pad = (22.0 * 0.7f64.max(k)) as i32;
         let mut go_w = self.f_btn.width(&t("lcr.go")).max(self.f_btn.width(&t("lcr.step"))) + pad;
         go_w = go_w.max((110.0 * k) as i32);
-        let mut cash_w = self.f_btn.width(&format!("{} 1000000", t("lcr.cashout"))) + pad;
+        let mut cash_w = self.f_btn.width(&format!("{} 999999999", t("lcr.cashout"))) + pad;
         let room = w - m - (self.r_plus.right() + m) - 4.max((8.0 * k) as i32);
         if go_w + cash_w > room {
             let f = room as f64 / (go_w + cash_w) as f64;
@@ -281,7 +333,7 @@ impl LamaCrossingGame {
         self.r_diffs = (0..4).map(|i| Rect::new(x0 + i * (bw + 6), bar_y, bw, bar_h)).collect();
         // Welt-Knoepfe oben links
         let wb = 26.max((36.0 * k) as i32);
-        self.r_worlds = (0..3).map(|i| Rect::new(m + i * (wb + 4), self.hud_h + m, wb, wb)).collect();
+        self.r_worlds = (0..l::WORLDS.len() as i32).map(|i| Rect::new(m + i * (wb + 4), self.hud_h + m, wb, wb)).collect();
     }
 
     // ===================================================== Einstellungen
@@ -344,7 +396,7 @@ impl LamaCrossingGame {
         l::steps(&self.diff)
     }
 
-    /// Weltkoordinate x der Schritt-Mitte (0 = Startufer, n+1 = Zielufer).
+    /// Weltkoordinate x der Spur-Mitte (0 = Startufer, n+1 = Zielufer).
     fn tile_x(&self, i: i32) -> i32 {
         (self.b.width as f64 * 0.22) as i32 + i * self.gap
     }
@@ -371,6 +423,9 @@ impl LamaCrossingGame {
         let x = self.tile_x(self.step) as f64;
         let mut y = self.tile_y(self.step) as f64;
         if self.state == State::Fall {
+            if self.fall_kind == FallKind::Hit {
+                return (x, y, "flat");
+            }
             let f = self.fall_t;
             if self.world == "bridge" {
                 return (x, y + 0.5 * 1500.0 * self.k * f * f, "fall");
@@ -393,9 +448,155 @@ impl LamaCrossingGame {
         0f64.max((hi as f64).min(lx as f64 - self.b.width as f64 * 0.32))
     }
 
+    // ===================================================== Verkehr
+
+    /// Oberkante der Hindernis-Bahn: Horizont (Fluss/Eis) bzw. ueber der Szene.
+    fn horizon(&self) -> i32 {
+        if self.world == "river" {
+            return self.path_y - (self.b.height as f64 * 0.10) as i32;
+        }
+        if self.world == "ice" {
+            return self.path_y - (self.b.height as f64 * 0.08) as i32;
+        }
+        self.scene.y - (self.gap as f64 * 1.5) as i32
+    }
+
+    /// Groesse eines Hindernisses auf Hoehe y (Fluss/Eis perspektivisch).
+    fn obs_size(&self, y: f64) -> i32 {
+        if self.world == "river" || self.world == "ice" {
+            let top = self.horizon();
+            let f = pmax(0.0, pmin(1.0, (y - top as f64) / 1.max(self.b.height - top) as f64));
+            return (self.gap as f64 * (0.45 + 0.80 * f)) as i32;
+        }
+        self.gap
+    }
+
+    /// Hoehe der Treffer-Mitte des Lamas.
+    fn target_y(&self) -> f64 {
+        self.path_y as f64 - self.llama_n as f64 * 0.35
+    }
+
+    /// Jede Spur 1..n: festes Tempo, Startzeit zufaellig versetzt.
+    fn init_traffic(&mut self) {
+        let (v_lo, v_hi, _gap_lo, gap_hi) = l::traffic(&self.diff);
+        self.lanes = vec![Lane { v: 0.0, t: 0.0, obs: Vec::new(), closed: false }];
+        for i in 1..=self.n() {
+            let v = self.rng.uniform(v_lo, v_hi) * self.k;
+            let tm = self.rng.uniform(0.0, gap_hi);
+            let closed = i <= self.step && self.state != State::Idle;
+            self.lanes.push(Lane { v, t: tm, obs: Vec::new(), closed });
+        }
+    }
+
+    fn spawn_obstacle(&mut self, lane: usize, kind: i32, v: f64, y: Option<f64>) {
+        let y = match y {
+            Some(y) => y,
+            None => {
+                let top = self.horizon();
+                let size = self.obs_size(top as f64);
+                if self.world == "river" || self.world == "ice" {
+                    top as f64
+                } else {
+                    top as f64 - d::obstacle_len(&self.world, kind, size) as f64 / 2.0
+                }
+            }
+        };
+        if let Some(ln) = self.lanes.get_mut(lane) {
+            ln.obs.push(Obs { y, v, kind, stop: None, fade: None });
+        }
+    }
+
+    fn update_traffic(&mut self, dt: f64) {
+        let (_v_lo, _v_hi, gap_lo, gap_hi) = l::traffic(&self.diff);
+        let f = l::speed_f(&self.world);
+        let h = self.b.height as f64;
+        for i in 1..self.lanes.len() {
+            let obs = std::mem::take(&mut self.lanes[i].obs);
+            let mut alive = Vec::with_capacity(obs.len());
+            for mut o in obs {
+                let mut ny = o.y + o.v * f * dt;
+                if let Some(stop) = o.stop {
+                    if ny >= stop {
+                        ny = pmax(o.y, stop);
+                    }
+                }
+                o.y = ny;
+                if let Some(fd) = o.fade.as_mut() {
+                    *fd -= dt;
+                }
+                let sichtbar = o.fade.is_none_or(|fd| fd > 0.0);
+                if sichtbar && o.y - d::obstacle_len(&self.world, o.kind, self.obs_size(o.y)) as f64 / 2.0 <= h {
+                    alive.push(o);
+                }
+            }
+            self.lanes[i].obs = alive;
+            self.lanes[i].t -= dt;
+            if self.lanes[i].t <= 0.0 && !self.lanes[i].closed {
+                let kind = self.rng.randrange0(4) as i32;
+                self.lanes[i].t = self.rng.uniform(gap_lo, gap_hi);
+                let v = self.lanes[i].v;
+                self.spawn_obstacle(i, kind, v, None);
+            }
+        }
+    }
+
+    /// Steht auf Spur b gerade ein Hindernis dort, wo das Lama landet?
+    fn hit(&self, b: i32) -> bool {
+        if !(1 <= b && (b as usize) < self.lanes.len()) {
+            return false;
+        }
+        let ty = self.target_y();
+        let reach = self.llama_n as f64 * 0.3;
+        for o in &self.lanes[b as usize].obs {
+            if o.fade.is_some() {
+                continue;
+            }
+            let olen = d::obstacle_len(&self.world, o.kind, self.obs_size(o.y));
+            if l::hit_test(o.y, olen, ty, reach) {
+                return true;
+            }
+        }
+        false
+    }
+
+    /// Spur b sicher erreicht: keine neuen Hindernisse, die kommenden halten
+    /// an (Strasse) bzw. blenden aus.
+    fn close_lane(&mut self, b: i32) {
+        if !(1 <= b && (b as usize) < self.lanes.len()) {
+            return;
+        }
+        let ty = self.target_y();
+        let road = self.world == "road";
+        let (path_y, llama_n, gap, k) = (self.path_y, self.llama_n, self.gap, self.k);
+        let lane = &mut self.lanes[b as usize];
+        lane.closed = true;
+        for o in lane.obs.iter_mut() {
+            if o.y >= ty {
+                continue; // schon vorbei
+            }
+            if road {
+                let olen = d::obstacle_len("road", o.kind, gap);
+                let stop = (path_y - llama_n) as f64 - olen as f64 / 2.0 - 6.0 * k;
+                // davor anhalten bzw. sofort, wenn schon naeher
+                o.stop = Some(pmax(stop, o.y));
+            } else if o.fade.is_none() {
+                o.fade = Some(FADE_T);
+            }
+        }
+    }
+
+    fn open_lanes(&mut self) {
+        for lane in self.lanes.iter_mut().skip(1) {
+            lane.closed = false;
+            for o in lane.obs.iter_mut() {
+                o.stop = None;
+            }
+        }
+    }
+
     // ===================================================== Ablauf
 
-    /// LOS (vor der Runde) bzw. WEITER (auf einem Schritt).
+    /// LOS (vor der Runde) bzw. WEITER (auf einer Spur).
     fn go(&mut self) {
         if self.state == State::Idle {
             if self.broke {
@@ -411,7 +612,6 @@ impl LamaCrossingGame {
             }
             self.round = Some(l::Round { bet: self.bet, diff: self.diff.clone(), step: 0 });
             self.step = 0;
-            self.reveal = None;
             self.b.play_sound("select");
             self.do_step();
         } else if self.state == State::Wait {
@@ -420,32 +620,25 @@ impl LamaCrossingGame {
     }
 
     fn do_step(&mut self) {
-        let n = self.n();
         let k = self.step + 1;
         let bet = self.round.as_ref().map(|r| r.bet).unwrap_or(0);
         if l::roll(&mut self.rng, &self.diff) {
-            if k >= n {
-                self.win = l::payout(bet, &self.diff, n);
-                lamabank::credit(self.win, KEY, true);
-                self.pending += self.win;
-                self.push_hist(l::mult(&self.diff, n));
-                self.round = None;
-                self.outcome = Outcome::Goal;
-            } else {
-                if let Some(r) = self.round.as_mut() {
-                    r.step = k;
-                }
-                self.outcome = Outcome::Ok;
-            }
+            self.outcome = Outcome::Ok;
         } else {
+            // Zufalls-Fehltritt: sofort verbucht (Verlassen hilft nicht)
             self.push_hist(0);
             self.round = None;
             self.outcome = Outcome::Fail;
             self.broken = k;
             self.lost = bet;
+            self.save_extra();
+            if self.world == "road" {
+                // Raser: trifft genau bei der Landung
+                let v = l::traffic(&self.diff).1 * l::RASER_F * self.k;
+                let y = self.target_y() - v * HOP_T;
+                self.spawn_obstacle(k as usize, 0, v, Some(y));
+            }
         }
-        self.save_extra();
-        self.b.score = lamabank::score_for(KEY);
         self.hop = Some(Hop { a: self.step, b: k, t: 0.0 });
         self.state = State::Hop;
         self.b.play_sound("move");
@@ -483,7 +676,7 @@ impl LamaCrossingGame {
             self.b.play_sound("level");
             self.b.rumble(220);
             self.b.ach_event("lcr_other_side", None);
-            if self.diff == "extreme" {
+            if self.diff == "extreme" && mult >= l::EXTREME_MULT {
                 self.b.ach_event("lcr_extreme", None);
             }
             if mult >= l::BRAVE_MULT {
@@ -492,30 +685,66 @@ impl LamaCrossingGame {
             return;
         }
         if self.outcome == Outcome::Fail {
-            self.hop = None;
-            self.state = State::Fall;
-            self.fall_t = 0.0;
-            self.res_t = 0.0;
-            self.shake = 0.35;
+            let kind = if self.world == "road" { FallKind::Hit } else { FallKind::Break };
             let title = t(&format!("lcr.fall.{}", self.world));
-            self.result = Some((title, tf("lcr.lost", &[("n", &self.lost.to_string())]), pal.red));
-            self.spawn_fail(x, y);
-            self.b.play_sound("hit");
-            self.b.rumble(260);
+            self.fall(kind, title, x, y);
             return;
         }
+        if self.hit(b) {
+            // ins Hindernis gelaufen: Einsatz weg
+            self.lost = self.round.as_ref().map(|r| r.bet).unwrap_or(0);
+            self.push_hist(0);
+            self.round = None;
+            self.broken = b;
+            self.save_extra();
+            let title = t(&format!("lcr.hit.{}", self.world));
+            self.fall(FallKind::Hit, title, x, y);
+            return;
+        }
+        self.close_lane(b);
         self.dust(x, y);
-        if self.outcome == Outcome::Goal {
-            // letzter Schritt geschafft: weiter ans Zielufer huepfen
+        self.b.score = lamabank::score_for(KEY);
+        if b >= n {
+            // letzte Spur geschafft: auszahlen, dann ans Zielufer huepfen
+            let bet = self.round.as_ref().map(|r| r.bet).unwrap_or(0);
+            self.win = l::payout(bet, &self.diff, n);
+            lamabank::credit(self.win, KEY, true);
+            self.pending += self.win;
+            self.push_hist(l::mult(&self.diff, n));
+            self.round = None;
+            self.save_extra();
+            self.b.score = lamabank::score_for(KEY);
             self.hop = Some(Hop { a: b, b: b + 1, t: 0.0 });
             self.b.play_sound("point");
             return;
         }
+        if let Some(r) = self.round.as_mut() {
+            r.step = b;
+        }
+        self.save_extra();
         self.hop = None;
         self.state = State::Wait;
         self.b.play_sound("point");
         let txt = self.fmt(l::mult(&self.diff, b));
         self.popup(x - self.cam, y - self.llama_n as f64 - 10.0 * self.k, txt, Some(pal.green), 0.9);
+    }
+
+    /// Runde verloren: Zufall (break) oder Treffer (hit, platt).
+    fn fall(&mut self, kind: FallKind, title: String, x: f64, y: f64) {
+        self.hop = None;
+        self.state = State::Fall;
+        self.fall_kind = kind;
+        self.fall_t = 0.0;
+        self.res_t = 0.0;
+        self.shake = 0.35;
+        self.result = Some((title, tf("lcr.lost", &[("n", &self.lost.to_string())]), ui::pal().red));
+        if kind == FallKind::Hit {
+            self.spawn_hit(x, y);
+        } else {
+            self.spawn_fail(x, y);
+        }
+        self.b.play_sound("hit");
+        self.b.rumble(260);
     }
 
     fn cash_out(&mut self) {
@@ -530,15 +759,11 @@ impl LamaCrossingGame {
         lamabank::credit(self.win, KEY, true);
         self.push_hist(mult);
         self.round = None;
-        self.reveal = l::next_break(&mut self.rng, &self.diff, self.step);
         self.save_extra();
         self.b.score = lamabank::score_for(KEY);
         self.state = State::Cashed;
         self.res_t = 0.0;
-        let sub = match self.reveal {
-            Some(r) => tf("lcr.reveal", &[("n", &r.to_string())]),
-            None => t("lcr.reveal_none"),
-        };
+        let sub = format!("{}   \u{00B7}   {}: {}", self.fmt(mult), t("cas.bet"), bet);
         self.result = Some((tf("lcr.cashed", &[("n", &self.win.to_string())]), sub, ui::pal().gold));
         let (x, y) = (self.tile_x(self.step) as f64, self.tile_y(self.step) as f64);
         let txt = format!("+{}", self.win);
@@ -550,6 +775,9 @@ impl LamaCrossingGame {
         if mult >= l::BRAVE_MULT {
             self.b.ach_event("lcr_brave", None);
         }
+        if self.diff == "extreme" && mult >= l::EXTREME_MULT {
+            self.b.ach_event("lcr_extreme", None);
+        }
     }
 
     fn back_to_idle(&mut self) {
@@ -557,10 +785,10 @@ impl LamaCrossingGame {
         self.step = 0;
         self.hop = None;
         self.result = None;
-        self.reveal = None;
         self.outcome = Outcome::None;
         self.broken = 0;
         self.ripples.clear();
+        self.open_lanes();
         let (x, y) = (self.tile_x(0) as f64, self.tile_y(0) as f64);
         self.dust(x, y);
         self.clamp_bet();
@@ -589,6 +817,7 @@ impl LamaCrossingGame {
         }
         self.diff = l::DIFFS[i].to_string();
         self.set_opt("difficulty", Value::from(self.diff.clone()));
+        self.init_traffic();
         self.cam = self.cam_target();
         self.b.play_sound("click");
     }
@@ -600,6 +829,7 @@ impl LamaCrossingGame {
         self.world = l::WORLDS[i].to_string();
         self.set_opt("world", Value::from(self.world.clone()));
         self.particles.clear();
+        self.init_traffic();
         self.b.play_sound("click");
     }
 
@@ -633,6 +863,7 @@ impl LamaCrossingGame {
 
     fn dust(&mut self, x: f64, y: f64) {
         let col = match self.world.as_str() {
+            "road" => (180, 180, 186),
             "bridge" => (196, 160, 120),
             "river" => (200, 230, 246),
             _ => (240, 248, 255),
@@ -654,6 +885,19 @@ impl LamaCrossingGame {
             self.spawn(x, y + 8.0 * k, 14, (150, 206, 236), 240.0, true, 3.0, 0.8, 900.0);
             self.ripples.push(Ripple { x, y: y + 14.0 * k, t: -0.3 });
         }
+    }
+
+    /// Treffer: Staub/Truemmer je Welt, Wolle fliegt.
+    fn spawn_hit(&mut self, x: f64, y: f64) {
+        let col = match self.world.as_str() {
+            "road" => (120, 120, 128),
+            "bridge" => (140, 130, 120),
+            "river" => (214, 238, 250),
+            _ => (232, 246, 255),
+        };
+        let yy = y - self.llama_n as f64 * 0.3;
+        self.spawn(x, yy, 14, col, 240.0, false, 3.4, 0.8, 500.0);
+        self.spawn(x, yy, 10, (250, 244, 230), 180.0, false, 3.0, 1.0, 200.0);
     }
 
     fn coin_shower(&mut self, n: usize) {
@@ -743,7 +987,7 @@ impl LamaCrossingGame {
                 let y = self.path_y + (40.0 * k) as i32 + (i % 3) * (26.0 * k) as i32;
                 draw::line(s, (40, 92, 124), (x, y as f64), (x + 40.0 * k, y as f64), 1.max((2.0 * k) as i32));
             }
-        } else {
+        } else if self.world == "bridge" {
             // ein paar Voegel ueber der Schlucht
             for i in 0..3 {
                 let x = py::fpmod((i * 300) as f64 + self.time * 25.0 * k, (w + 100) as f64) - 50.0;
@@ -779,10 +1023,18 @@ impl LamaCrossingGame {
         let h = self.b.height;
         let xl = self.tile_x(0) as f64 + self.gap as f64 * 0.42 + ox;
         let xr = self.tile_x(n + 1) as f64 - self.gap as f64 * 0.42 + ox;
+        let broken_tile = self.state == State::Fall && self.fall_kind == FallKind::Break;
+        if self.world == "road" {
+            let xs: Vec<f64> = (2..=n)
+                .map(|i| self.tile_x(i) as f64 - self.gap as f64 / 2.0 + ox)
+                .filter(|x| -10.0 <= *x && *x <= (self.b.width + 10) as f64)
+                .collect();
+            d::draw_lanes(s, &xs, self.scene.y, h, k, self.time);
+        }
         if self.world == "bridge" {
             let mut pts = vec![(xl, self.path_y as f64)];
             for i in 1..=n {
-                if self.state == State::Fall && i == self.broken {
+                if broken_tile && i == self.broken {
                     continue;
                 }
                 pts.push((self.tile_x(i) as f64 + ox, self.tile_y(i) as f64 + 4.0 * k));
@@ -790,8 +1042,8 @@ impl LamaCrossingGame {
             pts.push((xr, self.path_y as f64));
             d::draw_ropes(s, &pts, k);
         }
-        d::draw_bank(s, &self.world, xl, -1, self.path_y, h, k);
-        d::draw_bank(s, &self.world, xr, 1, self.path_y, h, k);
+        d::draw_bank(s, &self.world, xl, -1, self.path_y, h, k, 0);
+        d::draw_bank(s, &self.world, xr, 1, self.path_y, h, k, 0);
         self.draw_goal_flag(s, ox);
         let cur = if matches!(self.state, State::Wait | State::Hop | State::Fall | State::Cashed | State::Goal) { self.step } else { 0 };
         for i in 1..=n {
@@ -800,7 +1052,7 @@ impl LamaCrossingGame {
                 continue;
             }
             let y = self.tile_y(i) as f64;
-            if self.state == State::Fall && i == self.broken {
+            if broken_tile && i == self.broken {
                 self.draw_broken_tile(s, cx, y, i);
             } else {
                 if self.state == State::Wait && i == self.step + 1 {
@@ -810,11 +1062,50 @@ impl LamaCrossingGame {
                     draw::ellipse(s, col, glow, 1.max((2.0 * k) as i32));
                 }
                 d::draw_tile(s, &self.world, cx, y, self.tw, k, self.time, i, 255);
-                if self.state == State::Cashed && self.reveal == Some(i) {
-                    self.draw_cross(s, cx, y);
-                }
             }
             self.draw_label(s, cx, y, i, cur);
+        }
+    }
+
+    /// Hindernisse aller sichtbaren Spuren, auf der Strasse Baken auf
+    /// gesperrten Spuren.
+    fn draw_obstacles(&self, s: &mut Surface, ox: f64) {
+        let top = self.horizon() as f64;
+        let fade_in = 20.0 * self.k;
+        let perspektive = self.world == "river" || self.world == "ice";
+        for (i, lane) in self.lanes.iter().enumerate().skip(1) {
+            let cx = self.tile_x(i as i32) as f64 + ox;
+            if cx < -(self.gap as f64) || cx > (self.b.width + self.gap) as f64 {
+                continue;
+            }
+            if self.world == "road" && lane.closed {
+                let by = (self.path_y - self.llama_n) as f64 - 2.0 * self.k;
+                d::draw_barrier(s, cx, by, (self.gap as f64 * 0.7) as i32, self.k);
+            }
+            for o in &lane.obs {
+                let mut alpha = 255;
+                if let Some(fd) = o.fade {
+                    alpha = (255.0 * pmax(0.0, fd) / FADE_T) as i32;
+                }
+                if perspektive && o.y - top < fade_in {
+                    alpha = alpha.min((255.0 * pmax(0.0, o.y - top) / fade_in) as i32);
+                }
+                if alpha > 0 {
+                    d::draw_obstacle(s, &self.world, cx, o.y, self.obs_size(o.y), o.kind, alpha);
+                }
+            }
+        }
+    }
+
+    /// Das ueberfahrene Lama: platt auf seiner Spur (auf der Strasse mit
+    /// Reifenspuren).
+    fn draw_flat(&self, s: &mut Surface, ox: f64) {
+        let x = self.tile_x(self.step) as f64 + ox;
+        let y = self.tile_y(self.step) as f64;
+        let img = d::flat_llama(self.llama_n, self.b.accent);
+        s.blr(&img, img.get_rect().midbottom_at((x as i32, (y + 2.0 * self.k) as i32)));
+        if self.world == "road" {
+            d::draw_tire_marks(s, x, y - img.h() as f64 / 2.0, self.gap as f64 * 0.5, self.k);
         }
     }
 
@@ -867,23 +1158,11 @@ impl LamaCrossingGame {
         }
     }
 
-    /// Markiert den Schritt, an dem es nach dem Auszahlen schiefgegangen waere.
-    fn draw_cross(&self, s: &mut Surface, cx: f64, y: f64) {
-        let red = ui::pal().red;
-        let dd = self.tw as f64 * 0.22;
-        let c = (cx, y + self.tw as f64 * 0.10);
-        let w = 2.max((3.0 * self.k) as i32);
-        draw::line(s, red, (c.0 - dd, c.1 - dd * 0.6), (c.0 + dd, c.1 + dd * 0.6), w);
-        draw::line(s, red, (c.0 - dd, c.1 + dd * 0.6), (c.0 + dd, c.1 - dd * 0.6), w);
-    }
-
-    /// Multiplikator-Schild unter einem Schritt.
+    /// Multiplikator-Schild unter einer Spur.
     fn draw_label(&self, s: &mut Surface, cx: f64, y: f64, i: i32, cur: i32) {
         let txt = self.fmt(l::mult(&self.diff, i));
         let (fg, bg): (Color, Color) = if self.state == State::Fall && i == self.broken {
             (rgb(255, 255, 255), ui::pal().red)
-        } else if self.state == State::Cashed && self.reveal == Some(i) {
-            (rgb(255, 220, 220), rgb(120, 30, 40))
         } else if i <= cur {
             (rgb(230, 255, 236), rgb(40, 120, 72))
         } else if i == cur + 1 {
@@ -1222,7 +1501,7 @@ impl Game for LamaCrossingGame {
         let world = self.b.opt_value(KEY, "world");
         self.world = match world.as_ref().and_then(|v| v.as_str()) {
             Some(w) if l::WORLDS.contains(&w) => w.to_string(),
-            _ => "bridge".into(),
+            _ => "road".into(),
         };
         let diff = self.b.opt_value(KEY, "difficulty");
         self.diff = match diff.as_ref().and_then(|v| v.as_str()) {
@@ -1245,8 +1524,8 @@ impl Game for LamaCrossingGame {
         self.state = State::Idle;
         self.hop = None;
         self.outcome = Outcome::None;
+        self.fall_kind = FallKind::Break;
         self.broken = 0;
-        self.reveal = None;
         self.fall_t = 0.0;
         self.res_t = 0.0;
         self.result = None;
@@ -1275,6 +1554,7 @@ impl Game for LamaCrossingGame {
         } else {
             self.clamp_bet();
         }
+        self.init_traffic();
         self.cam = self.cam_target();
         self.b.score = lamabank::score_for(KEY);
         self.check_broke();
@@ -1283,6 +1563,7 @@ impl Game for LamaCrossingGame {
     fn on_surface_changed(&mut self) {
         d::clear_cache();
         self.layout();
+        self.init_traffic();
         self.cam = self.cam_target();
     }
 
@@ -1394,6 +1675,7 @@ impl Game for LamaCrossingGame {
         }
         self.shake = 0f64.max(self.shake - dt);
         self.update_fx(dt);
+        self.update_traffic(dt);
         let tgt = self.cam_target();
         self.cam += (tgt - self.cam) * 1f64.min(dt * 6.0);
         if (tgt - self.cam).abs() < 0.5 {
@@ -1424,17 +1706,26 @@ impl Game for LamaCrossingGame {
         let (w, h) = (self.b.width, self.b.height);
         let bg = d::background(&self.world, w, h, self.path_y);
         s.bl(&bg, (0, 0));
-        let far = d::far_layer(&self.world, w, h, self.path_y);
-        let off = py::pmod32(-((self.cam * 0.18) as i32), w);
-        s.bl(&far, (off - w, 0));
-        s.bl(&far, (off, 0));
+        if self.world != "road" {
+            let far = d::far_layer(&self.world, w, h, self.path_y);
+            let off = py::pmod32(-((self.cam * 0.18) as i32), w);
+            s.bl(&far, (off - w, 0));
+            s.bl(&far, (off, 0));
+        }
         let mut ox = -self.cam;
         if self.shake > 0.0 {
             ox += (self.time * 70.0).sin() * 6.0 * self.k * self.shake / 0.35;
         }
         self.draw_water(&mut s, ox);
         self.draw_world(&mut s, ox);
-        self.draw_llama(&mut s, ox);
+        let flat = self.state == State::Fall && self.fall_kind == FallKind::Hit;
+        if flat {
+            self.draw_flat(&mut s, ox);
+        }
+        self.draw_obstacles(&mut s, ox);
+        if !flat {
+            self.draw_llama(&mut s, ox);
+        }
         self.draw_particles(&mut s, ox);
         if self.world == "ice" {
             self.draw_snow(&mut s, 1);

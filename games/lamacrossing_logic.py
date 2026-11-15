@@ -5,10 +5,12 @@ lamacrossing_logic.py
 Regeln von Lama Crossing - ohne pygame, damit Web (``lamacrossing_logic.js``)
 und Rust (``lamacrossing_logic.rs``) dieselben Tabellen 1:1 übernehmen.
 
-Prinzip: Das Lama überquert Schritt für Schritt eine Schlucht, einen Fluss
-oder einen Eissee. Jeder Schritt hält mit Wahrscheinlichkeit ``1 - p`` und
-hebt den Multiplikator; ein Fehltritt kostet den Einsatz. Auszahlen geht nach
-jedem geschafften Schritt.
+Prinzip: Das Lama überquert Spur für Spur eine Straße, eine Schlucht, einen
+Fluss oder einen Eissee. Jede Spur hält mit Wahrscheinlichkeit ``1 - p`` und
+hebt den Multiplikator; ein Fehltritt kostet den Einsatz. Dazu kommen sichtbare
+Hindernisse (Autos, Felsbrocken, Treibholz, Eisblöcke), denen man per Timing
+ausweichen muss (``TRAFFIC``, ``hit_test``). Auszahlen geht nach jeder
+geschafften Spur.
 
 Multiplikatoren stehen als **Ganzzahlen in Hundertsteln** fest in den
 Tabellen (keine Gleitkomma-Rechnung zur Laufzeit, in allen drei Sprachen
@@ -22,33 +24,53 @@ Jede Strategie "bei Schritt k auszahlen" hat damit den Erwartungswert
 """
 
 DIFFS = ("easy", "medium", "hard", "extreme")
-WORLDS = ("bridge", "river", "ice")
+WORLDS = ("road", "bridge", "river", "ice")
 
 # Risiko je Schritt als Bruch (Zähler, Nenner) - zum Ziehen wird daraus EINE
 # Gleitkommazahl (in Python, JS und Rust dieselbe).
 RISK = {
     "easy": (1, 12),
-    "medium": (1, 7),
-    "hard": (1, 4),
-    "extreme": (2, 5),
+    "medium": (1, 6),
+    "hard": (3, 10),
+    "extreme": (1, 2),
 }
 
 # Multiplikator (x100) nach k geschafften Schritten, k = 1 .. Anzahl Schritte.
 TABLES = {
     "easy": (105, 115, 125, 137, 149, 163, 178, 194, 212, 231, 252, 275, 300,
-             327, 357, 390, 425, 464, 506, 552),
-    "medium": (113, 132, 154, 179, 209, 244, 285, 332, 388, 453, 528, 616,
-               719, 839, 979, 1142),
-    "hard": (129, 172, 229, 306, 408, 545, 726, 968, 1291, 1722, 2296, 3062,
-             4082),
-    "extreme": (161, 269, 449, 748, 1247, 2079, 3465, 5775, 9625, 16042),
+             327, 357, 390, 425, 464, 506, 552, 603, 657),
+    "medium": (116, 139, 167, 201, 241, 289, 347, 417, 500, 600, 720, 864,
+               1037, 1245, 1494, 1793, 2152, 2582, 3098, 3718),
+    "hard": (138, 197, 282, 403, 577, 824, 1177, 1682, 2403, 3433, 4905, 7008,
+             10011, 14302, 20431, 29187, 41697, 59567),
+    "extreme": (194, 388, 776, 1552, 3104, 6208, 12416, 24832, 49664, 99328,
+                198656, 397312, 794624, 1589248, 3178496),
 }
+
+# Verkehr je Stufe: (v_lo, v_hi) Tempo der Hindernisse in px/s bei 800x600
+# (wird mit k skaliert), (gap_lo, gap_hi) Abstand zwischen zwei Hindernissen
+# einer Spur in Sekunden. Jede Spur hat ein festes Tempo (kein Überholen).
+TRAFFIC = {
+    "easy": (240, 340, 1.8, 3.2),
+    "medium": (300, 420, 1.4, 2.8),
+    "hard": (360, 500, 1.1, 2.3),
+    "extreme": (440, 620, 0.9, 1.9),
+}
+
+# Tempo-Faktor je Welt: Treibholz und Eisblöcke kommen vom Horizont her
+# (kurzer Weg, daher langsamer), Autos und Felsbrocken von oben.
+SPEED_F = {"road": 1.0, "bridge": 1.0, "river": 0.4, "ice": 0.4}
+
+# Raser bei einem Zufalls-Fehltritt auf der Straße: v_hi * RASER_F
+RASER_F = 1.6
 
 # Einsatzstufen (Mindesteinsatz = erste Stufe, siehe lamabank.MIN_BET)
 BETS = (10, 20, 50, 100, 200, 500, 1000, 2500, 5000, 10000)
 
 # Ab diesem Multiplikator (x100) gibt es den Erfolg "Nervenstark"
 BRAVE_MULT = 1000
+# "Drahtseilakt": auf Extrem bei mindestens x100 ausgezahlt
+EXTREME_MULT = 10000
 
 
 def steps(diff):
@@ -80,16 +102,10 @@ def roll(rng, diff):
     return not rng.random() < risk(diff)
 
 
-def next_break(rng, diff, k):
-    """Nach dem Auszahlen bei Schritt k: wo wäre es schiefgegangen?
-
-    Zieht die restlichen Schritte k+1 .. Ende (bricht beim ersten Fehltritt
-    ab) und liefert dessen Nummer - oder None, wenn alles gehalten hätte.
-    """
-    for i in range(k + 1, steps(diff) + 1):
-        if not roll(rng, diff):
-            return i
-    return None
+def hit_test(obs_y, obs_len, target_y, reach):
+    """Trifft ein Hindernis (Mitte obs_y, senkrechte Länge obs_len) das Lama,
+    dessen Mitte auf target_y liegt (reach = halbe Trefferhöhe des Lamas)?"""
+    return abs(obs_y - target_y) < obs_len / 2 + reach
 
 
 def risk_percent(diff):

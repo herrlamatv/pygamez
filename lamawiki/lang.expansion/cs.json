@@ -3044,6 +3044,10 @@
         "násobitel",
         "žetony",
         "lama banka",
+        "silnice",
+        "doprava",
+        "auta",
+        "načasování",
         "most",
         "řeka",
         "led",
@@ -3054,40 +3058,51 @@
         {
           "h": "Jak se hraje",
           "body": [
-            "Lama krok za krokem přechází visutý most, řeku nebo zamrzlé jezero. Každý krok, který vydrží, zvedne násobitel - jediný chybný krok stojí sázku.",
-            "Vyber sázku (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 nebo 10000 lama žetonů) a stiskni START: sázka se strhne a lama udělá první krok.",
-            "Po každém úspěšném kroku se rozhodneš: DÁL, nebo VYPLATIT - pak dostaneš sázku krát aktuální násobitel. Na druhém břehu se výhra vyplatí automaticky, s konfetami.",
-            "Po výplatě hra prozradí, na kterém kroku by se to pokazilo. Vpravo nahoře je historie posledních 12 kol."
+            "Lama pruh po pruhu přechází silnici, visutý most, řeku nebo zamrzlé jezero. Každý zvládnutý pruh zvedne násobitel - když lamu něco zasáhne, sázka je pryč.",
+            "Vyber sázku (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 nebo 10000 lama žetonů) a stiskni START: sázka se strhne a lama vkročí do prvního pruhu.",
+            "Po každém zvládnutém pruhu se rozhodneš: DÁL, nebo VYPLATIT - pak dostaneš sázku krát aktuální násobitel (zaokrouhleno dolů). Na druhé straně se výhra vyplatí automaticky, s konfetami.",
+            "Vpravo nahoře je historie posledních 12 kol."
+          ]
+        },
+        {
+          "h": "Překážky a načasování",
+          "body": [
+            "V každém světě se něco blíží a musíš dobře načasovat, kdy vyrazit: na silnici jezdí každým pruhem auta a náklaďáky, na visutém mostě padají mostem balvany, na řece k tobě plují kmeny a na jezeře k tobě kloužou ledové bloky.",
+            "Když stiskneš START nebo DÁL, zatímco je v dalším pruhu překážka, lamu něco přejede nebo zasáhne a zůstane ležet placatá - sázka je prohraná. Počkej tedy na mezeru.",
+            "Pruh, ve kterém lama stojí, je chráněný: na silnici se spustí závora a auta zastaví před lamou, v ostatních světech překážky v tvém pruhu zmizí. Na správnou mezeru tedy můžeš v klidu počkat.",
+            "Čím vyšší obtížnost, tím hustší a rychlejší provoz.",
+            "Navíc má každý pruh náhodné riziko, kterému nezabrání ani dokonalé načasování: na silnici se náhle objeví pirát silnic, na mostě praskne prkno, na řece ujede kámen a na jezeře se prolomí led."
           ]
         },
         {
           "h": "Obtížnosti",
           "body": [
             "Čtyři stupně - volí se před každým kolem tlačítky ve spodní liště nebo klávesami [1] až [4]:",
-            "- Lehká: 20 kroků, riziko 1/12 na krok (asi 8 %), až ×5,52",
-            "- Střední: 16 kroků, riziko 1/7 (asi 14 %), až ×11,42",
-            "- Těžká: 13 kroků, riziko 1/4 (25 %), až ×40,82",
-            "- Extrémní: 10 kroků, riziko 2/5 (40 %), až ×160,42",
-            "Násobitele jsou v pevných tabulkách a jsou spočítané tak, aby každá strategie dlouhodobě vracela asi 97 % sázky - bez ohledu na to, na kterém kroku vybereš. Výhoda kasina je tedy zhruba 3 %."
+            "- Lehká: 22 pruhů, riziko 1/12 na pruh (asi 8 %), až ×6,57",
+            "- Střední: 20 pruhů, riziko 1/6 (asi 17 %), až ×37,18",
+            "- Těžká: 18 pruhů, riziko 3/10 (30 %), až ×595,67",
+            "- Extrémní: 15 pruhů, riziko 1/2 (50 %), až ×31 784,96 - každý pruh násobitel zdvojnásobí: ×1,94, ×3,88, ×7,76 …",
+            "Násobitele jsou v pevných tabulkách a jsou spočítané tak, aby každá strategie při dobrém načasování dlouhodobě vracela asi 97 % sázky - bez ohledu na to, ve kterém pruhu vybereš. Výhoda kasina je tedy zhruba 3 %."
           ]
         },
         {
-          "h": "Tři světy",
+          "h": "Čtyři světy",
           "body": [
-            "Svět mění jen vzhled, ne šance. Přepíná se tlačítky světů vlevo nahoře nebo klávesou [W]:",
-            "- Visutý most: prkna nad kaňonem - při chybném kroku prkno praskne a lama spadne.",
-            "- Řeka: kameny ve vodě - kámen ujede a lama žbluňkne do vody.",
-            "- Zamrzlé jezero: kry na zamrzlém jezeře - praskliny se rozbíhají a kra se prolomí.",
+            "Přepíná se čtyřmi tlačítky světů vlevo nahoře nebo klávesou [W]; svět šance nemění:",
+            "- Silnice (výchozí): ulice při pohledu shora, s chodníky. Lama ji přechází pruh po pruhu po kouscích přechodu pro chodce, zatímco kolem jezdí auta a náklaďáky - a občas pirát silnic.",
+            "- Visutý most: prkna nad kaňonem, padající balvany - když prkno praskne, lama spadne.",
+            "- Řeka: kameny ve vodě, plovoucí kmeny - když kámen ujede, lama žbluňkne do vody.",
+            "- Zamrzlé jezero: kry na zamrzlém jezeře, klouzající ledové bloky - praskliny se rozbíhají a kra se prolomí.",
             "V každém světě nosí lama šálu v akcentní barvě hry."
           ]
         },
         {
           "h": "Ovládání",
           "body": [
-            "- [Mezerník], [Vpravo] nebo kliknutí na další krok: START nebo další krok",
+            "- [Mezerník], [Vpravo] nebo kliknutí na další pruh: START nebo DÁL - nejlépe, když je pruh volný",
             "- [Enter] nebo [C]: vybrat výhru (před kolem funguje [Enter] jako START)",
             "- [Nahoru] / [Dolů], [+] / [-] nebo kolečko myši: změna sázky",
-            "- [1] až [4]: obtížnost, [W]: změna světa",
+            "- [1] až [4]: obtížnost, [W]: změna světa (silnice, visutý most, řeka, zamrzlé jezero)",
             "Sázku, obtížnost a svět lze měnit jen mezi koly. Svět, obtížnost a poslední sázka se ukládají do settings.json (sekce lamacrossing)."
           ]
         },
@@ -3097,7 +3112,7 @@
             "Lama Crossing hraje se společným účtem Lama banky - spolu s Blackjackem, Pokerem a Casinem (start 1000, uloženo v mem.json).",
             "Rekord je nejvyšší stav 1000 + tvé bilance v Lama Crossing; výhry v Blackjacku, Pokeru nebo Casinu se sem nepočítají.",
             "Pod 10 žetony jsi na mizině: [Enter] nebo kliknutí vezme úvěr od banky a doplní účet zpět na 1000. Úvěry se do bilance nepočítají.",
-            "Skončit uprostřed přechodu je bezpečné: sázka, obtížnost i krok se uloží a při dalším spuštění pokračuješ přesně tam."
+            "Skončit uprostřed přechodu je bezpečné: sázka, obtížnost i pruh se uloží a při dalším spuštění pokračuješ přesně tam."
           ]
         },
         {
@@ -3108,15 +3123,16 @@
             "- Mistr hry Lama Crossing: rekord 10000",
             "- Druhý břeh (vzácný): Převeď lamu v Lama Crossing až na druhý břeh",
             "- Ocelové nervy (epický): Vyber výhru v Lama Crossing při ×10 nebo více",
-            "- Provazochodec (legendární): Zvládni v Lama Crossing celý přechod na Extrémní obtížnost"
+            "- Provazochodec (legendární): Vyber výhru v Lama Crossing na Extrémní obtížnost při ×100 nebo více"
           ]
         },
         {
           "h": "Tipy",
           "body": [
-            "- Každý krok se losuje znovu - řada chybných kroků nic neříká o tom dalším.",
-            "- Až na druhý břeh se dostaneš zhruba v každém 6. kole na Lehkou, v každém 12. na Střední, v každém 42. na Těžkou a jen v každém 165. na Extrémní.",
-            "- Na Ocelové nervy (×10) stačí na Těžkou 9 kroků (×12,91) a na Extrémní jen 5 (×12,47); na Střední to vyjde až na druhém břehu (×11,42), na Lehkou nikdy.",
+            "- Nespěchej: ve svém pruhu je lama v bezpečí. Sleduj další pruh a vyraz, až přijde opravdová mezera.",
+            "- Každý pruh se losuje znovu - řada proher nic neříká o tom dalším.",
+            "- Při dobrém načasování se až na druhou stranu dostaneš zhruba v každém 7. kole na Lehkou, v každém 38. na Střední, v každém 614. na Těžkou a jen v jednom z 32 768 na Extrémní.",
+            "- Na Ocelové nervy (×10) stačí na Extrémní 4 pruhy (×15,52), na Těžkou 7 (×11,77) a na Střední 13 (×10,37); na Lehkou nikdy (nejvýš ×6,57). Na Provazochodce (×100 na Extrémní) potřebuješ 7 pruhů (×124,16) - to vyjde zhruba v každém 128. kole.",
             "- Rozhodni se předem, při jakém násobiteli vybereš - a drž se toho. Díky pevné návratnosti není žádná strategie lepší než jiná, jen víc nebo méně riskantní."
           ]
         }

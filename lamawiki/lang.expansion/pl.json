@@ -3043,6 +3043,10 @@
         "mnożnik",
         "żetony",
         "bank lamy",
+        "ulica",
+        "ruch",
+        "samochody",
+        "timing",
         "most",
         "rzeka",
         "lód",
@@ -3053,40 +3057,51 @@
         {
           "h": "Jak grać",
           "body": [
-            "Lama krok po kroku przechodzi przez most linowy, rzekę albo zamarznięte jezioro. Każdy krok, który wytrzyma, podnosi mnożnik - jeden fałszywy krok kosztuje stawkę.",
-            "Wybierz stawkę (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 lub 10000 żetonów Lamy) i naciśnij START: stawka zostaje pobrana, a lama robi pierwszy krok.",
-            "Po każdym udanym kroku decydujesz: DALEJ albo WYPŁAĆ - wtedy dostajesz stawkę razy aktualny mnożnik. Na drugim brzegu wygrana jest wypłacana automatycznie, z konfetti.",
-            "Po wypłacie gra pokazuje, na którym kroku by się nie udało. W prawym górnym rogu widać historię 12 ostatnich rund."
+            "Lama pas po pasie przechodzi przez ulicę, most linowy, rzekę albo zamarznięte jezioro. Każdy pokonany pas podnosi mnożnik - jeśli coś dopadnie lamę, stawka przepada.",
+            "Wybierz stawkę (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 lub 10000 żetonów Lamy) i naciśnij START: stawka zostaje pobrana, a lama wchodzi na pierwszy pas.",
+            "Po każdym pokonanym pasie decydujesz: DALEJ albo WYPŁAĆ - wtedy dostajesz stawkę razy aktualny mnożnik (zaokrągloną w dół). Po drugiej stronie wygrana jest wypłacana automatycznie, z konfetti.",
+            "W prawym górnym rogu widać historię 12 ostatnich rund."
+          ]
+        },
+        {
+          "h": "Przeszkody i timing",
+          "body": [
+            "W każdym świecie coś nadciąga i trzeba wyczuć właściwy moment: na ulicy każdym pasem jadą samochody i ciężarówki, na moście linowym przez most spadają głazy, na rzece płyną w twoją stronę pnie, a na jeziorze suną w twoją stronę bloki lodu.",
+            "Jeśli naciśniesz START lub DALEJ, gdy na następnym pasie jest przeszkoda, lama zostaje przejechana albo trafiona i leży płasko - stawka przepada. Czekaj więc na lukę.",
+            "Pas, na którym stoi lama, jest chroniony: na ulicy opuszcza się szlaban i samochody zatrzymują się przed lamą, w pozostałych światach przeszkody na twoim pasie znikają. Możesz więc spokojnie poczekać na właściwą lukę.",
+            "Im wyższy poziom trudności, tym gęstszy i szybszy ruch.",
+            "Do tego na każdym pasie jest losowe ryzyko, przed którym nie chroni nawet idealny timing: na ulicy nagle pojawia się pirat drogowy, na moście pęka deska, na rzece usuwa się kamień, a na jeziorze załamuje się lód."
           ]
         },
         {
           "h": "Poziomy trudności",
           "body": [
             "Cztery poziomy - do wyboru przed każdą rundą przyciskami na dolnym pasku lub klawiszami [1] do [4]:",
-            "- Łatwy: 20 kroków, ryzyko 1/12 na krok (ok. 8%), do ×5,52",
-            "- Średni: 16 kroków, ryzyko 1/7 (ok. 14%), do ×11,42",
-            "- Trudny: 13 kroków, ryzyko 1/4 (25%), do ×40,82",
-            "- Ekstremalny: 10 kroków, ryzyko 2/5 (40%), do ×160,42",
-            "Mnożniki są zapisane w stałych tabelach i policzone tak, że każda strategia na dłuższą metę zwraca ok. 97% stawki - niezależnie od tego, na którym kroku wypłacasz. Przewaga kasyna wynosi więc ok. 3%."
+            "- Łatwy: 22 pasy, ryzyko 1/12 na pas (ok. 8%), do ×6,57",
+            "- Średni: 20 pasów, ryzyko 1/6 (ok. 17%), do ×37,18",
+            "- Trudny: 18 pasów, ryzyko 3/10 (30%), do ×595,67",
+            "- Ekstremalny: 15 pasów, ryzyko 1/2 (50%), do ×31 784,96 - każdy pas podwaja mnożnik: ×1,94, ×3,88, ×7,76 …",
+            "Mnożniki są zapisane w stałych tabelach i policzone tak, że przy dobrym timingu każda strategia na dłuższą metę zwraca ok. 97% stawki - niezależnie od tego, na którym pasie wypłacasz. Przewaga kasyna wynosi więc ok. 3%."
           ]
         },
         {
-          "h": "Trzy światy",
+          "h": "Cztery światy",
           "body": [
-            "Świat zmienia tylko wygląd, nie szanse. Zmieniasz go przyciskami świata w lewym górnym rogu lub klawiszem [W]:",
-            "- Most linowy: deski nad kanionem - przy fałszywym kroku deska pęka, a lama spada.",
-            "- Rzeka: kamienie w wodzie - kamień się usuwa i plusk!",
-            "- Lodowe jezioro: kry na zamarzniętym jeziorze - rozchodzą się pęknięcia, potem kra się załamuje.",
+            "Zmieniasz je czterema przyciskami świata w lewym górnym rogu lub klawiszem [W]; świat nie zmienia szans:",
+            "- Ulica (domyślna): ulica widziana z góry, z chodnikami. Lama przechodzi pas po pasie po kawałkach przejścia dla pieszych, a obok jadą samochody i ciężarówki - i od czasu do czasu pirat drogowy.",
+            "- Most linowy: deski nad kanionem, spadające głazy - gdy deska pęknie, lama spada.",
+            "- Rzeka: kamienie w wodzie, dryfujące pnie - gdy kamień się usunie, plusk!",
+            "- Lodowe jezioro: kry na zamarzniętym jeziorze, sunące bloki lodu - rozchodzą się pęknięcia, potem kra się załamuje.",
             "W każdym świecie lama nosi szalik w kolorze akcentu gry."
           ]
         },
         {
           "h": "Sterowanie",
           "body": [
-            "- [Spacja], [Prawo] lub kliknięcie następnego kroku: START albo następny krok",
+            "- [Spacja], [Prawo] lub kliknięcie następnego pasa: START albo DALEJ - najlepiej, gdy pas jest wolny",
             "- [Enter] lub [C]: wypłata (przed rundą [Enter] działa jak START)",
             "- [Góra] / [Dół], [+] / [-] lub kółko myszy: zmiana stawki",
-            "- [1] do [4]: poziom trudności, [W]: zmiana świata",
+            "- [1] do [4]: poziom trudności, [W]: zmiana świata (ulica, most linowy, rzeka, lodowe jezioro)",
             "Stawkę, poziom trudności i świat można zmieniać tylko między rundami. Świat, poziom trudności i ostatnia stawka są zapisywane w settings.json (sekcja lamacrossing)."
           ]
         },
@@ -3096,7 +3111,7 @@
             "Lama Crossing gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem i Casino (start 1000, zapis w mem.json).",
             "Rekord to najwyższy stan 1000 + twojego bilansu w Lama Crossing; wygrane w Blackjacku, Pokerze czy Casino się tu nie liczą.",
             "Poniżej 10 żetonów jesteś bankrutem: [Enter] lub kliknięcie bierze kredyt z banku i uzupełnia konto do 1000. Kredyty nie liczą się do bilansu.",
-            "Przerwanie w połowie przeprawy jest bezpieczne: stawka, poziom trudności i krok są zapisywane, a przy następnym starcie grasz dokładnie od tego miejsca."
+            "Przerwanie w połowie przeprawy jest bezpieczne: stawka, poziom trudności i pas są zapisywane, a przy następnym starcie grasz dokładnie od tego miejsca."
           ]
         },
         {
@@ -3107,15 +3122,16 @@
             "- Mistrz Lama Crossing: rekord 10000",
             "- Drugi brzeg (rzadki): Przeprowadź lamę na drugi brzeg w Lama Crossing",
             "- Stalowe nerwy (epicki): Wypłać przy ×10 lub więcej w Lama Crossing",
-            "- Na linie (legendarny): Ukończ całą przeprawę na poziomie Ekstremalnym w Lama Crossing"
+            "- Na linie (legendarny): Wypłać przy ×100 lub więcej na poziomie Ekstremalnym w Lama Crossing"
           ]
         },
         {
           "h": "Wskazówki",
           "body": [
-            "- Każdy krok jest losowany od nowa - seria fałszywych kroków nic nie mówi o następnym.",
-            "- Na drugi brzeg dochodzi się mniej więcej w co 6. rundzie na poziomie Łatwym, w co 12. na Średnim, w co 42. na Trudnym i tylko w co 165. na Ekstremalnym.",
-            "- Do Stalowych nerwów (×10) wystarczy 9 kroków na Trudnym (×12,91) i tylko 5 na Ekstremalnym (×12,47); na Średnim udaje się to dopiero na drugim brzegu (×11,42), na Łatwym wcale.",
+            "- Nie musisz się spieszyć: na swoim pasie lama jest bezpieczna. Obserwuj następny pas i ruszaj dopiero, gdy pojawi się prawdziwa luka.",
+            "- Każdy pas jest losowany od nowa - seria porażek nic nie mówi o następnym pasie.",
+            "- Przy dobrym timingu na drugą stronę dochodzi się mniej więcej w co 7. rundzie na poziomie Łatwym, w co 38. na Średnim, w co 614. na Trudnym i tylko w jednej na 32 768 na Ekstremalnym.",
+            "- Do Stalowych nerwów (×10) wystarczą 4 pasy na Ekstremalnym (×15,52), 7 na Trudnym (×11,77) i 13 na Średnim (×10,37); na Łatwym wcale (najwyżej ×6,57). Na linie (×100 na Ekstremalnym) wymaga 7 pasów (×124,16) - to udaje się mniej więcej w co 128. rundzie.",
             "- Ustal z góry, przy jakim mnożniku wypłacasz - i trzymaj się tego. Przy stałym zwrocie żadna strategia nie jest lepsza od innej, tylko mniej lub bardziej ryzykowna."
           ]
         }

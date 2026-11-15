@@ -3044,6 +3044,10 @@
         "multiplier",
         "chips",
         "llama bank",
+        "road",
+        "traffic",
+        "cars",
+        "timing",
         "bridge",
         "river",
         "ice",
@@ -3055,40 +3059,51 @@
         {
           "h": "How to play",
           "body": [
-            "The llama crosses a rope bridge, a river or a frozen lake step by step. Every step that holds raises the multiplier - a misstep loses your bet.",
-            "Pick a bet (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 or 10000 llama chips) and press GO: the bet is taken and the llama makes its first step.",
-            "After every successful step you decide: risk the NEXT step or CASH OUT - then you get your bet times the current multiplier. Reaching the far bank cashes out automatically, with confetti.",
-            "After you cash out, the game reveals at which step it would have gone wrong. The top right shows the history of the last 12 rounds."
+            "The llama crosses a road, a rope bridge, a river or a frozen lake lane by lane. Every lane you make raises the multiplier - if the llama gets caught, the bet is gone.",
+            "Pick a bet (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 or 10000 llama chips) and press GO: the bet is taken and the llama steps into the first lane.",
+            "After every lane you make you decide: risk the NEXT lane or CASH OUT - then you get your bet times the current multiplier (rounded down to whole chips). Reaching the other side cashes out automatically, with confetti.",
+            "The top right shows the history of the last 12 rounds."
+          ]
+        },
+        {
+          "h": "Obstacles & timing",
+          "body": [
+            "Every world has something coming that you have to time: on the road cars and trucks drive down every lane, on the rope bridge boulders crash through the bridge, on the river driftwood floats towards you and on the ice lake ice blocks slide your way.",
+            "If you press GO or NEXT while an obstacle is in the next lane, the llama gets run over or hit and lies flat - the bet is lost. So wait for a gap.",
+            "The lane the llama is standing in is protected: on the road a barrier drops and the cars stop in front of the llama, in the other worlds obstacles in your lane vanish. So you can wait calmly for the right gap.",
+            "The higher the difficulty, the denser and faster the traffic.",
+            "On top of that every lane carries a random risk that even perfect timing can't prevent: on the road a speeder suddenly appears, on the bridge the plank breaks, on the river the stone slips away and on the ice lake the ice breaks."
           ]
         },
         {
           "h": "Difficulties",
           "body": [
             "Four levels - chosen before each round with the buttons in the bottom bar or with [1] to [4]:",
-            "- Easy: 20 steps, risk 1/12 per step (about 8%), up to ×5.52",
-            "- Medium: 16 steps, risk 1/7 (about 14%), up to ×11.42",
-            "- Hard: 13 steps, risk 1/4 (25%), up to ×40.82",
-            "- Extreme: 10 steps, risk 2/5 (40%), up to ×160.42",
-            "The multipliers are fixed tables, calculated so that every strategy returns about 97% of the stake in the long run - no matter at which step you cash out. The house edge is therefore about 3%."
+            "- Easy: 22 lanes, risk 1/12 per lane (about 8%), up to ×6.57",
+            "- Medium: 20 lanes, risk 1/6 (about 17%), up to ×37.18",
+            "- Hard: 18 lanes, risk 3/10 (30%), up to ×595.67",
+            "- Extreme: 15 lanes, risk 1/2 (50%), up to ×31,784.96 - every lane doubles the multiplier: ×1.94, ×3.88, ×7.76 …",
+            "The multipliers are fixed tables, calculated so that with clean timing every strategy returns about 97% of the stake in the long run - no matter at which lane you cash out. The house edge is therefore about 3%."
           ]
         },
         {
-          "h": "Three worlds",
+          "h": "Four worlds",
           "body": [
-            "The world is purely cosmetic and doesn't change the odds. Switch it with the world buttons top left or with [W]:",
-            "- Rope bridge: planks over a canyon - on a misstep the plank breaks and the llama falls.",
-            "- River: stepping stones in the water - the stone slips away with a splash.",
-            "- Ice lake: ice floes on the frozen lake - cracks spread, then the floe breaks.",
+            "Switch with the four world buttons top left or with [W]; the world doesn't change the odds:",
+            "- Road (default): a street seen from above, with sidewalks. The llama crosses lane by lane over zebra-crossing pieces while cars and trucks drive past - and now and then a speeder.",
+            "- Rope bridge: planks over a canyon, boulders crash down - if the plank breaks, the llama falls.",
+            "- River: stepping stones in the water, driftwood floats towards you - if the stone slips away, splash.",
+            "- Ice lake: ice floes on the frozen lake, ice blocks slide towards you - cracks spread, then the floe breaks.",
             "In every world the llama wears a scarf in the game's accent colour."
           ]
         },
         {
           "h": "Controls",
           "body": [
-            "- [Space], [Right] or a click on the next step: GO or next step",
+            "- [Space], [Right] or a click on the next lane: GO or NEXT - best when the lane is clear",
             "- [Enter] or [C]: cash out (before a round, [Enter] works like GO)",
             "- [Up] / [Down], [+] / [-] or mouse wheel: change the bet",
-            "- [1] to [4]: difficulty, [W]: switch world",
+            "- [1] to [4]: difficulty, [W]: switch world (road, rope bridge, river, ice lake)",
             "Bet, difficulty and world can only be changed between rounds. World, difficulty and your last bet are saved in settings.json (section lamacrossing)."
           ]
         },
@@ -3098,7 +3113,7 @@
             "Lama Crossing plays with the shared Llama Bank account - together with Blackjack, Poker and Casino (start 1000, stored in mem.json).",
             "The highscore is the peak of 1000 + your Lama Crossing balance; wins at Blackjack, Poker or the Casino don't count here.",
             "Below 10 chips you are broke: [Enter] or a click takes a bank loan and fills your account back up to 1000. Loans don't count towards the balance.",
-            "Stopping mid-crossing is safe: bet, difficulty and step are saved, and the next start continues exactly there."
+            "Stopping mid-crossing is safe: bet, difficulty and lane are saved, and the next start continues exactly there."
           ]
         },
         {
@@ -3109,15 +3124,16 @@
             "- Lama Crossing master: highscore 10000",
             "- Other Side (rare): Get the llama all the way across in Lama Crossing",
             "- Nerves of Steel (epic): Cash out at ×10 or more in Lama Crossing",
-            "- Tightrope Walk (legendary): Complete a full crossing on Extreme in Lama Crossing"
+            "- Tightrope Walk (legendary): Cash out at ×100 or more on Extreme in Lama Crossing"
           ]
         },
         {
           "h": "Tips",
           "body": [
-            "- Every step is drawn afresh - a run of missteps says nothing about the next step.",
-            "- You get all the way across in about every 6th round on Easy, every 12th on Medium, every 42nd on Hard and only every 165th on Extreme.",
-            "- For Nerves of Steel (×10), 9 steps are enough on Hard (×12.91) and just 5 on Extreme (×12.47); on Medium it only happens at the far bank (×11.42), on Easy never.",
+            "- No need to rush: the llama is safe in its own lane. Keep an eye on the next lane and only go when a real gap comes.",
+            "- Every lane is drawn afresh - a run of losses says nothing about the next lane.",
+            "- With clean timing you get all the way across in about every 7th round on Easy, every 38th on Medium, every 614th on Hard and only one in 32,768 on Extreme.",
+            "- For Nerves of Steel (×10), 4 lanes are enough on Extreme (×15.52), 7 on Hard (×11.77) and 13 on Medium (×10.37); on Easy it never happens (at most ×6.57). Tightrope Walk (×100 on Extreme) takes 7 lanes (×124.16) - that works out in about every 128th round.",
             "- Decide beforehand at which multiplier you will cash out - and stick to it. Thanks to the fixed return no strategy is better than another, only more or less risky."
           ]
         }

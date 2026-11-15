@@ -3046,6 +3046,10 @@
         "multiplikator",
         "chips",
         "lama-banken",
+        "vej",
+        "trafik",
+        "biler",
+        "timing",
         "bro",
         "flod",
         "is",
@@ -3056,40 +3060,51 @@
         {
           "h": "Sådan spiller du",
           "body": [
-            "Lamaen krydser skridt for skridt en hængebro, en flod eller en tilfrossen sø. Hvert skridt, der holder, hæver multiplikatoren - et fejltrin koster indsatsen.",
-            "Vælg din indsats (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 eller 10000 lama-chips) og tryk START: Indsatsen trækkes, og lamaen tager det første skridt.",
-            "Efter hvert vellykket skridt bestemmer du: VIDERE eller UDBETAL - så får du indsatsen gange den aktuelle multiplikator. På den anden bred udbetales der automatisk, med konfetti.",
-            "Efter udbetalingen afslører spillet, ved hvilket skridt det ville være gået galt. Øverst til højre står historikken for de sidste 12 runder."
+            "Lamaen krydser bane for bane en vej, en hængebro, en flod eller en tilfrossen sø. Hver bane, du klarer, hæver multiplikatoren - bliver lamaen ramt, er indsatsen tabt.",
+            "Vælg din indsats (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 eller 10000 lama-chips) og tryk START: Indsatsen trækkes, og lamaen går ud på den første bane.",
+            "Efter hver klaret bane bestemmer du: VIDERE eller UDBETAL - så får du indsatsen gange den aktuelle multiplikator (rundet ned). På den anden side udbetales der automatisk, med konfetti.",
+            "Øverst til højre står historikken for de sidste 12 runder."
+          ]
+        },
+        {
+          "h": "Forhindringer og timing",
+          "body": [
+            "I hver verden kommer der noget, som du skal time: På vejen kører biler og lastbiler ned ad hver bane, på hængebroen styrter klippeblokke ned gennem broen, i floden driver drivtømmer mod dig, og på issøen glider isblokke mod dig.",
+            "Trykker du START eller VIDERE, mens der er en forhindring på næste bane, bliver lamaen kørt ned eller ramt og ligger fladt - indsatsen er tabt. Vent altså på et hul.",
+            "Banen, som lamaen står på, er beskyttet: På vejen sænker en bom sig, og bilerne stopper foran lamaen; i de andre verdener forsvinder forhindringer på din bane. Du kan altså vente roligt på det rigtige hul.",
+            "Jo højere sværhedsgrad, desto tættere og hurtigere trafik.",
+            "Derudover har hver bane en tilfældig risiko, som selv perfekt timing ikke kan forhindre: På vejen dukker en vanvidsbilist pludselig op, på broen knækker planken, i floden glider stenen væk, og på issøen brister isen."
           ]
         },
         {
           "h": "Sværhedsgrader",
           "body": [
             "Fire niveauer - vælges før hver runde med knapperne i bjælken nederst eller med [1] til [4]:",
-            "- Let: 20 skridt, risiko 1/12 pr. skridt (ca. 8 %), op til ×5,52",
-            "- Middel: 16 skridt, risiko 1/7 (ca. 14 %), op til ×11,42",
-            "- Svær: 13 skridt, risiko 1/4 (25 %), op til ×40,82",
-            "- Ekstrem: 10 skridt, risiko 2/5 (40 %), op til ×160,42",
-            "Multiplikatorerne står i faste tabeller og er beregnet, så enhver strategi i længden giver omkring 97 % af indsatsen tilbage - uanset ved hvilket skridt du udbetaler. Husets fordel er altså cirka 3 %."
+            "- Let: 22 baner, risiko 1/12 pr. bane (ca. 8 %), op til ×6,57",
+            "- Middel: 20 baner, risiko 1/6 (ca. 17 %), op til ×37,18",
+            "- Svær: 18 baner, risiko 3/10 (30 %), op til ×595,67",
+            "- Ekstrem: 15 baner, risiko 1/2 (50 %), op til ×31.784,96 - hver bane fordobler multiplikatoren: ×1,94, ×3,88, ×7,76 …",
+            "Multiplikatorerne står i faste tabeller og er beregnet, så enhver strategi med god timing i længden giver omkring 97 % af indsatsen tilbage - uanset ved hvilken bane du udbetaler. Husets fordel er altså cirka 3 %."
           ]
         },
         {
-          "h": "Tre verdener",
+          "h": "Fire verdener",
           "body": [
-            "Verdenen er ren grafik og ændrer ikke chancerne. Skift med verdensknapperne øverst til venstre eller med [W]:",
-            "- Hængebro: planker over en kløft - ved et fejltrin knækker planken, og lamaen styrter ned.",
-            "- Flod: trædesten i vandet - stenen glider væk, og det siger plask.",
-            "- Issø: isflager på den tilfrosne sø - revnerne breder sig, og så brister flagen.",
+            "Skift med de fire verdensknapper øverst til venstre eller med [W]; verdenen ændrer ikke chancerne:",
+            "- Vej (standard): en gade set ovenfra, med fortove. Lamaen går bane for bane over på stykker af fodgængerovergang, mens biler og lastbiler kører forbi - og en gang imellem en vanvidsbilist.",
+            "- Hængebro: planker over en kløft, klippeblokke styrter ned - knækker planken, styrter lamaen ned.",
+            "- Flod: trædesten i vandet, drivtømmer driver mod dig - glider stenen væk, siger det plask.",
+            "- Issø: isflager på den tilfrosne sø, isblokke glider mod dig - revnerne breder sig, og så brister flagen.",
             "I alle verdener bærer lamaen et halstørklæde i spillets accentfarve."
           ]
         },
         {
           "h": "Styring",
           "body": [
-            "- [Mellemrum], [Højre] eller klik på næste skridt: START eller næste skridt",
+            "- [Mellemrum], [Højre] eller klik på næste bane: START eller VIDERE - helst når banen er fri",
             "- [Enter] eller [C]: udbetal (før en runde virker [Enter] som START)",
             "- [Op] / [Ned], [+] / [-] eller musehjul: skift indsats",
-            "- [1] til [4]: sværhedsgrad, [W]: skift verden",
+            "- [1] til [4]: sværhedsgrad, [W]: skift verden (vej, hængebro, flod, issø)",
             "Indsats, sværhedsgrad og verden kan kun ændres mellem runderne. Verden, sværhedsgrad og den sidste indsats gemmes i settings.json (afsnittet lamacrossing)."
           ]
         },
@@ -3099,7 +3114,7 @@
             "Lama Crossing spiller med den fælles konto i Lama-banken - sammen med Blackjack, Poker og Casino (start 1000, gemt i mem.json).",
             "Highscoren er toppen af 1000 + din Lama Crossing-balance; gevinster i Blackjack, Poker eller Casino tæller ikke her.",
             "Under 10 chips er du fallit: [Enter] eller et klik tager et banklån og fylder kontoen op til 1000 igen. Lån tæller ikke med i balancen.",
-            "Det er sikkert at stoppe midt i en krydsning: Indsats, sværhedsgrad og skridt gemmes, og ved næste start fortsætter du præcis dér."
+            "Det er sikkert at stoppe midt i en krydsning: Indsats, sværhedsgrad og bane gemmes, og ved næste start fortsætter du præcis dér."
           ]
         },
         {
@@ -3110,15 +3125,16 @@
             "- Lama Crossing-mester: highscore 10000",
             "- Den anden bred (sjælden): Få lamaen helt over til den anden bred i Lama Crossing",
             "- Stålnerver (episk): Udbetal ved ×10 eller mere i Lama Crossing",
-            "- Linedans (legendarisk): Klar en hel krydsning på Ekstrem i Lama Crossing"
+            "- Linedans (legendarisk): Udbetal ved ×100 eller mere på Ekstrem i Lama Crossing"
           ]
         },
         {
           "h": "Tips",
           "body": [
-            "- Hvert skridt trækkes på ny - en stribe fejltrin siger intet om det næste.",
-            "- Helt over kommer man cirka hver 6. runde på Let, hver 12. på Middel, hver 42. på Svær og kun hver 165. på Ekstrem.",
-            "- Til Stålnerver (×10) er 9 skridt nok på Svær (×12,91) og kun 5 på Ekstrem (×12,47); på Middel lykkes det først på den anden bred (×11,42), på Let aldrig.",
+            "- Ingen grund til at skynde sig: På sin egen bane er lamaen i sikkerhed. Hold øje med næste bane, og gå først, når der kommer et rigtigt hul.",
+            "- Hver bane trækkes på ny - en stribe nederlag siger intet om den næste.",
+            "- Med god timing kommer man helt over cirka hver 7. runde på Let, hver 38. på Middel, hver 614. på Svær og kun i én ud af 32.768 på Ekstrem.",
+            "- Til Stålnerver (×10) er 4 baner nok på Ekstrem (×15,52), 7 på Svær (×11,77) og 13 på Middel (×10,37); på Let aldrig (højst ×6,57). Linedans (×100 på Ekstrem) kræver 7 baner (×124,16) - det lykkes cirka hver 128. runde.",
             "- Bestem på forhånd, ved hvilken multiplikator du udbetaler - og hold dig til det. Med den faste tilbagebetaling er ingen strategi bedre end en anden, kun mere eller mindre risikabel."
           ]
         }
