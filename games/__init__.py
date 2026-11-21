@@ -48,6 +48,8 @@ from .geodash import GeometryDashGame
 from .battleship import BattleshipGame
 from .casino import CasinoGame
 from .lamacrossing import LamaCrossingGame
+from .lamamines import LamaMinesGame
+from .lamaplinko import LamaPlinkoGame
 
 # Reihenfolge der Spiele im Menü
 ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
@@ -61,4 +63,5 @@ ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
              SlidingPuzzleGame, MastermindGame, BubbleShooterGame, HangmanGame,
              BlockJumpGame, LamaTowerDefenseGame, MiniGolfGame,
              PinballGame, BowlingGame, CrossyRoadGame, GeometryDashGame,
-             BattleshipGame, CasinoGame, LamaCrossingGame]
+             BattleshipGame, CasinoGame, LamaCrossingGame, LamaMinesGame,
+             LamaPlinkoGame]

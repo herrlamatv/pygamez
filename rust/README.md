@@ -1,6 +1,6 @@
 # PyGameZ in Rust
 
-Die komplette Spielesammlung PyGameZ – alle **47 Spiele**, das Programm mit
+Die komplette Spielesammlung PyGameZ – alle **49 Spiele**, das Programm mit
 Seitenleiste, Menü und Vorspiel-Bildschirmen, Profile, Erfolge & Statistik,
 LamaWiki und Replay-Archiv – als natives Rust-Programm auf
 [rustgame](../rustgame), dem pixelgenauen Nachbau von pygame-ce.
@@ -36,9 +36,9 @@ anderer Datenordner wählen.
 
 | Paket | Inhalt |
 |---|---|
-| `crates/pgz-core` | Daten ohne Grafik: Speicher, Profile, Sprachen (14), Einstellungen, Highscores, Erfolge (256), Statistik, Level, Replays, Wortfilter, Lama-Bank, erzeugte Stammdaten (`defs.rs`) |
+| `crates/pgz-core` | Daten ohne Grafik: Speicher, Profile, Sprachen (14), Einstellungen, Highscores, Erfolge (268), Statistik, Level, Replays, Wortfilter, Lama-Bank, erzeugte Stammdaten (`defs.rs`) |
 | `crates/pgz-engine` | Python-Semantik (`py`: Zufall bitgleich zu CPython, `//`/`%`/`round`/`hypot` wie Python), pygame-Fassade (`pg`), `ui.py` (10 Designs), Audio, Erfolgs-Einblendungen, Dateidialoge, `Game`-Trait |
-| `crates/pgz-games` | Die 47 Spiele, je Datei eine Vorlage aus `games/` (plus Hilfsmodule wie `tetris_core`, `chess_engine`, `geodash_core`, `minigolf_edit`) |
+| `crates/pgz-games` | Die 49 Spiele, je Datei eine Vorlage aus `games/` (plus Hilfsmodule wie `tetris_core`, `chess_engine`, `geodash_core`, `minigolf_edit`) |
 | `crates/pygamez` | Das Programm: Fenster, Seitenleiste, Startbildschirm, Vorspiel/Optionen/Sprache/Willkommen, Profile, Erfolge & Statistik (mit Diagrammen), LamaWiki, Replay-Archiv und -Player |
 
 `crates/pgz-games/src/lib.rs` wird von `tools/gen_games_list.py` geschrieben
@@ -67,14 +67,15 @@ Python-Umgebung des Projekts (`.venv\Scripts\python.exe`).
   Zeitstempel der Wanduhr werden dabei nur in den Ziffern maskiert.
   `--nur-bild` schaltet das ab.
 * **`regression.py [--aufloesung WxH] [--sprache xx] [spiel ...|screens]`** –
-  feste Ereignisfolgen für alle 47 Spiele (mehrere Modi je Spiel) und alle
+  feste Ereignisfolgen für alle 49 Spiele (mehrere Modi je Spiel) und alle
   Bildschirme; nach Änderungen an `py.rs`, `ui.rs`, `pg.rs` oder der App
   immer laufen lassen. Mit `--aufloesung` in jeder Stufe der
   Auflösungsliste (480×360 bis 1280×960), mit `--sprache` in jeder der
   14 Sprachen – Python und Rust lesen beides aus dem Datenordner.
 * **`bots/bot_<spiel>.py`** – Bots spielen in Python echte Partien
   (Tetris bis Level 12, Schach, Casino, Minigolf mit Editor, Geometry Dash
-  mit Vorausschau-KI, Editor und Bibliothek, …) und schreiben ihre Eingaben
+  mit Vorausschau-KI, Editor und Bibliothek, Lama Mines bis zum Höchstgewinn
+  und mit Auto-Modus, …) und schreiben ihre Eingaben
   als Tastenfolge; `vergleich.py --keys-file` spielt sie in beiden Fassungen
   nach.
 * **Abgleich einzelner Kerne** gegen Python: `chess_check.py` (Schach-Engine),
@@ -93,6 +94,15 @@ Python-Umgebung des Projekts (`.venv\Scripts\python.exe`).
   Datei-Dialoge geht: Statistik exportieren/importieren (7 Fälle) und
   geteilte Bahnen, Level und Replays importieren – über Kreuz (Python liest
   Rust-Dateien und umgekehrt, 11 Fälle), jeweils mit Vergleich der Daten.
+* **`lamabank_check.py`** – die Lama-Bank (gemeinsames Chip-Konto der sechs
+  Casino-Spiele) Buchung für Buchung gegen `lamabank.py`: Einsatz und
+  Gewinn in einem Zug (`bet_and_pay`), Pleite und Kredit je Spiel, alter
+  Spielstand, Migration, Poker-Tischstapel (5 Fälle, Antworten und
+  `mem.json` gleich).
+* `vergleich.py` (und damit `regression.py`), `stats_check.py`,
+  `import_check.py` und `lamabank_check.py` nehmen die `.exe` aus
+  `CARGO_TARGET_DIR`, falls gesetzt (eigener Bauordner), sonst aus
+  `rust.output/`.
 * **`vollbild_check.py`** – das echte Fenster: Startgröße wie `main.py`,
   Programm-Symbol, Vollbild über F11 ein und über den Knopf der
   Seitenleiste wieder aus, Mindestgröße 880×560 (Schalter
@@ -113,13 +123,16 @@ Datenordner.
 
 ## Stand
 
-* **47/47 Spiele** pixelgleich, dazu alle Bildschirme der App,
+* **49/49 Spiele** pixelgleich, dazu alle Bildschirme der App,
   Startbildschirm (alle 10 Designs), Pause-Overlay und Highscore-Banner.
-* Gesamt-Regression (150 Läufe: alle Spiele in mehreren Modi und alle
+* Gesamt-Regression (183 Läufe: alle Spiele in mehreren Modi und alle
   Bildschirme) ohne Abweichung in Bild **und** gespeicherten Daten – in
   allen 14 Sprachen und in jeder Stufe der Auflösungsliste von 480×360 bis
   1280×960. Dazu gehören Teilen/Export (Schach-PGN, Minigolf-Bahn,
   Geometry-Dash-Level, Replay) und Import ohne Dialog.
+* Lama Plinko zusätzlich mit eigenen Spielständen (`vergleich.py --daten`):
+  Jackpot ×1000 und MEGA-Gewinn (Fairness-Zustand mit gesuchter Nonce
+  vorgegeben), Pleite beim Start, beschädigter Spielstand, Fortsetzen.
 * Was nur über Datei-Dialoge geht, ist direkt gegen Python geprüft:
   Statistik-Export/-Import, Import geteilter Bahnen, Level und Replays.
 * Das Fenster wie `main.py`: Startgröße nach der Bildschirmhöhe,

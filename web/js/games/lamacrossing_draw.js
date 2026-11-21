@@ -981,7 +981,7 @@
   }
 
   PG.lamaCrossingDraw = {
-    llamaCanvas, flatLlama, background, farLayer, drawBank, drawRopes, drawLanes, drawTile, tileCanvas, crackLines,
+    drawLlama, llamaCanvas, flatLlama, background, farLayer, drawBank, drawRopes, drawLanes, drawTile, tileCanvas, crackLines,
     obstacleLen, drawObstacle, drawBarrier, drawTireMarks, worldIcon,
     clearCache: () => cache.clear(),
   };

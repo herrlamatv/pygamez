@@ -15,7 +15,7 @@ If web is blocked, you can try  [web2](https://downgit.github.io/#/home?url=http
 ## 🇩🇪 Deutsch
 
 Eine Desktop-Spielesammlung in Python: **Tkinter** bildet Fenster und Menü,
-**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Siebenundvierzig
+**Pygame** wird als Spiel-Display in das Tkinter-Fenster eingebettet. Neunundvierzig
 Spiele mit gemeinsamen Optionen, frei belegbarer Steuerung, Highscores,
 prozeduralen Soundeffekten und teilweise Mehrspieler-Modus. Die Oberfläche ist
 **mehrsprachig** – **14 Sprachen** (Deutsch / English / Français / Español /
@@ -99,6 +99,8 @@ Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**
 | **Schiffe versenken** | 1 / 2 Spieler | 10x10-Seeschlacht: Flotte per Drag & Drop aufstellen, 3 Regel-Schalter (Berühren, Salve, Nochmal schießen), KI mit 3 Stärken oder lokales Duell mit Übergabe-Bildschirm |
 | **Casino**      | 1 Spieler       | Europäisches Roulette mit allen klassischen Wetten und Lama-Slot (5 Walzen, 10 Linien, Wild, Freispiele); ein Lama-Chip-Konto mit Blackjack und Poker |
 | **Lama Crossing** | 1 Spieler       | Mut-Spiel mit Lama-Chips: Spur für Spur über Straße, Hängebrücke, Fluss oder Eissee, Lücken im Verkehr abpassen, nach jeder Spur auszahlen; 4 Schwierigkeiten bis ×31.784, Quote ~97 % |
+| **Lama Mines**  | 1 Spieler       | Mut-Spiel mit Lama-Chips: Edelsteine aufdecken, Minen meiden - Felder 4x4 bis 7x7 mit 1 bis 48 Minen, jeder Edelstein hebt den Multiplikator bis ×100.000, jederzeit auszahlen; Auto-Modus, Fairness-Check per SHA-256, Statistik, Quote ~97 % |
+| **Lama Plinko** | 1 Spieler       | Goldene Wollknäuel fallen durch 8 bis 16 Stiftreihen in Multiplikator-Fächer: 3 Risikostufen bis ×1000, bis zu 50 Kugeln gleichzeitig, Dauerfeuer und Auto-Modus; Fairness-Check je Kugel, Treffer-Verteilung, Quote ~97 % |
 
 **Mehrspieler (2 Spieler lokal)** gibt es für **Snake**, **Pong**, **Air Hockey**,
 **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (Koop-Duell)**, **Memory (Duell)**,
@@ -837,11 +839,11 @@ Explosions-Effekte, Highscore.
   **Goldmünzen = Scatter** mit 10 Freispielen und doppelten Gewinnen, Einsatz je
   Linie 1/2/5/10, **Auto-Spin** (10/25), **Turbo** und Gewinntabelle. Die
   **Auszahlungsquote liegt bei 96,1 %** - exakt aus den Walzenstreifen berechnet.
-- **Lama-Bank**: Casino, Blackjack und Poker teilen sich ein Konto mit
-  **Lama-Chips** (Start 1000, Abschnitt `casino` in `mem.json`); alte Chipstände
-  werden automatisch übernommen. Einsätze werden sofort abgebucht, jedes Spiel
-  führt seine eigene Bilanz für den Highscore, und bei Pleite gibt es einen
-  **Bank-Kredit** auf 1000.
+- **Lama-Bank**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines und Lama
+  Plinko teilen sich ein Konto mit **Lama-Chips** (Start 1000, Abschnitt
+  `casino` in `mem.json`); alte Chipstände werden automatisch übernommen.
+  Einsätze werden sofort abgebucht, jedes Spiel führt seine eigene Bilanz für
+  den Highscore, und bei Pleite gibt es einen **Bank-Kredit** auf 1000.
 - Konfetti, Münzregen, Big-/Mega-/Jackpot-Banner und Gewinnlinien-Animationen;
   Erfolge **Volltreffer** (Plein beim Roulette) und **Lama-Jackpot** (5 Lamas
   auf einer Linie).
@@ -886,6 +888,154 @@ Explosions-Effekte, Highscore.
   **Nervenstark** (Auszahlung ab ×10) und **Drahtseilakt** (auf Extrem ab ×100
   auszahlen) sowie ein Meilenstein von 3000 und Meister 10000.
 
+**Lama Mines**
+- **Mut-Spiel mit Lama-Chips**: Einsatz wählen (10 bis 10000), **SPIELEN**
+  drücken - unter den verdeckten Steinquadern liegen Edelsteine und Minen.
+  Jeder aufgedeckte **Edelstein** hebt den **Multiplikator**, eine **Mine**
+  kostet den Einsatz. Ab dem ersten Edelstein darf jederzeit **AUSGEZAHLT**
+  werden; wer alle Edelsteine findet („ALLES MEINS!") oder den Höchstgewinn
+  erreicht, bekommt automatisch ausgezahlt.
+- **4 Feldgrößen** (Tasten **1-4**): 4x4, 5x5 (Standard), 6x6 und 7x7, dazu
+  **1 bis N−1 Minen** (**←**/**→** oder sechs Schnellwahl-Knöpfe, Standard 3) -
+  auf 7x7 also bis zu 48 Minen und genau ein Edelstein.
+- **Multiplikator nach k Edelsteinen** (in Hundertsteln, N Felder, M Minen):
+  `m_k = max(⌊97 · C(N, M) / C(N−k, M)⌋, m_(k−1) + 1)`, gedeckelt bei
+  ×100.000 - ganzzahlig und in Python, JavaScript und Rust bitgleich
+  (`lamamines_logic.py`). Er liegt nie unter ×1,01 und steigt mit jedem
+  Edelstein. Weil C(N−k, M) / C(N, M) genau die Chance ist, k Edelsteine in
+  Folge zu finden, bringt **jede Auszahl-Strategie 96,2 bis 97 % zurück** -
+  egal, wann man aussteigt. Nur drei Stufen mit 1 Mine auf 6x6 und 7x7 hebt die
+  Untergrenze an (höchstens 98,9 %), und wer bis an den Deckel spielt, bekommt
+  im Schnitt weniger zurück. Beispiel 5x5 mit 3 Minen: ×1,10, ×1,25, ×1,44 …
+  bis ×2.231 für alle 22 Edelsteine. Wer ×100.000 erreicht, bekommt den
+  **Höchstgewinn** sofort ausgezahlt.
+- **Rest-Übertrag**: Was beim Abrunden einer Auszahlung an Hundertsteln übrig
+  bleibt, wird zur nächsten gutgeschrieben - auch kleine Einsätze verlieren
+  nichts.
+- **Anzeige**: aktueller und nächster Multiplikator, die Chance, dass das
+  nächste Feld sicher ist (`(N−M−k) / (N−k)` in %), der Gewinn beim nächsten
+  Feld und eine Leiste mit den nächsten 5 Stufen. Edelsteine in vier Farben;
+  das **Maskottchen-Lama mit Grubenhelm und Stirnlampe** füllt seine Lore,
+  freut sich über jeden Edelstein und steht nach einer Mine voller Ruß da.
+- **Mine getroffen**: Explosion und Kamera-Wackeln, danach wird das **ganze
+  Feld abgedunkelt aufgedeckt** - so sieht man, wo die übrigen Minen lagen;
+  nach dem Auszahlen ebenso. Münzregen ab ×3, Konfetti ab ×10, beim Abräumen
+  und beim Höchstgewinn. Oben rechts steht der Verlauf der letzten 12 Runden.
+- **Auto-Modus** (**A**): Felder im Auto-Fenster auf dem Raster markieren
+  (Klick oder Pfeile + Leertaste, **Entf**/**Rücktaste** löscht; gemerkt je
+  Feldgröße), Rundenzahl wählen (5/10/25/50/100) und auf Wunsch **Stopp bei
+  Gewinn ab** bzw. **Stopp bei Verlust ab** (aus/100/500/1000/5000/10000/50000);
+  **Enter** startet. Jede Runde deckt genau die markierten Felder schnell
+  nacheinander auf und zahlt aus, wenn alle sicher waren. Auto läuft, bis die
+  Rundenzahl erreicht ist, eine Grenze greift, die Chips nicht mehr reichen
+  oder **STOPP**/Esc/Leertaste/Enter bzw. **A** gedrückt wird - eine laufende
+  Runde bleibt dann offen und lässt sich von Hand zu Ende spielen. **Turbo**
+  (**T**) setzt alle Zeiten auf 40 %.
+- **Fairness-Check** (**F**): Vor jeder Runde steht der **Prüfcode** fest - der
+  **SHA-256** eines geheimen Server-Seeds (32 Hex-Zeichen). Das Minenfeld
+  entsteht aus Server-Seed, eigenem **Client-Seed** (8 Zeichen, per Knopf
+  **Neuer Client-Seed** neu gewürfelt - nur außerhalb einer Runde) und
+  Rundennummer: Zufall per `seedrand` (mulberry32), die Felder 0 … N−1 werden
+  gemischt, die ersten M sind Minen. Nach der Runde wird der Seed gezeigt, der
+  Prüfcode der nächsten Runde steht da schon fest. Das Fenster listet die
+  letzten 12 Runden (Nr., Prüfcode, Server- und Client-Seed; Mausrad blättert,
+  Klick wählt eine Zeile); **Nachrechnen** prüft den Prüfcode und berechnet das
+  Minenfeld neu - ✓ oder ✗ samt Mini-Vorschau des Feldes.
+- **Statistik** (**S**): Kacheln für Runden, Gewonnen, Verloren, Eingesetzt,
+  Ausgezahlt, Bilanz, größten Gewinn, besten Multiplikator, **deine Quote**,
+  gefundene Edelsteine, getroffene Minen und abgeräumte Felder, dazu eine
+  **Bilanzkurve** der letzten 100 Runden.
+- **Lama-Bank**: dasselbe Konto wie Blackjack, Poker, Casino und Lama Crossing;
+  SPIELEN bucht den Einsatz und speichert die neue Runde in einem Zug
+  (`lamabank.bet_and_pay`). Der Highscore ist der Höchststand von 1000 +
+  Lama-Mines-Bilanz, unter 10 Chips gibt es einen **Bank-Kredit** auf 1000.
+  **Fortsetzen**: Eine laufende Runde wird bei jedem aufgedeckten Feld
+  gespeichert (Seeds, Rundennummer, Feldgröße, Minen, Einsatz und die
+  aufgedeckten Felder); beim nächsten Start wird das Feld aus dem Seed neu
+  berechnet und es geht genau dort weiter.
+- Bedienung: vor der Runde **Leertaste**/**Enter** = SPIELEN, **1-4** =
+  Feldgröße, **←**/**→** = Minen, **↑**/**↓**/**+**/**-**/Mausrad = Einsatz; in
+  der Runde Klick oder **Pfeiltasten** + **Leertaste** = Feld aufdecken (die
+  erste Leertaste zeigt den Cursor), **R** = Zufallsfeld, **Enter**/**C** =
+  auszahlen; nach einer Runde startet die Leertaste gleich die nächste. **A** =
+  Auto, **S** = Statistik, **F** = Fairness, **T** = Turbo, Esc schließt ein
+  offenes Fenster bzw. stoppt Auto. Die Tasten sind fest und hängen nicht an
+  der Steuerungs-Belegung in den Optionen. Laufende Runde, Verlauf,
+  Fairness-Log, Statistik, Rest-Übertrag und Auto-Markierungen liegen je Profil
+  im Abschnitt `casino` der `mem.json`; Feldgröße, Minen, Einsatz, Turbo und
+  die Auto-Einstellungen im Abschnitt `lamamines` der `settings.json`. Erfolge
+  **Schatzkammer** (ganzes Feld abgeräumt), **Tief gegraben** (Auszahlung ab
+  ×10) und **Diamantenlama** (Auszahlung ab ×1000) sowie ein Meilenstein von
+  3000 und Meister 10000.
+
+**Lama Plinko**
+- **Plinko mit Lama-Chips**: Einsatz je Kugel wählen (1 bis 1000), **WERFEN**
+  drücken - ein **goldenes Wollknäuel** springt durch das Stiftbrett und landet
+  in einem Fach mit **Multiplikator**: wenig in der Mitte, viel am Rand. Das
+  Lama oben am Brett nickt bei jedem Abwurf.
+- **8 bis 16 Reihen** (**←**/**→**, Standard 12) und **3 Risikostufen**
+  (**1-3**: Niedrig, Mittel, Hoch). Das äußerste Fach zahlt bei 16 Reihen ×16
+  (Niedrig), ×110 (Mittel) oder ×1000 (Hoch), bei 8 Reihen ×5,3, ×13 oder ×32;
+  die Mitte ×0,7, ×0,4 oder ×0,2. Reihen und Risiko sind gesperrt, solange
+  noch Kugeln fliegen oder Auto läuft.
+- **27 feste Tabellen** (9 Reihenzahlen × 3 Risiken) in `lamaplinko_logic.py`,
+  einmal erzeugt mit `devtools/gen_plinko_tables.py`: symmetrisch, nach außen
+  nie fallend, „schöne" Zahlen und jede mit einer **exakt berechneten Quote
+  zwischen 96,9 und 97,05 %**. Ein **Rest-Übertrag** der Hundertstel sorgt
+  dafür, dass auch Einsatz 1 bei rund 97 % bleibt.
+- **Ergebnis**: n Münzwürfe aus dem Fairness-Zufall (Zufallszahl < 0,5 =
+  rechts), das Fach ist die Zahl der Rechts-Würfe - genau die
+  Binomialverteilung. Die Animation folgt diesem Pfad Stift für Stift:
+  Bogensprünge, der getroffene Stift blinkt, ein kleines Zittern (nur Optik)
+  macht es lebendig; eine Kugel fliegt 1,62 s (8 Reihen) bis 2,30 s (16
+  Reihen). Das Fach wippt beim Treffer, ein Popup zeigt den Multiplikator, der
+  Ton hängt vom Wert ab; Münzregen ab ×10, ab ×100 ein Gewinn-Banner mit
+  Konfetti.
+- **Viele Kugeln gleichzeitig**: höchstens **50** auf dem Brett. **Leertaste
+  gedrückt halten** = Dauerfeuer im Takt Flugzeit/30 - so sind rund 30 Kugeln
+  zugleich unterwegs; **Turbo** (**T**) halbiert Flugzeit und Takt. Der Einsatz
+  lässt sich auch im Flug ändern. Die Maus über einem Fach zeigt
+  Multiplikator, Wahrscheinlichkeit und den Gewinn beim aktuellen Einsatz;
+  daneben zählt ein Kasten die Kugeln, die Bilanz und den besten Treffer der
+  Sitzung.
+- **Auto-Modus** (**A**): 10/25/50/100/250/500/1000 Kugeln, auf Wunsch mit
+  Stopp bei Gewinn ab bzw. Verlust ab (aus/100/500/1000/5000/10000/50000); eine
+  Kugel alle 0,24 s (Turbo 0,12 s) mit festem Einsatz. Auto läuft, bis die Zahl
+  erreicht ist, eine Grenze greift, die Chips nicht reichen oder **STOPP**/Esc
+  gedrückt wird. Im Fenster: **↑**/**↓** = Zeile, **←**/**→** = Wert,
+  **Enter**/**Leertaste** = START bzw. STOPP.
+- **Fairness-Check** (**F**) wie bei Lama Mines, aber **je Kugel**: Prüfcode
+  vorab, Seed nach der Landung, das Fenster zeigt die letzten 12 Kugeln
+  (**↑**/**↓**/Mausrad wählt eine aus). **Enter** bzw. **Nachrechnen** prüft
+  den Prüfcode, würfelt den Pfad neu aus und zeigt ✓ oder ✗ samt Mini-Vorschau
+  des Wegs; **C** = neuer Client-Seed (nicht, solange Kugeln fliegen).
+- **Statistik** (**S**): dieselben Kacheln und die Bilanzkurve wie bei Lama
+  Mines (jede Kugel zählt als Runde), dazu die **Treffer-Verteilung** je
+  Reihenzahl (**←**/**→** wechselt) als Balken gegen die erwartete
+  Binomialkurve.
+- **Lama-Bank**: dasselbe Konto wie Blackjack, Poker, Casino und Lama Crossing.
+  Weil das Ergebnis beim Abwurf schon feststeht, wird sofort gebucht - Einsatz
+  und Gewinn mit **einem** Speichern (`lamabank.bet_and_pay`), samt Verlauf,
+  Fairness-Log, Statistik und Rest-Übertrag; Chips, Verlauf und Statistik
+  zeigen den Gewinn erst bei der Landung. **Wollknäuel-Regen** fällt schon beim
+  Abwurf, **Randtreffer** und **Plinko-Legende** bei der Landung - beim
+  Verlassen werden sie für noch fliegende Kugeln nachgeholt, so geht nichts
+  verloren. Highscore = Höchststand von 1000 + Lama-Plinko-Bilanz; ist das
+  Konto leer und alle Kugeln sind gelandet, gibt es einen **Bank-Kredit** auf
+  1000.
+- Bedienung: Maus für alles, **Leertaste**/**Enter**/Klick auf WERFEN oder aufs
+  Brett = werfen (halten = Dauerfeuer), **↑**/**↓**/**+**/**-**/Mausrad =
+  Einsatz, **←**/**→** = Reihen, **1-3** = Risiko; **A** = Auto, **S** =
+  Statistik, **F** = Fairness, **T** = Turbo, Esc schließt ein offenes Fenster
+  bzw. stoppt Auto. Die Tasten sind fest und hängen nicht an der
+  Steuerungs-Belegung. Verlauf, Fairness-Log, Statistik (samt Trefferzählern)
+  und Rest-Übertrag liegen je Profil im Abschnitt `casino` der `mem.json`;
+  Reihen, Risiko, Einsatz, Turbo und die Auto-Einstellungen im Abschnitt
+  `lamaplinko` der `settings.json`. Erfolge **Randtreffer** (äußerstes Fach ab
+  12 Reihen), **Wollknäuel-Regen** (25 Kugeln gleichzeitig unterwegs) und
+  **Plinko-Legende** (äußerstes Fach bei 16 Reihen und Risiko Hoch) sowie ein
+  Meilenstein von 3000 und Meister 10000.
+
 Highscores werden im Abschnitt `highscores` von `mem.json` (neben dem Code)
 gespeichert – gemeinsam mit der Sprache (Abschnitt `mem`).
 
@@ -911,7 +1061,7 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   den bisherigen Rekord als Chip an. Bei vielen Modi und kleiner Auflösung rückt
   er **kompakt** zusammen: Optionen, Wiki und Zurück stehen dann in einer Reihe,
   die Schrift passt sich an - nichts läuft mehr aus dem Bild.
-- **Einheitlicher Spiel-Look**: alle 47 Spiele nutzen dieselbe Theme-Palette und
+- **Einheitlicher Spiel-Look**: alle 49 Spiele nutzen dieselbe Theme-Palette und
   -Schrift wie das Menü - HUDs, Setup-Screens und Overlays folgen dem in den
   Optionen gewählten Design (v4.1 / v4 / Classic), die Spielfelder behalten ihre
   Identitätsfarben. Auflösungswechsel mitten im Spiel übernimmt jedes Spiel
@@ -922,11 +1072,11 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   scrollbaren Artikeln und Tastenkappen-Chips, in allen 14 Sprachen.
   Erreichbar über den Sidebar-Button **„Wiki / Hilfe"** und aus dem
   Vorspiel-Screen jedes Spiels (öffnet direkt dessen Seite).
-- **Erfolge, Seltenheit & Level**: **256 Erfolge** in fünf Kategorien - 60
+- **Erfolge, Seltenheit & Level**: **268 Erfolge** in fünf Kategorien - 60
   sammlungsweite Ziele (Partien, Spielzeit, Rekorde, Siege, Spieltage,
-  Tagesserien, Duelle …), 38 **Punkte-Meilensteine**, 31 **Meister-Stufen**
+  Tagesserien, Duelle …), 40 **Punkte-Meilensteine**, 33 **Meister-Stufen**
   (die zweite, deutlich höhere Punktmarke), für jedes Spiel einen
-  **Stammgast**-Erfolg (25 Partien) und 80 **besondere Momente** (Schachmatt,
+  **Stammgast**-Erfolg (25 Partien) und 86 **besondere Momente** (Schachmatt,
   KNIFFEL, die 4096er-Kachel, Hole-in-One, Hattrick im Air Hockey, vier Geister
   mit einer Kraftpille …). Jeder Erfolg hat eine **Seltenheitsstufe**
   (gewöhnlich 10 bis mythisch 300 Punkte); die Punkte ergeben dein **Level**
@@ -1057,8 +1207,10 @@ filepick.py          Datei-Dialoge ("Exportieren als ...", "Importieren") und Do
 prestige.py          Prestige-System für Snake
 competitive.py       Kennzahlen für den Competitive-Modus von Snake (Level, Slot, Wett-Äpfel)
 ngb.py               Visuelle Personalisierung ("Mods"): Kopffarbe + Koordinaten-Raster + Menü (Abschnitt ngb je Profil)
-lamabank.py          Lama-Bank: gemeinsames Chip-Konto von Blackjack, Poker, Casino und Lama Crossing (Abschnitt casino in mem.json)
+lamabank.py          Lama-Bank: gemeinsames Chip-Konto von Blackjack, Poker, Casino, Lama Crossing, Lama Mines und Lama Plinko (Abschnitt casino in mem.json)
 seedrand.py          Zufallsgenerator mit bitgleichen Zahlen in Python und Browser (Tagesmodi, neue Rätsel)
+fairness.py          Fairness-Check von Lama Mines und Lama Plinko: Server-/Client-Seed, Nonce, SHA-256-Prüfcode, Nachrechnen (Gegenstücke: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
+chipstats.py         Statistik von Lama Mines und Lama Plinko (Runden, Einsatz, Auszahlung, Quote, Bilanzkurve) für das Fenster S (dazu chipstats.js, chipstats.rs)
 i18n.py              Übersetzungs-Engine (lädt lang/*.json, t("schlüssel"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Sprach-Strings (ein Platzhalter-Schlüssel je Text)
@@ -1079,6 +1231,8 @@ devtools/            Werkzeuge für Entwickler (werden nicht in die .exe gepackt
   build_geodash_levels.py    Baut die 16 Geometry-Dash-Kampagnenlevel und beweist per Solver, dass jedes samt Münzen schaffbar ist
   build_geodash_extra.py     Baut die Bibliothek (80 Level in 10 Kategorien) und die 12 Vorlagen, jedes vom Solver bewiesen
   build_geodash_solver.py    Solver mit dem echten Schritt-Code (Lösungen in geodash_proofs.json)
+  gen_plinko_tables.py       Erzeugt die 27 Plinko-Tabellen (8-16 Reihen × 3 Risiken) mit exakt berechneter Quote für lamaplinko_logic.py
+  export_chiplogic_ref.py    Schreibt die Prüfwerte der Chip-Regeln (Fairness, Statistik, Mines, Plinko) für die Rust-Unit-Tests
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -1098,11 +1252,14 @@ games/
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
+  lamamines.py  lamamines_logic.py  lamamines_draw.py
+  lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
   levels/              Level-Daten: snake-comp.json, chess-puzzles.json (+ Quellen-README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Gesamt-Audit (Eingabe, seedrand Python = JS, Speichern, Sprachdateien, Vorspiel-Screens) + alle audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless-Audits je Spiel
+  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko und die gemeinsame Chip-Logik (Fairness, Statistik, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 /rust/                Die Rust-Fassung (eigenständige .exe, siehe rust/README.md)
   ENGINE.md            Portierungs-Vertrag: wie ein Spiel von Python nach Rust kommt
@@ -1111,7 +1268,7 @@ tests/
   crates/pgz-engine/   Fenster, Zeichnen, Eingabe, Ton, Game-Trait (ui.py + audio.py + game_base.py)
   crates/pgz-games/    Die portierten Spiele
   crates/pygamez/      Das Programm: Menü, Seitenleiste, Bildschirme
-  tools/export_defs.py Erzeugt die Stammdaten (47 Spiele, 256 Erfolge, 10 Designs) aus den Python-Quellen
+  tools/export_defs.py Erzeugt die Stammdaten (49 Spiele, 268 Erfolge, 10 Designs) aus den Python-Quellen
   tools/audit.py       Prüfstand: Übersetzungen, Spieleliste, Konventionen
 rust.output/         Build-Ausgabe der Rust-Fassung (rust.output/release/pygamez.exe)
 ```
@@ -1233,7 +1390,7 @@ Spielen neben sich an.
 ## 🇬🇧 English
 
 A desktop game collection in Python: **Tkinter** provides the window and menu,
-**Pygame** is embedded as the game display inside the Tkinter window. Forty-seven
+**Pygame** is embedded as the game display inside the Tkinter window. Forty-nine
 games with shared options, freely rebindable controls, high scores, procedural
 sound effects and, for some titles, a multiplayer mode. The interface is
 **multilingual** – **14 languages** (German / English / French / Spanish /
@@ -1317,6 +1474,8 @@ bottom under **[Installation Guide](#installation-guide)**.
 | **Battleship**  | 1 / 2 players   | 10x10 naval battle: drag & drop fleet deployment, 3 rule toggles (touching, salvo, fire again), AI with 3 strengths or a local duel with a handover screen |
 | **Casino**      | 1 player        | European roulette with all classic bets and the Llama Slot (5 reels, 10 lines, wild, free spins); one llama-chip account shared with Blackjack and Poker |
 | **Lama Crossing** | 1 player        | Push-your-luck game with llama chips: lane by lane across a road, rope bridge, river or ice lake, time the gaps in the traffic, cash out after any lane; 4 difficulties up to ×31,784, ~97% return |
+| **Lama Mines**  | 1 player        | Push-your-luck game with llama chips: uncover gems, dodge mines - 4x4 to 7x7 fields with 1 to 48 mines, every gem raises the multiplier up to ×100,000, cash out any time; auto mode, SHA-256 fairness check, statistics, ~97% return |
+| **Lama Plinko** | 1 player        | Golden balls of yarn bounce down 8 to 16 rows of pegs into multiplier slots: 3 risk levels up to ×1000, up to 50 balls at once, rapid fire and auto mode; fairness check per ball, hit distribution, ~97% return |
 
 **Multiplayer (2 players local)** is available for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op
@@ -2039,11 +2198,11 @@ explosion effects, high score.
   coins = scatter** with 10 free spins and double wins, line bet 1/2/5/10,
   **auto spin** (10/25), **turbo** and a paytable. The **return to player is
   96.1%** - calculated exactly from the reel strips.
-- **Llama Bank**: Casino, Blackjack and Poker share one account of **llama
-  chips** (start 1000, section `casino` in `mem.json`); old chip counts carry
-  over automatically. Bets are taken immediately, every game keeps its own
-  balance for its high score, and going broke gives you a **bank loan** back up
-  to 1000.
+- **Llama Bank**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines and Lama
+  Plinko share one account of **llama chips** (start 1000, section `casino` in
+  `mem.json`); old chip counts carry over automatically. Bets are taken
+  immediately, every game keeps its own balance for its high score, and going
+  broke gives you a **bank loan** back up to 1000.
 - Confetti, coin showers, big/mega/jackpot banners and payline animations;
   achievements **Bullseye** (straight-up win at roulette) and **Llama Jackpot**
   (5 llamas on one line).
@@ -2085,6 +2244,143 @@ explosion effects, high score.
   Walk** (cash out at ×100 or more on Extreme), plus a 3000 milestone and a
   10000 master tier.
 
+**Lama Mines**
+- **Push-your-luck game with llama chips**: pick a bet (10 to 10000), press
+  **PLAY** - gems and mines are hidden under the covered stone tiles. Every
+  **gem** you uncover raises the **multiplier**, a **mine** loses the bet. From
+  the first gem on you can **CASH OUT** at any time; find every gem ("ALL
+  MINE!") or reach the max win and you are paid out automatically.
+- **4 field sizes** (keys **1-4**): 4x4, 5x5 (default), 6x6 and 7x7, with
+  **1 to N−1 mines** (**←**/**→** or six quick-pick buttons, default 3) - so up
+  to 48 mines and a single gem on 7x7.
+- **Multiplier after k gems** (in hundredths, N tiles, M mines):
+  `m_k = max(⌊97 · C(N, M) / C(N−k, M)⌋, m_(k−1) + 1)`, capped at ×100,000 -
+  integer-only and bit-identical in Python, JavaScript and Rust
+  (`lamamines_logic.py`). It never drops below ×1.01 and rises with every gem.
+  Since C(N−k, M) / C(N, M) is exactly the chance of finding k gems in a row,
+  **every cash-out strategy returns 96.2 to 97%** - no matter when you stop.
+  Only three steps with 1 mine on 6x6 and 7x7 are lifted by the floor (at most
+  98.9%), and playing all the way to the cap returns less on average. Example,
+  5x5 with 3 mines: ×1.10, ×1.25, ×1.44 … up to ×2,231 for all 22 gems. Reach
+  ×100,000 and the **max win** is paid out at once.
+- **Carry-over**: the hundredths left over when a payout is rounded down are
+  added to the next one - small bets lose nothing.
+- **Display**: current and next multiplier, the chance that the next tile is
+  safe (`(N−M−k) / (N−k)` in %), the win for the next tile and a bar with the
+  next 5 steps. Gems come in four colours; the **mascot llama with miner's
+  helmet and headlamp** fills its mine cart, cheers at every gem and is covered
+  in soot after a mine.
+- **Mine hit**: an explosion and camera shake, then the **whole field is
+  revealed, dimmed** - so you can see where the other mines were; after cashing
+  out as well. A coin shower from ×3, confetti from ×10, on a cleared field and
+  on the max win. The top right shows the history of the last 12 rounds.
+- **Auto mode** (**A**): mark tiles on the grid in the auto window (click or
+  arrows + Space, **Delete**/**Backspace** clears; remembered per field size),
+  pick the number of rounds (5/10/25/50/100) and optionally **stop at a profit
+  of** or **stop at a loss of** (off/100/500/1000/5000/10000/50000); **Enter**
+  starts. Every round uncovers exactly the marked tiles in quick succession and
+  cashes out if all of them were safe. Auto runs until the round count is
+  reached, a limit kicks in, the chips run out or **STOP**/Esc/Space/Enter or
+  **A** is pressed - a round in progress then stays open and can be finished
+  by hand. **Turbo** (**T**) cuts all timings to 40%.
+- **Fairness check** (**F**): before every round the **hash** is fixed - the
+  **SHA-256** of a secret server seed (32 hex characters). The minefield comes
+  from the server seed, your own **client seed** (8 characters, re-rolled with
+  the **New client seed** button - only outside a round) and the round number:
+  randomness via `seedrand` (mulberry32), tiles 0 … N−1 are shuffled and the
+  first M are mines. After the round the seed is revealed, and the next round's
+  hash is already fixed. The window lists the last 12 rounds (no., hash, server
+  and client seed; the mouse wheel scrolls, a click picks a row); **Verify**
+  checks the hash and recalculates the minefield - ✓ or ✗ with a mini preview
+  of the field.
+- **Statistics** (**S**): tiles for rounds, won, lost, wagered, paid out, net
+  result, biggest win, best multiplier, **your return**, gems found, mines hit
+  and fields cleared, plus a **net-result curve** of the last 100 rounds.
+- **Llama Bank**: the same account as Blackjack, Poker, Casino and Lama
+  Crossing; PLAY takes the bet and saves the new round in one go
+  (`lamabank.bet_and_pay`). The high score is the peak of 1000 + Lama Mines
+  balance, and below 10 chips you get a **bank loan** back up to 1000.
+  **Resume**: a round in progress is saved with every tile you uncover (seeds,
+  round number, field size, mines, bet and the uncovered tiles); on the next
+  start the field is recalculated from the seed and the round continues exactly
+  there.
+- Controls: before a round **Space**/**Enter** = PLAY, **1-4** = field size,
+  **←**/**→** = mines, **↑**/**↓**/**+**/**-**/mouse wheel = bet; during a
+  round click or **arrow keys** + **Space** = uncover a tile (the first Space
+  shows the cursor), **R** = random tile, **Enter**/**C** = cash out; after a
+  round Space starts the next one right away. **A** = auto, **S** =
+  statistics, **F** = fairness, **T** = turbo, Esc closes an open window or
+  stops auto. The keys are fixed and don't depend on the control bindings in
+  the options. The round in progress, history, fairness log, statistics,
+  carry-over and auto marks are stored per profile in the `casino` section of
+  `mem.json`; field size, mines, bet, turbo and the auto settings in the
+  `lamamines` section of `settings.json`. Achievements **Treasure Vault** (clear
+  a whole field), **Deep Digger** (cash out at ×10 or more) and **Diamond
+  Llama** (cash out at ×1000 or more), plus a 3000 milestone and a 10000 master
+  tier.
+
+**Lama Plinko**
+- **Plinko with llama chips**: pick a bet per ball (1 to 1000), press **DROP** -
+  a **golden ball of yarn** bounces down the peg board and lands in a slot with
+  a **multiplier**: little in the middle, a lot at the edges. The llama at the
+  top of the board nods with every drop.
+- **8 to 16 rows** (**←**/**→**, default 12) and **3 risk levels** (**1-3**:
+  Low, Medium, High). The outermost slot pays ×16 (Low), ×110 (Medium) or ×1000
+  (High) with 16 rows and ×5.3, ×13 or ×32 with 8 rows; the middle pays ×0.7,
+  ×0.4 or ×0.2. Rows and risk are locked while balls are still in the air or
+  auto is running.
+- **27 fixed tables** (9 row counts × 3 risks) in `lamaplinko_logic.py`,
+  generated once with `devtools/gen_plinko_tables.py`: symmetric, never falling
+  towards the edges, "nice" numbers and each with an **exactly calculated return
+  between 96.9 and 97.05%**. A **carry-over** of the hundredths keeps even a bet
+  of 1 at about 97%.
+- **Result**: n coin flips from the fairness randomness (a random number < 0.5 =
+  right), and the slot is the number of right flips - exactly the binomial
+  distribution. The animation follows that path peg by peg: arcing bounces, the
+  peg that is hit flashes, and a little jitter (cosmetic only) keeps it lively;
+  a ball takes 1.62 s (8 rows) to 2.30 s (16 rows). The slot bobs on a hit, a
+  popup shows the multiplier and the sound depends on the value; a coin shower
+  from ×10, a win banner with confetti from ×100.
+- **Lots of balls at once**: at most **50** on the board. **Hold Space** =
+  rapid fire at a rate of flight time/30 - that keeps about 30 balls in the
+  air; **turbo** (**T**) halves flight time and rate. The bet can be changed
+  mid-flight. Hovering over a slot shows its multiplier, probability and the
+  win at the current bet; a box next to the board counts the balls, the net
+  result and the best hit of the session.
+- **Auto mode** (**A**): 10/25/50/100/250/500/1000 balls, optionally with stop
+  at a profit or loss of (off/100/500/1000/5000/10000/50000); one ball every
+  0.24 s (turbo 0.12 s) with a fixed bet. It runs until the count is reached, a
+  limit kicks in, the chips run out or **STOP**/Esc is pressed. In the window:
+  **↑**/**↓** = row, **←**/**→** = value, **Enter**/**Space** = START or STOP.
+- **Fairness check** (**F**) as in Lama Mines, but **per ball**: hash
+  beforehand, seed after the landing, and the window shows the last 12 balls
+  (**↑**/**↓**/mouse wheel picks one). **Enter** or **Verify** checks the hash,
+  replays the coin flips and shows ✓ or ✗ with a mini preview of the path;
+  **C** = new client seed (not while balls are in the air).
+- **Statistics** (**S**): the same tiles and net-result curve as in Lama Mines
+  (every ball counts as a round), plus the **hit distribution** per row count
+  (**←**/**→** switches) as bars against the expected binomial curve.
+- **Llama Bank**: the same account as Blackjack, Poker, Casino and Lama
+  Crossing. Since the result is already settled when the ball is dropped, it is
+  booked right away - bet and win with **one** save (`lamabank.bet_and_pay`),
+  together with history, fairness log, statistics and carry-over; chips,
+  history and statistics show the win only when the ball lands. **Yarn Storm**
+  fires at the drop, **Edge Hit** and **Plinko Legend** on landing - on leaving
+  they are caught up for balls still in the air, so nothing gets lost. High
+  score = peak of 1000 + Lama Plinko balance; when the account is empty and
+  every ball has landed you get a **bank loan** back up to 1000.
+- Controls: mouse for everything, **Space**/**Enter**/click on DROP or the
+  board = drop (hold = rapid fire), **↑**/**↓**/**+**/**-**/mouse wheel = bet,
+  **←**/**→** = rows, **1-3** = risk; **A** = auto, **S** = statistics, **F** =
+  fairness, **T** = turbo, Esc closes an open window or stops auto. The keys
+  are fixed and don't depend on the control bindings. History, fairness log,
+  statistics (with the hit counters) and carry-over are stored per profile in
+  the `casino` section of `mem.json`; rows, risk, bet, turbo and the auto
+  settings in the `lamaplinko` section of `settings.json`. Achievements **Edge
+  Hit** (outermost slot with 12 rows or more), **Yarn Storm** (25 balls on the
+  board at once) and **Plinko Legend** (outermost slot with 16 rows on High),
+  plus a 3000 milestone and a 10000 master tier.
+
 High scores are stored in the `highscores` section of `mem.json` (next to the
 code) – together with the language (section `mem`).
 
@@ -2110,7 +2406,7 @@ packages) and styled like a modern game launcher:
   the previous record as a chip. With many modes at a small resolution it
   becomes **compact**: Options, Wiki and Back move into one row and the font
   adapts - nothing runs off-screen any more.
-- **Unified in-game look**: all 47 games share the menu's theme palette and
+- **Unified in-game look**: all 49 games share the menu's theme palette and
   font - HUDs, setup screens and overlays follow the design chosen in the
   options (v4.1 / v4 / Classic), while each playfield keeps its identity
   colours. Every game now handles mid-game resolution changes cleanly, and
@@ -2120,11 +2416,11 @@ packages) and styled like a modern game launcher:
   scrollable articles and keycap chips, in all 14 languages. Reachable via
   the **"Wiki / Help"** sidebar button and from every game's pre-game screen
   (opens that game's page directly).
-- **Achievements, rarity & level**: **256 achievements** in five categories -
+- **Achievements, rarity & level**: **268 achievements** in five categories -
   60 collection-wide goals (rounds, playtime, records, wins, days played, daily
-  streaks, duels …), 38 **score milestones**, 31 **master tiers** (the second,
+  streaks, duels …), 40 **score milestones**, 33 **master tiers** (the second,
   much higher mark), a **regular** achievement for every game (25 rounds) and
-  80 **special moments** (checkmate, a Yahtzee, the 4096 tile, a hole-in-one, an
+  86 **special moments** (checkmate, a Yahtzee, the 4096 tile, a hole-in-one, an
   air hockey hat-trick, four ghosts on one power pill …). Every achievement has
   a **rarity** (common 10 up to mythic 300 points); the points make your
   **level** with 14 **ranks** from Llama Chick to Star Llama. Unlocking shows a
@@ -2250,8 +2546,10 @@ filepick.py          File dialogs ("Export as ...", "Import") and the Downloads 
 prestige.py          Prestige system for Snake
 competitive.py       Tuning for Snake's Competitive mode (levels, slot machine, gamble apples)
 ngb.py               Visual personalization ("mods"): head color + coordinate grid + menu (section ngb per profile)
-lamabank.py          Llama Bank: shared chip account of Blackjack, Poker, Casino and Lama Crossing (section casino in mem.json)
+lamabank.py          Llama Bank: shared chip account of Blackjack, Poker, Casino, Lama Crossing, Lama Mines and Lama Plinko (section casino in mem.json)
 seedrand.py          Random generator with bit-identical numbers in Python and the browser (daily modes, new puzzles)
+fairness.py          Fairness check of Lama Mines and Lama Plinko: server/client seed, nonce, SHA-256 hash, verify (counterparts: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
+chipstats.py         Statistics of Lama Mines and Lama Plinko (rounds, wagered, paid out, return, net-result curve) for the S window (plus chipstats.js, chipstats.rs)
 i18n.py              Translation engine (loads lang/*.json, t("key"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Language strings (one placeholder key per text)
@@ -2272,6 +2570,8 @@ devtools/            Developer tools (not bundled into the .exe)
   build_geodash_levels.py    Builds the 16 Geometry Dash campaign levels and proves with the solver that each is beatable, coins included
   build_geodash_extra.py     Builds the library (80 levels in 10 categories) and the 12 templates, each proven by the solver
   build_geodash_solver.py    Solver using the real step code (solutions in geodash_proofs.json)
+  gen_plinko_tables.py       Generates the 27 Plinko tables (8-16 rows × 3 risks) with an exactly calculated return for lamaplinko_logic.py
+  export_chiplogic_ref.py    Writes the reference values of the chip rules (fairness, statistics, Mines, Plinko) for the Rust unit tests
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -2291,11 +2591,14 @@ games/
   battleship.py  battleship_core.py
   casino.py  casino_logic.py  casino_roulette.py  casino_slots.py  casino_draw.py
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
+  lamamines.py  lamamines_logic.py  lamamines_draw.py
+  lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
   levels/              Level data: snake-comp.json, chess-puzzles.json (+ source README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Overall audit (input, seedrand Python = JS, saving, language files, pre-game screens) + all audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless audits per game
+  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko and the shared chip logic (fairness, statistics, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                The Rust version (standalone .exe, see rust/README.md)
   ENGINE.md            Porting contract: how a game moves from Python to Rust
@@ -2304,7 +2607,7 @@ rust/                The Rust version (standalone .exe, see rust/README.md)
   crates/pgz-engine/   Window, drawing, input, sound, Game trait (ui.py + audio.py + game_base.py)
   crates/pgz-games/    The ported games
   crates/pygamez/      The program: menu, sidebar, screens
-  tools/export_defs.py Generates the master data (47 games, 256 achievements, 10 themes) from the Python sources
+  tools/export_defs.py Generates the master data (49 games, 268 achievements, 10 themes) from the Python sources
   tools/audit.py       Test bench: translations, game list, conventions
 rust.output/         Build output of the Rust version (rust.output/release/pygamez.exe)
 ```

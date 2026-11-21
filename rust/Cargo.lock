@@ -1805,6 +1805,7 @@ dependencies = [
 name = "pgz-engine"
 version = "0.2.0"
 dependencies = [
+ "chrono",
  "pgz-core",
  "rustgame-core",
  "rustgame-font",

@@ -1,11 +1,11 @@
 /*
  * casino_bank.js - Lama-Bank: gemeinsames Chip-Konto (Port von lamabank.py)
  * ==========================================================================
- * Blackjack, Poker, Casino und Lama Crossing setzen dieselben Lama-Chips. Gespeichert wird im
- * localStorage unter "pygamez.mem.casino" im gleichen Format wie der
- * mem.json-Abschnitt "casino" der Desktop-Version:
+ * Blackjack, Poker, Casino, Lama Crossing, Lama Mines und Lama Plinko setzen dieselben
+ * Lama-Chips. Gespeichert wird im localStorage unter "pygamez.mem.casino" im gleichen
+ * Format wie der mem.json-Abschnitt "casino" der Desktop-Version:
  *
- *   {chips, ledger: {blackjack, poker, casino, lamacrossing}, peak: {...}, escrow, refills,
+ *   {chips, ledger: {blackjack, poker, casino, lamacrossing, lamamines, lamaplinko}, peak: {...}, escrow, refills,
  *    migrated, extra}
  *
  * - Einsatz sofort abbuchen + speichern (Hand verlassen = Einsatz weg).
@@ -21,8 +21,9 @@
 
   const KEY = "mem.casino";
   const START_CHIPS = 1000;
-  const GAMES = ["blackjack", "poker", "casino", "lamacrossing"];
-  const MIN_BET = { blackjack: 10, poker: 20, "poker:video": 10, casino: 1, "casino:slots": 10, lamacrossing: 10 };
+  const GAMES = ["blackjack", "poker", "casino", "lamacrossing", "lamamines", "lamaplinko"];
+  const MIN_BET = { blackjack: 10, poker: 20, "poker:video": 10, casino: 1, "casino:slots": 10, lamacrossing: 10,
+    lamamines: 10, lamaplinko: 1 };
 
   let data = null;
 
@@ -152,6 +153,27 @@
       d.ledger[game] = (d.ledger[game] || 0) + n;
       d.peak[game] = Math.max(d.peak[game] || START_CHIPS, START_CHIPS + d.ledger[game]);
       if (doSave) save();
+    },
+    /** Einsatz abbuchen UND Gewinn gutschreiben mit EINEM Speichern
+     *  (Port von lamabank.bet_and_pay); optional Zusatz-Spielstand im selben
+     *  Zug. false = Einsatz nicht gedeckt, dann wird nichts gebucht. */
+    betAndPay(bet, win, game, extraKey = null, extra = null) {
+      const d = this._d();
+      bet = Math.trunc(bet);
+      win = Math.trunc(win);
+      if (bet > d.chips) return false;
+      if (bet > 0) {
+        d.chips -= bet;
+        d.ledger[game] = (d.ledger[game] || 0) - bet;
+      }
+      if (win > 0) {
+        d.chips += win;
+        d.ledger[game] = (d.ledger[game] || 0) + win;
+        d.peak[game] = Math.max(d.peak[game] || START_CHIPS, START_CHIPS + d.ledger[game]);
+      }
+      if (extraKey !== null && extraKey !== undefined) d.extra[extraKey] = extra;
+      save();
+      return true;
     },
     /** Bank-Kredit bei Pleite: Konto zurück auf 1000. */
     refillIfBroke(game, mode) {

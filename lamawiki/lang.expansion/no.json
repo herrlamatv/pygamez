@@ -147,7 +147,7 @@
           "body": [
             "Hvert spill med fremgang har sin egen seksjon i mem.json, for eksempel:",
             "- sudoku: løste nivåer med stjerner og beste tid, påbegynte oppgaver og dagens sudoku med rekke.",
-            "- casino: kontoen i Lama-banken - lama-sjetongene for Blackjack, Poker, Casino og Lama Crossing med hvert spills balanse, pluss en påbegynt kryssing i Lama Crossing.",
+            "- casino: kontoen i Lama-banken - lama-sjetongene for Blackjack, Poker, Casino, Lama Crossing, Lama Mines og Lama Plinko med hvert spills balanse, pluss en påbegynt kryssing i Lama Crossing, en påbegynt runde og automarkeringene i Lama Mines og historikk, rettferdsdata, statistikk og overført rest for Lama Mines og Lama Plinko.",
             "- crossy: innsamlede mynter, kjøpte figurer og dagens beste i Crossy Road.",
             "- tetris: beste tid i Sprint, beste poengsum i Ultra og Versus-regnskapet mot AI-en.",
             "- g2048: lagrede 2048-partier og beste poengsum per brettstørrelse og modus.",
@@ -349,7 +349,7 @@
         {
           "h": "Oversikt",
           "body": [
-            "256 prestasjoner på tvers av alle 47 spill - fra første start til et Perfect Clear i Tetris.",
+            "268 prestasjoner på tvers av alle 49 spill - fra første start til et Perfect Clear i Tetris.",
             "Hver prestasjon har en sjeldenhet og dermed en poengverdi; summen gir nivået ditt.",
             "Finnes bak knappen Prestasjoner og statistikk, fanen Prestasjoner. Et filter skjuler åpne eller oppnådde."
           ]
@@ -360,7 +360,7 @@
             "- Generelt: mål på tvers av samlingen - runder, prøvde spill, spilletid, rekorder, seire, spilledager, rekker, nivå og dueller. Pluss ekstra som nattugle, maraton eller helgespiller.",
             "- Poengmilepæler: en rettferdig målscore for hvert spill.",
             "- Mesternivåer: det andre, mye høyere merket - bare for spill med åpen score.",
-            "- Fast gjest: 25 runder i ett spill. Finnes for alle 47 spill.",
+            "- Fast gjest: 25 runder i ett spill. Finnes for alle 49 spill.",
             "- Spesielle øyeblikk: sjakkmatt, en Yatzy, 4096-brikken, hole-in-one, hattrick i air hockey, fire spøkelser på én kraftpille og mye mer."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Lama-sjetonger",
           "body": [
-            "Blackjack, Poker og Casino deler én konto i Lama-banken: du starter med 1000 lama-sjetonger, og saldoen lagres permanent.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines og Lama Plinko deler én konto i Lama-banken: du starter med 1000 lama-sjetonger, og saldoen lagres permanent.",
             "Innsatsen trekkes så snart kortene deles ut - forlater du en pågående hånd, er den tapt.",
             "Toppscoren er høyeste nivå på blackjack-balansen din: 1000 pluss alt du har vunnet og tapt i blackjack. Gevinster i rulett, på automaten eller i poker teller ikke her.",
             "Under 10 sjetonger er du blakk: [Enter] tar et banklån og fyller kontoen opp til 1000 igjen. Lån teller ikke i balansen."
@@ -1901,7 +1901,7 @@
         {
           "h": "Lama-sjetonger",
           "body": [
-            "Det spilles med lama-sjetonger fra Lama-banken - én konto som deles med Blackjack og Casino (start 1000, lagres permanent).",
+            "Det spilles med lama-sjetonger fra Lama-banken - én konto som deles med Blackjack, Casino, Lama Crossing, Lama Mines og Lama Plinko (start 1000, lagres permanent).",
             "Ved starten av en hånd ligger kontoen din på bordet som stabelen din; det som går i potten, trekkes med en gang. Forlater du bordet midt i en hånd, er din andel av potten tapt - resten går tilbake til kontoen.",
             "Toppscoren er høyeste nivå på pokerbalansen din: 1000 pluss alt du har vunnet og tapt i poker. Gevinster i andre spill teller ikke her.",
             "Blakk (mindre enn big blind på 20, i Video Poker under 10) = banklån med ett klikk, kontoen står igjen på 1000."
@@ -2976,7 +2976,7 @@
         {
           "h": "Lama-banken",
           "body": [
-            "Casino, Blackjack og Poker spiller med samme konto: lama-sjetonger (start 1000). Innsatser trekkes med en gang, gevinster godskrives - alt lagres permanent.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines og Lama Plinko spiller med samme konto: lama-sjetonger (start 1000). Innsatser trekkes med en gang, gevinster godskrives - alt lagres permanent.",
             "Hvert spill fører sin egen balanse. Casino-toppscoren er høyeste nivå av 1000 + casinobalanse; gevinster i Blackjack eller Poker teller ikke her.",
             "Er du blakk (under minsteinnsatsen), får du et banklån: kontoen fylles opp til 1000 igjen. Lån teller ikke i noen balanse; antallet står øverst til høyre."
           ]
@@ -3109,7 +3109,7 @@
         {
           "h": "Lama-sjetonger",
           "body": [
-            "Lama Crossing spiller med den felles kontoen i Lama-banken - sammen med Blackjack, Poker og Casino (start 1000, lagret i mem.json).",
+            "Lama Crossing spiller med den felles kontoen i Lama-banken - sammen med Blackjack, Poker, Casino, Lama Mines og Lama Plinko (start 1000, lagret i mem.json).",
             "Toppscoren er høyeste nivå av 1000 + Lama Crossing-balansen din; gevinster i Blackjack, Poker eller Casino teller ikke her.",
             "Under 10 sjetonger er du blakk: [Enter] eller et klikk tar et banklån og fyller kontoen opp til 1000 igjen. Lån teller ikke i balansen.",
             "Det er trygt å slutte midt i en kryssing: Innsats, vanskelighetsgrad og felt lagres, og neste gang fortsetter du nøyaktig der."
@@ -3134,6 +3134,318 @@
             "- Med god timing kommer man helt over omtrent hver 7. runde på Lett, hver 38. på Middels, hver 614. på Vanskelig og bare i én av 32 768 på Ekstrem.",
             "- Til Nerver av stål (×10) holder det med 4 felt på Ekstrem (×15,52), 7 på Vanskelig (×11,77) og 13 på Middels (×10,37); på Lett aldri (høyst ×6,57). Linedans (×100 på Ekstrem) krever 7 felt (×124,16) - det klarer man omtrent hver 128. runde.",
             "- Bestem på forhånd hvilken multiplikator du tar ut på - og hold deg til det. Med fast tilbakebetaling er ingen strategi bedre enn en annen, bare mer eller mindre risikabel."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "lama",
+        "mines",
+        "miner",
+        "edelsteiner",
+        "ruter",
+        "avdekke",
+        "ta ut",
+        "multiplikator",
+        "sjetonger",
+        "lama-banken",
+        "innsats",
+        "risiko",
+        "auto",
+        "fairness",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "statistikk",
+        "rettferd",
+        "kontrollkode"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Under hver skjult rute ligger en edelstein eller en mine. Hver edelstein du finner, øker multiplikatoren - en mine koster innsatsen.",
+            "Velg innsats (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 eller 10000 lama-sjetonger) og trykk SPILL: Innsatsen trekkes, og brettet trekkes ut. Fra nå av står det fast hvor minene ligger - det kan etterprøves med rettferdskontrollen.",
+            "Så avdekker du rute for rute: med et klikk, med piltastene og [Mellomrom] eller med [R] eller knappen Tilfeldig rute på en tilfeldig skjult rute. Fra den første edelsteinen kan du trykke TA UT når som helst - da får du innsatsen ganger den aktuelle multiplikatoren.",
+            "Når alle edelsteinene er funnet, tas gevinsten ut automatisk: ALLE ER MINE! Treffer du en mine, eksploderer den, skjermen rister, og innsatsen er tapt. I begge tilfeller - også etter et uttak - avdekkes de resterende rutene nedtonet, så du ser hvor minene lå. Brettet blir liggende slik til du spiller videre eller endrer en innstilling.",
+            "Øverst til høyre står historikken for de siste 12 rundene - den nyeste til høyre, en mine som rød ×0."
+          ]
+        },
+        {
+          "h": "Brettstørrelser og miner",
+          "body": [
+            "Fire størrelser - velges før hver runde med knappene eller med [1] til [4]: 4×4 (16 ruter), 5×5 (25 ruter, standard), 6×6 (36 ruter) og 7×7 (49 ruter).",
+            "Antall miner stiller du inn med [Venstre] / [Høyre], pilknappene eller de seks hurtigvalgknappene: fra 1 til antall ruter minus 1 - minst én edelstein blir alltid igjen. Standard er 3 miner. Hurtigvalget gir per størrelse:",
+            "- 4×4: 1, 2, 3, 5, 8 eller 12 miner",
+            "- 5×5: 1, 3, 5, 10, 15 eller 24 miner",
+            "- 6×6: 1, 3, 6, 12, 20 eller 35 miner",
+            "- 7×7: 1, 3, 7, 14, 24 eller 48 miner",
+            "Flere miner betyr: Hver edelstein er verdt mer, men neste rute er sjeldnere trygg. Med 24 miner på 5×5 gir allerede den første edelsteinen ×24,25 - med 4 % sjanse.",
+            "Størrelse, miner og innsats kan bare endres mellom rundene."
+          ]
+        },
+        {
+          "h": "Multiplikator og tilbakebetaling",
+          "body": [
+            "Multiplikatoren avhenger bare av hvor mange edelsteiner du har funnet - ikke av hvilke ruter det var. Den veier nøyaktig opp for sjansen for å komme så langt, minus 3 % til banken:",
+            "- multiplikator = 0,97 delt på sjansen for å finne k edelsteiner på rad",
+            "- den sjansen er et produkt med én faktor per edelstein: edelsteiner/ruter × (edelsteiner - 1)/(ruter - 1) × …",
+            "- som formel: 0,97 × C(N, M) / C(N - k, M), rundet ned til hundredeler. N er antall ruter, M antall miner, k antall funne edelsteiner og C(n, m) binomialkoeffisienten «n over m».",
+            "Eksempel 5×5 med 3 miner: Den første ruten er trygg i 22 av 25 (88 %), så den gir 0,97 / 0,88 = ×1,10. Etter to edelsteiner er sjansen 22/25 × 21/24 = 77 % - det gir ×1,25.",
+            "Videre går det med ×1,44, ×1,67 og ×1,95 etter 5 edelsteiner, ×4,90 etter 10, ×10,14 etter 13, ×18,59 etter 15, ×111,55 etter 19 og ×557,75 etter 21. Finner du alle 22 edelsteinene, får du ×2 231 - det skjer i én av 2300 runder.",
+            "Nedre grense: Hver edelstein øker multiplikatoren med minst 0,01 - allerede den første gir altså minst ×1,01. Etter formelen alene ville det for eksempel bare blitt ×0,99 på 6×6 med 1 mine. Bare tre trinn heves: den første edelsteinen på 6×6 med 1 mine og de to første på 7×7 med 1 mine.",
+            "Høyeste gevinst er ×100 000. Når multiplikatoren når den grensen, tas gevinsten ut automatisk med en gang: MAKSGEVINST! Når hele brettet ryddes, skjer det allerede fra 5×5 med 6 miner, 6×6 med 5 og 7×7 med 4 miner; aldri på 4×4. Mer blir det ikke, selv om formelen ville gitt mer.",
+            "Fordi sjanse og multiplikator veier hverandre opp, gir enhver strategi i lengden tilbake rundt 97 % av innsatsen - uansett størrelse, antall miner og etter hvor mange edelsteiner du tar ut. På grunn av avrundingen blir det 96 til 97 % avhengig av trinnet. De tre hevede trinnene ligger litt over (høyst 98,94 % ved den første edelsteinen på 7×7 med 1 mine), det begrensede trinnet klart under. Husets fordel er altså omtrent 3 %.",
+            "Brøkdeler går ikke tapt: Det betales ut hele sjetonger, og resten i hundredeler huskes og legges til neste uttak. 10 sjetonger × 1,01 gir altså først 10 sjetonger, de resterende 0,10 kommer senere - slik får også små innsatser full tilbakebetaling."
+          ]
+        },
+        {
+          "h": "Visninger",
+          "body": [
+            "Før runden viser toppfeltet den høyeste multiplikatoren for innstillingen (alle edelsteiner funnet) og antall edelsteiner og miner. Mens runden pågår, står alt du trenger til neste avgjørelse ved siden av brettet:",
+            "- den aktuelle multiplikatoren og gevinsten din hvis du tar ut nå",
+            "- multiplikatoren etter neste edelstein og gevinsten ved neste rute",
+            "- sjansen for at neste rute er trygg: gjenværende edelsteiner delt på gjenværende skjulte ruter - 88 % ved første klikk på 5×5 med 3 miner, deretter litt mindre for hver edelstein",
+            "- hvor mange edelsteiner som er funnet, og en stolpe med de neste 5 trinnene: hvor mange edelsteiner som gir hvilken multiplikator",
+            "Maskotlamaen med gruvehjelm og hodelykt lever seg inn i spillet: Den jubler ved hver edelstein mens gruvevogna ved siden av fylles, og ved en mine skvetter den og blir dekket av sot. Fra ×3 regner det mynter, fra ×10 og når brettet ryddes, kommer det også konfetti."
+          ]
+        },
+        {
+          "h": "Automodus",
+          "body": [
+            "[A] eller Auto-knappen åpner automodusen mellom rundene. Vinduet legger seg over sidepanelet og lar rutenettet være fritt: Med et klikk eller med piltastene og [Mellomrom] markerer du rutene som skal avdekkes hver runde - høyst like mange som det er edelsteiner. Spillet husker valget for hver brettstørrelse; [Del], [Backspace] eller Tøm fjerner alle markeringer.",
+            "Vinduet viser hvor mange ruter som er markert, og hva runden gir hvis alle er trygge: multiplikator og sjanse. Du velger også antall runder (5, 10, 25, 50 eller 100) og om ønskelig to grenser: Stopp ved gevinst på og Stopp ved tap på (av, 100, 500, 1000, 5000, 10000 eller 50000 sjetonger, regnet fra starten).",
+            "START AUTO eller [Enter]: Hver runde trekker innsatsen og avdekker de markerte rutene raskt etter hverandre. Er alle trygge, tas gevinsten ut - med multiplikatoren for like mange edelsteiner som du har markert. Ligger det en mine under en markert rute, er runden tapt.",
+            "Automodusen går til alle rundene er spilt, en grense slår inn, sjetongene ikke dekker neste innsats eller du trykker STOPP, [Mellomrom], [Enter], [A] eller [Esc]. Stopper du midt i en runde, blir den stående åpen - du avdekker videre for hånd eller tar ut. Innsats, brettstørrelse og miner er låst mens automodusen går.",
+            "[T] slår på turbo - også når du spiller for hånd: Ruter, eksplosjoner og autorunder går to og en halv gang så fort."
+          ]
+        },
+        {
+          "h": "Rettferdskontroll",
+          "body": [
+            "Lama Mines er beviselig rettferdig: Minefeltet står fast før du klikker på den første ruten - og etter runden kan du regne etter at ingenting er flyttet. Det skjer med fire verdier:",
+            "- Server-seed: en hemmelig tilfeldig verdi (32 tegn) som spillet bestemmer før runden.",
+            "- Kontrollkode: SHA-256-fingeravtrykket (hash) av server-seeden. Den vises allerede før runden (kontrollkode for neste runde). Seeden kan ikke regnes ut fra den - men bare ett annet tegn i seeden ville gitt en helt annen kode.",
+            "- Klient-seed: din andel av tilfeldigheten (8 tegn). Med Ny klient-seed trekker du en ny - bare utenfor en runde. Så bestemmer ikke spillet resultatet alene.",
+            "- Nr.: rundenummeret. Det øker med én hver runde, så ingen runde blir lik en annen.",
+            "Spillnavn, server-seed, klient-seed og rundenummer danner rundens tilfeldighet (mulberry32). Den stokker listen over alle ruter (telt rad for rad, fra øverst til venstre), og de første plassene i den stokkede listen - like mange som det er miner - blir miner.",
+            "Etter runden avsløres server-seeden; kontrollkoden for neste runde står da allerede fast.",
+            "[F] åpner vinduet Rettferd: øverst kontrollkoden for neste runde (under en runde også kontrollkoden for denne runden), klient-seeden din og rundenummeret, under det de siste 12 rundene med nr., kontrollkode og resultat, den nyeste øverst (musehjulet ruller). Et klikk på en linje viser brettstørrelse, miner, kontrollkode, server-seed og klient-seed.",
+            "Kontroller beregner SHA-256 av seeden på nytt, sammenligner den med kontrollkoden som ble vist på forhånd, bygger opp minefeltet igjen og sjekker også resultatet - lå de avdekkede rutene riktig, stemmer multiplikatoren? En hake eller et kryss og en liten forhåndsvisning av brettet viser: Stemmer eller Stemmer ikke.",
+            "Du kan også sjekke kontrollkoden selv: beregn SHA-256 av server-seeden med et hvilket som helst verktøy og sammenlign den med kontrollkoden."
+          ]
+        },
+        {
+          "h": "Statistikk",
+          "body": [
+            "[S] åpner statistikken for profilen din: runder, vunnet og tapt, avkastningen din (hvor mange prosent av innsatsene som har kommet tilbake), satset og utbetalt, balanse, største gevinst og beste multiplikator - pluss funne edelsteiner, truffede miner og ryddede brett.",
+            "En kurve viser balansen for de siste 100 rundene. En runde teller som vunnet hvis det ble utbetalt mer enn det ble satset.",
+            "I lengden legger avkastningen din seg rundt 97 % - over få runder kan den svinge kraftig opp eller ned."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Før runden: [Mellomrom] eller [Enter] = SPILL, [1] til [4] = brettstørrelse, [Venstre] / [Høyre] = antall miner",
+            "- [Opp] / [Ned], [+] / [-] eller musehjulet: endre innsats (bare mellom rundene)",
+            "- Under runden: Et klikk på en rute avdekker den. Piltastene flytter en markør; det første [Mellomrom] viser den bare, hvert neste avdekker ruten under den.",
+            "- [R] eller knappen Tilfeldig rute: avdekk en tilfeldig skjult rute; [Enter], [C] eller TA UT: ta ut (fra den første edelsteinen)",
+            "- Etter resultatet: [Mellomrom] eller SPILL starter neste runde med en gang, andre taster fører tilbake til innstillingene.",
+            "- [A]: automodus, [S]: statistikk, [F]: rettferd, [T]: turbo - eller de fire knappene øverst. [Esc] eller et klikk ved siden av vinduet lukker det, [Esc] stopper også automodusen.",
+            "Tastene er faste og avhenger ikke av tastetildelingen - spillertaster som WASD gjelder ikke her. Brettstørrelse, antall miner, siste innsats, turbo og autoinnstillingene lagres i settings.json (seksjonen lamamines)."
+          ]
+        },
+        {
+          "h": "Lama-sjetonger",
+          "body": [
+            "Lama Mines spiller med den felles kontoen i Lama-banken - sammen med Blackjack, Poker, Casino, Lama Crossing og Lama Plinko (start 1000, lagret i mem.json).",
+            "Toppscoren er høyeste nivå av 1000 + Lama Mines-balansen din; gevinster i Lama-bankens andre spill teller ikke her.",
+            "Under 10 sjetonger er du blakk: [Mellomrom], [Enter] eller et klikk tar et banklån og fyller kontoen opp til 1000 igjen. Lån teller ikke i balansen.",
+            "Det er trygt å slutte midt i en runde: Innsatsen trekkes ved starten, og etter hver funnet edelstein lagres brettstørrelse, miner, rundens seeds og de avdekkede rutene. Neste gang beregnes brettet på nytt fra seeden, og du fortsetter nøyaktig der.",
+            "Historikk, rettferdsdata, statistikk, automarkeringene og den overførte resten hører til profilen din."
+          ]
+        },
+        {
+          "h": "Prestasjoner",
+          "body": [
+            "- Lama Mines-stamgjest: 25 runder",
+            "- Milepæl: toppscore 3000",
+            "- Lama Mines-mester: toppscore 10000",
+            "- Skattkammer (sjelden): Rydd et helt brett i Lama Mines – alle edelsteiner funnet",
+            "- Dypt gravd (episk): Ta ut ved ×10 eller mer i Lama Mines",
+            "- Diamantlama (legendarisk): Ta ut ved ×1000 eller mer i Lama Mines"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Hver runde trekkes på nytt, og ingen rute er tryggere enn en annen - verken hjørnene eller midten. Mønstre fra tidligere runder hjelper ikke.",
+            "- Skattkammer: På 4×4 med 1 mine lykkes det å rydde brettet i én av 16 runder (×15,52) - akkurat som med 15 miner, der det bare finnes én edelstein. På 5×5 med 3 miner er det bare én av 2300.",
+            "- Dypt gravd (×10): På 5×5 med 3 miner holder det med 13 edelsteiner (×10,14), det lykkes omtrent hver 10. til 11. runde. Med 24 miner gir allerede den første edelsteinen ×24,25 - i én av 25 runder.",
+            "- Diamantlama (×1000): De beste veiene lykkes omtrent i én av 1100 runder, for eksempel 5×5 med 10 miner etter 10 edelsteiner (×1 055,84) eller 7×7 med 12 miner etter 19 edelsteiner (×1 034,71). På 5×5 med 3 miner går det bare ved å rydde hele brettet (×2 231).",
+            "- I automodus teller bare hvor mange ruter du markerer, ikke hvilke: 5 markerte ruter på 5×5 med 3 miner er alle trygge i 49,6 % av rundene og gir da ×1,95.",
+            "- Bestem på forhånd etter hvor mange edelsteiner du tar ut - og hold deg til det. Med fast tilbakebetaling er ingen strategi bedre enn en annen, bare mer eller mindre risikabel. Det lønner seg ikke å satse på maksgevinsten: Det begrensede trinnet betaler mindre enn risikoen er verdt."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "lama",
+        "plinko",
+        "kule",
+        "garnnøste",
+        "galton-brett",
+        "pinner",
+        "felt",
+        "multiplikator",
+        "sjetonger",
+        "lama-banken",
+        "innsats",
+        "rader",
+        "risiko",
+        "klokkekurve",
+        "auto",
+        "turbo",
+        "rettferd",
+        "provably fair",
+        "kontrollkode",
+        "seed",
+        "sha-256",
+        "statistikk"
+      ],
+      "sections": [
+        {
+          "h": "Slik spiller du",
+          "body": [
+            "Et gyllent garnnøste faller gjennom en trekant av pinner. Ved hver pinne spretter det til venstre eller høyre og lander i et av feltene nederst. På hvert felt står en multiplikator: innsats ganger multiplikator er utbetalingen din.",
+            "Velg innsats per kule (1, 2, 5, 10, 20, 50, 100, 200, 500 eller 1000 lama-sjetonger) og trykk SLIPP: Innsatsen trekkes, lamaen øverst på brettet nikker og slipper kula.",
+            "Feltene ytterst betaler mest, de i midten gir mindre enn innsatsen tilbake - til gjengjeld lander de fleste kulene der. Du får innsats ganger multiplikator i hele sjetonger; det som blir igjen under én sjetong, husker spillet og legger til neste kule.",
+            "Feltet som treffes, vipper, en pop-up viser multiplikatoren, og jo høyere den er, desto lysere låter tonen. Fra ×10 regner det mynter, fra ×100 kommer det i tillegg et banner og konfetti. Øverst til høyre står historikken for de siste 12 kulene."
+          ]
+        },
+        {
+          "h": "Rader og risiko",
+          "body": [
+            "Begge deler stiller du inn før kastet; så lenge det er kuler på brettet eller automodusen kjører, er de låst. Spillet viser også den høyeste multiplikatoren og den nøyaktige avkastningen for den valgte tabellen.",
+            "- Rader: 8 til 16 rader med pinner med [Venstre] / [Høyre] (standard 12). Med n rader er det n + 1 felt.",
+            "- Risiko: Lav, Middels (standard) eller Høy med [1] til [3].",
+            "Flere rader gjør kantfeltene sjeldnere og høyere. Risikoen avgjør hvor langt midten og kanten ligger fra hverandre:",
+            "- Lav: midten ×0,7, kanten ×5,3 (8 rader) opptil ×16 (16 rader) - små, hyppige gevinster",
+            "- Middels: midten ×0,4–0,5, kanten ×13 opptil ×110",
+            "- Høy: midten ×0,2, kanten ×32 opptil ×1 000 - nesten alltid mindre enn innsatsen, svært sjelden et kjempetreff",
+            "Eksempel - de 17 feltene med 16 rader på Middels: 110 · 38 · 14 · 6,2 · 2,8 · 1,4 · 0,8 · 0,5 · 0,4 · 0,5 · 0,8 · 1,4 · 2,8 · 6,2 · 14 · 38 · 110",
+            "Med 16 rader gir rundt 55 % av kulene mindre enn innsatsen tilbake på Lav, 79 % på Middels og hele 92 % på Høy."
+          ]
+        },
+        {
+          "h": "Slik faller kula",
+          "body": [
+            "Brettet er et Galton-brett: Ved hver pinne går kula til venstre eller høyre med nøyaktig 50 % - som ved mynt eller kron. Feltet er rett og slett antall sprett mot høyre: med 12 rader altså 0 (helt til venstre) til 12 (helt til høyre).",
+            "Helt ut til kanten kommer en kule bare hvis den spretter samme vei ved hver eneste pinne. Mot midten fører derimot svært mange veier. Derfor hoper kulene seg opp i midten i en klokkekurve (binomisk fordeling):",
+            "- 8 rader: midtfelt 27,34 %, hvert kantfelt 1 av 256",
+            "- 12 rader: midtfelt 22,56 %, hvert kantfelt 1 av 4 096",
+            "- 16 rader: midtfelt 19,64 %, hvert kantfelt 1 av 65 536",
+            "Hold musa over et felt: Det viser multiplikatoren, sjansen (også bitte små som 0,0015 %) og hva det betaler ut ved innsatsen din.",
+            "De 27 tabellene (9 radantall × 3 risikonivåer) er symmetriske, blir aldri mindre mot kanten og betaler - regnet nøyaktig - i lengden tilbake 96,9 % til 97,1 % av innsatsene. Husets fordel er altså omtrent 3 %, uansett hva du stiller inn. Rader og risiko endrer bare hvor mye flaksen svinger."
+          ]
+        },
+        {
+          "h": "Mange kuler samtidig",
+          "body": [
+            "Du trenger ikke vente til en kule har landet: Opptil 50 kuler kan sprette over brettet samtidig - telleren «I spill» holder oversikten. Hold [Mellomrom] nede, så faller de etter et lite øyeblikk i rask rekkefølge - så tett at rundt 30 kuler er underveis samtidig.",
+            "Veien til hver kule trekkes allerede ved kastet. Derfor bokføres og lagres innsats og utbetaling sammen med en gang - men utbetalingen vises først når kula når bunnen. Først da kan du også satse gevinsten igjen.",
+            "Går du ut av spillet mens det fortsatt faller kuler, går ingenting tapt: Sjetongene er allerede bokført, og prestasjoner fra de kulene deles ut når du går ut.",
+            "Turbo halverer kulenes flytid og avstanden mellom kastene - slå det av og på med [T]."
+          ]
+        },
+        {
+          "h": "Automodus",
+          "body": [
+            "[A] åpner automodusen. Der stiller du inn (vinduet regner også ut den samlede innsatsen for hele serien):",
+            "- Kuler: 10, 25, 50, 100, 250, 500 eller 1000",
+            "- Stopp ved gevinst på / Stopp ved tap på: av, 100, 500, 1000, 5000, 10000 eller 50000 sjetonger",
+            "- Turbo på eller av",
+            "START AUTO kaster kulene etter hverandre med gjeldende innsats, rader og risiko; de tre er låst så lenge. Automodusen avsluttes når alle kulene er kastet, gevinsten eller tapet siden starten når en grense, sjetongene heller ikke etter landingen av kulene i lufta rekker til neste kule, eller du trykker STOPP, [Mellomrom] eller [Esc]. Kuler som allerede er underveis, lander likevel.",
+            "Auto-innstillingene lagres i settings.json (seksjonen lamaplinko)."
+          ]
+        },
+        {
+          "h": "Rettferdskontroll",
+          "body": [
+            "I Lama Plinko kan du selv sjekke at ingen kule blir styrt i ettertid («provably fair»). Til det finnes det tre verdier:",
+            "- Server-seed: en hemmelig tilfeldig verdi på 32 tegn som spillet fastsetter før kastet. Hver kule får sin egen.",
+            "- Kontrollkode: SHA-256-fingeravtrykket av server-seeden. Den vises allerede før kastet. Den avslører ikke seeden, men enhver annen seed ville hatt en helt annen kode - spillet kan altså ikke lenger bytte ut seeden.",
+            "- Klient-seed: din egen andel (8 tegn). «Ny klient-seed» trekker en ny så snart ingen kule er i lufta - slik bestemmer ikke spillet tilfeldigheten alene.",
+            "I tillegg kommer nummeret (nonce), som øker med 1 for hver kule. Server-seed, klient-seed og nummer gir til sammen kulas tilfeldighet: ett myntkast per rad, og hvert «høyre» skyver den ett felt lenger mot høyre.",
+            "Etter landingen avsløres server-seeden - da står kontrollkoden for neste kule allerede fast.",
+            "[F] åpner rettferdskontrollen med de siste 12 kulene: nummer, kontrollkode, server-seed og klient-seed, pluss rader, risiko, felt og multiplikator. «Kontroller» beregner seedens SHA-256 på nytt, sammenligner den med kontrollkoden som ble vist før, og regner ut kulas vei en gang til: «Stemmer» betyr at alt stemmer - «Stemmer ikke» ville avslørt et avvik. En liten forhåndsvisning viser den etterregnede veien.",
+            "For de nysgjerrige: Tilfeldighetsgeneratoren er mulberry32, startet med FNV-1a-verdien av teksten «lamaplinko|server-seed|klient-seed|nummer». Hver rad trekker et tall mellom 0 og 1; under 0,5 betyr høyre. Slik kan hver kule også regnes etter med egne verktøy."
+          ]
+        },
+        {
+          "h": "Statistikk",
+          "body": [
+            "[S] åpner profilens statistikk for Lama Plinko:",
+            "- Ruter: Runder, Vunnet, Tapt, Satset, Utbetalt, Balanse, Største gevinst, Beste faktor, Din avkastning. Hver kule teller for seg; vunnet betyr mer enn innsatsen tilbake, tapt mindre.",
+            "- en balansekurve over de siste 100 kulene",
+            "- treffordelingen: treffene dine per felt som søyler, den forventede fordelingen (binomisk) i gull - for hvert radantall for seg, bytt med [Venstre] / [Høyre]",
+            "I starten hopper avkastningen din mye (ett kanttreff på Høy sender den langt opp), med mange kuler nærmer den seg de rundt 97 %. På samme måte nærmer søylene seg den gylne kurven etter noen hundre kuler."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- [Mellomrom], [Enter] eller klikk på SLIPP eller brettet: kast en kule - hold nede for rask rekkefølge",
+            "- [Opp] / [Ned], [+] / [-] eller musehjulet: endre innsats per kule",
+            "- [Venstre] / [Høyre]: rader (8 til 16), [1] til [3]: risiko",
+            "- [A]: automodus, [S]: statistikk, [F]: rettferdskontroll, [T]: turbo",
+            "- [Esc]: lukk et åpent vindu eller stopp automodusen",
+            "- Musa over et felt: multiplikator, sjanse og utbetaling ved innsatsen din",
+            "I vinduene: I automodus-vinduet velger [Opp] / [Ned] en linje, [Venstre] / [Høyre] endrer den, og [Enter] eller [Mellomrom] starter eller stopper. I statistikken bytter [Venstre] / [Høyre] radantallet for fordelingen. I rettferdskontrollen velger piltastene eller musehjulet en kule, [Enter] kontrollerer den, og [C] henter en ny klient-seed. [Esc] eller samme bokstavtast lukker vinduet igjen.",
+            "Alt fungerer også med musa; et klikk ved siden av et åpent vindu lukker det. Rader, risiko, innsats, turbo og auto-innstillingene lagres i settings.json (seksjonen lamaplinko)."
+          ]
+        },
+        {
+          "h": "Lama-sjetonger",
+          "body": [
+            "Lama Plinko spiller med den felles kontoen i Lama-banken - sammen med Blackjack, Poker, Casino, Lama Crossing og Lama Mines (start 1000, lagret i mem.json).",
+            "Toppscoren er høyeste nivå av 1000 + Lama Plinko-balansen din; gevinster i de andre spillene teller ikke her.",
+            "Dekker ikke kontoen den valgte innsatsen, velg en mindre. Med 0 sjetonger er du blakk: [Enter] eller et klikk tar et banklån og fyller kontoen opp til 1000 igjen. Lån teller ikke i balansen.",
+            "Historikk, statistikk og rettferdsdata hører til profilen din og lagres også i mem.json."
+          ]
+        },
+        {
+          "h": "Prestasjoner",
+          "body": [
+            "- Lama Plinko-stamgjest: 25 runder",
+            "- Milepæl: toppscore 3000",
+            "- Lama Plinko-mester: toppscore 10000",
+            "- Kanttreff (sjelden): Treff det ytterste feltet i Lama Plinko (12 rader eller flere)",
+            "- Garnregn (episk): Ha 25 kuler på brettet samtidig i Lama Plinko",
+            "- Plinko-legende (legendarisk): Treff det ytterste feltet i Lama Plinko med 16 rader på høy risiko"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Hver kule er uavhengig: Etter ti treff i midten er kanten ikke «på tide».",
+            "- Ingen innstilling slår avkastningen. På Lav svinger kontoen lite, på Høy taper du som regel - med en liten sjanse for et kjempetreff.",
+            "- Små innsatser er ingen ulempe: Ingen brøkdel av en sjetong går tapt. På 1 sjetong gir ×0,7 først ingenting, men de 0,7 sjetongene huskes og betales ut med en av de neste kulene så snart en hel sjetong er full. Derfor gjelder avkastningen på rundt 97 % for enhver innsats.",
+            "- Kanttreff: raskest med 12 rader - der lander omtrent 1 av 2 048 kuler helt ute på kanten (til venstre eller høyre). Med 1 sjetong per kule koster det i snitt bare rundt 3 sjetonger per 100 kuler.",
+            "- Garnregn: bare hold [Mellomrom] nede - den raske rekkefølgen gir rundt 30 kuler på brettet samtidig, uansett antall rader, og etter omtrent 2 sekunder er prestasjonen din. Automodusen kaster for rolig til det.",
+            "- Plinko-legende: med 16 rader på Høy lander bare 1 av 32 768 kuler helt ute på kanten - med auto-serier på 1000 kuler trenger du i snitt rundt 33 serier. Til gjengjeld betaler feltet ×1 000.",
+            "- Sett et budsjett på forhånd, og bruk tapsgrensen i automodusen."
           ]
         }
       ]

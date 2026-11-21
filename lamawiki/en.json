@@ -147,7 +147,7 @@
           "body": [
             "Every game with progress has its own section in mem.json, for example:",
             "- sudoku: solved levels with stars and best times, puzzles in progress and the Daily Sudoku with its streak.",
-            "- casino: the Llama Bank account - the llama chips for Blackjack, Poker, Casino and Lama Crossing with each game's balance, plus a Lama Crossing round in progress.",
+            "- casino: the Llama Bank account - the llama chips for Blackjack, Poker, Casino, Lama Crossing, Lama Mines and Lama Plinko with each game's balance, plus a Lama Crossing round and a Lama Mines round in progress, the Lama Mines auto marks and the history, fairness data, statistics and carried-over fractions of Lama Mines and Lama Plinko.",
             "- crossy: collected coins, bought characters and the Crossy Road daily best.",
             "- tetris: best Sprint time, best Ultra score and the Versus record against the AI.",
             "- g2048: saved 2048 games and best scores per board size and mode.",
@@ -349,7 +349,7 @@
         {
           "h": "Overview",
           "body": [
-            "256 achievements across all 47 games - from your first start to a Perfect Clear in Tetris.",
+            "268 achievements across all 49 games - from your first start to a Perfect Clear in Tetris.",
             "Every achievement has a rarity and therefore a point value; the sum is your level.",
             "Find them behind the Achievements & statistics button, tab Achievements. A filter hides open or unlocked ones."
           ]
@@ -360,7 +360,7 @@
             "- General: collection-wide goals - rounds, games tried, playtime, records, wins, days played, daily streaks, level and duels. Plus extras like night owl, marathon or weekend player.",
             "- Score milestones: a fair target score for each game.",
             "- Master tiers: the second, much higher mark - only for games whose score is open-ended.",
-            "- Regular: 25 rounds of one game. Exists for each of the 47 games.",
+            "- Regular: 25 rounds of one game. Exists for each of the 49 games.",
             "- Special moments: checkmate, a Yahtzee, the 4096 tile, a hole-in-one, an air hockey hat-trick, four ghosts on one power pill and much more."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Llama chips",
           "body": [
-            "Blackjack, Poker and Casino share one account at the Llama Bank: you start with 1000 llama chips and your balance is saved permanently.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines and Lama Plinko share one account at the Llama Bank: you start with 1000 llama chips and your balance is saved permanently.",
             "Your bet is taken as soon as the cards are dealt - leaving a hand in progress loses it.",
             "The highscore is the peak of your blackjack balance: 1000 plus everything you have won and lost at blackjack. Wins at roulette, the slot or poker don't count here.",
             "Below 10 chips you are broke: [Enter] takes a bank loan and fills your account back up to 1000. Loans don't count towards the balance."
@@ -1901,7 +1901,7 @@
         {
           "h": "Llama chips",
           "body": [
-            "You play with the llama chips of the Llama Bank - one account shared with Blackjack and Casino (start 1000, saved permanently).",
+            "You play with the llama chips of the Llama Bank - one account shared with Blackjack, Casino, Lama Crossing, Lama Mines and Lama Plinko (start 1000, saved permanently).",
             "At the start of a hand your account sits on the table as your stack; whatever goes into the pot is taken immediately. If you leave the table mid-hand, your share of the pot is gone - the rest goes back to your account.",
             "The highscore is the peak of your poker balance: 1000 plus everything you have won and lost at poker. Wins in other games don't count here.",
             "Broke (less than the big blind of 20, in Video Poker less than 10) = bank loan with a click, your account is back at 1000."
@@ -2977,7 +2977,7 @@
         {
           "h": "The Llama Bank",
           "body": [
-            "Casino, Blackjack and Poker share one account: the llama chips (start 1000). Bets are taken immediately, wins are credited - everything is saved permanently.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines and Lama Plinko share one account: the llama chips (start 1000). Bets are taken immediately, wins are credited - everything is saved permanently.",
             "Every game keeps its own balance. The Casino highscore is the peak of 1000 + casino balance; wins at Blackjack or Poker don't count here.",
             "Broke (less than the minimum bet) means a bank loan: your account is filled back up to 1000. Loans don't count towards any balance; their number is shown top right."
           ]
@@ -3110,7 +3110,7 @@
         {
           "h": "Llama chips",
           "body": [
-            "Lama Crossing plays with the shared Llama Bank account - together with Blackjack, Poker and Casino (start 1000, stored in mem.json).",
+            "Lama Crossing plays with the shared Llama Bank account - together with Blackjack, Poker, Casino, Lama Mines and Lama Plinko (start 1000, stored in mem.json).",
             "The highscore is the peak of 1000 + your Lama Crossing balance; wins at Blackjack, Poker or the Casino don't count here.",
             "Below 10 chips you are broke: [Enter] or a click takes a bank loan and fills your account back up to 1000. Loans don't count towards the balance.",
             "Stopping mid-crossing is safe: bet, difficulty and lane are saved, and the next start continues exactly there."
@@ -3135,6 +3135,315 @@
             "- With clean timing you get all the way across in about every 7th round on Easy, every 38th on Medium, every 614th on Hard and only one in 32,768 on Extreme.",
             "- For Nerves of Steel (×10), 4 lanes are enough on Extreme (×15.52), 7 on Hard (×11.77) and 13 on Medium (×10.37); on Easy it never happens (at most ×6.57). Tightrope Walk (×100 on Extreme) takes 7 lanes (×124.16) - that works out in about every 128th round.",
             "- Decide beforehand at which multiplier you will cash out - and stick to it. Thanks to the fixed return no strategy is better than another, only more or less risky."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "llama",
+        "mines",
+        "gems",
+        "tiles",
+        "reveal",
+        "cash out",
+        "multiplier",
+        "chips",
+        "llama bank",
+        "bet",
+        "risk",
+        "auto",
+        "fairness",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "statistics"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Under every hidden tile lies a gem or a mine. Every gem you find raises the multiplier - a mine costs you the bet.",
+            "Pick a bet (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 or 10000 llama chips) and press PLAY: the bet is taken and the field is drawn. From now on it is fixed where the mines are - verifiable with the fairness check.",
+            "Then you reveal tile after tile: with a click, with the arrow keys and [Space], or with [R] or the Random tile button on a random hidden tile. From the first gem on you can CASH OUT at any time - then you get your bet times the current multiplier.",
+            "Once all gems are found, the round cashes out automatically: ALL MINE! Hit a mine and it explodes, the screen shakes and the bet is gone. Either way - also after cashing out - the remaining tiles are revealed, dimmed, so you can see where the mines were. The field stays like that until you play on or change a setting.",
+            "The top right shows the history of the last 12 rounds - the newest on the right, a mine as a red ×0."
+          ]
+        },
+        {
+          "h": "Field sizes & mines",
+          "body": [
+            "Four field sizes - chosen before each round with the buttons or with [1] to [4]: 4×4 (16 tiles), 5×5 (25 tiles, default), 6×6 (36 tiles) and 7×7 (49 tiles).",
+            "Set the number of mines with [Left] / [Right], the arrow buttons or the six quick-pick buttons: from 1 up to the number of tiles minus 1 - at least one gem always remains. The default is 3 mines. The quick picks per field size are:",
+            "- 4×4: 1, 2, 3, 5, 8 or 12 mines",
+            "- 5×5: 1, 3, 5, 10, 15 or 24 mines",
+            "- 6×6: 1, 3, 6, 12, 20 or 35 mines",
+            "- 7×7: 1, 3, 7, 14, 24 or 48 mines",
+            "More mines means: every gem is worth more, but the next tile is safe less often. With 24 mines on 5×5 the very first gem pays ×24.25 - at a 4% chance.",
+            "Field size, mines and bet can only be changed between rounds."
+          ]
+        },
+        {
+          "h": "Multiplier & return",
+          "body": [
+            "The multiplier only depends on how many gems you have found so far - not on which tiles they were. It exactly balances the chance of getting that far, minus 3% for the bank:",
+            "- multiplier = 0.97 divided by the chance of finding k gems in a row",
+            "- that chance is a product with one factor per gem: gems/tiles × (gems - 1)/(tiles - 1) × …",
+            "- as a short formula: 0.97 × C(N, M) / C(N - k, M), rounded down to hundredths. Here N is the number of tiles, M the number of mines, k the number of gems found and C(n, m) the binomial coefficient “n choose m”.",
+            "Example 5×5 with 3 mines: the first tile is safe with 22 out of 25 (88%), so it pays 0.97 / 0.88 = ×1.10. After two gems the chance is 22/25 × 21/24 = 77% - that makes ×1.25.",
+            "It goes on with ×1.44, ×1.67 and ×1.95 after 5 gems, ×4.90 after 10, ×10.14 after 13, ×18.59 after 15, ×111.55 after 19 and ×557.75 after 21. Find all 22 gems and you get ×2,231 - that happens in one round out of 2300.",
+            "Floor: every gem raises the multiplier by at least 0.01 - so even the first one pays at least ×1.01. The plain formula would give only ×0.99 on 6×6 with 1 mine, for example. Only three steps are lifted: the first gem on 6×6 with 1 mine and the first two on 7×7 with 1 mine.",
+            "The maximum win is ×100,000. If the multiplier reaches this limit, the round cashes out automatically right away: MAX WIN! When clearing the whole field this already happens from 5×5 with 6 mines, 6×6 with 5 and 7×7 with 4 mines; never on 4×4. There is no more, even if the formula would give more.",
+            "Because chance and multiplier balance each other, every strategy returns about 97% of the stake in the long run - no matter which field size, how many mines and after how many gems you cash out. Rounding down makes it 96 to 97% depending on the step. The three lifted steps are slightly above (at most 98.94% for the first gem on 7×7 with 1 mine), the capped step clearly below. The house edge is therefore about 3%.",
+            "Fractions are not lost: whole chips are paid out, the rest in hundredths is remembered and added to your next payout. So 10 chips × 1.01 first pays 10 chips, the remaining 0.10 comes later - this way small bets get the full return too."
+          ]
+        },
+        {
+          "h": "Displays",
+          "body": [
+            "Before a round the header shows the top multiplier of your setting (all gems found) and the number of gems and mines. During a round you see everything you need for your next decision next to the field:",
+            "- the current multiplier and your win if you cash out now",
+            "- the multiplier after the next gem and the win on the next tile",
+            "- the chance that the next tile is safe: remaining gems divided by remaining hidden tiles - 88% on the first click on 5×5 with 3 mines, a little less with every gem after that",
+            "- how many gems you have found and a bar with the next 5 steps: how many gems pay which multiplier",
+            "The mascot llama with a miner's helmet and headlamp is right there with you: it cheers at every gem while the mine cart next to it fills up, and at a mine it gets a fright and ends up covered in soot. From ×3 coins rain down, from ×10 and when clearing the field there is confetti too."
+          ]
+        },
+        {
+          "h": "Auto mode",
+          "body": [
+            "[A] or the Auto button opens auto mode between rounds. The window sits over the side panel and leaves the grid free: with a click or with the arrow keys and [Space] you mark the tiles that will be revealed every round - at most as many as there are gems. The game remembers your choice per field size; [Del], [Backspace] or Clear removes all marks.",
+            "The window shows how many tiles are marked and what the round pays if all of them are safe: multiplier and chance. You also choose the number of rounds (5, 10, 25, 50 or 100) and, if you like, two limits: stop at a profit of and stop at a loss of (off, 100, 500, 1000, 5000, 10000 or 50000 chips, counted from the start).",
+            "START AUTO or [Enter]: every round takes the bet and quickly reveals the marked tiles one after another. If all of them are safe, it cashes out - with the multiplier for as many gems as you marked. If a mine is under one of the marked tiles, the round is lost.",
+            "Auto mode runs until all rounds are played, a limit kicks in, your chips don't cover the next bet or you press STOP, [Space], [Enter], [A] or [Esc]. If you stop in the middle of a round, it stays open - you reveal more by hand or cash out. Bet, field size and mines are locked while auto mode runs.",
+            "[T] toggles turbo - also when playing by hand: flipping tiles, explosions and auto rounds run two and a half times as fast."
+          ]
+        },
+        {
+          "h": "Fairness check",
+          "body": [
+            "Lama Mines is provably fair: the minefield is fixed before you click the first tile - and after the round you can check that nothing was moved. Four values make this work:",
+            "- Server seed: a secret random value (32 characters) that the game fixes before the round.",
+            "- Hash: the SHA-256 fingerprint of the server seed. It is shown before the round (hash of the next round). The seed can't be worked out from it - but even one different character in the seed would give a completely different hash.",
+            "- Client seed: your share of the randomness (8 characters). New client seed rolls a fresh one - only outside a round. So the game doesn't decide the result on its own.",
+            "- No.: the round number. It goes up by one every round, so no two rounds are alike.",
+            "Game name, server seed, client seed and round number make up the randomness of the round (mulberry32). It shuffles the list of all tiles (counted row by row, starting top left), and the first places of the shuffled list - as many as there are mines - become mines.",
+            "After the round the server seed is revealed; by then the hash of the next round is already fixed.",
+            "[F] opens the Fairness window: at the top the hash of the next round (during a round also the hash of this round), your client seed and the round number, below that the last 12 rounds with No., hash and result, newest at the top (the mouse wheel scrolls). Clicking a row shows field size, mines, hash, server seed and client seed.",
+            "Verify computes the SHA-256 of the seed again, compares it with the hash shown beforehand, rebuilds the minefield and also checks the result - were the revealed tiles right, does the multiplier match? A tick or cross and a small preview of the field show: Matches or Does not match.",
+            "You can also check the hash yourself: compute the SHA-256 of the server seed with any tool and compare it with the hash."
+          ]
+        },
+        {
+          "h": "Statistics",
+          "body": [
+            "[S] opens the statistics of your profile: rounds, won and lost, your return (what percentage of your bets came back), wagered and paid out, net result, biggest win and best multiplier - plus gems found, mines hit and fields cleared.",
+            "A curve shows the net result of the last 100 rounds. A round counts as won if more was paid out than wagered.",
+            "In the long run your return settles at about 97% - over a few rounds it can swing a lot up or down."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- Before a round: [Space] or [Enter] = PLAY, [1] to [4] = field size, [Left] / [Right] = number of mines",
+            "- [Up] / [Down], [+] / [-] or mouse wheel: change the bet (only between rounds)",
+            "- During a round: clicking a tile reveals it. The arrow keys move a cursor; the first [Space] only shows it, every further one reveals the tile under it.",
+            "- [R] or the Random tile button: reveal a random hidden tile; [Enter], [C] or CASH OUT: cash out (from the first gem on)",
+            "- After the result: [Space] or PLAY starts the next round right away, other keys go back to the setup.",
+            "- [A]: auto mode, [S]: statistics, [F]: fairness, [T]: turbo - or the four buttons at the top. [Esc] or a click next to the window closes it, [Esc] also stops auto mode.",
+            "The keys are fixed and don't depend on your key bindings - player keys like WASD don't apply here. Field size, number of mines, your last bet, turbo and the auto settings are saved in settings.json (section lamamines)."
+          ]
+        },
+        {
+          "h": "Llama chips",
+          "body": [
+            "Lama Mines plays with the shared Llama Bank account - together with Blackjack, Poker, Casino, Lama Crossing and Lama Plinko (start 1000, stored in mem.json).",
+            "The highscore is the peak of 1000 + your Lama Mines balance; wins in the other Llama Bank games don't count here.",
+            "Below 10 chips you are broke: [Space], [Enter] or a click takes a bank loan and fills your account back up to 1000. Loans don't count towards the balance.",
+            "Stopping mid-round is safe: the bet is booked at the start, and after every gem found the field size, mines, the seeds of the round and the revealed tiles are saved. On the next start the field is recalculated from the seed and you continue exactly there.",
+            "History, fairness data, statistics, the auto marks and the carried-over fraction belong to your profile."
+          ]
+        },
+        {
+          "h": "Achievements",
+          "body": [
+            "- Lama Mines regular: 25 rounds",
+            "- Milestone: highscore 3000",
+            "- Lama Mines master: highscore 10000",
+            "- Treasure Vault (rare): Clear a whole field in Lama Mines – every gem found",
+            "- Deep Digger (epic): Cash out at ×10 or more in Lama Mines",
+            "- Diamond Llama (legendary): Cash out at ×1000 or more in Lama Mines"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Every round is drawn afresh, and no tile is safer than another - not the corners, not the middle. Patterns from earlier rounds don't help.",
+            "- Treasure Vault: on 4×4 with 1 mine, clearing the field works in one round out of 16 (×15.52) - just like with 15 mines, where there is only one gem. On 5×5 with 3 mines it is only one in 2300.",
+            "- Deep Digger (×10): on 5×5 with 3 mines 13 gems are enough (×10.14), which works out in about every 10th to 11th round. With 24 mines the very first gem pays ×24.25 - in one round out of 25.",
+            "- Diamond Llama (×1000): the best routes work out in about one round out of 1100, for example 5×5 with 10 mines after 10 gems (×1,055.84) or 7×7 with 12 mines after 19 gems (×1,034.71). On 5×5 with 3 mines it only works by clearing the whole field (×2,231).",
+            "- In auto mode only the number of marked tiles counts, not which ones: 5 marked tiles on 5×5 with 3 mines are all safe in 49.6% of rounds and then pay ×1.95.",
+            "- Decide beforehand after how many gems you will cash out - and stick to it. Thanks to the fixed return no strategy is better than another, only more or less risky. Going for the maximum win doesn't pay: the capped step pays less than its risk would be worth."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "llama",
+        "plinko",
+        "ball",
+        "yarn",
+        "galton board",
+        "pegs",
+        "slots",
+        "multiplier",
+        "chips",
+        "llama bank",
+        "bet",
+        "rows",
+        "risk",
+        "bell curve",
+        "auto",
+        "turbo",
+        "provably fair",
+        "fairness",
+        "hash",
+        "seed",
+        "sha-256",
+        "statistics"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "A golden ball of yarn drops through a triangle of pegs. At every peg it bounces left or right and lands in one of the slots at the bottom. Every slot shows a multiplier: bet times multiplier is your payout.",
+            "Pick a bet per ball (1, 2, 5, 10, 20, 50, 100, 200, 500 or 1000 llama chips) and press DROP: the bet is taken, the llama at the top of the board nods and lets the ball drop.",
+            "The outer slots pay the most, the ones in the middle return less than the bet - but that's where most balls land. You get bet times multiplier in whole chips; whatever is left below one chip is remembered and added to the next ball.",
+            "The slot that was hit bounces, a popup shows the multiplier, and the higher it is, the brighter the sound. From ×10 coins rain down, from ×100 there's a banner and confetti as well. The top right shows the history of the last 12 balls."
+          ]
+        },
+        {
+          "h": "Rows & risk",
+          "body": [
+            "You set both before dropping; while balls are on the board or auto mode is running, they are locked. The game also shows the highest multiplier and the exact return of the chosen table.",
+            "- Rows: 8 to 16 rows of pegs with [Left] / [Right] (default 12). With n rows there are n + 1 slots.",
+            "- Risk: Low, Medium (default) or High with [1] to [3].",
+            "More rows make the edge slots rarer and higher. The risk decides how far apart the middle and the edge are:",
+            "- Low: middle ×0.7, edge ×5.3 (8 rows) up to ×16 (16 rows) - small, frequent wins",
+            "- Medium: middle ×0.4–0.5, edge ×13 up to ×110",
+            "- High: middle ×0.2, edge ×32 up to ×1,000 - almost always less than your bet, very rarely a huge hit",
+            "Example - the 17 slots with 16 rows on Medium: 110 · 38 · 14 · 6.2 · 2.8 · 1.4 · 0.8 · 0.5 · 0.4 · 0.5 · 0.8 · 1.4 · 2.8 · 6.2 · 14 · 38 · 110",
+            "With 16 rows, about 55% of all balls return less than the bet on Low, 79% on Medium and as many as 92% on High."
+          ]
+        },
+        {
+          "h": "How the ball falls",
+          "body": [
+            "The board is a Galton board: at every peg the ball goes left or right with exactly 50% - like a coin toss. The slot is simply the number of bounces to the right: with 12 rows that's 0 (far left) to 12 (far right).",
+            "A ball only reaches the very edge if it bounces the same way at every single peg. Lots of paths lead to the middle, though. That's why the balls pile up in the middle in a bell curve (binomial distribution):",
+            "- 8 rows: middle slot 27.34%, each edge slot 1 in 256",
+            "- 12 rows: middle slot 22.56%, each edge slot 1 in 4,096",
+            "- 16 rows: middle slot 19.64%, each edge slot 1 in 65,536",
+            "Move the mouse over a slot: it shows its multiplier, its chance (even tiny ones like 0.0015%) and what it pays at your bet.",
+            "The 27 tables (9 row counts × 3 risks) are symmetric, never get smaller towards the edge and - calculated exactly - pay back 96.9% to 97.1% of all bets in the long run. The house edge is therefore about 3%, whatever you set. Rows and risk only change how wildly your luck swings."
+          ]
+        },
+        {
+          "h": "Many balls at once",
+          "body": [
+            "You don't have to wait for a ball to land: up to 50 balls can bounce across the board at the same time - the \"In play\" counter keeps track. Hold [Space] and after a short moment they drop in rapid fire - so densely that about 30 balls are in play at once.",
+            "Each ball's path is drawn the moment it is dropped. That's why bet and payout are booked and saved together right away - but you only see the payout once the ball reaches the bottom. Only then can you bet those winnings again.",
+            "If you leave the game while balls are still falling, nothing is lost: the chips are already booked, and achievements from those balls are awarded when you leave.",
+            "Turbo halves the balls' flight time and the gap between rapid-fire drops - toggle it with [T]."
+          ]
+        },
+        {
+          "h": "Auto mode",
+          "body": [
+            "[A] opens auto mode. There you set (the window also works out the total stake of the run):",
+            "- Balls: 10, 25, 50, 100, 250, 500 or 1000",
+            "- Stop at a profit of / Stop at a loss of: off, 100, 500, 1000, 5000, 10000 or 50000 chips",
+            "- Turbo on or off",
+            "START AUTO drops the balls one after another with your current bet, rows and risk; those three are locked meanwhile. Auto mode ends when all balls have been dropped, the profit or loss since the start reaches a limit, your chips no longer cover the next ball even after the flying balls have landed, or you press STOP, [Space] or [Esc]. Balls already on their way still land.",
+            "The auto settings are saved in settings.json (section lamaplinko)."
+          ]
+        },
+        {
+          "h": "Fairness check",
+          "body": [
+            "In Lama Plinko you can check for yourself that no ball is steered after the fact (\"provably fair\"). Three values make that possible:",
+            "- Server seed: a secret random value of 32 characters that the game fixes before the drop. Every ball gets its own.",
+            "- Hash: the SHA-256 fingerprint of the server seed. You can see it before the drop. It doesn't give away the seed, but any other seed would have a completely different hash - so the game can no longer swap the seed.",
+            "- Client seed: your own share (8 characters). \"New client seed\" rolls a new one as soon as no ball is in the air - so the game doesn't decide the randomness on its own.",
+            "On top of that there is the number (nonce), which goes up by 1 with every ball. Server seed, client seed and number together make up the ball's randomness: one coin toss per row, and every \"right\" moves it one slot further to the right.",
+            "After the landing the server seed is revealed - by then the hash of the next ball is already fixed.",
+            "[F] opens the fairness window with the last 12 balls: number, hash, server seed and client seed, plus rows, risk, slot and multiplier. \"Verify\" computes the seed's SHA-256 again, compares it with the hash shown beforehand and recalculates the ball's path: \"Matches\" means everything checks out, \"Does not match\" would reveal a mismatch. A mini preview shows the recalculated path.",
+            "For the curious: the random generator is mulberry32, seeded with the FNV-1a value of the text \"lamaplinko|server seed|client seed|number\". Each row draws a number between 0 and 1; below 0.5 means right. So every ball can also be recalculated with your own tools."
+          ]
+        },
+        {
+          "h": "Statistics",
+          "body": [
+            "[S] opens your profile's statistics for Lama Plinko:",
+            "- Tiles: Rounds, Won, Lost, Wagered, Paid out, Net result, Biggest win, Best multiplier, Your return. Every ball counts on its own; won means more than the bet came back, lost means less.",
+            "- a net-result curve of the last 100 balls",
+            "- the hit distribution: your hits per slot as bars, the expected distribution (binomial) in gold - separately for each row count, switch with [Left] / [Right]",
+            "At first your return jumps around a lot (one edge hit on High sends it way up); with many balls it approaches about 97%. In the same way, after a few hundred balls the bars close in on the golden curve."
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- [Space], [Enter] or a click on DROP or the board: drop a ball - hold for rapid fire",
+            "- [Up] / [Down], [+] / [-] or mouse wheel: change the bet per ball",
+            "- [Left] / [Right]: rows (8 to 16), [1] to [3]: risk",
+            "- [A]: auto mode, [S]: statistics, [F]: fairness, [T]: turbo",
+            "- [Esc]: close an open window or stop auto mode",
+            "- Mouse over a slot: multiplier, chance and payout at your bet",
+            "In the windows: in the auto window [Up] / [Down] picks a line, [Left] / [Right] changes it and [Enter] or [Space] starts or stops. In the statistics [Left] / [Right] switches the row count of the distribution. In the fairness window the arrow keys or the mouse wheel pick a ball, [Enter] verifies it and [C] gets a new client seed. [Esc] or the same letter key closes the window again.",
+            "Everything also works with the mouse; clicking next to an open window closes it. Rows, risk, bet, turbo and the auto settings are saved in settings.json (section lamaplinko)."
+          ]
+        },
+        {
+          "h": "Llama chips",
+          "body": [
+            "Lama Plinko plays with the shared Llama Bank account - together with Blackjack, Poker, Casino, Lama Crossing and Lama Mines (start 1000, stored in mem.json).",
+            "The highscore is the peak of 1000 + your Lama Plinko balance; wins in the other games don't count here.",
+            "If your account doesn't cover the chosen bet, pick a smaller one. With 0 chips you are broke: [Enter] or a click takes a bank loan and fills your account back up to 1000. Loans don't count towards the balance.",
+            "History, statistics and fairness data belong to your profile and are stored in mem.json as well."
+          ]
+        },
+        {
+          "h": "Achievements",
+          "body": [
+            "- Lama Plinko regular: 25 rounds",
+            "- Milestone: highscore 3000",
+            "- Lama Plinko master: highscore 10000",
+            "- Edge Hit (rare): Hit the outermost slot in Lama Plinko (12 rows or more)",
+            "- Yarn Storm (epic): Have 25 balls on the board at once in Lama Plinko",
+            "- Plinko Legend (legendary): Hit the outermost slot in Lama Plinko with 16 rows on high risk"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Every ball is independent: after ten hits in the middle the edge is not \"due\".",
+            "- No setting beats the return. On Low your account barely swings, on High you lose most of the time - with a small chance of a huge hit.",
+            "- Small bets are no disadvantage: fractions of a chip are never lost. On 1 chip, ×0.7 pays nothing at first, but the 0.7 chips are remembered and paid out with one of the next balls as soon as a whole chip is full. So the return of about 97% holds for every bet.",
+            "- Edge Hit: fastest with 12 rows - there about 1 in 2,048 balls lands on the very edge (left or right). At 1 chip per ball that costs only about 3 chips per 100 balls on average.",
+            "- Yarn Storm: just hold [Space] - rapid fire puts about 30 balls on the board at once with any number of rows, and after about 2 seconds the achievement is yours. Auto mode drops too leisurely for it.",
+            "- Plinko Legend: with 16 rows on High only 1 in 32,768 balls lands on the very edge - with auto runs of 1000 balls that takes about 33 runs on average. That slot pays ×1,000, though.",
+            "- Set a budget beforehand and use the loss limit in auto mode."
           ]
         }
       ]

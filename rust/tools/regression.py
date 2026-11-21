@@ -163,6 +163,76 @@ LAEUFE = {
                      ("single", 400, spur("_*10 Up Up Up Up Up Up 4 _*10 space _*21 space _*319 Return"), 0),
                      ("single", 110, spur("_*10 w _*66 space"), 0),
                      ("single", 160, spur("_*10 w w w Up _*26 space _*89 space"), 0)],
+    # PLATZHALTER (RUST-INFRA): Lama Mines / Lama Plinko zeichnen nur ihren Namen.
+    # RUST-MINES bzw. RUST-PLINKO ersetzen je ihre Zeile durch echte Laeufe.
+    # Lama Mines (Spuren aus bots/bot_lamamines.py, 640x480, Startwert 7): Runde per
+    # Tastatur (Cursor, R = Zufallsfeld, Enter, Leertaste = naechste Runde); Mine per
+    # Maus - Explosion, BUMM-Tafel mit Rest-Aufdeckung, danach Ruhe; Einstellungen per
+    # Tasten/Maus/Mausrad + Zufallsfeld + AUSZAHLEN + Tooltip; 4x4/8 Minen abgeraeumt;
+    # Hoechstgewinn x100.000 (5x5/16 Minen); Auto-Fenster (Markierungen, Optionen,
+    # Turbo) und Auto-Lauf; Statistik; Fairness (Nachrechnen, Liste, Mausrad, neuer
+    # Client-Seed); Pleite mit 1000er-Einsatz + Kredit
+    "lamamines": [("single", 300, spur("_*5 space _*19 Left Left Left Up Up space _*14 Right space _*14 Right space r "
+                                       "_*14 Down Down Right Right Up Up Up space Return _*3 space _*16 space"), 0),
+                  ("single", 90, spur("_*5 ~300:300 _*3 @587:454 _*19 @53:122 _*14 @116:122 _*14 @242:122"), 0),
+                  ("single", 160, spur("_*5 ~300:300 _*3 @587:454 _*19 @53:122 _*14 @116:122 _*14 @242:122 "
+                                       "_*30 space"), 0),
+                  ("single", 300, spur("_*5 ~300:300 _*3 @587:454 _*19 @53:122 _*14 @116:122 _*14 @242:122 "
+                                       "_*30 space"), 0),
+                  ("single", 400, spur("_*4 3 _*4 Right Right _*3 Up Up _*3 %300:300:1 _*3 %300:300:-1 _*3 @111:454 "
+                                       "_*3 @24:454 _*3 1 _*3 4 _*3 @462:192 _*4 @611:221 _*3 @549:221 _*3 @559:246 "
+                                       "_*3 ~473:246 _*3 @457:454 _*5 @200:200 _*5 ~300:200 _*3 @587:454 _*19 @252:454 "
+                                       "_*14 @305:122 ~457:454 _*3 @457:454 _*20 ~60:55"), 0),
+                  ("single", 200, spur("_*4 1 _*3 @559:246 _*3 space _*18 @219:130 _*14 @61:209 _*14 @140:209 "
+                                       "_*14 @219:209 _*14 @140:288 _*14 @298:288 _*14 @219:367 _*14 @298:367"), 0),
+                  ("single", 200, spur("_*4 @559:246 _*2 Right _*3 space _*19 @305:122 _*14 @116:185 _*14 @116:248 "
+                                       "_*14 @116:311 _*14 @179:311 _*14 @242:311 _*14 @305:311 _*14 @53:374"), 0),
+                  ("single", 60, spur("_*4 a _*4 @53:122 _*2 @116:185 _*2 ~179:248 _*3 @179:248 _*3 @179:248 _*3 "
+                                      "Right space Right space _*3 @392:133 _*2 @495:172 _*2 @421:211 _*3 t"), 0),
+                  ("single", 300, spur("_*4 a _*4 @53:122 _*2 @116:185 _*2 ~179:248 _*3 @179:248 _*3 @179:248 _*3 "
+                                       "Right space Right space _*3 @392:133 _*2 @495:172 _*2 @421:211 _*3 t _*3 "
+                                       "@531:399"), 0),
+                  ("single", 420, spur("_*4 a _*4 @53:122 _*2 @116:185 _*2 @179:248 _*2 @242:311 _*3 @392:133 _*2 t "
+                                       "_*3 Return _*367 s _*10 ~300:350"), 0),
+                  ("single", 800, spur("_*4 a _*4 @53:122 _*2 @116:185 _*2 @179:248 _*2 @242:311 _*3 @392:133 _*2 t "
+                                       "_*3 Return _*367 s _*10 ~300:350 _*10 ~120:120 _*5 Escape _*5 @110:55 _*5 "
+                                       "@192:55 _*10 @319:245 _*10 @152:191 _*5 @319:245 _*5 @152:172 _*3 @319:245 "
+                                       "_*5 %200:300:-1 _*5 %200:300:1 _*5 @536:124 _*10 @10:10 _*5 f _*5 ~152:153"), 0),
+                  ("single", 140, spur("_*4 Up Up Up Up Up Up _*3 space _*19 @53:122 _*14 Left Right Right Right "
+                                       "space _*75 Return"), 0),
+                  ("single", 400, spur("_*4 Up Up Up Up Up Up _*3 space _*19 @53:122 _*14 Left Right Right Right "
+                                       "space _*75 Return _*30 @300:300 _*20 space"), 0)],
+    # Lama Plinko (Spuren aus bots/bot_lamaplinko.py, 640x480, Startwert 7): zwei Kugeln,
+    # Landung mit Popup, Tooltips (Fach, Knopf); Risiko/Reihen/Einsatz per Tasten, Sperre
+    # im Flug; Dauerfeuer 16 Reihen + Turbo (Wollknaeuel-Regen); alle Knoepfe per Maus,
+    # Fenster auf/zu, Mausrad; Auto per Tastatur (Turbo, Gewinnziel) und Maus (10 Kugeln,
+    # Verlustgrenze, Esc-/Leertaste-Stopp); Statistik (leer, Kacheln, Kurve, Verteilung,
+    # Balken-Tooltip, Reihen +/-); Fairness (leer, gesperrter Client-Seed, Nachrechnen,
+    # Liste, Mausrad, neuer Client-Seed); x32 per Dauerfeuer (Muenzregen); 8 Reihen/Hoch
+    # mit 1000er-Einsatz bis pleite + Kredit. Jackpot x1000, Pleite beim Start, kaputter
+    # Spielstand, Fortsetzen: per vergleich.py --daten (siehe rust/README.md).
+    "lamaplinko": [("single", 200, spur("_*20 space _*30 space _*128 ~320:381 _*10 ~308:454"), 0),
+                   ("single", 200, spur("_*10 3 Left Left Left Left Up Up space _*5 Right 1 _*10 space minus Down "
+                                        "_*95 Right 2 plus equal KP_Add KP_Subtract KP_3 _*8 space"), 0),
+                   ("single", 170, spur("_*10 t Right Right Right Right +space _*20 " + wdh("*space _*1", 60)
+                                        + " -space"), 0),
+                   ("single", 170, spur("_*6 @69:131 _*4 @28:176 _*4 @28:176 _*4 @111:454 _*4 @24:454 _*4 @24:454 "
+                                        "_*4 @579:454 _*20 @320:200 _*6 @110:176 _*6 @380:454 _*6 @272:454 _*10 "
+                                        "@566:118 _*6 @308:454 _*10 @5:5 _*6 @344:454 _*10 @566:64 _*6 %320:240:1 "
+                                        "_*4 %320:240:1 _*4 %320:240:-1 ~579:454 _*6 ~28:176 _*4 ~272:454"), 0),
+                   ("single", 520, spur("_*10 a _*6 Up Right Down Down Right Right Down Left Return _*274 @272:454 "
+                                        "_*4 @99:165 @172:259 @172:259 @156:292 _*4 @319:351 _*40 Escape _*122 a "
+                                        "_*4 Return _*20 space"), 0),
+                   ("single", 150, spur("_*6 s _*10 s t " + wdh("space _*8", 5) + " space _*67 s _*10 ~315:327"), 0),
+                   ("single", 185, spur("_*6 s _*10 s t " + wdh("space _*8", 5) + " space _*67 s _*10 ~315:327 _*6 "
+                                        "@542:222 _*4 Left _*4 Right Right Right ~259:327 _*8 @565:222 _*6 Left"), 0),
+                   ("single", 310, spur("_*6 f _*10 f _*4 space _*10 space _*10 space _*10 f _*10 c _*100 Escape "
+                                        "_*10 f _*6 Return _*10 Down Return _*10 %320:240:-1 _*6 @151:202 _*6 "
+                                        "@316:399 _*10 %320:240:1 _*4 c _*20 @509:122 _*20 Escape _*10 f _*6 Up "
+                                        "Right"), 0),
+                   ("single", 210, spur("_*10 3 Left Left Left Left t +space " + wdh("*space", 144) + " -space"), 0),
+                   ("single", 1270, spur("_*10 Up Up Up Up Up Up 3 Left Left Left Left t _*5 " + wdh("space _*48", 23)
+                                         + " space _*78 Return"), 0)],
     "minigolf": [("single", 900, "Return _ _ _ Up Up Up space _ _ _ _ _ _ _ _ _ _ _ _ g z Down space", 20),
                  ("single", 700, "3 Right Right Return _ _ <300:200 _ _ _ >300:200 _ _ _ _ _ _ f", 15),
                  # Editor -> Speichern -> Bibliothek -> Teilen (Downloads) -> Import
@@ -185,6 +255,8 @@ BILDSCHIRME = [
     ("screen:wiki", 80, "s n a _ k e _ BackSpace ~100:150 @100:150 Next _ Escape _ t e t r i s Down Next", 1, False),
     ("screen:wiki:snake", 40, "Next Next Down ~100:200 Up Prior", 2, False),
     ("screen:wiki:lamacrossing", 60, "Down Down Next Down", 3, False),
+    ("screen:wiki:lamamines", 60, "Next Next Down Up Next", 3, False),
+    ("screen:wiki:lamaplinko", 60, "Down Down Next Down", 3, False),
     ("screen:replays", 40, "Left Left Tab Right", 3, False),
     ("screen:menu", 90, "~320:330 _ _ ~150:360 _ _ ~480:300", 4, True),
     ("screen:menu", 60, "~320:330 _ ~150:360", 4, "classic"),

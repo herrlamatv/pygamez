@@ -1,6 +1,6 @@
 //! icons.rs
 //! ========
-//! Die 47 Mini-Piktogramme der Spieleliste - `main._draw_icon`.
+//! Die 49 Mini-Piktogramme der Spieleliste - `main._draw_icon`.
 //!
 //! In Python zeichnet sie ein Tk-Canvas (`create_oval`, `create_line`,
 //! `create_polygon` ...). Hier zeichnet rustgame dieselben Formen mit
@@ -419,6 +419,30 @@ pub fn draw_icon(s: &mut Surface, cx: i32, cy: i32, name: &str, color: Color, bg
             rect(s, c, cx - 3, cy - 7, cx, cy + 1);
             oval(s, c, cx - 4, cy - 10, cx + 4, cy - 5);
             poly(s, c, &[(cx - 3, cy - 9), (cx - 2, cy - 12), (cx, cy - 9)]);
+        }
+        "LamaMinesGame" => {
+            // geschliffener Edelstein (Krone + Spitze) mit Facettenlinien
+            poly(s, c, &[(cx - 9, cy - 3), (cx - 5, cy - 8), (cx + 5, cy - 8), (cx + 9, cy - 3), (cx, cy + 9)]);
+            line(s, bg, &[(cx - 9, cy - 3), (cx + 9, cy - 3)], 1, false);
+            line(s, bg, &[(cx - 3, cy - 3), (cx, cy + 8), (cx + 3, cy - 3)], 1, false);
+            line(s, bg, &[(cx - 5, cy - 8), (cx - 3, cy - 3)], 1, false);
+            line(s, bg, &[(cx + 5, cy - 8), (cx + 3, cy - 3)], 1, false);
+        }
+        "LamaPlinkoGame" => {
+            // Stift-Dreieck (1-2-3 Reihen) mit fallender Kugel und Faechern;
+            // px rechnet Python mit Kommazahlen (row / 2.0), die Werte sind
+            // aber immer ganz (Abstand 6).
+            for row in 0..3 {
+                for i in 0..=row {
+                    let px = (cx as f64 + (i as f64 - row as f64 / 2.0) * 6.0) as i32;
+                    let py = cy - 5 + row * 5;
+                    oval(s, c, px - 1, py - 1, px + 1, py + 1);
+                }
+            }
+            oval(s, c, cx + 1, cy - 11, cx + 5, cy - 7);
+            for dx in [-9, -3, 3] {
+                rect(s, c, cx + dx, cy + 8, cx + dx + 5, cy + 10);
+            }
         }
         _ => {
             let first: String = name.chars().take(1).collect();

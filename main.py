@@ -541,6 +541,27 @@ def _draw_icon(cv, cx, cy, name, color, bg):
         cv.create_oval(cx - 4, cy - 10, cx + 4, cy - 5, fill=color, outline="")
         cv.create_polygon(cx - 3, cy - 9, cx - 2, cy - 12, cx, cy - 9,
                           fill=color, outline="")
+    elif name == "LamaMinesGame":
+        # geschliffener Edelstein (Krone + Spitze) mit Facettenlinien
+        cv.create_polygon(cx - 9, cy - 3, cx - 5, cy - 8, cx + 5, cy - 8,
+                          cx + 9, cy - 3, cx, cy + 9, fill=color, outline="")
+        cv.create_line(cx - 9, cy - 3, cx + 9, cy - 3, fill=bg, width=1)
+        cv.create_line(cx - 3, cy - 3, cx, cy + 8, cx + 3, cy - 3, fill=bg,
+                       width=1)
+        cv.create_line(cx - 5, cy - 8, cx - 3, cy - 3, fill=bg, width=1)
+        cv.create_line(cx + 5, cy - 8, cx + 3, cy - 3, fill=bg, width=1)
+    elif name == "LamaPlinkoGame":
+        # Stift-Dreieck (1-2-3 Reihen) mit fallender Kugel und Fächern
+        for row in range(3):
+            for i in range(row + 1):
+                px = cx + (i - row / 2.0) * 6
+                py = cy - 5 + row * 5
+                cv.create_oval(px - 1, py - 1, px + 1, py + 1, fill=color,
+                               outline="")
+        cv.create_oval(cx + 1, cy - 11, cx + 5, cy - 7, fill=color, outline="")
+        for dx in (-9, -3, 3):
+            cv.create_rectangle(cx + dx, cy + 8, cx + dx + 5, cy + 10,
+                                fill=color, outline="")
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))

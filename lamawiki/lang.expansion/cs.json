@@ -147,7 +147,7 @@
           "body": [
             "Každá hra s postupem má v mem.json vlastní sekci, například:",
             "- sudoku: vyřešené úrovně s hvězdami a nejlepším časem, rozehraná sudoku a Sudoku dne se sérií.",
-            "- casino: účet Lama banky - lama žetony pro Blackjack, Poker, Casino a Lama Crossing s bilancí každé hry a rozehraným přechodem v Lama Crossing.",
+            "- casino: účet Lama banky - lama žetony pro Blackjack, Poker, Casino, Lama Crossing, Lama Mines a Lama Plinko s bilancí každé hry, rozehraným přechodem v Lama Crossing, rozehraným kolem a označením pro automatický režim v Lama Mines a historií, daty férovosti, statistikou a převáděným zbytkem Lama Mines a Lama Plinko.",
             "- crossy: sebrané mince, koupené postavy a denní maximum v Crossy Road.",
             "- tetris: nejlepší čas ve Sprintu, nejlepší skóre v Ultra a bilance Versus proti AI.",
             "- g2048: uložené partie 2048 a nejlepší skóre pro každou velikost desky a režim.",
@@ -349,7 +349,7 @@
         {
           "h": "Přehled",
           "body": [
-            "256 úspěchů napříč všemi 47 hrami - od prvního spuštění po Perfect Clear v Tetrisu.",
+            "268 úspěchů napříč všemi 49 hrami - od prvního spuštění po Perfect Clear v Tetrisu.",
             "Každý úspěch má vzácnost a tím i bodovou hodnotu; součet dává tvoji úroveň.",
             "Najdeš je za tlačítkem Úspěchy a statistiky, záložka Úspěchy. Filtr skryje získané nebo zbývající."
           ]
@@ -360,7 +360,7 @@
             "- Obecné: cíle napříč sbírkou - partie, vyzkoušené hry, herní čas, rekordy, výhry, herní dny, série, úroveň a souboje. K tomu extra jako noční sova, maraton nebo víkendový hráč.",
             "- Bodové mety: spravedlivý cílový počet bodů pro každou hru.",
             "- Mistrovské stupně: druhá, výrazně vyšší meta - jen pro hry s otevřeným bodováním.",
-            "- Stálý host: 25 partií jedné hry. Existuje pro všech 47 her.",
+            "- Stálý host: 25 partií jedné hry. Existuje pro všech 49 her.",
             "- Zvláštní okamžiky: šachmat, Yahtzee, dlaždice 4096, hole-in-one, hattrick v air hockeyi, čtyři duchové po jedné pilulce a mnoho dalšího."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Lama žetony",
           "body": [
-            "Blackjack, Poker a Casino sdílejí jeden účet v Lama bance: začínáš s 1000 lama žetony a zůstatek se trvale ukládá.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines a Lama Plinko sdílejí jeden účet v Lama bance: začínáš s 1000 lama žetony a zůstatek se trvale ukládá.",
             "Sázka se strhne hned při rozdání - kdo opustí rozehranou hru, přijde o ni.",
             "Rekord je nejvyšší stav tvé bilance v blackjacku: 1000 plus vše, co jsi v blackjacku vyhrál a prohrál. Výhry v ruletě, na automatu nebo v pokeru se sem nepočítají.",
             "Pod 10 žetony jsi na mizině: [Enter] vezme úvěr od banky a doplní účet zpět na 1000. Úvěry se do bilance nepočítají."
@@ -1901,7 +1901,7 @@
         {
           "h": "Lama žetony",
           "body": [
-            "Hraje se o lama žetony z Lama banky - společný účet s Blackjackem a Casinem (start 1000, trvale ukládán).",
+            "Hraje se o lama žetony z Lama banky - společný účet s Blackjackem, Casinem, Lama Crossing, Lama Mines a Lama Plinko (start 1000, trvale ukládán).",
             "Na začátku hry leží tvůj účet na stole jako stack; co jde do banku, se hned strhne. Pokud opustíš stůl uprostřed hry, tvůj podíl v banku propadá - zbytek se vrátí na účet.",
             "Rekord je nejvyšší stav tvé bilance v pokeru: 1000 plus vše, co jsi v pokeru vyhrál a prohrál. Výhry v jiných hrách se sem nepočítají.",
             "Na mizině (méně než big blind 20, ve Video Pokeru méně než 10) = úvěr od banky jedním kliknutím, účet je znovu na 1000."
@@ -2976,7 +2976,7 @@
         {
           "h": "Lama banka",
           "body": [
-            "Casino, Blackjack a Poker hrají se stejným účtem: lama žetony (start 1000). Sázky se strhnou hned, výhry se připíšou - vše se trvale ukládá.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines a Lama Plinko hrají se stejným účtem: lama žetony (start 1000). Sázky se strhnou hned, výhry se připíšou - vše se trvale ukládá.",
             "Každá hra vede vlastní bilanci. Rekord Casina je nejvyšší stav 1000 + bilance Casina; výhry v Blackjacku nebo Pokeru se sem nepočítají.",
             "Na mizině (méně než minimální sázka) dostaneš úvěr od banky: účet se doplní zpět na 1000. Úvěry se nepočítají do žádné bilance; jejich počet je vidět vpravo nahoře."
           ]
@@ -3109,7 +3109,7 @@
         {
           "h": "Lama žetony",
           "body": [
-            "Lama Crossing hraje se společným účtem Lama banky - spolu s Blackjackem, Pokerem a Casinem (start 1000, uloženo v mem.json).",
+            "Lama Crossing hraje se společným účtem Lama banky - spolu s Blackjackem, Pokerem, Casinem, Lama Mines a Lama Plinko (start 1000, uloženo v mem.json).",
             "Rekord je nejvyšší stav 1000 + tvé bilance v Lama Crossing; výhry v Blackjacku, Pokeru nebo Casinu se sem nepočítají.",
             "Pod 10 žetony jsi na mizině: [Enter] nebo kliknutí vezme úvěr od banky a doplní účet zpět na 1000. Úvěry se do bilance nepočítají.",
             "Skončit uprostřed přechodu je bezpečné: sázka, obtížnost i pruh se uloží a při dalším spuštění pokračuješ přesně tam."
@@ -3134,6 +3134,317 @@
             "- Při dobrém načasování se až na druhou stranu dostaneš zhruba v každém 7. kole na Lehkou, v každém 38. na Střední, v každém 614. na Těžkou a jen v jednom z 32 768 na Extrémní.",
             "- Na Ocelové nervy (×10) stačí na Extrémní 4 pruhy (×15,52), na Těžkou 7 (×11,77) a na Střední 13 (×10,37); na Lehkou nikdy (nejvýš ×6,57). Na Provazochodce (×100 na Extrémní) potřebuješ 7 pruhů (×124,16) - to vyjde zhruba v každém 128. kole.",
             "- Rozhodni se předem, při jakém násobiteli vybereš - a drž se toho. Díky pevné návratnosti není žádná strategie lepší než jiná, jen víc nebo méně riskantní."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "lama",
+        "mines",
+        "miny",
+        "drahokamy",
+        "pole",
+        "odkrýt",
+        "vyplatit",
+        "násobitel",
+        "žetony",
+        "lama banka",
+        "sázka",
+        "riziko",
+        "auto",
+        "férovost",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "statistika",
+        "kontrolní kód"
+      ],
+      "sections": [
+        {
+          "h": "Jak se hraje",
+          "body": [
+            "Pod každým zakrytým políčkem leží drahokam, nebo mina. Každý nalezený drahokam zvedne násobitel - mina stojí sázku.",
+            "Vyber sázku (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 nebo 10000 lama žetonů) a stiskni HRÁT: sázka se strhne a pole se vylosuje. Od této chvíle je pevně dané, kde leží miny - ověřitelné kontrolou férovosti.",
+            "Pak odkrýváš políčko po políčku: kliknutím, šipkami a klávesou [Mezerník] nebo klávesou [R] či tlačítkem Náhodně na náhodném zakrytém políčku. Od prvního drahokamu můžeš kdykoli stisknout VYPLATIT - pak dostaneš sázku krát aktuální násobitel.",
+            "Když najdeš všechny drahokamy, výhra se vyplatí automaticky: ODMINOVÁNO! Když trefíš minu, vybuchne, obraz se zatřese a sázka je pryč. V obou případech - i po vyplacení - se zbylá políčka odkryjí ztmavená, abys viděl, kde ležely miny. Pole tak zůstane, dokud nehraješ dál nebo něco nezměníš.",
+            "Vpravo nahoře je historie posledních 12 kol - nejnovější vpravo, mina jako červené ×0."
+          ]
+        },
+        {
+          "h": "Velikosti pole a miny",
+          "body": [
+            "Čtyři velikosti - volí se před každým kolem tlačítky nebo klávesami [1] až [4]: 4×4 (16 políček), 5×5 (25 políček, výchozí), 6×6 (36 políček) a 7×7 (49 políček).",
+            "Počet min nastavíš klávesami [Vlevo] / [Vpravo], tlačítky se šipkami nebo šesti tlačítky rychlé volby: od 1 do počtu políček minus 1 - aspoň jeden drahokam vždy zůstane. Výchozí jsou 3 miny. Rychlá volba nabízí podle velikosti:",
+            "- 4×4: 1, 2, 3, 5, 8 nebo 12 min",
+            "- 5×5: 1, 3, 5, 10, 15 nebo 24 min",
+            "- 6×6: 1, 3, 6, 12, 20 nebo 35 min",
+            "- 7×7: 1, 3, 7, 14, 24 nebo 48 min",
+            "Víc min znamená: každý drahokam má větší cenu, ale další políčko je méně často bezpečné. S 24 minami na 5×5 přinese už první drahokam ×24,25 - se šancí 4 %.",
+            "Velikost, miny a sázku lze měnit jen mezi koly."
+          ]
+        },
+        {
+          "h": "Násobitel a návratnost",
+          "body": [
+            "Násobitel závisí jen na tom, kolik drahokamů už máš - ne na tom, která políčka to byla. Přesně vyrovnává šanci dojít tak daleko, minus 3 % pro banku:",
+            "- násobitel = 0,97 děleno šancí najít k drahokamů za sebou",
+            "- tato šance je součin s jedním činitelem za každý drahokam: drahokamy/políčka × (drahokamy - 1)/(políčka - 1) × …",
+            "- jako vzorec: 0,97 × C(N, M) / C(N - k, M), zaokrouhleno dolů na setiny. N je počet políček, M počet min, k počet nalezených drahokamů a C(n, m) kombinační číslo „n nad m”.",
+            "Příklad 5×5 se 3 minami: první políčko je bezpečné ve 22 případech z 25 (88 %), takže přinese 0,97 / 0,88 = ×1,10. Po dvou drahokamech je šance 22/25 × 21/24 = 77 % - to dělá ×1,25.",
+            "Dál to jde ×1,44, ×1,67 a ×1,95 po 5 drahokamech, ×4,90 po 10, ×10,14 po 13, ×18,59 po 15, ×111,55 po 19 a ×557,75 po 21. Kdo najde všech 22 drahokamů, dostane ×2 231 - to se povede v jednom kole z 2300.",
+            "Spodní hranice: každý drahokam zvedne násobitel aspoň o 0,01 - už první tedy přinese aspoň ×1,01. Podle samotného vzorce by bylo třeba na 6×6 s 1 minou jen ×0,99. Zvednuté jsou jen tři stupně: první drahokam na 6×6 s 1 minou a první dva na 7×7 s 1 minou.",
+            "Nejvyšší výhra je ×100 000. Když násobitel dosáhne této hranice, výhra se okamžitě automaticky vyplatí: MAXIMÁLNÍ VÝHRA! Při vyčištění celého pole se to stane už od 5×5 se 6 minami, 6×6 s 5 a 7×7 se 4 minami; na 4×4 nikdy. Víc už není, i kdyby vzorec dával víc.",
+            "Protože se šance a násobitel vyrovnávají, každá strategie dlouhodobě vrací asi 97 % sázky - bez ohledu na velikost, počet min a na to, po kolika drahokamech vybereš. Kvůli zaokrouhlování je to podle stupně 96 až 97 %. Tři zvednuté stupně jsou o něco výš (nejvýš 98,94 % u prvního drahokamu na 7×7 s 1 minou), omezený stupeň výrazně níž. Výhoda kasina je tedy zhruba 3 %.",
+            "Zlomky se neztrácejí: vyplácejí se celé žetony a zbytek v setinách se zapamatuje a přičte k další výplatě. 10 žetonů × 1,01 tedy nejdřív přinese 10 žetonů, zbylých 0,10 přijde později - tak dostanou plnou návratnost i malé sázky."
+          ]
+        },
+        {
+          "h": "Ukazatele",
+          "body": [
+            "Před kolem ukazuje záhlaví nejvyšší násobitel nastavení (všechny drahokamy nalezeny) a počet drahokamů a min. Během kola je vedle pole všechno, co potřebuješ k dalšímu rozhodnutí:",
+            "- aktuální násobitel a tvoje výhra, když vybereš teď",
+            "- násobitel po dalším drahokamu a výhra u dalšího políčka",
+            "- šance, že další políčko je bezpečné: zbývající drahokamy děleno zbývajícími zakrytými políčky - při prvním kliknutí na 5×5 se 3 minami 88 %, pak s každým drahokamem o něco méně",
+            "- kolik drahokamů už je nalezeno, a lišta s dalšími 5 stupni: kolik drahokamů přinese jaký násobitel",
+            "Maskot lama s hornickou přilbou a čelovkou to prožívá s tebou: z každého drahokamu se raduje a důlní vozík vedle ní se plní, u miny se lekne a je pak celá od sazí. Od ×3 prší mince, od ×10 a při vyčištění pole navíc konfety."
+          ]
+        },
+        {
+          "h": "Automatický režim",
+          "body": [
+            "[A] nebo tlačítko Auto otevře mezi koly automatický režim. Okno leží nad postranním panelem a mřížku nechává volnou: kliknutím nebo šipkami a klávesou [Mezerník] označíš políčka, která se odkryjí v každém kole - nejvýš tolik, kolik je drahokamů. Hra si výběr pamatuje pro každou velikost pole; [Del], [Backspace] nebo Smazat odstraní všechna označení.",
+            "Okno ukazuje, kolik políček je označeno a co kolo přinese, když budou všechna bezpečná: násobitel a šanci. Navíc zvolíš počet kol (5, 10, 25, 50 nebo 100) a podle potřeby dvě hranice: Stop při zisku od a Stop při ztrátě od (vyp., 100, 500, 1000, 5000, 10000 nebo 50000 žetonů, počítáno od spuštění).",
+            "SPUSTIT AUTO nebo [Enter]: každé kolo strhne sázku a rychle za sebou odkryje označená políčka. Jsou-li všechna bezpečná, výhra se vyplatí - s násobitelem pro tolik drahokamů, kolik políček jsi označil. Leží-li pod označeným políčkem mina, kolo je prohrané.",
+            "Automatický režim běží, dokud se neodehrají všechna kola, nezasáhne hranice, žetony nestačí na další sázku nebo nestiskneš STOP, [Mezerník], [Enter], [A] či [Esc]. Když ho zastavíš uprostřed kola, zůstane kolo otevřené - odkrýváš dál ručně nebo vybereš výhru. Sázka, velikost pole a miny jsou během automatického režimu zamčené.",
+            "[T] zapne turbo - i při ruční hře: otáčení políček, výbuchy a automatická kola běží dvaapůlkrát rychleji."
+          ]
+        },
+        {
+          "h": "Kontrola férovosti",
+          "body": [
+            "Lama Mines je prokazatelně férová: minové pole je pevně dané dřív, než klikneš na první políčko - a po kole si můžeš přepočítat, že se nic nepřesunulo. Slouží k tomu čtyři hodnoty:",
+            "- Seed serveru: tajná náhodná hodnota (32 znaků), kterou hra určí před kolem.",
+            "- Kontrolní kód: otisk SHA-256 (hash) seedu serveru. Zobrazí se už před kolem (kontrolní kód dalšího kola). Seed se z něj zpětně spočítat nedá - ale už jediný jiný znak v seedu by dal úplně jiný kód.",
+            "- Seed klienta: tvůj podíl na náhodě (8 znaků). Tlačítkem Nový seed klienta si vylosuješ nový - jen mimo kolo. Hra tak o výsledku nerozhoduje sama.",
+            "- Č.: číslo kola. S každým kolem vzroste o jedna, aby žádné kolo nebylo stejné jako jiné.",
+            "Z názvu hry, seedu serveru, seedu klienta a čísla kola vzniká náhoda kola (mulberry32). Ta zamíchá seznam všech políček (počítaných po řádcích, od levého horního rohu) a první místa zamíchaného seznamu - tolik, kolik je min - se stanou minami.",
+            "Po kole se seed serveru odhalí; kontrolní kód dalšího kola je v tu chvíli už pevně daný.",
+            "[F] otevře okno Férovost: nahoře kontrolní kód dalšího kola (během kola i kontrolní kód tohoto kola), tvůj seed klienta a číslo kola, pod tím posledních 12 kol s číslem, kontrolním kódem a výsledkem, nejnovější nahoře (kolečko myši posouvá). Kliknutí na řádek ukáže velikost pole, miny, kontrolní kód, seed serveru a seed klienta.",
+            "Ověřit znovu spočítá SHA-256 seedu, porovná ho s předem zobrazeným kontrolním kódem, znovu sestaví minové pole a zkontroluje i výsledek - ležela odkrytá políčka správně, sedí násobitel? Fajfka nebo křížek a malý náhled pole ukážou: Souhlasí nebo Nesouhlasí.",
+            "Kontrolní kód si můžeš ověřit i sám: spočítej SHA-256 seedu serveru libovolným nástrojem a porovnej výsledek s kontrolním kódem."
+          ]
+        },
+        {
+          "h": "Statistika",
+          "body": [
+            "[S] otevře statistiku tvého profilu: kola, výhry a prohry, tvoje návratnost (kolik procent sázek se ti vrátilo), vsazeno a vyplaceno, bilance, největší výhra a nejlepší násobitel - k tomu drahokamy, vybuchlé miny a odminovaná pole.",
+            "Křivka ukazuje bilanci posledních 100 kol. Kolo se počítá jako vyhrané, když se vyplatilo víc, než se vsadilo.",
+            "Dlouhodobě se tvoje návratnost ustálí kolem 97 % - během několika kol může výrazně kolísat nahoru i dolů."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- Před kolem: [Mezerník] nebo [Enter] = HRÁT, [1] až [4] = velikost pole, [Vlevo] / [Vpravo] = počet min",
+            "- [Nahoru] / [Dolů], [+] / [-] nebo kolečko myši: změna sázky (jen mezi koly)",
+            "- Během kola: kliknutí na políčko ho odkryje. Šipky posouvají kurzor; první [Mezerník] ho jen ukáže, každý další odkryje políčko pod ním.",
+            "- [R] nebo tlačítko Náhodně: odkrýt náhodné zakryté políčko; [Enter], [C] nebo VYPLATIT: vybrat výhru (od prvního drahokamu)",
+            "- Po výsledku: [Mezerník] nebo HRÁT hned spustí další kolo, ostatní klávesy vedou zpět k nastavení.",
+            "- [A]: automatický režim, [S]: statistika, [F]: férovost, [T]: turbo - nebo čtyři tlačítka nahoře. [Esc] nebo kliknutí vedle okna ho zavře, [Esc] zastaví i automatický režim.",
+            "Klávesy jsou pevné a nezávisí na přiřazení kláves - hráčské klávesy jako WASD tu neplatí. Velikost pole, počet min, poslední sázka, turbo a nastavení automatického režimu se ukládají do settings.json (sekce lamamines)."
+          ]
+        },
+        {
+          "h": "Lama žetony",
+          "body": [
+            "Lama Mines hraje se společným účtem Lama banky - spolu s Blackjackem, Pokerem, Casinem, Lama Crossing a Lama Plinko (start 1000, uloženo v mem.json).",
+            "Rekord je nejvyšší stav 1000 + tvé bilance v Lama Mines; výhry v ostatních hrách Lama banky se sem nepočítají.",
+            "Pod 10 žetony jsi na mizině: [Mezerník], [Enter] nebo kliknutí vezme úvěr od banky a doplní účet zpět na 1000. Úvěry se do bilance nepočítají.",
+            "Skončit uprostřed kola je bezpečné: sázka se strhne na začátku a po každém nalezeném drahokamu se uloží velikost pole, miny, seedy kola a odkrytá políčka. Při dalším spuštění se pole znovu spočítá ze seedu a pokračuješ přesně tam.",
+            "Historie, data férovosti, statistika, políčka označená pro automatický režim a převáděný zbytek patří k tvému profilu."
+          ]
+        },
+        {
+          "h": "Úspěchy",
+          "body": [
+            "- Stálý host hry Lama Mines: 25 partií",
+            "- Milník: rekord 3000",
+            "- Mistr hry Lama Mines: rekord 10000",
+            "- Klenotnice (vzácný): Vyčisti v Lama Mines celé pole – všechny drahokamy nalezeny",
+            "- Hlubinný horník (epický): Vyber výhru v Lama Mines při ×10 nebo více",
+            "- Diamantová lama (legendární): Vyber výhru v Lama Mines při ×1000 nebo více"
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Každé kolo se losuje znovu a žádné políčko není bezpečnější než jiné - ani rohy, ani střed. Vzory z dřívějších kol nepomáhají.",
+            "- Klenotnice: na 4×4 s 1 minou se vyčištění pole povede v jednom kole z 16 (×15,52) - stejně jako s 15 minami, kde je jen jeden drahokam. Na 5×5 se 3 minami je to jen jedno z 2300.",
+            "- Hlubinný horník (×10): na 5×5 se 3 minami stačí 13 drahokamů (×10,14), což vyjde zhruba v každém 10. až 11. kole. S 24 minami přinese už první drahokam ×24,25 - v jednom kole z 25.",
+            "- Diamantová lama (×1000): nejlepší cesty vyjdou zhruba v jednom kole z 1100, například 5×5 s 10 minami po 10 drahokamech (×1 055,84) nebo 7×7 s 12 minami po 19 drahokamech (×1 034,71). Na 5×5 se 3 minami to jde jen vyčištěním celého pole (×2 231).",
+            "- V automatickém režimu záleží jen na tom, kolik políček označíš, ne která: 5 označených políček na 5×5 se 3 minami je bezpečných ve 49,6 % kol a přinese pak ×1,95.",
+            "- Rozhodni se předem, po kolika drahokamech vybereš - a drž se toho. Díky pevné návratnosti není žádná strategie lepší než jiná, jen víc nebo méně riskantní. Hrát na nejvyšší výhru se nevyplatí: omezený stupeň platí méně, než by odpovídalo jeho riziku."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "lama",
+        "plinko",
+        "kulička",
+        "klubko",
+        "galtonova deska",
+        "kolíky",
+        "přihrádky",
+        "násobitel",
+        "žetony",
+        "lama banka",
+        "sázka",
+        "řady",
+        "riziko",
+        "zvonová křivka",
+        "auto",
+        "turbo",
+        "férovost",
+        "provably fair",
+        "kontrolní kód",
+        "seed",
+        "sha-256",
+        "statistiky"
+      ],
+      "sections": [
+        {
+          "h": "Jak se hraje",
+          "body": [
+            "Zlaté klubko vlny padá trojúhelníkem z kolíků. Na každém kolíku odskočí doleva nebo doprava a dopadne do jedné z přihrádek dole. Na každé přihrádce je násobitel: sázka krát násobitel je tvoje výplata.",
+            "Vyber sázku na kuličku (1, 2, 5, 10, 20, 50, 100, 200, 500 nebo 1000 Lama žetonů) a stiskni HODIT: sázka se strhne, lama nahoře na desce kývne hlavou a pustí kuličku.",
+            "Krajní přihrádky platí nejvíc, prostřední vracejí méně než sázku - zato tam dopadá nejvíc kuliček. Dostaneš sázku krát násobitel v celých žetonech; co zbude pod jeden žeton, si hra zapamatuje a přičte k další kuličce.",
+            "Zasažená přihrádka se zhoupne, okénko ukáže násobitel a čím je vyšší, tím jasnější je tón. Od ×10 prší mince, od ×100 k tomu přibude banner a konfety. Vpravo nahoře je historie posledních 12 kuliček."
+          ]
+        },
+        {
+          "h": "Řady a riziko",
+          "body": [
+            "Obojí nastavuješ před hodem; dokud jsou na desce kuličky nebo běží automatický režim, je to zamčené. Hra navíc ukazuje nejvyšší násobitel a přesnou návratnost zvolené tabulky.",
+            "- Řady: 8 až 16 řad kolíků klávesami [Vlevo] / [Vpravo] (výchozí 12). Při n řadách je n + 1 přihrádek.",
+            "- Riziko: Nízké, Střední (výchozí) nebo Vysoké klávesami [1] až [3].",
+            "Víc řad dělá krajní přihrádky vzácnějšími a vyššími. Riziko určuje, jak daleko od sebe jsou střed a okraj:",
+            "- Nízké: střed ×0,7, okraj od ×5,3 (8 řad) do ×16 (16 řad) - malé, časté výhry",
+            "- Střední: střed ×0,4–0,5, okraj od ×13 do ×110",
+            "- Vysoké: střed ×0,2, okraj od ×32 do ×1 000 - skoro vždy méně než sázka, velmi vzácně obří zásah",
+            "Příklad - 17 přihrádek při 16 řadách (riziko Střední): 110 · 38 · 14 · 6,2 · 2,8 · 1,4 · 0,8 · 0,5 · 0,4 · 0,5 · 0,8 · 1,4 · 2,8 · 6,2 · 14 · 38 · 110",
+            "Při 16 řadách vrací méně než sázku asi 55 % kuliček (riziko Nízké), 79 % (Střední) a dokonce 92 % (Vysoké)."
+          ]
+        },
+        {
+          "h": "Jak kulička padá",
+          "body": [
+            "Deska je Galtonova deska: na každém kolíku jde kulička doleva nebo doprava s pravděpodobností přesně 50 % - jako při hodu mincí. Přihrádka je prostě počet odskoků doprava: při 12 řadách tedy 0 (úplně vlevo) až 12 (úplně vpravo).",
+            "Až na okraj se kulička dostane jen tehdy, když na každém jednotlivém kolíku odskočí stejným směrem. Do středu naopak vede spousta cest. Proto se kuličky uprostřed hromadí do zvonové křivky (binomické rozdělení):",
+            "- 8 řad: prostřední přihrádka 27,34 %, každá krajní 1 z 256",
+            "- 12 řad: prostřední přihrádka 22,56 %, každá krajní 1 z 4 096",
+            "- 16 řad: prostřední přihrádka 19,64 %, každá krajní 1 z 65 536",
+            "Najeď myší na přihrádku: ukáže svůj násobitel, šanci (i nepatrnou, třeba 0,0015 %) a kolik vyplatí při tvé sázce.",
+            "Všech 27 tabulek (9 počtů řad × 3 úrovně rizika) je symetrických, k okrajům se nikdy nezmenšují a - spočítáno přesně - dlouhodobě vracejí 96,9 % až 97,1 % sázek. Výhoda kasina je tedy asi 3 %, ať nastavíš cokoli. Řady a riziko mění jen to, jak silně kolísá štěstí."
+          ]
+        },
+        {
+          "h": "Mnoho kuliček najednou",
+          "body": [
+            "Nemusíš čekat, až kulička dopadne: po desce může najednou skákat až 50 kuliček - počítadlo „Ve hře“ je sleduje. Podrž [Mezerník] a po krátké chvilce budou padat v rychlé palbě - tak hustě, že najednou letí asi 30 kuliček.",
+            "Dráha každé kuličky se losuje už při hodu. Proto se sázka i výplata hned společně zaúčtují a uloží - výplatu ale uvidíš až ve chvíli, kdy kulička dopadne dolů. Teprve pak můžeš výhru znovu vsadit.",
+            "Když hru opustíš, zatímco kuličky ještě padají, nic se neztratí: žetony jsou už zaúčtované a úspěchy z těchto kuliček se udělí při odchodu.",
+            "Turbo zkracuje na polovinu dobu letu kuliček i odstup v rychlé palbě - zapíná a vypíná se klávesou [T]."
+          ]
+        },
+        {
+          "h": "Automatický režim",
+          "body": [
+            "[A] otevře automatický režim. Nastavíš v něm (okno spočítá i celkovou sázku celé série):",
+            "- Kuličky: 10, 25, 50, 100, 250, 500 nebo 1000",
+            "- Stop při zisku od / Stop při ztrátě od: vyp., 100, 500, 1000, 5000, 10000 nebo 50000 žetonů",
+            "- Turbo zapnuto nebo vypnuto",
+            "SPUSTIT AUTO hází kuličky jednu po druhé s aktuální sázkou, řadami a rizikem; tyto tři věci jsou mezitím zamčené. Automatický režim skončí, když jsou všechny kuličky hozené, zisk nebo ztráta od startu dosáhne limitu, žetony nestačí na další kuličku ani po dopadu letících kuliček, nebo stiskneš STOP, [Mezerník] či [Esc]. Kuličky, které už letí, stejně dopadnou.",
+            "Nastavení automatického režimu se ukládají do settings.json (sekce lamaplinko)."
+          ]
+        },
+        {
+          "h": "Kontrola férovosti",
+          "body": [
+            "V Lama Plinko si můžeš sám ověřit, že žádná kulička není dodatečně řízená („provably fair“). Slouží k tomu tři hodnoty:",
+            "- Seed serveru: tajná náhodná hodnota o 32 znacích, kterou hra stanoví před hodem. Každá kulička dostane vlastní.",
+            "- Kontrolní kód: otisk SHA-256 seedu serveru. Je vidět už před hodem. Seed z něj neuhodneš, ale každý jiný seed by měl úplně jiný kód - hra tedy seed už nemůže vyměnit.",
+            "- Seed klienta: tvůj vlastní podíl (8 znaků). „Nový seed klienta“ vylosuje nový, jakmile žádná kulička neletí - hra tak o náhodě nerozhoduje sama.",
+            "K tomu přistupuje číslo (nonce), které s každou kuličkou vzroste o 1. Seed serveru, seed klienta a číslo dohromady dávají náhodu kuličky: jeden hod mincí na řadu a každé „doprava“ ji posune o přihrádku dál doprava.",
+            "Po dopadu se seed serveru odhalí - kontrolní kód další kuličky je v tu chvíli už pevně daný.",
+            "[F] otevře kontrolu férovosti s posledními 12 kuličkami: číslo, kontrolní kód, seed serveru a seed klienta, k tomu řady, riziko, přihrádka a násobitel. „Ověřit“ znovu spočítá SHA-256 seedu, porovná ho s dříve zobrazeným kontrolním kódem a ještě jednou vypočítá dráhu kuličky: „Souhlasí“ znamená, že vše sedí - „Nesouhlasí“ by odhalilo rozdíl. Malý náhled ukáže přepočítanou dráhu.",
+            "Pro zvědavé: generátor náhody je mulberry32, spuštěný hodnotou FNV-1a textu „lamaplinko|seed serveru|seed klienta|číslo“. Každá řada vylosuje číslo od 0 do 1; pod 0,5 znamená doprava. Každou kuličku tak lze přepočítat i vlastními nástroji."
+          ]
+        },
+        {
+          "h": "Statistiky",
+          "body": [
+            "[S] otevře statistiky tvého profilu pro Lama Plinko:",
+            "- Dlaždice: Kola, Výhry, Prohry, Vsazeno, Vyplaceno, Bilance, Největší výhra, Max. násobitel, Tvá návratnost. Každá kulička se počítá zvlášť; výhra znamená, že se vrátilo víc než sázka, prohra méně.",
+            "- křivka bilance za posledních 100 kuliček",
+            "- rozdělení zásahů: tvoje zásahy v každé přihrádce jako sloupce, očekávané rozdělení (binomické) zlatě - pro každý počet řad zvlášť, přepínání klávesami [Vlevo] / [Vpravo]",
+            "Zpočátku tvoje návratnost silně skáče (jeden zásah okraje při riziku „Vysoké“ ji vystřelí vysoko), s mnoha kuličkami se blíží zhruba 97 %. Stejně tak se sloupce po několika stovkách kuliček přiblíží ke zlaté křivce."
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- [Mezerník], [Enter] nebo kliknutí na HODIT či na desku: hodit kuličku - podržením rychlá palba",
+            "- [Nahoru] / [Dolů], [+] / [-] nebo kolečko myši: změna sázky na kuličku",
+            "- [Vlevo] / [Vpravo]: řady (8 až 16), [1] až [3]: riziko",
+            "- [A]: automatický režim, [S]: statistiky, [F]: kontrola férovosti, [T]: turbo",
+            "- [Esc]: zavřít otevřené okno nebo zastavit automatický režim",
+            "- Myš nad přihrádkou: násobitel, šance a výplata při tvé sázce",
+            "V oknech: v okně automatického režimu [Nahoru] / [Dolů] vybírá řádek, [Vlevo] / [Vpravo] ho mění a [Enter] nebo [Mezerník] spouští či zastavuje. Ve statistikách [Vlevo] / [Vpravo] přepíná počet řad rozdělení. V kontrole férovosti vybírají kuličku šipky nebo kolečko myši, [Enter] ji ověří a [C] vylosuje nový seed klienta. [Esc] nebo stejná písmenná klávesa okno zase zavře.",
+            "Všechno jde i myší; kliknutí vedle otevřeného okna ho zavře. Řady, riziko, sázka, turbo a nastavení automatického režimu se ukládají do settings.json (sekce lamaplinko)."
+          ]
+        },
+        {
+          "h": "Lama žetony",
+          "body": [
+            "Lama Plinko hraje se společným účtem Lama banky - spolu s Blackjackem, Pokerem, Casinem, Lama Crossing a Lama Mines (start 1000, uloženo v mem.json).",
+            "Rekord je nejvyšší stav 1000 + tvé bilance v Lama Plinko; výhry v ostatních hrách se sem nepočítají.",
+            "Pokud účet nepokryje zvolenou sázku, vyber menší. S 0 žetony jsi na mizině: [Enter] nebo kliknutí vezme úvěr od banky a doplní účet zpět na 1000. Úvěry se do bilance nepočítají.",
+            "Historie, statistiky a údaje kontroly férovosti patří k tvému profilu a také se ukládají do mem.json."
+          ]
+        },
+        {
+          "h": "Úspěchy",
+          "body": [
+            "- Stálý host hry Lama Plinko: 25 partií",
+            "- Milník: rekord 3000",
+            "- Mistr hry Lama Plinko: rekord 10000",
+            "- Zásah na kraji (vzácný): Trefi v Lama Plinko krajní přihrádku (od 12 řad)",
+            "- Déšť klubíček (epický): Měj v Lama Plinko na desce najednou 25 kuliček",
+            "- Legenda Plinka (legendární): Trefi v Lama Plinko krajní přihrádku při 16 řadách a vysokém riziku"
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Každá kulička je nezávislá: po deseti zásazích do středu okraj „nepřijde na řadu“.",
+            "- Žádné nastavení nepřekoná návratnost. Při riziku „Nízké“ tvůj účet kolísá málo, při „Vysoké“ většinou prohráváš - s malou šancí na obří zásah.",
+            "- Malé sázky nejsou nevýhodné: žádná část žetonu se neztratí. Při 1 žetonu ×0,7 nejdřív nevyplatí nic, ale těch 0,7 žetonu si hra zapamatuje a vyplatí s některou z dalších kuliček, jakmile se naplní celý žeton. Návratnost zhruba 97 % proto platí pro každou sázku.",
+            "- Zásah na kraji: nejrychleji při 12 řadách - tam dopadne zhruba 1 z 2 048 kuliček úplně na okraj (vlevo nebo vpravo). Při 1 žetonu na kuličku to v průměru stojí jen asi 3 žetony na 100 kuliček.",
+            "- Déšť klubíček: stačí podržet [Mezerník] - rychlá palba dostane na desku najednou asi 30 kuliček při jakémkoli počtu řad a zhruba po 2 sekundách je úspěch tvůj. Automatický režim na to hází příliš pomalu.",
+            "- Legenda Plinka: při 16 řadách a riziku „Vysoké“ dopadne úplně na okraj jen 1 z 32 768 kuliček - se sériemi automatického režimu po 1000 kuličkách potřebuješ v průměru asi 33 sérií. Zato tahle přihrádka platí ×1 000.",
+            "- Stanov si předem rozpočet a v automatickém režimu používej limit ztráty."
           ]
         }
       ]

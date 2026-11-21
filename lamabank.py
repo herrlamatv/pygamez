@@ -2,9 +2,10 @@
 """
 lamabank.py
 ===========
-Die **Lama-Bank** - das gemeinsame Chip-Konto von Blackjack, Poker und Casino.
+Die **Lama-Bank** - das gemeinsame Chip-Konto von Blackjack, Poker, Casino,
+Lama Crossing, Lama Mines und Lama Plinko.
 
-Alle drei Spiele setzen dieselben "Lama-Chips". Gespeichert wird im Abschnitt
+Alle diese Spiele setzen dieselben "Lama-Chips". Gespeichert wird im Abschnitt
 ``casino`` der gemeinsamen ``mem.json``:
 
     {
@@ -45,12 +46,13 @@ import store
 
 SECTION = "casino"
 START_CHIPS = 1000
-GAMES = ("blackjack", "poker", "casino", "lamacrossing")
+GAMES = ("blackjack", "poker", "casino", "lamacrossing", "lamamines", "lamaplinko")
 
 # Mindesteinsatz je Spiel bzw. "spiel:modus" (Pleite-Regel).
 #   Blackjack: kleinster Chip 10 · Poker: Big Blind 20 (Hold'em und Draw),
 #   Video Poker 10 · Roulette: 1er-Chip · Lama-Slot: 10 Linien x 1 ·
-#   Lama Crossing: kleinste Einsatzstufe 10
+#   Lama Crossing und Lama Mines: kleinste Einsatzstufe 10 ·
+#   Lama Plinko: kleinster Einsatz je Kugel 1
 MIN_BET = {
     "blackjack": 10,
     "poker": 20,
@@ -58,6 +60,8 @@ MIN_BET = {
     "casino": 1,
     "casino:slots": 10,
     "lamacrossing": 10,
+    "lamamines": 10,
+    "lamaplinko": 1,
 }
 
 _data = None          # zuletzt geladener Stand (Cache - draw() liest pro Frame)
@@ -244,6 +248,33 @@ def credit(n, game, save=True):
                           START_CHIPS + d["ledger"][game])
     if save:
         _save()
+
+
+def bet_and_pay(bet, win, game, extra_key=None, extra=None):
+    """Einsatz abbuchen UND Gewinn gutschreiben - mit EINEM Speichern.
+
+    Für Spiele, deren Ergebnis schon beim Einsatz feststeht (Lama Plinko: der
+    Weg der Kugel wird beim Abwurf gezogen, gezeigt wird er erst bei der
+    Landung). Optional wird im selben Zug ein Zusatz-Spielstand geschrieben
+    (``extra_key``/``extra``, wie set_extra). False = Einsatz nicht gedeckt -
+    dann wird gar nichts gebucht.
+    """
+    d = _d()
+    bet, win = int(bet), int(win)
+    if bet > d["chips"]:
+        return False
+    if bet > 0:
+        d["chips"] -= bet
+        d["ledger"][game] = d["ledger"].get(game, 0) - bet
+    if win > 0:
+        d["chips"] += win
+        d["ledger"][game] = d["ledger"].get(game, 0) + win
+        d["peak"][game] = max(d["peak"].get(game, START_CHIPS),
+                              START_CHIPS + d["ledger"][game])
+    if extra_key is not None:
+        d["extra"][extra_key] = extra
+    _save()
+    return True
 
 
 def refill_if_broke(game, mode=None):

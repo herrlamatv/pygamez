@@ -56,6 +56,12 @@ pub mod labyrinth;
 pub mod lamacrossing;
 pub mod lamacrossing_draw;
 pub mod lamacrossing_logic;
+pub mod lamamines;
+pub mod lamamines_draw;
+pub mod lamamines_logic;
+pub mod lamaplinko;
+pub mod lamaplinko_draw;
+pub mod lamaplinko_logic;
 pub mod lamatowerdefense;
 pub mod mastermind;
 pub mod maze_gen;
@@ -140,5 +146,7 @@ pub fn all_games() -> Vec<GameInfo> {
         battleship::INFO,
         casino::INFO,
         lamacrossing::INFO,
+        lamamines::INFO,
+        lamaplinko::INFO,
     ]
 }

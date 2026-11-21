@@ -148,7 +148,7 @@
           "body": [
             "Jedes Spiel mit Fortschritt hat in mem.json einen eigenen Abschnitt, zum Beispiel:",
             "- sudoku: gelöste Level mit Sternen und Bestzeit, angefangene Rätsel und das Tages-Sudoku samt Serie.",
-            "- casino: das Konto der Lama-Bank - die Lama-Chips für Blackjack, Poker, Casino und Lama Crossing mit der Bilanz jedes Spiels, dazu eine angefangene Überquerung von Lama Crossing.",
+            "- casino: das Konto der Lama-Bank - die Lama-Chips für Blackjack, Poker, Casino, Lama Crossing, Lama Mines und Lama Plinko mit der Bilanz jedes Spiels, dazu eine angefangene Überquerung von Lama Crossing, eine angefangene Runde und die Auto-Markierungen von Lama Mines sowie Verlauf, Fairness-Daten, Statistik und Rest-Übertrag von Lama Mines und Lama Plinko.",
             "- crossy: gesammelte Münzen, gekaufte Figuren und der Tagesbestwert von Crossy Road.",
             "- tetris: Bestzeit im Sprint, Bestwert im Ultra und die Versus-Bilanz gegen die KI.",
             "- g2048: gespeicherte Partien und Bestwerte von 2048 je Brettgröße und Modus.",
@@ -350,7 +350,7 @@
         {
           "h": "Überblick",
           "body": [
-            "256 Erfolge über alle 47 Spiele - vom ersten Spielstart bis zum Perfect Clear in Tetris.",
+            "268 Erfolge über alle 49 Spiele - vom ersten Spielstart bis zum Perfect Clear in Tetris.",
             "Jeder Erfolg hat eine Seltenheitsstufe und damit einen Punktwert; die Summe ergibt dein Level.",
             "Zu finden über den Knopf Erfolge & Statistik in der Sidebar, Reiter Erfolge. Ein Filter blendet Offene oder Freigeschaltete aus."
           ]
@@ -361,7 +361,7 @@
             "- Allgemein: sammlungsweite Ziele - Partien, ausprobierte Spiele, Spielzeit, Rekorde, Siege, Spieltage, Tagesserien, Level und Duelle. Dazu Extras wie Nachteule, Marathon oder Wochenendspieler.",
             "- Punkte-Meilensteine: eine faire Zielpunktzahl je Spiel.",
             "- Meister-Stufen: die zweite, deutlich höhere Punktmarke - nur für Spiele, deren Punktzahl nach oben offen ist.",
-            "- Stammgast: 25 Partien in einem Spiel. Gibt es für jedes der 47 Spiele.",
+            "- Stammgast: 25 Partien in einem Spiel. Gibt es für jedes der 49 Spiele.",
             "- Besondere Momente: Schachmatt, KNIFFEL, die 4096er-Kachel, ein Hole-in-One, ein Hattrick im Air Hockey, vier Geister mit einer Kraftpille und vieles mehr."
           ]
         },
@@ -1475,7 +1475,7 @@
         {
           "h": "Lama-Chips",
           "body": [
-            "Blackjack, Poker und Casino teilen sich ein Konto bei der Lama-Bank: Du startest mit 1000 Lama-Chips, der Stand bleibt dauerhaft gespeichert.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines und Lama Plinko teilen sich ein Konto bei der Lama-Bank: Du startest mit 1000 Lama-Chips, der Stand bleibt dauerhaft gespeichert.",
             "Der Einsatz wird beim Geben sofort abgebucht - wer eine laufende Hand verlässt, verliert ihn.",
             "Der Highscore ist der Höchststand deiner Blackjack-Bilanz: 1000 plus alles, was du beim Blackjack gewonnen und verloren hast. Gewinne am Roulette, am Slot oder beim Poker zählen hier nicht.",
             "Unter 10 Chips bist du pleite: [Enter] nimmt einen Bank-Kredit und füllt das Konto wieder auf 1000 auf. Kredite zählen nicht zur Bilanz."
@@ -1902,7 +1902,7 @@
         {
           "h": "Lama-Chips",
           "body": [
-            "Gespielt wird mit den Lama-Chips der Lama-Bank - ein gemeinsames Konto mit Blackjack und Casino (Start 1000, dauerhaft gespeichert).",
+            "Gespielt wird mit den Lama-Chips der Lama-Bank - ein gemeinsames Konto mit Blackjack, Casino, Lama Crossing, Lama Mines und Lama Plinko (Start 1000, dauerhaft gespeichert).",
             "Zu Beginn einer Hand liegt dein Konto als Stapel am Tisch; was in den Pot geht, ist sofort abgebucht. Verlässt du den Tisch mitten in der Hand, ist dein Pot-Anteil weg - der Rest kommt zurück aufs Konto.",
             "Der Highscore ist der Höchststand deiner Poker-Bilanz: 1000 plus alles, was du beim Poker gewonnen und verloren hast. Gewinne in anderen Spielen zählen hier nicht.",
             "Pleite (weniger als der Big Blind von 20, im Video Poker weniger als 10) = Bank-Kredit per Klick, das Konto steht wieder bei 1000."
@@ -2979,7 +2979,7 @@
         {
           "h": "Die Lama-Bank",
           "body": [
-            "Casino, Blackjack und Poker spielen mit demselben Konto: den Lama-Chips (Start 1000). Einsätze werden sofort abgebucht, Gewinne gutgeschrieben - alles bleibt dauerhaft gespeichert.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines und Lama Plinko spielen mit demselben Konto: den Lama-Chips (Start 1000). Einsätze werden sofort abgebucht, Gewinne gutgeschrieben - alles bleibt dauerhaft gespeichert.",
             "Jedes Spiel führt seine eigene Bilanz. Der Casino-Highscore ist der Höchststand von 1000 + Casino-Bilanz; Gewinne beim Blackjack oder Poker zählen hier nicht.",
             "Pleite (weniger als der Mindesteinsatz) gibt einen Bank-Kredit: Das Konto wird wieder auf 1000 aufgefüllt. Kredite zählen nicht zur Bilanz, ihre Anzahl steht oben rechts."
           ]
@@ -3112,7 +3112,7 @@
         {
           "h": "Lama-Chips",
           "body": [
-            "Lama Crossing spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker und Casino (Start 1000, gespeichert in mem.json).",
+            "Lama Crossing spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker, Casino, Lama Mines und Lama Plinko (Start 1000, gespeichert in mem.json).",
             "Der Highscore ist der Höchststand von 1000 + Lama-Crossing-Bilanz; Gewinne bei Blackjack, Poker oder im Casino zählen hier nicht.",
             "Unter 10 Chips bist du pleite: [Enter] oder ein Klick nimmt einen Bank-Kredit und füllt das Konto wieder auf 1000 auf. Kredite zählen nicht zur Bilanz.",
             "Mitten in der Überquerung aufhören ist sicher: Einsatz, Schwierigkeit und Spur werden gespeichert, beim nächsten Start geht es genau dort weiter."
@@ -3137,6 +3137,314 @@
             "- Ganz hinüber kommt man bei sauberem Timing auf Leicht etwa in jeder 7. Runde, auf Mittel in jeder 38., auf Schwer in jeder 614. und auf Extrem nur in einer von 32.768.",
             "- Für Nervenstark (×10) reichen auf Extrem 4 Spuren (×15,52), auf Schwer 7 (×11,77) und auf Mittel 13 (×10,37); auf Leicht klappt es nie (höchstens ×6,57). Für Drahtseilakt (×100 auf Extrem) brauchst du 7 Spuren (×124,16) - das gelingt etwa in jeder 128. Runde.",
             "- Leg vorher fest, bei welchem Multiplikator du auszahlst - und bleib dabei. Wegen der festen Quote ist keine Strategie besser als eine andere, nur mehr oder weniger riskant."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "lama",
+        "mines",
+        "minen",
+        "edelsteine",
+        "felder",
+        "aufdecken",
+        "auszahlen",
+        "multiplikator",
+        "chips",
+        "lama-bank",
+        "einsatz",
+        "risiko",
+        "auto",
+        "fairness",
+        "prüfcode",
+        "seed",
+        "sha-256",
+        "statistik"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Unter jedem verdeckten Feld liegt ein Edelstein oder eine Mine. Jeder gefundene Edelstein hebt den Multiplikator - eine Mine kostet den Einsatz.",
+            "Einsatz wählen (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 oder 10000 Lama-Chips) und SPIELEN drücken: Der Einsatz wird abgebucht und das Feld ausgelost. Ab jetzt steht fest, wo die Minen liegen - nachprüfbar über den Fairness-Check.",
+            "Dann deckst du Feld für Feld auf: per Klick, mit den Pfeiltasten und [Leertaste] oder mit [R] bzw. dem Knopf Zufallsfeld auf ein zufälliges verdecktes Feld. Ab dem ersten Edelstein kannst du jederzeit AUSZAHLEN - dann bekommst du Einsatz mal aktuellem Multiplikator.",
+            "Sind alle Edelsteine gefunden, wird automatisch ausgezahlt: ALLES MEINS! Triffst du eine Mine, explodiert sie, das Bild wackelt und der Einsatz ist weg. In beiden Fällen - auch nach dem Auszahlen - werden die übrigen Felder abgedunkelt aufgedeckt, damit du siehst, wo die Minen lagen. Das Feld bleibt so liegen, bis du weiterspielst oder etwas verstellst.",
+            "Oben rechts steht der Verlauf der letzten 12 Runden - die neueste rechts, eine Mine als rotes ×0."
+          ]
+        },
+        {
+          "h": "Feldgrößen & Minen",
+          "body": [
+            "Vier Feldgrößen - vor jeder Runde mit den Knöpfen oder mit [1] bis [4] wählbar: 4×4 (16 Felder), 5×5 (25 Felder, Standard), 6×6 (36 Felder) und 7×7 (49 Felder).",
+            "Die Minenzahl stellst du mit [Links] / [Rechts], den Pfeil-Knöpfen oder den sechs Schnellwahl-Knöpfen ein: von 1 bis zur Felderzahl minus 1 - mindestens ein Edelstein bleibt immer. Standard sind 3 Minen. Die Schnellwahl bietet je Feldgröße:",
+            "- 4×4: 1, 2, 3, 5, 8 oder 12 Minen",
+            "- 5×5: 1, 3, 5, 10, 15 oder 24 Minen",
+            "- 6×6: 1, 3, 6, 12, 20 oder 35 Minen",
+            "- 7×7: 1, 3, 7, 14, 24 oder 48 Minen",
+            "Mehr Minen heißt: Jeder Edelstein ist mehr wert, aber das nächste Feld ist seltener sicher. Mit 24 Minen auf 5×5 bringt schon der erste Edelstein ×24,25 - bei einer Chance von 4 %.",
+            "Feldgröße, Minen und Einsatz lassen sich nur zwischen den Runden ändern."
+          ]
+        },
+        {
+          "h": "Multiplikator & Quote",
+          "body": [
+            "Der Multiplikator hängt nur davon ab, wie viele Edelsteine du schon gefunden hast - nicht davon, welche Felder es waren. Er gleicht genau die Chance aus, so weit zu kommen, abzüglich 3 % für die Bank:",
+            "- Multiplikator = 0,97 geteilt durch die Chance, k Edelsteine hintereinander zu finden",
+            "- Diese Chance ist ein Produkt mit einem Faktor je Edelstein: Edelsteine/Felder × (Edelsteine - 1)/(Felder - 1) × …",
+            "- Kurz als Formel: 0,97 × C(N, M) / C(N - k, M), abgerundet auf Hundertstel. Dabei ist N die Zahl der Felder, M die Zahl der Minen, k die Zahl der gefundenen Edelsteine und C(n, m) der Binomialkoeffizient „n über m“.",
+            "Beispiel 5×5 mit 3 Minen: Das erste Feld ist mit 22 von 25 (88 %) sicher, also gibt es 0,97 / 0,88 = ×1,10. Nach zwei Edelsteinen liegt die Chance bei 22/25 × 21/24 = 77 % - das macht ×1,25.",
+            "Weiter geht es mit ×1,44, ×1,67 und ×1,95 nach 5 Edelsteinen, ×4,90 nach 10, ×10,14 nach 13, ×18,59 nach 15, ×111,55 nach 19 und ×557,75 nach 21. Wer alle 22 Edelsteine findet, bekommt ×2.231 - das gelingt in einer von 2300 Runden.",
+            "Untergrenze: Jeder Edelstein hebt den Multiplikator um mindestens 0,01 - schon der erste bringt also mindestens ×1,01. Nach der reinen Formel gäbe es sonst z.B. auf 6×6 mit 1 Mine nur ×0,99. Angehoben werden nur drei Stufen: der erste Edelstein auf 6×6 mit 1 Mine und die ersten beiden auf 7×7 mit 1 Mine.",
+            "Höchstgewinn ist ×100.000. Erreicht der Multiplikator diese Grenze, wird sofort automatisch ausgezahlt: HÖCHSTGEWINN! Beim kompletten Abräumen passiert das schon ab 5×5 mit 6 Minen, 6×6 mit 5 und 7×7 mit 4 Minen; auf 4×4 nie. Mehr gibt es nicht, auch wenn die Formel mehr ergäbe.",
+            "Weil Chance und Multiplikator sich ausgleichen, gibt jede Strategie auf Dauer rund 97 % des Einsatzes zurück - egal, welche Feldgröße, wie viele Minen und nach wie vielen Edelsteinen du auszahlst. Durch das Abrunden sind es je nach Stufe 96 bis 97 %. Die drei angehobenen Stufen liegen etwas darüber (höchstens 98,94 % beim ersten Edelstein auf 7×7 mit 1 Mine), die gedeckelte Stufe deutlich darunter. Der Hausvorteil liegt also bei etwa 3 %.",
+            "Bruchteile gehen nicht verloren: Ausgezahlt werden ganze Chips, der Rest in Hundertsteln wird gemerkt und bei der nächsten Auszahlung gutgeschrieben. 10 Chips × 1,01 bringen also erst 10 Chips, die übrigen 0,10 kommen später dazu - so erreichen auch kleine Einsätze die volle Quote."
+          ]
+        },
+        {
+          "h": "Anzeigen",
+          "body": [
+            "Vor der Runde zeigt die Kopfzeile den höchsten Multiplikator der Einstellung (alle Edelsteine gefunden) und die Zahl der Edelsteine und Minen. Während der Runde steht neben dem Feld alles, was du für die nächste Entscheidung brauchst:",
+            "- der aktuelle Multiplikator und der Gewinn, wenn du jetzt auszahlst",
+            "- der Multiplikator nach dem nächsten Edelstein und der Gewinn beim nächsten Feld",
+            "- die Chance, dass das nächste Feld sicher ist: übrige Edelsteine geteilt durch übrige verdeckte Felder - beim ersten Klick auf 5×5 mit 3 Minen 88 %, danach mit jedem Edelstein etwas weniger",
+            "- wie viele Edelsteine schon gefunden sind und eine Leiste mit den nächsten 5 Stufen: wie viele Edelsteine welchen Multiplikator bringen",
+            "Das Maskottchen-Lama mit Grubenhelm und Stirnlampe fiebert mit: Bei jedem Edelstein freut es sich und die Lore neben ihm füllt sich, bei einer Mine erschrickt es und ist danach voller Ruß. Ab ×3 regnet es Münzen, ab ×10 und beim Abräumen gibt es zusätzlich Konfetti."
+          ]
+        },
+        {
+          "h": "Auto-Modus",
+          "body": [
+            "[A] oder der Auto-Knopf öffnet zwischen den Runden den Auto-Modus. Das Fenster liegt über der Seitenleiste, das Raster bleibt frei: Per Klick oder mit Pfeiltasten und [Leertaste] markierst du die Felder, die jede Runde aufgedeckt werden - höchstens so viele, wie es Edelsteine gibt. Das Spiel merkt sich die Auswahl je Feldgröße; [Entf], [Rücktaste] oder Löschen entfernt alle Markierungen.",
+            "Das Fenster zeigt, wie viele Felder markiert sind und was die Runde bringt, wenn alle sicher sind: Multiplikator und Chance. Dazu wählst du die Zahl der Runden (5, 10, 25, 50 oder 100) und auf Wunsch zwei Grenzen: Stopp bei Gewinn ab und Stopp bei Verlust ab (aus, 100, 500, 1000, 5000, 10000 oder 50000 Chips, gezählt ab dem Start).",
+            "AUTO STARTEN oder [Enter]: Jede Runde bucht den Einsatz ab und deckt die markierten Felder schnell nacheinander auf. Sind alle sicher, wird ausgezahlt - mit dem Multiplikator für so viele Edelsteine, wie du markiert hast. Liegt unter einem markierten Feld eine Mine, ist die Runde verloren.",
+            "Der Auto-Modus läuft, bis alle Runden gespielt sind, eine Grenze greift, die Chips für den nächsten Einsatz nicht reichen oder du STOPP, [Leertaste], [Enter], [A] oder [Esc] drückst. Stoppst du mitten in einer Runde, bleibt sie offen - du deckst von Hand weiter auf oder zahlst aus. Einsatz, Feldgröße und Minen sind während des Auto-Modus gesperrt.",
+            "[T] schaltet Turbo - auch beim Spielen von Hand: Aufklappen, Explosion und Auto-Runden laufen zweieinhalbmal so schnell."
+          ]
+        },
+        {
+          "h": "Fairness-Check",
+          "body": [
+            "Lama Mines ist nachprüfbar fair: Das Minenfeld steht fest, bevor du das erste Feld anklickst - und nach der Runde kannst du nachrechnen, dass nichts verschoben wurde. Dafür gibt es vier Werte:",
+            "- Server-Seed: eine geheime Zufallszahl (32 Zeichen), die das Spiel vor der Runde festlegt.",
+            "- Prüfcode: der SHA-256-Fingerabdruck des Server-Seeds. Er wird schon vor der Runde gezeigt (Prüfcode der nächsten Runde). Aus ihm lässt sich der Seed nicht zurückrechnen - aber schon ein anderes Zeichen im Seed ergäbe einen völlig anderen Prüfcode.",
+            "- Client-Seed: dein Anteil am Zufall (8 Zeichen). Mit Neuer Client-Seed würfelst du ihn neu - das geht nur außerhalb einer Runde. So bestimmt das Spiel das Ergebnis nicht allein.",
+            "- Nr.: die Rundennummer. Sie zählt jede Runde eins hoch, damit keine Runde der anderen gleicht.",
+            "Aus Spielname, Server-Seed, Client-Seed und Rundennummer entsteht der Zufall der Runde (mulberry32). Er mischt die Liste aller Felder (zeilenweise gezählt, oben links beginnend), und die ersten Plätze der gemischten Liste - so viele, wie es Minen gibt - werden zu Minen.",
+            "Nach der Runde wird der Server-Seed aufgedeckt; der Prüfcode der nächsten Runde steht dann schon fest.",
+            "[F] öffnet das Fenster Fairness: oben der Prüfcode der nächsten Runde (während einer Runde auch der Prüfcode dieser Runde), dein Client-Seed und die Rundennummer, darunter die letzten 12 Runden mit Nr., Prüfcode und Ergebnis, die neueste oben (Mausrad blättert). Ein Klick auf eine Zeile zeigt Feldgröße, Minen, Prüfcode, Server-Seed und Client-Seed.",
+            "Nachrechnen bildet den SHA-256 des Seeds neu, vergleicht ihn mit dem vorab gezeigten Prüfcode, baut das Minenfeld neu auf und prüft auch das Ergebnis - lagen die aufgedeckten Felder richtig, stimmt der Multiplikator? Ein Haken bzw. Kreuz und eine kleine Vorschau des Feldes zeigen: Stimmt oder Stimmt nicht.",
+            "Den Prüfcode kannst du auch selbst kontrollieren: SHA-256 des Server-Seeds mit einem beliebigen Werkzeug bilden und mit dem Prüfcode vergleichen."
+          ]
+        },
+        {
+          "h": "Statistik",
+          "body": [
+            "[S] öffnet die Statistik deines Profils: Runden, gewonnen und verloren, deine Quote (wie viel Prozent der Einsätze zurückgeflossen sind), eingesetzt und ausgezahlt, Bilanz, größter Gewinn und bester Multiplikator - dazu gefundene Edelsteine, getroffene Minen und abgeräumte Felder.",
+            "Eine Kurve zeigt die Bilanz der letzten 100 Runden. Als gewonnen zählt eine Runde, wenn mehr ausgezahlt wurde als eingesetzt.",
+            "Auf Dauer pendelt sich deine Quote bei rund 97 % ein - über wenige Runden kann sie kräftig nach oben oder unten ausschlagen."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- Vor der Runde: [Leertaste] oder [Enter] = SPIELEN, [1] bis [4] = Feldgröße, [Links] / [Rechts] = Minenzahl",
+            "- [Hoch] / [Runter], [+] / [-] oder Mausrad: Einsatz ändern (nur zwischen den Runden)",
+            "- In der Runde: Klick auf ein Feld deckt es auf. Die Pfeiltasten bewegen einen Cursor; die erste [Leertaste] zeigt ihn nur an, jede weitere deckt das Feld darunter auf.",
+            "- [R] oder Knopf Zufallsfeld: zufälliges verdecktes Feld aufdecken; [Enter], [C] oder AUSZAHLEN: auszahlen (ab dem ersten Edelstein)",
+            "- Nach dem Ergebnis: [Leertaste] oder SPIELEN startet gleich die nächste Runde, andere Tasten führen zurück zur Einstellung.",
+            "- [A]: Auto-Modus, [S]: Statistik, [F]: Fairness, [T]: Turbo - oder die vier Knöpfe oben. [Esc] oder ein Klick neben das Fenster schließt es, [Esc] stoppt auch den Auto-Modus.",
+            "Die Tasten sind fest und hängen nicht von der Tastenbelegung ab - die Spieler-Tasten wie WASD gelten hier nicht. Feldgröße, Minenzahl, der letzte Einsatz, Turbo und die Auto-Einstellungen bleiben in settings.json gespeichert (Abschnitt lamamines)."
+          ]
+        },
+        {
+          "h": "Lama-Chips",
+          "body": [
+            "Lama Mines spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker, Casino, Lama Crossing und Lama Plinko (Start 1000, gespeichert in mem.json).",
+            "Der Highscore ist der Höchststand von 1000 + Lama-Mines-Bilanz; Gewinne in den anderen Spielen der Lama-Bank zählen hier nicht.",
+            "Unter 10 Chips bist du pleite: [Leertaste], [Enter] oder ein Klick nimmt einen Bank-Kredit und füllt das Konto wieder auf 1000 auf. Kredite zählen nicht zur Bilanz.",
+            "Mitten in der Runde aufhören ist sicher: Der Einsatz wird beim Start gebucht, und nach jedem gefundenen Edelstein werden Feldgröße, Minen, die Seeds der Runde und die aufgedeckten Felder gespeichert. Beim nächsten Start wird das Feld aus dem Seed neu berechnet, und es geht genau dort weiter.",
+            "Verlauf, Fairness-Daten, Statistik, die Auto-Markierungen und der Rest-Übertrag gehören zu deinem Profil."
+          ]
+        },
+        {
+          "h": "Erfolge",
+          "body": [
+            "- Lama Mines-Stammgast: 25 Partien",
+            "- Meilenstein: Highscore 3000",
+            "- Lama Mines-Meister: Highscore 10000",
+            "- Schatzkammer (selten): Räume bei Lama Mines ein ganzes Feld ab – alle Edelsteine gefunden",
+            "- Tief gegraben (episch): Zahle bei Lama Mines mit ×10 oder mehr aus",
+            "- Diamantenlama (legendär): Zahle bei Lama Mines mit ×1000 oder mehr aus"
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Jede Runde wird neu ausgelost, und kein Feld ist sicherer als ein anderes - auch nicht die Ecken oder die Mitte. Muster aus früheren Runden helfen nicht.",
+            "- Schatzkammer: Auf 4×4 mit 1 Mine gelingt das Abräumen in einer von 16 Runden (×15,52) - genauso mit 15 Minen, wo es nur einen Edelstein gibt. Auf 5×5 mit 3 Minen ist es nur eine von 2300.",
+            "- Tief gegraben (×10): Auf 5×5 mit 3 Minen reichen 13 Edelsteine (×10,14), das klappt etwa in jeder 10. bis 11. Runde. Mit 24 Minen bringt schon der erste Edelstein ×24,25 - in einer von 25 Runden.",
+            "- Diamantenlama (×1000): Die günstigsten Wege gelingen etwa in einer von 1100 Runden, zum Beispiel 5×5 mit 10 Minen nach 10 Edelsteinen (×1.055,84) oder 7×7 mit 12 Minen nach 19 Edelsteinen (×1.034,71). Auf 5×5 mit 3 Minen geht es nur durch komplettes Abräumen (×2.231).",
+            "- Im Auto-Modus zählt nur, wie viele Felder du markierst, nicht welche: 5 markierte Felder auf 5×5 mit 3 Minen sind in 49,6 % der Runden alle sicher und bringen dann ×1,95.",
+            "- Leg vorher fest, nach wie vielen Edelsteinen du auszahlst - und bleib dabei. Wegen der festen Quote ist keine Strategie besser als eine andere, nur mehr oder weniger riskant. Auf den Höchstgewinn zu spielen lohnt sich nicht: Die gedeckelte Stufe zahlt weniger, als ihr Risiko wert wäre."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "lama",
+        "plinko",
+        "kugel",
+        "wollknäuel",
+        "galtonbrett",
+        "stifte",
+        "fächer",
+        "multiplikator",
+        "chips",
+        "lama-bank",
+        "einsatz",
+        "reihen",
+        "risiko",
+        "glockenkurve",
+        "auto",
+        "turbo",
+        "fairness",
+        "prüfcode",
+        "seed",
+        "sha-256",
+        "statistik"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Ein goldenes Wollknäuel fällt durch ein Dreieck aus Stiften. An jedem Stift springt es nach links oder rechts und landet unten in einem der Fächer. Auf jedem Fach steht ein Multiplikator: Einsatz mal Multiplikator ist deine Auszahlung.",
+            "Einsatz je Kugel wählen (1, 2, 5, 10, 20, 50, 100, 200, 500 oder 1000 Lama-Chips) und WERFEN drücken: Der Einsatz wird abgebucht, das Lama oben am Brett nickt und lässt die Kugel fallen.",
+            "Die Fächer außen zahlen am meisten, die in der Mitte weniger als den Einsatz zurück - dafür landen dort die meisten Kugeln. Ausgezahlt wird Einsatz mal Multiplikator in ganzen Chips; was unter einem Chip übrig bleibt, merkt sich das Spiel und schlägt es der nächsten Kugel zu.",
+            "Das getroffene Fach wippt, ein Popup zeigt den Multiplikator, und je höher er ist, desto heller klingt der Ton. Ab ×10 regnet es Münzen, ab ×100 gibt es dazu ein Banner und Konfetti. Oben rechts steht der Verlauf der letzten 12 Kugeln."
+          ]
+        },
+        {
+          "h": "Reihen & Risiko",
+          "body": [
+            "Beides stellst du vor dem Abwurf ein; solange Kugeln unterwegs sind oder der Auto-Modus läuft, ist es gesperrt. Das Spiel zeigt dazu den höchsten Multiplikator und die exakte Quote der gewählten Tabelle.",
+            "- Reihen: 8 bis 16 Stiftreihen mit [Links] / [Rechts] (Standard 12). Bei n Reihen gibt es n + 1 Fächer.",
+            "- Risiko: Niedrig, Mittel (Standard) oder Hoch mit [1] bis [3].",
+            "Mehr Reihen machen die Randfächer seltener und höher. Das Risiko bestimmt, wie weit Mitte und Rand auseinanderliegen:",
+            "- Niedrig: Mitte ×0,7, außen ×5,3 (8 Reihen) bis ×16 (16 Reihen) - kleine, häufige Gewinne",
+            "- Mittel: Mitte ×0,4–0,5, außen ×13 bis ×110",
+            "- Hoch: Mitte ×0,2, außen ×32 bis ×1.000 - fast immer weniger als der Einsatz, ganz selten ein Riesentreffer",
+            "Beispiel - die 17 Fächer bei 16 Reihen auf Mittel: 110 · 38 · 14 · 6,2 · 2,8 · 1,4 · 0,8 · 0,5 · 0,4 · 0,5 · 0,8 · 1,4 · 2,8 · 6,2 · 14 · 38 · 110",
+            "Bei 16 Reihen bringen auf Niedrig etwa 55 % der Kugeln weniger als den Einsatz zurück, auf Mittel 79 % und auf Hoch sogar 92 %."
+          ]
+        },
+        {
+          "h": "Wie die Kugel fällt",
+          "body": [
+            "Das Brett ist ein Galtonbrett: An jedem Stift geht es mit genau 50 % nach links oder rechts - wie bei einem Münzwurf. Das Fach ist einfach die Zahl der Sprünge nach rechts: bei 12 Reihen also 0 (ganz links) bis 12 (ganz rechts).",
+            "Ganz außen landet eine Kugel nur, wenn sie an jedem einzelnen Stift in dieselbe Richtung springt. In die Mitte führen dagegen sehr viele Wege. Deshalb häufen sich die Kugeln in der Mitte zu einer Glockenkurve (Binomialverteilung):",
+            "- 8 Reihen: Mittelfach 27,34 %, jedes Randfach 1 von 256",
+            "- 12 Reihen: Mittelfach 22,56 %, jedes Randfach 1 von 4.096",
+            "- 16 Reihen: Mittelfach 19,64 %, jedes Randfach 1 von 65.536",
+            "Fahr mit der Maus über ein Fach: Es zeigt Multiplikator, Chance (auch winzige wie 0,0015 %) und was es bei deinem Einsatz auszahlt.",
+            "Die 27 Tabellen (9 Reihenzahlen × 3 Risiken) sind symmetrisch, werden nach außen nie kleiner und zahlen - exakt gerechnet - auf Dauer 96,9 % bis 97,1 % der Einsätze zurück. Der Hausvorteil liegt also bei etwa 3 %, egal was du einstellst. Reihen und Risiko ändern nur, wie stark das Glück schwankt."
+          ]
+        },
+        {
+          "h": "Viele Kugeln auf einmal",
+          "body": [
+            "Du musst nicht warten, bis eine Kugel gelandet ist: Bis zu 50 Kugeln dürfen gleichzeitig über das Brett hüpfen - die Anzeige \"Unterwegs\" zählt mit. Halt die [Leertaste] gedrückt, dann fallen sie nach einem kurzen Moment im Dauerfeuer - so dicht, dass rund 30 Kugeln gleichzeitig unterwegs sind.",
+            "Der Weg jeder Kugel wird schon beim Abwurf ausgelost. Einsatz und Auszahlung werden deshalb sofort zusammen gebucht und gespeichert - zu sehen ist die Auszahlung aber erst, wenn die Kugel unten ankommt. Erst dann kannst du den Gewinn auch wieder einsetzen.",
+            "Verlässt du das Spiel, während noch Kugeln fliegen, geht nichts verloren: Die Chips sind schon gebucht, und Erfolge dieser Kugeln werden beim Verlassen nachgeholt.",
+            "Turbo halbiert die Flugzeit der Kugeln und den Abstand im Dauerfeuer - an- und ausschalten mit [T]."
+          ]
+        },
+        {
+          "h": "Auto-Modus",
+          "body": [
+            "[A] öffnet den Auto-Modus. Dort stellst du ein (das Fenster rechnet auch den gesamten Einsatz des Laufs aus):",
+            "- Kugeln: 10, 25, 50, 100, 250, 500 oder 1000",
+            "- Stopp bei Gewinn ab / Stopp bei Verlust ab: aus, 100, 500, 1000, 5000, 10000 oder 50000 Chips",
+            "- Turbo an oder aus",
+            "AUTO STARTEN wirft die Kugeln mit dem aktuellen Einsatz, den Reihen und dem Risiko nacheinander ab; diese drei sind währenddessen gesperrt. Der Auto-Modus endet, wenn alle Kugeln geworfen sind, der Gewinn oder Verlust seit dem Start eine Grenze erreicht, die Chips auch nach der Landung der fliegenden Kugeln nicht für die nächste reichen oder du STOPP, [Leertaste] bzw. [Esc] drückst. Kugeln, die schon unterwegs sind, landen trotzdem.",
+            "Die Auto-Einstellungen bleiben in settings.json gespeichert (Abschnitt lamaplinko)."
+          ]
+        },
+        {
+          "h": "Fairness-Check",
+          "body": [
+            "Bei Lama Plinko kannst du selbst nachprüfen, dass keine Kugel nachträglich gelenkt wird (\"Provably Fair\"). Dafür gibt es drei Werte:",
+            "- Server-Seed: ein geheimer Zufallswert aus 32 Zeichen, den das Spiel vor dem Abwurf festlegt. Jede Kugel bekommt ihren eigenen.",
+            "- Prüfcode: der SHA-256-Fingerabdruck des Server-Seeds. Er ist schon vor dem Abwurf zu sehen. Aus ihm lässt sich der Seed nicht erraten, aber jeder andere Seed hätte einen völlig anderen Prüfcode - austauschen kann das Spiel den Seed also nicht mehr.",
+            "- Client-Seed: dein eigener Anteil (8 Zeichen). Mit \"Neuer Client-Seed\" würfelst du ihn neu, sobald keine Kugel mehr fliegt - so bestimmt das Spiel den Zufall nicht allein.",
+            "Dazu kommt die Nr. (Nonce), die mit jeder Kugel um 1 steigt. Aus Server-Seed, Client-Seed und Nr. entsteht der Zufall der Kugel: ein Münzwurf je Reihe, und jedes \"rechts\" schiebt sie ein Fach weiter nach rechts.",
+            "Nach der Landung wird der Server-Seed aufgedeckt - der Prüfcode der nächsten Kugel steht da schon fest.",
+            "[F] öffnet das Fairness-Fenster mit den letzten 12 Kugeln: Nr., Prüfcode, Server-Seed und Client-Seed, dazu Reihen, Risiko, Fach und Multiplikator. \"Nachrechnen\" bildet den SHA-256 des Seeds neu, vergleicht ihn mit dem vorher gezeigten Prüfcode und rechnet den Weg der Kugel noch einmal aus: \"Stimmt\" heißt, alles passt - \"Stimmt nicht\" würde eine Abweichung verraten. Eine Mini-Vorschau zeigt den nachgerechneten Weg.",
+            "Für Neugierige: Der Zufallsgenerator ist mulberry32, gestartet mit dem FNV-1a-Wert des Textes \"lamaplinko|Server-Seed|Client-Seed|Nr.\". Je Reihe wird eine Zahl zwischen 0 und 1 gezogen, unter 0,5 heißt rechts. So lässt sich jede Kugel auch mit eigenen Werkzeugen nachrechnen."
+          ]
+        },
+        {
+          "h": "Statistik",
+          "body": [
+            "[S] öffnet die Statistik deines Profils für Lama Plinko:",
+            "- Kacheln: Runden, Gewonnen, Verloren, Eingesetzt, Ausgezahlt, Bilanz, Größter Gewinn, Bester Faktor, Deine Quote. Jede Kugel zählt einzeln; gewonnen heißt mehr als der Einsatz zurück, verloren weniger.",
+            "- eine Bilanzkurve über die letzten 100 Kugeln",
+            "- die Treffer-Verteilung: deine Treffer je Fach als Balken, die erwartete Verteilung (Binomialverteilung) in Gold - für jede Reihenzahl getrennt, umschalten mit [Links] / [Rechts]",
+            "Am Anfang springt deine Quote stark (ein Randtreffer auf Hoch reißt sie weit nach oben), mit vielen Kugeln nähert sie sich den rund 97 %. Genauso rücken die Balken nach ein paar hundert Kugeln an die goldene Kurve heran."
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- [Leertaste], [Enter] oder Klick auf WERFEN bzw. aufs Brett: Kugel werfen - gedrückt halten für Dauerfeuer",
+            "- [Hoch] / [Runter], [+] / [-] oder Mausrad: Einsatz je Kugel ändern",
+            "- [Links] / [Rechts]: Reihen (8 bis 16), [1] bis [3]: Risiko",
+            "- [A]: Auto-Modus, [S]: Statistik, [F]: Fairness, [T]: Turbo",
+            "- [Esc]: offenes Fenster schließen bzw. Auto-Modus stoppen",
+            "- Maus über einem Fach: Multiplikator, Chance und Gewinn bei deinem Einsatz",
+            "In den Fenstern: Im Auto-Fenster wählst du mit [Hoch] / [Runter] eine Zeile, änderst sie mit [Links] / [Rechts] und startest oder stoppst mit [Enter] bzw. [Leertaste]. In der Statistik schaltet [Links] / [Rechts] die Reihenzahl der Verteilung um. Im Fairness-Fenster wählst du mit den Pfeiltasten oder dem Mausrad eine Kugel, [Enter] rechnet nach und [C] holt einen neuen Client-Seed. [Esc] oder dieselbe Buchstaben-Taste schließt das Fenster wieder.",
+            "Alles geht auch mit der Maus; ein Klick neben ein offenes Fenster schließt es. Reihen, Risiko, Einsatz, Turbo und die Auto-Einstellungen bleiben in settings.json gespeichert (Abschnitt lamaplinko)."
+          ]
+        },
+        {
+          "h": "Lama-Chips",
+          "body": [
+            "Lama Plinko spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker, Casino, Lama Crossing und Lama Mines (Start 1000, gespeichert in mem.json).",
+            "Der Highscore ist der Höchststand von 1000 + Lama-Plinko-Bilanz; Gewinne in den anderen Spielen zählen hier nicht.",
+            "Reicht dein Konto nicht für den gewählten Einsatz, stell einen kleineren ein. Mit 0 Chips bist du pleite: [Enter] oder ein Klick nimmt einen Bank-Kredit und füllt das Konto wieder auf 1000 auf. Kredite zählen nicht zur Bilanz.",
+            "Verlauf, Statistik und Fairness-Daten gehören zu deinem Profil und liegen ebenfalls in mem.json."
+          ]
+        },
+        {
+          "h": "Erfolge",
+          "body": [
+            "- Lama Plinko-Stammgast: 25 Partien",
+            "- Meilenstein: Highscore 3000",
+            "- Lama Plinko-Meister: Highscore 10000",
+            "- Randtreffer (selten): Triff bei Lama Plinko das äußerste Fach (ab 12 Reihen)",
+            "- Wollknäuel-Regen (episch): Hab bei Lama Plinko 25 Kugeln gleichzeitig auf dem Brett",
+            "- Plinko-Legende (legendär): Triff bei Lama Plinko mit 16 Reihen und Risiko Hoch das äußerste Fach"
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Jede Kugel ist unabhängig: Nach zehn Treffern in der Mitte ist der Rand nicht \"fällig\".",
+            "- Keine Einstellung schlägt die Quote. Auf Niedrig schwankt dein Konto wenig, auf Hoch verlierst du meistens - mit der kleinen Chance auf einen Riesentreffer.",
+            "- Kleine Einsätze sind kein Nachteil: Bruchteile eines Chips gehen nicht verloren. Auf 1 Chip bringt ×0,7 zunächst nichts, die 0,7 Chips werden aber gemerkt und mit einer der nächsten Kugeln ausgezahlt, sobald ein ganzer Chip voll ist. Die Quote von rund 97 % gilt deshalb für jeden Einsatz.",
+            "- Randtreffer: Am schnellsten geht es mit 12 Reihen - dort landet etwa jede 2.048. Kugel ganz außen (links oder rechts). Mit 1 Chip je Kugel kostet das im Schnitt nur etwa 3 Chips je 100 Kugeln.",
+            "- Wollknäuel-Regen: Halt einfach die [Leertaste] gedrückt - das Dauerfeuer bringt bei jeder Reihenzahl rund 30 Kugeln gleichzeitig aufs Brett, nach etwa 2 Sekunden ist der Erfolg da. Der Auto-Modus wirft dafür zu gemächlich.",
+            "- Plinko-Legende: Bei 16 Reihen auf Hoch landet nur eine von 32.768 Kugeln ganz außen - mit Auto-Läufen zu 1000 Kugeln brauchst du im Schnitt rund 33 Durchgänge. Dafür zahlt das Fach ×1.000.",
+            "- Leg vorher ein Budget fest und nutz im Auto-Modus die Verlustgrenze."
           ]
         }
       ]

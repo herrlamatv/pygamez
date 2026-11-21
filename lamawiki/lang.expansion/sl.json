@@ -147,7 +147,7 @@
           "body": [
             "Vsaka igra z napredkom ima v mem.json svoj razdelek, na primer:",
             "- sudoku: rešene stopnje z zvezdicami in najboljšim časom, začete uganke in Sudoku dneva z nizom.",
-            "- casino: račun Lama banke - lama žetoni za Blackjack, Poker, Casino in Lama Crossing z bilanco vsake igre ter začetim prehodom v Lama Crossing.",
+            "- casino: račun Lama banke - lama žetoni za Blackjack, Poker, Casino, Lama Crossing, Lama Mines in Lama Plinko z bilanco vsake igre, začetim prehodom v Lama Crossing, začetim krogom in oznakami za samodejni način v Lama Mines ter zgodovino, podatki o poštenosti, statistiko in prenesenim ostankom za Lama Mines in Lama Plinko.",
             "- crossy: zbrani kovanci, kupljeni liki in dnevni najboljši rezultat v Crossy Road.",
             "- tetris: najboljši čas v Sprintu, najboljši rezultat v Ultra in bilanca Versus proti UI.",
             "- g2048: shranjene partije 2048 in najboljši rezultati po velikosti plošče in načinu.",
@@ -349,7 +349,7 @@
         {
           "h": "Pregled",
           "body": [
-            "256 dosežkov v vseh 47 igrah - od prvega zagona do Perfect Clear v Tetrisu.",
+            "268 dosežkov v vseh 49 igrah - od prvega zagona do Perfect Clear v Tetrisu.",
             "Vsak dosežek ima redkost in s tem vrednost v točkah; vsota da tvojo stopnjo.",
             "Najdeš jih za gumbom Dosežki in statistika, zavihek Dosežki. Filter skrije odklenjene ali odprte."
           ]
@@ -360,7 +360,7 @@
             "- Splošno: cilji čez vso zbirko - partije, preizkušene igre, čas igranja, rekordi, zmage, dnevi igranja, nizi, stopnja in dvoboji. Zraven dodatki, kot so nočna sova, maraton ali vikend igralec.",
             "- Točkovni mejniki: pošteno ciljno število točk za vsako igro.",
             "- Mojstrske stopnje: druga, precej višja meja - le za igre z odprtim točkovanjem.",
-            "- Redni gost: 25 partij ene igre. Obstaja za vseh 47 iger.",
+            "- Redni gost: 25 partij ene igre. Obstaja za vseh 49 iger.",
             "- Posebni trenutki: šahmat, Yahtzee, ploščica 4096, luknja z enim udarcem, hat-trick v zračnem hokeju, štirje duhovi z eno tableto in še več."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Lama žetoni",
           "body": [
-            "Blackjack, Poker in Casino si delijo en račun pri Lama banki: začneš s 1000 lama žetoni, stanje se trajno shrani.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines in Lama Plinko si delijo en račun pri Lama banki: začneš s 1000 lama žetoni, stanje se trajno shrani.",
             "Stava se odšteje takoj ob delitvi - kdor zapusti igro v teku, jo izgubi.",
             "Rekord je najvišje stanje tvoje bilance pri blackjacku: 1000 plus vse, kar si pri blackjacku dobil in izgubil. Dobitki pri ruleti, na avtomatu ali pri pokru tu ne štejejo.",
             "Pod 10 žetoni si v bankrotu: [Enter] vzame bančno posojilo in račun spet napolni na 1000. Posojila ne štejejo v bilanco."
@@ -1901,7 +1901,7 @@
         {
           "h": "Lama žetoni",
           "body": [
-            "Igra se z lama žetoni Lama banke - skupni račun z Blackjackom in Casinom (začetek 1000, trajno shranjen).",
+            "Igra se z lama žetoni Lama banke - skupni račun z Blackjackom, Casinom, Lama Crossing, Lama Mines in Lama Plinko (začetek 1000, trajno shranjen).",
             "Na začetku igre je tvoj račun na mizi kot kup žetonov; kar gre v pot, se takoj odšteje. Če mizo zapustiš sredi igre, tvoj delež pota propade - ostanek se vrne na račun.",
             "Rekord je najvišje stanje tvoje bilance pri pokru: 1000 plus vse, kar si pri pokru dobil in izgubil. Dobitki v drugih igrah tu ne štejejo.",
             "Bankrot (manj kot veliki blind 20, pri Video Pokru manj kot 10) = bančno posojilo s klikom, račun je spet na 1000."
@@ -2976,7 +2976,7 @@
         {
           "h": "Lama banka",
           "body": [
-            "Casino, Blackjack in Poker igrajo z istim računom: lama žetoni (začetek 1000). Stave se odštejejo takoj, dobitki se pripišejo - vse se trajno shrani.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines in Lama Plinko igrajo z istim računom: lama žetoni (začetek 1000). Stave se odštejejo takoj, dobitki se pripišejo - vse se trajno shrani.",
             "Vsaka igra vodi svojo bilanco. Rekord Casina je najvišje stanje 1000 + bilanca Casina; dobitki pri Blackjacku ali Pokru tu ne štejejo.",
             "V bankrotu (manj od najnižje stave) dobiš bančno posojilo: račun se spet napolni na 1000. Posojila ne štejejo v nobeno bilanco; njihovo število je zgoraj desno."
           ]
@@ -3108,7 +3108,7 @@
         {
           "h": "Lama žetoni",
           "body": [
-            "Lama Crossing igra s skupnim računom Lama banke - skupaj z Blackjackom, Pokrom in Casinom (začetek 1000, shranjeno v mem.json).",
+            "Lama Crossing igra s skupnim računom Lama banke - skupaj z Blackjackom, Pokrom, Casinom, Lama Mines in Lama Plinko (začetek 1000, shranjeno v mem.json).",
             "Rekord je najvišje stanje 1000 + tvoje bilance v Lama Crossing; dobitki pri Blackjacku, Pokru ali Casinu tu ne štejejo.",
             "Pod 10 žetoni si v bankrotu: [Enter] ali klik vzame bančno posojilo in račun spet napolni na 1000. Posojila ne štejejo v bilanco.",
             "Prenehati sredi prehoda je varno: stava, težavnost in pas se shranijo, ob naslednjem zagonu pa nadaljuješ natanko tam."
@@ -3133,6 +3133,317 @@
             "- Ob dobri izbiri trenutka prideš čisto na drugo stran približno v vsakem 7. krogu na Lahko, v vsakem 38. na Srednje, v vsakem 614. na Težko in le v enem od 32.768 na Ekstremno.",
             "- Za Jeklene živce (×10) zadoščajo na Ekstremno 4 pasovi (×15,52), na Težko 7 (×11,77) in na Srednje 13 (×10,37); na Lahko nikoli (največ ×6,57). Za Hojo po vrvi (×100 na Ekstremno) potrebuješ 7 pasov (×124,16) - to uspe približno v vsakem 128. krogu.",
             "- Vnaprej se odloči, pri katerem množitelju boš izplačal - in se tega drži. Zaradi stalnega vračila nobena strategija ni boljša od druge, le bolj ali manj tvegana."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "lama",
+        "mines",
+        "mine",
+        "dragulji",
+        "polja",
+        "odkrij",
+        "izplačaj",
+        "množitelj",
+        "žetoni",
+        "lama banka",
+        "stava",
+        "tveganje",
+        "auto",
+        "poštenost",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "statistika",
+        "kontrolna koda"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Pod vsakim skritim poljem je dragulj ali mina. Vsak najdeni dragulj dvigne množitelj - mina stane stavo.",
+            "Izberi stavo (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ali 10000 lama žetonov) in pritisni IGRAJ: stava se odšteje in plošča se izžreba. Od tega trenutka je določeno, kje so mine - preverljivo s preverjanjem poštenosti.",
+            "Nato odkrivaš polje za poljem: s klikom, s puščicami in tipko [Preslednica] ali s tipko [R] oziroma gumbom Naključno na naključnem skritem polju. Od prvega dragulja lahko kadar koli pritisneš IZPLAČAJ - takrat dobiš stavo, pomnoženo s trenutnim množiteljem.",
+            "Ko najdeš vse dragulje, se dobitek izplača samodejno: RAZMINIRANO! Če zadeneš mino, eksplodira, slika se strese in stava je izgubljena. V obeh primerih - tudi po izplačilu - se preostala polja odkrijejo zatemnjena, da vidiš, kje so bile mine. Plošča ostane takšna, dokler ne igraš naprej ali česa ne spremeniš.",
+            "Zgoraj desno je zgodovina zadnjih 12 krogov - najnovejši desno, mina kot rdeči ×0."
+          ]
+        },
+        {
+          "h": "Velikosti plošče in mine",
+          "body": [
+            "Štiri velikosti - izbereš jih pred vsakim krogom z gumbi ali s tipkami [1] do [4]: 4×4 (16 polj), 5×5 (25 polj, privzeto), 6×6 (36 polj) in 7×7 (49 polj).",
+            "Število min nastaviš s tipkama [Levo] / [Desno], z gumboma s puščicama ali s šestimi gumbi za hitro izbiro: od 1 do števila polj minus 1 - vsaj en dragulj vedno ostane. Privzeto so 3 mine. Hitra izbira ponuja glede na velikost:",
+            "- 4×4: 1, 2, 3, 5, 8 ali 12 min",
+            "- 5×5: 1, 3, 5, 10, 15 ali 24 min",
+            "- 6×6: 1, 3, 6, 12, 20 ali 35 min",
+            "- 7×7: 1, 3, 7, 14, 24 ali 48 min",
+            "Več min pomeni: vsak dragulj je vreden več, a naslednje polje je redkeje varno. S 24 minami na 5×5 že prvi dragulj prinese ×24,25 - s 4-odstotno možnostjo.",
+            "Velikost, mine in stavo lahko spremeniš le med krogi."
+          ]
+        },
+        {
+          "h": "Množitelj in vračilo",
+          "body": [
+            "Množitelj je odvisen samo od tega, koliko draguljev si že našel - ne od tega, katera polja so bila. Natanko izravna verjetnost, da prideš tako daleč, zmanjšano za 3 % za banko:",
+            "- množitelj = 0,97 deljeno z verjetnostjo, da najdeš k draguljev zapored",
+            "- ta verjetnost je zmnožek z enim faktorjem za vsak dragulj: dragulji/polja × (dragulji - 1)/(polja - 1) × …",
+            "- kot formula: 0,97 × C(N, M) / C(N - k, M), zaokroženo navzdol na stotinke. N je število polj, M število min, k število najdenih draguljev in C(n, m) binomski koeficient „n nad m”.",
+            "Primer 5×5 s 3 minami: prvo polje je varno v 22 od 25 primerov (88 %), zato prinese 0,97 / 0,88 = ×1,10. Po dveh draguljih je verjetnost 22/25 × 21/24 = 77 % - to da ×1,25.",
+            "Naprej gre z ×1,44, ×1,67 in ×1,95 po 5 draguljih, ×4,90 po 10, ×10,14 po 13, ×18,59 po 15, ×111,55 po 19 in ×557,75 po 21. Kdor najde vseh 22 draguljev, dobi ×2.231 - to uspe v enem od 2300 krogov.",
+            "Spodnja meja: vsak dragulj dvigne množitelj vsaj za 0,01 - že prvi torej prinese vsaj ×1,01. Po sami formuli bi bilo na primer na 6×6 z 1 mino samo ×0,99. Dvignejo se le tri stopnje: prvi dragulj na 6×6 z 1 mino in prva dva na 7×7 z 1 mino.",
+            "Največji dobitek je ×100.000. Ko množitelj doseže to mejo, se dobitek takoj samodejno izplača: NAJVIŠJI DOBITEK! Pri čiščenju cele plošče se to zgodi že od 5×5 s 6 minami, 6×6 s 5 in 7×7 s 4 minami; na 4×4 nikoli. Več ga ni, tudi če bi formula dala več.",
+            "Ker se verjetnost in množitelj izravnata, vsaka strategija dolgoročno vrne približno 97 % stave - ne glede na velikost, število min in na to, po koliko draguljih izplačaš. Zaradi zaokroževanja je to glede na stopnjo od 96 do 97 %. Tri dvignjene stopnje so malo višje (največ 98,94 % pri prvem dragulju na 7×7 z 1 mino), omejena stopnja pa izrazito nižja. Prednost igralnice je torej okoli 3 %.",
+            "Delčki se ne izgubijo: izplačajo se celi žetoni, ostanek v stotinkah pa se zapomni in prišteje k naslednjemu izplačilu. 10 žetonov × 1,01 torej najprej prinese 10 žetonov, preostalih 0,10 pride pozneje - tako tudi majhne stave dobijo polno vračilo."
+          ]
+        },
+        {
+          "h": "Prikazi",
+          "body": [
+            "Pred krogom glava pokaže najvišji množitelj nastavitve (vsi dragulji najdeni) ter število draguljev in min. Med krogom je ob plošči vse, kar potrebuješ za naslednjo odločitev:",
+            "- trenutni množitelj in tvoj dobitek, če izplačaš zdaj",
+            "- množitelj po naslednjem dragulju in dobitek pri naslednjem polju",
+            "- verjetnost, da je naslednje polje varno: preostali dragulji, deljeni s preostalimi skritimi polji - pri prvem kliku na 5×5 s 3 minami 88 %, nato z vsakim draguljem malo manj",
+            "- koliko draguljev je že najdenih in vrstica z naslednjimi 5 stopnjami: koliko draguljev prinese kateri množitelj",
+            "Lama maskota z rudarsko čelado in čelno svetilko navija s tabo: ob vsakem dragulju se razveseli in vagonček ob njej se polni, ob mini se prestraši in je nato vsa sajasta. Od ×3 dežuje kovance, od ×10 in ob čiščenju plošče pa še konfeti."
+          ]
+        },
+        {
+          "h": "Samodejni način",
+          "body": [
+            "[A] ali gumb Auto med krogi odpre samodejni način. Okno leži nad stransko ploščo in pusti mrežo prosto: s klikom ali s puščicami in tipko [Preslednica] označiš polja, ki se odkrijejo v vsakem krogu - največ toliko, kolikor je draguljev. Igra si izbiro zapomni za vsako velikost plošče; [Del], [Backspace] ali Počisti odstrani vse oznake.",
+            "Okno pokaže, koliko polj je označenih in kaj krog prinese, če so vsa varna: množitelj in verjetnost. Poleg tega izbereš število krogov (5, 10, 25, 50 ali 100) in po želji dve meji: Ustavi pri dobičku od in Ustavi pri izgubi od (izkl., 100, 500, 1000, 5000, 10000 ali 50000 žetonov, šteto od zagona).",
+            "ZAŽENI AVTO ali [Enter]: vsak krog odšteje stavo in hitro zaporedoma odkrije označena polja. Če so vsa varna, se dobitek izplača - z množiteljem za toliko draguljev, kolikor polj si označil. Če je pod označenim poljem mina, je krog izgubljen.",
+            "Samodejni način teče, dokler niso odigrani vsi krogi, ne poseže meja, žetoni ne zadoščajo za naslednjo stavo ali ne pritisneš STOP, [Preslednica], [Enter], [A] ali [Esc]. Če ga ustaviš sredi kroga, ostane krog odprt - naprej odkrivaš ročno ali izplačaš. Stava, velikost plošče in mine so med samodejnim načinom zaklenjene.",
+            "[T] vklopi turbo - tudi pri ročni igri: obračanje polj, eksplozije in samodejni krogi tečejo dvainpolkrat hitreje."
+          ]
+        },
+        {
+          "h": "Preverjanje poštenosti",
+          "body": [
+            "Lama Mines je dokazljivo pošten: minsko polje je določeno, preden klikneš prvo polje - po krogu pa lahko preračunaš, da se ni nič premaknilo. Za to so štiri vrednosti:",
+            "- Seed strežnika: skrivna naključna vrednost (32 znakov), ki jo igra določi pred krogom.",
+            "- Kontrolna koda: prstni odtis SHA-256 (hash) seeda strežnika. Prikaže se že pred krogom (kontrolna koda naslednjega kroga). Iz nje se seeda ne da izračunati nazaj - a že en drug znak v seedu bi dal popolnoma drugo kodo.",
+            "- Seed odjemalca: tvoj delež naključja (8 znakov). Z gumbom Nov seed odjemalca izžrebaš novega - le zunaj kroga. Tako igra ne odloča o izidu sama.",
+            "- Št.: številka kroga. Z vsakim krogom se poveča za ena, da noben krog ni enak drugemu.",
+            "Iz imena igre, seeda strežnika, seeda odjemalca in številke kroga nastane naključje kroga (mulberry32). To premeša seznam vseh polj (štetih po vrsticah, od zgoraj levo), in prva mesta premešanega seznama - toliko, kolikor je min - postanejo mine.",
+            "Po krogu se seed strežnika razkrije; kontrolna koda naslednjega kroga je takrat že določena.",
+            "[F] odpre okno Poštenost: zgoraj kontrolna koda naslednjega kroga (med krogom tudi koda tega kroga), tvoj seed odjemalca in številka kroga, spodaj zadnjih 12 krogov s številko, kontrolno kodo in izidom, najnovejši zgoraj (kolesce miške drsi). Klik na vrstico pokaže velikost plošče, mine, kontrolno kodo, seed strežnika in seed odjemalca.",
+            "Preveri znova izračuna SHA-256 seeda, ga primerja z vnaprej prikazano kontrolno kodo, znova sestavi minsko polje in preveri tudi izid - so bila odkrita polja pravilna, se množitelj ujema? Kljukica ali križec in majhen predogled plošče pokažeta: Se ujema ali Se ne ujema.",
+            "Kontrolno kodo lahko preveriš tudi sam: izračunaj SHA-256 seeda strežnika s poljubnim orodjem in rezultat primerjaj s kontrolno kodo."
+          ]
+        },
+        {
+          "h": "Statistika",
+          "body": [
+            "[S] odpre statistiko tvojega profila: krogi, dobljeni in izgubljeni, tvoje vračilo (koliko odstotkov stav se ti je vrnilo), vloženo in izplačano, bilanca, največji dobitek in najboljši množitelj - poleg tega najdeni dragulji, zadete mine in očiščene plošče.",
+            "Krivulja prikazuje bilanco zadnjih 100 krogov. Krog šteje kot dobljen, če je bilo izplačanega več, kot je bilo vloženega.",
+            "Dolgoročno se tvoje vračilo ustali pri približno 97 % - v nekaj krogih lahko močno niha navzgor ali navzdol."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Pred krogom: [Preslednica] ali [Enter] = IGRAJ, [1] do [4] = velikost plošče, [Levo] / [Desno] = število min",
+            "- [Gor] / [Dol], [+] / [-] ali kolesce miške: spremeni stavo (le med krogi)",
+            "- Med krogom: klik na polje ga odkrije. Puščice premikajo kazalec; prva [Preslednica] ga samo pokaže, vsaka naslednja odkrije polje pod njim.",
+            "- [R] ali gumb Naključno: odkrij naključno skrito polje; [Enter], [C] ali IZPLAČAJ: izplačaj (od prvega dragulja naprej)",
+            "- Po izidu: [Preslednica] ali IGRAJ takoj začne naslednji krog, druge tipke vrnejo k nastavitvam.",
+            "- [A]: samodejni način, [S]: statistika, [F]: poštenost, [T]: turbo - ali štirje gumbi zgoraj. [Esc] ali klik zraven okna ga zapre, [Esc] ustavi tudi samodejni način.",
+            "Tipke so stalne in niso odvisne od dodelitve tipk - igralske tipke, kot je WASD, tu ne veljajo. Velikost plošče, število min, zadnja stava, turbo in nastavitve samodejnega načina se shranijo v settings.json (razdelek lamamines)."
+          ]
+        },
+        {
+          "h": "Lama žetoni",
+          "body": [
+            "Lama Mines igra s skupnim računom Lama banke - skupaj z Blackjackom, Pokrom, Casinom, Lama Crossing in Lama Plinko (začetek 1000, shranjeno v mem.json).",
+            "Rekord je najvišje stanje 1000 + tvoje bilance v Lama Mines; dobitki v drugih igrah Lama banke tu ne štejejo.",
+            "Pod 10 žetoni si v bankrotu: [Preslednica], [Enter] ali klik vzame bančno posojilo in račun spet napolni na 1000. Posojila ne štejejo v bilanco.",
+            "Prenehati sredi kroga je varno: stava se odšteje ob začetku, po vsakem najdenem dragulju pa se shranijo velikost plošče, mine, seedi kroga in odkrita polja. Ob naslednjem zagonu se plošča znova izračuna iz seeda in nadaljuješ natanko tam.",
+            "Zgodovina, podatki o poštenosti, statistika, oznake za samodejni način in preneseni ostanek spadajo k tvojemu profilu."
+          ]
+        },
+        {
+          "h": "Dosežki",
+          "body": [
+            "- Redni gost igre Lama Mines: 25 partij",
+            "- Mejnik: rekord 3000",
+            "- Mojster igre Lama Mines: rekord 10000",
+            "- Zakladnica (redek): Počisti v Lama Mines celo polje – vsi dragulji najdeni",
+            "- Globoko kopanje (epski): Izplačaj v Lama Mines pri ×10 ali več",
+            "- Diamantna lama (legendaren): Izplačaj v Lama Mines pri ×1000 ali več"
+          ]
+        },
+        {
+          "h": "Nasveti",
+          "body": [
+            "- Vsak krog se izžreba na novo in nobeno polje ni varnejše od drugega - ne vogali ne sredina. Vzorci iz prejšnjih krogov ne pomagajo.",
+            "- Zakladnica: na 4×4 z 1 mino čiščenje plošče uspe v enem od 16 krogov (×15,52) - prav tako s 15 minami, kjer je samo en dragulj. Na 5×5 s 3 minami je to le eden od 2300.",
+            "- Globoko kopanje (×10): na 5×5 s 3 minami zadošča 13 draguljev (×10,14), kar uspe približno v vsakem 10. do 11. krogu. S 24 minami že prvi dragulj prinese ×24,25 - v enem od 25 krogov.",
+            "- Diamantna lama (×1000): najboljše poti uspejo približno v enem od 1100 krogov, na primer 5×5 z 10 minami po 10 draguljih (×1.055,84) ali 7×7 z 12 minami po 19 draguljih (×1.034,71). Na 5×5 s 3 minami gre le s čiščenjem cele plošče (×2.231).",
+            "- V samodejnem načinu šteje le, koliko polj označiš, ne katera: 5 označenih polj na 5×5 s 3 minami je vseh varnih v 49,6 % krogov in prinese takrat ×1,95.",
+            "- Vnaprej se odloči, po koliko draguljih boš izplačal - in se tega drži. Zaradi stalnega vračila nobena strategija ni boljša od druge, le bolj ali manj tvegana. Igranje na največji dobitek se ne splača: omejena stopnja plača manj, kot bi bilo vredno njeno tveganje."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "lama",
+        "plinko",
+        "kroglica",
+        "klobčič",
+        "galtonova deska",
+        "zatiči",
+        "predalčki",
+        "množitelj",
+        "žetoni",
+        "lama banka",
+        "stava",
+        "vrste",
+        "tveganje",
+        "zvonasta krivulja",
+        "auto",
+        "turbo",
+        "poštenost",
+        "provably fair",
+        "kontrolna koda",
+        "seed",
+        "sha-256",
+        "statistika"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Zlat klobčič volne pada skozi trikotnik iz zatičev. Na vsakem zatiču odskoči levo ali desno in pristane v enem od predalčkov spodaj. Na vsakem predalčku je množitelj: stava, pomnožena z množiteljem, je tvoje izplačilo.",
+            "Izberi stavo na kroglico (1, 2, 5, 10, 20, 50, 100, 200, 500 ali 1000 Lama žetonov) in pritisni SPUSTI: stava se odšteje, lama na vrhu deske pokima in spusti kroglico.",
+            "Skrajni predalčki plačajo največ, srednji vrnejo manj od stave - zato pa tja pade največ kroglic. Dobiš stavo, pomnoženo z množiteljem, v celih žetonih; kar ostane pod enim žetonom, si igra zapomni in prišteje naslednji kroglici.",
+            "Zadeti predalček se zaziba, okence pokaže množitelj, in višji kot je, svetlejši je ton. Od ×10 dežujejo kovanci, od ×100 se pridružita še pasica in konfeti. Desno zgoraj je zgodovina zadnjih 12 kroglic."
+          ]
+        },
+        {
+          "h": "Vrste in tveganje",
+          "body": [
+            "Oboje nastaviš pred metom; dokler so na deski kroglice ali teče samodejni način, je zaklenjeno. Igra prikaže tudi najvišji množitelj in natančen donos izbrane tabele.",
+            "- Vrste: 8 do 16 vrst zatičev s tipkama [Levo] / [Desno] (privzeto 12). Pri n vrstah je n + 1 predalčkov.",
+            "- Tveganje: Nizko, Srednje (privzeto) ali Visoko s tipkami [1] do [3].",
+            "Več vrst naredi skrajne predalčke redkejše in višje. Tveganje določa, kako daleč narazen sta sredina in rob:",
+            "- Nizko: sredina ×0,7, rob od ×5,3 (8 vrst) do ×16 (16 vrst) - majhni, pogosti dobitki",
+            "- Srednje: sredina ×0,4–0,5, rob od ×13 do ×110",
+            "- Visoko: sredina ×0,2, rob od ×32 do ×1.000 - skoraj vedno manj od stave, zelo redko velikanski zadetek",
+            "Primer - 17 predalčkov pri 16 vrstah (tveganje Srednje): 110 · 38 · 14 · 6,2 · 2,8 · 1,4 · 0,8 · 0,5 · 0,4 · 0,5 · 0,8 · 1,4 · 2,8 · 6,2 · 14 · 38 · 110",
+            "Pri 16 vrstah vrne manj od stave približno 55 % kroglic (tveganje Nizko), 79 % (Srednje) in celo 92 % (Visoko)."
+          ]
+        },
+        {
+          "h": "Kako pada kroglica",
+          "body": [
+            "Deska je Galtonova deska: na vsakem zatiču gre kroglica levo ali desno z verjetnostjo natanko 50 % - kot pri metu kovanca. Predalček je preprosto število odskokov v desno: pri 12 vrstah torej od 0 (skrajno levo) do 12 (skrajno desno).",
+            "Do samega roba pride kroglica le, če na prav vsakem zatiču odskoči v isto smer. Proti sredini pa vodi zelo veliko poti. Zato se kroglice na sredini kopičijo v zvonasto krivuljo (binomska porazdelitev):",
+            "- 8 vrst: srednji predalček 27,34 %, vsak skrajni 1 od 256",
+            "- 12 vrst: srednji predalček 22,56 %, vsak skrajni 1 od 4.096",
+            "- 16 vrst: srednji predalček 19,64 %, vsak skrajni 1 od 65.536",
+            "Z miško pojdi nad predalček: pokaže svoj množitelj, možnost (tudi drobceno, kot je 0,0015 %) in koliko izplača pri tvoji stavi.",
+            "Vseh 27 tabel (9 števil vrst × 3 stopnje tveganja) je simetričnih, proti robu se nikoli ne zmanjšujejo in - natančno izračunano - dolgoročno vrnejo 96,9 % do 97,1 % stav. Prednost igralnice je torej okoli 3 %, ne glede na nastavitve. Vrste in tveganje spremenijo le, kako močno niha sreča."
+          ]
+        },
+        {
+          "h": "Veliko kroglic hkrati",
+          "body": [
+            "Ni ti treba čakati, da kroglica pristane: po deski lahko hkrati poskakuje do 50 kroglic - števec «V igri» jih šteje. Pridrži tipko [Preslednica] in po kratkem trenutku padajo v hitrem zaporedju - tako na gosto, da je hkrati na poti okoli 30 kroglic.",
+            "Pot vsake kroglice se izžreba že ob metu. Zato se stava in izplačilo takoj skupaj knjižita in shranita - izplačilo pa vidiš šele, ko kroglica pride na dno. Šele takrat lahko dobitek tudi znova staviš.",
+            "Če zapustiš igro, medtem ko kroglice še padajo, se nič ne izgubi: žetoni so že knjiženi, dosežki teh kroglic pa se podelijo ob izhodu.",
+            "Turbo prepolovi čas leta kroglic in razmik v hitrem zaporedju - vklopiš in izklopiš ga s tipko [T]."
+          ]
+        },
+        {
+          "h": "Samodejni način",
+          "body": [
+            "[A] odpre samodejni način. Tam nastaviš (okno izračuna tudi skupno stavo celotne serije):",
+            "- Kroglice: 10, 25, 50, 100, 250, 500 ali 1000",
+            "- Ustavi pri dobičku od / Ustavi pri izgubi od: izkl., 100, 500, 1000, 5000, 10000 ali 50000 žetonov",
+            "- Turbo vklopljen ali izklopljen",
+            "ZAŽENI AVTO meče kroglice eno za drugo s trenutno stavo, vrstami in tveganjem; te tri stvari so medtem zaklenjene. Samodejni način se konča, ko so vržene vse kroglice, dobiček ali izguba od začetka doseže mejo, žetoni tudi po pristanku letečih kroglic ne zadoščajo za naslednjo kroglico ali pritisneš STOP, [Preslednica] ali [Esc]. Kroglice, ki so že na poti, vseeno pristanejo.",
+            "Nastavitve samodejnega načina se shranijo v settings.json (razdelek lamaplinko)."
+          ]
+        },
+        {
+          "h": "Preverjanje poštenosti",
+          "body": [
+            "V Lama Plinko lahko sam preveriš, da nobena kroglica ni naknadno usmerjena («provably fair»). Za to obstajajo tri vrednosti:",
+            "- Seed strežnika: skrivna naključna vrednost iz 32 znakov, ki jo igra določi pred metom. Vsaka kroglica dobi svojo.",
+            "- Kontrolna koda: prstni odtis SHA-256 seeda strežnika. Vidna je že pred metom. Iz nje seeda ne moreš uganiti, vsak drug seed pa bi imel povsem drugačno kodo - igra torej seeda ne more več zamenjati.",
+            "- Seed odjemalca: tvoj lastni delež (8 znakov). «Nov seed odjemalca» izžreba novega, takoj ko nobena kroglica ni v zraku - tako igra o naključju ne odloča sama.",
+            "Zraven je še številka (nonce), ki se z vsako kroglico poveča za 1. Seed strežnika, seed odjemalca in številka skupaj dajo naključje kroglice: en met kovanca na vrsto, in vsak «desno» jo potisne za en predalček bolj v desno.",
+            "Po pristanku se seed strežnika razkrije - kontrolna koda naslednje kroglice je takrat že določena.",
+            "[F] odpre preverjanje poštenosti z zadnjimi 12 kroglicami: številka, kontrolna koda, seed strežnika in seed odjemalca, poleg tega vrste, tveganje, predalček in množitelj. «Preveri» znova izračuna SHA-256 seeda, ga primerja s prej prikazano kontrolno kodo in še enkrat izračuna pot kroglice: «Se ujema» pomeni, da je vse v redu - «Se ne ujema» bi razkril razliko. Majhen predogled prikaže preračunano pot.",
+            "Za radovedne: generator naključij je mulberry32, zagnan z vrednostjo FNV-1a besedila «lamaplinko|seed strežnika|seed odjemalca|številka». Vsaka vrsta izžreba število med 0 in 1; pod 0,5 pomeni desno. Tako lahko vsako kroglico preračunaš tudi z lastnimi orodji."
+          ]
+        },
+        {
+          "h": "Statistika",
+          "body": [
+            "[S] odpre statistiko tvojega profila za Lama Plinko:",
+            "- Ploščice: Krogi, Zmage, Porazi, Vloženo, Izplačano, Bilanca, Največji dobitek, Najboljši faktor, Tvoje vračilo. Vsaka kroglica šteje posebej; zmaga pomeni, da se je vrnilo več od stave, poraz manj.",
+            "- krivulja bilance zadnjih 100 kroglic",
+            "- porazdelitev zadetkov: tvoji zadetki po predalčkih kot stolpci, pričakovana porazdelitev (binomska) v zlati barvi - za vsako število vrst posebej, preklop s tipkama [Levo] / [Desno]",
+            "Na začetku tvoj donos močno skače (en zadetek roba pri tveganju «Visoko» ga izstreli visoko), z veliko kroglicami se približa okoli 97 %. Prav tako se stolpci po nekaj sto kroglicah približajo zlati krivulji."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- [Preslednica], [Enter] ali klik na SPUSTI ali na desko: vrzi kroglico - pridrži za hitro zaporedje",
+            "- [Gor] / [Dol], [+] / [-] ali kolesce miške: spremeni stavo na kroglico",
+            "- [Levo] / [Desno]: vrste (8 do 16), [1] do [3]: tveganje",
+            "- [A]: samodejni način, [S]: statistika, [F]: preverjanje poštenosti, [T]: turbo",
+            "- [Esc]: zapri odprto okno ali ustavi samodejni način",
+            "- Miška nad predalčkom: množitelj, možnost in izplačilo pri tvoji stavi",
+            "V oknih: v oknu samodejnega načina [Gor] / [Dol] izbere postavko, [Levo] / [Desno] jo spremeni, [Enter] ali [Preslednica] pa zažene ali ustavi. V statistiki [Levo] / [Desno] preklopi število vrst porazdelitve. V preverjanju poštenosti puščice ali kolesce miške izberejo kroglico, [Enter] jo preveri, [C] pa izžreba nov seed odjemalca. [Esc] ali ista črkovna tipka okno spet zapre.",
+            "Vse deluje tudi z miško; klik ob odprto okno ga zapre. Vrste, tveganje, stava, turbo in nastavitve samodejnega načina se shranijo v settings.json (razdelek lamaplinko)."
+          ]
+        },
+        {
+          "h": "Lama žetoni",
+          "body": [
+            "Lama Plinko igra s skupnim računom Lama banke - skupaj z Blackjackom, Pokrom, Casinom, Lama Crossing in Lama Mines (začetek 1000, shranjeno v mem.json).",
+            "Rekord je najvišje stanje 1000 + tvoje bilance v Lama Plinko; dobitki v drugih igrah tu ne štejejo.",
+            "Če račun ne pokrije izbrane stave, izberi manjšo. Z 0 žetoni si v bankrotu: [Enter] ali klik vzame bančno posojilo in račun spet napolni na 1000. Posojila ne štejejo v bilanco.",
+            "Zgodovina, statistika in podatki o poštenosti pripadajo tvojemu profilu in se prav tako shranijo v mem.json."
+          ]
+        },
+        {
+          "h": "Dosežki",
+          "body": [
+            "- Redni gost igre Lama Plinko: 25 partij",
+            "- Mejnik: rekord 3000",
+            "- Mojster igre Lama Plinko: rekord 10000",
+            "- Zadetek na robu (redek): Zadeni v Lama Plinko skrajni predalček (od 12 vrst naprej)",
+            "- Dež klobčičev (epski): Imej v Lama Plinko hkrati 25 kroglic na deski",
+            "- Legenda Plinka (legendaren): Zadeni v Lama Plinko skrajni predalček pri 16 vrstah in visokem tveganju"
+          ]
+        },
+        {
+          "h": "Nasveti",
+          "body": [
+            "- Vsaka kroglica je neodvisna: po desetih zadetkih v sredino rob ni «na vrsti».",
+            "- Nobena nastavitev ne premaga donosa. Pri tveganju «Nizko» tvoj račun malo niha, pri «Visoko» večinoma izgubljaš - z majhno možnostjo za velikanski zadetek.",
+            "- Majhne stave niso v slabšem položaju: noben delček žetona se ne izgubi. Pri 1 žetonu ×0,7 najprej ne izplača nič, a teh 0,7 žetona si igra zapomni in jih izplača z eno od naslednjih kroglic, ko se nabere cel žeton. Zato donos okoli 97 % velja za vsako stavo.",
+            "- Zadetek na robu: najhitreje pri 12 vrstah - tam približno 1 od 2.048 kroglic pristane čisto na robu (levo ali desno). Pri 1 žetonu na kroglico to v povprečju stane le okoli 3 žetone na 100 kroglic.",
+            "- Dež klobčičev: samo pridrži [Preslednica] - hitro zaporedje spravi na desko hkrati okoli 30 kroglic pri katerem koli številu vrst, in po približno 2 sekundah je dosežek tvoj. Samodejni način za to meče prepočasi.",
+            "- Legenda Plinka: pri 16 vrstah in tveganju «Visoko» pristane čisto na robu le 1 od 32.768 kroglic - s serijami samodejnega načina po 1000 kroglic potrebuješ v povprečju okoli 33 serij. Zato pa ta predalček plača ×1.000.",
+            "- Vnaprej si določi proračun in v samodejnem načinu uporabi mejo izgube."
           ]
         }
       ]

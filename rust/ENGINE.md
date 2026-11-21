@@ -91,6 +91,8 @@ Optionale Hooks: `on_surface_changed`, `on_exit`, `wants_escape`,
 | `self.settings.get("pong", {}).get("hold", False)` | `self.b.opt_bool("pong", "hold", false)` |
 | `settings_mod.save_settings(...)` nach Änderung | `self.b.set_opt("pong", "hold", v.into())` |
 | `store.load_section("x")` / `save_section` | `pgz_core::store::load_section("x")` / `save_section` |
+| `lamabank.bet_and_pay(b, w, KEY, "k", v)` | `lamabank::bet_and_pay(b, w, KEY, Some(("k", v)))` (ohne Zusatz `None`) |
+| `charts.line(...)` / `charts.bars(..., max_value=, label_size=)` / `charts.tooltip` | `pgz_engine::charts::line` (`line_ex` mit `fill`) / `bars_ex` / `tooltip` |
 
 **Zahlen**: pygame schneidet Kommazahlen zur Null hin ab; die Fassade
 (`pg::Num`, `pg::Pt`, `pg::IntoRect`) tut dasselbe, also Koordinaten einfach
@@ -113,4 +115,8 @@ PYGAMEZ_SHOT=ordner PYGAMEZ_GAME=all cargo run
 ```
 
 Ohne Fenster, mit fester Uhr; Datenordner mit `PYGAMEZ_DATA_DIR` umlenken.
-Alle Schalter stehen in `crates/pygamez/src/main.rs`.
+Alle Schalter stehen in `crates/pygamez/src/main.rs` (Ereignisse: `Taste`,
+`+Taste`/`-Taste`, `*Taste` = Wiederholung, `@x:y[:3]`, `~x:y`, `^dx:dy`,
+`<x:y`/`>x:y`, `%x:y:d` = Mausrad). `tools/vergleich.py` (+ regression)
+sowie `stats_check.py`, `import_check.py` und `lamabank_check.py` nehmen
+die .exe aus `CARGO_TARGET_DIR`, falls gesetzt (sonst `rust.output/`).

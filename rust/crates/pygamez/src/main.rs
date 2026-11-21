@@ -23,7 +23,9 @@
 //! losgelassen) oder: `+Taste` / `-Taste` (nur druecken / nur loslassen),
 //! `@x:y` (Linksklick in Spielkoordinaten), `@x:y:3` (Rechtsklick),
 //! `~x:y` (Maus bewegen), `^dx:dy` (relative Mausbewegung, MOUSEREL),
-//! `<x:y` / `>x:y` (Maustaste nur druecken / nur loslassen).
+//! `<x:y` / `>x:y` (Maustaste nur druecken / nur loslassen),
+//! `%x:y:d` (Mausrad bei x, y um d Rasten, + = hoch), `*Taste`
+//! (Tastenwiederholung: KEYDOWN mit `repeat`, ohne Loslassen).
 //! Leer = ein Bild ohne Ereignis.
 //! | `PYGAMEZ_SEED` | Startwert fuer `random` |
 //! | `PYGAMEZ_FULL` | `1` = ganzes Fenster samt Seitenleiste fotografieren |
@@ -355,6 +357,17 @@ fn ereignis(app: &mut App, k: &str) {
         if z.len() >= 2 {
             app.spiel_ereignis(&InputEvent::mouse(Kind::MouseMove, (z[0], z[1]), 1));
         }
+    } else if let (Some(rest), true) = (k.strip_prefix('%'), k.len() > 1) {
+        // Mausrad bei (x, y) um d Rasten (vergleich.py: WHEEL)
+        let z = zahlen(rest);
+        if z.len() >= 2 {
+            let mut ev = InputEvent::mouse(Kind::Wheel, (z[0], z[1]), 1);
+            ev.delta = z.get(2).copied().unwrap_or(1);
+            app.spiel_ereignis(&ev);
+        }
+    } else if let (Some(rest), true) = (k.strip_prefix('*'), k.len() > 1) {
+        // Tastenwiederholung des Systems (KEYDOWN mit repeat, ohne Loslassen)
+        app.key_down(rest, &zeichen(rest), true);
     } else if let (Some(rest), true) = (k.strip_prefix('+'), k.len() > 1) {
         app.key_down(rest, &zeichen(rest), false);
     } else if let (Some(rest), true) = (k.strip_prefix('-'), k.len() > 1) {

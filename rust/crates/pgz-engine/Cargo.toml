@@ -6,6 +6,8 @@ license.workspace = true
 description = "Engine von PyGameZ auf rustgame: pygame-Fassade, ui.py, audio.py, game_base.py"
 
 [dependencies]
+# chrono: charts.rs (Kalender-Heatmap des Fortschritt-Bildschirms)
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
 pgz-core = { workspace = true }
 rustgame-core = { workspace = true }
 rustgame-font = { workspace = true }

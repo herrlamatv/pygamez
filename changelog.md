@@ -8,6 +8,191 @@
 
 ## 🇩🇪 Deutsch
 
+### Lama Mines & Lama Plinko – 2026-11-21
+
+Zwei neue Chip-Spiele auf einmal: **Lama Mines** (Spiel Nr. 48) und **Lama
+Plinko** (Spiel Nr. 49). Bei Lama Mines deckt man auf einem Feld von 4x4 bis
+7x7 Edelsteine auf und meidet die Minen – jeder Edelstein hebt den
+Multiplikator, bis zu **×100.000**. Bei Lama Plinko fallen goldene Wollknäuel
+durch 8 bis 16 Stiftreihen in Fächer bis **×1000**, bis zu 50 gleichzeitig.
+Beide haben einen **Auto-Modus**, ein **Statistik-Fenster** und einen
+**Fairness-Check**: Vor jeder Runde steht ein SHA-256-Prüfcode fest, danach
+wird der Seed gezeigt – jedes Ergebnis lässt sich nachrechnen. Dazu kommen
+**12 neue Erfolge** – jetzt **268** insgesamt. Alles in 14 Sprachen, mit
+LamaWiki-Seiten, in beiden READMEs, in der Web-Version, in der Rust-Fassung und
+auf pygamez.com.
+
+#### Neu
+
+**Lama Mines** (Spiel Nr. 48, im Menü nach Lama Crossing)
+- Einsatz wählen (10, 20, 50 … bis 10000 Lama-Chips), **SPIELEN** drücken: Der
+  Einsatz wird abgebucht, das Feld liegt verdeckt bereit. Jeder aufgedeckte
+  Edelstein hebt den Multiplikator, eine Mine kostet den Einsatz. Ab dem ersten
+  Edelstein darf jederzeit **AUSGEZAHLT** werden; wer alle Edelsteine findet
+  („ALLES MEINS!“) oder ×100.000 erreicht, bekommt automatisch ausgezahlt.
+- **4 Feldgrößen** (Tasten 1–4): 4x4, 5x5 (Standard), 6x6 und 7x7, dazu **1 bis
+  N−1 Minen** (←/→ oder sechs Schnellwahl-Knöpfe, Standard 3).
+- **Auszahlungsquote rund 97 %**: Der Multiplikator (in Hundertsteln) nach k
+  Edelsteinen ist `m_k = max(⌊97 · C(N, M) / C(N−k, M)⌋, m_(k−1) + 1)`,
+  gedeckelt bei ×100.000 – ganzzahlig und in Python, JavaScript und Rust
+  bitgleich (`games/lamamines_logic.py`). Er liegt also nie unter ×1,01 und
+  steigt mit jedem Edelstein. Jede Strategie „nach k Edelsteinen auszahlen“
+  bringt 96,2 bis 97 % zurück; nur drei Stufen mit 1 Mine auf 6x6 und 7x7
+  werden von der Untergrenze angehoben (höchstens 98,9 %), und wer bis an den
+  Deckel spielt, bekommt weniger. Beispiel 5x5 mit 3 Minen: ×1,10, ×1,25, ×1,44
+  … bis ×2.231 für alle 22 Edelsteine.
+- **Rest-Übertrag**: Was beim Abrunden einer Auszahlung an Hundertsteln
+  übrig bleibt, wird zur nächsten gutgeschrieben – auch kleine Einsätze
+  verlieren nichts.
+- **Anzeige**: aktueller und nächster Multiplikator, die Chance auf ein sicheres
+  Feld in %, der Gewinn beim nächsten Feld und eine Leiste mit den nächsten 5
+  Stufen. Edelsteine in vier Farben; das Maskottchen-Lama mit Grubenhelm und
+  Stirnlampe füllt seine Lore, freut sich über jeden Edelstein und steht nach
+  einer Mine voller Ruß da.
+- **Mine getroffen**: Explosion und Kamera-Wackeln, danach wird das **ganze
+  Feld abgedunkelt aufgedeckt** – nach dem Auszahlen ebenso. Münzregen ab ×3,
+  Konfetti ab ×10, beim Abräumen und beim Höchstgewinn.
+- **Auto-Modus** mit Markierungen: Felder im Auto-Fenster auf dem Raster
+  markieren (Klick oder Pfeile + Leertaste, Entf/Rücktaste löscht; gemerkt je
+  Feldgröße), jede Runde deckt genau diese auf und zahlt aus, wenn alle sicher
+  waren; 5, 10, 25, 50 oder 100 Runden. Wird Auto gestoppt, bleibt eine
+  laufende Runde offen und kann von Hand weitergespielt werden.
+- **Fortsetzen nach dem Verlassen**: Die Runde wird bei jedem aufgedeckten Feld
+  gespeichert; beim nächsten Start wird das Feld aus dem Seed neu berechnet und
+  es geht genau dort weiter.
+- Steuerung: vor der Runde Leertaste/Enter = SPIELEN, 1–4 = Feldgröße, ←/→ =
+  Minen, ↑/↓/+/-/Mausrad = Einsatz; in der Runde Klick oder Pfeile + Leertaste
+  = Feld aufdecken, R = Zufallsfeld, Enter/C = auszahlen; Turbo (T) = alle
+  Zeiten ×0,4. Feldgröße, Minen, Einsatz, Turbo und Auto-Einstellungen stehen
+  im Abschnitt `lamamines` der `settings.json`.
+
+**Lama Plinko** (Spiel Nr. 49, im Menü nach Lama Mines)
+- Einsatz je Kugel wählen (1, 2, 5 … bis 1000 Lama-Chips), **WERFEN** drücken:
+  Ein goldenes Wollknäuel springt Stift für Stift durch das Brett und landet in
+  einem Fach mit Multiplikator. Das Lama oben am Brett nickt bei jedem Abwurf.
+- **8 bis 16 Reihen** (←/→, Standard 12) und **3 Risikostufen** (1–3: Niedrig,
+  Mittel, Hoch); beides ist gesperrt, solange Kugeln fliegen oder Auto läuft.
+  Das äußerste Fach zahlt bei 16 Reihen ×16, ×110 bzw. ×1000, bei 8 Reihen
+  ×5,3, ×13 bzw. ×32; die Mitte ×0,7, ×0,4 bzw. ×0,2.
+- **27 feste Tabellen** in `games/lamaplinko_logic.py`, einmal erzeugt mit
+  `devtools/gen_plinko_tables.py`: symmetrisch, nach außen nicht fallend,
+  „schöne“ Zahlen und eine exakt (mit Brüchen) berechnete Quote zwischen 96,9
+  und 97,05 %. Ein Rest-Übertrag der Hundertstel sorgt dafür, dass auch Einsatz
+  1 bei rund 97 % bleibt.
+- **Ergebnis = n Münzwürfe**: Jede Reihe ist ein Wurf links/rechts aus dem
+  Fairness-Zufall, das Fach ist die Zahl der Rechts-Würfe. Die Animation folgt
+  genau diesem Pfad – mit Bogensprüngen, blinkendem Stift und etwas
+  kosmetischem Zittern; eine Kugel fliegt 1,62 s (8 Reihen) bis 2,30 s (16
+  Reihen). Das Fach wippt beim Treffer, ein Popup zeigt den Multiplikator, der
+  Ton hängt vom Wert ab; Münzregen ab ×10, ab ×100 ein Gewinn-Banner mit
+  Konfetti.
+- **Bis zu 50 Kugeln gleichzeitig**: Leertaste gedrückt halten = Dauerfeuer im
+  Takt Flugzeit/30 – so sind rund 30 Kugeln zugleich unterwegs; Turbo halbiert
+  Flugzeit und Takt. Der Einsatz lässt sich auch im Flug ändern. Die Maus über
+  einem Fach zeigt Multiplikator, Wahrscheinlichkeit und den Gewinn beim
+  aktuellen Einsatz.
+- **Gebucht wird beim Abwurf**: Einsatz und Gewinn mit einem einzigen Speichern
+  (`lamabank.bet_and_pay`), angezeigt wird erst bei der Landung. Wer mit
+  fliegenden Kugeln geht, verliert nichts – auch deren Erfolge werden
+  nachgeholt.
+- **Auto-Modus**: 10, 25, 50, 100, 250, 500 oder 1000 Kugeln, eine alle 0,24 s
+  (Turbo 0,12 s), mit festem Einsatz.
+- Steuerung: Maus für alles, Leertaste/Enter/Klick auf WERFEN oder aufs Brett =
+  werfen (halten = Dauerfeuer), ↑/↓/+/-/Mausrad = Einsatz, ←/→ = Reihen, 1–3 =
+  Risiko. Reihen, Risiko, Einsatz, Turbo und Auto-Einstellungen stehen im
+  Abschnitt `lamaplinko` der `settings.json`.
+
+**Für beide Spiele**
+- **Auto-Modus** (A): Runden- bzw. Kugelzahl, Stopp bei Gewinn ab bzw. bei
+  Verlust ab (aus, 100, 500, 1000, 5000, 10000 oder 50000 Chips) und Turbo (T).
+  Auto läuft, bis die Zahl erreicht ist, eine Grenze greift, die Chips nicht
+  mehr reichen oder STOPP/Esc gedrückt wird.
+- **Fairness-Check** (F): Vor jeder Runde – bei Plinko vor jeder Kugel – steht
+  der Prüfcode fest, der SHA-256 eines geheimen Server-Seeds aus 32
+  Hex-Zeichen. Der Zufall entsteht aus Server-Seed, eigenem Client-Seed (8
+  Zeichen, per Knopf neu – nur außerhalb einer Runde bzw. wenn keine Kugel
+  fliegt) und Rundennummer (`seedrand`, mulberry32). Nach der Runde wird der
+  Seed gezeigt; der Prüfcode der nächsten Runde steht dann schon fest. Das
+  Fenster zeigt die letzten 12 Einträge, „Nachrechnen“ prüft Prüfcode und
+  Ergebnis neu und zeigt ✓ oder ✗ mit Mini-Vorschau. Neu dafür: `fairness.py`.
+- **Statistik** (S): Kacheln für Runden, Gewonnen, Verloren, Eingesetzt,
+  Ausgezahlt, Bilanz, größten Gewinn, besten Multiplikator und die eigene
+  Quote, dazu eine Bilanzkurve der letzten 100 Runden. Lama Mines zählt
+  zusätzlich Edelsteine, getroffene Minen und abgeräumte Felder; Lama Plinko
+  zeigt die Treffer-Verteilung je Reihenzahl (←/→ wechselt) gegen die erwartete
+  Binomialkurve. Neu dafür: `chipstats.py`.
+- Oben rechts steht der **Verlauf der letzten 12 Runden** bzw. Kugeln.
+- **Lama-Bank**: dasselbe Konto wie Blackjack, Poker, Casino und Lama Crossing
+  (Abschnitt `casino` in `mem.json`); dort liegen je Profil auch laufende
+  Runde, Verlauf, Fairness-Werte, Statistik, Rest-Übertrag und
+  Auto-Markierungen. Highscore = Höchststand von 1000 + eigene Bilanz; bei
+  Pleite gibt es einen Bank-Kredit auf 1000 (bei Plinko, sobald alle Kugeln
+  gelandet sind). Replays gibt es – wie bei allen Chip-Spielen – nicht.
+- Die Tasten sind fest (Pfeile, Leertaste, Enter, Ziffern und Buchstaben) und
+  hängen nicht an der Steuerungs-Belegung in den Optionen; Esc schließt ein
+  offenes Fenster bzw. stoppt Auto.
+
+**12 neue Erfolge** (jetzt 268)
+- **Lama Mines-Stammgast** und **Lama Plinko-Stammgast** (je 25 Partien), je ein
+  Meilenstein von **3000** und Meister **10000**.
+- **Schatzkammer** (selten): bei Lama Mines ein ganzes Feld abräumen.
+- **Tief gegraben** (episch): bei Lama Mines mit ×10 oder mehr auszahlen.
+- **Diamantenlama** (legendär): bei Lama Mines mit ×1000 oder mehr auszahlen.
+- **Randtreffer** (selten): bei Lama Plinko das äußerste Fach treffen (ab 12
+  Reihen).
+- **Wollknäuel-Regen** (episch): 25 Kugeln gleichzeitig auf dem Brett.
+- **Plinko-Legende** (legendär): das äußerste Fach bei 16 Reihen und Risiko
+  Hoch treffen.
+- Insgesamt jetzt 60 allgemeine Erfolge, 40 Meilensteine, 33 Meister-Stufen, 86
+  besondere Momente und 49 Stammgast-Erfolge; höchstens **10680 Erfolgspunkte**
+  (bisher 10020), das entspricht Level **50** (bisher 49).
+
+**Web**
+- Beide Spiele laufen auch in der Web-Version – mit denselben Formeln,
+  Tabellen, Fairness-Werten und Erfolgen. SHA-256 ist dort selbst geschrieben
+  (Prüfvektor „abc“ → `ba7816bf…`), neue Seeds kommen aus
+  `crypto.getRandomValues`.
+
+**Rust-Fassung**
+- Lama Mines und Lama Plinko gibt es auch in der Rust-.exe – pixel- und
+  datengleich mit Python, geprüft mit Vergleichsläufen in
+  `rust/tools/regression.py`. SHA-256 ist auch dort selbst geschrieben, weil
+  ohne zusätzliche Crates offline gebaut wird. Damit sind es **49/49 Spiele**.
+
+**Website**
+- Auf pygamez.com sind beide Spiele dabei – im Konto mit gespeicherter
+  Lama-Bank, auf dem Handy mit Bildschirm-Tasten; die Spielezahl steht in allen
+  14 Sprachen auf 49.
+
+**Tests**
+- Neu: `tests/audit_lamamines.py` und `tests/audit_lamaplinko.py` – Quote exakt
+  (mit Brüchen) und per Monte-Carlo, Rest-Übertrag, Lama-Bank-Buchungen,
+  Fortsetzen, Pleite und Kredit, Fairness-Nachrechnung, Auto-Stopps,
+  Statistik-Grenzen, Dauerfeuer, Tasten, Maus und das Layout in 5 Auflösungen ×
+  14 Sprachen (UI v4.2 und v1).
+- Neu: `tests/audit_chiplogic.py` für die gemeinsamen Regeln – SHA-256-Prüfvektoren,
+  Seeds, Fairness-Log, Statistik, Mines-Formel und Plinko-Tabellen (auch gegen
+  `devtools/gen_plinko_tables.py`); Kreuztest Python = JS über Node, für Rust
+  schreibt `devtools/export_chiplogic_ref.py` die Prüfwerte, die die
+  Rust-Unit-Tests nachrechnen.
+
+#### Geändert
+
+- **Lama-Bank**: neue Funktion `bet_and_pay(bet, win, game)` bucht Einsatz und
+  Gewinn in einem Zug mit **einem** Speichern, auf Wunsch samt Spielstand – für
+  Spiele, deren Ergebnis beim Einsatz schon feststeht (Plinko) oder die den
+  Einsatz zusammen mit der neuen Runde sichern (Mines). Sie steht ebenso in
+  `web/js/games/casino_bank.js` und `rust/crates/pgz-core/src/lamabank.rs`.
+
+**Dokumentation**
+- LamaWiki: neue Seiten **Lama Mines** und **Lama Plinko** in allen 14
+  Sprachen; *Erfolge, Seltenheit & Level* (268 Erfolge, 49 Spiele) und
+  *Speichern & Highscores* (Lama-Bank) aktualisiert.
+- Beide READMEs: 49 Spiele, zwei neue Tabellenzeilen, zwei Feature-Abschnitte,
+  Projektstruktur und Erfolgszahlen.
+
+---
+
 ### Lama Crossing – 2026-11-15
 
 Spiel Nr. 47 ist ein neues Mut-Spiel mit Lama-Chips: **Lama Crossing**. Das Lama
@@ -1405,6 +1590,181 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Lama Mines & Lama Plinko – 2026-11-21
+
+Two new chip games at once: **Lama Mines** (game no. 48) and **Lama Plinko**
+(game no. 49). In Lama Mines you uncover gems on a 4x4 to 7x7 field and dodge
+the mines – every gem raises the multiplier, up to **×100,000**. In Lama Plinko
+golden balls of yarn fall through 8 to 16 rows of pegs into slots worth up to
+**×1000**, up to 50 at once. Both come with an **auto mode**, a **statistics
+window** and a **fairness check**: before every round a SHA-256 hash is fixed,
+afterwards the seed is revealed – every result can be recalculated. On top of
+that come **12 new achievements** – **268** in total. Everything in 14
+languages, with LamaWiki pages, in both READMEs, in the web version, in the Rust
+build and on pygamez.com.
+
+#### New
+
+**Lama Mines** (game no. 48, in the menu after Lama Crossing)
+- Pick a bet (10, 20, 50 … up to 10000 llama chips) and press **PLAY**: the bet
+  is taken and the covered field is ready. Every gem you uncover raises the
+  multiplier, a mine loses the bet. From the first gem on you can **CASH OUT**
+  at any time; find every gem ("ALL MINE!") or reach ×100,000 and you are paid
+  out automatically.
+- **4 field sizes** (keys 1–4): 4x4, 5x5 (default), 6x6 and 7x7, with **1 to
+  N−1 mines** (←/→ or six quick-pick buttons, default 3).
+- **About 97% return**: the multiplier (in hundredths) after k gems is
+  `m_k = max(⌊97 · C(N, M) / C(N−k, M)⌋, m_(k−1) + 1)`, capped at ×100,000 –
+  integer-only and bit-identical in Python, JavaScript and Rust
+  (`games/lamamines_logic.py`). So it never drops below ×1.01 and rises with
+  every gem. Every "cash out after k gems" strategy returns 96.2 to 97%; only
+  three steps with 1 mine on 6x6 and 7x7 are lifted by the floor (at most
+  98.9%), and playing all the way to the cap returns less. Example, 5x5 with 3
+  mines: ×1.10, ×1.25, ×1.44 … up to ×2,231 for all 22 gems.
+- **Carry-over**: the hundredths left over when a payout is rounded down are
+  added to the next one – small bets lose nothing.
+- **Display**: current and next multiplier, the chance of a safe tile in %, the
+  win for the next tile and a bar with the next 5 steps. Gems come in four
+  colours; the mascot llama with miner's helmet and headlamp fills its mine
+  cart, cheers at every gem and is covered in soot after a mine.
+- **Mine hit**: an explosion and camera shake, then the **whole field is
+  revealed, dimmed** – after cashing out as well. A coin shower from ×3,
+  confetti from ×10, on a cleared field and on the max win.
+- **Auto mode** with marks: mark tiles on the grid in the auto window (click or
+  arrows + Space, Delete/Backspace clears; remembered per field size); every
+  round uncovers exactly those and cashes out if all of them were safe; 5, 10,
+  25, 50 or 100 rounds. Stopping auto leaves a round in progress open, so you
+  can finish it by hand.
+- **Resume after leaving**: the round is saved with every tile you uncover; on
+  the next start the field is recalculated from the seed and the round
+  continues exactly there.
+- Controls: before a round Space/Enter = PLAY, 1–4 = field size, ←/→ = mines,
+  ↑/↓/+/-/mouse wheel = bet; during a round click or arrows + Space = uncover a
+  tile, R = random tile, Enter/C = cash out; turbo (T) = all timings ×0.4.
+  Field size, mines, bet, turbo and the auto settings are stored in the
+  `lamamines` section of `settings.json`.
+
+**Lama Plinko** (game no. 49, in the menu after Lama Mines)
+- Pick a bet per ball (1, 2, 5 … up to 1000 llama chips) and press **DROP**: a
+  golden ball of yarn bounces down the board peg by peg and lands in a slot with
+  a multiplier. The llama at the top of the board nods with every drop.
+- **8 to 16 rows** (←/→, default 12) and **3 risk levels** (1–3: Low, Medium,
+  High); both are locked while balls are in the air or auto is running. The
+  outermost slot pays ×16, ×110 or ×1000 with 16 rows and ×5.3, ×13 or ×32 with
+  8 rows; the middle pays ×0.7, ×0.4 or ×0.2.
+- **27 fixed tables** in `games/lamaplinko_logic.py`, generated once with
+  `devtools/gen_plinko_tables.py`: symmetric, never falling towards the edges,
+  "nice" numbers and a return calculated exactly (with fractions) between 96.9
+  and 97.05%. A carry-over of the hundredths keeps even a bet of 1 at about 97%.
+- **Result = n coin flips**: every row is a left/right flip from the fairness
+  randomness, and the slot is the number of right flips. The animation follows
+  exactly that path – with arcing bounces, a flashing peg and a little cosmetic
+  jitter; a ball takes 1.62 s (8 rows) to 2.30 s (16 rows). The slot bobs on a
+  hit, a popup shows the multiplier and the sound depends on the value; a coin
+  shower from ×10, a win banner with confetti from ×100.
+- **Up to 50 balls at once**: hold Space = rapid fire at a rate of flight
+  time/30 – that keeps about 30 balls in the air; turbo halves flight time and
+  rate. The bet can be changed mid-flight. Hovering over a slot shows its
+  multiplier, probability and the win at the current bet.
+- **Booked at the drop**: bet and win with a single save
+  (`lamabank.bet_and_pay`), shown only when the ball lands. Leaving with balls
+  still in the air costs nothing – their achievements are caught up as well.
+- **Auto mode**: 10, 25, 50, 100, 250, 500 or 1000 balls, one every 0.24 s
+  (turbo 0.12 s), with a fixed bet.
+- Controls: mouse for everything, Space/Enter/click on DROP or the board = drop
+  (hold = rapid fire), ↑/↓/+/-/mouse wheel = bet, ←/→ = rows, 1–3 = risk. Rows,
+  risk, bet, turbo and the auto settings are stored in the `lamaplinko` section
+  of `settings.json`.
+
+**In both games**
+- **Auto mode** (A): number of rounds or balls, stop at a profit of or at a loss
+  of (off, 100, 500, 1000, 5000, 10000 or 50000 chips) and turbo (T). Auto runs
+  until the count is reached, a limit kicks in, the chips run out or STOP/Esc
+  is pressed.
+- **Fairness check** (F): before every round – in Plinko before every ball – the
+  hash is fixed, the SHA-256 of a secret server seed of 32 hex characters. The
+  randomness comes from the server seed, your own client seed (8 characters,
+  new at the press of a button – only outside a round or while no ball is in
+  the air) and the round number (`seedrand`, mulberry32). After the round the
+  seed is revealed; by then the next round's hash is already fixed. The window
+  shows the last 12 entries, and "Verify" recomputes the hash and the result
+  and shows ✓ or ✗ with a mini preview. New for this: `fairness.py`.
+- **Statistics** (S): tiles for rounds, won, lost, wagered, paid out, net
+  result, biggest win, best multiplier and your own return, plus a net-result
+  curve of the last 100 rounds. Lama Mines also counts gems found, mines hit and
+  fields cleared; Lama Plinko shows the hit distribution per row count (←/→
+  switches) against the expected binomial curve. New for this: `chipstats.py`.
+- The top right shows the **history of the last 12 rounds** or balls.
+- **Llama Bank**: the same account as Blackjack, Poker, Casino and Lama Crossing
+  (section `casino` in `mem.json`); the round in progress, history, fairness
+  values, statistics, carry-over and auto marks are kept there per profile as
+  well. High score = peak of 1000 + the game's own balance; going broke gives
+  you a bank loan back up to 1000 (in Plinko once every ball has landed). Like
+  all chip games, they have no replays.
+- The keys are fixed (arrows, Space, Enter, digits and letters) and don't depend
+  on the control bindings in the options; Esc closes an open window or stops
+  auto.
+
+**12 new achievements** (now 268)
+- **Lama Mines regular** and **Lama Plinko regular** (25 rounds each), plus a
+  **3000** milestone and a **10000** master tier for each.
+- **Treasure Vault** (rare): clear a whole field in Lama Mines.
+- **Deep Digger** (epic): cash out at ×10 or more in Lama Mines.
+- **Diamond Llama** (legendary): cash out at ×1000 or more in Lama Mines.
+- **Edge Hit** (rare): hit the outermost slot in Lama Plinko (12 rows or more).
+- **Yarn Storm** (epic): have 25 balls on the board at once.
+- **Plinko Legend** (legendary): hit the outermost slot with 16 rows on High
+  risk.
+- That makes 60 general achievements, 40 milestones, 33 master tiers, 86 special
+  moments and 49 regulars; at most **10680 achievement points** (was 10020),
+  which is level **50** (was 49).
+
+**Web**
+- Both games also run in the web version – with the same formulas, tables,
+  fairness values and achievements. SHA-256 is written from scratch there (test
+  vector "abc" → `ba7816bf…`), and new seeds come from
+  `crypto.getRandomValues`.
+
+**Rust build**
+- Lama Mines and Lama Plinko are in the Rust .exe as well – pixel- and
+  data-identical to Python, checked with comparison runs in
+  `rust/tools/regression.py`. SHA-256 is written from scratch there too, because
+  the build runs offline without extra crates. That makes **49/49 games**.
+
+**Website**
+- Both games are on pygamez.com – with the Llama Bank saved in your account and
+  on-screen keys on phones; the game count reads 49 in all 14 languages.
+
+**Tests**
+- New: `tests/audit_lamamines.py` and `tests/audit_lamaplinko.py` – the return
+  exactly (with fractions) and by Monte Carlo, the carry-over, Llama Bank
+  bookings, resuming, going broke and the loan, fairness verification, auto
+  stops, statistics limits, rapid fire, keys, mouse and the layout in 5
+  resolutions × 14 languages (UI v4.2 and v1).
+- New: `tests/audit_chiplogic.py` for the shared rules – SHA-256 test vectors,
+  seeds, fairness log, statistics, the Mines formula and the Plinko tables (also
+  against `devtools/gen_plinko_tables.py`); a Python = JS cross-check via Node,
+  and for Rust `devtools/export_chiplogic_ref.py` writes the reference values
+  that the Rust unit tests recompute.
+
+#### Changed
+
+- **Llama Bank**: the new function `bet_and_pay(bet, win, game)` books bet and
+  win in one go with **one** save, optionally together with the game state –
+  for games whose result is already settled when the bet is placed (Plinko) or
+  that store the bet together with the new round (Mines). It is in
+  `web/js/games/casino_bank.js` and `rust/crates/pgz-core/src/lamabank.rs` as
+  well.
+
+**Documentation**
+- LamaWiki: new **Lama Mines** and **Lama Plinko** pages in all 14 languages;
+  *Achievements, rarity & level* (268 achievements, 49 games) and *Saving & high
+  scores* (Llama Bank) updated.
+- Both READMEs: 49 games, two new table rows, two feature sections, the project
+  structure and the achievement counts.
+
+---
 
 ### Lama Crossing – 2026-11-15
 

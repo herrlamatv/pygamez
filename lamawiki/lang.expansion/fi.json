@@ -147,7 +147,7 @@
           "body": [
             "Jokaisella edistymistä tallentavalla pelillä on mem.json-tiedostossa oma osionsa, esimerkiksi:",
             "- sudoku: ratkaistut tasot tähtineen ja parhaine aikoineen, kesken jääneet ruudukot sekä päivän sudoku putkineen.",
-            "- casino: Laamapankin tili - Blackjackin, Pokerin, Casinon ja Lama Crossingin laamamerkit sekä kunkin pelin saldo ja Lama Crossingin kesken jäänyt ylitys.",
+            "- casino: Laamapankin tili - Blackjackin, Pokerin, Casinon, Lama Crossingin, Lama Minesin ja Lama Plinkon laamamerkit sekä kunkin pelin saldo, Lama Crossingin kesken jäänyt ylitys, Lama Minesin kesken jäänyt kierros ja autotilan merkinnät sekä Lama Minesin ja Lama Plinkon historia, reiluustiedot, tilastot ja siirtyvä jäännös.",
             "- crossy: kerätyt kolikot, ostetut hahmot ja Crossy Roadin päivän paras.",
             "- tetris: Sprintin paras aika, Ultran paras tulos ja Versus-tilasto tekoälyä vastaan.",
             "- g2048: tallennetut 2048-pelit ja parhaat tulokset laudan koon ja tilan mukaan.",
@@ -349,7 +349,7 @@
         {
           "h": "Yleiskatsaus",
           "body": [
-            "256 saavutusta kaikissa 47 pelissä - ensimmäisestä käynnistyksestä Tetriksen Perfect Cleariin.",
+            "268 saavutusta kaikissa 49 pelissä - ensimmäisestä käynnistyksestä Tetriksen Perfect Cleariin.",
             "Jokaisella saavutuksella on harvinaisuus ja siten pistearvo; summa on tasosi.",
             "Löytyvät Saavutukset ja tilastot -painikkeen takaa, Saavutukset-välilehdeltä. Suodatin piilottaa avatut tai avaamattomat."
           ]
@@ -360,7 +360,7 @@
             "- Yleiset: koko kokoelman tavoitteet - kierrokset, kokeillut pelit, peliaika, ennätykset, voitot, pelipäivät, putket, taso ja kaksintaistelut. Lisäksi yökyöpeli, maraton tai viikonloppupelaaja.",
             "- Pistevirstanpylväät: reilu tavoitepistemäärä kullekin pelille.",
             "- Mestaritasot: toinen, selvästi korkeampi raja - vain peleissä, joiden pisteillä ei ole kattoa.",
-            "- Vakiokävijä: 25 kierrosta yhtä peliä. Löytyy kaikille 47 pelille.",
+            "- Vakiokävijä: 25 kierrosta yhtä peliä. Löytyy kaikille 49 pelille.",
             "- Erityiset hetket: šakkimatti, Yatzy, 4096-laatta, hole-in-one, hattutemppu ilmakiekossa, neljä haamua yhdellä voimapillerillä ja paljon muuta."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Laamamerkit",
           "body": [
-            "Blackjackilla, Pokerilla ja Casinolla on yhteinen tili Laamapankissa: aloitat 1000 laamamerkillä, ja saldo tallentuu pysyvästi.",
+            "Blackjackilla, Pokerilla, Casinolla, Lama Crossingilla, Lama Minesilla ja Lama Plinkolla on yhteinen tili Laamapankissa: aloitat 1000 laamamerkillä, ja saldo tallentuu pysyvästi.",
             "Panos veloitetaan heti kun kortit jaetaan - jos poistut kesken käden, menetät sen.",
             "Paras tulos on blackjack-saldosi korkein arvo: 1000 plus kaikki, mitä olet voittanut ja hävinnyt blackjackissa. Ruletin, automaatin tai pokerin voitot eivät lasketa tähän.",
             "Alle 10 merkillä rahat ovat lopussa: [Enter] ottaa pankkilainan ja täyttää tilin taas 1000:een. Lainat eivät lasketa saldoon."
@@ -1901,7 +1901,7 @@
         {
           "h": "Laamamerkit",
           "body": [
-            "Pelataan Laamapankin laamamerkeillä - yhteinen tili Blackjackin ja Casinon kanssa (alku 1000, tallentuu pysyvästi).",
+            "Pelataan Laamapankin laamamerkeillä - yhteinen tili Blackjackin, Casinon, Lama Crossingin, Lama Minesin ja Lama Plinkon kanssa (alku 1000, tallentuu pysyvästi).",
             "Käden alussa tilisi on pöydällä pinona; pottiin menevä osuus veloitetaan heti. Jos poistut pöydästä kesken käden, osuutesi potista menetetään - loput palaavat tilille.",
             "Paras tulos on pokerisaldosi korkein arvo: 1000 plus kaikki, mitä olet voittanut ja hävinnyt pokerissa. Muiden pelien voitot eivät lasketa tähän.",
             "Rahat lopussa (alle 20:n ison blindin, Video Pokerissa alle 10) = pankkilaina yhdellä klikkauksella, tilillä on taas 1000."
@@ -2975,7 +2975,7 @@
         {
           "h": "Laamapankki",
           "body": [
-            "Casino, Blackjack ja Poker käyttävät samaa tiliä: laamamerkkejä (alku 1000). Panokset veloitetaan heti ja voitot hyvitetään - kaikki tallentuu pysyvästi.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines ja Lama Plinko käyttävät samaa tiliä: laamamerkkejä (alku 1000). Panokset veloitetaan heti ja voitot hyvitetään - kaikki tallentuu pysyvästi.",
             "Jokaisella pelillä on oma saldonsa. Casinon paras tulos on 1000 + Casino-saldon korkein arvo; Blackjackin tai Pokerin voitot eivät lasketa tähän.",
             "Kun rahat loppuvat (alle pienimmän panoksen), saat pankkilainan: tili täytetään taas 1000:een. Lainat eivät lasketa mihinkään saldoon; niiden määrä näkyy oikeassa yläkulmassa."
           ]
@@ -3109,7 +3109,7 @@
         {
           "h": "Laamamerkit",
           "body": [
-            "Lama Crossing pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin ja Casinon kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
+            "Lama Crossing pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin, Casinon, Lama Minesin ja Lama Plinkon kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
             "Paras tulos on 1000 + Lama Crossing -saldosi korkein arvo; Blackjackin, Pokerin tai Casinon voitot eivät lasketa tähän.",
             "Alle 10 merkillä rahat ovat lopussa: [Enter] tai klikkaus ottaa pankkilainan ja täyttää tilin taas 1000:een. Lainat eivät lasketa saldoon.",
             "Kesken ylityksen lopettaminen on turvallista: panos, vaikeustaso ja kaista tallentuvat, ja seuraavalla käynnistyskerralla jatkat täsmälleen siitä."
@@ -3134,6 +3134,319 @@
             "- Hyvällä ajoituksella perille asti pääsee Helpolla suunnilleen joka 7. kierroksella, Keskitasolla joka 38., Vaikealla joka 614. ja Äärimmäisellä vain kerran 32 768 kierroksessa.",
             "- Teräshermoihin (×10) riittää Äärimmäisellä 4 kaistaa (×15,52), Vaikealla 7 (×11,77) ja Keskitasolla 13 (×10,37); Helpolla ei koskaan (enintään ×6,57). Nuorallatanssiin (×100 Äärimmäisellä) tarvitaan 7 kaistaa (×124,16) - se onnistuu suunnilleen joka 128. kierroksella.",
             "- Päätä etukäteen, millä kertoimella kotiutat - ja pidä siitä kiinni. Kiinteän palautuksen ansiosta mikään strategia ei ole toista parempi, vain enemmän tai vähemmän riskialtis."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "laama",
+        "lama",
+        "mines",
+        "miinat",
+        "jalokivet",
+        "ruudut",
+        "avaa",
+        "kotiuta",
+        "kerroin",
+        "merkit",
+        "laamapankki",
+        "panos",
+        "riski",
+        "automaatti",
+        "reiluus",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "tilastot",
+        "siemen"
+      ],
+      "sections": [
+        {
+          "h": "Näin pelataan",
+          "body": [
+            "Jokaisen piilotetun ruudun alla on jalokivi tai miina. Jokainen löydetty jalokivi nostaa kerrointa - miina vie panoksen.",
+            "Valitse panos (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 tai 10000 laamamerkkiä) ja paina PELAA: panos veloitetaan ja kenttä arvotaan. Siitä hetkestä lähtien on varmaa, missä miinat ovat - sen voi tarkistaa reiluustarkistuksella.",
+            "Sitten avaat ruudun kerrallaan: klikkaamalla, nuolinäppäimillä ja näppäimellä [Välilyönti] tai näppäimellä [R] tai painikkeella Arvo ruutu satunnaisesta piilotetusta ruudusta. Ensimmäisestä jalokivestä lähtien voit painaa KOTIUTA milloin tahansa - silloin saat panoksen kerrottuna nykyisellä kertoimella.",
+            "Kun kaikki jalokivet on löydetty, voitto kotiutetaan automaattisesti: KAIKKI MIINUN! Jos osut miinaan, se räjähtää, kuva tärisee ja panos menee. Kummassakin tapauksessa - myös kotiutuksen jälkeen - loput ruudut paljastetaan himmennettyinä, jotta näet, missä miinat olivat. Kenttä jää näkyviin, kunnes pelaat lisää tai muutat asetusta.",
+            "Oikeassa yläkulmassa näkyy 12 viimeisen kierroksen historia - uusin oikealla, miina punaisena ×0:na."
+          ]
+        },
+        {
+          "h": "Kentän koot ja miinat",
+          "body": [
+            "Neljä kokoa - valitaan ennen jokaista kierrosta painikkeilla tai näppäimillä [1] - [4]: 4×4 (16 ruutua), 5×5 (25 ruutua, oletus), 6×6 (36 ruutua) ja 7×7 (49 ruutua).",
+            "Miinojen määrän säädät näppäimillä [Vasen] / [Oikea], nuolipainikkeilla tai kuudella pikavalintapainikkeella: yhdestä ruutujen määrään miinus yksi - vähintään yksi jalokivi jää aina. Oletuksena miinoja on 3. Pikavalinta tarjoaa koon mukaan:",
+            "- 4×4: 1, 2, 3, 5, 8 tai 12 miinaa",
+            "- 5×5: 1, 3, 5, 10, 15 tai 24 miinaa",
+            "- 6×6: 1, 3, 6, 12, 20 tai 35 miinaa",
+            "- 7×7: 1, 3, 7, 14, 24 tai 48 miinaa",
+            "Enemmän miinoja tarkoittaa: jokainen jalokivi on arvokkaampi, mutta seuraava ruutu on harvemmin turvallinen. 24 miinalla 5×5-kentällä jo ensimmäinen jalokivi tuo ×24,25 - 4 %:n todennäköisyydellä.",
+            "Kokoa, miinoja ja panosta voi vaihtaa vain kierrosten välissä."
+          ]
+        },
+        {
+          "h": "Kerroin ja palautus",
+          "body": [
+            "Kerroin riippuu vain siitä, montako jalokiveä olet jo löytänyt - ei siitä, mitkä ruudut ne olivat. Se tasaa tarkalleen todennäköisyyden päästä niin pitkälle, vähennettynä pankin 3 %:lla:",
+            "- kerroin = 0,97 jaettuna todennäköisyydellä löytää k jalokiveä peräkkäin",
+            "- tämä todennäköisyys on tulo, jossa on yksi tekijä jokaista jalokiveä kohden: jalokivet/ruudut × (jalokivet - 1)/(ruudut - 1) × …",
+            "- kaavana: 0,97 × C(N, M) / C(N - k, M), pyöristettynä alaspäin sadasosiin. N on ruutujen määrä, M miinojen määrä, k löydettyjen jalokivien määrä ja C(n, m) binomikerroin ”n yli m”.",
+            "Esimerkki 5×5 ja 3 miinaa: ensimmäinen ruutu on turvallinen 22 kertaa 25:stä (88 %), joten se tuo 0,97 / 0,88 = ×1,10. Kahden jalokiven jälkeen todennäköisyys on 22/25 × 21/24 = 77 % - siitä tulee ×1,25.",
+            "Jatko on ×1,44, ×1,67 ja ×1,95 viiden jalokiven jälkeen, ×4,90 kymmenen jälkeen, ×10,14 13:n jälkeen, ×18,59 15:n jälkeen, ×111,55 19:n jälkeen ja ×557,75 21:n jälkeen. Kaikki 22 jalokiveä löytävä saa ×2 231 - se onnistuu kerran 2300 kierroksessa.",
+            "Alaraja: jokainen jalokivi nostaa kerrointa vähintään 0,01 - jo ensimmäinen tuo siis vähintään ×1,01. Pelkän kaavan mukaan esimerkiksi 6×6-kentällä yhdellä miinalla saisi vain ×0,99. Vain kolmea porrasta nostetaan: ensimmäistä jalokiveä 6×6-kentällä yhdellä miinalla ja kahta ensimmäistä 7×7-kentällä yhdellä miinalla.",
+            "Suurin voitto on ×100 000. Jos kerroin saavuttaa tämän rajan, voitto kotiutetaan heti automaattisesti: MAKSIMIVOITTO! Koko kenttää tyhjennettäessä se tapahtuu jo 5×5-kentällä 6 miinalla, 6×6-kentällä 5 miinalla ja 7×7-kentällä 4 miinalla; 4×4-kentällä ei koskaan. Enempää ei tule, vaikka kaava antaisi enemmän.",
+            "Koska todennäköisyys ja kerroin tasaavat toisensa, jokainen strategia palauttaa pitkällä aikavälillä noin 97 % panoksesta - riippumatta koosta, miinojen määrästä ja siitä, monenko jalokiven jälkeen kotiutat. Pyöristyksen vuoksi se on portaasta riippuen 96-97 %. Kolme nostettua porrasta ovat hieman yli (enintään 98,94 % ensimmäisellä jalokivellä 7×7-kentällä yhdellä miinalla), rajattu porras selvästi alle. Talon etu on siis noin 3 %.",
+            "Murto-osat eivät katoa: maksetaan kokonaisia merkkejä, ja sadasosina jäävä loppu muistetaan ja lisätään seuraavaan kotiutukseen. 10 merkkiä × 1,01 tuo siis ensin 10 merkkiä, ja loput 0,10 tulevat myöhemmin - näin myös pienet panokset saavat täyden palautuksen."
+          ]
+        },
+        {
+          "h": "Näytöt",
+          "body": [
+            "Ennen kierrosta yläosa näyttää asetuksen suurimman kertoimen (kaikki jalokivet löydetty) sekä jalokivien ja miinojen määrän. Kierroksen aikana kentän vieressä on kaikki, mitä tarvitset seuraavaan päätökseen:",
+            "- nykyinen kerroin ja voittosi, jos kotiutat nyt",
+            "- kerroin seuraavan jalokiven jälkeen ja voitto seuraavasta ruudusta",
+            "- todennäköisyys, että seuraava ruutu on turvallinen: jäljellä olevat jalokivet jaettuna jäljellä olevilla piilotetuilla ruuduilla - 88 % ensimmäisellä klikkauksella 5×5-kentällä 3 miinalla, sitten jokaisen jalokiven jälkeen hieman vähemmän",
+            "- montako jalokiveä on löydetty ja palkki seuraavista 5 portaasta: montako jalokiveä tuo minkäkin kertoimen",
+            "Kaivoskypäräinen ja otsalamppuinen maskottilaama elää mukana: se iloitsee jokaisesta jalokivestä ja vieressä oleva kaivosvaunu täyttyy, miinasta se säikähtää ja on sen jälkeen nokinen. Alkaen ×3 sataa kolikoita, alkaen ×10 ja kentän tyhjentyessä myös konfetteja."
+          ]
+        },
+        {
+          "h": "Autotila",
+          "body": [
+            "[A] tai Auto-painike avaa autotilan kierrosten välissä. Ikkuna asettuu sivupaneelin päälle ja jättää ruudukon vapaaksi: klikkaamalla tai nuolinäppäimillä ja näppäimellä [Välilyönti] merkitset ruudut, jotka avataan joka kierroksella - enintään yhtä monta kuin jalokiviä on. Peli muistaa valinnan jokaiselle kentän koolle; [Del], [Backspace] tai Tyhjennä poistaa kaikki merkinnät.",
+            "Ikkuna näyttää, montako ruutua on merkitty ja mitä kierros tuo, jos kaikki ovat turvallisia: kertoimen ja todennäköisyyden. Lisäksi valitset kierrosten määrän (5, 10, 25, 50 tai 100) ja halutessasi kaksi rajaa: Lopeta, kun voitto on ja Lopeta, kun tappio on (pois, 100, 500, 1000, 5000, 10000 tai 50000 merkkiä, laskettuna alusta).",
+            "KÄYNNISTÄ AUTO tai [Enter]: jokainen kierros veloittaa panoksen ja avaa merkityt ruudut nopeasti peräkkäin. Jos kaikki ovat turvallisia, voitto kotiutetaan - kertoimella, joka vastaa merkitsemiesi ruutujen määrää. Jos merkityn ruudun alla on miina, kierros hävitään.",
+            "Autotila jatkuu, kunnes kaikki kierrokset on pelattu, jokin raja täyttyy, merkit eivät riitä seuraavaan panokseen tai painat SEIS, [Välilyönti], [Enter], [A] tai [Esc]. Jos pysäytät kesken kierroksen, se jää auki - jatkat käsin avaamista tai kotiutat. Panos, kentän koko ja miinat ovat lukittuina autotilan aikana.",
+            "[T] kytkee turbon - myös käsin pelatessa: ruutujen kääntö, räjähdykset ja autokierrokset sujuvat kaksi ja puoli kertaa nopeammin."
+          ]
+        },
+        {
+          "h": "Reiluustarkistus",
+          "body": [
+            "Lama Mines on todistettavasti reilu: miinakenttä on lukittu ennen kuin klikkaat ensimmäistä ruutua - ja kierroksen jälkeen voit laskea, ettei mitään siirretty. Siihen tarvitaan neljä arvoa:",
+            "- Palvelimen siemen: salainen satunnaisarvo (32 merkkiä), jonka peli päättää ennen kierrosta.",
+            "- Tarkistuskoodi: palvelimen siemenen SHA-256-sormenjälki (hash). Se näytetään jo ennen kierrosta (seuraavan kierroksen tarkistuskoodi). Siitä ei voi laskea siementä takaisin - mutta yksikin eri merkki siemenessä antaisi täysin eri koodin.",
+            "- Asiakkaan siemen: oma osuutesi satunnaisuudesta (8 merkkiä). Uusi asiakkaan siemen arpoo uuden - vain kierroksen ulkopuolella. Näin peli ei päätä tulosta yksin.",
+            "- Nro: kierroksen numero. Se kasvaa yhdellä joka kierros, jotta mikään kierros ei ole toisen kaltainen.",
+            "Pelin nimestä, palvelimen siemenestä, asiakkaan siemenestä ja kierroksen numerosta syntyy kierroksen satunnaisuus (mulberry32). Se sekoittaa kaikkien ruutujen listan (laskettuna riveittäin vasemmasta yläkulmasta alkaen), ja sekoitetun listan ensimmäisistä paikoista - yhtä monesta kuin miinoja on - tulee miinoja.",
+            "Kierroksen jälkeen palvelimen siemen paljastetaan; seuraavan kierroksen tarkistuskoodi on silloin jo lukittu.",
+            "[F] avaa Reiluus-ikkunan: ylhäällä seuraavan kierroksen tarkistuskoodi (kierroksen aikana myös tämän kierroksen tarkistuskoodi), asiakkaan siemen ja kierroksen numero, alla 12 viimeistä kierrosta numeron, tarkistuskoodin ja tuloksen kanssa, uusin ylimpänä (hiiren rulla vierittää). Rivin klikkaus näyttää kentän koon, miinat, tarkistuskoodin, palvelimen siemenen ja asiakkaan siemenen.",
+            "Tarkista laskee siemenen SHA-256:n uudelleen, vertaa sitä etukäteen näytettyyn tarkistuskoodiin, rakentaa miinakentän uudelleen ja tarkistaa myös tuloksen - olivatko avatut ruudut oikein, täsmääkö kerroin? Rasti tai risti ja pieni esikatselu kentästä kertovat: Täsmää tai Ei täsmää.",
+            "Voit myös tarkistaa koodin itse: laske palvelimen siemenen SHA-256 millä tahansa työkalulla ja vertaa sitä tarkistuskoodiin."
+          ]
+        },
+        {
+          "h": "Tilastot",
+          "body": [
+            "[S] avaa profiilisi tilastot: kierrokset, voitetut ja hävityt, palautuksesi (montako prosenttia panoksistasi on palannut), panostettu ja maksettu, saldo, suurin voitto ja paras kerroin - sekä löydetyt jalokivet, osutut miinat ja tyhjennetyt kentät.",
+            "Käyrä näyttää 100 viimeisen kierroksen saldon. Kierros lasketaan voitetuksi, jos maksettiin enemmän kuin panostettiin.",
+            "Pitkällä aikavälillä palautuksesi asettuu noin 97 %:iin - muutamalla kierroksella se voi heilahdella paljon ylös tai alas."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- Ennen kierrosta: [Välilyönti] tai [Enter] = PELAA, [1] - [4] = kentän koko, [Vasen] / [Oikea] = miinojen määrä",
+            "- [Ylös] / [Alas], [+] / [-] tai hiiren rulla: vaihda panosta (vain kierrosten välissä)",
+            "- Kierroksen aikana: ruudun klikkaus avaa sen. Nuolinäppäimet siirtävät kohdistinta; ensimmäinen [Välilyönti] vain näyttää sen, jokainen seuraava avaa sen alla olevan ruudun.",
+            "- [R] tai painike Arvo ruutu: avaa satunnainen piilotettu ruutu; [Enter], [C] tai KOTIUTA: kotiuta (ensimmäisestä jalokivestä lähtien)",
+            "- Tuloksen jälkeen: [Välilyönti] tai PELAA aloittaa heti seuraavan kierroksen, muut näppäimet vievät takaisin asetuksiin.",
+            "- [A]: autotila, [S]: tilastot, [F]: reiluus, [T]: turbo - tai neljä painiketta ylhäällä. [Esc] tai klikkaus ikkunan viereen sulkee sen, [Esc] pysäyttää myös autotilan.",
+            "Näppäimet ovat kiinteitä eivätkä riipu näppäinasetuksista - pelaajanäppäimet kuten WASD eivät ole tässä käytössä. Kentän koko, miinojen määrä, viimeisin panos, turbo ja autotilan asetukset tallentuvat tiedostoon settings.json (osio lamamines)."
+          ]
+        },
+        {
+          "h": "Laamamerkit",
+          "body": [
+            "Lama Mines pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin, Casinon, Lama Crossingin ja Lama Plinkon kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
+            "Paras tulos on 1000 + Lama Mines -saldosi korkein arvo; Laamapankin muiden pelien voitot eivät lasketa tähän.",
+            "Alle 10 merkillä rahat ovat lopussa: [Välilyönti], [Enter] tai klikkaus ottaa pankkilainan ja täyttää tilin taas 1000:een. Lainat eivät lasketa saldoon.",
+            "Kesken kierroksen lopettaminen on turvallista: panos veloitetaan alussa, ja jokaisen löydetyn jalokiven jälkeen tallentuvat kentän koko, miinat, kierroksen siemenet ja avatut ruudut. Seuraavalla käynnistyskerralla kenttä lasketaan uudelleen siemenestä, ja jatkat täsmälleen siitä.",
+            "Historia, reiluustiedot, tilastot, autotilan merkinnät ja siirtyvä jäännös kuuluvat profiiliisi."
+          ]
+        },
+        {
+          "h": "Saavutukset",
+          "body": [
+            "- Lama Mines-vakiopelaaja: 25 kierrosta",
+            "- Virstanpylväs: paras tulos 3000",
+            "- Lama Mines-mestari: paras tulos 10000",
+            "- Aarrekammio (harvinainen): Tyhjennä Lama Minesissa koko ruudukko – kaikki jalokivet löydetty",
+            "- Syvälle kaivettu (eeppinen): Kotiuta Lama Minesissa kertoimella ×10 tai enemmän",
+            "- Timanttilaama (legendaarinen): Kotiuta Lama Minesissa kertoimella ×1000 tai enemmän"
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Jokainen kierros arvotaan uudelleen, eikä mikään ruutu ole toista turvallisempi - eivät kulmat eikä keskikohta. Aiempien kierrosten kuviot eivät auta.",
+            "- Aarrekammio: 4×4-kentällä yhdellä miinalla kentän tyhjentäminen onnistuu kerran 16 kierroksessa (×15,52) - samoin 15 miinalla, jolloin jalokiviä on vain yksi. 5×5-kentällä 3 miinalla se on vain kerran 2300:sta.",
+            "- Syvälle kaivettu (×10): 5×5-kentällä 3 miinalla riittää 13 jalokiveä (×10,14), mikä onnistuu suunnilleen joka 10.-11. kierroksella. 24 miinalla jo ensimmäinen jalokivi tuo ×24,25 - kerran 25 kierroksessa.",
+            "- Timanttilaama (×1000): parhaat reitit onnistuvat noin kerran 1100 kierroksessa, esimerkiksi 5×5 ja 10 miinaa 10 jalokiven jälkeen (×1 055,84) tai 7×7 ja 12 miinaa 19 jalokiven jälkeen (×1 034,71). 5×5-kentällä 3 miinalla se onnistuu vain tyhjentämällä koko kentän (×2 231).",
+            "- Autotilassa ratkaisee vain merkittyjen ruutujen määrä, ei se, mitkä ruudut ne ovat: 5 merkittyä ruutua 5×5-kentällä 3 miinalla ovat kaikki turvallisia 49,6 %:ssa kierroksista ja tuovat silloin ×1,95.",
+            "- Päätä etukäteen, monenko jalokiven jälkeen kotiutat - ja pidä siitä kiinni. Kiinteän palautuksen ansiosta mikään strategia ei ole toista parempi, vain enemmän tai vähemmän riskialtis. Maksimivoiton tavoittelu ei kannata: rajattu porras maksaa vähemmän kuin sen riski olisi arvoinen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "laama",
+        "lama",
+        "plinko",
+        "pallo",
+        "lankakerä",
+        "galtonin lauta",
+        "nastat",
+        "lokerot",
+        "kerroin",
+        "merkit",
+        "laamapankki",
+        "panos",
+        "rivit",
+        "riski",
+        "kellokäyrä",
+        "auto",
+        "turbo",
+        "reiluus",
+        "provably fair",
+        "tarkistuskoodi",
+        "siemen",
+        "sha-256",
+        "tilastot"
+      ],
+      "sections": [
+        {
+          "h": "Näin pelataan",
+          "body": [
+            "Kultainen lankakerä putoaa nastoista muodostetun kolmion läpi. Jokaisessa nastassa se pomppaa vasemmalle tai oikealle ja laskeutuu johonkin alareunan lokeroista. Jokaisessa lokerossa on kerroin: panos kertaa kerroin on maksusi.",
+            "Valitse panos palloa kohden (1, 2, 5, 10, 20, 50, 100, 200, 500 tai 1000 laamamerkkiä) ja paina PUDOTA: panos veloitetaan, laudan yläreunan laama nyökkää ja pudottaa pallon.",
+            "Uloimmat lokerot maksavat eniten, keskimmäiset palauttavat vähemmän kuin panoksen - mutta sinne putoaa suurin osa palloista. Saat panoksen kertaa kertoimen kokonaisina merkkeinä; yhden merkin alle jäävä osa muistetaan ja lisätään seuraavaan palloon.",
+            "Osuttu lokero keinahtaa, ponnahdusikkuna näyttää kertoimen, ja mitä suurempi se on, sitä kirkkaampi ääni. Kertoimesta ×10 alkaen sataa kolikoita, kertoimesta ×100 alkaen tulee lisäksi banneri ja konfetteja. Oikeassa yläkulmassa näkyy 12 viimeisen pallon historia."
+          ]
+        },
+        {
+          "h": "Rivit ja riski",
+          "body": [
+            "Molemmat säädetään ennen pudotusta; niin kauan kuin laudalla on palloja tai autotila on käynnissä, ne ovat lukittuina. Peli näyttää myös valitun taulukon suurimman kertoimen ja tarkan palautusprosentin.",
+            "- Rivit: 8-16 nastariviä näppäimillä [Vasen] / [Oikea] (oletus 12). n rivillä lokeroita on n + 1.",
+            "- Riski: Matala, Keskitaso (oletus) tai Korkea näppäimillä [1] - [3].",
+            "Useampi rivi tekee reunalokeroista harvinaisempia ja korkeampia. Riski määrää, kuinka kaukana keskikohta ja reuna ovat toisistaan:",
+            "- Matala: keskellä ×0,7, reunalla ×5,3 (8 riviä) ja jopa ×16 (16 riviä) - pieniä, tiheitä voittoja",
+            "- Keskitaso: keskellä ×0,4–0,5, reunalla ×13 ja jopa ×110",
+            "- Korkea: keskellä ×0,2, reunalla ×32 ja jopa ×1 000 - lähes aina vähemmän kuin panos, hyvin harvoin jättiosuma",
+            "Esimerkki - 17 lokeroa 16 rivillä, riski Keskitaso: 110 · 38 · 14 · 6,2 · 2,8 · 1,4 · 0,8 · 0,5 · 0,4 · 0,5 · 0,8 · 1,4 · 2,8 · 6,2 · 14 · 38 · 110",
+            "16 rivillä noin 55 % palloista palauttaa vähemmän kuin panoksen riskitasolla \"Matala\", 79 % tasolla \"Keskitaso\" ja peräti 92 % tasolla \"Korkea\"."
+          ]
+        },
+        {
+          "h": "Näin pallo putoaa",
+          "body": [
+            "Lauta on Galtonin lauta: jokaisessa nastassa pallo menee vasemmalle tai oikealle tasan 50 %:n todennäköisyydellä - kuin kolikonheitossa. Lokero on yksinkertaisesti oikealle tehtyjen pomppujen määrä: 12 rivillä siis 0 (vasen reuna) - 12 (oikea reuna).",
+            "Pallo pääsee aivan reunaan vain, jos se pomppaa jokaisessa nastassa samaan suuntaan. Keskelle sen sijaan johtaa todella monta reittiä. Siksi pallot kasautuvat keskelle kellokäyräksi (binomijakauma):",
+            "- 8 riviä: keskilokero 27,34 %, jokainen reunalokero 1/256",
+            "- 12 riviä: keskilokero 22,56 %, jokainen reunalokero 1/4 096",
+            "- 16 riviä: keskilokero 19,64 %, jokainen reunalokero 1/65 536",
+            "Vie hiiri lokeron päälle: se näyttää kertoimensa, todennäköisyytensä (pienetkin, kuten 0,0015 %) ja sen, mitä se maksaa panoksellasi.",
+            "Kaikki 27 taulukkoa (9 rivimäärää × 3 riskitasoa) ovat symmetrisiä, eivät koskaan pienene reunaa kohti ja palauttavat - tarkasti laskettuna - pitkällä aikavälillä 96,9-97,1 % panoksista. Talon etu on siis noin 3 %, säädit mitä tahansa. Rivit ja riski muuttavat vain sitä, kuinka rajusti onni heilahtelee."
+          ]
+        },
+        {
+          "h": "Monta palloa kerralla",
+          "body": [
+            "Sinun ei tarvitse odottaa, että pallo laskeutuu: laudalla voi pomppia yhtä aikaa jopa 50 palloa - laskuri \"Matkalla\" pitää niistä kirjaa. Pidä [Välilyönti] painettuna, niin hetken päästä palloja putoaa sarjatulena - niin tiheään, että matkalla on yhtä aikaa noin 30 palloa.",
+            "Jokaisen pallon reitti arvotaan jo pudotushetkellä. Siksi panos ja maksu kirjataan ja tallennetaan heti yhdessä - mutta maksun näet vasta, kun pallo saapuu alas. Vasta silloin voit myös panostaa voiton uudelleen.",
+            "Jos poistut pelistä palloja vielä pudotessa, mitään ei menetetä: merkit on jo kirjattu, ja näiden pallojen saavutukset myönnetään poistuessa.",
+            "Turbo puolittaa pallojen lentoajan ja sarjatulen välin - kytke se päälle ja pois näppäimellä [T]."
+          ]
+        },
+        {
+          "h": "Autotila",
+          "body": [
+            "[A] avaa autotilan. Siellä säädät (ikkuna laskee myös koko sarjan kokonaispanoksen):",
+            "- Pallot: 10, 25, 50, 100, 250, 500 tai 1000",
+            "- Lopeta, kun voitto on / Lopeta, kun tappio on: pois, 100, 500, 1000, 5000, 10000 tai 50000 merkkiä",
+            "- Turbo päällä tai pois",
+            "KÄYNNISTÄ AUTO pudottaa pallot peräkkäin nykyisellä panoksella, rivimäärällä ja riskillä; nämä kolme ovat sillä aikaa lukittuina. Autotila päättyy, kun kaikki pallot on pudotettu, voitto tai tappio alusta lähtien saavuttaa rajan, merkit eivät riitä seuraavaan palloon vielä lennossa olevien pallojen laskeuduttuakaan tai painat SEIS, [Välilyönti] tai [Esc]. Jo matkalla olevat pallot laskeutuvat silti.",
+            "Autotilan asetukset tallentuvat tiedostoon settings.json (osio lamaplinko)."
+          ]
+        },
+        {
+          "h": "Reiluustarkistus",
+          "body": [
+            "Lama Plinkossa voit itse tarkistaa, ettei yhtäkään palloa ohjata jälkikäteen (\"provably fair\"). Siihen on kolme arvoa:",
+            "- Palvelimen siemen: 32 merkin salainen satunnaisarvo, jonka peli lyö lukkoon ennen pudotusta. Jokainen pallo saa omansa.",
+            "- Tarkistuskoodi: palvelimen siemenen SHA-256-sormenjälki. Se näkyy jo ennen pudotusta. Siitä ei voi päätellä siementä, mutta millä tahansa muulla siemenellä olisi täysin eri koodi - peli ei siis voi enää vaihtaa siementä.",
+            "- Asiakkaan siemen: oma osuutesi (8 merkkiä). \"Uusi asiakkaan siemen\" arpoo uuden heti, kun yksikään pallo ei ole ilmassa - näin peli ei päätä sattumasta yksin.",
+            "Lisäksi on numero (nonce), joka kasvaa yhdellä joka pallolla. Palvelimen siemen, asiakkaan siemen ja numero muodostavat yhdessä pallon sattuman: yksi kolikonheitto riviä kohden, ja jokainen \"oikea\" siirtää palloa yhden lokeron oikealle.",
+            "Laskeutumisen jälkeen palvelimen siemen paljastetaan - silloin seuraavan pallon tarkistuskoodi on jo lukittu.",
+            "[F] avaa reiluustarkistuksen 12 viimeisellä pallolla: numero, tarkistuskoodi, palvelimen siemen ja asiakkaan siemen sekä rivit, riski, lokero ja kerroin. \"Tarkista\" laskee siemenen SHA-256:n uudelleen, vertaa sitä aiemmin näytettyyn tarkistuskoodiin ja laskee pallon reitin vielä kerran: \"Täsmää\" tarkoittaa, että kaikki täsmää - \"Ei täsmää\" paljastaisi poikkeaman. Pieni esikatselu näyttää uudelleen lasketun reitin.",
+            "Uteliaille: satunnaislukugeneraattori on mulberry32, joka käynnistetään tekstin \"lamaplinko|palvelimen siemen|asiakkaan siemen|numero\" FNV-1a-arvolla. Jokainen rivi arpoo luvun väliltä 0-1; alle 0,5 tarkoittaa oikeaa. Näin jokaisen pallon voi laskea uudelleen myös omilla työkaluilla."
+          ]
+        },
+        {
+          "h": "Tilastot",
+          "body": [
+            "[S] avaa profiilisi Lama Plinko -tilastot:",
+            "- Ruudut: Kierrokset, Voitetut, Hävityt, Panostettu, Maksettu, Saldo, Suurin voitto, Paras kerroin, Palautuksesi. Jokainen pallo lasketaan erikseen; voitettu tarkoittaa, että takaisin tuli enemmän kuin panos, hävitty vähemmän.",
+            "- saldokäyrä 100 viimeisestä pallosta",
+            "- osumajakauma: osumasi lokeroittain pylväinä, odotettu jakauma (binomijakauma) kultaisena - jokaiselle rivimäärälle erikseen, vaihda näppäimillä [Vasen] / [Oikea]",
+            "Alussa palautuksesi heittelee rajusti (yksi reunaosuma riskitasolla \"Korkea\" nostaa sen korkealle), monella pallolla se lähestyy noin 97 %:a. Samalla tavalla pylväät lähestyvät kultaista käyrää muutaman sadan pallon jälkeen."
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- [Välilyönti], [Enter] tai klikkaus painikkeeseen PUDOTA tai laudalle: pudota pallo - pidä painettuna sarjatulta varten",
+            "- [Ylös] / [Alas], [+] / [-] tai hiiren rulla: vaihda panosta palloa kohden",
+            "- [Vasen] / [Oikea]: rivit (8-16), [1] - [3]: riski",
+            "- [A]: autotila, [S]: tilastot, [F]: reiluustarkistus, [T]: turbo",
+            "- [Esc]: sulje avoin ikkuna tai pysäytä autotila",
+            "- Hiiri lokeron päällä: kerroin, todennäköisyys ja maksu panoksellasi",
+            "Ikkunoissa: autotilan ikkunassa [Ylös] / [Alas] valitsee rivin, [Vasen] / [Oikea] muuttaa sitä ja [Enter] tai [Välilyönti] käynnistää tai pysäyttää. Tilastoissa [Vasen] / [Oikea] vaihtaa jakauman rivimäärää. Reiluustarkistuksessa nuolinäppäimet tai hiiren rulla valitsevat pallon, [Enter] tarkistaa sen ja [C] arpoo uuden asiakkaan siemenen. [Esc] tai sama kirjainnäppäin sulkee ikkunan.",
+            "Kaikki toimii myös hiirellä; klikkaus avoimen ikkunan viereen sulkee sen. Rivit, riski, panos, turbo ja autotilan asetukset tallentuvat tiedostoon settings.json (osio lamaplinko)."
+          ]
+        },
+        {
+          "h": "Laamamerkit",
+          "body": [
+            "Lama Plinko pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin, Casinon, Lama Crossingin ja Lama Minesin kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
+            "Paras tulos on 1000 + Lama Plinko -saldosi korkein arvo; muiden pelien voitot eivät lasketa tähän.",
+            "Jos tilisi ei riitä valittuun panokseen, valitse pienempi. 0 merkillä rahat ovat lopussa: [Enter] tai klikkaus ottaa pankkilainan ja täyttää tilin taas 1000:een. Lainat eivät lasketa saldoon.",
+            "Historia, tilastot ja reiluustiedot kuuluvat profiiliisi, ja nekin tallennetaan tiedostoon mem.json."
+          ]
+        },
+        {
+          "h": "Saavutukset",
+          "body": [
+            "- Lama Plinko-vakiopelaaja: 25 kierrosta",
+            "- Virstanpylväs: paras tulos 3000",
+            "- Lama Plinko-mestari: paras tulos 10000",
+            "- Reunaosuma (harvinainen): Osu Lama Plinkossa uloimpaan lokeroon (vähintään 12 riviä)",
+            "- Lankakerämyrsky (eeppinen): Pidä Lama Plinkossa 25 palloa laudalla yhtä aikaa",
+            "- Plinkolegenda (legendaarinen): Osu Lama Plinkossa uloimpaan lokeroon 16 rivillä ja korkealla riskillä"
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Jokainen pallo on riippumaton: kymmenen keskiosuman jälkeen reuna ei ole \"vuorossa\".",
+            "- Mikään asetus ei voita palautusprosenttia. Riskitasolla \"Matala\" tilisi heiluu vähän, tasolla \"Korkea\" häviät yleensä - pienellä mahdollisuudella jättiosumaan.",
+            "- Pienet panokset eivät ole huonompia: merkin murto-osia ei menetetä. 1 merkin panoksella ×0,7 ei ensin maksa mitään, mutta 0,7 merkkiä muistetaan ja maksetaan jonkin seuraavan pallon mukana heti, kun kokonainen merkki täyttyy. Siksi noin 97 %:n palautus pätee jokaisella panoksella.",
+            "- Reunaosuma: nopeimmin 12 rivillä - siellä noin joka 2 048. pallo osuu aivan reunaan (vasemmalle tai oikealle). 1 merkin palloilla se maksaa keskimäärin vain noin 3 merkkiä 100:aa palloa kohden.",
+            "- Lankakerämyrsky: pidä vain [Välilyönti] painettuna - sarjatuli tuo laudalle yhtä aikaa noin 30 palloa rivimäärästä riippumatta, ja noin 2 sekunnin päästä saavutus on sinun. Autotila pudottaa siihen liian verkkaisesti.",
+            "- Plinkolegenda: 16 rivillä ja riskitasolla \"Korkea\" vain noin 1/32 768 palloista osuu aivan reunaan - 1000 pallon autosarjoilla tarvitset keskimäärin noin 33 sarjaa. Sen sijaan tuo lokero maksaa ×1 000.",
+            "- Päätä budjetti etukäteen ja käytä autotilan tappiorajaa."
           ]
         }
       ]

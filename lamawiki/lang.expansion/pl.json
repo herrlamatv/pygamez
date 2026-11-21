@@ -147,7 +147,7 @@
           "body": [
             "Każda gra z postępami ma w mem.json własną sekcję, na przykład:",
             "- sudoku: rozwiązane poziomy z gwiazdkami i najlepszym czasem, rozpoczęte łamigłówki oraz Sudoku dnia z serią.",
-            "- casino: konto Banku Lamy - żetony Lamy dla Blackjacka, Pokera, Casino i Lama Crossing wraz z bilansem każdej gry oraz rozpoczętą przeprawą w Lama Crossing.",
+            "- casino: konto Banku Lamy - żetony Lamy dla Blackjacka, Pokera, Casino, Lama Crossing, Lama Mines i Lama Plinko wraz z bilansem każdej gry, rozpoczętą przeprawą w Lama Crossing, rozpoczętą rundą i zaznaczeniami trybu auto w Lama Mines oraz historią, danymi uczciwości, statystykami i przeniesioną resztą Lama Mines i Lama Plinko.",
             "- crossy: zebrane monety, kupione postacie i najlepszy wynik dnia w Crossy Road.",
             "- tetris: najlepszy czas w Sprincie, najlepszy wynik w Ultra i bilans pojedynków z SI.",
             "- g2048: zapisane partie 2048 i najlepsze wyniki dla każdego rozmiaru planszy i trybu.",
@@ -349,7 +349,7 @@
         {
           "h": "Przegląd",
           "body": [
-            "256 osiągnięć we wszystkich 47 grach - od pierwszego startu po Perfect Clear w Tetrisie.",
+            "268 osiągnięć we wszystkich 49 grach - od pierwszego startu po Perfect Clear w Tetrisie.",
             "Każde osiągnięcie ma rzadkość, a więc wartość punktową; suma daje twój poziom.",
             "Znajdziesz je pod przyciskiem Osiągnięcia i statystyki, karta Osiągnięcia. Filtr ukrywa zdobyte lub pozostałe."
           ]
@@ -360,7 +360,7 @@
             "- Ogólne: cele całej kolekcji - rozgrywki, wypróbowane gry, czas, rekordy, zwycięstwa, dni z grą, serie, poziom i pojedynki. Do tego dodatki: nocny marek, maraton, weekendowy gracz.",
             "- Progi punktowe: uczciwy wynik docelowy dla każdej gry.",
             "- Poziomy mistrzowskie: druga, znacznie wyższa poprzeczka - tylko dla gier z otwartą punktacją.",
-            "- Bywalec: 25 rozgrywek jednej gry. Jest dla wszystkich 47 gier.",
+            "- Bywalec: 25 rozgrywek jednej gry. Jest dla wszystkich 49 gier.",
             "- Wyjątkowe chwile: mat, generał w kościach, kafelek 4096, hole-in-one, hat-trick w air hockey, cztery duchy z jednej pigułki i wiele więcej."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Żetony Lamy",
           "body": [
-            "Blackjack, Poker i Casino dzielą jedno konto w Banku Lamy: zaczynasz z 1000 żetonów Lamy, a stan konta jest trwale zapisywany.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines i Lama Plinko dzielą jedno konto w Banku Lamy: zaczynasz z 1000 żetonów Lamy, a stan konta jest trwale zapisywany.",
             "Stawka jest pobierana od razu przy rozdaniu - kto opuści trwające rozdanie, traci ją.",
             "Rekord to najwyższy stan twojego bilansu w blackjacku: 1000 plus wszystko, co wygrałeś i przegrałeś w blackjacku. Wygrane w ruletce, na automacie czy w pokerze się tu nie liczą.",
             "Poniżej 10 żetonów jesteś bankrutem: [Enter] bierze kredyt z banku i uzupełnia konto do 1000. Kredyty nie liczą się do bilansu."
@@ -1901,7 +1901,7 @@
         {
           "h": "Żetony Lamy",
           "body": [
-            "Gra toczy się o żetony Lamy z Banku Lamy - wspólne konto z Blackjackiem i Casino (start 1000, trwale zapisywane).",
+            "Gra toczy się o żetony Lamy z Banku Lamy - wspólne konto z Blackjackiem, Casino, Lama Crossing, Lama Mines i Lama Plinko (start 1000, trwale zapisywane).",
             "Na początku rozdania twoje konto leży na stole jako stos; to, co trafia do puli, jest od razu pobierane. Jeśli opuścisz stół w trakcie rozdania, twoja część puli przepada - reszta wraca na konto.",
             "Rekord to najwyższy stan twojego bilansu w pokerze: 1000 plus wszystko, co wygrałeś i przegrałeś w pokerze. Wygrane w innych grach się tu nie liczą.",
             "Bankructwo (mniej niż duża ciemna 20, w Video Pokerze mniej niż 10) = kredyt z banku jednym kliknięciem, konto znów ma 1000."
@@ -2975,7 +2975,7 @@
         {
           "h": "Bank Lamy",
           "body": [
-            "Casino, Blackjack i Poker korzystają z tego samego konta: żetonów Lamy (start 1000). Stawki są pobierane od razu, wygrane dopisywane - wszystko jest trwale zapisywane.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines i Lama Plinko korzystają z tego samego konta: żetonów Lamy (start 1000). Stawki są pobierane od razu, wygrane dopisywane - wszystko jest trwale zapisywane.",
             "Każda gra prowadzi własny bilans. Rekord Casino to najwyższy stan 1000 + bilans Casino; wygrane w Blackjacku czy Pokerze się tu nie liczą.",
             "Przy bankructwie (mniej niż minimalna stawka) dostajesz kredyt z banku: konto wraca do 1000. Kredyty nie liczą się do żadnego bilansu; ich liczba jest widoczna w prawym górnym rogu."
           ]
@@ -3108,7 +3108,7 @@
         {
           "h": "Żetony Lamy",
           "body": [
-            "Lama Crossing gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem i Casino (start 1000, zapis w mem.json).",
+            "Lama Crossing gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem, Casino, Lama Mines i Lama Plinko (start 1000, zapis w mem.json).",
             "Rekord to najwyższy stan 1000 + twojego bilansu w Lama Crossing; wygrane w Blackjacku, Pokerze czy Casino się tu nie liczą.",
             "Poniżej 10 żetonów jesteś bankrutem: [Enter] lub kliknięcie bierze kredyt z banku i uzupełnia konto do 1000. Kredyty nie liczą się do bilansu.",
             "Przerwanie w połowie przeprawy jest bezpieczne: stawka, poziom trudności i pas są zapisywane, a przy następnym starcie grasz dokładnie od tego miejsca."
@@ -3133,6 +3133,317 @@
             "- Przy dobrym timingu na drugą stronę dochodzi się mniej więcej w co 7. rundzie na poziomie Łatwym, w co 38. na Średnim, w co 614. na Trudnym i tylko w jednej na 32 768 na Ekstremalnym.",
             "- Do Stalowych nerwów (×10) wystarczą 4 pasy na Ekstremalnym (×15,52), 7 na Trudnym (×11,77) i 13 na Średnim (×10,37); na Łatwym wcale (najwyżej ×6,57). Na linie (×100 na Ekstremalnym) wymaga 7 pasów (×124,16) - to udaje się mniej więcej w co 128. rundzie.",
             "- Ustal z góry, przy jakim mnożniku wypłacasz - i trzymaj się tego. Przy stałym zwrocie żadna strategia nie jest lepsza od innej, tylko mniej lub bardziej ryzykowna."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "lama",
+        "mines",
+        "miny",
+        "klejnoty",
+        "pola",
+        "odkrywanie",
+        "wypłata",
+        "mnożnik",
+        "żetony",
+        "bank lamy",
+        "stawka",
+        "ryzyko",
+        "auto",
+        "uczciwość",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "statystyki",
+        "kod kontrolny"
+      ],
+      "sections": [
+        {
+          "h": "Jak grać",
+          "body": [
+            "Pod każdym zakrytym polem leży klejnot albo mina. Każdy znaleziony klejnot podnosi mnożnik - mina kosztuje stawkę.",
+            "Wybierz stawkę (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 lub 10000 żetonów Lamy) i naciśnij GRAJ: stawka zostaje pobrana, a plansza wylosowana. Od tej chwili wiadomo, gdzie leżą miny - można to sprawdzić kontrolą uczciwości.",
+            "Potem odkrywasz pole po polu: kliknięciem, strzałkami i [Spacja] albo klawiszem [R] lub przyciskiem Losowe pole na losowym zakrytym polu. Od pierwszego klejnotu możesz w każdej chwili nacisnąć WYPŁAĆ - wtedy dostajesz stawkę razy aktualny mnożnik.",
+            "Gdy znajdziesz wszystkie klejnoty, wygrana jest wypłacana automatycznie: TRIUMFALNA MINA! Jeśli trafisz na minę, wybucha, ekran się trzęsie, a stawka przepada. W obu przypadkach - także po wypłacie - pozostałe pola zostają odkryte w przyciemnieniu, żeby było widać, gdzie leżały miny. Plansza zostaje tak, dopóki nie zagrasz dalej albo czegoś nie zmienisz.",
+            "W prawym górnym rogu widać historię 12 ostatnich rund - najnowsza po prawej, mina jako czerwone ×0."
+          ]
+        },
+        {
+          "h": "Rozmiary planszy i miny",
+          "body": [
+            "Cztery rozmiary - do wyboru przed każdą rundą przyciskami lub klawiszami [1] do [4]: 4×4 (16 pól), 5×5 (25 pól, domyślnie), 6×6 (36 pól) i 7×7 (49 pól).",
+            "Liczbę min ustawiasz klawiszami [Lewo] / [Prawo], przyciskami ze strzałkami albo sześcioma przyciskami szybkiego wyboru: od 1 do liczby pól minus 1 - zawsze zostaje co najmniej jeden klejnot. Domyślnie są 3 miny. Szybki wybór oferuje dla każdego rozmiaru:",
+            "- 4×4: 1, 2, 3, 5, 8 lub 12 min",
+            "- 5×5: 1, 3, 5, 10, 15 lub 24 miny",
+            "- 6×6: 1, 3, 6, 12, 20 lub 35 min",
+            "- 7×7: 1, 3, 7, 14, 24 lub 48 min",
+            "Więcej min oznacza: każdy klejnot jest wart więcej, ale następne pole rzadziej jest bezpieczne. Przy 24 minach na 5×5 już pierwszy klejnot daje ×24,25 - przy szansie 4%.",
+            "Rozmiar, liczbę min i stawkę można zmieniać tylko między rundami."
+          ]
+        },
+        {
+          "h": "Mnożnik i zwrot",
+          "body": [
+            "Mnożnik zależy tylko od tego, ile klejnotów już znalazłeś - nie od tego, które to były pola. Wyrównuje dokładnie szansę dojścia tak daleko, minus 3% dla banku:",
+            "- mnożnik = 0,97 podzielone przez szansę znalezienia k klejnotów z rzędu",
+            "- ta szansa to iloczyn z jednym czynnikiem na każdy klejnot: klejnoty/pola × (klejnoty - 1)/(pola - 1) × …",
+            "- jako wzór: 0,97 × C(N, M) / C(N - k, M), zaokrąglone w dół do setnych. N to liczba pól, M liczba min, k liczba znalezionych klejnotów, a C(n, m) to symbol Newtona „n po m”.",
+            "Przykład 5×5 z 3 minami: pierwsze pole jest bezpieczne w 22 na 25 przypadków (88%), więc daje 0,97 / 0,88 = ×1,10. Po dwóch klejnotach szansa wynosi 22/25 × 21/24 = 77% - to daje ×1,25.",
+            "Dalej jest ×1,44, ×1,67 i ×1,95 po 5 klejnotach, ×4,90 po 10, ×10,14 po 13, ×18,59 po 15, ×111,55 po 19 i ×557,75 po 21. Kto znajdzie wszystkie 22 klejnoty, dostaje ×2 231 - udaje się to w jednej rundzie na 2300.",
+            "Dolna granica: każdy klejnot podnosi mnożnik co najmniej o 0,01 - już pierwszy daje więc co najmniej ×1,01. Według samego wzoru na 6×6 z 1 miną byłoby na przykład tylko ×0,99. Podniesione są tylko trzy stopnie: pierwszy klejnot na 6×6 z 1 miną i dwa pierwsze na 7×7 z 1 miną.",
+            "Maksymalna wygrana to ×100 000. Gdy mnożnik osiągnie tę granicę, wygrana jest od razu wypłacana automatycznie: MAKSYMALNA WYGRANA! Przy oczyszczaniu całej planszy dzieje się to już od 5×5 z 6 minami, 6×6 z 5 i 7×7 z 4 minami; na 4×4 nigdy. Więcej nie ma, nawet gdyby wzór dawał więcej.",
+            "Ponieważ szansa i mnożnik się równoważą, każda strategia na dłuższą metę zwraca ok. 97% stawki - niezależnie od rozmiaru planszy, liczby min i tego, po ilu klejnotach wypłacasz. Przez zaokrąglanie wychodzi zależnie od stopnia 96 do 97%. Trzy podniesione stopnie są trochę wyżej (najwyżej 98,94% przy pierwszym klejnocie na 7×7 z 1 miną), stopień z limitem wyraźnie niżej. Przewaga kasyna wynosi więc ok. 3%.",
+            "Ułamki nie przepadają: wypłacane są pełne żetony, a reszta w setnych jest zapamiętywana i doliczana do następnej wypłaty. 10 żetonów × 1,01 daje więc najpierw 10 żetonów, a brakujące 0,10 przychodzi później - dzięki temu także małe stawki dostają pełny zwrot."
+          ]
+        },
+        {
+          "h": "Wskaźniki",
+          "body": [
+            "Przed rundą nagłówek pokazuje najwyższy mnożnik ustawienia (wszystkie klejnoty znalezione) oraz liczbę klejnotów i min. W trakcie rundy obok planszy widać wszystko, czego potrzebujesz do następnej decyzji:",
+            "- aktualny mnożnik i twoja wygrana, jeśli wypłacisz teraz",
+            "- mnożnik po następnym klejnocie i wygrana przy następnym polu",
+            "- szansa, że następne pole jest bezpieczne: pozostałe klejnoty podzielone przez pozostałe zakryte pola - 88% przy pierwszym kliknięciu na 5×5 z 3 minami, potem z każdym klejnotem trochę mniej",
+            "- ile klejnotów już znaleziono i pasek z 5 kolejnymi stopniami: ile klejnotów daje jaki mnożnik",
+            "Maskotka lama w kasku górnika z czołówką kibicuje razem z tobą: cieszy się z każdego klejnotu, a wózek obok niej się zapełnia; przy minie przestrasza się i jest potem cała w sadzy. Od ×3 pada deszcz monet, od ×10 i przy oczyszczeniu planszy dochodzi konfetti."
+          ]
+        },
+        {
+          "h": "Tryb auto",
+          "body": [
+            "[A] lub przycisk Auto otwiera między rundami tryb auto. Okno leży nad panelem bocznym i zostawia siatkę wolną: kliknięciem albo strzałkami i [Spacja] zaznaczasz pola, które będą odkrywane w każdej rundzie - najwyżej tyle, ile jest klejnotów. Gra zapamiętuje wybór dla każdego rozmiaru planszy; [Del], [Backspace] lub Wyczyść usuwa wszystkie zaznaczenia.",
+            "Okno pokazuje, ile pól zaznaczono i co da runda, jeśli wszystkie będą bezpieczne: mnożnik i szansę. Wybierasz też liczbę rund (5, 10, 25, 50 lub 100) i w razie potrzeby dwie granice: Stop przy zysku od i Stop przy stracie od (wył., 100, 500, 1000, 5000, 10000 lub 50000 żetonów, liczone od startu).",
+            "URUCHOM AUTO lub [Enter]: każda runda pobiera stawkę i szybko odkrywa zaznaczone pola jedno po drugim. Jeśli wszystkie są bezpieczne, następuje wypłata - z mnożnikiem dla tylu klejnotów, ile pól zaznaczyłeś. Jeśli pod zaznaczonym polem leży mina, runda jest przegrana.",
+            "Tryb auto działa, dopóki nie zostaną rozegrane wszystkie rundy, nie zadziała granica, żetony nie wystarczą na następną stawkę albo nie naciśniesz STOP, [Spacja], [Enter], [A] lub [Esc]. Jeśli zatrzymasz go w połowie rundy, zostaje ona otwarta - odkrywasz dalej ręcznie albo wypłacasz. Stawka, rozmiar planszy i miny są w trybie auto zablokowane.",
+            "[T] włącza turbo - także przy grze ręcznej: odkrywanie pól, wybuchy i rundy auto są dwa i pół raza szybsze."
+          ]
+        },
+        {
+          "h": "Kontrola uczciwości",
+          "body": [
+            "Lama Mines jest uczciwe w sposób sprawdzalny: pole minowe jest ustalone, zanim klikniesz pierwsze pole - a po rundzie możesz przeliczyć, że nic nie zostało przesunięte. Służą do tego cztery wartości:",
+            "- Seed serwera: tajna wartość losowa (32 znaki), którą gra ustala przed rundą.",
+            "- Kod kontrolny: odcisk SHA-256 (hash) seeda serwera. Jest pokazywany już przed rundą (kod kontrolny następnej rundy). Nie da się z niego odtworzyć seeda - ale już jeden inny znak w seedzie dałby zupełnie inny kod.",
+            "- Seed klienta: twój udział w losowości (8 znaków). Przyciskiem Nowy seed klienta losujesz go od nowa - tylko poza rundą. Dzięki temu gra nie decyduje o wyniku sama.",
+            "- Nr: numer rundy. Rośnie o jeden z każdą rundą, żeby żadna runda nie była taka sama jak inna.",
+            "Z nazwy gry, seeda serwera, seeda klienta i numeru rundy powstaje losowość rundy (mulberry32). Tasuje ona listę wszystkich pól (liczonych wierszami, od lewego górnego rogu), a pierwsze miejsca potasowanej listy - tyle, ile jest min - stają się minami.",
+            "Po rundzie seed serwera zostaje ujawniony; kod kontrolny następnej rundy jest wtedy już ustalony.",
+            "[F] otwiera okno Uczciwość: u góry kod kontrolny następnej rundy (w trakcie rundy także kod tej rundy), twój seed klienta i numer rundy, pod spodem 12 ostatnich rund z numerem, kodem kontrolnym i wynikiem, najnowsza na górze (kółko myszy przewija). Kliknięcie wiersza pokazuje rozmiar planszy, miny, kod kontrolny, seed serwera i seed klienta.",
+            "Sprawdź oblicza ponownie SHA-256 seeda, porównuje go z wcześniej pokazanym kodem kontrolnym, odtwarza pole minowe i sprawdza też wynik - czy odkryte pola się zgadzały, czy mnożnik pasuje? Ptaszek albo krzyżyk i mały podgląd planszy pokazują: Zgadza się albo Nie zgadza się.",
+            "Kod kontrolny możesz też sprawdzić sam: oblicz SHA-256 seeda serwera dowolnym narzędziem i porównaj wynik z kodem kontrolnym."
+          ]
+        },
+        {
+          "h": "Statystyki",
+          "body": [
+            "[S] otwiera statystyki twojego profilu: rundy, wygrane i przegrane, twój zwrot (ile procent stawek wróciło), postawione i wypłacone, bilans, największa wygrana i najlepszy mnożnik - do tego odkryte klejnoty, trafione miny i czyste plansze.",
+            "Krzywa pokazuje bilans 100 ostatnich rund. Runda liczy się jako wygrana, jeśli wypłacono więcej, niż postawiono.",
+            "Na dłuższą metę twój zwrot ustala się w okolicy 97% - w ciągu kilku rund może mocno skakać w górę albo w dół."
+          ]
+        },
+        {
+          "h": "Sterowanie",
+          "body": [
+            "- Przed rundą: [Spacja] lub [Enter] = GRAJ, [1] do [4] = rozmiar planszy, [Lewo] / [Prawo] = liczba min",
+            "- [Góra] / [Dół], [+] / [-] lub kółko myszy: zmiana stawki (tylko między rundami)",
+            "- W trakcie rundy: kliknięcie pola je odkrywa. Strzałki przesuwają kursor; pierwsza [Spacja] tylko go pokazuje, każda następna odkrywa pole pod nim.",
+            "- [R] lub przycisk Losowe pole: odkrycie losowego zakrytego pola; [Enter], [C] lub WYPŁAĆ: wypłata (od pierwszego klejnotu)",
+            "- Po wyniku: [Spacja] lub GRAJ od razu zaczyna następną rundę, inne klawisze wracają do ustawień.",
+            "- [A]: tryb auto, [S]: statystyki, [F]: uczciwość, [T]: turbo - albo cztery przyciski u góry. [Esc] lub kliknięcie obok okna je zamyka, [Esc] zatrzymuje też tryb auto.",
+            "Klawisze są stałe i nie zależą od przypisania klawiszy - klawisze graczy, np. WASD, nie działają tu. Rozmiar planszy, liczba min, ostatnia stawka, turbo i ustawienia auto są zapisywane w settings.json (sekcja lamamines)."
+          ]
+        },
+        {
+          "h": "Żetony Lamy",
+          "body": [
+            "Lama Mines gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem, Casino, Lama Crossing i Lama Plinko (start 1000, zapis w mem.json).",
+            "Rekord to najwyższy stan 1000 + twojego bilansu w Lama Mines; wygrane w innych grach Banku Lamy się tu nie liczą.",
+            "Poniżej 10 żetonów jesteś bankrutem: [Spacja], [Enter] lub kliknięcie bierze kredyt z banku i uzupełnia konto do 1000. Kredyty nie liczą się do bilansu.",
+            "Przerwanie w połowie rundy jest bezpieczne: stawka jest pobierana na starcie, a po każdym znalezionym klejnocie zapisywane są rozmiar planszy, miny, seedy rundy i odkryte pola. Przy następnym starcie plansza jest odtwarzana z seeda, a ty grasz dokładnie od tego miejsca.",
+            "Historia, dane uczciwości, statystyki, pola zaznaczone dla trybu auto i przeniesiona reszta należą do twojego profilu."
+          ]
+        },
+        {
+          "h": "Osiągnięcia",
+          "body": [
+            "- Bywalec Lama Mines: 25 rozgrywek",
+            "- Kamień milowy: rekord 3000",
+            "- Mistrz Lama Mines: rekord 10000",
+            "- Skarbiec (rzadki): Oczyść całą planszę w Lama Mines – wszystkie klejnoty znalezione",
+            "- Głęboki wykop (epicki): Wypłać przy ×10 lub więcej w Lama Mines",
+            "- Diamentowa lama (legendarny): Wypłać przy ×1000 lub więcej w Lama Mines"
+          ]
+        },
+        {
+          "h": "Wskazówki",
+          "body": [
+            "- Każda runda jest losowana od nowa i żadne pole nie jest bezpieczniejsze od innego - ani rogi, ani środek. Wzory z wcześniejszych rund nie pomagają.",
+            "- Skarbiec: na 4×4 z 1 miną oczyszczenie planszy udaje się w jednej rundzie na 16 (×15,52) - tak samo przy 15 minach, gdzie jest tylko jeden klejnot. Na 5×5 z 3 minami to tylko jedna na 2300.",
+            "- Głęboki wykop (×10): na 5×5 z 3 minami wystarczy 13 klejnotów (×10,14), co udaje się mniej więcej w co 10. lub 11. rundzie. Przy 24 minach już pierwszy klejnot daje ×24,25 - w jednej rundzie na 25.",
+            "- Diamentowa lama (×1000): najlepsze drogi udają się mniej więcej w jednej rundzie na 1100, na przykład 5×5 z 10 minami po 10 klejnotach (×1 055,84) albo 7×7 z 12 minami po 19 klejnotach (×1 034,71). Na 5×5 z 3 minami udaje się to tylko przez oczyszczenie całej planszy (×2 231).",
+            "- W trybie auto liczy się tylko, ile pól zaznaczysz, a nie które: 5 zaznaczonych pól na 5×5 z 3 minami jest bezpiecznych w 49,6% rund i daje wtedy ×1,95.",
+            "- Ustal z góry, po ilu klejnotach wypłacasz - i trzymaj się tego. Przy stałym zwrocie żadna strategia nie jest lepsza od innej, tylko mniej lub bardziej ryzykowna. Granie na maksymalną wygraną się nie opłaca: stopień z limitem płaci mniej, niż byłoby warte jego ryzyko."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "lama",
+        "plinko",
+        "kulka",
+        "kłębek",
+        "deska galtona",
+        "kołki",
+        "przegródki",
+        "mnożnik",
+        "żetony",
+        "bank lamy",
+        "stawka",
+        "rzędy",
+        "ryzyko",
+        "krzywa dzwonowa",
+        "auto",
+        "turbo",
+        "uczciwość",
+        "provably fair",
+        "kod kontrolny",
+        "seed",
+        "sha-256",
+        "statystyki"
+      ],
+      "sections": [
+        {
+          "h": "Jak grać",
+          "body": [
+            "Złoty kłębek wełny spada przez trójkąt z kołków. Na każdym kołku odbija się w lewo albo w prawo i ląduje w jednej z przegródek na dole. Na każdej przegródce jest mnożnik: stawka razy mnożnik to twoja wypłata.",
+            "Wybierz stawkę na kulkę (1, 2, 5, 10, 20, 50, 100, 200, 500 lub 1000 żetonów Lamy) i naciśnij RZUĆ: stawka zostaje pobrana, lama na górze planszy kiwa głową i puszcza kulkę.",
+            "Skrajne przegródki płacą najwięcej, środkowe zwracają mniej niż stawka - ale to tam ląduje najwięcej kulek. Dostajesz stawkę razy mnożnik w pełnych żetonach; to, co zostaje poniżej jednego żetonu, gra zapamiętuje i dolicza do następnej kulki.",
+            "Trafiona przegródka podskakuje, okienko pokazuje mnożnik, a im jest wyższy, tym jaśniej brzmi dźwięk. Od ×10 sypią się monety, od ×100 dochodzą jeszcze baner i konfetti. W prawym górnym rogu widać historię ostatnich 12 kulek."
+          ]
+        },
+        {
+          "h": "Rzędy i ryzyko",
+          "body": [
+            "Oba ustawiasz przed rzutem; dopóki kulki są na planszy albo działa tryb auto, są zablokowane. Gra pokazuje też najwyższy mnożnik i dokładny zwrot wybranej tabeli.",
+            "- Rzędy: od 8 do 16 rzędów kołków klawiszami [Lewo] / [Prawo] (domyślnie 12). Przy n rzędach jest n + 1 przegródek.",
+            "- Ryzyko: Niskie, Średnie (domyślnie) lub Wysokie klawiszami [1] do [3].",
+            "Więcej rzędów sprawia, że skrajne przegródki są rzadsze i wyższe. Ryzyko decyduje, jak daleko od siebie są środek i brzeg:",
+            "- Niskie: środek ×0,7, brzeg od ×5,3 (8 rzędów) do ×16 (16 rzędów) - małe, częste wygrane",
+            "- Średnie: środek ×0,4–0,5, brzeg od ×13 do ×110",
+            "- Wysokie: środek ×0,2, brzeg od ×32 do ×1000 - prawie zawsze mniej niż stawka, bardzo rzadko ogromne trafienie",
+            "Przykład - 17 przegródek przy 16 rzędach (ryzyko Średnie): 110 · 38 · 14 · 6,2 · 2,8 · 1,4 · 0,8 · 0,5 · 0,4 · 0,5 · 0,8 · 1,4 · 2,8 · 6,2 · 14 · 38 · 110",
+            "Przy 16 rzędach mniej niż stawkę zwraca ok. 55% kulek (ryzyko Niskie), 79% (Średnie), a nawet 92% (Wysokie)."
+          ]
+        },
+        {
+          "h": "Jak spada kulka",
+          "body": [
+            "Plansza to deska Galtona: na każdym kołku kulka leci w lewo albo w prawo z prawdopodobieństwem dokładnie 50% - jak przy rzucie monetą. Przegródka to po prostu liczba odbić w prawo: przy 12 rzędach od 0 (skrajnie z lewej) do 12 (skrajnie z prawej).",
+            "Na sam brzeg kulka trafia tylko wtedy, gdy na każdym kołku odbije się w tę samą stronę. Do środka prowadzi za to bardzo wiele dróg. Dlatego kulki gromadzą się na środku w krzywą dzwonową (rozkład dwumianowy):",
+            "- 8 rzędów: środkowa przegródka 27,34%, każda skrajna 1 na 256",
+            "- 12 rzędów: środkowa przegródka 22,56%, każda skrajna 1 na 4096",
+            "- 16 rzędów: środkowa przegródka 19,64%, każda skrajna 1 na 65 536",
+            "Najedź myszą na przegródkę: pokaże swój mnożnik, szansę (nawet malutką, jak 0,0015%) i to, ile wypłaci przy twojej stawce.",
+            "Wszystkie 27 tabel (9 liczb rzędów × 3 poziomy ryzyka) jest symetrycznych, a mnożniki ku brzegom nigdy nie maleją. Liczone dokładnie, tabele zwracają na dłuższą metę od 96,9% do 97,1% stawek. Przewaga kasyna wynosi więc ok. 3%, niezależnie od ustawień. Rzędy i ryzyko zmieniają tylko to, jak mocno waha się szczęście."
+          ]
+        },
+        {
+          "h": "Wiele kulek naraz",
+          "body": [
+            "Nie musisz czekać, aż kulka wyląduje: na planszy może naraz skakać do 50 kulek - licznik „W grze” je liczy. Przytrzymaj klawisz [Spacja], a po krótkiej chwili kulki polecą seriami - tak gęsto, że naraz w grze będzie ok. 30 kulek.",
+            "Droga każdej kulki jest losowana już przy rzucie. Dlatego stawka i wypłata są od razu razem księgowane i zapisywane - ale wypłatę widać dopiero, gdy kulka dotrze na dół. Dopiero wtedy możesz ponownie postawić tę wygraną.",
+            "Jeśli wyjdziesz z gry, gdy kulki jeszcze lecą, nic nie przepada: żetony są już zaksięgowane, a osiągnięcia z tych kulek zostaną przyznane przy wyjściu.",
+            "Turbo skraca o połowę czas lotu kulek i odstęp przy serii - włączasz je i wyłączasz klawiszem [T]."
+          ]
+        },
+        {
+          "h": "Tryb auto",
+          "body": [
+            "[A] otwiera tryb auto. Ustawiasz tam (okno liczy też łączną stawkę całej serii):",
+            "- Kulki: 10, 25, 50, 100, 250, 500 lub 1000",
+            "- Stop przy zysku od / Stop przy stracie od: wył., 100, 500, 1000, 5000, 10000 lub 50000 żetonów",
+            "- Turbo wł. lub wył.",
+            "URUCHOM AUTO rzuca kulki jedna po drugiej z aktualną stawką, liczbą rzędów i ryzykiem; te trzy ustawienia są w tym czasie zablokowane. Tryb auto kończy się, gdy wszystkie kulki zostaną rzucone, zysk lub strata od startu osiągnie limit, żetony nie wystarczą na kolejną kulkę nawet po wylądowaniu lecących, albo naciśniesz STOP, [Spacja] lub [Esc]. Kulki, które już lecą, i tak wylądują.",
+            "Ustawienia trybu auto są zapisywane w settings.json (sekcja lamaplinko)."
+          ]
+        },
+        {
+          "h": "Kontrola uczciwości",
+          "body": [
+            "W Lama Plinko możesz sam sprawdzić, że żadna kulka nie jest sterowana po fakcie („provably fair”). Służą do tego trzy wartości:",
+            "- Seed serwera: tajna losowa wartość z 32 znaków, którą gra ustala przed rzutem. Każda kulka dostaje własną.",
+            "- Kod kontrolny: odcisk SHA-256 seeda serwera. Widać go już przed rzutem. Nie zdradza seeda, ale każdy inny seed miałby zupełnie inny kod - gra nie może więc już podmienić seeda.",
+            "- Seed klienta: twój własny udział (8 znaków). „Nowy seed klienta” losuje nowy, gdy żadna kulka nie leci - dzięki temu gra nie decyduje o losie sama.",
+            "Do tego dochodzi numer (nonce), który rośnie o 1 z każdą kulką. Seed serwera, seed klienta i numer razem dają los kulki: jeden rzut monetą na rząd, a każde „w prawo” przesuwa ją o jedną przegródkę w prawo.",
+            "Po wylądowaniu seed serwera zostaje ujawniony - kod kontrolny następnej kulki jest wtedy już ustalony.",
+            "[F] otwiera okno kontroli uczciwości z ostatnimi 12 kulkami: numer, kod kontrolny, seed serwera i seed klienta, a do tego rzędy, ryzyko, przegródka i mnożnik. „Sprawdź” ponownie liczy SHA-256 seeda, porównuje go z wcześniej pokazanym kodem kontrolnym i jeszcze raz wylicza drogę kulki: „Zgadza się” znaczy, że wszystko się zgadza, „Nie zgadza się” zdradziłoby rozbieżność. Mały podgląd pokazuje przeliczoną drogę.",
+            "Dla ciekawskich: generator losowy to mulberry32, uruchamiany wartością FNV-1a tekstu „lamaplinko|seed serwera|seed klienta|numer”. Każdy rząd losuje liczbę od 0 do 1; poniżej 0,5 oznacza w prawo. Dzięki temu każdą kulkę można przeliczyć także własnymi narzędziami."
+          ]
+        },
+        {
+          "h": "Statystyki",
+          "body": [
+            "[S] otwiera statystyki twojego profilu dla Lama Plinko:",
+            "- Kafelki: Rundy, Wygrane, Przegrane, Postawiono, Wypłacono, Bilans, Maks. wygrana, Maks. mnożnik, Twój zwrot. Każda kulka liczy się osobno; wygrana oznacza zwrot większy niż stawka, przegrana - mniejszy.",
+            "- krzywa bilansu z ostatnich 100 kulek",
+            "- rozkład trafień: twoje trafienia w każdą przegródkę jako słupki, oczekiwany rozkład (dwumianowy) na złoto - osobno dla każdej liczby rzędów, przełączanej klawiszami [Lewo] / [Prawo]",
+            "Na początku twój zwrot mocno skacze (jedno trafienie w brzeg przy ryzyku „Wysokie” wyrzuca go wysoko w górę), przy wielu kulkach zbliża się do ok. 97%. Tak samo po kilkuset kulkach słupki zbliżają się do złotej krzywej."
+          ]
+        },
+        {
+          "h": "Sterowanie",
+          "body": [
+            "- [Spacja], [Enter] lub kliknięcie RZUĆ albo planszy: rzut kulką - przytrzymaj, by rzucać seriami",
+            "- [Góra] / [Dół], [+] / [-] lub kółko myszy: zmiana stawki na kulkę",
+            "- [Lewo] / [Prawo]: rzędy (8 do 16), [1] do [3]: ryzyko",
+            "- [A]: tryb auto, [S]: statystyki, [F]: kontrola uczciwości, [T]: turbo",
+            "- [Esc]: zamknięcie otwartego okna lub zatrzymanie trybu auto",
+            "- Mysz nad przegródką: mnożnik, szansa i wypłata przy twojej stawce",
+            "W oknach: w oknie trybu auto [Góra] / [Dół] wybiera wiersz, [Lewo] / [Prawo] go zmienia, a [Enter] lub [Spacja] uruchamia albo zatrzymuje. W statystykach [Lewo] / [Prawo] przełącza liczbę rzędów rozkładu. W oknie kontroli uczciwości strzałki lub kółko myszy wybierają kulkę, [Enter] ją sprawdza, a [C] losuje nowy seed klienta. [Esc] albo ta sama litera zamyka okno.",
+            "Wszystko działa też myszą; kliknięcie obok otwartego okna je zamyka. Rzędy, ryzyko, stawka, turbo i ustawienia trybu auto są zapisywane w settings.json (sekcja lamaplinko)."
+          ]
+        },
+        {
+          "h": "Żetony Lamy",
+          "body": [
+            "Lama Plinko gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem, Casino, Lama Crossing i Lama Mines (start 1000, zapis w mem.json).",
+            "Rekord to najwyższy stan 1000 + twojego bilansu w Lama Plinko; wygrane w innych grach się tu nie liczą.",
+            "Jeśli konto nie pokrywa wybranej stawki, ustaw mniejszą. Przy 0 żetonów jesteś bankrutem: [Enter] lub kliknięcie bierze kredyt z banku i uzupełnia konto do 1000. Kredyty nie liczą się do bilansu.",
+            "Historia, statystyki i dane kontroli uczciwości należą do twojego profilu i również są zapisywane w mem.json."
+          ]
+        },
+        {
+          "h": "Osiągnięcia",
+          "body": [
+            "- Bywalec Lama Plinko: 25 rozgrywek",
+            "- Kamień milowy: rekord 3000",
+            "- Mistrz Lama Plinko: rekord 10000",
+            "- Na samej krawędzi (rzadki): Traf w skrajną przegródkę w Lama Plinko (od 12 rzędów)",
+            "- Deszcz kłębków (epicki): Miej jednocześnie 25 kul na planszy w Lama Plinko",
+            "- Legenda Plinko (legendarny): Traf w skrajną przegródkę w Lama Plinko przy 16 rzędach i wysokim ryzyku"
+          ]
+        },
+        {
+          "h": "Wskazówki",
+          "body": [
+            "- Każda kulka jest niezależna: po dziesięciu trafieniach w środek brzeg wcale nie „musi” paść.",
+            "- Żadne ustawienie nie pokona zwrotu. Przy ryzyku „Niskie” twoje konto waha się niewiele, przy „Wysokie” zwykle przegrywasz - z małą szansą na ogromne trafienie.",
+            "- Małe stawki nie są gorsze: żadna część żetonu nie przepada. Przy 1 żetonie ×0,7 najpierw nie daje nic, ale te 0,7 żetonu gra zapamiętuje i wypłaca z jedną z następnych kulek, gdy uzbiera się pełny żeton. Dlatego zwrot ok. 97% obowiązuje przy każdej stawce.",
+            "- Na samej krawędzi: najszybciej przy 12 rzędach - tam mniej więcej 1 na 2048 kulek ląduje na samym brzegu (z lewej lub z prawej). Przy 1 żetonie na kulkę kosztuje to średnio tylko ok. 3 żetony na 100 kulek.",
+            "- Deszcz kłębków: po prostu przytrzymaj [Spacja] - seria daje ok. 30 kulek naraz na planszy przy każdej liczbie rzędów, a po ok. 2 sekundach osiągnięcie jest twoje. Tryb auto rzuca na to za wolno.",
+            "- Legenda Plinko: przy 16 rzędach i ryzyku „Wysokie” na samym brzegu ląduje tylko 1 na 32 768 kulek - przy seriach auto po 1000 kulek potrzeba średnio ok. 33 serii. Za to ta przegródka płaci ×1000.",
+            "- Ustal wcześniej budżet i korzystaj z limitu straty w trybie auto."
           ]
         }
       ]

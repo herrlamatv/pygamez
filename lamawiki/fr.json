@@ -146,7 +146,7 @@
           "body": [
             "Chaque jeu avec une progression a sa propre section dans mem.json, par exemple :",
             "- sudoku : niveaux résolus avec étoiles et meilleur temps, grilles commencées et le Sudoku du jour avec sa série.",
-            "- casino : le compte de la Banque Lama - les jetons Lama du Blackjack, du Poker, du Casino et de Lama Crossing avec le bilan de chaque jeu, plus une traversée de Lama Crossing en cours.",
+            "- casino : le compte de la Banque Lama - les jetons Lama du Blackjack, du Poker, du Casino, de Lama Crossing, de Lama Mines et de Lama Plinko avec le bilan de chaque jeu, plus une traversée de Lama Crossing et une manche de Lama Mines en cours, les cases marquées pour l'auto de Lama Mines, ainsi que l'historique, les données d'équité, les statistiques et le reste reporté de Lama Mines et de Lama Plinko.",
             "- crossy : pièces collectées, personnages achetés et meilleur score du jour de Crossy Road.",
             "- tetris : meilleur temps en Sprint, meilleur score en Ultra et bilan du duel contre l'IA.",
             "- g2048 : parties de 2048 sauvegardées et meilleurs scores par taille de plateau et par mode.",
@@ -348,7 +348,7 @@
         {
           "h": "Aperçu",
           "body": [
-            "256 succès dans les 47 jeux - du premier lancement au Perfect Clear dans Tetris.",
+            "268 succès dans les 49 jeux - du premier lancement au Perfect Clear dans Tetris.",
             "Chaque succès a une rareté, donc une valeur en points ; la somme donne ton niveau.",
             "Bouton Succès et statistiques, onglet Succès. Un filtre masque les succès obtenus ou restants."
           ]
@@ -359,7 +359,7 @@
             "- Général : objectifs d'ensemble - parties, jeux essayés, temps de jeu, records, victoires, jours joués, séries, niveau et duels. Plus des extras : oiseau de nuit, marathon, joueur du week-end.",
             "- Paliers de points : un score cible équitable par jeu.",
             "- Niveaux maîtres : le second palier, bien plus haut - seulement pour les jeux au score illimité.",
-            "- Habitué : 25 parties d'un même jeu. Existe pour chacun des 47 jeux.",
+            "- Habitué : 25 parties d'un même jeu. Existe pour chacun des 49 jeux.",
             "- Moments particuliers : échec et mat, un Yams, la tuile 4096, un trou en un, un coup du chapeau au air hockey, quatre fantômes d'une seule pastille et bien plus."
           ]
         },
@@ -1473,7 +1473,7 @@
         {
           "h": "Jetons Lama",
           "body": [
-            "Blackjack, Poker et Casino partagent un compte à la Banque Lama : tu démarres avec 1000 jetons Lama et ton solde est sauvegardé durablement.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines et Lama Plinko partagent un compte à la Banque Lama : tu démarres avec 1000 jetons Lama et ton solde est sauvegardé durablement.",
             "La mise est débitée dès la distribution - quitter une main en cours la fait perdre.",
             "Le record est le plus haut niveau de ton bilan au blackjack : 1000 plus tout ce que tu as gagné et perdu au blackjack. Les gains à la roulette, à la machine ou au poker ne comptent pas ici.",
             "Sous 10 jetons tu es fauché : [Entrée] prend un prêt de la banque et remet ton compte à 1000. Les prêts ne comptent pas dans le bilan."
@@ -1899,7 +1899,7 @@
         {
           "h": "Jetons Lama",
           "body": [
-            "On joue avec les jetons Lama de la Banque Lama - un compte partagé avec Blackjack et Casino (départ 1000, sauvegardé durablement).",
+            "On joue avec les jetons Lama de la Banque Lama - un compte partagé avec Blackjack, Casino, Lama Crossing, Lama Mines et Lama Plinko (départ 1000, sauvegardé durablement).",
             "Au début d'une main, ton compte est posé sur la table comme tapis ; ce qui va au pot est débité aussitôt. Si tu quittes la table en pleine main, ta part du pot est perdue - le reste retourne sur ton compte.",
             "Le record est le plus haut niveau de ton bilan au poker : 1000 plus tout ce que tu as gagné et perdu au poker. Les gains des autres jeux ne comptent pas ici.",
             "Fauché (moins que la grosse blinde de 20, au Video Poker moins de 10) = prêt de la banque d'un clic, ton compte revient à 1000."
@@ -2975,7 +2975,7 @@
         {
           "h": "La Banque Lama",
           "body": [
-            "Casino, Blackjack et Poker jouent avec le même compte : les jetons Lama (départ 1000). Les mises sont débitées aussitôt, les gains crédités - tout est sauvegardé durablement.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines et Lama Plinko jouent avec le même compte : les jetons Lama (départ 1000). Les mises sont débitées aussitôt, les gains crédités - tout est sauvegardé durablement.",
             "Chaque jeu tient son propre bilan. Le record du Casino est le plus haut niveau de 1000 + bilan du Casino ; les gains au Blackjack ou au Poker ne comptent pas ici.",
             "Fauché (moins que la mise minimale), tu reçois un prêt de la banque : ton compte revient à 1000. Les prêts ne comptent dans aucun bilan ; leur nombre s'affiche en haut à droite."
           ]
@@ -3108,7 +3108,7 @@
         {
           "h": "Jetons Lama",
           "body": [
-            "Lama Crossing joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker et le Casino (départ 1000, sauvegardé dans mem.json).",
+            "Lama Crossing joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker, le Casino, Lama Mines et Lama Plinko (départ 1000, sauvegardé dans mem.json).",
             "Le record est le plus haut niveau de 1000 + ton bilan à Lama Crossing ; les gains au Blackjack, au Poker ou au Casino ne comptent pas ici.",
             "Sous 10 jetons tu es fauché : [Entrée] ou un clic prend un prêt de la banque et remet ton compte à 1000. Les prêts ne comptent pas dans le bilan.",
             "Arrêter en pleine traversée ne coûte rien : la mise, la difficulté et la voie sont sauvegardées, et la partie reprend exactement là au prochain lancement."
@@ -3133,6 +3133,317 @@
             "- Avec un bon timing, on arrive tout au bout environ une manche sur 7 en Facile, une sur 38 en Moyen, une sur 614 en Difficile et seulement une sur 32 768 en Extrême.",
             "- Pour Nerfs d'acier (×10), 4 voies suffisent en Extrême (×15,52), 7 en Difficile (×11,77) et 13 en Moyen (×10,37) ; en Facile c'est impossible (au plus ×6,57). Funambule (×100 en Extrême) demande 7 voies (×124,16) - environ une manche sur 128.",
             "- Fixe à l'avance le multiplicateur auquel tu encaisses - et tiens-t'y. Avec le taux fixe, aucune stratégie n'est meilleure qu'une autre, seulement plus ou moins risquée."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "lama",
+        "mines",
+        "gemmes",
+        "cases",
+        "révéler",
+        "encaisser",
+        "multiplicateur",
+        "jetons",
+        "banque lama",
+        "mise",
+        "risque",
+        "auto",
+        "équité",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "statistiques",
+        "code de contrôle"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Sous chaque case cachée se trouve une gemme ou une mine. Chaque gemme trouvée fait monter le multiplicateur - une mine coûte la mise.",
+            "Choisis ta mise (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ou 10000 jetons Lama) et appuie sur JOUER : la mise est débitée et le plateau est tiré au sort. Dès cet instant, l'emplacement des mines est fixé - vérifiable avec le contrôle d'équité.",
+            "Ensuite, tu révèles les cases une à une : d'un clic, avec les flèches et [Espace], ou avec [R] ou le bouton Au hasard sur une case cachée au hasard. Dès la première gemme, tu peux ENCAISSER à tout moment - tu reçois alors ta mise multipliée par le multiplicateur actuel.",
+            "Quand toutes les gemmes sont trouvées, le gain est encaissé automatiquement : UNE MINE D'OR ! Si tu touches une mine, elle explose, l'écran tremble et la mise est perdue. Dans les deux cas - et aussi après un encaissement -, les cases restantes sont révélées en sombre pour que tu voies où se cachaient les mines. Le plateau reste ainsi jusqu'à ce que tu rejoues ou changes un réglage.",
+            "En haut à droite s'affiche l'historique des 12 dernières manches - la plus récente à droite, une mine en ×0 rouge."
+          ]
+        },
+        {
+          "h": "Tailles de plateau et mines",
+          "body": [
+            "Quatre tailles - à choisir avant chaque manche avec les boutons ou avec [1] à [4] : 4×4 (16 cases), 5×5 (25 cases, par défaut), 6×6 (36 cases) et 7×7 (49 cases).",
+            "Le nombre de mines se règle avec [Gauche] / [Droite], les boutons fléchés ou les six boutons de choix rapide : de 1 jusqu'au nombre de cases moins 1 - il reste toujours au moins une gemme. Par défaut, il y a 3 mines. Le choix rapide propose selon la taille :",
+            "- 4×4 : 1, 2, 3, 5, 8 ou 12 mines",
+            "- 5×5 : 1, 3, 5, 10, 15 ou 24 mines",
+            "- 6×6 : 1, 3, 6, 12, 20 ou 35 mines",
+            "- 7×7 : 1, 3, 7, 14, 24 ou 48 mines",
+            "Plus de mines, c'est : chaque gemme vaut davantage, mais la case suivante est moins souvent sûre. Avec 24 mines en 5×5, la toute première gemme rapporte déjà ×24,25 - avec 4 % de chances.",
+            "La taille, les mines et la mise ne se changent qu'entre deux manches."
+          ]
+        },
+        {
+          "h": "Multiplicateur et taux de retour",
+          "body": [
+            "Le multiplicateur dépend uniquement du nombre de gemmes déjà trouvées - pas des cases choisies. Il compense exactement la probabilité d'arriver jusque-là, moins 3 % pour la banque :",
+            "- multiplicateur = 0,97 divisé par la probabilité de trouver k gemmes d'affilée",
+            "- cette probabilité est un produit avec un facteur par gemme : gemmes/cases × (gemmes - 1)/(cases - 1) × …",
+            "- en formule : 0,97 × C(N, M) / C(N - k, M), arrondi au centième inférieur. N est le nombre de cases, M le nombre de mines, k le nombre de gemmes trouvées et C(n, m) le coefficient binomial « m parmi n ».",
+            "Exemple en 5×5 avec 3 mines : la première case est sûre à 22 sur 25 (88 %), cela donne donc 0,97 / 0,88 = ×1,10. Après deux gemmes, la probabilité est de 22/25 × 21/24 = 77 % - soit ×1,25.",
+            "On continue avec ×1,44, ×1,67 et ×1,95 après 5 gemmes, ×4,90 après 10, ×10,14 après 13, ×18,59 après 15, ×111,55 après 19 et ×557,75 après 21. Qui trouve les 22 gemmes reçoit ×2 231 - cela arrive une manche sur 2300.",
+            "Plancher : chaque gemme fait monter le multiplicateur d'au moins 0,01 - la première rapporte donc au moins ×1,01. Selon la formule seule, on n'aurait par exemple que ×0,99 en 6×6 avec 1 mine. Seuls trois paliers sont relevés : la première gemme en 6×6 avec 1 mine et les deux premières en 7×7 avec 1 mine.",
+            "Le gain maximal est de ×100 000. Si le multiplicateur atteint cette limite, le gain est encaissé automatiquement sur-le-champ : GAIN MAXIMAL ! En vidant tout le plateau, cela arrive dès 5×5 avec 6 mines, 6×6 avec 5 et 7×7 avec 4 mines ; jamais en 4×4. Il n'y a pas plus, même si la formule donnerait davantage.",
+            "Comme probabilité et multiplicateur se compensent, chaque stratégie rend à la longue environ 97 % de la mise - peu importe la taille du plateau, le nombre de mines et le nombre de gemmes après lequel tu encaisses. À cause de l'arrondi, c'est 96 à 97 % selon le palier. Les trois paliers relevés sont un peu au-dessus (au plus 98,94 % pour la première gemme en 7×7 avec 1 mine), le palier plafonné nettement en dessous. L'avantage de la maison est donc d'environ 3 %.",
+            "Les fractions ne se perdent pas : le jeu verse des jetons entiers et garde le reste en centièmes pour l'ajouter au prochain gain. 10 jetons × 1,01 rapportent donc d'abord 10 jetons, les 0,10 restants arrivent plus tard - ainsi, même les petites mises obtiennent le taux complet."
+          ]
+        },
+        {
+          "h": "Affichages",
+          "body": [
+            "Avant la manche, l'en-tête montre le multiplicateur maximal du réglage (toutes les gemmes trouvées) et le nombre de gemmes et de mines. Pendant la manche, à côté du plateau, tu vois tout ce qu'il faut pour ta prochaine décision :",
+            "- le multiplicateur actuel et ton gain si tu encaisses maintenant",
+            "- le multiplicateur après la prochaine gemme et le gain sur la case suivante",
+            "- la probabilité que la case suivante soit sûre : gemmes restantes divisées par cases cachées restantes - 88 % au premier clic en 5×5 avec 3 mines, puis un peu moins à chaque gemme",
+            "- le nombre de gemmes déjà trouvées et une barre avec les 5 prochains paliers : combien de gemmes rapportent quel multiplicateur",
+            "Le lama mascotte avec casque de mineur et lampe frontale vit la partie avec toi : il se réjouit à chaque gemme et le wagonnet à côté de lui se remplit ; devant une mine, il sursaute et se retrouve couvert de suie. Dès ×3, il pleut des pièces, dès ×10 et quand tu vides le plateau, il y a aussi des confettis."
+          ]
+        },
+        {
+          "h": "Mode auto",
+          "body": [
+            "[A] ou le bouton Auto ouvre le mode auto entre deux manches. La fenêtre se place sur le panneau latéral et laisse la grille libre : d'un clic ou avec les flèches et [Espace], tu marques les cases qui seront révélées à chaque manche - au plus autant qu'il y a de gemmes. Le jeu retient ton choix pour chaque taille de plateau ; [Suppr], [Retour] ou Effacer enlève toutes les marques.",
+            "La fenêtre indique combien de cases sont marquées et ce que rapporte la manche si elles sont toutes sûres : multiplicateur et probabilité. Tu choisis aussi le nombre de manches (5, 10, 25, 50 ou 100) et, si tu veux, deux limites : Arrêt à un gain de et Arrêt à une perte de (désact., 100, 500, 1000, 5000, 10000 ou 50000 jetons, comptés depuis le lancement).",
+            "LANCER AUTO ou [Entrée] : chaque manche débite la mise et révèle rapidement les cases marquées l'une après l'autre. Si elles sont toutes sûres, le gain est encaissé - avec le multiplicateur correspondant au nombre de cases marquées. Si une mine se cache sous une case marquée, la manche est perdue.",
+            "Le mode auto tourne jusqu'à ce que toutes les manches soient jouées, qu'une limite s'applique, que tes jetons ne couvrent plus la mise suivante ou que tu appuies sur STOP, [Espace], [Entrée], [A] ou [Échap]. Si tu arrêtes en pleine manche, elle reste ouverte - tu continues à la main ou tu encaisses. La mise, la taille et les mines sont bloquées pendant le mode auto.",
+            "[T] active le turbo - aussi quand tu joues à la main : retournement des cases, explosions et manches auto vont deux fois et demie plus vite."
+          ]
+        },
+        {
+          "h": "Contrôle d'équité",
+          "body": [
+            "Lama Mines est équitable et vérifiable : le champ de mines est fixé avant que tu cliques sur la première case - et après la manche, tu peux vérifier que rien n'a été déplacé. Quatre valeurs le permettent :",
+            "- Seed serveur : une valeur aléatoire secrète (32 caractères) que le jeu fixe avant la manche.",
+            "- Code de contrôle : l'empreinte SHA-256 (hash) du seed serveur. Il est affiché dès avant la manche (code de contrôle de la prochaine manche). Impossible d'en déduire le seed - mais un seul caractère différent dans le seed donnerait un code complètement différent.",
+            "- Seed client : ta part du hasard (8 caractères). Nouveau seed client en tire un nouveau - seulement en dehors d'une manche. Ainsi, le jeu ne décide pas seul du résultat.",
+            "- N° : le numéro de la manche. Il augmente de un à chaque manche, pour qu'aucune manche ne ressemble à une autre.",
+            "Le nom du jeu, le seed serveur, le seed client et le numéro de manche forment le hasard de la manche (mulberry32). Il mélange la liste de toutes les cases (comptées ligne par ligne, en partant d'en haut à gauche), et les premières places de la liste mélangée - autant qu'il y a de mines - deviennent des mines.",
+            "Après la manche, le seed serveur est dévoilé ; le code de contrôle de la prochaine manche est alors déjà fixé.",
+            "[F] ouvre la fenêtre Équité : en haut, le code de contrôle de la prochaine manche (pendant une manche aussi celui de la manche en cours), ton seed client et le numéro de manche ; en dessous, les 12 dernières manches avec n°, code de contrôle et résultat, la plus récente en haut (la molette fait défiler). Un clic sur une ligne affiche la taille, les mines, le code de contrôle, le seed serveur et le seed client.",
+            "Vérifier recalcule le SHA-256 du seed, le compare au code de contrôle affiché avant, reconstruit le champ de mines et contrôle aussi le résultat - les cases révélées étaient-elles justes, le multiplicateur correspond-il ? Une coche ou une croix et un petit aperçu du plateau indiquent : Correct ou Incorrect.",
+            "Tu peux aussi contrôler le code toi-même : calcule le SHA-256 du seed serveur avec n'importe quel outil et compare-le au code de contrôle."
+          ]
+        },
+        {
+          "h": "Statistiques",
+          "body": [
+            "[S] ouvre les statistiques de ton profil : manches, gagnées et perdues, ton retour (le pourcentage de tes mises qui t'est revenu), misé et versé, bilan, plus gros gain et meilleur multiplicateur - plus les gemmes trouvées, les mines touchées et les plateaux dégagés.",
+            "Une courbe montre le bilan des 100 dernières manches. Une manche compte comme gagnée si elle a rapporté plus que la mise.",
+            "À la longue, ton retour se stabilise autour de 97 % - sur peu de manches, il peut fortement varier vers le haut ou vers le bas."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- Avant une manche : [Espace] ou [Entrée] = JOUER, [1] à [4] = taille du plateau, [Gauche] / [Droite] = nombre de mines",
+            "- [Haut] / [Bas], [+] / [-] ou molette : changer la mise (seulement entre deux manches)",
+            "- Pendant la manche : un clic sur une case la révèle. Les flèches déplacent un curseur ; le premier [Espace] l'affiche seulement, chaque suivant révèle la case dessous.",
+            "- [R] ou le bouton Au hasard : révéler une case cachée au hasard ; [Entrée], [C] ou ENCAISSER : encaisser (dès la première gemme)",
+            "- Après le résultat : [Espace] ou JOUER lance tout de suite la manche suivante, les autres touches ramènent aux réglages.",
+            "- [A] : mode auto, [S] : statistiques, [F] : équité, [T] : turbo - ou les quatre boutons en haut. [Échap] ou un clic à côté de la fenêtre la ferme, [Échap] arrête aussi le mode auto.",
+            "Les touches sont fixes et ne dépendent pas de l'attribution des touches - les touches des joueurs comme WASD ne servent pas ici. La taille du plateau, le nombre de mines, la dernière mise, le turbo et les réglages auto sont sauvegardés dans settings.json (section lamamines)."
+          ]
+        },
+        {
+          "h": "Jetons Lama",
+          "body": [
+            "Lama Mines joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker, le Casino, Lama Crossing et Lama Plinko (départ 1000, sauvegardé dans mem.json).",
+            "Le record est le plus haut niveau de 1000 + ton bilan à Lama Mines ; les gains dans les autres jeux de la Banque Lama ne comptent pas ici.",
+            "Sous 10 jetons tu es fauché : [Espace], [Entrée] ou un clic prend un prêt de la banque et remet ton compte à 1000. Les prêts ne comptent pas dans le bilan.",
+            "Arrêter en pleine manche ne coûte rien : la mise est débitée au départ, et après chaque gemme trouvée, la taille du plateau, les mines, les seeds de la manche et les cases révélées sont sauvegardés. Au prochain lancement, le plateau est recalculé à partir du seed et la partie reprend exactement là.",
+            "L'historique, les données d'équité, les statistiques, les cases marquées pour l'auto et le reste reporté appartiennent à ton profil."
+          ]
+        },
+        {
+          "h": "Succès",
+          "body": [
+            "- Habitué de Lama Mines : 25 parties",
+            "- Palier : record 3000",
+            "- Maître de Lama Mines : record 10000",
+            "- Salle du trésor (rare) : Dégage toute la grille dans Lama Mines – toutes les gemmes trouvées",
+            "- Fouille profonde (épique) : Encaisse à ×10 ou plus dans Lama Mines",
+            "- Lama de diamant (légendaire) : Encaisse à ×1000 ou plus dans Lama Mines"
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Chaque manche est tirée à nouveau, et aucune case n'est plus sûre qu'une autre - ni les coins, ni le centre. Les motifs des manches précédentes n'aident pas.",
+            "- Salle du trésor : en 4×4 avec 1 mine, vider le plateau réussit une manche sur 16 (×15,52) - tout comme avec 15 mines, où il n'y a qu'une seule gemme. En 5×5 avec 3 mines, ce n'est qu'une sur 2300.",
+            "- Fouille profonde (×10) : en 5×5 avec 3 mines, 13 gemmes suffisent (×10,14), ce qui réussit environ une manche sur 10 à 11. Avec 24 mines, la toute première gemme rapporte ×24,25 - une manche sur 25.",
+            "- Lama de diamant (×1000) : les meilleures voies réussissent environ une manche sur 1100, par exemple 5×5 avec 10 mines après 10 gemmes (×1 055,84) ou 7×7 avec 12 mines après 19 gemmes (×1 034,71). En 5×5 avec 3 mines, seul le plateau entièrement vidé y mène (×2 231).",
+            "- En mode auto, seul compte le nombre de cases marquées, pas lesquelles : 5 cases marquées en 5×5 avec 3 mines sont toutes sûres dans 49,6 % des manches et rapportent alors ×1,95.",
+            "- Fixe à l'avance après combien de gemmes tu encaisses - et tiens-t'y. Avec le taux fixe, aucune stratégie n'est meilleure qu'une autre, seulement plus ou moins risquée. Viser le gain maximal ne vaut pas le coup : le palier plafonné rapporte moins que ce que vaudrait son risque."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "lama",
+        "plinko",
+        "balle",
+        "pelote",
+        "planche de galton",
+        "picots",
+        "cases",
+        "multiplicateur",
+        "jetons",
+        "banque lama",
+        "mise",
+        "rangées",
+        "risque",
+        "courbe en cloche",
+        "auto",
+        "turbo",
+        "équité",
+        "provably fair",
+        "code de contrôle",
+        "hash",
+        "seed",
+        "sha-256",
+        "statistiques"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Une pelote de laine dorée tombe à travers un triangle de picots. À chaque picot, elle rebondit à gauche ou à droite et finit dans l'une des cases du bas. Chaque case affiche un multiplicateur : la mise multipliée par le multiplicateur, c'est ton gain.",
+            "Choisis une mise par balle (1, 2, 5, 10, 20, 50, 100, 200, 500 ou 1000 jetons Lama) et appuie sur LÂCHER : la mise est prélevée, le lama en haut du plateau hoche la tête et lâche la balle.",
+            "Les cases extérieures rapportent le plus, celles du milieu rendent moins que la mise - mais c'est là que tombent la plupart des balles. Tu reçois la mise multipliée par le multiplicateur en jetons entiers ; ce qui reste sous un jeton est mémorisé et ajouté à la balle suivante.",
+            "La case touchée rebondit, une bulle affiche le multiplicateur, et plus il est élevé, plus le son est clair. À partir de ×10, il pleut des pièces ; à partir de ×100, une bannière et des confettis s'y ajoutent. En haut à droite s'affiche l'historique des 12 dernières balles."
+          ]
+        },
+        {
+          "h": "Rangées et risque",
+          "body": [
+            "Tu règles les deux avant de lâcher ; tant que des balles sont sur le plateau ou que le mode auto tourne, c'est verrouillé. Le jeu affiche aussi le multiplicateur maximal et le taux de retour exact de la table choisie.",
+            "- Rangées : 8 à 16 rangées de picots avec [Gauche] / [Droite] (par défaut 12). Avec n rangées, il y a n + 1 cases.",
+            "- Risque : Faible, Moyen (par défaut) ou Élevé avec [1] à [3].",
+            "Plus il y a de rangées, plus les cases du bord sont rares et payantes. Le risque décide de l'écart entre le milieu et le bord :",
+            "- Faible : milieu ×0,7, bord de ×5,3 (8 rangées) à ×16 (16 rangées) - petits gains fréquents",
+            "- Moyen : milieu ×0,4–0,5, bord de ×13 à ×110",
+            "- Élevé : milieu ×0,2, bord de ×32 à ×1 000 - presque toujours moins que la mise, très rarement un coup énorme",
+            "Exemple - les 17 cases avec 16 rangées en risque Moyen : 110 · 38 · 14 · 6,2 · 2,8 · 1,4 · 0,8 · 0,5 · 0,4 · 0,5 · 0,8 · 1,4 · 2,8 · 6,2 · 14 · 38 · 110",
+            "Avec 16 rangées, environ 55 % des balles rendent moins que la mise en risque Faible, 79 % en Moyen et même 92 % en Élevé."
+          ]
+        },
+        {
+          "h": "Comment tombe la balle",
+          "body": [
+            "Le plateau est une planche de Galton : à chaque picot, la balle part à gauche ou à droite avec exactement 50 % de chances - comme à pile ou face. La case est tout simplement le nombre de rebonds vers la droite : avec 12 rangées, de 0 (tout à gauche) à 12 (tout à droite).",
+            "Une balle n'atteint le bord que si elle rebondit du même côté à chaque picot. Vers le milieu, en revanche, mènent énormément de chemins. C'est pourquoi les balles s'accumulent au milieu en une courbe en cloche (loi binomiale) :",
+            "- 8 rangées : case du milieu 27,34 %, chaque case du bord 1 sur 256",
+            "- 12 rangées : case du milieu 22,56 %, chaque case du bord 1 sur 4 096",
+            "- 16 rangées : case du milieu 19,64 %, chaque case du bord 1 sur 65 536",
+            "Passe la souris sur une case : elle affiche son multiplicateur, sa chance (même minuscule, comme 0,0015 %) et ce qu'elle rapporte avec ta mise.",
+            "Les 27 tables (9 nombres de rangées × 3 risques) sont symétriques, ne diminuent jamais vers le bord et, calculées exactement, rendent à la longue 96,9 % à 97,1 % des mises. L'avantage de la maison est donc d'environ 3 %, quels que soient tes réglages. Rangées et risque changent seulement l'ampleur des variations de chance."
+          ]
+        },
+        {
+          "h": "Plein de balles à la fois",
+          "body": [
+            "Pas besoin d'attendre qu'une balle soit arrivée : jusqu'à 50 balles peuvent rebondir en même temps sur le plateau - le compteur « En jeu » les compte. Maintiens [Espace] et, après un court instant, elles tombent en tir continu - si serré qu'environ 30 balles sont en jeu à la fois.",
+            "Le chemin de chaque balle est tiré au sort dès qu'elle est lâchée. La mise et le gain sont donc comptabilisés et sauvegardés ensemble tout de suite - mais tu ne vois le gain que lorsque la balle arrive en bas. C'est seulement alors que tu peux remiser ce gain.",
+            "Si tu quittes le jeu pendant que des balles tombent encore, rien n'est perdu : les jetons sont déjà comptabilisés, et les succès de ces balles sont validés à la sortie.",
+            "Le turbo divise par deux le temps de chute des balles et l'intervalle du tir continu - [T] l'active ou le coupe."
+          ]
+        },
+        {
+          "h": "Mode auto",
+          "body": [
+            "[A] ouvre le mode auto. Tu y règles (la fenêtre calcule aussi la mise totale de la série) :",
+            "- Balles : 10, 25, 50, 100, 250, 500 ou 1000",
+            "- Arrêt à un gain de / Arrêt à une perte de : désact., 100, 500, 1000, 5000, 10000 ou 50000 jetons",
+            "- Turbo activé ou non",
+            "LANCER AUTO lâche les balles l'une après l'autre avec ta mise, tes rangées et ton risque actuels ; ces trois réglages sont verrouillés pendant ce temps. Le mode auto s'arrête quand toutes les balles sont lâchées, que le gain ou la perte depuis le départ atteint une limite, que tes jetons ne suffisent plus pour la balle suivante même après l'arrivée des balles en vol, ou que tu appuies sur STOP, [Espace] ou [Échap]. Les balles déjà en route arrivent quand même.",
+            "Les réglages auto sont sauvegardés dans settings.json (section lamaplinko)."
+          ]
+        },
+        {
+          "h": "Contrôle d'équité",
+          "body": [
+            "Dans Lama Plinko, tu peux vérifier toi-même qu'aucune balle n'est déviée après coup (« provably fair »). Trois valeurs le permettent :",
+            "- Seed serveur : une valeur aléatoire secrète de 32 caractères, fixée par le jeu avant le lâcher. Chaque balle a la sienne.",
+            "- Code de contrôle : l'empreinte SHA-256 du seed serveur. Il est visible avant le lâcher. Il ne trahit pas le seed, mais tout autre seed aurait un code complètement différent - le jeu ne peut donc plus échanger le seed.",
+            "- Seed client : ta propre part (8 caractères). « Nouveau seed client » en tire un nouveau dès qu'aucune balle n'est en l'air - ainsi le jeu ne décide pas seul du hasard.",
+            "S'y ajoute le numéro (nonce), qui augmente de 1 à chaque balle. Seed serveur, seed client et numéro donnent ensemble le hasard de la balle : un pile ou face par rangée, et chaque « droite » la pousse d'une case vers la droite.",
+            "Après l'arrivée, le seed serveur est dévoilé - le code de contrôle de la balle suivante est alors déjà fixé.",
+            "[F] ouvre la fenêtre d'équité avec les 12 dernières balles : numéro, code de contrôle, seed serveur et seed client, plus rangées, risque, case et multiplicateur. « Vérifier » recalcule le SHA-256 du seed, le compare au code de contrôle affiché avant et recalcule le chemin de la balle : « Correct » signifie que tout est en ordre, « Incorrect » révélerait un écart. Un mini-aperçu montre le chemin recalculé.",
+            "Pour les curieux : le générateur aléatoire est mulberry32, initialisé avec la valeur FNV-1a du texte « lamaplinko|seed serveur|seed client|numéro ». Chaque rangée tire un nombre entre 0 et 1 ; en dessous de 0,5, c'est à droite. Chaque balle peut donc aussi être recalculée avec tes propres outils."
+          ]
+        },
+        {
+          "h": "Statistiques",
+          "body": [
+            "[S] ouvre les statistiques de ton profil pour Lama Plinko :",
+            "- Tuiles : Manches, Gagnées, Perdues, Misé, Encaissé, Bilan, Plus gros gain, Meilleure cote, Ton retour. Chaque balle compte à part ; gagnée signifie plus que la mise rendue, perdue moins.",
+            "- une courbe du bilan sur les 100 dernières balles",
+            "- la répartition des coups : tes coups par case en barres, la répartition attendue (binomiale) en doré - pour chaque nombre de rangées séparément, à changer avec [Gauche] / [Droite]",
+            "Au début, ton taux de retour fait de grands bonds (un coup au bord en Élevé le propulse très haut) ; avec beaucoup de balles, il s'approche des 97 % environ. De même, après quelques centaines de balles, les barres se rapprochent de la courbe dorée."
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- [Espace], [Entrée] ou clic sur LÂCHER ou sur le plateau : lâcher une balle - maintenir pour un tir continu",
+            "- [Haut] / [Bas], [+] / [-] ou molette : changer la mise par balle",
+            "- [Gauche] / [Droite] : rangées (8 à 16), [1] à [3] : risque",
+            "- [A] : mode auto, [S] : statistiques, [F] : équité, [T] : turbo",
+            "- [Échap] : fermer une fenêtre ouverte ou arrêter le mode auto",
+            "- Souris sur une case : multiplicateur, chance et gain avec ta mise",
+            "Dans les fenêtres : dans la fenêtre auto, [Haut] / [Bas] choisit une ligne, [Gauche] / [Droite] la modifie et [Entrée] ou [Espace] lance ou arrête. Dans les statistiques, [Gauche] / [Droite] change le nombre de rangées de la répartition. Dans la fenêtre d'équité, les flèches ou la molette choisissent une balle, [Entrée] la vérifie et [C] tire un nouveau seed client. [Échap] ou la même touche lettre referme la fenêtre.",
+            "Tout se fait aussi à la souris ; un clic à côté d'une fenêtre ouverte la referme. Les rangées, le risque, la mise, le turbo et les réglages auto sont sauvegardés dans settings.json (section lamaplinko)."
+          ]
+        },
+        {
+          "h": "Jetons Lama",
+          "body": [
+            "Lama Plinko joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker, le Casino, Lama Crossing et Lama Mines (départ 1000, sauvegardé dans mem.json).",
+            "Le record est le plus haut niveau de 1000 + ton bilan à Lama Plinko ; les gains dans les autres jeux ne comptent pas ici.",
+            "Si ton compte ne couvre pas la mise choisie, prends-en une plus petite. À 0 jeton, tu es fauché : [Entrée] ou un clic prend un prêt de la banque et remet ton compte à 1000. Les prêts ne comptent pas dans le bilan.",
+            "L'historique, les statistiques et les données d'équité appartiennent à ton profil et sont eux aussi sauvegardés dans mem.json."
+          ]
+        },
+        {
+          "h": "Succès",
+          "body": [
+            "- Habitué de Lama Plinko : 25 parties",
+            "- Palier : record 3000",
+            "- Maître de Lama Plinko : record 10000",
+            "- Tout au bord (rare) : Atteins la case la plus extérieure dans Lama Plinko (12 rangées ou plus)",
+            "- Pluie de pelotes (épique) : Aie 25 billes en même temps sur le plateau dans Lama Plinko",
+            "- Légende du Plinko (légendaire) : Atteins la case la plus extérieure dans Lama Plinko avec 16 rangées en risque élevé"
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Chaque balle est indépendante : après dix coups au milieu, le bord n'est pas « dû ».",
+            "- Aucun réglage ne bat le taux de retour. En risque Faible, ton compte varie peu ; en Élevé, tu perds la plupart du temps - avec une petite chance de coup énorme.",
+            "- Les petites mises ne sont pas désavantagées : aucune fraction de jeton n'est perdue. Sur 1 jeton, ×0,7 ne rapporte d'abord rien, mais les 0,7 jeton sont mémorisés et versés avec l'une des balles suivantes dès qu'un jeton entier est atteint. Le taux de retour d'environ 97 % vaut donc pour toutes les mises.",
+            "- Tout au bord : le plus rapide avec 12 rangées - environ 1 balle sur 2 048 y finit tout au bord (à gauche ou à droite). À 1 jeton par balle, cela ne coûte en moyenne qu'environ 3 jetons pour 100 balles.",
+            "- Pluie de pelotes : maintiens simplement [Espace] - le tir continu met environ 30 balles à la fois sur le plateau, quel que soit le nombre de rangées, et au bout d'environ 2 secondes le succès est à toi. Le mode auto lâche trop tranquillement pour ça.",
+            "- Légende du Plinko : avec 16 rangées en risque Élevé, seule 1 balle sur 32 768 finit tout au bord - avec des séries auto de 1000 balles, il faut en moyenne environ 33 séries. Mais cette case rapporte ×1 000.",
+            "- Fixe-toi un budget à l'avance et utilise la limite de perte du mode auto."
           ]
         }
       ]

@@ -146,7 +146,7 @@
           "body": [
             "Cada jogo com progresso tem a sua própria secção no mem.json, por exemplo:",
             "- sudoku: níveis resolvidos com estrelas e melhor tempo, puzzles começados e o Sudoku do dia com a sua série.",
-            "- casino: a conta do Banco Lama - as fichas Lama do Blackjack, Póquer, Casino e Lama Crossing com o saldo de cada jogo, mais uma travessia de Lama Crossing a meio.",
+            "- casino: a conta do Banco Lama - as fichas Lama do Blackjack, Póquer, Casino, Lama Crossing, Lama Mines e Lama Plinko com o saldo de cada jogo, mais uma travessia de Lama Crossing e uma ronda de Lama Mines a meio, as casas marcadas do modo automático de Lama Mines e o histórico, os dados de equidade, as estatísticas e o resto acumulado de Lama Mines e Lama Plinko.",
             "- crossy: moedas apanhadas, personagens comprados e o melhor do dia no Crossy Road.",
             "- tetris: melhor tempo no Sprint, melhor pontuação no Ultra e o balanço do Versus contra a IA.",
             "- g2048: partidas guardadas do 2048 e melhores pontuações por tamanho de tabuleiro e modo.",
@@ -348,7 +348,7 @@
         {
           "h": "Visão geral",
           "body": [
-            "256 conquistas nos 47 jogos - do primeiro arranque ao Perfect Clear no Tetris.",
+            "268 conquistas nos 49 jogos - do primeiro arranque ao Perfect Clear no Tetris.",
             "Cada conquista tem uma raridade e com ela um valor em pontos; a soma é o teu nível.",
             "Estão atrás do botão Conquistas e estatísticas, separador Conquistas. Um filtro esconde as pendentes ou as obtidas."
           ]
@@ -359,7 +359,7 @@
             "- Geral: metas de toda a coleção - partidas, jogos experimentados, tempo, recordes, vitórias, dias jogados, sequências, nível e duelos. Mais extras como coruja noturna, maratona ou jogador de fim de semana.",
             "- Marcos de pontos: uma pontuação-alvo justa por jogo.",
             "- Níveis mestre: a segunda marca, bem mais alta, só para jogos com pontuação sem limite.",
-            "- Frequentador: 25 partidas de um jogo. Existe para os 47 jogos.",
+            "- Frequentador: 25 partidas de um jogo. Existe para os 49 jogos.",
             "- Momentos especiais: xeque-mate, um Yahtzee, a peça 4096, um hole-in-one, um hat-trick no air hockey, quatro fantasmas com uma pílula e muito mais."
           ]
         },
@@ -1473,7 +1473,7 @@
         {
           "h": "Fichas Lama",
           "body": [
-            "Blackjack, Póquer e Casino partilham uma conta no Banco Lama: começas com 1000 fichas Lama e o saldo fica guardado permanentemente.",
+            "Blackjack, Póquer, Casino, Lama Crossing, Lama Mines e Lama Plinko partilham uma conta no Banco Lama: começas com 1000 fichas Lama e o saldo fica guardado permanentemente.",
             "A aposta é debitada logo ao dar as cartas - quem abandona uma mão em curso perde-a.",
             "O recorde é o máximo do teu saldo no blackjack: 1000 mais tudo o que ganhaste e perdeste no blackjack. Ganhos na roleta, na máquina ou no póquer não contam aqui.",
             "Abaixo de 10 fichas estás falido: [Enter] pede um empréstimo ao banco e repõe a conta em 1000. Os empréstimos não contam para o saldo."
@@ -1898,7 +1898,7 @@
         {
           "h": "Fichas Lama",
           "body": [
-            "Joga-se com as fichas Lama do Banco Lama - uma conta partilhada com Blackjack e Casino (início 1000, guardada permanentemente).",
+            "Joga-se com as fichas Lama do Banco Lama - uma conta partilhada com Blackjack, Casino, Lama Crossing, Lama Mines e Lama Plinko (início 1000, guardada permanentemente).",
             "No início de uma mão, a tua conta fica na mesa como pilha; o que vai para o pote é debitado logo. Se saíres da mesa a meio da mão, a tua parte do pote perde-se - o resto volta para a conta.",
             "O recorde é o máximo do teu saldo no póquer: 1000 mais tudo o que ganhaste e perdeste no póquer. Ganhos noutros jogos não contam aqui.",
             "Falido (menos do que a big blind de 20, no Video Poker menos de 10) = empréstimo do banco com um clique, a conta volta a 1000."
@@ -2973,7 +2973,7 @@
         {
           "h": "O Banco Lama",
           "body": [
-            "Casino, Blackjack e Póquer usam a mesma conta: as fichas Lama (início 1000). As apostas são debitadas logo e os prémios creditados - tudo fica guardado permanentemente.",
+            "Casino, Blackjack, Póquer, Lama Crossing, Lama Mines e Lama Plinko usam a mesma conta: as fichas Lama (início 1000). As apostas são debitadas logo e os prémios creditados - tudo fica guardado permanentemente.",
             "Cada jogo tem o seu próprio saldo. O recorde do Casino é o máximo de 1000 + saldo do Casino; ganhos no Blackjack ou no Póquer não contam aqui.",
             "Falido (menos do que a aposta mínima) recebes um empréstimo do banco: a conta volta a 1000. Os empréstimos não contam para nenhum saldo; o seu número aparece em cima à direita."
           ]
@@ -3106,7 +3106,7 @@
         {
           "h": "Fichas Lama",
           "body": [
-            "O Lama Crossing joga com a conta comum do Banco Lama - junto com o Blackjack, o Póquer e o Casino (início 1000, guardado no mem.json).",
+            "O Lama Crossing joga com a conta comum do Banco Lama - junto com o Blackjack, o Póquer, o Casino, o Lama Mines e o Lama Plinko (início 1000, guardado no mem.json).",
             "O recorde é o máximo de 1000 + o teu saldo no Lama Crossing; ganhos no Blackjack, no Póquer ou no Casino não contam aqui.",
             "Abaixo de 10 fichas estás falido: [Enter] ou um clique pede um empréstimo ao banco e repõe a conta em 1000. Os empréstimos não contam para o saldo.",
             "Parar a meio da travessia é seguro: a aposta, a dificuldade e a faixa ficam guardadas, e no próximo arranque continuas exatamente aí."
@@ -3131,6 +3131,318 @@
             "- Com bom timing chega-se ao fim mais ou menos em 1 de cada 7 rondas no Fácil, 1 em 38 no Médio, 1 em 614 no Difícil e só 1 em 32.768 no Extremo.",
             "- Para Nervos de aço (×10) bastam 4 faixas no Extremo (×15,52), 7 no Difícil (×11,77) e 13 no Médio (×10,37); no Fácil nunca (no máximo ×6,57). Para Equilibrista (×100 no Extremo) são precisas 7 faixas (×124,16) - mais ou menos 1 em cada 128 rondas.",
             "- Decide antes em que multiplicador vais levantar - e cumpre. Com o retorno fixo nenhuma estratégia é melhor do que outra, só mais ou menos arriscada."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "lama",
+        "mines",
+        "minas",
+        "gemas",
+        "casas",
+        "revelar",
+        "levantar",
+        "multiplicador",
+        "fichas",
+        "banco lama",
+        "aposta",
+        "risco",
+        "auto",
+        "equidade",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "estatísticas",
+        "semente"
+      ],
+      "sections": [
+        {
+          "h": "Como se joga",
+          "body": [
+            "Debaixo de cada casa tapada há uma gema ou uma mina. Cada gema encontrada faz subir o multiplicador - uma mina custa a aposta.",
+            "Escolhe a aposta (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ou 10000 fichas Lama) e carrega em JOGAR: a aposta é debitada e o tabuleiro é sorteado. A partir daí fica decidido onde estão as minas - o que se pode confirmar na verificação de equidade.",
+            "Depois revelas casa a casa: com um clique, com as setas e [Espaço] ou com [R] ou o botão Ao acaso numa casa tapada ao acaso. A partir da primeira gema podes LEVANTAR a qualquer momento - recebes então a aposta vezes o multiplicador atual.",
+            "Quando todas as gemas forem encontradas, o prémio é levantado automaticamente: UMA MINA DE OURO! Se acertares numa mina, ela explode, o ecrã treme e a aposta perde-se. Em ambos os casos - e também depois de levantares - as casas restantes são reveladas escurecidas, para veres onde estavam as minas. O tabuleiro fica assim até voltares a jogar ou mudares uma definição.",
+            "Em cima à direita aparece o histórico das últimas 12 rondas - a mais recente à direita, uma mina como ×0 a vermelho."
+          ]
+        },
+        {
+          "h": "Tamanhos e minas",
+          "body": [
+            "Quatro tamanhos - escolhidos antes de cada ronda com os botões ou com [1] a [4]: 4×4 (16 casas), 5×5 (25 casas, predefinido), 6×6 (36 casas) e 7×7 (49 casas).",
+            "O número de minas ajusta-se com [Esquerda] / [Direita], os botões de seta ou os seis botões de escolha rápida: de 1 até ao número de casas menos 1 - fica sempre pelo menos uma gema. Por predefinição há 3 minas. A escolha rápida oferece por tamanho:",
+            "- 4×4: 1, 2, 3, 5, 8 ou 12 minas",
+            "- 5×5: 1, 3, 5, 10, 15 ou 24 minas",
+            "- 6×6: 1, 3, 6, 12, 20 ou 35 minas",
+            "- 7×7: 1, 3, 7, 14, 24 ou 48 minas",
+            "Mais minas significa: cada gema vale mais, mas a casa seguinte é segura menos vezes. Com 24 minas no 5×5, a primeira gema já paga ×24,25 - com 4 % de probabilidade.",
+            "O tamanho, as minas e a aposta só mudam entre rondas."
+          ]
+        },
+        {
+          "h": "Multiplicador e retorno",
+          "body": [
+            "O multiplicador só depende de quantas gemas já encontraste - não de quais casas eram. Compensa exatamente a probabilidade de chegar até ali, menos 3 % para a banca:",
+            "- multiplicador = 0,97 a dividir pela probabilidade de encontrar k gemas seguidas",
+            "- essa probabilidade é um produto com um fator por gema: gemas/casas × (gemas - 1)/(casas - 1) × …",
+            "- em fórmula: 0,97 × C(N, M) / C(N - k, M), arredondado para baixo às centésimas. N é o número de casas, M o número de minas, k o número de gemas encontradas e C(n, m) o coeficiente binomial «n sobre m».",
+            "Exemplo 5×5 com 3 minas: a primeira casa é segura em 22 de 25 (88 %), por isso paga 0,97 / 0,88 = ×1,10. Depois de duas gemas, a probabilidade é 22/25 × 21/24 = 77 % - o que dá ×1,25.",
+            "Segue-se ×1,44, ×1,67 e ×1,95 após 5 gemas, ×4,90 após 10, ×10,14 após 13, ×18,59 após 15, ×111,55 após 19 e ×557,75 após 21. Quem encontra as 22 gemas recebe ×2.231 - isso acontece em 1 de cada 2300 rondas.",
+            "Mínimo: cada gema faz subir o multiplicador pelo menos 0,01 - a primeira já paga, portanto, no mínimo ×1,01. Só com a fórmula, no 6×6 com 1 mina haveria por exemplo apenas ×0,99. Só três passos são elevados: a primeira gema no 6×6 com 1 mina e as duas primeiras no 7×7 com 1 mina.",
+            "O prémio máximo é ×100.000. Se o multiplicador chegar a esse limite, o prémio é levantado automaticamente de imediato: PRÉMIO MÁXIMO! Ao limpar o tabuleiro inteiro isso já acontece a partir de 5×5 com 6 minas, 6×6 com 5 e 7×7 com 4 minas; no 4×4 nunca. Não há mais, mesmo que a fórmula desse mais.",
+            "Como probabilidade e multiplicador se compensam, qualquer estratégia devolve a longo prazo cerca de 97 % do apostado - seja qual for o tamanho, o número de minas e depois de quantas gemas levantas. Por causa do arredondamento são 96 a 97 % consoante o passo. Os três passos elevados ficam um pouco acima (no máximo 98,94 % na primeira gema no 7×7 com 1 mina), o passo com teto bem abaixo. A vantagem da casa ronda, portanto, os 3 %.",
+            "As frações não se perdem: são pagas fichas inteiras e o resto em centésimas fica guardado e é somado ao próximo prémio. Assim, 10 fichas × 1,01 pagam primeiro 10 fichas e os 0,10 restantes chegam depois - também as apostas pequenas têm o retorno completo."
+          ]
+        },
+        {
+          "h": "Indicadores",
+          "body": [
+            "Antes da ronda, o cabeçalho mostra o multiplicador máximo da definição (todas as gemas encontradas) e o número de gemas e minas. Durante a ronda, ao lado do tabuleiro, vês tudo o que precisas para a próxima decisão:",
+            "- o multiplicador atual e o teu prémio se levantares agora",
+            "- o multiplicador depois da próxima gema e o prémio na casa seguinte",
+            "- a probabilidade de a casa seguinte ser segura: gemas restantes a dividir pelas casas tapadas restantes - 88 % no primeiro clique no 5×5 com 3 minas, depois um pouco menos a cada gema",
+            "- quantas gemas já encontraste e uma barra com os 5 próximos passos: quantas gemas pagam que multiplicador",
+            "A lama mascote com capacete de mineiro e lanterna de cabeça vive o jogo contigo: alegra-se a cada gema enquanto a vagoneta ao lado se enche, e com uma mina assusta-se e fica coberta de fuligem. A partir de ×3 chovem moedas, a partir de ×10 e ao limpar o tabuleiro há também confetes."
+          ]
+        },
+        {
+          "h": "Modo auto",
+          "body": [
+            "[A] ou o botão Auto abre o modo automático entre rondas. A janela fica sobre o painel lateral e deixa a grelha livre: com um clique ou com as setas e [Espaço] marcas as casas que serão reveladas em cada ronda - no máximo tantas quantas as gemas. O jogo memoriza a escolha para cada tamanho; [Del], [Backspace] ou Limpar remove todas as marcas.",
+            "A janela mostra quantas casas estão marcadas e o que a ronda paga se forem todas seguras: multiplicador e probabilidade. Escolhes também o número de rondas (5, 10, 25, 50 ou 100) e, se quiseres, dois limites: Parar com lucro de e Parar com perda de (deslig., 100, 500, 1000, 5000, 10000 ou 50000 fichas, contados desde o início).",
+            "INICIAR AUTO ou [Enter]: cada ronda debita a aposta e revela rapidamente as casas marcadas, uma após outra. Se forem todas seguras, o prémio é levantado - com o multiplicador de tantas gemas quantas as casas marcadas. Se houver uma mina debaixo de uma casa marcada, a ronda está perdida.",
+            "O modo automático corre até todas as rondas serem jogadas, um limite atuar, as fichas não chegarem para a aposta seguinte ou carregares em PARAR, [Espaço], [Enter], [A] ou [Esc]. Se parares a meio de uma ronda, ela fica aberta - continuas à mão ou levantas. A aposta, o tamanho e as minas ficam bloqueados durante o modo automático.",
+            "[T] liga o turbo - também quando jogas à mão: abrir casas, explosões e rondas automáticas ficam duas vezes e meia mais rápidas."
+          ]
+        },
+        {
+          "h": "Verificação de equidade",
+          "body": [
+            "O Lama Mines é comprovadamente justo: o campo de minas fica fixado antes de clicares na primeira casa - e depois da ronda podes confirmar que nada foi mudado. Para isso há quatro valores:",
+            "- Semente do servidor: um valor aleatório secreto (32 caracteres) que o jogo fixa antes da ronda.",
+            "- Código de controlo: a impressão digital SHA-256 (hash) da semente do servidor. É mostrado logo antes da ronda (código de controlo da próxima ronda). Não se consegue calcular a semente a partir dele - mas um único carácter diferente na semente daria um código completamente diferente.",
+            "- Semente do cliente: a tua parte do acaso (8 caracteres). Com Nova semente do cliente geras uma nova - só fora de uma ronda. Assim o jogo não decide sozinho o resultado.",
+            "- N.º: o número da ronda. Sobe um em cada ronda, para que nenhuma ronda seja igual a outra.",
+            "O nome do jogo, a semente do servidor, a semente do cliente e o número da ronda formam o acaso da ronda (mulberry32). Este baralha a lista de todas as casas (contadas linha a linha, a começar em cima à esquerda), e os primeiros lugares da lista baralhada - tantos quantas as minas - passam a ser minas.",
+            "Depois da ronda, a semente do servidor é revelada; nessa altura o código de controlo da próxima ronda já está fixado.",
+            "[F] abre a janela Equidade: em cima, o código de controlo da próxima ronda (durante uma ronda também o desta ronda), a tua semente do cliente e o número da ronda; por baixo, as últimas 12 rondas com n.º, código de controlo e resultado, a mais recente em cima (a roda do rato faz deslizar). Um clique numa linha mostra tamanho, minas, código de controlo, semente do servidor e semente do cliente.",
+            "Verificar volta a calcular o SHA-256 da semente, compara-o com o código de controlo mostrado antes, reconstrói o campo de minas e confere também o resultado - as casas reveladas estavam certas, o multiplicador bate certo? Um visto ou uma cruz e uma pequena pré-visualização do tabuleiro mostram: Confere ou Não confere.",
+            "Também podes verificar o código tu mesmo: calcula o SHA-256 da semente do servidor com qualquer ferramenta e compara-o com o código de controlo."
+          ]
+        },
+        {
+          "h": "Estatísticas",
+          "body": [
+            "[S] abre as estatísticas do teu perfil: rondas, ganhas e perdidas, o teu retorno (que percentagem das apostas voltou para ti), apostado e pago, saldo, maior prémio e melhor multiplicador - e ainda gemas achadas, minas ativadas e tabuleiros limpos.",
+            "Uma curva mostra o saldo das últimas 100 rondas. Uma ronda conta como ganha se foi pago mais do que o apostado.",
+            "A longo prazo, o teu retorno aproxima-se dos 97 % - em poucas rondas pode oscilar muito para cima ou para baixo."
+          ]
+        },
+        {
+          "h": "Controlos",
+          "body": [
+            "- Antes da ronda: [Espaço] ou [Enter] = JOGAR, [1] a [4] = tamanho do tabuleiro, [Esquerda] / [Direita] = número de minas",
+            "- [Cima] / [Baixo], [+] / [-] ou roda do rato: mudar a aposta (só entre rondas)",
+            "- Durante a ronda: um clique numa casa revela-a. As setas movem um cursor; o primeiro [Espaço] só o mostra, cada um dos seguintes revela a casa por baixo.",
+            "- [R] ou o botão Ao acaso: revelar uma casa tapada ao acaso; [Enter], [C] ou LEVANTAR: levantar (a partir da primeira gema)",
+            "- Depois do resultado: [Espaço] ou JOGAR começa logo a ronda seguinte, as outras teclas voltam às definições.",
+            "- [A]: modo automático, [S]: estatísticas, [F]: equidade, [T]: turbo - ou os quatro botões em cima. [Esc] ou um clique fora da janela fecha-a, [Esc] também para o modo automático.",
+            "As teclas são fixas e não dependem da atribuição de teclas - as teclas de jogador como WASD não se aplicam aqui. O tamanho do tabuleiro, o número de minas, a última aposta, o turbo e as definições automáticas ficam guardados no settings.json (secção lamamines)."
+          ]
+        },
+        {
+          "h": "Fichas Lama",
+          "body": [
+            "O Lama Mines joga com a conta comum do Banco Lama - junto com o Blackjack, o Póquer, o Casino, o Lama Crossing e o Lama Plinko (início 1000, guardado no mem.json).",
+            "O recorde é o máximo de 1000 + o teu saldo no Lama Mines; ganhos nos outros jogos do Banco Lama não contam aqui.",
+            "Abaixo de 10 fichas estás falido: [Espaço], [Enter] ou um clique pede um empréstimo ao banco e repõe a conta em 1000. Os empréstimos não contam para o saldo.",
+            "Parar a meio da ronda é seguro: a aposta é debitada ao começar, e depois de cada gema encontrada ficam guardados o tamanho, as minas, as sementes da ronda e as casas reveladas. No próximo arranque, o tabuleiro é recalculado a partir da semente e continuas exatamente aí.",
+            "O histórico, os dados de equidade, as estatísticas, as casas marcadas para o modo automático e o resto acumulado pertencem ao teu perfil."
+          ]
+        },
+        {
+          "h": "Conquistas",
+          "body": [
+            "- Frequentador de Lama Mines: 25 partidas",
+            "- Marco: recorde 3000",
+            "- Mestre de Lama Mines: recorde 10000",
+            "- Câmara do tesouro (raro): Limpa um tabuleiro inteiro em Lama Mines – todas as gemas encontradas",
+            "- Escavação profunda (épico): Levanta com ×10 ou mais em Lama Mines",
+            "- Lama de diamante (lendário): Levanta com ×1000 ou mais em Lama Mines"
+          ]
+        },
+        {
+          "h": "Dicas",
+          "body": [
+            "- Cada ronda é sorteada de novo, e nenhuma casa é mais segura do que outra - nem os cantos, nem o centro. Padrões de rondas anteriores não ajudam.",
+            "- Câmara do tesouro: no 4×4 com 1 mina, limpar o tabuleiro resulta em 1 de cada 16 rondas (×15,52) - tal como com 15 minas, onde só há uma gema. No 5×5 com 3 minas é só 1 em 2300.",
+            "- Escavação profunda (×10): no 5×5 com 3 minas bastam 13 gemas (×10,14), o que resulta mais ou menos em 1 de cada 10 a 11 rondas. Com 24 minas, a primeira gema já paga ×24,25 - em 1 de cada 25 rondas.",
+            "- Lama de diamante (×1000): os melhores caminhos resultam mais ou menos em 1 de cada 1100 rondas, por exemplo 5×5 com 10 minas após 10 gemas (×1.055,84) ou 7×7 com 12 minas após 19 gemas (×1.034,71). No 5×5 com 3 minas só se consegue limpando o tabuleiro inteiro (×2.231).",
+            "- No modo automático só conta quantas casas marcas, não quais: 5 casas marcadas no 5×5 com 3 minas são todas seguras em 49,6 % das rondas e pagam então ×1,95.",
+            "- Decide antes depois de quantas gemas vais levantar - e cumpre. Com o retorno fixo nenhuma estratégia é melhor do que outra, só mais ou menos arriscada. Apostar no prémio máximo não compensa: o passo com teto paga menos do que valeria o seu risco."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "lama",
+        "plinko",
+        "bola",
+        "novelo",
+        "máquina de galton",
+        "pinos",
+        "casas",
+        "multiplicador",
+        "fichas",
+        "banco lama",
+        "aposta",
+        "filas",
+        "risco",
+        "curva em sino",
+        "auto",
+        "turbo",
+        "equidade",
+        "provably fair",
+        "código de controlo",
+        "hash",
+        "semente",
+        "sha-256",
+        "estatísticas"
+      ],
+      "sections": [
+        {
+          "h": "Como se joga",
+          "body": [
+            "Um novelo de lã dourado cai por um triângulo de pinos. Em cada pino ressalta para a esquerda ou para a direita e acaba numa das casas em baixo. Cada casa mostra um multiplicador: a aposta vezes o multiplicador é o teu prémio.",
+            "Escolhe a aposta por bola (1, 2, 5, 10, 20, 50, 100, 200, 500 ou 1000 fichas Lama) e carrega em LARGAR: a aposta é descontada, a lama no topo do tabuleiro acena com a cabeça e larga a bola.",
+            "As casas das pontas pagam mais, as do meio devolvem menos do que a aposta - mas é aí que cai a maioria das bolas. Recebes a aposta vezes o multiplicador em fichas inteiras; o que sobra abaixo de uma ficha fica guardado e é somado à bola seguinte.",
+            "A casa atingida abana, um aviso mostra o multiplicador e, quanto mais alto for, mais claro soa o tom. A partir de ×10 chovem moedas; a partir de ×100 juntam-se ainda uma faixa e confetes. Em cima à direita aparece o histórico das últimas 12 bolas."
+          ]
+        },
+        {
+          "h": "Filas e risco",
+          "body": [
+            "Ambos se ajustam antes de largar; enquanto houver bolas no tabuleiro ou o modo automático estiver a correr, ficam bloqueados. O jogo mostra também o multiplicador máximo e o retorno exato da tabela escolhida.",
+            "- Filas: 8 a 16 filas de pinos com [Esquerda] / [Direita] (predefinição 12). Com n filas há n + 1 casas.",
+            "- Risco: Baixo, Médio (predefinição) ou Alto com [1] a [3].",
+            "Mais filas tornam as casas das pontas mais raras e mais altas. O risco decide a distância entre o meio e as pontas:",
+            "- Baixo: meio ×0,7, pontas de ×5,3 (8 filas) a ×16 (16 filas) - prémios pequenos e frequentes",
+            "- Médio: meio ×0,4–0,5, pontas de ×13 a ×110",
+            "- Alto: meio ×0,2, pontas de ×32 a ×1.000 - quase sempre menos do que a aposta, muito raramente um acerto enorme",
+            "Exemplo - as 17 casas com 16 filas e risco Médio: 110 · 38 · 14 · 6,2 · 2,8 · 1,4 · 0,8 · 0,5 · 0,4 · 0,5 · 0,8 · 1,4 · 2,8 · 6,2 · 14 · 38 · 110",
+            "Com 16 filas, cerca de 55 % das bolas devolvem menos do que a aposta com risco Baixo, 79 % com Médio e até 92 % com Alto."
+          ]
+        },
+        {
+          "h": "Como cai a bola",
+          "body": [
+            "O tabuleiro é uma máquina de Galton: em cada pino a bola vai para a esquerda ou para a direita com exatamente 50 % - como ao atirar uma moeda ao ar. A casa é simplesmente o número de ressaltos para a direita: com 12 filas, de 0 (tudo à esquerda) a 12 (tudo à direita).",
+            "Uma bola só chega à ponta se ressaltar para o mesmo lado em todos os pinos. Para o meio, pelo contrário, levam muitíssimos caminhos. Por isso as bolas amontoam-se no meio numa curva em sino (distribuição binomial):",
+            "- 8 filas: casa do meio 27,34 %, cada casa da ponta 1 em 256",
+            "- 12 filas: casa do meio 22,56 %, cada casa da ponta 1 em 4.096",
+            "- 16 filas: casa do meio 19,64 %, cada casa da ponta 1 em 65.536",
+            "Passa o rato sobre uma casa: mostra o seu multiplicador, a sua probabilidade (mesmo as minúsculas, como 0,0015 %) e o que paga com a tua aposta.",
+            "As 27 tabelas (9 números de filas × 3 riscos) são simétricas, nunca descem em direção às pontas e, calculadas com exatidão, devolvem a longo prazo entre 96,9 % e 97,1 % do apostado. A vantagem da casa ronda, portanto, os 3 %, seja qual for o ajuste. Filas e risco só mudam o quanto a sorte oscila."
+          ]
+        },
+        {
+          "h": "Muitas bolas de uma vez",
+          "body": [
+            "Não tens de esperar que uma bola caia: até 50 bolas podem saltitar ao mesmo tempo pelo tabuleiro - o contador «Em jogo» vai contando. Mantém [Espaço] premido e, após um breve momento, caem em rajada - tão seguidas que ficam cerca de 30 bolas em jogo ao mesmo tempo.",
+            "O caminho de cada bola é sorteado no momento em que a largas. Por isso a aposta e o prémio são registados e guardados juntos de imediato - mas só vês o prémio quando a bola chega ao fundo. Só então podes voltar a apostar esse ganho.",
+            "Se saíres do jogo enquanto ainda caem bolas, nada se perde: as fichas já estão registadas e as conquistas dessas bolas são atribuídas ao sair.",
+            "O turbo reduz para metade o tempo de queda das bolas e o intervalo da rajada - liga-se e desliga-se com [T]."
+          ]
+        },
+        {
+          "h": "Modo automático",
+          "body": [
+            "[A] abre o modo automático. Aí ajustas (a janela calcula também a aposta total da série):",
+            "- Bolas: 10, 25, 50, 100, 250, 500 ou 1000",
+            "- Parar com lucro de / Parar com perda de: deslig., 100, 500, 1000, 5000, 10000 ou 50000 fichas",
+            "- Turbo ligado ou desligado",
+            "INICIAR AUTO larga as bolas umas atrás das outras com a tua aposta, filas e risco atuais; esses três ficam bloqueados entretanto. O modo automático termina quando todas as bolas tiverem sido largadas, o ganho ou a perda desde o início atingir um limite, as fichas já não chegarem para a bola seguinte, mesmo depois de caírem as que estão no ar, ou carregares em PARAR, [Espaço] ou [Esc]. As bolas que já estão a caminho chegam na mesma.",
+            "As definições do modo automático ficam guardadas no settings.json (secção lamaplinko)."
+          ]
+        },
+        {
+          "h": "Verificação de equidade",
+          "body": [
+            "No Lama Plinko podes verificar tu próprio que nenhuma bola é desviada depois («provably fair»). Para isso há três valores:",
+            "- Semente do servidor: um valor aleatório secreto de 32 caracteres que o jogo fixa antes de largar. Cada bola tem a sua.",
+            "- Código de controlo: a impressão digital SHA-256 da semente do servidor. Vê-se antes de largar. Não revela a semente, mas qualquer outra semente teria um código completamente diferente - por isso o jogo já não a pode trocar.",
+            "- Semente do cliente: a tua própria parte (8 caracteres). «Nova semente do cliente» gera uma nova assim que não houver nenhuma bola no ar - assim o jogo não decide o acaso sozinho.",
+            "A isto junta-se o número (nonce), que sobe 1 a cada bola. Semente do servidor, semente do cliente e número formam juntos o acaso da bola: uma moeda por fila, e cada «direita» empurra-a uma casa para a direita.",
+            "Depois da chegada, a semente do servidor é revelada - nessa altura o código de controlo da bola seguinte já está fixado.",
+            "[F] abre a janela de equidade com as últimas 12 bolas: número, código de controlo, semente do servidor e semente do cliente, além de filas, risco, casa e multiplicador. «Verificar» volta a calcular o SHA-256 da semente, compara-o com o código de controlo mostrado antes e recalcula o caminho da bola: «Confere» quer dizer que tudo bate certo, «Não confere» denunciaria uma diferença. Uma pequena pré-visualização mostra o caminho recalculado.",
+            "Para curiosos: o gerador aleatório é o mulberry32, iniciado com o valor FNV-1a do texto «lamaplinko|semente do servidor|semente do cliente|número». Cada fila tira um número entre 0 e 1; abaixo de 0,5 significa direita. Assim podes recalcular cada bola também com as tuas próprias ferramentas."
+          ]
+        },
+        {
+          "h": "Estatísticas",
+          "body": [
+            "[S] abre as estatísticas do teu perfil para o Lama Plinko:",
+            "- Mosaicos: Rondas, Ganhas, Perdidas, Apostado, Recebido, Saldo, Maior prémio, Melhor fator, O teu retorno. Cada bola conta à parte; ganha quer dizer que voltou mais do que a aposta, perdida, menos.",
+            "- uma curva do saldo das últimas 100 bolas",
+            "- a distribuição de acertos: os teus acertos por casa em barras e a distribuição esperada (binomial) a dourado - separadamente para cada número de filas, muda-se com [Esquerda] / [Direita]",
+            "No início o teu retorno dá grandes saltos (um acerto na ponta com risco Alto atira-o lá para cima); com muitas bolas aproxima-se dos cerca de 97 %. Da mesma forma, após umas centenas de bolas as barras aproximam-se da curva dourada."
+          ]
+        },
+        {
+          "h": "Controlos",
+          "body": [
+            "- [Espaço], [Enter] ou clique em LARGAR ou no tabuleiro: largar uma bola - mantém premido para largar em rajada",
+            "- [Cima] / [Baixo], [+] / [-] ou roda do rato: mudar a aposta por bola",
+            "- [Esquerda] / [Direita]: filas (8 a 16), [1] a [3]: risco",
+            "- [A]: modo automático, [S]: estatísticas, [F]: equidade, [T]: turbo",
+            "- [Esc]: fechar uma janela aberta ou parar o modo automático",
+            "- Rato sobre uma casa: multiplicador, probabilidade e prémio com a tua aposta",
+            "Nas janelas: na do modo automático, [Cima] / [Baixo] escolhe uma linha, [Esquerda] / [Direita] muda-a e [Enter] ou [Espaço] inicia ou para. Nas estatísticas, [Esquerda] / [Direita] muda o número de filas da distribuição. Na janela de equidade, as setas ou a roda do rato escolhem uma bola, [Enter] verifica-a e [C] gera uma nova semente do cliente. [Esc] ou a mesma tecla de letra volta a fechar a janela.",
+            "Tudo funciona também com o rato; um clique fora de uma janela aberta fecha-a. Filas, risco, aposta, turbo e as definições do modo automático ficam guardados no settings.json (secção lamaplinko)."
+          ]
+        },
+        {
+          "h": "Fichas Lama",
+          "body": [
+            "O Lama Plinko joga com a conta comum do Banco Lama - junto com o Blackjack, o Póquer, o Casino, o Lama Crossing e o Lama Mines (início 1000, guardado no mem.json).",
+            "O recorde é o máximo de 1000 + o teu saldo no Lama Plinko; ganhos nos outros jogos não contam aqui.",
+            "Se a tua conta não cobrir a aposta escolhida, escolhe uma menor. Com 0 fichas estás falido: [Enter] ou um clique pede um empréstimo ao banco e repõe a conta em 1000. Os empréstimos não contam para o saldo.",
+            "O histórico, as estatísticas e os dados de equidade pertencem ao teu perfil e também ficam guardados no mem.json."
+          ]
+        },
+        {
+          "h": "Conquistas",
+          "body": [
+            "- Frequentador de Lama Plinko: 25 partidas",
+            "- Marco: recorde 3000",
+            "- Mestre de Lama Plinko: recorde 10000",
+            "- Mesmo na borda (raro): Acerta na casa mais exterior em Lama Plinko (12 filas ou mais)",
+            "- Chuva de novelos (épico): Tem 25 bolas ao mesmo tempo no tabuleiro em Lama Plinko",
+            "- Lenda do Plinko (lendário): Acerta na casa mais exterior em Lama Plinko com 16 filas e risco alto"
+          ]
+        },
+        {
+          "h": "Dicas",
+          "body": [
+            "- Cada bola é independente: depois de dez acertos no meio, a ponta não «está para sair».",
+            "- Nenhum ajuste bate o retorno. Com risco Baixo a tua conta oscila pouco; com Alto perdes quase sempre - com uma pequena hipótese de um acerto enorme.",
+            "- Apostas pequenas não ficam a perder: nenhuma fração de ficha se perde. Com 1 ficha, ×0,7 não paga nada de início, mas as 0,7 fichas ficam guardadas e são pagas com uma das bolas seguintes assim que se completa uma ficha inteira. Por isso o retorno de cerca de 97 % vale para qualquer aposta.",
+            "- Mesmo na borda: o mais rápido é com 12 filas - aí cerca de 1 em cada 2.048 bolas cai na ponta (esquerda ou direita). Com 1 ficha por bola isso custa em média só cerca de 3 fichas por cada 100 bolas.",
+            "- Chuva de novelos: basta manter [Espaço] premido - a rajada põe cerca de 30 bolas ao mesmo tempo no tabuleiro com qualquer número de filas, e em cerca de 2 segundos a conquista é tua. O modo automático larga demasiado devagar para isso.",
+            "- Lenda do Plinko: com 16 filas e risco Alto, só 1 em cada 32.768 bolas cai na ponta - com séries automáticas de 1000 bolas são precisas em média cerca de 33 séries. Em compensação, essa casa paga ×1.000.",
+            "- Define um orçamento antes e usa o limite de perdas do modo automático."
           ]
         }
       ]

@@ -32,8 +32,11 @@ import tempfile
 HIER = os.path.dirname(os.path.abspath(__file__))
 RUST = os.path.dirname(HIER)
 WURZEL = os.path.dirname(RUST)
-EXE = os.path.join(os.path.dirname(WURZEL), os.path.basename(WURZEL),
-                   "rust.output", "release", "pygamez.exe")
+# Bauordner: rust.output/ - oder ein eigener per CARGO_TARGET_DIR (parallele
+# Bauten mehrerer Arbeitsstraenge; dieselbe Variable wie fuer cargo).
+ZIEL = (os.path.abspath(os.environ["CARGO_TARGET_DIR"]) if os.environ.get("CARGO_TARGET_DIR")
+        else os.path.join(os.path.dirname(WURZEL), os.path.basename(WURZEL), "rust.output"))
+EXE = os.path.join(ZIEL, "release", "pygamez.exe")
 
 sys.path.insert(0, WURZEL)
 os.environ["SDL_VIDEODRIVER"] = "dummy"
@@ -77,7 +80,10 @@ def ereignis(game, k, InputEvent):
     nur loslassen, ``@x:y`` = Linksklick, ``@x:y:3`` = Rechtsklick,
     ``~x:y`` = Maus bewegen (Spielkoordinaten), ``^dx:dy`` = relative
     Mausbewegung (MOUSEREL, Pointer-Capture), ``<x:y`` / ``>x:y`` = Maustaste
-    nur druecken / nur loslassen (Ziehen mit ``~x:y`` dazwischen).
+    nur druecken / nur loslassen (Ziehen mit ``~x:y`` dazwischen),
+    ``%x:y:d`` = Mausrad bei (x, y) um d Rasten (+ = hoch, ohne d: 1),
+    ``*Taste`` = Tastenwiederholung des Systems (KEYDOWN mit ``repeat=True``,
+    ohne Loslassen - wie eine gehaltene Taste nach ``+Taste``).
     """
     def zahlen(rest):
         out = []
@@ -88,9 +94,14 @@ def ereignis(game, k, InputEvent):
                 pass
         return out
 
-    if len(k) > 1 and k[0] in "@~^<>":
+    if len(k) > 1 and k[0] in "@~^<>%":
         z = zahlen(k[1:])
         if len(z) < 2 or game.paused:
+            return
+        if k[0] == "%":
+            # main._on_wheel: WHEEL mit pos und delta (Rasten)
+            game.handle_event(InputEvent(InputEvent.WHEEL, pos=(z[0], z[1]),
+                                         delta=z[2] if len(z) > 2 else 1))
             return
         if k[0] in "<>":
             art = InputEvent.MOUSEDOWN if k[0] == "<" else InputEvent.MOUSEUP
@@ -108,13 +119,17 @@ def ereignis(game, k, InputEvent):
             game.handle_event(InputEvent(InputEvent.MOUSEUP, pos=(z[0], z[1]), button=knopf))
         return
     runter = hoch = True
+    wdh = False
     if len(k) > 1 and k[0] == "+":
         k, hoch = k[1:], False
     elif len(k) > 1 and k[0] == "-":
         k, runter = k[1:], False
+    elif len(k) > 1 and k[0] == "*":
+        k, hoch, wdh = k[1:], False, True
     ch = k if len(k) == 1 else ""
     if k == "Escape":
-        if not runter:
+        # main._on_key: gehaltenes Escape wiederholt nichts
+        if not runter or wdh:
             return
         if getattr(game, "is_menu", False) or getattr(game, "wants_escape", False):
             game.handle_event(InputEvent(InputEvent.KEYDOWN, key="Escape"))
@@ -122,7 +137,7 @@ def ereignis(game, k, InputEvent):
             game.paused = not game.paused
         return
     if runter and not game.paused:
-        game.handle_event(InputEvent(InputEvent.KEYDOWN, key=k, char=ch))
+        game.handle_event(InputEvent(InputEvent.KEYDOWN, key=k, char=ch, repeat=wdh))
     if hoch and not game.paused:
         game.handle_event(InputEvent(InputEvent.KEYUP, key=k))
 

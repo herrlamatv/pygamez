@@ -83,7 +83,8 @@ fn leg(s: &mut Surface, a: (f64, f64), b: (f64, f64), w: i32, col: Rgb) {
 
 type Leg = ((f64, f64), (f64, f64));
 
-fn draw_llama(s: &mut Surface, ni: i32, pose: &str, scarf: Color) {
+/// `_draw_llama(s, n, pose, scarf)` - auch von Lama Plinko benutzt (gedrehtes Lama).
+pub fn draw_llama(s: &mut Surface, ni: i32, pose: &str, scarf: Color) {
     let n = ni as f64;
     let lw = 2.max((n * 0.055) as i32);
     let hip = (n * 0.34, n * 0.62);

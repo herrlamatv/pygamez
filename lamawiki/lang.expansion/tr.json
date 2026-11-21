@@ -147,7 +147,7 @@
           "body": [
             "İlerlemesi olan her oyunun mem.json içinde kendi bölümü vardır, örneğin:",
             "- sudoku: yıldızları ve en iyi süreleriyle çözülmüş seviyeler, yarım kalan bulmacalar ve serisiyle birlikte Günün Sudokusu.",
-            "- casino: Lama Bankası hesabı - Blackjack, Poker, Casino ve Lama Crossing için Lama çipleri, her oyunun bakiyesi ve Lama Crossing'de yarım kalan geçiş.",
+            "- casino: Lama Bankası hesabı - Blackjack, Poker, Casino, Lama Crossing, Lama Mines ve Lama Plinko için Lama çipleri, her oyunun bakiyesi, Lama Crossing'de yarım kalan geçiş, Lama Mines'ta yarım kalan tur ile oto mod işaretleri ve Lama Mines ile Lama Plinko'nun geçmişi, adillik verileri, istatistikleri ve devreden küsuratı.",
             "- crossy: toplanan jetonlar, satın alınan karakterler ve Crossy Road'un günlük en iyisi.",
             "- tetris: Sprint'te en iyi süre, Ultra'da en iyi skor ve yapay zekâya karşı Versus bilançosu.",
             "- g2048: kaydedilmiş 2048 oyunları ve tahta boyutu ile moda göre en iyi skorlar.",
@@ -349,7 +349,7 @@
         {
           "h": "Genel bakış",
           "body": [
-            "47 oyunun tamamında 256 başarım - ilk oyundan Tetris'teki Perfect Clear'a kadar.",
+            "49 oyunun tamamında 268 başarım - ilk oyundan Tetris'teki Perfect Clear'a kadar.",
             "Her başarımın bir nadirliği, dolayısıyla puan değeri vardır; toplam seviyeni verir.",
             "Kenar çubuğundaki Başarımlar ve istatistikler düğmesi, Başarımlar sekmesi. Filtre açık ya da kapalı olanları gizler."
           ]
@@ -360,7 +360,7 @@
             "- Genel: koleksiyon geneli hedefler - oyunlar, denenen oyunlar, süre, rekorlar, galibiyetler, oyun günleri, günlük seriler, seviye ve düellolar. Ayrıca gece kuşu, maraton, hafta sonu oyuncusu gibi ekstralar.",
             "- Puan kilometre taşları: her oyun için adil bir hedef puan.",
             "- Usta seviyeleri: çok daha yüksek ikinci eşik - yalnızca puanı sınırsız oyunlarda.",
-            "- Müdavim: bir oyunda 25 parti. 47 oyunun hepsinde var.",
+            "- Müdavim: bir oyunda 25 parti. 49 oyunun hepsinde var.",
             "- Özel anlar: şah mat, Yahtzee, 4096 karosu, hole-in-one, air hockey'de hat-trick, tek güç hapıyla dört hayalet ve dahası."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Lama Çipleri",
           "body": [
-            "Blackjack, Poker ve Casino, Lama Bankası'nda tek bir hesabı paylaşır: 1000 Lama çipiyle başlarsın ve bakiyen kalıcı olarak kaydedilir.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines ve Lama Plinko, Lama Bankası'nda tek bir hesabı paylaşır: 1000 Lama çipiyle başlarsın ve bakiyen kalıcı olarak kaydedilir.",
             "Bahis kartlar dağıtılır dağıtılmaz düşülür - süren bir eli bırakan bahsini kaybeder.",
             "Rekor, blackjack bakiyenin ulaştığı en yüksek değerdir: 1000 artı blackjackte kazandığın ve kaybettiğin her şey. Rulette, slotta veya pokerde kazandıkların burada sayılmaz.",
             "10 çipin altında iflas edersin: [Enter] bankadan kredi alır ve hesabını yeniden 1000'e tamamlar. Krediler bakiyeye sayılmaz."
@@ -1901,7 +1901,7 @@
         {
           "h": "Lama Çipleri",
           "body": [
-            "Lama Bankası'nın Lama çipleriyle oynanır - Blackjack ve Casino ile ortak bir hesap (başlangıç 1000, kalıcı olarak kaydedilir).",
+            "Lama Bankası'nın Lama çipleriyle oynanır - Blackjack, Casino, Lama Crossing, Lama Mines ve Lama Plinko ile ortak bir hesap (başlangıç 1000, kalıcı olarak kaydedilir).",
             "Bir elin başında hesabın masada yığın olarak durur; pota giren miktar hemen düşülür. Elin ortasında masadan kalkarsan pottaki payın gider - geri kalanı hesabına döner.",
             "Rekor, poker bakiyenin ulaştığı en yüksek değerdir: 1000 artı pokerde kazandığın ve kaybettiğin her şey. Diğer oyunlardaki kazançlar burada sayılmaz.",
             "İflas (20'lik büyük kördan az, Video Poker'de 10'dan az) = tek tıkla banka kredisi, hesabın yine 1000 olur."
@@ -2976,7 +2976,7 @@
         {
           "h": "Lama Bankası",
           "body": [
-            "Casino, Blackjack ve Poker aynı hesapla oynar: Lama çipleri (başlangıç 1000). Bahisler hemen düşülür, kazançlar eklenir - her şey kalıcı olarak kaydedilir.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines ve Lama Plinko aynı hesapla oynar: Lama çipleri (başlangıç 1000). Bahisler hemen düşülür, kazançlar eklenir - her şey kalıcı olarak kaydedilir.",
             "Her oyun kendi bakiyesini tutar. Casino rekoru, 1000 + Casino bakiyesinin ulaştığı en yüksek değerdir; Blackjack veya Poker kazançları burada sayılmaz.",
             "İflas edince (en düşük bahisten az) bankadan kredi alırsın: hesabın yeniden 1000 olur. Krediler hiçbir bakiyeye sayılmaz; sayıları sağ üstte görünür."
           ]
@@ -3109,7 +3109,7 @@
         {
           "h": "Lama Çipleri",
           "body": [
-            "Lama Crossing, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker ve Casino ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
+            "Lama Crossing, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker, Casino, Lama Mines ve Lama Plinko ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
             "Rekor, 1000 + Lama Crossing bakiyenin ulaştığı en yüksek değerdir; Blackjack, Poker veya Casino kazançları burada sayılmaz.",
             "10 çipin altında iflas edersin: [Enter] ya da bir tık bankadan kredi alır ve hesabını yeniden 1000'e tamamlar. Krediler bakiyeye sayılmaz.",
             "Geçişin ortasında bırakmak güvenlidir: bahis, zorluk ve şerit kaydedilir, bir sonraki başlangıçta tam oradan devam edersin."
@@ -3134,6 +3134,317 @@
             "- İyi zamanlamayla karşıya Kolay'da yaklaşık her 7 turda bir, Orta'da 38 turda bir, Zor'da 614 turda bir ve Aşırı'da yalnızca 32.768 turda bir varılır.",
             "- Çelik sinirler (×10) için Aşırı'da 4 şerit (×15,52), Zor'da 7 (×11,77) ve Orta'da 13 şerit (×10,37) yeter; Kolay'da hiç olmaz (en fazla ×6,57). İp cambazı (Aşırı'da ×100) için 7 şerit (×124,16) gerekir - bu yaklaşık 128 turda bir olur.",
             "- Hangi çarpanda çekeceğine önceden karar ver ve buna sadık kal. Sabit geri ödeme sayesinde hiçbir strateji diğerinden iyi değildir, yalnızca daha az ya da daha çok risklidir."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "lama",
+        "mines",
+        "mayın",
+        "mücevher",
+        "kareler",
+        "açmak",
+        "çek",
+        "çarpan",
+        "çip",
+        "lama bankası",
+        "bahis",
+        "risk",
+        "otomatik",
+        "adillik",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "istatistik",
+        "kontrol kodu"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Her kapalı karenin altında bir mücevher ya da bir mayın vardır. Bulunan her mücevher çarpanı yükseltir - bir mayın bahse mal olur.",
+            "Bahsini seç (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 veya 10000 Lama çipi) ve OYNA düğmesine bas: bahis düşülür ve alan çekilir. Bu andan itibaren mayınların yeri bellidir - adillik kontrolüyle doğrulanabilir.",
+            "Sonra kareleri tek tek açarsın: tıklayarak, ok tuşları ve [Boşluk] ile ya da [R] tuşu veya Rastgele kare düğmesiyle rastgele bir kapalı kareyi. İlk mücevherden itibaren istediğin an ÇEK düğmesine basabilirsin - o zaman bahsinin güncel çarpanla çarpımı hesabına geçer.",
+            "Tüm mücevherler bulununca kazanç otomatik olarak çekilir: MAYIN DEĞİL, MADEN! Bir mayına basarsan patlar, ekran sarsılır ve bahis gider. Her iki durumda da - çektikten sonra da - kalan kareler karartılmış olarak açılır, böylece mayınların nerede olduğunu görürsün. Alan, yeniden oynayana ya da bir ayarı değiştirene kadar böyle kalır.",
+            "Sağ üstte son 12 turun geçmişi durur - en yenisi sağda, mayın kırmızı ×0 olarak."
+          ]
+        },
+        {
+          "h": "Alan boyutları ve mayınlar",
+          "body": [
+            "Dört boyut - her turdan önce düğmelerle ya da [1] ile [4] tuşlarıyla seçilir: 4×4 (16 kare), 5×5 (25 kare, varsayılan), 6×6 (36 kare) ve 7×7 (49 kare).",
+            "Mayın sayısını [Sol] / [Sağ], ok düğmeleri ya da altı hızlı seçim düğmesiyle ayarlarsın: 1'den kare sayısının bir eksiğine kadar - en az bir mücevher her zaman kalır. Varsayılan 3 mayındır. Hızlı seçim boyuta göre şunları sunar:",
+            "- 4×4: 1, 2, 3, 5, 8 veya 12 mayın",
+            "- 5×5: 1, 3, 5, 10, 15 veya 24 mayın",
+            "- 6×6: 1, 3, 6, 12, 20 veya 35 mayın",
+            "- 7×7: 1, 3, 7, 14, 24 veya 48 mayın",
+            "Daha çok mayın şu demektir: her mücevher daha değerlidir, ama sıradaki kare daha seyrek güvenlidir. 5×5'te 24 mayınla ilk mücevher bile ×24,25 getirir - %4 şansla.",
+            "Boyut, mayınlar ve bahis yalnızca turlar arasında değiştirilebilir."
+          ]
+        },
+        {
+          "h": "Çarpan ve geri ödeme",
+          "body": [
+            "Çarpan yalnızca kaç mücevher bulduğuna bağlıdır - hangi kareler olduğuna değil. Oraya kadar gelme şansını tam olarak dengeler, bankanın %3'ü düşülerek:",
+            "- çarpan = 0,97 bölü art arda k mücevher bulma şansı",
+            "- bu şans, her mücevher için bir çarpanı olan bir çarpımdır: mücevherler/kareler × (mücevherler - 1)/(kareler - 1) × …",
+            "- formül olarak: 0,97 × C(N, M) / C(N - k, M), yüzde birlere aşağı yuvarlanır. N kare sayısı, M mayın sayısı, k bulunan mücevher sayısı ve C(n, m) binom katsayısıdır (n'in m'li kombinasyonu).",
+            "Örnek, 3 mayınlı 5×5: ilk kare 25'te 22 ihtimalle (%88) güvenlidir, bu yüzden 0,97 / 0,88 = ×1,10 öder. İki mücevherden sonra şans 22/25 × 21/24 = %77'dir - bu da ×1,25 eder.",
+            "Devamında 5 mücevherden sonra ×1,44, ×1,67 ve ×1,95, 10'dan sonra ×4,90, 13'ten sonra ×10,14, 15'ten sonra ×18,59, 19'dan sonra ×111,55 ve 21'den sonra ×557,75 gelir. 22 mücevherin hepsini bulan ×2.231 alır - bu 2300 turda bir olur.",
+            "Alt sınır: her mücevher çarpanı en az 0,01 artırır - yani ilk mücevher bile en az ×1,01 getirir. Yalnızca formüle göre örneğin 1 mayınlı 6×6'da sadece ×0,99 olurdu. Yalnızca üç basamak yükseltilir: 1 mayınlı 6×6'da ilk mücevher ve 1 mayınlı 7×7'de ilk iki mücevher.",
+            "En yüksek kazanç ×100.000'dir. Çarpan bu sınıra ulaşırsa kazanç hemen otomatik olarak çekilir: MAKSİMUM KAZANÇ! Alanın tamamı temizlenirken bu 6 mayınlı 5×5, 5 mayınlı 6×6 ve 4 mayınlı 7×7'den itibaren olur; 4×4'te asla. Formül daha fazlasını verse bile fazlası yoktur.",
+            "Şans ve çarpan birbirini dengelediği için her strateji uzun vadede bahsin yaklaşık %97'sini geri verir - hangi boyutta, kaç mayınla ve kaç mücevherden sonra çektiğin fark etmez. Aşağı yuvarlama yüzünden basamağa göre %96 ile %97 arasıdır. Yükseltilen üç basamak biraz üstündedir (en fazla %98,94, 1 mayınlı 7×7'de ilk mücevherde), sınırlanan basamak ise belirgin şekilde altında. Kasa avantajı yani yaklaşık %3'tür.",
+            "Küsuratlar kaybolmaz: tam çipler ödenir, yüzde birlik kalan saklanır ve bir sonraki ödemeye eklenir. 10 çip × 1,01 önce 10 çip getirir, kalan 0,10 sonra gelir - böylece küçük bahisler de tam geri ödemeyi alır."
+          ]
+        },
+        {
+          "h": "Göstergeler",
+          "body": [
+            "Turdan önce üst satır ayarın en yüksek çarpanını (tüm mücevherler bulunmuş) ve mücevher ile mayın sayısını gösterir. Tur sırasında alanın yanında bir sonraki kararın için gereken her şey durur:",
+            "- güncel çarpan ve şimdi çekersen kazancın",
+            "- bir sonraki mücevherden sonraki çarpan ve sıradaki karedeki kazanç",
+            "- sıradaki karenin güvenli olma şansı: kalan mücevherler bölü kalan kapalı kareler - 3 mayınlı 5×5'te ilk tıklamada %88, sonra her mücevherle biraz daha az",
+            "- şimdiye kadar bulunan mücevherler ve sonraki 5 basamağı gösteren bir çubuk: kaç mücevherin hangi çarpanı getirdiği",
+            "Madenci kasklı ve kafa lambalı maskot lama seninle birlikte heyecanlanır: her mücevherde sevinir ve yanındaki maden arabası dolar, bir mayında irkilir ve kurum içinde kalır. ×3'ten itibaren para yağar, ×10'dan itibaren ve alan temizlenince ayrıca konfeti saçılır."
+          ]
+        },
+        {
+          "h": "Oto mod",
+          "body": [
+            "[A] ya da Auto düğmesi turlar arasında oto modu açar. Pencere yan panelin üstüne açılır ve ızgarayı serbest bırakır: tıklayarak ya da ok tuşları ve [Boşluk] ile her turda açılacak kareleri işaretlersin - en fazla mücevher sayısı kadar. Oyun seçimini her alan boyutu için hatırlar; [Del], [Backspace] ya da Temizle tüm işaretleri kaldırır.",
+            "Pencere kaç karenin işaretli olduğunu ve hepsi güvenliyse turun ne getireceğini gösterir: çarpan ve şans. Ayrıca tur sayısını (5, 10, 25, 50 veya 100) ve istersen iki sınırı seçersin: Kâr hedefi ve Zarar limiti (kapalı, 100, 500, 1000, 5000, 10000 veya 50000 çip, başlangıçtan itibaren sayılır).",
+            "OTO BAŞLAT ya da [Enter]: her tur bahsi düşer ve işaretli kareleri hızla birbiri ardına açar. Hepsi güvenliyse kazanç çekilir - işaretlediğin kare sayısı kadar mücevherin çarpanıyla. İşaretli bir karenin altında mayın varsa tur kaybedilir.",
+            "Oto mod tüm turlar oynanana, bir sınır devreye girene, çiplerin bir sonraki bahse yetmeyene ya da DUR, [Boşluk], [Enter], [A] veya [Esc] tuşuna basana kadar sürer. Turun ortasında durdurursan tur açık kalır - elle açmaya devam eder ya da çekersin. Oto mod sürerken bahis, alan boyutu ve mayınlar kilitlidir.",
+            "[T] turboyu açıp kapatır - elle oynarken de: kare açma, patlamalar ve oto turlar iki buçuk kat hızlı geçer."
+          ]
+        },
+        {
+          "h": "Adillik kontrolü",
+          "body": [
+            "Lama Mines kanıtlanabilir şekilde adildir: mayın alanı sen ilk kareye tıklamadan önce bellidir - ve turdan sonra hiçbir şeyin yerinin değişmediğini hesaplayabilirsin. Bunun için dört değer vardır:",
+            "- Sunucu seed'i: oyunun turdan önce belirlediği gizli bir rastgele değer (32 karakter).",
+            "- Kontrol kodu: sunucu seed'inin SHA-256 parmak izi (hash). Turdan önce gösterilir (sonraki turun kontrol kodu). Ondan seed geri hesaplanamaz - ama seed'deki tek bir farklı karakter bile tamamen farklı bir kod verirdi.",
+            "- İstemci seed'i: rastgeleliğe senin katkın (8 karakter). Yeni istemci seed'i ile yenisini çekersin - yalnızca tur dışında. Böylece sonucu oyun tek başına belirlemez.",
+            "- No.: tur numarası. Her turda bir artar, böylece hiçbir tur diğerine benzemez.",
+            "Oyun adı, sunucu seed'i, istemci seed'i ve tur numarasından turun rastgeleliği oluşur (mulberry32). Bu, tüm karelerin listesini karıştırır (satır satır, sol üstten başlayarak sayılır) ve karıştırılmış listenin ilk yerleri - mayın sayısı kadar - mayın olur.",
+            "Turdan sonra sunucu seed'i açıklanır; sonraki turun kontrol kodu o sırada zaten bellidir.",
+            "[F] Adillik penceresini açar: üstte sonraki turun kontrol kodu (tur sırasında bu turun kontrol kodu da), istemci seed'in ve tur numarası; altında son 12 tur no., kontrol kodu ve sonuçla, en yenisi üstte (fare tekerleği kaydırır). Bir satıra tıklamak alan boyutunu, mayınları, kontrol kodunu, sunucu seed'ini ve istemci seed'ini gösterir.",
+            "Doğrula, seed'in SHA-256'sını yeniden hesaplar, önceden gösterilen kontrol koduyla karşılaştırır, mayın alanını yeniden kurar ve sonucu da denetler - açılan kareler doğru muydu, çarpan tutuyor mu? Bir onay ya da çarpı işareti ve alanın küçük bir önizlemesi gösterir: Eşleşiyor ya da Eşleşmiyor.",
+            "Kontrol kodunu kendin de doğrulayabilirsin: sunucu seed'inin SHA-256'sını herhangi bir araçla hesapla ve kontrol koduyla karşılaştır."
+          ]
+        },
+        {
+          "h": "İstatistik",
+          "body": [
+            "[S] profilinin istatistiklerini açar: turlar, kazanılan ve kaybedilen, ödeme oranın (bahislerinin yüzde kaçının geri döndüğü), yatırılan ve ödenen, bakiye, en büyük kazanç ve en iyi çarpan - ayrıca bulunan mücevherler, patlayan mayınlar ve temizlenen alanlar.",
+            "Bir eğri son 100 turun bakiyesini gösterir. Yatırılandan fazlası ödendiyse tur kazanılmış sayılır.",
+            "Uzun vadede ödeme oranın %97 civarına oturur - birkaç turda yukarı ya da aşağı çok oynayabilir."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Turdan önce: [Boşluk] veya [Enter] = OYNA, [1] ile [4] = alan boyutu, [Sol] / [Sağ] = mayın sayısı",
+            "- [Yukarı] / [Aşağı], [+] / [-] veya fare tekerleği: bahsi değiştir (yalnızca turlar arasında)",
+            "- Tur sırasında: bir kareye tıklamak onu açar. Ok tuşları bir imleci taşır; ilk [Boşluk] onu yalnızca gösterir, sonraki her basış altındaki kareyi açar.",
+            "- [R] veya Rastgele kare düğmesi: rastgele bir kapalı kare aç; [Enter], [C] veya ÇEK: çek (ilk mücevherden itibaren)",
+            "- Sonuçtan sonra: [Boşluk] veya OYNA hemen yeni turu başlatır, diğer tuşlar ayarlara döner.",
+            "- [A]: oto mod, [S]: istatistik, [F]: adillik, [T]: turbo - ya da üstteki dört düğme. [Esc] veya pencerenin yanına tıklamak onu kapatır, [Esc] oto modu da durdurur.",
+            "Tuşlar sabittir ve tuş atamasına bağlı değildir - WASD gibi oyuncu tuşları burada geçerli değildir. Alan boyutu, mayın sayısı, son bahis, turbo ve otomatik ayarlar settings.json içinde saklanır (lamamines bölümü)."
+          ]
+        },
+        {
+          "h": "Lama Çipleri",
+          "body": [
+            "Lama Mines, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker, Casino, Lama Crossing ve Lama Plinko ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
+            "Rekor, 1000 + Lama Mines bakiyenin ulaştığı en yüksek değerdir; Lama Bankası'nın diğer oyunlarındaki kazançlar burada sayılmaz.",
+            "10 çipin altında iflas edersin: [Boşluk], [Enter] ya da bir tık bankadan kredi alır ve hesabını yeniden 1000'e tamamlar. Krediler bakiyeye sayılmaz.",
+            "Turun ortasında bırakmak güvenlidir: bahis başlangıçta düşülür ve bulunan her mücevherden sonra alan boyutu, mayınlar, turun seed'leri ve açılmış kareler kaydedilir. Bir sonraki başlangıçta alan seed'den yeniden hesaplanır ve tam oradan devam edersin.",
+            "Geçmiş, adillik verileri, istatistikler, oto mod için işaretlenen kareler ve devreden küsurat profiline aittir."
+          ]
+        },
+        {
+          "h": "Başarımlar",
+          "body": [
+            "- Lama Mines müdavimi: 25 parti",
+            "- Kilometre taşı: rekor 3000",
+            "- Lama Mines ustası: rekor 10000",
+            "- Hazine odası (nadir): Lama Mines'ta bir tahtanın tamamını temizle – tüm mücevherler bulundu",
+            "- Derin kazı (destansı): Lama Mines'ta ×10 veya üzerinde çek",
+            "- Elmas lama (efsanevi): Lama Mines'ta ×1000 veya üzerinde çek"
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Her tur yeniden çekilir ve hiçbir kare diğerinden daha güvenli değildir - ne köşeler ne de orta. Önceki turlardaki desenler işe yaramaz.",
+            "- Hazine odası: 1 mayınlı 4×4'te alanı temizlemek 16 turda bir başarılır (×15,52) - tek bir mücevherin olduğu 15 mayınla da aynı. 3 mayınlı 5×5'te ise yalnızca 2300 turda bir.",
+            "- Derin kazı (×10): 3 mayınlı 5×5'te 13 mücevher yeter (×10,14), bu yaklaşık her 10-11 turda bir olur. 24 mayınla ilk mücevher bile ×24,25 getirir - 25 turda bir.",
+            "- Elmas lama (×1000): en iyi yollar yaklaşık 1100 turda bir başarılır, örneğin 10 mayınlı 5×5'te 10 mücevherden sonra (×1.055,84) ya da 12 mayınlı 7×7'de 19 mücevherden sonra (×1.034,71). 3 mayınlı 5×5'te ancak alanın tamamını temizleyerek olur (×2.231).",
+            "- Oto modda yalnızca kaç kare işaretlediğin önemlidir, hangileri değil: 3 mayınlı 5×5'te işaretli 5 karenin hepsi turların %49,6'sında güvenlidir ve o zaman ×1,95 getirir.",
+            "- Kaç mücevherden sonra çekeceğine önceden karar ver ve buna sadık kal. Sabit geri ödeme sayesinde hiçbir strateji diğerinden iyi değildir, yalnızca daha az ya da daha çok risklidir. En yüksek kazanca oynamak değmez: sınırlanan basamak, riskinin değerinden az öder."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "lama",
+        "plinko",
+        "top",
+        "yumak",
+        "galton tahtası",
+        "çiviler",
+        "cepler",
+        "çarpan",
+        "çip",
+        "lama bankası",
+        "bahis",
+        "sıralar",
+        "risk",
+        "çan eğrisi",
+        "oto",
+        "turbo",
+        "adillik",
+        "provably fair",
+        "kontrol kodu",
+        "seed",
+        "sha-256",
+        "istatistikler"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Altın renkli bir yün yumağı, çivilerden oluşan bir üçgenin içinden düşer. Her çivide sola ya da sağa seker ve aşağıdaki ceplerden birine düşer. Her cebin üzerinde bir çarpan yazar: bahis çarpı çarpan, senin ödemendir.",
+            "Top başına bahsini seç (1, 2, 5, 10, 20, 50, 100, 200, 500 veya 1000 Lama çipi) ve BIRAK düğmesine bas: bahis düşülür, tahtanın tepesindeki lama başını sallar ve topu bırakır.",
+            "Dıştaki cepler en çok öder, ortadakiler bahisten azını geri verir - ama topların çoğu oraya düşer. Bahis çarpı çarpanı tam çip olarak alırsın; bir çipin altında kalan kısım saklanır ve sonraki topa eklenir.",
+            "Vurulan cep sallanır, bir açılır kutu çarpanı gösterir; çarpan ne kadar yüksekse ses o kadar parlak çıkar. ×10 ve üstünde para yağar, ×100 ve üstünde buna bir afiş ile konfeti eklenir. Sağ üstte son 12 topun geçmişi durur."
+          ]
+        },
+        {
+          "h": "Sıralar ve risk",
+          "body": [
+            "İkisini de bırakmadan önce ayarlarsın; tahtada top varken ya da oto mod çalışırken kilitlidirler. Oyun ayrıca seçilen tablonun en yüksek çarpanını ve tam geri dönüş oranını gösterir.",
+            "- Sıralar: [Sol] / [Sağ] ile 8 ila 16 çivi sırası (varsayılan 12). n sırada n + 1 cep vardır.",
+            "- Risk: [1] ile [3] arası tuşlarla Düşük, Orta (varsayılan) ya da Yüksek.",
+            "Daha fazla sıra, kenar ceplerini daha nadir ve daha yüksek yapar. Risk, orta ile kenarın birbirinden ne kadar uzak olduğunu belirler:",
+            "- Düşük: orta ×0,7, kenar ×5,3 (8 sıra) ile ×16 (16 sıra) arası - küçük ama sıkça gelen kazançlar",
+            "- Orta: orta ×0,4–0,5, kenar ×13 ile ×110 arası",
+            "- Yüksek: orta ×0,2, kenar ×32 ile ×1.000 arası - neredeyse her zaman bahisten az, çok nadiren dev bir vuruş",
+            "Örnek - 16 sırada 17 cep, risk Orta: 110 · 38 · 14 · 6,2 · 2,8 · 1,4 · 0,8 · 0,5 · 0,4 · 0,5 · 0,8 · 1,4 · 2,8 · 6,2 · 14 · 38 · 110",
+            "16 sırada topların yaklaşık %55 kadarı bahisten azını geri verir (risk Düşük); Orta riskte bu oran %79, Yüksek riskte ise %92."
+          ]
+        },
+        {
+          "h": "Top nasıl düşer",
+          "body": [
+            "Tahta bir Galton tahtasıdır: top her çivide tam %50 olasılıkla sola ya da sağa gider - yazı tura gibi. Cep, sağa yapılan sekmelerin sayısından ibarettir: 12 sırada 0 (en sol) ile 12 (en sağ) arası.",
+            "Bir top ancak her bir çivide aynı yöne sekerse en kenara ulaşır. Ortaya ise çok sayıda yol çıkar. Bu yüzden toplar ortada bir çan eğrisi (binom dağılımı) oluşturacak şekilde birikir:",
+            "- 8 sıra: orta cep %27,34, her kenar cebi 256 topta bir",
+            "- 12 sıra: orta cep %22,56, her kenar cebi 4.096 topta bir",
+            "- 16 sıra: orta cep %19,64, her kenar cebi 65.536 topta bir",
+            "Fareyi bir cebin üzerine getir: çarpanını, şansını (%0,0015 gibi minicik olanları bile) ve bahsinle ne ödeyeceğini gösterir.",
+            "27 tablonun (9 sıra sayısı × 3 risk) hepsi simetriktir, kenara doğru asla küçülmez ve tam hesapla uzun vadede bahislerin %96,9 ile %97,1 arasını geri öder. Kasa avantajı yani ne ayarlarsan ayarla yaklaşık %3'tür. Sıralar ve risk yalnızca şansın ne kadar sert dalgalandığını değiştirir."
+          ]
+        },
+        {
+          "h": "Aynı anda birçok top",
+          "body": [
+            "Bir topun düşmesini beklemek zorunda değilsin: tahtada aynı anda 50 topa kadar zıplayabilir - \"Oyunda\" sayacı bunları sayar. [Boşluk] tuşunu basılı tut, kısa bir an sonra toplar seri halinde düşer - öyle hızlı ki aynı anda yaklaşık 30 top yolda olur.",
+            "Her topun yolu daha bırakıldığı anda çekilir. Bu yüzden bahis ve ödeme hemen birlikte hesaba işlenir ve kaydedilir - ama ödemeyi ancak top aşağı vardığında görürsün. Kazancı da ancak o zaman yeniden yatırabilirsin.",
+            "Toplar hâlâ düşerken oyundan çıkarsan hiçbir şey kaybolmaz: çipler zaten işlenmiştir ve bu topların başarımları çıkışta verilir.",
+            "Turbo, topların uçuş süresini ve seri atıştaki aralığı yarıya indirir - [T] ile açılıp kapanır."
+          ]
+        },
+        {
+          "h": "Oto mod",
+          "body": [
+            "[A] oto modu açar. Orada şunları ayarlarsın (pencere serinin toplam bahsini de hesaplar):",
+            "- Toplar: 10, 25, 50, 100, 250, 500 veya 1000",
+            "- Kâr hedefi / Zarar limiti: kapalı, 100, 500, 1000, 5000, 10000 veya 50000 çip",
+            "- Turbo açık ya da kapalı",
+            "OTO BAŞLAT topları güncel bahsin, sıraların ve riskinle art arda bırakır; bu üçü bu sırada kilitlidir. Oto mod; tüm toplar bırakıldığında, başlangıçtan beri kâr ya da zarar bir sınıra ulaştığında, çiplerin yoldaki toplar düştükten sonra bile sonraki topa yetmediğinde ya da DUR, [Boşluk] veya [Esc] tuşuna bastığında biter. Zaten yolda olan toplar yine de düşer.",
+            "Oto mod ayarları settings.json içinde saklanır (lamaplinko bölümü)."
+          ]
+        },
+        {
+          "h": "Adillik kontrolü",
+          "body": [
+            "Lama Plinko'da hiçbir topun sonradan yönlendirilmediğini kendin kontrol edebilirsin (\"provably fair\"). Bunun için üç değer vardır:",
+            "- Sunucu seed'i: oyunun bırakmadan önce belirlediği, 32 karakterlik gizli bir rastgele değer. Her top kendi seed'ini alır.",
+            "- Kontrol kodu: sunucu seed'inin SHA-256 parmak izi. Bırakmadan önce görünür. Seed'i ele vermez, ama başka her seed'in bambaşka bir kodu olurdu - yani oyun seed'i artık değiştiremez.",
+            "- İstemci seed'i: senin kendi payın (8 karakter). \"Yeni istemci seed'i\" havada top kalmadığında yenisini çeker - böylece rastlantıya oyun tek başına karar vermez.",
+            "Buna her topla 1 artan numara (nonce) eklenir. Sunucu seed'i, istemci seed'i ve numara birlikte topun rastlantısını oluşturur: her sıra için bir yazı tura, her \"sağ\" topu bir cep daha sağa iter.",
+            "Top düştükten sonra sunucu seed'i açıklanır - o sırada bir sonraki topun kontrol kodu zaten belirlenmiştir.",
+            "[F] son 12 topla adillik kontrolü penceresini açar: numara, kontrol kodu, sunucu seed'i ve istemci seed'i, ayrıca sıralar, risk, cep ve çarpan. \"Doğrula\" seed'in SHA-256'sını yeniden hesaplar, önceden gösterilen kontrol koduyla karşılaştırır ve topun yolunu bir kez daha hesaplar: \"Eşleşiyor\" her şeyin tuttuğu anlamına gelir, \"Eşleşmiyor\" ise bir sapmayı ortaya çıkarırdı. Küçük bir önizleme yeniden hesaplanan yolu gösterir.",
+            "Meraklısına: rastgele sayı üreteci mulberry32'dir ve \"lamaplinko|sunucu seed'i|istemci seed'i|numara\" metninin FNV-1a değeriyle başlatılır. Her sıra 0 ile 1 arasında bir sayı çeker; 0,5'in altı sağ demektir. Böylece her top kendi araçlarınla da yeniden hesaplanabilir."
+          ]
+        },
+        {
+          "h": "İstatistikler",
+          "body": [
+            "[S] profilinin Lama Plinko istatistiklerini açar:",
+            "- Kutucuklar: Turlar, Kazanılan, Kaybedilen, Toplam bahis, Ödenen, Net sonuç, Rekor kazanç, En iyi çarpan, Ödeme oranın. Her top ayrı sayılır; kazanılan, bahisten fazlasının geri geldiği, kaybedilen ise azının geldiği anlamına gelir.",
+            "- son 100 topun bakiye eğrisi",
+            "- isabet dağılımı: her cebe isabetlerin çubuk olarak, beklenen dağılım (binom) altın renkte - her sıra sayısı için ayrı, [Sol] / [Sağ] ile değiştirilir",
+            "Başta geri dönüş oranın çok zıplar (Yüksek riskte tek bir kenar vuruşu onu çok yukarı fırlatır); çok sayıda topla yaklaşık %97'ye yaklaşır. Aynı şekilde birkaç yüz toptan sonra çubuklar altın eğriye yaklaşır."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- [Boşluk], [Enter] ya da BIRAK düğmesine veya tahtaya tık: top bırak - seri atış için basılı tut",
+            "- [Yukarı] / [Aşağı], [+] / [-] veya fare tekerleği: top başına bahsi değiştir",
+            "- [Sol] / [Sağ]: sıralar (8 ile 16), [1] ile [3]: risk",
+            "- [A]: oto mod, [S]: istatistikler, [F]: adillik kontrolü, [T]: turbo",
+            "- [Esc]: açık pencereyi kapat ya da oto modu durdur",
+            "- Fare bir cebin üzerinde: çarpan, şans ve bahsinle ödeme",
+            "Pencerelerde: oto mod penceresinde [Yukarı] / [Aşağı] bir satır seçer, [Sol] / [Sağ] onu değiştirir, [Enter] veya [Boşluk] başlatır ya da durdurur. İstatistiklerde [Sol] / [Sağ] dağılımın sıra sayısını değiştirir. Adillik penceresinde ok tuşları veya fare tekerleği bir top seçer, [Enter] onu doğrular, [C] yeni bir istemci seed'i çeker. [Esc] ya da aynı harf tuşu pencereyi kapatır.",
+            "Her şey fareyle de çalışır; açık bir pencerenin dışına tıklamak onu kapatır. Sıralar, risk, bahis, turbo ve oto mod ayarları settings.json içinde saklanır (lamaplinko bölümü)."
+          ]
+        },
+        {
+          "h": "Lama Çipleri",
+          "body": [
+            "Lama Plinko, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker, Casino, Lama Crossing ve Lama Mines ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
+            "Rekor, 1000 + Lama Plinko bakiyenin ulaştığı en yüksek değerdir; diğer oyunlardaki kazançlar burada sayılmaz.",
+            "Hesabın seçilen bahsi karşılamıyorsa daha küçük bir bahis seç. 0 çiple iflas edersin: [Enter] ya da bir tık bankadan kredi alır ve hesabını yeniden 1000'e tamamlar. Krediler bakiyeye sayılmaz.",
+            "Geçmiş, istatistikler ve adillik verileri profiline aittir ve onlar da mem.json içinde saklanır."
+          ]
+        },
+        {
+          "h": "Başarımlar",
+          "body": [
+            "- Lama Plinko müdavimi: 25 parti",
+            "- Kilometre taşı: rekor 3000",
+            "- Lama Plinko ustası: rekor 10000",
+            "- Kenar isabeti (nadir): Lama Plinko'da topu en dıştaki cebe düşür (12 sıra veya daha fazla)",
+            "- Yumak yağmuru (destansı): Lama Plinko'da tahtada aynı anda 25 top olsun",
+            "- Plinko efsanesi (efsanevi): Lama Plinko'da 16 sıra ve yüksek riskte topu en dıştaki cebe düşür"
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Her top bağımsızdır: ortaya on isabetten sonra kenarın \"sırası gelmiş\" değildir.",
+            "- Hiçbir ayar geri dönüş oranını yenemez. Düşük riskte hesabın az dalgalanır, Yüksek riskte çoğu zaman kaybedersin - küçük bir dev vuruş şansıyla.",
+            "- Küçük bahisler dezavantajlı değildir: çipin hiçbir kesri kaybolmaz. 1 çipte ×0,7 önce hiçbir şey ödemez, ama 0,7 çip saklanır ve tam bir çip dolduğunda sonraki toplardan biriyle ödenir. Bu yüzden yaklaşık %97'lik geri dönüş her bahis için geçerlidir.",
+            "- Kenar isabeti: en hızlısı 12 sırayla - orada yaklaşık 2.048 topta bir top en kenara (solda ya da sağda) düşer. Top başına 1 çiple bu, ortalama 100 topta yalnızca yaklaşık 3 çipe mal olur.",
+            "- Yumak yağmuru: [Boşluk] tuşunu basılı tutman yeter - seri atış, sıra sayısı ne olursa olsun tahtaya aynı anda yaklaşık 30 top getirir ve yaklaşık 2 saniye sonra başarım senindir. Oto mod bunun için fazla ağır bırakır.",
+            "- Plinko efsanesi: 16 sıra ve Yüksek riskte yalnızca 32.768 topta bir top en kenara düşer - 1000 topluk oto serilerle ortalama yaklaşık 33 seri gerekir. Buna karşılık o cep ×1.000 öder.",
+            "- Önceden bir bütçe belirle ve oto modda zarar sınırını kullan."
           ]
         }
       ]

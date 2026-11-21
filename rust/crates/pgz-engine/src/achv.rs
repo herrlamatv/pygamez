@@ -45,23 +45,23 @@ pub fn clear_toasts() {
     TOASTS.with(|t| t.borrow_mut().clear());
 }
 
-/// Meldet [`clear_toasts`] beim Profilwechsel an.
+/// Meldet [`clear_toasts`] beim Profilwechsel an - und das Konfetti seltener
+/// Erfolge (Python `_unlock`: sofort beim Freischalten, nicht erst hier).
 pub fn register_switch_hook() {
     pgz_core::store::on_switch(clear_toasts);
+    achievements::on_rare_unlock(rare_confetti);
+}
+
+/// Seltene Stuecke (legendaer, mythisch) bekommen wie in Python Konfetti.
+fn rare_confetti() {
+    ui::spawn_confetti(800.0, 600.0, 60);
 }
 
 /// Holt neue Freischaltungen aus `pgz_core` und reiht sie ein.
-///
-/// Seltene Stuecke (legendaer, mythisch) bekommen wie in Python Konfetti.
 pub fn push_toasts() {
     for toast in achievements::take_toasts() {
         let art = match toast {
-            Toast::Achievement(d) => {
-                if matches!(d.rarity.as_str(), "legendary" | "mythic") {
-                    ui::spawn_confetti(800.0, 600.0, 60);
-                }
-                Art::Ach(d)
-            }
+            Toast::Achievement(d) => Art::Ach(d),
             Toast::Level(level, titel) => {
                 Art::Level(level, titel, ui::c3(pgz_core::levels::rank_color(level)))
             }

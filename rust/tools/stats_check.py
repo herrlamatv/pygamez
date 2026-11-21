@@ -25,7 +25,9 @@ WURZEL = os.path.dirname(os.path.dirname(HIER))
 sys.path.insert(0, HIER)
 from vergleich import _texte_vergleichen  # noqa: E402
 
-EXE = os.path.join(WURZEL, "rust.output", "release", "examples", "stats_io.exe")
+# Bauordner wie vergleich.py (CARGO_TARGET_DIR oder rust.output/)
+EXE = os.path.join(os.path.abspath(os.environ.get("CARGO_TARGET_DIR") or os.path.join(WURZEL, "rust.output")),
+                   "release", "examples", "stats_io.exe")
 PY = os.path.join(WURZEL, ".venv", "Scripts", "python.exe")
 if not os.path.exists(PY):
     PY = sys.executable

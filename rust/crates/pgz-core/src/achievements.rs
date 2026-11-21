@@ -427,6 +427,16 @@ fn pending() -> MutexGuard<'static, Vec<Toast>> {
         .unwrap_or_else(|e| e.into_inner())
 }
 
+/// Rueckruf beim Freischalten seltener Erfolge (legendaer, mythisch).
+static RARE_HOOK: OnceLock<fn()> = OnceLock::new();
+
+/// Meldet den Rueckruf fuer seltene Erfolge an: Python streut in `_unlock`
+/// SOFORT `ui.spawn_confetti(800, 600, n=60)` (mitten im `update` des
+/// Spiels) - nicht erst beim Abholen der Einblendungen nach `ui.draw_fx`.
+pub fn on_rare_unlock(f: fn()) {
+    let _ = RARE_HOOK.set(f);
+}
+
 /// Holt die aufgelaufenen Einblendungen ab (und leert die Liste).
 pub fn take_toasts() -> Vec<Toast> {
     std::mem::take(&mut *pending())
@@ -455,6 +465,11 @@ fn unlock(d: &'static Achievement, silent: bool) -> bool {
 
     if !silent {
         pending().push(Toast::Achievement(d));
+        if matches!(d.rarity.as_str(), "legendary" | "mythic") {
+            if let Some(f) = RARE_HOOK.get() {
+                f();
+            }
+        }
     }
     if after > before {
         crate::stats::log_level(after, Some(&stamp));

@@ -147,7 +147,7 @@
           "body": [
             "Hvert spil med fremskridt har sit eget afsnit i mem.json, for eksempel:",
             "- sudoku: løste niveauer med stjerner og bedste tid, påbegyndte opgaver og dagens sudoku med stime.",
-            "- casino: kontoen i Lama-banken - lama-chips til Blackjack, Poker, Casino og Lama Crossing med hvert spils balance plus en påbegyndt krydsning i Lama Crossing.",
+            "- casino: kontoen i Lama-banken - lama-chips til Blackjack, Poker, Casino, Lama Crossing, Lama Mines og Lama Plinko med hvert spils balance plus en påbegyndt krydsning i Lama Crossing, en påbegyndt runde og auto-markeringerne i Lama Mines samt historik, fairness-data, statistik og overført rest for Lama Mines og Lama Plinko.",
             "- crossy: indsamlede mønter, købte figurer og dagens bedste i Crossy Road.",
             "- tetris: bedste tid i Sprint, bedste score i Ultra og Versus-regnskabet mod AI'en.",
             "- g2048: gemte 2048-partier og bedste score pr. brætstørrelse og tilstand.",
@@ -349,7 +349,7 @@
         {
           "h": "Overblik",
           "body": [
-            "256 præstationer på tværs af alle 47 spil - fra den første start til et Perfect Clear i Tetris.",
+            "268 præstationer på tværs af alle 49 spil - fra den første start til et Perfect Clear i Tetris.",
             "Hver præstation har en sjældenhed og dermed en pointværdi; summen giver dit niveau.",
             "Findes bag knappen Præstationer og statistik, fanebladet Præstationer. Et filter skjuler åbne eller opnåede."
           ]
@@ -360,7 +360,7 @@
             "- Generelt: mål på tværs af samlingen - runder, prøvede spil, spilletid, rekorder, sejre, spilledage, stimer, niveau og dueller. Plus ekstra som natteugle, maraton eller weekendspiller.",
             "- Pointmilepæle: en fair målscore for hvert spil.",
             "- Mesterniveauer: det andet, meget højere mærke - kun for spil med åben score.",
-            "- Fast gæst: 25 runder i ét spil. Findes for alle 47 spil.",
+            "- Fast gæst: 25 runder i ét spil. Findes for alle 49 spil.",
             "- Særlige øjeblikke: skakmat, en Yahtzee, 4096-brikken, hole-in-one, et hattrick i air hockey, fire spøgelser på én kraftpille og meget mere."
           ]
         },
@@ -1475,7 +1475,7 @@
         {
           "h": "Lama-chips",
           "body": [
-            "Blackjack, Poker og Casino deler én konto i Lama-banken: du starter med 1000 lama-chips, og saldoen gemmes permanent.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines og Lama Plinko deler én konto i Lama-banken: du starter med 1000 lama-chips, og saldoen gemmes permanent.",
             "Indsatsen trækkes, så snart kortene gives - forlader du en igangværende hånd, er den tabt.",
             "Highscoren er toppen af din blackjack-balance: 1000 plus alt, hvad du har vundet og tabt i blackjack. Gevinster i roulette, på slotten eller i poker tæller ikke her.",
             "Under 10 chips er du fallit: [Enter] tager et banklån og fylder kontoen op til 1000 igen. Lån tæller ikke med i balancen."
@@ -1902,7 +1902,7 @@
         {
           "h": "Lama-chips",
           "body": [
-            "Der spilles med lama-chips fra Lama-banken - én konto, der deles med Blackjack og Casino (start 1000, gemmes permanent).",
+            "Der spilles med lama-chips fra Lama-banken - én konto, der deles med Blackjack, Casino, Lama Crossing, Lama Mines og Lama Plinko (start 1000, gemmes permanent).",
             "Ved starten af en hånd ligger din konto på bordet som din stak; det, der går i puljen, trækkes med det samme. Forlader du bordet midt i en hånd, er din andel af puljen tabt - resten går tilbage til kontoen.",
             "Highscoren er toppen af din poker-balance: 1000 plus alt, hvad du har vundet og tabt i poker. Gevinster i andre spil tæller ikke her.",
             "Fallit (mindre end big blind på 20, i Video Poker under 10) = banklån med et klik, kontoen står igen på 1000."
@@ -2978,7 +2978,7 @@
         {
           "h": "Lama-banken",
           "body": [
-            "Casino, Blackjack og Poker spiller med den samme konto: lama-chips (start 1000). Indsatser trækkes med det samme, gevinster krediteres - alt gemmes permanent.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines og Lama Plinko spiller med den samme konto: lama-chips (start 1000). Indsatser trækkes med det samme, gevinster krediteres - alt gemmes permanent.",
             "Hvert spil fører sin egen balance. Casinoets highscore er toppen af 1000 + casino-balance; gevinster i Blackjack eller Poker tæller ikke her.",
             "Er du fallit (under minimumsindsatsen), får du et banklån: kontoen fyldes op til 1000 igen. Lån tæller ikke i nogen balance; antallet står øverst til højre."
           ]
@@ -3111,7 +3111,7 @@
         {
           "h": "Lama-chips",
           "body": [
-            "Lama Crossing spiller med den fælles konto i Lama-banken - sammen med Blackjack, Poker og Casino (start 1000, gemt i mem.json).",
+            "Lama Crossing spiller med den fælles konto i Lama-banken - sammen med Blackjack, Poker, Casino, Lama Mines og Lama Plinko (start 1000, gemt i mem.json).",
             "Highscoren er toppen af 1000 + din Lama Crossing-balance; gevinster i Blackjack, Poker eller Casino tæller ikke her.",
             "Under 10 chips er du fallit: [Enter] eller et klik tager et banklån og fylder kontoen op til 1000 igen. Lån tæller ikke med i balancen.",
             "Det er sikkert at stoppe midt i en krydsning: Indsats, sværhedsgrad og bane gemmes, og ved næste start fortsætter du præcis dér."
@@ -3136,6 +3136,317 @@
             "- Med god timing kommer man helt over cirka hver 7. runde på Let, hver 38. på Middel, hver 614. på Svær og kun i én ud af 32.768 på Ekstrem.",
             "- Til Stålnerver (×10) er 4 baner nok på Ekstrem (×15,52), 7 på Svær (×11,77) og 13 på Middel (×10,37); på Let aldrig (højst ×6,57). Linedans (×100 på Ekstrem) kræver 7 baner (×124,16) - det lykkes cirka hver 128. runde.",
             "- Bestem på forhånd, ved hvilken multiplikator du udbetaler - og hold dig til det. Med den faste tilbagebetaling er ingen strategi bedre end en anden, kun mere eller mindre risikabel."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "lama",
+        "mines",
+        "miner",
+        "ædelsten",
+        "felter",
+        "afdække",
+        "udbetal",
+        "multiplikator",
+        "chips",
+        "lama-banken",
+        "indsats",
+        "risiko",
+        "auto",
+        "fairness",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "statistik",
+        "kontrolkode"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Under hvert skjult felt ligger en ædelsten eller en mine. Hver ædelsten, du finder, hæver multiplikatoren - en mine koster indsatsen.",
+            "Vælg din indsats (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 eller 10000 lama-chips) og tryk SPIL: Indsatsen trækkes, og brættet trækkes lod om. Fra nu af ligger det fast, hvor minerne er - det kan efterprøves med fairness-tjekket.",
+            "Så afdækker du felt for felt: med et klik, med piletasterne og [Mellemrum] eller med [R] eller knappen Tilfældigt felt på et tilfældigt skjult felt. Fra den første ædelsten kan du trykke UDBETAL når som helst - så får du indsatsen gange den aktuelle multiplikator.",
+            "Når alle ædelsten er fundet, udbetales der automatisk: ALLE ER MINE! Rammer du en mine, eksploderer den, skærmen ryster, og indsatsen er tabt. I begge tilfælde - også efter en udbetaling - afdækkes de resterende felter nedtonet, så du kan se, hvor minerne lå. Brættet bliver liggende sådan, indtil du spiller videre eller ændrer en indstilling.",
+            "Øverst til højre står historikken for de sidste 12 runder - den nyeste til højre, en mine som rødt ×0."
+          ]
+        },
+        {
+          "h": "Brætstørrelser og miner",
+          "body": [
+            "Fire størrelser - vælges før hver runde med knapperne eller med [1] til [4]: 4×4 (16 felter), 5×5 (25 felter, standard), 6×6 (36 felter) og 7×7 (49 felter).",
+            "Antallet af miner stiller du med [Venstre] / [Højre], pileknapperne eller de seks hurtigvalgsknapper: fra 1 til antallet af felter minus 1 - mindst én ædelsten er der altid. Standard er 3 miner. Hurtigvalget tilbyder pr. størrelse:",
+            "- 4×4: 1, 2, 3, 5, 8 eller 12 miner",
+            "- 5×5: 1, 3, 5, 10, 15 eller 24 miner",
+            "- 6×6: 1, 3, 6, 12, 20 eller 35 miner",
+            "- 7×7: 1, 3, 7, 14, 24 eller 48 miner",
+            "Flere miner betyder: Hver ædelsten er mere værd, men det næste felt er sjældnere sikkert. Med 24 miner på 5×5 giver allerede den første ædelsten ×24,25 - med 4 % chance.",
+            "Størrelse, miner og indsats kan kun ændres mellem runderne."
+          ]
+        },
+        {
+          "h": "Multiplikator og tilbagebetaling",
+          "body": [
+            "Multiplikatoren afhænger kun af, hvor mange ædelsten du har fundet - ikke af, hvilke felter det var. Den udligner præcis chancen for at nå så langt, minus 3 % til banken:",
+            "- multiplikator = 0,97 divideret med chancen for at finde k ædelsten i træk",
+            "- den chance er et produkt med én faktor pr. ædelsten: ædelsten/felter × (ædelsten - 1)/(felter - 1) × …",
+            "- som formel: 0,97 × C(N, M) / C(N - k, M), rundet ned til hundrededele. N er antallet af felter, M antallet af miner, k antallet af fundne ædelsten og C(n, m) binomialkoefficienten „n over m”.",
+            "Eksempel 5×5 med 3 miner: Det første felt er sikkert i 22 ud af 25 (88 %), så det giver 0,97 / 0,88 = ×1,10. Efter to ædelsten er chancen 22/25 × 21/24 = 77 % - det giver ×1,25.",
+            "Det fortsætter med ×1,44, ×1,67 og ×1,95 efter 5 ædelsten, ×4,90 efter 10, ×10,14 efter 13, ×18,59 efter 15, ×111,55 efter 19 og ×557,75 efter 21. Finder du alle 22 ædelsten, får du ×2.231 - det sker i én ud af 2300 runder.",
+            "Bundgrænse: Hver ædelsten hæver multiplikatoren med mindst 0,01 - allerede den første giver altså mindst ×1,01. Efter formlen alene ville der fx kun være ×0,99 på 6×6 med 1 mine. Kun tre trin hæves: den første ædelsten på 6×6 med 1 mine og de to første på 7×7 med 1 mine.",
+            "Den højeste gevinst er ×100.000. Når multiplikatoren når den grænse, udbetales der automatisk med det samme: MAKSGEVINST! Når hele brættet ryddes, sker det allerede fra 5×5 med 6 miner, 6×6 med 5 og 7×7 med 4 miner; aldrig på 4×4. Mere er der ikke, selv om formlen ville give mere.",
+            "Fordi chance og multiplikator udligner hinanden, giver enhver strategi i længden omkring 97 % af indsatsen tilbage - uanset størrelse, antal miner og efter hvor mange ædelsten du udbetaler. På grund af afrundingen er det 96 til 97 % alt efter trin. De tre hævede trin ligger lidt over (højst 98,94 % ved den første ædelsten på 7×7 med 1 mine), det begrænsede trin tydeligt under. Husets fordel er altså cirka 3 %.",
+            "Brøkdele går ikke tabt: Der udbetales hele chips, og resten i hundrededele huskes og lægges til næste udbetaling. 10 chips × 1,01 giver altså først 10 chips, de resterende 0,10 kommer senere - så får også små indsatser den fulde tilbagebetaling."
+          ]
+        },
+        {
+          "h": "Visninger",
+          "body": [
+            "Før runden viser overskriften den højeste multiplikator for indstillingen (alle ædelsten fundet) og antallet af ædelsten og miner. Under runden står alt, hvad du skal bruge til din næste beslutning, ved siden af brættet:",
+            "- den aktuelle multiplikator og din gevinst, hvis du udbetaler nu",
+            "- multiplikatoren efter den næste ædelsten og gevinsten ved det næste felt",
+            "- chancen for, at det næste felt er sikkert: resterende ædelsten divideret med resterende skjulte felter - 88 % ved første klik på 5×5 med 3 miner, derefter lidt mindre for hver ædelsten",
+            "- hvor mange ædelsten der er fundet, og en bjælke med de næste 5 trin: hvor mange ædelsten der giver hvilken multiplikator",
+            "Maskotlamaen med minehjelm og pandelampe lever med: Den jubler ved hver ædelsten, mens minevognen ved siden af fyldes, og ved en mine farer den sammen og er bagefter dækket af sod. Fra ×3 regner det med mønter, fra ×10 og når brættet ryddes, kommer der også konfetti."
+          ]
+        },
+        {
+          "h": "Auto-tilstand",
+          "body": [
+            "[A] eller Auto-knappen åbner auto-tilstanden mellem runderne. Vinduet ligger over sidepanelet og lader gitteret være frit: Med et klik eller med piletasterne og [Mellemrum] markerer du de felter, der afdækkes i hver runde - højst lige så mange, som der er ædelsten. Spillet husker valget for hver brætstørrelse; [Del], [Backspace] eller Ryd fjerner alle markeringer.",
+            "Vinduet viser, hvor mange felter der er markeret, og hvad runden giver, hvis de alle er sikre: multiplikator og chance. Desuden vælger du antallet af runder (5, 10, 25, 50 eller 100) og efter ønske to grænser: Stop ved gevinst på og Stop ved tab på (fra, 100, 500, 1000, 5000, 10000 eller 50000 chips, talt fra starten).",
+            "START AUTO eller [Enter]: Hver runde trækker indsatsen og afdækker hurtigt de markerede felter et efter et. Er de alle sikre, udbetales der - med multiplikatoren for lige så mange ædelsten, som du har markeret. Ligger der en mine under et markeret felt, er runden tabt.",
+            "Auto-tilstanden kører, indtil alle runder er spillet, en grænse slår til, dine chips ikke rækker til næste indsats, eller du trykker STOP, [Mellemrum], [Enter], [A] eller [Esc]. Stopper du midt i en runde, forbliver den åben - du afdækker videre i hånden eller udbetaler. Indsats, brætstørrelse og miner er låst, mens auto-tilstanden kører.",
+            "[T] slår turbo til - også når du spiller i hånden: Felter, eksplosioner og auto-runder går to en halv gang så hurtigt."
+          ]
+        },
+        {
+          "h": "Fairness-tjek",
+          "body": [
+            "Lama Mines er beviseligt fair: Minefeltet ligger fast, før du klikker på det første felt - og efter runden kan du regne efter, at intet er flyttet. Det klares med fire værdier:",
+            "- Server-seed: en hemmelig tilfældig værdi (32 tegn), som spillet fastlægger før runden.",
+            "- Kontrolkode: SHA-256-fingeraftrykket (hash) af server-seedet. Den vises allerede før runden (kontrolkode for næste runde). Seedet kan ikke regnes tilbage ud fra den - men blot ét andet tegn i seedet ville give en helt anden kode.",
+            "- Klient-seed: din andel af tilfældigheden (8 tegn). Med Ny klient-seed slår du et nyt - kun uden for en runde. Så bestemmer spillet ikke resultatet alene.",
+            "- Nr.: rundenummeret. Det tæller én op hver runde, så ingen runde ligner en anden.",
+            "Spillets navn, server-seed, klient-seed og rundenummer danner rundens tilfældighed (mulberry32). Den blander listen over alle felter (talt række for række, begyndende øverst til venstre), og de første pladser i den blandede liste - lige så mange, som der er miner - bliver til miner.",
+            "Efter runden afsløres server-seedet; kontrolkoden for næste runde ligger så allerede fast.",
+            "[F] åbner vinduet Fairness: øverst kontrolkoden for næste runde (under en runde også kontrolkoden for denne runde), dit klient-seed og rundenummeret, nedenunder de sidste 12 runder med nr., kontrolkode og resultat, den nyeste øverst (musehjulet ruller). Et klik på en linje viser brætstørrelse, miner, kontrolkode, server-seed og klient-seed.",
+            "Kontrollér beregner seedets SHA-256 igen, sammenligner den med den kontrolkode, der blev vist på forhånd, genopbygger minefeltet og tjekker også resultatet - lå de afdækkede felter rigtigt, passer multiplikatoren? Et flueben eller kryds og en lille forhåndsvisning af brættet viser: Stemmer eller Stemmer ikke.",
+            "Du kan også selv tjekke kontrolkoden: beregn server-seedets SHA-256 med et hvilket som helst værktøj, og sammenlign den med kontrolkoden."
+          ]
+        },
+        {
+          "h": "Statistik",
+          "body": [
+            "[S] åbner statistikken for din profil: runder, vundne og tabte, dit afkast (hvor mange procent af dine indsatser der er kommet tilbage), indsat og udbetalt, balance, største gevinst og bedste multiplikator - plus fundne ædelsten, ramte miner og ryddede brætter.",
+            "En kurve viser balancen for de sidste 100 runder. En runde tæller som vundet, hvis der blev udbetalt mere, end der blev sat ind.",
+            "I længden lægger dit afkast sig omkring 97 % - over få runder kan den svinge kraftigt op eller ned."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- Før runden: [Mellemrum] eller [Enter] = SPIL, [1] til [4] = brætstørrelse, [Venstre] / [Højre] = antal miner",
+            "- [Op] / [Ned], [+] / [-] eller musehjul: skift indsats (kun mellem runderne)",
+            "- Under runden: Et klik på et felt afdækker det. Piletasterne flytter en markør; det første [Mellemrum] viser den kun, hvert næste afdækker feltet under den.",
+            "- [R] eller knappen Tilfældigt felt: afdæk et tilfældigt skjult felt; [Enter], [C] eller UDBETAL: udbetal (fra den første ædelsten)",
+            "- Efter resultatet: [Mellemrum] eller SPIL starter straks næste runde, andre taster fører tilbage til indstillingerne.",
+            "- [A]: auto-tilstand, [S]: statistik, [F]: fairness, [T]: turbo - eller de fire knapper øverst. [Esc] eller et klik ved siden af vinduet lukker det, [Esc] stopper også auto-tilstanden.",
+            "Tasterne er faste og afhænger ikke af tastetildelingen - spillertaster som WASD gælder ikke her. Brætstørrelse, antal miner, den sidste indsats, turbo og auto-indstillingerne gemmes i settings.json (afsnittet lamamines)."
+          ]
+        },
+        {
+          "h": "Lama-chips",
+          "body": [
+            "Lama Mines spiller med den fælles konto i Lama-banken - sammen med Blackjack, Poker, Casino, Lama Crossing og Lama Plinko (start 1000, gemt i mem.json).",
+            "Highscoren er toppen af 1000 + din Lama Mines-balance; gevinster i Lama-bankens andre spil tæller ikke her.",
+            "Under 10 chips er du fallit: [Mellemrum], [Enter] eller et klik tager et banklån og fylder kontoen op til 1000 igen. Lån tæller ikke med i balancen.",
+            "Det er sikkert at stoppe midt i en runde: Indsatsen trækkes ved starten, og efter hver fundet ædelsten gemmes brætstørrelse, miner, rundens seeds og de afdækkede felter. Ved næste start beregnes brættet igen ud fra seedet, og du fortsætter præcis dér.",
+            "Historik, fairness-data, statistik, auto-markeringerne og den overførte rest hører til din profil."
+          ]
+        },
+        {
+          "h": "Præstationer",
+          "body": [
+            "- Lama Mines-stamgæst: 25 runder",
+            "- Milepæl: highscore 3000",
+            "- Lama Mines-mester: highscore 10000",
+            "- Skatkammer (sjælden): Ryd en hel plade i Lama Mines – alle ædelsten fundet",
+            "- Dybt gravet (episk): Udbetal ved ×10 eller mere i Lama Mines",
+            "- Diamantlama (legendarisk): Udbetal ved ×1000 eller mere i Lama Mines"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Hver runde trækkes på ny, og intet felt er sikrere end et andet - hverken hjørnerne eller midten. Mønstre fra tidligere runder hjælper ikke.",
+            "- Skatkammer: På 4×4 med 1 mine lykkes det at rydde brættet i én ud af 16 runder (×15,52) - ligesom med 15 miner, hvor der kun er én ædelsten. På 5×5 med 3 miner er det kun én ud af 2300.",
+            "- Dybt gravet (×10): På 5×5 med 3 miner er 13 ædelsten nok (×10,14), det lykkes cirka hver 10. til 11. runde. Med 24 miner giver allerede den første ædelsten ×24,25 - i én ud af 25 runder.",
+            "- Diamantlama (×1000): De bedste veje lykkes cirka i én ud af 1100 runder, for eksempel 5×5 med 10 miner efter 10 ædelsten (×1.055,84) eller 7×7 med 12 miner efter 19 ædelsten (×1.034,71). På 5×5 med 3 miner går det kun ved at rydde hele brættet (×2.231).",
+            "- I auto-tilstanden tæller kun, hvor mange felter du markerer, ikke hvilke: 5 markerede felter på 5×5 med 3 miner er alle sikre i 49,6 % af runderne og giver så ×1,95.",
+            "- Bestem på forhånd, efter hvor mange ædelsten du udbetaler - og hold dig til det. Med den faste tilbagebetaling er ingen strategi bedre end en anden, kun mere eller mindre risikabel. Det kan ikke betale sig at gå efter maksgevinsten: Det begrænsede trin betaler mindre, end risikoen er værd."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "lama",
+        "plinko",
+        "kugle",
+        "garnnøgle",
+        "galton-bræt",
+        "pinde",
+        "felter",
+        "multiplikator",
+        "chips",
+        "lama-banken",
+        "indsats",
+        "rækker",
+        "risiko",
+        "klokkekurve",
+        "auto",
+        "turbo",
+        "fairness",
+        "provably fair",
+        "kontrolkode",
+        "seed",
+        "sha-256",
+        "statistik"
+      ],
+      "sections": [
+        {
+          "h": "Sådan spiller du",
+          "body": [
+            "Et gyldent garnnøgle falder gennem en trekant af pinde. Ved hver pind hopper det til venstre eller højre og lander i et af felterne forneden. På hvert felt står en multiplikator: indsats gange multiplikator er din udbetaling.",
+            "Vælg en indsats pr. kugle (1, 2, 5, 10, 20, 50, 100, 200, 500 eller 1000 lama-chips) og tryk på SLIP: Indsatsen trækkes, lamaen øverst på brættet nikker og slipper kuglen.",
+            "Felterne yderst betaler mest, dem i midten giver mindre end indsatsen tilbage - til gengæld lander de fleste kugler dér. Du får indsats gange multiplikator i hele chips; det, der er tilbage under én chip, husker spillet og lægger til næste kugle.",
+            "Det ramte felt vipper, en pop-up viser multiplikatoren, og jo højere den er, desto lysere lyder tonen. Fra ×10 regner det med mønter, fra ×100 kommer der også et banner og konfetti. Øverst til højre står historikken for de sidste 12 kugler."
+          ]
+        },
+        {
+          "h": "Rækker og risiko",
+          "body": [
+            "Begge dele indstiller du før kastet; så længe der er kugler på brættet, eller auto-tilstanden kører, er de låst. Spillet viser også den højeste multiplikator og det præcise afkast for den valgte tabel.",
+            "- Rækker: 8 til 16 rækker af pinde med [Venstre] / [Højre] (standard 12). Med n rækker er der n + 1 felter.",
+            "- Risiko: Lav, Middel (standard) eller Høj med [1] til [3].",
+            "Flere rækker gør kantfelterne sjældnere og højere. Risikoen bestemmer, hvor langt midten og kanten ligger fra hinanden:",
+            "- Lav: midten ×0,7, kanten ×5,3 (8 rækker) op til ×16 (16 rækker) - små, hyppige gevinster",
+            "- Middel: midten ×0,4–0,5, kanten ×13 op til ×110",
+            "- Høj: midten ×0,2, kanten ×32 op til ×1.000 - næsten altid mindre end indsatsen, meget sjældent et kæmpe træf",
+            "Eksempel - de 17 felter med 16 rækker på Middel: 110 · 38 · 14 · 6,2 · 2,8 · 1,4 · 0,8 · 0,5 · 0,4 · 0,5 · 0,8 · 1,4 · 2,8 · 6,2 · 14 · 38 · 110",
+            "Med 16 rækker giver omkring 55 % af kuglerne mindre end indsatsen tilbage på Lav, 79 % på Middel og hele 92 % på Høj."
+          ]
+        },
+        {
+          "h": "Sådan falder kuglen",
+          "body": [
+            "Brættet er et Galton-bræt: Ved hver pind går kuglen til venstre eller højre med præcis 50 % - som ved plat eller krone. Feltet er ganske enkelt antallet af hop til højre: med 12 rækker altså 0 (helt til venstre) til 12 (helt til højre).",
+            "Helt ud til kanten kommer en kugle kun, hvis den hopper samme vej ved hver eneste pind. Mod midten fører derimod rigtig mange veje. Derfor hober kuglerne sig op i midten i en klokkekurve (binomialfordeling):",
+            "- 8 rækker: midterfelt 27,34 %, hvert kantfelt 1 ud af 256",
+            "- 12 rækker: midterfelt 22,56 %, hvert kantfelt 1 ud af 4.096",
+            "- 16 rækker: midterfelt 19,64 %, hvert kantfelt 1 ud af 65.536",
+            "Hold musen over et felt: Det viser sin multiplikator, sin chance (også bittesmå som 0,0015 %) og hvad det udbetaler ved din indsats.",
+            "De 27 tabeller (9 antal rækker × 3 risici) er symmetriske, bliver aldrig mindre mod kanten og betaler - regnet præcist - i længden 96,9 % til 97,1 % af indsatserne tilbage. Husets fordel er altså omkring 3 %, uanset hvad du indstiller. Rækker og risiko ændrer kun, hvor meget heldet svinger."
+          ]
+        },
+        {
+          "h": "Mange kugler på én gang",
+          "body": [
+            "Du behøver ikke vente, til en kugle er landet: Op til 50 kugler må hoppe over brættet på én gang - tælleren \"I spil\" holder styr på dem. Hold [Mellemrum] nede, så falder de efter et kort øjeblik i hurtig rækkefølge - så tæt, at omkring 30 kugler er undervejs på én gang.",
+            "Hver kugles vej trækkes allerede ved kastet. Derfor bogføres og gemmes indsats og udbetaling med det samme - men udbetalingen ses først, når kuglen når bunden. Først da kan du også satse gevinsten igen.",
+            "Forlader du spillet, mens der stadig falder kugler, går intet tabt: Chipsene er allerede bogført, og præstationer fra de kugler gives, når du forlader spillet.",
+            "Turbo halverer kuglernes flyvetid og afstanden mellem kastene - slå det til og fra med [T]."
+          ]
+        },
+        {
+          "h": "Auto-tilstand",
+          "body": [
+            "[A] åbner auto-tilstanden. Der indstiller du (vinduet regner også den samlede indsats for hele serien ud):",
+            "- Kugler: 10, 25, 50, 100, 250, 500 eller 1000",
+            "- Stop ved gevinst på / Stop ved tab på: fra, 100, 500, 1000, 5000, 10000 eller 50000 chips",
+            "- Turbo til eller fra",
+            "START AUTO kaster kuglerne efter hinanden med din aktuelle indsats, rækker og risiko; de tre er låst imens. Auto-tilstanden slutter, når alle kugler er kastet, gevinsten eller tabet siden starten når en grænse, chipsene heller ikke efter landingen af de flyvende kugler rækker til næste kugle, eller du trykker på STOP, [Mellemrum] eller [Esc]. Kugler, der allerede er undervejs, lander alligevel.",
+            "Auto-indstillingerne gemmes i settings.json (afsnittet lamaplinko)."
+          ]
+        },
+        {
+          "h": "Fairness-tjek",
+          "body": [
+            "I Lama Plinko kan du selv efterprøve, at ingen kugle bliver styret bagefter (\"provably fair\"). Til det findes der tre værdier:",
+            "- Server-seed: en hemmelig tilfældig værdi på 32 tegn, som spillet fastlægger før kastet. Hver kugle får sit eget.",
+            "- Kontrolkode: SHA-256-fingeraftrykket af server-seedet. Den kan ses allerede før kastet. Den afslører ikke seedet, men ethvert andet seed ville have en helt anden kode - spillet kan altså ikke længere bytte seedet ud.",
+            "- Klient-seed: din egen andel (8 tegn). \"Ny klient-seed\" trækker et nyt, så snart ingen kugle er i luften - så bestemmer spillet ikke tilfældigheden alene.",
+            "Dertil kommer nummeret (nonce), der stiger med 1 for hver kugle. Server-seed, klient-seed og nummer giver tilsammen kuglens tilfældighed: ét plat eller krone pr. række, og hvert \"højre\" skubber den ét felt længere til højre.",
+            "Efter landingen afsløres server-seedet - da står kontrolkoden for næste kugle allerede fast.",
+            "[F] åbner fairness-vinduet med de sidste 12 kugler: nummer, kontrolkode, server-seed og klient-seed samt rækker, risiko, felt og multiplikator. \"Kontrollér\" beregner seedets SHA-256 igen, sammenligner den med den kontrolkode, der blev vist før, og regner kuglens vej ud en gang til: \"Stemmer\" betyder, at alt stemmer - \"Stemmer ikke\" ville afsløre en afvigelse. En lille forhåndsvisning viser den efterregnede vej.",
+            "For de nysgerrige: Tilfældighedsgeneratoren er mulberry32, startet med FNV-1a-værdien af teksten \"lamaplinko|server-seed|klient-seed|nummer\". Hver række trækker et tal mellem 0 og 1; under 0,5 betyder højre. Sådan kan hver kugle også efterregnes med dine egne værktøjer."
+          ]
+        },
+        {
+          "h": "Statistik",
+          "body": [
+            "[S] åbner din profils statistik for Lama Plinko:",
+            "- Kort: Runder, Vundet, Tabt, Indsat, Udbetalt, Balance, Største gevinst, Bedste faktor, Dit afkast. Hver kugle tæller for sig; vundet betyder mere end indsatsen tilbage, tabt mindre.",
+            "- en balancekurve over de sidste 100 kugler",
+            "- træffer-fordelingen: dine træffere pr. felt som søjler, den forventede fordeling (binomial) i guld - for hvert antal rækker for sig, skift med [Venstre] / [Højre]",
+            "I starten hopper dit afkast meget (ét kanttræf på Høj sender det langt op), med mange kugler nærmer det sig de cirka 97 %. På samme måde nærmer søjlerne sig den gyldne kurve efter et par hundrede kugler."
+          ]
+        },
+        {
+          "h": "Styring",
+          "body": [
+            "- [Mellemrum], [Enter] eller klik på SLIP eller brættet: kast en kugle - hold nede for hurtig rækkefølge",
+            "- [Op] / [Ned], [+] / [-] eller musehjul: skift indsats pr. kugle",
+            "- [Venstre] / [Højre]: rækker (8 til 16), [1] til [3]: risiko",
+            "- [A]: auto-tilstand, [S]: statistik, [F]: fairness, [T]: turbo",
+            "- [Esc]: luk et åbent vindue eller stop auto-tilstanden",
+            "- Musen over et felt: multiplikator, chance og udbetaling ved din indsats",
+            "I vinduerne: I auto-vinduet vælger [Op] / [Ned] en linje, [Venstre] / [Højre] ændrer den, og [Enter] eller [Mellemrum] starter eller stopper. I statistikken skifter [Venstre] / [Højre] fordelingens antal rækker. I fairness-vinduet vælger piletasterne eller musehjulet en kugle, [Enter] kontrollerer den, og [C] henter et nyt klient-seed. [Esc] eller samme bogstavtast lukker vinduet igen.",
+            "Alt virker også med musen; et klik ved siden af et åbent vindue lukker det. Rækker, risiko, indsats, turbo og auto-indstillingerne gemmes i settings.json (afsnittet lamaplinko)."
+          ]
+        },
+        {
+          "h": "Lama-chips",
+          "body": [
+            "Lama Plinko spiller med den fælles konto i Lama-banken - sammen med Blackjack, Poker, Casino, Lama Crossing og Lama Mines (start 1000, gemt i mem.json).",
+            "Highscoren er toppen af 1000 + din Lama Plinko-balance; gevinster i de andre spil tæller ikke her.",
+            "Dækker kontoen ikke den valgte indsats, så vælg en mindre. Med 0 chips er du fallit: [Enter] eller et klik tager et banklån og fylder kontoen op til 1000 igen. Lån tæller ikke med i balancen.",
+            "Historik, statistik og fairness-data hører til din profil og gemmes også i mem.json."
+          ]
+        },
+        {
+          "h": "Præstationer",
+          "body": [
+            "- Lama Plinko-stamgæst: 25 runder",
+            "- Milepæl: highscore 3000",
+            "- Lama Plinko-mester: highscore 10000",
+            "- Kanttræffer (sjælden): Ram det yderste felt i Lama Plinko (12 rækker eller flere)",
+            "- Garnregn (episk): Hav 25 kugler på pladen på én gang i Lama Plinko",
+            "- Plinko-legende (legendarisk): Ram det yderste felt i Lama Plinko med 16 rækker på høj risiko"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Hver kugle er uafhængig: Efter ti træffere i midten er kanten ikke \"på tide\".",
+            "- Ingen indstilling slår afkastet. På Lav svinger din konto kun lidt, på Høj taber du som regel - med en lille chance for et kæmpe træf.",
+            "- Små indsatser er ingen ulempe: Ingen brøkdel af en chip går tabt. På 1 chip giver ×0,7 først ingenting, men de 0,7 chips huskes og udbetales med en af de næste kugler, så snart en hel chip er fuld. Derfor gælder afkastet på cirka 97 % for enhver indsats.",
+            "- Kanttræffer: hurtigst med 12 rækker - dér lander cirka 1 ud af 2.048 kugler helt ude ved kanten (til venstre eller højre). Med 1 chip pr. kugle koster det i gennemsnit kun omkring 3 chips pr. 100 kugler.",
+            "- Garnregn: hold bare [Mellemrum] nede - den hurtige rækkefølge giver omkring 30 kugler på brættet på én gang, uanset antal rækker, og efter cirka 2 sekunder er præstationen din. Auto-tilstanden kaster for roligt til det.",
+            "- Plinko-legende: med 16 rækker på Høj lander kun 1 ud af 32.768 kugler helt ude ved kanten - med auto-serier på 1000 kugler skal du i gennemsnit bruge omkring 33 serier. Til gengæld betaler feltet ×1.000.",
+            "- Læg et budget på forhånd, og brug tabsgrænsen i auto-tilstanden."
           ]
         }
       ]

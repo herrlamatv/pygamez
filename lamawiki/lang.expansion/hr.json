@@ -147,7 +147,7 @@
           "body": [
             "Svaka igra s napretkom ima u mem.json vlastiti odjeljak, na primjer:",
             "- sudoku: riješene razine sa zvjezdicama i najboljim vremenom, započete zagonetke i Sudoku dana s nizom.",
-            "- casino: račun Lama banke - lama žetoni za Blackjack, Poker, Casino i Lama Crossing s bilancom svake igre te započeti prijelaz u Lama Crossingu.",
+            "- casino: račun Lama banke - lama žetoni za Blackjack, Poker, Casino, Lama Crossing, Lama Mines i Lama Plinko s bilancom svake igre, započeti prijelaz u Lama Crossingu, započeti krug i oznake za automatski način u Lama Minesu te povijest, podaci o poštenosti, statistika i preneseni ostatak za Lama Mines i Lama Plinko.",
             "- crossy: skupljeni novčići, kupljeni likovi i dnevni najbolji rezultat u Crossy Roadu.",
             "- tetris: najbolje vrijeme u Sprintu, najbolji rezultat u Ultri i bilanca Versusa protiv AI-ja.",
             "- g2048: spremljene partije 2048 i najbolji rezultati po veličini ploče i načinu.",
@@ -349,7 +349,7 @@
         {
           "h": "Pregled",
           "body": [
-            "256 postignuća u svih 47 igara - od prvog pokretanja do Perfect Cleara u Tetrisu.",
+            "268 postignuća u svih 49 igara - od prvog pokretanja do Perfect Cleara u Tetrisu.",
             "Svako postignuće ima rijetkost i time bodovnu vrijednost; zbroj daje tvoju razinu.",
             "Nalaze se iza gumba Postignuća i statistika, kartica Postignuća. Filtar skriva otključana ili preostala."
           ]
@@ -360,7 +360,7 @@
             "- Općenito: ciljevi kroz cijelu zbirku - partije, isprobane igre, vrijeme, rekordi, pobjede, dani igranja, nizovi, razina i dvoboji. Uz dodatke poput noćne ptice, maratona ili vikend igrača.",
             "- Bodovne prekretnice: pošten ciljni rezultat za svaku igru.",
             "- Majstorske razine: druga, znatno viša granica - samo za igre s otvorenim bodovanjem.",
-            "- Stalni gost: 25 partija jedne igre. Postoji za svih 47 igara.",
+            "- Stalni gost: 25 partija jedne igre. Postoji za svih 49 igara.",
             "- Posebni trenuci: šah-mat, Yahtzee, pločica 4096, rupa iz jednog udarca, hat-trick u air hockeyju, četiri duha jednom pilulom i još mnogo toga."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Lama žetoni",
           "body": [
-            "Blackjack, Poker i Casino dijele jedan račun u Lama banci: počinješ s 1000 lama žetona, a stanje se trajno sprema.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines i Lama Plinko dijele jedan račun u Lama banci: počinješ s 1000 lama žetona, a stanje se trajno sprema.",
             "Ulog se skida odmah pri dijeljenju - tko napusti ruku u tijeku, gubi ga.",
             "Rekord je najviše stanje tvoje bilance u blackjacku: 1000 plus sve što si u blackjacku dobio i izgubio. Dobici na ruletu, automatu ili u pokeru ovdje se ne računaju.",
             "Ispod 10 žetona si bankrot: [Enter] uzima bankovni kredit i ponovno puni račun na 1000. Krediti se ne računaju u bilancu."
@@ -1901,7 +1901,7 @@
         {
           "h": "Lama žetoni",
           "body": [
-            "Igra se lama žetonima Lama banke - zajednički račun s Blackjackom i Casinom (početak 1000, trajno spremljen).",
+            "Igra se lama žetonima Lama banke - zajednički račun s Blackjackom, Casinom, Lama Crossingom, Lama Minesom i Lama Plinkom (početak 1000, trajno spremljen).",
             "Na početku ruke tvoj je račun na stolu kao hrpa; ono što ide u pot odmah se skida. Ako napustiš stol usred ruke, tvoj udio u potu je izgubljen - ostatak se vraća na račun.",
             "Rekord je najviše stanje tvoje bilance u pokeru: 1000 plus sve što si u pokeru dobio i izgubio. Dobici u drugim igrama ovdje se ne računaju.",
             "Bankrot (manje od velikog blinda od 20, u Video Pokeru manje od 10) = bankovni kredit jednim klikom, račun je opet na 1000."
@@ -2976,7 +2976,7 @@
         {
           "h": "Lama banka",
           "body": [
-            "Casino, Blackjack i Poker igraju s istim računom: lama žetonima (početak 1000). Ulozi se skidaju odmah, dobici se pripisuju - sve se trajno sprema.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines i Lama Plinko igraju s istim računom: lama žetonima (početak 1000). Ulozi se skidaju odmah, dobici se pripisuju - sve se trajno sprema.",
             "Svaka igra vodi vlastitu bilancu. Rekord Casina je najviše stanje 1000 + bilance Casina; dobici u Blackjacku ili Pokeru ovdje se ne računaju.",
             "Kad si bankrot (manje od najmanjeg uloga), dobivaš bankovni kredit: račun se ponovno puni na 1000. Krediti se ne računaju ni u jednu bilancu; njihov broj stoji gore desno."
           ]
@@ -3108,7 +3108,7 @@
         {
           "h": "Lama žetoni",
           "body": [
-            "Lama Crossing igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom i Casinom (početak 1000, spremljeno u mem.json).",
+            "Lama Crossing igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom, Casinom, Lama Minesom i Lama Plinkom (početak 1000, spremljeno u mem.json).",
             "Rekord je najviše stanje 1000 + tvoje bilance u Lama Crossingu; dobici u Blackjacku, Pokeru ili Casinu ovdje se ne računaju.",
             "Ispod 10 žetona si bankrot: [Enter] ili klik uzima bankovni kredit i ponovno puni račun na 1000. Krediti se ne računaju u bilancu.",
             "Prekinuti usred prijelaza je sigurno: ulog, težina i traka se spremaju, a pri sljedećem pokretanju nastavljaš točno ondje."
@@ -3133,6 +3133,317 @@
             "- Uz dobar tajming do kraja se stiže otprilike u svakom 7. krugu na Lako, u svakom 38. na Srednje, u svakom 614. na Teško i samo u jednom od 32.768 na Ekstremno.",
             "- Za Čelične živce (×10) dovoljne su na Ekstremno 4 trake (×15,52), na Teško 7 (×11,77) i na Srednje 13 (×10,37); na Lako nikad (najviše ×6,57). Za Hod po užetu (×100 na Ekstremno) trebaš 7 traka (×124,16) - to uspijeva otprilike u svakom 128. krugu.",
             "- Unaprijed odluči pri kojem ćeš množitelju isplatiti - i drži se toga. Zbog fiksnog povrata nijedna strategija nije bolja od druge, samo više ili manje rizična."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "lama",
+        "mines",
+        "mine",
+        "dragulji",
+        "polja",
+        "otkrij",
+        "isplati",
+        "množitelj",
+        "žetoni",
+        "lama banka",
+        "ulog",
+        "rizik",
+        "auto",
+        "poštenost",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "statistika",
+        "kontrolni kod"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Ispod svakog skrivenog polja nalazi se dragulj ili mina. Svaki pronađeni dragulj podiže množitelj - mina košta ulog.",
+            "Odaberi ulog (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 ili 10000 lama žetona) i pritisni IGRAJ: ulog se skida, a ploča se izvlači. Od tog trenutka je određeno gdje su mine - provjerljivo provjerom poštenosti.",
+            "Zatim otkrivaš polje po polje: klikom, strelicama i tipkom [Razmaknica] ili tipkom [R] odnosno gumbom Nasumično na nasumičnom skrivenom polju. Od prvog dragulja možeš bilo kada pritisnuti ISPLATI - tada dobivaš ulog pomnožen trenutnim množiteljem.",
+            "Kad pronađeš sve dragulje, dobitak se isplaćuje automatski: ZLATNI RUDNIK! Ako pogodiš minu, ona eksplodira, slika se trese, a ulog je izgubljen. U oba slučaja - i nakon isplate - preostala se polja otkrivaju zatamnjena, da vidiš gdje su bile mine. Ploča ostaje takva dok ne nastaviš igrati ili nešto ne promijeniš.",
+            "Gore desno je povijest zadnjih 12 krugova - najnoviji desno, mina kao crveni ×0."
+          ]
+        },
+        {
+          "h": "Veličine ploče i mine",
+          "body": [
+            "Četiri veličine - biraju se prije svakog kruga gumbima ili tipkama [1] do [4]: 4×4 (16 polja), 5×5 (25 polja, zadano), 6×6 (36 polja) i 7×7 (49 polja).",
+            "Broj mina namještaš tipkama [Lijevo] / [Desno], gumbima sa strelicama ili šest gumba za brzi odabir: od 1 do broja polja minus 1 - barem jedan dragulj uvijek ostaje. Zadane su 3 mine. Brzi odabir nudi po veličini:",
+            "- 4×4: 1, 2, 3, 5, 8 ili 12 mina",
+            "- 5×5: 1, 3, 5, 10, 15 ili 24 mine",
+            "- 6×6: 1, 3, 6, 12, 20 ili 35 mina",
+            "- 7×7: 1, 3, 7, 14, 24 ili 48 mina",
+            "Više mina znači: svaki dragulj vrijedi više, ali sljedeće polje rjeđe je sigurno. S 24 mine na 5×5 već prvi dragulj donosi ×24,25 - uz šansu od 4 %.",
+            "Veličina, mine i ulog mogu se mijenjati samo između krugova."
+          ]
+        },
+        {
+          "h": "Množitelj i povrat",
+          "body": [
+            "Množitelj ovisi samo o tome koliko si dragulja već pronašao - ne o tome koja su to polja bila. Točno izjednačuje šansu da stigneš tako daleko, umanjeno za 3 % za banku:",
+            "- množitelj = 0,97 podijeljeno sa šansom da pronađeš k dragulja zaredom",
+            "- ta šansa je umnožak s jednim faktorom po dragulju: dragulji/polja × (dragulji - 1)/(polja - 1) × …",
+            "- kao formula: 0,97 × C(N, M) / C(N - k, M), zaokruženo naniže na stotinke. N je broj polja, M broj mina, k broj pronađenih dragulja, a C(n, m) binomni koeficijent „n povrh m”.",
+            "Primjer 5×5 s 3 mine: prvo polje je sigurno u 22 od 25 slučajeva (88 %), pa donosi 0,97 / 0,88 = ×1,10. Nakon dva dragulja šansa je 22/25 × 21/24 = 77 % - to daje ×1,25.",
+            "Dalje ide ×1,44, ×1,67 i ×1,95 nakon 5 dragulja, ×4,90 nakon 10, ×10,14 nakon 13, ×18,59 nakon 15, ×111,55 nakon 19 i ×557,75 nakon 21. Tko pronađe sva 22 dragulja, dobiva ×2.231 - to uspijeva u jednom od 2300 krugova.",
+            "Donja granica: svaki dragulj podiže množitelj barem za 0,01 - već prvi dakle donosi barem ×1,01. Prema samoj formuli na 6×6 s 1 minom bilo bi na primjer samo ×0,99. Podižu se samo tri stupnja: prvi dragulj na 6×6 s 1 minom i prva dva na 7×7 s 1 minom.",
+            "Najveći dobitak je ×100.000. Kad množitelj dosegne tu granicu, dobitak se odmah automatski isplaćuje: NAJVEĆI DOBITAK! Pri čišćenju cijele ploče to se događa već od 5×5 sa 6 mina, 6×6 s 5 i 7×7 s 4 mine; na 4×4 nikad. Više od toga nema, čak i kad bi formula dala više.",
+            "Budući da se šansa i množitelj izjednačuju, svaka strategija dugoročno vraća oko 97 % uloga - bez obzira na veličinu, broj mina i nakon koliko dragulja isplatiš. Zbog zaokruživanja to je ovisno o stupnju od 96 do 97 %. Tri podignuta stupnja nešto su iznad (najviše 98,94 % kod prvog dragulja na 7×7 s 1 minom), ograničeni stupanj jasno ispod. Prednost kuće je dakle oko 3 %.",
+            "Djelići se ne gube: isplaćuju se cijeli žetoni, a ostatak u stotinkama pamti se i pribraja sljedećoj isplati. 10 žetona × 1,01 dakle najprije donosi 10 žetona, preostalih 0,10 dolazi kasnije - tako i mali ulozi dobivaju puni povrat."
+          ]
+        },
+        {
+          "h": "Prikazi",
+          "body": [
+            "Prije kruga zaglavlje pokazuje najveći množitelj postavke (svi dragulji pronađeni) te broj dragulja i mina. Tijekom kruga uz ploču stoji sve što trebaš za sljedeću odluku:",
+            "- trenutni množitelj i tvoj dobitak ako isplatiš sada",
+            "- množitelj nakon sljedećeg dragulja i dobitak na sljedećem polju",
+            "- šansa da je sljedeće polje sigurno: preostali dragulji podijeljeni s preostalim skrivenim poljima - 88 % kod prvog klika na 5×5 s 3 mine, zatim sa svakim draguljem malo manje",
+            "- koliko je dragulja već pronađeno i traka sa sljedećih 5 stupnjeva: koliko dragulja donosi koji množitelj",
+            "Lama maskota s rudarskom kacigom i čeonom svjetiljkom navija s tobom: raduje se svakom dragulju dok se rudarska kolica pokraj nje pune, a kod mine se prepadne i ostane sva čađava. Od ×3 pada kiša novčića, od ×10 i pri čišćenju ploče još i konfeti."
+          ]
+        },
+        {
+          "h": "Automatski način",
+          "body": [
+            "[A] ili gumb Auto između krugova otvara automatski način. Prozor leži iznad bočne ploče i ostavlja mrežu slobodnom: klikom ili strelicama i tipkom [Razmaknica] označiš polja koja će se otkriti u svakom krugu - najviše onoliko koliko ima dragulja. Igra pamti odabir za svaku veličinu ploče; [Del], [Backspace] ili Očisti uklanja sve oznake.",
+            "Prozor pokazuje koliko je polja označeno i što krug donosi ako su sva sigurna: množitelj i šansu. Osim toga biraš broj krugova (5, 10, 25, 50 ili 100) i po želji dvije granice: Zaustavi pri dobiti od i Zaustavi pri gubitku od (isklj., 100, 500, 1000, 5000, 10000 ili 50000 žetona, računano od pokretanja).",
+            "POKRENI AUTO ili [Enter]: svaki krug skida ulog i brzo jedno za drugim otkriva označena polja. Ako su sva sigurna, slijedi isplata - s množiteljem za onoliko dragulja koliko si polja označio. Ako je ispod označenog polja mina, krug je izgubljen.",
+            "Automatski način traje dok se ne odigraju svi krugovi, ne aktivira se granica, žetoni ne dostaju za sljedeći ulog ili ne pritisneš STOP, [Razmaknica], [Enter], [A] ili [Esc]. Ako ga zaustaviš usred kruga, krug ostaje otvoren - nastavljaš ručno otkrivati ili isplaćuješ. Ulog, veličina ploče i mine zaključani su dok traje automatski način.",
+            "[T] uključuje turbo - i pri ručnoj igri: okretanje polja, eksplozije i automatski krugovi traju samo 40 % uobičajenog vremena."
+          ]
+        },
+        {
+          "h": "Provjera poštenosti",
+          "body": [
+            "Lama Mines je dokazivo pošten: minsko polje određeno je prije nego što klikneš prvo polje - a nakon kruga možeš preračunati da se ništa nije pomaknulo. Za to postoje četiri vrijednosti:",
+            "- Seed poslužitelja: tajna nasumična vrijednost (32 znaka) koju igra odredi prije kruga.",
+            "- Kontrolni kod: SHA-256 otisak (hash) seeda poslužitelja. Prikazuje se već prije kruga (kontrolni kod sljedeće runde). Iz njega se seed ne može izračunati unatrag - ali već jedan drugi znak u seedu dao bi potpuno drugi kod.",
+            "- Seed klijenta: tvoj udio u slučajnosti (8 znakova). Gumbom Novi seed klijenta izvlačiš novi - samo izvan kruga. Tako igra ne odlučuje sama o ishodu.",
+            "- Br.: broj kruga. Sa svakim krugom raste za jedan, kako nijedan krug ne bi bio jednak drugome.",
+            "Iz naziva igre, seeda poslužitelja, seeda klijenta i broja kruga nastaje slučajnost kruga (mulberry32). Ona promiješa popis svih polja (brojenih po redovima, od gore lijevo), a prva mjesta promiješanog popisa - onoliko koliko ima mina - postaju mine.",
+            "Nakon kruga seed poslužitelja se otkriva; kontrolni kod sljedećeg kruga tada je već određen.",
+            "[F] otvara prozor Poštenost: gore kontrolni kod sljedeće runde (tijekom kruga i kod ove runde), tvoj seed klijenta i broj kruga, ispod zadnjih 12 krugova s brojem, kontrolnim kodom i ishodom, najnoviji gore (kotačić miša pomiče). Klik na redak pokazuje veličinu ploče, mine, kontrolni kod, seed poslužitelja i seed klijenta.",
+            "Provjeri ponovno izračunava SHA-256 seeda, uspoređuje ga s unaprijed prikazanim kontrolnim kodom, ponovno slaže minsko polje i provjerava i ishod - jesu li otkrivena polja bila ispravna, odgovara li množitelj? Kvačica ili križić i mali pregled ploče pokazuju: Odgovara ili Ne odgovara.",
+            "Kontrolni kod možeš provjeriti i sam: izračunaj SHA-256 seeda poslužitelja bilo kojim alatom i usporedi rezultat s kontrolnim kodom."
+          ]
+        },
+        {
+          "h": "Statistika",
+          "body": [
+            "[S] otvara statistiku tvog profila: krugovi, dobiveni i izgubljeni, tvoj povrat (koliko se posto tvojih uloga vratilo), uloženo i isplaćeno, bilanca, najveći dobitak i najbolji množitelj - uz to pronađeni dragulji, pogođene mine i očišćene ploče.",
+            "Krivulja prikazuje bilancu zadnjih 100 krugova. Krug se računa kao dobiven ako je isplaćeno više nego uloženo.",
+            "Dugoročno se tvoj povrat ustali oko 97 % - kroz nekoliko krugova može jako oscilirati gore ili dolje."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- Prije kruga: [Razmaknica] ili [Enter] = IGRAJ, [1] do [4] = veličina ploče, [Lijevo] / [Desno] = broj mina",
+            "- [Gore] / [Dolje], [+] / [-] ili kotačić miša: promjena uloga (samo između krugova)",
+            "- Tijekom kruga: klik na polje ga otkriva. Strelice pomiču pokazivač; prva [Razmaknica] ga samo prikaže, svaka sljedeća otkriva polje ispod njega.",
+            "- [R] ili gumb Nasumično: otkrij nasumično skriveno polje; [Enter], [C] ili ISPLATI: isplata (od prvog dragulja)",
+            "- Nakon ishoda: [Razmaknica] ili IGRAJ odmah pokreće sljedeći krug, ostale tipke vraćaju na postavke.",
+            "- [A]: automatski način, [S]: statistika, [F]: poštenost, [T]: turbo - ili četiri gumba gore. [Esc] ili klik pokraj prozora ga zatvara, [Esc] zaustavlja i automatski način.",
+            "Tipke su fiksne i ne ovise o dodjeli tipki - igračke tipke poput WASD ovdje ne vrijede. Veličina ploče, broj mina, zadnji ulog, turbo i postavke automatskog načina spremaju se u settings.json (odjeljak lamamines)."
+          ]
+        },
+        {
+          "h": "Lama žetoni",
+          "body": [
+            "Lama Mines igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom, Casinom, Lama Crossingom i Lama Plinkom (početak 1000, spremljeno u mem.json).",
+            "Rekord je najviše stanje 1000 + tvoje bilance u Lama Minesu; dobici u ostalim igrama Lama banke ovdje se ne računaju.",
+            "Ispod 10 žetona si bankrot: [Razmaknica], [Enter] ili klik uzima bankovni kredit i ponovno puni račun na 1000. Krediti se ne računaju u bilancu.",
+            "Prekinuti usred kruga je sigurno: ulog se skida na početku, a nakon svakog pronađenog dragulja spremaju se veličina ploče, mine, seedovi kruga i otkrivena polja. Pri sljedećem pokretanju ploča se ponovno izračunava iz seeda i nastavljaš točno ondje.",
+            "Povijest, podaci o poštenosti, statistika, oznake za automatski način i preneseni ostatak pripadaju tvom profilu."
+          ]
+        },
+        {
+          "h": "Postignuća",
+          "body": [
+            "- Stalni gost igre Lama Mines: 25 partija",
+            "- Prekretnica: rekord 3000",
+            "- Majstor igre Lama Mines: rekord 10000",
+            "- Riznica (rijedak): Očisti u Lama Minesu cijelo polje – svi dragulji pronađeni",
+            "- Duboko kopanje (epski): Isplati u Lama Minesu pri ×10 ili više",
+            "- Dijamantna lama (legendaran): Isplati u Lama Minesu pri ×1000 ili više"
+          ]
+        },
+        {
+          "h": "Savjeti",
+          "body": [
+            "- Svaki krug izvlači se iznova i nijedno polje nije sigurnije od drugog - ni kutovi ni sredina. Uzorci iz ranijih krugova ne pomažu.",
+            "- Riznica: na 4×4 s 1 minom čišćenje ploče uspijeva u jednom od 16 krugova (×15,52) - kao i s 15 mina, gdje postoji samo jedan dragulj. Na 5×5 s 3 mine to je samo jedan od 2300.",
+            "- Duboko kopanje (×10): na 5×5 s 3 mine dovoljno je 13 dragulja (×10,14), što uspijeva otprilike u svakom 10. do 11. krugu. S 24 mine već prvi dragulj donosi ×24,25 - u jednom od 25 krugova.",
+            "- Dijamantna lama (×1000): najbolji putovi uspijevaju otprilike u jednom od 1100 krugova, na primjer 5×5 s 10 mina nakon 10 dragulja (×1.055,84) ili 7×7 s 12 mina nakon 19 dragulja (×1.034,71). Na 5×5 s 3 mine to ide samo čišćenjem cijele ploče (×2.231).",
+            "- U automatskom načinu važno je samo koliko polja označiš, a ne koja: 5 označenih polja na 5×5 s 3 mine sva su sigurna u 49,6 % krugova i tada donose ×1,95.",
+            "- Unaprijed odluči nakon koliko ćeš dragulja isplatiti - i drži se toga. Zbog fiksnog povrata nijedna strategija nije bolja od druge, samo više ili manje rizična. Igranje na najveći dobitak ne isplati se: ograničeni stupanj plaća manje nego što bi vrijedio njegov rizik."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "lama",
+        "plinko",
+        "kuglica",
+        "klupko",
+        "galtonova ploča",
+        "čavlići",
+        "pretinci",
+        "množitelj",
+        "žetoni",
+        "lama banka",
+        "ulog",
+        "redovi",
+        "rizik",
+        "zvonolika krivulja",
+        "auto",
+        "turbo",
+        "poštenost",
+        "provably fair",
+        "kontrolni kod",
+        "seed",
+        "sha-256",
+        "statistika"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Zlatno klupko vune pada kroz trokut od čavlića. Na svakom čavliću odskoči lijevo ili desno i padne u jedan od pretinaca dolje. Na svakom pretincu piše množitelj: ulog pomnožen množiteljem tvoja je isplata.",
+            "Odaberi ulog po kuglici (1, 2, 5, 10, 20, 50, 100, 200, 500 ili 1000 Lama žetona) i pritisni BACI: ulog se skida, lama na vrhu ploče kimne glavom i pusti kuglicu.",
+            "Krajnji pretinci plaćaju najviše, srednji vraćaju manje od uloga - zato onamo pada najviše kuglica. Dobivaš ulog pomnožen množiteljem u cijelim žetonima; ono što ostane ispod jednog žetona igra pamti i dodaje sljedećoj kuglici.",
+            "Pogođeni pretinac se zaljulja, skočni prozorčić pokaže množitelj, a što je veći, to je ton svjetliji. Od ×10 pljušte kovanice, od ×100 dolaze još i natpis i konfete. Gore desno je povijest zadnjih 12 kuglica."
+          ]
+        },
+        {
+          "h": "Redovi i rizik",
+          "body": [
+            "Oboje namještaš prije bacanja; dok su na ploči kuglice ili radi automatski način, zaključano je. Igra prikazuje i najveći množitelj i točan povrat odabrane tablice.",
+            "- Redovi: 8 do 16 redova čavlića tipkama [Lijevo] / [Desno] (zadano 12). Uz n redova ima n + 1 pretinaca.",
+            "- Rizik: Nizak, Srednji (zadano) ili Visok tipkama [1] do [3].",
+            "Više redova čini krajnje pretince rjeđima i višima. Rizik određuje koliko su sredina i rub udaljeni:",
+            "- Nizak: sredina ×0,7, rub od ×5,3 (8 redova) do ×16 (16 redova) - mali, česti dobici",
+            "- Srednji: sredina ×0,4–0,5, rub od ×13 do ×110",
+            "- Visok: sredina ×0,2, rub od ×32 do ×1.000 - gotovo uvijek manje od uloga, vrlo rijetko golem pogodak",
+            "Primjer - 17 pretinaca uz 16 redova (rizik Srednji): 110 · 38 · 14 · 6,2 · 2,8 · 1,4 · 0,8 · 0,5 · 0,4 · 0,5 · 0,8 · 1,4 · 2,8 · 6,2 · 14 · 38 · 110",
+            "Uz 16 redova manje od uloga vraća otprilike 55 % kuglica (rizik Nizak), 79 % (Srednji), pa čak i 92 % (Visok)."
+          ]
+        },
+        {
+          "h": "Kako kuglica pada",
+          "body": [
+            "Ploča je Galtonova ploča: na svakom čavliću kuglica ide lijevo ili desno s vjerojatnošću od točno 50 % - kao kod bacanja novčića. Pretinac je jednostavno broj odskoka udesno: uz 12 redova dakle od 0 (skroz lijevo) do 12 (skroz desno).",
+            "Do samog ruba kuglica stiže samo ako na baš svakom čavliću odskoči u istom smjeru. Prema sredini pak vodi mnogo putova. Zato se kuglice na sredini gomilaju u zvonoliku krivulju (binomna razdioba):",
+            "- 8 redova: srednji pretinac 27,34 %, svaki krajnji 1 od 256",
+            "- 12 redova: srednji pretinac 22,56 %, svaki krajnji 1 od 4.096",
+            "- 16 redova: srednji pretinac 19,64 %, svaki krajnji 1 od 65.536",
+            "Pređi mišem preko pretinca: pokazat će svoj množitelj, šansu (i sićušnu, poput 0,0015 %) i koliko isplaćuje uz tvoj ulog.",
+            "Svih 27 tablica (9 brojeva redova × 3 razine rizika) simetrično je, prema rubu se nikad ne smanjuju i - točno izračunano - dugoročno vraćaju 96,9 % do 97,1 % uloga. Prednost kuće je dakle oko 3 %, kako god namjestio. Redovi i rizik mijenjaju samo koliko jako sreća oscilira."
+          ]
+        },
+        {
+          "h": "Mnogo kuglica odjednom",
+          "body": [
+            "Ne moraš čekati da kuglica padne: po ploči istodobno može skakati do 50 kuglica - brojač „U igri” ih broji. Drži tipku [Razmaknica] i nakon kratkog trenutka padaju u brzom nizu - tako gusto da je istodobno na putu oko 30 kuglica.",
+            "Put svake kuglice izvlači se već pri bacanju. Zato se ulog i isplata odmah zajedno knjiže i spremaju - isplatu ipak vidiš tek kad kuglica stigne na dno. Tek tada dobitak možeš ponovno uložiti.",
+            "Ako izađeš iz igre dok kuglice još padaju, ništa se ne gubi: žetoni su već proknjiženi, a postignuća tih kuglica dodjeljuju se pri izlasku.",
+            "Turbo prepolovljuje vrijeme leta kuglica i razmak u brzom nizu - uključuješ ga i isključuješ tipkom [T]."
+          ]
+        },
+        {
+          "h": "Automatski način",
+          "body": [
+            "[A] otvara automatski način. Ondje namještaš (prozor izračunava i ukupni ulog cijele serije):",
+            "- Kuglice: 10, 25, 50, 100, 250, 500 ili 1000",
+            "- Zaustavi pri dobiti od / Zaustavi pri gubitku od: isklj., 100, 500, 1000, 5000, 10000 ili 50000 žetona",
+            "- Turbo uključen ili isključen",
+            "POKRENI AUTO baca kuglice jednu za drugom s trenutačnim ulogom, redovima i rizikom; te su tri stvari za to vrijeme zaključane. Automatski način završava kad su bačene sve kuglice, dobitak ili gubitak od početka dosegne granicu, žetoni ni nakon pada kuglica u letu nisu dovoljni za sljedeću kuglicu ili pritisneš STOP, [Razmaknica] ili [Esc]. Kuglice koje su već na putu ipak padnu.",
+            "Postavke automatskog načina spremaju se u settings.json (odjeljak lamaplinko)."
+          ]
+        },
+        {
+          "h": "Provjera poštenosti",
+          "body": [
+            "U Lama Plinku možeš sam provjeriti da nijedna kuglica nije naknadno usmjerena („provably fair”). Za to postoje tri vrijednosti:",
+            "- Seed poslužitelja: tajna slučajna vrijednost od 32 znaka koju igra utvrdi prije bacanja. Svaka kuglica dobiva svoju.",
+            "- Kontrolni kod: SHA-256 otisak seeda poslužitelja. Vidi se već prije bacanja. Iz njega ne možeš pogoditi seed, ali svaki bi drugi seed imao potpuno drugačiji kod - igra dakle seed više ne može zamijeniti.",
+            "- Seed klijenta: tvoj vlastiti udio (8 znakova). „Novi seed klijenta” izvlači novi čim nijedna kuglica nije u zraku - tako igra ne odlučuje sama o slučaju.",
+            "Uz to ide i broj (nonce), koji se sa svakom kuglicom povećava za 1. Seed poslužitelja, seed klijenta i broj zajedno daju slučaj kuglice: jedno bacanje novčića po redu, a svako „desno” pomakne je za jedan pretinac udesno.",
+            "Nakon pada seed poslužitelja se otkriva - kontrolni kod sljedeće kuglice tada je već utvrđen.",
+            "[F] otvara provjeru poštenosti sa zadnjih 12 kuglica: broj, kontrolni kod, seed poslužitelja i seed klijenta, uz to redovi, rizik, pretinac i množitelj. „Provjeri” ponovno računa SHA-256 seeda, uspoređuje ga s ranije prikazanim kontrolnim kodom i još jednom izračunava put kuglice: „Odgovara” znači da se sve slaže - „Ne odgovara” bi otkrilo odstupanje. Mali pregled prikazuje preračunati put.",
+            "Za znatiželjne: generator slučajnih brojeva je mulberry32, pokrenut FNV-1a vrijednošću teksta „lamaplinko|seed poslužitelja|seed klijenta|broj”. Svaki red izvlači broj između 0 i 1; ispod 0,5 znači desno. Tako se svaka kuglica može preračunati i vlastitim alatima."
+          ]
+        },
+        {
+          "h": "Statistika",
+          "body": [
+            "[S] otvara statistiku tvog profila za Lama Plinko:",
+            "- Pločice: Runde, Pobjede, Porazi, Uloženo, Isplaćeno, Bilanca, Najveći dobitak, Najbolji faktor, Tvoj povrat. Svaka kuglica broji se zasebno; pobjeda znači da se vratilo više od uloga, poraz manje.",
+            "- krivulja bilance zadnjih 100 kuglica",
+            "- razdioba pogodaka: tvoji pogoci po pretincima kao stupci, očekivana razdioba (binomna) zlatnom bojom - za svaki broj redova zasebno, prebacivanje tipkama [Lijevo] / [Desno]",
+            "Na početku tvoj povrat jako skače (jedan pogodak ruba uz rizik „Visok” izbaci ga visoko), s mnogo kuglica približava se otprilike 97 %. Isto se tako stupci nakon nekoliko stotina kuglica približe zlatnoj krivulji."
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- [Razmaknica], [Enter] ili klik na BACI ili na ploču: baci kuglicu - drži za brzi niz",
+            "- [Gore] / [Dolje], [+] / [-] ili kotačić miša: promjena uloga po kuglici",
+            "- [Lijevo] / [Desno]: redovi (8 do 16), [1] do [3]: rizik",
+            "- [A]: automatski način, [S]: statistika, [F]: provjera poštenosti, [T]: turbo",
+            "- [Esc]: zatvori otvoreni prozor ili zaustavi automatski način",
+            "- Miš iznad pretinca: množitelj, šansa i isplata uz tvoj ulog",
+            "U prozorima: u prozoru automatskog načina [Gore] / [Dolje] bira stavku, [Lijevo] / [Desno] je mijenja, a [Enter] ili [Razmaknica] pokreće ili zaustavlja. U statistici [Lijevo] / [Desno] mijenja broj redova razdiobe. U provjeri poštenosti strelice ili kotačić miša biraju kuglicu, [Enter] je provjerava, a [C] izvlači novi seed klijenta. [Esc] ili ista slovna tipka ponovno zatvara prozor.",
+            "Sve radi i mišem; klik pokraj otvorenog prozora zatvara ga. Redovi, rizik, ulog, turbo i postavke automatskog načina spremaju se u settings.json (odjeljak lamaplinko)."
+          ]
+        },
+        {
+          "h": "Lama žetoni",
+          "body": [
+            "Lama Plinko igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom, Casinom, Lama Crossingom i Lama Minesom (početak 1000, spremljeno u mem.json).",
+            "Rekord je najviše stanje 1000 + tvoje bilance u Lama Plinku; dobici u drugim igrama ovdje se ne računaju.",
+            "Ako račun ne pokriva odabrani ulog, odaberi manji. S 0 žetona si bankrot: [Enter] ili klik uzima bankovni kredit i ponovno puni račun na 1000. Krediti se ne računaju u bilancu.",
+            "Povijest, statistika i podaci provjere poštenosti pripadaju tvom profilu i također se spremaju u mem.json."
+          ]
+        },
+        {
+          "h": "Postignuća",
+          "body": [
+            "- Stalni gost igre Lama Plinko: 25 partija",
+            "- Prekretnica: rekord 3000",
+            "- Majstor igre Lama Plinko: rekord 10000",
+            "- Pogodak na rubu (rijedak): Pogodi u Lama Plinku krajnji pretinac (od 12 redova)",
+            "- Kiša klupaka (epski): Imaj u Lama Plinku istovremeno 25 kuglica na ploči",
+            "- Legenda Plinka (legendaran): Pogodi u Lama Plinku krajnji pretinac sa 16 redova i visokim rizikom"
+          ]
+        },
+        {
+          "h": "Savjeti",
+          "body": [
+            "- Svaka je kuglica neovisna: nakon deset pogodaka u sredinu rub nije „na redu”.",
+            "- Nijedna postavka ne pobjeđuje povrat. Uz rizik „Nizak” tvoj račun malo oscilira, uz „Visok” uglavnom gubiš - s malom šansom za golem pogodak.",
+            "- Mali ulozi nisu u nepovoljnijem položaju: nijedan dio žetona ne gubi se. Uz 1 žeton ×0,7 isprva ne isplaćuje ništa, ali tih 0,7 žetona igra pamti i isplaćuje s jednom od sljedećih kuglica čim se skupi cijeli žeton. Zato povrat od oko 97 % vrijedi za svaki ulog.",
+            "- Pogodak na rubu: najbrže uz 12 redova - ondje otprilike 1 od 2.048 kuglica padne skroz na rub (lijevo ili desno). Uz 1 žeton po kuglici to u prosjeku stoji samo oko 3 žetona na 100 kuglica.",
+            "- Kiša klupaka: samo drži [Razmaknica] - brzi niz donosi na ploču istodobno oko 30 kuglica uz bilo koji broj redova, i nakon otprilike 2 sekunde postignuće je tvoje. Automatski način za to baca presporo.",
+            "- Legenda Plinka: uz 16 redova i rizik „Visok” skroz na rub padne samo 1 od 32.768 kuglica - sa serijama automatskog načina od 1000 kuglica treba ti u prosjeku oko 33 serije. Zato taj pretinac plaća ×1.000.",
+            "- Unaprijed odredi budžet i u automatskom načinu koristi granicu gubitka."
           ]
         }
       ]

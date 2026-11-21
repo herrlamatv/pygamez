@@ -147,7 +147,7 @@
           "body": [
             "Varje spel med framsteg har en egen sektion i mem.json, till exempel:",
             "- sudoku: lösta nivåer med stjärnor och bästa tid, påbörjade pussel och dagens sudoku med svit.",
-            "- casino: kontot i Lamabanken - lamamarkerna för Blackjack, Poker, Casino och Lama Crossing med varje spels balans, plus en påbörjad överfart i Lama Crossing.",
+            "- casino: kontot i Lamabanken - lamamarkerna för Blackjack, Poker, Casino, Lama Crossing, Lama Mines och Lama Plinko med varje spels balans, plus en påbörjad överfart i Lama Crossing, en påbörjad runda och automarkeringarna i Lama Mines samt historik, rättvisedata, statistik och överförd rest för Lama Mines och Lama Plinko.",
             "- crossy: insamlade mynt, köpta figurer och dagens bästa i Crossy Road.",
             "- tetris: bästa tid i Sprint, bästa poäng i Ultra och Versus-facit mot AI:n.",
             "- g2048: sparade 2048-partier och bästa poäng per brädstorlek och läge.",
@@ -349,7 +349,7 @@
         {
           "h": "Översikt",
           "body": [
-            "256 prestationer i alla 47 spel - från första starten till en Perfect Clear i Tetris.",
+            "268 prestationer i alla 49 spel - från första starten till en Perfect Clear i Tetris.",
             "Varje prestation har en sällsynthet och därmed ett poängvärde; summan ger din nivå.",
             "Finns bakom knappen Prestationer och statistik, fliken Prestationer. Ett filter döljer kvarvarande eller upplåsta."
           ]
@@ -360,7 +360,7 @@
             "- Allmänt: mål för hela samlingen - omgångar, provade spel, speltid, rekord, segrar, speldagar, sviter, nivå och dueller. Plus extra som nattuggla, maraton eller helgspelare.",
             "- Poängmilstolpar: ett rimligt målresultat per spel.",
             "- Mästarnivåer: den andra, mycket högre gränsen - bara för spel med öppen poäng.",
-            "- Stammis: 25 omgångar av ett spel. Finns för alla 47 spel.",
+            "- Stammis: 25 omgångar av ett spel. Finns för alla 49 spel.",
             "- Särskilda ögonblick: schackmatt, en Yatzy, 4096-brickan, hole-in-one, hattrick i air hockey, fyra spöken på ett kraftpiller och mycket mer."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Lamamarker",
           "body": [
-            "Blackjack, Poker och Casino delar ett konto hos Lamabanken: du börjar med 1000 lamamarker och saldot sparas permanent.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines och Lama Plinko delar ett konto hos Lamabanken: du börjar med 1000 lamamarker och saldot sparas permanent.",
             "Insatsen dras så fort korten delas ut - lämnar du en pågående hand är den förlorad.",
             "Rekordet är toppen av din blackjackbalans: 1000 plus allt du har vunnit och förlorat i blackjack. Vinster i roulett, på automaten eller i poker räknas inte här.",
             "Under 10 marker är du pank: [Enter] tar ett banklån och fyller på kontot till 1000 igen. Lån räknas inte in i balansen."
@@ -1901,7 +1901,7 @@
         {
           "h": "Lamamarker",
           "body": [
-            "Man spelar med lamamarker från Lamabanken - ett konto som delas med Blackjack och Casino (start 1000, sparas permanent).",
+            "Man spelar med lamamarker från Lamabanken - ett konto som delas med Blackjack, Casino, Lama Crossing, Lama Mines och Lama Plinko (start 1000, sparas permanent).",
             "I början av en hand ligger ditt konto på bordet som din stack; det som går till potten dras direkt. Lämnar du bordet mitt i en hand är din del av potten förlorad - resten går tillbaka till kontot.",
             "Rekordet är toppen av din pokerbalans: 1000 plus allt du har vunnit och förlorat i poker. Vinster i andra spel räknas inte här.",
             "Pank (mindre än big blind på 20, i Video Poker under 10) = banklån med ett klick, kontot står åter på 1000."
@@ -2976,7 +2976,7 @@
         {
           "h": "Lamabanken",
           "body": [
-            "Casino, Blackjack och Poker spelar med samma konto: lamamarker (start 1000). Insatser dras direkt och vinster krediteras - allt sparas permanent.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines och Lama Plinko spelar med samma konto: lamamarker (start 1000). Insatser dras direkt och vinster krediteras - allt sparas permanent.",
             "Varje spel har sin egen balans. Casinots rekord är toppen av 1000 + casinobalans; vinster i Blackjack eller Poker räknas inte här.",
             "Är du pank (under minsta insatsen) får du ett banklån: kontot fylls på till 1000 igen. Lån räknas inte i någon balans; antalet visas uppe till höger."
           ]
@@ -3109,7 +3109,7 @@
         {
           "h": "Lamamarker",
           "body": [
-            "Lama Crossing spelar med det gemensamma kontot hos Lamabanken - tillsammans med Blackjack, Poker och Casino (start 1000, sparas i mem.json).",
+            "Lama Crossing spelar med det gemensamma kontot hos Lamabanken - tillsammans med Blackjack, Poker, Casino, Lama Mines och Lama Plinko (start 1000, sparas i mem.json).",
             "Rekordet är toppen av 1000 + din Lama Crossing-balans; vinster i Blackjack, Poker eller Casino räknas inte här.",
             "Under 10 marker är du pank: [Enter] eller ett klick tar ett banklån och fyller på kontot till 1000 igen. Lån räknas inte in i balansen.",
             "Det är säkert att sluta mitt i en överfart: insats, svårighetsgrad och fil sparas, och nästa gång fortsätter du precis där."
@@ -3134,6 +3134,317 @@
             "- Med bra timing kommer man hela vägen över ungefär var 7:e runda på Lätt, var 38:e på Medel, var 614:e på Svår och bara i en av 32 768 på Extrem.",
             "- För Stålnerver (×10) räcker 4 filer på Extrem (×15,52), 7 på Svår (×11,77) och 13 på Medel (×10,37); på Lätt aldrig (högst ×6,57). Lindans (×100 på Extrem) kräver 7 filer (×124,16) - det lyckas ungefär var 128:e runda.",
             "- Bestäm i förväg vid vilken multiplikator du tar ut - och håll dig till det. Med den fasta återbetalningen är ingen strategi bättre än en annan, bara mer eller mindre riskabel."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamamines",
+      "category": "games",
+      "game": "LamaMinesGame",
+      "title": "Lama Mines",
+      "keywords": [
+        "lama",
+        "mines",
+        "minor",
+        "ädelstenar",
+        "rutor",
+        "vända",
+        "ta ut",
+        "multiplikator",
+        "marker",
+        "lamabanken",
+        "insats",
+        "risk",
+        "auto",
+        "rättvisa",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "statistik",
+        "kontrollkod"
+      ],
+      "sections": [
+        {
+          "h": "Så spelar du",
+          "body": [
+            "Under varje dold ruta ligger en ädelsten eller en mina. Varje ädelsten du hittar höjer multiplikatorn - en mina kostar insatsen.",
+            "Välj insats (10, 20, 50, 100, 200, 500, 1000, 2500, 5000 eller 10000 lamamarker) och tryck SPELA: insatsen dras och spelplanen lottas. Från och med nu står det fast var minorna ligger - det går att kontrollera med rättvisekontrollen.",
+            "Sedan vänder du ruta för ruta: med ett klick, med piltangenterna och [Blanksteg] eller med [R] eller knappen Slumpvis ruta på en slumpvis dold ruta. Från första ädelstenen kan du trycka TA UT när som helst - då får du insatsen gånger aktuell multiplikator.",
+            "När alla ädelstenar är hittade tas vinsten ut automatiskt: ALLA ÄR MINA! Träffar du en mina exploderar den, skärmen skakar och insatsen är förlorad. I båda fallen - även efter ett uttag - visas de återstående rutorna nedtonade, så att du ser var minorna låg. Spelplanen ligger kvar så tills du spelar vidare eller ändrar en inställning.",
+            "Uppe till höger syns historiken för de senaste 12 rundorna - den nyaste till höger, en mina som rött ×0."
+          ]
+        },
+        {
+          "h": "Spelplanens storlek och minor",
+          "body": [
+            "Fyra storlekar - väljs före varje runda med knapparna eller med [1] till [4]: 4×4 (16 rutor), 5×5 (25 rutor, standard), 6×6 (36 rutor) och 7×7 (49 rutor).",
+            "Antalet minor ställer du in med [Vänster] / [Höger], pilknapparna eller de sex snabbvalsknapparna: från 1 upp till antalet rutor minus 1 - minst en ädelsten blir alltid kvar. Standard är 3 minor. Snabbvalet erbjuder per storlek:",
+            "- 4×4: 1, 2, 3, 5, 8 eller 12 minor",
+            "- 5×5: 1, 3, 5, 10, 15 eller 24 minor",
+            "- 6×6: 1, 3, 6, 12, 20 eller 35 minor",
+            "- 7×7: 1, 3, 7, 14, 24 eller 48 minor",
+            "Fler minor betyder: varje ädelsten är värd mer, men nästa ruta är mer sällan säker. Med 24 minor på 5×5 ger redan den första ädelstenen ×24,25 - med 4 % chans.",
+            "Storlek, minor och insats kan bara ändras mellan rundorna."
+          ]
+        },
+        {
+          "h": "Multiplikator och återbetalning",
+          "body": [
+            "Multiplikatorn beror bara på hur många ädelstenar du har hittat - inte på vilka rutor det var. Den väger exakt upp chansen att komma så långt, minus 3 % till banken:",
+            "- multiplikator = 0,97 delat med chansen att hitta k ädelstenar i rad",
+            "- den chansen är en produkt med en faktor per ädelsten: ädelstenar/rutor × (ädelstenar - 1)/(rutor - 1) × …",
+            "- som formel: 0,97 × C(N, M) / C(N - k, M), avrundat nedåt till hundradelar. N är antalet rutor, M antalet minor, k antalet hittade ädelstenar och C(n, m) binomialkoefficienten ”n över m”.",
+            "Exempel 5×5 med 3 minor: den första rutan är säker i 22 av 25 fall (88 %), alltså ger den 0,97 / 0,88 = ×1,10. Efter två ädelstenar är chansen 22/25 × 21/24 = 77 % - det blir ×1,25.",
+            "Sedan följer ×1,44, ×1,67 och ×1,95 efter 5 ädelstenar, ×4,90 efter 10, ×10,14 efter 13, ×18,59 efter 15, ×111,55 efter 19 och ×557,75 efter 21. Den som hittar alla 22 ädelstenar får ×2 231 - det lyckas i en av 2300 rundor.",
+            "Golv: varje ädelsten höjer multiplikatorn med minst 0,01 - redan den första ger alltså minst ×1,01. Enligt formeln ensam skulle det till exempel bara bli ×0,99 på 6×6 med 1 mina. Bara tre steg höjs: den första ädelstenen på 6×6 med 1 mina och de två första på 7×7 med 1 mina.",
+            "Högsta vinsten är ×100 000. Når multiplikatorn den gränsen tas vinsten ut automatiskt direkt: MAXVINST! När hela spelplanen rensas händer det redan från 5×5 med 6 minor, 6×6 med 5 och 7×7 med 4 minor; aldrig på 4×4. Mer än så blir det inte, även om formeln skulle ge mer.",
+            "Eftersom chans och multiplikator väger upp varandra ger varje strategi i längden tillbaka ungefär 97 % av insatsen - oavsett storlek, antal minor och efter hur många ädelstenar du tar ut. På grund av avrundningen blir det 96 till 97 % beroende på steg. De tre höjda stegen ligger lite över (högst 98,94 % vid den första ädelstenen på 7×7 med 1 mina), det begränsade steget klart under. Husets fördel är alltså cirka 3 %.",
+            "Bråkdelar går inte förlorade: hela marker betalas ut, och resten i hundradelar sparas och läggs till nästa uttag. 10 marker × 1,01 ger alltså först 10 marker, de återstående 0,10 kommer senare - så får även små insatser full återbetalning."
+          ]
+        },
+        {
+          "h": "Visningar",
+          "body": [
+            "Före rundan visar rubriken den högsta multiplikatorn för inställningen (alla ädelstenar hittade) och antalet ädelstenar och minor. Under rundan står allt du behöver för nästa beslut bredvid spelplanen:",
+            "- aktuell multiplikator och din vinst om du tar ut nu",
+            "- multiplikatorn efter nästa ädelsten och vinsten vid nästa ruta",
+            "- chansen att nästa ruta är säker: återstående ädelstenar delat med återstående dolda rutor - 88 % vid första klicket på 5×5 med 3 minor, sedan lite mindre för varje ädelsten",
+            "- hur många ädelstenar som är hittade och en list med de nästa 5 stegen: hur många ädelstenar som ger vilken multiplikator",
+            "Maskotlaman med gruvhjälm och pannlampa lever med: den jublar vid varje ädelsten medan gruvvagnen bredvid fylls, och vid en mina rycker den till och blir täckt av sot. Från ×3 regnar det mynt, från ×10 och när spelplanen rensas blir det också konfetti."
+          ]
+        },
+        {
+          "h": "Autoläge",
+          "body": [
+            "[A] eller Auto-knappen öppnar autoläget mellan rundorna. Fönstret lägger sig över sidopanelen och lämnar rutnätet fritt: med ett klick eller med piltangenterna och [Blanksteg] markerar du de rutor som ska vändas varje runda - högst lika många som det finns ädelstenar. Spelet minns valet för varje storlek; [Del], [Backspace] eller Rensa tar bort alla markeringar.",
+            "Fönstret visar hur många rutor som är markerade och vad rundan ger om alla är säkra: multiplikator och chans. Dessutom väljer du antalet rundor (5, 10, 25, 50 eller 100) och vid behov två gränser: Stoppa vid vinst på och Stoppa vid förlust på (av, 100, 500, 1000, 5000, 10000 eller 50000 marker, räknat från starten).",
+            "STARTA AUTO eller [Enter]: varje runda drar insatsen och vänder snabbt de markerade rutorna en efter en. Är alla säkra tas vinsten ut - med multiplikatorn för lika många ädelstenar som du har markerat. Ligger en mina under en markerad ruta är rundan förlorad.",
+            "Autoläget pågår tills alla rundor är spelade, en gräns slår till, markerna inte räcker till nästa insats eller du trycker STOPP, [Blanksteg], [Enter], [A] eller [Esc]. Stoppar du mitt i en runda förblir den öppen - du vänder vidare för hand eller tar ut. Insats, storlek och minor är låsta medan autoläget pågår.",
+            "[T] slår på turbo - även när du spelar för hand: rutor, explosioner och autorundor går två och en halv gång så snabbt."
+          ]
+        },
+        {
+          "h": "Rättvisekontroll",
+          "body": [
+            "Lama Mines är bevisligen rättvist: minfältet står fast innan du klickar på första rutan - och efter rundan kan du räkna efter att inget har flyttats. Det sköts med fyra värden:",
+            "- Server-seed: ett hemligt slumpvärde (32 tecken) som spelet bestämmer före rundan.",
+            "- Kontrollkod: SHA-256-fingeravtrycket (hash) av server-seeden. Den visas redan före rundan (kontrollkod för nästa runda). Seeden går inte att räkna fram ur den - men redan ett annat tecken i seeden skulle ge en helt annan kod.",
+            "- Klient-seed: din andel av slumpen (8 tecken). Med Ny klient-seed slumpar du fram en ny - bara utanför en runda. Så bestämmer inte spelet resultatet ensamt.",
+            "- Nr: rundnumret. Det ökar med ett varje runda, så att ingen runda blir som en annan.",
+            "Spelets namn, server-seed, klient-seed och rundnummer bildar rundans slump (mulberry32). Den blandar listan över alla rutor (räknade rad för rad, uppifrån vänster), och de första platserna i den blandade listan - lika många som det finns minor - blir minor.",
+            "Efter rundan avslöjas server-seeden; kontrollkoden för nästa runda står då redan fast.",
+            "[F] öppnar fönstret Rättvisa: överst kontrollkoden för nästa runda (under en runda även kontrollkoden för denna runda), din klient-seed och rundnumret, därunder de senaste 12 rundorna med nr, kontrollkod och resultat, den nyaste överst (mushjulet bläddrar). Ett klick på en rad visar storlek, minor, kontrollkod, server-seed och klient-seed.",
+            "Kontrollera beräknar seedens SHA-256 på nytt, jämför den med kontrollkoden som visades i förväg, bygger upp minfältet igen och kontrollerar även resultatet - låg de vända rutorna rätt, stämmer multiplikatorn? En bock eller ett kryss och en liten förhandsvisning av spelplanen visar: Stämmer eller Stämmer inte.",
+            "Du kan också kontrollera koden själv: beräkna server-seedens SHA-256 med valfritt verktyg och jämför den med kontrollkoden."
+          ]
+        },
+        {
+          "h": "Statistik",
+          "body": [
+            "[S] öppnar statistiken för din profil: rundor, vunna och förlorade, din avkastning (hur många procent av dina insatser som har kommit tillbaka), insatt och utbetalt, balans, största vinst och bästa multiplikator - plus hittade ädelstenar, träffade minor och rensade planer.",
+            "Ett diagram visar balansen för de senaste 100 rundorna. En runda räknas som vunnen om mer betalades ut än det sattes in.",
+            "I längden lägger sig din avkastning kring 97 % - under få rundor kan den svänga kraftigt uppåt eller nedåt."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- Före rundan: [Blanksteg] eller [Enter] = SPELA, [1] till [4] = storlek, [Vänster] / [Höger] = antal minor",
+            "- [Upp] / [Ner], [+] / [-] eller mushjulet: ändra insats (bara mellan rundorna)",
+            "- Under rundan: ett klick på en ruta vänder den. Piltangenterna flyttar en markör; det första [Blanksteg] visar den bara, varje följande vänder rutan under den.",
+            "- [R] eller knappen Slumpvis ruta: vänd en slumpvis dold ruta; [Enter], [C] eller TA UT: ta ut (från första ädelstenen)",
+            "- Efter resultatet: [Blanksteg] eller SPELA startar nästa runda direkt, andra tangenter leder tillbaka till inställningarna.",
+            "- [A]: autoläge, [S]: statistik, [F]: rättvisa, [T]: turbo - eller de fyra knapparna överst. [Esc] eller ett klick bredvid fönstret stänger det, [Esc] stoppar också autoläget.",
+            "Tangenterna är fasta och beror inte på tangentbindningen - spelartangenter som WASD gäller inte här. Storlek, antal minor, senaste insats, turbo och autoinställningarna sparas i settings.json (sektionen lamamines)."
+          ]
+        },
+        {
+          "h": "Lamamarker",
+          "body": [
+            "Lama Mines spelar med det gemensamma kontot hos Lamabanken - tillsammans med Blackjack, Poker, Casino, Lama Crossing och Lama Plinko (start 1000, sparas i mem.json).",
+            "Rekordet är toppen av 1000 + din Lama Mines-balans; vinster i Lamabankens andra spel räknas inte här.",
+            "Under 10 marker är du pank: [Blanksteg], [Enter] eller ett klick tar ett banklån och fyller på kontot till 1000 igen. Lån räknas inte in i balansen.",
+            "Det är säkert att sluta mitt i en runda: insatsen dras vid starten, och efter varje hittad ädelsten sparas storlek, minor, rundans seeds och de vända rutorna. Vid nästa start räknas spelplanen fram på nytt ur seeden, och du fortsätter precis där.",
+            "Historik, rättvisedata, statistik, automarkeringarna och den överförda resten hör till din profil."
+          ]
+        },
+        {
+          "h": "Prestationer",
+          "body": [
+            "- Lama Mines-stammis: 25 omgångar",
+            "- Milstolpe: rekord 3000",
+            "- Lama Mines-mästare: rekord 10000",
+            "- Skattkammare (sällsynt): Rensa en hel spelplan i Lama Mines – alla ädelstenar hittade",
+            "- Djupt grävt (episk): Ta ut vid ×10 eller mer i Lama Mines",
+            "- Diamantlama (legendarisk): Ta ut vid ×1000 eller mer i Lama Mines"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Varje runda lottas på nytt, och ingen ruta är säkrare än en annan - varken hörnen eller mitten. Mönster från tidigare rundor hjälper inte.",
+            "- Skattkammare: på 4×4 med 1 mina lyckas det att rensa spelplanen i en av 16 rundor (×15,52) - precis som med 15 minor, där det bara finns en ädelsten. På 5×5 med 3 minor är det bara en av 2300.",
+            "- Djupt grävt (×10): på 5×5 med 3 minor räcker 13 ädelstenar (×10,14), det lyckas ungefär var 10:e till 11:e runda. Med 24 minor ger redan den första ädelstenen ×24,25 - i en av 25 rundor.",
+            "- Diamantlama (×1000): de bästa vägarna lyckas ungefär i en av 1100 rundor, till exempel 5×5 med 10 minor efter 10 ädelstenar (×1 055,84) eller 7×7 med 12 minor efter 19 ädelstenar (×1 034,71). På 5×5 med 3 minor går det bara genom att rensa hela spelplanen (×2 231).",
+            "- I autoläget räknas bara hur många rutor du markerar, inte vilka: 5 markerade rutor på 5×5 med 3 minor är alla säkra i 49,6 % av rundorna och ger då ×1,95.",
+            "- Bestäm i förväg efter hur många ädelstenar du tar ut - och håll dig till det. Med den fasta återbetalningen är ingen strategi bättre än en annan, bara mer eller mindre riskabel. Att satsa på maxvinsten lönar sig inte: det begränsade steget betalar mindre än risken är värd."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamaplinko",
+      "category": "games",
+      "game": "LamaPlinkoGame",
+      "title": "Lama Plinko",
+      "keywords": [
+        "lama",
+        "plinko",
+        "kula",
+        "garnnystan",
+        "galtonbräda",
+        "stift",
+        "fack",
+        "multiplikator",
+        "marker",
+        "lamabanken",
+        "insats",
+        "rader",
+        "risk",
+        "klockkurva",
+        "auto",
+        "turbo",
+        "rättvisa",
+        "provably fair",
+        "kontrollkod",
+        "seed",
+        "sha-256",
+        "statistik"
+      ],
+      "sections": [
+        {
+          "h": "Så spelar du",
+          "body": [
+            "Ett gyllene garnnystan faller genom en triangel av stift. Vid varje stift studsar det åt vänster eller höger och landar i ett av facken längst ner. På varje fack står en multiplikator: insats gånger multiplikator är din utbetalning.",
+            "Välj insats per kula (1, 2, 5, 10, 20, 50, 100, 200, 500 eller 1000 lamamarker) och tryck på SLÄPP: Insatsen dras, laman högst upp på brädet nickar och släpper kulan.",
+            "Facken längst ut betalar mest, de i mitten ger tillbaka mindre än insatsen - men det är där de flesta kulorna landar. Du får insats gånger multiplikator i hela marker; det som blir över under en mark kommer spelet ihåg och lägger till nästa kula.",
+            "Det träffade facket gungar, en popup visar multiplikatorn, och ju högre den är, desto ljusare låter tonen. Från ×10 regnar det mynt, från ×100 kommer dessutom en banderoll och konfetti. Uppe till höger står historiken för de senaste 12 kulorna."
+          ]
+        },
+        {
+          "h": "Rader och risk",
+          "body": [
+            "Båda ställer du in före kastet; så länge det finns kulor på brädet eller autoläget körs är de låsta. Spelet visar också den högsta multiplikatorn och den exakta återbetalningen för den valda tabellen.",
+            "- Rader: 8 till 16 rader med stift med [Vänster] / [Höger] (standard 12). Med n rader finns det n + 1 fack.",
+            "- Risk: Låg, Medel (standard) eller Hög med [1] till [3].",
+            "Fler rader gör kantfacken ovanligare och högre. Risken avgör hur långt mitten och kanten ligger från varandra:",
+            "- Låg: mitten ×0,7, kanten ×5,3 (8 rader) upp till ×16 (16 rader) - små, täta vinster",
+            "- Medel: mitten ×0,4–0,5, kanten ×13 upp till ×110",
+            "- Hög: mitten ×0,2, kanten ×32 upp till ×1 000 - nästan alltid mindre än insatsen, mycket sällan en jätteträff",
+            "Exempel - de 17 facken med 16 rader på Medel: 110 · 38 · 14 · 6,2 · 2,8 · 1,4 · 0,8 · 0,5 · 0,4 · 0,5 · 0,8 · 1,4 · 2,8 · 6,2 · 14 · 38 · 110",
+            "Med 16 rader ger omkring 55 % av kulorna tillbaka mindre än insatsen på Låg, 79 % på Medel och hela 92 % på Hög."
+          ]
+        },
+        {
+          "h": "Så faller kulan",
+          "body": [
+            "Brädet är en galtonbräda: Vid varje stift går kulan åt vänster eller höger med exakt 50 % - som vid krona eller klave. Facket är helt enkelt antalet studsar åt höger: med 12 rader alltså 0 (längst till vänster) till 12 (längst till höger).",
+            "Ända ut till kanten kommer en kula bara om den studsar åt samma håll vid varenda stift. Mot mitten leder däremot väldigt många vägar. Därför samlas kulorna i mitten i en klockkurva (binomialfördelning):",
+            "- 8 rader: mittfack 27,34 %, varje kantfack 1 av 256",
+            "- 12 rader: mittfack 22,56 %, varje kantfack 1 av 4 096",
+            "- 16 rader: mittfack 19,64 %, varje kantfack 1 av 65 536",
+            "Håll musen över ett fack: Det visar sin multiplikator, sin chans (även pyttesmå som 0,0015 %) och vad det betalar ut vid din insats.",
+            "De 27 tabellerna (9 radantal × 3 risknivåer) är symmetriska, blir aldrig mindre mot kanten och betalar - exakt uträknat - i längden tillbaka 96,9 % till 97,1 % av insatserna. Husets fördel är alltså cirka 3 %, oavsett vad du ställer in. Rader och risk ändrar bara hur mycket turen svänger."
+          ]
+        },
+        {
+          "h": "Många kulor på en gång",
+          "body": [
+            "Du behöver inte vänta tills en kula har landat: Upp till 50 kulor kan studsa över brädet samtidigt - räknaren \"I spel\" håller koll. Håll [Blanksteg] nedtryckt, så faller de efter ett kort ögonblick i snabb följd - så tätt att runt 30 kulor är på väg samtidigt.",
+            "Varje kulas väg lottas redan vid kastet. Därför bokförs och sparas insats och utbetalning tillsammans direkt - men utbetalningen syns först när kulan når botten. Först då kan du också satsa vinsten igen.",
+            "Lämnar du spelet medan kulor fortfarande faller går ingenting förlorat: Markerna är redan bokförda, och prestationer från de kulorna delas ut när du lämnar.",
+            "Turbo halverar kulornas flygtid och avståndet mellan kasten - slå på och av med [T]."
+          ]
+        },
+        {
+          "h": "Autoläge",
+          "body": [
+            "[A] öppnar autoläget. Där ställer du in (fönstret räknar också ut den totala insatsen för hela serien):",
+            "- Kulor: 10, 25, 50, 100, 250, 500 eller 1000",
+            "- Stoppa vid vinst på / Stoppa vid förlust på: av, 100, 500, 1000, 5000, 10000 eller 50000 marker",
+            "- Turbo på eller av",
+            "STARTA AUTO kastar kulorna efter varandra med din aktuella insats, rader och risk; de tre är låsta under tiden. Autoläget slutar när alla kulor är kastade, vinsten eller förlusten sedan starten når en gräns, markerna inte heller efter landningen av kulorna i luften räcker till nästa kula eller du trycker på STOPP, [Blanksteg] eller [Esc]. Kulor som redan är på väg landar ändå.",
+            "Autoinställningarna sparas i settings.json (sektionen lamaplinko)."
+          ]
+        },
+        {
+          "h": "Rättvisekontroll",
+          "body": [
+            "I Lama Plinko kan du själv kontrollera att ingen kula styrs i efterhand (\"provably fair\"). Till det finns tre värden:",
+            "- Server-seed: ett hemligt slumpvärde på 32 tecken som spelet bestämmer före kastet. Varje kula får sitt eget.",
+            "- Kontrollkod: SHA-256-fingeravtrycket av server-seedet. Den syns redan före kastet. Den avslöjar inte seedet, men varje annat seed skulle ha en helt annan kod - spelet kan alltså inte längre byta ut seedet.",
+            "- Klient-seed: din egen andel (8 tecken). \"Ny klient-seed\" drar ett nytt så snart ingen kula är i luften - så bestämmer spelet inte slumpen ensamt.",
+            "Dessutom finns numret (nonce), som ökar med 1 för varje kula. Server-seed, klient-seed och nummer ger tillsammans kulans slump: ett myntkast per rad, och varje \"höger\" skjuter den ett fack längre åt höger.",
+            "Efter landningen avslöjas server-seedet - då står kontrollkoden för nästa kula redan fast.",
+            "[F] öppnar rättvisekontrollen med de senaste 12 kulorna: nummer, kontrollkod, server-seed och klient-seed, plus rader, risk, fack och multiplikator. \"Kontrollera\" räknar ut seedets SHA-256 igen, jämför den med kontrollkoden som visades innan och räknar ut kulans väg en gång till: \"Stämmer\" betyder att allt stämmer - \"Stämmer inte\" skulle avslöja en avvikelse. En liten förhandsvisning visar den omräknade vägen.",
+            "För den nyfikne: Slumpgeneratorn är mulberry32, startad med FNV-1a-värdet av texten \"lamaplinko|server-seed|klient-seed|nummer\". Varje rad drar ett tal mellan 0 och 1; under 0,5 betyder höger. Så kan varje kula också räknas om med egna verktyg."
+          ]
+        },
+        {
+          "h": "Statistik",
+          "body": [
+            "[S] öppnar din profils statistik för Lama Plinko:",
+            "- Rutor: Rundor, Vunna, Förlorade, Satsat, Utbetalt, Balans, Största vinst, Bästa faktor, Din avkastning. Varje kula räknas för sig; vunnen betyder mer än insatsen tillbaka, förlorad mindre.",
+            "- en balanskurva över de senaste 100 kulorna",
+            "- träffördelningen: dina träffar per fack som staplar, den förväntade fördelningen (binomial) i guld - för varje radantal för sig, byt med [Vänster] / [Höger]",
+            "I början hoppar din återbetalning mycket (en kantträff på Hög skickar den högt upp), med många kulor närmar den sig cirka 97 %. På samma sätt närmar sig staplarna guldkurvan efter några hundra kulor."
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- [Blanksteg], [Enter] eller klick på SLÄPP eller brädet: kasta en kula - håll nedtryckt för snabb följd",
+            "- [Upp] / [Ner], [+] / [-] eller mushjulet: ändra insats per kula",
+            "- [Vänster] / [Höger]: rader (8 till 16), [1] till [3]: risk",
+            "- [A]: autoläge, [S]: statistik, [F]: rättvisekontroll, [T]: turbo",
+            "- [Esc]: stäng ett öppet fönster eller stoppa autoläget",
+            "- Musen över ett fack: multiplikator, chans och utbetalning vid din insats",
+            "I fönstren: I autofönstret väljer [Upp] / [Ner] en rad, [Vänster] / [Höger] ändrar den och [Enter] eller [Blanksteg] startar eller stoppar. I statistiken byter [Vänster] / [Höger] fördelningens radantal. I rättvisekontrollen väljer piltangenterna eller mushjulet en kula, [Enter] kontrollerar den och [C] hämtar ett nytt klient-seed. [Esc] eller samma bokstavstangent stänger fönstret igen.",
+            "Allt fungerar också med musen; ett klick bredvid ett öppet fönster stänger det. Rader, risk, insats, turbo och autoinställningarna sparas i settings.json (sektionen lamaplinko)."
+          ]
+        },
+        {
+          "h": "Lamamarker",
+          "body": [
+            "Lama Plinko spelar med det gemensamma kontot hos Lamabanken - tillsammans med Blackjack, Poker, Casino, Lama Crossing och Lama Mines (start 1000, sparas i mem.json).",
+            "Rekordet är toppen av 1000 + din Lama Plinko-balans; vinster i de andra spelen räknas inte här.",
+            "Räcker kontot inte till den valda insatsen, välj en mindre. Med 0 marker är du pank: [Enter] eller ett klick tar ett banklån och fyller på kontot till 1000 igen. Lån räknas inte in i balansen.",
+            "Historik, statistik och rättvisedata hör till din profil och sparas också i mem.json."
+          ]
+        },
+        {
+          "h": "Prestationer",
+          "body": [
+            "- Lama Plinko-stammis: 25 omgångar",
+            "- Milstolpe: rekord 3000",
+            "- Lama Plinko-mästare: rekord 10000",
+            "- Kantträff (sällsynt): Träffa det yttersta facket i Lama Plinko (12 rader eller fler)",
+            "- Nystanregn (episk): Ha 25 kulor på brädet samtidigt i Lama Plinko",
+            "- Plinkolegend (legendarisk): Träffa det yttersta facket i Lama Plinko med 16 rader på hög risk"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Varje kula är oberoende: Efter tio träffar i mitten är kanten inte \"på tur\".",
+            "- Ingen inställning slår återbetalningen. På Låg svänger ditt konto lite, på Hög förlorar du för det mesta - med en liten chans till en jätteträff.",
+            "- Små insatser är ingen nackdel: Ingen bråkdel av en mark går förlorad. På 1 mark ger ×0,7 först ingenting, men de 0,7 markerna sparas och betalas ut med en av de nästa kulorna så snart en hel mark är full. Därför gäller återbetalningen på cirka 97 % för varje insats.",
+            "- Kantträff: snabbast med 12 rader - där landar ungefär 1 av 2 048 kulor längst ut vid kanten (till vänster eller höger). Med 1 mark per kula kostar det i snitt bara runt 3 marker per 100 kulor.",
+            "- Nystanregn: håll bara [Blanksteg] nedtryckt - den snabba följden ger runt 30 kulor på brädet samtidigt, oavsett antal rader, och efter ungefär 2 sekunder är prestationen din. Autoläget kastar för lugnt för det.",
+            "- Plinkolegend: med 16 rader på Hög landar bara 1 av 32 768 kulor längst ut vid kanten - med autoserier på 1000 kulor behöver du i snitt runt 33 serier. I gengäld betalar facket ×1 000.",
+            "- Bestäm en budget i förväg och använd förlustgränsen i autoläget."
           ]
         }
       ]

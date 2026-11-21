@@ -1,7 +1,7 @@
 //! lamabank.rs
 //! ===========
-//! Die **Lama-Bank** - das gemeinsame Chip-Konto von Blackjack, Poker und
-//! Casino (aus `lamabank.py`).
+//! Die **Lama-Bank** - das gemeinsame Chip-Konto von Blackjack, Poker,
+//! Casino, Lama Crossing, Lama Mines und Lama Plinko (aus `lamabank.py`).
 //!
 //! Gespeichert im Abschnitt `casino` der `mem.json` (je Profil):
 //! `chips`, `ledger` (Netto-Bilanz je Spiel), `peak` (Hoechststand je Spiel),
@@ -21,15 +21,22 @@ pub const SECTION: &str = "casino";
 /// Startkapital (und Wert nach einem Bank-Kredit).
 pub const START_CHIPS: i64 = 1000;
 /// Die Spiele mit eigener Bilanz.
-pub const GAMES: [&str; 4] = ["blackjack", "poker", "casino", "lamacrossing"];
+pub const GAMES: [&str; 6] = ["blackjack", "poker", "casino", "lamacrossing", "lamamines", "lamaplinko"];
 
-const MIN_BET: [(&str, i64); 6] = [
+/// Mindesteinsatz je Spiel bzw. `"spiel:modus"` (Pleite-Regel).
+/// Blackjack: kleinster Chip 10 - Poker: Big Blind 20 (Hold'em und Draw),
+/// Video Poker 10 - Roulette: 1er-Chip - Lama-Slot: 10 Linien x 1 -
+/// Lama Crossing und Lama Mines: kleinste Einsatzstufe 10 -
+/// Lama Plinko: kleinster Einsatz je Kugel 1.
+const MIN_BET: [(&str, i64); 8] = [
     ("blackjack", 10),
     ("poker", 20),
     ("poker:video", 10),
     ("casino", 1),
     ("casino:slots", 10),
     ("lamacrossing", 10),
+    ("lamamines", 10),
+    ("lamaplinko", 1),
 ];
 
 static DATA: Mutex<Option<Map<String, Value>>> = Mutex::new(None);
@@ -253,6 +260,47 @@ pub fn credit(n: i64, game: &str, save_now: bool) {
         if save_now {
             save(d);
         }
+    })
+}
+
+/// `bet_and_pay(bet, win, game, extra_key, extra)` - Einsatz abbuchen UND
+/// Gewinn gutschreiben, mit EINEM Speichern.
+///
+/// Fuer Spiele, deren Ergebnis schon beim Einsatz feststeht (Lama Plinko:
+/// der Weg der Kugel wird beim Abwurf gezogen, gezeigt erst bei der
+/// Landung). `extra = Some((schluessel, wert))` schreibt im selben Zug einen
+/// Zusatz-Spielstand wie `set_extra` (Python `extra_key`/`extra`; ein
+/// `None`-Wert dort ist hier `Value::Null`). `false` = Einsatz nicht
+/// gedeckt - dann wird gar nichts gebucht (auch kein Zusatz).
+///
+/// Reihenfolge der Schritte wie in Python, damit `ledger`/`peak` gleich
+/// aussehen: erst Einsatz (nur wenn > 0), dann Gewinn (nur wenn > 0) samt
+/// Hoechststand; ein bisher fehlender Spiel-Schluessel landet hinten.
+pub fn bet_and_pay(bet: i64, win: i64, game: &str, extra: Option<(&str, Value)>) -> bool {
+    with(|d| {
+        let chips = geti(d, "chips");
+        if bet > chips {
+            return false;
+        }
+        if bet > 0 {
+            d["chips"] = json!(geti(d, "chips") - bet);
+            let l = get_in(d, "ledger", game, 0);
+            d["ledger"][game] = json!(l - bet);
+        }
+        if win > 0 {
+            d["chips"] = json!(geti(d, "chips") + win);
+            let l = get_in(d, "ledger", game, 0) + win;
+            d["ledger"][game] = json!(l);
+            let peak = get_in(d, "peak", game, START_CHIPS).max(START_CHIPS + l);
+            d["peak"][game] = json!(peak);
+        }
+        if let Some((key, value)) = extra {
+            if let Some(Value::Object(e)) = d.get_mut("extra") {
+                e.insert(key.into(), value);
+            }
+        }
+        save(d);
+        true
     })
 }
 

@@ -206,6 +206,14 @@ DEFAULTS = {
     "casino": {"roulette_chip": 5, "line_bet": 1, "turbo": False},
     # Lama Crossing: Welt (Straße = Standard), Schwierigkeit, zuletzt gewählter Einsatz
     "lamacrossing": {"world": "road", "difficulty": "medium", "bet": 10},
+    # Lama Mines: Feldgröße (4-7 = 4x4 .. 7x7), Minen, Einsatz, Turbo,
+    # Auto-Modus (Runden, Stopp bei Gewinn/Verlust ab ... Chips, 0 = aus)
+    "lamamines": {"grid": 5, "mines": 3, "bet": 10, "turbo": False,
+                  "auto_rounds": 10, "auto_win": 0, "auto_loss": 0},
+    # Lama Plinko: Reihen (8-16), Risiko, Einsatz je Kugel, Turbo,
+    # Auto-Modus (Kugeln, Stopp bei Gewinn/Verlust ab ... Chips, 0 = aus)
+    "lamaplinko": {"rows": 12, "risk": "medium", "bet": 10, "turbo": False,
+                   "auto_balls": 25, "auto_win": 0, "auto_loss": 0},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -242,6 +250,19 @@ SCHEMAS = {
     "lamacrossing": {"world": ("choice", ("road", "bridge", "river", "ice")),
                      "difficulty": ("choice", ("easy", "medium", "hard", "extreme")),
                      "bet": ("choice", (10, 20, 50, 100, 200, 500, 1000, 2500, 5000, 10000))},
+    "lamamines": {"grid": (int, 4, 7), "mines": (int, 1, 48),
+                  "bet": ("choice", (10, 20, 50, 100, 200, 500, 1000, 2500, 5000, 10000)),
+                  "turbo": bool,
+                  "auto_rounds": ("choice", (5, 10, 25, 50, 100)),
+                  "auto_win": ("choice", (0, 100, 500, 1000, 5000, 10000, 50000)),
+                  "auto_loss": ("choice", (0, 100, 500, 1000, 5000, 10000, 50000))},
+    "lamaplinko": {"rows": (int, 8, 16),
+                   "risk": ("choice", ("low", "medium", "high")),
+                   "bet": ("choice", (1, 2, 5, 10, 20, 50, 100, 200, 500, 1000)),
+                   "turbo": bool,
+                   "auto_balls": ("choice", (10, 25, 50, 100, 250, 500, 1000)),
+                   "auto_win": ("choice", (0, 100, 500, 1000, 5000, 10000, 50000)),
+                   "auto_loss": ("choice", (0, 100, 500, 1000, 5000, 10000, 50000))},
 }
 
 _INVALID = object()

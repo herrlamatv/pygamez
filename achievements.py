@@ -196,6 +196,8 @@ MILESTONES = {
     "geodash": 20,         # 20 Sterne (Level-Sterne + Münzen)
     "casino": 5000,        # Casino-Bilanz auf 5000 Chips gebracht
     "lamacrossing": 3000,  # Lama-Crossing-Bilanz auf 3000 Chips gebracht
+    "lamamines": 3000,     # Lama-Mines-Bilanz auf 3000 Chips gebracht
+    "lamaplinko": 3000,    # Lama-Plinko-Bilanz auf 3000 Chips gebracht
 }
 
 # Zweite Punktstufe ("{Spiel}-Meister"). Nur für Spiele, deren Punktzahl
@@ -234,6 +236,8 @@ MASTERS = {
     "geodash": 45,
     "casino": 15000,
     "lamacrossing": 10000,
+    "lamamines": 10000,
+    "lamaplinko": 10000,
 }
 
 # Besondere Momente: (id, icon, highscore_key, target, rarity).
@@ -324,6 +328,14 @@ SPECIALS = [
     ("lcr_other_side", "flag",  "lamacrossing", None, "rare"),      # einmal ganz hinüber
     ("lcr_brave",      "bolt",  "lamacrossing", None, "epic"),      # bei x10 oder mehr ausgezahlt
     ("lcr_extreme",    "crown", "lamacrossing", None, "legendary"), # Extrem ganz geschafft
+    # --- Lama Mines ----------------------------------------------------------
+    ("lmi_clear",      "gem",   "lamamines",  None, "rare"),        # Feld komplett abgeräumt
+    ("lmi_brave",      "bolt",  "lamamines",  None, "epic"),        # bei x10 oder mehr ausgezahlt
+    ("lmi_legend",     "crown", "lamamines",  None, "legendary"),   # bei x1000 oder mehr ausgezahlt
+    # --- Lama Plinko ---------------------------------------------------------
+    ("lpl_edge",       "flag",  "lamaplinko", None, "rare"),        # äußerstes Fach ab 12 Reihen
+    ("lpl_rain",       "bolt",  "lamaplinko", None, "epic"),        # 25 Kugeln gleichzeitig unterwegs
+    ("lpl_jackpot",    "crown", "lamaplinko", None, "legendary"),   # äußerstes Fach, 16 Reihen, Hoch
 ]
 
 _unlocked = None      # {id: "YYYY-MM-DD HH:MM"} (In-Memory-Kopie)

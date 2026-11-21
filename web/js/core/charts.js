@@ -133,7 +133,7 @@
       ]);
       if (o.fill !== false && points.length > 1) {
         const poly = points.concat([[points[points.length - 1][0], rect.bottom], [points[0][0], rect.bottom]]);
-        draw.polygon(ctx, ui.col(col, 46), poly);
+        draw.polygon(ctx, ui.col(col, 46 / 255), poly); // Alpha 46 von 255 wie charts.py
       }
       if (points.length > 1) draw.lines(ctx, col, false, points, 2);
       points.forEach(([x, y], i) => {

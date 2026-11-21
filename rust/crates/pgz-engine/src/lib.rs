@@ -8,6 +8,7 @@
 //! | [`py`] | Pythons Rechenregeln und `random` (MT19937, bitgleich) |
 //! | [`pg`] | `pygame` selbst: Surface, Rect, draw, transform, font |
 //! | [`ui`] | `ui.py` |
+//! | [`charts`] | `charts.py` (Diagramme: Fortschritt, Chip-Statistik) |
 //! | [`audio`] | `audio.py` |
 //! | [`game`] | `game_base.py` |
 //!
@@ -19,6 +20,7 @@
 
 pub mod achv;
 pub mod audio;
+pub mod charts;
 pub mod clip;
 pub mod filepick;
 pub mod game;

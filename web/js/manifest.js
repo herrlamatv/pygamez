@@ -53,4 +53,6 @@ window.PG_MANIFEST = [
   { id: "BattleshipGame", files: ["js/games/battleship.js"] },
   { id: "CasinoGame", files: ["js/games/cards.js", "js/games/casino_bank.js", "js/games/casino_logic.js", "js/games/casino_draw.js", "js/games/casino.js"] },
   { id: "LamaCrossingGame", files: ["js/games/casino_bank.js", "js/games/casino_logic.js", "js/games/casino_draw.js", "js/games/lamacrossing_logic.js", "js/games/lamacrossing_draw.js", "js/games/lamacrossing.js"] },
+  { id: "LamaMinesGame", files: ["js/games/casino_bank.js", "js/games/casino_logic.js", "js/games/casino_draw.js", "js/games/lamacrossing_draw.js", "js/games/seedrand.js", "js/games/fairness.js", "js/games/chipstats.js", "js/games/lamamines_logic.js", "js/games/lamamines_draw.js", "js/games/lamamines.js"] },
+  { id: "LamaPlinkoGame", files: ["js/games/casino_bank.js", "js/games/casino_logic.js", "js/games/casino_draw.js", "js/games/lamacrossing_draw.js", "js/games/seedrand.js", "js/games/fairness.js", "js/games/chipstats.js", "js/games/lamaplinko_logic.js", "js/games/lamaplinko_draw.js", "js/games/lamaplinko.js"] },
 ];
