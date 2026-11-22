@@ -47,6 +47,9 @@ MEM_START = {"mem": {"lang": "de"}}
 # Optionaler Vorlagen-Ordner (--daten): seine Dateien kommen in jeden frischen
 # Datenordner (z.B. aus rust/tools/testdaten.py).
 VORLAGE = None
+# Gehaltene Tasten (wie main.App._held_keys bzw. App.gehaltene in Rust) -
+# nur fuer "!blur" (Fokusverlust: alles loslassen).
+GEHALTEN = []
 
 
 def datenordner(basis, name):
@@ -83,7 +86,9 @@ def ereignis(game, k, InputEvent):
     nur druecken / nur loslassen (Ziehen mit ``~x:y`` dazwischen),
     ``%x:y:d`` = Mausrad bei (x, y) um d Rasten (+ = hoch, ohne d: 1),
     ``*Taste`` = Tastenwiederholung des Systems (KEYDOWN mit ``repeat=True``,
-    ohne Loslassen - wie eine gehaltene Taste nach ``+Taste``).
+    ohne Loslassen - wie eine gehaltene Taste nach ``+Taste``), ``!blur`` =
+    das Fenster verliert den Fokus (main.App._on_focus_out: gehaltene Tasten
+    loslassen, dann der echte ``_pause_on_blur``).
     """
     def zahlen(rest):
         out = []
@@ -94,6 +99,16 @@ def ereignis(game, k, InputEvent):
                 pass
         return out
 
+    if k == "!blur":
+        gehalten = list(GEHALTEN)
+        del GEHALTEN[:]
+        for taste in gehalten:
+            if not game.paused:
+                game.handle_event(InputEvent(InputEvent.KEYUP, key=taste))
+        import types
+        import main as main_mod
+        main_mod.App._pause_on_blur(types.SimpleNamespace(current=game))
+        return
     if len(k) > 1 and k[0] in "@~^<>%":
         z = zahlen(k[1:])
         if len(z) < 2 or game.paused:
@@ -136,6 +151,10 @@ def ereignis(game, k, InputEvent):
         elif not game.game_over:
             game.paused = not game.paused
         return
+    if runter and not wdh and k not in GEHALTEN:
+        GEHALTEN.append(k)
+    if hoch and k in GEHALTEN:
+        GEHALTEN.remove(k)
     if runter and not game.paused:
         game.handle_event(InputEvent(InputEvent.KEYDOWN, key=k, char=ch, repeat=wdh))
     if hoch and not game.paused:
@@ -143,6 +162,7 @@ def ereignis(game, k, InputEvent):
 
 
 def python_lauf(key, mode, seed, frames, keys, data_dir, ziel):
+    del GEHALTEN[:]
     import pygame
     import store
     import settings as settings_mod

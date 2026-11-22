@@ -861,6 +861,22 @@
       }
     }
 
+    /**
+     * Fenster verliert den Fokus (anderes Fenster/Programm, der Tab bleibt
+     * sichtbar): Spiele, die das wünschen (get pauseOnBlur - z.B. Lama Crash,
+     * solange ein Einsatz fliegt), gehen in die Pause - wie main.py
+     * _pause_on_blur. Ein verborgener Tab pausiert ohnehin jedes Spiel.
+     */
+    pauseOnBlur() {
+      const g = this.game;
+      if (!g || this.current !== g || g.paused || g.gameOver) return;
+      let want = false;
+      try {
+        want = !!g.pauseOnBlur;
+      } catch (err) {}
+      if (want) this.togglePause();
+    }
+
     releaseKeys() {
       const cur = this.current;
       for (const key of new Set(this.pressed.values())) {
@@ -943,7 +959,10 @@
         }
       });
 
-      window.addEventListener("blur", () => this.releaseKeys());
+      window.addEventListener("blur", () => {
+        this.releaseKeys();
+        this.pauseOnBlur();
+      });
       document.addEventListener("visibilitychange", () => {
         if (document.hidden) {
           const g = this.game;

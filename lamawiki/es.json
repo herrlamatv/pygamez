@@ -146,7 +146,7 @@
           "body": [
             "Cada juego con progreso tiene su propia sección en mem.json, por ejemplo:",
             "- sudoku: niveles resueltos con estrellas y mejor tiempo, sudokus empezados y el Sudoku del día con su racha.",
-            "- casino: la cuenta del Banco Llama, es decir, las fichas Llama de Blackjack, Póker, Casino, Lama Crossing, Lama Mines y Lama Plinko con el balance de cada juego, además de una travesía de Lama Crossing y una ronda de Lama Mines a medias, las casillas marcadas del modo automático de Lama Mines y el historial, los datos de equidad, las estadísticas y el resto pendiente de Lama Mines y Lama Plinko.",
+            "- casino: la cuenta del Banco Llama, es decir, las fichas Llama de Blackjack, Póker, Casino, Lama Crossing, Lama Mines, Lama Plinko y Lama Crash con el balance de cada juego, además de una travesía de Lama Crossing, una ronda de Lama Mines y un vuelo de Lama Crash a medias, las casillas marcadas del modo automático de Lama Mines y el historial, los datos de equidad, las estadísticas y el resto pendiente de Lama Mines, Lama Plinko y Lama Crash.",
             "- crossy: monedas recogidas, personajes comprados y la mejor marca del día de Crossy Road.",
             "- tetris: mejor tiempo en Sprint, mejor puntuación en Ultra y el balance del Versus contra la IA.",
             "- g2048: partidas guardadas de 2048 y mejores puntuaciones por tamaño de tablero y modo.",
@@ -348,7 +348,7 @@
         {
           "h": "Resumen",
           "body": [
-            "268 logros en los 49 juegos, desde tu primera partida hasta un Perfect Clear en Tetris.",
+            "274 logros en los 50 juegos, desde tu primera partida hasta un Perfect Clear en Tetris.",
             "Cada logro tiene una rareza y con ella un valor en puntos; la suma es tu nivel.",
             "Están tras el botón Logros y estadísticas, pestaña Logros. Un filtro oculta los pendientes o los conseguidos."
           ]
@@ -359,7 +359,7 @@
             "- General: metas de toda la colección: partidas, juegos probados, tiempo, récords, victorias, días jugados, rachas, nivel y duelos. Más extras como búho nocturno, maratón o jugador de fin de semana.",
             "- Hitos de puntos: una puntuación objetivo justa por juego.",
             "- Niveles maestros: la segunda marca, mucho más alta, solo para juegos con puntuación abierta.",
-            "- Habitual: 25 partidas de un juego. Existe para los 49 juegos.",
+            "- Habitual: 25 partidas de un juego. Existe para los 50 juegos.",
             "- Momentos especiales: jaque mate, un Yahtzee, la ficha 4096, un hoyo en uno, un hat-trick en air hockey, cuatro fantasmas con una pastilla y mucho más."
           ]
         },
@@ -1473,7 +1473,7 @@
         {
           "h": "Fichas Llama",
           "body": [
-            "Blackjack, Póker, Casino, Lama Crossing, Lama Mines y Lama Plinko comparten una cuenta en el Banco Llama: empiezas con 1000 fichas Llama y tu saldo se guarda de forma permanente.",
+            "Blackjack, Póker, Casino, Lama Crossing, Lama Mines, Lama Plinko y Lama Crash comparten una cuenta en el Banco Llama: empiezas con 1000 fichas Llama y tu saldo se guarda de forma permanente.",
             "La apuesta se descuenta en cuanto se reparten las cartas; si abandonas una mano en curso, la pierdes.",
             "El récord es el máximo de tu balance de blackjack: 1000 más todo lo que has ganado y perdido al blackjack. Las ganancias en la ruleta, la tragaperras o el póker no cuentan aquí.",
             "Con menos de 10 fichas estás sin fichas: [Enter] pide un préstamo al banco y deja tu cuenta de nuevo en 1000. Los préstamos no cuentan para el balance."
@@ -1899,7 +1899,7 @@
         {
           "h": "Fichas Llama",
           "body": [
-            "Se juega con las fichas Llama del Banco Llama, una cuenta compartida con Blackjack, Casino, Lama Crossing, Lama Mines y Lama Plinko (inicio 1000, guardada de forma permanente).",
+            "Se juega con las fichas Llama del Banco Llama, una cuenta compartida con Blackjack, Casino, Lama Crossing, Lama Mines, Lama Plinko y Lama Crash (inicio 1000, guardada de forma permanente).",
             "Al empezar una mano, tu cuenta está en la mesa como tu pila; lo que va al bote se descuenta al instante. Si dejas la mesa a mitad de mano, pierdes tu parte del bote y el resto vuelve a tu cuenta.",
             "El récord es el máximo de tu balance de póker: 1000 más todo lo que has ganado y perdido al póker. Las ganancias de otros juegos no cuentan aquí.",
             "Sin fichas (menos que la ciega grande de 20; en Video Poker menos de 10) = préstamo del banco con un clic, tu cuenta vuelve a 1000."
@@ -2975,7 +2975,7 @@
         {
           "h": "El Banco Llama",
           "body": [
-            "Casino, Blackjack, Póker, Lama Crossing, Lama Mines y Lama Plinko usan la misma cuenta: las fichas Llama (inicio 1000). Las apuestas se descuentan al instante y los premios se abonan; todo se guarda de forma permanente.",
+            "Casino, Blackjack, Póker, Lama Crossing, Lama Mines, Lama Plinko y Lama Crash usan la misma cuenta: las fichas Llama (inicio 1000). Las apuestas se descuentan al instante y los premios se abonan; todo se guarda de forma permanente.",
             "Cada juego lleva su propio balance. El récord del Casino es el máximo de 1000 + balance del Casino; las ganancias en Blackjack o Póker no cuentan aquí.",
             "Sin fichas (menos que la apuesta mínima) recibes un préstamo del banco: tu cuenta vuelve a 1000. Los préstamos no cuentan en ningún balance; su número aparece arriba a la derecha."
           ]
@@ -3109,7 +3109,7 @@
         {
           "h": "Fichas Llama",
           "body": [
-            "Lama Crossing juega con la cuenta común del Banco Llama, junto con Blackjack, Póker, Casino, Lama Mines y Lama Plinko (inicio 1000, guardado en mem.json).",
+            "Lama Crossing juega con la cuenta común del Banco Llama, junto con Blackjack, Póker, Casino, Lama Mines, Lama Plinko y Lama Crash (inicio 1000, guardado en mem.json).",
             "El récord es el máximo de 1000 + tu balance de Lama Crossing; las ganancias en Blackjack, Póker o Casino no cuentan aquí.",
             "Con menos de 10 fichas estás sin fichas: [Enter] o un clic pide un préstamo al banco y deja tu cuenta de nuevo en 1000. Los préstamos no cuentan para el balance.",
             "Dejarlo a mitad de la travesía es seguro: la apuesta, la dificultad y el carril se guardan, y al volver sigues exactamente ahí."
@@ -3264,7 +3264,7 @@
         {
           "h": "Fichas Llama",
           "body": [
-            "Lama Mines juega con la cuenta común del Banco Llama, junto con Blackjack, Póker, Casino, Lama Crossing y Lama Plinko (inicio 1000, guardado en mem.json).",
+            "Lama Mines juega con la cuenta común del Banco Llama, junto con Blackjack, Póker, Casino, Lama Crossing, Lama Plinko y Lama Crash (inicio 1000, guardado en mem.json).",
             "El récord es el máximo de 1000 + tu balance de Lama Mines; las ganancias en los otros juegos del Banco Llama no cuentan aquí.",
             "Con menos de 10 fichas estás sin fichas: [Espacio], [Enter] o un clic pide un préstamo al banco y deja tu cuenta de nuevo en 1000. Los préstamos no cuentan para el balance.",
             "Dejarlo a mitad de ronda es seguro: la apuesta se descuenta al empezar, y tras cada gema encontrada se guardan el tamaño, las minas, las semillas de la ronda y las casillas destapadas. Al volver, el tablero se recalcula a partir de la semilla y sigues exactamente ahí.",
@@ -3421,7 +3421,7 @@
         {
           "h": "Fichas Llama",
           "body": [
-            "Lama Plinko juega con la cuenta común del Banco Llama, junto con Blackjack, Póker, Casino, Lama Crossing y Lama Mines (inicio 1000, guardado en mem.json).",
+            "Lama Plinko juega con la cuenta común del Banco Llama, junto con Blackjack, Póker, Casino, Lama Crossing, Lama Mines y Lama Crash (inicio 1000, guardado en mem.json).",
             "El récord es el máximo de 1000 + tu balance de Lama Plinko; las ganancias en los demás juegos no cuentan aquí.",
             "Si tu cuenta no cubre la apuesta elegida, elige una menor. Con 0 fichas estás sin fichas: [Enter] o un clic pide un préstamo al banco y deja tu cuenta de nuevo en 1000. Los préstamos no cuentan para el balance.",
             "El historial, las estadísticas y los datos de equidad pertenecen a tu perfil y también se guardan en mem.json."
@@ -3447,6 +3447,165 @@
             "- Justo en el borde: lo más rápido es con 12 filas; ahí aproximadamente 1 de cada 2048 bolas cae en el extremo (izquierdo o derecho). Con 1 ficha por bola, eso cuesta de media solo unas 3 fichas cada 100 bolas.",
             "- Lluvia de ovillos: basta con mantener pulsado [Espacio]; la ráfaga pone unas 30 bolas a la vez en el tablero con cualquier número de filas, y en unos 2 segundos el logro es tuyo. El modo automático suelta demasiado despacio para conseguirlo.",
             "- Leyenda del Plinko: con 16 filas y riesgo Alto, solo 1 de cada 32.768 bolas cae en el extremo; con series automáticas de 1000 bolas hacen falta de media unas 33 series. Eso sí, esa casilla paga ×1000.",
+            "- Fija un presupuesto de antemano y usa el límite de pérdidas del modo automático."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrash",
+      "category": "games",
+      "game": "LamaCrashGame",
+      "title": "Lama Crash",
+      "keywords": [
+        "llama",
+        "lama",
+        "crash",
+        "globo",
+        "globo aerostático",
+        "multiplicador",
+        "cobrar",
+        "premio",
+        "explotar",
+        "punto de explosión",
+        "objetivo auto",
+        "mitad",
+        "dos apuestas",
+        "altitud",
+        "luna",
+        "fichas",
+        "banco llama",
+        "auto",
+        "turbo",
+        "música",
+        "equidad",
+        "provably fair",
+        "código de control",
+        "hash",
+        "semilla",
+        "sha-256",
+        "estadísticas"
+      ],
+      "sections": [
+        {
+          "h": "Cómo se juega",
+          "body": [
+            "Tu llama sube en globo y el multiplicador crece cada segundo: ×1,00, ×1,50, ×2,00 … Si cobras, recibes tu apuesta por el multiplicador de ese momento. Si el globo explota antes, pierdes la apuesta.",
+            "Elige la apuesta (10, 20, 50 … hasta 10000 fichas Llama) y pulsa JUGAR: se descuenta la apuesta y, tras un breve 3-2-1, el globo despega. Desde ×1,01 puedes COBRAR en cualquier momento: la llama salta en paracaídas y el premio se abona al instante.",
+            "Cuándo explota el globo ya está decidido antes de despegar, pero nadie lo ve: ni el globo ni la música ni los sonidos delatan nada. Simplemente se hincha cada vez más a medida que sube.",
+            "Después de cobrar, el globo vacío sigue volando hasta que explota; así ves hasta dónde habría llegado. Con [Espacio] o ADELANTAR pasa a cámara rápida. Arriba a la derecha aparecen los puntos de explosión de las últimas 12 rondas.",
+            "Los tiempos: ×2 a los 11,6 segundos, ×10 a los 38 segundos, ×100 a los 77 segundos, ×100.000 a los 3,2 minutos. El turbo ([T]) lo hace todo tres veces más rápido."
+          ]
+        },
+        {
+          "h": "Dos apuestas y cobro de la mitad",
+          "body": [
+            "Con [Z] o el interruptor de la tarjeta 2 te llevas una segunda llama: dos apuestas en la misma ronda, cada una con su propio importe y su propio objetivo auto. Ambas vuelan en el mismo globo; por ejemplo, una prudente con objetivo ×1,50 y otra atrevida con objetivo ×10.",
+            "- [Espacio] / [Enter] / [C] o COBRAR abajo: cobran todas las apuestas que siguen volando",
+            "- [1] / [2] o el botón de la tarjeta: solo esa apuesta",
+            "- [H] o MITAD: cada apuesta aún sin dividir cobra la mitad y la otra mitad sigue volando",
+            "- [Q] / [W] o el botón de mitad de la tarjeta: solo la mitad de esa apuesta",
+            "Cada apuesta se puede dividir una sola vez. La llama suelta la mitad cobrada como un saco de dinero con un miniparacaídas.",
+            "Objetivo auto: con [Izquierda] / [Derecha] (o la rueda del ratón sobre el objetivo) ajustas el multiplicador al que una apuesta cobra sola (de ×1,01 a ×100.000); [X] lo activa o desactiva. Si el globo alcanza el objetivo, se paga exactamente en el objetivo, aunque explote en ese mismo instante."
+          ]
+        },
+        {
+          "h": "Cómo se decide el punto de explosión",
+          "body": [
+            "En cada ronda se saca un número aleatorio r entre 0 y 2^32 - 1. El punto de explosión es 97 × 2^32 / (2^32 - r), redondeado hacia abajo a centésimas, como mínimo ×1,00 y como máximo ×100.000. Cerca del 4 % de las rondas explotan ya en ×1,00, antes de que se pueda cobrar.",
+            "De ahí sale una regla sencilla: la probabilidad de alcanzar un objetivo x es el 97 % dividido entre x. Da igual cuándo cobres: a la larga vuelve el 97 % de lo apostado:",
+            "- ×1,50: 64,67 % · ×2: 48,50 % · ×3: 32,33 % · ×5: 19,40 %",
+            "- ×10: 9,70 % · ×100: 0,97 % · ×1000: 0,097 % · ×100.000: 0,001 %",
+            "Si cobras a mano en un multiplicador, ganas justo cuando el globo explota después, igual que si lo hubieras puesto como objetivo auto.",
+            "Quien llega a ×100.000 aterriza en la Luna: premio máximo, y todas las apuestas que siguen volando se pagan con ×100.000.",
+            "Arrastre del resto: lo que sobra en centésimas al redondear un pago hacia abajo se suma al siguiente, así que ni las apuestas pequeñas pierden nada."
+          ]
+        },
+        {
+          "h": "Mundos de altitud y música",
+          "body": [
+            "Cuanto más alto es el multiplicador, más alto vuela el globo, a través de seis mundos:",
+            "- Prado de llamas (desde ×1): el pasto, la valla y el establo se quedan abajo",
+            "- Mar de nubes (desde ×1,50): nubes y bandadas de pájaros",
+            "- Tormenta (desde ×3): lluvia, rayos y aviones",
+            "- Aurora boreal (desde ×10): estrellas y auroras danzantes",
+            "- Espacio (desde ×100): la curvatura de la Tierra, satélites, estrellas fugaces y una Luna cada vez más grande",
+            "- Luna (×100.000): el alunizaje",
+            "La música de suspense se vuelve más rápida y aguda con cada mundo; desde ×2, el globo estirado chirría. [M] activa o desactiva la música."
+          ]
+        },
+        {
+          "h": "Modo automático",
+          "body": [
+            "[A] abre el modo automático (solo entre rondas). Allí ajustas:",
+            "- Rondas: 5, 10, 25, 50, 100 o 250",
+            "- Parar con ganancia de / Parar con pérdida de: desact., 100, 500, 1000, 5000, 10000 o 50000 fichas",
+            "- Turbo activado o no",
+            "INICIAR AUTO juega las rondas una tras otra con tus apuestas y objetivos auto; a una apuesta sin objetivo auto se le activa uno. Cuando todos han cobrado, se adelanta automáticamente. Aun así puedes cobrar a mano en cualquier momento.",
+            "El modo automático sigue hasta alcanzar el número de rondas, saltar un límite o quedarse sin fichas suficientes, o hasta que pulses PARAR, [Esc] o [A]; una ronda que ya está en vuelo termina entonces con normalidad."
+          ]
+        },
+        {
+          "h": "Comprobación de equidad",
+          "body": [
+            "En Lama Crash puedes comprobar tú mismo que el punto de explosión no se cambia a posteriori («provably fair»):",
+            "- Semilla del servidor: un valor aleatorio secreto de 32 caracteres, fijado antes de la ronda",
+            "- Código de control: la huella SHA-256 de la semilla del servidor, visible antes de despegar",
+            "- Semilla del cliente: tu propia parte (8 caracteres); «Nueva semilla del cliente» genera otra cuando no hay ninguna ronda en curso",
+            "Además está el número de ronda (nonce). Tras la ronda se revela la semilla del servidor; para entonces el código de control de la siguiente ronda ya está fijado.",
+            "[F] muestra las últimas 12 rondas. «Verificar» ([Enter]) comprueba el código, recalcula el punto de explosión y muestra con una marca o una cruz si todo cuadra, junto con una minicurva de tus cobros.",
+            "Para curiosos: el azar es mulberry32, iniciado con el valor FNV-1a de «lamacrash|semilla del servidor|semilla del cliente|número»; r es el primer número que sale."
+          ]
+        },
+        {
+          "h": "Estadísticas",
+          "body": [
+            "[S] abre las estadísticas de tu perfil para Lama Crash:",
+            "- Recuadros: Rondas, Ganadas, Perdidas, Tu retorno, Apostado, Cobrado, Balance, Mayor premio, Mejor cuota (cobro más alto), Explosión más alta, Mitades cobradas y Por los pelos",
+            "- una curva del balance de las últimas 100 rondas",
+            "- la distribución de los puntos de explosión de tus rondas en barras y la esperada en dorado"
+          ]
+        },
+        {
+          "h": "Controles",
+          "body": [
+            "- [Espacio] / [Enter] o JUGAR: empezar la ronda; en vuelo: cobrar todo; después: adelantar",
+            "- [1] / [2] o [Tab]: elegir tarjeta (antes de la ronda) o cobrar una sola apuesta (en vuelo)",
+            "- [Arriba] / [Abajo], [+] / [-] o rueda del ratón: apuesta de la tarjeta elegida",
+            "- [Izquierda] / [Derecha] o rueda sobre el objetivo: objetivo auto; [X]: objetivo auto sí/no; [Z]: segunda apuesta",
+            "- [H]: mitad de todas las apuestas sin dividir; [Q] / [W]: mitad de la apuesta 1 o 2",
+            "- [A]: modo automático, [S]: estadísticas, [F]: equidad, [T]: turbo, [M]: música",
+            "- [Esc]: cerrar una ventana o detener el modo automático; si no, pausa",
+            "Las ventanas solo se abren mientras no vuela ninguna apuesta. Si la ventana del juego pierde el foco con una apuesta en vuelo, el juego se pausa solo. Las apuestas, los objetivos, el turbo, la música y los ajustes del modo automático se guardan en settings.json (sección lamacrash)."
+          ]
+        },
+        {
+          "h": "Fichas Llama",
+          "body": [
+            "Lama Crash juega con la cuenta común del Banco Llama, junto con Blackjack, Póker, Casino, Lama Crossing, Lama Mines y Lama Plinko (inicio 1000, guardado en mem.json).",
+            "JUGAR descuenta la apuesta y guarda la ronda de una vez, y cada cobro abona el premio al instante. Si sales del juego en pleno vuelo, no se pierde nada: en el siguiente inicio hay una cuenta atrás y el globo sigue subiendo justo desde donde estaba; al fin y al cabo, el punto de explosión ya está fijado.",
+            "El récord es el máximo de 1000 + tu balance de Lama Crash. Por debajo de 10 fichas te quedas sin fichas: [Enter] o un clic pide un préstamo al banco que deja tu cuenta de nuevo en 1000."
+          ]
+        },
+        {
+          "h": "Logros",
+          "body": [
+            "- Habitual de Lama Crash: 25 partidas",
+            "- Hito: récord 3000",
+            "- Maestro de Lama Crash: récord 10000",
+            "- Por los pelos (raro): Cobra a mano con ×2 o más - como mucho un 5 % antes de explotar",
+            "- Piloto de auroras (épico): Cobra con ×10 o más",
+            "- Llama espacial (legendario): Cobra con ×1000 o más"
+          ]
+        },
+        {
+          "h": "Consejos",
+          "body": [
+            "- Cada ronda es independiente: tras cinco explosiones tempranas no «toca» un vuelo largo.",
+            "- Ninguna estrategia supera el 97 %. Los objetivos bajos ganan a menudo y poco; los altos, rara vez y mucho.",
+            "- Dos apuestas combinan ambas cosas: una asegura pronto y la otra vuela lejos.",
+            "- Por los pelos solo cuenta a mano: con objetivos auto no vale.",
+            "- Piloto de auroras: un objetivo auto ×10 acierta más o menos una de cada diez rondas; Llama espacial con objetivo ×1000, una de cada mil. Con turbo, un vuelo así dura 38 segundos.",
             "- Fija un presupuesto de antemano y usa el límite de pérdidas del modo automático."
           ]
         }

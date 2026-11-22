@@ -1,7 +1,8 @@
 //! lamabank.rs
 //! ===========
 //! Die **Lama-Bank** - das gemeinsame Chip-Konto von Blackjack, Poker,
-//! Casino, Lama Crossing, Lama Mines und Lama Plinko (aus `lamabank.py`).
+//! Casino, Lama Crossing, Lama Mines, Lama Plinko und Lama Crash (aus
+//! `lamabank.py`).
 //!
 //! Gespeichert im Abschnitt `casino` der `mem.json` (je Profil):
 //! `chips`, `ledger` (Netto-Bilanz je Spiel), `peak` (Hoechststand je Spiel),
@@ -21,14 +22,15 @@ pub const SECTION: &str = "casino";
 /// Startkapital (und Wert nach einem Bank-Kredit).
 pub const START_CHIPS: i64 = 1000;
 /// Die Spiele mit eigener Bilanz.
-pub const GAMES: [&str; 6] = ["blackjack", "poker", "casino", "lamacrossing", "lamamines", "lamaplinko"];
+pub const GAMES: [&str; 7] =
+    ["blackjack", "poker", "casino", "lamacrossing", "lamamines", "lamaplinko", "lamacrash"];
 
 /// Mindesteinsatz je Spiel bzw. `"spiel:modus"` (Pleite-Regel).
 /// Blackjack: kleinster Chip 10 - Poker: Big Blind 20 (Hold'em und Draw),
 /// Video Poker 10 - Roulette: 1er-Chip - Lama-Slot: 10 Linien x 1 -
 /// Lama Crossing und Lama Mines: kleinste Einsatzstufe 10 -
-/// Lama Plinko: kleinster Einsatz je Kugel 1.
-const MIN_BET: [(&str, i64); 8] = [
+/// Lama Plinko: kleinster Einsatz je Kugel 1 - Lama Crash: kleinste Stufe 10.
+const MIN_BET: [(&str, i64); 9] = [
     ("blackjack", 10),
     ("poker", 20),
     ("poker:video", 10),
@@ -37,6 +39,7 @@ const MIN_BET: [(&str, i64); 8] = [
     ("lamacrossing", 10),
     ("lamamines", 10),
     ("lamaplinko", 1),
+    ("lamacrash", 10),
 ];
 
 static DATA: Mutex<Option<Map<String, Value>>> = Mutex::new(None);

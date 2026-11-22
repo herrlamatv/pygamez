@@ -1,6 +1,6 @@
 //! icons.rs
 //! ========
-//! Die 49 Mini-Piktogramme der Spieleliste - `main._draw_icon`.
+//! Die 50 Mini-Piktogramme der Spieleliste - `main._draw_icon`.
 //!
 //! In Python zeichnet sie ein Tk-Canvas (`create_oval`, `create_line`,
 //! `create_polygon` ...). Hier zeichnet rustgame dieselben Formen mit
@@ -444,6 +444,15 @@ pub fn draw_icon(s: &mut Surface, cx: i32, cy: i32, name: &str, color: Color, bg
                 rect(s, c, cx + dx, cy + 8, cx + dx + 5, cy + 10);
             }
         }
+        "LamaCrashGame" => {
+            // Ballon mit Korb auf einer steigenden Kurve (smooth=True)
+            let kurve = tk_spline(&[(cx - 10, cy + 9), (cx - 4, cy + 7), (cx + 1, cy + 3), (cx + 4, cy - 1)]);
+            draw::lines(s, c, false, &kurve, 2);
+            oval(s, c, cx - 1, cy - 12, cx + 9, cy - 2);
+            line(s, c, &[(cx + 1, cy - 4), (cx + 3, cy + 1)], 1, false);
+            line(s, c, &[(cx + 7, cy - 4), (cx + 5, cy + 1)], 1, false);
+            rect(s, c, cx + 2, cy + 1, cx + 6, cy + 4);
+        }
         _ => {
             let first: String = name.chars().take(1).collect();
             text(s, c, cx, cy, if first.is_empty() { "?" } else { &first }, 15);
@@ -453,4 +462,35 @@ pub fn draw_icon(s: &mut Surface, cx: i32, cy: i32, name: &str, color: Color, bg
 
 fn py_pi() -> f64 {
     std::f64::consts::PI
+}
+
+/// `create_line(..., smooth=True)` - Tks Bezier-Kurve (`TkMakeBezierCurve`,
+/// 12 Schritte je Stueck): offene Kurve durch Anfang, Mitten der inneren
+/// Strecken und Ende.
+fn tk_spline(p: &[(i32, i32)]) -> Vec<(f64, f64)> {
+    let pf: Vec<(f64, f64)> = p.iter().map(|&(x, y)| (x as f64, y as f64)).collect();
+    let n = pf.len();
+    if n < 3 {
+        return pf;
+    }
+    let mix = |a: (f64, f64), fa: f64, b: (f64, f64), fb: f64| (a.0 * fa + b.0 * fb, a.1 * fa + b.1 * fb);
+    let mut out = vec![pf[0]];
+    let mut c0 = pf[0];
+    let mut c1 = mix(pf[0], 0.333, pf[1], 0.667);
+    for i in 2..n {
+        let (a, b) = (pf[i - 1], pf[i]);
+        let (c2, c3) = if i == n - 1 { (mix(a, 0.667, b, 0.333), b) } else { (mix(a, 0.833, b, 0.167), mix(a, 0.5, b, 0.5)) };
+        for k in 1..=12 {
+            let t = k as f64 / 12.0;
+            let u = 1.0 - t;
+            let (w0, w1, w2, w3) = (u * u * u, 3.0 * t * u * u, 3.0 * t * t * u, t * t * t);
+            out.push((
+                c0.0 * w0 + c1.0 * w1 + c2.0 * w2 + c3.0 * w3,
+                c0.1 * w0 + c1.1 * w1 + c2.1 * w2 + c3.1 * w3,
+            ));
+        }
+        c0 = c3;
+        c1 = mix(a, 0.167, b, 0.833);
+    }
+    out
 }

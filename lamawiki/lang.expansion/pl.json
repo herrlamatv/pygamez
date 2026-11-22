@@ -147,7 +147,7 @@
           "body": [
             "Każda gra z postępami ma w mem.json własną sekcję, na przykład:",
             "- sudoku: rozwiązane poziomy z gwiazdkami i najlepszym czasem, rozpoczęte łamigłówki oraz Sudoku dnia z serią.",
-            "- casino: konto Banku Lamy - żetony Lamy dla Blackjacka, Pokera, Casino, Lama Crossing, Lama Mines i Lama Plinko wraz z bilansem każdej gry, rozpoczętą przeprawą w Lama Crossing, rozpoczętą rundą i zaznaczeniami trybu auto w Lama Mines oraz historią, danymi uczciwości, statystykami i przeniesioną resztą Lama Mines i Lama Plinko.",
+            "- casino: konto Banku Lamy - żetony Lamy dla Blackjacka, Pokera, Casino, Lama Crossing, Lama Mines, Lama Plinko i Lama Crash wraz z bilansem każdej gry, rozpoczętą przeprawą w Lama Crossing, rozpoczętą rundą i zaznaczeniami trybu auto w Lama Mines, rozpoczętym lotem w Lama Crash oraz historią, danymi uczciwości, statystykami i przeniesioną resztą Lama Mines, Lama Plinko i Lama Crash.",
             "- crossy: zebrane monety, kupione postacie i najlepszy wynik dnia w Crossy Road.",
             "- tetris: najlepszy czas w Sprincie, najlepszy wynik w Ultra i bilans pojedynków z SI.",
             "- g2048: zapisane partie 2048 i najlepsze wyniki dla każdego rozmiaru planszy i trybu.",
@@ -349,7 +349,7 @@
         {
           "h": "Przegląd",
           "body": [
-            "268 osiągnięć we wszystkich 49 grach - od pierwszego startu po Perfect Clear w Tetrisie.",
+            "274 osiągnięcia we wszystkich 50 grach - od pierwszego startu po Perfect Clear w Tetrisie.",
             "Każde osiągnięcie ma rzadkość, a więc wartość punktową; suma daje twój poziom.",
             "Znajdziesz je pod przyciskiem Osiągnięcia i statystyki, karta Osiągnięcia. Filtr ukrywa zdobyte lub pozostałe."
           ]
@@ -360,7 +360,7 @@
             "- Ogólne: cele całej kolekcji - rozgrywki, wypróbowane gry, czas, rekordy, zwycięstwa, dni z grą, serie, poziom i pojedynki. Do tego dodatki: nocny marek, maraton, weekendowy gracz.",
             "- Progi punktowe: uczciwy wynik docelowy dla każdej gry.",
             "- Poziomy mistrzowskie: druga, znacznie wyższa poprzeczka - tylko dla gier z otwartą punktacją.",
-            "- Bywalec: 25 rozgrywek jednej gry. Jest dla wszystkich 49 gier.",
+            "- Bywalec: 25 rozgrywek jednej gry. Jest dla wszystkich 50 gier.",
             "- Wyjątkowe chwile: mat, generał w kościach, kafelek 4096, hole-in-one, hat-trick w air hockey, cztery duchy z jednej pigułki i wiele więcej."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Żetony Lamy",
           "body": [
-            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines i Lama Plinko dzielą jedno konto w Banku Lamy: zaczynasz z 1000 żetonów Lamy, a stan konta jest trwale zapisywany.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko i Lama Crash dzielą jedno konto w Banku Lamy: zaczynasz z 1000 żetonów Lamy, a stan konta jest trwale zapisywany.",
             "Stawka jest pobierana od razu przy rozdaniu - kto opuści trwające rozdanie, traci ją.",
             "Rekord to najwyższy stan twojego bilansu w blackjacku: 1000 plus wszystko, co wygrałeś i przegrałeś w blackjacku. Wygrane w ruletce, na automacie czy w pokerze się tu nie liczą.",
             "Poniżej 10 żetonów jesteś bankrutem: [Enter] bierze kredyt z banku i uzupełnia konto do 1000. Kredyty nie liczą się do bilansu."
@@ -1901,7 +1901,7 @@
         {
           "h": "Żetony Lamy",
           "body": [
-            "Gra toczy się o żetony Lamy z Banku Lamy - wspólne konto z Blackjackiem, Casino, Lama Crossing, Lama Mines i Lama Plinko (start 1000, trwale zapisywane).",
+            "Gra toczy się o żetony Lamy z Banku Lamy - wspólne konto z Blackjackiem, Casino, Lama Crossing, Lama Mines, Lama Plinko i Lama Crash (start 1000, trwale zapisywane).",
             "Na początku rozdania twoje konto leży na stole jako stos; to, co trafia do puli, jest od razu pobierane. Jeśli opuścisz stół w trakcie rozdania, twoja część puli przepada - reszta wraca na konto.",
             "Rekord to najwyższy stan twojego bilansu w pokerze: 1000 plus wszystko, co wygrałeś i przegrałeś w pokerze. Wygrane w innych grach się tu nie liczą.",
             "Bankructwo (mniej niż duża ciemna 20, w Video Pokerze mniej niż 10) = kredyt z banku jednym kliknięciem, konto znów ma 1000."
@@ -2975,7 +2975,7 @@
         {
           "h": "Bank Lamy",
           "body": [
-            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines i Lama Plinko korzystają z tego samego konta: żetonów Lamy (start 1000). Stawki są pobierane od razu, wygrane dopisywane - wszystko jest trwale zapisywane.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama Plinko i Lama Crash korzystają z tego samego konta: żetonów Lamy (start 1000). Stawki są pobierane od razu, wygrane dopisywane - wszystko jest trwale zapisywane.",
             "Każda gra prowadzi własny bilans. Rekord Casino to najwyższy stan 1000 + bilans Casino; wygrane w Blackjacku czy Pokerze się tu nie liczą.",
             "Przy bankructwie (mniej niż minimalna stawka) dostajesz kredyt z banku: konto wraca do 1000. Kredyty nie liczą się do żadnego bilansu; ich liczba jest widoczna w prawym górnym rogu."
           ]
@@ -3108,7 +3108,7 @@
         {
           "h": "Żetony Lamy",
           "body": [
-            "Lama Crossing gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem, Casino, Lama Mines i Lama Plinko (start 1000, zapis w mem.json).",
+            "Lama Crossing gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem, Casino, Lama Mines, Lama Plinko i Lama Crash (start 1000, zapis w mem.json).",
             "Rekord to najwyższy stan 1000 + twojego bilansu w Lama Crossing; wygrane w Blackjacku, Pokerze czy Casino się tu nie liczą.",
             "Poniżej 10 żetonów jesteś bankrutem: [Enter] lub kliknięcie bierze kredyt z banku i uzupełnia konto do 1000. Kredyty nie liczą się do bilansu.",
             "Przerwanie w połowie przeprawy jest bezpieczne: stawka, poziom trudności i pas są zapisywane, a przy następnym starcie grasz dokładnie od tego miejsca."
@@ -3262,7 +3262,7 @@
         {
           "h": "Żetony Lamy",
           "body": [
-            "Lama Mines gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem, Casino, Lama Crossing i Lama Plinko (start 1000, zapis w mem.json).",
+            "Lama Mines gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem, Casino, Lama Crossing, Lama Plinko i Lama Crash (start 1000, zapis w mem.json).",
             "Rekord to najwyższy stan 1000 + twojego bilansu w Lama Mines; wygrane w innych grach Banku Lamy się tu nie liczą.",
             "Poniżej 10 żetonów jesteś bankrutem: [Spacja], [Enter] lub kliknięcie bierze kredyt z banku i uzupełnia konto do 1000. Kredyty nie liczą się do bilansu.",
             "Przerwanie w połowie rundy jest bezpieczne: stawka jest pobierana na starcie, a po każdym znalezionym klejnocie zapisywane są rozmiar planszy, miny, seedy rundy i odkryte pola. Przy następnym starcie plansza jest odtwarzana z seeda, a ty grasz dokładnie od tego miejsca.",
@@ -3417,7 +3417,7 @@
         {
           "h": "Żetony Lamy",
           "body": [
-            "Lama Plinko gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem, Casino, Lama Crossing i Lama Mines (start 1000, zapis w mem.json).",
+            "Lama Plinko gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem, Casino, Lama Crossing, Lama Mines i Lama Crash (start 1000, zapis w mem.json).",
             "Rekord to najwyższy stan 1000 + twojego bilansu w Lama Plinko; wygrane w innych grach się tu nie liczą.",
             "Jeśli konto nie pokrywa wybranej stawki, ustaw mniejszą. Przy 0 żetonów jesteś bankrutem: [Enter] lub kliknięcie bierze kredyt z banku i uzupełnia konto do 1000. Kredyty nie liczą się do bilansu.",
             "Historia, statystyki i dane kontroli uczciwości należą do twojego profilu i również są zapisywane w mem.json."
@@ -3443,6 +3443,163 @@
             "- Na samej krawędzi: najszybciej przy 12 rzędach - tam mniej więcej 1 na 2048 kulek ląduje na samym brzegu (z lewej lub z prawej). Przy 1 żetonie na kulkę kosztuje to średnio tylko ok. 3 żetony na 100 kulek.",
             "- Deszcz kłębków: po prostu przytrzymaj [Spacja] - seria daje ok. 30 kulek naraz na planszy przy każdej liczbie rzędów, a po ok. 2 sekundach osiągnięcie jest twoje. Tryb auto rzuca na to za wolno.",
             "- Legenda Plinko: przy 16 rzędach i ryzyku „Wysokie” na samym brzegu ląduje tylko 1 na 32 768 kulek - przy seriach auto po 1000 kulek potrzeba średnio ok. 33 serii. Za to ta przegródka płaci ×1000.",
+            "- Ustal wcześniej budżet i korzystaj z limitu straty w trybie auto."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrash",
+      "category": "games",
+      "game": "LamaCrashGame",
+      "title": "Lama Crash",
+      "keywords": [
+        "lama",
+        "crash",
+        "balon",
+        "balon na ogrzane powietrze",
+        "mnożnik",
+        "wypłata",
+        "wypłać",
+        "pęknięcie",
+        "punkt pęknięcia",
+        "cel auto",
+        "połowa",
+        "dwie stawki",
+        "wysokość",
+        "księżyc",
+        "żetony",
+        "bank lamy",
+        "auto",
+        "turbo",
+        "muzyka",
+        "uczciwość",
+        "provably fair",
+        "kod kontrolny",
+        "seed",
+        "sha-256",
+        "statystyki"
+      ],
+      "sections": [
+        {
+          "h": "Jak grać",
+          "body": [
+            "Twoja lama wznosi się balonem, a mnożnik rośnie z każdą sekundą: ×1,00, ×1,50, ×2,00 … Gdy wypłacisz, dostajesz stawkę razy mnożnik z tej chwili. Jeśli balon pęknie wcześniej, stawka przepada.",
+            "Wybierz stawkę (10, 20, 50 … aż do 10000 żetonów Lamy) i naciśnij GRAJ: stawka zostaje pobrana, a po krótkim odliczaniu 3-2-1 balon startuje. Od ×1,01 możesz w każdej chwili nacisnąć WYPŁAĆ - lama skacze ze spadochronem, a wygrana od razu trafia na konto.",
+            "Moment pęknięcia jest ustalony już przed startem - ale nikt go nie widzi: ani balon, ani muzyka, ani dźwięki niczego nie zdradzają. Balon po prostu nadyma się coraz bardziej, im wyżej leci.",
+            "Po wypłacie pusty balon leci dalej, aż pęknie - widać więc, jak daleko by zaszedł. Klawisz [Spacja] lub PRZEWIŃ przyspiesza ten lot. W prawym górnym rogu widać punkty pęknięcia ostatnich 12 rund.",
+            "Czasy: ×2 po 11,6 sekundy, ×10 po 38 sekundach, ×100 po 77 sekundach, ×100 000 po 3,2 minuty. Turbo ([T]) przyspiesza wszystko trzykrotnie."
+          ]
+        },
+        {
+          "h": "Dwie stawki i wypłata połowy",
+          "body": [
+            "Klawiszem [Z] lub przełącznikiem na karcie 2 zabierasz drugą lamę: dwie stawki w tej samej rundzie, każda z własną kwotą i własnym celem auto. Obie lecą tym samym balonem - na przykład jedna ostrożnie z celem ×1,50, druga odważnie z celem ×10.",
+            "- [Spacja] / [Enter] / [C] lub WYPŁAĆ na dole: wypłacane są wszystkie stawki, które jeszcze lecą",
+            "- [1] / [2] lub przycisk na karcie: tylko ta stawka",
+            "- [H] lub POŁOWA: każda jeszcze niepodzielona stawka wypłaca połowę, druga połowa leci dalej",
+            "- [Q] / [W] lub przycisk połowy na karcie: połowa tylko tej stawki",
+            "Każdą stawkę można podzielić na pół tylko raz. Wypłaconą połowę lama zrzuca jako worek pieniędzy na mini spadochronie.",
+            "Cel auto: klawiszami [Lewo] / [Prawo] (albo kółkiem myszy nad celem) ustawiasz mnożnik, przy którym stawka sama się wypłaca (od ×1,01 do ×100 000); [X] włącza go lub wyłącza. Gdy balon osiągnie cel, wypłata następuje dokładnie przy celu - nawet jeśli w tej samej chwili pęka."
+          ]
+        },
+        {
+          "h": "Skąd się bierze punkt pęknięcia",
+          "body": [
+            "W każdej rundzie losowana jest liczba r od 0 do 2^32 - 1. Punkt pęknięcia to 97 × 2^32 / (2^32 - r), zaokrąglone w dół do setnych, co najmniej ×1,00 i najwyżej ×100 000. Około 4% rund pęka już przy ×1,00 - zanim da się cokolwiek wypłacić.",
+            "Wynika z tego prosta zasada: szansa na osiągnięcie celu x to 97% podzielone przez x. Niezależnie od tego, kiedy wypłacasz, na dłuższą metę wraca 97% stawek:",
+            "- ×1,50: 64,67% · ×2: 48,50% · ×3: 32,33% · ×5: 19,40%",
+            "- ×10: 9,70% · ×100: 0,97% · ×1000: 0,097% · ×100 000: 0,001%",
+            "Jeśli wypłacisz ręcznie przy jakimś mnożniku, wygrywasz dokładnie wtedy, gdy balon pęknie później - tak, jakbyś ustawił go jako cel auto.",
+            "Kto osiągnie ×100 000, ląduje na Księżycu: maksymalna wygrana, a wszystkie wciąż lecące stawki są wypłacane po ×100 000.",
+            "Przeniesienie reszty: to, co przy zaokrąglaniu wypłaty w dół zostaje w setnych, jest doliczane do następnej - nawet małe stawki nic nie tracą."
+          ]
+        },
+        {
+          "h": "Światy wysokości i muzyka",
+          "body": [
+            "Im wyższy mnożnik, tym wyżej leci balon - przez sześć światów:",
+            "- Łąka lam (od ×1): pastwisko, płot i obora zostają w dole",
+            "- Morze chmur (od ×1,50): chmury i klucze ptaków",
+            "- Front burzowy (od ×3): deszcz, błyskawice i samoloty",
+            "- Zorza polarna (od ×10): gwiazdy i tańczące zorze",
+            "- Kosmos (od ×100): krzywizna Ziemi, satelity, spadające gwiazdy - a Księżyc robi się coraz większy",
+            "- Księżyc (×100 000): lądowanie na Księżycu",
+            "Muzyka pełna napięcia z każdym światem staje się szybsza i wyższa; od ×2 rozciągnięty balon skrzypi. [M] włącza lub wyłącza muzykę."
+          ]
+        },
+        {
+          "h": "Tryb auto",
+          "body": [
+            "[A] otwiera tryb auto (tylko między rundami). Ustawiasz tam:",
+            "- Rundy: 5, 10, 25, 50, 100 lub 250",
+            "- Stop przy zysku od / Stop przy stracie od: wył., 100, 500, 1000, 5000, 10000 lub 50000 żetonów",
+            "- Turbo wł. lub wył.",
+            "URUCHOM AUTO gra rundy jedna po drugiej z twoimi stawkami i celami auto; stawce bez celu auto zostaje on włączony. Gdy wszystko jest wypłacone, lot jest przewijany automatycznie. Mimo to w każdej chwili możesz wypłacić ręcznie.",
+            "Tryb auto działa, dopóki nie zostanie osiągnięta liczba rund, nie zadziała limit, nie zabraknie żetonów albo nie naciśniesz STOP, [Esc] lub [A] - runda, która już leci, kończy się wtedy normalnie."
+          ]
+        },
+        {
+          "h": "Kontrola uczciwości",
+          "body": [
+            "W Lama Crash możesz sam sprawdzić, że punkt pęknięcia nie jest zmieniany po fakcie („provably fair”):",
+            "- Seed serwera: tajna losowa wartość z 32 znaków, ustalona przed rundą",
+            "- Kod kontrolny: odcisk SHA-256 seeda serwera - widoczny przed startem",
+            "- Seed klienta: twój własny udział (8 znaków); „Nowy seed klienta” losuje nowy, gdy nie trwa żadna runda",
+            "Do tego dochodzi numer rundy (nonce). Po rundzie seed serwera zostaje ujawniony - kod kontrolny następnej rundy jest wtedy już ustalony.",
+            "[F] pokazuje ostatnie 12 rund. „Sprawdź” ([Enter]) weryfikuje kod kontrolny, ponownie liczy punkt pęknięcia i ptaszkiem albo krzyżykiem pokazuje, czy wszystko się zgadza - do tego mała krzywa z twoimi wypłatami.",
+            "Dla ciekawskich: losowość to mulberry32, uruchamiany wartością FNV-1a tekstu „lamacrash|seed serwera|seed klienta|numer”; r to pierwsza wylosowana liczba."
+          ]
+        },
+        {
+          "h": "Statystyki",
+          "body": [
+            "[S] otwiera statystyki twojego profilu dla Lama Crash:",
+            "- Kafelki: Rundy, Wygrane, Przegrane, Twój zwrot, Postawiono, Wypłacono, Bilans, Maks. wygrana, Maks. mnożnik (najwyższa wypłata), Maks. pęknięcie, Wypłaty połowy i O włos",
+            "- krzywa bilansu z ostatnich 100 rund",
+            "- rozkład punktów pęknięcia twoich rund jako słupki, oczekiwany rozkład na złoto"
+          ]
+        },
+        {
+          "h": "Sterowanie",
+          "body": [
+            "- [Spacja] / [Enter] lub GRAJ: start rundy; w locie: wypłać wszystko; potem: przewiń",
+            "- [1] / [2] lub [Tab]: wybór karty (przed rundą) lub wypłata pojedynczej stawki (w locie)",
+            "- [Góra] / [Dół], [+] / [-] lub kółko myszy: stawka wybranej karty",
+            "- [Lewo] / [Prawo] lub kółko myszy nad celem: cel auto; [X]: cel auto wł./wył.; [Z]: druga stawka",
+            "- [H]: połowa wszystkich niepodzielonych stawek; [Q] / [W]: połowa stawki 1 lub 2",
+            "- [A]: tryb auto, [S]: statystyki, [F]: kontrola uczciwości, [T]: turbo, [M]: muzyka",
+            "- [Esc]: zamknięcie okna lub zatrzymanie trybu auto, poza tym pauza",
+            "Okna można otworzyć tylko wtedy, gdy żadna stawka nie leci. Jeśli okno gry straci fokus, gdy stawka leci, gra sama się wstrzymuje. Stawki, cele, turbo, muzyka i ustawienia trybu auto są zapisywane w settings.json (sekcja lamacrash)."
+          ]
+        },
+        {
+          "h": "Żetony Lamy",
+          "body": [
+            "Lama Crash gra na wspólnym koncie Banku Lamy - razem z Blackjackiem, Pokerem, Casino, Lama Crossing, Lama Mines i Lama Plinko (start 1000, zapis w mem.json).",
+            "GRAJ pobiera stawkę i zapisuje rundę za jednym razem, a każda wypłata od razu dopisuje wygraną. Jeśli wyjdziesz z gry w trakcie lotu, nic nie przepada: przy następnym uruchomieniu jest odliczanie, a balon wznosi się dalej dokładnie od tego miejsca - punkt pęknięcia i tak jest już ustalony.",
+            "Rekord to najwyższy stan 1000 + twojego bilansu w Lama Crash. Poniżej 10 żetonów jesteś bankrutem: [Enter] lub kliknięcie bierze kredyt z banku, który uzupełnia konto do 1000."
+          ]
+        },
+        {
+          "h": "Osiągnięcia",
+          "body": [
+            "- Bywalec Lama Crash: 25 rozgrywek",
+            "- Kamień milowy: rekord 3000",
+            "- Mistrz Lama Crash: rekord 10000",
+            "- O włos (rzadki): Wypłać ręcznie przy ×2 lub więcej - najwyżej 5% przed pęknięciem",
+            "- Pilot zorzy (epicki): Wypłać przy ×10 lub więcej",
+            "- Kosmiczna lama (legendarny): Wypłać przy ×1000 lub więcej"
+          ]
+        },
+        {
+          "h": "Wskazówki",
+          "body": [
+            "- Każda runda jest niezależna: po pięciu wczesnych pęknięciach długi lot wcale się „nie należy”.",
+            "- Żadna strategia nie pokona 97%. Niskie cele wygrywają często i mało, wysokie rzadko i dużo.",
+            "- Dwie stawki łączą jedno i drugie: jedna zabezpiecza wcześnie, druga leci daleko.",
+            "- O włos liczy się tylko przy wypłacie ręcznej - z celami auto się nie liczy.",
+            "- Pilot zorzy: cel auto ×10 trafia mniej więcej co dziesiątą rundę; Kosmiczna lama z celem ×1000 mniej więcej co tysięczną - z turbo taki lot trwa 38 sekund.",
             "- Ustal wcześniej budżet i korzystaj z limitu straty w trybie auto."
           ]
         }

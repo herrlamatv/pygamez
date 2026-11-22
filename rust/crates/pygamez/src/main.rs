@@ -25,7 +25,8 @@
 //! `~x:y` (Maus bewegen), `^dx:dy` (relative Mausbewegung, MOUSEREL),
 //! `<x:y` / `>x:y` (Maustaste nur druecken / nur loslassen),
 //! `%x:y:d` (Mausrad bei x, y um d Rasten, + = hoch), `*Taste`
-//! (Tastenwiederholung: KEYDOWN mit `repeat`, ohne Loslassen).
+//! (Tastenwiederholung: KEYDOWN mit `repeat`, ohne Loslassen), `!blur`
+//! (Fokusverlust des Fensters: Tasten loslassen + `pause_on_blur`).
 //! Leer = ein Bild ohne Ereignis.
 //! | `PYGAMEZ_SEED` | Startwert fuer `random` |
 //! | `PYGAMEZ_FULL` | `1` = ganzes Fenster samt Seitenleiste fotografieren |
@@ -151,6 +152,9 @@ fn fenster(app: &mut App) {
     let probe = env("PYGAMEZ_VOLLBILD_PROBE");
     let mut bild = 0u32;
     let mut bericht: Vec<String> = Vec::new();
+    // Hatte das Fenster im letzten Bild den Fokus? (Fokusverlust = Wechsel
+    // aktiv -> inaktiv, wie Tks <FocusOut> mit `focus_get() is None`.)
+    let mut war_aktiv = false;
 
     while window.is_open() && !app.closing {
         let jetzt = Instant::now();
@@ -172,7 +176,8 @@ fn fenster(app: &mut App) {
         // Windows: Taste + Zeichen aus der eigenen Fensterprozedur (wie Tk);
         // sonst aus minifbs Tastenstand.
         let roh = fenster::tasten_holen();
-        if window.is_active() {
+        let aktiv = window.is_active();
+        if aktiv {
             let gemeldet = match roh {
                 Some(roh) => tasten.aus_nachrichten(roh),
                 None => tasten.abholen(&window, &liste),
@@ -188,7 +193,12 @@ fn fenster(app: &mut App) {
             for k in tasten.alle_los() {
                 app.key_up(&k);
             }
+            if war_aktiv {
+                // main._on_focus_out: Tasten loslassen, dann _pause_on_blur
+                app.fokus_verloren();
+            }
         }
+        war_aktiv = aktiv;
 
         // --- Maus ----------------------------------------------------------
         if let Some((mx, my)) = window.get_mouse_pos(MouseMode::Pass) {
@@ -332,6 +342,9 @@ fn ereignis(app: &mut App, k: &str) {
     let zahlen = |rest: &str| -> Vec<i32> { rest.split(':').filter_map(|z| z.parse().ok()).collect() };
     let zeichen = |k: &str| if k.chars().count() == 1 { k.to_string() } else { String::new() };
     if k.is_empty() {
+    } else if k == "!blur" {
+        // Fokusverlust des Fensters (wie oben in der Fensterschleife)
+        app.fokus_verloren();
     } else if let (Some(rest), true) = (k.strip_prefix('@'), k.len() > 1) {
         let z = zahlen(rest);
         if z.len() >= 2 {

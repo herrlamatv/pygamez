@@ -424,6 +424,13 @@ pub trait Game {
     fn show_highscore_banner(&self) -> bool {
         true
     }
+    /// `pause_on_blur` - beim Verlust des Fensterfokus automatisch pausieren?
+    /// Die App fragt das nach dem Loslassen der Tasten (`App::fokus_verloren`,
+    /// wie `main._pause_on_blur`). Lama Crash: solange ein Einsatz fliegt -
+    /// sonst stiege der Ballon weiter, waehrend man in einem anderen Fenster ist.
+    fn pause_on_blur(&self) -> bool {
+        false
+    }
     /// `name` eines Menue-Bildschirms (Statuszeile); Spiele lassen es leer.
     fn screen_name(&self) -> String {
         String::new()

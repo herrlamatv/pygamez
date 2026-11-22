@@ -3,7 +3,7 @@
 lamabank.py
 ===========
 Die **Lama-Bank** - das gemeinsame Chip-Konto von Blackjack, Poker, Casino,
-Lama Crossing, Lama Mines und Lama Plinko.
+Lama Crossing, Lama Mines, Lama Plinko und Lama Crash.
 
 Alle diese Spiele setzen dieselben "Lama-Chips". Gespeichert wird im Abschnitt
 ``casino`` der gemeinsamen ``mem.json``:
@@ -46,13 +46,13 @@ import store
 
 SECTION = "casino"
 START_CHIPS = 1000
-GAMES = ("blackjack", "poker", "casino", "lamacrossing", "lamamines", "lamaplinko")
+GAMES = ("blackjack", "poker", "casino", "lamacrossing", "lamamines", "lamaplinko", "lamacrash")
 
 # Mindesteinsatz je Spiel bzw. "spiel:modus" (Pleite-Regel).
 #   Blackjack: kleinster Chip 10 · Poker: Big Blind 20 (Hold'em und Draw),
 #   Video Poker 10 · Roulette: 1er-Chip · Lama-Slot: 10 Linien x 1 ·
 #   Lama Crossing und Lama Mines: kleinste Einsatzstufe 10 ·
-#   Lama Plinko: kleinster Einsatz je Kugel 1
+#   Lama Plinko: kleinster Einsatz je Kugel 1 · Lama Crash: kleinste Stufe 10
 MIN_BET = {
     "blackjack": 10,
     "poker": 20,
@@ -62,6 +62,7 @@ MIN_BET = {
     "lamacrossing": 10,
     "lamamines": 10,
     "lamaplinko": 1,
+    "lamacrash": 10,
 }
 
 _data = None          # zuletzt geladener Stand (Cache - draw() liest pro Frame)

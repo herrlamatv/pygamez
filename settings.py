@@ -214,6 +214,12 @@ DEFAULTS = {
     # Auto-Modus (Kugeln, Stopp bei Gewinn/Verlust ab ... Chips, 0 = aus)
     "lamaplinko": {"rows": 12, "risk": "medium", "bet": 10, "turbo": False,
                    "auto_balls": 25, "auto_win": 0, "auto_loss": 0},
+    # Lama Crash: Einsatz 1/2, zweiter Einsatz an/aus, Auto-Ziel je Einsatz
+    # (an/aus + Multiplikator x100), Turbo, Musik, Auto-Modus (Runden, Stopp
+    # bei Gewinn/Verlust ab ... Chips, 0 = aus)
+    "lamacrash": {"bet1": 10, "bet2": 10, "two": False, "auto1": False, "target1": 200,
+                  "auto2": True, "target2": 1000, "turbo": False, "music": True,
+                  "auto_rounds": 10, "auto_win": 0, "auto_loss": 0},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -263,6 +269,14 @@ SCHEMAS = {
                    "auto_balls": ("choice", (10, 25, 50, 100, 250, 500, 1000)),
                    "auto_win": ("choice", (0, 100, 500, 1000, 5000, 10000, 50000)),
                    "auto_loss": ("choice", (0, 100, 500, 1000, 5000, 10000, 50000))},
+    "lamacrash": {"bet1": ("choice", (10, 20, 50, 100, 200, 500, 1000, 2500, 5000, 10000)),
+                  "bet2": ("choice", (10, 20, 50, 100, 200, 500, 1000, 2500, 5000, 10000)),
+                  "two": bool, "auto1": bool, "auto2": bool,
+                  "target1": (int, 101, 10000000), "target2": (int, 101, 10000000),
+                  "turbo": bool, "music": bool,
+                  "auto_rounds": ("choice", (5, 10, 25, 50, 100, 250)),
+                  "auto_win": ("choice", (0, 100, 500, 1000, 5000, 10000, 50000)),
+                  "auto_loss": ("choice", (0, 100, 500, 1000, 5000, 10000, 50000))},
 }
 
 _INVALID = object()

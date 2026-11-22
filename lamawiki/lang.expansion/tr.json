@@ -147,7 +147,7 @@
           "body": [
             "İlerlemesi olan her oyunun mem.json içinde kendi bölümü vardır, örneğin:",
             "- sudoku: yıldızları ve en iyi süreleriyle çözülmüş seviyeler, yarım kalan bulmacalar ve serisiyle birlikte Günün Sudokusu.",
-            "- casino: Lama Bankası hesabı - Blackjack, Poker, Casino, Lama Crossing, Lama Mines ve Lama Plinko için Lama çipleri, her oyunun bakiyesi, Lama Crossing'de yarım kalan geçiş, Lama Mines'ta yarım kalan tur ile oto mod işaretleri ve Lama Mines ile Lama Plinko'nun geçmişi, adillik verileri, istatistikleri ve devreden küsuratı.",
+            "- casino: Lama Bankası hesabı - Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko ve Lama Crash için Lama çipleri, her oyunun bakiyesi, Lama Crossing'de yarım kalan geçiş, Lama Mines'ta yarım kalan tur ile oto mod işaretleri, Lama Crash'te yarım kalan uçuş ve Lama Mines, Lama Plinko ile Lama Crash'in geçmişi, adillik verileri, istatistikleri ve devreden küsuratı.",
             "- crossy: toplanan jetonlar, satın alınan karakterler ve Crossy Road'un günlük en iyisi.",
             "- tetris: Sprint'te en iyi süre, Ultra'da en iyi skor ve yapay zekâya karşı Versus bilançosu.",
             "- g2048: kaydedilmiş 2048 oyunları ve tahta boyutu ile moda göre en iyi skorlar.",
@@ -349,7 +349,7 @@
         {
           "h": "Genel bakış",
           "body": [
-            "49 oyunun tamamında 268 başarım - ilk oyundan Tetris'teki Perfect Clear'a kadar.",
+            "50 oyunun tamamında 274 başarım - ilk oyundan Tetris'teki Perfect Clear'a kadar.",
             "Her başarımın bir nadirliği, dolayısıyla puan değeri vardır; toplam seviyeni verir.",
             "Kenar çubuğundaki Başarımlar ve istatistikler düğmesi, Başarımlar sekmesi. Filtre açık ya da kapalı olanları gizler."
           ]
@@ -360,7 +360,7 @@
             "- Genel: koleksiyon geneli hedefler - oyunlar, denenen oyunlar, süre, rekorlar, galibiyetler, oyun günleri, günlük seriler, seviye ve düellolar. Ayrıca gece kuşu, maraton, hafta sonu oyuncusu gibi ekstralar.",
             "- Puan kilometre taşları: her oyun için adil bir hedef puan.",
             "- Usta seviyeleri: çok daha yüksek ikinci eşik - yalnızca puanı sınırsız oyunlarda.",
-            "- Müdavim: bir oyunda 25 parti. 49 oyunun hepsinde var.",
+            "- Müdavim: bir oyunda 25 parti. 50 oyunun hepsinde var.",
             "- Özel anlar: şah mat, Yahtzee, 4096 karosu, hole-in-one, air hockey'de hat-trick, tek güç hapıyla dört hayalet ve dahası."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Lama Çipleri",
           "body": [
-            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines ve Lama Plinko, Lama Bankası'nda tek bir hesabı paylaşır: 1000 Lama çipiyle başlarsın ve bakiyen kalıcı olarak kaydedilir.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko ve Lama Crash, Lama Bankası'nda tek bir hesabı paylaşır: 1000 Lama çipiyle başlarsın ve bakiyen kalıcı olarak kaydedilir.",
             "Bahis kartlar dağıtılır dağıtılmaz düşülür - süren bir eli bırakan bahsini kaybeder.",
             "Rekor, blackjack bakiyenin ulaştığı en yüksek değerdir: 1000 artı blackjackte kazandığın ve kaybettiğin her şey. Rulette, slotta veya pokerde kazandıkların burada sayılmaz.",
             "10 çipin altında iflas edersin: [Enter] bankadan kredi alır ve hesabını yeniden 1000'e tamamlar. Krediler bakiyeye sayılmaz."
@@ -1901,7 +1901,7 @@
         {
           "h": "Lama Çipleri",
           "body": [
-            "Lama Bankası'nın Lama çipleriyle oynanır - Blackjack, Casino, Lama Crossing, Lama Mines ve Lama Plinko ile ortak bir hesap (başlangıç 1000, kalıcı olarak kaydedilir).",
+            "Lama Bankası'nın Lama çipleriyle oynanır - Blackjack, Casino, Lama Crossing, Lama Mines, Lama Plinko ve Lama Crash ile ortak bir hesap (başlangıç 1000, kalıcı olarak kaydedilir).",
             "Bir elin başında hesabın masada yığın olarak durur; pota giren miktar hemen düşülür. Elin ortasında masadan kalkarsan pottaki payın gider - geri kalanı hesabına döner.",
             "Rekor, poker bakiyenin ulaştığı en yüksek değerdir: 1000 artı pokerde kazandığın ve kaybettiğin her şey. Diğer oyunlardaki kazançlar burada sayılmaz.",
             "İflas (20'lik büyük kördan az, Video Poker'de 10'dan az) = tek tıkla banka kredisi, hesabın yine 1000 olur."
@@ -2976,7 +2976,7 @@
         {
           "h": "Lama Bankası",
           "body": [
-            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines ve Lama Plinko aynı hesapla oynar: Lama çipleri (başlangıç 1000). Bahisler hemen düşülür, kazançlar eklenir - her şey kalıcı olarak kaydedilir.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama Plinko ve Lama Crash aynı hesapla oynar: Lama çipleri (başlangıç 1000). Bahisler hemen düşülür, kazançlar eklenir - her şey kalıcı olarak kaydedilir.",
             "Her oyun kendi bakiyesini tutar. Casino rekoru, 1000 + Casino bakiyesinin ulaştığı en yüksek değerdir; Blackjack veya Poker kazançları burada sayılmaz.",
             "İflas edince (en düşük bahisten az) bankadan kredi alırsın: hesabın yeniden 1000 olur. Krediler hiçbir bakiyeye sayılmaz; sayıları sağ üstte görünür."
           ]
@@ -3109,7 +3109,7 @@
         {
           "h": "Lama Çipleri",
           "body": [
-            "Lama Crossing, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker, Casino, Lama Mines ve Lama Plinko ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
+            "Lama Crossing, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker, Casino, Lama Mines, Lama Plinko ve Lama Crash ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
             "Rekor, 1000 + Lama Crossing bakiyenin ulaştığı en yüksek değerdir; Blackjack, Poker veya Casino kazançları burada sayılmaz.",
             "10 çipin altında iflas edersin: [Enter] ya da bir tık bankadan kredi alır ve hesabını yeniden 1000'e tamamlar. Krediler bakiyeye sayılmaz.",
             "Geçişin ortasında bırakmak güvenlidir: bahis, zorluk ve şerit kaydedilir, bir sonraki başlangıçta tam oradan devam edersin."
@@ -3263,7 +3263,7 @@
         {
           "h": "Lama Çipleri",
           "body": [
-            "Lama Mines, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker, Casino, Lama Crossing ve Lama Plinko ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
+            "Lama Mines, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker, Casino, Lama Crossing, Lama Plinko ve Lama Crash ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
             "Rekor, 1000 + Lama Mines bakiyenin ulaştığı en yüksek değerdir; Lama Bankası'nın diğer oyunlarındaki kazançlar burada sayılmaz.",
             "10 çipin altında iflas edersin: [Boşluk], [Enter] ya da bir tık bankadan kredi alır ve hesabını yeniden 1000'e tamamlar. Krediler bakiyeye sayılmaz.",
             "Turun ortasında bırakmak güvenlidir: bahis başlangıçta düşülür ve bulunan her mücevherden sonra alan boyutu, mayınlar, turun seed'leri ve açılmış kareler kaydedilir. Bir sonraki başlangıçta alan seed'den yeniden hesaplanır ve tam oradan devam edersin.",
@@ -3418,7 +3418,7 @@
         {
           "h": "Lama Çipleri",
           "body": [
-            "Lama Plinko, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker, Casino, Lama Crossing ve Lama Mines ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
+            "Lama Plinko, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker, Casino, Lama Crossing, Lama Mines ve Lama Crash ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
             "Rekor, 1000 + Lama Plinko bakiyenin ulaştığı en yüksek değerdir; diğer oyunlardaki kazançlar burada sayılmaz.",
             "Hesabın seçilen bahsi karşılamıyorsa daha küçük bir bahis seç. 0 çiple iflas edersin: [Enter] ya da bir tık bankadan kredi alır ve hesabını yeniden 1000'e tamamlar. Krediler bakiyeye sayılmaz.",
             "Geçmiş, istatistikler ve adillik verileri profiline aittir ve onlar da mem.json içinde saklanır."
@@ -3444,6 +3444,163 @@
             "- Kenar isabeti: en hızlısı 12 sırayla - orada yaklaşık 2.048 topta bir top en kenara (solda ya da sağda) düşer. Top başına 1 çiple bu, ortalama 100 topta yalnızca yaklaşık 3 çipe mal olur.",
             "- Yumak yağmuru: [Boşluk] tuşunu basılı tutman yeter - seri atış, sıra sayısı ne olursa olsun tahtaya aynı anda yaklaşık 30 top getirir ve yaklaşık 2 saniye sonra başarım senindir. Oto mod bunun için fazla ağır bırakır.",
             "- Plinko efsanesi: 16 sıra ve Yüksek riskte yalnızca 32.768 topta bir top en kenara düşer - 1000 topluk oto serilerle ortalama yaklaşık 33 seri gerekir. Buna karşılık o cep ×1.000 öder.",
+            "- Önceden bir bütçe belirle ve oto modda zarar sınırını kullan."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrash",
+      "category": "games",
+      "game": "LamaCrashGame",
+      "title": "Lama Crash",
+      "keywords": [
+        "lama",
+        "crash",
+        "balon",
+        "sıcak hava balonu",
+        "çarpan",
+        "çek",
+        "ödeme",
+        "patlama",
+        "patlama noktası",
+        "oto hedef",
+        "yarısı",
+        "iki bahis",
+        "irtifa",
+        "ay",
+        "çip",
+        "lama bankası",
+        "oto",
+        "turbo",
+        "müzik",
+        "adillik",
+        "provably fair",
+        "kontrol kodu",
+        "seed",
+        "sha-256",
+        "istatistikler"
+      ],
+      "sections": [
+        {
+          "h": "Nasıl oynanır",
+          "body": [
+            "Laman bir balonla yükselir ve çarpan her saniye büyür: ×1,00, ×1,50, ×2,00 … Çekersen bahsini o anki çarpanla çarpılmış olarak alırsın. Balon daha önce patlarsa bahis gider.",
+            "Bahsini seç (10, 20, 50 … 10000 Lama çipine kadar) ve OYNA'ya bas: bahis düşülür, kısa bir 3-2-1 geri sayımından sonra balon havalanır. ×1,01'den itibaren istediğin an ÇEK'e basabilirsin - lama paraşütle atlar, kazanç anında hesabına geçer.",
+            "Balonun ne zaman patlayacağı daha kalkıştan önce bellidir - ama kimse göremez: ne balon ne müzik ne de sesler bir şey ele verir. Balon yükseldikçe yalnızca giderek daha çok şişer.",
+            "Çektikten sonra boş balon patlayana kadar uçmaya devam eder - böylece ne kadar ileri gideceğini görürsün. [Boşluk] ya da İLERİ SAR ile bu kısım hızlı geçer. Sağ üstte son 12 turun patlama noktaları durur.",
+            "Süreler: ×2 11,6 saniyede, ×10 38 saniyede, ×100 77 saniyede, ×100.000 3,2 dakikada gelir. Turbo ([T]) her şeyi üç kat hızlandırır."
+          ]
+        },
+        {
+          "h": "İki bahis ve yarısını çekme",
+          "body": [
+            "[Z] ya da 2. karttaki düğmeyle ikinci bir lamayı da yanına alırsın: aynı turda iki bahis, her birinin kendi tutarı ve kendi oto hedefi olur. İkisi de aynı balonda uçar - örneğin biri ×1,50 hedefle temkinli, diğeri ×10 hedefle cesur.",
+            "- [Boşluk] / [Enter] / [C] ya da alttaki ÇEK: hâlâ uçan tüm bahisler çekilir",
+            "- [1] / [2] ya da karttaki düğme: yalnızca o bahis",
+            "- [H] ya da YARISI: henüz bölünmemiş her bahsin yarısı çekilir, diğer yarısı uçmaya devam eder",
+            "- [Q] / [W] ya da karttaki yarı düğmesi: yalnızca o bahsin yarısı",
+            "Her bahis yalnızca bir kez yarıya bölünebilir. Lama çekilen yarıyı mini paraşütlü bir para kesesi olarak aşağı bırakır.",
+            "Oto hedef: [Sol] / [Sağ] ile (ya da hedefin üzerinde fare tekerleğiyle) bir bahsin kendiliğinden çekileceği çarpanı ayarlarsın (×1,01 ile ×100.000 arası); [X] onu açar ya da kapatır. Balon hedefe ulaşırsa ödeme tam hedef çarpanla yapılır - aynı anda patlasa bile."
+          ]
+        },
+        {
+          "h": "Patlama noktası nasıl belirlenir",
+          "body": [
+            "Her tur için 0 ile 2^32 - 1 arasında rastgele bir r sayısı çekilir. Patlama noktası 97 × 2^32 / (2^32 - r) olup yüzde birlere aşağı yuvarlanır; en az ×1,00, en çok ×100.000'dir. Turların yaklaşık %4'ü daha ×1,00'de patlar - kimse çekemeden.",
+            "Buradan basit bir kural çıkar: x hedefine ulaşma olasılığı %97 bölü x'tir. Ne zaman çekersen çek - uzun vadede bahislerinin %97'si geri döner:",
+            "- ×1,50: %64,67 · ×2: %48,50 · ×3: %32,33 · ×5: %19,40",
+            "- ×10: %9,70 · ×100: %0,97 · ×1.000: %0,097 · ×100.000: %0,001",
+            "Belirli bir çarpanda elle çekersen, balon daha sonra patladığında tam olarak kazanırsın - sanki onu oto hedef olarak ayarlamışsın gibi.",
+            "×100.000'e ulaşan Ay'a iner: maksimum kazanç, hâlâ uçan tüm bahisler ×100.000 ile ödenir.",
+            "Kalan aktarımı: bir ödeme aşağı yuvarlanırken yüzde birlerde kalan kısım bir sonrakine eklenir - küçük bahisler bile hiçbir şey kaybetmez."
+          ]
+        },
+        {
+          "h": "İrtifa dünyaları ve müzik",
+          "body": [
+            "Çarpan ne kadar yüksekse balon da o kadar yükseğe uçar - altı dünyadan geçerek:",
+            "- Lama çayırı (×1'den itibaren): mera, çit ve ahır aşağıda kalır",
+            "- Bulut denizi (×1,50'den itibaren): bulutlar ve kuş sürüleri",
+            "- Fırtına cephesi (×3'ten itibaren): yağmur, şimşekler ve uçaklar",
+            "- Kuzey ışıkları (×10'dan itibaren): yıldızlar ve dans eden kutup ışıkları",
+            "- Uzay (×100'den itibaren): Dünya'nın kavisi, uydular, kayan yıldızlar - ve Ay giderek büyür",
+            "- Ay (×100.000): Ay'a iniş",
+            "Gerilim müziği her dünyada daha hızlı ve daha tiz olur; ×2'den itibaren gerilen balon gıcırdar. [M] müziği açar ya da kapatır."
+          ]
+        },
+        {
+          "h": "Oto mod",
+          "body": [
+            "[A] oto modu açar (yalnızca turlar arasında). Orada şunları ayarlarsın:",
+            "- Turlar: 5, 10, 25, 50, 100 veya 250",
+            "- Kâr hedefi / Zarar limiti: kapalı, 100, 500, 1000, 5000, 10000 veya 50000 çip",
+            "- Turbo açık ya da kapalı",
+            "OTO BAŞLAT turları bahislerin ve oto hedeflerinle art arda oynar; oto hedefi olmayan bir bahsin hedefi açılır. Hepsi çekildiğinde otomatik olarak ileri sarılır. Yine de istediğin an elle çekebilirsin.",
+            "Oto mod; tur sayısına ulaşılana, bir sınır devreye girene, çipler yetmeyene ya da DUR, [Esc] veya [A] tuşuna basana kadar sürer - o sırada uçuştaki bir tur normal şekilde biter."
+          ]
+        },
+        {
+          "h": "Adillik kontrolü",
+          "body": [
+            "Lama Crash'te patlama noktasının sonradan değiştirilmediğini kendin kontrol edebilirsin (\"provably fair\"):",
+            "- Sunucu seed'i: tur öncesinde belirlenen, 32 karakterlik gizli bir rastgele değer",
+            "- Kontrol kodu: sunucu seed'inin SHA-256 parmak izi - kalkıştan önce görünür",
+            "- İstemci seed'i: senin kendi payın (8 karakter); \"Yeni istemci seed'i\" hiçbir tur sürmüyorken yenisini çeker",
+            "Buna tur numarası (nonce) eklenir. Turdan sonra sunucu seed'i açıklanır - o sırada bir sonraki turun kontrol kodu zaten belirlenmiştir.",
+            "[F] son 12 turu gösterir. \"Doğrula\" ([Enter]) kontrol kodunu denetler, patlama noktasını yeniden hesaplar ve her şeyin tutup tutmadığını bir onay işareti ya da çarpıyla gösterir - yanında çekişlerini gösteren mini bir eğriyle.",
+            "Meraklısına: rastlantı mulberry32'dir ve \"lamacrash|sunucu seed'i|istemci seed'i|numara\" metninin FNV-1a değeriyle başlatılır; r ondan çıkan ilk sayıdır."
+          ]
+        },
+        {
+          "h": "İstatistikler",
+          "body": [
+            "[S] profilinin Lama Crash istatistiklerini açar:",
+            "- Kutucuklar: Turlar, Kazanılan, Kaybedilen, Ödeme oranın, Toplam bahis, Ödenen, Net sonuç, Rekor kazanç, En iyi çarpan (en yüksek çekiş), En yüksek patlama, Yarı çekimler ve Kıl payı",
+            "- son 100 turun bakiye eğrisi",
+            "- turlarının patlama noktalarının dağılımı çubuk olarak, beklenen dağılım altın renkte"
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- [Boşluk] / [Enter] ya da OYNA: turu başlat; uçuşta: hepsini çek; sonrasında: ileri sar",
+            "- [1] / [2] ya da [Tab]: kart seç (turdan önce) ya da tek bahsi çek (uçuşta)",
+            "- [Yukarı] / [Aşağı], [+] / [-] veya fare tekerleği: seçili kartın bahsi",
+            "- [Sol] / [Sağ] ya da hedefin üzerinde fare tekerleği: oto hedef; [X]: oto hedef aç/kapa; [Z]: ikinci bahis",
+            "- [H]: bölünmemiş tüm bahislerin yarısı; [Q] / [W]: 1. ya da 2. bahsin yarısı",
+            "- [A]: oto mod, [S]: istatistikler, [F]: adillik kontrolü, [T]: turbo, [M]: müzik",
+            "- [Esc]: pencereyi kapat ya da otoyu durdur, aksi halde duraklat",
+            "Pencereler yalnızca uçan bahis yokken açılabilir. Bir bahis uçarken oyun penceresi odağı kaybederse oyun kendiliğinden duraklar. Bahisler, hedefler, turbo, müzik ve oto mod ayarları settings.json içinde saklanır (lamacrash bölümü)."
+          ]
+        },
+        {
+          "h": "Lama Çipleri",
+          "body": [
+            "Lama Crash, Lama Bankası'nın ortak hesabıyla oynar - Blackjack, Poker, Casino, Lama Crossing, Lama Mines ve Lama Plinko ile birlikte (başlangıç 1000, mem.json içinde saklanır).",
+            "OYNA bahsi düşer ve turu tek hamlede kaydeder; her çekiş kazancı anında hesaba geçirir. Uçuşun ortasında oyundan çıkarsan hiçbir şey kaybolmaz: bir sonraki açılışta geri sayım olur ve balon tam kaldığı yerden yükselmeye devam eder - patlama noktası zaten bellidir.",
+            "Rekor, 1000 + Lama Crash bakiyenin ulaştığı en yüksek değerdir. 10 çipin altında iflas edersin: [Enter] ya da bir tık bankadan kredi alır ve hesabını yeniden 1000'e tamamlar."
+          ]
+        },
+        {
+          "h": "Başarımlar",
+          "body": [
+            "- Lama Crash müdavimi: 25 parti",
+            "- Kilometre taşı: rekor 3000",
+            "- Lama Crash ustası: rekor 10000",
+            "- Kıl payı (nadir): ×2 veya üzerinde elle çek - patlamadan en fazla %5 önce",
+            "- Kutup ışığı pilotu (destansı): ×10 veya üzerinde çek",
+            "- Uzay laması (efsanevi): ×1000 veya üzerinde çek"
+          ]
+        },
+        {
+          "h": "İpuçları",
+          "body": [
+            "- Her tur bağımsızdır: beş erken patlamadan sonra uzun bir uçuşun \"sırası gelmiş\" değildir.",
+            "- Hiçbir strateji %97'yi yenemez. Düşük hedefler çoğu zaman az kazandırır, yüksek hedefler nadiren ama çok.",
+            "- İki bahis ikisini birleştirir: biri erkenden kazancı güvenceye alır, diğeri uzağa uçar.",
+            "- Kıl payı yalnızca elle çekişte sayılır - oto hedeflerle sayılmaz.",
+            "- Kutup ışığı pilotu: ×10 oto hedef yaklaşık her on turda bir tutar; Uzay laması için ×1.000 hedef yaklaşık her bin turda bir - turboda böyle bir uçuş 38 saniye sürer.",
             "- Önceden bir bütçe belirle ve oto modda zarar sınırını kullan."
           ]
         }

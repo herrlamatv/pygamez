@@ -1,12 +1,12 @@
 /*
  * casino_bank.js - Lama-Bank: gemeinsames Chip-Konto (Port von lamabank.py)
  * ==========================================================================
- * Blackjack, Poker, Casino, Lama Crossing, Lama Mines und Lama Plinko setzen dieselben
- * Lama-Chips. Gespeichert wird im localStorage unter "pygamez.mem.casino" im gleichen
- * Format wie der mem.json-Abschnitt "casino" der Desktop-Version:
+ * Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko und Lama Crash setzen
+ * dieselben Lama-Chips. Gespeichert wird im localStorage unter "pygamez.mem.casino" im
+ * gleichen Format wie der mem.json-Abschnitt "casino" der Desktop-Version:
  *
- *   {chips, ledger: {blackjack, poker, casino, lamacrossing, lamamines, lamaplinko}, peak: {...}, escrow, refills,
- *    migrated, extra}
+ *   {chips, ledger: {blackjack, poker, casino, lamacrossing, lamamines, lamaplinko, lamacrash},
+ *    peak: {...}, escrow, refills, migrated, extra}
  *
  * - Einsatz sofort abbuchen + speichern (Hand verlassen = Einsatz weg).
  * - Poker-Tischstapel liegt als escrow; load() erstattet ihn beim nächsten Start.
@@ -21,9 +21,11 @@
 
   const KEY = "mem.casino";
   const START_CHIPS = 1000;
-  const GAMES = ["blackjack", "poker", "casino", "lamacrossing", "lamamines", "lamaplinko"];
+  const GAMES = ["blackjack", "poker", "casino", "lamacrossing", "lamamines", "lamaplinko", "lamacrash"];
+  // Mindesteinsatz je Spiel bzw. "spiel:modus" (Pleite-Regel) - wie lamabank.MIN_BET:
+  // Lama Crossing, Lama Mines und Lama Crash: kleinste Einsatzstufe 10 · Plinko: 1 je Kugel
   const MIN_BET = { blackjack: 10, poker: 20, "poker:video": 10, casino: 1, "casino:slots": 10, lamacrossing: 10,
-    lamamines: 10, lamaplinko: 1 };
+    lamamines: 10, lamaplinko: 1, lamacrash: 10 };
 
   let data = null;
 

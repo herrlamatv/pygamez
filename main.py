@@ -562,6 +562,15 @@ def _draw_icon(cv, cx, cy, name, color, bg):
         for dx in (-9, -3, 3):
             cv.create_rectangle(cx + dx, cy + 8, cx + dx + 5, cy + 10,
                                 fill=color, outline="")
+    elif name == "LamaCrashGame":
+        # Ballon mit Korb auf einer steigenden Kurve
+        cv.create_line(cx - 10, cy + 9, cx - 4, cy + 7, cx + 1, cy + 3,
+                       cx + 4, cy - 1, fill=color, width=2, smooth=True)
+        cv.create_oval(cx - 1, cy - 12, cx + 9, cy - 2, fill=color, outline="")
+        cv.create_line(cx + 1, cy - 4, cx + 3, cy + 1, fill=color, width=1)
+        cv.create_line(cx + 7, cy - 4, cx + 5, cy + 1, fill=color, width=1)
+        cv.create_rectangle(cx + 2, cy + 1, cx + 6, cy + 4, fill=color,
+                            outline="")
     else:
         cv.create_text(cx, cy, text=(name[:1] or "?"), fill=color,
                        font=("Segoe UI", 11, "bold"))
@@ -1380,12 +1389,23 @@ class App:
             try:
                 if self.root.focus_get() is None:
                     self._release_keys()
+                    self._pause_on_blur()
             except (KeyError, tk.TclError):
                 self._release_keys()
+                self._pause_on_blur()
         try:
             self.root.after_idle(check)
         except tk.TclError:
             pass
+
+    def _pause_on_blur(self):
+        """Fokus weg: Spiele, die das wünschen (``pause_on_blur`` - z.B. Lama
+        Crash, solange ein Einsatz fliegt), gehen in die Pause."""
+        cur = self.current
+        if cur is not None and not getattr(cur, "is_menu", False) \
+                and not cur.paused and not cur.game_over \
+                and getattr(cur, "pause_on_blur", False):
+            cur.paused = True
 
     def _switch_current(self, new, exit_old=True):
         """Macht 'new' zum aktiven Screen/Spiel (None = Startbildschirm).

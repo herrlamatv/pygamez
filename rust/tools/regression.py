@@ -12,9 +12,15 @@ Je Spiel laufen ein bis drei feste Ereignisfolgen durch ``vergleich.py``
 ein paar Spielzuege, Mausklicks - sie decken Zeichnen, Zufall und Logik ab,
 aber nicht jede Spielsituation (dafuer gibt es die Bots in ``bots/``).
 
+Ein Lauf ist ``(modus, bilder, tokens, abstand)``, optional mit einem fuenften
+Eintrag ``{"seed": n, "daten": name}``: anderer Startwert fuer ``random``
+bzw. ein Spielstand aus ``DATENSAETZE`` (wird in beide Datenordner kopiert,
+wie ``vergleich.py --daten``).
+
 Ausgabe: eine Zeile je Lauf, am Ende die Zahl der Abweichungen.
 """
 
+import hashlib
 import json
 import os
 import shutil
@@ -24,6 +30,65 @@ import tempfile
 
 HIER = os.path.dirname(os.path.abspath(__file__))
 WURZEL = os.path.dirname(os.path.dirname(HIER))
+
+
+# ---------------------------------------------------------------- Spielstaende
+# Lama Crash: Runden mit fest gewaehlten Fairness-Werten (Platzpunkt aus
+# lamacrash_logic.crash_point nachgerechnet, steht je Satz im Kommentar).
+_LCX_CLIENT = "kaugummi"
+
+
+def _lcx_runde(server, nonce, t, bets):
+    return {"n": nonce, "s": server, "c": _LCX_CLIENT, "h": hashlib.sha256(server.encode("utf-8")).hexdigest(),
+            "t": t, "bets": [dict(zip(("b", "a", "hm", "xm", "p", "man"), b)) for b in bets]}
+
+
+def _lcx_mem(chips, extra):
+    return {"mem": {"lang": "de"},
+            "casino": {"chips": chips, "ledger": {"lamacrash": -120}, "peak": {"lamacrash": 1000}, "escrow": 0,
+                       "refills": 0, "migrated": True, "extra": {"lamacrash": extra}}}
+
+
+def _lcx_fair(nonce):
+    return {"server": "ab" * 16, "client": _LCX_CLIENT, "nonce": nonce}
+
+
+DATENSAETZE = {
+    # Mondlandung beim Fortsetzen: Platzpunkt x100.000 ("c3"*16 / Nonce 6775),
+    # Takt 11400 (x88.770); Einsatz 2 ist schon zur Haelfte bei x50.000 raus
+    "lcx_mond": lambda: _lcx_mem(501000, {
+        "round": _lcx_runde("c3" * 16, 6775, 11400, [(100, 0, 0, 0, 0, 0), (20, 0, 5000000, 0, 500000, 1)]),
+        "hist": [197, 4560, 100], "fair": _lcx_fair(6776), "carry": 0}),
+    # Ins Weltall beim Fortsetzen: Platzpunkt x205,80 ("d4"*16 / Nonce 68),
+    # Takt 4500 (x89,77); Einsatz 1 mit Auto-Ziel x150, Einsatz 2 von Hand
+    "lcx_weltall": lambda: _lcx_mem(940, {
+        "round": _lcx_runde("d4" * 16, 68, 4500, [(50, 15000, 0, 0, 0, 0), (10, 0, 0, 0, 0, 0)]),
+        "hist": [], "fair": _lcx_fair(69), "carry": 37}),
+    # Runde ohne fliegendes Geld (Haelfte x1,50, Rest x2,40; Platzpunkt x2,98
+    # aus "e5"*16 / Nonce 0): wird beim Laden still abgeschlossen
+    "lcx_fertig": lambda: _lcx_mem(1095, {
+        "round": _lcx_runde("e5" * 16, 0, 900, [(100, 0, 150, 240, 195, 3)]),
+        "hist": [120, 350], "fair": _lcx_fair(1), "carry": 12}),
+    # Kaputter Spielstand: falscher Pruefcode, Verlauf/Seeds/Log/Statistik/
+    # Uebertrag ungueltig - alles wird verworfen bzw. bereinigt
+    "lcx_kaputt": lambda: _lcx_mem(1000, {
+        "round": dict(_lcx_runde("e5" * 16, 0, 10, [(100, 0, 0, 0, 0, 0)]), h="0" * 64),
+        "hist": [50, "x", 350, True, 99999999, 2.5, 120], "fair": {"server": "XYZ", "client": "l0l", "nonce": -1},
+        "fairlog": ["x", {"n": 1}], "stats": {"rounds": -2, "curve": [1, "x"], "x": {"hits": [1, 2], "top": True}},
+        "carry": 150}),
+    # Pleite beim Start (5 Chips unter dem Mindesteinsatz 10)
+    "lcx_pleite": lambda: _lcx_mem(5, {"hist": [], "fair": _lcx_fair(3)}),
+}
+
+
+def datensatz(name, ordner):
+    """Spielstand ``name`` aus DATENSAETZE als mem.json in ``ordner`` (neu)."""
+    if os.path.exists(ordner):
+        shutil.rmtree(ordner)
+    os.makedirs(ordner)
+    with open(os.path.join(ordner, "mem.json"), "w", encoding="utf-8") as f:
+        json.dump(DATENSAETZE[name](), f)
+    return ordner
 
 
 def folge(tokens, abstand):
@@ -233,6 +298,37 @@ LAEUFE = {
                    ("single", 210, spur("_*10 3 Left Left Left Left t +space " + wdh("*space", 144) + " -space"), 0),
                    ("single", 1270, spur("_*10 Up Up Up Up Up Up 3 Left Left Left Left t _*5 " + wdh("space _*48", 23)
                                          + " space _*78 Return"), 0)],
+    # Lama Crash (Spuren aus bots/bot_lamacrash.py, 640x480, Startwert 7 wenn nicht
+    # anders angegeben): Spielen mit Tooltip + Aussteigen + naechste Runde; Turbo,
+    # gesperrte Knoepfe im Flug, Platzen; zwei Einsaetze mit Haelfte/Aussteigen per
+    # Taste und Maus; "Haarscharf" (Startwert 1) + Statistik mit Balken-Tooltip;
+    # Auto-Ziel; Auto-Modus ueber das Fenster (5 Runden, Turbo); Fairness
+    # (Nachrechnen, Liste, Mausrad, neuer Client-Seed); Sofort-Platzen x1,00
+    # (Startwert 3); Nordlicht-Welt + Fokusverlust-Pause (Startwert 10); Mondlandung
+    # und Weltall beim Fortsetzen, kaputter bzw. fertiger Spielstand (DATENSAETZE);
+    # Pleite mit 1000er-Einsatz + Kredit; Ruhe per Maus (alle Schalter, Mausrad);
+    # Fokusverlust im Countdown mit gehaltener Taste
+    "lamacrash": [("single", 587, spur("_*4 ~22:55 _*6 ~300:300 _*3 space _*486 space _*20 space"), 0),
+                  ("single", 284, spur("_*3 t _*3 space _*40 a _*3 s _*3 @84:55 _*3 f"), 0),
+                  ("single", 507, spur("_*3 z _*3 Tab _*3 Up _*3 Left _*3 x _*3 space _*176 q _*86 w _*4 h _*74 1 "
+                                       "_*73 @498:213 _*12 @553:454"), 0),
+                  ("single", 491, spur("_*3 t _*3 space _*418 space _*20 space _*25 s _*8 ~397:322"), 0, {"seed": 1}),
+                  ("single", 306, spur("_*3 t _*3 x _*3 Left _*3 Left _*3 z _*3 space"), 0),
+                  ("single", 1263, spur("_*3 a _*5 @48:136 _*3 @75:173 _*3 @108:234 _*3 @195:393"), 0),
+                  ("single", 256, spur("_*3 t _*3 space _*36 space _*2 space _*63 space _*36 space _*2 space _*58 f "
+                                       "_*6 Down _*3 Return _*6 @150:159 _*3 @318:251 _*6 %320:240:-1 _*3 c"), 0),
+                  ("single", 136, spur("_*3 space"), 0, {"seed": 3}),
+                  ("single", 904, spur("_*3 t _*3 space _*726 !blur _*30 Escape"), 0, {"seed": 10}),
+                  ("single", 279, "", 0, {"daten": "lcx_mond"}),
+                  ("single", 386, spur("_*3 t _*336 2 _*6 space"), 0, {"daten": "lcx_weltall"}),
+                  ("single", 494, spur("_*3 t _*3 Up Up Up Up Up Up _*3 space _*449 space"), 0),
+                  ("single", 32, "", 0, {"daten": "lcx_kaputt"}),
+                  ("single", 23, spur("_*10 s"), 0, {"daten": "lcx_fertig"}),
+                  ("single", 83, spur("_*3 ~53:55 _*6 ~146:55 _*6 ~511:113 _*2 %300:300:1 _*3 ~511:139 _*2 "
+                                      "%300:300:1 _*3 @603:168 _*4 @610:187 _*3 @610:213 _*3 @412:213 _*3 @412:113 "
+                                      "_*3 @438:139 _*3 @195:249 _*4 m _*4 @52:454 _*3 ~553:454"), 0),
+                  ("single", 171, spur("_*3 !blur _*6 space _*10 +Left _*10 !blur _*25 Escape"), 0),
+                  ("single", 60, spur("_*20 space"), 0, {"daten": "lcx_pleite"})],
     "minigolf": [("single", 900, "Return _ _ _ Up Up Up space _ _ _ _ _ _ _ _ _ _ _ _ g z Down space", 20),
                  ("single", 700, "3 Right Right Return _ _ <300:200 _ _ _ >300:200 _ _ _ _ _ _ f", 15),
                  # Editor -> Speichern -> Bibliothek -> Teilen (Downloads) -> Import
@@ -257,6 +353,7 @@ BILDSCHIRME = [
     ("screen:wiki:lamacrossing", 60, "Down Down Next Down", 3, False),
     ("screen:wiki:lamamines", 60, "Next Next Down Up Next", 3, False),
     ("screen:wiki:lamaplinko", 60, "Down Down Next Down", 3, False),
+    ("screen:wiki:lamacrash", 60, "Next Down Next Next Up", 3, False),
     ("screen:replays", 40, "Left Left Tab Right", 3, False),
     ("screen:menu", 90, "~320:330 _ _ ~150:360 _ _ ~480:300", 4, True),
     ("screen:menu", 60, "~320:330 _ ~150:360", 4, "classic"),
@@ -310,15 +407,23 @@ def main():
         if nur and spiel not in nur:
             continue
         # Jeder Lauf zusaetzlich nach 8 Bildern: deckt den Bildschirm-Uebergang ab.
-        laeufe = laeufe + [(laeufe[0][0], 8, laeufe[0][2], laeufe[0][3])]
-        for i, (modus, bilder, tokens, abstand) in enumerate(laeufe):
+        laeufe = laeufe + [(laeufe[0][0], 8) + tuple(laeufe[0][2:])]
+        for i, lauf in enumerate(laeufe):
+            modus, bilder, tokens, abstand = lauf[:4]
+            wahl = lauf[4] if len(lauf) > 4 else {}
             liste = os.path.join(ordner, "%s_%d.txt" % (spiel, i))
             with open(liste, "w", encoding="utf-8") as f:
                 f.write(",".join(folge(tokens, abstand)))
+            daten = spiel_daten
+            if wahl.get("daten"):
+                quelle = datensatz(wahl["daten"], os.path.join(ordner, "%s_%d_satz" % (spiel, i)))
+                daten = ["--daten", mit_aufloesung(quelle, "%s_%d_daten" % (spiel, i)) if eigen else quelle]
+            if wahl.get("seed") is not None:
+                daten = daten + ["--seed", str(wahl["seed"])]
             r = subprocess.run([exe, os.path.join(HIER, "vergleich.py"), spiel,
                                 "--mode", modus, "--frames", str(bilder),
                                 "--keys-file", liste,
-                                "--out", os.path.join(ordner, "%s_%d" % (spiel, i))] + spiel_daten,
+                                "--out", os.path.join(ordner, "%s_%d" % (spiel, i))] + daten,
                                cwd=WURZEL, capture_output=True, text=True)
             zeile = (r.stdout.strip().splitlines() or [r.stderr.strip()[-200:]])[0]
             ok = r.returncode == 0 and "gleich" in zeile

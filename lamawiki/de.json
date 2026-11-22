@@ -148,7 +148,7 @@
           "body": [
             "Jedes Spiel mit Fortschritt hat in mem.json einen eigenen Abschnitt, zum Beispiel:",
             "- sudoku: gelöste Level mit Sternen und Bestzeit, angefangene Rätsel und das Tages-Sudoku samt Serie.",
-            "- casino: das Konto der Lama-Bank - die Lama-Chips für Blackjack, Poker, Casino, Lama Crossing, Lama Mines und Lama Plinko mit der Bilanz jedes Spiels, dazu eine angefangene Überquerung von Lama Crossing, eine angefangene Runde und die Auto-Markierungen von Lama Mines sowie Verlauf, Fairness-Daten, Statistik und Rest-Übertrag von Lama Mines und Lama Plinko.",
+            "- casino: das Konto der Lama-Bank - die Lama-Chips für Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko und Lama Crash mit der Bilanz jedes Spiels, dazu eine angefangene Überquerung von Lama Crossing, eine angefangene Runde und die Auto-Markierungen von Lama Mines, ein angefangener Flug von Lama Crash sowie Verlauf, Fairness-Daten, Statistik und Rest-Übertrag von Lama Mines, Lama Plinko und Lama Crash.",
             "- crossy: gesammelte Münzen, gekaufte Figuren und der Tagesbestwert von Crossy Road.",
             "- tetris: Bestzeit im Sprint, Bestwert im Ultra und die Versus-Bilanz gegen die KI.",
             "- g2048: gespeicherte Partien und Bestwerte von 2048 je Brettgröße und Modus.",
@@ -350,7 +350,7 @@
         {
           "h": "Überblick",
           "body": [
-            "268 Erfolge über alle 49 Spiele - vom ersten Spielstart bis zum Perfect Clear in Tetris.",
+            "274 Erfolge über alle 50 Spiele - vom ersten Spielstart bis zum Perfect Clear in Tetris.",
             "Jeder Erfolg hat eine Seltenheitsstufe und damit einen Punktwert; die Summe ergibt dein Level.",
             "Zu finden über den Knopf Erfolge & Statistik in der Sidebar, Reiter Erfolge. Ein Filter blendet Offene oder Freigeschaltete aus."
           ]
@@ -361,7 +361,7 @@
             "- Allgemein: sammlungsweite Ziele - Partien, ausprobierte Spiele, Spielzeit, Rekorde, Siege, Spieltage, Tagesserien, Level und Duelle. Dazu Extras wie Nachteule, Marathon oder Wochenendspieler.",
             "- Punkte-Meilensteine: eine faire Zielpunktzahl je Spiel.",
             "- Meister-Stufen: die zweite, deutlich höhere Punktmarke - nur für Spiele, deren Punktzahl nach oben offen ist.",
-            "- Stammgast: 25 Partien in einem Spiel. Gibt es für jedes der 49 Spiele.",
+            "- Stammgast: 25 Partien in einem Spiel. Gibt es für jedes der 50 Spiele.",
             "- Besondere Momente: Schachmatt, KNIFFEL, die 4096er-Kachel, ein Hole-in-One, ein Hattrick im Air Hockey, vier Geister mit einer Kraftpille und vieles mehr."
           ]
         },
@@ -1475,7 +1475,7 @@
         {
           "h": "Lama-Chips",
           "body": [
-            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines und Lama Plinko teilen sich ein Konto bei der Lama-Bank: Du startest mit 1000 Lama-Chips, der Stand bleibt dauerhaft gespeichert.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko und Lama Crash teilen sich ein Konto bei der Lama-Bank: Du startest mit 1000 Lama-Chips, der Stand bleibt dauerhaft gespeichert.",
             "Der Einsatz wird beim Geben sofort abgebucht - wer eine laufende Hand verlässt, verliert ihn.",
             "Der Highscore ist der Höchststand deiner Blackjack-Bilanz: 1000 plus alles, was du beim Blackjack gewonnen und verloren hast. Gewinne am Roulette, am Slot oder beim Poker zählen hier nicht.",
             "Unter 10 Chips bist du pleite: [Enter] nimmt einen Bank-Kredit und füllt das Konto wieder auf 1000 auf. Kredite zählen nicht zur Bilanz."
@@ -1902,7 +1902,7 @@
         {
           "h": "Lama-Chips",
           "body": [
-            "Gespielt wird mit den Lama-Chips der Lama-Bank - ein gemeinsames Konto mit Blackjack, Casino, Lama Crossing, Lama Mines und Lama Plinko (Start 1000, dauerhaft gespeichert).",
+            "Gespielt wird mit den Lama-Chips der Lama-Bank - ein gemeinsames Konto mit Blackjack, Casino, Lama Crossing, Lama Mines, Lama Plinko und Lama Crash (Start 1000, dauerhaft gespeichert).",
             "Zu Beginn einer Hand liegt dein Konto als Stapel am Tisch; was in den Pot geht, ist sofort abgebucht. Verlässt du den Tisch mitten in der Hand, ist dein Pot-Anteil weg - der Rest kommt zurück aufs Konto.",
             "Der Highscore ist der Höchststand deiner Poker-Bilanz: 1000 plus alles, was du beim Poker gewonnen und verloren hast. Gewinne in anderen Spielen zählen hier nicht.",
             "Pleite (weniger als der Big Blind von 20, im Video Poker weniger als 10) = Bank-Kredit per Klick, das Konto steht wieder bei 1000."
@@ -2979,7 +2979,7 @@
         {
           "h": "Die Lama-Bank",
           "body": [
-            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines und Lama Plinko spielen mit demselben Konto: den Lama-Chips (Start 1000). Einsätze werden sofort abgebucht, Gewinne gutgeschrieben - alles bleibt dauerhaft gespeichert.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama Plinko und Lama Crash spielen mit demselben Konto: den Lama-Chips (Start 1000). Einsätze werden sofort abgebucht, Gewinne gutgeschrieben - alles bleibt dauerhaft gespeichert.",
             "Jedes Spiel führt seine eigene Bilanz. Der Casino-Highscore ist der Höchststand von 1000 + Casino-Bilanz; Gewinne beim Blackjack oder Poker zählen hier nicht.",
             "Pleite (weniger als der Mindesteinsatz) gibt einen Bank-Kredit: Das Konto wird wieder auf 1000 aufgefüllt. Kredite zählen nicht zur Bilanz, ihre Anzahl steht oben rechts."
           ]
@@ -3112,7 +3112,7 @@
         {
           "h": "Lama-Chips",
           "body": [
-            "Lama Crossing spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker, Casino, Lama Mines und Lama Plinko (Start 1000, gespeichert in mem.json).",
+            "Lama Crossing spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker, Casino, Lama Mines, Lama Plinko und Lama Crash (Start 1000, gespeichert in mem.json).",
             "Der Highscore ist der Höchststand von 1000 + Lama-Crossing-Bilanz; Gewinne bei Blackjack, Poker oder im Casino zählen hier nicht.",
             "Unter 10 Chips bist du pleite: [Enter] oder ein Klick nimmt einen Bank-Kredit und füllt das Konto wieder auf 1000 auf. Kredite zählen nicht zur Bilanz.",
             "Mitten in der Überquerung aufhören ist sicher: Einsatz, Schwierigkeit und Spur werden gespeichert, beim nächsten Start geht es genau dort weiter."
@@ -3264,7 +3264,7 @@
         {
           "h": "Lama-Chips",
           "body": [
-            "Lama Mines spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker, Casino, Lama Crossing und Lama Plinko (Start 1000, gespeichert in mem.json).",
+            "Lama Mines spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker, Casino, Lama Crossing, Lama Plinko und Lama Crash (Start 1000, gespeichert in mem.json).",
             "Der Highscore ist der Höchststand von 1000 + Lama-Mines-Bilanz; Gewinne in den anderen Spielen der Lama-Bank zählen hier nicht.",
             "Unter 10 Chips bist du pleite: [Leertaste], [Enter] oder ein Klick nimmt einen Bank-Kredit und füllt das Konto wieder auf 1000 auf. Kredite zählen nicht zur Bilanz.",
             "Mitten in der Runde aufhören ist sicher: Der Einsatz wird beim Start gebucht, und nach jedem gefundenen Edelstein werden Feldgröße, Minen, die Seeds der Runde und die aufgedeckten Felder gespeichert. Beim nächsten Start wird das Feld aus dem Seed neu berechnet, und es geht genau dort weiter.",
@@ -3418,7 +3418,7 @@
         {
           "h": "Lama-Chips",
           "body": [
-            "Lama Plinko spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker, Casino, Lama Crossing und Lama Mines (Start 1000, gespeichert in mem.json).",
+            "Lama Plinko spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker, Casino, Lama Crossing, Lama Mines und Lama Crash (Start 1000, gespeichert in mem.json).",
             "Der Highscore ist der Höchststand von 1000 + Lama-Plinko-Bilanz; Gewinne in den anderen Spielen zählen hier nicht.",
             "Reicht dein Konto nicht für den gewählten Einsatz, stell einen kleineren ein. Mit 0 Chips bist du pleite: [Enter] oder ein Klick nimmt einen Bank-Kredit und füllt das Konto wieder auf 1000 auf. Kredite zählen nicht zur Bilanz.",
             "Verlauf, Statistik und Fairness-Daten gehören zu deinem Profil und liegen ebenfalls in mem.json."
@@ -3444,6 +3444,162 @@
             "- Randtreffer: Am schnellsten geht es mit 12 Reihen - dort landet etwa jede 2.048. Kugel ganz außen (links oder rechts). Mit 1 Chip je Kugel kostet das im Schnitt nur etwa 3 Chips je 100 Kugeln.",
             "- Wollknäuel-Regen: Halt einfach die [Leertaste] gedrückt - das Dauerfeuer bringt bei jeder Reihenzahl rund 30 Kugeln gleichzeitig aufs Brett, nach etwa 2 Sekunden ist der Erfolg da. Der Auto-Modus wirft dafür zu gemächlich.",
             "- Plinko-Legende: Bei 16 Reihen auf Hoch landet nur eine von 32.768 Kugeln ganz außen - mit Auto-Läufen zu 1000 Kugeln brauchst du im Schnitt rund 33 Durchgänge. Dafür zahlt das Fach ×1.000.",
+            "- Leg vorher ein Budget fest und nutz im Auto-Modus die Verlustgrenze."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrash",
+      "category": "games",
+      "game": "LamaCrashGame",
+      "title": "Lama Crash",
+      "keywords": [
+        "lama",
+        "crash",
+        "ballon",
+        "heißluftballon",
+        "multiplikator",
+        "aussteigen",
+        "auszahlen",
+        "platzen",
+        "platzpunkt",
+        "auto-ziel",
+        "hälfte",
+        "zwei einsätze",
+        "höhenwelten",
+        "mond",
+        "chips",
+        "lama-bank",
+        "auto",
+        "turbo",
+        "musik",
+        "fairness",
+        "prüfcode",
+        "seed",
+        "sha-256",
+        "statistik"
+      ],
+      "sections": [
+        {
+          "h": "So wird gespielt",
+          "body": [
+            "Dein Lama steigt im Ballon auf, und mit jeder Sekunde wächst der Multiplikator: ×1,00, ×1,50, ×2,00 … Steigst du aus, bekommst du deinen Einsatz mal den Multiplikator in diesem Moment. Platzt der Ballon vorher, ist der Einsatz weg.",
+            "Einsatz wählen (10, 20, 50 … bis 10000 Lama-Chips) und SPIELEN drücken: Der Einsatz wird abgebucht, nach einem kurzen 3-2-1 hebt der Ballon ab. Ab ×1,01 darfst du jederzeit AUSSTEIGEN - das Lama springt mit dem Fallschirm ab, der Gewinn wird sofort gutgeschrieben.",
+            "Wann der Ballon platzt, steht schon vor dem Start fest - aber niemand sieht es: Weder der Ballon noch Musik oder Töne verraten etwas. Er bläht sich nur immer weiter auf, je höher es geht.",
+            "Nach dem Aussteigen fliegt der leere Ballon weiter, bis er platzt - so siehst du, wie weit es gegangen wäre. Mit [Leertaste] bzw. VORSPULEN geht das im Zeitraffer. Oben rechts stehen die Platzpunkte der letzten 12 Runden.",
+            "Die Zeit: ×2 nach 11,6 Sekunden, ×10 nach 38 Sekunden, ×100 nach 77 Sekunden, ×100.000 nach 3,2 Minuten. Turbo ([T]) macht alles dreimal so schnell."
+          ]
+        },
+        {
+          "h": "Zwei Einsätze & Hälfte",
+          "body": [
+            "Mit [Z] oder dem Schalter auf Karte 2 nimmst du ein zweites Lama mit: zwei Einsätze in derselben Runde, jeder mit eigenem Betrag und eigenem Auto-Ziel. Beide fliegen im selben Ballon - zum Beispiel einer vorsichtig mit Ziel ×1,50, einer mutig mit Ziel ×10.",
+            "- [Leertaste] / [Enter] / [C] oder AUSSTEIGEN unten: alle noch fliegenden Einsätze steigen aus",
+            "- [1] / [2] oder der Knopf auf der Karte: nur dieser Einsatz",
+            "- [H] oder HÄLFTE: jeder noch ungeteilte Einsatz zahlt die Hälfte aus, die andere Hälfte fliegt weiter",
+            "- [Q] / [W] oder der Hälfte-Knopf auf der Karte: nur von diesem Einsatz die Hälfte",
+            "Jeder Einsatz lässt sich einmal halbieren. Die ausgezahlte Hälfte wirft das Lama als Geldsack am Mini-Fallschirm ab.",
+            "Auto-Ziel: Mit [Links] / [Rechts] (oder Mausrad über dem Ziel) stellst du ein, bei welchem Multiplikator ein Einsatz von selbst aussteigt (×1,01 bis ×100.000); [X] schaltet es an oder aus. Erreicht der Ballon das Ziel, wird genau beim Ziel ausgezahlt - auch wenn er im selben Moment platzt."
+          ]
+        },
+        {
+          "h": "Wie der Platzpunkt entsteht",
+          "body": [
+            "Für jede Runde wird eine Zufallszahl r zwischen 0 und 2^32 - 1 gezogen. Der Platzpunkt ist 97 × 2^32 / (2^32 - r), abgerundet auf Hundertstel, mindestens ×1,00 und höchstens ×100.000. Rund 4 % der Runden platzen schon bei ×1,00 - bevor man aussteigen kann.",
+            "Daraus folgt eine einfache Regel: Die Chance, ein Ziel x zu erreichen, ist 97 % geteilt durch x. Egal, wann du aussteigst - auf Dauer kommen 97 % deiner Einsätze zurück:",
+            "- ×1,50: 64,67 % · ×2: 48,50 % · ×3: 32,33 % · ×5: 19,40 %",
+            "- ×10: 9,70 % · ×100: 0,97 % · ×1000: 0,097 % · ×100.000: 0,001 %",
+            "Steigst du von Hand bei einem Multiplikator aus, gewinnst du genau dann, wenn der Ballon später platzt - so, als hättest du ihn als Auto-Ziel gesetzt.",
+            "Wer ×100.000 erreicht, landet auf dem Mond: Höchstgewinn, alle noch fliegenden Einsätze werden mit ×100.000 ausgezahlt.",
+            "Rest-Übertrag: Was beim Abrunden einer Auszahlung an Hundertsteln übrig bleibt, wird der nächsten gutgeschrieben - auch kleine Einsätze verlieren nichts."
+          ]
+        },
+        {
+          "h": "Höhenwelten & Musik",
+          "body": [
+            "Je höher der Multiplikator, desto höher fliegt der Ballon - durch sechs Welten:",
+            "- Lamawiese (ab ×1): Weide, Zaun und Stall bleiben unten zurück",
+            "- Wolkenmeer (ab ×1,50): Wolken und Vogelschwärme",
+            "- Gewitterfront (ab ×3): Regen, Blitze und Flugzeuge",
+            "- Nordlicht (ab ×10): Sterne und tanzende Polarlichter",
+            "- Weltall (ab ×100): Erdkrümmung, Satelliten, Sternschnuppen - und der Mond wird immer größer",
+            "- Mond (×100.000): die Mondlandung",
+            "Die Spannungsmusik wird mit jeder Welt schneller und höher; ab ×2 quietscht der gedehnte Ballon. [M] schaltet die Musik an oder aus."
+          ]
+        },
+        {
+          "h": "Auto-Modus",
+          "body": [
+            "[A] öffnet den Auto-Modus (nur zwischen den Runden). Dort stellst du ein:",
+            "- Runden: 5, 10, 25, 50, 100 oder 250",
+            "- Stopp bei Gewinn ab / Stopp bei Verlust ab: aus, 100, 500, 1000, 5000, 10000 oder 50000 Chips",
+            "- Turbo an oder aus",
+            "AUTO STARTEN spielt die Runden mit deinen Einsätzen und Auto-Zielen nacheinander; ein Einsatz ohne Auto-Ziel bekommt es dabei eingeschaltet. Sind alle ausgestiegen, wird automatisch vorgespult. Du darfst trotzdem jederzeit von Hand aussteigen.",
+            "Auto läuft, bis die Rundenzahl erreicht ist, eine Grenze greift, die Chips nicht reichen oder du STOPP, [Esc] bzw. [A] drückst - eine Runde im Flug fliegt dann normal zu Ende."
+          ]
+        },
+        {
+          "h": "Fairness-Check",
+          "body": [
+            "Bei Lama Crash kannst du selbst nachprüfen, dass der Platzpunkt nicht nachträglich geändert wird (\"Provably Fair\"):",
+            "- Server-Seed: ein geheimer Zufallswert aus 32 Zeichen, vor der Runde festgelegt",
+            "- Prüfcode: der SHA-256-Fingerabdruck des Server-Seeds - vor dem Start sichtbar",
+            "- Client-Seed: dein eigener Anteil (8 Zeichen); \"Neuer Client-Seed\" würfelt ihn neu, wenn keine Runde läuft",
+            "Dazu kommt die Rundennummer (Nonce). Nach der Runde wird der Server-Seed aufgedeckt - der Prüfcode der nächsten Runde steht da schon fest.",
+            "[F] zeigt die letzten 12 Runden. \"Nachrechnen\" ([Enter]) prüft den Prüfcode, berechnet den Platzpunkt neu und zeigt mit Haken oder Kreuz, ob alles stimmt - dazu eine Mini-Kurve mit deinen Ausstiegen.",
+            "Für Neugierige: Zufall ist mulberry32, gestartet mit dem FNV-1a-Wert von \"lamacrash|Server-Seed|Client-Seed|Nr.\"; r ist die erste Zahl daraus."
+          ]
+        },
+        {
+          "h": "Statistik",
+          "body": [
+            "[S] öffnet die Statistik deines Profils für Lama Crash:",
+            "- Kacheln: Runden, Gewonnen, Verloren, Deine Quote, Eingesetzt, Ausgezahlt, Bilanz, Größter Gewinn, Bester Faktor (höchster Ausstieg), Max. Platzpunkt, Halbierungen und Haarscharf",
+            "- eine Bilanzkurve über die letzten 100 Runden",
+            "- die Verteilung der Platzpunkte deiner Runden als Balken, die erwartete Verteilung in Gold"
+          ]
+        },
+        {
+          "h": "Steuerung",
+          "body": [
+            "- [Leertaste] / [Enter] oder SPIELEN: Runde starten; im Flug: alle aussteigen; danach: vorspulen",
+            "- [1] / [2] oder [Tab]: Karte wählen (vor der Runde) bzw. einzeln aussteigen (im Flug)",
+            "- [Hoch] / [Runter], [+] / [-] oder Mausrad: Einsatz der gewählten Karte",
+            "- [Links] / [Rechts] oder Mausrad über dem Ziel: Auto-Ziel; [X]: Auto-Ziel an/aus; [Z]: zweiter Einsatz",
+            "- [H]: Hälfte aller ungeteilten Einsätze; [Q] / [W]: Hälfte von Einsatz 1 bzw. 2",
+            "- [A]: Auto-Modus, [S]: Statistik, [F]: Fairness, [T]: Turbo, [M]: Musik",
+            "- [Esc]: Fenster schließen bzw. Auto stoppen, sonst Pause",
+            "Die Fenster lassen sich nur öffnen, solange kein Einsatz fliegt. Verliert das Spielfenster den Fokus, während ein Einsatz fliegt, pausiert das Spiel von selbst. Einsätze, Ziele, Turbo, Musik und die Auto-Einstellungen bleiben in settings.json (Abschnitt lamacrash)."
+          ]
+        },
+        {
+          "h": "Lama-Chips",
+          "body": [
+            "Lama Crash spielt mit dem gemeinsamen Konto der Lama-Bank - zusammen mit Blackjack, Poker, Casino, Lama Crossing, Lama Mines und Lama Plinko (Start 1000, gespeichert in mem.json).",
+            "SPIELEN bucht den Einsatz und speichert die Runde in einem Zug, jeder Ausstieg schreibt den Gewinn sofort gut. Verlässt du das Spiel mitten im Flug, geht nichts verloren: Beim nächsten Start gibt es einen Countdown, und der Ballon steigt genau dort weiter - der Platzpunkt steht ja schon fest.",
+            "Der Highscore ist der Höchststand von 1000 + Lama-Crash-Bilanz. Unter 10 Chips bist du pleite: [Enter] oder ein Klick nimmt einen Bank-Kredit auf 1000."
+          ]
+        },
+        {
+          "h": "Erfolge",
+          "body": [
+            "- Lama Crash-Stammgast: 25 Partien",
+            "- Meilenstein: Highscore 3000",
+            "- Lama Crash-Meister: Highscore 10000",
+            "- Haarscharf (selten): Steig ab ×2 von Hand aus - höchstens 5 % vor dem Platzen",
+            "- Polarlicht-Pilot (episch): Steig bei ×10 oder mehr aus",
+            "- Weltraumlama (legendär): Steig bei ×1000 oder mehr aus"
+          ]
+        },
+        {
+          "h": "Tipps",
+          "body": [
+            "- Jede Runde ist unabhängig: Nach fünf frühen Platzern ist kein großer Flug \"fällig\".",
+            "- Keine Strategie schlägt die 97 %. Niedrige Ziele gewinnen oft und wenig, hohe selten und viel.",
+            "- Zwei Einsätze mischen beides: einer sichert früh ab, der andere fliegt weit.",
+            "- Haarscharf gibt es nur von Hand - mit Auto-Zielen zählt es nicht.",
+            "- Polarlicht-Pilot: Ein Auto-Ziel ×10 trifft etwa jede zehnte Runde; Weltraumlama mit Ziel ×1000 etwa jede tausendste - mit Turbo dauert so ein Flug 38 Sekunden.",
             "- Leg vorher ein Budget fest und nutz im Auto-Modus die Verlustgrenze."
           ]
         }

@@ -50,6 +50,7 @@ from .casino import CasinoGame
 from .lamacrossing import LamaCrossingGame
 from .lamamines import LamaMinesGame
 from .lamaplinko import LamaPlinkoGame
+from .lamacrash import LamaCrashGame
 
 # Reihenfolge der Spiele im Menü
 ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
@@ -64,4 +65,4 @@ ALL_GAMES = [SnakeGame, PongGame, AirHockeyGame, TicTacToeGame, BreakoutGame,
              BlockJumpGame, LamaTowerDefenseGame, MiniGolfGame,
              PinballGame, BowlingGame, CrossyRoadGame, GeometryDashGame,
              BattleshipGame, CasinoGame, LamaCrossingGame, LamaMinesGame,
-             LamaPlinkoGame]
+             LamaPlinkoGame, LamaCrashGame]

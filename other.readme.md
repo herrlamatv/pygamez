@@ -12,7 +12,7 @@
 
 Une collection de jeux de bureau en Python : **Tkinter** fournit la fenêtre et
 le menu, **Pygame** est intégré comme écran de jeu à l'intérieur de la fenêtre
-Tkinter. Quarante-neuf jeux avec des options partagées, des commandes entièrement
+Tkinter. Cinquante jeux avec des options partagées, des commandes entièrement
 réassignables, des meilleurs scores, des effets sonores procéduraux et, pour
 plusieurs titres, un mode multijoueur. L'interface est **multilingue** –
 **14 langues** (allemand / anglais / français / espagnol / portugais / polonais /
@@ -94,6 +94,7 @@ trouve tout en bas : **[Guide d'installation](#guide-dinstallation)**.
 | **Lama Crossing** | 1 joueur      | Jeu de nerfs avec jetons Lama : voie par voie à travers route, pont suspendu, rivière ou lac gelé, guetter les trous dans la circulation, encaisser après chaque voie ; 4 difficultés jusqu'à ×31 784, retour ~97 % |
 | **Lama Mines**  | 1 joueur      | Chasse aux gemmes avec jetons Lama : plateau de 4x4 à 7x7 avec 1 à 48 mines, chaque gemme fait monter le multiplicateur jusqu'à ×100 000, encaisser quand on veut ; mode auto, contrôle d'équité SHA-256 et statistiques, retour ~97 % |
 | **Lama Plinko** | 1 joueur      | Plinko avec jetons Lama : des pelotes de laine dorées rebondissent sur 8 à 16 rangées de clous, 3 niveaux de risque jusqu'à ×1000, jusqu'à 50 billes à la fois ; mode auto, contrôle d'équité SHA-256 et statistiques, retour ~97 % |
+| **Lama Crash**  | 1 joueur      | Jeu de crash avec jetons Lama : le lama s'élève en ballon et le multiplicateur grimpe jusqu'à ×100 000 - encaisser avant l'éclatement ; deux mises avec objectif auto et encaissement de moitié, 6 mondes d'altitude jusqu'à la Lune, musique à suspense, mode auto, contrôle d'équité et statistiques, retour ~97 % |
 
 **Le multijoueur (2 joueurs en local)** est disponible pour **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duel
@@ -774,11 +775,12 @@ bouclier, amélioration d'arme), effets d'explosion, meilleur score.
   par ligne 1/2/5/10, **tours automatiques** (10/25), **turbo** et table des
   gains. Le **taux de redistribution est de 96,1 %** - calculé exactement à partir
   des bandes des rouleaux.
-- **Banque Lama** : Casino, Blackjack, Poker, Lama Crossing, Lama Mines et Lama
-  Plinko partagent un compte de **jetons Lama** (départ 1000, section `casino` de
-  `mem.json`) ; les anciens soldes sont repris automatiquement. Les mises sont
-  débitées aussitôt, chaque jeu tient son propre bilan pour son record, et à sec
-  tu reçois un **crédit bancaire** qui remonte le compte à 1000.
+- **Banque Lama** : Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama
+  Plinko et Lama Crash partagent un compte de **jetons Lama** (départ 1000,
+  section `casino` de `mem.json`) ; les anciens soldes sont repris
+  automatiquement. Les mises sont débitées aussitôt, chaque jeu tient son propre
+  bilan pour son record, et à sec tu reçois un **crédit bancaire** qui remonte
+  le compte à 1000.
 - Confettis, pluies de pièces, bannières gros gain/méga/jackpot et animations des
   lignes gagnantes ; succès **En plein dans le mille** (plein gagnant à la
   roulette) et **Jackpot Lama** (5 lamas sur une ligne).
@@ -958,6 +960,113 @@ bouclier, amélioration d'arme), effets d'explosion, meilleur score.
   et **Légende du Plinko** (case extrême en 16 rangées et risque Élevé), plus
   un palier à 3000 et un niveau maître à 10000.
 
+**Lama Crash**
+- **Jeu de crash avec jetons Lama** : choisis ta mise (10 à 10000) et appuie sur
+  **JOUER** - après un court 3-2-1, le lama s'élève en **ballon** et le
+  **multiplicateur** grimpe avec le temps : ×2 après 11,6 s, ×10 après 38,4 s,
+  ×100 après 76,8 s et ×100 000 après 192 s (3,2 minutes). Dès ×1,01, tu peux
+  **ENCAISSER** à tout moment - le lama saute en parachute et le gain (mise ×
+  multiplicateur) est crédité aussitôt ; si le ballon éclate avant, la mise est
+  perdue. Après l'encaissement, le ballon vide continue de monter jusqu'à ce
+  qu'il éclate (« Tous sortis – le ballon continue ») : on voit ainsi jusqu'où
+  il serait allé ; l'**accéléré** (Espace) va 16 fois plus vite.
+- **Deux mises** dans la même manche (un deuxième lama dans la nacelle, via
+  l'interrupteur de la carte 2 ou **Z**), chacune avec son propre montant et son
+  propre **objectif auto** (×1,01 à ×100 000, **←**/**→**, **X** = oui/non) : si
+  le ballon atteint l'objectif, le paiement se fait exactement à l'objectif -
+  même s'il éclate au même instant. Chaque mise peut être **coupée en deux** une
+  fois (**H** ou MOITIÉ pour toutes, **Q**/**W** ou le bouton de la carte pour
+  une seule) : cette moitié s'envole en sac d'argent sous un mini-parachute, le
+  reste continue de monter.
+- **Point d'éclatement** tiré du hasard vérifiable : un nombre aléatoire r (32
+  bits), puis `⌊97 · 2³² / (2³² − r)⌋` en centièmes, au moins ×1,00 et au plus
+  ×100 000 - en entiers et identique au bit près en Python, JavaScript et Rust
+  (`lamacrash_logic.py`). La chance d'atteindre ×x vaut ainsi 97 % / x (arrondie
+  au multiple de 2⁻³² inférieur) : **chaque objectif d'encaissement rend 96,997
+  à 97,000 %**, que ce soit ×1,01 ou ×100 000 ; environ 3,96 % des manches
+  éclatent dès ×1,00, avant qu'on puisse encaisser. La courbe de montée est elle
+  aussi en entiers (`mu += mu // 1000` par tic de 1/60 s), et le ballon n'éclate
+  que lorsque le multiplicateur **dépasse** le point d'éclatement - encaisser à
+  la main à ×m gagne donc exactement dans les mêmes conditions qu'un objectif
+  auto à ×m. Qui atteint ×100 000 se pose sur la **Lune** : gain maximal pour
+  toutes les mises encore en vol.
+- **Mondes d'altitude** : Pré aux lamas (pâturage, clôture, étable) → Mer de
+  nuages (dès ×1,5, vols d'oiseaux) → Front orageux (dès ×3, pluie, éclairs,
+  avions) → Aurore boréale (dès ×10, aurores dansantes) → Espace (dès ×100,
+  courbure de la Terre, satellites, étoiles filantes, planètes lointaines - et
+  la Lune grossit sans cesse) → **alunissage** avec drapeau, confettis et pluie
+  de pièces. Chaque nouveau monde est annoncé par son nom dès qu'on l'atteint,
+  et les mondes se fondent en douceur l'un dans l'autre. Par-dessus défile la
+  courbe du multiplicateur, dont les axes grandissent avec elle, et le ballon
+  gonfle de plus en plus avec l'altitude.
+- **Musique à suspense** en six niveaux, un par monde d'altitude
+  (`lamacrash_music.py`) : du pré jusqu'à l'espace, le morceau monte d'un ton et
+  accélère à chaque monde (96 à 150 bpm), et une fanfare retentit sur la Lune ;
+  **M** active ou coupe la musique. Dès ×2, le ballon étiré grince. Rien de tout
+  cela ne dépend du point d'éclatement - ni l'image ni le son ne trahissent quoi
+  que ce soit (un test de manches jumelles dans l'audit compare deux manches qui
+  éclatent à ×5 et à ×50, jusqu'à ×4,99, image par image et son par son).
+- **Éclatement** : détonation, lambeaux de caoutchouc et secousse de l'écran ;
+  les lamas encore assis dans la nacelle dégringolent hors de l'image avec elle.
+  Les encaissements sont fêtés : pluie de pièces dès ×3, confettis dès ×10 et
+  bannière de gain dès ×100. En haut à droite, les points d'éclatement des 12
+  dernières manches s'affichent en pastilles de couleur (rouge sous ×2, vert dès
+  ×2, or dès ×10, violet dès ×100).
+- **Mode auto** (**A**, seulement entre les manches) : 5/10/25/50/100/250
+  manches, au besoin avec **arrêt à un gain de** ou **à une perte de**
+  (désact./100/500/1000/5000/10000/50000) et turbo. Chaque mise active reçoit
+  alors un objectif auto, le vol à vide passe tout seul en accéléré, et
+  encaisser à la main reste possible. Le mode auto tourne jusqu'au nombre de
+  manches choisi, jusqu'à ce qu'une limite se déclenche, que les jetons ne
+  suffisent plus ou qu'on appuie sur **STOP**/**Échap**/**A** - une manche en
+  vol se termine alors normalement. Dans la fenêtre : **↑**/**↓** = ligne,
+  **←**/**→** = valeur, **Entrée**/**Espace** = LANCER AUTO ou STOP. Le
+  **turbo** (**T**) fait monter le ballon trois fois plus vite et raccourcit
+  compte à rebours et pauses.
+- **Contrôle d'équité** (**F**) comme à Lama Mines : avant chaque manche, le
+  **code de contrôle** est fixé (SHA-256 du seed serveur secret) ; le point
+  d'éclatement naît du seed serveur, de ton **seed client** et du numéro de
+  manche (`fairness.round_rand`, mulberry32), et le seed est révélé après la
+  manche. La fenêtre liste les 12 dernières manches (**↑**/**↓** en choisit une,
+  **C** = nouveau seed client tant qu'aucune manche n'est en cours) ;
+  **Vérifier** (**Entrée**) contrôle le code, recalcule le point d'éclatement et
+  vérifie les encaissements - ✓ ou ✗ avec une mini-courbe.
+- **Statistiques** (**S**) : tuiles Manches, Gagnées, Perdues, Ton retour, Misé,
+  Encaissé, Bilan, Plus gros gain, Meilleure cote, **Éclatement record**,
+  Moitiés encaissées et De justesse, plus la **courbe du bilan** des 100
+  dernières manches et la **répartition des points d'éclatement** en sept
+  classes (×1 à ×1000+), en barres face à la répartition attendue (points
+  dorés).
+- **Banque Lama** : le même compte que le Blackjack, le Poker, le Casino, Lama
+  Crossing, Lama Mines et Lama Plinko. JOUER débite la mise totale et sauvegarde
+  la nouvelle manche d'un seul coup (`lamabank.bet_and_pay`), et chaque
+  encaissement crédite le gain aussitôt ; un **report** des centièmes fait que
+  même les petites mises ne perdent rien. **Reprise** : qui quitte en plein vol
+  reprend au prochain lancement, après un compte à rebours, exactement au même
+  tic - le point d'éclatement est de toute façon fixé ; qui quitte pendant le
+  vol à vide voit sa manche clôturée aussitôt. Si la fenêtre perd le focus
+  pendant que de l'argent est en vol, le jeu se met **en pause** tout seul
+  (nouveau hook du moteur `pause_on_blur` dans `game_base.py`, traité par
+  `main.py`). Le record est le plus haut niveau de 1000 + bilan de Lama Crash ;
+  sous 10 jetons, un **crédit bancaire** remonte le compte à 1000.
+- Commandes : avant la manche **Espace**/**Entrée** = JOUER,
+  **1**/**2**/**Tab** = choisir la carte, **↑**/**↓**/**+**/**-**/molette =
+  mise, **←**/**→** ou molette sur l'objectif = objectif auto, **X** = objectif
+  oui/non, **Z** = deuxième mise ; en vol **Espace**/**Entrée**/**C** = tout
+  encaisser, **1**/**2** = une seule mise, **H** = moitié, **Q**/**W** = moitié
+  d'une mise ; ensuite **Espace** = accélérer. **A** = auto, **S** =
+  statistiques, **F** = équité, **T** = turbo, **M** = musique, **Échap** ferme
+  une fenêtre ou arrête l'auto (sinon pause). Les fenêtres ne s'ouvrent que tant
+  qu'aucune mise n'est en vol ; les touches sont fixes et ne dépendent pas de
+  l'affectation des commandes. Manche en cours, historique, état d'équité,
+  statistiques et report des centièmes sont enregistrés par profil dans la
+  section `casino` de `mem.json` ; mises, objectifs, deuxième mise, turbo,
+  musique et réglages auto dans la section `lamacrash` de `settings.json`.
+  Succès **De justesse** (encaisser à la main dès ×2, au plus 5 % avant
+  l'éclatement), **Pilote des aurores** (encaisser dès ×10) et **Lama de
+  l'espace** (encaisser dès ×1000), plus un palier à 3000 et un niveau maître à
+  10000.
+
 Les meilleurs scores sont enregistrés dans la section `highscores` de
 `mem.json` (à côté du code) – avec la langue (section `mem`).
 
@@ -984,7 +1093,7 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
   affiche le record précédent sous forme de puce. Avec beaucoup de modes et une
   petite résolution, il devient **compact** : Options, Wiki et Retour passent sur
   une seule ligne et la police s'adapte - plus rien ne déborde de l'écran.
-- **Look unifié en jeu** : les 49 jeux partagent la palette et la police du
+- **Look unifié en jeu** : les 50 jeux partagent la palette et la police du
   menu - les HUD, écrans de préparation et superpositions suivent le design
   choisi dans les options (v4.1 / v4 / Classique), tandis que chaque terrain
   garde ses couleurs d'identité. Chaque jeu gère proprement un changement de
@@ -996,16 +1105,16 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
   14 langues. Accessible via le bouton **« Wiki / Aide »** de la barre
   latérale et depuis l'écran de préparation de chaque jeu (ouvre directement sa
   page).
-- **Succès, rareté et niveau** : **268 succès** en cinq catégories - 60
+- **Succès, rareté et niveau** : **274 succès** en cinq catégories - 60
   objectifs globaux (parties, temps de jeu, records, victoires, jours joués,
-  séries, duels …), 40 **paliers de points**, 33 **niveaux maîtres** (le second
-  palier, bien plus haut), un succès **Habitué** par jeu (25 parties) et 86
-  **moments particuliers** (échec et mat, un Yams, la tuile 4096, un trou en un,
-  un coup du chapeau au air hockey …). Chaque succès a une **rareté** (commun 10
-  jusqu'à mythique 300 points) ; les points donnent ton **niveau** avec 14
-  **rangs**, de Petit lama à Lama stellaire. Le déblocage affiche une
-  notification de la couleur de la rareté, un passage de niveau la sienne avec
-  fanfare.
+  séries, duels …), 41 **paliers de points**, 34 **niveaux maîtres** (le second
+  palier, bien plus haut), un succès **Habitué** pour chacun des 50 jeux (25
+  parties) et 89 **moments particuliers** (échec et mat, un Yams, la tuile 4096,
+  un trou en un, un coup du chapeau au air hockey …). Chaque succès a une
+  **rareté** (commun 10 jusqu'à mythique 300 points) ; les points donnent ton
+  **niveau** avec 14 **rangs**, de Petit lama à Lama stellaire. Le déblocage
+  affiche une notification de la couleur de la rareté, un passage de niveau la
+  sienne avec fanfare.
 - **Statistiques et graphiques** : cinq onglets - Succès (filtre, points, barre
   d'XP), Statistiques (cartes, top 10 en barres, anneau victoires/défaites,
   tableau), **Calendrier** (carte des jours joués, séries, jours de la semaine,
@@ -1035,7 +1144,10 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
 - Choisis le jeu avec le bouton du menu de gauche. Ensuite apparaît l'**écran
   de préparation** : choisir **Un joueur** ou **Multijoueur**, aller aux
   **options** ou revenir. Flèches/souris pour choisir, Entrée démarre.
-- **ÉCHAP** = pause / reprendre (dans les menus : retour).
+- **ÉCHAP** = pause / reprendre (dans les menus : retour). Les jeux qui
+  continueraient sans toi se mettent d'eux-mêmes en pause quand la fenêtre perd
+  le focus (hook du moteur `pause_on_blur` - pour l'instant Lama Crash, tant
+  qu'une mise est en vol).
 - **F11** (ou le bouton « Plein écran oui/non ») = plein écran. L'affichage
   Pygame reste intégré et est agrandi en conservant les proportions (bandes
   noires si le rapport diffère). La fenêtre se redimensionne librement.
@@ -1114,10 +1226,10 @@ filepick.py          Boîtes de dialogue de fichiers ("Exporter sous ...", "Impo
 prestige.py          Système de prestige de Snake
 competitive.py       Paramètres du mode Compétitif de Snake (niveaux, machine à sous, pommes de pari)
 ngb.py               Personnalisation visuelle (« mods ») : couleur de tête + grille + menu (mem-ngb.json)
-lamabank.py          Banque Lama : compte de jetons commun au Blackjack, au Poker, au Casino, à Lama Crossing, à Lama Mines et à Lama Plinko (section casino de mem.json)
+lamabank.py          Banque Lama : compte de jetons commun au Blackjack, au Poker, au Casino, à Lama Crossing, à Lama Mines, à Lama Plinko et à Lama Crash (section casino de mem.json)
 seedrand.py          Générateur aléatoire aux nombres identiques au bit près en Python et dans le navigateur (modes du jour, nouveaux problèmes)
-fairness.py          Contrôle d'équité (« provably fair ») de Lama Mines et Lama Plinko : code de contrôle SHA-256, seeds serveur/client, vérification
-chipstats.py         Statistiques de Lama Mines et Lama Plinko (fenêtre S) : manches, mises, gains, taux de retour, courbe du bilan
+fairness.py          Contrôle d'équité (« provably fair ») de Lama Mines, Lama Plinko et Lama Crash : code de contrôle SHA-256, seeds serveur/client, vérification
+chipstats.py         Statistiques de Lama Mines, Lama Plinko et Lama Crash (fenêtre S) : manches, mises, gains, taux de retour, courbe du bilan
 i18n.py              Moteur de traduction (charge lang/*.json, t("clé"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Textes (une clé par texte)
@@ -1160,12 +1272,13 @@ games/
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   lamamines.py  lamamines_logic.py  lamamines_draw.py
   lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
+  lamacrash.py  lamacrash_logic.py  lamacrash_draw.py  lamacrash_world.py  lamacrash_music.py
   levels/              Données de niveaux : snake-comp.json, chess-puzzles.json (+ README des sources), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Audit global (saisie, seedrand Python = JS, sauvegarde, fichiers de langue, écrans de préparation) + tous les audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Audits headless par jeu
-  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko et la logique commune des jetons (équité, statistiques, Python = JS = Rust)
+  audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash et la logique commune des jetons (équité, statistiques, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                La version Rust (.exe autonome, voir rust/README.md)
   ENGINE.md            Contrat de portage : comment un jeu passe de Python à Rust
@@ -1174,7 +1287,7 @@ rust/                La version Rust (.exe autonome, voir rust/README.md)
   crates/pgz-engine/   Fenêtre, rendu, saisie, son, trait Game (ui.py + audio.py + game_base.py)
   crates/pgz-games/    Les jeux portés
   crates/pygamez/      Le programme : menu, barre latérale, écrans
-  tools/export_defs.py Génère les données de base (49 jeux, 268 succès, 10 thèmes) depuis les sources Python
+  tools/export_defs.py Génère les données de base (50 jeux, 274 succès, 10 thèmes) depuis les sources Python
   tools/audit.py       Banc d'essai : traductions, liste des jeux, conventions
 rust.output/         Sortie de compilation de la version Rust (rust.output/release/pygamez.exe)
 ```
@@ -1302,7 +1415,7 @@ Les réglages et meilleurs scores (`settings.json`, `mem.json`,
 
 Una colección de juegos de escritorio en Python: **Tkinter** aporta la ventana y
 el menú, **Pygame** va incrustado como pantalla de juego dentro de la ventana de
-Tkinter. Cuarenta y nueve juegos con opciones compartidas, controles totalmente
+Tkinter. Cincuenta juegos con opciones compartidas, controles totalmente
 reasignables, récords, efectos de sonido procedurales y, en varios títulos, modo
 multijugador. La interfaz es **multilingüe** – **14 idiomas** (alemán / inglés /
 francés / español / portugués / polaco / turco / danés / noruego / sueco / finés /
@@ -1384,6 +1497,7 @@ detallada paso a paso: **[Guía de instalación](#guía-de-instalación)**.
 | **Lama Crossing** | 1 jugador       | Juego de nervios con fichas Llama: cruzar carril a carril una calle, un puente colgante, un río o un lago helado esquivando el tráfico, cobrar tras cada carril; 4 dificultades hasta ×31.784, retorno ~97 % |
 | **Lama Mines**  | 1 jugador       | Caza de gemas con fichas Llama: tablero de 4x4 a 7x7 con 1 a 48 minas, cada gema sube el multiplicador hasta ×100.000, cobrar cuando quieras; modo automático, comprobación de equidad SHA-256 y estadísticas, retorno ~97 % |
 | **Lama Plinko** | 1 jugador       | Plinko con fichas Llama: ovillos de lana dorados rebotan por 8 a 16 filas de clavos, 3 niveles de riesgo hasta ×1000, hasta 50 bolas a la vez; modo automático, comprobación de equidad SHA-256 y estadísticas, retorno ~97 % |
+| **Lama Crash**  | 1 jugador       | Juego de crash con fichas Llama: la llama sube en globo y el multiplicador crece hasta ×100.000, cobra antes de que explote; dos apuestas con objetivo auto y cobro de la mitad, 6 mundos de altitud hasta la Luna, música de suspense, modo automático, comprobación de equidad y estadísticas, retorno ~97 % |
 
 **El multijugador (2 jugadores en local)** está disponible en **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
@@ -2027,11 +2141,12 @@ arma), efectos de explosión, récord.
   apuesta por línea 1/2/5/10, **tirada automática** (10/25), **turbo** y tabla de
   premios. El **retorno al jugador es del 96,1 %**, calculado con exactitud a
   partir de las tiras de los rodillos.
-- **Banco Llama**: Casino, Blackjack, Póker, Lama Crossing, Lama Mines y Lama
-  Plinko comparten una cuenta de **fichas Llama** (inicio 1000, sección `casino`
-  de `mem.json`); los saldos antiguos se pasan automáticamente. Las apuestas se
-  descuentan al instante, cada juego lleva su propio balance para su récord y,
-  si te quedas sin fichas, recibes un **crédito del banco** hasta 1000.
+- **Banco Llama**: Casino, Blackjack, Póker, Lama Crossing, Lama Mines, Lama
+  Plinko y Lama Crash comparten una cuenta de **fichas Llama** (inicio 1000,
+  sección `casino` de `mem.json`); los saldos antiguos se pasan automáticamente.
+  Las apuestas se descuentan al instante, cada juego lleva su propio balance
+  para su récord y, si te quedas sin fichas, recibes un **crédito del banco**
+  hasta 1000.
 - Confeti, lluvia de monedas, carteles de gran premio/mega/jackpot y animaciones
   de líneas ganadoras; logros **Diana** (pleno ganador en la ruleta) y **Jackpot
   Llama** (5 llamas en una línea).
@@ -2211,6 +2326,111 @@ arma), efectos de explosión, récord.
   en el aire a la vez) y **Leyenda del Plinko** (casilla exterior con 16 filas y
   riesgo Alto), además de un hito de 3000 y un nivel maestro de 10000.
 
+**Lama Crash**
+- **Juego de crash con fichas Llama**: elige tu apuesta (10 a 10000) y pulsa
+  **JUGAR**; tras un breve 3-2-1, la llama sube en **globo** y el
+  **multiplicador** crece con el tiempo: ×2 a los 11,6 s, ×10 a los 38,4 s, ×100
+  a los 76,8 s y ×100.000 a los 192 s (3,2 minutos). Desde ×1,01 puedes
+  **COBRAR** en cualquier momento: la llama salta en paracaídas y el premio
+  (apuesta × multiplicador) se abona al instante; si el globo explota antes, la
+  apuesta se pierde. Después de cobrar, el globo vacío sigue subiendo hasta que
+  explota («Todos fuera – el globo sigue subiendo»), así que se ve hasta dónde
+  habría llegado; **adelantar** (Espacio) va 16 veces más rápido.
+- **Dos apuestas** en la misma ronda (una segunda llama en la cesta, con el
+  interruptor de la tarjeta 2 o **Z**), cada una con su propio importe y su
+  propio **objetivo auto** (de ×1,01 a ×100.000, **←**/**→**, **X** = sí/no): si
+  el globo alcanza el objetivo, se paga exactamente el objetivo, aunque explote
+  en ese mismo instante. Cada apuesta se puede **partir por la mitad** una vez
+  (**H** o MITAD para todas, **Q**/**W** o el botón de la tarjeta para una): esa
+  mitad se va volando como saco de dinero con un miniparacaídas y el resto sigue
+  subiendo.
+- **Punto de explosión** a partir del azar verificable: número aleatorio r (32
+  bits) y luego `⌊97 · 2³² / (2³² − r)⌋` en centésimas, como mínimo ×1,00 y como
+  máximo ×100.000, con enteros e idéntico bit a bit en Python, JavaScript y Rust
+  (`lamacrash_logic.py`). La probabilidad de llegar a ×x es, pues, del 97 % / x
+  (redondeada hacia abajo a un múltiplo de 2⁻³²): **cualquier objetivo de cobro
+  devuelve del 96,997 al 97,000 %**, sea ×1,01 o ×100.000; cerca del 3,96 % de
+  las rondas explotan ya en ×1,00, antes de que se pueda cobrar. La curva de
+  subida también es entera (`mu += mu // 1000` por paso de 1/60 s), y el globo
+  solo explota cuando el multiplicador **supera** el punto de explosión; quien
+  cobra a mano en ×m gana, por tanto, exactamente en las mismas condiciones que
+  con un objetivo auto ×m. Quien llega a ×100.000 aterriza en la **Luna**:
+  premio máximo para todas las apuestas que siguen en vuelo.
+- **Mundos de altitud**: Prado de llamas (pasto, valla, establo) → Mar de nubes
+  (desde ×1,5, bandadas de pájaros) → Tormenta (desde ×3, lluvia, rayos,
+  aviones) → Aurora boreal (desde ×10, auroras danzantes) → Espacio (desde ×100,
+  curvatura de la Tierra, satélites, estrellas fugaces, planetas lejanos y una
+  Luna cada vez más grande) → **alunizaje** con bandera, confeti y lluvia de
+  monedas. Cada mundo nuevo se anuncia con su nombre al alcanzarlo, y los mundos
+  se funden suavemente unos con otros. Por encima corre la curva del
+  multiplicador, con ejes que crecen con ella, y el globo se hincha cada vez más
+  con la altura.
+- **Música de suspense** en seis niveles, uno por mundo (`lamacrash_music.py`):
+  del prado al espacio, la pieza sube un tono y se acelera con cada mundo (de 96
+  a 150 bpm), y en la Luna suena una fanfarria; **M** activa o desactiva la
+  música. Desde ×2, el globo estirado chirría. Nada de esto depende del punto de
+  explosión: ni la imagen ni el sonido delatan nada (una prueba de rondas
+  gemelas en la auditoría compara dos rondas que explotan en ×5 y ×50, hasta
+  ×4,99, fotograma a fotograma y sonido a sonido).
+- **Explosión**: estallido, jirones de goma y sacudida de cámara; las llamas que
+  siguen sentadas en la cesta salen dando tumbos de la imagen junto con ella.
+  Los cobros se celebran: lluvia de monedas desde ×3, confeti desde ×10 y cartel
+  de premio desde ×100. Arriba a la derecha aparecen los puntos de explosión de
+  las últimas 12 rondas como píldoras de colores (rojo por debajo de ×2, verde
+  desde ×2, dorado desde ×10, violeta desde ×100).
+- **Modo automático** (**A**, solo entre rondas): 5/10/25/50/100/250 rondas, si
+  quieres con **parar con ganancia de** o **con pérdida de**
+  (desact./100/500/1000/5000/10000/50000) y turbo. Cada apuesta activa recibe un
+  objetivo auto, el vuelo en vacío se adelanta automáticamente y se puede seguir
+  cobrando a mano. Sigue hasta alcanzar el número de rondas, saltar un límite o
+  quedarse sin fichas, o hasta pulsar **PARAR**/**Esc**/**A**; una ronda en
+  vuelo termina entonces con normalidad. En la ventana: **↑**/**↓** = fila,
+  **←**/**→** = valor, **Enter**/**Espacio** = INICIAR AUTO o PARAR. El
+  **turbo** (**T**) hace subir el globo tres veces más rápido y acorta la cuenta
+  atrás y las pausas.
+- **Comprobación de equidad** (**F**) como en Lama Mines: antes de cada ronda se
+  fija el **código de control** (SHA-256 de la semilla secreta del servidor); el
+  punto de explosión sale de la semilla del servidor, tu **semilla del cliente**
+  y el número de ronda (`fairness.round_rand`, mulberry32), y tras la ronda se
+  revela la semilla. La ventana lista las últimas 12 rondas (**↑**/**↓** elige
+  una, **C** = nueva semilla del cliente mientras no haya ninguna ronda en
+  curso); **Verificar** (**Enter**) comprueba el código, recalcula el punto de
+  explosión y revisa los cobros: ✓ o ✗ con una minicurva.
+- **Estadísticas** (**S**): recuadros Rondas, Ganadas, Perdidas, Tu retorno,
+  Apostado, Cobrado, Balance, Mayor premio, Mejor cuota, **Explosión más alta**,
+  Mitades cobradas y Por los pelos, además de la **curva del balance** de las
+  últimas 100 rondas y la **distribución de los puntos de explosión** en siete
+  tramos (×1 a ×1000+) en barras frente a la distribución esperada (puntos
+  dorados).
+- **Banco Llama**: la misma cuenta que Blackjack, Póker, Casino, Lama Crossing,
+  Lama Mines y Lama Plinko. JUGAR descuenta la apuesta total y guarda la nueva
+  ronda de una vez (`lamabank.bet_and_pay`), y cada cobro abona el premio al
+  instante; el **arrastre** de las centésimas hace que ni las apuestas pequeñas
+  pierdan nada. **Reanudar**: quien sale en pleno vuelo sigue en el siguiente
+  inicio, tras una cuenta atrás, en el mismo paso (el punto de explosión ya está
+  fijado); quien sale durante el vuelo en vacío ve su ronda cerrada al momento.
+  Si la ventana pierde el foco mientras hay dinero en vuelo, el juego **se
+  pausa** solo (nuevo gancho del motor `pause_on_blur` en `game_base.py`,
+  gestionado por `main.py`). El récord es el máximo de 1000 + balance de Lama
+  Crash; con menos de 10 fichas hay un **préstamo del banco** hasta 1000.
+- Controles: antes de la ronda **Espacio**/**Enter** = JUGAR,
+  **1**/**2**/**Tab** = elegir tarjeta, **↑**/**↓**/**+**/**-**/rueda = apuesta,
+  **←**/**→** o la rueda sobre el objetivo = objetivo auto, **X** = objetivo
+  sí/no, **Z** = segunda apuesta; en vuelo **Espacio**/**Enter**/**C** = cobrar
+  todo, **1**/**2** = una sola apuesta, **H** = mitad, **Q**/**W** = mitad de
+  una apuesta; después **Espacio** = adelantar. **A** = automático, **S** =
+  estadísticas, **F** = equidad, **T** = turbo, **M** = música, **Esc** cierra
+  una ventana o detiene el modo automático (si no, pausa). Las ventanas solo se
+  abren mientras no vuela ninguna apuesta; las teclas son fijas y no dependen de
+  la asignación de controles. La ronda en curso, el historial, el estado de
+  equidad, las estadísticas y el arrastre de centésimas se guardan por perfil en
+  la sección `casino` de `mem.json`; apuestas, objetivos, segunda apuesta,
+  turbo, música y ajustes del modo automático, en la sección `lamacrash` de
+  `settings.json`. Logros **Por los pelos** (cobrar a mano desde ×2, como mucho
+  un 5 % antes de explotar), **Piloto de auroras** (cobrar con ×10 o más) y
+  **Llama espacial** (cobrar con ×1000 o más), además de un hito de 3000 y un
+  nivel maestro de 10000.
+
 Los récords se guardan en la sección `highscores` de `mem.json` (junto al
 código) – junto con el idioma (sección `mem`).
 
@@ -2237,7 +2457,7 @@ extra) y pulida con aspecto de lanzador moderno:
   el récord anterior como chip. Con muchos modos y poca resolución se vuelve
   **compacta**: Opciones, Wiki y Volver pasan a una sola fila y la letra se
   adapta, así que nada se sale de la pantalla.
-- **Aspecto unificado en el juego**: los 49 juegos comparten la paleta y la
+- **Aspecto unificado en el juego**: los 50 juegos comparten la paleta y la
   tipografía del menú - los HUD, pantallas de configuración y superposiciones
   siguen el diseño elegido en las opciones (v4.1 / v4 / Clásico), mientras cada
   campo de juego conserva sus colores de identidad. Todos los juegos gestionan
@@ -2248,15 +2468,15 @@ extra) y pulida con aspecto de lanzador moderno:
   artículos desplazables y chips de teclas, en los 14 idiomas. Accesible por
   el botón **«Wiki / Ayuda»** de la barra lateral y desde la pantalla previa de
   cada juego (abre directamente su página).
-- **Logros, rareza y nivel**: **268 logros** en cinco categorías: 60 metas
-  globales (partidas, tiempo, récords, victorias, días jugados, rachas,
-  duelos …), 40 **hitos de puntos**, 33 **niveles maestros** (la segunda marca,
-  mucho más alta), un logro **Habitual** por juego (25 partidas) y 86 **momentos
-  especiales** (jaque mate, un Yahtzee, la ficha 4096, un hoyo en uno, un
-  hat-trick en air hockey …). Cada logro tiene una **rareza** (común 10 hasta
-  mítico 300 puntos); los puntos dan tu **nivel** con 14 **rangos**, de Cría de
-  llama a Llama estelar. Al desbloquear aparece un aviso del color de la rareza;
-  al subir de nivel, uno propio con fanfarria.
+- **Logros, rareza y nivel**: **274 logros** en cinco categorías: 60 metas
+  globales (partidas, tiempo, récords, victorias, días jugados, rachas, duelos
+  …), 41 **hitos de puntos**, 34 **niveles maestros** (la segunda marca, mucho
+  más alta), un logro **Habitual** para cada uno de los 50 juegos (25 partidas)
+  y 89 **momentos especiales** (jaque mate, un Yahtzee, la ficha 4096, un hoyo
+  en uno, un hat-trick en air hockey …). Cada logro tiene una **rareza** (común
+  10 hasta mítico 300 puntos); los puntos dan tu **nivel** con 14 **rangos**, de
+  Cría de llama a Llama estelar. Al desbloquear aparece un aviso del color de la
+  rareza; al subir de nivel, uno propio con fanfarria.
 - **Estadísticas con gráficos**: cinco pestañas: Logros (filtro, puntos, barra
   de XP), Estadísticas (tarjetas, top 10 en barras, anillo de victorias, tabla),
   **Calendario** (mapa de días jugados, rachas, días de la semana, franjas),
@@ -2285,7 +2505,9 @@ extra) y pulida con aspecto de lanzador moderno:
 - Elige el juego con el botón del menú izquierdo. Después aparece la **pantalla
   previa**: elegir **Un jugador** o **Multijugador**, ir a las **opciones** o
   volver. Flechas/ratón para elegir, Enter empieza.
-- **ESC** = pausa / continuar (en menús: volver).
+- **ESC** = pausa / continuar (en menús: volver). Los juegos que seguirían sin
+  ti se pausan solos cuando la ventana pierde el foco (gancho del motor
+  `pause_on_blur`; por ahora Lama Crash, mientras haya una apuesta en vuelo).
 - **F11** (o el botón «Pantalla completa sí/no») = pantalla completa. La pantalla
   de Pygame sigue incrustada y se escala conservando la proporción (bandas negras
   si la proporción difiere). La ventana se puede redimensionar libremente.
@@ -2363,10 +2585,10 @@ filepick.py          Diálogos de archivo ("Exportar como ...", "Importar")
 prestige.py          Sistema de prestigio de Snake
 competitive.py       Parámetros del modo Competitivo de Snake (niveles, tragaperras, manzanas de apuesta)
 ngb.py               Personalización visual ("mods"): color de cabeza + rejilla + menú (mem-ngb.json)
-lamabank.py          Banco Llama: cuenta de fichas común de Blackjack, Póker, Casino, Lama Crossing, Lama Mines y Lama Plinko (sección casino de mem.json)
+lamabank.py          Banco Llama: cuenta de fichas común de Blackjack, Póker, Casino, Lama Crossing, Lama Mines, Lama Plinko y Lama Crash (sección casino de mem.json)
 seedrand.py          Generador aleatorio con números idénticos bit a bit en Python y en el navegador (modos diarios, nuevos puzles)
-fairness.py          Comprobación de equidad («provably fair») de Lama Mines y Lama Plinko: código de control SHA-256, semillas del servidor/cliente, verificación
-chipstats.py         Estadísticas de Lama Mines y Lama Plinko (ventana S): rondas, apuestas, premios, retorno, curva del balance
+fairness.py          Comprobación de equidad («provably fair») de Lama Mines, Lama Plinko y Lama Crash: código de control SHA-256, semillas del servidor/cliente, verificación
+chipstats.py         Estadísticas de Lama Mines, Lama Plinko y Lama Crash (ventana S): rondas, apuestas, premios, retorno, curva del balance
 i18n.py              Motor de traducción (carga lang/*.json, t("clave"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Textos (una clave por texto)
@@ -2409,12 +2631,13 @@ games/
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   lamamines.py  lamamines_logic.py  lamamines_draw.py
   lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
+  lamacrash.py  lamacrash_logic.py  lamacrash_draw.py  lamacrash_world.py  lamacrash_music.py
   levels/              Datos de niveles: snake-comp.json, chess-puzzles.json (+ README de fuentes), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Auditoría general (entrada, seedrand Python = JS, guardado, archivos de idioma, pantallas previas) + todos los audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Auditorías headless por juego
-  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko y la lógica común de fichas (equidad, estadísticas, Python = JS = Rust)
+  audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash y la lógica común de fichas (equidad, estadísticas, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                La versión en Rust (.exe independiente, véase rust/README.md)
   ENGINE.md            Contrato de portado: cómo pasa un juego de Python a Rust
@@ -2423,7 +2646,7 @@ rust/                La versión en Rust (.exe independiente, véase rust/README
   crates/pgz-engine/   Ventana, dibujo, entrada, sonido, trait Game (ui.py + audio.py + game_base.py)
   crates/pgz-games/    Los juegos portados
   crates/pygamez/      El programa: menú, barra lateral, pantallas
-  tools/export_defs.py Genera los datos maestros (49 juegos, 268 logros, 10 temas) desde las fuentes Python
+  tools/export_defs.py Genera los datos maestros (50 juegos, 274 logros, 10 temas) desde las fuentes Python
   tools/audit.py       Banco de pruebas: traducciones, lista de juegos, convenciones
 rust.output/         Salida de compilación de la versión Rust (rust.output/release/pygamez.exe)
 ```
@@ -2545,7 +2768,7 @@ junto al .exe al jugar.
 
 Uma coleção de jogos de desktop em Python: o **Tkinter** fornece a janela e o
 menu, o **Pygame** é incorporado como ecrã de jogo dentro da janela do Tkinter.
-Quarenta e nove jogos com opções partilhadas, controlos totalmente reatribuíveis,
+Cinquenta jogos com opções partilhadas, controlos totalmente reatribuíveis,
 recordes, efeitos sonoros procedurais e, em vários títulos, modo multijogador.
 A interface é **multilingue** – **14 idiomas** (alemão / inglês / francês /
 espanhol / português / polaco / turco / dinamarquês / norueguês / sueco /
@@ -2627,6 +2850,7 @@ passo a passo: **[Guia de instalação](#guia-de-instalação)**.
 | **Lama Crossing** | 1 jogador       | Jogo de nervos com fichas Lama: atravessar faixa a faixa uma estrada, uma ponte suspensa, um rio ou um lago gelado a desviar do trânsito, levantar após cada faixa; 4 dificuldades até ×31.784, retorno ~97 % |
 | **Lama Mines**  | 1 jogador       | Caça às gemas com fichas Lama: tabuleiro de 4x4 a 7x7 com 1 a 48 minas, cada gema faz subir o multiplicador até ×100.000, levantar quando quiseres; modo automático, verificação de equidade SHA-256 e estatísticas, retorno ~97 % |
 | **Lama Plinko** | 1 jogador       | Plinko com fichas Lama: novelos de lã dourados saltam por 8 a 16 filas de pinos, 3 níveis de risco até ×1000, até 50 bolas ao mesmo tempo; modo automático, verificação de equidade SHA-256 e estatísticas, retorno ~97 % |
+| **Lama Crash**  | 1 jogador       | Jogo de crash com fichas Lama: a lama sobe num balão e o multiplicador cresce até ×100.000 - levanta antes de rebentar; duas apostas com objetivo auto e levantamento de metade, 6 mundos de altitude até à Lua, música de suspense, modo automático, verificação de equidade e estatísticas, retorno ~97 % |
 
 **O multijogador (2 jogadores em local)** está disponível em **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (duelo
@@ -3265,11 +3489,11 @@ melhoria de arma), efeitos de explosão, recorde.
   por linha 1/2/5/10, **rodadas automáticas** (10/25), **turbo** e tabela de
   prémios. O **retorno ao jogador é de 96,1 %** - calculado com exatidão a partir
   das fitas dos rolos.
-- **Banco Lama**: Casino, Blackjack, Póquer, Lama Crossing, Lama Mines e Lama
-  Plinko partilham uma conta de **fichas Lama** (início 1000, secção `casino` do
-  `mem.json`); os saldos antigos passam automaticamente. As apostas são
-  debitadas logo, cada jogo tem o seu próprio saldo para o recorde e, sem fichas,
-  recebes um **crédito do banco** até 1000.
+- **Banco Lama**: Casino, Blackjack, Póquer, Lama Crossing, Lama Mines, Lama
+  Plinko e Lama Crash partilham uma conta de **fichas Lama** (início 1000,
+  secção `casino` do `mem.json`); os saldos antigos passam automaticamente. As
+  apostas são debitadas logo, cada jogo tem o seu próprio saldo para o recorde
+  e, sem fichas, recebes um **crédito do banco** até 1000.
 - Confetes, chuva de moedas, faixas de grande prémio/mega/jackpot e animações das
   linhas vencedoras; conquistas **Em cheio** (pleno ganho na roleta) e **Jackpot
   Lama** (5 lamas numa linha).
@@ -3445,6 +3669,111 @@ melhoria de arma), efeitos de explosão, recorde.
   ao mesmo tempo) e **Lenda do Plinko** (casa exterior com 16 filas e risco
   Alto), mais um marco de 3000 e um nível mestre de 10000.
 
+**Lama Crash**
+- **Jogo de crash com fichas Lama**: escolhe a aposta (10 a 10000) e carrega em
+  **JOGAR** - após uma breve contagem 3-2-1, a lama sobe num **balão** e o
+  **multiplicador** cresce com o tempo: ×2 ao fim de 11,6 s, ×10 ao fim de
+  38,4 s, ×100 ao fim de 76,8 s e ×100.000 ao fim de 192 s (3,2 minutos). A
+  partir de ×1,01 podes **LEVANTAR** a qualquer momento - a lama salta de
+  paraquedas e o prémio (aposta × multiplicador) é creditado de imediato; se o
+  balão rebentar antes, a aposta perde-se. Depois de levantares, o balão vazio
+  continua a subir até rebentar («Todos fora – o balão continua»), e assim vê-se
+  até onde teria chegado; **acelerar** (Espaço) corre 16 vezes mais depressa.
+- **Duas apostas** na mesma ronda (uma segunda lama no cesto, com o interruptor
+  do cartão 2 ou **Z**), cada uma com o seu valor e o seu **objetivo auto**
+  (×1,01 a ×100.000, **←**/**→**, **X** = sim/não): se o balão chegar ao
+  objetivo, paga-se exatamente o objetivo - mesmo que rebente nesse mesmo
+  instante. Cada aposta pode ser **dividida ao meio** uma vez (**H** ou METADE
+  para todas, **Q**/**W** ou o botão do cartão para uma): essa metade voa para
+  longe como saco de dinheiro num mini-paraquedas e o resto continua a subir.
+- **Ponto de rebentamento** a partir do acaso verificável: número aleatório r
+  (32 bits) e depois `⌊97 · 2³² / (2³² − r)⌋` em centésimas, no mínimo ×1,00 e
+  no máximo ×100.000 - com inteiros e idêntico bit a bit em Python, JavaScript e
+  Rust (`lamacrash_logic.py`). A probabilidade de chegar a ×x é assim 97 % / x
+  (arredondada por baixo a um múltiplo de 2⁻³²): **qualquer objetivo de
+  levantamento devolve 96,997 a 97,000 %**, seja ×1,01 ou ×100.000; cerca de
+  3,96 % das rondas rebentam logo a ×1,00, antes de se poder levantar. A curva
+  de subida também é inteira (`mu += mu // 1000` por passo de 1/60 s), e o balão
+  só rebenta quando o multiplicador **ultrapassa** o ponto de rebentamento -
+  quem levanta à mão a ×m ganha, portanto, exatamente nas mesmas condições que
+  um objetivo auto ×m. Quem chega a ×100.000 aterra na **Lua**: prémio máximo
+  para todas as apostas ainda em voo.
+- **Mundos de altitude**: Prado das lamas (pasto, cerca, estábulo) → Mar de
+  nuvens (a partir de ×1,5, bandos de pássaros) → Tempestade (a partir de ×3,
+  chuva, relâmpagos, aviões) → Aurora boreal (a partir de ×10, auroras a dançar)
+  → Espaço (a partir de ×100, curvatura da Terra, satélites, estrelas cadentes,
+  planetas distantes - e a Lua cada vez maior) → **alunagem** com bandeira,
+  confetes e chuva de moedas. Cada mundo novo é anunciado pelo nome quando é
+  alcançado, e os mundos fundem-se suavemente uns nos outros. Por cima corre a
+  curva do multiplicador, com eixos que crescem com ela, e o balão incha cada
+  vez mais com a altitude.
+- **Música de suspense** em seis níveis, um por mundo (`lamacrash_music.py`): do
+  prado ao espaço, a peça sobe um tom e acelera a cada mundo (96 a 150 bpm), e
+  na Lua soa uma fanfarra; **M** liga ou desliga a música. A partir de ×2, o
+  balão esticado range. Nada disto depende do ponto de rebentamento - nem a
+  imagem nem o som revelam nada (um teste de rondas gémeas na auditoria compara
+  duas rondas que rebentam a ×5 e a ×50, até ×4,99, imagem a imagem e som a
+  som).
+- **Rebentamento**: estoiro, farrapos de borracha e abanão da câmara; as lamas
+  ainda sentadas no cesto caem aos trambolhões para fora da imagem com ele. Os
+  levantamentos são festejados: chuva de moedas a partir de ×3, confetes a
+  partir de ×10 e faixa de prémio a partir de ×100. Em cima à direita aparecem
+  os pontos de rebentamento das últimas 12 rondas como pastilhas coloridas
+  (vermelho abaixo de ×2, verde a partir de ×2, dourado a partir de ×10, violeta
+  a partir de ×100).
+- **Modo automático** (**A**, só entre rondas): 5/10/25/50/100/250 rondas, se
+  quiseres com **parar com lucro de** ou **com perda de**
+  (deslig./100/500/1000/5000/10000/50000) e turbo. Cada aposta ativa recebe um
+  objetivo auto, o voo vazio acelera automaticamente e continua a ser possível
+  levantar à mão. Corre até se atingir o número de rondas, um limite disparar,
+  as fichas deixarem de chegar ou se carregar em **PARAR**/**Esc**/**A** - uma
+  ronda em voo termina então normalmente. Na janela: **↑**/**↓** = linha,
+  **←**/**→** = valor, **Enter**/**Espaço** = INICIAR AUTO ou PARAR. O **turbo**
+  (**T**) faz o balão subir três vezes mais depressa e encurta a contagem e as
+  pausas.
+- **Verificação de equidade** (**F**) como no Lama Mines: antes de cada ronda
+  fica fixado o **código de controlo** (SHA-256 da semente secreta do servidor);
+  o ponto de rebentamento resulta da semente do servidor, da tua **semente do
+  cliente** e do número da ronda (`fairness.round_rand`, mulberry32), e a
+  semente é revelada depois da ronda. A janela lista as últimas 12 rondas
+  (**↑**/**↓** escolhe uma, **C** = nova semente do cliente enquanto não houver
+  ronda a decorrer); **Verificar** (**Enter**) confere o código, recalcula o
+  ponto de rebentamento e verifica os levantamentos - ✓ ou ✗ com uma minicurva.
+- **Estatísticas** (**S**): cartões Rondas, Ganhas, Perdidas, O teu retorno,
+  Apostado, Recebido, Saldo, Maior prémio, Melhor fator, **Rebentamento máx.**,
+  Metades levantadas e Por um triz, mais a **curva do saldo** das últimas 100
+  rondas e a **distribuição dos pontos de rebentamento** em sete classes (×1 a
+  ×1000+) em barras face à distribuição esperada (pontos dourados).
+- **Banco Lama**: a mesma conta do Blackjack, do Póquer, do Casino, do Lama
+  Crossing, do Lama Mines e do Lama Plinko. JOGAR desconta a aposta total e
+  guarda a nova ronda de uma só vez (`lamabank.bet_and_pay`), e cada
+  levantamento credita o prémio de imediato; o **transporte** das centésimas faz
+  com que nem as apostas pequenas percam nada. **Retomar**: quem sai a meio do
+  voo continua no próximo arranque, após uma contagem decrescente, exatamente no
+  mesmo passo - afinal, o ponto de rebentamento já está fixado; quem sai durante
+  o voo vazio vê a ronda fechada de imediato. Se a janela perder o foco enquanto
+  há dinheiro em voo, o jogo **entra em pausa** sozinho (novo gancho do motor
+  `pause_on_blur` em `game_base.py`, tratado por `main.py`). O recorde é o
+  máximo de 1000 + saldo do Lama Crash; abaixo de 10 fichas há um **crédito do
+  banco** até 1000.
+- Controlos: antes da ronda **Espaço**/**Enter** = JOGAR, **1**/**2**/**Tab** =
+  escolher o cartão, **↑**/**↓**/**+**/**-**/roda do rato = aposta, **←**/**→**
+  ou a roda sobre o objetivo = objetivo auto, **X** = objetivo sim/não, **Z** =
+  segunda aposta; em voo **Espaço**/**Enter**/**C** = levantar tudo,
+  **1**/**2** = uma só aposta, **H** = metade, **Q**/**W** = metade de uma
+  aposta; depois **Espaço** = acelerar. **A** = automático, **S** =
+  estatísticas, **F** = equidade, **T** = turbo, **M** = música, **Esc** fecha
+  uma janela ou para o modo automático (caso contrário, pausa). As janelas só
+  abrem enquanto nenhuma aposta estiver em voo; as teclas são fixas e não
+  dependem da atribuição dos controlos. A ronda em curso, o histórico, o estado
+  da equidade, as estatísticas e o transporte das centésimas ficam guardados por
+  perfil na secção `casino` do `mem.json`; apostas, objetivos, segunda aposta,
+  turbo, música e definições do modo automático na secção `lamacrash` do
+  `settings.json`. Conquistas **Por um triz** (levantar à mão a partir de ×2, no
+  máximo 5 % antes de rebentar), **Piloto da aurora** (levantar com ×10 ou mais)
+  e **Lama espacial** (levantar com ×1000 ou mais), mais um marco de 3000 e um
+  nível mestre de 10000.
+
 Os recordes são guardados na secção `highscores` de `mem.json` (junto ao
 código) – juntamente com o idioma (secção `mem`).
 
@@ -3471,7 +3800,7 @@ e polida com aspeto de launcher moderno:
   o recorde anterior como chip. Com muitos modos e pouca resolução fica
   **compacto**: Opções, Wiki e Voltar passam para uma só linha e a letra
   ajusta-se - nada sai do ecrã.
-- **Visual unificado no jogo**: os 49 jogos partilham a paleta e a tipografia do
+- **Visual unificado no jogo**: os 50 jogos partilham a paleta e a tipografia do
   menu - os HUD, ecrãs de preparação e sobreposições seguem o design escolhido
   nas opções (v4.1 / v4 / Clássico), enquanto cada campo de jogo mantém as suas
   cores de identidade. Todos os jogos lidam corretamente com uma mudança de
@@ -3482,15 +3811,15 @@ e polida com aspeto de launcher moderno:
   categorias, artigos deslocáveis e chips de teclas, nos 14 idiomas.
   Acessível pelo botão **«Wiki / Ajuda»** da barra lateral e a partir do ecrã de
   preparação de cada jogo (abre logo a sua página).
-- **Conquistas, raridade e nível**: **268 conquistas** em cinco categorias - 60
+- **Conquistas, raridade e nível**: **274 conquistas** em cinco categorias - 60
   metas globais (partidas, tempo, recordes, vitórias, dias jogados, sequências,
-  duelos …), 40 **marcos de pontos**, 33 **níveis mestre** (a segunda marca, bem
-  mais alta), uma conquista **Frequentador** por jogo (25 partidas) e 86
-  **momentos especiais** (xeque-mate, um Yahtzee, a peça 4096, um hole-in-one,
-  um hat-trick no air hockey …). Cada conquista tem uma **raridade** (comum 10
-  até mítico 300 pontos); os pontos dão o teu **nível** com 14 **patentes**, de
-  Filhote de lhama a Lhama estelar. Ao desbloquear surge um aviso na cor da
-  raridade; ao subir de nível, um próprio com fanfarra.
+  duelos …), 41 **marcos de pontos**, 34 **níveis mestre** (a segunda marca, bem
+  mais alta), uma conquista **Frequentador** para cada um dos 50 jogos (25
+  partidas) e 89 **momentos especiais** (xeque-mate, um Yahtzee, a peça 4096, um
+  hole-in-one, um hat-trick no air hockey …). Cada conquista tem uma
+  **raridade** (comum 10 até mítico 300 pontos); os pontos dão o teu **nível**
+  com 14 **patentes**, de Filhote de lhama a Lhama estelar. Ao desbloquear surge
+  um aviso na cor da raridade; ao subir de nível, um próprio com fanfarra.
 - **Estatísticas com gráficos**: cinco separadores - Conquistas (filtro, pontos,
   barra de XP), Estatísticas (cartões, top 10 em barras, anel de vitórias,
   tabela), **Calendário** (mapa dos dias jogados, sequências, dias da semana,
@@ -3519,7 +3848,9 @@ e polida com aspeto de launcher moderno:
 - Escolhe o jogo com o botão no menu à esquerda. Depois aparece o **ecrã de
   preparação**: escolher **Um jogador** ou **Multijogador**, ir às **opções** ou
   voltar. Setas/rato para escolher, Enter começa.
-- **ESC** = pausa / continuar (nos menus: voltar).
+- **ESC** = pausa / continuar (nos menus: voltar). Os jogos que continuariam sem
+  ti entram em pausa sozinhos quando a janela perde o foco (gancho do motor
+  `pause_on_blur` - por agora o Lama Crash, enquanto houver uma aposta em voo).
 - **F11** (ou o botão «Ecrã inteiro sim/não») = ecrã inteiro. O ecrã do Pygame
   continua incorporado e é ampliado mantendo a proporção (barras pretas se a
   proporção diferir). A janela pode ser redimensionada livremente.
@@ -3595,10 +3926,10 @@ filepick.py          Janelas de ficheiros ("Exportar como ...", "Importar")
 prestige.py          Sistema de prestígio do Snake
 competitive.py       Parâmetros do modo Competitivo do Snake (níveis, slot machine, maçãs de aposta)
 ngb.py               Personalização visual ("mods"): cor da cabeça + grelha + menu (mem-ngb.json)
-lamabank.py          Banco Lama: conta de fichas comum do Blackjack, Póquer, Casino, Lama Crossing, Lama Mines e Lama Plinko (secção casino do mem.json)
+lamabank.py          Banco Lama: conta de fichas comum do Blackjack, Póquer, Casino, Lama Crossing, Lama Mines, Lama Plinko e Lama Crash (secção casino do mem.json)
 seedrand.py          Gerador aleatório com números idênticos bit a bit em Python e no navegador (modos diários, novos puzzles)
-fairness.py          Verificação de equidade («provably fair») do Lama Mines e do Lama Plinko: código de controlo SHA-256, sementes do servidor/cliente, verificação
-chipstats.py         Estatísticas do Lama Mines e do Lama Plinko (janela S): rondas, apostas, prémios, retorno, curva do saldo
+fairness.py          Verificação de equidade («provably fair») do Lama Mines, do Lama Plinko e do Lama Crash: código de controlo SHA-256, sementes do servidor/cliente, verificação
+chipstats.py         Estatísticas do Lama Mines, do Lama Plinko e do Lama Crash (janela S): rondas, apostas, prémios, retorno, curva do saldo
 i18n.py              Motor de tradução (carrega lang/*.json, t("chave"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Textos (uma chave por texto)
@@ -3641,12 +3972,13 @@ games/
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   lamamines.py  lamamines_logic.py  lamamines_draw.py
   lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
+  lamacrash.py  lamacrash_logic.py  lamacrash_draw.py  lamacrash_world.py  lamacrash_music.py
   levels/              Dados de níveis: snake-comp.json, chess-puzzles.json (+ README das fontes), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Auditoria geral (entrada, seedrand Python = JS, gravação, ficheiros de idioma, ecrãs de preparação) + todos os audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Auditorias headless por jogo
-  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko e a lógica comum das fichas (equidade, estatísticas, Python = JS = Rust)
+  audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash e a lógica comum das fichas (equidade, estatísticas, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                A versão em Rust (.exe autónomo, ver rust/README.md)
   ENGINE.md            Contrato de portabilidade: como um jogo passa de Python para Rust
@@ -3655,7 +3987,7 @@ rust/                A versão em Rust (.exe autónomo, ver rust/README.md)
   crates/pgz-engine/   Janela, desenho, entrada, som, trait Game (ui.py + audio.py + game_base.py)
   crates/pgz-games/    Os jogos portados
   crates/pygamez/      O programa: menu, barra lateral, ecrãs
-  tools/export_defs.py Gera os dados base (49 jogos, 268 conquistas, 10 temas) a partir das fontes Python
+  tools/export_defs.py Gera os dados base (50 jogos, 274 conquistas, 10 temas) a partir das fontes Python
   tools/audit.py       Bancada de testes: traduções, lista de jogos, convenções
 rust.output/         Saída de compilação da versão Rust (rust.output/release/pygamez.exe)
 ```
@@ -3774,7 +4106,7 @@ do .exe durante o jogo.
 ## 🇵🇱 Polski
 
 Kolekcja gier na komputer stworzona w Pythonie: **Tkinter** zapewnia okno i menu,
-a **Pygame** jest osadzony jako ekran gry wewnątrz okna Tkinter. Czterdzieści dziewięć
+a **Pygame** jest osadzony jako ekran gry wewnątrz okna Tkinter. Pięćdziesiąt
 gier ze wspólnymi opcjami, w pełni przypisywalnym sterowaniem, rekordami,
 proceduralnymi efektami dźwiękowymi oraz — w części tytułów — trybem wieloosobowym.
 Interfejs jest **wielojęzyczny** — **14 języków** (niemiecki / angielski /
@@ -3858,6 +4190,7 @@ krok po kroku znajduje się na samym dole w sekcji
 | **Lama Crossing** | 1 gracz       | Gra na nerwy z żetonami Lamy: pas po pasie przez ulicę, most linowy, rzekę lub lodowe jezioro, z wyczuciem luk w ruchu, po każdym pasie wypłata albo dalej; 4 poziomy trudności do ×31 784, zwrot ~97% |
 | **Lama Mines**  | 1 gracz       | Poszukiwanie klejnotów z żetonami Lamy: plansza od 4x4 do 7x7 i od 1 do 48 min, każdy klejnot podnosi mnożnik aż do ×100 000, wypłata w dowolnej chwili; tryb automatyczny, kontrola uczciwości SHA-256 i statystyki, zwrot ~97% |
 | **Lama Plinko** | 1 gracz       | Plinko z żetonami Lamy: złote kłębki włóczki odbijają się przez 8 do 16 rzędów kołków, 3 poziomy ryzyka do ×1000, do 50 kul naraz; tryb automatyczny, kontrola uczciwości SHA-256 i statystyki, zwrot ~97% |
+| **Lama Crash**  | 1 gracz       | Gra typu crash z żetonami Lamy: lama wznosi się balonem, a mnożnik rośnie aż do ×100 000 - wypłać, zanim balon pęknie; dwie stawki z celem auto i wypłatą połowy, 6 światów wysokości aż po Księżyc, muzyka pełna napięcia, tryb automatyczny, kontrola uczciwości i statystyki, zwrot ~97% |
 
 **Tryb wieloosobowy (2 graczy lokalnie)** jest dostępny w grach **Snake**, **Pong**,
 **Air Hockey**, **Kółko i krzyżyk**, **Tetris (Versus)**, **Asteroids (pojedynek
@@ -4575,10 +4908,11 @@ jednoosobowa.
   podwojonymi wygranymi, stawka na linię 1/2/5/10, **auto-spin** (10/25),
   **turbo** i tabela wypłat. **Wskaźnik zwrotu wynosi 96,1%** — policzony
   dokładnie z pasów bębnów.
-- **Bank Lamy**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines i Lama
-  Plinko dzielą jedno konto **żetonów Lamy** (start 1000, sekcja `casino` w
-  `mem.json`); stare stany żetonów przechodzą automatycznie. Stawki są pobierane od razu, każda gra prowadzi własny bilans
-  do rekordu, a przy bankructwie dostajesz **kredyt bankowy** do 1000.
+- **Bank Lamy**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama
+  Plinko i Lama Crash dzielą jedno konto **żetonów Lamy** (start 1000, sekcja
+  `casino` w `mem.json`); stare stany żetonów przechodzą automatycznie. Stawki
+  są pobierane od razu, każda gra prowadzi własny bilans do rekordu, a przy
+  bankructwie dostajesz **kredyt bankowy** do 1000.
 - Konfetti, deszcz monet, banery big/mega/jackpot i animacje linii
   wygrywających; osiągnięcia **W dziesiątkę** (wygrany plein w ruletce) i
   **Jackpot Lamy** (5 lam na jednej linii).
@@ -4754,6 +5088,104 @@ jednoosobowa.
   (25 kul naraz w locie) i **Legenda Plinko** (skrajna przegródka przy 16 rzędach
   i ryzyku Wysokim) oraz próg 3000 i poziom mistrzowski 10000.
 
+**Lama Crash**
+- **Gra typu crash z żetonami Lamy**: wybierz stawkę (10 do 10000) i naciśnij
+  **GRAJ** - po krótkim odliczaniu 3-2-1 lama wznosi się **balonem**, a
+  **mnożnik** rośnie z czasem: ×2 po 11,6 s, ×10 po 38,4 s, ×100 po 76,8 s i
+  ×100 000 po 192 s (3,2 minuty). Od ×1,01 możesz w każdej chwili nacisnąć
+  **WYPŁAĆ** - lama skacze ze spadochronem, a wygrana (stawka × mnożnik) od razu
+  trafia na konto; jeśli balon pęknie wcześniej, stawka przepada. Po wypłacie
+  pusty balon leci dalej w górę, aż pęknie („Po wypłacie – balon leci dalej"),
+  widać więc, jak daleko by zaszedł; **przewijanie** (Spacja) działa 16 razy
+  szybciej.
+- **Dwie stawki** w tej samej rundzie (druga lama w koszu, przełącznikiem na
+  karcie 2 albo **Z**), każda z własną kwotą i własnym **celem auto** (×1,01 do
+  ×100 000, **←**/**→**, **X** = wł./wył.): gdy balon osiągnie cel, wypłata
+  następuje dokładnie przy celu - nawet jeśli w tej samej chwili pęka. Każdą
+  stawkę można raz **podzielić na pół** (**H** albo POŁOWA dla wszystkich,
+  **Q**/**W** albo przycisk na karcie dla jednej): ta połowa odlatuje jako worek
+  pieniędzy na mini spadochronie, a reszta leci dalej w górę.
+- **Punkt pęknięcia** z weryfikowalnego losowania: liczba losowa r (32 bity),
+  potem `⌊97 · 2³² / (2³² − r)⌋` w setnych częściach, co najmniej ×1,00 i
+  najwyżej ×100 000 - na liczbach całkowitych i identycznie co do bitu w
+  Pythonie, JavaScripcie i Ruście (`lamacrash_logic.py`). Szansa na osiągnięcie
+  ×x wynosi zatem 97% / x (zaokrąglona w dół do wielokrotności 2⁻³²): **każdy
+  cel wypłaty zwraca od 96,997 do 97,000%**, czy to ×1,01, czy ×100 000; około
+  3,96% rund pęka już przy ×1,00, zanim da się cokolwiek wypłacić. Krzywa
+  wznoszenia też jest liczona na liczbach całkowitych (`mu += mu // 1000` na
+  takt 1/60 s), a balon pęka dopiero wtedy, gdy mnożnik **przekroczy** punkt
+  pęknięcia - kto wypłaca ręcznie przy ×m, wygrywa więc dokładnie pod tym samym
+  warunkiem co cel auto ×m. Kto osiągnie ×100 000, ląduje na **Księżycu**:
+  maksymalna wygrana dla wszystkich stawek, które jeszcze lecą.
+- **Światy wysokości**: Łąka lam (pastwisko, płot, obora) → Morze chmur (od
+  ×1,5, klucze ptaków) → Front burzowy (od ×3, deszcz, błyskawice, samoloty) →
+  Zorza polarna (od ×10, tańczące zorze) → Kosmos (od ×100, krzywizna Ziemi,
+  satelity, spadające gwiazdy, odległe planety - a Księżyc robi się coraz
+  większy) → **lądowanie na Księżycu** z flagą, konfetti i deszczem monet. Każdy
+  nowy świat jest zapowiadany swoją nazwą, gdy balon do niego dotrze, a światy
+  płynnie przechodzą jeden w drugi. Nad tym biegnie krzywa mnożnika z rosnącymi
+  osiami, a balon z wysokością nadyma się coraz bardziej.
+- **Muzyka pełna napięcia** w sześciu stopniach, po jednym na każdy świat
+  (`lamacrash_music.py`): od łąki aż po kosmos utwór z każdym światem brzmi o
+  cały ton wyżej i szybciej (96 do 150 bpm), a na Księżycu rozbrzmiewa fanfara;
+  **M** włącza lub wyłącza muzykę. Od ×2 rozciągnięty balon skrzypi. Nic z tego
+  nie zależy od punktu pęknięcia - ani obraz, ani dźwięk niczego nie zdradzają
+  (test bliźniaczych rund w audycie porównuje dwie rundy pękające przy ×5 i ×50,
+  aż do ×4,99, klatka po klatce i dźwięk po dźwięku).
+- **Pęknięcie**: huk, strzępy gumy i wstrząs kamery; lamy, które jeszcze siedzą
+  w koszu, koziołkują razem z nim poza kadr. Wypłaty są świętowane: deszcz monet
+  od ×3, konfetti od ×10 i baner wygranej od ×100. W prawym górnym rogu widać
+  punkty pęknięcia 12 ostatnich rund jako kolorowe pigułki (czerwone poniżej ×2,
+  zielone od ×2, złote od ×10, fioletowe od ×100).
+- **Tryb automatyczny** (**A**, tylko między rundami): 5/10/25/50/100/250 rund,
+  w razie potrzeby ze **stopem przy zysku od** albo **przy stracie od**
+  (wył./100/500/1000/5000/10000/50000) i turbo. Każda aktywna stawka dostaje
+  przy tym cel auto, pusty lot jest przewijany automatycznie, a ręczna wypłata
+  nadal działa. Tryb działa, dopóki nie zostanie osiągnięta liczba rund, nie
+  zadziała limit, nie zabraknie żetonów albo nie zostanie naciśnięte
+  **STOP**/**Esc**/**A** - runda w locie kończy się wtedy normalnie. W oknie:
+  **↑**/**↓** = wiersz, **←**/**→** = wartość, **Enter**/**Spacja** = URUCHOM
+  AUTO albo STOP. **Turbo** (**T**) sprawia, że balon wznosi się trzy razy
+  szybciej, i skraca odliczanie oraz przerwy.
+- **Kontrola uczciwości** (**F**) jak w Lama Mines: przed każdą rundą **kod
+  kontrolny** jest już ustalony (SHA-256 tajnego seeda serwera), punkt pęknięcia
+  wynika z seeda serwera, twojego **seeda klienta** i numeru rundy
+  (`fairness.round_rand`, mulberry32), a po rundzie seed zostaje ujawniony. Okno
+  pokazuje 12 ostatnich rund (**↑**/**↓** wybiera, **C** = nowy seed klienta,
+  gdy nie trwa żadna runda); **Sprawdź** (**Enter**) weryfikuje kod, ponownie
+  liczy punkt pęknięcia i kontroluje wypłaty - ✓ albo ✗ z małą krzywą.
+- **Statystyki** (**S**): kafelki Rundy, Wygrane, Przegrane, Twój zwrot,
+  Postawiono, Wypłacono, Bilans, Maks. wygrana, Maks. mnożnik, **Maks.
+  pęknięcie**, Wypłaty połowy i O włos, do tego **krzywa bilansu** z ostatnich
+  100 rund i **rozkład punktów pęknięcia** w siedmiu przedziałach (×1 do ×1000+)
+  jako słupki na tle oczekiwanego rozkładu (złote punkty).
+- **Bank Lamy**: to samo konto co Blackjack, Poker, Casino, Lama Crossing, Lama
+  Mines i Lama Plinko. GRAJ pobiera łączną stawkę i zapisuje nową rundę za
+  jednym razem (`lamabank.bet_and_pay`), a każda wypłata od razu dopisuje
+  wygraną; **przeniesienie** setnych części sprawia, że nawet małe stawki nic
+  nie tracą. **Wznawianie**: kto wyjdzie w trakcie lotu, przy następnym starcie
+  po odliczaniu leci dalej dokładnie od tego samego taktu - punkt pęknięcia i
+  tak jest już ustalony; kto wyjdzie dopiero podczas pustego lotu, ma rundę od
+  razu zamkniętą. Jeśli okno straci fokus, gdy pieniądze są w locie, gra sama
+  się **wstrzymuje** (nowy hak silnika `pause_on_blur` w `game_base.py`,
+  obsługiwany przez `main.py`). Rekord to najwyższy stan 1000 + bilansu Lama
+  Crash; poniżej 10 żetonów jest **kredyt bankowy** do 1000.
+- Sterowanie: przed rundą **Spacja**/**Enter** = GRAJ, **1**/**2**/**Tab** =
+  wybór karty, **↑**/**↓**/**+**/**-**/kółko myszy = stawka, **←**/**→** albo
+  kółko nad celem = cel auto, **X** = cel wł./wył., **Z** = druga stawka; w
+  locie **Spacja**/**Enter**/**C** = wypłać wszystko, **1**/**2** = pojedynczo,
+  **H** = połowa, **Q**/**W** = połowa pojedynczo; potem **Spacja** = przewiń.
+  **A** = automat, **S** = statystyki, **F** = uczciwość, **T** = turbo, **M** =
+  muzyka, **Esc** zamyka okno albo zatrzymuje automat (poza tym pauza). Okna
+  można otwierać tylko wtedy, gdy żadna stawka nie leci; klawisze są stałe i nie
+  zależą od przypisania sterowania. Bieżąca runda, historia, stan kontroli
+  uczciwości, statystyki i przeniesienie reszty są zapisywane dla każdego
+  profilu w sekcji `casino` pliku `mem.json`; stawki, cele, druga stawka, turbo,
+  muzyka i ustawienia automatu w sekcji `lamacrash` pliku `settings.json`.
+  Osiągnięcia **O włos** (ręczna wypłata od ×2, najwyżej 5% przed pęknięciem),
+  **Pilot zorzy** (wypłata przy ×10 lub więcej) i **Kosmiczna lama** (wypłata
+  przy ×1000 lub więcej) oraz próg 3000 i poziom mistrzowski 10000.
+
 Rekordy są przechowywane w sekcji `highscores` pliku `mem.json` (obok kodu) —
 razem z językiem (sekcja `mem`).
 
@@ -4779,7 +5211,7 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
   poprzedni rekord jako chip. Przy wielu trybach i małej rozdzielczości staje się
   **kompaktowy**: Opcje, Wiki i Powrót trafiają do jednego rzędu, a czcionka się
   dopasowuje — nic już nie wychodzi poza ekran.
-- **Jednolity wygląd w grze**: wszystkie 49 gier korzysta z tej samej palety motywu
+- **Jednolity wygląd w grze**: wszystkie 50 gier korzysta z tej samej palety motywu
   i czcionki co menu — HUD-y, ekrany konfiguracji i nakładki podążają za wyglądem
   wybranym w opcjach (v4.1 / v4 / Klasyczny), a każde pole gry zachowuje swoje
   kolory tożsamości. Każda gra poprawnie obsługuje zmianę rozdzielczości w trakcie
@@ -4789,15 +5221,15 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
   kategoriami, przewijanymi artykułami i chipami klawiszy, we wszystkich 14
   językach. Dostępna przez przycisk **„Wiki / Pomoc"** na pasku bocznym i z ekranu
   przygotowania każdej gry (otwiera bezpośrednio jej stronę).
-- **Osiągnięcia, rzadkość i poziom**: **268 osiągnięć** w pięciu kategoriach -
+- **Osiągnięcia, rzadkość i poziom**: **274 osiągnięcia** w pięciu kategoriach -
   60 celów całej kolekcji (rozgrywki, czas gry, rekordy, zwycięstwa, dni z grą,
-  serie, pojedynki …), 40 **progów punktowych**, 33 **poziomy mistrzowskie**
-  (druga, znacznie wyższa poprzeczka), osiągnięcie **Bywalec** dla każdej gry
-  (25 rozgrywek) i 86 **wyjątkowych chwil** (mat, generał, kafelek 4096,
+  serie, pojedynki …), 41 **progów punktowych**, 34 **poziomy mistrzowskie**
+  (druga, znacznie wyższa poprzeczka), osiągnięcie **Bywalec** dla każdej z 50
+  gier (25 rozgrywek) i 89 **wyjątkowych chwil** (mat, generał, kafelek 4096,
   hole-in-one, hat-trick w air hockey …). Każde osiągnięcie ma **rzadkość**
-  (zwykły 10 aż po mityczny 300 punktów); punkty dają **poziom** z 14 **rangami**
-  od Małej lamy po Gwiezdną lamę. Odblokowanie pokazuje powiadomienie w kolorze
-  rzadkości, awans - własne z fanfarą.
+  (zwykły 10 aż po mityczny 300 punktów); punkty dają **poziom** z 14
+  **rangami** od Małej lamy po Gwiezdną lamę. Odblokowanie pokazuje
+  powiadomienie w kolorze rzadkości, awans - własne z fanfarą.
 - **Statystyki z wykresami**: pięć kart - Osiągnięcia (filtr, punkty, pasek XP),
   Statystyki (karty, top 10 na słupkach, pierścień zwycięstw, tabela),
   **Kalendarz** (mapa dni z grą, serie, dni tygodnia, pory dnia), **Historia**
@@ -4826,7 +5258,9 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
 - Wybierz grę przyciskiem w menu po lewej. Następnie pojawia się **ekran
   przygotowania**: wybierz **Jeden gracz** lub **Wielu graczy**, przejdź do
   **opcji** albo wróć. Strzałki/mysz do wyboru, Enter uruchamia.
-- **ESC** = pauza / wznowienie (w menu: wstecz).
+- **ESC** = pauza / wznowienie (w menu: wstecz). Gry, które toczyłyby się dalej
+  bez ciebie, same się wstrzymują, gdy okno straci fokus (hak silnika
+  `pause_on_blur` - na razie Lama Crash, dopóki jakaś stawka jest w locie).
 - **F11** (lub przycisk „Pełny ekran wł./wył.") = przełącz pełny ekran. Wyświetlacz
   Pygame pozostaje osadzony i jest skalowany w górę z zachowaniem proporcji (czarne
   pasy przy innym stosunku boków). Okno można dowolnie skalować.
@@ -4901,10 +5335,10 @@ filepick.py          Okna plików ("Eksportuj jako ...", "Importuj")
 prestige.py          System prestiżu dla Snake
 competitive.py       Strojenie trybu Competitive w Snake (poziomy, slot machine, jabłka zakładów)
 ngb.py               Personalizacja wizualna („mody"): kolor głowy + siatka współrzędnych + menu (mem-ngb.json)
-lamabank.py          Bank Lamy: wspólne konto żetonów Blackjacka, Pokera, Casino, Lama Crossing, Lama Mines i Lama Plinko (sekcja casino w mem.json)
+lamabank.py          Bank Lamy: wspólne konto żetonów Blackjacka, Pokera, Casino, Lama Crossing, Lama Mines, Lama Plinko i Lama Crash (sekcja casino w mem.json)
 seedrand.py          Generator losowy z identycznymi co do bitu liczbami w Pythonie i przeglądarce (tryby dnia, nowe łamigłówki)
-fairness.py          Kontrola uczciwości („provably fair") Lama Mines i Lama Plinko: kod kontrolny SHA-256, seedy serwera/klienta, sprawdzanie
-chipstats.py         Statystyki Lama Mines i Lama Plinko (okno S): rundy, stawki, wygrane, zwrot, krzywa bilansu
+fairness.py          Kontrola uczciwości („provably fair") Lama Mines, Lama Plinko i Lama Crash: kod kontrolny SHA-256, seedy serwera/klienta, sprawdzanie
+chipstats.py         Statystyki Lama Mines, Lama Plinko i Lama Crash (okno S): rundy, stawki, wygrane, zwrot, krzywa bilansu
 i18n.py              Silnik tłumaczeń (wczytuje lang/*.json, t("klucz"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Teksty językowe (jeden klucz zastępczy na tekst)
@@ -4947,12 +5381,13 @@ games/
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   lamamines.py  lamamines_logic.py  lamamines_draw.py
   lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
+  lamacrash.py  lamacrash_logic.py  lamacrash_draw.py  lamacrash_world.py  lamacrash_music.py
   levels/              Dane poziomów: snake-comp.json, chess-puzzles.json (+ README ze źródłami), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Audyt całościowy (wejście, seedrand Python = JS, zapis, pliki językowe, ekrany przygotowania) + wszystkie audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Audyty headless dla każdej gry
-  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko i wspólna logika żetonów (uczciwość, statystyki, Python = JS = Rust)
+  audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash i wspólna logika żetonów (uczciwość, statystyki, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                Wersja w Ruscie (samodzielny .exe, zob. rust/README.md)
   ENGINE.md            Umowa portowania: jak gra trafia z Pythona do Rusta
@@ -4961,7 +5396,7 @@ rust/                Wersja w Ruscie (samodzielny .exe, zob. rust/README.md)
   crates/pgz-engine/   Okno, rysowanie, sterowanie, dźwięk, trait Game (ui.py + audio.py + game_base.py)
   crates/pgz-games/    Przeniesione gry
   crates/pygamez/      Program: menu, panel boczny, ekrany
-  tools/export_defs.py Generuje dane bazowe (49 gier, 268 osiągnięć, 10 motywów) ze źródeł Pythona
+  tools/export_defs.py Generuje dane bazowe (50 gier, 274 osiągnięcia, 10 motywów) ze źródeł Pythona
   tools/audit.py       Stanowisko testowe: tłumaczenia, lista gier, konwencje
 rust.output/         Wynik kompilacji wersji Rust (rust.output/release/pygamez.exe)
 ```
@@ -5084,8 +5519,8 @@ dowolnie kopiować. Ustawienia i rekordy (`settings.json`, `mem.json`,
 Python ile hazırlanmış bir masaüstü oyun koleksiyonu: pencereyi ve menüyü
 **Tkinter** sağlar, **Pygame** ise oyun ekranı olarak Tkinter penceresinin içine
 gömülüdür. Ortak seçenekler, tamamen yeniden atanabilen kontroller, yüksek
-skorlar, prosedürel ses efektleri ve bazı oyunlarda çok oyunculu mod içeren kırk
-dokuz oyun. Arayüz **çok dillidir** – **14 dil** (Almanca / İngilizce /
+skorlar, prosedürel ses efektleri ve bazı oyunlarda çok oyunculu mod içeren elli
+oyun. Arayüz **çok dillidir** – **14 dil** (Almanca / İngilizce /
 Fransızca / İspanyolca / Portekizce / Lehçe / Türkçe / Danca / Norveççe /
 İsveççe / Fince / Çekçe / Slovence / Hırvatça); dil, ilk açılışta bir
 **karşılama ekranında** seçilir; bu ekran ayrıca **çözünürlüğü** ve **sesi**
@@ -5166,6 +5601,7 @@ yoksa sistemdeki Python'ı. Ayrıntılı, adım adım bir kılavuz en altta
 | **Lama Crossing** | 1 oyuncu     | Lama çipleriyle cesaret oyunu: yol, asma köprü, nehir ya da buz gölü üzerinden şerit şerit geç, trafikteki boşlukları kolla, her şeritten sonra çek ya da devam et; en fazla ×31.784, 4 zorluk, ~%97 geri ödeme |
 | **Lama Mines**  | 1 oyuncu     | Lama çipleriyle mücevher avı: 4x4'ten 7x7'ye alan ve 1-48 mayın, her mücevher çarpanı ×100.000'e kadar yükseltir, istediğin an çek; otomatik mod, SHA-256 adillik kontrolü ve istatistikler, ~%97 geri ödeme |
 | **Lama Plinko** | 1 oyuncu     | Lama çipleriyle Plinko: altın yün yumakları 8-16 sıra çivinin arasından sekerek düşer, 3 risk seviyesi ve ×1000'e kadar, aynı anda 50 topa kadar; otomatik mod, SHA-256 adillik kontrolü ve istatistikler, ~%97 geri ödeme |
+| **Lama Crash**  | 1 oyuncu     | Lama çipleriyle crash oyunu: lama balonla yükselir, çarpan ×100.000'e kadar büyür - balon patlamadan çek; oto hedefli iki bahis ve yarısını çekme, Ay'a kadar 6 irtifa dünyası, gerilim müziği, otomatik mod, adillik kontrolü ve istatistikler, ~%97 geri ödeme |
 
 **Çok oyunculu (2 oyuncu yerel)** şu oyunlarda mevcuttur: **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (ortaklaşa
@@ -5886,10 +6322,11 @@ patlama efektleri, yüksek skor.
   **altın paralar = scatter** ile iki kat kazançlı 10 bedava dönüş, hat başına
   1/2/5/10 bahis, **otomatik dönüş** (10/25), **turbo** ve ödeme tablosu.
   **Geri ödeme oranı %96,1'dir** - makara şeritlerinden tam olarak hesaplanmıştır.
-- **Lama Bankası**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines ve Lama
-  Plinko tek bir **Lama çipi** hesabını paylaşır (başlangıç 1000, `mem.json`
-  içindeki `casino` bölümü); eski çip bakiyeleri otomatik aktarılır. Bahisler hemen düşülür, her oyun rekoru için
-  kendi bakiyesini tutar, iflasta 1000'e tamamlayan bir **banka kredisi** gelir.
+- **Lama Bankası**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama
+  Plinko ve Lama Crash tek bir **Lama çipi** hesabını paylaşır (başlangıç 1000,
+  `mem.json` içindeki `casino` bölümü); eski çip bakiyeleri otomatik aktarılır.
+  Bahisler hemen düşülür, her oyun rekoru için kendi bakiyesini tutar, iflasta
+  1000'e tamamlayan bir **banka kredisi** gelir.
 - Konfeti, para yağmuru, büyük/mega/jackpot afişleri ve kazanç hattı
   animasyonları; **Tam isabet** (rulette kazanan plein) ve **Lama Jackpotu** (tek
   hatta 5 lama) başarımları.
@@ -6058,6 +6495,105 @@ patlama efektleri, yüksek skor.
   efsanesi** (16 sıra ve Yüksek riskte en dış cep) başarımları, ayrıca 3000
   kilometre taşı ve 10000 usta seviyesi.
 
+**Lama Crash**
+- **Lama çipleriyle crash oyunu**: bahsini (10 ile 10000 arası) seç ve
+  **OYNA**'ya bas - kısa bir 3-2-1 geri sayımından sonra lama **balonla**
+  yükselir ve **çarpan** zamanla büyür: 11,6 saniyede ×2, 38,4 saniyede ×10,
+  76,8 saniyede ×100 ve 192 saniyede (3,2 dakika) ×100.000. ×1,01'den itibaren
+  istediğin an **ÇEK**'e basabilirsin - lama paraşütle atlar, kazanç (bahis ×
+  çarpan) anında hesabına geçer; balon daha önce patlarsa bahis gider. Çektikten
+  sonra boş balon patlayana kadar yükselmeye devam eder ("Hepsi çekildi – balon
+  hâlâ yükseliyor"), böylece ne kadar ileri gideceği görülür; **ileri sarma**
+  (Boşluk) 16 kat hızlıdır.
+- Aynı turda **iki bahis** (sepette ikinci bir lama, 2. karttaki düğme ya da
+  **Z**), her birinin kendi tutarı ve kendi **oto hedefi** var (×1,01 ile
+  ×100.000 arası, **←**/**→**, **X** = aç/kapa): balon hedefe ulaşırsa ödeme tam
+  hedef çarpanla yapılır - aynı anda patlasa bile. Her bahis bir kez **yarıya
+  bölünebilir** (**H** ya da YARISI hepsi için, **Q**/**W** ya da karttaki düğme
+  tek bahis için): o yarı mini paraşütlü bir para kesesi olarak uçup gider,
+  kalanı yükselmeye devam eder.
+- **Patlama noktası** doğrulanabilir rastlantıdan gelir: rastgele bir r sayısı
+  (32 bit), ardından yüzde birler olarak `⌊97 · 2³² / (2³² − r)⌋`, en az ×1,00
+  ve en çok ×100.000 - tam sayılarla ve Python, JavaScript ve Rust'ta bit bit
+  aynı (`lamacrash_logic.py`). ×x'e ulaşma olasılığı böylece %97 / x'tir
+  (2⁻³²'nin katlarına aşağı yuvarlanmış): **her çekme hedefi %96,997 ile %97,000
+  arası geri verir**, ister ×1,01 ister ×100.000 olsun; turların
+  yaklaşık %3,96'sı daha ×1,00'de, kimse çekemeden patlar. Yükselme eğrisi de
+  tam sayılıdır (1/60 saniyelik her adımda `mu += mu // 1000`) ve balon ancak
+  çarpan patlama noktasını **aştığında** patlar - yani ×m'de elle çeken, ×m oto
+  hedefiyle tam olarak aynı koşulda kazanır. ×100.000'e ulaşan **Ay**'a iner:
+  hâlâ uçan tüm bahisler için maksimum kazanç.
+- **İrtifa dünyaları**: Lama çayırı (mera, çit, ahır) → Bulut denizi (×1,5'ten
+  itibaren, kuş sürüleri) → Fırtına cephesi (×3'ten itibaren, yağmur, şimşekler,
+  uçaklar) → Kuzey ışıkları (×10'dan itibaren, dans eden kutup ışıkları) → Uzay
+  (×100'den itibaren, Dünya'nın kavisi, uydular, kayan yıldızlar, uzak
+  gezegenler - ve Ay giderek büyür) → bayrak, konfeti ve para yağmuruyla **Ay'a
+  iniş**. Her yeni dünyaya ulaşıldığında adı duyurulur ve dünyalar yumuşakça
+  birbirine geçer. Üstte, eksenleri onunla birlikte büyüyen çarpan eğrisi akar;
+  balon da yükseldikçe giderek daha çok şişer.
+- **Gerilim müziği** altı kademede, her irtifa dünyasına bir kademe
+  (`lamacrash_music.py`): çayırdan uzaya kadar parça her dünyada bir tam ses
+  daha tiz ve daha hızlı olur (96 ile 150 bpm arası), Ay'da bir fanfar çalar;
+  **M** müziği açar ya da kapatır. ×2'den itibaren gerilen balon gıcırdar.
+  Bunların hiçbiri patlama noktasına bağlı değildir - ne görüntü ne ses bir şey
+  ele verir (denetimdeki ikiz tur testi ×5 ve ×50'de patlayan iki turu ×4,99'a
+  kadar kare kare ve ses ses karşılaştırır).
+- **Patlama**: büyük bir pat sesi, lastik parçaları ve kamera sarsıntısı; hâlâ
+  sepette oturan lamalar sepetle birlikte yuvarlanarak görüntüden çıkar.
+  Çekişler kutlanır: ×3'ten itibaren para yağmuru, ×10'dan itibaren konfeti ve
+  ×100'den itibaren kazanç afişi. Sağ üstte son 12 turun patlama noktaları
+  renkli haplar olarak durur (×2'nin altı kırmızı, ×2'den itibaren yeşil,
+  ×10'dan itibaren altın, ×100'den itibaren mor).
+- **Otomatik mod** (**A**, yalnızca turlar arasında): 5/10/25/50/100/250 tur,
+  istersen **Kâr hedefi** ya da **Zarar limiti**
+  (kapalı/100/500/1000/5000/10000/50000) ve turbo ile. Her etkin bahis bu sırada
+  bir oto hedef alır, boş uçuş otomatik olarak ileri sarılır, elle çekmek yine
+  de mümkündür. Otomatik mod; tur sayısına ulaşılana, bir sınır devreye girene,
+  çipler yetmeyene ya da **DUR**/**Esc**/**A**'ya basılana kadar sürer -
+  uçuştaki tur o zaman normal şekilde biter. Pencerede: **↑**/**↓** = satır,
+  **←**/**→** = değer, **Enter**/**Boşluk** = OTO BAŞLAT ya da DUR. **Turbo**
+  (**T**) balonu üç kat hızlı yükseltir, geri sayımı ve araları kısaltır.
+- **Adillik kontrolü** (**F**) Lama Mines'taki gibi: her turdan önce **kontrol
+  kodu** belirlenir (gizli sunucu seed'inin SHA-256'sı), patlama noktası sunucu
+  seed'inden, senin **istemci seed'inden** ve tur numarasından çıkar
+  (`fairness.round_rand`, mulberry32), turdan sonra seed gösterilir. Pencere son
+  12 turu listeler (**↑**/**↓** seçer, **C** = hiçbir tur sürmüyorken yeni
+  istemci seed'i); **Doğrula** (**Enter**) kontrol kodunu denetler, patlama
+  noktasını yeniden hesaplar ve çekişleri kontrol eder - mini bir eğriyle ✓ ya
+  da ✗.
+- **İstatistikler** (**S**): Turlar, Kazanılan, Kaybedilen, Ödeme oranın, Toplam
+  bahis, Ödenen, Net sonuç, Rekor kazanç, En iyi çarpan, **En yüksek patlama**,
+  Yarı çekimler ve Kıl payı kutucukları, ayrıca son 100 turun **bakiye eğrisi**
+  ve yedi aralıkta (×1 ile ×1000+ arası) beklenen dağılıma (altın noktalar)
+  karşı çubuklar hâlinde **patlama noktalarının dağılımı**.
+- **Lama Bankası**: Blackjack, Poker, Casino, Lama Crossing, Lama Mines ve Lama
+  Plinko ile aynı hesap. OYNA toplam bahsi düşer ve yeni turu tek hamlede
+  kaydeder (`lamabank.bet_and_pay`), her çekiş kazancı anında hesaba geçirir;
+  yüzde birlerin **aktarımı** sayesinde küçük bahisler de hiçbir şey kaybetmez.
+  **Devam etme**: uçuşun ortasında çıkan, bir sonraki açılışta geri sayımdan
+  sonra aynı adımdan devam eder - patlama noktası zaten bellidir; boş uçuş
+  sırasında çıkanın turu hemen kapatılır. Para havadayken pencere odağı
+  kaybederse oyun kendiliğinden **duraklar** (`game_base.py` içinde yeni motor
+  kancası `pause_on_blur`, `main.py` tarafından işlenir). Rekor, 1000 + Lama
+  Crash bakiyesinin en yüksek değeridir; 10 çipin altında hesabı 1000'e
+  tamamlayan bir **banka kredisi** gelir.
+- Kontroller: tur öncesi **Boşluk**/**Enter** = OYNA, **1**/**2**/**Tab** = kart
+  seç, **↑**/**↓**/**+**/**-**/fare tekerleği = bahis, **←**/**→** ya da hedefin
+  üzerinde tekerlek = oto hedef, **X** = hedef aç/kapa, **Z** = ikinci bahis;
+  uçuşta **Boşluk**/**Enter**/**C** = hepsini çek, **1**/**2** = tek tek,
+  **H** = yarısı, **Q**/**W** = tek bahsin yarısı; sonrasında **Boşluk** = ileri
+  sar. **A** = otomatik, **S** = istatistik, **F** = adillik, **T** = turbo,
+  **M** = müzik, **Esc** bir pencereyi kapatır ya da otomatik modu durdurur
+  (aksi hâlde duraklatır). Pencereler yalnızca uçan bahis yokken açılabilir;
+  tuşlar sabittir ve kontrol atamalarına bağlı değildir. Süren tur, geçmiş,
+  adillik kaydı, istatistikler ve kalan aktarımı her profil için `mem.json`
+  içindeki `casino` bölümünde; bahisler, hedefler, ikinci bahis, turbo, müzik ve
+  otomatik mod ayarları `settings.json` içindeki `lamacrash` bölümünde saklanır.
+  **Kıl payı** (×2'den itibaren elle, patlamadan en fazla %5 önce çekmek),
+  **Kutup ışığı pilotu** (×10 veya üzerinde çekmek) ve **Uzay laması** (×1000
+  veya üzerinde çekmek) başarımları, ayrıca 3000 kilometre taşı ve 10000 usta
+  seviyesi.
+
 Yüksek skorlar `mem.json` dosyasının `highscores` bölümünde (kodun yanında) - dil
 ile birlikte (`mem` bölümü) saklanır.
 
@@ -6083,7 +6619,7 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
   rekoru bir çip olarak gösterir. Çok mod ve düşük çözünürlükte **kompakt** hâle
   gelir: Seçenekler, Wiki ve Geri tek satıra geçer, yazı boyutu uyum sağlar -
   artık hiçbir şey ekrandan taşmaz.
-- **Birleşik oyun içi görünüm**: 49 oyunun tamamı menünün tema paletini ve yazı
+- **Birleşik oyun içi görünüm**: 50 oyunun tamamı menünün tema paletini ve yazı
   tipini paylaşır - HUD'lar, setup ekranları ve katmanlar seçeneklerde belirlenen
   tasarımı (v4.1 / v4 / Klasik) izlerken her oyun alanı kendi kimlik renklerini
   korur. Artık her oyun, oyun ortasındaki çözünürlük değişikliklerini düzgün
@@ -6094,15 +6630,15 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
   kaydırılabilir makaleler ve tuş çipleriyle, 14 dilde. Kenar çubuğundaki
   **"Wiki / Yardım"** düğmesiyle ve her oyunun oyun öncesi ekranından erişilebilir
   (doğrudan o oyunun sayfasını açar).
-- **Başarımlar, nadirlik ve seviye**: beş kategoride **268 başarım** - 60 genel
-  hedef (oyunlar, süre, rekorlar, galibiyetler, oyun günleri, seriler,
-  düellolar …), 40 **puan kilometre taşı**, 33 **usta seviyesi** (çok daha
-  yüksek ikinci eşik), her oyun için bir **Müdavim** başarımı (25 parti) ve 86
+- **Başarımlar, nadirlik ve seviye**: beş kategoride **274 başarım** - 60 genel
+  hedef (oyunlar, süre, rekorlar, galibiyetler, oyun günleri, seriler, düellolar
+  …), 41 **puan kilometre taşı**, 34 **usta seviyesi** (çok daha yüksek ikinci
+  eşik), 50 oyunun her biri için bir **Müdavim** başarımı (25 parti) ve 89
   **özel an** (şah mat, Yahtzee, 4096 karosu, hole-in-one, air hockey'de
-  hat-trick …). Her başarımın bir **nadirliği** vardır (yaygın 10'dan mitik
-  300 puana); puanlar, Lama Yavrusu'ndan Yıldız Lama'ya 14 **rütbeli**
-  **seviyeni** oluşturur. Açılışta nadirlik renginde bir bildirim, seviye
-  atlayınca fanfarlı kendi bildirimi görünür.
+  hat-trick …). Her başarımın bir **nadirliği** vardır (yaygın 10'dan mitik 300
+  puana); puanlar, Lama Yavrusu'ndan Yıldız Lama'ya 14 **rütbeli** **seviyeni**
+  oluşturur. Açılışta nadirlik renginde bir bildirim, seviye atlayınca fanfarlı
+  kendi bildirimi görünür.
 - **Grafikli istatistikler**: beş sekme - Başarımlar (filtre, puan, XP çubuğu),
   İstatistikler (kartlar, ilk 10 çubuk, galibiyet halkası, tablo), **Takvim**
   (oyun günleri haritası, seriler, haftanın günleri, günün saati), **Geçmiş**
@@ -6130,7 +6666,9 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
 - Soldaki menüde düğmeyle bir oyun seçin. Ardından bir **oyun öncesi ekranı**
   belirir: **Tek oyunculu** ya da **Çok oyunculu** seçin, **seçeneklere** gidin
   ya da geri dönün. Seçmek için oklar/fare, başlatmak için Enter.
-- **ESC** = duraklat / devam et (menülerde: geri).
+- **ESC** = duraklat / devam et (menülerde: geri). Sensiz devam edecek oyunlar,
+  pencere odağı kaybedince kendiliğinden duraklar (motor kancası
+  `pause_on_blur` - şimdilik Lama Crash, bir bahis havadayken).
 - **F11** (ya da "Tam ekran aç/kapa" düğmesi) = tam ekranı açar/kapatır. Pygame
   ekranı gömülü kalır ve en boy oranını koruyarak büyütülür (oran farklıysa siyah
   şeritler). Pencere serbestçe yeniden boyutlandırılabilir.
@@ -6203,10 +6741,10 @@ filepick.py          Dosya pencereleri ("Farklı dışa aktar ...", "İçe aktar
 prestige.py         Snake için prestij sistemi
 competitive.py      Snake'in Rekabetçi modu için ince ayar (seviyeler, slot makinesi, kumar elmaları)
 ngb.py              Görsel kişiselleştirme ("mods"): baş rengi + koordinat ızgarası + menü (mem-ngb.json)
-lamabank.py          Lama Bankası: Blackjack, Poker, Casino, Lama Crossing, Lama Mines ve Lama Plinko'nun ortak çip hesabı (mem.json içindeki casino bölümü)
+lamabank.py          Lama Bankası: Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko ve Lama Crash'in ortak çip hesabı (mem.json içindeki casino bölümü)
 seedrand.py          Python'da ve tarayıcıda bit bit aynı sayılar üreten rastgele üreteci (günlük modlar, yeni bulmacalar)
-fairness.py          Lama Mines ve Lama Plinko için adillik kontrolü ("provably fair"): SHA-256 kontrol kodu, sunucu/istemci seed'leri, doğrulama
-chipstats.py         Lama Mines ve Lama Plinko istatistikleri (S penceresi): turlar, bahisler, kazançlar, geri ödeme oranı, bakiye eğrisi
+fairness.py          Lama Mines, Lama Plinko ve Lama Crash için adillik kontrolü ("provably fair"): SHA-256 kontrol kodu, sunucu/istemci seed'leri, doğrulama
+chipstats.py         Lama Mines, Lama Plinko ve Lama Crash istatistikleri (S penceresi): turlar, bahisler, kazançlar, geri ödeme oranı, bakiye eğrisi
 i18n.py             Çeviri motoru (lang/*.json yükler, t("anahtar"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Dil metinleri (metin başına bir yer tutucu anahtar)
@@ -6249,12 +6787,13 @@ games/
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   lamamines.py  lamamines_logic.py  lamamines_draw.py
   lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
+  lamacrash.py  lamacrash_logic.py  lamacrash_draw.py  lamacrash_world.py  lamacrash_music.py
   levels/              Seviye verileri: snake-comp.json, chess-puzzles.json (+ kaynak README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Genel denetim (giriş, seedrand Python = JS, kayıt, dil dosyaları, oyun öncesi ekranları) + tüm audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Oyun başına headless denetimler
-  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko ve ortak çip mantığı (adillik, istatistik, Python = JS = Rust)
+  audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash ve ortak çip mantığı (adillik, istatistik, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                Rust sürümü (bağımsız .exe, bkz. rust/README.md)
   ENGINE.md            Taşıma sözleşmesi: bir oyun Python'dan Rust'a nasıl geçer
@@ -6263,7 +6802,7 @@ rust/                Rust sürümü (bağımsız .exe, bkz. rust/README.md)
   crates/pgz-engine/   Pencere, çizim, giriş, ses, Game trait'i (ui.py + audio.py + game_base.py)
   crates/pgz-games/    Taşınan oyunlar
   crates/pygamez/      Program: menü, yan çubuk, ekranlar
-  tools/export_defs.py Ana verileri (49 oyun, 268 başarım, 10 tema) Python kaynaklarından üretir
+  tools/export_defs.py Ana verileri (50 oyun, 274 başarım, 10 tema) Python kaynaklarından üretir
   tools/audit.py       Test tezgâhı: çeviriler, oyun listesi, kurallar
 rust.output/         Rust sürümünün derleme çıktısı (rust.output/release/pygamez.exe)
 ```
@@ -6382,7 +6921,7 @@ paketler. Dosya, Python kurulu olmayan herhangi bir Windows bilgisayarında
 ## 🇩🇰 Dansk
 
 En skrivebords-spilsamling i Python: **Tkinter** leverer vinduet og menuen,
-**Pygame** indlejres som spildisplay inde i Tkinter-vinduet. Niogfyrre spil
+**Pygame** indlejres som spildisplay inde i Tkinter-vinduet. Halvtreds spil
 med fælles indstillinger, frit omdefinerbare kontroller, highscores, proceduralt
 genererede lydeffekter og – for nogle titler – en multiplayer-tilstand.
 Grænsefladen er **flersproget** og fås på **14 sprog**; sproget vælges på en
@@ -6463,6 +7002,7 @@ nederst under **[Installationsguide](#installationsguide)**.
 | **Lama Crossing** | 1 spiller     | Nervespil med lama-chips: bane for bane over vej, hængebro, flod eller issø, ram hullerne i trafikken, udbetal efter hver bane eller fortsæt; 4 sværhedsgrader op til ×31.784, ~97 % tilbagebetaling |
 | **Lama Mines**  | 1 spiller     | Ædelstensjagt med lama-chips: bræt fra 4x4 til 7x7 med 1-48 miner, hver ædelsten hæver multiplikatoren op til ×100.000, udbetal når du vil; auto-tilstand, SHA-256-fairness-tjek og statistik, ~97 % tilbagebetaling |
 | **Lama Plinko** | 1 spiller     | Plinko med lama-chips: gyldne garnnøgler hopper ned gennem 8-16 rækker af pinde, 3 risikoniveauer op til ×1000, op til 50 kugler ad gangen; auto-tilstand, SHA-256-fairness-tjek og statistik, ~97 % tilbagebetaling |
+| **Lama Crash**  | 1 spiller     | Crash-spil med lama-chips: lamaen stiger i en ballon, og multiplikatoren vokser op til ×100.000 - udbetal, før ballonen springer; to indsatser med auto-mål og halv udbetaling, 6 højdeverdener op til månen, spændingsmusik, auto-tilstand, fairness-tjek og statistik, ~97 % tilbagebetaling |
 
 **Multiplayer (2 spillere lokalt)** findes til **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op-duel)**,
@@ -7156,10 +7696,11 @@ eksplosionseffekter, highscore.
   **guldmønter = scatter** med 10 gratisspil og dobbelte gevinster, indsats pr.
   linje 1/2/5/10, **auto-spin** (10/25), **turbo** og gevinsttabel.
   **Tilbagebetalingsprocenten er 96,1 %** - beregnet nøjagtigt ud fra hjulstrimlerne.
-- **Lama-banken**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines og Lama
-  Plinko deler én konto med **lama-chips** (start 1000, afsnittet `casino` i
-  `mem.json`); gamle chipsaldi overføres automatisk. Indsatser trækkes med det samme, hvert spil fører sin egen balance
-  til highscoren, og går du fallit, får du et **banklån** op til 1000.
+- **Lama-banken**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama
+  Plinko og Lama Crash deler én konto med **lama-chips** (start 1000, afsnittet
+  `casino` i `mem.json`); gamle chipsaldi overføres automatisk. Indsatser
+  trækkes med det samme, hvert spil fører sin egen balance til highscoren, og
+  går du fallit, får du et **banklån** op til 1000.
 - Konfetti, mønteregn, big/mega/jackpot-bannere og gevinstlinje-animationer;
   præstationerne **Plet** (vundet plein i roulette) og **Lama-jackpot** (5 lamaer
   på én linje).
@@ -7332,6 +7873,106 @@ eksplosionseffekter, highscore.
   (yderste felt ved 16 rækker og risiko Høj) samt en milepæl på 3000 og et
   mesterniveau på 10000.
 
+**Lama Crash**
+- **Crash-spil med lama-chips**: vælg indsats (10 til 10000), og tryk **SPIL** -
+  efter en kort 3-2-1 stiger lamaen til vejrs i **ballonen**, og
+  **multiplikatoren** vokser med tiden: ×2 efter 11,6 s, ×10 efter 38,4 s, ×100
+  efter 76,8 s og ×100.000 efter 192 s (3,2 minutter). Fra ×1,01 kan du til
+  enhver tid trykke **UDBETAL** - lamaen springer ud med faldskærm, og gevinsten
+  (indsats × multiplikator) krediteres med det samme; springer ballonen før, er
+  indsatsen tabt. Efter udbetalingen stiger den tomme ballon videre, til den
+  springer ("Alle er ude – ballonen stiger"), så man kan se, hvor langt den
+  ville være nået; **spol frem** (Mellemrum) kører 16 gange så hurtigt.
+- **To indsatser** i samme runde (en lama nummer to i kurven, via kontakten på
+  kort 2 eller **Z**), hver med sit eget beløb og sit eget **auto-mål** (×1,01
+  til ×100.000, **←**/**→**, **X** = til/fra): Når ballonen når målet, udbetales
+  der præcis ved målet - også selv om den springer i samme øjeblik. Hver indsats
+  kan **halveres** én gang (**H** eller HALVDEL for alle, **Q**/**W** eller
+  knappen på kortet for én): Den halvdel svæver væk som pengesæk i en
+  minifaldskærm, resten stiger videre.
+- **Bristepunkt** fra den efterprøvelige tilfældighed: tilfældigt tal r (32
+  bit), derefter `⌊97 · 2³² / (2³² − r)⌋` i hundrededele, mindst ×1,00 og højst
+  ×100.000 - i heltal og bit-identisk i Python, JavaScript og Rust
+  (`lamacrash_logic.py`). Chancen for at nå ×x er dermed 97 % / x (rundet ned
+  til hele 2⁻³²): **ethvert udbetalingsmål giver 96,997 til 97,000 % tilbage**,
+  hvad enten det er ×1,01 eller ×100.000; omkring 3,96 % af runderne springer
+  allerede ved ×1,00, før man kan nå at udbetale. Stigekurven regnes også i
+  heltal (`mu += mu // 1000` pr. takt på 1/60 s), og ballonen springer først,
+  når multiplikatoren **overstiger** bristepunktet - den, der udbetaler manuelt
+  ved ×m, vinder altså under præcis samme betingelse som et auto-mål ×m. Når
+  ×100.000 nås, lander lamaerne på **månen**: maksgevinst for alle indsatser,
+  der stadig flyver.
+- **Højdeverdener**: Lamaeng (græsmark, hegn, lamastald) → Skyhav (fra ×1,5,
+  fugleflokke) → Tordenfront (fra ×3, regn, lyn, fly) → Nordlys (fra ×10,
+  dansende nordlys) → Rummet (fra ×100, Jordens krumning, satellitter,
+  stjerneskud, fjerne planeter - og månen bliver større og større) →
+  **månelanding** med flag, konfetti og mønteregn. Hver ny verden annonceres med
+  sit navn, når ballonen når den, og verdenerne glider blødt over i hinanden.
+  Ovenover løber multiplikatorkurven med akser, der vokser med, og ballonen
+  pustes mere og mere op med højden.
+- **Spændingsmusik** i seks trin, ét pr. højdeverden (`lamacrash_music.py`): Fra
+  engen op til rummet bliver stykket en heltone højere og hurtigere for hver
+  verden (96 til 150 bpm), og på månen lyder en fanfare; **M** slår musikken til
+  eller fra. Fra ×2 knirker den udspændte ballon. Intet af det afhænger af
+  bristepunktet - hverken billede eller lyd afslører noget (en tvillingetest i
+  auditten sammenligner to runder, der springer ved ×5 og ×50, op til ×4,99
+  billede for billede og tone for tone).
+- **Når ballonen springer**: knald, gummistumper og kamerarystelse; lamaer, der
+  stadig sidder i kurven, tumler ud af billedet sammen med den. Udbetalinger
+  fejres: mønteregn fra ×3, konfetti fra ×10 og et gevinstbanner fra ×100.
+  Øverst til højre står bristepunkterne for de sidste 12 runder som farvede
+  piller (rød under ×2, grøn fra ×2, guld fra ×10, violet fra ×100).
+- **Auto-tilstand** (**A**, kun mellem runderne): 5/10/25/50/100/250 runder,
+  evt. med **stop ved gevinst på** eller **ved tab på**
+  (fra/100/500/1000/5000/10000/50000) og turbo. Hver aktiv indsats får et
+  auto-mål, under den tomme flyvning spoles der automatisk frem, og manuel
+  udbetaling virker stadig. Auto kører, indtil antallet af runder er nået, en
+  grænse slår til, chipsene ikke rækker, eller der trykkes
+  **STOP**/**Esc**/**A** - en runde i luften flyver så færdig som normalt. I
+  vinduet: **↑**/**↓** = linje, **←**/**→** = værdi, **Enter**/**Mellemrum** =
+  START AUTO eller STOP. **Turbo** (**T**) får ballonen til at stige tre gange
+  så hurtigt og forkorter nedtælling og pauser.
+- **Fairness-tjek** (**F**) som i Lama Mines: Før hver runde ligger
+  **kontrolkoden** fast (SHA-256 af den hemmelige server-seed), bristepunktet
+  kommer fra server-seed, din egen **klient-seed** og rundenummeret
+  (`fairness.round_rand`, mulberry32), og efter runden vises seeden. Vinduet
+  viser de sidste 12 runder (**↑**/**↓** vælger, **C** = ny klient-seed, så
+  længe ingen runde er i gang); **Kontrollér** (**Enter**) tjekker kontrolkoden,
+  beregner bristepunktet igen og efterprøver udbetalingerne - ✓ eller ✗ med en
+  minikurve.
+- **Statistik** (**S**): kort for Runder, Vundet, Tabt, Dit afkast, Indsat,
+  Udbetalt, Balance, Største gevinst, Bedste faktor, **Højeste bristepunkt**,
+  Halveringer og Hårfint, plus **balancekurven** for de sidste 100 runder og
+  **fordelingen af bristepunkterne** i syv intervaller (×1 til ×1000+) som
+  bjælker mod den forventede fordeling (gyldne prikker).
+- **Lama-banken**: samme konto som Blackjack, Poker, Casino, Lama Crossing, Lama
+  Mines og Lama Plinko. SPIL trækker den samlede indsats og gemmer den nye runde
+  i ét hug (`lamabank.bet_and_pay`), og hver udbetaling krediterer gevinsten med
+  det samme; en **restoverførsel** af hundrededelene sørger for, at selv små
+  indsatser intet mister. **Genoptagelse**: Går du midt i flyvningen, fortsætter
+  spillet ved næste start efter en nedtælling ved samme takt - bristepunktet
+  ligger jo fast; går du først under den tomme flyvning, afsluttes runden med
+  det samme. Mister vinduet fokus, mens der er penge i luften, sætter spillet
+  sig selv **på pause** (nyt motor-hook `pause_on_blur` i `game_base.py`,
+  håndteret af `main.py`). Highscoren er toppen af 1000 + Lama Crash-balancen;
+  under 10 chips får du et **banklån** op til 1000.
+- Styring: før runden **Mellemrum**/**Enter** = SPIL, **1**/**2**/**Tab** = vælg
+  kort, **↑**/**↓**/**+**/**-**/musehjul = indsats, **←**/**→** eller musehjulet
+  over målet = auto-mål, **X** = mål til/fra, **Z** = anden indsats; under
+  flyvningen **Mellemrum**/**Enter**/**C** = udbetal alle, **1**/**2** =
+  enkeltvis, **H** = halvdel, **Q**/**W** = halvdel enkeltvis; bagefter
+  **Mellemrum** = spol frem. **A** = auto, **S** = statistik, **F** = fairness,
+  **T** = turbo, **M** = musik, **Esc** lukker et vindue eller stopper auto
+  (ellers pause). Vinduerne kan kun åbnes, så længe ingen indsats flyver;
+  tasterne er faste og afhænger ikke af styringsopsætningen. Igangværende runde,
+  historik, fairness-log, statistik og restoverførsel gemmes pr. profil i
+  afsnittet `casino` i `mem.json`; indsatser, mål, anden indsats, turbo, musik
+  og auto-indstillinger i afsnittet `lamacrash` i `settings.json`.
+  Præstationerne **Hårfint** (manuel udbetaling fra ×2, højst 5 % før ballonen
+  springer), **Nordlyspilot** (udbetal ved ×10 eller mere) og **Rumlama**
+  (udbetal ved ×1000 eller mere) samt en milepæl på 3000 og et mesterniveau på
+  10000.
+
 Highscores gemmes i afsnittet `highscores` i `mem.json` (ved siden af koden) –
 sammen med sproget (afsnittet `mem`).
 
@@ -7356,7 +7997,7 @@ og stylet som en moderne spil-launcher:
   den tidligere rekord som en chip. Ved mange tilstande og lav opløsning bliver den
   **kompakt**: Indstillinger, Wiki og Tilbage rykker op på én række, og skriften
   tilpasser sig - intet løber længere ud af billedet.
-- **Ensartet look i spillet**: alle 49 spil deler menuens temapalet og skrifttype -
+- **Ensartet look i spillet**: alle 50 spil deler menuens temapalet og skrifttype -
   HUD'er, setup-skærme og overlays følger det design, der er valgt i indstillingerne
   (v4.1 / v4 / Klassisk), mens hvert spillefelt beholder sine identitetsfarver.
   Hvert spil håndterer nu en opløsningsændring midt i spillet rent, og menunavnene
@@ -7366,15 +8007,15 @@ og stylet som en moderne spil-launcher:
   rulbare artikler og tastekap-chips, på alle 14 sprog. Nås via sidebjælkeknappen
   **»Wiki / Hjælp«** og fra hvert spils forspils-skærm (åbner det pågældende spils
   side direkte).
-- **Præstationer, sjældenhed og niveau**: **268 præstationer** i fem kategorier
-  - 60 mål på tværs af samlingen (runder, spilletid, rekorder, sejre,
-  spilledage, stimer, dueller …), 40 **pointmilepæle**, 33 **mesterniveauer**
-  (det andet, meget højere mærke), en **Fast gæst**-præstation pr. spil (25
-  runder) og 86 **særlige øjeblikke** (skakmat, en Yahtzee, 4096-brikken,
-  hole-in-one, hattrick i air hockey …). Hver præstation har en **sjældenhed**
-  (almindelig 10 op til mytisk 300 point); pointene giver dit **niveau** med 14
-  **rang** fra Lamaunge til Stjernelama. Ved oplåsning vises en notifikation i
-  sjældenhedens farve, ved nyt niveau sin egen med fanfare.
+- **Præstationer, sjældenhed og niveau**: **274 præstationer** i fem
+  kategorier - 60 mål på tværs af samlingen (runder, spilletid, rekorder, sejre,
+  spilledage, stimer, dueller …), 41 **pointmilepæle**, 34 **mesterniveauer**
+  (det andet, meget højere mærke), en **Fast gæst**-præstation for hvert af de
+  50 spil (25 runder) og 89 **særlige øjeblikke** (skakmat, en Yahtzee,
+  4096-brikken, hole-in-one, hattrick i air hockey …). Hver præstation har en
+  **sjældenhed** (almindelig 10 op til mytisk 300 point); pointene giver dit
+  **niveau** med 14 **rang** fra Lamaunge til Stjernelama. Ved oplåsning vises
+  en notifikation i sjældenhedens farve, ved nyt niveau sin egen med fanfare.
 - **Statistik med diagrammer**: fem faneblade - Præstationer (filter, point,
   XP-bjælke), Statistik (kort, top 10 som bjælker, sejrsring, tabel),
   **Kalender** (kort over spilledage, stimer, ugedage, tidspunkter),
@@ -7404,7 +8045,10 @@ og stylet som en moderne spil-launcher:
   **forspils-skærm** op: vælg **Enkeltspiller** eller **Multiplayer**, gå til
   **indstillingerne** eller tilbage. Piletaster/mus for at vælge, Enter for at
   starte.
-- **ESC** = pause / fortsæt (i menuer: tilbage).
+- **ESC** = pause / fortsæt (i menuer: tilbage). Spil, der ellers ville køre
+  videre uden dig, sætter sig selv på pause, når vinduet mister fokus
+  (motor-hook `pause_on_blur` - indtil videre Lama Crash, mens en indsats
+  flyver).
 - **F11** (eller knappen »Fuldskærm til/fra«) = slå fuldskærm til/fra.
   Pygame-displayet forbliver indlejret og skaleres op med bevaret
   højde-bredde-forhold (sorte bjælker, når forholdet afviger). Vinduet kan frit
@@ -7478,10 +8122,10 @@ filepick.py          Fildialoger ("Eksportér som ...", "Importér")
 prestige.py          Prestige-system til Snake
 competitive.py       Finindstilling til Snakes Competitive-tilstand (niveauer, enarmet tyveknægt, gamble-æbler)
 ngb.py               Visuel tilpasning ("mods"): hovedfarve + koordinatgitter + menu (mem-ngb.json)
-lamabank.py          Lama-banken: fælles chipkonto for Blackjack, Poker, Casino, Lama Crossing, Lama Mines og Lama Plinko (afsnittet casino i mem.json)
+lamabank.py          Lama-banken: fælles chipkonto for Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko og Lama Crash (afsnittet casino i mem.json)
 seedrand.py          Tilfældighedsgenerator med bit-identiske tal i Python og browseren (dagens tilstande, nye opgaver)
-fairness.py          Fairness-tjek ("provably fair") for Lama Mines og Lama Plinko: SHA-256-kontrolkode, server-/klient-seed, genberegning
-chipstats.py         Statistik for Lama Mines og Lama Plinko (vinduet S): runder, indsatser, gevinster, tilbagebetaling, balancekurve
+fairness.py          Fairness-tjek ("provably fair") for Lama Mines, Lama Plinko og Lama Crash: SHA-256-kontrolkode, server-/klient-seed, genberegning
+chipstats.py         Statistik for Lama Mines, Lama Plinko og Lama Crash (vinduet S): runder, indsatser, gevinster, tilbagebetaling, balancekurve
 i18n.py              Oversættelsesmotor (indlæser lang/*.json, t("nøgle"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Sprogstrenge (én pladsholdernøgle pr. tekst)
@@ -7524,12 +8168,13 @@ games/
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   lamamines.py  lamamines_logic.py  lamamines_draw.py
   lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
+  lamacrash.py  lamacrash_logic.py  lamacrash_draw.py  lamacrash_world.py  lamacrash_music.py
   levels/              Banedata: snake-comp.json, chess-puzzles.json (+ kilde-README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Samlet audit (input, seedrand Python = JS, gemning, sprogfiler, forspils-skærme) + alle audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless-audits pr. spil
-  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko og den fælles chip-logik (fairness, statistik, Python = JS = Rust)
+  audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash og den fælles chip-logik (fairness, statistik, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                Rust-udgaven (selvstændig .exe, se rust/README.md)
   ENGINE.md            Porteringskontrakt: hvordan et spil kommer fra Python til Rust
@@ -7538,7 +8183,7 @@ rust/                Rust-udgaven (selvstændig .exe, se rust/README.md)
   crates/pgz-engine/   Vindue, tegning, input, lyd, Game-trait (ui.py + audio.py + game_base.py)
   crates/pgz-games/    De porterede spil
   crates/pygamez/      Programmet: menu, sidepanel, skærme
-  tools/export_defs.py Danner stamdata (49 spil, 268 bedrifter, 10 temaer) ud fra Python-kilderne
+  tools/export_defs.py Danner stamdata (50 spil, 274 bedrifter, 10 temaer) ud fra Python-kilderne
   tools/audit.py       Prøvebænk: oversættelser, spilliste, konventioner
 rust.output/         Byggeresultat af Rust-udgaven (rust.output/release/pygamez.exe)
 ```
@@ -7655,7 +8300,7 @@ Python og kan kopieres frit. Indstillinger og highscores (`settings.json`,
 ## 🇳🇴 Norsk
 
 En samling skrivebordsspill i Python: **Tkinter** står for vinduet og menyen,
-**Pygame** er bygget inn som spillvisning inne i Tkinter-vinduet. Førtini
+**Pygame** er bygget inn som spillvisning inne i Tkinter-vinduet. Femti
 spill med felles innstillinger, fritt omdefinerbar styring, rekorder,
 prosedyregenererte lydeffekter og – for enkelte titler – flerspillermodus.
 Grensesnittet er **flerspråklig** – **14 språk** (tysk / engelsk / fransk /
@@ -7738,6 +8383,7 @@ nederst under **[Installasjonsveiledning](#installasjonsveiledning)**.
 | **Lama Crossing** | 1 spiller     | Nervespill med lama-sjetonger: felt for felt over vei, hengebro, elv eller islagt innsjø, finn lukene i trafikken, ta ut etter hvert felt eller fortsett; 4 vanskelighetsgrader opptil ×31 784, ~97 % tilbakebetaling |
 | **Lama Mines** | 1 spiller     | Edelsteinsjakt med lama-sjetonger: rutenett fra 4×4 til 7×7 med 1 til 48 miner, avdekk rute for rute og ta ut når du vil; opptil ×100 000, automodus, rettferdskontroll og statistikk, ~97 % tilbakebetaling |
 | **Lama Plinko** | 1 spiller     | Plinko med lama-sjetonger: opptil 50 garnnøster samtidig gjennom 8 til 16 rader med pinner, 3 risikonivåer opptil ×1000, automodus, rettferdskontroll og statistikk, ~97 % tilbakebetaling |
+| **Lama Crash** | 1 spiller     | Crash-spill med lama-sjetonger: lamaen stiger i en ballong, og multiplikatoren vokser opptil ×100 000 - ta ut før ballongen sprekker; to innsatser med automål og halvt uttak, 6 høydeverdener helt til månen, spenningsmusikk, automodus, rettferdskontroll og statistikk, ~97 % tilbakebetaling |
 
 **Flerspiller (2 spillere lokalt)** er tilgjengelig for **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids
@@ -8426,11 +9072,11 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   **gullmynter = scatter** med 10 gratisspinn og doble gevinster, innsats per
   linje 1/2/5/10, **auto-spinn** (10/25), **turbo** og gevinsttabell.
   **Tilbakebetalingsprosenten er 96,1 %** – beregnet nøyaktig fra hjulstrimlene.
-- **Lama-banken**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines og Lama
-  Plinko deler én konto med **lama-sjetonger** (start 1000, seksjonen `casino`
-  i `mem.json`); gamle sjetongsaldoer overføres automatisk. Innsatser trekkes med en gang, hvert spill
-  fører sin egen balanse for rekorden, og går du blakk, får du et **banklån** opp
-  til 1000.
+- **Lama-banken**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama
+  Plinko og Lama Crash deler én konto med **lama-sjetonger** (start 1000,
+  seksjonen `casino` i `mem.json`); gamle sjetongsaldoer overføres automatisk.
+  Innsatser trekkes med en gang, hvert spill fører sin egen balanse for
+  rekorden, og går du blakk, får du et **banklån** opp til 1000.
 - Konfetti, myntregn, big/mega/jackpot-bannere og gevinstlinje-animasjoner;
   prestasjonene **Blinkskudd** (vunnet plein i rulett) og **Lama-jackpot** (5
   lamaer på én linje).
@@ -8610,6 +9256,103 @@ våpenoppgradering), eksplosjonseffekter, rekord.
   på brettet) og **Plinko-legende** (ytterste felt med 16 rader og risiko Høy)
   samt en milepæl på 3000 og et mesternivå på 10000.
 
+**Lama Crash**
+- **Crash-spill med lama-sjetonger**: velg innsats (10 til 10000) og trykk
+  **SPILL** - etter en kort 3-2-1 stiger lamaen opp i **ballongen**, og
+  **multiplikatoren** vokser med tiden: ×2 etter 11,6 s, ×10 etter 38,4 s, ×100
+  etter 76,8 s og ×100 000 etter 192 s (3,2 minutter). Fra ×1,01 kan du når som
+  helst trykke **TA UT** - lamaen hopper ut med fallskjerm, og gevinsten
+  (innsats × multiplikator) godskrives med en gang; sprekker ballongen før, er
+  innsatsen tapt. Etter uttaket stiger den tomme ballongen videre til den
+  sprekker («Alle er ute – ballongen stiger»), så du ser hvor langt det ville
+  gått; **spol frem** (Mellomrom) går 16 ganger så fort.
+- **To innsatser** i samme runde (en lama til i kurven, via bryteren på kort 2
+  eller **Z**), hver med sitt eget beløp og sitt eget **automål** (×1,01 til
+  ×100 000, **←**/**→**, **X** = på/av): Når ballongen når målet, betales det ut
+  nøyaktig ved målet - selv om den sprekker i samme øyeblikk. Hver innsats kan
+  **halveres** én gang (**H** eller HALVPART for alle, **Q**/**W** eller knappen
+  på kortet for én): Den halvparten svever bort som pengesekk i en
+  minifallskjerm, resten stiger videre.
+- **Bristepunkt** fra rettferdighetstilfeldigheten: tilfeldig tall r (32 bit),
+  så `⌊97 · 2³² / (2³² − r)⌋` i hundredeler, minst ×1,00 og høyst ×100 000 - i
+  heltall og bit-identisk i Python, JavaScript og Rust (`lamacrash_logic.py`).
+  Sjansen for å nå ×x er dermed 97 % / x (rundet ned til hele 2⁻³²): **ethvert
+  uttaksmål gir 96,997-97,000 % tilbake**, enten det er ×1,01 eller ×100 000;
+  rundt 3,96 % av rundene sprekker allerede ved ×1,00, før noen rekker å ta ut.
+  Stigekurven regnes også i heltall (`mu += mu // 1000` per takt på 1/60 s), og
+  ballongen sprekker først når multiplikatoren **overstiger** bristepunktet -
+  den som tar ut manuelt ved ×m, vinner altså under nøyaktig samme betingelse
+  som et automål ×m. Den som når ×100 000, lander på **månen**: maksgevinst for
+  alle innsatser som fortsatt flyr.
+- **Høydeverdener**: Lamaeng (beite, gjerde, lamafjøs) → Skyhav (fra ×1,5,
+  fugleflokker) → Tordenfront (fra ×3, regn, lyn, fly) → Nordlys (fra ×10,
+  dansende nordlys) → Verdensrommet (fra ×100, jordkrumningen, satellitter,
+  stjerneskudd, fjerne planeter - og månen blir stadig større) → **månelanding**
+  med flagg, konfetti og myntregn. Hver ny verden annonseres med navn når
+  ballongen når den, og verdenene glir mykt over i hverandre. Over det hele går
+  multiplikatorkurven med akser som vokser med, og ballongen blåses mer og mer
+  opp med høyden.
+- **Spenningsmusikk** i seks trinn, ett per høydeverden (`lamacrash_music.py`):
+  Fra enga til verdensrommet blir stykket en heltone høyere og raskere for hver
+  verden (96 til 150 bpm), og på månen lyder en fanfare; **M** slår musikken på
+  eller av. Fra ×2 knirker den strekte ballongen. Ingenting av dette avhenger av
+  bristepunktet - verken bilde eller lyd røper noe (en tvillingtest i revisjonen
+  sammenligner to runder som sprekker ved ×5 og ×50, opp til ×4,99, bilde for
+  bilde og tone for tone).
+- **Når ballongen sprekker**: smell, gummifiller og kamerarystelser; lamaer som
+  fortsatt sitter i kurven, tumler ut av bildet sammen med den. Uttak feires:
+  myntregn fra ×3, konfetti fra ×10 og et gevinstbanner fra ×100. Øverst til
+  høyre står bristepunktene for de siste 12 rundene som fargede piller (rød
+  under ×2, grønn fra ×2, gull fra ×10, fiolett fra ×100).
+- **Automodus** (**A**, bare mellom rundene): 5/10/25/50/100/250 runder,
+  eventuelt med **stopp ved gevinst på** eller **ved tap på**
+  (av/100/500/1000/5000/10000/50000) og turbo. Hver aktiv innsats får et
+  automål, den tomme flyturen spoles automatisk frem, og manuelt uttak virker
+  fortsatt. Auto kjører til antall runder er nådd, en grense slår inn,
+  sjetongene ikke rekker eller du trykker **STOPP**/**Esc**/**A** - en runde i
+  lufta flyr da ferdig som vanlig. I vinduet: **↑**/**↓** = linje, **←**/**→** =
+  verdi, **Enter**/**Mellomrom** = START AUTO eller STOPP. **Turbo** (**T**) får
+  ballongen til å stige tre ganger så raskt og forkorter nedtelling og pauser.
+- **Rettferdskontroll** (**F**) som i Lama Mines: Før hver runde står
+  **kontrollkoden** fast (SHA-256 av den hemmelige server-seeden), bristepunktet
+  kommer fra server-seed, din egen **klient-seed** og rundenummeret
+  (`fairness.round_rand`, mulberry32), og etter runden vises seeden. Vinduet
+  viser de siste 12 rundene (**↑**/**↓** velger, **C** = ny klient-seed så lenge
+  ingen runde pågår); **«Kontroller»** (**Enter**) sjekker kontrollkoden, regner
+  ut bristepunktet på nytt og kontrollerer uttakene - ✓ eller ✗ med en
+  minikurve.
+- **Statistikk** (**S**): kort for Runder, Vunnet, Tapt, Din avkastning, Satset,
+  Utbetalt, Balanse, Største gevinst, Beste faktor, **Høyeste bristepunkt**,
+  Halveringer og På håret, pluss **balansekurven** for de siste 100 rundene og
+  **fordelingen av bristepunktene** i sju intervaller (×1 til ×1000+) som søyler
+  mot den forventede fordelingen (gylne prikker).
+- **Lama-banken**: samme konto som Blackjack, Poker, Casino, Lama Crossing, Lama
+  Mines og Lama Plinko. SPILL trekker den samlede innsatsen og lagrer den nye
+  runden i én operasjon (`lamabank.bet_and_pay`), og hvert uttak godskriver
+  gevinsten med en gang; **restoverføring** av hundredelene sørger for at også
+  små innsatser ikke taper noe. **Fortsett**: Går du ut midt i flyturen,
+  fortsetter du ved neste start etter en nedtelling på samme takt -
+  bristepunktet står jo fast; går du ut under den tomme flyturen, avsluttes
+  runden med en gang. Mister vinduet fokus mens det er penger i lufta,
+  **pauser** spillet av seg selv (ny motorkrok `pause_on_blur` i `game_base.py`,
+  håndtert av `main.py`). Toppscoren er høyeste nivå av 1000 + Lama
+  Crash-balansen; under 10 sjetonger får du et **banklån** opp til 1000.
+- Kontroller (faste taster, uavhengig av tastebindingene): før runden
+  **Mellomrom**/**Enter** = SPILL, **1**/**2**/**Tab** = velg kort,
+  **↑**/**↓**/**+**/**-**/musehjul = innsats, **←**/**→** eller musehjulet over
+  målet = automål, **X** = mål på/av, **Z** = andre innsats; i lufta
+  **Mellomrom**/**Enter**/**C** = ta ut alle, **1**/**2** = enkeltvis, **H** =
+  halvpart, **Q**/**W** = halvpart enkeltvis; etterpå **Mellomrom** = spol frem.
+  **A** = auto, **S** = statistikk, **F** = rettferdskontroll, **T** = turbo,
+  **M** = musikk, **Esc** lukker et vindu eller stopper auto (ellers pause).
+  Vinduene kan bare åpnes så lenge ingen innsats flyr. Pågående runde,
+  historikk, kontrollogg, statistikk og restoverføring lagres per profil i
+  seksjonen `casino` i `mem.json`; innsatser, mål, andre innsats, turbo, musikk
+  og autoinnstillingene i seksjonen `lamacrash` i `settings.json`. Prestasjonene
+  **På håret** (manuelt uttak fra ×2, høyst 5 % før ballongen sprekker),
+  **Nordlyspilot** (ta ut ved ×10 eller mer) og **Romlama** (ta ut ved ×1000
+  eller mer) samt en milepæl på 3000 og et mesternivå på 10000.
+
 Rekordene lagres i `highscores`-delen av `mem.json` (ved siden av koden) – sammen
 med språket (delen `mem`).
 
@@ -8634,7 +9377,7 @@ pakker) og stylet som en moderne spill-launcher:
   rekord som en chip. Med mange moduser og lav oppløsning blir den **kompakt**:
   Innstillinger, Wiki og Tilbake samles på én rad, og skriften tilpasser seg –
   ingenting havner lenger utenfor bildet.
-- **Enhetlig utseende i spillet**: alle 49 spillene deler menyens temapalett og
+- **Enhetlig utseende i spillet**: alle 50 spillene deler menyens temapalett og
   skrift – HUD-er, oppsettskjermer og overlegg følger designet valgt i
   alternativene (v4.1 / v4 / Classic), mens hver spillflate beholder sine
   identitetsfarger. Hvert spill håndterer nå oppløsningsendringer midt i spillet
@@ -8644,15 +9387,15 @@ pakker) og stylet som en moderne spill-launcher:
   rullbare artikler og tastekapsler, på alle 14 språk. Nåbar via sidefelt-knappen
   **«Wiki / Hjelp»** og fra hvert spills forspillskjerm (åpner spillets side
   direkte).
-- **Prestasjoner, sjeldenhet og nivå**: **268 prestasjoner** i fem kategorier -
+- **Prestasjoner, sjeldenhet og nivå**: **274 prestasjoner** i fem kategorier -
   60 mål på tvers av samlingen (runder, spilletid, rekorder, seire, spilledager,
-  rekker, dueller …), 40 **poengmilepæler**, 33 **mesternivåer** (det andre,
-  mye høyere merket), en **Fast gjest**-prestasjon per spill (25 runder) og 86
-  **spesielle øyeblikk** (sjakkmatt, en Yatzy, 4096-brikken, hole-in-one,
-  hattrick i air hockey …). Hver prestasjon har en **sjeldenhet** (vanlig 10 opp
-  til mytisk 300 poeng); poengene gir **nivået** ditt med 14 **rang** fra
-  Lamaunge til Stjernelama. Opplåsning vises som varsel i sjeldenhetens farge,
-  nytt nivå med sitt eget og en fanfare.
+  rekker, dueller …), 41 **poengmilepæler**, 34 **mesternivåer** (det andre, mye
+  høyere merket), en **Fast gjest**-prestasjon for hvert av de 50 spillene (25
+  runder) og 89 **spesielle øyeblikk** (sjakkmatt, en Yatzy, 4096-brikken,
+  hole-in-one, hattrick i air hockey …). Hver prestasjon har en **sjeldenhet**
+  (vanlig 10 opp til mytisk 300 poeng); poengene gir **nivået** ditt med 14
+  **rang** fra Lamaunge til Stjernelama. Opplåsning vises som varsel i
+  sjeldenhetens farge, nytt nivå med sitt eget og en fanfare.
 - **Statistikk med diagrammer**: fem faner - Prestasjoner (filter, poeng,
   XP-linje), Statistikk (kort, topp 10 som søyler, seiersring, tabell),
   **Kalender** (kart over spilledager, rekker, ukedager, tid på dagen),
@@ -8680,7 +9423,9 @@ pakker) og stylet som en moderne spill-launcher:
 - Velg et spill via knappen i menyen til venstre. Deretter vises en
   **forspillskjerm**: velg **Énspiller** eller **Flerspiller**, gå til
   **alternativene** eller tilbake. Piler/mus for å velge, Enter for å starte.
-- **ESC** = pause / fortsett (i menyer: tilbake).
+- **ESC** = pause / fortsett (i menyer: tilbake). Spill som ellers ville
+  fortsatt uten deg, pauser av seg selv når vinduet mister fokus (motorkrok
+  `pause_on_blur` - foreløpig Lama Crash, mens en innsats flyr).
 - **F11** (eller knappen «Fullskjerm på/av») = veksle fullskjerm. Pygame-visningen
   forblir innebygd og skaleres opp med bevart sideforhold (svarte kanter når
   sideforholdet avviker). Vinduet kan endres fritt i størrelse.
@@ -8753,10 +9498,10 @@ filepick.py          Fildialoger ("Eksporter som ...", "Importer")
 prestige.py          Prestige-system for Snake
 competitive.py       Finjustering av Snakes Competitive-modus (nivåer, enarmet banditt, gambleepler)
 ngb.py               Visuell tilpasning («mods»): hodefarge + koordinatrutenett + meny (mem-ngb.json)
-lamabank.py          Lama-banken: felles sjetongkonto for Blackjack, Poker, Casino, Lama Crossing, Lama Mines og Lama Plinko (seksjonen casino i mem.json)
+lamabank.py          Lama-banken: felles sjetongkonto for Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko og Lama Crash (seksjonen casino i mem.json)
 seedrand.py          Tilfeldighetsgenerator med bit-identiske tall i Python og nettleseren (dagens moduser, nye oppgaver)
-fairness.py          Rettferdskontroll for Lama Mines og Lama Plinko: server-/klient-seed, rundenummer, SHA-256-kontrollkode, kontroll (motstykker: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
-chipstats.py         Statistikk for Lama Mines og Lama Plinko (runder, satset, utbetalt, tilbakebetaling, balansekurve) for vinduet S (i tillegg chipstats.js, chipstats.rs)
+fairness.py          Rettferdskontroll for Lama Mines, Lama Plinko og Lama Crash: server-/klient-seed, rundenummer, SHA-256-kontrollkode, kontroll (motstykker: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
+chipstats.py         Statistikk for Lama Mines, Lama Plinko og Lama Crash (runder, satset, utbetalt, tilbakebetaling, balansekurve) for vinduet S (i tillegg chipstats.js, chipstats.rs)
 i18n.py              Oversettelsesmotor (laster lang/*.json, t("nøkkel"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Språkstrenger (én plassholdernøkkel per tekst)
@@ -8799,12 +9544,13 @@ games/
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   lamamines.py  lamamines_logic.py  lamamines_draw.py
   lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
+  lamacrash.py  lamacrash_logic.py  lamacrash_draw.py  lamacrash_world.py  lamacrash_music.py
   levels/              Nivådata: snake-comp.json, chess-puzzles.json (+ kilde-README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Samlet revisjon (input, seedrand Python = JS, lagring, språkfiler, forspillskjermer) + alle audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless-revisjoner per spill
-  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko og den felles sjetonglogikken (rettferdighet, statistikk, Python = JS = Rust)
+  audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash og den felles sjetonglogikken (rettferdighet, statistikk, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                Rust-utgaven (frittstående .exe, se rust/README.md)
   ENGINE.md            Porteringskontrakt: hvordan et spill går fra Python til Rust
@@ -8813,7 +9559,7 @@ rust/                Rust-utgaven (frittstående .exe, se rust/README.md)
   crates/pgz-engine/   Vindu, tegning, inndata, lyd, Game-trait (ui.py + audio.py + game_base.py)
   crates/pgz-games/    De porterte spillene
   crates/pygamez/      Programmet: meny, sidefelt, skjermer
-  tools/export_defs.py Lager grunndata (49 spill, 268 prestasjoner, 10 temaer) fra Python-kildene
+  tools/export_defs.py Lager grunndata (50 spill, 274 prestasjoner, 10 temaer) fra Python-kildene
   tools/audit.py       Prøvebenk: oversettelser, spilliste, konvensjoner
 rust.output/         Byggeresultat av Rust-utgaven (rust.output/release/pygamez.exe)
 ```
@@ -8931,7 +9677,7 @@ kopieres fritt. Innstillinger og rekorder (`settings.json`, `mem.json`,
 ## 🇸🇪 Svenska
 
 En spelsamling för skrivbordet i Python: **Tkinter** står för fönstret och menyn,
-**Pygame** bäddas in som spelyta inuti Tkinter-fönstret. Fyrtionio spel med
+**Pygame** bäddas in som spelyta inuti Tkinter-fönstret. Femtio spel med
 gemensamma inställningar, fritt ombindbara kontroller, topplistor, procedurella
 ljudeffekter och, för vissa titlar, ett flerspelarläge. Gränssnittet är
 **flerspråkigt** – **14 språk** (tyska / engelska / franska / spanska /
@@ -9014,6 +9760,7 @@ under **[Installationsguide](#installationsguide)**.
 | **Lama Crossing** | 1 spelare     | Nervspel med lamamarker: fil för fil över väg, hängbro, flod eller isbelagd sjö, pricka luckorna i trafiken, ta ut efter varje fil eller fortsätt; 4 svårighetsgrader upp till ×31 784, ~97 % återbetalning |
 | **Lama Mines** | 1 spelare     | Ädelstensjakt med lamamarker: rutnät från 4×4 till 7×7 med 1 till 48 minor, vänd ruta för ruta och ta ut när du vill; upp till ×100 000, autoläge, rättvisekontroll och statistik, ~97 % återbetalning |
 | **Lama Plinko** | 1 spelare     | Plinko med lamamarker: upp till 50 garnnystan samtidigt genom 8 till 16 rader med piggar, 3 risknivåer upp till ×1000, autoläge, rättvisekontroll och statistik, ~97 % återbetalning |
+| **Lama Crash** | 1 spelare     | Crashspel med lamamarker: laman stiger i en ballong och multiplikatorn växer upp till ×100 000 - ta ut innan ballongen spricker; två insatser med automål och halvt uttag, 6 höjdvärldar ända till månen, spänningsmusik, autoläge, rättvisekontroll och statistik, ~97 % återbetalning |
 
 **Flerspelarläge (2 spelare lokalt)** finns för **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (co-op-duell)**,
@@ -9652,9 +10399,10 @@ explosionseffekter, topplista.
 - **Lamaautomat**: 5 hjul x 3 rader, **10 vinstlinjer**, **lama = wild**, **guldmynt = scatter** med
   10 gratissnurr och dubbla vinster, insats per linje 1/2/5/10, **autosnurr** (10/25), **turbo** och
   vinsttabell. **Återbetalningsgraden är 96,1 %** - exakt beräknad från hjulremsorna.
-- **Lamabanken**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines och Lama Plinko delar ett
-  konto med **lamamarker** (start 1000, sektionen `casino` i `mem.json`); gamla marksaldon förs
-  över automatiskt. Insatser dras direkt, varje spel för sin egen balans till rekordet, och går du
+- **Lamabanken**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama
+  Plinko och Lama Crash delar ett konto med **lamamarker** (start 1000,
+  sektionen `casino` i `mem.json`); gamla marksaldon förs över automatiskt.
+  Insatser dras direkt, varje spel för sin egen balans till rekordet, och går du
   pank får du ett **banklån** upp till 1000.
 - Konfetti, myntregn, big/mega/jackpot-banderoller och vinstlinjeanimationer; prestationerna
   **Fullträff** (vunnen plein i roulette) och **Lamajackpot** (5 lamor på en linje).
@@ -9832,6 +10580,104 @@ explosionseffekter, topplista.
   brädet) och **Plinkolegend** (yttersta facket med 16 rader och risk Hög) samt
   en milstolpe på 3000 och en mästarnivå på 10000.
 
+**Lama Crash**
+- **Crashspel med lamamarker**: välj insats (10 till 10000) och tryck
+  **SPELA** - efter en kort 3-2-1 stiger laman i **ballongen**, och
+  **multiplikatorn** växer med tiden: ×2 efter 11,6 s, ×10 efter 38,4 s, ×100
+  efter 76,8 s och ×100 000 efter 192 s (3,2 minuter). Från ×1,01 kan du när som
+  helst trycka **TA UT** - laman hoppar ut med fallskärm och vinsten (insats ×
+  multiplikator) krediteras direkt; spricker ballongen innan, är insatsen
+  förlorad. Efter uttaget stiger den tomma ballongen vidare tills den spricker
+  (”Alla är ute – ballongen stiger vidare”), så ser du hur långt det hade gått;
+  **spola fram** (blanksteg) går 16 gånger så snabbt.
+- **Två insatser** i samma runda (en lama till i korgen, via reglaget på kort 2
+  eller **Z**), var och en med eget belopp och eget **automål** (×1,01 till
+  ×100 000, **←**/**→**, **X** = på/av): när ballongen når målet betalas exakt
+  målet ut - även om den spricker i samma ögonblick. Varje insats kan
+  **halveras** en gång (**H** eller HÄLFTEN för alla, **Q**/**W** eller knappen
+  på kortet för en): den hälften svävar iväg som pengasäck i en minifallskärm,
+  resten stiger vidare.
+- **Bristningspunkt** ur rättviseslumpen: slumptal r (32 bitar), sedan
+  `⌊97 · 2³² / (2³² − r)⌋` i hundradelar, minst ×1,00 och högst ×100 000 - i
+  heltal och bitidentiskt i Python, JavaScript och Rust (`lamacrash_logic.py`).
+  Chansen att nå ×x är därmed 97 % / x (avrundat nedåt till hela 2⁻³²): **varje
+  uttagsmål ger tillbaka 96,997-97,000 %**, oavsett om det är ×1,01 eller
+  ×100 000; omkring 3,96 % av rundorna spricker redan vid ×1,00, innan någon
+  hinner ta ut. Stigkurvan räknas också i heltal (`mu += mu // 1000` per takt på
+  1/60 s), och ballongen spricker först när multiplikatorn **överstiger**
+  bristningspunkten - den som tar ut manuellt vid ×m vinner alltså under exakt
+  samma villkor som ett automål ×m. Den som når ×100 000 landar på **månen**:
+  maxvinst för alla insatser som fortfarande flyger.
+- **Höjdvärldar**: Lamaängen (bete, staket, lamastall) → Molnhav (från ×1,5,
+  fågelflockar) → Åskfront (från ×3, regn, blixtar, flygplan) → Norrsken (från
+  ×10, dansande norrsken) → Rymden (från ×100, jordens krökning, satelliter,
+  stjärnfall, avlägsna planeter - och månen blir allt större) → **månlandning**
+  med flagga, konfetti och myntregn. Varje ny värld annonseras med sitt namn när
+  ballongen når den, och världarna glider mjukt över i varandra. Ovanför löper
+  multiplikatorkurvan med axlar som växer med, och ballongen blåses upp mer och
+  mer med höjden.
+- **Spänningsmusik** i sex steg, ett per höjdvärld (`lamacrash_music.py`): från
+  ängen upp till rymden blir stycket en helton högre och snabbare för varje
+  värld (96 till 150 bpm), och på månen ljuder en fanfar; **M** slår på eller av
+  musiken. Från ×2 knarrar den uttänjda ballongen. Inget av detta beror på
+  bristningspunkten - varken bild eller ljud avslöjar något (ett tvillingtest i
+  granskningen jämför två rundor som spricker vid ×5 och ×50, upp till ×4,99,
+  bild för bild och ton för ton).
+- **När ballongen spricker**: smäll, gummitrasor och skakande kamera; lamor som
+  fortfarande sitter i korgen tumlar ut ur bilden tillsammans med den. Uttag
+  firas: myntregn från ×3, konfetti från ×10 och en vinstbanderoll från ×100.
+  Uppe till höger syns bristningspunkterna för de senaste 12 rundorna som
+  färgade piller (rött under ×2, grönt från ×2, guld från ×10, lila från ×100).
+- **Autoläge** (**A**, bara mellan rundorna): 5/10/25/50/100/250 rundor, vid
+  behov med **stoppa vid vinst på** eller **vid förlust på**
+  (av/100/500/1000/5000/10000/50000) och turbo. Varje aktiv insats får ett
+  automål, den tomma flygningen spolas fram automatiskt och manuellt uttag
+  fungerar fortfarande. Auto kör tills antalet rundor är nått, en gräns slår
+  till, markerna inte räcker eller **STOPP**/**Esc**/**A** trycks - en runda i
+  luften flyger då färdigt som vanligt. I fönstret: **↑**/**↓** = rad,
+  **←**/**→** = värde, **Enter**/**Blanksteg** = STARTA AUTO eller STOPP.
+  **Turbo** (**T**) får ballongen att stiga tre gånger så snabbt och förkortar
+  nedräkning och pauser.
+- **Rättvisekontroll** (**F**) som i Lama Mines: före varje runda står
+  **kontrollkoden** fast (SHA-256 av den hemliga server-seeden),
+  bristningspunkten kommer från server-seed, din egen **klient-seed** och
+  rundnumret (`fairness.round_rand`, mulberry32), och efter rundan visas seeden.
+  Fönstret visar de senaste 12 rundorna (**↑**/**↓** väljer, **C** = ny
+  klient-seed så länge ingen runda pågår); **”Kontrollera”** (**Enter**)
+  kontrollerar koden, räknar om bristningspunkten och prövar uttagen - ✓ eller ✗
+  med en miniatyrkurva.
+- **Statistik** (**S**): kort för Rundor, Vunna, Förlorade, Din avkastning,
+  Satsat, Utbetalt, Balans, Största vinst, Bästa faktor, **Bristningsrekord**,
+  Halveringar och Nära ögat, plus **saldokurvan** för de senaste 100 rundorna
+  och **fördelningen av bristningspunkterna** i sju intervall (×1 till ×1000+)
+  som staplar mot den förväntade fördelningen (gyllene punkter).
+- **Lamabanken**: samma konto som Blackjack, Poker, Casino, Lama Crossing, Lama
+  Mines och Lama Plinko. SPELA drar den totala insatsen och sparar den nya
+  rundan i ett svep (`lamabank.bet_and_pay`), och varje uttag krediterar vinsten
+  direkt; en **restöverföring** av hundradelarna gör att även små insatser inte
+  förlorar något. **Återuppta**: lämnar du mitt i flygningen fortsätter du vid
+  nästa start efter en nedräkning vid samma takt - bristningspunkten står ju
+  fast; lämnar du under den tomma flygningen avslutas rundan direkt. Tappar
+  fönstret fokus medan pengar är i luften **pausas** spelet av sig självt (ny
+  motorkrok `pause_on_blur` i `game_base.py`, hanterad av `main.py`). Rekordet
+  är toppen av 1000 + Lama Crash-balansen; under 10 marker får du ett
+  **banklån** upp till 1000.
+- Kontroller (fasta tangenter, oberoende av tangentbindningarna): före rundan
+  **Blanksteg**/**Enter** = SPELA, **1**/**2**/**Tab** = välj kort,
+  **↑**/**↓**/**+**/**-**/mushjul = insats, **←**/**→** eller mushjulet över
+  målet = automål, **X** = mål på/av, **Z** = andra insatsen; i luften
+  **Blanksteg**/**Enter**/**C** = ta ut alla, **1**/**2** = enskilt, **H** =
+  hälften, **Q**/**W** = hälften enskilt; efteråt **Blanksteg** = spola fram.
+  **A** = auto, **S** = statistik, **F** = rättvisa, **T** = turbo, **M** =
+  musik, **Esc** stänger ett fönster eller stoppar auto (annars paus). Fönstren
+  kan bara öppnas så länge ingen insats flyger. Pågående runda, historik,
+  rättviselogg, statistik och restöverföring sparas per profil i sektionen
+  `casino` i `mem.json`; insatser, mål, andra insatsen, turbo, musik och
+  autoinställningarna i sektionen `lamacrash` i `settings.json`. Prestationerna
+  **Nära ögat** (manuellt uttag från ×2, högst 5 % innan ballongen spricker),
+  **Norrskenspilot** (ta ut vid ×10 eller mer) och **Rymdlama** (ta ut vid ×1000
+  eller mer) samt en milstolpe på 3000 och en mästarnivå på 10000.
+
 Topplistorna sparas i avsnittet `highscores` i `mem.json` (bredvid koden) – tillsammans med
 språket (avsnittet `mem`).
 
@@ -9853,7 +10699,7 @@ modern spel-launcher:
 - Varje spels **förspelsskärm** visas i det spelets accentfärg och visar det tidigare rekordet som ett
   chip. Med många lägen och låg upplösning blir den **kompakt**: Inställningar, Wiki och Tillbaka hamnar
   på en rad och typsnittet anpassas - inget hamnar längre utanför bilden.
-- **Enhetlig look i spelet**: alla 49 spel delar menyns temapalett och typsnitt - HUD:ar, setup-skärmar
+- **Enhetlig look i spelet**: alla 50 spel delar menyns temapalett och typsnitt - HUD:ar, setup-skärmar
   och överlägg följer den design som valts i alternativen (v4.1 / v4 / Classic), medan varje spelplan
   behåller sina identitetsfärger. Varje spel hanterar nu upplösningsbyten mitt i spelet snyggt, och
   menynamnen är språkanpassade (t.ex. ”Schach” → ”Schack”).
@@ -9861,15 +10707,15 @@ modern spel-launcher:
   allmänna sidor - med en **sökruta**, kategorier, scrollbara artiklar och tangentchips, på alla 14
   språk. Nås via sidofältsknappen **”Wiki / Hjälp”** och från varje spels förspelsskärm (öppnar det
   spelets sida direkt).
-- **Prestationer, sällsynthet och nivå**: **268 prestationer** i fem kategorier
+- **Prestationer, sällsynthet och nivå**: **274 prestationer** i fem kategorier
   – 60 mål för hela samlingen (omgångar, speltid, rekord, segrar, speldagar,
-  sviter, dueller …), 40 **poängmilstolpar**, 33 **mästarnivåer** (den andra,
-  mycket högre gränsen), en **Stammis**-prestation per spel (25 omgångar) och 86
-  **särskilda ögonblick** (schackmatt, en Yatzy, 4096-brickan, hole-in-one,
-  hattrick i air hockey …). Varje prestation har en **sällsynthet** (vanlig 10
-  upp till mytisk 300 poäng); poängen ger din **nivå** med 14 **rang** från
-  Lamaunge till Stjärnlama. Upplåsning visar en notis i sällsynthetens färg, en
-  ny nivå en egen med fanfar.
+  sviter, dueller …), 41 **poängmilstolpar**, 34 **mästarnivåer** (den andra,
+  mycket högre gränsen), en **Stammis**-prestation för vart och ett av de 50
+  spelen (25 omgångar) och 89 **särskilda ögonblick** (schackmatt, en Yatzy,
+  4096-brickan, hole-in-one, hattrick i air hockey …). Varje prestation har en
+  **sällsynthet** (vanlig 10 upp till mytisk 300 poäng); poängen ger din
+  **nivå** med 14 **rang** från Lamaunge till Stjärnlama. Upplåsning visar en
+  notis i sällsynthetens färg, en ny nivå en egen med fanfar.
 - **Statistik med diagram**: fem flikar - Prestationer (filter, poäng,
   XP-mätare), Statistik (kort, topp 10 som staplar, segerring, tabell),
   **Kalender** (karta över speldagar, sviter, veckodagar, tid på dygnet),
@@ -9896,7 +10742,9 @@ modern spel-launcher:
 - Välj ett spel via knappen i menyn till vänster. Sedan visas en **förspelsskärm**: välj
   **Enspelarläge** eller **Flerspelarläge**, gå till **alternativen** eller tillbaka. Pilar/mus för
   att välja, Enter startar.
-- **ESC** = paus / återuppta (i menyer: tillbaka).
+- **ESC** = paus / återuppta (i menyer: tillbaka). Spel som annars skulle
+  fortsätta utan dig pausas av sig självt när fönstret tappar fokus (motorkrok
+  `pause_on_blur` - hittills Lama Crash, medan en insats flyger).
 - **F11** (eller knappen ”Helskärm på/av”) = växla helskärm. Pygame-displayen förblir inbäddad och
   skalas upp med bibehållet bildförhållande (svarta kanter när bildförhållandet skiljer sig). Fönstret
   kan storleksändras fritt.
@@ -9963,10 +10811,10 @@ filepick.py          Fildialoger ("Exportera som ...", "Importera")
 prestige.py          Prestige-system för Snake
 competitive.py       Finjustering av Snakes Competitive-läge (nivåer, enarmad bandit, speläpplen)
 ngb.py               Visuell personalisering ("mods"): huvudfärg + koordinatrutnät + meny (mem-ngb.json)
-lamabank.py          Lamabanken: gemensamt markkonto för Blackjack, Poker, Casino, Lama Crossing, Lama Mines och Lama Plinko (sektionen casino i mem.json)
+lamabank.py          Lamabanken: gemensamt markkonto för Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko och Lama Crash (sektionen casino i mem.json)
 seedrand.py          Slumpgenerator med bitidentiska tal i Python och webbläsaren (dagens lägen, nya pussel)
-fairness.py          Rättvisekontroll för Lama Mines och Lama Plinko: server-/klient-seed, rundnummer, SHA-256-kontrollkod, kontroll (motsvarigheter: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
-chipstats.py         Statistik för Lama Mines och Lama Plinko (rundor, satsat, utbetalt, återbetalning, saldokurva) för fönstret S (plus chipstats.js, chipstats.rs)
+fairness.py          Rättvisekontroll för Lama Mines, Lama Plinko och Lama Crash: server-/klient-seed, rundnummer, SHA-256-kontrollkod, kontroll (motsvarigheter: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
+chipstats.py         Statistik för Lama Mines, Lama Plinko och Lama Crash (rundor, satsat, utbetalt, återbetalning, saldokurva) för fönstret S (plus chipstats.js, chipstats.rs)
 i18n.py              Översättningsmotor (laddar lang/*.json, t("nyckel"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Språksträngar (en platshållarnyckel per text)
@@ -10009,12 +10857,13 @@ games/
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   lamamines.py  lamamines_logic.py  lamamines_draw.py
   lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
+  lamacrash.py  lamacrash_logic.py  lamacrash_draw.py  lamacrash_world.py  lamacrash_music.py
   levels/              Nivådata: snake-comp.json, chess-puzzles.json (+ käll-README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Övergripande granskning (inmatning, seedrand Python = JS, sparande, språkfiler, förspelsskärmar) + alla audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless-granskningar per spel
-  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko och den gemensamma marklogiken (rättvisa, statistik, Python = JS = Rust)
+  audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash och den gemensamma marklogiken (rättvisa, statistik, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                Rust-versionen (fristående .exe, se rust/README.md)
   ENGINE.md            Porteringskontrakt: hur ett spel går från Python till Rust
@@ -10023,7 +10872,7 @@ rust/                Rust-versionen (fristående .exe, se rust/README.md)
   crates/pgz-engine/   Fönster, ritning, inmatning, ljud, Game-trait (ui.py + audio.py + game_base.py)
   crates/pgz-games/    De porterade spelen
   crates/pygamez/      Programmet: meny, sidopanel, skärmar
-  tools/export_defs.py Skapar stamdata (49 spel, 268 utmärkelser, 10 teman) från Python-källorna
+  tools/export_defs.py Skapar stamdata (50 spel, 274 utmärkelser, 10 teman) från Python-källorna
   tools/audit.py       Provbänk: översättningar, spellista, konventioner
 rust.output/         Byggresultat av Rust-versionen (rust.output/release/pygamez.exe)
 ```
@@ -10137,7 +10986,7 @@ medan du spelar.
 ## 🇫🇮 Suomi
 
 Työpöytäpelikokoelma Pythonilla: **Tkinter** tarjoaa ikkunan ja valikon,
-**Pygame** upotetaan pelinäytöksi Tkinter-ikkunan sisään. Neljäkymmentäyhdeksän
+**Pygame** upotetaan pelinäytöksi Tkinter-ikkunan sisään. Viisikymmentä
 peliä, joilla on yhteiset asetukset, vapaasti uudelleenmääriteltävät ohjaimet,
 ennätykset, proseduraaliset äänitehosteet ja osassa peleistä moninpeli.
 Käyttöliittymä on **monikielinen** – **14 kieltä** (saksa / englanti / ranska /
@@ -10220,6 +11069,7 @@ ohje löytyy aivan alhaalta kohdasta **[Asennusopas](#asennusopas)**.
 | **Lama Crossing** | 1 pelaaja     | Hermopeli laamamerkeillä: kaista kerrallaan tien, riippusillan, joen tai jäisen järven yli, ajoita raot liikenteessä, kotiuta jokaisen kaistan jälkeen tai jatka; 4 vaikeustasoa jopa ×31 784, palautus ~97 % |
 | **Lama Mines** | 1 pelaaja     | Jalokivijahti laamamerkeillä: ruudukko 4×4:stä 7×7:ään ja 1–48 miinaa, avaa ruutu kerrallaan ja kotiuta milloin haluat; jopa ×100 000, autotila, reiluustarkistus ja tilastot, palautus ~97 % |
 | **Lama Plinko** | 1 pelaaja     | Plinko laamamerkeillä: jopa 50 lankakerää yhtä aikaa 8–16 nastarivin läpi, 3 riskitasoa jopa ×1000, autotila, reiluustarkistus ja tilastot, palautus ~97 % |
+| **Lama Crash** | 1 pelaaja     | Crash-peli laamamerkeillä: laama nousee kuumailmapallolla ja kerroin kasvaa jopa ×100 000:een - kotiuta ennen kuin pallo puhkeaa; kaksi panosta autotavoitteineen ja puolituksineen, 6 korkeusmaailmaa Kuuhun asti, jännitysmusiikki, autotila, reiluustarkistus ja tilastot, palautus ~97 % |
 
 **Moninpeli (2 pelaajaa paikallisesti)** on saatavilla peleihin **Snake**,
 **Pong**, **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids
@@ -10941,9 +11791,9 @@ räjähdystehosteet, ennätys.
   **kultakolikot = scatter**, joista 10 ilmaiskierrosta tuplavoitoin, panos per
   linja 1/2/5/10, **automaattipyöritys** (10/25), **turbo** ja voittotaulukko.
   **Palautusprosentti on 96,1 %** – laskettu tarkasti rullanauhoista.
-- **Laamapankki**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines ja Lama
-  Plinko jakavat yhden **laamamerkkitilin** (alku 1000, `mem.json`-tiedoston
-  osio `casino`); vanhat merkkisaldot siirtyvät
+- **Laamapankki**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama
+  Plinko ja Lama Crash jakavat yhden **laamamerkkitilin** (alku 1000,
+  `mem.json`-tiedoston osio `casino`); vanhat merkkisaldot siirtyvät
   automaattisesti. Panokset veloitetaan heti, jokainen peli pitää ennätystään
   varten omaa saldoaan, ja rahojen loppuessa saat **pankkilainan** 1000:een.
 - Konfetti, kolikkosade, big/mega/jackpot-bannerit ja voittolinja-animaatiot;
@@ -11135,6 +11985,112 @@ räjähdystehosteet, ennätys.
   lokero 16 rivillä ja riskillä Korkea) sekä virstanpylväs 3000 ja mestaritaso
   10000.
 
+**Lama Crash**
+- **Crash-peli laamamerkeillä**: valitse panos (10–10000) ja paina **PELAA** -
+  lyhyen 3-2-1-laskennan jälkeen laama nousee **kuumailmapallolla**, ja
+  **kerroin** kasvaa ajan myötä: 11,6 sekunnissa ×2, 38,4 sekunnissa ×10, 76,8
+  sekunnissa ×100 ja 192 sekunnissa (3,2 minuutissa) ×100 000. Kertoimesta ×1,01
+  alkaen voit milloin tahansa painaa **KOTIUTA** - laama hyppää laskuvarjolla ja
+  voitto (panos × kerroin) hyvitetään heti; jos pallo puhkeaa sitä ennen, panos
+  menetetään. Kotiutuksen jälkeen tyhjä pallo nousee edelleen, kunnes se puhkeaa
+  (”Kaikki ulkona – pallo nousee yhä”), joten näet, kuinka pitkälle se olisi
+  päässyt; **kelaus eteen** (välilyönti) on 16 kertaa nopeampi.
+- **Kaksi panosta** samalla kierroksella (toinen laama koriin kortin 2
+  kytkimellä tai **Z**), kummallakin oma summa ja oma **autotavoite**
+  (×1,01–×100 000, **←**/**→**, **X** = päälle/pois): kun pallo saavuttaa
+  tavoitteen, maksetaan täsmälleen tavoitteen mukaan - vaikka pallo puhkeaisi
+  samalla hetkellä. Jokaisen panoksen voi **puolittaa** kerran (**H** tai PUOLET
+  kaikille, **Q**/**W** tai kortin painike yhdelle): tämä puolikas lentää pois
+  rahasäkkinä minilaskuvarjon varassa, loput jatkavat nousuaan.
+- **Puhkeamispiste** reiluussatunnaisuudesta: satunnaisluku r (32 bittiä),
+  sitten `⌊97 · 2³² / (2³² − r)⌋` sadasosina, vähintään ×1,00 ja enintään
+  ×100 000 - kokonaisluvuilla ja bitilleen sama Pythonissa, JavaScriptissä ja
+  Rustissa (`lamacrash_logic.py`). Todennäköisyys saavuttaa ×x on siis 97 % / x
+  (alaspäin 2⁻³²:n monikertaan pyöristettynä): **jokainen kotiutustavoite
+  palauttaa 96,997–97,000 %**, oli se ×1,01 tai ×100 000; noin 3,96 %
+  kierroksista puhkeaa jo kertoimella ×1,00, ennen kuin kukaan ehtii kotiuttaa.
+  Nousukäyräkin lasketaan kokonaisluvuilla (`mu += mu // 1000` jokaisella 1/60
+  sekunnin askeleella), ja pallo puhkeaa vasta, kun kerroin **ylittää**
+  puhkeamispisteen - käsin kertoimella ×m kotiuttava voittaa siis täsmälleen
+  samalla ehdolla kuin autotavoite ×m. Joka saavuttaa kertoimen ×100 000,
+  laskeutuu **Kuuhun**: maksimivoitto kaikille vielä lentäville panoksille.
+- **Korkeusmaailmat**: Laamaniitty (laidun, aita, laamatalli) → Pilvimeri
+  (alkaen ×1,5, lintuparvia) → Ukkosrintama (alkaen ×3, sadetta, salamoita,
+  lentokoneita) → Revontulet (alkaen ×10, tanssivia revontulia) → Avaruus
+  (alkaen ×100, Maan kaarevuus, satelliitteja, tähdenlentoja, kaukaisia
+  planeettoja - ja Kuu kasvaa kasvamistaan) → **kuulaskeutuminen** lipun,
+  konfettien ja kolikkosateen kera. Jokainen uusi maailma kuulutetaan nimeltä,
+  kun pallo saavuttaa sen, ja maailmat liukuvat pehmeästi toisiinsa. Yläpuolella
+  kulkee kerroinkäyrä, jonka akselit kasvavat mukana, ja pallo paisuu korkeuden
+  myötä yhä enemmän.
+- **Jännitysmusiikki** kuudessa vaiheessa, yksi kutakin korkeusmaailmaa kohden
+  (`lamacrash_music.py`): niityltä avaruuteen kappale nousee jokaisessa
+  maailmassa kokosävelaskeleen korkeammalle ja nopeutuu (96–150 bpm), ja Kuussa
+  soi fanfaari; **M** kytkee musiikin päälle tai pois. Kertoimesta ×2 alkaen
+  venynyt pallo narisee. Mikään tästä ei riipu puhkeamispisteestä - kuva tai
+  ääni eivät paljasta mitään (tarkastuksen kaksoskierrostesti vertaa kahta
+  kertoimilla ×5 ja ×50 puhkeavaa kierrosta ×4,99:ään asti kuva kuvalta ja ääni
+  ääneltä).
+- **Puhkeaminen**: pamaus, kumisuikaleita ja kameran tärinää; vielä korissa
+  istuvat laamat putoavat kuperkeikkoja heittäen kuvasta korin mukana.
+  Kotiutuksia juhlitaan: kolikkosade kertoimesta ×3, konfetit kertoimesta ×10 ja
+  voittobanneri kertoimesta ×100. Oikeassa yläkulmassa näkyvät 12 viimeisen
+  kierroksen puhkeamispisteet värillisinä pillereinä (punainen alle ×2, vihreä
+  ×2:sta, kulta ×10:stä, violetti ×100:sta).
+- **Autotila** (**A**, vain kierrosten välissä): 5/10/25/50/100/250 kierrosta,
+  halutessa rajoilla **Lopeta, kun voitto on** tai **Lopeta, kun tappio on**
+  (pois/100/500/1000/5000/10000/50000) sekä turbolla. Jokainen aktiivinen panos
+  saa autotavoitteen, tyhjä lento kelataan automaattisesti eteenpäin, ja käsin
+  kotiuttaminen toimii edelleen. Autotila jatkuu, kunnes kierrosmäärä täyttyy,
+  jokin raja laukeaa, merkit eivät riitä tai painetaan **SEIS**/**Esc**/**A** -
+  lennossa oleva kierros lentää silloin normaalisti loppuun. Ikkunassa:
+  **↑**/**↓** = rivi, **←**/**→** = arvo, **Enter**/**Välilyönti** = KÄYNNISTÄ
+  AUTO tai SEIS. **Turbo** (**T**) saa pallon nousemaan kolme kertaa nopeammin
+  ja lyhentää lähtölaskentaa ja taukoja.
+- **Reiluustarkistus** (**F**) kuten Lama Minesissa: ennen jokaista kierrosta
+  **tarkistuskoodi** on lukittu (salaisen palvelimen siemenen SHA-256),
+  puhkeamispiste syntyy palvelimen siemenestä, omasta **asiakkaan siemenestäsi**
+  ja kierroksen numerosta (`fairness.round_rand`, mulberry32), ja siemen
+  näytetään kierroksen jälkeen. Ikkuna listaa 12 viimeistä kierrosta
+  (**↑**/**↓** valitsee, **C** = uusi asiakkaan siemen, kun mikään kierros ei
+  ole käynnissä); **”Tarkista”** (**Enter**) tarkistaa koodin, laskee
+  puhkeamispisteen uudelleen ja tarkistaa kotiutukset - ✓ tai ✗ minikäyrän kera.
+- **Tilastot** (**S**): kortit Kierrokset, Voitetut, Hävityt, Palautuksesi,
+  Panostettu, Maksettu, Saldo, Suurin voitto, Paras kerroin,
+  **Puhkeamisennätys**, Puolitukset ja Täpärät, lisäksi 100 viimeisen kierroksen
+  **saldokäyrä** ja **puhkeamispisteiden jakauma** seitsemässä luokassa
+  (×1–×1000+) pylväinä odotettua jakaumaa vasten (kultaiset pisteet).
+- **Laamapankki**: sama tili kuin Blackjackilla, Pokerilla, Casinolla, Lama
+  Crossingilla, Lama Minesilla ja Lama Plinkolla. PELAA veloittaa
+  kokonaispanoksen ja tallentaa uuden kierroksen yhdellä kertaa
+  (`lamabank.bet_and_pay`), ja jokainen kotiutus hyvittää voiton heti;
+  sadasosien **jäännöksen siirto** varmistaa, etteivät pienetkään panokset
+  menetä mitään. **Jatkaminen**: jos poistut kesken lennon, seuraavalla
+  käynnistyskerralla peli jatkuu lähtölaskennan jälkeen samalta askeleelta -
+  puhkeamispistehän on jo lukittu; jos poistut vasta tyhjän lennon aikana,
+  kierros päätetään heti. Jos ikkuna menettää kohdistuksen rahojen ollessa
+  ilmassa, peli siirtyy itsestään **tauolle** (uusi moottorin koukku
+  `pause_on_blur` tiedostossa `game_base.py`, jota `main.py` käsittelee). Paras
+  tulos on 1000 + Lama Crash -saldon korkein arvo; alle 10 merkillä saat
+  **pankkilainan** 1000:een.
+- Ohjaus (kiinteät näppäimet, näppäinasetuksista riippumatta): ennen kierrosta
+  **Välilyönti**/**Enter** = PELAA, **1**/**2**/**Tab** = valitse kortti,
+  **↑**/**↓**/**+**/**-**/hiiren rulla = panos, **←**/**→** tai rulla tavoitteen
+  päällä = autotavoite, **X** = tavoite päälle/pois, **Z** = toinen panos;
+  lennossa **Välilyönti**/**Enter**/**C** = kotiuta kaikki, **1**/**2** =
+  yksittäin, **H** = puolet, **Q**/**W** = puolet yksittäin; sen jälkeen
+  **Välilyönti** = kelaa eteen. **A** = autotila, **S** = tilastot, **F** =
+  reiluus, **T** = turbo, **M** = musiikki, **Esc** sulkee ikkunan tai pysäyttää
+  autotilan (muuten tauko). Ikkunat voi avata vain, kun yksikään panos ei lennä.
+  Kesken oleva kierros, historia, reiluusloki, tilastot ja jäännöksen siirto
+  tallennetaan profiilikohtaisesti tiedoston `mem.json` osioon `casino`,
+  panokset, tavoitteet, toinen panos, turbo, musiikki ja automaattiasetukset
+  tiedoston `settings.json` osioon `lamacrash`. Saavutukset **Hiuskarvan
+  varassa** (käsin kotiutus kertoimesta ×2 alkaen, enintään 5 % ennen
+  puhkeamista), **Revontulilentäjä** (kotiutus kertoimella ×10 tai enemmän) ja
+  **Avaruuslaama** (kotiutus kertoimella ×1000 tai enemmän) sekä virstanpylväs
+  3000 ja mestaritaso 10000.
+
 Ennätykset tallennetaan tiedoston `mem.json` osioon `highscores` (koodin vieressä)
 – yhdessä kielen kanssa (osio `mem`).
 
@@ -11159,7 +12115,7 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
   edellisen ennätyksen chippinä. Kun tiloja on paljon ja resoluutio pieni, se
   muuttuu **tiiviiksi**: Asetukset, Wiki ja Takaisin siirtyvät samalle riville ja
   fontti mukautuu – mikään ei enää valu kuvan ulkopuolelle.
-- **Yhtenäinen pelin ilme**: kaikki 49 peliä jakavat valikon teemapaletin ja fontin –
+- **Yhtenäinen pelin ilme**: kaikki 50 peliä jakavat valikon teemapaletin ja fontin –
   HUDit, asetusnäytöt ja peittokerrokset noudattavat asetuksissa valittua ulkoasua
   (v4.1 / v4 / Klassinen), kun taas jokainen pelikenttä säilyttää identiteettivärinsä.
   Jokainen peli käsittelee nyt siististi resoluution vaihdon kesken pelin, ja valikon
@@ -11169,11 +12125,11 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
   kategorioilla, vieritettävillä artikkeleilla ja näppäinsiruilla, kaikilla 14
   kielellä. Saavutettavissa sivupalkin **"Wiki / Ohje"** -painikkeella ja jokaisen
   pelin esinäytöstä (avaa suoraan kyseisen pelin sivun).
-- **Saavutukset, harvinaisuus ja taso**: **268 saavutusta** viidessä luokassa -
+- **Saavutukset, harvinaisuus ja taso**: **274 saavutusta** viidessä luokassa -
   60 koko kokoelman tavoitetta (kierrokset, peliaika, ennätykset, voitot,
-  pelipäivät, putket, kaksintaistelut …), 40 **pistevirstanpylvästä**, 33
+  pelipäivät, putket, kaksintaistelut …), 41 **pistevirstanpylvästä**, 34
   **mestaritasoa** (toinen, selvästi korkeampi raja), **Vakiokävijä**-saavutus
-  jokaiselle pelille (25 kierrosta) ja 86 **erityistä hetkeä** (šakkimatti,
+  jokaiselle 50 pelille (25 kierrosta) ja 89 **erityistä hetkeä** (šakkimatti,
   Yatzy, 4096-laatta, hole-in-one, hattutemppu ilmakiekossa …). Jokaisella
   saavutuksella on **harvinaisuus** (tavallinen 10 aina myyttiseen 300
   pisteeseen); pisteet muodostavat **tasosi** ja 14 **arvoa** Laamanpoikasesta
@@ -11208,7 +12164,10 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
 - Valitse peli vasemmalla olevan valikon painikkeella. Sen jälkeen ilmestyy
   **esinäyttö**: valitse **Yksinpeli** tai **Moninpeli**, siirry **asetuksiin** tai
   takaisin. Nuolet/hiiri valitsemiseen, Enter aloittaa.
-- **ESC** = tauko / jatka (valikoissa: takaisin).
+- **ESC** = tauko / jatka (valikoissa: takaisin). Pelit, jotka muuten
+  jatkuisivat ilman sinua, siirtyvät itsestään tauolle, kun ikkuna menettää
+  kohdistuksen (moottorin koukku `pause_on_blur` - toistaiseksi Lama Crash, kun
+  jokin panos on ilmassa).
 - **F11** (tai painike "Koko näyttö päälle/pois") = koko näyttö päälle/pois.
   Pygame-näyttö pysyy upotettuna ja skaalataan kuvasuhde säilyttäen (mustat palkit,
   jos kuvasuhde poikkeaa). Ikkunan kokoa voi muuttaa vapaasti.
@@ -11282,10 +12241,10 @@ filepick.py          Tiedostoikkunat ("Vie nimellä ...", "Tuo")
 prestige.py          Snaken prestige-järjestelmä
 competitive.py       Snaken Competitive-tilan hienosäätö (tasot, kolikkopeli, veto-omenat)
 ngb.py               Visuaalinen mukauttaminen ("modit"): pään väri + koordinaattiruudukko + valikko (mem-ngb.json)
-lamabank.py          Laamapankki: Blackjackin, Pokerin, Casinon, Lama Crossingin, Lama Minesin ja Lama Plinkon yhteinen merkkitili (osio casino mem.json-tiedostossa)
+lamabank.py          Laamapankki: Blackjackin, Pokerin, Casinon, Lama Crossingin, Lama Minesin, Lama Plinkon ja Lama Crashin yhteinen merkkitili (osio casino mem.json-tiedostossa)
 seedrand.py          Satunnaislukugeneraattori, joka tuottaa bitilleen samat luvut Pythonissa ja selaimessa (päivän tilat, uudet pulmat)
-fairness.py          Lama Minesin ja Lama Plinkon reiluustarkistus: palvelimen ja asiakkaan siemen, kierrosnumero, SHA-256-tarkistuskoodi, tarkistus (vastineet: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
-chipstats.py         Lama Minesin ja Lama Plinkon tilastot (kierrokset, panostettu, maksettu, palautus, saldokäyrä) S-ikkunaa varten (lisäksi chipstats.js, chipstats.rs)
+fairness.py          Lama Minesin, Lama Plinkon ja Lama Crashin reiluustarkistus: palvelimen ja asiakkaan siemen, kierrosnumero, SHA-256-tarkistuskoodi, tarkistus (vastineet: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
+chipstats.py         Lama Minesin, Lama Plinkon ja Lama Crashin tilastot (kierrokset, panostettu, maksettu, palautus, saldokäyrä) S-ikkunaa varten (lisäksi chipstats.js, chipstats.rs)
 i18n.py              Käännösmoottori (lataa lang/*.json, t("avain"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Kielitekstit (yksi paikkamerkkiavain per teksti)
@@ -11328,12 +12287,13 @@ games/
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   lamamines.py  lamamines_logic.py  lamamines_draw.py
   lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
+  lamacrash.py  lamacrash_logic.py  lamacrash_draw.py  lamacrash_world.py  lamacrash_music.py
   levels/              Tasodata: snake-comp.json, chess-puzzles.json (+ lähde-README), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Kokonaistarkastus (syöte, seedrand Python = JS, tallennus, kielitiedostot, esinäytöt) + kaikki audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless-tarkastukset peleittäin
-  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko ja yhteinen merkkilogiikka (reiluus, tilastot, Python = JS = Rust)
+  audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash ja yhteinen merkkilogiikka (reiluus, tilastot, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                Rust-versio (itsenäinen .exe, ks. rust/README.md)
   ENGINE.md            Siirtosopimus: miten peli siirtyy Pythonista Rustiin
@@ -11342,7 +12302,7 @@ rust/                Rust-versio (itsenäinen .exe, ks. rust/README.md)
   crates/pgz-engine/   Ikkuna, piirto, syöte, ääni, Game-trait (ui.py + audio.py + game_base.py)
   crates/pgz-games/    Siirretyt pelit
   crates/pygamez/      Ohjelma: valikko, sivupalkki, näkymät
-  tools/export_defs.py Luo perustiedot (49 peliä, 268 saavutusta, 10 teemaa) Python-lähteistä
+  tools/export_defs.py Luo perustiedot (50 peliä, 274 saavutusta, 10 teemaa) Python-lähteistä
   tools/audit.py       Koepenkki: käännökset, pelilista, käytännöt
 rust.output/         Rust-version käännöstulos (rust.output/release/pygamez.exe)
 ```
@@ -11458,7 +12418,7 @@ Pythonia ja sen voi kopioida vapaasti. Asetukset ja ennätykset (`settings.json`
 ## 🇨🇿 Čeština
 
 Sbírka desktopových her v Pythonu: **Tkinter** tvoří okno a menu, **Pygame** je
-vložen jako herní obrazovka do okna Tkinteru. Čtyřicet devět her se sdílenými
+vložen jako herní obrazovka do okna Tkinteru. Padesát her se sdílenými
 nastaveními, volně přemapovatelným ovládáním, nejlepšími skóre, procedurálními
 zvukovými efekty a u některých titulů i režimem pro více hráčů. Rozhraní je
 **vícejazyčné** – **14 jazyků** (němčina / angličtina / francouzština /
@@ -11542,6 +12502,7 @@ existuje, jinak systémový Python. Podrobný návod krok za krokem je úplně d
 | **Lama Crossing** | 1 hráč        | Hra o nervy s lama žetony: pruh po pruhu přes silnici, visutý most, řeku nebo zamrzlé jezero, chytat mezery v provozu, po každém pruhu vybrat výhru, nebo pokračovat; 4 obtížnosti až ×31 784, návratnost ~97 % |
 | **Lama Mines** | 1 hráč        | Lov drahokamů s lama žetony: mřížka 4×4 až 7×7 s 1 až 48 minami, odkrývej políčko po políčku a vyber výhru, kdy chceš; až ×100 000, automatický režim, kontrola férovosti a statistiky, návratnost ~97 % |
 | **Lama Plinko** | 1 hráč        | Plinko s lama žetony: až 50 klubíček najednou přes 8 až 16 řad kolíčků, 3 úrovně rizika až ×1000, automatický režim, kontrola férovosti a statistiky, návratnost ~97 % |
+| **Lama Crash** | 1 hráč        | Hra typu crash s lama žetony: lama stoupá v balonu a násobitel roste až na ×100 000 - vyber výhru, než balon praskne; dvě sázky s auto cílem a výplatou poloviny, 6 výškových světů až k Měsíci, napínavá hudba, automatický režim, kontrola férovosti a statistiky, návratnost ~97 % |
 
 **Více hráčů (2 hráči lokálně)** je k dispozici pro **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (kooperativní
@@ -12241,11 +13202,11 @@ zbraně), efekty explozí, nejlepší skóre.
   symbol**, **zlaté mince = scatter** s 10 volnými otočkami a dvojnásobnými
   výhrami, sázka na linii 1/2/5/10, **automatické otáčení** (10/25), **turbo** a
   výherní tabulka. **Výplatní poměr je 96,1 %** - vypočtený přesně z pásů válců.
-- **Lama banka**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines a Lama
-  Plinko sdílejí jeden účet **lama žetonů** (start 1000, sekce `casino` v
-  `mem.json`); staré stavy žetonů se převezmou
-  automaticky. Sázky se strhnou hned, každá hra si pro rekord vede vlastní bilanci
-  a při bankrotu dostaneš **bankovní úvěr** do 1000.
+- **Lama banka**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama
+  Plinko a Lama Crash sdílejí jeden účet **lama žetonů** (start 1000, sekce
+  `casino` v `mem.json`); staré stavy žetonů se převezmou automaticky. Sázky se
+  strhnou hned, každá hra si pro rekord vede vlastní bilanci a při bankrotu
+  dostaneš **bankovní úvěr** do 1000.
 - Konfety, déšť mincí, bannery big/mega/jackpot a animace výherních linií;
   úspěchy **Terno** (výherní plein v ruletě) a **Lama jackpot** (5 lam na jedné
   linii).
@@ -12417,6 +13378,97 @@ zbraně), efekty explozí, nejlepší skóre.
   kuliček najednou na desce) a **Legenda Plinka** (krajní přihrádka při 16
   řadách a riziku Vysoké), k tomu milník 3000 a mistrovský stupeň 10000.
 
+**Lama Crash**
+- **Hra typu crash s lama žetony**: vyber sázku (10 až 10000) a stiskni
+  **HRÁT** - po krátkém odpočtu 3-2-1 lama stoupá v **balonu** a **násobitel** s
+  časem roste: ×2 po 11,6 s, ×10 po 38,4 s, ×100 po 76,8 s a ×100 000 po 192 s
+  (3,2 minuty). Od ×1,01 můžeš kdykoli **VYPLATIT** - lama vyskočí s padákem a
+  výhra (sázka × násobitel) se hned připíše; když balon praskne dřív, sázka je
+  pryč. Po vyplacení stoupá prázdný balon dál, dokud nepraskne („Vše vyplaceno –
+  balon stoupá“), takže uvidíš, kam až by se dostal; **přetočení** (mezerník)
+  běží 16krát rychleji.
+- **Dvě sázky** v tomtéž kole (druhá lama v koši, přepínačem na kartě 2 nebo
+  **Z**), každá s vlastní částkou a vlastním **auto cílem** (×1,01 až ×100 000,
+  **←**/**→**, **X** = zap./vyp.): když balon cíle dosáhne, vyplácí se přesně
+  při cíli - i kdyby v tu samou chvíli praskl. Každou sázku jde jednou
+  **rozpůlit** (**H** nebo POLOVINA pro všechny, **Q**/**W** nebo tlačítko na
+  kartě pro jednu): ta polovina odletí jako pytel peněz na malém padáku a zbytek
+  stoupá dál.
+- **Bod prasknutí** z náhody férovosti: náhodné číslo r (32 bitů), pak
+  `⌊97 · 2³² / (2³² − r)⌋` v setinách, nejméně ×1,00 a nejvýš ×100 000 - celými
+  čísly a bitově shodně v Pythonu, JavaScriptu i Rustu (`lamacrash_logic.py`).
+  Šance dosáhnout ×x je tedy 97 % / x (zaokrouhleno dolů na celé 2⁻³²): **každý
+  cíl výplaty vrací 96,997–97,000 %**, ať je to ×1,01, nebo ×100 000; asi 3,96 %
+  kol praskne hned při ×1,00, dřív, než jde vyplatit. Křivka stoupání je také
+  celočíselná (`mu += mu // 1000` v každém taktu 1/60 s) a balon praskne teprve
+  tehdy, když násobitel bod prasknutí **překročí** - kdo vyplatí ručně při ×m,
+  vyhrává tedy za přesně stejné podmínky jako auto cíl ×m. Kdo dosáhne ×100 000,
+  přistane na **Měsíci**: maximální výhra pro všechny sázky, které ještě letí.
+- **Výškové světy**: Lamí louka (pastvina, plot, chlév) → Moře mraků (od ×1,5,
+  hejna ptáků) → Bouřková fronta (od ×3, déšť, blesky, letadla) → Polární záře
+  (od ×10, tančící polární záře) → Vesmír (od ×100, zakřivení Země, satelity,
+  padající hvězdy, vzdálené planety - a Měsíc je stále větší) → **přistání na
+  Měsíci** s vlajkou, konfetami a deštěm mincí. Každý nový svět se při dosažení
+  ohlásí svým jménem a světy do sebe plynule přecházejí. Nad tím běží křivka
+  násobitele s rostoucími osami a balon se s výškou nafukuje víc a víc.
+- **Napínavá hudba** v šesti stupních, jeden pro každý výškový svět
+  (`lamacrash_music.py`): od louky až do vesmíru je skladba s každým světem o
+  celý tón vyšší a rychlejší (96 až 150 bpm) a na Měsíci zazní fanfára; **M**
+  hudbu zapne nebo vypne. Od ×2 natažený balon vrže. Nic z toho nezávisí na bodu
+  prasknutí - obraz ani zvuk nic neprozradí (test dvojčat v auditu porovnává dvě
+  kola praskající při ×5 a ×50 až do ×4,99 snímek po snímku a tón po tónu).
+- **Prasknutí**: rána, cáry gumy a otřes kamery; lamy, které ještě sedí v koši,
+  padají kotrmelcem i s ním z obrazu. Výplaty se slaví: déšť mincí od ×3,
+  konfety od ×10 a banner výhry od ×100. Vpravo nahoře jsou body prasknutí
+  posledních 12 kol jako barevné pilulky (červená pod ×2, zelená od ×2, zlatá od
+  ×10, fialová od ×100).
+- **Automatický režim** (**A**, jen mezi koly): 5/10/25/50/100/250 kol, podle
+  potřeby se **Stop při zisku od** nebo **Stop při ztrátě od**
+  (vyp./100/500/1000/5000/10000/50000) a turbem. Každá aktivní sázka přitom
+  dostane auto cíl, prázdný let se přetočí automaticky a ruční výplata funguje
+  dál. Režim běží, dokud se nedosáhne počtu kol, nezasáhne limit, nedojdou
+  žetony nebo se nestiskne **STOP**/**Esc**/**A** - kolo v letu pak normálně
+  doletí. V okně: **↑**/**↓** = řádek, **←**/**→** = hodnota,
+  **Enter**/**Mezerník** = SPUSTIT AUTO nebo STOP. **Turbo** (**T**) nechá balon
+  stoupat třikrát rychleji a zkrátí odpočet i pauzy.
+- **Kontrola férovosti** (**F**) jako v Lama Mines: před každým kolem je pevně
+  daný **kontrolní kód** (SHA-256 tajného seedu serveru), bod prasknutí vzniká
+  ze seedu serveru, tvého **seedu klienta** a čísla kola (`fairness.round_rand`,
+  mulberry32) a po kole se seed ukáže. Okno ukazuje posledních 12 kol
+  (**↑**/**↓** vybírá, **C** = nový seed klienta, dokud neběží žádné kolo);
+  **„Ověřit“** (**Enter**) zkontroluje kontrolní kód, znovu spočítá bod
+  prasknutí a prověří výplaty - ✓ nebo ✗ s malou křivkou.
+- **Statistika** (**S**): dlaždice Kola, Výhry, Prohry, Tvá návratnost, Vsazeno,
+  Vyplaceno, Bilance, Největší výhra, Max. násobitel, **Max. bod prasknutí**,
+  Vyplacené poloviny a O chlup, k tomu **křivka bilance** za posledních 100 kol
+  a **rozdělení bodů prasknutí** v sedmi přihrádkách (×1 až ×1000+) jako sloupce
+  proti očekávanému rozdělení (zlaté body).
+- **Lama banka**: stejný účet jako Blackjack, Poker, Casino, Lama Crossing, Lama
+  Mines a Lama Plinko. HRÁT strhne celkovou sázku a uloží nové kolo najednou
+  (`lamabank.bet_and_pay`), každá výplata hned připíše výhru; **převod zbytku**
+  setin zajistí, že ani malé sázky nic neztrácejí. **Pokračování**: kdo odejde
+  uprostřed letu, pokračuje při dalším spuštění po odpočtu ve stejném taktu -
+  bod prasknutí je přece už daný; kdo odejde až během prázdného letu, tomu se
+  kolo hned uzavře. Když okno ztratí fokus, zatímco peníze letí, hra se sama
+  **pozastaví** (nový háček enginu `pause_on_blur` v `game_base.py`, obsluhovaný
+  v `main.py`). Rekord je nejvyšší stav 1000 + bilance Lama Crash; pod 10 žetony
+  dostaneš **bankovní úvěr** do 1000.
+- Ovládání (pevné klávesy nezávislé na nastavení kláves): před kolem
+  **Mezerník**/**Enter** = HRÁT, **1**/**2**/**Tab** = vybrat kartu,
+  **↑**/**↓**/**+**/**-**/kolečko myši = sázka, **←**/**→** nebo kolečko nad
+  cílem = auto cíl, **X** = cíl zap./vyp., **Z** = druhá sázka; v letu
+  **Mezerník**/**Enter**/**C** = vyplatit vše, **1**/**2** = jednotlivě, **H** =
+  polovina, **Q**/**W** = polovina jednotlivě; potom **Mezerník** = přetočit.
+  **A** = auto, **S** = statistika, **F** = férovost, **T** = turbo, **M** =
+  hudba, **Esc** zavře okno nebo zastaví auto (jinak pauza). Okna jdou otevřít
+  jen tehdy, když neletí žádná sázka. Rozehrané kolo, historie, záznam
+  férovosti, statistiky a převod zbytku se ukládají pro každý profil do sekce
+  `casino` v `mem.json`; sázky, cíle, druhá sázka, turbo, hudba a nastavení
+  automatu do sekce `lamacrash` souboru `settings.json`. Úspěchy **O chlup**
+  (ruční výplata od ×2, nejvýš 5 % před prasknutím), **Pilot polární záře**
+  (výplata při ×10 nebo více) a **Vesmírná lama** (výplata při ×1000 nebo více),
+  k tomu milník 3000 a mistrovský stupeň 10000.
+
 Nejlepší skóre se ukládají do sekce `highscores` souboru `mem.json` (vedle
 kódu) – spolu s jazykem (sekce `mem`).
 
@@ -12442,7 +13494,7 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
   dosavadní rekord jako čip. Při mnoha režimech a malém rozlišení se stane
   **kompaktní**: Možnosti, Wiki a Zpět se přesunou do jedné řady a písmo se
   přizpůsobí - nic už nepřetéká z obrazu.
-- **Jednotný vzhled ve hře**: všech 49 her sdílí paletu témat a písmo menu -
+- **Jednotný vzhled ve hře**: všech 50 her sdílí paletu témat a písmo menu -
   HUDy, obrazovky nastavení a překrytí následují design zvolený v nastavení
   (v4.1 / v4 / Klasický), zatímco každé hrací pole si ponechává své identitní
   barvy. Každá hra nyní čistě zvládne změnu rozlišení uprostřed partie a názvy
@@ -12452,15 +13504,15 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
   kategoriemi, rolovatelnými články a čipy kláves, ve všech 14 jazycích.
   Dostupná přes tlačítko **„Wiki / Nápověda"** v postranním panelu a z přípravné
   obrazovky každé hry (otevře přímo její stránku).
-- **Úspěchy, vzácnost a úroveň**: **268 úspěchů** v pěti kategoriích - 60 cílů
-  napříč sbírkou (partie, herní čas, rekordy, výhry, herní dny, série,
-  souboje …), 40 **bodových met**, 33 **mistrovských stupňů** (druhá, výrazně
-  vyšší meta), úspěch **Stálý host** pro každou hru (25 partií) a 86
-  **zvláštních okamžiků** (šachmat, Yahtzee, dlaždice 4096, hole-in-one,
-  hattrick v air hockeyi …). Každý úspěch má **vzácnost** (běžný 10 až mýtický
-  300 bodů); body dávají tvoji **úroveň** se 14 **hodnostmi** od Lama mláděte po
-  Hvězdnou lamu. Získání ukáže upozornění v barvě vzácnosti, postup o úroveň
-  vlastní s fanfárou.
+- **Úspěchy, vzácnost a úroveň**: **274 úspěchů** v pěti kategoriích - 60 cílů
+  napříč sbírkou (partie, herní čas, rekordy, výhry, herní dny, série, souboje
+  …), 41 **bodových met**, 34 **mistrovských stupňů** (druhá, výrazně vyšší
+  meta), úspěch **Stálý host** pro každou z 50 her (25 partií) a 89 **zvláštních
+  okamžiků** (šachmat, Yahtzee, dlaždice 4096, hole-in-one, hattrick v air
+  hockeyi …). Každý úspěch má **vzácnost** (běžný 10 až mýtický 300 bodů); body
+  dávají tvoji **úroveň** se 14 **hodnostmi** od Lama mláděte po Hvězdnou lamu.
+  Získání ukáže upozornění v barvě vzácnosti, postup o úroveň vlastní s
+  fanfárou.
 - **Statistiky s grafy**: pět záložek - Úspěchy (filtr, body, pruh XP),
   Statistiky (karty, top 10 jako pruhy, kolečko výher, tabulka), **Kalendář**
   (mapa herních dnů, série, dny v týdnu, denní doba), **Historie** (vše s
@@ -12487,7 +13539,9 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
 - Hru vyber tlačítkem v menu vlevo. Poté se objeví **přípravná obrazovka**: zvol
   **Jeden hráč** nebo **Více hráčů**, přejdi do **nastavení** nebo zpět.
   Šipky/myš pro výběr, Enter spustí.
-- **ESC** = pauza / pokračovat (v menu: zpět).
+- **ESC** = pauza / pokračovat (v menu: zpět). Hry, které by jinak běžely dál
+  bez tebe, se při ztrátě fokusu okna samy pozastaví (háček enginu
+  `pause_on_blur` - zatím Lama Crash, dokud nějaká sázka letí).
 - **F11** (nebo tlačítko „Celá obrazovka zap/vyp") = přepnutí celé obrazovky.
   Zobrazení Pygame zůstává vložené a zvětšuje se se zachováním poměru stran
   (černé pruhy při odlišném poměru). Okno lze libovolně měnit.
@@ -12561,10 +13615,10 @@ filepick.py          Dialogy souborů ("Exportovat jako ...", "Importovat")
 prestige.py          Systém prestiže pro Snake
 competitive.py       Parametry Kompetitivního režimu Snaku (úrovně, automat, sázková jablka)
 ngb.py               Vizuální přizpůsobení („mody"): barva hlavy + souřadnicová mřížka + menu (mem-ngb.json)
-lamabank.py          Lama banka: společný účet žetonů pro Blackjack, Poker, Casino, Lama Crossing, Lama Mines a Lama Plinko (sekce casino v mem.json)
+lamabank.py          Lama banka: společný účet žetonů pro Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko a Lama Crash (sekce casino v mem.json)
 seedrand.py          Generátor náhodných čísel s bitově shodnými čísly v Pythonu i v prohlížeči (denní režimy, nové hlavolamy)
-fairness.py          Kontrola férovosti pro Lama Mines a Lama Plinko: seed serveru a klienta, číslo kola, kontrolní kód SHA-256, ověření (protějšky: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
-chipstats.py         Statistika Lama Mines a Lama Plinko (kola, vsazeno, vyplaceno, návratnost, křivka bilance) pro okno S (k tomu chipstats.js, chipstats.rs)
+fairness.py          Kontrola férovosti pro Lama Mines, Lama Plinko a Lama Crash: seed serveru a klienta, číslo kola, kontrolní kód SHA-256, ověření (protějšky: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
+chipstats.py         Statistika Lama Mines, Lama Plinko a Lama Crash (kola, vsazeno, vyplaceno, návratnost, křivka bilance) pro okno S (k tomu chipstats.js, chipstats.rs)
 i18n.py              Překladový engine (načítá lang/*.json, t("klíč"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Jazykové řetězce (jeden zástupný klíč na text)
@@ -12607,12 +13661,13 @@ games/
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   lamamines.py  lamamines_logic.py  lamamines_draw.py
   lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
+  lamacrash.py  lamacrash_logic.py  lamacrash_draw.py  lamacrash_world.py  lamacrash_music.py
   levels/              Data úrovní: snake-comp.json, chess-puzzles.json (+ README se zdroji), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Celkový audit (vstup, seedrand Python = JS, ukládání, jazykové soubory, přípravné obrazovky) + všechny audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless audity pro jednotlivé hry
-  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko a společná žetonová logika (férovost, statistiky, Python = JS = Rust)
+  audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash a společná žetonová logika (férovost, statistiky, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                Verze v Rustu (samostatné .exe, viz rust/README.md)
   ENGINE.md            Smlouva o portování: jak se hra dostane z Pythonu do Rustu
@@ -12621,7 +13676,7 @@ rust/                Verze v Rustu (samostatné .exe, viz rust/README.md)
   crates/pgz-engine/   Okno, kreslení, vstup, zvuk, trait Game (ui.py + audio.py + game_base.py)
   crates/pgz-games/    Portované hry
   crates/pygamez/      Program: nabídka, postranní panel, obrazovky
-  tools/export_defs.py Vytvoří základní data (49 her, 268 úspěchů, 10 vzhledů) ze zdrojů v Pythonu
+  tools/export_defs.py Vytvoří základní data (50 her, 274 úspěchů, 10 vzhledů) ze zdrojů v Pythonu
   tools/audit.py       Zkušebna: překlady, seznam her, konvence
 rust.output/         Výstup sestavení verze v Rustu (rust.output/release/pygamez.exe)
 ```
@@ -12740,7 +13795,7 @@ a lze jej volně kopírovat. Nastavení a nejlepší skóre (`settings.json`,
 ## 🇸🇮 Slovenščina
 
 Zbirka namiznih iger v Pythonu: **Tkinter** poskrbi za okno in meni, **Pygame**
-je kot prikaz igre vgrajen v okno Tkinter. Devetinštirideset iger s skupnimi
+je kot prikaz igre vgrajen v okno Tkinter. Petdeset iger s skupnimi
 možnostmi, prosto nastavljivim krmiljenjem, rekordi, proceduralnimi zvočnimi
 učinki in, pri nekaterih naslovih, večigralskim načinom. Vmesnik je
 **večjezičen** – **14 jezikov** (nemščina / angleščina / francoščina /
@@ -12823,6 +13878,7 @@ obstaja, sicer sistemski Python. Na dnu dokumenta je podroben vodnik po korakih:
 | **Lama Crossing** | 1 igralec     | Igra živcev z lama žetoni: pas za pasom čez cesto, viseči most, reko ali zamrznjeno jezero, ujemi vrzeli v prometu, po vsakem pasu izplačaj ali nadaljuj; 4 težavnosti do ×31.784, vračilo ~97 % |
 | **Lama Mines** | 1 igralec     | Lov na dragulje z lama žetoni: plošča od 4×4 do 7×7 z 1 do 48 minami, odkrivaj polje za poljem in izplačaj, kadar želiš; do ×100.000, samodejni način, preverjanje poštenosti in statistika, vračilo ~97 % |
 | **Lama Plinko** | 1 igralec     | Plinko z lama žetoni: do 50 klobčičev hkrati skozi 8 do 16 vrst zatičev, 3 stopnje tveganja do ×1000, samodejni način, preverjanje poštenosti in statistika, vračilo ~97 % |
+| **Lama Crash** | 1 igralec     | Igra crash z lama žetoni: lama se dviga v balonu, množitelj pa raste do ×100.000 - izplačaj, preden balon poči; dve stavi z avto ciljem in izplačilom polovice, 6 višinskih svetov vse do Lune, napeta glasba, samodejni način, preverjanje poštenosti in statistika, vračilo ~97 % |
 
 **Večigralski način (2 igralca lokalno)** je na voljo za igre **Snake**,
 **Pong**, **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**,
@@ -13521,11 +14577,11 @@ nadgradnja orožja), učinki eksplozij, rekord.
   simbol**, **zlatniki = scatter** z 10 brezplačnimi vrtljaji in dvojnimi dobitki,
   stava na linijo 1/2/5/10, **samodejno vrtenje** (10/25), **turbo** in tabela
   dobitkov. **Stopnja vračila je 96,1 %** - natančno izračunana iz trakov kolutov.
-- **Lama banka**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines in Lama
-  Plinko si delijo en račun **lama žetonov** (začetek 1000, razdelek `casino` v
-  `mem.json`); stara stanja žetonov se prenesejo
-  samodejno. Stave se odštejejo takoj, vsaka igra vodi svojo bilanco za rekord, ob
-  bankrotu pa dobiš **bančni kredit** do 1000.
+- **Lama banka**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama
+  Plinko in Lama Crash si delijo en račun **lama žetonov** (začetek 1000,
+  razdelek `casino` v `mem.json`); stara stanja žetonov se prenesejo samodejno.
+  Stave se odštejejo takoj, vsaka igra vodi svojo bilanco za rekord, ob bankrotu
+  pa dobiš **bančni kredit** do 1000.
 - Konfeti, dež kovancev, pasice big/mega/jackpot in animacije dobitnih linij;
   dosežka **Polni zadetek** (dobljen plein na ruleti) in **Lama jackpot** (5 lam na
   eni liniji).
@@ -13706,6 +14762,102 @@ nadgradnja orožja), učinki eksplozij, rekord.
   deski) in **Legenda Plinka** (skrajni predalček pri 16 vrstah in tveganju
   Visoko) ter mejnik 3000 in mojstrska stopnja 10000.
 
+**Lama Crash**
+- **Igra crash z lama žetoni**: izberi stavo (10 do 10000) in pritisni
+  **IGRAJ** - po kratkem odštevanju 3-2-1 se lama dvigne v **balonu**,
+  **množitelj** pa s časom raste: ×2 po 11,6 s, ×10 po 38,4 s, ×100 po 76,8 s in
+  ×100.000 po 192 s (3,2 minute). Od ×1,01 naprej lahko kadar koli pritisneš
+  **IZPLAČAJ** - lama skoči s padalom, dobitek (stava × množitelj) pa se takoj
+  pripiše; če balon poči prej, je stava izgubljena. Po izplačilu se prazen balon
+  dviga naprej, dokler ne poči (»Vse izplačano – balon se dviga«), tako da
+  vidiš, kako daleč bi prišel; **hitro naprej** (preslednica) teče 16-krat
+  hitreje.
+- **Dve stavi** v istem krogu (druga lama v košari, s stikalom na kartici 2 ali
+  **Z**), vsaka s svojim zneskom in svojim **avto ciljem** (×1,01 do ×100.000,
+  **←**/**→**, **X** = vkl./izkl.): ko balon doseže cilj, se izplača natanko pri
+  cilju - tudi če v istem trenutku poči. Vsako stavo lahko enkrat **razpoloviš**
+  (**H** ali POLOVICA za vse, **Q**/**W** ali gumb na kartici za eno): ta
+  polovica odleti kot vreča denarja na mini padalu, ostalo se dviga naprej.
+- **Točka poka** iz naključja za poštenost: naključno število r (32 bitov), nato
+  `⌊97 · 2³² / (2³² − r)⌋` v stotinkah, najmanj ×1,00 in največ ×100.000 - s
+  celimi števili in bitno enako v Pythonu, JavaScriptu in Rustu
+  (`lamacrash_logic.py`). Verjetnost, da dosežeš ×x, je torej 97 % / x
+  (zaokroženo navzdol na cele 2⁻³²): **vsak cilj izplačila vrne
+  96,997–97,000 %**, naj bo ×1,01 ali ×100.000; približno 3,96 % krogov poči že
+  pri ×1,00, preden je mogoče izplačati. Tudi krivulja dviganja je celoštevilska
+  (`mu += mu // 1000` v vsakem koraku 1/60 s), balon pa poči šele, ko množitelj
+  **preseže** točko poka - kdor ročno izplača pri ×m, torej zmaga pod natanko
+  enakim pogojem kot avto cilj ×m. Kdor doseže ×100.000, pristane na **Luni**:
+  najvišji dobitek za vse stave, ki še letijo.
+- **Višinski svetovi**: Lamji travnik (pašnik, ograja, hlev) → Morje oblakov (od
+  ×1,5, jate ptic) → Nevihtna fronta (od ×3, dež, strele, letala) → Severni sij
+  (od ×10, plešoči severni sij) → Vesolje (od ×100, ukrivljenost Zemlje,
+  sateliti, zvezdni utrinki, oddaljeni planeti - Luna pa je vse večja) →
+  **pristanek na Luni** z zastavo, konfeti in dežjem kovancev. Vsak nov svet se
+  ob prihodu napove s svojim imenom, svetovi pa se mehko prelivajo drug v
+  drugega. Nad tem teče krivulja množitelja z rastočimi osmi, balon pa se z
+  višino vse bolj napihuje.
+- **Napeta glasba** v šestih stopnjah, po ena za vsak višinski svet
+  (`lamacrash_music.py`): od travnika do vesolja je skladba z vsakim svetom za
+  cel ton višja in hitrejša (96 do 150 bpm), na Luni pa zadoni fanfara; **M**
+  glasbo vklopi ali izklopi. Od ×2 raztegnjeni balon škripa. Nič od tega ni
+  odvisno od točke poka - ne slika ne zvok ničesar ne izdata (test dvojčkov v
+  reviziji primerja dva kroga, ki počita pri ×5 in ×50, do ×4,99 sličico za
+  sličico in ton za tonom).
+- **Pok**: tresk, koščki gume in tresenje kamere; lame, ki še sedijo v košari,
+  se skupaj z njo zvalijo iz slike. Izplačila se proslavijo: dež kovancev od ×3,
+  konfeti od ×10 in pasica dobitka od ×100. Desno zgoraj so točke poka zadnjih
+  12 krogov kot barvne tabletke (rdeča pod ×2, zelena od ×2, zlata od ×10,
+  vijolična od ×100).
+- **Samodejni način** (**A**, samo med krogi): 5/10/25/50/100/250 krogov, po
+  želji z **Ustavi pri dobičku od** ali **Ustavi pri izgubi od**
+  (izkl./100/500/1000/5000/10000/50000) in turbom. Vsaka aktivna stava pri tem
+  dobi avto cilj, prazen let se samodejno previje naprej, ročno izplačilo pa še
+  vedno deluje. Samodejni način teče, dokler ni doseženo število krogov, ne
+  poseže meja, ne zmanjka žetonov ali se ne pritisne **STOP**/**Esc**/**A** -
+  krog v zraku se nato normalno izteče. V oknu: **↑**/**↓** = vrstica,
+  **←**/**→** = vrednost, **Enter**/**Preslednica** = ZAŽENI AVTO ali STOP.
+  **Turbo** (**T**) balon dviga trikrat hitreje ter skrajša odštevanje in
+  premore.
+- **Preverjanje poštenosti** (**F**) kot pri Lama Mines: pred vsakim krogom je
+  **kontrolna koda** že določena (SHA-256 skrivnega seeda strežnika), točka poka
+  izhaja iz seeda strežnika, tvojega **seeda odjemalca** in številke kroga
+  (`fairness.round_rand`, mulberry32), po krogu pa se seed prikaže. Okno našteje
+  zadnjih 12 krogov (**↑**/**↓** izbere, **C** = nov seed odjemalca, ko ne teče
+  noben krog); **»Preveri«** (**Enter**) preveri kontrolno kodo, znova izračuna
+  točko poka in preveri izplačila - ✓ ali ✗ z mini krivuljo.
+- **Statistika** (**S**): ploščice Krogi, Zmage, Porazi, Tvoje vračilo, Vloženo,
+  Izplačano, Bilanca, Največji dobitek, Najboljši faktor, **Najvišja točka
+  poka**, Izplačane polovice in Za las, poleg tega **krivulja bilance** zadnjih
+  100 krogov in **porazdelitev točk poka** v sedmih razredih (×1 do ×1000+) kot
+  stolpci ob pričakovani porazdelitvi (zlate pike).
+- **Lama banka**: isti račun kot Blackjack, Poker, Casino, Lama Crossing, Lama
+  Mines in Lama Plinko. IGRAJ odšteje skupno stavo in shrani nov krog v enem
+  koraku (`lamabank.bet_and_pay`), vsako izplačilo pa dobitek takoj pripiše;
+  **prenos ostanka** stotink poskrbi, da tudi majhne stave ne izgubijo ničesar.
+  **Nadaljevanje**: kdor odide sredi leta, ob naslednjem zagonu po odštevanju
+  nadaljuje v istem koraku - točka poka je namreč že določena; kdor odide šele
+  med praznim letom, se mu krog takoj zaključi. Če okno izgubi fokus, medtem ko
+  je denar v zraku, se igra sama **ustavi** (nov kavelj pogona `pause_on_blur` v
+  `game_base.py`, ki ga obdela `main.py`). Rekord je najvišje stanje 1000 +
+  bilance Lama Crash; pod 10 žetoni dobiš **bančni kredit** do 1000.
+- Upravljanje (stalne tipke, neodvisne od nastavitev tipk): pred krogom
+  **Preslednica**/**Enter** = IGRAJ, **1**/**2**/**Tab** = izberi kartico,
+  **↑**/**↓**/**+**/**-**/kolesce miške = stava, **←**/**→** ali kolesce nad
+  ciljem = avto cilj, **X** = cilj vkl./izkl., **Z** = druga stava; med letom
+  **Preslednica**/**Enter**/**C** = izplačaj vse, **1**/**2** = posamezno,
+  **H** = polovica, **Q**/**W** = polovica posamezno; nato **Preslednica** =
+  hitro naprej. **A** = avto, **S** = statistika, **F** = poštenost, **T** =
+  turbo, **M** = glasba, **Esc** zapre okno ali ustavi avto (sicer premor). Okna
+  se dajo odpreti le, ko ne leti nobena stava. Nedokončan krog, zgodovina,
+  dnevnik poštenosti, statistika in prenos ostanka se shranijo za vsak profil v
+  razdelek `casino` datoteke `mem.json`; stave, cilji, druga stava, turbo,
+  glasba in nastavitve samodejnega načina v razdelek `lamacrash` datoteke
+  `settings.json`. Dosežki **Za las** (ročno izplačilo od ×2, največ 5 % pred
+  pokom), **Pilot severnega sija** (izplačilo pri ×10 ali več) in **Vesoljska
+  lama** (izplačilo pri ×1000 ali več) ter mejnik 3000 in mojstrska stopnja
+  10000.
+
 Rekordi se shranijo v razdelku `highscores` datoteke `mem.json` (poleg kode) –
 skupaj z jezikom (razdelek `mem`).
 
@@ -13731,7 +14883,7 @@ oblikovan kot sodoben zaganjalnik iger:
   rekord prikaže kot čip. Pri veliko načinih in majhni ločljivosti postane
   **kompakten**: Možnosti, Wiki in Nazaj se postavijo v eno vrsto, pisava pa se
   prilagodi - nič več ne sega čez rob slike.
-- **Poenoten videz v igri**: vseh 49 iger si deli barvno paleto in pisavo menija -
+- **Poenoten videz v igri**: vseh 50 iger si deli barvno paleto in pisavo menija -
   HUD-i, nastavitveni zasloni in prekrivni sloji sledijo izbranemu dizajnu v
   možnostih (v4.1 / v4 / Klasični), medtem ko vsako igrišče obdrži svoje
   identitetne barve. Vsaka igra zdaj čisto obvlada spremembo ločljivosti med igro,
@@ -13741,15 +14893,15 @@ oblikovan kot sodoben zaganjalnik iger:
   kategorijami, drsečimi članki in čipi tipk, v vseh 14 jezikih. Dostopen prek
   gumba **»Wiki / Pomoč«** v stranski vrstici in z predigralnega zaslona vsake
   igre (odpre neposredno njeno stran).
-- **Dosežki, redkost in stopnja**: **268 dosežkov** v petih kategorijah - 60
+- **Dosežki, redkost in stopnja**: **274 dosežkov** v petih kategorijah - 60
   ciljev čez vso zbirko (partije, čas igranja, rekordi, zmage, dnevi igranja,
-  nizi, dvoboji …), 40 **točkovnih mejnikov**, 33 **mojstrskih stopenj** (druga,
-  precej višja meja), dosežek **Redni gost** za vsako igro (25 partij) in 86
-  **posebnih trenutkov** (šahmat, Yahtzee, ploščica 4096, luknja z enim
-  udarcem, hat-trick v zračnem hokeju …). Vsak dosežek ima **redkost** (pogost 10
-  do mitski 300 točk); točke dajo **stopnjo** s 14 **čini** od Lamjega mladiča do
-  Zvezdne lame. Odklep pokaže obvestilo v barvi redkosti, napredovanje svoje s
-  fanfaro.
+  nizi, dvoboji …), 41 **točkovnih mejnikov**, 34 **mojstrskih stopenj** (druga,
+  precej višja meja), dosežek **Redni gost** za vsako od 50 iger (25 partij) in
+  89 **posebnih trenutkov** (šahmat, Yahtzee, ploščica 4096, luknja z enim
+  udarcem, hat-trick v zračnem hokeju …). Vsak dosežek ima **redkost** (pogost
+  10 do mitski 300 točk); točke dajo **stopnjo** s 14 **čini** od Lamjega
+  mladiča do Zvezdne lame. Odklep pokaže obvestilo v barvi redkosti,
+  napredovanje svoje s fanfaro.
 - **Statistika z grafi**: pet zavihkov - Dosežki (filter, točke, vrstica XP),
   Statistika (kartice, top 10 kot stolpci, obroč zmag, tabela), **Koledar**
   (zemljevid dni igranja, nizi, dnevi v tednu, čas dneva), **Zgodovina** (vse s
@@ -13776,7 +14928,9 @@ oblikovan kot sodoben zaganjalnik iger:
 - Izberi igro z gumbom v meniju na levi. Nato se pojavi **predigralni zaslon**:
   izberi **En igralec** ali **Več igralcev**, pojdi na **možnosti** ali nazaj.
   Puščice/miška za izbiro, enter zažene.
-- **ESC** = pavza / nadaljuj (v menijih: nazaj).
+- **ESC** = pavza / nadaljuj (v menijih: nazaj). Igre, ki bi sicer tekle naprej
+  brez tebe, se ob izgubi fokusa okna same ustavijo (kavelj pogona
+  `pause_on_blur` - zaenkrat Lama Crash, dokler kakšna stava leti).
 - **F11** (ali gumb »Celozaslonsko vkl./izkl.«) = preklop celozaslonskega načina.
   Prikaz Pygame ostane vgrajen in se poveča z ohranitvijo razmerja stranic (črni
   robovi, kadar se razmerje razlikuje). Okno je mogoče prosto spreminjati po
@@ -13850,10 +15004,10 @@ filepick.py          Pogovorna okna za datoteke ("Izvozi kot ...", "Uvozi")
 prestige.py          Sistem prestiža za Snake
 competitive.py       Nastavitve za Tekmovalni način igre Snake (ravni, igralni avtomat, jabolka za stave)
 ngb.py               Vizualna prilagoditev (»modi«): barva glave + koordinatna mreža + meni (mem-ngb.json)
-lamabank.py          Lama banka: skupni račun žetonov za Blackjack, Poker, Casino, Lama Crossing, Lama Mines in Lama Plinko (razdelek casino v mem.json)
+lamabank.py          Lama banka: skupni račun žetonov za Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko in Lama Crash (razdelek casino v mem.json)
 seedrand.py          Generator naključnih števil z bitno enakimi števili v Pythonu in brskalniku (dnevni načini, nove uganke)
-fairness.py          Preverjanje poštenosti za Lama Mines in Lama Plinko: seed strežnika in odjemalca, številka kroga, kontrolna koda SHA-256, preverjanje (dvojnika: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
-chipstats.py         Statistika za Lama Mines in Lama Plinko (krogi, vloženo, izplačano, stopnja vračila, krivulja bilance) za okno S (poleg tega chipstats.js, chipstats.rs)
+fairness.py          Preverjanje poštenosti za Lama Mines, Lama Plinko in Lama Crash: seed strežnika in odjemalca, številka kroga, kontrolna koda SHA-256, preverjanje (dvojnika: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
+chipstats.py         Statistika za Lama Mines, Lama Plinko in Lama Crash (krogi, vloženo, izplačano, stopnja vračila, krivulja bilance) za okno S (poleg tega chipstats.js, chipstats.rs)
 i18n.py              Prevajalski pogon (naloži lang/*.json, t("ključ"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Jezikovni nizi (en ključ na besedilo)
@@ -13896,12 +15050,13 @@ games/
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   lamamines.py  lamamines_logic.py  lamamines_draw.py
   lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
+  lamacrash.py  lamacrash_logic.py  lamacrash_draw.py  lamacrash_world.py  lamacrash_music.py
   levels/              Podatki o ravneh: snake-comp.json, chess-puzzles.json (+ README z viri), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Celovita revizija (vnos, seedrand Python = JS, shranjevanje, jezikovne datoteke, predigralni zasloni) + vsi audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless revizije za posamezne igre
-  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko in skupna logika žetonov (poštenost, statistika, Python = JS = Rust)
+  audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash in skupna logika žetonov (poštenost, statistika, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                Različica v Rustu (samostojni .exe, glej rust/README.md)
   ENGINE.md            Pogodba o prenosu: kako igra pride iz Pythona v Rust
@@ -13910,7 +15065,7 @@ rust/                Različica v Rustu (samostojni .exe, glej rust/README.md)
   crates/pgz-engine/   Okno, risanje, vnos, zvok, trait Game (ui.py + audio.py + game_base.py)
   crates/pgz-games/    Prenesene igre
   crates/pygamez/      Program: meni, stranska vrstica, zasloni
-  tools/export_defs.py Ustvari osnovne podatke (49 iger, 268 dosežkov, 10 videzov) iz virov v Pythonu
+  tools/export_defs.py Ustvari osnovne podatke (50 iger, 274 dosežkov, 10 videzov) iz virov v Pythonu
   tools/audit.py       Preizkuševalnica: prevodi, seznam iger, dogovori
 rust.output/         Rezultat gradnje različice v Rustu (rust.output/release/pygamez.exe)
 ```
@@ -14026,7 +15181,7 @@ prosto kopirati. Nastavitve in rekordi (`settings.json`, `mem.json`,
 ## 🇭🇷 Hrvatski
 
 Zbirka desktop igara u Pythonu: **Tkinter** pruža prozor i izbornik, a **Pygame**
-je ugrađen kao prikaz igre unutar Tkinter prozora. Četrdeset i devet igara sa
+je ugrađen kao prikaz igre unutar Tkinter prozora. Pedeset igara sa
 zajedničkim opcijama, slobodno preslagivim upravljanjem, rekordima,
 proceduralnim zvučnim efektima i, kod nekih naslova, višeigračkim modom. Sučelje
 je **višejezično** – **14 jezika** (njemački / engleski / francuski / španjolski /
@@ -14109,6 +15264,7 @@ dnu pod **[Vodič za instalaciju](#vodič-za-instalaciju)**.
 | **Lama Crossing** | 1 igrač       | Igra živaca s lama žetonima: traku po traku preko ceste, visećeg mosta, rijeke ili zaleđenog jezera, hvataj praznine u prometu, nakon svake trake isplati ili nastavi; 4 težine do ×31.784, povrat ~97 % |
 | **Lama Mines** | 1 igrač       | Lov na dragulje s lama žetonima: ploča od 4×4 do 7×7 s 1 do 48 mina, otkrivaj polje po polje i isplati kad god želiš; do ×100.000, automatski način, provjera poštenosti i statistika, povrat ~97 % |
 | **Lama Plinko** | 1 igrač       | Plinko s lama žetonima: do 50 klupaka istodobno kroz 8 do 16 redova čavlića, 3 razine rizika do ×1000, automatski način, provjera poštenosti i statistika, povrat ~97 % |
+| **Lama Crash** | 1 igrač       | Crash igra s lama žetonima: lama se diže u balonu, a množitelj raste do ×100.000 - isplati prije nego što balon pukne; dva uloga s auto ciljem i isplatom polovice, 6 visinskih svjetova sve do Mjeseca, napeta glazba, automatski način, provjera poštenosti i statistika, povrat ~97 % |
 
 **Više igrača (2 igrača lokalno)** dostupno je za **Snake**, **Pong**,
 **Air Hockey**, **Tic-Tac-Toe**, **Tetris (Versus)**, **Asteroids (kooperativni
@@ -14814,11 +15970,11 @@ nadogradnja oružja), efekti eksplozije, rekord.
   **zlatnici = scatter** s 10 besplatnih vrtnji i dvostrukim dobicima, ulog po
   liniji 1/2/5/10, **automatska vrtnja** (10/25), **turbo** i tablica isplata.
   **Stopa povrata je 96,1 %** - točno izračunata iz traka valjaka.
-- **Lama banka**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines i Lama
-  Plinko dijele jedan račun **lama žetona** (početak 1000, odjeljak `casino` u
-  `mem.json`); stara stanja žetona prenose se
-  automatski. Ulozi se skidaju odmah, svaka igra vodi vlastitu bilancu za rekord, a
-  pri bankrotu dobivate **bankovni kredit** do 1000.
+- **Lama banka**: Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama
+  Plinko i Lama Crash dijele jedan račun **lama žetona** (početak 1000, odjeljak
+  `casino` u `mem.json`); stara stanja žetona prenose se automatski. Ulozi se
+  skidaju odmah, svaka igra vodi vlastitu bilancu za rekord, a pri bankrotu
+  dobivate **bankovni kredit** do 1000.
 - Konfeti, kiša novčića, natpisi big/mega/jackpot i animacije dobitnih linija;
   postignuća **Pun pogodak** (dobitni plein na ruletu) i **Lama jackpot** (5 lama na
   jednoj liniji).
@@ -14998,6 +16154,104 @@ nadogradnja oružja), efekti eksplozije, rekord.
   (krajnji pretinac sa 16 redova i rizikom Visok) te prekretnica 3000 i
   majstorska razina 10000.
 
+**Lama Crash**
+- **Crash igra s lama žetonima**: odaberi ulog (10 do 10000) i pritisni
+  **IGRAJ** - nakon kratkog odbrojavanja 3-2-1 lama se diže u **balonu**, a
+  **množitelj** s vremenom raste: ×2 nakon 11,6 s, ×10 nakon 38,4 s, ×100 nakon
+  76,8 s i ×100.000 nakon 192 s (3,2 minute). Od ×1,01 možeš u bilo kojem
+  trenutku pritisnuti **ISPLATI** - lama skače s padobranom, a dobitak (ulog ×
+  množitelj) odmah se pripisuje; ako balon pukne prije, ulog je izgubljen. Nakon
+  isplate prazni se balon diže dalje dok ne pukne („Sve isplaćeno – balon se
+  diže dalje“), pa vidiš dokle bi stigao; **premotavanje** (razmaknica) ide 16
+  puta brže.
+- **Dva uloga** u istoj rundi (druga lama u košari, prekidačem na kartici 2 ili
+  **Z**), svaki s vlastitim iznosom i vlastitim **auto ciljem** (×1,01 do
+  ×100.000, **←**/**→**, **X** = uklj./isklj.): kad balon dosegne cilj,
+  isplaćuje se točno na cilju - čak i ako pukne u istom trenutku. Svaki se ulog
+  može jednom **prepoloviti** (**H** ili POLOVICA za sve, **Q**/**W** ili gumb
+  na kartici za jedan): ta polovica odlijeće kao vreća novca na mini padobranu,
+  a ostatak se diže dalje.
+- **Točka pucanja** iz slučajnosti za poštenost: slučajni broj r (32 bita),
+  zatim `⌊97 · 2³² / (2³² − r)⌋` u stotinkama, najmanje ×1,00 i najviše
+  ×100.000 - cjelobrojno i bitovno jednako u Pythonu, JavaScriptu i Rustu
+  (`lamacrash_logic.py`). Vjerojatnost da dosegneš ×x stoga iznosi 97 % / x
+  (zaokruženo nadolje na cijele 2⁻³²): **svaki cilj isplate vraća
+  96,997–97,000 %**, bilo ×1,01 ili ×100.000; otprilike 3,96 % rundi pukne već
+  pri ×1,00, prije nego što se može isplatiti. I krivulja dizanja je cjelobrojna
+  (`mu += mu // 1000` u svakom taktu od 1/60 s), a balon pukne tek kad množitelj
+  **premaši** točku pucanja - tko ručno isplati pri ×m, dobiva dakle pod točno
+  istim uvjetom kao auto cilj ×m. Tko dosegne ×100.000, slijeće na **Mjesec**:
+  najveći dobitak za sve uloge koji još lete.
+- **Visinski svjetovi**: Livada lama (pašnjak, ograda, štala) → More oblaka (od
+  ×1,5, jata ptica) → Olujna fronta (od ×3, kiša, munje, zrakoplovi) → Polarna
+  svjetlost (od ×10, razigrana polarna svjetlost) → Svemir (od ×100,
+  zakrivljenost Zemlje, sateliti, zvijezde padalice, daleki planeti - a Mjesec
+  je sve veći) → **slijetanje na Mjesec** sa zastavom, konfetima i kišom
+  novčića. Svaki se novi svijet pri dolasku najavi svojim imenom, a svjetovi se
+  glatko pretapaju jedan u drugi. Iznad toga teče krivulja množitelja s osima
+  koje rastu s njom, a balon se s visinom sve više napuhuje.
+- **Napeta glazba** u šest stupnjeva, po jedan za svaki visinski svijet
+  (`lamacrash_music.py`): od livade do svemira skladba je sa svakim svijetom
+  cijeli ton viša i brža (96 do 150 bpm), a na Mjesecu zasvira fanfara; **M**
+  uključuje ili isključuje glazbu. Od ×2 rastegnuti balon škripi. Ništa od toga
+  ne ovisi o točki pucanja - ni slika ni zvuk ništa ne odaju (test s rundama
+  blizancima u provjeri uspoređuje dvije runde koje puknu pri ×5 i ×50, do
+  ×4,99, kadar po kadar i ton po ton).
+- **Pucanje**: prasak, komadići gume i trešnja kamere; lame koje još sjede u
+  košari otkotrljaju se zajedno s njom iz slike. Isplate se slave: kiša novčića
+  od ×3, konfeti od ×10 i natpis dobitka od ×100. Gore desno su točke pucanja
+  zadnjih 12 rundi kao šarene pilule (crvena ispod ×2, zelena od ×2, zlatna od
+  ×10, ljubičasta od ×100).
+- **Automatski način** (**A**, samo između rundi): 5/10/25/50/100/250 rundi, po
+  želji sa **Zaustavi pri dobiti od** ili **Zaustavi pri gubitku od**
+  (isklj./100/500/1000/5000/10000/50000) i turbom. Svaki aktivni ulog pritom
+  dobiva auto cilj, prazni let premotava se automatski, a ručna isplata i dalje
+  radi. Automatski način traje dok se ne dosegne broj rundi, ne aktivira
+  granica, ne ponestane žetona ili se ne pritisne **STOP**/**Esc**/**A** - runda
+  u letu tada normalno završi. U prozoru: **↑**/**↓** = redak, **←**/**→** =
+  vrijednost, **Enter**/**Razmaknica** = POKRENI AUTO ili STOP. **Turbo**
+  (**T**) diže balon triput brže i skraćuje odbrojavanje i stanke.
+- **Provjera poštenosti** (**F**) kao kod Lama Minesa: prije svake runde
+  **kontrolni kod** je već određen (SHA-256 tajnog seeda poslužitelja), točka
+  pucanja proizlazi iz seeda poslužitelja, tvojeg **seeda klijenta** i broja
+  runde (`fairness.round_rand`, mulberry32), a nakon runde seed se prikazuje.
+  Prozor prikazuje zadnjih 12 rundi (**↑**/**↓** bira, **C** = novi seed
+  klijenta dok nijedna runda nije u tijeku); **„Provjeri“** (**Enter**)
+  provjerava kontrolni kod, ponovno računa točku pucanja i provjerava isplate -
+  ✓ ili ✗ s malom krivuljom.
+- **Statistika** (**S**): pločice Runde, Pobjede, Porazi, Tvoj povrat, Uloženo,
+  Isplaćeno, Bilanca, Najveći dobitak, Najbolji faktor, **Najviše pucanje**,
+  Isplaćene polovice i Za dlaku, uz to **krivulja bilance** zadnjih 100 rundi i
+  **razdioba točaka pucanja** u sedam razreda (×1 do ×1000+) kao stupci naspram
+  očekivane razdiobe (zlatne točke).
+- **Lama banka**: isti račun kao Blackjack, Poker, Casino, Lama Crossing, Lama
+  Mines i Lama Plinko. IGRAJ skida ukupni ulog i sprema novu rundu u jednom
+  potezu (`lamabank.bet_and_pay`), a svaka isplata odmah pripisuje dobitak;
+  **prijenos ostatka** stotinki brine se da ni mali ulozi ništa ne gube.
+  **Nastavak**: tko ode usred leta, pri sljedećem pokretanju nakon odbrojavanja
+  nastavlja u istom taktu - točka pucanja ionako je već određena; tko ode tek
+  tijekom praznog leta, runda mu se odmah zaključuje. Ako prozor izgubi fokus
+  dok je novac u zraku, igra se sama **pauzira** (nova kuka pogona
+  `pause_on_blur` u `game_base.py`, koju obrađuje `main.py`). Rekord je najviše
+  stanje 1000 + bilance Lama Crasha; ispod 10 žetona dobivaš **bankovni kredit**
+  do 1000.
+- Upravljanje (stalne tipke, neovisne o postavkama tipki): prije runde
+  **Razmaknica**/**Enter** = IGRAJ, **1**/**2**/**Tab** = odaberi karticu,
+  **↑**/**↓**/**+**/**-**/kotačić miša = ulog, **←**/**→** ili kotačić iznad
+  cilja = auto cilj, **X** = cilj uklj./isklj., **Z** = drugi ulog; u letu
+  **Razmaknica**/**Enter**/**C** = isplati sve, **1**/**2** = pojedinačno,
+  **H** = polovica, **Q**/**W** = polovica pojedinačno; nakon toga
+  **Razmaknica** = premotaj. **A** = auto, **S** = statistika, **F** =
+  poštenost, **T** = turbo, **M** = glazba, **Esc** zatvara prozor ili
+  zaustavlja auto (inače pauza). Prozori se mogu otvoriti samo dok nijedan ulog
+  ne leti. Nedovršena runda, povijest, zapisnik poštenosti, statistika i
+  prijenos ostatka spremaju se po profilu u odjeljak `casino` datoteke
+  `mem.json`; ulozi, ciljevi, drugi ulog, turbo, glazba i postavke automatskog
+  načina u odjeljak `lamacrash` datoteke `settings.json`. Postignuća **Za
+  dlaku** (ručna isplata od ×2, najviše 5 % prije pucanja), **Pilot polarne
+  svjetlosti** (isplata pri ×10 ili više) i **Svemirska lama** (isplata pri
+  ×1000 ili više) te prekretnica 3000 i majstorska razina 10000.
+
 Rekordi se spremaju u odjeljak `highscores` datoteke `mem.json` (uz kôd) – zajedno
 s jezikom (odjeljak `mem`).
 
@@ -15022,7 +16276,7 @@ dotjerano poput modernog pokretača igara:
   prikazuje prethodni rekord kao čip. Uz mnogo načina i malu razlučivost postaje
   **kompaktan**: Opcije, Wiki i Natrag slažu se u jedan red, a font se
   prilagođava - ništa više ne izlazi iz slike.
-- **Ujednačen izgled u igri**: svih 49 igara dijeli paletu teme i font izbornika -
+- **Ujednačen izgled u igri**: svih 50 igara dijeli paletu teme i font izbornika -
   HUD-ovi, zasloni pripreme i prekrivači slijede dizajn odabran u opcijama
   (v4.1 / v4 / Classic), dok svako igralište zadržava svoje prepoznatljive boje.
   Svaka igra sada uredno obrađuje promjenu razlučivosti usred partije, a nazivi u
@@ -15032,15 +16286,15 @@ dotjerano poput modernog pokretača igara:
   kategorijama, člancima koji se pomiču i čipovima s tipkama, na svih 14 jezika.
   Dostupan preko gumba **„Wiki / Pomoć"** u bočnoj traci i sa zaslona pripreme
   svake igre (izravno otvara njezinu stranicu).
-- **Postignuća, rijetkost i razina**: **268 postignuća** u pet kategorija - 60
+- **Postignuća, rijetkost i razina**: **274 postignuća** u pet kategorija - 60
   ciljeva kroz cijelu zbirku (partije, vrijeme igranja, rekordi, pobjede, dani
-  igranja, nizovi, dvoboji …), 40 **bodovnih prekretnica**, 33 **majstorske
-  razine** (druga, znatno viša granica), postignuće **Stalni gost** za svaku igru
-  (25 partija) i 86 **posebnih trenutaka** (šah-mat, Yahtzee, pločica 4096, rupa
-  iz jednog udarca, hat-trick u air hockeyju …). Svako postignuće ima
+  igranja, nizovi, dvoboji …), 41 **bodovna prekretnica**, 34 **majstorske
+  razine** (druga, znatno viša granica), postignuće **Stalni gost** za svaku od
+  50 igara (25 partija) i 89 **posebnih trenutaka** (šah-mat, Yahtzee, pločica
+  4096, rupa iz jednog udarca, hat-trick u air hockeyju …). Svako postignuće ima
   **rijetkost** (uobičajen 10 do mitski 300 bodova); bodovi daju **razinu** s 14
-  **činova** od Mlade lame do Zvjezdane lame. Otključavanje prikazuje obavijest u
-  boji rijetkosti, napredovanje vlastitu s fanfarom.
+  **činova** od Mlade lame do Zvjezdane lame. Otključavanje prikazuje obavijest
+  u boji rijetkosti, napredovanje vlastitu s fanfarom.
 - **Statistika s grafikonima**: pet kartica - Postignuća (filtar, bodovi, XP
   traka), Statistika (kartice, top 10 kao stupci, prsten pobjeda, tablica),
   **Kalendar** (karta dana igranja, nizovi, dani u tjednu, doba dana),
@@ -15068,7 +16322,9 @@ dotjerano poput modernog pokretača igara:
 - Igru odaberite gumbom u izborniku slijeva. Zatim se pojavljuje **zaslon
   pripreme**: odaberite **Jedan igrač** ili **Više igrača**, otiđite na **opcije**
   ili natrag. Strelice/miš za odabir, Enter za pokretanje.
-- **ESC** = pauza / nastavak (u izbornicima: natrag).
+- **ESC** = pauza / nastavak (u izbornicima: natrag). Igre koje bi inače
+  nastavile bez tebe same se pauziraju kad prozor izgubi fokus (kuka pogona
+  `pause_on_blur` - zasad Lama Crash, dok je neki ulog u zraku).
 - **F11** (ili gumb „Puni zaslon uklj./isklj.") = uključivanje/isključivanje punog
   zaslona. Pygame prikaz ostaje ugrađen i uvećava se uz zadržavanje omjera stranica
   (crne trake kad se omjer razlikuje). Prozor se može slobodno mijenjati veličinom.
@@ -15141,10 +16397,10 @@ filepick.py          Dijalozi datoteka ("Izvezi kao ...", "Uvezi")
 prestige.py          Prestiž-sustav za Snake
 competitive.py       Ugađanje Competitive moda za Snake (razine, slot machine, kockarske jabuke)
 ngb.py               Vizualna personalizacija ("mods"): boja glave + koordinatna mreža + izbornik (mem-ngb.json)
-lamabank.py          Lama banka: zajednički račun žetona za Blackjack, Poker, Casino, Lama Crossing, Lama Mines i Lama Plinko (odjeljak casino u mem.json)
+lamabank.py          Lama banka: zajednički račun žetona za Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko i Lama Crash (odjeljak casino u mem.json)
 seedrand.py          Generator slučajnih brojeva s bitovno jednakim brojevima u Pythonu i pregledniku (dnevni načini, nove zagonetke)
-fairness.py          Provjera poštenosti za Lama Mines i Lama Plinko: seed poslužitelja i klijenta, broj kruga, kontrolni kod SHA-256, provjera (parnjaci: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
-chipstats.py         Statistika za Lama Mines i Lama Plinko (krugovi, uloženo, isplaćeno, stopa povrata, krivulja bilance) za prozor S (uz to chipstats.js, chipstats.rs)
+fairness.py          Provjera poštenosti za Lama Mines, Lama Plinko i Lama Crash: seed poslužitelja i klijenta, broj kruga, kontrolni kod SHA-256, provjera (parnjaci: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
+chipstats.py         Statistika za Lama Mines, Lama Plinko i Lama Crash (krugovi, uloženo, isplaćeno, stopa povrata, krivulja bilance) za prozor S (uz to chipstats.js, chipstats.rs)
 i18n.py              Prevoditeljski mehanizam (učitava lang/*.json, t("ključ"))
 lang/
   de.json  en.json  fr.json  es.json  pt.json   Jezični nizovi (jedan ključ po tekstu)
@@ -15187,12 +16443,13 @@ games/
   lamacrossing.py  lamacrossing_logic.py  lamacrossing_draw.py
   lamamines.py  lamamines_logic.py  lamamines_draw.py
   lamaplinko.py  lamaplinko_logic.py  lamaplinko_draw.py
+  lamacrash.py  lamacrash_logic.py  lamacrash_draw.py  lamacrash_world.py  lamacrash_music.py
   levels/              Podaci razina: snake-comp.json, chess-puzzles.json (+ README s izvorima), sudoku-killer.json, geodash.json, geodash_extra.json, geodash_templates.json
 tests/
   arcade_casino_audit.py     Cjelovita provjera (unos, seedrand Python = JS, spremanje, jezične datoteke, zasloni pripreme) + svi audit_*.py
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless provjere po igri
-  audit_lamamines.py  audit_lamaplinko.py  audit_chiplogic.py   Lama Mines, Lama Plinko i zajednička logika žetona (poštenost, statistika, Python = JS = Rust)
+  audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash i zajednička logika žetona (poštenost, statistika, Python = JS = Rust)
   newgames_audit.py  blockjump_audit.py
 rust/                Inačica u Rustu (samostalni .exe, vidi rust/README.md)
   ENGINE.md            Ugovor o prenošenju: kako igra dolazi iz Pythona u Rust
@@ -15201,7 +16458,7 @@ rust/                Inačica u Rustu (samostalni .exe, vidi rust/README.md)
   crates/pgz-engine/   Prozor, crtanje, unos, zvuk, trait Game (ui.py + audio.py + game_base.py)
   crates/pgz-games/    Prenesene igre
   crates/pygamez/      Program: izbornik, bočna traka, zasloni
-  tools/export_defs.py Stvara osnovne podatke (49 igara, 268 postignuća, 10 tema) iz Python izvora
+  tools/export_defs.py Stvara osnovne podatke (50 igara, 274 postignuća, 10 tema) iz Python izvora
   tools/audit.py       Ispitni stol: prijevodi, popis igara, konvencije
 rust.output/         Rezultat gradnje inačice u Rustu (rust.output/release/pygamez.exe)
 ```

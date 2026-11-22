@@ -147,7 +147,7 @@
           "body": [
             "Každá hra s postupem má v mem.json vlastní sekci, například:",
             "- sudoku: vyřešené úrovně s hvězdami a nejlepším časem, rozehraná sudoku a Sudoku dne se sérií.",
-            "- casino: účet Lama banky - lama žetony pro Blackjack, Poker, Casino, Lama Crossing, Lama Mines a Lama Plinko s bilancí každé hry, rozehraným přechodem v Lama Crossing, rozehraným kolem a označením pro automatický režim v Lama Mines a historií, daty férovosti, statistikou a převáděným zbytkem Lama Mines a Lama Plinko.",
+            "- casino: účet Lama banky - lama žetony pro Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko a Lama Crash s bilancí každé hry, rozehraným přechodem v Lama Crossing, rozehraným kolem a označením pro automatický režim v Lama Mines, rozehraným letem v Lama Crash a historií, daty férovosti, statistikou a převáděným zbytkem Lama Mines, Lama Plinko a Lama Crash.",
             "- crossy: sebrané mince, koupené postavy a denní maximum v Crossy Road.",
             "- tetris: nejlepší čas ve Sprintu, nejlepší skóre v Ultra a bilance Versus proti AI.",
             "- g2048: uložené partie 2048 a nejlepší skóre pro každou velikost desky a režim.",
@@ -349,7 +349,7 @@
         {
           "h": "Přehled",
           "body": [
-            "268 úspěchů napříč všemi 49 hrami - od prvního spuštění po Perfect Clear v Tetrisu.",
+            "274 úspěchů napříč všemi 50 hrami - od prvního spuštění po Perfect Clear v Tetrisu.",
             "Každý úspěch má vzácnost a tím i bodovou hodnotu; součet dává tvoji úroveň.",
             "Najdeš je za tlačítkem Úspěchy a statistiky, záložka Úspěchy. Filtr skryje získané nebo zbývající."
           ]
@@ -360,7 +360,7 @@
             "- Obecné: cíle napříč sbírkou - partie, vyzkoušené hry, herní čas, rekordy, výhry, herní dny, série, úroveň a souboje. K tomu extra jako noční sova, maraton nebo víkendový hráč.",
             "- Bodové mety: spravedlivý cílový počet bodů pro každou hru.",
             "- Mistrovské stupně: druhá, výrazně vyšší meta - jen pro hry s otevřeným bodováním.",
-            "- Stálý host: 25 partií jedné hry. Existuje pro všech 49 her.",
+            "- Stálý host: 25 partií jedné hry. Existuje pro všech 50 her.",
             "- Zvláštní okamžiky: šachmat, Yahtzee, dlaždice 4096, hole-in-one, hattrick v air hockeyi, čtyři duchové po jedné pilulce a mnoho dalšího."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Lama žetony",
           "body": [
-            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines a Lama Plinko sdílejí jeden účet v Lama bance: začínáš s 1000 lama žetony a zůstatek se trvale ukládá.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko a Lama Crash sdílejí jeden účet v Lama bance: začínáš s 1000 lama žetony a zůstatek se trvale ukládá.",
             "Sázka se strhne hned při rozdání - kdo opustí rozehranou hru, přijde o ni.",
             "Rekord je nejvyšší stav tvé bilance v blackjacku: 1000 plus vše, co jsi v blackjacku vyhrál a prohrál. Výhry v ruletě, na automatu nebo v pokeru se sem nepočítají.",
             "Pod 10 žetony jsi na mizině: [Enter] vezme úvěr od banky a doplní účet zpět na 1000. Úvěry se do bilance nepočítají."
@@ -1901,7 +1901,7 @@
         {
           "h": "Lama žetony",
           "body": [
-            "Hraje se o lama žetony z Lama banky - společný účet s Blackjackem, Casinem, Lama Crossing, Lama Mines a Lama Plinko (start 1000, trvale ukládán).",
+            "Hraje se o lama žetony z Lama banky - společný účet s Blackjackem, Casinem, Lama Crossing, Lama Mines, Lama Plinko a Lama Crash (start 1000, trvale ukládán).",
             "Na začátku hry leží tvůj účet na stole jako stack; co jde do banku, se hned strhne. Pokud opustíš stůl uprostřed hry, tvůj podíl v banku propadá - zbytek se vrátí na účet.",
             "Rekord je nejvyšší stav tvé bilance v pokeru: 1000 plus vše, co jsi v pokeru vyhrál a prohrál. Výhry v jiných hrách se sem nepočítají.",
             "Na mizině (méně než big blind 20, ve Video Pokeru méně než 10) = úvěr od banky jedním kliknutím, účet je znovu na 1000."
@@ -2976,7 +2976,7 @@
         {
           "h": "Lama banka",
           "body": [
-            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines a Lama Plinko hrají se stejným účtem: lama žetony (start 1000). Sázky se strhnou hned, výhry se připíšou - vše se trvale ukládá.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama Plinko a Lama Crash hrají se stejným účtem: lama žetony (start 1000). Sázky se strhnou hned, výhry se připíšou - vše se trvale ukládá.",
             "Každá hra vede vlastní bilanci. Rekord Casina je nejvyšší stav 1000 + bilance Casina; výhry v Blackjacku nebo Pokeru se sem nepočítají.",
             "Na mizině (méně než minimální sázka) dostaneš úvěr od banky: účet se doplní zpět na 1000. Úvěry se nepočítají do žádné bilance; jejich počet je vidět vpravo nahoře."
           ]
@@ -3109,7 +3109,7 @@
         {
           "h": "Lama žetony",
           "body": [
-            "Lama Crossing hraje se společným účtem Lama banky - spolu s Blackjackem, Pokerem, Casinem, Lama Mines a Lama Plinko (start 1000, uloženo v mem.json).",
+            "Lama Crossing hraje se společným účtem Lama banky - spolu s Blackjackem, Pokerem, Casinem, Lama Mines, Lama Plinko a Lama Crash (start 1000, uloženo v mem.json).",
             "Rekord je nejvyšší stav 1000 + tvé bilance v Lama Crossing; výhry v Blackjacku, Pokeru nebo Casinu se sem nepočítají.",
             "Pod 10 žetony jsi na mizině: [Enter] nebo kliknutí vezme úvěr od banky a doplní účet zpět na 1000. Úvěry se do bilance nepočítají.",
             "Skončit uprostřed přechodu je bezpečné: sázka, obtížnost i pruh se uloží a při dalším spuštění pokračuješ přesně tam."
@@ -3263,7 +3263,7 @@
         {
           "h": "Lama žetony",
           "body": [
-            "Lama Mines hraje se společným účtem Lama banky - spolu s Blackjackem, Pokerem, Casinem, Lama Crossing a Lama Plinko (start 1000, uloženo v mem.json).",
+            "Lama Mines hraje se společným účtem Lama banky - spolu s Blackjackem, Pokerem, Casinem, Lama Crossing, Lama Plinko a Lama Crash (start 1000, uloženo v mem.json).",
             "Rekord je nejvyšší stav 1000 + tvé bilance v Lama Mines; výhry v ostatních hrách Lama banky se sem nepočítají.",
             "Pod 10 žetony jsi na mizině: [Mezerník], [Enter] nebo kliknutí vezme úvěr od banky a doplní účet zpět na 1000. Úvěry se do bilance nepočítají.",
             "Skončit uprostřed kola je bezpečné: sázka se strhne na začátku a po každém nalezeném drahokamu se uloží velikost pole, miny, seedy kola a odkrytá políčka. Při dalším spuštění se pole znovu spočítá ze seedu a pokračuješ přesně tam.",
@@ -3418,7 +3418,7 @@
         {
           "h": "Lama žetony",
           "body": [
-            "Lama Plinko hraje se společným účtem Lama banky - spolu s Blackjackem, Pokerem, Casinem, Lama Crossing a Lama Mines (start 1000, uloženo v mem.json).",
+            "Lama Plinko hraje se společným účtem Lama banky - spolu s Blackjackem, Pokerem, Casinem, Lama Crossing, Lama Mines a Lama Crash (start 1000, uloženo v mem.json).",
             "Rekord je nejvyšší stav 1000 + tvé bilance v Lama Plinko; výhry v ostatních hrách se sem nepočítají.",
             "Pokud účet nepokryje zvolenou sázku, vyber menší. S 0 žetony jsi na mizině: [Enter] nebo kliknutí vezme úvěr od banky a doplní účet zpět na 1000. Úvěry se do bilance nepočítají.",
             "Historie, statistiky a údaje kontroly férovosti patří k tvému profilu a také se ukládají do mem.json."
@@ -3444,6 +3444,163 @@
             "- Zásah na kraji: nejrychleji při 12 řadách - tam dopadne zhruba 1 z 2 048 kuliček úplně na okraj (vlevo nebo vpravo). Při 1 žetonu na kuličku to v průměru stojí jen asi 3 žetony na 100 kuliček.",
             "- Déšť klubíček: stačí podržet [Mezerník] - rychlá palba dostane na desku najednou asi 30 kuliček při jakémkoli počtu řad a zhruba po 2 sekundách je úspěch tvůj. Automatický režim na to hází příliš pomalu.",
             "- Legenda Plinka: při 16 řadách a riziku „Vysoké“ dopadne úplně na okraj jen 1 z 32 768 kuliček - se sériemi automatického režimu po 1000 kuličkách potřebuješ v průměru asi 33 sérií. Zato tahle přihrádka platí ×1 000.",
+            "- Stanov si předem rozpočet a v automatickém režimu používej limit ztráty."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrash",
+      "category": "games",
+      "game": "LamaCrashGame",
+      "title": "Lama Crash",
+      "keywords": [
+        "lama",
+        "crash",
+        "balon",
+        "horkovzdušný balon",
+        "násobitel",
+        "vyplatit",
+        "výplata",
+        "prasknutí",
+        "bod prasknutí",
+        "auto cíl",
+        "polovina",
+        "dvě sázky",
+        "výška",
+        "měsíc",
+        "žetony",
+        "lama banka",
+        "auto",
+        "turbo",
+        "hudba",
+        "férovost",
+        "provably fair",
+        "kontrolní kód",
+        "seed",
+        "sha-256",
+        "statistiky"
+      ],
+      "sections": [
+        {
+          "h": "Jak se hraje",
+          "body": [
+            "Tvoje lama stoupá v balonu a násobitel s každou sekundou roste: ×1,00, ×1,50, ×2,00 … Když vyplatíš, dostaneš sázku krát násobitel v tu chvíli. Když balon praskne dřív, sázka je pryč.",
+            "Vyber sázku (10, 20, 50 … až 10000 Lama žetonů) a stiskni HRÁT: sázka se strhne a po krátkém odpočtu 3-2-1 balon vzlétne. Od ×1,01 můžeš kdykoli stisknout VYPLATIT - lama vyskočí s padákem a výhra se hned připíše.",
+            "Kdy balon praskne, je dané už před startem - ale nikdo to nevidí: balon, hudba ani zvuky nic neprozradí. Jen se s rostoucí výškou nafukuje víc a víc.",
+            "Po vyplacení letí prázdný balon dál, dokud nepraskne - uvidíš tak, kam až by se dostal. Klávesou [Mezerník] nebo tlačítkem PŘETOČIT to proběhne zrychleně. Vpravo nahoře jsou body prasknutí posledních 12 kol.",
+            "Časy: ×2 po 11,6 sekundy, ×10 po 38 sekundách, ×100 po 77 sekundách, ×100 000 po 3,2 minuty. Turbo ([T]) všechno trojnásobně zrychlí."
+          ]
+        },
+        {
+          "h": "Dvě sázky a výplata poloviny",
+          "body": [
+            "Klávesou [Z] nebo přepínačem na kartě 2 vezmeš s sebou druhou lamu: dvě sázky v tomtéž kole, každá s vlastní částkou a vlastním auto cílem. Obě letí ve stejném balonu - třeba jedna opatrně s cílem ×1,50, druhá odvážně s cílem ×10.",
+            "- [Mezerník] / [Enter] / [C] nebo VYPLATIT dole: vyplatí se všechny sázky, které ještě letí",
+            "- [1] / [2] nebo tlačítko na kartě: jen tahle sázka",
+            "- [H] nebo POLOVINA: každá dosud nerozdělená sázka vyplatí polovinu, druhá polovina letí dál",
+            "- [Q] / [W] nebo tlačítko poloviny na kartě: polovina jen této sázky",
+            "Každou sázku jde rozpůlit jen jednou. Vyplacenou polovinu lama shodí jako pytel peněz na malém padáku.",
+            "Auto cíl: klávesami [Vlevo] / [Vpravo] (nebo kolečkem myši nad cílem) nastavíš násobitel, při kterém se sázka vyplatí sama (×1,01 až ×100 000); [X] ho zapne nebo vypne. Když balon cíle dosáhne, vyplácí se přesně při cíli - i kdyby v tu samou chvíli praskl."
+          ]
+        },
+        {
+          "h": "Jak vzniká bod prasknutí",
+          "body": [
+            "Pro každé kolo se vylosuje náhodné číslo r od 0 do 2^32 - 1. Bod prasknutí je 97 × 2^32 / (2^32 - r), zaokrouhleno dolů na setiny, nejméně ×1,00 a nejvýš ×100 000. Asi 4 % kol praskne hned při ×1,00 - dřív, než jde vyplatit.",
+            "Z toho plyne jednoduché pravidlo: šance dosáhnout cíle x je 97 % děleno x. Ať vyplácíš kdykoli - dlouhodobě se vrací 97 % sázek:",
+            "- ×1,50: 64,67 % · ×2: 48,50 % · ×3: 32,33 % · ×5: 19,40 %",
+            "- ×10: 9,70 % · ×100: 0,97 % · ×1 000: 0,097 % · ×100 000: 0,001 %",
+            "Když vyplatíš ručně při nějakém násobiteli, vyhraješ přesně tehdy, když balon praskne později - jako bys ho nastavil jako auto cíl.",
+            "Kdo dosáhne ×100 000, přistane na Měsíci: maximální výhra, všechny ještě letící sázky se vyplatí s ×100 000.",
+            "Přenos zbytku: co při zaokrouhlení výplaty dolů zbude v setinách, připíše se k další - ani malé sázky nic neztrácejí."
+          ]
+        },
+        {
+          "h": "Výškové světy a hudba",
+          "body": [
+            "Čím vyšší násobitel, tím výš balon letí - šesti světy:",
+            "- Lamí louka (od ×1): pastvina, plot a chlév zůstávají dole",
+            "- Moře mraků (od ×1,50): mraky a hejna ptáků",
+            "- Bouřková fronta (od ×3): déšť, blesky a letadla",
+            "- Polární záře (od ×10): hvězdy a tančící polární záře",
+            "- Vesmír (od ×100): zakřivení Země, satelity, padající hvězdy - a Měsíc je stále větší",
+            "- Měsíc (×100 000): přistání na Měsíci",
+            "Napínavá hudba je s každým světem rychlejší a vyšší; od ×2 natažený balon vrže. [M] hudbu zapne nebo vypne."
+          ]
+        },
+        {
+          "h": "Automatický režim",
+          "body": [
+            "[A] otevře automatický režim (jen mezi koly). Nastavíš v něm:",
+            "- Kola: 5, 10, 25, 50, 100 nebo 250",
+            "- Stop při zisku od / Stop při ztrátě od: vyp., 100, 500, 1000, 5000, 10000 nebo 50000 žetonů",
+            "- Turbo zapnuto nebo vypnuto",
+            "SPUSTIT AUTO hraje kola jedno po druhém s tvými sázkami a auto cíli; sázce bez auto cíle se nějaký zapne. Když je vše vyplaceno, automaticky se přetáčí. Ručně vyplatit můžeš i tak kdykoli.",
+            "Automatický režim běží, dokud se nedosáhne počtu kol, nezasáhne limit, nedojdou žetony nebo nestiskneš STOP, [Esc] či [A] - kolo, které už letí, pak normálně doletí."
+          ]
+        },
+        {
+          "h": "Kontrola férovosti",
+          "body": [
+            "V Lama Crash si můžeš sám ověřit, že se bod prasknutí dodatečně nemění („provably fair“):",
+            "- Seed serveru: tajná náhodná hodnota o 32 znacích, stanovená před kolem",
+            "- Kontrolní kód: otisk SHA-256 seedu serveru - vidět už před startem",
+            "- Seed klienta: tvůj vlastní podíl (8 znaků); „Nový seed klienta“ vylosuje nový, když neběží žádné kolo",
+            "K tomu přistupuje číslo kola (nonce). Po kole se seed serveru odhalí - kontrolní kód dalšího kola je v tu chvíli už pevně daný.",
+            "[F] ukáže posledních 12 kol. „Ověřit“ ([Enter]) zkontroluje kontrolní kód, znovu spočítá bod prasknutí a fajfkou nebo křížkem ukáže, jestli vše sedí - k tomu malá křivka s tvými výběry.",
+            "Pro zvědavé: náhoda je mulberry32, spuštěný hodnotou FNV-1a textu „lamacrash|seed serveru|seed klienta|číslo“; r je první číslo z něj."
+          ]
+        },
+        {
+          "h": "Statistiky",
+          "body": [
+            "[S] otevře statistiky tvého profilu pro Lama Crash:",
+            "- Dlaždice: Kola, Výhry, Prohry, Tvá návratnost, Vsazeno, Vyplaceno, Bilance, Největší výhra, Max. násobitel (nejvyšší výběr), Max. bod prasknutí, Vyplacené poloviny a O chlup",
+            "- křivka bilance za posledních 100 kol",
+            "- rozdělení bodů prasknutí tvých kol jako sloupce, očekávané rozdělení zlatě"
+          ]
+        },
+        {
+          "h": "Ovládání",
+          "body": [
+            "- [Mezerník] / [Enter] nebo HRÁT: spustit kolo; v letu: vyplatit vše; potom: přetočit",
+            "- [1] / [2] nebo [Tab]: vybrat kartu (před kolem) nebo vyplatit jednu sázku (v letu)",
+            "- [Nahoru] / [Dolů], [+] / [-] nebo kolečko myši: sázka vybrané karty",
+            "- [Vlevo] / [Vpravo] nebo kolečko myši nad cílem: auto cíl; [X]: auto cíl zap./vyp.; [Z]: druhá sázka",
+            "- [H]: polovina všech nerozdělených sázek; [Q] / [W]: polovina sázky 1 nebo 2",
+            "- [A]: automatický režim, [S]: statistiky, [F]: kontrola férovosti, [T]: turbo, [M]: hudba",
+            "- [Esc]: zavřít okno nebo zastavit auto, jinak pauza",
+            "Okna jdou otevřít jen tehdy, když neletí žádná sázka. Když okno hry ztratí fokus, zatímco sázka letí, hra se sama pozastaví. Sázky, cíle, turbo, hudba a nastavení automatického režimu se ukládají do settings.json (sekce lamacrash)."
+          ]
+        },
+        {
+          "h": "Lama žetony",
+          "body": [
+            "Lama Crash hraje se společným účtem Lama banky - spolu s Blackjackem, Pokerem, Casinem, Lama Crossing, Lama Mines a Lama Plinko (start 1000, uloženo v mem.json).",
+            "HRÁT strhne sázku a uloží kolo najednou, každý výběr hned připíše výhru. Když hru opustíš uprostřed letu, nic se neztratí: při dalším spuštění proběhne odpočet a balon stoupá dál přesně odtamtud - bod prasknutí je přece už daný.",
+            "Rekord je nejvyšší stav 1000 + tvé bilance v Lama Crash. Pod 10 žetony jsi na mizině: [Enter] nebo kliknutí vezme úvěr od banky a doplní účet zpět na 1000."
+          ]
+        },
+        {
+          "h": "Úspěchy",
+          "body": [
+            "- Stálý host hry Lama Crash: 25 partií",
+            "- Milník: rekord 3000",
+            "- Mistr hry Lama Crash: rekord 10000",
+            "- O chlup (vzácný): Vyber výhru ručně při ×2 nebo více - nejvýš 5 % před prasknutím",
+            "- Pilot polární záře (epický): Vyber výhru při ×10 nebo více",
+            "- Vesmírná lama (legendární): Vyber výhru při ×1000 nebo více"
+          ]
+        },
+        {
+          "h": "Tipy",
+          "body": [
+            "- Každé kolo je nezávislé: po pěti brzkých prasknutích dlouhý let „nepřijde na řadu“.",
+            "- Žádná strategie nepřekoná 97 %. Nízké cíle vyhrávají často a málo, vysoké zřídka a hodně.",
+            "- Dvě sázky spojí obojí: jedna jistí brzy, druhá letí daleko.",
+            "- O chlup se počítá jen při ručním výběru - s auto cíli se nepočítá.",
+            "- Pilot polární záře: auto cíl ×10 vyjde zhruba v každém desátém kole; Vesmírná lama s cílem ×1 000 zhruba v každém tisícím - s turbem trvá takový let 38 sekund.",
             "- Stanov si předem rozpočet a v automatickém režimu používej limit ztráty."
           ]
         }

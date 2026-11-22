@@ -8,6 +8,167 @@
 
 ## 🇩🇪 Deutsch
 
+### Lama Crash – 2026-11-21
+
+Spiel Nr. 50 ist ein Crash-Spiel mit Lama-Chips: **Lama Crash**. Ein Lama
+steigt im Heißluftballon auf, und der Multiplikator wächst mit jeder Sekunde –
+wer rechtzeitig aussteigt, bekommt Einsatz × Multiplikator, wer zu lange
+wartet, verliert den Einsatz, sobald der Ballon platzt. Die Reise führt durch
+**sechs Höhenwelten** von der Lamawiese bis zur **Mondlandung bei ×100.000**,
+begleitet von Spannungsmusik, die mit jeder Welt schneller wird. Dazu kommen
+**zwei Einsätze** mit eigenem Auto-Ziel, **Halbieren**, ein Auto-Modus, eine
+Statistik und derselbe **Fairness-Check** wie bei Lama Mines und Lama Plinko –
+jeder Platzpunkt lässt sich nachrechnen, und jedes Ausstiegsziel bringt 96,997
+bis 97,000 % zurück. Außerdem **6 neue Erfolge** – jetzt **274** insgesamt.
+Alles in 14 Sprachen, mit LamaWiki-Seite, in beiden READMEs, in der
+Web-Version, in der Rust-Fassung und auf pygamez.com.
+
+#### Neu
+
+**Lama Crash** (Spiel Nr. 50, im Menü nach Lama Plinko)
+- Einsatz wählen (10, 20, 50 … bis 10000 Lama-Chips), **SPIELEN** drücken: Der
+  Einsatz wird abgebucht, nach einem kurzen 3-2-1 hebt der Ballon ab. Ab ×1,01
+  darf man jederzeit **AUSSTEIGEN** – das Lama springt mit dem Fallschirm ab,
+  der Gewinn wird sofort gutgeschrieben. Platzt der Ballon vorher, ist der noch
+  fliegende Einsatz weg.
+- **Steigkurve**: ×2 nach 11,6 s, ×10 nach 38,4 s, ×100 nach 76,8 s, ×100.000
+  nach 192 s – ganzzahlig (`mu += mu // 1000` je Takt von 1/60 s) und in
+  Python, JavaScript und Rust bitgleich (`games/lamacrash_logic.py`). **Turbo**
+  (T) steigt dreimal so schnell.
+- **Leerflug**: Nach dem Aussteigen fliegt der leere Ballon weiter, bis er
+  platzt („Alle draußen – Ballon steigt“) – so sieht man, wie weit es gegangen
+  wäre. Leertaste bzw. VORSPULEN läuft 16-mal so schnell.
+- **Platzpunkt und Quote**: Für jede Runde wird eine 32-Bit-Zufallszahl r
+  gezogen, der Platzpunkt ist `⌊97 · 2³² / (2³² − r)⌋` in Hundertsteln (×1,00
+  bis ×100.000). Die Chance, ×x zu erreichen, ist damit 97 % / x – jedes
+  Ausstiegsziel bringt 96,997 bis 97,000 % zurück, rund 3,96 % der Runden
+  platzen schon bei ×1,00. Der Ballon platzt erst, wenn der Multiplikator den
+  Platzpunkt überschreitet: Von Hand bei ×m auszusteigen gewinnt unter genau
+  derselben Bedingung wie ein Auto-Ziel ×m. Wer ×100.000 erreicht, landet auf
+  dem Mond – Höchstgewinn für alle noch fliegenden Einsätze.
+- **Zwei Einsätze** (Z oder Schalter auf Karte 2): ein zweites Lama im Korb,
+  jedes mit eigenem Betrag und eigenem **Auto-Ziel** (×1,01 bis ×100.000, ←/→,
+  X an/aus). Ein Auto-Ziel zahlt genau beim Ziel aus – auch wenn der Ballon im
+  selben Takt platzt. Jeder Einsatz lässt sich einmal **halbieren** (H für
+  alle, Q/W einzeln): Die Hälfte fliegt als Geldsack am Mini-Fallschirm davon,
+  der Rest steigt weiter.
+- **Sechs Höhenwelten**: Lamawiese → Wolkenmeer (ab ×1,5) → Gewitterfront (ab
+  ×3, Regen, Blitze, Flugzeuge) → Nordlicht (ab ×10) → Weltall (ab ×100,
+  Erdkrümmung, Satelliten, Sternschnuppen, ein immer größerer Mond) →
+  **Mondlandung** mit Fahne, Konfetti und Münzregen. Jede neue Welt wird beim
+  Erreichen angesagt; die Welten blenden weich ineinander über, der Ballon
+  bläht sich mit der Höhe immer weiter auf, und darüber läuft die
+  Multiplikator-Kurve mit mitwachsenden Achsen (`games/lamacrash_world.py`,
+  `games/lamacrash_draw.py` – alles aus pygame-Primitiven, ohne Bilddateien).
+- **Spannungsmusik** (`games/lamacrash_music.py`): ein Stück in sechs Stufen,
+  je Höhenwelt eine – von der Wiese bis ins Weltall mit jeder Welt einen
+  Ganzton höher und schneller (96 bis 150 bpm), auf dem Mond eine Fanfare; M
+  schaltet sie an oder aus. Ab ×2 quietscht der gedehnte Ballon.
+- **Nichts verrät den Platzpunkt**: Bild, Musik und Töne hängen nur vom
+  aktuellen Multiplikator ab.
+- **Platzen**: Knall, Gummifetzen und Kamera-Wackeln, noch sitzende Lamas
+  purzeln samt Korb aus dem Bild. Gejubelt wird beim Aussteigen: Münzregen ab
+  ×3, Konfetti ab ×10, Gewinn-Banner ab ×100. Oben rechts stehen die
+  Platzpunkte der letzten 12 Runden als farbige Pillen.
+- **Auto-Modus** (A): 5, 10, 25, 50, 100 oder 250 Runden, Stopp bei Gewinn ab
+  bzw. bei Verlust ab (aus, 100, 500, 1000, 5000, 10000 oder 50000 Chips) und
+  Turbo. Jeder aktive Einsatz bekommt ein Auto-Ziel, im Leerflug wird
+  automatisch vorgespult, von Hand aussteigen geht weiterhin. Wird Auto
+  gestoppt, fliegt eine laufende Runde normal zu Ende.
+- **Fairness-Check** (F) wie bei Lama Mines und Lama Plinko: Prüfcode vorab,
+  Seed nach der Runde; „Nachrechnen“ prüft den Prüfcode, berechnet den
+  Platzpunkt neu, kontrolliert die Ausstiege und zeigt ✓ oder ✗ samt
+  Mini-Kurve.
+- **Statistik** (S): die Kacheln der Chip-Spiele plus Max. Platzpunkt,
+  Halbierungen und Haarscharf, die Bilanzkurve der letzten 100 Runden und die
+  **Verteilung der Platzpunkte** in sieben Fächern als Balken gegen die
+  erwartete Verteilung.
+- **Lama-Bank**: dasselbe Konto wie Blackjack, Poker, Casino, Lama Crossing,
+  Lama Mines und Lama Plinko. SPIELEN bucht den Gesamteinsatz und speichert die
+  Runde in einem Zug (`lamabank.bet_and_pay`), jeder Ausstieg schreibt den
+  Gewinn sofort gut, und ein Rest-Übertrag der Hundertstel kommt der nächsten
+  Auszahlung zugute. Highscore = Höchststand von 1000 + Lama-Crash-Bilanz;
+  unter 10 Chips gibt es einen Bank-Kredit auf 1000. Replays gibt es – wie bei
+  allen Chip-Spielen – nicht.
+- **Fortsetzen nach dem Verlassen**: Wer mitten im Flug geht, macht beim
+  nächsten Start nach einem Countdown am selben Takt weiter – der Platzpunkt
+  steht ja schon fest. Wer erst im Leerflug geht, dessen Runde wird sofort
+  abgeschlossen.
+- **Pause bei Fokusverlust**: Verliert das Fenster den Fokus, während ein
+  Einsatz fliegt, pausiert das Spiel von selbst – sonst stiege der Ballon
+  weiter, während man woanders ist.
+- Steuerung: vor der Runde Leertaste/Enter = SPIELEN, 1/2/Tab = Karte wählen,
+  ↑/↓/+/-/Mausrad = Einsatz, ←/→ = Auto-Ziel, X = Ziel an/aus, Z = zweiter
+  Einsatz; im Flug Leertaste/Enter/C = alle aussteigen, 1/2 = einzeln, H =
+  Hälfte, Q/W = Hälfte einzeln; danach Leertaste = Vorspulen; A/S/F/T/M =
+  Auto, Statistik, Fairness, Turbo, Musik. Die Tasten sind fest und hängen
+  nicht an der Steuerungs-Belegung. Einsätze, Ziele, Turbo, Musik und die
+  Auto-Einstellungen stehen im Abschnitt `lamacrash` der `settings.json` (mit
+  Prüfregeln in `settings.py`).
+- Eigenes Sidebar-Piktogramm – ein Ballon über einer steigenden Kurve – und
+  eine eigene rote Akzentfarbe; 72 neue Texte in allen 14 Sprachen.
+
+**6 neue Erfolge** (jetzt 274)
+- **Lama Crash-Stammgast** (25 Partien), ein Meilenstein von **3000** und
+  Meister **10000**.
+- **Haarscharf** (selten): von Hand ab ×2 aussteigen – höchstens 5 % vor dem
+  Platzen. Zählt nur von Hand, nicht mit Auto-Zielen.
+- **Polarlicht-Pilot** (episch): bei ×10 oder mehr aussteigen.
+- **Weltraumlama** (legendär): bei ×1000 oder mehr aussteigen.
+- Insgesamt jetzt 60 allgemeine Erfolge, 41 Meilensteine, 34 Meister-Stufen, 89
+  besondere Momente und 50 Stammgast-Erfolge; höchstens **11010 Erfolgspunkte**
+  (bisher 10680), das entspricht Level **51** (bisher 50).
+
+**Web**
+- Lama Crash läuft auch in der Web-Version – mit derselben Kurve, denselben
+  Platzpunkten, Welten, Musik und Erfolgen; die Pause bei Fokusverlust gibt es
+  dort ebenso.
+
+**Rust-Fassung**
+- Lama Crash gibt es auch in der Rust-.exe – bild- und datengleich mit Python.
+  Damit sind es **50/50 Spiele**.
+
+**Website**
+- Auf pygamez.com ist Lama Crash dabei – mit der im Konto gespeicherten
+  Lama-Bank, auch in der Handy-Version; die Spielezahl steht in allen 14
+  Sprachen auf 50.
+
+**Tests**
+- Neu: `tests/audit_lamacrash.py` – Lama-Bank-Buchungen, Aussteigen, Leerflug
+  und Vorspulen, zwei Einsätze und Hälfte, Auto-Ziel genau am Ziel und
+  Mondlandung, Erfolge, Fortsetzen nach dem Verlassen, **Zwillingsrunden**
+  (Platzpunkt ×5 und ×50 sehen und klingen bis ×4,99 Bild für Bild gleich –
+  nichts verrät den Platzpunkt), Fairness-Nachrechnung, Takte unabhängig von
+  der Bildrate (30/60/144 Hz), Turbo, Pause und `pause_on_blur`, Auto-Modus,
+  Tasten, Maus, Pleite und Kredit sowie das Layout in 5 Auflösungen × 14
+  Sprachen (UI v4.2 und v1).
+- `tests/audit_chiplogic.py` prüft jetzt auch die Crash-Regeln (18)–(22): die
+  Platzpunkt-Formel vollständig am 2¹⁶-Gegenstück, die exakte Quote je Ziel,
+  die Steigkurve und ihre Umkehrung, die Takt-Regel gegen eine Referenz (400
+  Zufallsrunden), Monte-Carlo mit echten Seeds sowie Zähler, Texte, Achsen und
+  Welten. `devtools/export_chiplogic_ref.py` schreibt dafür einen neuen
+  Abschnitt `crash` mit den Prüfwerten für die Rust-Unit-Tests.
+
+#### Geändert
+
+- **Engine**: neuer Haken `pause_on_blur` in `game_base.py` – ein Spiel kann
+  (auch als property) verlangen, beim Verlust des Fensterfokus pausiert zu
+  werden; `main.py` prüft das direkt nach dem Loslassen der Tasten. Lama Crash
+  nutzt ihn, solange ein Einsatz fliegt. Dasselbe gibt es in der Web-Version
+  (`web/js/app.js`) und in der Rust-Fassung.
+- **Lama-Bank**: `lamabank.py` kennt Lama Crash (`GAMES`, Mindesteinsatz 10 in
+  `MIN_BET`).
+
+**Dokumentation**
+- LamaWiki: neue Seite **Lama Crash** in allen 14 Sprachen; *Erfolge,
+  Seltenheit & Level* (274 Erfolge, 50 Spiele), *Speichern & Highscores* und
+  die Lama-Bank-Absätze von Blackjack, Poker, Casino, Lama Crossing, Lama Mines
+  und Lama Plinko aktualisiert.
+- Beide READMEs: 50 Spiele, neue Tabellenzeile, Feature-Abschnitt,
+  Projektstruktur und Erfolgszahlen.
+
+---
+
 ### Lama Mines & Lama Plinko – 2026-11-21
 
 Zwei neue Chip-Spiele auf einmal: **Lama Mines** (Spiel Nr. 48) und **Lama
@@ -1590,6 +1751,164 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Lama Crash – 2026-11-21
+
+Game no. 50 is a crash game with llama chips: **Lama Crash**. A llama rises in
+a hot-air balloon while the multiplier grows every second – cash out in time
+and you get bet × multiplier, wait too long and the bet is gone the moment the
+balloon pops. The trip leads through **six altitude worlds** from the llama
+meadow to the **moon landing at ×100,000**, accompanied by suspense music that
+speeds up with every world. On top of that come **two bets** with their own
+auto target, **halving**, an auto mode, statistics and the same **fairness
+check** as in Lama Mines and Lama Plinko – every pop point can be
+recalculated, and every cash-out target returns 96.997 to 97.000%. Plus **6 new
+achievements** – **274** in total. Everything in 14 languages, with a LamaWiki
+page, in both READMEs, in the web version, in the Rust build and on
+pygamez.com.
+
+#### New
+
+**Lama Crash** (game no. 50, in the menu after Lama Plinko)
+- Pick a bet (10, 20, 50 … up to 10000 llama chips) and press **PLAY**: the bet
+  is taken, and after a short 3-2-1 the balloon lifts off. From ×1.01 on you
+  may **CASH OUT** at any time – the llama jumps off with a parachute and the
+  win is credited at once. If the balloon pops first, the bet still in the air
+  is lost.
+- **Climb curve**: ×2 after 11.6 s, ×10 after 38.4 s, ×100 after 76.8 s,
+  ×100,000 after 192 s – integer-only (`mu += mu // 1000` per tick of 1/60 s)
+  and bit-identical in Python, JavaScript and Rust
+  (`games/lamacrash_logic.py`). **Turbo** (T) climbs three times as fast.
+- **Empty flight**: after cashing out the empty balloon keeps rising until it
+  pops ("All out – the balloon keeps rising") – so you see how far it would
+  have gone. Space or FAST FORWARD runs it 16 times as fast.
+- **Pop point and return**: every round draws a 32-bit random number r, and
+  the pop point is `⌊97 · 2³² / (2³² − r)⌋` in hundredths (×1.00 to
+  ×100,000). So the chance of reaching ×x is 97% / x – every cash-out target
+  returns 96.997 to 97.000%, and about 3.96% of rounds pop right at ×1.00. The
+  balloon only pops once the multiplier exceeds the pop point: cashing out by
+  hand at ×m wins under exactly the same condition as an auto target of ×m.
+  Reach ×100,000 and you land on the moon – the max win for every bet still in
+  the air.
+- **Two bets** (Z or the switch on card 2): a second llama in the basket, each
+  with its own amount and its own **auto target** (×1.01 to ×100,000, ←/→, X
+  on/off). An auto target pays exactly the target – even if the balloon pops
+  in the same tick. Each bet can be **halved** once (H for all, Q/W for one):
+  that half floats away as a money sack on a mini parachute while the rest
+  keeps climbing.
+- **Six altitude worlds**: llama meadow → sea of clouds (from ×1.5) → storm
+  front (from ×3, rain, lightning, planes) → northern lights (from ×10) →
+  outer space (from ×100, the curve of the Earth, satellites, shooting stars,
+  an ever bigger moon) → **moon landing** with a flag, confetti and a coin
+  shower. Each new world is announced as you reach it; the worlds blend
+  smoothly into one another, the balloon inflates more and more with altitude,
+  and the multiplier curve runs on top with growing axes
+  (`games/lamacrash_world.py`, `games/lamacrash_draw.py` – all drawn from
+  pygame primitives, no image files).
+- **Suspense music** (`games/lamacrash_music.py`): one piece in six stages,
+  one per altitude world – from the meadow up to outer space a whole tone
+  higher and faster with every world (96 to 150 bpm), a fanfare on the moon;
+  M switches it on or off. From ×2 on the stretched balloon squeaks.
+- **Nothing gives the pop point away**: picture, music and sounds depend only
+  on the current multiplier.
+- **Pop**: a bang, rubber shreds and camera shake; llamas still on board
+  tumble out of the picture together with the basket. The celebrating happens
+  when you cash out: a coin shower from ×3, confetti from ×10, a win banner
+  from ×100. The top right shows the pop points of the last 12 rounds as
+  coloured pills.
+- **Auto mode** (A): 5, 10, 25, 50, 100 or 250 rounds, stop at a profit of or
+  at a loss of (off, 100, 500, 1000, 5000, 10000 or 50000 chips) and turbo.
+  Every active bet gets an auto target, an empty balloon is fast-forwarded
+  automatically, and you can still cash out by hand. Stopping auto lets a
+  round in the air fly on normally.
+- **Fairness check** (F) as in Lama Mines and Lama Plinko: hash beforehand,
+  seed after the round; "Verify" checks the hash, recalculates the pop point,
+  checks the cash-outs and shows ✓ or ✗ with a mini curve.
+- **Statistics** (S): the chip games' tiles plus top pop point, half cash-outs
+  and close calls, the net-result curve of the last 100 rounds and the
+  **distribution of pop points** in seven buckets as bars against the
+  expected distribution.
+- **Llama Bank**: the same account as Blackjack, Poker, Casino, Lama Crossing,
+  Lama Mines and Lama Plinko. PLAY takes the total bet and saves the round in
+  one go (`lamabank.bet_and_pay`), every cash-out credits the win right away,
+  and a carry-over of the hundredths goes to the next payout. High score =
+  peak of 1000 + Lama Crash balance; below 10 chips you get a bank loan back
+  up to 1000. Like all chip games, it has no replays.
+- **Resume after leaving**: leave mid-flight and the next start continues at
+  the same tick after a countdown – the pop point is fixed anyway. Leave during
+  the empty flight and the round is settled right away.
+- **Pause on focus loss**: if the window loses focus while a bet is in the
+  air, the game pauses by itself – otherwise the balloon would keep climbing
+  while you are elsewhere.
+- Controls: before a round Space/Enter = PLAY, 1/2/Tab = pick a card,
+  ↑/↓/+/-/mouse wheel = bet, ←/→ = auto target, X = target on/off, Z = second
+  bet; in flight Space/Enter/C = everyone out, 1/2 = one bet, H = half, Q/W =
+  half of one bet; afterwards Space = fast-forward; A/S/F/T/M = auto,
+  statistics, fairness, turbo, music. The keys are fixed and don't depend on
+  the control bindings. Bets, targets, turbo, music and the auto settings are
+  stored in the `lamacrash` section of `settings.json` (with validation rules
+  in `settings.py`).
+- Its own sidebar pictogram – a balloon above a rising curve – and its own red
+  accent colour; 72 new texts in all 14 languages.
+
+**6 new achievements** (now 274)
+- **Lama Crash regular** (25 rounds), a **3000** milestone and a **10000**
+  master tier.
+- **Close Call** (rare): cash out by hand at ×2 or more – at most 5% before
+  the pop. Only counts by hand, not with auto targets.
+- **Aurora Pilot** (epic): cash out at ×10 or more.
+- **Space Llama** (legendary): cash out at ×1000 or more.
+- That makes 60 general achievements, 41 milestones, 34 master tiers, 89
+  special moments and 50 regulars; at most **11010 achievement points** (was
+  10680), which is level **51** (was 50).
+
+**Web**
+- Lama Crash also runs in the web version – with the same curve, pop points,
+  worlds, music and achievements; the pause on focus loss is there as well.
+
+**Rust build**
+- Lama Crash is in the Rust .exe as well – picture- and data-identical to
+  Python. That makes **50/50 games**.
+
+**Website**
+- Lama Crash is on pygamez.com – with the Llama Bank saved in your account,
+  also in the phone version; the game count reads 50 in all 14 languages.
+
+**Tests**
+- New: `tests/audit_lamacrash.py` – Llama Bank bookings, cashing out, empty
+  flight and fast-forward, two bets and halves, auto targets paying exactly
+  the target and the moon landing, achievements, resuming after leaving,
+  **twin rounds** (pop points ×5 and ×50 look and sound identical up to ×4.99,
+  frame by frame – nothing gives the pop point away), fairness verification,
+  ticks independent of the frame rate (30/60/144 Hz), turbo, pause and
+  `pause_on_blur`, auto mode, keys, mouse, going broke and the loan, and the
+  layout in 5 resolutions × 14 languages (UI v4.2 and v1).
+- `tests/audit_chiplogic.py` now also checks the crash rules (18)–(22): the
+  pop-point formula in full against its 2¹⁶ counterpart, the exact return per
+  target, the climb curve and its inverse, the tick rule against a reference
+  (400 random rounds), Monte Carlo with real seeds, and counters, texts, axes
+  and worlds. For this `devtools/export_chiplogic_ref.py` writes a new `crash`
+  section with the reference values for the Rust unit tests.
+
+#### Changed
+
+- **Engine**: new hook `pause_on_blur` in `game_base.py` – a game can ask (also
+  as a property) to be paused when the window loses focus; `main.py` checks it
+  right after releasing the keys. Lama Crash uses it while a bet is in the
+  air. The same exists in the web version (`web/js/app.js`) and in the Rust
+  build.
+- **Llama Bank**: `lamabank.py` knows Lama Crash (`GAMES`, minimum bet 10 in
+  `MIN_BET`).
+
+**Documentation**
+- LamaWiki: new **Lama Crash** page in all 14 languages; *Achievements, rarity
+  & level* (274 achievements, 50 games), *Saving & high scores* and the Llama
+  Bank paragraphs of Blackjack, Poker, Casino, Lama Crossing, Lama Mines and
+  Lama Plinko updated.
+- Both READMEs: 50 games, a new table row, a feature section, the project
+  structure and the achievement counts.
+
+---
 
 ### Lama Mines & Lama Plinko – 2026-11-21
 

@@ -53,6 +53,11 @@ pub mod hangman;
 pub mod invaders;
 pub mod kniffel;
 pub mod labyrinth;
+pub mod lamacrash;
+pub mod lamacrash_draw;
+pub mod lamacrash_logic;
+pub mod lamacrash_music;
+pub mod lamacrash_world;
 pub mod lamacrossing;
 pub mod lamacrossing_draw;
 pub mod lamacrossing_logic;
@@ -148,5 +153,6 @@ pub fn all_games() -> Vec<GameInfo> {
         lamacrossing::INFO,
         lamamines::INFO,
         lamaplinko::INFO,
+        lamacrash::INFO,
     ]
 }

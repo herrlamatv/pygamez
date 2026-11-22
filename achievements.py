@@ -198,6 +198,7 @@ MILESTONES = {
     "lamacrossing": 3000,  # Lama-Crossing-Bilanz auf 3000 Chips gebracht
     "lamamines": 3000,     # Lama-Mines-Bilanz auf 3000 Chips gebracht
     "lamaplinko": 3000,    # Lama-Plinko-Bilanz auf 3000 Chips gebracht
+    "lamacrash": 3000,     # Lama-Crash-Bilanz auf 3000 Chips gebracht
 }
 
 # Zweite Punktstufe ("{Spiel}-Meister"). Nur für Spiele, deren Punktzahl
@@ -238,6 +239,7 @@ MASTERS = {
     "lamacrossing": 10000,
     "lamamines": 10000,
     "lamaplinko": 10000,
+    "lamacrash": 10000,
 }
 
 # Besondere Momente: (id, icon, highscore_key, target, rarity).
@@ -336,6 +338,10 @@ SPECIALS = [
     ("lpl_edge",       "flag",  "lamaplinko", None, "rare"),        # äußerstes Fach ab 12 Reihen
     ("lpl_rain",       "bolt",  "lamaplinko", None, "epic"),        # 25 Kugeln gleichzeitig unterwegs
     ("lpl_jackpot",    "crown", "lamaplinko", None, "legendary"),   # äußerstes Fach, 16 Reihen, Hoch
+    # --- Lama Crash ----------------------------------------------------------
+    ("lcx_close",      "target", "lamacrash", None, "rare"),        # von Hand ab x2, max. 5 % vor dem Platzen
+    ("lcx_brave",      "rocket", "lamacrash", None, "epic"),        # bei x10 oder mehr ausgestiegen
+    ("lcx_space",      "moon",   "lamacrash", None, "legendary"),   # bei x1000 oder mehr ausgestiegen
 ]
 
 _unlocked = None      # {id: "YYYY-MM-DD HH:MM"} (In-Memory-Kopie)

@@ -147,7 +147,7 @@
           "body": [
             "Every game with progress has its own section in mem.json, for example:",
             "- sudoku: solved levels with stars and best times, puzzles in progress and the Daily Sudoku with its streak.",
-            "- casino: the Llama Bank account - the llama chips for Blackjack, Poker, Casino, Lama Crossing, Lama Mines and Lama Plinko with each game's balance, plus a Lama Crossing round and a Lama Mines round in progress, the Lama Mines auto marks and the history, fairness data, statistics and carried-over fractions of Lama Mines and Lama Plinko.",
+            "- casino: the Llama Bank account - the llama chips for Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko and Lama Crash with each game's balance, plus a Lama Crossing round, a Lama Mines round and a Lama Crash flight in progress, the Lama Mines auto marks and the history, fairness data, statistics and carried-over fractions of Lama Mines, Lama Plinko and Lama Crash.",
             "- crossy: collected coins, bought characters and the Crossy Road daily best.",
             "- tetris: best Sprint time, best Ultra score and the Versus record against the AI.",
             "- g2048: saved 2048 games and best scores per board size and mode.",
@@ -349,7 +349,7 @@
         {
           "h": "Overview",
           "body": [
-            "268 achievements across all 49 games - from your first start to a Perfect Clear in Tetris.",
+            "274 achievements across all 50 games - from your first start to a Perfect Clear in Tetris.",
             "Every achievement has a rarity and therefore a point value; the sum is your level.",
             "Find them behind the Achievements & statistics button, tab Achievements. A filter hides open or unlocked ones."
           ]
@@ -360,7 +360,7 @@
             "- General: collection-wide goals - rounds, games tried, playtime, records, wins, days played, daily streaks, level and duels. Plus extras like night owl, marathon or weekend player.",
             "- Score milestones: a fair target score for each game.",
             "- Master tiers: the second, much higher mark - only for games whose score is open-ended.",
-            "- Regular: 25 rounds of one game. Exists for each of the 49 games.",
+            "- Regular: 25 rounds of one game. Exists for each of the 50 games.",
             "- Special moments: checkmate, a Yahtzee, the 4096 tile, a hole-in-one, an air hockey hat-trick, four ghosts on one power pill and much more."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Llama chips",
           "body": [
-            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines and Lama Plinko share one account at the Llama Bank: you start with 1000 llama chips and your balance is saved permanently.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko and Lama Crash share one account at the Llama Bank: you start with 1000 llama chips and your balance is saved permanently.",
             "Your bet is taken as soon as the cards are dealt - leaving a hand in progress loses it.",
             "The highscore is the peak of your blackjack balance: 1000 plus everything you have won and lost at blackjack. Wins at roulette, the slot or poker don't count here.",
             "Below 10 chips you are broke: [Enter] takes a bank loan and fills your account back up to 1000. Loans don't count towards the balance."
@@ -1901,7 +1901,7 @@
         {
           "h": "Llama chips",
           "body": [
-            "You play with the llama chips of the Llama Bank - one account shared with Blackjack, Casino, Lama Crossing, Lama Mines and Lama Plinko (start 1000, saved permanently).",
+            "You play with the llama chips of the Llama Bank - one account shared with Blackjack, Casino, Lama Crossing, Lama Mines, Lama Plinko and Lama Crash (start 1000, saved permanently).",
             "At the start of a hand your account sits on the table as your stack; whatever goes into the pot is taken immediately. If you leave the table mid-hand, your share of the pot is gone - the rest goes back to your account.",
             "The highscore is the peak of your poker balance: 1000 plus everything you have won and lost at poker. Wins in other games don't count here.",
             "Broke (less than the big blind of 20, in Video Poker less than 10) = bank loan with a click, your account is back at 1000."
@@ -2977,7 +2977,7 @@
         {
           "h": "The Llama Bank",
           "body": [
-            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines and Lama Plinko share one account: the llama chips (start 1000). Bets are taken immediately, wins are credited - everything is saved permanently.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama Plinko and Lama Crash share one account: the llama chips (start 1000). Bets are taken immediately, wins are credited - everything is saved permanently.",
             "Every game keeps its own balance. The Casino highscore is the peak of 1000 + casino balance; wins at Blackjack or Poker don't count here.",
             "Broke (less than the minimum bet) means a bank loan: your account is filled back up to 1000. Loans don't count towards any balance; their number is shown top right."
           ]
@@ -3110,7 +3110,7 @@
         {
           "h": "Llama chips",
           "body": [
-            "Lama Crossing plays with the shared Llama Bank account - together with Blackjack, Poker, Casino, Lama Mines and Lama Plinko (start 1000, stored in mem.json).",
+            "Lama Crossing plays with the shared Llama Bank account - together with Blackjack, Poker, Casino, Lama Mines, Lama Plinko and Lama Crash (start 1000, stored in mem.json).",
             "The highscore is the peak of 1000 + your Lama Crossing balance; wins at Blackjack, Poker or the Casino don't count here.",
             "Below 10 chips you are broke: [Enter] or a click takes a bank loan and fills your account back up to 1000. Loans don't count towards the balance.",
             "Stopping mid-crossing is safe: bet, difficulty and lane are saved, and the next start continues exactly there."
@@ -3262,7 +3262,7 @@
         {
           "h": "Llama chips",
           "body": [
-            "Lama Mines plays with the shared Llama Bank account - together with Blackjack, Poker, Casino, Lama Crossing and Lama Plinko (start 1000, stored in mem.json).",
+            "Lama Mines plays with the shared Llama Bank account - together with Blackjack, Poker, Casino, Lama Crossing, Lama Plinko and Lama Crash (start 1000, stored in mem.json).",
             "The highscore is the peak of 1000 + your Lama Mines balance; wins in the other Llama Bank games don't count here.",
             "Below 10 chips you are broke: [Space], [Enter] or a click takes a bank loan and fills your account back up to 1000. Loans don't count towards the balance.",
             "Stopping mid-round is safe: the bet is booked at the start, and after every gem found the field size, mines, the seeds of the round and the revealed tiles are saved. On the next start the field is recalculated from the seed and you continue exactly there.",
@@ -3417,7 +3417,7 @@
         {
           "h": "Llama chips",
           "body": [
-            "Lama Plinko plays with the shared Llama Bank account - together with Blackjack, Poker, Casino, Lama Crossing and Lama Mines (start 1000, stored in mem.json).",
+            "Lama Plinko plays with the shared Llama Bank account - together with Blackjack, Poker, Casino, Lama Crossing, Lama Mines and Lama Crash (start 1000, stored in mem.json).",
             "The highscore is the peak of 1000 + your Lama Plinko balance; wins in the other games don't count here.",
             "If your account doesn't cover the chosen bet, pick a smaller one. With 0 chips you are broke: [Enter] or a click takes a bank loan and fills your account back up to 1000. Loans don't count towards the balance.",
             "History, statistics and fairness data belong to your profile and are stored in mem.json as well."
@@ -3443,6 +3443,163 @@
             "- Edge Hit: fastest with 12 rows - there about 1 in 2,048 balls lands on the very edge (left or right). At 1 chip per ball that costs only about 3 chips per 100 balls on average.",
             "- Yarn Storm: just hold [Space] - rapid fire puts about 30 balls on the board at once with any number of rows, and after about 2 seconds the achievement is yours. Auto mode drops too leisurely for it.",
             "- Plinko Legend: with 16 rows on High only 1 in 32,768 balls lands on the very edge - with auto runs of 1000 balls that takes about 33 runs on average. That slot pays ×1,000, though.",
+            "- Set a budget beforehand and use the loss limit in auto mode."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrash",
+      "category": "games",
+      "game": "LamaCrashGame",
+      "title": "Lama Crash",
+      "keywords": [
+        "llama",
+        "crash",
+        "balloon",
+        "hot-air balloon",
+        "multiplier",
+        "cash out",
+        "payout",
+        "pop",
+        "pop point",
+        "auto target",
+        "half",
+        "two bets",
+        "altitude worlds",
+        "moon",
+        "chips",
+        "llama bank",
+        "auto",
+        "turbo",
+        "music",
+        "fairness",
+        "provably fair",
+        "hash",
+        "seed",
+        "sha-256",
+        "statistics"
+      ],
+      "sections": [
+        {
+          "h": "How to play",
+          "body": [
+            "Your llama rides up in a balloon, and the multiplier grows with every second: ×1.00, ×1.50, ×2.00 … If you cash out, you get your bet times the multiplier at that moment. If the balloon pops first, the bet is gone.",
+            "Pick a bet (10, 20, 50 … up to 10000 llama chips) and press PLAY: the bet is taken, and after a short 3-2-1 the balloon lifts off. From ×1.01 on you can CASH OUT at any time - the llama jumps off with a parachute and the win is credited right away.",
+            "When the balloon pops is fixed before the start - but nobody can see it: neither the balloon nor the music or sounds give anything away. It simply keeps inflating the higher it goes.",
+            "After you cash out, the empty balloon flies on until it pops - so you can see how far it would have gone. [Space] or FAST FORWARD speeds this up. The top right shows the pop points of the last 12 rounds.",
+            "Timing: ×2 after 11.6 seconds, ×10 after 38 seconds, ×100 after 77 seconds, ×100,000 after 3.2 minutes. Turbo ([T]) makes everything three times as fast."
+          ]
+        },
+        {
+          "h": "Two bets & half cash-out",
+          "body": [
+            "With [Z] or the switch on card 2 you take a second llama along: two bets in the same round, each with its own amount and its own auto target. Both fly in the same balloon - for example a careful one with a target of ×1.50 and a bold one with a target of ×10.",
+            "- [Space] / [Enter] / [C] or CASH OUT at the bottom: every bet still flying cashes out",
+            "- [1] / [2] or the button on the card: only that bet",
+            "- [H] or HALF: every bet that hasn't been split yet cashes out half, the other half keeps flying",
+            "- [Q] / [W] or the half button on the card: half of that bet only",
+            "Each bet can be halved once. The llama drops the cashed-out half as a money bag on a mini parachute.",
+            "Auto target: with [Left] / [Right] (or the mouse wheel over the target) you set the multiplier at which a bet cashes out by itself (×1.01 to ×100,000); [X] switches it on or off. If the balloon reaches the target, the payout is exactly at the target - even if it pops at that very moment."
+          ]
+        },
+        {
+          "h": "How the pop point is decided",
+          "body": [
+            "For every round a random number r between 0 and 2^32 - 1 is drawn. The pop point is 97 × 2^32 / (2^32 - r), rounded down to hundredths, at least ×1.00 and at most ×100,000. About 4% of rounds pop right at ×1.00 - before anyone can cash out.",
+            "This leads to a simple rule: the chance of reaching a target x is 97% divided by x. No matter when you cash out - in the long run 97% of your bets come back:",
+            "- ×1.50: 64.67% · ×2: 48.50% · ×3: 32.33% · ×5: 19.40%",
+            "- ×10: 9.70% · ×100: 0.97% · ×1,000: 0.097% · ×100,000: 0.001%",
+            "If you cash out by hand at some multiplier, you win exactly when the balloon pops later - just as if you had set it as your auto target.",
+            "Reach ×100,000 and you land on the moon: maximum win, and every bet still flying is paid out at ×100,000.",
+            "Carry-over: whatever is left in hundredths when a payout is rounded down is added to the next one - so even small bets lose nothing."
+          ]
+        },
+        {
+          "h": "Altitude worlds & music",
+          "body": [
+            "The higher the multiplier, the higher the balloon flies - through six worlds:",
+            "- Llama meadow (from ×1): pasture, fence and barn stay behind below",
+            "- Sea of clouds (from ×1.50): clouds and flocks of birds",
+            "- Storm front (from ×3): rain, lightning and planes",
+            "- Northern lights (from ×10): stars and dancing auroras",
+            "- Outer space (from ×100): the curve of the Earth, satellites, shooting stars - and the moon keeps getting bigger",
+            "- Moon (×100,000): the moon landing",
+            "The suspense music gets faster and higher with every world; from ×2 the stretched balloon starts to creak. [M] switches the music on or off."
+          ]
+        },
+        {
+          "h": "Auto mode",
+          "body": [
+            "[A] opens auto mode (only between rounds). There you set:",
+            "- Rounds: 5, 10, 25, 50, 100 or 250",
+            "- Stop at a profit of / Stop at a loss of: off, 100, 500, 1000, 5000, 10000 or 50000 chips",
+            "- Turbo on or off",
+            "START AUTO plays the rounds one after another with your bets and auto targets; a bet without an auto target gets one switched on. Once everyone is out, it fast-forwards automatically. You can still cash out by hand at any time.",
+            "Auto runs until the number of rounds is reached, a limit kicks in, your chips run short or you press STOP, [Esc] or [A] - a round already in flight then finishes normally."
+          ]
+        },
+        {
+          "h": "Fairness check",
+          "body": [
+            "In Lama Crash you can check for yourself that the pop point is not changed after the fact (\"provably fair\"):",
+            "- Server seed: a secret random value of 32 characters, fixed before the round",
+            "- Hash: the SHA-256 fingerprint of the server seed - visible before the start",
+            "- Client seed: your own share (8 characters); \"New client seed\" rolls a new one while no round is running",
+            "On top of that comes the round number (nonce). After the round the server seed is revealed - by then the hash of the next round is already fixed.",
+            "[F] shows the last 12 rounds. \"Verify\" ([Enter]) checks the hash, recalculates the pop point and shows with a tick or a cross whether everything matches - plus a mini curve with your cash-outs.",
+            "For the curious: the randomness is mulberry32, seeded with the FNV-1a value of \"lamacrash|server seed|client seed|number\"; r is its first number."
+          ]
+        },
+        {
+          "h": "Statistics",
+          "body": [
+            "[S] opens your profile's statistics for Lama Crash:",
+            "- Tiles: Rounds, Won, Lost, Your return, Wagered, Paid out, Net result, Biggest win, Best multiplier (highest cash-out), Top pop point, Half cash-outs and Close calls",
+            "- a net-result curve of the last 100 rounds",
+            "- the distribution of your rounds' pop points as bars, the expected distribution in gold"
+          ]
+        },
+        {
+          "h": "Controls",
+          "body": [
+            "- [Space] / [Enter] or PLAY: start a round; in flight: cash out all; afterwards: fast-forward",
+            "- [1] / [2] or [Tab]: select a card (before the round) or cash out a single bet (in flight)",
+            "- [Up] / [Down], [+] / [-] or mouse wheel: bet of the selected card",
+            "- [Left] / [Right] or mouse wheel over the target: auto target; [X]: auto target on/off; [Z]: second bet",
+            "- [H]: half of every unsplit bet; [Q] / [W]: half of bet 1 or 2",
+            "- [A]: auto mode, [S]: statistics, [F]: fairness, [T]: turbo, [M]: music",
+            "- [Esc]: close a window or stop auto, otherwise pause",
+            "The windows can only be opened while no bet is flying. If the game window loses focus while a bet is flying, the game pauses by itself. Bets, targets, turbo, music and the auto settings are saved in settings.json (section lamacrash)."
+          ]
+        },
+        {
+          "h": "Llama chips",
+          "body": [
+            "Lama Crash plays with the shared Llama Bank account - together with Blackjack, Poker, Casino, Lama Crossing, Lama Mines and Lama Plinko (start 1000, stored in mem.json).",
+            "PLAY books the bet and saves the round in one go, and every cash-out credits the win immediately. If you leave the game mid-flight, nothing is lost: on the next start there is a countdown and the balloon climbs on from exactly where it was - after all, the pop point is already fixed.",
+            "The highscore is the peak of 1000 + your Lama Crash balance. Below 10 chips you are broke: [Enter] or a click takes a bank loan that tops your account back up to 1000."
+          ]
+        },
+        {
+          "h": "Achievements",
+          "body": [
+            "- Lama Crash regular: 25 rounds",
+            "- Milestone: highscore 3000",
+            "- Lama Crash master: highscore 10000",
+            "- Close Call (rare): Cash out manually at ×2 or more - at most 5% before the pop",
+            "- Aurora Pilot (epic): Cash out at ×10 or more",
+            "- Space Llama (legendary): Cash out at ×1000 or more"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Every round is independent: after five early pops, a big flight is not \"due\".",
+            "- No strategy beats the 97%. Low targets win often and little, high ones rarely and a lot.",
+            "- Two bets mix both: one locks in a win early, the other flies far.",
+            "- Close Call only counts when you cash out by hand - auto targets don't count.",
+            "- Aurora Pilot: an auto target of ×10 hits about every tenth round; Space Llama with a target of ×1,000 about every thousandth - with turbo such a flight takes 38 seconds.",
             "- Set a budget beforehand and use the loss limit in auto mode."
           ]
         }

@@ -146,7 +146,7 @@
           "body": [
             "Chaque jeu avec une progression a sa propre section dans mem.json, par exemple :",
             "- sudoku : niveaux résolus avec étoiles et meilleur temps, grilles commencées et le Sudoku du jour avec sa série.",
-            "- casino : le compte de la Banque Lama - les jetons Lama du Blackjack, du Poker, du Casino, de Lama Crossing, de Lama Mines et de Lama Plinko avec le bilan de chaque jeu, plus une traversée de Lama Crossing et une manche de Lama Mines en cours, les cases marquées pour l'auto de Lama Mines, ainsi que l'historique, les données d'équité, les statistiques et le reste reporté de Lama Mines et de Lama Plinko.",
+            "- casino : le compte de la Banque Lama - les jetons Lama du Blackjack, du Poker, du Casino, de Lama Crossing, de Lama Mines, de Lama Plinko et de Lama Crash avec le bilan de chaque jeu, plus une traversée de Lama Crossing, une manche de Lama Mines et un vol de Lama Crash en cours, les cases marquées pour l'auto de Lama Mines, ainsi que l'historique, les données d'équité, les statistiques et le reste reporté de Lama Mines, de Lama Plinko et de Lama Crash.",
             "- crossy : pièces collectées, personnages achetés et meilleur score du jour de Crossy Road.",
             "- tetris : meilleur temps en Sprint, meilleur score en Ultra et bilan du duel contre l'IA.",
             "- g2048 : parties de 2048 sauvegardées et meilleurs scores par taille de plateau et par mode.",
@@ -348,7 +348,7 @@
         {
           "h": "Aperçu",
           "body": [
-            "268 succès dans les 49 jeux - du premier lancement au Perfect Clear dans Tetris.",
+            "274 succès dans les 50 jeux - du premier lancement au Perfect Clear dans Tetris.",
             "Chaque succès a une rareté, donc une valeur en points ; la somme donne ton niveau.",
             "Bouton Succès et statistiques, onglet Succès. Un filtre masque les succès obtenus ou restants."
           ]
@@ -359,7 +359,7 @@
             "- Général : objectifs d'ensemble - parties, jeux essayés, temps de jeu, records, victoires, jours joués, séries, niveau et duels. Plus des extras : oiseau de nuit, marathon, joueur du week-end.",
             "- Paliers de points : un score cible équitable par jeu.",
             "- Niveaux maîtres : le second palier, bien plus haut - seulement pour les jeux au score illimité.",
-            "- Habitué : 25 parties d'un même jeu. Existe pour chacun des 49 jeux.",
+            "- Habitué : 25 parties d'un même jeu. Existe pour chacun des 50 jeux.",
             "- Moments particuliers : échec et mat, un Yams, la tuile 4096, un trou en un, un coup du chapeau au air hockey, quatre fantômes d'une seule pastille et bien plus."
           ]
         },
@@ -1473,7 +1473,7 @@
         {
           "h": "Jetons Lama",
           "body": [
-            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines et Lama Plinko partagent un compte à la Banque Lama : tu démarres avec 1000 jetons Lama et ton solde est sauvegardé durablement.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko et Lama Crash partagent un compte à la Banque Lama : tu démarres avec 1000 jetons Lama et ton solde est sauvegardé durablement.",
             "La mise est débitée dès la distribution - quitter une main en cours la fait perdre.",
             "Le record est le plus haut niveau de ton bilan au blackjack : 1000 plus tout ce que tu as gagné et perdu au blackjack. Les gains à la roulette, à la machine ou au poker ne comptent pas ici.",
             "Sous 10 jetons tu es fauché : [Entrée] prend un prêt de la banque et remet ton compte à 1000. Les prêts ne comptent pas dans le bilan."
@@ -1899,7 +1899,7 @@
         {
           "h": "Jetons Lama",
           "body": [
-            "On joue avec les jetons Lama de la Banque Lama - un compte partagé avec Blackjack, Casino, Lama Crossing, Lama Mines et Lama Plinko (départ 1000, sauvegardé durablement).",
+            "On joue avec les jetons Lama de la Banque Lama - un compte partagé avec Blackjack, Casino, Lama Crossing, Lama Mines, Lama Plinko et Lama Crash (départ 1000, sauvegardé durablement).",
             "Au début d'une main, ton compte est posé sur la table comme tapis ; ce qui va au pot est débité aussitôt. Si tu quittes la table en pleine main, ta part du pot est perdue - le reste retourne sur ton compte.",
             "Le record est le plus haut niveau de ton bilan au poker : 1000 plus tout ce que tu as gagné et perdu au poker. Les gains des autres jeux ne comptent pas ici.",
             "Fauché (moins que la grosse blinde de 20, au Video Poker moins de 10) = prêt de la banque d'un clic, ton compte revient à 1000."
@@ -2975,7 +2975,7 @@
         {
           "h": "La Banque Lama",
           "body": [
-            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines et Lama Plinko jouent avec le même compte : les jetons Lama (départ 1000). Les mises sont débitées aussitôt, les gains crédités - tout est sauvegardé durablement.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama Plinko et Lama Crash jouent avec le même compte : les jetons Lama (départ 1000). Les mises sont débitées aussitôt, les gains crédités - tout est sauvegardé durablement.",
             "Chaque jeu tient son propre bilan. Le record du Casino est le plus haut niveau de 1000 + bilan du Casino ; les gains au Blackjack ou au Poker ne comptent pas ici.",
             "Fauché (moins que la mise minimale), tu reçois un prêt de la banque : ton compte revient à 1000. Les prêts ne comptent dans aucun bilan ; leur nombre s'affiche en haut à droite."
           ]
@@ -3108,7 +3108,7 @@
         {
           "h": "Jetons Lama",
           "body": [
-            "Lama Crossing joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker, le Casino, Lama Mines et Lama Plinko (départ 1000, sauvegardé dans mem.json).",
+            "Lama Crossing joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker, le Casino, Lama Mines, Lama Plinko et Lama Crash (départ 1000, sauvegardé dans mem.json).",
             "Le record est le plus haut niveau de 1000 + ton bilan à Lama Crossing ; les gains au Blackjack, au Poker ou au Casino ne comptent pas ici.",
             "Sous 10 jetons tu es fauché : [Entrée] ou un clic prend un prêt de la banque et remet ton compte à 1000. Les prêts ne comptent pas dans le bilan.",
             "Arrêter en pleine traversée ne coûte rien : la mise, la difficulté et la voie sont sauvegardées, et la partie reprend exactement là au prochain lancement."
@@ -3261,7 +3261,7 @@
         {
           "h": "Jetons Lama",
           "body": [
-            "Lama Mines joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker, le Casino, Lama Crossing et Lama Plinko (départ 1000, sauvegardé dans mem.json).",
+            "Lama Mines joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker, le Casino, Lama Crossing, Lama Plinko et Lama Crash (départ 1000, sauvegardé dans mem.json).",
             "Le record est le plus haut niveau de 1000 + ton bilan à Lama Mines ; les gains dans les autres jeux de la Banque Lama ne comptent pas ici.",
             "Sous 10 jetons tu es fauché : [Espace], [Entrée] ou un clic prend un prêt de la banque et remet ton compte à 1000. Les prêts ne comptent pas dans le bilan.",
             "Arrêter en pleine manche ne coûte rien : la mise est débitée au départ, et après chaque gemme trouvée, la taille du plateau, les mines, les seeds de la manche et les cases révélées sont sauvegardés. Au prochain lancement, le plateau est recalculé à partir du seed et la partie reprend exactement là.",
@@ -3417,7 +3417,7 @@
         {
           "h": "Jetons Lama",
           "body": [
-            "Lama Plinko joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker, le Casino, Lama Crossing et Lama Mines (départ 1000, sauvegardé dans mem.json).",
+            "Lama Plinko joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker, le Casino, Lama Crossing, Lama Mines et Lama Crash (départ 1000, sauvegardé dans mem.json).",
             "Le record est le plus haut niveau de 1000 + ton bilan à Lama Plinko ; les gains dans les autres jeux ne comptent pas ici.",
             "Si ton compte ne couvre pas la mise choisie, prends-en une plus petite. À 0 jeton, tu es fauché : [Entrée] ou un clic prend un prêt de la banque et remet ton compte à 1000. Les prêts ne comptent pas dans le bilan.",
             "L'historique, les statistiques et les données d'équité appartiennent à ton profil et sont eux aussi sauvegardés dans mem.json."
@@ -3443,6 +3443,164 @@
             "- Tout au bord : le plus rapide avec 12 rangées - environ 1 balle sur 2 048 y finit tout au bord (à gauche ou à droite). À 1 jeton par balle, cela ne coûte en moyenne qu'environ 3 jetons pour 100 balles.",
             "- Pluie de pelotes : maintiens simplement [Espace] - le tir continu met environ 30 balles à la fois sur le plateau, quel que soit le nombre de rangées, et au bout d'environ 2 secondes le succès est à toi. Le mode auto lâche trop tranquillement pour ça.",
             "- Légende du Plinko : avec 16 rangées en risque Élevé, seule 1 balle sur 32 768 finit tout au bord - avec des séries auto de 1000 balles, il faut en moyenne environ 33 séries. Mais cette case rapporte ×1 000.",
+            "- Fixe-toi un budget à l'avance et utilise la limite de perte du mode auto."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrash",
+      "category": "games",
+      "game": "LamaCrashGame",
+      "title": "Lama Crash",
+      "keywords": [
+        "lama",
+        "crash",
+        "ballon",
+        "montgolfière",
+        "multiplicateur",
+        "encaisser",
+        "gain",
+        "éclater",
+        "point d'éclatement",
+        "objectif auto",
+        "moitié",
+        "deux mises",
+        "altitude",
+        "lune",
+        "jetons",
+        "banque lama",
+        "auto",
+        "turbo",
+        "musique",
+        "équité",
+        "provably fair",
+        "code de contrôle",
+        "hash",
+        "seed",
+        "sha-256",
+        "statistiques"
+      ],
+      "sections": [
+        {
+          "h": "Comment jouer",
+          "body": [
+            "Ton lama monte en ballon, et à chaque seconde le multiplicateur grimpe : ×1,00, ×1,50, ×2,00 … Si tu encaisses, tu reçois ta mise multipliée par le multiplicateur de cet instant. Si le ballon éclate avant, la mise est perdue.",
+            "Choisis une mise (10, 20, 50 … jusqu'à 10000 jetons Lama) et appuie sur JOUER : la mise est prélevée et, après un court 3-2-1, le ballon décolle. Dès ×1,01, tu peux ENCAISSER à tout moment - le lama saute en parachute et le gain est crédité aussitôt.",
+            "Le moment où le ballon éclate est fixé avant le départ - mais personne ne le voit : ni le ballon, ni la musique, ni les sons ne trahissent quoi que ce soit. Il se contente de gonfler de plus en plus à mesure qu'il monte.",
+            "Après l'encaissement, le ballon vide continue de voler jusqu'à ce qu'il éclate - tu vois ainsi jusqu'où il serait allé. Avec [Espace] ou ACCÉLÉRER, cela passe en accéléré. En haut à droite s'affichent les points d'éclatement des 12 dernières manches.",
+            "Les temps : ×2 après 11,6 secondes, ×10 après 38 secondes, ×100 après 77 secondes, ×100 000 après 3,2 minutes. Le turbo ([T]) rend tout trois fois plus rapide."
+          ]
+        },
+        {
+          "h": "Deux mises et encaissement de moitié",
+          "body": [
+            "Avec [Z] ou l'interrupteur de la carte 2, tu emmènes un deuxième lama : deux mises dans la même manche, chacune avec son propre montant et son propre objectif auto. Les deux volent dans le même ballon - par exemple l'une prudente avec l'objectif ×1,50, l'autre audacieuse avec l'objectif ×10.",
+            "- [Espace] / [Entrée] / [C] ou ENCAISSER en bas : toutes les mises encore en vol encaissent",
+            "- [1] / [2] ou le bouton de la carte : seulement cette mise",
+            "- [H] ou MOITIÉ : chaque mise pas encore partagée encaisse la moitié, l'autre moitié continue de voler",
+            "- [Q] / [W] ou le bouton moitié de la carte : la moitié de cette mise seulement",
+            "Chaque mise ne peut être coupée en deux qu'une seule fois. Le lama largue la moitié encaissée sous forme de sac d'argent avec un mini-parachute.",
+            "Objectif auto : avec [Gauche] / [Droite] (ou la molette sur l'objectif), tu règles le multiplicateur auquel une mise encaisse toute seule (×1,01 à ×100 000) ; [X] l'active ou le désactive. Si le ballon atteint l'objectif, le paiement se fait exactement à l'objectif - même s'il éclate au même instant."
+          ]
+        },
+        {
+          "h": "Comment naît le point d'éclatement",
+          "body": [
+            "Pour chaque manche, un nombre aléatoire r entre 0 et 2^32 - 1 est tiré. Le point d'éclatement vaut 97 × 2^32 / (2^32 - r), arrondi au centième inférieur, au moins ×1,00 et au plus ×100 000. Environ 4 % des manches éclatent dès ×1,00 - avant qu'on puisse encaisser.",
+            "Il en découle une règle simple : la chance d'atteindre un objectif x est de 97 % divisé par x. Peu importe quand tu encaisses - à la longue, 97 % de tes mises reviennent :",
+            "- ×1,50 : 64,67 % · ×2 : 48,50 % · ×3 : 32,33 % · ×5 : 19,40 %",
+            "- ×10 : 9,70 % · ×100 : 0,97 % · ×1 000 : 0,097 % · ×100 000 : 0,001 %",
+            "Si tu encaisses à la main à un multiplicateur donné, tu gagnes exactement quand le ballon éclate plus tard - comme si tu l'avais choisi comme objectif auto.",
+            "Qui atteint ×100 000 se pose sur la Lune : gain maximal, toutes les mises encore en vol sont payées à ×100 000.",
+            "Report du reste : ce qui reste en centièmes quand un paiement est arrondi vers le bas est ajouté au suivant - même les petites mises ne perdent rien."
+          ]
+        },
+        {
+          "h": "Mondes d'altitude et musique",
+          "body": [
+            "Plus le multiplicateur est haut, plus le ballon vole haut - à travers six mondes :",
+            "- Pré aux lamas (dès ×1) : pâturage, clôture et étable restent en bas",
+            "- Mer de nuages (dès ×1,50) : nuages et vols d'oiseaux",
+            "- Front orageux (dès ×3) : pluie, éclairs et avions",
+            "- Aurore boréale (dès ×10) : étoiles et aurores dansantes",
+            "- Espace (dès ×100) : courbure de la Terre, satellites, étoiles filantes - et la Lune grossit sans cesse",
+            "- Lune (×100 000) : l'alunissage",
+            "La musique à suspense devient plus rapide et plus aiguë à chaque monde ; dès ×2, le ballon étiré grince. [M] active ou coupe la musique."
+          ]
+        },
+        {
+          "h": "Mode auto",
+          "body": [
+            "[A] ouvre le mode auto (seulement entre les manches). Tu y règles :",
+            "- Manches : 5, 10, 25, 50, 100 ou 250",
+            "- Arrêt à un gain de / Arrêt à une perte de : désact., 100, 500, 1000, 5000, 10000 ou 50000 jetons",
+            "- Turbo activé ou non",
+            "LANCER AUTO joue les manches l'une après l'autre avec tes mises et tes objectifs auto ; une mise sans objectif auto en reçoit un. Quand tout le monde a encaissé, l'accéléré démarre tout seul. Tu peux quand même encaisser à la main à tout moment.",
+            "Le mode auto tourne jusqu'à ce que le nombre de manches soit atteint, qu'une limite se déclenche, que les jetons ne suffisent plus ou que tu appuies sur STOP, [Échap] ou [A] - une manche déjà en vol se termine alors normalement."
+          ]
+        },
+        {
+          "h": "Contrôle d'équité",
+          "body": [
+            "Dans Lama Crash, tu peux vérifier toi-même que le point d'éclatement n'est pas modifié après coup (« provably fair ») :",
+            "- Seed serveur : une valeur aléatoire secrète de 32 caractères, fixée avant la manche",
+            "- Code de contrôle : l'empreinte SHA-256 du seed serveur - visible avant le départ",
+            "- Seed client : ta propre part (8 caractères) ; « Nouveau seed client » en tire un nouveau tant qu'aucune manche n'est en cours",
+            "S'y ajoute le numéro de manche (nonce). Après la manche, le seed serveur est dévoilé - le code de contrôle de la manche suivante est alors déjà fixé.",
+            "[F] affiche les 12 dernières manches. « Vérifier » ([Entrée]) contrôle le code, recalcule le point d'éclatement et indique par une coche ou une croix si tout est correct - avec une mini-courbe de tes encaissements.",
+            "Pour les curieux : le hasard vient de mulberry32, initialisé avec la valeur FNV-1a de « lamacrash|seed serveur|seed client|numéro » ; r est le premier nombre tiré."
+          ]
+        },
+        {
+          "h": "Statistiques",
+          "body": [
+            "[S] ouvre les statistiques de ton profil pour Lama Crash :",
+            "- Tuiles : Manches, Gagnées, Perdues, Ton retour, Misé, Encaissé, Bilan, Plus gros gain, Meilleure cote (encaissement le plus haut), Éclatement record, Moitiés encaissées et De justesse",
+            "- une courbe du bilan sur les 100 dernières manches",
+            "- la répartition des points d'éclatement de tes manches en barres, la répartition attendue en doré"
+          ]
+        },
+        {
+          "h": "Commandes",
+          "body": [
+            "- [Espace] / [Entrée] ou JOUER : lancer une manche ; en vol : tout encaisser ; ensuite : accélérer",
+            "- [1] / [2] ou [Tab] : choisir une carte (avant la manche) ou encaisser une seule mise (en vol)",
+            "- [Haut] / [Bas], [+] / [-] ou molette : mise de la carte choisie",
+            "- [Gauche] / [Droite] ou molette sur l'objectif : objectif auto ; [X] : objectif auto oui/non ; [Z] : deuxième mise",
+            "- [H] : moitié de toutes les mises non partagées ; [Q] / [W] : moitié de la mise 1 ou 2",
+            "- [A] : mode auto, [S] : statistiques, [F] : équité, [T] : turbo, [M] : musique",
+            "- [Échap] : fermer une fenêtre ou arrêter l'auto, sinon pause",
+            "Les fenêtres ne s'ouvrent que si aucune mise n'est en vol. Si la fenêtre du jeu perd le focus pendant qu'une mise vole, le jeu se met en pause tout seul. Mises, objectifs, turbo, musique et réglages auto sont sauvegardés dans settings.json (section lamacrash)."
+          ]
+        },
+        {
+          "h": "Jetons Lama",
+          "body": [
+            "Lama Crash joue avec le compte commun de la Banque Lama - avec le Blackjack, le Poker, le Casino, Lama Crossing, Lama Mines et Lama Plinko (départ 1000, sauvegardé dans mem.json).",
+            "JOUER prélève la mise et sauvegarde la manche d'un seul coup, et chaque encaissement crédite le gain aussitôt. Si tu quittes le jeu en plein vol, rien n'est perdu : au prochain lancement, un compte à rebours démarre et le ballon reprend son ascension exactement là où il était - le point d'éclatement est de toute façon déjà fixé.",
+            "Le record est le plus haut niveau de 1000 + ton bilan à Lama Crash. Sous 10 jetons, tu es fauché : [Entrée] ou un clic prend un prêt de la banque qui remet ton compte à 1000."
+          ]
+        },
+        {
+          "h": "Succès",
+          "body": [
+            "- Habitué de Lama Crash : 25 parties",
+            "- Palier : record 3000",
+            "- Maître de Lama Crash : record 10000",
+            "- De justesse (rare) : Encaisse à la main à ×2 ou plus - au plus 5 % avant l'éclatement",
+            "- Pilote des aurores (épique) : Encaisse à ×10 ou plus",
+            "- Lama de l'espace (légendaire) : Encaisse à ×1000 ou plus"
+          ]
+        },
+        {
+          "h": "Astuces",
+          "body": [
+            "- Chaque manche est indépendante : après cinq éclatements précoces, un grand vol n'est pas « dû ».",
+            "- Aucune stratégie ne bat les 97 %. Les objectifs bas gagnent souvent et peu, les hauts rarement et beaucoup.",
+            "- Deux mises combinent les deux : l'une sécurise tôt, l'autre vole loin.",
+            "- De justesse ne compte qu'à la main - avec un objectif auto, ça ne compte pas.",
+            "- Pilote des aurores : un objectif auto ×10 réussit environ une manche sur dix ; Lama de l'espace avec l'objectif ×1 000 environ une sur mille - en turbo, un tel vol dure 38 secondes.",
             "- Fixe-toi un budget à l'avance et utilise la limite de perte du mode auto."
           ]
         }

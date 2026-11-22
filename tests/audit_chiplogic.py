@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Headless-Audit der Chip-Regeln von Lama Mines und Lama Plinko (ohne pygame).
+"""Headless-Audit der Chip-Regeln von Lama Mines, Lama Plinko und Lama Crash (ohne pygame).
 
 Geprüft wird:
 
@@ -22,13 +22,21 @@ Plinko    (13) 27 Tabellen: Länge, symmetrisch, nach außen nicht fallend, sch�
           (14) drop_path: genau rows Würfe, Verteilung = Binomial (Monte-Carlo),
           (15) prob / expected_return / Texte / clean_hits / clean_history,
               payout_carry (Rest-Hundertstel-Übertrag für Einsätze 1/2/5) / clean_carry,
+Crash     (18) Platzpunkt: Formel vollständig am 2^16-Gegenstück, exakte Quote je Ziel,
+          (19) Steigkurve (Landmarken, Umkehrung tick_at), (20) Takt-Regel gegen eine
+              Referenz (400 Zufallsrunden, Grenzfälle, Mond, Hälfte, Übertrag),
+          (21) Monte-Carlo mit echten Seeds, (22) clean_round/Zähler/Texte/Achsen/Welten,
 Web       (16) Python = JS über web/tools/fairness_dump.js,
-              lamamines_logic_dump.js und lamaplinko_logic_dump.js (node),
-Rust      (17) Rust-Quelltext hat dieselben Tabellen und Konstanten; der
-              Gleichstand der Rechnungen läuft als Rust-Unit-Test:
+              lamamines_logic_dump.js, lamaplinko_logic_dump.js und
+              lamacrash_logic_dump.js (node; Crash: ganze Kurve, Platzpunkte,
+              ganze Runden mit Hand-Ausstiegen und Mond, clean_round, Zähler, Achsen),
+Rust      (17) Rust-Quelltext hat dieselben Tabellen und Konstanten (Mines, Plinko,
+              Lama Crash samt Musik und Lama-Bank); Prüfwerte chiplogic_ref.json und
+              lamacrash_music_ref.txt aktuell; der Gleichstand der Rechnungen läuft
+              als Rust-Unit-Test:
                   cd rust
                   cargo test -p pgz-core --offline --lib -- fairness chipstats
-                  cargo test -p pgz-games --offline --lib -- chiplogic
+                  cargo test -p pgz-games --offline --lib -- chiplogic lamacrash_music
 
 Aufruf aus dem Repo-Root:  python tests/audit_chiplogic.py
 Exit-Code 0 = alle Prüfungen bestanden.
@@ -472,6 +480,215 @@ check(P.clean_carry(42) == 42 and P.clean_carry(100) == 0 and P.clean_carry(-1) 
       and P.clean_carry("5") == 0 and P.clean_carry(None) == 0 and q_low[1] < 0.5,
       "(15) clean_carry 0..99 (ohne Übertrag hätte Einsatz 1 nur %.0f %% Quote)" % (q_low[1] * 100))
 
+# ================================================================ Crash
+print("\n[Crash]")
+X = _load("lamacrash_logic", "games/lamacrash_logic.py")
+TWO32 = 2 ** 32
+
+# (18) Platzpunkt: geschlossene Formel, vollständig am 2^16-Gegenstück, exakte Quote
+check(X.crash_from_u32(0) == 100 and X.crash_from_u32(TWO32 - 1) == X.MAX_MULT100
+      and X.crash_from_u32(TWO32 // 2) == 194, "(18) Platzpunkt: r=0 -> x1,00, r=max -> x100.000, Mitte x1,94")
+check(X.HOUSE * TWO32 < 2 ** 53 and X.HOUSE * TWO32 * 2000 < 2 ** 53 and X.BETS[-1] * X.MAX_MULT100 < 2 ** 53,
+      "(18) alle Zwischenwerte < 2^53 (JS-Zahlen exakt)")
+
+
+def _crash16(r):
+    """Dieselbe Formel mit 2^16 statt 2^32 (vollständig auszählbar)."""
+    return min(X.MAX_MULT100, max(100, (X.HOUSE * 65536) // (65536 - r)))
+
+
+cnt = {}
+for r16 in range(65536):
+    c16 = _crash16(r16)
+    cnt[c16] = cnt.get(c16, 0) + 1
+keys16 = sorted(cnt)
+ge, acc = {}, 0
+for v in reversed(keys16):
+    acc += cnt[v]
+    ge[v] = acc
+bad16 = []
+for T in list(range(101, 3000)) + [5000, 10000, 65000, 100000, 1000000, X.MAX_MULT100]:
+    have = 0
+    for v in keys16:
+        if v >= T:
+            have = ge[v]
+            break
+    if have != (X.HOUSE * 65536) // T:
+        bad16.append(T)
+check(not bad16, "(18) 2^16-Gegenstück: #(crash >= T) = 97*2^16 // T für alle geprüften T", bad16[:5])
+rtps = [X.expected_return(T) for T in X.TARGETS] + [X.expected_return(R.randint(101, X.MAX_MULT100)) for _ in range(3000)]
+check(all(Fraction(96997, 100000) <= v <= Fraction(97, 100) for v in rtps),
+      "(18) Quote jedes Ziels 96,997-97,000 % (alle TARGETS + 3000 Zufallsziele, exakt)",
+      (float(min(rtps)), float(max(rtps))))
+check(abs(1 - X.win_count(101) / TWO32 - 0.0396) < 0.0001, "(18) rund 3,96 % platzen sofort (vor x1,01)")
+check(X.fmt_chance(200) == "48.50" and X.fmt_chance(200, ",") == "48,50" and X.fmt_chance(10000) == "0.9700"
+      and X.fmt_chance(X.MAX_MULT100) == "0.0010" and X.fmt_chance(101) == "96.04", "(18) fmt_chance")
+
+# (19) Steigkurve
+tab = X._table()
+check(len(tab) == X.MOON_TICK + 1 and tab[0] == 100 and all(tab[i] <= tab[i + 1] for i in range(len(tab) - 1)),
+      "(19) Kurve: 11521 Werte, Start x1,00, nie fallend")
+check(X.mult_at(X.MOON_TICK - 1) < X.MAX_MULT100 <= X.mu_at(X.MOON_TICK) // X.MU_UNIT
+      and X.mu_at(X.MOON_TICK) < 2 ** 53 and X.mult_at(10 ** 9) == X.MAX_MULT100 and X.mult_at(-5) == 100,
+      "(19) MOON_TICK = erster Takt mit x100.000, mu < 2^53, Begrenzung")
+check([X.tick_at(v) for v in (101, 200, 1000, 10000, 100000, X.MAX_MULT100)] == [10, 694, 2305, 4608, 6912, 11520]
+      and X.world_ticks() == (0, 406, 1100, 2305, 4608, 11520), "(19) Landmarken: x2 bei 694, x10 bei 2305 … Welten")
+bad = [m for m in [R.randint(100, X.MAX_MULT100) for _ in range(2000)]
+       if not (X.mult_at(X.tick_at(m)) >= m and (X.tick_at(m) == 0 or X.mult_at(X.tick_at(m) - 1) < m))]
+check(not bad, "(19) tick_at ist die Umkehrung von mult_at (2000 Zufallswerte)", bad[:3])
+mu, ok_mu = X.MU0, True
+for tk in range(1, 3000):
+    mu += mu // X.GROWTH
+    ok_mu = ok_mu and X.mu_at(tk) == mu
+check(ok_mu, "(19) Kurve = schrittweise mu += mu // 1000")
+
+
+# (20) Takt-Regel gegen eine einfache Referenz
+def _ref(pairs, crash, acts):
+    """Erwartetes Ergebnis ohne L.tick: Teil gewinnt bei Ziel a gdw. a <= crash; Hand-Ausstieg bei
+    Takt t mit m = mult_at(t) nur, wenn m >= MIN_CASH, noch nicht geplatzt und das Auto-Ziel noch
+    nicht erreicht ist (je Einsatz höchstens eine ganze und eine halbe Aktion)."""
+    end_t = X.pop_tick(crash)
+    out = []
+    for i, (b, a) in enumerate(pairs):
+        half_t = next((tk for tk, j, h in acts if j == i and h), None)
+        full_t = next((tk for tk, j, h in acts if j == i and not h), None)
+        auto_t = X.tick_at(a) if (a and a <= crash) else None
+
+        def ok(tk):
+            return (tk is not None and X.mult_at(tk) >= X.MIN_CASH and tk < end_t
+                    and (auto_t is None or tk < auto_t))
+        hm = xm = 0
+        if ok(full_t):
+            xm = X.mult_at(full_t)
+        if ok(half_t) and (not xm or half_t < full_t):
+            hm = X.mult_at(half_t)
+        if not xm and auto_t is not None:
+            xm = a
+        if not xm and crash >= X.MAX_MULT100:
+            xm = X.MAX_MULT100
+        out.append((hm, xm))
+    return out
+
+
+def _sim(pairs, crash, acts):
+    rnd = X.new_round({"n": 1, "s": "0" * 32, "c": "abc", "h": "0" * 64}, pairs)
+    carry, end, todo = 0, None, sorted(acts)
+    while end is None:
+        while todo and todo[0][0] == rnd["t"]:
+            tk, i, h = todo.pop(0)
+            res = X.cash_out(rnd, i, h, carry)
+            if res is not None:
+                carry = res[2]
+        _, carry, end = X.tick(rnd, crash, carry)
+        if rnd["t"] > X.MOON_TICK + 2:
+            break
+    return rnd, end, carry
+
+
+bad = []
+for case in range(400):
+    pairs = [(R.choice(X.BETS), R.choice((0,) + X.TARGETS[:30])) for _ in range(R.randint(1, 2))]
+    crash = R.choice((100, 101, 102, 150, 200, 207, 350, 1000, 2500)) if case % 3 else X.crash_from_u32(R.getrandbits(32))
+    crash = min(crash, 20000)
+    acts = []
+    for i in range(len(pairs)):
+        if R.random() < 0.6:
+            acts.append((R.randint(0, X.pop_tick(crash) + 5), i, False))
+        if R.random() < 0.5:
+            acts.append((R.randint(0, X.pop_tick(crash) + 5), i, True))
+    rnd, end, carry = _sim(pairs, crash, acts)
+    got = [(b["hm"], b["xm"]) for b in rnd["bets"]]
+    want = _ref(pairs, crash, acts)
+    if got != want or end != "pop" or rnd["t"] != X.pop_tick(crash) or X.mult_at(rnd["t"] - 1) > crash:
+        bad.append((pairs, crash, acts, got, want, end))
+check(not bad, "(20) Takt-Regel: 400 Zufallsrunden = Referenz (Auto bei a <= Platzpunkt, Platzen erst bei m > Platzpunkt)",
+      bad[:1])
+# Grenzfälle
+r1, e1, _ = _sim([(100, 350)], 350, [])
+r2, e2, _ = _sim([(100, 351)], 350, [])
+check(r1["bets"][0]["xm"] == 350 and r1["bets"][0]["p"] == 350 and r2["bets"][0]["xm"] == 0 and e1 == e2 == "pop",
+      "(20) Ziel = Platzpunkt gewinnt, Ziel = Platzpunkt + 0,01 verliert")
+r3, e3, _ = _sim([(10, 0)], 100, [(0, 0, False), (5, 0, False), (9, 0, True)])
+check(r3["bets"][0]["xm"] == 0 and r3["bets"][0]["hm"] == 0 and e3 == "pop" and r3["t"] == 10,
+      "(20) Sofort-Platzer: unter x1,01 kein Ausstieg, Platzen bei Takt 10")
+r4, e4, c4 = _sim([(10, 0), (20, 200)], X.MAX_MULT100, [(5000, 0, True)])
+check(e4 == "moon" and r4["t"] == X.MOON_TICK and r4["bets"][0]["xm"] == X.MAX_MULT100 and r4["bets"][1]["xm"] == 200
+      and r4["bets"][0]["hm"] == X.mult_at(5000), "(20) Mondlandung: Rest bekommt x100.000, Auto-Ziel vorher")
+rnd = X.new_round({"n": 1, "s": "0" * 32, "c": "abc", "h": "0" * 64}, [(10, 0), (50, 0)])
+rnd["t"] = 694
+w1 = X.cash_out(rnd, 1, True, 0)
+w2 = X.cash_out(rnd, 1, True, w1[2])
+w3 = X.cash_out(rnd, 0, False, w1[2])
+w4 = X.cash_out(rnd, 1, False, w3[2])
+check(w1 == (25 * 200 // 100, 200, 0) and w2 is None and w3 == (20, 200, 0) and w4 == (50, 200, 0)
+      and rnd["bets"][1]["p"] == 100 and rnd["bets"][1]["man"] == 3 and not X.flying(rnd),
+      "(20) Hälfte einmal, Rest danach, man-Bits, flying", (w1, w2, w3, w4))
+cr = 0
+seq = []
+for b, m in ((10, 101), (10, 137), (5, 199), (25, 101)):
+    w, cr = X.payout_carry(b, m, cr)
+    seq.append((w, cr))
+check(seq == [(10, 10), (13, 80), (10, 75), (26, 0)], "(20) Rest-Übertrag über Teile und Runden", seq)
+
+# (21) Monte-Carlo mit echten Seeds
+N = 120000
+srv, cli = F.new_server_seed(R), F.new_client_seed(R)
+cr_list = [X.crash_point(srv, cli, n) for n in range(N)]
+for T in (101, 150, 200, 1000, 10000):
+    p = X.win_count(T) / TWO32
+    have = sum(1 for v in cr_list if v >= T) / N
+    sig = math.sqrt(p * (1 - p) / N)
+    check(abs(have - p) <= 4 * sig, "(21) Monte-Carlo %d Runden: P(>= x%s) = %.4f (erwartet %.4f, 4 sigma)"
+          % (N, X.fmt_mult(T, ","), have, p))
+check(sum(1 for v in cr_list if v == 100) > 0 and max(cr_list) > 10000, "(21) Spannweite: Sofort-Platzer und große Flüge")
+
+# (22) Prüfen/Laden, Zähler, Texte, Kurve
+n7 = 7
+while X.crash_point(srv, cli, n7) < 1000:          # Runde, die sicher über x10 fliegt
+    n7 += 1
+ent = F.begin({"server": srv, "client": cli, "nonce": n7})
+crash7 = X.crash_point(srv, cli, n7)
+good = X.new_round(ent, [(100, 0), (20, 150)])
+check(X.clean_round(json.loads(json.dumps(good))) == good, "(22) clean_round: frische Runde bleibt gleich")
+bad_rounds = [None, 5, dict(good, h="0" * 64), dict(good, t=-1), dict(good, t=X.MOON_TICK + 1),
+              dict(good, bets=[]), dict(good, bets=[{"b": 7, "a": 0, "hm": 0, "xm": 0, "p": 0, "man": 0}]),
+              dict(good, bets=[{"b": 10, "a": 100, "hm": 0, "xm": 0, "p": 0, "man": 0}]),
+              dict(good, bets=[{"b": 10, "a": 0, "hm": 0, "xm": 0, "p": 0, "man": 2}]),
+              dict(good, bets=[{"b": 10, "a": 0, "hm": 0, "xm": 0, "p": 0, "man": True}]),
+              dict(good, t=X.pop_tick(crash7)),
+              dict(good, bets=[{"b": 10, "a": 0, "hm": 0, "xm": 500000, "p": 0, "man": 2}])]
+check(all(X.clean_round(b) is None for b in bad_rounds), "(22) clean_round verwirft kaputte/abgelaufene Runden",
+      [i for i, b in enumerate(bad_rounds) if X.clean_round(b) is not None])
+done = dict(good, t=10, bets=[{"b": 100, "a": 0, "hm": 0, "xm": 101, "p": 101, "man": 2}])
+check(X.clean_round(done) == done, "(22) Runde ohne fliegendes Geld ist gültig (wird beim Laden abgeschlossen)")
+x = X.blank_x()
+rnd = X.new_round(ent, [(100, 0), (20, 150)])
+rnd["bets"][0].update(hm=300, xm=320, p=310, man=3)
+rnd["bets"][1].update(xm=150, p=30)
+X.record_x(x, rnd, 330, "pop")
+check(x["hits"][X.bucket_of(330)] == 1 and x["cash"] == 3 and x["half"] == 1 and x["auto"] == 1 and x["close"] == 1
+      and x["top"] == 330 and x["inst"] == 0 and X.clean_x(json.loads(json.dumps(x))) == x
+      and X.clean_x({"hits": [1, 2], "cash": -1, "top": True}) == X.blank_x(), "(22) Zähler: record_x / clean_x")
+check(X.close_call(rnd, 330) and not X.close_call(rnd, 400) and X.best_cash(rnd) == 320,
+      "(22) Haarscharf nur von Hand ab x2 und >= 95 % des Platzpunkts")
+o = X.outcome(rnd, 330)
+check(X.check_outcome(o, 330) and not X.check_outcome(o, 329) and not X.check_outcome(dict(o, b=[[1, 2, 3]]), 330)
+      and F._plain(o), "(22) Fairness-Ergebnis: check_outcome, nur JSON-Grundtypen")
+check(sum(X.bucket_prob(i) for i in range(len(X.BUCKETS))) == 1 and all(X.bucket_prob(i) > 0 for i in range(len(X.BUCKETS))),
+      "(22) Verteilung der Fächer summiert sich exakt zu 1")
+check(X.clean_history([50, 100, True, "x", 350, X.MAX_MULT100 + 1] + [200] * 20) == [200] * 12
+      and X.clean_carry(99) == 99 and X.clean_carry(100) == 0, "(22) clean_history / clean_carry")
+check([X.step_target(200, 1), X.step_target(200, -1), X.step_target(101, -1), X.step_target(X.MAX_MULT100, 1),
+       X.step_target(201, -1)] == [225, 175, 101, X.MAX_MULT100, 200], "(22) step_target auf der Leiter")
+check([X.fmt_short(v, ",") for v in (101, 999, 1234, 12345, 123456, X.MAX_MULT100)]
+      == ["1,01", "9,99", "12,3", "123", "1,2k", "100k"] and X.fmt_mult(235, ",") == "2,35", "(22) fmt_short / fmt_mult")
+check(X.chart_span(0) == (480, 200) and X.chart_ylines(200) == [125, 150, 175, 200] and X.chart_xlines(480) == [120, 240, 360, 480]
+      and len(X.chart_ylines(X.MAX_MULT100)) <= 4 and len(X.chart_xlines(20000)) <= 5, "(22) Kurven-Achsen")
+check([X.world_blend(v) for v in (0, 300, 380, 406, 1100, 4700)] == [(0, 0), (0, 0), (0, 181), (1, 0), (2, 0), (4, 0)]
+      and [X.world_of(v) for v in (100, 149, 150, 299, 300, 999, 1000, 9999, 10000, X.MAX_MULT100)]
+      == [0, 0, 1, 1, 2, 2, 3, 3, 4, 5], "(22) Höhenwelten: world_of / world_blend")
+
 # ================================================================ Web
 print("\n[Web]")
 if NODE:
@@ -524,11 +741,14 @@ if NODE:
               "(16) Web: chipstats clean/record/rtp gleich")
 
     sv = [F.new_server_seed(R) for _ in range(40)]
+    # Mines-Runde aus (12) - "good" ist seit dem Crash-Abschnitt (22) dessen Runde
+    m_good = {"bet": 100, "grid": 5, "mines": 3, "n": 7, "s": "ab" * 16, "c": "kaugummi", "h": F.commit("ab" * 16),
+              "open": safe[:4]}
     mcases = {
         "fields": [[g, R.randint(1, g * g - 1), sv[i], F.new_client_seed(R), R.randrange(10 ** 6)]
                    for i, g in enumerate(list(M.GRIDS) * 10)],
         "make": [[R.getrandbits(32), g, R.randint(1, g * g - 1)] for g in list(M.GRIDS) * 10],
-        "rounds": [good, dict(good, open=[])] + bads[:16] + [dict(good, open=safe[:21])],
+        "rounds": [m_good, dict(m_good, open=[])] + bads[:16] + [dict(m_good, open=safe[:21])],
         "history": [[0, 154, -3, "x", True, 999] + [100] * 20, None, [0, 154]],
         "marks": [{"4": [3, 1, 3, True, 16, -1, "2", 0], "5": "x", "7": list(range(60)), "9": [1]}, None, {"6": [35, 0]}],
         "carry": MCARRY[:300],
@@ -617,6 +837,287 @@ if NODE:
             want_carry.append(rows_)
         check(js.get("carry") == want_carry and js.get("carry_clean") == [P.clean_carry(v) for v in pcases["carry_clean"]],
               "(16) Web: payout_carry / clean_carry gleich")
+
+    # ---- Lama Crash (eigener Zufall - die Fälle oben bleiben unverändert)
+    EXC = _load("export_chiplogic_ref_web", "devtools/export_chiplogic_ref.py")
+    rx = random.Random(8080)
+    MX = X.MAX_MULT100
+    NOSEED = {"n": 1, "s": "0" * 32, "c": "abc", "h": "0" * 64}
+
+    def jn(v):
+        """Wie nach JSON (Tupel -> Listen) - so kommen die Werte aus node zurück."""
+        return json.loads(json.dumps(v))
+
+    def _csim(sim):
+        """Ganze Runde mit Hand-Ausstiegen (Schleife wie _crash_sims in devtools/export_chiplogic_ref.py)."""
+        rnd_ = X.new_round(NOSEED, [tuple(p_) for p_ in sim["pairs"]])
+        carry_, log_, todo, end_ = sim["carry0"], [], [list(a_) for a_ in sim["acts"]], None
+        while end_ is None:
+            while todo and todo[0][0] == rnd_["t"]:
+                _, i_, h_ = todo.pop(0)
+                res_ = X.cash_out(rnd_, i_, h_, carry_)
+                log_.append(["cash", rnd_["t"], i_, h_] + (list(res_) if res_ is not None else [None, None, None]))
+                if res_ is not None:
+                    carry_ = res_[2]
+            evs, carry_, end_ = X.tick(rnd_, sim["crash"], carry_)
+            for ev in evs:
+                log_.append(["ev", rnd_["t"], ev[0], ev[1], ev[2], ev[3]])
+            if rnd_["t"] > X.MOON_TICK + 2:
+                break
+        o_ = X.outcome(rnd_, sim["crash"])
+        return jn({"log": log_, "end": end_, "t": rnd_["t"], "bets": rnd_["bets"], "carry": carry_, "outcome": o_,
+                   "best": X.best_cash(rnd_), "close": X.close_call(rnd_, sim["crash"]), "flying": X.flying(rnd_),
+                   "stake": X.stake_total(rnd_), "paid": X.paid_total(rnd_),
+                   "check": X.check_outcome(o_, sim["crash"])})
+
+    # ganze Runden: 6 x 30 wie für Rust (eigene Startwerte) + Grenzfälle (Mond, Ziel = Deckel, Sofort-Platzer ...)
+    sims = []
+    for sd in range(6):
+        for sm in EXC._crash_sims(X, random.Random(9100 + sd)):
+            sims.append({k_: sm[k_] for k_ in ("pairs", "crash", "acts", "carry0")})
+    sims += [
+        {"pairs": [[10, MX], [20, 5000000]], "crash": MX, "acts": [], "carry0": 0},
+        {"pairs": [[10000, 0]], "crash": MX - 1, "acts": [[X.MOON_TICK - 1, 0, False]], "carry0": 99},
+        {"pairs": [[10000, 0], [10000, 0]], "crash": MX, "acts": [[5000, 0, True], [6000, 1, True], [7000, 1, False]],
+         "carry0": 50},
+        {"pairs": [[50, 0], [20, 101]], "crash": 100, "acts": [[tk_, 0, tk_ % 2 == 0] for tk_ in range(12)], "carry0": 7},
+        {"pairs": [[20, 101]], "crash": 101, "acts": [[9, 0, True], [10, 0, False]], "carry0": 0},
+        {"pairs": [[100, 0]], "crash": 350, "acts": [[0, 0, False], [694, 0, True], [694, 0, True], [700, 0, False],
+                                                    [700, 0, False], [9000, 0, False]], "carry0": 0},
+        {"pairs": [[2500, 300], [5000, 0]], "crash": MX, "acts": [[1000, 1, True], [X.MOON_TICK - 1, 1, False]],
+         "carry0": 33},
+    ]
+    want_sims = [_csim(sm) for sm in sims]
+    fin = [[dict(NOSEED, t=w_["t"], bets=w_["bets"]), sm["crash"], w_["end"]] for sm, w_ in zip(sims, want_sims)]
+    # einzelne Ausstiege: unter x1,01, Hälfte doppelt, ganz ausgestiegen, falscher Index
+    cbase = X.new_round(NOSEED, [(10, 0), (25, 200)])
+    cash_in = []
+    for tk_ in (0, 9, 10, 694, 5000, X.MOON_TICK):
+        for i_ in (-1, 0, 1, 2):
+            for half_ in (False, True):
+                cash_in.append([dict(jn(cbase), t=tk_), i_, half_, rx.randrange(100)])
+    r_ = dict(jn(cbase), t=800)
+    r_["bets"][0].update(hm=150, man=1, p=7)
+    cash_in += [[r_, 0, True, 5], [r_, 0, False, 5]]
+    r_ = dict(jn(cbase), t=800)
+    r_["bets"][0].update(xm=150, man=2, p=15)
+    cash_in += [[r_, 0, False, 0], [r_, 0, True, 0], [r_, 1, True, 98]]
+    want_cash = []
+    for r_, i_, half_, c_ in cash_in:
+        rc = jn(r_)
+        res_ = X.cash_out(rc, i_, half_, c_)
+        want_cash.append(jn([res_, rc, X.riding(rc["bets"][0]), X.flying(rc)]))
+    # gespeicherte Runden: die aus (22) + Typfehler + 60 Runden mit echten Seeds und zufälligen Ausstiegen
+    b0 = good["bets"][0]
+    crounds = [good, done] + bad_rounds + [
+        dict(good, n=True), dict(good, n=-1), dict(good, s="AB" * 16), dict(good, c=""), dict(good, t=True),
+        dict(good, t=2.5), dict(good, bets="x"), dict(good, bets=[None]), dict(good, bets=[b0] * 3),
+        dict(good, bets=[dict(b0, b=True)]), dict(good, bets=[dict(b0, a=100)]), dict(good, bets=[dict(b0, man=4)]),
+        dict(good, bets=[dict(b0, p=-1)]), dict(good, bets=[dict(b0, a=101)]), [], "x", None, 5, {}]
+    for _ in range(60):
+        st_ = F.blank_state(rx)
+        st_["nonce"] = rx.randrange(10 ** 6)
+        ent_ = F.begin(st_)
+        cr_ = X.crash_point(ent_["s"], ent_["c"], ent_["n"])
+        pt_ = X.pop_tick(cr_)
+        r_ = X.new_round(ent_, [(rx.choice(X.BETS), rx.choice((0,) + X.TARGETS)) for _ in range(rx.randint(1, 2))])
+        r_["t"] = rx.choice((0, max(0, pt_ - 1), pt_, rx.randint(0, pt_ + 5), X.MOON_TICK))
+        m_ = X.mult_at(r_["t"])
+        for b_ in r_["bets"]:
+            if rx.random() < 0.4:
+                b_["hm"] = rx.choice((101, m_, cr_, cr_ + 1, 50))
+                b_["man"] |= rx.choice((0, 1))
+            if rx.random() < 0.4:
+                b_["xm"] = rx.choice((101, m_, cr_, max(101, m_ - 1)))
+                b_["man"] |= rx.choice((0, 2))
+            if rx.random() < 0.3:
+                b_["p"] = rx.choice((0, 5, b_["b"] * MX // 100 + 1, b_["b"] * MX // 100 + 2))
+            if rx.random() < 0.1:
+                b_["man"] = rx.choice((1, 2, 3))
+        crounds.append(r_)
+    rc_ = dict(NOSEED, t=2000, bets=[{"b": 100, "a": 0, "hm": 300, "xm": 320, "p": 310, "man": 3},
+                                     {"b": 20, "a": 150, "hm": 0, "xm": 150, "p": 30, "man": 0}])
+    o_ = X.outcome(rc_, 330)
+    curve = [X.mult_at(tk_) for tk_ in range(X.MOON_TICK + 1)]
+    u32_in = [0, 1, 2, 3, TWO32 // 2, TWO32 - 3, TWO32 - 2, TWO32 - 1] + [rx.getrandbits(32) for _ in range(4000)]
+    for T in list(X.TARGETS) + [rx.randint(101, MX) for _ in range(300)]:
+        q_ = X.HOUSE * TWO32 // T                # Stufen-Grenze: ab r = 2^32 - q_ gilt crash >= T
+        u32_in += [TWO32 - q_ + d_ for d_ in (-2, -1, 0, 1, 2) if 0 <= TWO32 - q_ + d_ < TWO32]
+    chart_in = list(range(0, X.MOON_TICK + 1, 37)) + [1, 2, 3, 4, 5, 479, 480, 481, 694, 11519, 11520]
+    wt = X.world_ticks()
+    ccases = {
+        "tick_at": [50, 99, 100, 101, MX, MX + 1, 10 ** 9, 0]
+        + [curve[i_] + d_ for i_ in range(0, len(curve), 7) for d_ in (-1, 0, 1)]
+        + [rx.randint(0, MX + 10) for _ in range(2000)],
+        "u32": u32_in,
+        "seeds": [[F.new_server_seed(rx), F.new_client_seed(rx), rx.randrange(10 ** 9)] for _ in range(300)]
+        + [["ab" * 16, "kaugummi", n_] for n_ in (0, 1, 7, F.MAX_NONCE)],
+        "win_count": list(X.TARGETS) + [50, 100, 101, MX, MX + 1, 10 ** 9] + [rx.randint(101, MX) for _ in range(300)],
+        "pop_tick": [100, 101, 102, 350, 1000, 999999, MX - 1, MX] + [X.crash_from_u32(v) for v in u32_in[:2000]],
+        "expected": list(X.TARGETS) + [rx.randint(101, MX) for _ in range(300)] + [50, MX + 100],
+        "payout": [[[rx.choice(X.BETS + (1, 5, 13, 1250)), rx.randint(101, MX)] for _ in range(300)] for _ in range(3)],
+        "sims": sims,
+        "cash": cash_in,
+        "rounds": [jn(v) for v in crounds],
+        "x_clean": [{"hits": [1, 2], "cash": -1, "top": True}, {"hits": [3] * 7, "moon": 2, "close": "x"}, None, "x", [],
+                    {"hits": [1, True, -1, 2.5, "x", 5, 2 ** 53], "cash": 2 ** 53 - 1, "half": 2 ** 53, "auto": 3,
+                     "inst": 0, "moon": None, "close": 1, "top": MX}, X.blank_x(), {"hits": "x", "top": 5}],
+        "x_record": [fin[i_::4] for i_ in range(4)],
+        "history": [[50, 100, True, "x", 350, MX + 1] + [200] * 20, None, "x", [], [100, MX, 99, 101.5],
+                    list(range(90, 130))],
+        "carry_clean": [42, 100, -1, True, "5", None, 0, 99, 2.5],
+        "target_ok": [100, 101, MX, MX + 1, True, 150.5, "200", None, 200],
+        "fmt": [100, 101, 999, 1000, 1001, 1234, 9999, 10000, 12345, 99999, 100000, 123456, 999999, 1000000,
+                1234567, MX] + list(X.TARGETS) + [rx.randint(100, MX) for _ in range(300)],
+        "chart": chart_in,
+        "ylines": [X.chart_span(v)[1] for v in chart_in] + [1, 50, 100, 101, 150, 200, 201, 12500000, MX]
+        + [rx.randint(100, 13 * 10 ** 6) for _ in range(200)],
+        "xlines": [X.chart_span(v)[0] for v in chart_in] + [1, 59, 60, 300, 301, 480, 13824, 100000]
+        + [rx.randint(1, 20000) for _ in range(200)],
+        "blend": [0.0, 315.5, 316.0, 380.25, 405.999, 406.0, 1050.75, 1099.5, 2300.0, 4600.125, 4700.0, -3.5, 12000.5]
+        + [rx.uniform(0, 11600) for _ in range(600)] + list(range(300, 420))
+        + [w_ - d_ for w_ in wt for d_ in (0, 0.5, 1, 1e-9, 89.999, 90, 90.001, 0.1 + 0.2)],
+        "world_of": [100, 149, 150, 299, 300, 999, 1000, 9999, 10000, 9999999, MX, 50, MX * 2]
+        + [rx.randint(100, MX) for _ in range(200)],
+        "step": [[v, d_] for v in (101, 150, 151, 200, 201, 9999999, MX, 50, MX + 5, 100) + X.TARGETS for d_ in (1, -1)],
+        "bucket": [100, 149, 150, 199, 200, 499, 500, 999, 1000, 9999, 10000, 99999, 100000, MX, 50]
+        + [rx.randint(100, MX) for _ in range(200)],
+        "close": [[r_, c_] for r_, c_, _ in fin] + [[rc_, c_] for c_ in range(290, 420, 3)]
+        + [[dict(rc_, bets=[dict(rc_["bets"][0], man=m_)]), 330] for m_ in range(4)],
+        "check": [[w_["outcome"], sm["crash"]] for sm, w_ in zip(sims, want_sims)]
+        + [[o_, 330], [o_, 329], [o_, 320], [dict(o_, x=331), 330], [dict(o_, b=[]), 330], [dict(o_, b=[[1, 2, 3]]), 330],
+           [dict(o_, b=[[1, 50, 0, 0]]), 330], [dict(o_, b=[[1, 0, 331, 0]]), 330], [dict(o_, b=[[1, 0, 0, True]]), 330],
+           [dict(o_, b=[[1, 0, 0, 0]] * 3), 330], ["x", 330], [None, 330], [{"x": 330}, 330], [dict(o_, b="x"), 330],
+           [dict(o_, x="330"), 330], [dict(o_, b=[[1, 0, 0, 2.5]]), 330], [dict(o_, b=[[1, -5, 0, 0]]), 330]],
+    }
+    ccases["chance"] = ccases["win_count"]
+    ccases["music_m"] = [0, 99, 100, 149, 150, 199, 200, 229, 230, 299, 300, 999, 1000, 9999, 10000, 99999, 100000,
+                         1000000, 9999999, MX] + list(range(100, 10_500_001, 9973))
+    js, err = js_dump("lamacrash_logic_dump.js", ccases)
+    if check(js is not None, "(16) Web-Crash lässt sich laden", err):
+        check(js["consts"] == {"key": X.KEY, "house": X.HOUSE, "max": MX, "min_cash": X.MIN_CASH, "bets": list(X.BETS),
+                               "max_bets": X.MAX_BETS, "history": X.HISTORY, "tps": X.TPS, "mu0": X.MU0,
+                               "growth": X.GROWTH, "mu_unit": X.MU_UNIT, "moon_tick": X.MOON_TICK,
+                               "speed_turbo": X.SPEED_TURBO, "speed_ff": X.SPEED_FF, "targets": list(X.TARGETS),
+                               "default_target": X.DEFAULT_TARGET, "worlds": list(X.WORLDS),
+                               "world_at": list(X.WORLD_AT), "blend_ticks": X.BLEND_TICKS, "brave": X.BRAVE_MULT,
+                               "space": X.SPACE_MULT, "close_min": X.CLOSE_MIN, "close_pct": X.CLOSE_PCT,
+                               "buckets": list(X.BUCKETS), "chart_min_ticks": X.CHART_MIN_TICKS,
+                               "y_steps": list(X._Y_STEPS), "x_steps": list(X._X_STEPS), "two32": X.TWO32},
+              "(16) Web: gleiche Crash-Konstanten (Quote, Deckel, Kurve, Ziel-Leiter, Welten, Fächer, Achsen)")
+        check(js["curve"] == curve and js["mu"] == [X.mu_at(tk_) for tk_ in range(X.MOON_TICK + 1)]
+              and js["clamp"] == [[X.mult_at(v), X.mu_at(v)] for v in (-5, -1, 0, 0.9, 1.5, 11519.99, 11520, 11521, 1e9)]
+              and js["tick_at"] == [X.tick_at(v) for v in ccases["tick_at"]],
+              "(16) Web: ganze Steigkurve bitgleich (11.521 Takte, mu und m100, Begrenzung) + tick_at (%d Werte)"
+              % len(ccases["tick_at"]))
+        check(js["u32"] == [X.crash_from_u32(v) for v in u32_in] and js["seeds"] == [X.crash_point(*v) for v in ccases["seeds"]],
+              "(16) Web: Platzpunkt bitgleich (%d Zufallszahlen inkl. Stufen-Grenzen, %d echte Seeds)"
+              % (len(u32_in), len(ccases["seeds"])))
+        check(js["win_count"] == [X.win_count(v) for v in ccases["win_count"]]
+              and js["chance"] == [[X.fmt_chance(v), X.fmt_chance(v, ",")] for v in ccases["win_count"]]
+              and js["pop_tick"] == [X.pop_tick(v) for v in ccases["pop_tick"]]
+              and all(Fraction(*a_[0]) == X.expected_return(v) and a_[1] == float(X.expected_return(v))
+                      for a_, v in zip(js["expected"], ccases["expected"])),
+              "(16) Web: win_count / fmt_chance / pop_tick / expected_return (exakt) gleich")
+        bad_s = [i_ for i_, (a_, b_) in enumerate(zip(js["sims"], want_sims)) if a_ != b_]
+        n_moon = sum(1 for w_ in want_sims if w_["end"] == "moon")
+        n_hand = sum(1 for w_ in want_sims for ln in w_["log"] if ln[0] == "cash" and ln[4] is not None)
+        n_auto = sum(1 for w_ in want_sims for ln in w_["log"] if ln[0] == "ev" and ln[3] == "auto")
+        check(not bad_s and len(js["sims"]) == len(sims),
+              "(16) Web: %d ganze Runden gleich (%d Mondlandungen, %d Hand-Ausstiege, %d Auto-Ziele; Takt-Regel, "
+              "Hälften, Übertrag, Ergebnis)" % (len(sims), n_moon, n_hand, n_auto), bad_s[:3])
+        check(js["cash"] == want_cash and js["half"] == [[X.half_stake(b), X.rest_stake(b)] for b in list(X.BETS) + [1, 3, 7]]
+              and js["new_round"] == jn(X.new_round({"n": 5, "s": "ab" * 16, "c": "kaugummi", "h": "0" * 64},
+                                                    [(10, 0), (20, 150)]))
+              and list(js["new_round"]) == ["n", "s", "c", "h", "t", "bets"]
+              and list(js["new_round"]["bets"][0]) == ["b", "a", "hm", "xm", "p", "man"],
+              "(16) Web: cash_out-Einzelfälle (%d), Hälften, new_round samt Schlüsselreihenfolge gleich" % len(cash_in))
+        want_rounds = [jn(X.clean_round(v)) for v in ccases["rounds"]]
+        check(js["rounds"] == want_rounds
+              and all(list(a_) == list(b_) and [list(x_) for x_ in a_["bets"]] == [list(x_) for x_ in b_["bets"]]
+                      for a_, b_ in zip(js["rounds"], want_rounds) if a_ and b_),
+              "(16) Web: clean_round gleich (%d Rohdaten, davon %d gültig; Schlüsselreihenfolge)"
+              % (len(want_rounds), sum(1 for v in want_rounds if v)))
+        want_x = []
+        for seq in ccases["x_record"]:
+            x_ = X.blank_x()
+            for r_, c_, e_ in seq:
+                X.record_x(x_, r_, c_, e_)
+            want_x.append(x_)
+        check(js["x_record"] == want_x and js["x_clean"] == [X.clean_x(v) for v in ccases["x_clean"]]
+              and js["blank_x"] == X.blank_x() and list(js["blank_x"]) == list(X.blank_x()),
+              "(16) Web: record_x (%d Runden) / clean_x / blank_x gleich" % len(fin))
+        want_pay = []
+        for seq in ccases["payout"]:
+            c_, rows_ = 0, []
+            for b_, m_ in seq:
+                w_, c_ = X.payout_carry(b_, m_, c_)
+                rows_.append([w_, c_])
+            want_pay.append(rows_)
+        check(js["history"] == [X.clean_history(v) for v in ccases["history"]]
+              and js["carry_clean"] == [X.clean_carry(v) for v in ccases["carry_clean"]]
+              and js["target_ok"] == [X.target_ok(v) for v in ccases["target_ok"]] and js["payout"] == want_pay,
+              "(16) Web: clean_history / clean_carry / target_ok / payout_carry gleich")
+        check(js["fmt"] == [[X.fmt_mult(v), X.fmt_mult(v, ","), X.fmt_short(v), X.fmt_short(v, ",")] for v in ccases["fmt"]],
+              "(16) Web: fmt_mult / fmt_short gleich (%d Werte)" % len(ccases["fmt"]))
+        check(js["chart"] == [list(X.chart_span(v)) for v in chart_in]
+              and js["ylines"] == [X.chart_ylines(v) for v in ccases["ylines"]]
+              and js["xlines"] == [X.chart_xlines(v) for v in ccases["xlines"]],
+              "(16) Web: Kurven-Achsen chart_span / chart_ylines / chart_xlines gleich")
+        check(js["blend"] == [list(X.world_blend(v)) for v in ccases["blend"]]
+              and js["world_of"] == [X.world_of(v) for v in ccases["world_of"]] and js["world_ticks"] == list(wt),
+              "(16) Web: world_blend (Gleitkomma, %d Takte) / world_of / world_ticks gleich" % len(ccases["blend"]))
+        check(js["step"] == [X.step_target(v, d_) for v, d_ in ccases["step"]]
+              and js["bucket"] == [X.bucket_of(v) for v in ccases["bucket"]]
+              and [Fraction(*v) for v in js["bucket_prob"]] == [X.bucket_prob(i_) for i_ in range(len(X.BUCKETS))]
+              and js["bucket_prob_f"] == [float(X.bucket_prob(i_)) for i_ in range(len(X.BUCKETS))],
+              "(16) Web: step_target / bucket_of / bucket_prob (exakt) gleich")
+        check(js["close"] == [X.close_call(r_, c_) for r_, c_ in ccases["close"]]
+              and js["check"] == [X.check_outcome(jn(o2), c_) for o2, c_ in ccases["check"]],
+              "(16) Web: close_call (%d) / check_outcome (%d) gleich" % (len(ccases["close"]), len(ccases["check"])))
+
+        # Musik: games/lamacrash_music.py ohne pygame laden - compose()/squeak() brauchen
+        # kein Audio, ein Platzhalter für "audio" reicht (gerendert wird hier nichts)
+        def _py_music():
+            import types
+            had_audio = "audio" in sys.modules
+            if not had_audio:
+                sys.modules["audio"] = types.ModuleType("audio")
+            pkg = types.ModuleType("lcx_web_pkg")
+            pkg.__path__ = [os.path.join(REPO, "games")]
+            sys.modules["lcx_web_pkg"] = pkg
+            try:
+                for name in ("lamacrash_logic", "lamacrash_music"):
+                    spec = importlib.util.spec_from_file_location("lcx_web_pkg." + name,
+                                                                  os.path.join(REPO, "games", name + ".py"))
+                    mod = importlib.util.module_from_spec(spec)
+                    sys.modules["lcx_web_pkg." + name] = mod
+                    spec.loader.exec_module(mod)
+                return sys.modules["lcx_web_pkg.lamacrash_music"]
+            finally:
+                if not had_audio:
+                    del sys.modules["audio"]
+
+        MUS = _py_music()
+        jm = js["music"]
+        want_songs = [jn(MUS.compose(s)) for s in range(MUS.STAGES)]
+        n_notes = n_exact = 0
+        same_mu = jm["stages"] == MUS.STAGES and len(jm["compose"]) == len(want_songs)
+        for a_, b_ in zip(jm["compose"], want_songs):
+            same_mu = same_mu and a_["bars"] == b_["bars"] and a_["bpm"] == b_["bpm"] and a_["length"] == b_["length"]
+            same_mu = same_mu and len(a_["voices"]) == len(b_["voices"])
+            for va, vb in zip(a_["voices"], b_["voices"]):
+                same_mu = same_mu and va["vol"] == vb["vol"] and len(va["notes"]) == len(vb["notes"])
+                for na, nb in zip(va["notes"], vb["notes"]):
+                    n_notes += 1
+                    n_exact += na == nb
+                    # Frequenz: 440 * 2^(x/12) - Math.pow und C-pow dürfen im letzten Bit abweichen
+                    same_mu = same_mu and na[0] == nb[0] and na[2:] == nb[2:] and abs(na[1] - nb[1]) <= 1e-12 * nb[1]
+        check(same_mu and jm["bpm"] == [MUS.bpm(s) for s in range(6)] and jm["beat"] == [MUS.beat_seconds(s) for s in range(6)]
+              and jm["stage_of"] == [MUS.stage_of(m_) for m_ in ccases["music_m"]]
+              and jm["squeak"] == [jn(MUS.squeak(m_)) for m_ in ccases["music_m"]],
+              "(16) Web: Lama-Crash-Musik gleich (%d Noten aller 6 Stufen, davon %d bitgleich; Tempi, Stufen, Quietschen)"
+              % (n_notes, n_exact))
 else:
     print("  --   (16) node nicht gefunden - Web-Vergleich übersprungen")
 
@@ -655,6 +1156,91 @@ if check(None not in (prs, mrs, frs, crs), "(17) Rust-Module vorhanden (fairness
           "(17) Rust: Konstanten (Deckel, Quote, Alphabet, Log, Kurve, SHA-256-Tabelle)")
     print("  --   (17) Rechen-Gleichstand: cd rust; cargo test -p pgz-core --offline --lib -- fairness chipstats;"
           " cargo test -p pgz-games --offline --lib -- chiplogic")
+
+# Lama Crash: Konstanten und Tabellen im Rust-Quelltext gegen die Python-Fassung
+xrs = _read("pgz-games", "src", "lamacrash_logic.rs")
+urs = _read("pgz-games", "src", "lamacrash_music.rs")
+lbrs = _read("pgz-core", "src", "lamabank.rs")
+if check(None not in (xrs, urs, lbrs), "(17) Rust-Module vorhanden (lamacrash_logic, lamacrash_music, lamabank)"):
+    import ast
+
+    def _rs_const(src, name, env):
+        """Wert der Rust-Konstante ``name`` (``const NAME: TYP = WERT;`` am
+        Zeilenanfang): Zahlen mit ``_``, Listen, Tupel, Texte, ``a * b`` und
+        Namen schon gelesener Konstanten (env). None = nicht gefunden."""
+        m = re.search(r"(?m)^(?:pub )?const %s: [^=]+=\s*(.*?);\s*$" % name, src, re.S)
+        if not m:
+            return None
+        txt = re.sub(r"(?<=\d)_(?=\d)", "", m.group(1).strip()).lstrip("&")
+        for k_, v_ in env.items():
+            txt = re.sub(r"\b%s\b" % k_, repr(v_), txt)
+        prod = re.fullmatch(r"(\d+) \* (\d+)", txt)
+        if prod:
+            return int(prod.group(1)) * int(prod.group(2))
+        try:
+            return ast.literal_eval(txt)
+        except (ValueError, SyntaxError):
+            return None
+
+    def _py_assign(rel, names):
+        """Literale Zuweisungen eines Python-Moduls (ohne es zu importieren)."""
+        with open(os.path.join(REPO, *rel.split("/")), encoding="utf-8") as f:
+            tree = ast.parse(f.read())
+        out = {}
+        for node in tree.body:
+            if isinstance(node, ast.Assign) and isinstance(node.targets[0], ast.Name) \
+                    and node.targets[0].id in names:
+                out[node.targets[0].id] = ast.literal_eval(node.value)
+        return out
+
+    def _plain_json(v):
+        return json.loads(json.dumps(v))
+
+    want_x = {"KEY": X.KEY, "HOUSE": X.HOUSE, "MAX_MULT100": X.MAX_MULT100, "MIN_CASH": X.MIN_CASH,
+              "BETS": X.BETS, "MAX_BETS": X.MAX_BETS, "HISTORY": X.HISTORY, "TPS": X.TPS, "MU0": X.MU0,
+              "GROWTH": X.GROWTH, "MU_UNIT": X.MU_UNIT, "MOON_TICK": X.MOON_TICK, "SPEED_TURBO": X.SPEED_TURBO,
+              "SPEED_FF": X.SPEED_FF, "TARGETS": X.TARGETS, "DEFAULT_TARGET": X.DEFAULT_TARGET,
+              "WORLDS": X.WORLDS, "WORLD_AT": X.WORLD_AT, "BLEND_TICKS": X.BLEND_TICKS,
+              "BRAVE_MULT": X.BRAVE_MULT, "SPACE_MULT": X.SPACE_MULT, "CLOSE_MIN": X.CLOSE_MIN,
+              "CLOSE_PCT": X.CLOSE_PCT, "BUCKETS": X.BUCKETS, "CHART_MIN_TICKS": X.CHART_MIN_TICKS,
+              "Y_STEPS": X._Y_STEPS, "X_STEPS": X._X_STEPS, "TWO32": X.TWO32, "X_COUNTERS": X._X_COUNTERS}
+    got_x, env_x = {}, {}
+    for name_ in want_x:
+        got_x[name_] = _rs_const(xrs, name_, env_x)
+        if isinstance(got_x[name_], int):
+            env_x[name_] = got_x[name_]
+    bad_x = [n_ for n_ in want_x if _plain_json(got_x[n_]) != _plain_json(want_x[n_])]
+    check(not bad_x, "(17) Rust: Lama-Crash-Konstanten wie Python (%d: Quote, Deckel, Kurve, Tempo, %d Ziele, "
+          "Welten, Erfolge, Fächer, Achsen, Zähler)" % (len(want_x), len(X.TARGETS)), bad_x)
+    py_mu = _py_assign("games/lamacrash_music.py",
+                       {"STAGES", "_BPM", "_ROOTS", "_VOICE_VOL", "_SQUEAK_AT", "_SQUEAK_BASE"})
+    env_u = {}
+    got_u = {}
+    for py_name, rs_name in (("STAGES", "STAGES"), ("_BPM", "BPM"), ("_ROOTS", "ROOTS"), ("_VOICE_VOL", "VOICE_VOL"),
+                             ("_SQUEAK_AT", "SQUEAK_AT"), ("_SQUEAK_BASE", "SQUEAK_BASE")):
+        got_u[py_name] = _rs_const(urs, rs_name, env_u)
+        if isinstance(got_u[py_name], int):
+            env_u[rs_name] = got_u[py_name]
+    bad_u = [n_ for n_ in py_mu if _plain_json(got_u.get(n_)) != _plain_json(py_mu[n_])]
+    check(len(py_mu) == 6 and not bad_u, "(17) Rust: Lama-Crash-Musik - Stufen, Tempi, Grundtöne, Stimmen-"
+          "Lautstärken, Quietsch-Schwellen wie Python", bad_u)
+    music_ref = subprocess.run([sys.executable, os.path.join(REPO, "rust", "tools", "lamacrash_music_ref.py"), "--check"],
+                               cwd=REPO, capture_output=True, text=True)
+    check(music_ref.returncode == 0, "(17) Rust-Prüfwerte data/lamacrash_music_ref.txt (Noten aller 6 Stufen bitgenau) "
+          "passen zur Python-Fassung (sonst: python rust/tools/lamacrash_music_ref.py)",
+          (music_ref.stdout + music_ref.stderr).strip()[-200:])
+    py_lb = _py_assign("lamabank.py", {"GAMES", "MIN_BET"})
+    rs_games = _rs_const(lbrs, "GAMES", {})
+    rs_min = _rs_const(lbrs, "MIN_BET", {})
+    check(rs_games == list(py_lb.get("GAMES", ())) and rs_min == list(py_lb.get("MIN_BET", {}).items())
+          and rs_games[-1] == X.KEY and dict(rs_min).get(X.KEY) == X.BETS[0],
+          "(17) Rust: Lama-Bank kennt Lama Crash (GAMES-Reihenfolge, MIN_BET = kleinste Stufe %d) wie lamabank.py"
+          % X.BETS[0], (rs_games, rs_min))
+    check("fn chiplogic_crash_wie_python" in xrs and 'include_str!("data/chiplogic_ref.json")' in xrs
+          and "fn lamacrash_music_wie_python" in urs and 'include_str!("data/lamacrash_music_ref.txt")' in urs,
+          "(17) Rust-Unit-Tests für Lama Crash vorhanden (Regeln über chiplogic_ref.json, Musik über "
+          "lamacrash_music_ref.txt)")
+    print("  --   (17) Lama Crash rechnet: cd rust; cargo test -p pgz-games --offline --lib -- chiplogic lamacrash_music")
 
 print("\n%s - %d Fehler" % ("BESTANDEN" if not FAILS else "FEHLGESCHLAGEN", len(FAILS)))
 sys.exit(1 if FAILS else 0)

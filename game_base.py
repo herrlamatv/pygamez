@@ -122,6 +122,11 @@ class Game:
     # (auch als property) je nach Modus auf False. Solche Modi lassen
     # außerdem self.score auf 0 und speichern ihre Bestwerte selbst.
     show_highscore_banner = True
+    # Beim Verlust des Fensterfokus automatisch pausieren? (main.py prüft das
+    # nach dem Loslassen der Tasten.) Lama Crash setzt es als property auf
+    # True, solange ein Einsatz im Flug ist - sonst stiege der Ballon weiter,
+    # während man in einem anderen Fenster ist.
+    pause_on_blur = False
 
     def __init__(self, surface, width, height, mode="single", game_settings=None):
         self.surface = surface

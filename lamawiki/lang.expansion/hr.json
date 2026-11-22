@@ -147,7 +147,7 @@
           "body": [
             "Svaka igra s napretkom ima u mem.json vlastiti odjeljak, na primjer:",
             "- sudoku: riješene razine sa zvjezdicama i najboljim vremenom, započete zagonetke i Sudoku dana s nizom.",
-            "- casino: račun Lama banke - lama žetoni za Blackjack, Poker, Casino, Lama Crossing, Lama Mines i Lama Plinko s bilancom svake igre, započeti prijelaz u Lama Crossingu, započeti krug i oznake za automatski način u Lama Minesu te povijest, podaci o poštenosti, statistika i preneseni ostatak za Lama Mines i Lama Plinko.",
+            "- casino: račun Lama banke - lama žetoni za Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko i Lama Crash s bilancom svake igre, započeti prijelaz u Lama Crossingu, započeti krug i oznake za automatski način u Lama Minesu, započeti let u Lama Crashu te povijest, podaci o poštenosti, statistika i preneseni ostatak za Lama Mines, Lama Plinko i Lama Crash.",
             "- crossy: skupljeni novčići, kupljeni likovi i dnevni najbolji rezultat u Crossy Roadu.",
             "- tetris: najbolje vrijeme u Sprintu, najbolji rezultat u Ultri i bilanca Versusa protiv AI-ja.",
             "- g2048: spremljene partije 2048 i najbolji rezultati po veličini ploče i načinu.",
@@ -349,7 +349,7 @@
         {
           "h": "Pregled",
           "body": [
-            "268 postignuća u svih 49 igara - od prvog pokretanja do Perfect Cleara u Tetrisu.",
+            "274 postignuća u svih 50 igara - od prvog pokretanja do Perfect Cleara u Tetrisu.",
             "Svako postignuće ima rijetkost i time bodovnu vrijednost; zbroj daje tvoju razinu.",
             "Nalaze se iza gumba Postignuća i statistika, kartica Postignuća. Filtar skriva otključana ili preostala."
           ]
@@ -360,7 +360,7 @@
             "- Općenito: ciljevi kroz cijelu zbirku - partije, isprobane igre, vrijeme, rekordi, pobjede, dani igranja, nizovi, razina i dvoboji. Uz dodatke poput noćne ptice, maratona ili vikend igrača.",
             "- Bodovne prekretnice: pošten ciljni rezultat za svaku igru.",
             "- Majstorske razine: druga, znatno viša granica - samo za igre s otvorenim bodovanjem.",
-            "- Stalni gost: 25 partija jedne igre. Postoji za svih 49 igara.",
+            "- Stalni gost: 25 partija jedne igre. Postoji za svih 50 igara.",
             "- Posebni trenuci: šah-mat, Yahtzee, pločica 4096, rupa iz jednog udarca, hat-trick u air hockeyju, četiri duha jednom pilulom i još mnogo toga."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Lama žetoni",
           "body": [
-            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines i Lama Plinko dijele jedan račun u Lama banci: počinješ s 1000 lama žetona, a stanje se trajno sprema.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko i Lama Crash dijele jedan račun u Lama banci: počinješ s 1000 lama žetona, a stanje se trajno sprema.",
             "Ulog se skida odmah pri dijeljenju - tko napusti ruku u tijeku, gubi ga.",
             "Rekord je najviše stanje tvoje bilance u blackjacku: 1000 plus sve što si u blackjacku dobio i izgubio. Dobici na ruletu, automatu ili u pokeru ovdje se ne računaju.",
             "Ispod 10 žetona si bankrot: [Enter] uzima bankovni kredit i ponovno puni račun na 1000. Krediti se ne računaju u bilancu."
@@ -1901,7 +1901,7 @@
         {
           "h": "Lama žetoni",
           "body": [
-            "Igra se lama žetonima Lama banke - zajednički račun s Blackjackom, Casinom, Lama Crossingom, Lama Minesom i Lama Plinkom (početak 1000, trajno spremljen).",
+            "Igra se lama žetonima Lama banke - zajednički račun s Blackjackom, Casinom, Lama Crossingom, Lama Minesom, Lama Plinkom i Lama Crashom (početak 1000, trajno spremljen).",
             "Na početku ruke tvoj je račun na stolu kao hrpa; ono što ide u pot odmah se skida. Ako napustiš stol usred ruke, tvoj udio u potu je izgubljen - ostatak se vraća na račun.",
             "Rekord je najviše stanje tvoje bilance u pokeru: 1000 plus sve što si u pokeru dobio i izgubio. Dobici u drugim igrama ovdje se ne računaju.",
             "Bankrot (manje od velikog blinda od 20, u Video Pokeru manje od 10) = bankovni kredit jednim klikom, račun je opet na 1000."
@@ -2976,7 +2976,7 @@
         {
           "h": "Lama banka",
           "body": [
-            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines i Lama Plinko igraju s istim računom: lama žetonima (početak 1000). Ulozi se skidaju odmah, dobici se pripisuju - sve se trajno sprema.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama Plinko i Lama Crash igraju s istim računom: lama žetonima (početak 1000). Ulozi se skidaju odmah, dobici se pripisuju - sve se trajno sprema.",
             "Svaka igra vodi vlastitu bilancu. Rekord Casina je najviše stanje 1000 + bilance Casina; dobici u Blackjacku ili Pokeru ovdje se ne računaju.",
             "Kad si bankrot (manje od najmanjeg uloga), dobivaš bankovni kredit: račun se ponovno puni na 1000. Krediti se ne računaju ni u jednu bilancu; njihov broj stoji gore desno."
           ]
@@ -3108,7 +3108,7 @@
         {
           "h": "Lama žetoni",
           "body": [
-            "Lama Crossing igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom, Casinom, Lama Minesom i Lama Plinkom (početak 1000, spremljeno u mem.json).",
+            "Lama Crossing igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom, Casinom, Lama Minesom, Lama Plinkom i Lama Crashom (početak 1000, spremljeno u mem.json).",
             "Rekord je najviše stanje 1000 + tvoje bilance u Lama Crossingu; dobici u Blackjacku, Pokeru ili Casinu ovdje se ne računaju.",
             "Ispod 10 žetona si bankrot: [Enter] ili klik uzima bankovni kredit i ponovno puni račun na 1000. Krediti se ne računaju u bilancu.",
             "Prekinuti usred prijelaza je sigurno: ulog, težina i traka se spremaju, a pri sljedećem pokretanju nastavljaš točno ondje."
@@ -3262,7 +3262,7 @@
         {
           "h": "Lama žetoni",
           "body": [
-            "Lama Mines igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom, Casinom, Lama Crossingom i Lama Plinkom (početak 1000, spremljeno u mem.json).",
+            "Lama Mines igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom, Casinom, Lama Crossingom, Lama Plinkom i Lama Crashom (početak 1000, spremljeno u mem.json).",
             "Rekord je najviše stanje 1000 + tvoje bilance u Lama Minesu; dobici u ostalim igrama Lama banke ovdje se ne računaju.",
             "Ispod 10 žetona si bankrot: [Razmaknica], [Enter] ili klik uzima bankovni kredit i ponovno puni račun na 1000. Krediti se ne računaju u bilancu.",
             "Prekinuti usred kruga je sigurno: ulog se skida na početku, a nakon svakog pronađenog dragulja spremaju se veličina ploče, mine, seedovi kruga i otkrivena polja. Pri sljedećem pokretanju ploča se ponovno izračunava iz seeda i nastavljaš točno ondje.",
@@ -3417,7 +3417,7 @@
         {
           "h": "Lama žetoni",
           "body": [
-            "Lama Plinko igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom, Casinom, Lama Crossingom i Lama Minesom (početak 1000, spremljeno u mem.json).",
+            "Lama Plinko igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom, Casinom, Lama Crossingom, Lama Minesom i Lama Crashom (početak 1000, spremljeno u mem.json).",
             "Rekord je najviše stanje 1000 + tvoje bilance u Lama Plinku; dobici u drugim igrama ovdje se ne računaju.",
             "Ako račun ne pokriva odabrani ulog, odaberi manji. S 0 žetona si bankrot: [Enter] ili klik uzima bankovni kredit i ponovno puni račun na 1000. Krediti se ne računaju u bilancu.",
             "Povijest, statistika i podaci provjere poštenosti pripadaju tvom profilu i također se spremaju u mem.json."
@@ -3443,6 +3443,163 @@
             "- Pogodak na rubu: najbrže uz 12 redova - ondje otprilike 1 od 2.048 kuglica padne skroz na rub (lijevo ili desno). Uz 1 žeton po kuglici to u prosjeku stoji samo oko 3 žetona na 100 kuglica.",
             "- Kiša klupaka: samo drži [Razmaknica] - brzi niz donosi na ploču istodobno oko 30 kuglica uz bilo koji broj redova, i nakon otprilike 2 sekunde postignuće je tvoje. Automatski način za to baca presporo.",
             "- Legenda Plinka: uz 16 redova i rizik „Visok” skroz na rub padne samo 1 od 32.768 kuglica - sa serijama automatskog načina od 1000 kuglica treba ti u prosjeku oko 33 serije. Zato taj pretinac plaća ×1.000.",
+            "- Unaprijed odredi budžet i u automatskom načinu koristi granicu gubitka."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrash",
+      "category": "games",
+      "game": "LamaCrashGame",
+      "title": "Lama Crash",
+      "keywords": [
+        "lama",
+        "crash",
+        "balon",
+        "balon na vrući zrak",
+        "množitelj",
+        "isplati",
+        "isplata",
+        "pucanje",
+        "točka pucanja",
+        "auto cilj",
+        "polovica",
+        "dva uloga",
+        "visina",
+        "mjesec",
+        "žetoni",
+        "lama banka",
+        "auto",
+        "turbo",
+        "glazba",
+        "poštenost",
+        "provably fair",
+        "kontrolni kod",
+        "seed",
+        "sha-256",
+        "statistika"
+      ],
+      "sections": [
+        {
+          "h": "Kako se igra",
+          "body": [
+            "Tvoja se lama diže u balonu, a množitelj raste svake sekunde: ×1,00, ×1,50, ×2,00 … Kad isplatiš, dobivaš ulog pomnožen množiteljem u tom trenutku. Ako balon pukne prije, ulog je izgubljen.",
+            "Odaberi ulog (10, 20, 50 … do 10000 Lama žetona) i pritisni IGRAJ: ulog se skida, a nakon kratkog odbrojavanja 3-2-1 balon polijeće. Od ×1,01 možeš u bilo kojem trenutku pritisnuti ISPLATI - lama skače s padobranom, a dobitak se odmah pripisuje.",
+            "Kad će balon puknuti, određeno je već prije polijetanja - ali to nitko ne vidi: ni balon, ni glazba, ni zvukovi ništa ne odaju. Samo se sve više napuhuje što se više diže.",
+            "Nakon isplate prazni balon leti dalje dok ne pukne - tako vidiš dokle bi stigao. Tipkom [Razmaknica] ili gumbom PREMOTAJ to ide ubrzano. Gore desno su točke pucanja zadnjih 12 rundi.",
+            "Vremena: ×2 nakon 11,6 sekundi, ×10 nakon 38 sekundi, ×100 nakon 77 sekundi, ×100.000 nakon 3,2 minute. Turbo ([T]) sve trostruko ubrzava."
+          ]
+        },
+        {
+          "h": "Dva uloga i isplata polovice",
+          "body": [
+            "Tipkom [Z] ili prekidačem na kartici 2 vodiš i drugu lamu: dva uloga u istoj rundi, svaki s vlastitim iznosom i vlastitim auto ciljem. Oba lete u istom balonu - na primjer jedan oprezno s ciljem ×1,50, drugi hrabro s ciljem ×10.",
+            "- [Razmaknica] / [Enter] / [C] ili ISPLATI dolje: isplaćuju se svi ulozi koji još lete",
+            "- [1] / [2] ili gumb na kartici: samo taj ulog",
+            "- [H] ili POLOVICA: svaki još nepodijeljeni ulog isplaćuje polovicu, druga polovica leti dalje",
+            "- [Q] / [W] ili gumb za polovicu na kartici: samo polovica tog uloga",
+            "Svaki se ulog može prepoloviti samo jednom. Isplaćenu polovicu lama baca kao vreću novca na mini padobranu.",
+            "Auto cilj: tipkama [Lijevo] / [Desno] (ili kotačićem miša iznad cilja) namještaš množitelj pri kojem se ulog sam isplaćuje (od ×1,01 do ×100.000); [X] ga uključuje ili isključuje. Kad balon dosegne cilj, isplaćuje se točno na cilju - čak i ako pukne u istom trenutku."
+          ]
+        },
+        {
+          "h": "Kako nastaje točka pucanja",
+          "body": [
+            "Za svaku rundu izvlači se slučajni broj r između 0 i 2^32 - 1. Točka pucanja je 97 × 2^32 / (2^32 - r), zaokruženo nadolje na stotinke, najmanje ×1,00 i najviše ×100.000. Otprilike 4 % rundi pukne već pri ×1,00 - prije nego što se može isplatiti.",
+            "Iz toga slijedi jednostavno pravilo: vjerojatnost da dosegneš cilj x iznosi 97 % podijeljeno s x. Bez obzira na to kad isplaćuješ - dugoročno se vraća 97 % uloga:",
+            "- ×1,50: 64,67 % · ×2: 48,50 % · ×3: 32,33 % · ×5: 19,40 %",
+            "- ×10: 9,70 % · ×100: 0,97 % · ×1.000: 0,097 % · ×100.000: 0,001 %",
+            "Ako isplatiš ručno pri nekom množitelju, dobivaš točno onda kad balon pukne kasnije - kao da si ga postavio kao auto cilj.",
+            "Tko dosegne ×100.000, slijeće na Mjesec: najveći dobitak, a svi ulozi koji još lete isplaćuju se s ×100.000.",
+            "Prijenos ostatka: ono što pri zaokruživanju isplate nadolje ostane u stotinkama pribraja se sljedećoj - ni mali ulozi ništa ne gube."
+          ]
+        },
+        {
+          "h": "Visinski svjetovi i glazba",
+          "body": [
+            "Što je veći množitelj, to balon leti više - kroz šest svjetova:",
+            "- Livada lama (od ×1): pašnjak, ograda i štala ostaju dolje",
+            "- More oblaka (od ×1,50): oblaci i jata ptica",
+            "- Olujna fronta (od ×3): kiša, munje i zrakoplovi",
+            "- Polarna svjetlost (od ×10): zvijezde i razigrana polarna svjetlost",
+            "- Svemir (od ×100): zakrivljenost Zemlje, sateliti, zvijezde padalice - a Mjesec je sve veći",
+            "- Mjesec (×100.000): slijetanje na Mjesec",
+            "Napeta glazba sa svakim je svijetom brža i viša; od ×2 rastegnuti balon škripi. [M] uključuje ili isključuje glazbu."
+          ]
+        },
+        {
+          "h": "Automatski način",
+          "body": [
+            "[A] otvara automatski način (samo između rundi). Ondje namještaš:",
+            "- Runde: 5, 10, 25, 50, 100 ili 250",
+            "- Zaustavi pri dobiti od / Zaustavi pri gubitku od: isklj., 100, 500, 1000, 5000, 10000 ili 50000 žetona",
+            "- Turbo uključen ili isključen",
+            "POKRENI AUTO igra runde jednu za drugom s tvojim ulozima i auto ciljevima; ulogu bez auto cilja on se uključuje. Kad je sve isplaćeno, automatski se premotava. Ručno ipak možeš isplatiti u bilo kojem trenutku.",
+            "Automatski način traje dok se ne dosegne broj rundi, ne aktivira granica, ne ponestane žetona ili ne pritisneš STOP, [Esc] ili [A] - runda koja je već u letu tada normalno završi."
+          ]
+        },
+        {
+          "h": "Provjera poštenosti",
+          "body": [
+            "U Lama Crashu možeš sam provjeriti da se točka pucanja naknadno ne mijenja („provably fair”):",
+            "- Seed poslužitelja: tajna slučajna vrijednost od 32 znaka, određena prije runde",
+            "- Kontrolni kod: SHA-256 otisak seeda poslužitelja - vidljiv već prije polijetanja",
+            "- Seed klijenta: tvoj vlastiti udio (8 znakova); „Novi seed klijenta” izvlači novi kad nijedna runda nije u tijeku",
+            "Uz to ide i broj runde (nonce). Nakon runde seed poslužitelja se otkriva - kontrolni kod sljedeće runde tada je već utvrđen.",
+            "[F] prikazuje zadnjih 12 rundi. „Provjeri” ([Enter]) provjerava kontrolni kod, ponovno računa točku pucanja i kvačicom ili križićem pokazuje slaže li se sve - uz malu krivulju s tvojim isplatama.",
+            "Za znatiželjne: slučajnost je mulberry32, pokrenut FNV-1a vrijednošću teksta „lamacrash|seed poslužitelja|seed klijenta|broj”; r je prvi broj iz njega."
+          ]
+        },
+        {
+          "h": "Statistika",
+          "body": [
+            "[S] otvara statistiku tvog profila za Lama Crash:",
+            "- Pločice: Runde, Pobjede, Porazi, Tvoj povrat, Uloženo, Isplaćeno, Bilanca, Najveći dobitak, Najbolji faktor (najviša isplata), Najviše pucanje, Isplaćene polovice i Za dlaku",
+            "- krivulja bilance zadnjih 100 rundi",
+            "- razdioba točaka pucanja tvojih rundi kao stupci, očekivana razdioba zlatnom bojom"
+          ]
+        },
+        {
+          "h": "Upravljanje",
+          "body": [
+            "- [Razmaknica] / [Enter] ili IGRAJ: pokreni rundu; u letu: isplati sve; nakon toga: premotaj",
+            "- [1] / [2] ili [Tab]: odaberi karticu (prije runde) ili isplati pojedinačni ulog (u letu)",
+            "- [Gore] / [Dolje], [+] / [-] ili kotačić miša: ulog odabrane kartice",
+            "- [Lijevo] / [Desno] ili kotačić miša iznad cilja: auto cilj; [X]: auto cilj uklj./isklj.; [Z]: drugi ulog",
+            "- [H]: polovica svih nepodijeljenih uloga; [Q] / [W]: polovica uloga 1 ili 2",
+            "- [A]: automatski način, [S]: statistika, [F]: provjera poštenosti, [T]: turbo, [M]: glazba",
+            "- [Esc]: zatvori prozor ili zaustavi auto, inače pauza",
+            "Prozori se mogu otvoriti samo dok nijedan ulog ne leti. Ako prozor igre izgubi fokus dok ulog leti, igra se sama pauzira. Ulozi, ciljevi, turbo, glazba i postavke automatskog načina spremaju se u settings.json (odjeljak lamacrash)."
+          ]
+        },
+        {
+          "h": "Lama žetoni",
+          "body": [
+            "Lama Crash igra sa zajedničkim računom Lama banke - zajedno s Blackjackom, Pokerom, Casinom, Lama Crossingom, Lama Minesom i Lama Plinkom (početak 1000, spremljeno u mem.json).",
+            "IGRAJ skida ulog i sprema rundu u jednom potezu, a svaka isplata odmah pripisuje dobitak. Ako izađeš iz igre usred leta, ništa se ne gubi: pri sljedećem pokretanju slijedi odbrojavanje i balon se nastavlja dizati točno odande - točka pucanja ionako je već određena.",
+            "Rekord je najviše stanje 1000 + tvoje bilance u Lama Crashu. Ispod 10 žetona si bankrot: [Enter] ili klik uzima bankovni kredit koji račun ponovno puni na 1000."
+          ]
+        },
+        {
+          "h": "Postignuća",
+          "body": [
+            "- Stalni gost igre Lama Crash: 25 partija",
+            "- Prekretnica: rekord 3000",
+            "- Majstor igre Lama Crash: rekord 10000",
+            "- Za dlaku (rijedak): Isplati ručno pri ×2 ili više - najviše 5 % prije pucanja",
+            "- Pilot polarne svjetlosti (epski): Isplati pri ×10 ili više",
+            "- Svemirska lama (legendaran): Isplati pri ×1000 ili više"
+          ]
+        },
+        {
+          "h": "Savjeti",
+          "body": [
+            "- Svaka je runda neovisna: nakon pet ranih pucanja dugi let nije „na redu”.",
+            "- Nijedna strategija ne pobjeđuje 97 %. Niski ciljevi dobivaju često i malo, visoki rijetko i mnogo.",
+            "- Dva uloga spajaju oboje: jedan rano osigurava dobitak, drugi leti daleko.",
+            "- Za dlaku se broji samo pri ručnoj isplati - s auto ciljevima se ne broji.",
+            "- Pilot polarne svjetlosti: auto cilj ×10 uspije otprilike u svakoj desetoj rundi; Svemirska lama s ciljem ×1.000 otprilike u svakoj tisućitoj - s turbom takav let traje 38 sekundi.",
             "- Unaprijed odredi budžet i u automatskom načinu koristi granicu gubitka."
           ]
         }

@@ -416,6 +416,25 @@ impl App {
         }
     }
 
+    /// `_pause_on_blur` - Fokus weg: Spiele, die das wuenschen
+    /// (`pause_on_blur` - z.B. Lama Crash, solange ein Einsatz fliegt),
+    /// gehen in die Pause.
+    pub fn pause_on_blur(&mut self) {
+        if let Some(cur) = self.current.as_mut() {
+            let b = cur.base();
+            if !b.is_menu && !b.paused && !b.game_over && cur.pause_on_blur() {
+                cur.base_mut().paused = true;
+            }
+        }
+    }
+
+    /// `_on_focus_out` - das Fenster hat den Fokus verloren: erst alle
+    /// Tasten loslassen, dann `pause_on_blur` (wie `main.py`).
+    pub fn fokus_verloren(&mut self) {
+        self.release_keys();
+        self.pause_on_blur();
+    }
+
     /// Fensterkoordinaten der Spielflaeche -> logische Koordinaten.
     pub fn to_logical(&self, x: i32, y: i32) -> (i32, i32) {
         let s = if self.scale == 0.0 { 1.0 } else { self.scale };

@@ -147,7 +147,7 @@
           "body": [
             "Varje spel med framsteg har en egen sektion i mem.json, till exempel:",
             "- sudoku: lösta nivåer med stjärnor och bästa tid, påbörjade pussel och dagens sudoku med svit.",
-            "- casino: kontot i Lamabanken - lamamarkerna för Blackjack, Poker, Casino, Lama Crossing, Lama Mines och Lama Plinko med varje spels balans, plus en påbörjad överfart i Lama Crossing, en påbörjad runda och automarkeringarna i Lama Mines samt historik, rättvisedata, statistik och överförd rest för Lama Mines och Lama Plinko.",
+            "- casino: kontot i Lamabanken - lamamarkerna för Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko och Lama Crash med varje spels balans, plus en påbörjad överfart i Lama Crossing, en påbörjad runda och automarkeringarna i Lama Mines, en påbörjad flygning i Lama Crash samt historik, rättvisedata, statistik och överförd rest för Lama Mines, Lama Plinko och Lama Crash.",
             "- crossy: insamlade mynt, köpta figurer och dagens bästa i Crossy Road.",
             "- tetris: bästa tid i Sprint, bästa poäng i Ultra och Versus-facit mot AI:n.",
             "- g2048: sparade 2048-partier och bästa poäng per brädstorlek och läge.",
@@ -349,7 +349,7 @@
         {
           "h": "Översikt",
           "body": [
-            "268 prestationer i alla 49 spel - från första starten till en Perfect Clear i Tetris.",
+            "274 prestationer i alla 50 spel - från första starten till en Perfect Clear i Tetris.",
             "Varje prestation har en sällsynthet och därmed ett poängvärde; summan ger din nivå.",
             "Finns bakom knappen Prestationer och statistik, fliken Prestationer. Ett filter döljer kvarvarande eller upplåsta."
           ]
@@ -360,7 +360,7 @@
             "- Allmänt: mål för hela samlingen - omgångar, provade spel, speltid, rekord, segrar, speldagar, sviter, nivå och dueller. Plus extra som nattuggla, maraton eller helgspelare.",
             "- Poängmilstolpar: ett rimligt målresultat per spel.",
             "- Mästarnivåer: den andra, mycket högre gränsen - bara för spel med öppen poäng.",
-            "- Stammis: 25 omgångar av ett spel. Finns för alla 49 spel.",
+            "- Stammis: 25 omgångar av ett spel. Finns för alla 50 spel.",
             "- Särskilda ögonblick: schackmatt, en Yatzy, 4096-brickan, hole-in-one, hattrick i air hockey, fyra spöken på ett kraftpiller och mycket mer."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Lamamarker",
           "body": [
-            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines och Lama Plinko delar ett konto hos Lamabanken: du börjar med 1000 lamamarker och saldot sparas permanent.",
+            "Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko och Lama Crash delar ett konto hos Lamabanken: du börjar med 1000 lamamarker och saldot sparas permanent.",
             "Insatsen dras så fort korten delas ut - lämnar du en pågående hand är den förlorad.",
             "Rekordet är toppen av din blackjackbalans: 1000 plus allt du har vunnit och förlorat i blackjack. Vinster i roulett, på automaten eller i poker räknas inte här.",
             "Under 10 marker är du pank: [Enter] tar ett banklån och fyller på kontot till 1000 igen. Lån räknas inte in i balansen."
@@ -1901,7 +1901,7 @@
         {
           "h": "Lamamarker",
           "body": [
-            "Man spelar med lamamarker från Lamabanken - ett konto som delas med Blackjack, Casino, Lama Crossing, Lama Mines och Lama Plinko (start 1000, sparas permanent).",
+            "Man spelar med lamamarker från Lamabanken - ett konto som delas med Blackjack, Casino, Lama Crossing, Lama Mines, Lama Plinko och Lama Crash (start 1000, sparas permanent).",
             "I början av en hand ligger ditt konto på bordet som din stack; det som går till potten dras direkt. Lämnar du bordet mitt i en hand är din del av potten förlorad - resten går tillbaka till kontot.",
             "Rekordet är toppen av din pokerbalans: 1000 plus allt du har vunnit och förlorat i poker. Vinster i andra spel räknas inte här.",
             "Pank (mindre än big blind på 20, i Video Poker under 10) = banklån med ett klick, kontot står åter på 1000."
@@ -2976,7 +2976,7 @@
         {
           "h": "Lamabanken",
           "body": [
-            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines och Lama Plinko spelar med samma konto: lamamarker (start 1000). Insatser dras direkt och vinster krediteras - allt sparas permanent.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama Plinko och Lama Crash spelar med samma konto: lamamarker (start 1000). Insatser dras direkt och vinster krediteras - allt sparas permanent.",
             "Varje spel har sin egen balans. Casinots rekord är toppen av 1000 + casinobalans; vinster i Blackjack eller Poker räknas inte här.",
             "Är du pank (under minsta insatsen) får du ett banklån: kontot fylls på till 1000 igen. Lån räknas inte i någon balans; antalet visas uppe till höger."
           ]
@@ -3109,7 +3109,7 @@
         {
           "h": "Lamamarker",
           "body": [
-            "Lama Crossing spelar med det gemensamma kontot hos Lamabanken - tillsammans med Blackjack, Poker, Casino, Lama Mines och Lama Plinko (start 1000, sparas i mem.json).",
+            "Lama Crossing spelar med det gemensamma kontot hos Lamabanken - tillsammans med Blackjack, Poker, Casino, Lama Mines, Lama Plinko och Lama Crash (start 1000, sparas i mem.json).",
             "Rekordet är toppen av 1000 + din Lama Crossing-balans; vinster i Blackjack, Poker eller Casino räknas inte här.",
             "Under 10 marker är du pank: [Enter] eller ett klick tar ett banklån och fyller på kontot till 1000 igen. Lån räknas inte in i balansen.",
             "Det är säkert att sluta mitt i en överfart: insats, svårighetsgrad och fil sparas, och nästa gång fortsätter du precis där."
@@ -3263,7 +3263,7 @@
         {
           "h": "Lamamarker",
           "body": [
-            "Lama Mines spelar med det gemensamma kontot hos Lamabanken - tillsammans med Blackjack, Poker, Casino, Lama Crossing och Lama Plinko (start 1000, sparas i mem.json).",
+            "Lama Mines spelar med det gemensamma kontot hos Lamabanken - tillsammans med Blackjack, Poker, Casino, Lama Crossing, Lama Plinko och Lama Crash (start 1000, sparas i mem.json).",
             "Rekordet är toppen av 1000 + din Lama Mines-balans; vinster i Lamabankens andra spel räknas inte här.",
             "Under 10 marker är du pank: [Blanksteg], [Enter] eller ett klick tar ett banklån och fyller på kontot till 1000 igen. Lån räknas inte in i balansen.",
             "Det är säkert att sluta mitt i en runda: insatsen dras vid starten, och efter varje hittad ädelsten sparas storlek, minor, rundans seeds och de vända rutorna. Vid nästa start räknas spelplanen fram på nytt ur seeden, och du fortsätter precis där.",
@@ -3418,7 +3418,7 @@
         {
           "h": "Lamamarker",
           "body": [
-            "Lama Plinko spelar med det gemensamma kontot hos Lamabanken - tillsammans med Blackjack, Poker, Casino, Lama Crossing och Lama Mines (start 1000, sparas i mem.json).",
+            "Lama Plinko spelar med det gemensamma kontot hos Lamabanken - tillsammans med Blackjack, Poker, Casino, Lama Crossing, Lama Mines och Lama Crash (start 1000, sparas i mem.json).",
             "Rekordet är toppen av 1000 + din Lama Plinko-balans; vinster i de andra spelen räknas inte här.",
             "Räcker kontot inte till den valda insatsen, välj en mindre. Med 0 marker är du pank: [Enter] eller ett klick tar ett banklån och fyller på kontot till 1000 igen. Lån räknas inte in i balansen.",
             "Historik, statistik och rättvisedata hör till din profil och sparas också i mem.json."
@@ -3444,6 +3444,164 @@
             "- Kantträff: snabbast med 12 rader - där landar ungefär 1 av 2 048 kulor längst ut vid kanten (till vänster eller höger). Med 1 mark per kula kostar det i snitt bara runt 3 marker per 100 kulor.",
             "- Nystanregn: håll bara [Blanksteg] nedtryckt - den snabba följden ger runt 30 kulor på brädet samtidigt, oavsett antal rader, och efter ungefär 2 sekunder är prestationen din. Autoläget kastar för lugnt för det.",
             "- Plinkolegend: med 16 rader på Hög landar bara 1 av 32 768 kulor längst ut vid kanten - med autoserier på 1000 kulor behöver du i snitt runt 33 serier. I gengäld betalar facket ×1 000.",
+            "- Bestäm en budget i förväg och använd förlustgränsen i autoläget."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrash",
+      "category": "games",
+      "game": "LamaCrashGame",
+      "title": "Lama Crash",
+      "keywords": [
+        "lama",
+        "crash",
+        "ballong",
+        "luftballong",
+        "varmluftsballong",
+        "multiplikator",
+        "ta ut",
+        "utbetalning",
+        "spricka",
+        "bristningspunkt",
+        "automål",
+        "hälften",
+        "två insatser",
+        "höjd",
+        "månen",
+        "marker",
+        "lamabanken",
+        "auto",
+        "turbo",
+        "musik",
+        "rättvisa",
+        "provably fair",
+        "kontrollkod",
+        "seed",
+        "sha-256",
+        "statistik"
+      ],
+      "sections": [
+        {
+          "h": "Så spelar du",
+          "body": [
+            "Din lama stiger i en ballong, och multiplikatorn växer för varje sekund: ×1,00, ×1,50, ×2,00 … Tar du ut får du insatsen gånger multiplikatorn i just det ögonblicket. Spricker ballongen innan, är insatsen förlorad.",
+            "Välj insats (10, 20, 50 … upp till 10000 lamamarker) och tryck på SPELA: Insatsen dras, och efter en kort 3-2-1 lyfter ballongen. Från ×1,01 kan du när som helst trycka på TA UT - laman hoppar ut med fallskärm och vinsten krediteras direkt.",
+            "När ballongen spricker är bestämt redan före starten - men ingen ser det: Varken ballongen, musiken eller ljuden avslöjar något. Den blåses bara upp mer och mer ju högre den kommer.",
+            "Efter uttaget flyger den tomma ballongen vidare tills den spricker - så ser du hur långt det hade gått. Med [Blanksteg] eller SPOLA FRAM går det i snabbspolning. Uppe till höger står bristningspunkterna för de senaste 12 rundorna.",
+            "Tiderna: ×2 efter 11,6 sekunder, ×10 efter 38 sekunder, ×100 efter 77 sekunder, ×100 000 efter 3,2 minuter. Turbo ([T]) gör allt tre gånger så snabbt."
+          ]
+        },
+        {
+          "h": "Två insatser och halvt uttag",
+          "body": [
+            "Med [Z] eller reglaget på kort 2 tar du med en lama till: två insatser i samma runda, var och en med eget belopp och eget automål. Båda flyger i samma ballong - till exempel en försiktig med målet ×1,50 och en modig med målet ×10.",
+            "- [Blanksteg] / [Enter] / [C] eller TA UT längst ner: alla insatser som fortfarande flyger tas ut",
+            "- [1] / [2] eller knappen på kortet: bara den insatsen",
+            "- [H] eller HÄLFTEN: varje insats som ännu inte är delad tar ut hälften, den andra hälften flyger vidare",
+            "- [Q] / [W] eller hälften-knappen på kortet: bara hälften av den insatsen",
+            "Varje insats kan bara halveras en gång. Laman släpper den uttagna hälften som en pengasäck i en minifallskärm.",
+            "Automål: Med [Vänster] / [Höger] (eller mushjulet över målet) ställer du in vid vilken multiplikator en insats tas ut av sig själv (×1,01 till ×100 000); [X] slår på eller av det. När ballongen når målet betalas det ut exakt vid målet - även om den spricker i samma ögonblick."
+          ]
+        },
+        {
+          "h": "Så uppstår bristningspunkten",
+          "body": [
+            "För varje runda dras ett slumptal r mellan 0 och 2^32 - 1. Bristningspunkten är 97 × 2^32 / (2^32 - r), avrundat nedåt till hundradelar, minst ×1,00 och högst ×100 000. Omkring 4 % av rundorna spricker redan vid ×1,00 - innan någon hinner ta ut.",
+            "Det ger en enkel regel: Chansen att nå ett mål x är 97 % delat med x. Oavsett när du tar ut - i längden kommer 97 % av dina insatser tillbaka:",
+            "- ×1,50: 64,67 % · ×2: 48,50 % · ×3: 32,33 % · ×5: 19,40 %",
+            "- ×10: 9,70 % · ×100: 0,97 % · ×1 000: 0,097 % · ×100 000: 0,001 %",
+            "Tar du ut manuellt vid en multiplikator vinner du exakt när ballongen spricker senare - precis som om du hade satt den som automål.",
+            "Den som når ×100 000 landar på månen: maxvinst, och alla insatser som fortfarande flyger betalas ut med ×100 000.",
+            "Restöverföring: Det som blir över i hundradelar när en utbetalning avrundas nedåt läggs till nästa - även små insatser förlorar ingenting."
+          ]
+        },
+        {
+          "h": "Höjdvärldar och musik",
+          "body": [
+            "Ju högre multiplikatorn är, desto högre flyger ballongen - genom sex världar:",
+            "- Lamaängen (från ×1): Bete, staket och lada blir kvar där nere",
+            "- Molnhav (från ×1,50): moln och flyttfåglar",
+            "- Åskfront (från ×3): regn, blixtar och flygplan",
+            "- Norrsken (från ×10): stjärnor och dansande norrsken",
+            "- Rymden (från ×100): jordens krökning, satelliter, stjärnfall - och månen blir allt större",
+            "- Månen (×100 000): månlandningen",
+            "Spänningsmusiken blir snabbare och ljusare för varje värld; från ×2 knarrar den uttänjda ballongen. [M] slår på eller av musiken."
+          ]
+        },
+        {
+          "h": "Autoläge",
+          "body": [
+            "[A] öppnar autoläget (bara mellan rundorna). Där ställer du in:",
+            "- Rundor: 5, 10, 25, 50, 100 eller 250",
+            "- Stoppa vid vinst på / Stoppa vid förlust på: av, 100, 500, 1000, 5000, 10000 eller 50000 marker",
+            "- Turbo på eller av",
+            "STARTA AUTO spelar rundorna efter varandra med dina insatser och automål; en insats utan automål får ett påslaget. När alla är ute spolas det fram automatiskt. Du kan ändå ta ut manuellt när som helst.",
+            "Auto kör tills antalet rundor är nått, en gräns slår till, markerna inte räcker eller du trycker på STOPP, [Esc] eller [A] - en runda som redan är i luften flyger då färdigt som vanligt."
+          ]
+        },
+        {
+          "h": "Rättvisekontroll",
+          "body": [
+            "I Lama Crash kan du själv kontrollera att bristningspunkten inte ändras i efterhand (\"provably fair\"):",
+            "- Server-seed: ett hemligt slumpvärde på 32 tecken, bestämt före rundan",
+            "- Kontrollkod: SHA-256-fingeravtrycket av server-seedet - synligt före starten",
+            "- Klient-seed: din egen andel (8 tecken); \"Ny klient-seed\" drar ett nytt när ingen runda pågår",
+            "Dessutom finns rundnumret (nonce). Efter rundan avslöjas server-seedet - då står kontrollkoden för nästa runda redan fast.",
+            "[F] visar de senaste 12 rundorna. \"Kontrollera\" ([Enter]) kontrollerar koden, räknar om bristningspunkten och visar med en bock eller ett kryss om allt stämmer - plus en miniatyrkurva med dina uttag.",
+            "För den nyfikne: Slumpen är mulberry32, startad med FNV-1a-värdet av \"lamacrash|server-seed|klient-seed|nummer\"; r är det första talet därifrån."
+          ]
+        },
+        {
+          "h": "Statistik",
+          "body": [
+            "[S] öppnar din profils statistik för Lama Crash:",
+            "- Rutor: Rundor, Vunna, Förlorade, Din avkastning, Satsat, Utbetalt, Balans, Största vinst, Bästa faktor (högsta uttag), Bristningsrekord, Halveringar och Nära ögat",
+            "- en balanskurva över de senaste 100 rundorna",
+            "- fördelningen av dina rundors bristningspunkter som staplar, den förväntade fördelningen i guld"
+          ]
+        },
+        {
+          "h": "Kontroller",
+          "body": [
+            "- [Blanksteg] / [Enter] eller SPELA: starta rundan; i luften: ta ut alla; efteråt: spola fram",
+            "- [1] / [2] eller [Tab]: välj kort (före rundan) eller ta ut en enskild insats (i luften)",
+            "- [Upp] / [Ner], [+] / [-] eller mushjulet: insatsen på valt kort",
+            "- [Vänster] / [Höger] eller mushjulet över målet: automål; [X]: automål på/av; [Z]: andra insatsen",
+            "- [H]: hälften av alla odelade insatser; [Q] / [W]: hälften av insats 1 eller 2",
+            "- [A]: autoläge, [S]: statistik, [F]: rättvisekontroll, [T]: turbo, [M]: musik",
+            "- [Esc]: stäng ett fönster eller stoppa auto, annars paus",
+            "Fönstren kan bara öppnas så länge ingen insats flyger. Tappar spelfönstret fokus medan en insats flyger pausas spelet av sig självt. Insatser, mål, turbo, musik och autoinställningarna sparas i settings.json (sektionen lamacrash)."
+          ]
+        },
+        {
+          "h": "Lamamarker",
+          "body": [
+            "Lama Crash spelar med det gemensamma kontot hos Lamabanken - tillsammans med Blackjack, Poker, Casino, Lama Crossing, Lama Mines och Lama Plinko (start 1000, sparas i mem.json).",
+            "SPELA drar insatsen och sparar rundan i ett svep, och varje uttag krediterar vinsten direkt. Lämnar du spelet mitt i flygningen går ingenting förlorat: Vid nästa start blir det en nedräkning och ballongen stiger vidare exakt därifrån - bristningspunkten står ju redan fast.",
+            "Rekordet är toppen av 1000 + din Lama Crash-balans. Under 10 marker är du pank: [Enter] eller ett klick tar ett banklån som fyller på kontot till 1000 igen."
+          ]
+        },
+        {
+          "h": "Prestationer",
+          "body": [
+            "- Lama Crash-stammis: 25 omgångar",
+            "- Milstolpe: rekord 3000",
+            "- Lama Crash-mästare: rekord 10000",
+            "- Nära ögat (sällsynt): Ta ut manuellt vid ×2 eller mer - högst 5 % innan ballongen spricker",
+            "- Norrskenspilot (episk): Ta ut vid ×10 eller mer",
+            "- Rymdlama (legendarisk): Ta ut vid ×1000 eller mer"
+          ]
+        },
+        {
+          "h": "Tips",
+          "body": [
+            "- Varje runda är oberoende: Efter fem tidiga smällar är en lång flygning inte \"på tur\".",
+            "- Ingen strategi slår 97 %. Låga mål vinner ofta och lite, höga sällan och mycket.",
+            "- Två insatser blandar båda: den ena säkrar tidigt, den andra flyger långt.",
+            "- Nära ögat räknas bara vid manuellt uttag - med automål räknas det inte.",
+            "- Norrskenspilot: Ett automål på ×10 träffar ungefär var tionde runda; Rymdlama med målet ×1 000 ungefär var tusende - med turbo tar en sådan flygning 38 sekunder.",
             "- Bestäm en budget i förväg och använd förlustgränsen i autoläget."
           ]
         }

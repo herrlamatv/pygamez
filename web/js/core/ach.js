@@ -57,7 +57,7 @@
     if (defs) return defs;
     const games = gamesByKey();
     const list = [];
-    const total = Object.keys(games).length || 49;
+    const total = Object.keys(games).length || 50;
     for (const [id, icon, stat, target, rarity] of D.general) {
       list.push({ id, cat: "general", icon, stat, rarity,
         target: id === "explorer_all" ? total : target, game: null });

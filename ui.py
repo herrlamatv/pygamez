@@ -524,6 +524,7 @@ GAME_COLORS = {
     "BattleshipGame": "#3a78b5", "CasinoGame": "#d6336c",
     "LamaCrossingGame": "#19a7ce",
     "LamaMinesGame": "#14d6b0", "LamaPlinkoGame": "#ff6b35",
+    "LamaCrashGame": "#ff4060",
 }
 
 # Schriftname mit Fallback-Kette (SysFont probiert der Reihe nach durch).

@@ -147,7 +147,7 @@
           "body": [
             "Jokaisella edistymistä tallentavalla pelillä on mem.json-tiedostossa oma osionsa, esimerkiksi:",
             "- sudoku: ratkaistut tasot tähtineen ja parhaine aikoineen, kesken jääneet ruudukot sekä päivän sudoku putkineen.",
-            "- casino: Laamapankin tili - Blackjackin, Pokerin, Casinon, Lama Crossingin, Lama Minesin ja Lama Plinkon laamamerkit sekä kunkin pelin saldo, Lama Crossingin kesken jäänyt ylitys, Lama Minesin kesken jäänyt kierros ja autotilan merkinnät sekä Lama Minesin ja Lama Plinkon historia, reiluustiedot, tilastot ja siirtyvä jäännös.",
+            "- casino: Laamapankin tili - Blackjackin, Pokerin, Casinon, Lama Crossingin, Lama Minesin, Lama Plinkon ja Lama Crashin laamamerkit sekä kunkin pelin saldo, Lama Crossingin kesken jäänyt ylitys, Lama Minesin kesken jäänyt kierros ja autotilan merkinnät, Lama Crashin kesken jäänyt lento sekä Lama Minesin, Lama Plinkon ja Lama Crashin historia, reiluustiedot, tilastot ja siirtyvä jäännös.",
             "- crossy: kerätyt kolikot, ostetut hahmot ja Crossy Roadin päivän paras.",
             "- tetris: Sprintin paras aika, Ultran paras tulos ja Versus-tilasto tekoälyä vastaan.",
             "- g2048: tallennetut 2048-pelit ja parhaat tulokset laudan koon ja tilan mukaan.",
@@ -349,7 +349,7 @@
         {
           "h": "Yleiskatsaus",
           "body": [
-            "268 saavutusta kaikissa 49 pelissä - ensimmäisestä käynnistyksestä Tetriksen Perfect Cleariin.",
+            "274 saavutusta kaikissa 50 pelissä - ensimmäisestä käynnistyksestä Tetriksen Perfect Cleariin.",
             "Jokaisella saavutuksella on harvinaisuus ja siten pistearvo; summa on tasosi.",
             "Löytyvät Saavutukset ja tilastot -painikkeen takaa, Saavutukset-välilehdeltä. Suodatin piilottaa avatut tai avaamattomat."
           ]
@@ -360,7 +360,7 @@
             "- Yleiset: koko kokoelman tavoitteet - kierrokset, kokeillut pelit, peliaika, ennätykset, voitot, pelipäivät, putket, taso ja kaksintaistelut. Lisäksi yökyöpeli, maraton tai viikonloppupelaaja.",
             "- Pistevirstanpylväät: reilu tavoitepistemäärä kullekin pelille.",
             "- Mestaritasot: toinen, selvästi korkeampi raja - vain peleissä, joiden pisteillä ei ole kattoa.",
-            "- Vakiokävijä: 25 kierrosta yhtä peliä. Löytyy kaikille 49 pelille.",
+            "- Vakiokävijä: 25 kierrosta yhtä peliä. Löytyy kaikille 50 pelille.",
             "- Erityiset hetket: šakkimatti, Yatzy, 4096-laatta, hole-in-one, hattutemppu ilmakiekossa, neljä haamua yhdellä voimapillerillä ja paljon muuta."
           ]
         },
@@ -1474,7 +1474,7 @@
         {
           "h": "Laamamerkit",
           "body": [
-            "Blackjackilla, Pokerilla, Casinolla, Lama Crossingilla, Lama Minesilla ja Lama Plinkolla on yhteinen tili Laamapankissa: aloitat 1000 laamamerkillä, ja saldo tallentuu pysyvästi.",
+            "Blackjackilla, Pokerilla, Casinolla, Lama Crossingilla, Lama Minesilla, Lama Plinkolla ja Lama Crashilla on yhteinen tili Laamapankissa: aloitat 1000 laamamerkillä, ja saldo tallentuu pysyvästi.",
             "Panos veloitetaan heti kun kortit jaetaan - jos poistut kesken käden, menetät sen.",
             "Paras tulos on blackjack-saldosi korkein arvo: 1000 plus kaikki, mitä olet voittanut ja hävinnyt blackjackissa. Ruletin, automaatin tai pokerin voitot eivät lasketa tähän.",
             "Alle 10 merkillä rahat ovat lopussa: [Enter] ottaa pankkilainan ja täyttää tilin taas 1000:een. Lainat eivät lasketa saldoon."
@@ -1901,7 +1901,7 @@
         {
           "h": "Laamamerkit",
           "body": [
-            "Pelataan Laamapankin laamamerkeillä - yhteinen tili Blackjackin, Casinon, Lama Crossingin, Lama Minesin ja Lama Plinkon kanssa (alku 1000, tallentuu pysyvästi).",
+            "Pelataan Laamapankin laamamerkeillä - yhteinen tili Blackjackin, Casinon, Lama Crossingin, Lama Minesin, Lama Plinkon ja Lama Crashin kanssa (alku 1000, tallentuu pysyvästi).",
             "Käden alussa tilisi on pöydällä pinona; pottiin menevä osuus veloitetaan heti. Jos poistut pöydästä kesken käden, osuutesi potista menetetään - loput palaavat tilille.",
             "Paras tulos on pokerisaldosi korkein arvo: 1000 plus kaikki, mitä olet voittanut ja hävinnyt pokerissa. Muiden pelien voitot eivät lasketa tähän.",
             "Rahat lopussa (alle 20:n ison blindin, Video Pokerissa alle 10) = pankkilaina yhdellä klikkauksella, tilillä on taas 1000."
@@ -2975,7 +2975,7 @@
         {
           "h": "Laamapankki",
           "body": [
-            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines ja Lama Plinko käyttävät samaa tiliä: laamamerkkejä (alku 1000). Panokset veloitetaan heti ja voitot hyvitetään - kaikki tallentuu pysyvästi.",
+            "Casino, Blackjack, Poker, Lama Crossing, Lama Mines, Lama Plinko ja Lama Crash käyttävät samaa tiliä: laamamerkkejä (alku 1000). Panokset veloitetaan heti ja voitot hyvitetään - kaikki tallentuu pysyvästi.",
             "Jokaisella pelillä on oma saldonsa. Casinon paras tulos on 1000 + Casino-saldon korkein arvo; Blackjackin tai Pokerin voitot eivät lasketa tähän.",
             "Kun rahat loppuvat (alle pienimmän panoksen), saat pankkilainan: tili täytetään taas 1000:een. Lainat eivät lasketa mihinkään saldoon; niiden määrä näkyy oikeassa yläkulmassa."
           ]
@@ -3109,7 +3109,7 @@
         {
           "h": "Laamamerkit",
           "body": [
-            "Lama Crossing pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin, Casinon, Lama Minesin ja Lama Plinkon kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
+            "Lama Crossing pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin, Casinon, Lama Minesin, Lama Plinkon ja Lama Crashin kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
             "Paras tulos on 1000 + Lama Crossing -saldosi korkein arvo; Blackjackin, Pokerin tai Casinon voitot eivät lasketa tähän.",
             "Alle 10 merkillä rahat ovat lopussa: [Enter] tai klikkaus ottaa pankkilainan ja täyttää tilin taas 1000:een. Lainat eivät lasketa saldoon.",
             "Kesken ylityksen lopettaminen on turvallista: panos, vaikeustaso ja kaista tallentuvat, ja seuraavalla käynnistyskerralla jatkat täsmälleen siitä."
@@ -3264,7 +3264,7 @@
         {
           "h": "Laamamerkit",
           "body": [
-            "Lama Mines pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin, Casinon, Lama Crossingin ja Lama Plinkon kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
+            "Lama Mines pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin, Casinon, Lama Crossingin, Lama Plinkon ja Lama Crashin kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
             "Paras tulos on 1000 + Lama Mines -saldosi korkein arvo; Laamapankin muiden pelien voitot eivät lasketa tähän.",
             "Alle 10 merkillä rahat ovat lopussa: [Välilyönti], [Enter] tai klikkaus ottaa pankkilainan ja täyttää tilin taas 1000:een. Lainat eivät lasketa saldoon.",
             "Kesken kierroksen lopettaminen on turvallista: panos veloitetaan alussa, ja jokaisen löydetyn jalokiven jälkeen tallentuvat kentän koko, miinat, kierroksen siemenet ja avatut ruudut. Seuraavalla käynnistyskerralla kenttä lasketaan uudelleen siemenestä, ja jatkat täsmälleen siitä.",
@@ -3420,7 +3420,7 @@
         {
           "h": "Laamamerkit",
           "body": [
-            "Lama Plinko pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin, Casinon, Lama Crossingin ja Lama Minesin kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
+            "Lama Plinko pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin, Casinon, Lama Crossingin, Lama Minesin ja Lama Crashin kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
             "Paras tulos on 1000 + Lama Plinko -saldosi korkein arvo; muiden pelien voitot eivät lasketa tähän.",
             "Jos tilisi ei riitä valittuun panokseen, valitse pienempi. 0 merkillä rahat ovat lopussa: [Enter] tai klikkaus ottaa pankkilainan ja täyttää tilin taas 1000:een. Lainat eivät lasketa saldoon.",
             "Historia, tilastot ja reiluustiedot kuuluvat profiiliisi, ja nekin tallennetaan tiedostoon mem.json."
@@ -3446,6 +3446,164 @@
             "- Reunaosuma: nopeimmin 12 rivillä - siellä noin joka 2 048. pallo osuu aivan reunaan (vasemmalle tai oikealle). 1 merkin palloilla se maksaa keskimäärin vain noin 3 merkkiä 100:aa palloa kohden.",
             "- Lankakerämyrsky: pidä vain [Välilyönti] painettuna - sarjatuli tuo laudalle yhtä aikaa noin 30 palloa rivimäärästä riippumatta, ja noin 2 sekunnin päästä saavutus on sinun. Autotila pudottaa siihen liian verkkaisesti.",
             "- Plinkolegenda: 16 rivillä ja riskitasolla \"Korkea\" vain noin 1/32 768 palloista osuu aivan reunaan - 1000 pallon autosarjoilla tarvitset keskimäärin noin 33 sarjaa. Sen sijaan tuo lokero maksaa ×1 000.",
+            "- Päätä budjetti etukäteen ja käytä autotilan tappiorajaa."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lamacrash",
+      "category": "games",
+      "game": "LamaCrashGame",
+      "title": "Lama Crash",
+      "keywords": [
+        "laama",
+        "lama",
+        "crash",
+        "pallo",
+        "kuumailmapallo",
+        "kerroin",
+        "kotiuta",
+        "maksu",
+        "puhkeaminen",
+        "puhkeamispiste",
+        "autotavoite",
+        "puolet",
+        "kaksi panosta",
+        "korkeus",
+        "kuu",
+        "merkit",
+        "laamapankki",
+        "auto",
+        "turbo",
+        "musiikki",
+        "reiluus",
+        "provably fair",
+        "tarkistuskoodi",
+        "siemen",
+        "sha-256",
+        "tilastot"
+      ],
+      "sections": [
+        {
+          "h": "Näin pelataan",
+          "body": [
+            "Laamasi nousee kuumailmapallolla, ja kerroin kasvaa joka sekunti: ×1,00, ×1,50, ×2,00 … Jos kotiutat, saat panoksesi kerrottuna sen hetken kertoimella. Jos pallo puhkeaa sitä ennen, panos menetetään.",
+            "Valitse panos (10, 20, 50 … aina 10000 laamamerkkiin asti) ja paina PELAA: panos veloitetaan, ja lyhyen 3-2-1-laskennan jälkeen pallo nousee ilmaan. Kertoimesta ×1,01 alkaen voit milloin tahansa painaa KOTIUTA - laama hyppää laskuvarjolla ja voitto hyvitetään heti.",
+            "Pallon puhkeamishetki on lyöty lukkoon jo ennen lähtöä - mutta kukaan ei näe sitä: pallo, musiikki tai äänet eivät paljasta mitään. Pallo vain paisuu paisumistaan mitä korkeammalle se nousee.",
+            "Kotiutuksen jälkeen tyhjä pallo lentää edelleen, kunnes se puhkeaa - näet siis, kuinka pitkälle se olisi päässyt. [Välilyönti] tai KELAA ETEEN näyttää loput pikakelauksena. Oikeassa yläkulmassa näkyvät 12 viimeisen kierroksen puhkeamispisteet.",
+            "Ajat: ×2 saavutetaan 11,6 sekunnissa, ×10 38 sekunnissa, ×100 77 sekunnissa ja ×100 000 3,2 minuutissa. Turbo ([T]) tekee kaikesta kolme kertaa nopeampaa."
+          ]
+        },
+        {
+          "h": "Kaksi panosta ja puolitus",
+          "body": [
+            "Näppäimellä [Z] tai kortin 2 kytkimellä otat mukaan toisen laaman: kaksi panosta samalla kierroksella, kummallakin oma summa ja oma autotavoite. Molemmat lentävät samassa pallossa - esimerkiksi toinen varovaisesti tavoitteella ×1,50, toinen rohkeasti tavoitteella ×10.",
+            "- [Välilyönti] / [Enter] / [C] tai alhaalla KOTIUTA: kaikki vielä lentävät panokset kotiutetaan",
+            "- [1] / [2] tai kortin painike: vain tämä panos",
+            "- [H] tai PUOLET: jokainen vielä jakamaton panos kotiuttaa puolet, toinen puoli lentää edelleen",
+            "- [Q] / [W] tai kortin puolituspainike: vain tämän panoksen puolet",
+            "Jokaisen panoksen voi puolittaa vain kerran. Kotiutetun puolikkaan laama pudottaa rahasäkkinä minilaskuvarjon varassa.",
+            "Autotavoite: näppäimillä [Vasen] / [Oikea] (tai hiiren rullalla tavoitteen päällä) asetat kertoimen, jolla panos kotiutuu itsestään (×1,01 - ×100 000); [X] kytkee sen päälle tai pois. Jos pallo saavuttaa tavoitteen, maksu tehdään tarkalleen tavoitteen kertoimella - vaikka pallo puhkeaisi samalla hetkellä."
+          ]
+        },
+        {
+          "h": "Miten puhkeamispiste syntyy",
+          "body": [
+            "Jokaiselle kierrokselle arvotaan satunnaisluku r lukujen 0 ja 2^32 - 1 väliltä. Puhkeamispiste on 97 × 2^32 / (2^32 - r) alaspäin sadasosiin pyöristettynä, vähintään ×1,00 ja enintään ×100 000. Noin 4 % kierroksista puhkeaa jo kertoimella ×1,00 - ennen kuin kukaan ehtii kotiuttaa.",
+            "Tästä seuraa yksinkertainen sääntö: todennäköisyys saavuttaa tavoite x on 97 % jaettuna x:llä. Kotiutitpa milloin tahansa - pitkällä aikavälillä panoksistasi palaa 97 %:",
+            "- ×1,50: 64,67 % · ×2: 48,50 % · ×3: 32,33 % · ×5: 19,40 %",
+            "- ×10: 9,70 % · ×100: 0,97 % · ×1 000: 0,097 % · ×100 000: 0,001 %",
+            "Jos kotiutat käsin jollakin kertoimella, voitat juuri silloin, kun pallo puhkeaa myöhemmin - aivan kuin olisit asettanut sen autotavoitteeksi.",
+            "Joka saavuttaa kertoimen ×100 000, laskeutuu Kuuhun: maksimivoitto, ja kaikki vielä lentävät panokset maksetaan kertoimella ×100 000.",
+            "Jäännöksen siirto: se, mitä maksun alaspäin pyöristämisestä jää yli sadasosina, lisätään seuraavaan maksuun - pienetkään panokset eivät menetä mitään."
+          ]
+        },
+        {
+          "h": "Korkeusmaailmat ja musiikki",
+          "body": [
+            "Mitä suurempi kerroin, sitä korkeammalla pallo lentää - kuuden maailman läpi:",
+            "- Laamaniitty (alkaen ×1): laidun, aita ja talli jäävät alas",
+            "- Pilvimeri (alkaen ×1,50): pilviä ja lintuparvia",
+            "- Ukkosrintama (alkaen ×3): sadetta, salamoita ja lentokoneita",
+            "- Revontulet (alkaen ×10): tähtiä ja tanssivia revontulia",
+            "- Avaruus (alkaen ×100): Maan kaarevuus, satelliitteja, tähdenlentoja - ja Kuu kasvaa kasvamistaan",
+            "- Kuu (×100 000): kuulaskeutuminen",
+            "Jännitysmusiikki nopeutuu ja nousee korkeammalle jokaisessa maailmassa; kertoimesta ×2 alkaen venynyt pallo narisee. [M] kytkee musiikin päälle tai pois."
+          ]
+        },
+        {
+          "h": "Autotila",
+          "body": [
+            "[A] avaa autotilan (vain kierrosten välissä). Siellä säädät:",
+            "- Kierrokset: 5, 10, 25, 50, 100 tai 250",
+            "- Lopeta, kun voitto on / Lopeta, kun tappio on: pois, 100, 500, 1000, 5000, 10000 tai 50000 merkkiä",
+            "- Turbo päällä tai pois",
+            "KÄYNNISTÄ AUTO pelaa kierrokset peräkkäin panoksillasi ja autotavoitteillasi; panokselle, jolla ei ole autotavoitetta, sellainen kytketään päälle. Kun kaikki on kotiutettu, kelataan automaattisesti eteenpäin. Voit silti kotiuttaa käsin milloin tahansa.",
+            "Autotila jatkuu, kunnes kierrosmäärä täyttyy, jokin raja laukeaa, merkit eivät riitä tai painat SEIS, [Esc] tai [A] - jo lennossa oleva kierros lentää silloin normaalisti loppuun."
+          ]
+        },
+        {
+          "h": "Reiluustarkistus",
+          "body": [
+            "Lama Crashissa voit itse tarkistaa, ettei puhkeamispistettä muuteta jälkikäteen (\"provably fair\"):",
+            "- Palvelimen siemen: 32 merkin salainen satunnaisarvo, joka lyödään lukkoon ennen kierrosta",
+            "- Tarkistuskoodi: palvelimen siemenen SHA-256-sormenjälki - näkyy ennen lähtöä",
+            "- Asiakkaan siemen: oma osuutesi (8 merkkiä); \"Uusi asiakkaan siemen\" arpoo uuden, kun mikään kierros ei ole käynnissä",
+            "Lisäksi on kierroksen numero (nonce). Kierroksen jälkeen palvelimen siemen paljastetaan - silloin seuraavan kierroksen tarkistuskoodi on jo lukittu.",
+            "[F] näyttää 12 viimeistä kierrosta. \"Tarkista\" ([Enter]) tarkistaa koodin, laskee puhkeamispisteen uudelleen ja näyttää rastilla tai ristillä, täsmääkö kaikki - lisäksi minikäyrän kotiutuksistasi.",
+            "Uteliaille: sattuma on mulberry32, joka käynnistetään tekstin \"lamacrash|palvelimen siemen|asiakkaan siemen|numero\" FNV-1a-arvolla; r on sen ensimmäinen luku."
+          ]
+        },
+        {
+          "h": "Tilastot",
+          "body": [
+            "[S] avaa profiilisi Lama Crash -tilastot:",
+            "- Ruudut: Kierrokset, Voitetut, Hävityt, Palautuksesi, Panostettu, Maksettu, Saldo, Suurin voitto, Paras kerroin (korkein kotiutus), Puhkeamisennätys, Puolitukset ja Täpärät",
+            "- saldokäyrä 100 viimeisestä kierroksesta",
+            "- kierrostesi puhkeamispisteiden jakauma pylväinä, odotettu jakauma kultaisena"
+          ]
+        },
+        {
+          "h": "Ohjaus",
+          "body": [
+            "- [Välilyönti] / [Enter] tai PELAA: aloita kierros; lennossa: kotiuta kaikki; sen jälkeen: kelaa eteen",
+            "- [1] / [2] tai [Tab]: valitse kortti (ennen kierrosta) tai kotiuta yksittäinen panos (lennossa)",
+            "- [Ylös] / [Alas], [+] / [-] tai hiiren rulla: valitun kortin panos",
+            "- [Vasen] / [Oikea] tai hiiren rulla tavoitteen päällä: autotavoite; [X]: autotavoite päälle/pois; [Z]: toinen panos",
+            "- [H]: kaikkien jakamattomien panosten puolet; [Q] / [W]: panoksen 1 tai 2 puolet",
+            "- [A]: autotila, [S]: tilastot, [F]: reiluustarkistus, [T]: turbo, [M]: musiikki",
+            "- [Esc]: sulje ikkuna tai pysäytä auto, muuten tauko",
+            "Ikkunat voi avata vain, kun yksikään panos ei lennä. Jos peli-ikkuna menettää kohdistuksen panoksen lentäessä, peli siirtyy itsestään tauolle. Panokset, tavoitteet, turbo, musiikki ja autotilan asetukset tallentuvat tiedostoon settings.json (osio lamacrash)."
+          ]
+        },
+        {
+          "h": "Laamamerkit",
+          "body": [
+            "Lama Crash pelaa Laamapankin yhteisellä tilillä - yhdessä Blackjackin, Pokerin, Casinon, Lama Crossingin, Lama Minesin ja Lama Plinkon kanssa (alku 1000, tallennetaan tiedostoon mem.json).",
+            "PELAA veloittaa panoksen ja tallentaa kierroksen yhdellä kertaa, ja jokainen kotiutus hyvittää voiton heti. Jos poistut pelistä kesken lennon, mitään ei menetetä: seuraavalla käynnistyskerralla on lähtölaskenta, ja pallo jatkaa nousuaan tarkalleen samasta kohdasta - puhkeamispistehän on jo lukittu.",
+            "Paras tulos on 1000 + Lama Crash -saldosi korkein arvo. Alle 10 merkillä rahat ovat lopussa: [Enter] tai klikkaus ottaa pankkilainan, joka täyttää tilin taas 1000:een."
+          ]
+        },
+        {
+          "h": "Saavutukset",
+          "body": [
+            "- Lama Crash-vakiopelaaja: 25 kierrosta",
+            "- Virstanpylväs: paras tulos 3000",
+            "- Lama Crash-mestari: paras tulos 10000",
+            "- Hiuskarvan varassa (harvinainen): Kotiuta käsin kertoimella ×2 tai enemmän - enintään 5 % ennen puhkeamista",
+            "- Revontulilentäjä (eeppinen): Kotiuta kertoimella ×10 tai enemmän",
+            "- Avaruuslaama (legendaarinen): Kotiuta kertoimella ×1000 tai enemmän"
+          ]
+        },
+        {
+          "h": "Vinkit",
+          "body": [
+            "- Jokainen kierros on riippumaton: viiden aikaisen puhkeamisen jälkeen pitkä lento ei ole \"vuorossa\".",
+            "- Mikään strategia ei voita 97 %:a. Matalat tavoitteet voittavat usein ja vähän, korkeat harvoin ja paljon.",
+            "- Kaksi panosta yhdistää molemmat: toinen varmistaa voiton aikaisin, toinen lentää pitkälle.",
+            "- Hiuskarvan varassa lasketaan vain käsin kotiutettaessa - autotavoitteilla se ei lasketa.",
+            "- Revontulilentäjä: autotavoite ×10 osuu noin joka kymmenennellä kierroksella; Avaruuslaama tavoitteella ×1 000 noin joka tuhannennella - turbolla sellainen lento kestää 38 sekuntia.",
             "- Päätä budjetti etukäteen ja käytä autotilan tappiorajaa."
           ]
         }

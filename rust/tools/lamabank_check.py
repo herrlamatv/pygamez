@@ -16,7 +16,10 @@ Abgedeckt: frisches Konto, ``bet_and_pay`` (mit/ohne Gewinn, nicht gedeckt,
 Einsatz 0, Zusatz-Spielstand, unbekanntes Spiel), Mindesteinsaetze und Pleite
 je Spiel samt Kredit, Spielstand von vor dem Mines-/Plinko-Update (4 Spiele
 im ``ledger``), Migration der alten Blackjack-/Poker-Abschnitte, Poker-
-Tischstapel (escrow) inkl. Erstattung beim Laden.
+Tischstapel (escrow) inkl. Erstattung beim Laden. Lama Crash wie im Spiel:
+Runde mit zwei Einsaetzen (``bet_and_pay`` mit Runde im Zusatz), Auszahlungen
+ohne Speichern (``credit ... 0``) und danach ein ``set_extra``, Pleite +
+Kredit; dazu ein Spielstand von vor dem Crash-Update (6 Spiele im ``ledger``).
 """
 
 import json
@@ -110,6 +113,20 @@ LEGACY = {"mem": {"lang": "de"}, "blackjack": {"chips": 1800, "best": 2100}, "po
 ESCROW = {"mem": {"lang": "de"},
           "casino": {"chips": 400, "ledger": {}, "peak": {}, "escrow": 250, "refills": 0, "migrated": True,
                      "extra": {}}}
+# Spielstand von vor dem Lama-Crash-Update: ledger/peak kennen 6 Spiele.
+ALT_6 = {"mem": {"lang": "de"},
+         "casino": {"chips": 2210,
+                    "ledger": {"blackjack": 120, "poker": -40, "casino": 300, "lamacrossing": 150, "lamamines": 480,
+                               "lamaplinko": 200},
+                    "peak": {"blackjack": 1200, "poker": 1000, "casino": 1500, "lamacrossing": 1150,
+                             "lamamines": 1600, "lamaplinko": 1250},
+                    "escrow": 0, "refills": 1, "migrated": True,
+                    "extra": {"lamamines": {"hist": [0, 154]}, "lamaplinko": {"hist": [20]}}}}
+# Lama-Crash-Runde wie im Spiel (_start: bet_and_pay(total, 0, KEY, KEY, _extra()))
+_CRASH_RUNDE = ('{"round":{"n":0,"s":"' + "ab" * 16 + '","c":"kaugummi","h":"' + "0" * 64 + '","t":0,'
+                '"bets":[{"b":10,"a":0,"hm":0,"xm":0,"p":0,"man":0},{"b":20,"a":1000,"hm":0,"xm":0,"p":0,"man":0}]},'
+                '"hist":[],"fair":{"server":"' + "cd" * 16 + '","client":"kaugummi","nonce":1},"fairlog":[],'
+                '"stats":{"rounds":0,"x":{"hits":[0,0,0,0,0,0,0],"top":0}},"carry":0}')
 
 FAELLE = [
     ("frisch_plinko", FRISCH, """load
@@ -199,6 +216,61 @@ load
 balance
 escrow
 clear_escrow 1"""),
+    ("frisch_crash", FRISCH, """load
+min_bet lamacrash
+is_broke lamacrash
+ledger lamacrash
+score_for lamacrash
+get_extra lamacrash
+bet_and_pay 30 0 lamacrash lamacrash """ + _CRASH_RUNDE + """
+get_extra lamacrash
+balance
+credit 12 lamacrash 0
+credit 25 lamacrash 0
+set_extra lamacrash {"round":null,"hist":[250],"carry":37}
+ledger lamacrash
+value_for lamacrash
+score_for lamacrash
+bet_and_pay 10000 0 lamacrash lamacrash {"x":1}
+get_extra lamacrash
+bet_and_pay 1000 0 lamacrash lamacrash {"round":{"t":5},"hist":[250]}
+credit 30 lamacrash 0
+credit 0 lamacrash 1
+set_extra lamacrash {"round":null,"hist":[250,104]}
+balance
+is_broke lamacrash
+bet_and_pay 30 0 lamacrash lamacrash {"round":{"t":0},"hist":[250,104]}
+balance
+is_broke lamacrash
+is_broke lamaplinko
+refill lamacrash
+refill lamacrash
+refills
+balance
+ledger lamacrash
+score_for lamacrash
+reset_cache
+load
+balance
+ledger lamacrash
+score_for lamacrash
+get_extra lamacrash"""),
+    ("alt_6_spiele", ALT_6, """load
+ledger lamacrash
+value_for lamacrash
+score_for lamacrash
+score_for lamaplinko
+min_bet lamacrash
+is_broke lamacrash
+get_extra lamacrash
+bet_and_pay 50 0 lamacrash lamacrash {"round":{"t":0},"hist":[]}
+credit 120 lamacrash 0
+set_extra lamacrash {"round":null,"hist":[240]}
+ledger lamacrash
+score_for lamacrash
+get_extra lamamines
+balance
+refills"""),
 ]
 
 

@@ -3,9 +3,9 @@
 export_chiplogic_ref.py
 =======================
 Schreibt die Prüfwerte der Chip-Regeln (fairness, chipstats, Lama Mines,
-Lama Plinko) aus der Python-Fassung nach
+Lama Plinko, Lama Crash) aus der Python-Fassung nach
 ``rust/crates/pgz-games/src/data/chiplogic_ref.json``. Die Rust-Unit-Tests
-(``lamamines_logic.rs`` / ``lamaplinko_logic.rs``) lesen die Datei per
+(``lamamines_logic.rs`` / ``lamaplinko_logic.rs`` / ``lamacrash_logic.rs``) lesen die Datei per
 ``include_str!`` und rechnen alles nach:
 
     python devtools/export_chiplogic_ref.py           # Datei neu schreiben
@@ -147,6 +147,101 @@ def build():
         "carry_clean_in": [42, 100, -1, True, "5", None],
         "carry_clean_out": [P.clean_carry(v) for v in (42, 100, -1, True, "5", None)],
     }
+    # ---- Crash (eigener Zufall - die Werte von Mines/Plinko bleiben unverändert)
+    X = _load("lamacrash_logic", "games/lamacrash_logic.py")
+    RC = random.Random(5050)
+    two32 = 2 ** 32
+    curve = [X.mult_at(tk) for tk in range(X.MOON_TICK + 1)]
+    seeds = []
+    for _ in range(24):
+        sv, cv, nv = F.new_server_seed(RC), F.new_client_seed(RC), RC.randrange(10 ** 9)
+        seeds.append([sv, cv, nv, X.crash_point(sv, cv, nv)])
+    us = [0, 1, 2, 171798691, two32 // 2, two32 - 2, two32 - 1] + [RC.getrandbits(32) for _ in range(40)]
+    sims = _crash_sims(X, RC)
+    xs = X.blank_x()
+    for sim in sims[:12]:
+        rnd = {"n": 1, "s": "0" * 32, "c": "abc", "h": "0" * 64, "t": sim["t"], "bets": sim["bets"]}
+        X.record_x(xs, rnd, sim["crash"], sim["end"])
+    st = F.blank_state(RC)
+    st["nonce"] = 17
+    ent = F.begin(st)
+    good = X.new_round(ent, [(100, 0), (20, 150)])
+    crash_g = X.crash_point(ent["s"], ent["c"], ent["n"])
+    rounds_in = [good, dict(good, t=10), dict(good, t=X.pop_tick(crash_g)), dict(good, h="0" * 64),
+                 dict(good, bets=[{"b": 10, "a": 100, "hm": 0, "xm": 0, "p": 0, "man": 0}]),
+                 dict(good, bets=[{"b": 10, "a": 0, "hm": 0, "xm": 0, "p": 0, "man": 2}]),
+                 dict(good, bets=[{"b": 10, "a": 0, "hm": 0, "xm": 0, "p": 0, "man": True}]),
+                 dict(good, t=-1), dict(good, bets=[]), None, "x"]
+    out["crash"] = {
+        "consts": [X.HOUSE, X.MAX_MULT100, X.MIN_CASH, X.MU0, X.GROWTH, X.MU_UNIT, X.MOON_TICK,
+                   X.SPEED_TURBO, X.SPEED_FF, X.HISTORY, X.DEFAULT_TARGET, X.BLEND_TICKS, X.CHART_MIN_TICKS,
+                   X.BRAVE_MULT, X.SPACE_MULT, X.CLOSE_MIN, X.CLOSE_PCT, X.MAX_BETS, X.TPS],
+        "bets": list(X.BETS), "targets": list(X.TARGETS), "world_at": list(X.WORLD_AT),
+        "buckets": list(X.BUCKETS),
+        "digest_curve": digest(curve),
+        "curve": [[tk, curve[tk], X.mu_at(tk)] for tk in (0, 1, 9, 10, 693, 694, 2305, 4608, 6912, 11519, 11520)],
+        "tick_at": [[m, X.tick_at(m)] for m in (50, 100, 101, 150, 200, 777, 1000, 123456,
+                                               X.MAX_MULT100, X.MAX_MULT100 + 1)],
+        "u32": [[u, X.crash_from_u32(u)] for u in us],
+        "seeds": seeds,
+        "win_count": [[tv, X.win_count(tv)] for tv in X.TARGETS],
+        "chance": [[tv, X.fmt_chance(tv), X.fmt_chance(tv, ",")] for tv in (101, 150, 200, 777, 10000, 123456,
+                                                                           X.MAX_MULT100)],
+        "pop_tick": [[c, X.pop_tick(c)] for c in (100, 101, 102, 350, 1000, 999999, X.MAX_MULT100)],
+        "sims": sims,
+        "x": xs,
+        "x_clean_in": [{"hits": [1, 2], "cash": -1, "top": True}, {"hits": [3] * 7, "moon": 2, "close": "x"}, None],
+        "x_clean_out": [X.clean_x(v) for v in ({"hits": [1, 2], "cash": -1, "top": True},
+                                              {"hits": [3] * 7, "moon": 2, "close": "x"}, None)],
+        "rounds_in": rounds_in,
+        "rounds_out": [X.clean_round(v) for v in rounds_in],
+        "history_in": [50, 100, True, "x", 350, X.MAX_MULT100 + 1] + [200] * 20,
+        "history_out": X.clean_history([50, 100, True, "x", 350, X.MAX_MULT100 + 1] + [200] * 20),
+        "fmt": [[v, X.fmt_mult(v), X.fmt_mult(v, ","), X.fmt_short(v), X.fmt_short(v, ",")]
+                for v in (100, 101, 999, 1000, 1234, 9999, 10000, 12345, 99999, 100000, 123456, 999999,
+                          1000000, X.MAX_MULT100)],
+        "chart": [[tk, list(X.chart_span(tk)), X.chart_ylines(X.chart_span(tk)[1]),
+                   X.chart_xlines(X.chart_span(tk)[0])] for tk in (0, 50, 480, 694, 1500, 3000, 6000, 11520)],
+        "blend": [[repr(f), list(X.world_blend(f))] for f in (0.0, 315.5, 316.0, 380.25, 405.999, 406.0,
+                                                             1050.75, 1099.5, 2300.0, 4600.125, 4700.0)],
+        "world_of": [[v, X.world_of(v)] for v in (100, 149, 150, 299, 300, 999, 1000, 9999, 10000, 9999999,
+                                                  X.MAX_MULT100)],
+        "step": [[v, d, X.step_target(v, d)] for v in (101, 150, 151, 200, 201, 9999999, X.MAX_MULT100)
+                 for d in (1, -1)],
+        "bucket": [[v, X.bucket_of(v)] for v in (100, 149, 150, 199, 200, 499, 500, 999, 1000, 9999, 10000,
+                                                 99999, 100000, X.MAX_MULT100)],
+        "bucket_prob": [[X.bucket_prob(i).numerator, X.bucket_prob(i).denominator] for i in range(len(X.BUCKETS))],
+    }
+    return out
+
+
+def _crash_sims(X, R):
+    """Ganze Runden mit Hand-Ausstiegen: Protokoll je Takt (Ausstiege und Ereignisse)."""
+    out = []
+    for case in range(30):
+        n = R.randint(1, 2)
+        pairs = [[R.choice(X.BETS), R.choice((0,) + X.TARGETS[:28])] for _ in range(n)]
+        crash = min(X.crash_from_u32(R.getrandbits(32)), 30000) if case < 28 else X.MAX_MULT100
+        end_t = X.pop_tick(crash)
+        acts = sorted([[R.randint(0, min(end_t + 3, 4000)), R.randrange(n), R.random() < 0.5]
+                       for _ in range(R.randint(0, 3))])
+        rnd = X.new_round({"n": 1, "s": "0" * 32, "c": "abc", "h": "0" * 64}, [tuple(p) for p in pairs])
+        carry = R.randrange(100)
+        carry0 = carry
+        log, todo, end = [], list(acts), None
+        while end is None:
+            while todo and todo[0][0] == rnd["t"]:
+                _, i, h = todo.pop(0)
+                res = X.cash_out(rnd, i, h, carry)
+                log.append(["cash", rnd["t"], i, h] + (list(res) if res is not None else [None, None, None]))
+                if res is not None:
+                    carry = res[2]
+            evs, carry, end = X.tick(rnd, crash, carry)
+            for ev in evs:
+                log.append(["ev", rnd["t"], ev[0], ev[1], ev[2], ev[3]])
+        out.append({"pairs": pairs, "crash": crash, "acts": acts, "carry0": carry0, "log": log, "end": end,
+                    "t": rnd["t"], "bets": rnd["bets"], "carry": carry, "outcome": X.outcome(rnd, crash),
+                    "best": X.best_cash(rnd), "close": X.close_call(rnd, crash)})
     return out
 
 

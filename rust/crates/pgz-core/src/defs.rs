@@ -33,7 +33,7 @@ pub struct GameDef {
     pub name: &'static str,
 }
 
-/// Alle 49 Spiele in Menue-Reihenfolge.
+/// Alle 50 Spiele in Menue-Reihenfolge.
 pub const GAMES: &[GameDef] = &[
     GameDef { key: "snake", class_name: "SnakeGame", color: "#6ecd8c", name: "Snake" },
     GameDef { key: "pong", class_name: "PongGame", color: "#589cff", name: "Pong" },
@@ -84,6 +84,7 @@ pub const GAMES: &[GameDef] = &[
     GameDef { key: "lamacrossing", class_name: "LamaCrossingGame", color: "#19a7ce", name: "Lama Crossing" },
     GameDef { key: "lamamines", class_name: "LamaMinesGame", color: "#14d6b0", name: "Lama Mines" },
     GameDef { key: "lamaplinko", class_name: "LamaPlinkoGame", color: "#ff6b35", name: "Lama Plinko" },
+    GameDef { key: "lamacrash", class_name: "LamaCrashGame", color: "#ff4060", name: "Lama Crash" },
 ];
 
 /// Die Namen eines Spiels je Sprache: `[(Sprachcode, Name)]`.
@@ -148,7 +149,7 @@ pub const GENERAL: &[(&str, &str, &str, Option<i64>, &str)] = &[
     ("explorer_15", "gem", "distinct", Some(15), "rare"),
     ("explorer_25", "gem", "distinct", Some(25), "rare"),
     ("explorer_35", "gem", "distinct", Some(35), "epic"),
-    ("explorer_all", "crown", "distinct", Some(49), "legendary"),
+    ("explorer_all", "crown", "distinct", Some(50), "legendary"),
     ("time_1h", "clock", "time", Some(3600), "common"),
     ("time_5h", "clock", "time", Some(18000), "rare"),
     ("time_20h", "crown", "time", Some(72000), "epic"),
@@ -242,6 +243,7 @@ pub const MILESTONES: &[(&str, i64)] = &[
     ("lamacrossing", 3000),
     ("lamamines", 3000),
     ("lamaplinko", 3000),
+    ("lamacrash", 3000),
 ];
 
 /// Zweite Punktstufe je Spiel (`master_<key>`).
@@ -279,6 +281,7 @@ pub const MASTERS: &[(&str, i64)] = &[
     ("lamacrossing", 10000),
     ("lamamines", 10000),
     ("lamaplinko", 10000),
+    ("lamacrash", 10000),
 ];
 
 /// Besondere Momente: `(id, Symbol, Spiel-Schluessel, Ziel, Seltenheit)`.
@@ -372,6 +375,9 @@ pub const SPECIALS: &[(&str, &str, &str, Option<i64>, &str)] = &[
     ("lpl_edge", "flag", "lamaplinko", None, "rare"),
     ("lpl_rain", "bolt", "lamaplinko", None, "epic"),
     ("lpl_jackpot", "crown", "lamaplinko", None, "legendary"),
+    ("lcx_close", "target", "lamacrash", None, "rare"),
+    ("lcx_brave", "rocket", "lamacrash", None, "epic"),
+    ("lcx_space", "moon", "lamacrash", None, "legendary"),
 ];
 
 /// Standardwerte der spielspezifischen Abschnitte aus `settings.py`.
@@ -380,7 +386,7 @@ pub const SPECIALS: &[(&str, &str, &str, Option<i64>, &str)] = &[
 /// Zahlen, Text, verschachtelte Tabellen). `settings::load` liest das
 /// einmal ein. **Nur was hier steht, ueberlebt das Laden** - genau
 /// wie `settings.SCHEMAS` in der Python-Fassung.
-pub const GAME_DEFAULTS_JSON: &str = r##"{"snake": {"wrap": false, "bonus_apple": false}, "pong": {"hold_p1": false, "hold_p2": false}, "sudoku": {"difficulty": 0, "fail_limit": true, "last_level": {}, "variant": "classic", "input": "cell", "colors": false}, "frogger": {"difficulty": "normal"}, "memory": {"size": "6x6"}, "solitaire": {"draw3": false, "spider_suits": 1}, "aim": {"theme": "space", "sens": 1.0, "blur": 0.0}, "connect4": {"difficulty": 1}, "reversi": {"difficulty": 1}, "tanks": {"difficulty": 1, "arena": -1}, "tunnel": {"control": "keys", "blur": 0.35, "last_level": 1}, "maze": {"view": "ego", "sens": 1.0, "last_level": 1}, "trex": {"difficulty": "normal", "skin": 1, "night": true}, "dame": {"variant": "german", "difficulty": 1}, "poker": {"opponents": 2, "difficulty": 1}, "chess": {"difficulty": 2, "color": "white", "clock": "none", "chess960": false, "flip": false}, "muehle": {"difficulty": 1, "flying": true}, "simon": {"mode": "classic", "audio": "on", "pads": 4}, "billiard": {"variant": "8ball", "view": "2d", "difficulty": 1}, "blockjump": {"view": "first", "blur": 0.35, "sens": 1.0, "mouse_invert": false, "textures": "high"}, "minigolf": {"course": "classic", "tour": 1, "guide": true, "autoaim": true, "pickup": true, "ugc_map": "", "grid": true}, "pinball": {"table": "classic", "balls": 3}, "bowling": {"difficulty": "normal", "guide": true}, "replay": {"enabled": true}, "tetris": {"das": 170, "arr": 50, "ghost": true, "solo": "marathon", "ai_level": 1, "start_level": 1}, "g2048": {"size": 4, "mode": "classic", "undo": "limited"}, "wordle": {"length": 5, "hard": false, "colorblind": false}, "crossy": {"shadows": true, "daynight": true}, "geodash": {"music": true, "auto_checkpoints": true, "progress_bar": true, "grid": true, "last_level": 0, "last_tab": "play", "last_cat": "all"}, "battleship": {"difficulty": 1, "touch": true, "salvo": false, "extra_shot": false}, "casino": {"roulette_chip": 5, "line_bet": 1, "turbo": false}, "lamacrossing": {"world": "road", "difficulty": "medium", "bet": 10}, "lamamines": {"grid": 5, "mines": 3, "bet": 10, "turbo": false, "auto_rounds": 10, "auto_win": 0, "auto_loss": 0}, "lamaplinko": {"rows": 12, "risk": "medium", "bet": 10, "turbo": false, "auto_balls": 25, "auto_win": 0, "auto_loss": 0}}"##;
+pub const GAME_DEFAULTS_JSON: &str = r##"{"snake": {"wrap": false, "bonus_apple": false}, "pong": {"hold_p1": false, "hold_p2": false}, "sudoku": {"difficulty": 0, "fail_limit": true, "last_level": {}, "variant": "classic", "input": "cell", "colors": false}, "frogger": {"difficulty": "normal"}, "memory": {"size": "6x6"}, "solitaire": {"draw3": false, "spider_suits": 1}, "aim": {"theme": "space", "sens": 1.0, "blur": 0.0}, "connect4": {"difficulty": 1}, "reversi": {"difficulty": 1}, "tanks": {"difficulty": 1, "arena": -1}, "tunnel": {"control": "keys", "blur": 0.35, "last_level": 1}, "maze": {"view": "ego", "sens": 1.0, "last_level": 1}, "trex": {"difficulty": "normal", "skin": 1, "night": true}, "dame": {"variant": "german", "difficulty": 1}, "poker": {"opponents": 2, "difficulty": 1}, "chess": {"difficulty": 2, "color": "white", "clock": "none", "chess960": false, "flip": false}, "muehle": {"difficulty": 1, "flying": true}, "simon": {"mode": "classic", "audio": "on", "pads": 4}, "billiard": {"variant": "8ball", "view": "2d", "difficulty": 1}, "blockjump": {"view": "first", "blur": 0.35, "sens": 1.0, "mouse_invert": false, "textures": "high"}, "minigolf": {"course": "classic", "tour": 1, "guide": true, "autoaim": true, "pickup": true, "ugc_map": "", "grid": true}, "pinball": {"table": "classic", "balls": 3}, "bowling": {"difficulty": "normal", "guide": true}, "replay": {"enabled": true}, "tetris": {"das": 170, "arr": 50, "ghost": true, "solo": "marathon", "ai_level": 1, "start_level": 1}, "g2048": {"size": 4, "mode": "classic", "undo": "limited"}, "wordle": {"length": 5, "hard": false, "colorblind": false}, "crossy": {"shadows": true, "daynight": true}, "geodash": {"music": true, "auto_checkpoints": true, "progress_bar": true, "grid": true, "last_level": 0, "last_tab": "play", "last_cat": "all"}, "battleship": {"difficulty": 1, "touch": true, "salvo": false, "extra_shot": false}, "casino": {"roulette_chip": 5, "line_bet": 1, "turbo": false}, "lamacrossing": {"world": "road", "difficulty": "medium", "bet": 10}, "lamamines": {"grid": 5, "mines": 3, "bet": 10, "turbo": false, "auto_rounds": 10, "auto_win": 0, "auto_loss": 0}, "lamaplinko": {"rows": 12, "risk": "medium", "bet": 10, "turbo": false, "auto_balls": 25, "auto_win": 0, "auto_loss": 0}, "lamacrash": {"bet1": 10, "bet2": 10, "two": false, "auto1": false, "target1": 200, "auto2": true, "target2": 1000, "turbo": false, "music": true, "auto_rounds": 10, "auto_win": 0, "auto_loss": 0}}"##;
 
 /// Farbpalette eines UI-Designs (Reihenfolge wie `ui._*_COLORS`).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -1236,7 +1242,7 @@ pub const THEMES: &[Theme] = &[
 pub const DEFAULT_THEME: &str = "v42";
 
 /// Gesamtzahl der Erfolge - Probe gegen die Python-Fassung.
-pub const TOTAL_ACHIEVEMENTS: usize = 268;
+pub const TOTAL_ACHIEVEMENTS: usize = 274;
 
 /// Gesamtzahl der Spiele - Probe gegen die Python-Fassung.
-pub const TOTAL_GAMES: usize = 49;
+pub const TOTAL_GAMES: usize = 50;

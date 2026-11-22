@@ -149,7 +149,7 @@
     BubbleShooterGame: "#ff7aa8", HangmanGame: "#d89a4a", BlockJumpGame: "#8fd14f",
     LamaTowerDefenseGame: "#e2725b", MiniGolfGame: "#4fd17a", PinballGame: "#7f5af0", BowlingGame: "#4a7de0",
     CrossyRoadGame: "#e8e25a", GeometryDashGame: "#b9f23a", BattleshipGame: "#3a78b5", CasinoGame: "#d6336c",
-    LamaCrossingGame: "#19a7ce", LamaMinesGame: "#14d6b0", LamaPlinkoGame: "#ff6b35",
+    LamaCrossingGame: "#19a7ce", LamaMinesGame: "#14d6b0", LamaPlinkoGame: "#ff6b35", LamaCrashGame: "#ff4060",
   };
 
   // ------------------------------------------------------------ Farb-Helfer

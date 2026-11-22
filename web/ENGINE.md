@@ -115,12 +115,20 @@ score, gameOver, paused, font (22px), bigFont (48px bold), accent ([r,g,b]), hig
 | `settings_mod.save_settings(self.settings)` | `this.saveSettings()`                             |
 | `highscore.load_highscores().get(key, 0)` | `this.highscore` bzw. `PG.highscore.get(key)`       |
 | `wants_right_click`, `wants_escape`, `capture_mouse` | `get wantsRightClick()`, `get wantsEscape()`, `get captureMouse()` |
+| `pause_on_blur`                           | `get pauseOnBlur()` (optional, Standard: nicht gesetzt = false) |
+| `show_highscore_banner`                   | `get showHighscoreBanner()`                         |
+| `on_exit()`                               | `destroy()`                                         |
 | `on_surface_changed()`                    | entfällt (feste logische Größe)                     |
 
 Die App übernimmt wie `main.py`: **ESC = Pause** (außer `wantsEscape` ist true – dann bekommt
 das Spiel ESC), Highscore sichern beim Übergang zu `gameOver` und beim Verlassen, Highscore-Banner
 unten bei Game Over, Konfetti bei Rekord, Neustart-Erkennung (gameOver → false).
 Das Spiel selbst startet also wie in Python mit Enter/Leertaste neu (`reset()`).
+
+**Fokus weg:** Ein verborgener Tab pausiert jedes laufende Spiel. Verliert nur das
+Fenster den Fokus (anderes Programm, der Tab bleibt sichtbar), lässt die App die Tasten
+los und pausiert zusätzlich Spiele, deren `pauseOnBlur` gerade true ist – wie
+`main.py` `_pause_on_blur` (z.B. Lama Crash, solange ein Einsatz fliegt).
 
 ## Eingabe-Ereignisse
 
@@ -200,6 +208,10 @@ PG.stats.totals() / daysMap() / events({limit}) / seriesOf(key) / exportText() /
 PG.ach.event("id" [, wert]) / onHighscore(key, score) / checkStats() / drawToasts(ctx, dt)
 PG.charts.bars/line/calendarHeat/donut/clockRing/tooltip(ctx, rect, ...)
 PG.audio.play(name) / tone(freq, dur, wave, vol)
+PG.audio.noteSamples(freq, dur, wave, vol, decay) / renderVoice(notes, length) / musicRate()
+PG.audio.music(voices, owner, vol) / stopMusic(owner) / setMusicVolume(v) / musicPlaying(owner)
+                                      // Musik wie audio.music_*: Stimmen als Float32 in der Rate
+                                      // musicRate(); app.js lässt sie mit ihrem Spiel pausieren/enden
 PG.downloadText(filename, text) / PG.pickTextFile(accept, (text, name) => ...)   // Export/Import
 PG.replay.recorder(game, meta) / .saveReplay(rep) / .loadAll() / .exportText(rep) / .importText(text)
 PG.ReplayScreen(app, {pending, game}, onClose)   // Archiv + Wiedergabe (app.openReplays/openReplay)
