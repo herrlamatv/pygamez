@@ -58,12 +58,13 @@
     /**
      * Vereinheitlicht den Text vor dem Vergleich: Akzente weg, Kleinschreibung,
      * "-"/"_" werden zu Leerzeichen (so fängt derselbe Filter auch Map-IDs).
+     * Das punktlose "ı" (U+0131) zählt wie "i" - genau wie in swear.py.
      */
     function norm(text) {
       if (typeof text !== "string") return "";
       text = text.slice(0, MAX_LEN).normalize("NFKD").replace(/\p{M}/gu, "");
       text = text.replace(/-/g, " ").replace(/_/g, " ");
-      return text.replace(/\s+/g, " ").trim().toLowerCase().replace(/ß/g, "ss");
+      return text.replace(/\s+/g, " ").trim().toLowerCase().replace(/ß/g, "ss").replace(/\u0131/g, "i");
     }
 
     /**

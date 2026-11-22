@@ -42,10 +42,13 @@ Exit-Code 0 = alle Prüfungen bestanden.
 import json
 import os
 import random
+import shutil
 import sys
+import tempfile
 import time
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 except (AttributeError, OSError):
@@ -62,6 +65,15 @@ import store
 HERE = os.path.dirname(os.path.abspath(__file__))
 MEM = os.path.join(HERE, "_audit-chess-mem.json")
 store._PATH = MEM
+# Ebenso tabu: Statistik, Replays und eigene Level. stats.pgzlamastats (und die
+# alte highscores.json) hängen an store._DIR, replay.json/ugc.json liegen neben
+# ihren Modulen - alles in einen eigenen Kratzordner umlenken.
+store._DIR = tempfile.mkdtemp(prefix="pgz-audit-chess-")
+store._LEGACY_HS_PATH = os.path.join(store._DIR, "highscores.json")
+import replay
+replay._PATH = os.path.join(store._DIR, "replay.json")
+import ugc
+ugc._PATH = os.path.join(store._DIR, "ugc.json")
 import settings as settings_mod
 settings_mod.save_settings = lambda s: None
 import i18n
@@ -71,7 +83,7 @@ import filepick
 
 from game_base import InputEvent
 
-# Nur das Schach-Paket laden, nicht games/__init__.py mit allen 46 Spielen -
+# Nur das Schach-Paket laden, nicht games/__init__.py mit allen 50 Spielen -
 # so bleibt der Audit unabhängig von Baustellen in anderen Spielen.
 if "games" not in sys.modules:
     import types
@@ -1254,6 +1266,7 @@ def main():
     for p in (MEM, MEM + ".bak"):
         if os.path.exists(p):
             os.remove(p)
+    shutil.rmtree(store._DIR, ignore_errors=True)
     print("\n%d Fehler, %.0f s" % (len(FAILS), time.time() - t0))
     for f in FAILS:
         print("  - " + f)

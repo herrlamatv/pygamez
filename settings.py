@@ -133,8 +133,10 @@ DEFAULTS = {
     "reversi": {"difficulty": 1},
     # Panzer-Duell: KI-Stärke (0-2), Arena (-1 = zufällig, 0-3 = Preset)
     "tanks": {"difficulty": 1, "arena": -1},
-    # Tunnel Racer: Steuerung (keys/mouse), Motion-Blur, letztes Level
-    "tunnel": {"control": "keys", "blur": 0.35, "last_level": 1},
+    # Tunnel Racer: Steuerung (keys/mouse), Motion-Blur, letztes Level,
+    # invertierte Maus-Richtung
+    "tunnel": {"control": "keys", "blur": 0.35, "last_level": 1,
+               "mouse_invert": False},
     # Labyrinth: Ansicht (ego/top), Maus-Empfindlichkeit, letztes Level
     "maze": {"view": "ego", "sens": 1.0, "last_level": 1},
     # T-Rex Runner: Schwierigkeit (chill/normal/hardcore), Figur/Skin (0-3),
@@ -220,6 +222,17 @@ DEFAULTS = {
     "lamacrash": {"bet1": 10, "bet2": 10, "two": False, "auto1": False, "target1": 200,
                   "auto2": True, "target2": 1000, "turbo": False, "music": True,
                   "auto_rounds": 10, "auto_win": 0, "auto_loss": 0},
+    # Air Hockey: KI-Stärke (0-2), Tore bis zum Sieg (3/5/7/10), Power-ups an/aus
+    "airhockey": {"difficulty": 1, "goals": 5, "powerups": True},
+    # Asteroids: Schwierigkeit (0-2), UFOs an/aus, Power-ups an/aus
+    "asteroids": {"difficulty": 1, "ufos": True, "powerups": True},
+    # Pac-Man, Flappy Bird, Doodle Jump: Schwierigkeit (0-2)
+    "pacman": {"difficulty": 0},
+    "flappy": {"difficulty": 1},
+    "doodle": {"difficulty": 1},
+    # Minesweeper: Voreinstellung (beginner/advanced/expert), Fragezeichen-
+    # Markierung an/aus, Bestzeit in Sekunden je Voreinstellung
+    "minesweeper": {"preset": "beginner", "qmarks": False, "best": {}},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -277,6 +290,16 @@ SCHEMAS = {
                   "auto_rounds": ("choice", (5, 10, 25, 50, 100, 250)),
                   "auto_win": ("choice", (0, 100, 500, 1000, 5000, 10000, 50000)),
                   "auto_loss": ("choice", (0, 100, 500, 1000, 5000, 10000, 50000))},
+    "tunnel": {"mouse_invert": bool},
+    "airhockey": {"difficulty": (int, 0, 2), "goals": ("choice", (3, 5, 7, 10)),
+                  "powerups": bool},
+    "asteroids": {"difficulty": (int, 0, 2), "ufos": bool, "powerups": bool},
+    "pacman": {"difficulty": (int, 0, 2)},
+    "flappy": {"difficulty": (int, 0, 2)},
+    "doodle": {"difficulty": (int, 0, 2)},
+    # Minesweeper: die Bestzeiten ("best") prüft _merge_defaults selbst.
+    "minesweeper": {"preset": ("choice", ("beginner", "advanced", "expert")),
+                    "qmarks": bool},
 }
 
 _INVALID = object()
@@ -529,6 +552,17 @@ def _merge_defaults(data):
         rpl = data.get("replay")
         if isinstance(rpl, dict) and isinstance(rpl.get("enabled"), bool):
             out["replay"]["enabled"] = rpl["enabled"]
+        # Minesweeper-Bestzeiten {Voreinstellung: Sekunden}: dafür gibt es
+        # keine Regel-Art in SCHEMAS - nur bekannte Voreinstellungen und
+        # ganze Sekunden ab 0 (das Spiel speichert int(Spielzeit)).
+        mine = data.get("minesweeper")
+        best = mine.get("best") if isinstance(mine, dict) else None
+        if isinstance(best, dict):
+            for k, v in best.items():
+                if (k in ("beginner", "advanced", "expert")
+                        and isinstance(v, int) and not isinstance(v, bool)
+                        and v >= 0):
+                    out["minesweeper"]["best"][k] = v
         # Alle Optionen mit Prüfregel in SCHEMAS (neuere Spiele + Erweiterungen).
         _apply_schemas(out, data)
         ctrl = data.get("controls")
@@ -542,15 +576,31 @@ def _merge_defaults(data):
     return out
 
 
+def _read_file():
+    """Liest settings.json als dict (None, wenn nichts Lesbares da ist).
+
+    Ist settings.json beschädigt oder fehlt sie nach einem abgebrochenen
+    Speichern, wird die Sicherung settings.json.bak gelesen (Stand vor dem
+    letzten Speichern, siehe store.write_json_atomic) - sonst wären alle
+    Einstellungen und Tastenbelegungen weg, obwohl die Sicherung daneben liegt.
+    """
+    for path in (_PATH, _PATH + ".bak"):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if isinstance(data, dict):
+                return data
+        except (json.JSONDecodeError, ValueError, OSError):
+            pass
+    return None
+
+
 def load_settings():
     """Liest die Einstellungen (immer ein vollständiges, gültiges dict)."""
-    if not os.path.exists(_PATH):
+    data = _read_file()
+    if data is None:
         return _clone(DEFAULTS)
-    try:
-        with open(_PATH, "r", encoding="utf-8") as f:
-            return _merge_defaults(json.load(f))
-    except (json.JSONDecodeError, ValueError, OSError):
-        return _clone(DEFAULTS)
+    return _merge_defaults(data)
 
 
 def _generated_stamp():
@@ -559,13 +609,10 @@ def _generated_stamp():
     Ein bereits vorhandener Stempel (= Anlege-Datum der Datei) bleibt
     erhalten; nur wenn keiner existiert, wird ein neuer erzeugt.
     """
-    try:
-        with open(_PATH, "r", encoding="utf-8") as f:
-            stamp = json.load(f).get("_generated")
-            if isinstance(stamp, str) and stamp:
-                return stamp
-    except (OSError, json.JSONDecodeError, ValueError):
-        pass
+    data = _read_file()
+    stamp = data.get("_generated") if data is not None else None
+    if isinstance(stamp, str) and stamp:
+        return stamp
     return ("generated by PyGameZ at " + time.strftime("%Y-%m-%d %H:%M:%S")
             + " (YYYY-MM-DD HH:MM:SS)")
 

@@ -149,6 +149,13 @@ def ereignis(game, k, InputEvent):
         if getattr(game, "is_menu", False) or getattr(game, "wants_escape", False):
             game.handle_event(InputEvent(InputEvent.KEYDOWN, key="Escape"))
         elif not game.game_over:
+            if not game.paused:
+                # main._on_key: vor der Pause alles loslassen (_release_keys) -
+                # wie App::key_down in app.rs (release_keys).
+                gehalten = list(GEHALTEN)
+                del GEHALTEN[:]
+                for taste in gehalten:
+                    game.handle_event(InputEvent(InputEvent.KEYUP, key=taste))
             game.paused = not game.paused
         return
     if runter and not wdh and k not in GEHALTEN:

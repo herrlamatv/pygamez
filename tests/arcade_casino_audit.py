@@ -37,6 +37,7 @@ import sys
 import tempfile
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 except (AttributeError, OSError):
@@ -52,6 +53,15 @@ pygame.display.set_mode((64, 64))
 
 import store
 store._PATH = os.path.join(TMP, "mem.json")
+# Ebenso tabu: Statistik, Replays und eigene Level. stats.pgzlamastats (und die
+# alte highscores.json) hängen an store._DIR, replay.json/ugc.json liegen neben
+# ihren Modulen - alles in den Kratzordner umlenken.
+store._DIR = TMP
+store._LEGACY_HS_PATH = os.path.join(TMP, "highscores.json")
+import replay
+replay._PATH = os.path.join(TMP, "replay.json")
+import ugc
+ugc._PATH = os.path.join(TMP, "ugc.json")
 import settings as settings_mod
 settings_mod._PATH = os.path.join(TMP, "settings.json")
 import i18n
@@ -174,6 +184,43 @@ def audit_settings_store():
             if not ok:
                 check(False, "SCHEMAS %s.%s hat Standardwert" % (sec, key))
     check(True, "alle SCHEMAS-Schlüssel haben Standardwerte")
+
+    # Optionen, die früher beim Laden still wegfielen (weder in DEFAULTS noch
+    # in SCHEMAS): gültige Werte bleiben, ungültige fallen auf den Standard.
+    gut = {"airhockey": {"difficulty": 2, "goals": 7, "powerups": False},
+           "asteroids": {"difficulty": 0, "ufos": False, "powerups": False},
+           "pacman": {"difficulty": 2}, "flappy": {"difficulty": 0},
+           "doodle": {"difficulty": 2},
+           "minesweeper": {"preset": "expert", "qmarks": True,
+                           "best": {"expert": 412, "beginner": 0}},
+           "tunnel": {"control": "mouse", "blur": 0.5, "last_level": 7,
+                      "mouse_invert": True}}
+    d = settings_mod._merge_defaults(json.loads(json.dumps(gut)))
+    for sec, opts in gut.items():
+        check(d.get(sec) == opts, "Spiel-Optionen überleben das Laden: " + sec, d.get(sec))
+    check(list(d["minesweeper"]["best"]) == ["expert", "beginner"],
+          "Minesweeper: Bestzeiten in der Reihenfolge der Datei", d["minesweeper"])
+    d = settings_mod._merge_defaults({
+        "airhockey": {"difficulty": 9, "goals": 4, "powerups": 1},
+        "asteroids": {"difficulty": "2", "ufos": None, "powerups": "nein"},
+        "pacman": {"difficulty": True}, "flappy": {"difficulty": -4},
+        "doodle": {"difficulty": 1.5},
+        "minesweeper": {"preset": "riesig", "qmarks": 0,
+                        "best": {"beginner": -1, "advanced": "12",
+                                 "expert": True, "fremd": 5}},
+        "tunnel": {"mouse_invert": "ja"}})
+    check(d["airhockey"] == {"difficulty": 2, "goals": 5, "powerups": True},
+          "Air Hockey: begrenzt / ungültig -> Standard", d["airhockey"])
+    check(d["asteroids"] == settings_mod.DEFAULTS["asteroids"],
+          "Asteroids: falsche Typen -> Standard", d["asteroids"])
+    check((d["pacman"], d["flappy"], d["doodle"])
+          == ({"difficulty": 0}, {"difficulty": 0}, {"difficulty": 1}),
+          "Pac-Man/Flappy/Doodle: bool/Kommazahl -> Standard, -4 begrenzt",
+          (d["pacman"], d["flappy"], d["doodle"]))
+    check(d["minesweeper"] == {"preset": "beginner", "qmarks": False, "best": {}},
+          "Minesweeper: ungültige Voreinstellung/Bestzeiten verworfen", d["minesweeper"])
+    check(d["tunnel"] == settings_mod.DEFAULTS["tunnel"],
+          "Tunnel: mouse_invert nur als bool", d["tunnel"])
 
     path = os.path.join(TMP, "atomic.json")
     check(store.write_json_atomic(path, {"a": 1}), "write_json_atomic schreibt")

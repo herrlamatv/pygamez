@@ -20,6 +20,9 @@ Tetris    (7) ein Ultra-Lauf ergibt Kapitel; die Wiedergabe trifft Feld,
               Punkte und Vorschau exakt,
 Alle      (8) Vorwärts-, Rückwärts- und Zufallssprünge durch jede Aufnahme
               zeichnen fehlerfrei (wie im Replay-Screen).
+Liste     (9) Entf löscht in der frisch geöffneten Archiv-Liste (ohne
+              vorheriges Abspielen) das gewählte Replay - erst Rückfrage,
+              beim zweiten Druck ist es weg.
 
 Aufruf aus dem Repo-Root:  python tests/replay_audit.py
 Exit-Code 0 = alle Prüfungen bestanden.
@@ -27,10 +30,12 @@ Exit-Code 0 = alle Prüfungen bestanden.
 import json
 import os
 import random
+import shutil
 import sys
 import tempfile
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 except (AttributeError, OSError):
@@ -45,6 +50,13 @@ pygame.display.set_mode((960, 640))
 
 import store
 store._PATH = os.path.join(tempfile.gettempdir(), "_replay-audit-mem.json")
+# Ebenso tabu: Statistik und eigene Level. stats.pgzlamastats (und die alte
+# highscores.json) hängen an store._DIR, ugc.json liegt neben seinem Modul -
+# alles in einen eigenen Kratzordner umlenken (replay.json: siehe unten).
+store._DIR = tempfile.mkdtemp(prefix="pgz-audit-replay-")
+store._LEGACY_HS_PATH = os.path.join(store._DIR, "highscores.json")
+import ugc
+ugc._PATH = os.path.join(store._DIR, "ugc.json")
 import settings as settings_mod
 settings_mod.save_settings = lambda s: None
 import i18n
@@ -52,6 +64,7 @@ i18n.init()
 
 import replay
 import replayview
+from game_base import InputEvent
 from games import billiard as bil
 from games import pinball as pin
 from games import snake as snk
@@ -60,8 +73,11 @@ from games import tetris as tet
 # Das Archiv des Tests liegt im Temp-Ordner - die echte replay.json bleibt
 # unberührt.
 replay._PATH = os.path.join(tempfile.gettempdir(), "_replay-audit.json")
-if os.path.exists(replay._PATH):
-    os.remove(replay._PATH)
+# Auch die Sicherung und ein liegengebliebener Schreibversuch müssen weg:
+# sonst läse replay.py über den .bak-Rückfall den Stand des letzten Laufs.
+for _ext in ("", ".bak", ".tmp"):
+    if os.path.exists(replay._PATH + _ext):
+        os.remove(replay._PATH + _ext)
 
 GS = json.loads(json.dumps(settings_mod.DEFAULTS))
 W, H = 960, 640
@@ -197,6 +213,66 @@ def audit_share(rep):
     for p in (path, fremd, kaputt):
         if os.path.exists(p):
             os.remove(p)
+
+
+# -------------------------------------------------------------- Archiv-Liste
+
+class _App:
+    """Attrappe für main.App: der Replay-Screen braucht nur die Einstellungen."""
+    settings = GS
+
+
+def audit_list_delete(rep):
+    print(NL + "[9] Liste: Entf in der frisch geöffneten Archiv-Liste")
+    game = rep["game"]
+    for r in list(replay.load_game(game)):
+        replay.delete_replay(game, r["id"])
+    for i in range(3):
+        kopie = dict(rep)
+        kopie["id"] = "%s-liste-%d" % (game, i)
+        replay.save_replay(kopie)
+    if not check(replay.count(game) == 3, "drei Replays im Archiv",
+                 str(replay.count(game))):
+        return
+
+    def taste(scr, key):
+        scr.handle_event(InputEvent(InputEvent.KEYDOWN, key=key, char=""))
+        scr.handle_event(InputEvent(InputEvent.KEYUP, key=key))
+        scr.update(1 / 60.0)
+        scr.draw()
+
+    def ids():
+        return [r["id"] for r in replay.load_game(game)]
+
+    # So öffnet main.open_replays das Archiv (hier gleich auf dem Reiter des
+    # Spiels); abgespielt wird vorher nichts.
+    scr = quiet(replayview.ReplayScreen(SURF, W, H, _App(),
+                                        on_close=lambda: None, game=game))
+    check(scr.mode == "list", "frisch geöffnet: Listen-Ansicht", repr(scr.mode))
+    check(len(scr.items) == 3 and scr.sel == 0, "Liste zeigt die drei Replays")
+    ziel = scr.items[scr.sel]["id"]
+    taste(scr, "Delete")
+    check(scr._confirm == ziel and len(ids()) == 3,
+          "erster Druck auf Entf fragt nur nach", repr(scr._confirm))
+    taste(scr, "Delete")
+    check(ziel not in ids() and len(ids()) == 2,
+          "zweiter Druck auf Entf löscht das gewählte Replay", str(ids()))
+    check(len(scr.items) == 2 and ziel not in [r["id"] for r in scr.items]
+          and scr.counts.get(game) == 2, "Liste und Reiter-Zähler folgen")
+
+    # Dasselbe mit der zweiten Lösch-Taste in einem neu geöffneten Screen.
+    scr = quiet(replayview.ReplayScreen(SURF, W, H, _App(),
+                                        on_close=lambda: None, game=game))
+    taste(scr, "Down")
+    ziel = scr.items[scr.sel]["id"]
+    rest = [r["id"] for r in scr.items if r["id"] != ziel]
+    taste(scr, "x")
+    taste(scr, "x")
+    check(ids() == rest, "x löscht ebenso (zweite Zeile gewählt)", str(ids()))
+
+    for r in list(replay.load_game(game)):
+        replay.delete_replay(game, r["id"])
+    check(replay.count(game) == 0, "Archiv nach dem Listen-Test wieder leer")
 
 
 # ------------------------------------------------------- Wiedergabe-Fahrten
@@ -445,6 +521,17 @@ def audit_multi():
         playback("tetris", rep, "Tetris (Versus)", ende)
 
 
+def cleanup():
+    """Räumt die eigenen Kratzdateien im Temp-Ordner wieder weg."""
+    shutil.rmtree(store._DIR, ignore_errors=True)
+    for base in (store._PATH, replay._PATH):
+        for ext in ("", ".bak", ".tmp"):
+            try:
+                os.remove(base + ext)
+            except OSError:
+                pass
+
+
 def main():
     audit_basics()
     audit_langs()
@@ -453,6 +540,8 @@ def main():
     reps = [r for r in reps if r]
     if reps:
         audit_share(reps[0])
+        audit_list_delete(reps[0])
+    cleanup()
     print("\n" + "=" * 62)
     if FAILS:
         print("FEHLGESCHLAGEN (%d): %s" % (len(FAILS), ", ".join(FAILS[:10])))

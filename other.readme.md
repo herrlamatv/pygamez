@@ -170,7 +170,7 @@ propose en plus un **duel contre l'IA**. La version web est uniquement en solo.
   - **Bannière** : activer/désactiver la bannière de multiplicateur (p. ex. de
     la pomme violette) et régler sa **taille** et son **opacité** - avec aperçu
     en direct.
-  Tout est enregistré dans `mem-ngb.json` ; la personnalisation visuelle passe
+  Tout est enregistré dans `mem.json` (section `ngb`, par profil) ; la personnalisation visuelle passe
   par le module `ngb.py`.
 - Esthétique : serpent arrondi avec des yeux (tête turquoise par défaut), halo
   de turbo, particules.
@@ -1207,17 +1207,24 @@ qui peuvent être coupés globalement.
 install-python.bat  Installation Windows : Python 3.13 + .venv + pygame
 start.bat            Script de lancement (Windows)
 start.sh             Script de lancement (Linux / macOS / Git Bash)
-pyinstall.bat        Build EXE (Windows) : met tout dans builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      Build EXE (Windows) : met tout dans builds\PyGameZ.exe
 main.py              Interface Tkinter, intégration Pygame, boucle de jeu centrale
 game_base.py         Classe de base des jeux (update/draw/handle_event) + InputEvent + assistants
 settings.py          Charger/enregistrer les réglages (son/vibration/touches/options de jeu avec règles de contrôle) (JSON)
 audio.py             Effets sonores procéduraux, boucles musicales + vibration de manette
 menu.py              Écrans de langue, de préparation (mode) et d'options (son/commandes)
+ui.py                Boîte à outils d'interface commune à tous les écrans Pygame : dix thèmes, fond, titres, boutons, panneaux, effets
+logo.py              Gestion centrale du logo : quel logo de logo/ est chargé (icône de fenêtre, menu)
 highscore.py         Charger/enregistrer les meilleurs scores (section dans mem.json)
-store.py             Fichier de sauvegarde central mem.json (sections : mem, highscores, stats, achievements + progression des jeux), atomique avec copie .bak
+store.py             Fichier de sauvegarde central mem.json (sections : mem, highscores, achievements + progression des jeux), atomique avec copie .bak
+profiles.py          Profils de joueur : créer, changer, renommer, vérification du nom, couleur/icône
 stats.py             Statistiques du joueur (parties, temps de jeu, victoires, records) par jeu
 achievements.py      Succès : définitions, logique de déblocage, notification (toast)
-progress.py          Écran Succès & statistiques (deux onglets, défilable)
+levels.py            Système de niveaux : points de succès -> niveau et 14 rangs
+charts.py            Graphiques des écrans de statistiques (barres, lignes, carte calendrier, anneaux, infobulle)
+progress.py          Écran Succès & statistiques (cinq onglets, défilable)
+profileview.py       Écran des profils, choix du joueur 2 et carte du niveau de départ
 replay.py            Enregistrement et archive des rediffusions (replay.json)
 replayview.py        Écran Replay : liste de l'archive et lecture
 ugc.py               Contenus personnels (trous de minigolf, niveaux Geometry Dash) : stockage, vérification, export/import (ugc.json)
@@ -1225,7 +1232,7 @@ swear.py             Filtre de mots pour noms et id (lang/swear/*.yml, les 14 la
 filepick.py          Boîtes de dialogue de fichiers ("Exporter sous ...", "Importer")
 prestige.py          Système de prestige de Snake
 competitive.py       Paramètres du mode Compétitif de Snake (niveaux, machine à sous, pommes de pari)
-ngb.py               Personnalisation visuelle (« mods ») : couleur de tête + grille + menu (mem-ngb.json)
+ngb.py               Personnalisation visuelle (« mods ») : couleur de tête + grille + menu (section ngb par profil)
 lamabank.py          Banque Lama : compte de jetons commun au Blackjack, au Poker, au Casino, à Lama Crossing, à Lama Mines, à Lama Plinko et à Lama Crash (section casino de mem.json)
 seedrand.py          Générateur aléatoire aux nombres identiques au bit près en Python et dans le navigateur (modes du jour, nouveaux problèmes)
 fairness.py          Contrôle d'équité (« provably fair ») de Lama Mines, Lama Plinko et Lama Crash : code de contrôle SHA-256, seeds serveur/client, vérification
@@ -1250,7 +1257,10 @@ devtools/            Outils de développement (non inclus dans la .exe)
   build_geodash_levels.py    Construit les 16 niveaux de Geometry Dash et prouve avec le solveur que chacun est faisable, pièces comprises
   build_geodash_extra.py     Construit la bibliothèque (80 niveaux en 10 catégories) et les 12 modèles, chacun prouvé par le solveur
   build_geodash_solver.py    Solveur utilisant le vrai code de pas (solutions dans geodash_proofs.json)
+  geodash_sections.py        Kit de sections pour build_geodash_extra.py : courts morceaux de niveau à enchaîner
   gen_plinko_tables.py       Génère les 27 tables de Lama Plinko (8 à 16 rangées × 3 risques) au taux de retour exact
+  export_chiplogic_ref.py    Écrit les valeurs de référence des règles de jetons (équité, statistiques, Mines, Plinko, Crash) pour les tests unitaires Rust
+  export_achievements.py     Écrit les définitions des succès et des niveaux pour la version web (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -1279,7 +1289,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Audits headless par jeu
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash et la logique commune des jetons (équité, statistiques, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                La version Rust (.exe autonome, voir rust/README.md)
   ENGINE.md            Contrat de portage : comment un jeu passe de Python à Rust
   crates/pgz-core/     Couche de données sans graphismes (store, settings, i18n, profiles,
@@ -1382,7 +1392,7 @@ version voulue et l'ID winget en conséquence (`Python.Python.3.12`).
 #### Créer une EXE autonome (Windows)
 
 ```bat
-pyinstall.bat         :: crée builds\PyGameZ.exe (tout dans un seul fichier)
+pyinstall-dev\pyinstall.bat   :: crée builds\PyGameZ.exe (tout dans un seul fichier)
 ```
 
 `pyinstall.bat` utilise la `.venv` (et la crée au besoin), installe
@@ -1390,8 +1400,8 @@ automatiquement **PyInstaller** et empaquette le jeu complet - Python,
 pygame, tous les jeux, les langues, le wiki et les logos - dans **une seule
 `PyGameZ.exe`** dans le dossier **`builds\`**. Le fichier tourne sur
 n'importe quel PC Windows sans Python installé et peut être copié librement.
-Les réglages et meilleurs scores (`settings.json`, `mem.json`,
-`mem-ngb.json`) sont créés à côté de la .exe pendant le jeu.
+Les réglages et meilleurs scores (`settings.json`, `mem.json`)
+sont créés à côté de la .exe pendant le jeu.
 
 #### Dépannage
 
@@ -1563,7 +1573,7 @@ además **Versus contra la IA**. La versión web es solo para un jugador.
     colores propios A/B) define el tema.
   - **Banner**: activar/desactivar el banner de multiplicador (p. ej. de la
     manzana lila) y ajustar **tamaño** y **opacidad** - con vista previa en vivo.
-  Todo se guarda en `mem-ngb.json`; la personalización visual pasa por el módulo
+  Todo se guarda en `mem.json` (sección `ngb`, por perfil); la personalización visual pasa por el módulo
   `ngb.py`.
 - Estética: serpiente redondeada con ojos (cabeza turquesa por defecto), brillo
   de turbo, partículas.
@@ -2566,17 +2576,24 @@ globalmente.
 install-python.bat  Instalación en Windows: Python 3.13 + .venv + pygame
 start.bat            Script de arranque (Windows)
 start.sh             Script de arranque (Linux / macOS / Git Bash)
-pyinstall.bat        Build de EXE (Windows): lo empaqueta todo en builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      Build de EXE (Windows): lo empaqueta todo en builds\PyGameZ.exe
 main.py              Interfaz Tkinter, incrustación de Pygame, bucle central
 game_base.py         Clase base de juego (update/draw/handle_event) + InputEvent + ayudas
 settings.py          Cargar/guardar ajustes (sonido/vibración/teclas/opciones de juego con reglas de validación) (JSON)
 audio.py             Efectos de sonido procedurales, bucles de música + vibración del mando
 menu.py              Pantallas de idioma, previa (modo) y opciones (sonido/controles)
+ui.py                Kit de interfaz común para todas las pantallas de Pygame: diez temas, fondo, títulos, botones, paneles, efectos
+logo.py              Gestión central del logo: qué logo de logo/ se carga (icono de la ventana, menú)
 highscore.py         Cargar/guardar récords (sección en mem.json)
-store.py             Archivo de guardado central mem.json (secciones: mem, highscores, stats, achievements + progreso de los juegos), atómico con copia .bak
+store.py             Archivo de guardado central mem.json (secciones: mem, highscores, achievements + progreso de los juegos), atómico con copia .bak
+profiles.py          Perfiles de jugador: crear, cambiar, renombrar, comprobación del nombre, color/icono
 stats.py             Estadísticas del jugador (partidas, tiempo, victorias, récords) por juego
 achievements.py      Logros: definiciones, lógica de desbloqueo, aviso (toast)
-progress.py          Pantalla de logros y estadísticas (dos pestañas, desplazable)
+levels.py            Sistema de niveles: puntos de logro -> nivel y 14 rangos
+charts.py            Gráficos para las pantallas de estadísticas (barras, líneas, mapa de calendario, anillos, tooltip)
+progress.py          Pantalla de logros y estadísticas (cinco pestañas, desplazable)
+profileview.py       Pantalla de perfiles, selección del jugador 2 y la tarjeta del nivel inicial
 replay.py            Grabación y archivo de las repeticiones (replay.json)
 replayview.py        Pantalla de repeticiones: lista del archivo y reproducción
 ugc.py               Contenido propio (hoyos de minigolf, niveles de Geometry Dash): almacenamiento, validación, exportar/importar (ugc.json)
@@ -2584,7 +2601,7 @@ swear.py             Filtro de palabras para nombres e id (lang/swear/*.yml, 14 
 filepick.py          Diálogos de archivo ("Exportar como ...", "Importar")
 prestige.py          Sistema de prestigio de Snake
 competitive.py       Parámetros del modo Competitivo de Snake (niveles, tragaperras, manzanas de apuesta)
-ngb.py               Personalización visual ("mods"): color de cabeza + rejilla + menú (mem-ngb.json)
+ngb.py               Personalización visual ("mods"): color de cabeza + rejilla + menú (sección ngb por perfil)
 lamabank.py          Banco Llama: cuenta de fichas común de Blackjack, Póker, Casino, Lama Crossing, Lama Mines, Lama Plinko y Lama Crash (sección casino de mem.json)
 seedrand.py          Generador aleatorio con números idénticos bit a bit en Python y en el navegador (modos diarios, nuevos puzles)
 fairness.py          Comprobación de equidad («provably fair») de Lama Mines, Lama Plinko y Lama Crash: código de control SHA-256, semillas del servidor/cliente, verificación
@@ -2609,7 +2626,10 @@ devtools/            Herramientas de desarrollo (no se incluyen en el .exe)
   build_geodash_levels.py    Construye los 16 niveles de Geometry Dash y demuestra con el solucionador que todos son superables, monedas incluidas
   build_geodash_extra.py     Construye la biblioteca (80 niveles en 10 categorías) y las 12 plantillas, todas demostradas por el solucionador
   build_geodash_solver.py    Solucionador con el código de paso real (soluciones en geodash_proofs.json)
+  geodash_sections.py        Kit de secciones para build_geodash_extra.py: tramos cortos de nivel que se encadenan
   gen_plinko_tables.py       Genera las 27 tablas de Lama Plinko (8 a 16 filas × 3 riesgos) con retorno exacto
+  export_chiplogic_ref.py    Escribe los valores de referencia de las reglas de fichas (equidad, estadísticas, Mines, Plinko, Crash) para las pruebas unitarias de Rust
+  export_achievements.py     Escribe las definiciones de logros y niveles para la versión web (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -2638,7 +2658,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Auditorías headless por juego
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash y la lógica común de fichas (equidad, estadísticas, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                La versión en Rust (.exe independiente, véase rust/README.md)
   ENGINE.md            Contrato de portado: cómo pasa un juego de Python a Rust
   crates/pgz-core/     Capa de datos sin gráficos (store, settings, i18n, profiles,
@@ -2737,7 +2757,7 @@ y el ID de winget en consecuencia (`Python.Python.3.12`).
 #### Crear un EXE independiente (Windows)
 
 ```bat
-pyinstall.bat         :: crea builds\PyGameZ.exe (todo en un solo archivo)
+pyinstall-dev\pyinstall.bat   :: crea builds\PyGameZ.exe (todo en un solo archivo)
 ```
 
 `pyinstall.bat` usa la `.venv` (y la crea si hace falta), instala
@@ -2745,7 +2765,7 @@ pyinstall.bat         :: crea builds\PyGameZ.exe (todo en un solo archivo)
 pygame, todos los juegos, los idiomas, el wiki y los logos - en **un único
 `PyGameZ.exe`** dentro de la carpeta **`builds\`**. El archivo funciona en
 cualquier PC con Windows sin Python instalado y se puede copiar libremente.
-Los ajustes y récords (`settings.json`, `mem.json`, `mem-ngb.json`) se crean
+Los ajustes y récords (`settings.json`, `mem.json`) se crean
 junto al .exe al jugar.
 
 #### Solución de problemas
@@ -2916,7 +2936,7 @@ oferece ainda **Versus contra a IA**. A versão web é apenas para um jogador.
     próprias A/B) define o tema.
   - **Banner**: ligar/desligar o banner de multiplicador (p. ex. da maçã lilás)
     e ajustar **tamanho** e **opacidade** - com pré-visualização ao vivo.
-  Tudo é guardado em `mem-ngb.json`; a personalização visual passa pelo módulo
+  Tudo é guardado em `mem.json` (secção `ngb`, por perfil); a personalização visual passa pelo módulo
   `ngb.py`.
 - Visual: cobra arredondada com olhos (cabeça turquesa por padrão), brilho de
   turbo, partículas.
@@ -3907,17 +3927,24 @@ globalmente.
 install-python.bat  Instalação no Windows: Python 3.13 + .venv + pygame
 start.bat            Script de arranque (Windows)
 start.sh             Script de arranque (Linux / macOS / Git Bash)
-pyinstall.bat        Build de EXE (Windows): empacota tudo em builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      Build de EXE (Windows): empacota tudo em builds\PyGameZ.exe
 main.py              Interface Tkinter, incorporação do Pygame, ciclo central
 game_base.py         Classe base de jogo (update/draw/handle_event) + InputEvent + auxiliares
 settings.py          Carregar/guardar definições (som/vibração/teclas/opções de jogo com regras de validação) (JSON)
 audio.py             Efeitos sonoros procedurais, loops de música + vibração do comando
 menu.py              Ecrãs de idioma, preparação (modo) e opções (som/controlos)
+ui.py                Kit de interface comum a todos os ecrãs Pygame: dez temas, fundo, títulos, botões, painéis, efeitos
+logo.py              Gestão central do logótipo: que logótipo de logo/ é carregado (ícone da janela, menu)
 highscore.py         Carregar/guardar recordes (secção em mem.json)
-store.py             Ficheiro de gravação central mem.json (secções: mem, highscores, stats, achievements + progresso dos jogos), atómico com cópia .bak
+store.py             Ficheiro de gravação central mem.json (secções: mem, highscores, achievements + progresso dos jogos), atómico com cópia .bak
+profiles.py          Perfis de jogador: criar, mudar, renomear, verificação do nome, cor/ícone
 stats.py             Estatísticas do jogador (partidas, tempo, vitórias, recordes) por jogo
 achievements.py      Conquistas: definições, lógica de desbloqueio, aviso (toast)
-progress.py          Ecrã de conquistas e estatísticas (dois separadores, deslocável)
+levels.py            Sistema de níveis: pontos de conquista -> nível e 14 patentes
+charts.py            Gráficos para os ecrãs de estatísticas (barras, linhas, mapa de calendário, anéis, tooltip)
+progress.py          Ecrã de conquistas e estatísticas (cinco separadores, deslocável)
+profileview.py       Ecrã de perfis, escolha do jogador 2 e o cartão do nível inicial
 replay.py            Gravação e arquivo das repetições (replay.json)
 replayview.py        Ecrã de replays: lista do arquivo e reprodução
 ugc.py               Conteúdo próprio (buracos de minigolfe, níveis de Geometry Dash): armazenamento, validação, exportar/importar (ugc.json)
@@ -3925,7 +3952,7 @@ swear.py             Filtro de palavras para nomes e id (lang/swear/*.yml, 14 id
 filepick.py          Janelas de ficheiros ("Exportar como ...", "Importar")
 prestige.py          Sistema de prestígio do Snake
 competitive.py       Parâmetros do modo Competitivo do Snake (níveis, slot machine, maçãs de aposta)
-ngb.py               Personalização visual ("mods"): cor da cabeça + grelha + menu (mem-ngb.json)
+ngb.py               Personalização visual ("mods"): cor da cabeça + grelha + menu (secção ngb por perfil)
 lamabank.py          Banco Lama: conta de fichas comum do Blackjack, Póquer, Casino, Lama Crossing, Lama Mines, Lama Plinko e Lama Crash (secção casino do mem.json)
 seedrand.py          Gerador aleatório com números idênticos bit a bit em Python e no navegador (modos diários, novos puzzles)
 fairness.py          Verificação de equidade («provably fair») do Lama Mines, do Lama Plinko e do Lama Crash: código de controlo SHA-256, sementes do servidor/cliente, verificação
@@ -3950,7 +3977,10 @@ devtools/            Ferramentas de desenvolvimento (não incluídas no .exe)
   build_geodash_levels.py    Constrói os 16 níveis do Geometry Dash e prova com o solucionador que cada um é possível, moedas incluídas
   build_geodash_extra.py     Constrói a biblioteca (80 níveis em 10 categorias) e os 12 modelos, todos provados pelo solucionador
   build_geodash_solver.py    Solucionador com o verdadeiro código de passo (soluções em geodash_proofs.json)
+  geodash_sections.py        Kit de secções para build_geodash_extra.py: troços curtos de nível que se encadeiam
   gen_plinko_tables.py       Gera as 27 tabelas do Lama Plinko (8 a 16 filas × 3 riscos) com retorno exato
+  export_chiplogic_ref.py    Escreve os valores de referência das regras de fichas (equidade, estatísticas, Mines, Plinko, Crash) para os testes unitários em Rust
+  export_achievements.py     Escreve as definições de conquistas e níveis para a versão web (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -3979,7 +4009,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Auditorias headless por jogo
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash e a lógica comum das fichas (equidade, estatísticas, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                A versão em Rust (.exe autónomo, ver rust/README.md)
   ENGINE.md            Contrato de portabilidade: como um jogo passa de Python para Rust
   crates/pgz-core/     Camada de dados sem gráficos (store, settings, i18n, profiles,
@@ -4077,7 +4107,7 @@ desejada e o ID do winget em conformidade (`Python.Python.3.12`).
 #### Criar um EXE autónomo (Windows)
 
 ```bat
-pyinstall.bat         :: cria builds\PyGameZ.exe (tudo num único ficheiro)
+pyinstall-dev\pyinstall.bat   :: cria builds\PyGameZ.exe (tudo num único ficheiro)
 ```
 
 `pyinstall.bat` usa a `.venv` (e cria-a se necessário), instala o
@@ -4085,7 +4115,7 @@ pyinstall.bat         :: cria builds\PyGameZ.exe (tudo num único ficheiro)
 todos os jogos, os idiomas, o wiki e os logótipos - num **único
 `PyGameZ.exe`** na pasta **`builds\`**. O ficheiro corre em qualquer PC
 Windows sem Python instalado e pode ser copiado livremente. As definições e
-recordes (`settings.json`, `mem.json`, `mem-ngb.json`) são criados ao lado
+recordes (`settings.json`, `mem.json`) são criados ao lado
 do .exe durante o jogo.
 
 #### Resolução de problemas
@@ -4263,7 +4293,7 @@ jednoosobowa.
   - **Baner**: **włącz/wyłącz** baner mnożnika (np. z fioletowego jabłka) oraz
     ustaw jego **rozmiar** (mniejszy/większy) i **krycie** (bardziej przezroczysty)
     — z podglądem na żywo.
-  Wszystko jest zapisywane w `mem-ngb.json`; cała personalizacja wizualna działa
+  Wszystko jest zapisywane w `mem.json` (sekcja `ngb`, osobno dla każdego profilu); cała personalizacja wizualna działa
   przez moduł `ngb.py`.
 - Wygląd: zaokrąglony wąż z oczami (głowa domyślnie turkusowa), poświata
   dopalacza, cząsteczki.
@@ -5316,17 +5346,24 @@ wyciszyć.
 install-python.bat  Instalacja na Windows: Python 3.13 + .venv + pygame
 start.bat            Skrypt uruchamiający (Windows)
 start.sh             Skrypt uruchamiający (Linux / macOS / Git Bash)
-pyinstall.bat        Budowanie EXE (Windows): pakuje wszystko do builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      Budowanie EXE (Windows): pakuje wszystko do builds\PyGameZ.exe
 main.py              Interfejs Tkinter, osadzenie Pygame, centralna pętla gry
 game_base.py         Klasa bazowa gry (update/draw/handle_event) + InputEvent + funkcje pomocnicze
 settings.py          Wczytywanie/zapis ustawień (dźwięk/haptyka/klawisze/opcje gier z regułami sprawdzania) (JSON)
 audio.py             Proceduralne efekty dźwiękowe, pętle muzyczne + wibracje gamepada
 menu.py              Ekran języka, przygotowania (tryb) i opcji (dźwięk/sterowanie)
+ui.py                Wspólny zestaw narzędzi interfejsu dla wszystkich ekranów Pygame: dziesięć motywów, tło, tytuły, przyciski, panele, efekty
+logo.py              Centralna obsługa logo: które logo z logo/ jest wczytywane (ikona okna, menu)
 highscore.py         Wczytywanie/zapis rekordów (sekcja w mem.json)
-store.py             Centralny plik zapisu mem.json (sekcje: mem, highscores, stats, achievements + postępy gier), atomowo z kopią .bak
+store.py             Centralny plik zapisu mem.json (sekcje: mem, highscores, achievements + postępy gier), atomowo z kopią .bak
+profiles.py          Profile graczy: tworzenie, przełączanie, zmiana nazwy, sprawdzanie nazwy, kolor/ikona
 stats.py             Statystyki gracza (rozgrywki, czas, zwycięstwa, rekordy) na grę
 achievements.py      Osiągnięcia: definicje, logika odblokowań, powiadomienie (toast)
-progress.py          Ekran osiągnięć i statystyk (dwie zakładki, przewijany)
+levels.py            System poziomów: punkty osiągnięć -> poziom i 14 rang
+charts.py            Wykresy dla ekranów statystyk (słupki, linie, mapa kalendarza, pierścienie, podpowiedź)
+progress.py          Ekran osiągnięć i statystyk (pięć zakładek, przewijany)
+profileview.py       Ekran profili, wybór gracza 2 i karta poziomu startowego
 replay.py            Nagrywanie i archiwum powtórek (replay.json)
 replayview.py        Ekran powtórek: lista archiwum i odtwarzanie
 ugc.py               Własne treści (dołki do minigolfa, poziomy Geometry Dash): przechowywanie, sprawdzanie, eksport/import (ugc.json)
@@ -5334,7 +5371,7 @@ swear.py             Filtr słów dla nazw i id (lang/swear/*.yml, wszystkie 14 
 filepick.py          Okna plików ("Eksportuj jako ...", "Importuj")
 prestige.py          System prestiżu dla Snake
 competitive.py       Strojenie trybu Competitive w Snake (poziomy, slot machine, jabłka zakładów)
-ngb.py               Personalizacja wizualna („mody"): kolor głowy + siatka współrzędnych + menu (mem-ngb.json)
+ngb.py               Personalizacja wizualna („mody"): kolor głowy + siatka współrzędnych + menu (sekcja ngb osobno dla każdego profilu)
 lamabank.py          Bank Lamy: wspólne konto żetonów Blackjacka, Pokera, Casino, Lama Crossing, Lama Mines, Lama Plinko i Lama Crash (sekcja casino w mem.json)
 seedrand.py          Generator losowy z identycznymi co do bitu liczbami w Pythonie i przeglądarce (tryby dnia, nowe łamigłówki)
 fairness.py          Kontrola uczciwości („provably fair") Lama Mines, Lama Plinko i Lama Crash: kod kontrolny SHA-256, seedy serwera/klienta, sprawdzanie
@@ -5359,7 +5396,10 @@ devtools/            Narzędzia deweloperskie (nie trafiają do .exe)
   build_geodash_levels.py    Buduje 16 poziomów Geometry Dash i solverem dowodzi, że każdy da się przejść razem z monetami
   build_geodash_extra.py     Buduje bibliotekę (80 poziomów w 10 kategoriach) i 12 szablonów, każdy potwierdzony solverem
   build_geodash_solver.py    Solver korzystający z prawdziwego kodu kroku (rozwiązania w geodash_proofs.json)
+  geodash_sections.py        Zestaw sekcji dla build_geodash_extra.py: krótkie fragmenty poziomów do łączenia
   gen_plinko_tables.py       Generuje 27 tabel Lama Plinko (8 do 16 rzędów × 3 poziomy ryzyka) z dokładnym zwrotem
+  export_chiplogic_ref.py    Zapisuje wartości wzorcowe reguł żetonów (uczciwość, statystyki, Mines, Plinko, Crash) dla testów jednostkowych Rusta
+  export_achievements.py     Zapisuje definicje osiągnięć i poziomów dla wersji przeglądarkowej (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -5388,7 +5428,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Audyty headless dla każdej gry
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash i wspólna logika żetonów (uczciwość, statystyki, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                Wersja w Ruscie (samodzielny .exe, zob. rust/README.md)
   ENGINE.md            Umowa portowania: jak gra trafia z Pythona do Rusta
   crates/pgz-core/     Warstwa danych bez grafiki (store, settings, i18n, profiles,
@@ -5487,15 +5527,15 @@ winget odpowiednio (`Python.Python.3.12`).
 #### Budowanie samodzielnego pliku EXE (Windows)
 
 ```bat
-pyinstall.bat         :: buduje builds\PyGameZ.exe (wszystko w jednym pliku)
+pyinstall-dev\pyinstall.bat   :: buduje builds\PyGameZ.exe (wszystko w jednym pliku)
 ```
 
 `pyinstall.bat` używa `.venv` (i tworzy je w razie potrzeby), automatycznie
 instaluje **PyInstaller** i pakuje kompletną grę — Pythona, pygame, wszystkie gry,
 języki, wiki i loga — w **jeden plik `PyGameZ.exe`** w folderze **`builds\`**. Plik
 działa na każdym komputerze z Windows bez zainstalowanego Pythona i można go
-dowolnie kopiować. Ustawienia i rekordy (`settings.json`, `mem.json`,
-`mem-ngb.json`) są tworzone obok pliku .exe podczas gry.
+dowolnie kopiować. Ustawienia i rekordy (`settings.json`, `mem.json`)
+są tworzone obok pliku .exe podczas gry.
 
 #### Rozwiązywanie problemów
 
@@ -5672,7 +5712,7 @@ karşı Versus** sunar. Web sürümü yalnızca tek oyunculudur.
   - **Afiş**: çarpan afişini (örneğin mor elmadan gelen) **açar/kapatır** ve
     **boyutunu** (daha küçük/daha büyük) ile **saydamlığını** (daha şeffaf)
     ayarlar - canlı önizlemeyle.
-  Her şey `mem-ngb.json` içinde saklanır; tüm görsel kişiselleştirme `ngb.py`
+  Her şey `mem.json` içinde (`ngb` bölümü, profil başına) saklanır; tüm görsel kişiselleştirme `ngb.py`
   modülü üzerinden çalışır.
 - Görsel: gözleri olan yuvarlak hatlı yılan (baş öntanımlı olarak turkuaz),
   hızlanma parıltısı, parçacıklar.
@@ -6722,17 +6762,24 @@ efektleri** vardır (prosedürel olarak üretilir, ek dosya gerekmez).
 install-python.bat  Windows kurulumu: Python 3.13 + .venv + pygame
 start.bat           Başlatma betiği (Windows)
 start.sh            Başlatma betiği (Linux / macOS / Git Bash)
-pyinstall.bat       EXE derlemesi (Windows): her şeyi builds\PyGameZ.exe içine paketler
+pyinstall-dev/
+  pyinstall.bat     EXE derlemesi (Windows): her şeyi builds\PyGameZ.exe içine paketler
 main.py             Tkinter arayüzü, Pygame gömme, merkezî oyun döngüsü
 game_base.py        Oyun temel sınıfı (update/draw/handle_event) + InputEvent + yardımcılar
 settings.py          Ayarları yükler/kaydeder (ses/titreşim/tuş atamaları/doğrulama kurallı oyun seçenekleri) (JSON)
 audio.py             Prosedürel ses efektleri, müzik döngüleri + gamepad titreşimi
 menu.py             Dil, oyun öncesi (mod) ve seçenekler ekranı (ses/kontroller)
+ui.py               Tüm Pygame ekranları için ortak arayüz araç takımı: on tema, arka plan, başlıklar, düğmeler, paneller, efektler
+logo.py             Merkezi logo yönetimi: logo/ klasöründen hangi logonun yükleneceği (pencere simgesi, menü)
 highscore.py        Yüksek skorları yükle/kaydet (mem.json içindeki bölüm)
-store.py             Merkezi kayıt dosyası mem.json (bölümler: mem, highscores, stats, achievements + oyun ilerlemeleri), .bak yedekli atomik yazım
+store.py             Merkezi kayıt dosyası mem.json (bölümler: mem, highscores, achievements + oyun ilerlemeleri), .bak yedekli atomik yazım
+profiles.py          Oyuncu profilleri: oluşturma, değiştirme, yeniden adlandırma, ad denetimi, renk/simge
 stats.py             Oyuncu istatistikleri (oyun, süre, galibiyet, rekor) oyun başına
 achievements.py      Başarımlar: tanımlar, açma mantığı, bildirim (toast)
-progress.py          Başarımlar ve istatistikler ekranı (iki sekme, kaydırılabilir)
+levels.py            Seviye sistemi: başarım puanları -> seviye ve 14 rütbe
+charts.py            İstatistik ekranları için grafikler (çubuklar, çizgiler, takvim ısı haritası, halkalar, ipucu)
+progress.py          Başarımlar ve istatistikler ekranı (beş sekme, kaydırılabilir)
+profileview.py       Profil ekranı, 2. oyuncu seçimi ve başlangıç seviyesi kartı
 replay.py            Tekrarların kaydı ve arşivi (replay.json)
 replayview.py        Tekrar ekranı: arşiv listesi ve oynatma
 ugc.py               Kendi içerikler (minigolf parkurları, Geometry Dash seviyeleri): depolama, doğrulama, dışa/içe aktarma (ugc.json)
@@ -6740,7 +6787,7 @@ swear.py             Adlar ve id'ler için kelime filtresi (lang/swear/*.yml, 14
 filepick.py          Dosya pencereleri ("Farklı dışa aktar ...", "İçe aktar")
 prestige.py         Snake için prestij sistemi
 competitive.py      Snake'in Rekabetçi modu için ince ayar (seviyeler, slot makinesi, kumar elmaları)
-ngb.py              Görsel kişiselleştirme ("mods"): baş rengi + koordinat ızgarası + menü (mem-ngb.json)
+ngb.py              Görsel kişiselleştirme ("mods"): baş rengi + koordinat ızgarası + menü (profil başına ngb bölümü)
 lamabank.py          Lama Bankası: Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko ve Lama Crash'in ortak çip hesabı (mem.json içindeki casino bölümü)
 seedrand.py          Python'da ve tarayıcıda bit bit aynı sayılar üreten rastgele üreteci (günlük modlar, yeni bulmacalar)
 fairness.py          Lama Mines, Lama Plinko ve Lama Crash için adillik kontrolü ("provably fair"): SHA-256 kontrol kodu, sunucu/istemci seed'leri, doğrulama
@@ -6765,7 +6812,10 @@ devtools/            Geliştirici araçları (.exe'ye paketlenmez)
   build_geodash_levels.py    16 Geometry Dash bölümünü oluşturur ve her birinin altınlarla birlikte geçilebildiğini çözücüyle kanıtlar
   build_geodash_extra.py     Kütüphaneyi (10 kategoride 80 bölüm) ve 12 şablonu oluşturur, her birini çözücüyle kanıtlar
   build_geodash_solver.py    Gerçek adım koduyla çalışan çözücü (çözümler geodash_proofs.json içinde)
+  geodash_sections.py        build_geodash_extra.py için kesit seti: art arda dizilen kısa bölüm parçaları
   gen_plinko_tables.py       Lama Plinko'nun 27 tablosunu (8-16 sıra × 3 risk) tam geri ödeme oranıyla üretir
+  export_chiplogic_ref.py    Çip kurallarının (adillik, istatistik, Mines, Plinko, Crash) referans değerlerini Rust birim testleri için yazar
+  export_achievements.py     Başarım ve seviye tanımlarını web sürümü için yazar (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -6794,7 +6844,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Oyun başına headless denetimler
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash ve ortak çip mantığı (adillik, istatistik, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                Rust sürümü (bağımsız .exe, bkz. rust/README.md)
   ENGINE.md            Taşıma sözleşmesi: bir oyun Python'dan Rust'a nasıl geçer
   crates/pgz-core/     Grafiksiz veri katmanı (store, settings, i18n, profiles,
@@ -6892,7 +6942,7 @@ sürüme ve winget kimliğini buna göre (`Python.Python.3.12`) değiştirin.
 #### Bağımsız bir EXE oluşturma (Windows)
 
 ```bat
-pyinstall.bat         :: builds\PyGameZ.exe oluşturur (her şey tek dosyada)
+pyinstall-dev\pyinstall.bat   :: builds\PyGameZ.exe oluşturur (her şey tek dosyada)
 ```
 
 `pyinstall.bat`, `.venv`'i kullanır (gerekirse oluşturur), **PyInstaller**'ı
@@ -6900,7 +6950,7 @@ otomatik olarak kurar ve oyunun tamamını - Python, pygame, tüm oyunlar, dille
 wiki ve logolar - **`builds\`** klasöründe **tek bir `PyGameZ.exe`** içine
 paketler. Dosya, Python kurulu olmayan herhangi bir Windows bilgisayarında
 çalışır ve serbestçe kopyalanabilir. Ayarlar ve yüksek skorlar (`settings.json`,
-`mem.json`, `mem-ngb.json`) oyun sırasında .exe'nin yanında oluşturulur.
+`mem.json`) oyun sırasında .exe'nin yanında oluşturulur.
 
 #### Sorun giderme
 
@@ -7071,7 +7121,7 @@ Webversionen er kun til én spiller.
   - **Banner**: slå multiplikatorbanneret (f.eks. fra det lilla æble) **til/fra** og
     juster dets **størrelse** (mindre/større) og **uigennemsigtighed** (mere
     gennemsigtig) - med en live-forhåndsvisning.
-  Alt gemmes i `mem-ngb.json`; al visuel tilpasning kører gennem modulet `ngb.py`.
+  Alt gemmes i `mem.json` (afsnittet `ngb`, pr. profil); al visuel tilpasning kører gennem modulet `ngb.py`.
 - Udseende: afrundet slange med øjne (hovedet er turkis som standard), boost-glød,
   partikler.
 
@@ -8103,17 +8153,24 @@ ingen ekstra filer nødvendige), som kan slås fra globalt.
 install-python.bat  Windows-opsætning: Python 3.13 + .venv + pygame
 start.bat            Startscript (Windows)
 start.sh             Startscript (Linux / macOS / Git Bash)
-pyinstall.bat        EXE-build (Windows): pakker alt ind i builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      EXE-build (Windows): pakker alt ind i builds\PyGameZ.exe
 main.py              Tkinter-UI, Pygame-indlejring, central spil-loop
 game_base.py         Spil-basisklasse (update/draw/handle_event) + InputEvent + hjælpere
 settings.py          Indlæser/gemmer indstillinger (lyd/haptik/tastebindinger/spilindstillinger med kontrolregler) (JSON)
 audio.py             Procedurale lydeffekter, musikløkker + gamepad-rumble
 menu.py              Sprog-, forspils- (tilstand) og indstillingsskærm (lyd/styring)
+ui.py                Fælles UI-værktøjskasse til alle Pygame-skærme: ti temaer, baggrund, titler, knapper, paneler, effekter
+logo.py              Central logo-håndtering: hvilket logo fra logo/ der indlæses (vinduesikon, menu)
 highscore.py         Indlæs/gem highscores (afsnit i mem.json)
-store.py             Central gemmefil mem.json (afsnit: mem, highscores, stats, achievements + spilfremskridt), atomisk med .bak-kopi
+store.py             Central gemmefil mem.json (afsnit: mem, highscores, achievements + spilfremskridt), atomisk med .bak-kopi
+profiles.py          Spillerprofiler: oprette, skifte, omdøbe, navnekontrol, farve/ikon
 stats.py             Spillerstatistik (partier, spilletid, sejre, rekorder) pr. spil
 achievements.py      Præstationer: definitioner, oplåsning, notifikation (toast)
-progress.py          Skærm for præstationer & statistik (to faner, rulbar)
+levels.py            Niveausystem: præstationspoint -> niveau og 14 rang
+charts.py            Diagrammer til statistikskærmene (bjælker, linjer, kalenderkort, ringe, tooltip)
+progress.py          Skærm for præstationer & statistik (fem faner, rulbar)
+profileview.py       Profilskærm, valg af spiller 2 og startniveau-kortet
 replay.py            Optagelse og arkiv over replays (replay.json)
 replayview.py        Replay-skærm: arkivliste og afspilning
 ugc.py               Eget indhold (minigolfbaner, Geometry Dash-baner): lagring, kontrol, eksport/import (ugc.json)
@@ -8121,7 +8178,7 @@ swear.py             Ordfilter til navne og id'er (lang/swear/*.yml, alle 14 spr
 filepick.py          Fildialoger ("Eksportér som ...", "Importér")
 prestige.py          Prestige-system til Snake
 competitive.py       Finindstilling til Snakes Competitive-tilstand (niveauer, enarmet tyveknægt, gamble-æbler)
-ngb.py               Visuel tilpasning ("mods"): hovedfarve + koordinatgitter + menu (mem-ngb.json)
+ngb.py               Visuel tilpasning ("mods"): hovedfarve + koordinatgitter + menu (afsnittet ngb pr. profil)
 lamabank.py          Lama-banken: fælles chipkonto for Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko og Lama Crash (afsnittet casino i mem.json)
 seedrand.py          Tilfældighedsgenerator med bit-identiske tal i Python og browseren (dagens tilstande, nye opgaver)
 fairness.py          Fairness-tjek ("provably fair") for Lama Mines, Lama Plinko og Lama Crash: SHA-256-kontrolkode, server-/klient-seed, genberegning
@@ -8146,7 +8203,10 @@ devtools/            Udviklerværktøjer (pakkes ikke med i .exe'en)
   build_geodash_levels.py    Bygger de 16 Geometry Dash-baner og beviser med løsningsalgoritmen, at hver kan klares inkl. mønter
   build_geodash_extra.py     Bygger biblioteket (80 baner i 10 kategorier) og de 12 skabeloner, hver bevist af løsningsprogrammet
   build_geodash_solver.py    Løsningsalgoritme med spillets rigtige skridt-kode (løsninger i geodash_proofs.json)
+  geodash_sections.py        Sektionsbyggesæt til build_geodash_extra.py: korte banestykker, der sættes sammen
   gen_plinko_tables.py       Danner de 27 tabeller til Lama Plinko (8-16 rækker × 3 risici) med nøjagtig tilbagebetaling
+  export_chiplogic_ref.py    Skriver referenceværdierne for chipreglerne (fairness, statistik, Mines, Plinko, Crash) til Rust-enhedstestene
+  export_achievements.py     Skriver præstations- og niveaudefinitionerne til webversionen (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -8175,7 +8235,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless-audits pr. spil
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash og den fælles chip-logik (fairness, statistik, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                Rust-udgaven (selvstændig .exe, se rust/README.md)
   ENGINE.md            Porteringskontrakt: hvordan et spil kommer fra Python til Rust
   crates/pgz-core/     Datalag uden grafik (store, settings, i18n, profiles,
@@ -8272,7 +8332,7 @@ version og winget-id'et tilsvarende (`Python.Python.3.12`).
 #### Byg en selvstændig EXE (Windows)
 
 ```bat
-pyinstall.bat         :: bygger builds\PyGameZ.exe (alt i én fil)
+pyinstall-dev\pyinstall.bat   :: bygger builds\PyGameZ.exe (alt i én fil)
 ```
 
 `pyinstall.bat` bruger `.venv` (og opretter det om nødvendigt), installerer
@@ -8280,7 +8340,7 @@ automatisk **PyInstaller** og pakker det komplette spil - Python, pygame, alle
 spil, sprog, wiki og logoer - ind i **en enkelt `PyGameZ.exe`** i mappen
 **`builds\`**. Filen kører på en hvilken som helst Windows-PC uden installeret
 Python og kan kopieres frit. Indstillinger og highscores (`settings.json`,
-`mem.json`, `mem-ngb.json`) oprettes ved siden af .exe'en, mens du spiller.
+`mem.json`) oprettes ved siden af .exe'en, mens du spiller.
 
 #### Fejlfinding
 
@@ -8450,7 +8510,7 @@ rett i forspillskjermen (*Énspiller / Flerspiller*); Tetris har i tillegg
   - **Banner**: slå multiplikatorbanneret (f.eks. fra det lilla eplet) **på/av** og
     juster **størrelse** (mindre/større) og **gjennomsiktighet** (mer transparent)
     – med sanntids forhåndsvisning.
-  Alt lagres i `mem-ngb.json`; all visuell tilpasning går gjennom modulen `ngb.py`.
+  Alt lagres i `mem.json` (seksjonen `ngb`, per profil); all visuell tilpasning går gjennom modulen `ngb.py`.
 - Utseende: avrundet slange med øyne (hodet er turkis som standard), boost-glød,
   partikler.
 
@@ -9479,17 +9539,24 @@ som kan dempes globalt.
 install-python.bat  Windows-oppsett: Python 3.13 + .venv + pygame
 start.bat            Startskript (Windows)
 start.sh             Startskript (Linux / macOS / Git Bash)
-pyinstall.bat        EXE-bygg (Windows): pakker alt i builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      EXE-bygg (Windows): pakker alt i builds\PyGameZ.exe
 main.py              Tkinter-grensesnitt, Pygame-innbygging, sentral spilløkke
 game_base.py         Spill-baseklasse (update/draw/handle_event) + InputEvent + hjelpere
 settings.py          Laster/lagrer innstillinger (lyd/haptikk/tastebindinger/spillalternativer med kontrollregler) (JSON)
 audio.py             Prosedyregenererte lydeffekter, musikksløyfer + gamepad-rumble
 menu.py              Språk-, forspill- (modus) og alternativskjerm (lyd/styring)
+ui.py                Felles UI-verktøykasse for alle Pygame-skjermer: ti temaer, bakgrunn, titler, knapper, paneler, effekter
+logo.py              Sentral logohåndtering: hvilken logo fra logo/ som lastes (vindusikon, meny)
 highscore.py         Laste/lagre rekorder (del i mem.json)
-store.py             Sentral lagringsfil mem.json (seksjoner: mem, highscores, stats, achievements + spillfremgang), atomisk med .bak-kopi
+store.py             Sentral lagringsfil mem.json (seksjoner: mem, highscores, achievements + spillfremgang), atomisk med .bak-kopi
+profiles.py          Spillerprofiler: opprette, bytte, gi nytt navn, navnekontroll, farge/ikon
 stats.py             Spillerstatistikk (partier, spilletid, seire, rekorder) per spill
 achievements.py      Prestasjoner: definisjoner, opplåsing, varsel (toast)
-progress.py          Skjerm for prestasjoner & statistikk (to faner, rullbar)
+levels.py            Nivåsystem: prestasjonspoeng -> nivå og 14 rang
+charts.py            Diagrammer for statistikkskjermene (søyler, linjer, kalenderkart, ringer, tooltip)
+progress.py          Skjerm for prestasjoner & statistikk (fem faner, rullbar)
+profileview.py       Profilskjerm, valg av spiller 2 og startnivå-kortet
 replay.py            Opptak og arkiv over replays (replay.json)
 replayview.py        Replay-skjerm: arkivliste og avspilling
 ugc.py               Eget innhold (minigolfbaner, Geometry Dash-nivåer): lagring, kontroll, eksport/import (ugc.json)
@@ -9497,7 +9564,7 @@ swear.py             Ordfilter for navn og id-er (lang/swear/*.yml, alle 14 spr�
 filepick.py          Fildialoger ("Eksporter som ...", "Importer")
 prestige.py          Prestige-system for Snake
 competitive.py       Finjustering av Snakes Competitive-modus (nivåer, enarmet banditt, gambleepler)
-ngb.py               Visuell tilpasning («mods»): hodefarge + koordinatrutenett + meny (mem-ngb.json)
+ngb.py               Visuell tilpasning («mods»): hodefarge + koordinatrutenett + meny (seksjonen ngb per profil)
 lamabank.py          Lama-banken: felles sjetongkonto for Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko og Lama Crash (seksjonen casino i mem.json)
 seedrand.py          Tilfeldighetsgenerator med bit-identiske tall i Python og nettleseren (dagens moduser, nye oppgaver)
 fairness.py          Rettferdskontroll for Lama Mines, Lama Plinko og Lama Crash: server-/klient-seed, rundenummer, SHA-256-kontrollkode, kontroll (motstykker: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
@@ -9522,7 +9589,10 @@ devtools/            Utviklerverktøy (pakkes ikke inn i .exe-filen)
   build_geodash_levels.py    Bygger de 16 Geometry Dash-banene og beviser med løsningsalgoritmen at hver kan klares, mynter inkludert
   build_geodash_extra.py     Bygger biblioteket (80 baner i 10 kategorier) og de 12 malene, hver bevist av løsningsprogrammet
   build_geodash_solver.py    Løsningsalgoritme med spillets ekte stegkode (løsninger i geodash_proofs.json)
+  geodash_sections.py        Seksjonsbyggesett for build_geodash_extra.py: korte banebiter som settes sammen
   gen_plinko_tables.py       Lager de 27 Plinko-tabellene (8-16 rader × 3 risikonivåer) med eksakt beregnet tilbakebetaling for lamaplinko_logic.py
+  export_chiplogic_ref.py    Skriver referanseverdiene for sjetongreglene (rettferd, statistikk, Mines, Plinko, Crash) for Rust-enhetstestene
+  export_achievements.py     Skriver prestasjons- og nivådefinisjonene for nettversjonen (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -9551,7 +9621,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless-revisjoner per spill
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash og den felles sjetonglogikken (rettferdighet, statistikk, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                Rust-utgaven (frittstående .exe, se rust/README.md)
   ENGINE.md            Porteringskontrakt: hvordan et spill går fra Python til Rust
   crates/pgz-core/     Datalag uten grafikk (store, settings, i18n, profiles,
@@ -9649,15 +9719,15 @@ versjon og winget-ID-en tilsvarende (`Python.Python.3.12`).
 #### Bygge en frittstående EXE (Windows)
 
 ```bat
-pyinstall.bat         :: bygger builds\PyGameZ.exe (alt i én fil)
+pyinstall-dev\pyinstall.bat   :: bygger builds\PyGameZ.exe (alt i én fil)
 ```
 
 `pyinstall.bat` bruker `.venv` (og oppretter den ved behov), installerer
 **PyInstaller** automatisk og pakker hele spillet – Python, pygame, alle spill,
 språk, wiki og logoer – i **én enkelt `PyGameZ.exe`** i mappen **`builds\`**.
 Filen kjører på hvilken som helst Windows-PC uten Python installert og kan
-kopieres fritt. Innstillinger og rekorder (`settings.json`, `mem.json`,
-`mem-ngb.json`) opprettes ved siden av .exe-en mens du spiller.
+kopieres fritt. Innstillinger og rekorder (`settings.json`, `mem.json`)
+opprettes ved siden av .exe-en mens du spiller.
 
 #### Feilsøking
 
@@ -9825,7 +9895,7 @@ Webbversionen är endast för en spelare.
   - **Banner**: slå **på/av** multiplikatorbannern (t.ex. från det lila äpplet) och
     justera dess **storlek** (mindre/större) och **opacitet** (mer genomskinlig) - med
     förhandsvisning i realtid.
-  Allt lagras i `mem-ngb.json`; all visuell personalisering går via modulen `ngb.py`.
+  Allt lagras i `mem.json` (sektionen `ngb`, per profil); all visuell personalisering går via modulen `ngb.py`.
 - Utseende: rundad orm med ögon (huvudet är turkost som standard), boost-sken, partiklar.
 
 **Pong**
@@ -10792,17 +10862,24 @@ figur (standard: WASD *och* pilar), i **flerspelarläge** en var. Alla spel har 
 install-python.bat  Windows-installation: Python 3.13 + .venv + pygame
 start.bat            Startskript (Windows)
 start.sh             Startskript (Linux / macOS / Git Bash)
-pyinstall.bat        EXE-bygge (Windows): packar allt i builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      EXE-bygge (Windows): packar allt i builds\PyGameZ.exe
 main.py              Tkinter-gränssnitt, Pygame-inbäddning, central spelloop
 game_base.py         Spelbasklass (update/draw/handle_event) + InputEvent + hjälpfunktioner
 settings.py          Läser/sparar inställningar (ljud/haptik/tangentbindningar/spelalternativ med kontrollregler) (JSON)
 audio.py             Procedurella ljudeffekter, musikslingor + handkontrollsvibration
 menu.py              Skärmar för språk, förspel (läge) och alternativ (ljud/styrning)
+ui.py                Gemensam UI-verktygslåda för alla Pygame-skärmar: tio teman, bakgrund, titlar, knappar, paneler, effekter
+logo.py              Central logotyphantering: vilken logotyp från logo/ som laddas (fönsterikon, meny)
 highscore.py         Ladda/spara topplistor (avsnitt i mem.json)
-store.py             Central sparfil mem.json (sektioner: mem, highscores, stats, achievements + spelframsteg), atomär med .bak-kopia
+store.py             Central sparfil mem.json (sektioner: mem, highscores, achievements + spelframsteg), atomär med .bak-kopia
+profiles.py          Spelarprofiler: skapa, byta, byta namn, namnkontroll, färg/ikon
 stats.py             Spelarstatistik (partier, speltid, segrar, rekord) per spel
 achievements.py      Prestationer: definitioner, upplåsning, avisering (toast)
-progress.py          Skärm för prestationer & statistik (två flikar, rullbar)
+levels.py            Nivåsystem: prestationspoäng -> nivå och 14 rang
+charts.py            Diagram för statistikskärmarna (staplar, linjer, kalenderkarta, ringar, tooltip)
+progress.py          Skärm för prestationer & statistik (fem flikar, rullbar)
+profileview.py       Profilskärm, val av spelare 2 och startnivåkortet
 replay.py            Inspelning och arkiv för replays (replay.json)
 replayview.py        Replay-skärm: arkivlista och uppspelning
 ugc.py               Eget innehåll (minigolfbanor, Geometry Dash-nivåer): lagring, kontroll, export/import (ugc.json)
@@ -10810,7 +10887,7 @@ swear.py             Ordfilter för namn och id (lang/swear/*.yml, alla 14 språ
 filepick.py          Fildialoger ("Exportera som ...", "Importera")
 prestige.py          Prestige-system för Snake
 competitive.py       Finjustering av Snakes Competitive-läge (nivåer, enarmad bandit, speläpplen)
-ngb.py               Visuell personalisering ("mods"): huvudfärg + koordinatrutnät + meny (mem-ngb.json)
+ngb.py               Visuell personalisering ("mods"): huvudfärg + koordinatrutnät + meny (sektionen ngb per profil)
 lamabank.py          Lamabanken: gemensamt markkonto för Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko och Lama Crash (sektionen casino i mem.json)
 seedrand.py          Slumpgenerator med bitidentiska tal i Python och webbläsaren (dagens lägen, nya pussel)
 fairness.py          Rättvisekontroll för Lama Mines, Lama Plinko och Lama Crash: server-/klient-seed, rundnummer, SHA-256-kontrollkod, kontroll (motsvarigheter: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
@@ -10835,7 +10912,10 @@ devtools/            Utvecklarverktyg (packas inte in i .exe-filen)
   build_geodash_levels.py    Bygger de 16 Geometry Dash-banorna och bevisar med lösningsalgoritmen att varje bana går att klara, mynt inräknade
   build_geodash_extra.py     Bygger biblioteket (80 banor i 10 kategorier) och de 12 mallarna, var och en bevisad av lösaren
   build_geodash_solver.py    Lösningsalgoritm med spelets riktiga stegkod (lösningar i geodash_proofs.json)
+  geodash_sections.py        Sektionsbyggsats för build_geodash_extra.py: korta banbitar som sätts ihop
   gen_plinko_tables.py       Skapar de 27 Plinko-tabellerna (8-16 rader × 3 risknivåer) med exakt beräknad återbetalning för lamaplinko_logic.py
+  export_chiplogic_ref.py    Skriver referensvärdena för markreglerna (rättvisa, statistik, Mines, Plinko, Crash) för Rust-enhetstesterna
+  export_achievements.py     Skriver prestations- och nivådefinitionerna för webbversionen (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -10864,7 +10944,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless-granskningar per spel
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash och den gemensamma marklogiken (rättvisa, statistik, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                Rust-versionen (fristående .exe, se rust/README.md)
   ENGINE.md            Porteringskontrakt: hur ett spel går från Python till Rust
   crates/pgz-core/     Datalager utan grafik (store, settings, i18n, profiles,
@@ -10958,14 +11038,14 @@ winget-ID:t därefter (`Python.Python.3.12`).
 #### Bygga en fristående EXE (Windows)
 
 ```bat
-pyinstall.bat         :: bygger builds\PyGameZ.exe (allt i en fil)
+pyinstall-dev\pyinstall.bat   :: bygger builds\PyGameZ.exe (allt i en fil)
 ```
 
 `pyinstall.bat` använder `.venv` (och skapar den vid behov), installerar automatiskt
 **PyInstaller** och packar hela spelet - Python, pygame, alla spel, språk, wiki och
 logotyper - i **en enda `PyGameZ.exe`** i mappen **`builds\`**. Filen körs på vilken
 Windows-dator som helst utan installerad Python och kan kopieras fritt. Inställningar
-och topplistor (`settings.json`, `mem.json`, `mem-ngb.json`) skapas bredvid .exe-filen
+och topplistor (`settings.json`, `mem.json`) skapas bredvid .exe-filen
 medan du spelar.
 
 #### Felsökning
@@ -11141,7 +11221,7 @@ pelkkää yksinpeliä.
   - **Banneri**: kytke kerroinbanneri (esim. violetista omenasta) **päälle/pois**
     ja säädä sen **kokoa** (pienempi/suurempi) ja **läpinäkyvyyttä** (läpinäkyvämpi)
     – reaaliaikaisella esikatselulla.
-  Kaikki tallentuu tiedostoon `mem-ngb.json`; koko visuaalinen mukauttaminen
+  Kaikki tallentuu tiedostoon `mem.json` (osio `ngb`, profiilikohtaisesti); koko visuaalinen mukauttaminen
   kulkee moduulin `ngb.py` kautta.
 - Ulkoasu: pyöristetty mato silmineen (pää oletuksena turkoosi), boost-hehku, partikkelit.
 
@@ -12222,17 +12302,24 @@ ylimääräisiä tiedostoja) jotka voi mykistää globaalisti.
 install-python.bat  Windows-asennus: Python 3.13 + .venv + pygame
 start.bat            Käynnistysskripti (Windows)
 start.sh             Käynnistysskripti (Linux / macOS / Git Bash)
-pyinstall.bat        EXE-käännös (Windows): pakkaa kaiken tiedostoon builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      EXE-käännös (Windows): pakkaa kaiken tiedostoon builds\PyGameZ.exe
 main.py              Tkinter-käyttöliittymä, Pygame-upotus, keskeinen pelisilmukka
 game_base.py         Pelin perusluokka (update/draw/handle_event) + InputEvent + apurit
 settings.py          Asetusten lataus/tallennus (ääni/haptiikka/näppäimet/peliasetukset tarkistussäännöillä) (JSON)
 audio.py             Proseduraaliset äänitehosteet, musiikkisilmukat + peliohjaimen tärinä
 menu.py              Kieli-, esinäyttö- (tila) ja asetusnäytöt (ääni/ohjaus)
+ui.py                Yhteinen käyttöliittymätyökalupakki kaikille Pygame-näytöille: kymmenen teemaa, tausta, otsikot, painikkeet, paneelit, tehosteet
+logo.py              Keskitetty logon hallinta: mikä logo kansiosta logo/ ladataan (ikkunan kuvake, valikko)
 highscore.py         Ennätysten lataus/tallennus (osio tiedostossa mem.json)
-store.py             Keskitetty tallennustiedosto mem.json (osiot: mem, highscores, stats, achievements + pelien edistyminen), atominen .bak-varmuuskopiolla
+store.py             Keskitetty tallennustiedosto mem.json (osiot: mem, highscores, achievements + pelien edistyminen), atominen .bak-varmuuskopiolla
+profiles.py          Pelaajaprofiilit: luonti, vaihto, uudelleennimeäminen, nimen tarkistus, väri/kuvake
 stats.py             Pelaajatilastot (pelikerrat, peliaika, voitot, ennätykset) peliä kohden
 achievements.py      Saavutukset: määritykset, avaaminen, ilmoitus (toast)
-progress.py          Saavutukset ja tilastot -näyttö (kaksi välilehteä, vieritettävä)
+levels.py            Tasojärjestelmä: saavutuspisteet -> taso ja 14 arvoa
+charts.py            Kaaviot tilastonäyttöihin (pylväät, viivat, kalenterikartta, renkaat, työkaluvihje)
+progress.py          Saavutukset ja tilastot -näyttö (viisi välilehteä, vieritettävä)
+profileview.py       Profiilinäyttö, pelaajan 2 valinta ja aloitustasokortti
 replay.py            Uusintojen tallennus ja arkisto (replay.json)
 replayview.py        Uusintanäyttö: arkistolista ja toisto
 ugc.py               Oma sisältö (minigolfradat, Geometry Dash -tasot): tallennus, tarkistus, vienti/tuonti (ugc.json)
@@ -12240,7 +12327,7 @@ swear.py             Sanasuodatin nimille ja id:ille (lang/swear/*.yml, 14 kielt
 filepick.py          Tiedostoikkunat ("Vie nimellä ...", "Tuo")
 prestige.py          Snaken prestige-järjestelmä
 competitive.py       Snaken Competitive-tilan hienosäätö (tasot, kolikkopeli, veto-omenat)
-ngb.py               Visuaalinen mukauttaminen ("modit"): pään väri + koordinaattiruudukko + valikko (mem-ngb.json)
+ngb.py               Visuaalinen mukauttaminen ("modit"): pään väri + koordinaattiruudukko + valikko (osio ngb profiilikohtaisesti)
 lamabank.py          Laamapankki: Blackjackin, Pokerin, Casinon, Lama Crossingin, Lama Minesin, Lama Plinkon ja Lama Crashin yhteinen merkkitili (osio casino mem.json-tiedostossa)
 seedrand.py          Satunnaislukugeneraattori, joka tuottaa bitilleen samat luvut Pythonissa ja selaimessa (päivän tilat, uudet pulmat)
 fairness.py          Lama Minesin, Lama Plinkon ja Lama Crashin reiluustarkistus: palvelimen ja asiakkaan siemen, kierrosnumero, SHA-256-tarkistuskoodi, tarkistus (vastineet: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
@@ -12265,7 +12352,10 @@ devtools/            Kehitystyökalut (eivät tule .exe-tiedostoon)
   build_geodash_levels.py    Rakentaa 16 Geometry Dash -kenttää ja todistaa ratkaisijalla, että jokainen on läpäistävissä kolikoineen
   build_geodash_extra.py     Rakentaa kirjaston (80 kenttää 10 kategoriassa) ja 12 pohjaa, jokaisen ratkaisijalla todistettuna
   build_geodash_solver.py    Ratkaisija pelin oikealla askelkoodilla (ratkaisut tiedostossa geodash_proofs.json)
+  geodash_sections.py        Osiorakennussarja tiedostolle build_geodash_extra.py: lyhyitä kentän paloja, jotka liitetään peräkkäin
   gen_plinko_tables.py       Luo 27 Plinko-taulukkoa (8–16 riviä × 3 riskiä) täsmälleen lasketulla palautuksella tiedostoon lamaplinko_logic.py
+  export_chiplogic_ref.py    Kirjoittaa pelimerkkisääntöjen vertailuarvot (reiluus, tilastot, Mines, Plinko, Crash) Rustin yksikkötestejä varten
+  export_achievements.py     Kirjoittaa saavutusten ja tasojen määritykset selainversiota varten (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -12294,7 +12384,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless-tarkastukset peleittäin
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash ja yhteinen merkkilogiikka (reiluus, tilastot, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                Rust-versio (itsenäinen .exe, ks. rust/README.md)
   ENGINE.md            Siirtosopimus: miten peli siirtyy Pythonista Rustiin
   crates/pgz-core/     Datakerros ilman grafiikkaa (store, settings, i18n, profiles,
@@ -12390,7 +12480,7 @@ winget-tunnus vastaavasti (`Python.Python.3.12`).
 #### Itsenäisen EXE:n rakentaminen (Windows)
 
 ```bat
-pyinstall.bat         :: rakentaa builds\PyGameZ.exe (kaikki yhdessä tiedostossa)
+pyinstall-dev\pyinstall.bat   :: rakentaa builds\PyGameZ.exe (kaikki yhdessä tiedostossa)
 ```
 
 `pyinstall.bat` käyttää `.venv`-ympäristöä (ja luo sen tarvittaessa), asentaa
@@ -12398,7 +12488,7 @@ automaattisesti **PyInstallerin** ja pakkaa koko pelin – Pythonin, pygamen, ka
 pelit, kielet, wikin ja logot – **yhdeksi `PyGameZ.exe`-tiedostoksi** kansioon
 **`builds\`**. Tiedosto toimii millä tahansa Windows-koneella ilman asennettua
 Pythonia ja sen voi kopioida vapaasti. Asetukset ja ennätykset (`settings.json`,
-`mem.json`, `mem-ngb.json`) luodaan .exe:n viereen pelatessa.
+`mem.json`) luodaan .exe:n viereen pelatessa.
 
 #### Vianetsintä
 
@@ -12572,7 +12662,7 @@ Webová verze je jen pro jednoho hráče.
   - **Banner**: **zapnout/vypnout** banner násobitele (např. z fialového jablka)
     a nastavit jeho **velikost** (menší/větší) a **průhlednost** (průhlednější) -
     s živým náhledem.
-  Vše se ukládá do `mem-ngb.json`; veškeré vizuální přizpůsobení běží přes modul
+  Vše se ukládá do `mem.json` (sekce `ngb`, pro každý profil zvlášť); veškeré vizuální přizpůsobení běží přes modul
   `ngb.py`.
 - Vzhled: zaoblený had s očima (hlava je ve výchozím stavu tyrkysová), záře
   turba, částice.
@@ -13596,17 +13686,24 @@ nutnosti dalších souborů), které lze globálně ztlumit.
 install-python.bat  Instalace pro Windows: Python 3.13 + .venv + pygame
 start.bat            Spouštěcí skript (Windows)
 start.sh             Spouštěcí skript (Linux / macOS / Git Bash)
-pyinstall.bat        Sestavení EXE (Windows): zabalí vše do builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      Sestavení EXE (Windows): zabalí vše do builds\PyGameZ.exe
 main.py              Rozhraní Tkinter, vložení Pygame, centrální herní smyčka
 game_base.py         Základní třída her (update/draw/handle_event) + InputEvent + pomocníci
 settings.py          Načítání/ukládání nastavení (zvuk/haptika/klávesy/herní volby s kontrolními pravidly) (JSON)
 audio.py             Procedurální zvukové efekty, hudební smyčky + vibrace gamepadu
 menu.py              Obrazovky jazyka, přípravy (režim) a nastavení (zvuk/ovládání)
+ui.py                Společná sada UI nástrojů pro všechny obrazovky Pygame: deset vzhledů, pozadí, titulky, tlačítka, panely, efekty
+logo.py              Centrální správa loga: které logo z logo/ se načte (ikona okna, menu)
 highscore.py         Načtení/uložení nejlepších skóre (sekce v mem.json)
-store.py             Centrální soubor uložení mem.json (sekce: mem, highscores, stats, achievements + postup her), atomicky se zálohou .bak
+store.py             Centrální soubor uložení mem.json (sekce: mem, highscores, achievements + postup her), atomicky se zálohou .bak
+profiles.py          Profily hráčů: vytvoření, přepnutí, přejmenování, kontrola jména, barva/ikona
 stats.py             Statistiky hráče (partie, herní čas, výhry, rekordy) na hru
 achievements.py      Úspěchy: definice, odemykání, oznámení (toast)
-progress.py          Obrazovka úspěchů a statistik (dvě záložky, posuvná)
+levels.py            Systém úrovní: body za úspěchy -> úroveň a 14 hodností
+charts.py            Grafy pro obrazovky statistik (pruhy, čáry, kalendářová mapa, kruhy, tooltip)
+progress.py          Obrazovka úspěchů a statistik (pět záložek, posuvná)
+profileview.py       Obrazovka profilů, výběr hráče 2 a karta startovní úrovně
 replay.py            Nahrávání a archiv záznamů (replay.json)
 replayview.py        Obrazovka záznamů: seznam archivu a přehrávání
 ugc.py               Vlastní obsah (minigolfové jamky, úrovně Geometry Dash): úložiště, kontrola, export/import (ugc.json)
@@ -13614,7 +13711,7 @@ swear.py             Filtr slov pro názvy a id (lang/swear/*.yml, všech 14 jaz
 filepick.py          Dialogy souborů ("Exportovat jako ...", "Importovat")
 prestige.py          Systém prestiže pro Snake
 competitive.py       Parametry Kompetitivního režimu Snaku (úrovně, automat, sázková jablka)
-ngb.py               Vizuální přizpůsobení („mody"): barva hlavy + souřadnicová mřížka + menu (mem-ngb.json)
+ngb.py               Vizuální přizpůsobení („mody"): barva hlavy + souřadnicová mřížka + menu (sekce ngb pro každý profil)
 lamabank.py          Lama banka: společný účet žetonů pro Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko a Lama Crash (sekce casino v mem.json)
 seedrand.py          Generátor náhodných čísel s bitově shodnými čísly v Pythonu i v prohlížeči (denní režimy, nové hlavolamy)
 fairness.py          Kontrola férovosti pro Lama Mines, Lama Plinko a Lama Crash: seed serveru a klienta, číslo kola, kontrolní kód SHA-256, ověření (protějšky: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
@@ -13639,7 +13736,10 @@ devtools/            Vývojářské nástroje (nebalí se do .exe)
   build_geodash_levels.py    Sestaví 16 levelů Geometry Dash a řešičem dokáže, že každý je zvládnutelný i s mincemi
   build_geodash_extra.py     Staví knihovnu (80 levelů v 10 kategoriích) a 12 šablon, každou ověřenou řešičem
   build_geodash_solver.py    Řešič se skutečným kódem kroku (řešení v geodash_proofs.json)
+  geodash_sections.py        Stavebnice sekcí pro build_geodash_extra.py: krátké kousky levelu, které se řadí za sebe
   gen_plinko_tables.py       Vytvoří 27 tabulek Plinka (8–16 řad × 3 rizika) s přesně spočítanou návratností pro lamaplinko_logic.py
+  export_chiplogic_ref.py    Zapíše referenční hodnoty pravidel žetonů (férovost, statistika, Mines, Plinko, Crash) pro jednotkové testy v Rustu
+  export_achievements.py     Zapíše definice úspěchů a úrovní pro webovou verzi (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -13668,7 +13768,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless audity pro jednotlivé hry
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash a společná žetonová logika (férovost, statistiky, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                Verze v Rustu (samostatné .exe, viz rust/README.md)
   ENGINE.md            Smlouva o portování: jak se hra dostane z Pythonu do Rustu
   crates/pgz-core/     Datová vrstva bez grafiky (store, settings, i18n, profiles,
@@ -13766,7 +13866,7 @@ verzi a odpovídajícím způsobem i winget ID (`Python.Python.3.12`).
 #### Sestavení samostatného EXE (Windows)
 
 ```bat
-pyinstall.bat         :: sestaví builds\PyGameZ.exe (vše v jednom souboru)
+pyinstall-dev\pyinstall.bat   :: sestaví builds\PyGameZ.exe (vše v jednom souboru)
 ```
 
 `pyinstall.bat` používá `.venv` (a v případě potřeby ji vytvoří), automaticky
@@ -13774,7 +13874,7 @@ doinstaluje **PyInstaller** a zabalí kompletní hru - Python, pygame, všechny
 hry, jazyky, wiki a loga - do **jediného souboru `PyGameZ.exe`** ve složce
 **`builds\`**. Soubor běží na jakémkoli PC s Windows bez nainstalovaného Pythonu
 a lze jej volně kopírovat. Nastavení a nejlepší skóre (`settings.json`,
-`mem.json`, `mem-ngb.json`) si .exe vytvoří vedle sebe během hraní.
+`mem.json`) si .exe vytvoří vedle sebe během hraní.
 
 #### Řešení problémů
 
@@ -13945,7 +14045,7 @@ ponuja še **Versus proti UI**. Spletna različica je samo za enega igralca.
   - **Pasica**: pasico množitelja (npr. od vijoličnega jabolka) **vklopi/izklopi**
     ter nastavi njeno **velikost** (manjša/večja) in **prosojnost** (bolj
     prozorna) - s predogledom v živo.
-  Vse je shranjeno v `mem-ngb.json`; vsa vizualna prilagoditev teče prek modula
+  Vse je shranjeno v `mem.json` (razdelek `ngb`, za vsak profil posebej); vsa vizualna prilagoditev teče prek modula
   `ngb.py`.
 - Videz: zaobljena kača z očmi (glava je privzeto turkizna), sij pospeška, delci.
 
@@ -14985,17 +15085,24 @@ dodatnih datotek), ki jih je mogoče globalno utišati.
 install-python.bat  Namestitev za Windows: Python 3.13 + .venv + pygame
 start.bat            Zagonska skripta (Windows)
 start.sh             Zagonska skripta (Linux / macOS / Git Bash)
-pyinstall.bat        Gradnja EXE (Windows): vse zapakira v builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      Gradnja EXE (Windows): vse zapakira v builds\PyGameZ.exe
 main.py              Vmesnik Tkinter, vgradnja Pygame, osrednja igralna zanka
 game_base.py         Osnovni razred iger (update/draw/handle_event) + InputEvent + pomočniki
 settings.py          Nalaganje/shranjevanje nastavitev (zvok/haptika/tipke/možnosti iger s pravili preverjanja) (JSON)
 audio.py             Proceduralni zvočni učinki, glasbene zanke + vibriranje igralne ploščice
 menu.py              Zasloni za jezik, predigro (način) in možnosti (zvok/upravljanje)
+ui.py                Skupni komplet orodij vmesnika za vse zaslone Pygame: deset videzov, ozadje, naslovi, gumbi, plošče, učinki
+logo.py              Osrednje upravljanje logotipa: kateri logotip iz logo/ se naloži (ikona okna, meni)
 highscore.py         Nalaganje/shranjevanje rekordov (razdelek v mem.json)
-store.py             Osrednja datoteka shranjevanja mem.json (razdelki: mem, highscores, stats, achievements + napredek iger), atomsko z varnostno kopijo .bak
+store.py             Osrednja datoteka shranjevanja mem.json (razdelki: mem, highscores, achievements + napredek iger), atomsko z varnostno kopijo .bak
+profiles.py          Profili igralcev: ustvarjanje, preklop, preimenovanje, preverjanje imena, barva/ikona
 stats.py             Statistika igralca (partije, čas igranja, zmage, rekordi) na igro
 achievements.py      Dosežki: definicije, odklepanje, obvestilo (toast)
-progress.py          Zaslon dosežkov in statistike (dva zavihka, drsni)
+levels.py            Sistem stopenj: točke dosežkov -> stopnja in 14 činov
+charts.py            Grafi za zaslone statistike (stolpci, črte, koledarski zemljevid, obroči, namig)
+progress.py          Zaslon dosežkov in statistike (pet zavihkov, drsni)
+profileview.py       Zaslon profilov, izbira igralca 2 in kartica začetne stopnje
 replay.py            Snemanje in arhiv posnetkov (replay.json)
 replayview.py        Zaslon posnetkov: seznam arhiva in predvajanje
 ugc.py               Lastna vsebina (minigolf proge, stopnje Geometry Dash): shranjevanje, preverjanje, izvoz/uvoz (ugc.json)
@@ -15003,7 +15110,7 @@ swear.py             Besedni filter za imena in id (lang/swear/*.yml, vseh 14 je
 filepick.py          Pogovorna okna za datoteke ("Izvozi kot ...", "Uvozi")
 prestige.py          Sistem prestiža za Snake
 competitive.py       Nastavitve za Tekmovalni način igre Snake (ravni, igralni avtomat, jabolka za stave)
-ngb.py               Vizualna prilagoditev (»modi«): barva glave + koordinatna mreža + meni (mem-ngb.json)
+ngb.py               Vizualna prilagoditev (»modi«): barva glave + koordinatna mreža + meni (razdelek ngb za vsak profil)
 lamabank.py          Lama banka: skupni račun žetonov za Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko in Lama Crash (razdelek casino v mem.json)
 seedrand.py          Generator naključnih števil z bitno enakimi števili v Pythonu in brskalniku (dnevni načini, nove uganke)
 fairness.py          Preverjanje poštenosti za Lama Mines, Lama Plinko in Lama Crash: seed strežnika in odjemalca, številka kroga, kontrolna koda SHA-256, preverjanje (dvojnika: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
@@ -15028,7 +15135,10 @@ devtools/            Razvijalska orodja (ne pakirajo se v .exe)
   build_geodash_levels.py    Zgradi 16 stopenj Geometry Dash in z reševalcem dokaže, da je vsaka rešljiva skupaj s kovanci
   build_geodash_extra.py     Zgradi knjižnico (80 stopenj v 10 kategorijah) in 12 predlog, vsako dokazano z reševalnikom
   build_geodash_solver.py    Reševalec s pravo kodo koraka (rešitve v geodash_proofs.json)
+  geodash_sections.py        Komplet odsekov za build_geodash_extra.py: kratki kosi stopnje, ki se nizajo drug za drugim
   gen_plinko_tables.py       Ustvari 27 tabel za Plinko (8–16 vrst × 3 tveganja) z natančno izračunano stopnjo vračila za lamaplinko_logic.py
+  export_chiplogic_ref.py    Zapiše referenčne vrednosti pravil žetonov (poštenost, statistika, Mines, Plinko, Crash) za enotske teste v Rustu
+  export_achievements.py     Zapiše definicije dosežkov in stopenj za spletno različico (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -15057,7 +15167,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless revizije za posamezne igre
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash in skupna logika žetonov (poštenost, statistika, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                Različica v Rustu (samostojni .exe, glej rust/README.md)
   ENGINE.md            Pogodba o prenosu: kako igra pride iz Pythona v Rust
   crates/pgz-core/     Podatkovna plast brez grafike (store, settings, i18n, profiles,
@@ -15153,15 +15263,15 @@ temu ustrezno ID winget (`Python.Python.3.12`).
 #### Izdelava samostojnega EXE (Windows)
 
 ```bat
-pyinstall.bat         :: zgradi builds\PyGameZ.exe (vse v eni datoteki)
+pyinstall-dev\pyinstall.bat   :: zgradi builds\PyGameZ.exe (vse v eni datoteki)
 ```
 
 `pyinstall.bat` uporabi `.venv` (in ga po potrebi ustvari), samodejno namesti
 **PyInstaller** in celotno igro - Python, pygame, vse igre, jezike, wiki in
 logotipe - zapakira v **eno samo `PyGameZ.exe`** v mapi **`builds\`**. Datoteka
 teče na katerem koli računalniku Windows brez nameščenega Pythona in jo je mogoče
-prosto kopirati. Nastavitve in rekordi (`settings.json`, `mem.json`,
-`mem-ngb.json`) se med igranjem ustvarijo poleg datoteke .exe.
+prosto kopirati. Nastavitve in rekordi (`settings.json`, `mem.json`)
+se med igranjem ustvarijo poleg datoteke .exe.
 
 #### Odpravljanje težav
 
@@ -15334,7 +15444,7 @@ Web-inačica je samo za jednog igrača.
   - **Baner**: uključite/isključite baner množitelja (npr. od ljubičaste jabuke)
     te podesite njegovu **veličinu** (manje/veće) i **prozirnost** (prozirnije) -
     uz pretpregled uživo.
-  Sve se sprema u `mem-ngb.json`; sva vizualna personalizacija ide kroz modul
+  Sve se sprema u `mem.json` (odjeljak `ngb`, za svaki profil zasebno); sva vizualna personalizacija ide kroz modul
   `ngb.py`.
 - Izgled: zaobljena zmija s očima (glava je po zadanome tirkizna), sjaj turba,
   čestice.
@@ -16378,17 +16488,24 @@ dodatnim datotekama) koji se mogu globalno utišati.
 install-python.bat  Windows postavljanje: Python 3.13 + .venv + pygame
 start.bat            Skripta za pokretanje (Windows)
 start.sh             Skripta za pokretanje (Linux / macOS / Git Bash)
-pyinstall.bat        Izrada EXE-a (Windows): pakira sve u builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      Izrada EXE-a (Windows): pakira sve u builds\PyGameZ.exe
 main.py              Tkinter sučelje, ugradnja Pygamea, središnja petlja igre
 game_base.py         Osnovna klasa igre (update/draw/handle_event) + InputEvent + pomoćnici
 settings.py          Učitavanje/spremanje postavki (zvuk/haptika/tipke/opcije igara s pravilima provjere) (JSON)
 audio.py             Proceduralni zvučni efekti, glazbene petlje + vibracija gamepada
 menu.py              Zasloni jezika, pripreme (mod) i opcija (zvuk/upravljanje)
+ui.py                Zajednički komplet UI alata za sve Pygame zaslone: deset tema, pozadina, naslovi, gumbi, paneli, efekti
+logo.py              Središnje upravljanje logotipom: koji se logotip iz logo/ učitava (ikona prozora, izbornik)
 highscore.py         Učitavanje/spremanje rekorda (odjeljak u mem.json)
-store.py             Središnja datoteka spremanja mem.json (odjeljci: mem, highscores, stats, achievements + napredak igara), atomski sa sigurnosnom kopijom .bak
+store.py             Središnja datoteka spremanja mem.json (odjeljci: mem, highscores, achievements + napredak igara), atomski sa sigurnosnom kopijom .bak
+profiles.py          Profili igrača: stvaranje, promjena, preimenovanje, provjera imena, boja/ikona
 stats.py             Statistika igrača (partije, vrijeme, pobjede, rekordi) po igri
 achievements.py      Postignuća: definicije, otključavanje, obavijest (toast)
-progress.py          Zaslon postignuća i statistike (dvije kartice, pomični)
+levels.py            Sustav razina: bodovi postignuća -> razina i 14 činova
+charts.py            Grafikoni za zaslone statistike (stupci, linije, kalendarska karta, prstenovi, tooltip)
+progress.py          Zaslon postignuća i statistike (pet kartica, pomični)
+profileview.py       Zaslon profila, odabir igrača 2 i kartica početne razine
 replay.py            Snimanje i arhiva snimaka (replay.json)
 replayview.py        Zaslon snimaka: popis arhive i reprodukcija
 ugc.py               Vlastiti sadržaj (minigolf staze, razine Geometry Dasha): pohrana, provjera, izvoz/uvoz (ugc.json)
@@ -16396,7 +16513,7 @@ swear.py             Filtar riječi za nazive i id (lang/swear/*.yml, svih 14 je
 filepick.py          Dijalozi datoteka ("Izvezi kao ...", "Uvezi")
 prestige.py          Prestiž-sustav za Snake
 competitive.py       Ugađanje Competitive moda za Snake (razine, slot machine, kockarske jabuke)
-ngb.py               Vizualna personalizacija ("mods"): boja glave + koordinatna mreža + izbornik (mem-ngb.json)
+ngb.py               Vizualna personalizacija ("mods"): boja glave + koordinatna mreža + izbornik (odjeljak ngb za svaki profil)
 lamabank.py          Lama banka: zajednički račun žetona za Blackjack, Poker, Casino, Lama Crossing, Lama Mines, Lama Plinko i Lama Crash (odjeljak casino u mem.json)
 seedrand.py          Generator slučajnih brojeva s bitovno jednakim brojevima u Pythonu i pregledniku (dnevni načini, nove zagonetke)
 fairness.py          Provjera poštenosti za Lama Mines, Lama Plinko i Lama Crash: seed poslužitelja i klijenta, broj kruga, kontrolni kod SHA-256, provjera (parnjaci: web/js/games/fairness.js, rust/crates/pgz-core/src/fairness.rs)
@@ -16421,7 +16538,10 @@ devtools/            Razvojni alati (ne pakiraju se u .exe)
   build_geodash_levels.py    Gradi 16 razina Geometry Dasha i rješavačem dokazuje da je svaka prolazna zajedno s novčićima
   build_geodash_extra.py     Gradi knjižnicu (80 razina u 10 kategorija) i 12 predložaka, svaki dokazan rješavačem
   build_geodash_solver.py    Rješavač sa stvarnim kodom koraka (rješenja u geodash_proofs.json)
+  geodash_sections.py        Komplet sekcija za build_geodash_extra.py: kratki dijelovi razine koji se nižu jedan za drugim
   gen_plinko_tables.py       Izrađuje 27 tablica za Plinko (8–16 redova × 3 rizika) s točno izračunatom stopom povrata za lamaplinko_logic.py
+  export_chiplogic_ref.py    Zapisuje referentne vrijednosti pravila žetona (poštenost, statistika, Mines, Plinko, Crash) za jedinične testove u Rustu
+  export_achievements.py     Zapisuje definicije postignuća i razina za web-inačicu (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -16450,7 +16570,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless provjere po igri
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash i zajednička logika žetona (poštenost, statistika, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                Inačica u Rustu (samostalni .exe, vidi rust/README.md)
   ENGINE.md            Ugovor o prenošenju: kako igra dolazi iz Pythona u Rust
   crates/pgz-core/     Podatkovni sloj bez grafike (store, settings, i18n, profiles,
@@ -16546,14 +16666,14 @@ verziju i winget ID u skladu s tim (`Python.Python.3.12`).
 #### Izrada samostalne EXE datoteke (Windows)
 
 ```bat
-pyinstall.bat         :: gradi builds\PyGameZ.exe (sve u jednoj datoteci)
+pyinstall-dev\pyinstall.bat   :: gradi builds\PyGameZ.exe (sve u jednoj datoteci)
 ```
 
 `pyinstall.bat` koristi `.venv` (i stvara ga po potrebi), automatski instalira
 **PyInstaller** i pakira cijelu igru - Python, pygame, sve igre, jezike, wiki i
 logotipe - u **jedan `PyGameZ.exe`** u mapi **`builds\`**. Datoteka radi na svakom
 Windows računalu bez instaliranog Pythona i može se slobodno kopirati. Postavke i
-rekordi (`settings.json`, `mem.json`, `mem-ngb.json`) stvaraju se pokraj .exe
+rekordi (`settings.json`, `mem.json`) stvaraju se pokraj .exe
 datoteke tijekom igranja.
 
 #### Rješavanje problema

@@ -2425,7 +2425,7 @@ def _check_dependencies():
             "So behebst du das:\n"
             "  - Unter Windows einfach start.bat ausführen\n"
             "    (installiert pygame automatisch), ODER\n"
-            "  - im Terminal:  python -m pip install pygame\n\n"
+            "  - im Terminal:  python -m pip install pygame-ce\n\n"
             "In PyCharm: pygame im Interpreter des Projekts installieren."
         )
         try:

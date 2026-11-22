@@ -22,9 +22,14 @@ import swear  # noqa: E402
 
 LEET = {"a": "4", "e": "3", "i": "1", "o": "0", "s": "$", "t": "7", "g": "9"}
 AKZENT = {"a": "á", "e": "é", "i": "í", "o": "ö", "u": "ü", "c": "ç"}
+# Zeichen, die erst die Normalisierung zu einem ASCII-Buchstaben macht: das punktlose i (swear._norm
+# ersetzt es ausdruecklich), langes s und Kelvin-K (NFKD). Die Regex-Maschinen der Fassungen setzen
+# sie bei "ohne Gross-/Kleinschreibung" nicht alle von sich aus mit i/s/k gleich.
+GLEICH = {"i": "ı", "s": "ſ", "k": "\u212a"}
 SAUBER = ["Lama", "Tunnelblick", "Pick a game", "Grassland", "Mein Kurs", "Bahn 3", "Pass auf",
           "Classic", "Wasserfall", "Schanze", "Kurve", "Insel", "Labyrinth", "Hasenjagd",
-          "Glas", "Klasse", "Sushi", "Analyse", "Assistent", "Kassel", "Cocktail", "Scunthorpe"]
+          "Glas", "Klasse", "Sushi", "Analyse", "Assistent", "Kassel", "Cocktail", "Scunthorpe",
+          "Kırmızı", "Yıldız", "Işık", "Balık", "Sıkı Fıkı"]
 
 
 def woerter():
@@ -56,6 +61,18 @@ def korpus():
         out.append("mein " + w + " kurs")
         out.append("".join(c * 2 for c in w))
         out.append("".join(LEET.get(c, c) if r.random() < 0.5 else c for c in w) + r.choice(["", "$", "?", "_x"]))
+        for von, nach in GLEICH.items():
+            if von in w:
+                out.append(w.replace(von, nach))
+                out.append(w.replace(von, nach).upper())
+        if "i" in w:
+            out.append(w.replace("i", "İ").upper())      # tuerkisch grossgeschrieben (I mit Punkt)
+            out.append(w.replace("i", "ı", 1))
+            out.append(" ".join(w.replace("i", "ı")))
+            out.append("mein " + w.replace("i", "ı") + " kurs")
+        out.append(w[:1] + "ı" + w[1:])                   # punktloses i als zusaetzlicher Buchstabe
+        out.append("ı" + w)
+        out.append(w + "ı")
     return out
 
 

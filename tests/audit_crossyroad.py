@@ -32,10 +32,12 @@ import os
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 import types
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 except (AttributeError, OSError):
@@ -51,6 +53,15 @@ pygame.display.set_mode((640, 480))
 import store
 store._PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                            "_audit-crossy-mem.json")
+# Ebenso tabu: Statistik, Replays und eigene Level. stats.pgzlamastats (und die
+# alte highscores.json) hängen an store._DIR, replay.json/ugc.json liegen neben
+# ihren Modulen - alles in einen eigenen Kratzordner umlenken.
+store._DIR = tempfile.mkdtemp(prefix="pgz-audit-crossy-")
+store._LEGACY_HS_PATH = os.path.join(store._DIR, "highscores.json")
+import replay
+replay._PATH = os.path.join(store._DIR, "replay.json")
+import ugc
+ugc._PATH = os.path.join(store._DIR, "ugc.json")
 import settings as settings_mod
 settings_mod.save_settings = lambda s: None
 import i18n
@@ -709,6 +720,7 @@ if __name__ == "__main__":
     audit_layout()
     audit_performance()
     wipe_mem()
+    shutil.rmtree(store._DIR, ignore_errors=True)
     print("\n%s  (%.1f s)" % ("ALLE PRÜFUNGEN BESTANDEN" if not FAILS
                               else "%d FEHLER: %s" % (len(FAILS), FAILS),
                               time.time() - t0))

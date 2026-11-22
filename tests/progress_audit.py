@@ -33,6 +33,7 @@ import tempfile
 import time
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
@@ -49,6 +50,11 @@ import store  # noqa: E402
 store._PATH = MEM
 store._DIR = TMP
 store._LEGACY_HS_PATH = os.path.join(TMP, "highscores.json")
+# replay.json/ugc.json liegen neben ihren Modulen - ebenfalls in den Kratzordner
+import replay  # noqa: E402
+replay._PATH = os.path.join(TMP, "replay.json")
+import ugc  # noqa: E402
+ugc._PATH = os.path.join(TMP, "ugc.json")
 
 import i18n  # noqa: E402
 import ui  # noqa: E402

@@ -282,13 +282,33 @@ fn path() -> std::path::PathBuf {
     crate::store::path_for("settings.json")
 }
 
-/// Liest `settings.json` (Standardwerte, wenn die Datei fehlt oder klemmt).
+/// Liest `settings.json` als Objekt (`None`, wenn nichts Lesbares da ist).
+///
+/// Ist `settings.json` beschaedigt oder fehlt sie nach einem abgebrochenen
+/// Speichern, wird die Sicherung `settings.json.bak` gelesen (Stand vor dem
+/// letzten Speichern, siehe `store::write_json_atomic`) - sonst waeren alle
+/// Einstellungen und Tastenbelegungen weg, obwohl die Sicherung daneben liegt
+/// (wie `settings.py`).
+fn read_file() -> Option<Map<String, Value>> {
+    let path = path();
+    let mut bak = path.as_os_str().to_os_string();
+    bak.push(".bak");
+    for p in [path, std::path::PathBuf::from(bak)] {
+        let Ok(text) = std::fs::read_to_string(&p) else {
+            continue;
+        };
+        if let Ok(Value::Object(raw)) = serde_json::from_str::<Value>(&text) {
+            return Some(raw);
+        }
+    }
+    None
+}
+
+/// Liest `settings.json` (Standardwerte, wenn die Datei fehlt oder klemmt
+/// und auch keine Sicherung da ist).
 pub fn load() -> Settings {
     let mut s = Settings::default();
-    let Ok(text) = std::fs::read_to_string(path()) else {
-        return s;
-    };
-    let Ok(Value::Object(raw)) = serde_json::from_str::<Value>(&text) else {
+    let Some(raw) = read_file() else {
         return s;
     };
 
@@ -353,14 +373,7 @@ pub fn load() -> Settings {
 /// Unbekannte Abschnitte der Datei (z.B. Optionen von Spielen, die erst in
 /// der Python-Fassung existieren) bleiben dabei erhalten.
 pub fn save(s: &Settings) -> bool {
-    let existing: Map<String, Value> = std::fs::read_to_string(path())
-        .ok()
-        .and_then(|t| serde_json::from_str::<Value>(&t).ok())
-        .and_then(|v| match v {
-            Value::Object(m) => Some(m),
-            _ => None,
-        })
-        .unwrap_or_default();
+    let existing: Map<String, Value> = read_file().unwrap_or_default();
 
     // Wie settings.py: "_generated" (Anlege-Datum der Datei) steht immer als
     // erster Eintrag, ein vorhandener Stempel bleibt erhalten.

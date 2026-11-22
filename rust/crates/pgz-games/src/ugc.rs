@@ -192,8 +192,27 @@ pub fn unique_id(wanted: &str, game: &str, ignore: Option<&str>) -> String {
 //  Datei lesen/schreiben
 // ---------------------------------------------------------------------------
 
+/// Liest eine JSON-Datei als Objekt (`None` bei Fehler/fehlender Datei).
+fn read_json(path: &Path) -> Option<Map<String, Value>> {
+    let text = std::fs::read_to_string(path).ok()?;
+    match serde_json::from_str::<Value>(&text) {
+        Ok(Value::Object(map)) => Some(map),
+        _ => None,
+    }
+}
+
+/// Liest `ugc.json` roh. Ist sie beschaedigt oder fehlt sie nach einem
+/// abgebrochenen Speichern, wird die Sicherung `ugc.json.bak` gelesen - sonst
+/// wuerde das naechste Speichern alle eigenen Bahnen und Level mit nur diesem
+/// einen Inhalt ueberschreiben (wie `ugc.py`).
 fn read_raw() -> Map<String, Value> {
-    std::fs::read_to_string(path()).ok().and_then(|t| serde_json::from_str::<Value>(&t).ok()).and_then(|v| v.as_object().cloned()).unwrap_or_default()
+    let path = path();
+    if let Some(map) = read_json(&path) {
+        return map;
+    }
+    let mut bak = path.as_os_str().to_os_string();
+    bak.push(".bak");
+    read_json(Path::new(&bak)).unwrap_or_default()
 }
 
 fn now(fmt: &str) -> String {
@@ -222,8 +241,12 @@ fn write_raw(data: &Map<String, Value>) -> bool {
             }
         }
     }
-    let text = serde_json::to_string_pretty(&Value::Object(out)).unwrap_or_default();
-    std::fs::write(path(), store::text_mode(&text).as_bytes()).is_ok()
+    // Wie ugc.py ueber store.write_json_atomic: Temp-Datei + Umbenennen, die
+    // vorherige Fassung bleibt als ugc.json.bak liegen (Textmodus wie bisher).
+    let Ok(text) = serde_json::to_string_pretty(&Value::Object(out)) else {
+        return false;
+    };
+    store::write_text_atomic(&path(), &text)
 }
 
 // ---------------------------------------------------------------------------

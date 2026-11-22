@@ -2,8 +2,8 @@
 """
 chipstats.py
 ============
-Statistik der Chip-Spiele Lama Mines und Lama Plinko (Fenster **S**) - ohne
-pygame, Gegenstücke: ``web/js/games/chipstats.js`` und
+Statistik der Chip-Spiele Lama Mines, Lama Plinko und Lama Crash (Fenster
+**S**) - ohne pygame, Gegenstücke: ``web/js/games/chipstats.js`` und
 ``rust/crates/pgz-core/src/chipstats.rs``.
 
 Gespeichert wird je Profil im lamabank-Extra des Spiels unter "stats"::

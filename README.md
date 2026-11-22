@@ -173,7 +173,7 @@ Einzelspieler.
   - **Banner**: das Multiplikator-Banner (z.B. beim lila Apfel) **an-/ausschalten**
     sowie **Größe** (kleiner/größer) und **Deckkraft** (transparenter) einstellen -
     mit Live-Vorschau.
-  Alles wird in `mem-ngb.json` gespeichert; die visuelle Personalisierung läuft über
+  Alles wird in `mem.json` (Abschnitt `ngb`, je Profil) gespeichert; die visuelle Personalisierung läuft über
   das Modul `ngb.py`.
 - Optik: abgerundete Schlange mit Augen (Kopf standardmäßig türkis), Boost-Glow, Partikel.
 
@@ -1290,12 +1290,15 @@ keine Extra-Dateien nötig), die sich global stummschalten lassen.
 install-python.bat  Windows-Einrichtung: Python 3.13 + .venv + pygame
 start.bat            Startskript (Windows)
 start.sh             Startskript (Linux / macOS / Git Bash)
-pyinstall.bat        EXE-Build (Windows): packt alles in eine builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      EXE-Build (Windows): packt alles in eine builds\PyGameZ.exe
 main.py              Tkinter-Oberfläche, Pygame-Einbettung, zentrale Game-Loop
 game_base.py         Game-Basisklasse (update/draw/handle_event) + InputEvent + Helfer
 settings.py          Einstellungen (Sound/Haptik/Tastenbelegung/Spiel-Optionen mit Prüfregeln) laden/speichern (JSON)
 audio.py             Prozedurale Soundeffekte, Musik-Schleifen + Gamepad-Rumble
 menu.py              Sprach-, Vorspiel- (Modus) und Options-Screen (Sound/Steuerung)
+ui.py                Gemeinsames UI-Toolkit für alle Pygame-Screens: zehn Designs, Hintergrund, Titel, Buttons, Panels, Effekte
+logo.py              Zentrale Logo-Verwaltung: welches Logo aus logo/ geladen wird (Fenster-Icon, Menü)
 highscore.py         Laden/Speichern der Highscores (Abschnitt in mem.json)
 store.py             Zentrale Speicherdatei mem.json (gerätweit: mem; je Profil: highscores, achievements + Spielstände), atomar mit .bak-Sicherung
 profiles.py          Spielerprofile: anlegen, wechseln, umbenennen, Namensprüfung, Farbe/Symbol
@@ -1337,8 +1340,10 @@ devtools/            Werkzeuge für Entwickler (werden nicht in die .exe gepackt
   build_geodash_levels.py    Baut die 16 Geometry-Dash-Kampagnenlevel und beweist per Solver, dass jedes samt Münzen schaffbar ist
   build_geodash_extra.py     Baut die Bibliothek (80 Level in 10 Kategorien) und die 12 Vorlagen, jedes vom Solver bewiesen
   build_geodash_solver.py    Solver mit dem echten Schritt-Code (Lösungen in geodash_proofs.json)
+  geodash_sections.py        Sektions-Baukasten für build_geodash_extra.py: kurze Level-Stücke, die sich aneinanderreihen lassen
   gen_plinko_tables.py       Erzeugt die 27 Plinko-Tabellen (8-16 Reihen × 3 Risiken) mit exakt berechneter Quote für lamaplinko_logic.py
   export_chiplogic_ref.py    Schreibt die Prüfwerte der Chip-Regeln (Fairness, Statistik, Mines, Plinko, Crash) für die Rust-Unit-Tests
+  export_achievements.py     Schreibt die Erfolgs- und Level-Definitionen für die Web-Version (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -1367,8 +1372,8 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless-Audits je Spiel
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash und die gemeinsame Chip-Logik (Fairness, Statistik, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
-/rust/                Die Rust-Fassung (eigenständige .exe, siehe rust/README.md)
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
+rust/                Die Rust-Fassung (eigenständige .exe, siehe rust/README.md)
   ENGINE.md            Portierungs-Vertrag: wie ein Spiel von Python nach Rust kommt
   crates/pgz-core/     Datenschicht ohne Grafik (store, settings, i18n, profiles,
                        highscore, levels, stats, achievements, seedrand, swear)
@@ -1468,7 +1473,7 @@ gewünschte Version und die winget-ID entsprechend (`Python.Python.3.12`).
 #### Eigenständige EXE bauen (Windows)
 
 ```bat
-pyinstall.bat         :: baut builds\PyGameZ.exe (alles in einer Datei)
+pyinstall-dev\pyinstall.bat   :: baut builds\PyGameZ.exe (alles in einer Datei)
 ```
 
 `pyinstall.bat` nutzt die `.venv` (und erstellt sie bei Bedarf), installiert
@@ -1476,7 +1481,7 @@ pyinstall.bat         :: baut builds\PyGameZ.exe (alles in einer Datei)
 pygame, alle Spiele, Sprachen, Wiki und Logos - in **eine einzige
 `PyGameZ.exe`** im Ordner **`builds\`**. Die Datei läuft auf jedem Windows-PC
 ohne installiertes Python und lässt sich frei kopieren. Einstellungen und
-Highscores (`settings.json`, `mem.json`, `mem-ngb.json`) legt die .exe beim
+Highscores (`settings.json`, `mem.json`) legt die .exe beim
 Spielen neben sich an.
 
 #### Fehlersuche
@@ -1652,7 +1657,7 @@ pre-game screen (*Single-player / Multiplayer*); Tetris additionally offers
   - **Banner**: turn the multiplier banner (e.g. from the purple apple) **on/off** and
     adjust its **size** (smaller/larger) and **opacity** (more transparent) - with a
     live preview.
-  Everything is stored in `mem-ngb.json`; all visual personalization runs through the
+  Everything is stored in `mem.json` (section `ngb`, per profile); all visual personalization runs through the
   `ngb.py` module.
 - Look: rounded snake with eyes (head is teal by default), boost glow, particles.
 
@@ -2732,12 +2737,15 @@ generated, no extra files needed) that can be muted globally.
 install-python.bat  Windows setup: Python 3.13 + .venv + pygame
 start.bat            Launch script (Windows)
 start.sh             Launch script (Linux / macOS / Git Bash)
-pyinstall.bat        EXE build (Windows): bundles everything into builds\PyGameZ.exe
+pyinstall-dev/
+  pyinstall.bat      EXE build (Windows): bundles everything into builds\PyGameZ.exe
 main.py              Tkinter UI, Pygame embedding, central game loop
 game_base.py         Game base class (update/draw/handle_event) + InputEvent + helpers
 settings.py          Load/save settings (sound/haptics/key bindings/game options with validation rules) (JSON)
 audio.py             Procedural sound effects, music loops + gamepad rumble
 menu.py              Language, pre-game (mode) and options screen (sound/controls)
+ui.py                Shared UI toolkit for all Pygame screens: ten themes, background, titles, buttons, panels, effects
+logo.py              Central logo handling: which logo from logo/ is loaded (window icon, menu)
 highscore.py         Load/save high scores (section in mem.json)
 store.py             Central save file mem.json (device-wide: mem; per profile: highscores, achievements + game progress), atomic with .bak backup
 profiles.py          Player profiles: create, switch, rename, name check, colour/icon
@@ -2779,8 +2787,10 @@ devtools/            Developer tools (not bundled into the .exe)
   build_geodash_levels.py    Builds the 16 Geometry Dash campaign levels and proves with the solver that each is beatable, coins included
   build_geodash_extra.py     Builds the library (80 levels in 10 categories) and the 12 templates, each proven by the solver
   build_geodash_solver.py    Solver using the real step code (solutions in geodash_proofs.json)
+  geodash_sections.py        Section kit for build_geodash_extra.py: short level pieces that can be strung together
   gen_plinko_tables.py       Generates the 27 Plinko tables (8-16 rows × 3 risks) with an exactly calculated return for lamaplinko_logic.py
   export_chiplogic_ref.py    Writes the reference values of the chip rules (fairness, statistics, Mines, Plinko, Crash) for the Rust unit tests
+  export_achievements.py     Writes the achievement and level definitions for the web version (web/js/core/achdefs.js)
 games/
   snake.py  pong.py  airhockey.py  tictactoe.py  breakout.py
   tetris.py  tetris_core.py  tetris_ai.py
@@ -2809,7 +2819,7 @@ tests/
   audit_tetris.py  audit_2048.py  audit_chess.py  audit_sudoku.py  audit_wordle.py
   audit_crossyroad.py  audit_geodash.py  audit_battleship.py  audit_casino.py  audit_lamacrossing.py   Headless audits per game
   audit_lamamines.py  audit_lamaplinko.py  audit_lamacrash.py  audit_chiplogic.py   Lama Mines, Lama Plinko, Lama Crash and the shared chip logic (fairness, statistics, Python = JS = Rust)
-  newgames_audit.py  blockjump_audit.py
+  newgames_audit.py  blockjump_audit.py  progress_audit.py  replay_audit.py
 rust/                The Rust version (standalone .exe, see rust/README.md)
   ENGINE.md            Porting contract: how a game moves from Python to Rust
   crates/pgz-core/     Data layer without graphics (store, settings, i18n, profiles,
@@ -2906,7 +2916,7 @@ and the winget ID accordingly (`Python.Python.3.12`).
 #### Building a standalone EXE (Windows)
 
 ```bat
-pyinstall.bat         :: builds builds\PyGameZ.exe (everything in one file)
+pyinstall-dev\pyinstall.bat   :: builds builds\PyGameZ.exe (everything in one file)
 ```
 
 `pyinstall.bat` uses the `.venv` (creating it if needed), automatically
@@ -2914,7 +2924,7 @@ installs **PyInstaller** and bundles the complete game - Python, pygame, all
 games, languages, wiki and logos - into **a single `PyGameZ.exe`** in the
 **`builds\`** folder. The file runs on any Windows PC without Python
 installed and can be copied freely. Settings and high scores
-(`settings.json`, `mem.json`, `mem-ngb.json`) are created next to the .exe
+(`settings.json`, `mem.json`) are created next to the .exe
 while playing.
 
 #### Troubleshooting

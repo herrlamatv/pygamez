@@ -100,7 +100,6 @@ class ReplayScreen(_Screen):
         self.tab = game or (pending or {}).get("game") or replay.GAMES[0]
         if self.tab not in replay.GAMES:
             self.tab = replay.GAMES[0]
-        self.mode = "list"
         self.sel = 0
         self.first = 0                  # erste sichtbare Zeile
         self._tab_hover = None
@@ -130,6 +129,10 @@ class ReplayScreen(_Screen):
         self.error = None
 
         super().__init__(surface, width, height, app)
+        # Erst hier: Game.__init__ belegt self.mode mit dem Spielmodus
+        # ("single"). Davor gesetzt ginge "list" verloren - Entf löschte in
+        # der frisch geöffneten Liste dann nichts (_delete_selected).
+        self.mode = "list"
         self.name = t("replay.name")
         self._load()
         self._build()

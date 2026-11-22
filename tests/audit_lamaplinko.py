@@ -61,6 +61,15 @@ import store
 TMP = tempfile.mkdtemp(prefix="pgz-audit-lamaplinko-")
 MEM = os.path.join(TMP, "mem.json")
 store._PATH = MEM
+# Ebenso tabu: Statistik, Replays und eigene Level. stats.pgzlamastats (und die
+# alte highscores.json) hängen an store._DIR, replay.json/ugc.json liegen neben
+# ihren Modulen - alles in den Kratzordner umlenken.
+store._DIR = TMP
+store._LEGACY_HS_PATH = os.path.join(TMP, "highscores.json")
+import replay
+replay._PATH = os.path.join(TMP, "replay.json")
+import ugc
+ugc._PATH = os.path.join(TMP, "ugc.json")
 import settings as settings_mod
 SAVED = []
 settings_mod.save_settings = lambda s: SAVED.append(json.loads(json.dumps(s.get("lamaplinko", {}))))

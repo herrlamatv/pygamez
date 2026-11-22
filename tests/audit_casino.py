@@ -42,9 +42,11 @@ import random
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 except (AttributeError, OSError):
@@ -60,6 +62,15 @@ pygame.display.set_mode((640, 480))
 import store
 MEM = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_audit-casino-mem.json")
 store._PATH = MEM
+# Ebenso tabu: Statistik, Replays und eigene Level. stats.pgzlamastats (und die
+# alte highscores.json) hängen an store._DIR, replay.json/ugc.json liegen neben
+# ihren Modulen - alles in einen eigenen Kratzordner umlenken.
+store._DIR = tempfile.mkdtemp(prefix="pgz-audit-casino-")
+store._LEGACY_HS_PATH = os.path.join(store._DIR, "highscores.json")
+import replay
+replay._PATH = os.path.join(store._DIR, "replay.json")
+import ugc
+ugc._PATH = os.path.join(store._DIR, "ugc.json")
 import settings as settings_mod
 SAVED = []
 settings_mod.save_settings = lambda s: SAVED.append(json.loads(json.dumps(s.get("casino", {}))))
@@ -721,6 +732,7 @@ check(not wiki_bad, "(18) LamaWiki: Casino-Seite in 14 Sprachen, Blackjack/Poker
 for p in (MEM, MEM + ".bak", MEM + ".tmp"):
     if os.path.exists(p):
         os.remove(p)
+shutil.rmtree(store._DIR, ignore_errors=True)
 print("\n%s  (%d Fehler)" % ("ALLES OK" if not FAILS else "FEHLGESCHLAGEN", len(FAILS)))
 for f in FAILS:
     print("   -", f)

@@ -64,6 +64,11 @@ def _norm(text):
     Akzente weg (``Pícá`` -> ``pica``), Kleinschreibung, und ``-``/``_``
     werden zu Leerzeichen - so fängt derselbe Filter auch Map-IDs wie
     ``mein-böses-wort``, die ja keine Leerzeichen enthalten dürfen.
+
+    Das punktlose „ı“ (U+0131) wird ausdrücklich zu „i“: weder NFKD noch
+    ``casefold()`` ändern es, und dass es trotzdem wie „i“ zählte, lag allein
+    an einer Sonderregel von CPythons ``re`` bei ``IGNORECASE`` - die kennen
+    die Regex-Maschinen der anderen Fassungen (Web, Rust, PHP) nicht.
     """
     if not isinstance(text, str):
         return ""
@@ -71,7 +76,7 @@ def _norm(text):
     text = unicodedata.normalize("NFKD", text)
     text = "".join(c for c in text if not unicodedata.combining(c))
     text = text.replace("-", " ").replace("_", " ")
-    return re.sub(r"\s+", " ", text).strip().casefold()
+    return re.sub(r"\s+", " ", text).strip().casefold().replace("\u0131", "i")
 
 
 def _variants(text):

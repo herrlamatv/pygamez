@@ -55,6 +55,15 @@ TMP = os.environ.get("PGZ_AUDIT_DIR") or tempfile.mkdtemp(prefix="pgz-lcx-")
 os.makedirs(TMP, exist_ok=True)
 MEM = os.path.join(TMP, "_audit-lamacrash-mem.json")
 store._PATH = MEM
+# Ebenso tabu: Statistik, Replays und eigene Level. stats.pgzlamastats (und die
+# alte highscores.json) hängen an store._DIR, replay.json/ugc.json liegen neben
+# ihren Modulen - alles in einen eigenen (je Lauf frischen) Kratzordner in TMP.
+store._DIR = tempfile.mkdtemp(prefix="daten-", dir=TMP)
+store._LEGACY_HS_PATH = os.path.join(store._DIR, "highscores.json")
+import replay
+replay._PATH = os.path.join(store._DIR, "replay.json")
+import ugc
+ugc._PATH = os.path.join(store._DIR, "ugc.json")
 import settings as settings_mod
 SAVED = []
 settings_mod.save_settings = lambda s: SAVED.append(json.loads(json.dumps(s.get("lamacrash", {}))))
@@ -145,6 +154,28 @@ def launch(g, crash=None):
         g._crash = crash
     while g.state == LC.COUNT:
         g.update(1 / 60)
+
+
+_SEEDS = {}                    # (Platzpunkt, Nonce) -> (Server-Seed, Client-Seed)
+
+
+def seed_crash(g, crash):
+    """Fairness-Seeds der nächsten Runde so einsetzen, dass ihr ECHTER Platzpunkt genau
+    crash ist (feste Suchfolge, kein Zufall); danach launch(g) ohne crash.
+
+    Nötig, sobald eine Runde gespeichert und wieder geladen wird: L.clean_round rechnet
+    den Platzpunkt aus den Seeds nach und verwirft Runden, deren Takt oder Ausstiege
+    darüber liegen - ein nur über g._crash erzwungener Platzpunkt hält dem nicht stand
+    (das Spiel selbst speichert so eine Runde nie)."""
+    k = (crash, g.fair["nonce"])
+    if k not in _SEEDS:
+        rng = random.Random(crash)
+        client = fairness.new_client_seed(rng)
+        server = fairness.new_server_seed(rng)
+        while L.crash_point(server, client, k[1]) != crash:
+            server = fairness.new_server_seed(rng)
+        _SEEDS[k] = (server, client)
+    g.fair["server"], g.fair["client"] = _SEEDS[k]
 
 
 def fly_to(g, m100, dt=1 / 60):
@@ -284,7 +315,8 @@ check(ev.count("lcx_close") == 1 and g.stats["x"]["close"] == 1, "(5) Haarscharf
 print("\n[Speichern]")
 fresh_mem()
 g = game(bet1=100)
-launch(g, crash=900)
+seed_crash(g, 900)
+launch(g)
 fly_to(g, 180)
 t_exit = g.round["t"]
 g.on_exit()
@@ -293,7 +325,6 @@ check(ex["round"] is not None and ex["round"]["t"] == t_exit and cas["chips"] ==
       "(6) Verlassen im Flug: Takt %d gespeichert, Einsatz bleibt gebucht" % t_exit)
 g2 = game(bet1=100)
 check(g2.state == LC.COUNT and g2.round["t"] == t_exit and g2.toast is not None, "(6) Neustart: Countdown, gleicher Takt")
-g2._crash = 900
 run(g2, 2.0)
 check(g2.state == LC.FLY and g2.round["t"] > t_exit, "(6) Fortsetzen fliegt weiter")
 fly_to(g2, 250)
@@ -307,7 +338,8 @@ check(g3.round is None and lamabank.balance() == chips and len(g3.fairlog) == 1,
       "(6) Laden einer Runde ohne fliegendes Geld schließt sofort ab, keine Doppelzahlung")
 fresh_mem()
 g = game(bet1=100)
-launch(g, crash=900)
+seed_crash(g, 900)
+launch(g)
 fly_to(g, 120)
 key(g, "space")
 check(g.state == LC.COAST, "(6) Leerflug vor dem Verlassen")
@@ -317,7 +349,8 @@ check(ex["round"] is None and len(ex["fairlog"]) == 1 and ex["hist"] == [900] an
       "(6) Verlassen im Leerflug schließt die Runde ab")
 fresh_mem()
 g = game(bet1=100)
-launch(g, crash=900)
+seed_crash(g, 900)
+launch(g)
 fly_to(g, 150)
 g.on_exit()
 cas = store.load_section("casino")
@@ -421,6 +454,10 @@ check(g.auto is None and g.stats["rounds"] - rounds_before == 5, "(9) 5 Runden, 
       g.stats["rounds"] - rounds_before)
 fresh_mem()
 g = game(bet1=10, auto1=True, target1=10000000, auto_rounds=50, auto_loss=100, turbo=True)
+# feste Fairness-Seeds (keine der zehn Runden erreicht den Mond): mit zufälligen landet
+# etwa jeder 10.000. Lauf vorher auf dem Mond - Gewinn statt Verlust, kein Stopp
+g.seed_rng = random.Random(9)
+g.fair.update(fairness.blank_state(g.seed_rng))
 g._start_auto()
 for _ in range(200000):
     g.update(1 / 60)
@@ -694,6 +731,7 @@ check(not wiki_bad, "(14) LamaWiki-Seite in 14 Sprachen", wiki_bad)
 for p in (MEM, MEM + ".bak", MEM + ".tmp"):
     if os.path.exists(p):
         os.remove(p)
+shutil.rmtree(store._DIR, ignore_errors=True)
 if not os.environ.get("PGZ_AUDIT_DIR"):
     shutil.rmtree(TMP, ignore_errors=True)
 D.clear_cache()

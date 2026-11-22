@@ -50,11 +50,13 @@ import math
 import os
 import random
 import re
+import shutil
 import sys
 import tempfile
 import time
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 # Die Berichte enthalten Umlaute - Ausgabe fest auf UTF-8 stellen,
 # sonst zeigt eine Konsole mit anderer Codepage Kraut und Rüben.
 try:
@@ -73,6 +75,15 @@ import store
 # Testläufe dürfen weder mem.json noch settings.json anfassen
 store._PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                            "_audit-mem.json")
+# Ebenso tabu: Statistik, Replays und eigene Level. stats.pgzlamastats (und die
+# alte highscores.json) hängen an store._DIR, replay.json/ugc.json liegen neben
+# ihren Modulen - alles in einen eigenen Kratzordner umlenken.
+store._DIR = tempfile.mkdtemp(prefix="pgz-audit-newgames-")
+store._LEGACY_HS_PATH = os.path.join(store._DIR, "highscores.json")
+import replay
+replay._PATH = os.path.join(store._DIR, "replay.json")
+import ugc
+ugc._PATH = os.path.join(store._DIR, "ugc.json")
 import settings as settings_mod
 settings_mod.save_settings = lambda s: None
 import i18n
@@ -1021,6 +1032,7 @@ if __name__ == "__main__":
         os.remove(store._PATH)
     except OSError:
         pass
+    shutil.rmtree(store._DIR, ignore_errors=True)
     print("\n%s  (%.1f s)" % ("ALLE PRÜFUNGEN BESTANDEN" if not FAILS
                               else "%d FEHLER: %s" % (len(FAILS), FAILS),
                               time.time() - t0))

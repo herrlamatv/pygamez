@@ -145,14 +145,28 @@ def is_enabled(settings):
 #  Datei lesen/schreiben
 # ---------------------------------------------------------------------------
 
-def _read_raw():
-    """Liest replay.json roh (immer ein dict, leer bei Fehler/ohne Datei)."""
+def _read_json(path):
+    """Liest eine JSON-Datei als dict (None bei Fehler/fehlender Datei)."""
     try:
-        with open(_PATH, "r", encoding="utf-8") as f:
+        with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
-            return data if isinstance(data, dict) else {}
+            return data if isinstance(data, dict) else None
     except (OSError, json.JSONDecodeError, ValueError):
-        return {}
+        return None
+
+
+def _read_raw():
+    """Liest replay.json roh (immer ein dict, leer bei Fehler/ohne Datei).
+
+    Ist replay.json beschädigt oder fehlt sie nach einem abgebrochenen
+    Speichern, wird die Sicherung replay.json.bak (Stand vor dem letzten
+    Speichern) gelesen - sonst würde das nächste gespeicherte Replay das
+    ganze Archiv mit nur diesem einen überschreiben.
+    """
+    data = _read_json(_PATH)
+    if data is None:
+        data = _read_json(_PATH + ".bak")
+    return data if data is not None else {}
 
 
 def _write_raw(data):
@@ -161,6 +175,11 @@ def _write_raw(data):
     "_generated" (Anlege-Datum) steht immer als erster Eintrag; ein bereits
     vorhandener Stempel bleibt erhalten. Gespeichert wird kompakt (ohne
     Einrückung) - Replays sind Rohdaten, keine Datei zum Handbearbeiten.
+
+    Geschrieben wird wie in store.write_json_atomic: erst in eine Temp-Datei
+    daneben, dann per os.replace an die richtige Stelle - ein Absturz mitten
+    im Schreiben zerstört das Archiv nicht. Die vorherige Fassung bleibt als
+    replay.json.bak liegen.
     """
     stamp = data.get("_generated")
     if not (isinstance(stamp, str) and stamp):
@@ -171,12 +190,30 @@ def _write_raw(data):
         items = data.get(key)
         if isinstance(items, list) and items:
             out[key] = items
+    tmp = _PATH + ".tmp"
     try:
-        with open(_PATH, "w", encoding="utf-8") as f:
-            json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
+        text = json.dumps(out, ensure_ascii=False, separators=(",", ":"))
+        with open(tmp, "w", encoding="utf-8") as f:
+            f.write(text)
+            f.flush()
+            try:
+                os.fsync(f.fileno())
+            except OSError:
+                pass
+        if os.path.exists(_PATH):
+            try:
+                os.replace(_PATH, _PATH + ".bak")
+            except OSError:
+                pass
+        os.replace(tmp, _PATH)
         return True
-    except OSError:
+    except (OSError, TypeError, ValueError):
         # Ohne Schreibrechte läuft alles weiter - nur eben ohne Archiv.
+        try:
+            if os.path.exists(tmp):
+                os.remove(tmp)
+        except OSError:
+            pass
         return False
 
 

@@ -213,14 +213,28 @@ def unique_id(wanted, game="minigolf", ignore=None):
 #  Datei lesen/schreiben
 # ---------------------------------------------------------------------------
 
-def _read_raw():
-    """Liest ugc.json roh (immer ein dict, leer bei Fehler/ohne Datei)."""
+def _read_json(path):
+    """Liest eine JSON-Datei als dict (None bei Fehler/fehlender Datei)."""
     try:
-        with open(_PATH, "r", encoding="utf-8") as f:
+        with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
-            return data if isinstance(data, dict) else {}
+            return data if isinstance(data, dict) else None
     except (OSError, json.JSONDecodeError, ValueError):
-        return {}
+        return None
+
+
+def _read_raw():
+    """Liest ugc.json roh (immer ein dict, leer bei Fehler/ohne Datei).
+
+    Ist ugc.json beschädigt oder fehlt sie nach einem abgebrochenen
+    Speichern, wird die Sicherung ugc.json.bak (Stand vor dem letzten
+    Speichern) gelesen - sonst würde das nächste Speichern alle eigenen
+    Bahnen und Level mit nur diesem einen Inhalt überschreiben.
+    """
+    data = _read_json(_PATH)
+    if data is None:
+        data = _read_json(_PATH + ".bak")
+    return data if data is not None else {}
 
 
 def _write_raw(data):
@@ -230,6 +244,10 @@ def _write_raw(data):
     Bahnen darf man ruhig von Hand anschauen und anpassen. Übernommen werden
     ALLE Listen - auch die einer Art, die diese Programmversion noch nicht
     kennt (eine neuere Version darf die Datei nicht leerräumen lassen).
+
+    Geschrieben wird über store.write_json_atomic (Temp-Datei + os.replace):
+    ein Absturz mitten im Schreiben zerstört die Sammlung nicht, die
+    vorherige Fassung bleibt als ugc.json.bak liegen.
     """
     stamp = data.get("_generated")
     if not (isinstance(stamp, str) and stamp):
@@ -245,13 +263,9 @@ def _write_raw(data):
         items = data.get(key)
         if isinstance(items, list) and items:
             out[key] = items
-    try:
-        with open(_PATH, "w", encoding="utf-8") as f:
-            json.dump(out, f, indent=2, ensure_ascii=False)
-        return True
-    except OSError:
-        # Ohne Schreibrechte läuft alles weiter - nur eben ohne Sammlung.
-        return False
+    import store
+    # Ohne Schreibrechte läuft alles weiter - nur eben ohne Sammlung.
+    return store.write_json_atomic(_PATH, out)
 
 
 def _valid(m, game="minigolf"):

@@ -65,6 +65,7 @@ import time
 import types
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 except (AttributeError, OSError):
@@ -81,6 +82,13 @@ pygame.display.set_mode((640, 480))
 
 import store
 store._PATH = os.path.join(HERE, "_audit-geodash-mem.json")
+# Ebenso tabu: Statistik und Replays. stats.pgzlamastats (und die alte
+# highscores.json) hängen an store._DIR, replay.json liegt neben seinem
+# Modul - alles in einen eigenen Kratzordner umlenken (ugc.json: siehe unten).
+store._DIR = tempfile.mkdtemp(prefix="audit-geodash-daten-")
+store._LEGACY_HS_PATH = os.path.join(store._DIR, "highscores.json")
+import replay
+replay._PATH = os.path.join(store._DIR, "replay.json")
 import settings as settings_mod
 settings_mod.save_settings = lambda s: None
 import ugc
@@ -1663,6 +1671,7 @@ if __name__ == "__main__":
     finally:
         wipe_files()
         shutil.rmtree(TMP, ignore_errors=True)
+        shutil.rmtree(store._DIR, ignore_errors=True)
     print("\n%s  (%.1f s)" % ("ALLE PRÜFUNGEN BESTANDEN" if not FAILS
                               else "%d FEHLER: %s" % (len(FAILS), FAILS),
                               time.time() - t_start))

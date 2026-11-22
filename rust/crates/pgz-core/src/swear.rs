@@ -16,7 +16,7 @@
 //! Ende des Musters steht).
 //!
 //! Normalisierung wie `_norm`: NFKD, Kombinationszeichen weg, `-`/`_` zu
-//! Leerzeichen, Leerraum zusammenziehen, `casefold()`.
+//! Leerzeichen, Leerraum zusammenziehen, `casefold()`, punktloses i zu `i`.
 
 use std::sync::OnceLock;
 
@@ -47,7 +47,9 @@ const LISTS: &[(&str, &str)] = &[
 
 const LOOKAHEAD: &str = r"(?=[^\s]*\b)";
 
-/// `str.casefold()` - die Sonderfaelle gegenueber `lower()`.
+/// `str.casefold()` - die Sonderfaelle gegenueber `lower()`. Dazu das punktlose
+/// i (U+0131) als `i`, wie es `_norm` in Python ausdruecklich ersetzt (die
+/// `regex`-Crate setzt es bei `(?i)` nicht mit `i` gleich).
 fn casefold(text: &str) -> String {
     let mut out = String::with_capacity(text.len());
     for c in text.chars() {
@@ -55,6 +57,7 @@ fn casefold(text: &str) -> String {
             '\u{00DF}' | '\u{1E9E}' => out.push_str("ss"),
             '\u{03C2}' => out.push('\u{03C3}'),
             '\u{017F}' => out.push('s'),
+            '\u{0131}' => out.push('i'),
             _ => out.extend(c.to_lowercase()),
         }
     }

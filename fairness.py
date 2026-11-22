@@ -2,9 +2,9 @@
 """
 fairness.py
 ===========
-Nachprüfbarer Zufall ("Provably Fair") für die Chip-Spiele Lama Mines und
-Lama Plinko - ohne pygame, Gegenstücke: ``web/js/games/fairness.js`` und
-``rust/crates/pgz-core/src/fairness.rs``.
+Nachprüfbarer Zufall ("Provably Fair") für die Chip-Spiele Lama Mines, Lama
+Plinko und Lama Crash - ohne pygame, Gegenstücke: ``web/js/games/fairness.js``
+und ``rust/crates/pgz-core/src/fairness.rs``.
 
 Prinzip:
 

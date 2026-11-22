@@ -44,12 +44,27 @@ fn now(fmt: &str) -> String {
     chrono::Local::now().format(fmt).to_string()
 }
 
+/// Liest eine JSON-Datei als Objekt (`None` bei Fehler/fehlender Datei).
+fn read_json(path: &Path) -> Option<Map<String, Value>> {
+    let text = std::fs::read_to_string(path).ok()?;
+    match serde_json::from_str::<Value>(&text) {
+        Ok(Value::Object(map)) => Some(map),
+        _ => None,
+    }
+}
+
+/// Liest `replay.json` roh. Ist sie beschaedigt oder fehlt sie nach einem
+/// abgebrochenen Speichern, wird die Sicherung `replay.json.bak` gelesen -
+/// sonst wuerde das naechste gespeicherte Replay das ganze Archiv mit nur
+/// diesem einen ueberschreiben (wie `replay.py`).
 fn read_raw() -> Map<String, Value> {
-    std::fs::read_to_string(path())
-        .ok()
-        .and_then(|s| serde_json::from_str::<Value>(&s).ok())
-        .and_then(|v| v.as_object().cloned())
-        .unwrap_or_default()
+    let path = path();
+    if let Some(map) = read_json(&path) {
+        return map;
+    }
+    let mut bak = path.as_os_str().to_os_string();
+    bak.push(".bak");
+    read_json(Path::new(&bak)).unwrap_or_default()
 }
 
 fn write_raw(data: &Map<String, Value>) -> bool {
@@ -66,8 +81,11 @@ fn write_raw(data: &Map<String, Value>) -> bool {
             }
         }
     }
+    // Wie replay.py: erst in eine Temp-Datei daneben, dann an die richtige
+    // Stelle umbenennen - ein Absturz mitten im Schreiben zerstoert das
+    // Archiv nicht; die vorherige Fassung bleibt als replay.json.bak liegen.
     match serde_json::to_string(&Value::Object(out)) {
-        Ok(text) => std::fs::write(path(), text).is_ok(),
+        Ok(text) => crate::store::write_text_atomic(&path(), &text),
         Err(_) => false,
     }
 }

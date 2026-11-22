@@ -34,12 +34,15 @@ import hashlib
 import json
 import multiprocessing
 import os
+import shutil
 import subprocess
 import sys
+import tempfile
 import time
 import types
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 except (AttributeError, OSError):
@@ -54,6 +57,17 @@ import store  # noqa: E402
 # Testläufe dürfen weder mem.json noch settings.json anfassen
 store._PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                            "_audit-sudoku-mem.json")
+# Ebenso tabu: Statistik, Replays und eigene Level. stats.pgzlamastats (und die
+# alte highscores.json) hängen an store._DIR, replay.json/ugc.json liegen neben
+# ihren Modulen - alles in einen eigenen Kratzordner umlenken.
+# Angelegt wird er erst in main(): die Pool-Prozesse laden dieses Skript
+# erneut und sollen keine Ordner hinterlassen.
+store._DIR = os.path.join(tempfile.gettempdir(), "pgz-audit-sudoku-%d" % os.getpid())
+store._LEGACY_HS_PATH = os.path.join(store._DIR, "highscores.json")
+import replay  # noqa: E402
+replay._PATH = os.path.join(store._DIR, "replay.json")
+import ugc  # noqa: E402
+ugc._PATH = os.path.join(store._DIR, "ugc.json")
 import settings as settings_mod  # noqa: E402
 settings_mod.save_settings = lambda s: None
 import i18n  # noqa: E402
@@ -810,6 +824,7 @@ def audit_performance():
 
 
 def main():
+    os.makedirs(store._DIR, exist_ok=True)
     pygame.init()
     pygame.display.set_mode((640, 480))
     i18n.init()
@@ -829,6 +844,7 @@ def main():
         for p in (store._PATH, store._PATH + ".bak", store._PATH + ".tmp"):
             if os.path.exists(p):
                 os.remove(p)
+        shutil.rmtree(store._DIR, ignore_errors=True)
     print()
     if FAILS:
         print("%d Prüfung(en) fehlgeschlagen:" % len(FAILS))

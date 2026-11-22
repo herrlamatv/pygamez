@@ -14,7 +14,7 @@ Aufruf (aus dem Projektordner):
     .venv/Scripts/python.exe rust/tools/export_defs.py
 
 Nach jeder Aenderung an ``achievements.py``, ``games/__init__.py`` oder
-``ui.GAME_COLORS`` neu laufen lassen; ``tests/rust_audit.py`` prueft, ob die
+``ui.GAME_COLORS`` neu laufen lassen; ``rust/tools/audit.py`` prueft, ob die
 erzeugte Datei noch zu den Quellen passt.
 """
 

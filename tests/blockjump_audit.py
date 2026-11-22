@@ -13,9 +13,12 @@ Exit-Code 0 = alle Prüfungen bestanden.
 import json
 import math
 import os
+import shutil
 import sys
+import tempfile
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 # Die Berichte enthalten Umlaute - Ausgabe fest auf UTF-8 stellen,
 # sonst zeigt eine Konsole mit anderer Codepage Kraut und Rüben.
 try:
@@ -28,6 +31,18 @@ import pygame
 pygame.init()
 pygame.display.set_mode((640, 480))
 
+import store
+# Testläufe dürfen weder mem.json noch Statistik, Replays oder eigene Level
+# anfassen: stats.pgzlamastats (und die alte highscores.json) hängen an
+# store._DIR, replay.json/ugc.json liegen neben ihren Modulen - alles in einen
+# eigenen Kratzordner umlenken.
+store._DIR = tempfile.mkdtemp(prefix="pgz-audit-blockjump-")
+store._PATH = os.path.join(store._DIR, "mem.json")
+store._LEGACY_HS_PATH = os.path.join(store._DIR, "highscores.json")
+import replay
+replay._PATH = os.path.join(store._DIR, "replay.json")
+import ugc
+ugc._PATH = os.path.join(store._DIR, "ugc.json")
 import settings as settings_mod
 from games import blockjump as bj
 
@@ -135,6 +150,7 @@ def main():
             for e in errs:
                 print(f"[FAIL] {mode} L{level}: {e}")
             bad += len(errs)
+    shutil.rmtree(store._DIR, ignore_errors=True)
     print("OK: alle Prüfungen bestanden" if bad == 0 else f"{bad} Fehler")
     sys.exit(0 if bad == 0 else 1)
 
