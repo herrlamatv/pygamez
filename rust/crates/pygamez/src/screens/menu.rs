@@ -53,6 +53,7 @@ pub fn action_label(action: &str) -> String {
 enum Was {
     Start(String),
     Options,
+    Matches,
     Wiki,
     Back,
 }
@@ -68,11 +69,13 @@ pub struct PreGameScreen {
     sel: usize,
 }
 
-const UTIL: usize = 3;
+/// Anzahl der Knoepfe unter den Modi (Optionen, Matches, Wiki, Zurueck).
+const UTIL: usize = 4;
 
 impl PreGameScreen {
     /// Baut den Bildschirm fuer ein Spiel.
     pub fn new(mut b: GameBase, info: GameInfo) -> PreGameScreen {
+        // Akzentfarbe des Spiels (Python setzt sie nach super().__init__).
         b.accent = ui::game_color(info.class_name);
         let best = pgz_core::highscore::get(info.key);
         let mut s = PreGameScreen { b, info, best, buttons: Vec::new(), rects: Vec::new(), row_start: 0, sel: 0 };
@@ -93,6 +96,7 @@ impl PreGameScreen {
             }
         }
         self.buttons.push((t("pregame.options"), Was::Options));
+        self.buttons.push((t("pregame.matches"), Was::Matches));
         self.buttons.push((t("pregame.lamawiki"), Was::Wiki));
         self.buttons.push((t("pregame.back"), Was::Back));
         self.layout_buttons();
@@ -119,7 +123,9 @@ impl PreGameScreen {
                 return;
             }
         }
-        bw = 420.min(w - 40);
+        // Kompakt: etwas breiter, damit die vier Knoepfe der Reihe ihre Texte
+        // (z.B. "Optionen / Steuerung") noch lesbar tragen.
+        bw = 480.min(w - 40);
         x = w / 2 - bw / 2;
         let (mut bh, mut gap, mut total) = (32, 6, 0);
         for (b_, g_) in [(32, 6), (28, 5), (24, 4)] {
@@ -140,6 +146,13 @@ impl PreGameScreen {
             self.rects.push(Rect::new(x + j * (cell + gap), row_y, cell, bh));
         }
         self.row_start = n_modes as usize;
+        // Vier Knoepfe nebeneinander: passt "Optionen / Steuerung" selbst in
+        // der kleinsten Schrift nicht, steht dort die Kurzform.
+        for j in self.row_start..n as usize {
+            if matches!(self.buttons[j].1, Was::Options) && ui::f(11).width(&self.buttons[j].0) > self.rects[j].w - 8 {
+                self.buttons[j].0 = t("pregame.options_short");
+            }
+        }
     }
 
     fn button_font(&self, i: usize) -> pg::Font {
@@ -172,6 +185,7 @@ impl PreGameScreen {
         match self.buttons[i].1.clone() {
             Was::Start(m) => self.start(&m),
             Was::Options => shell::post(Cmd::Options(Some(self.info.key.into()))),
+            Was::Matches => shell::post(Cmd::Matches(self.info.key.into())),
             Was::Wiki => shell::post(Cmd::Wiki(Some(format!("game:{}", self.info.class_name)), Some(self.info.key.into()))),
             Was::Back => shell::post(Cmd::BackToMenu),
         }

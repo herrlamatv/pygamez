@@ -158,6 +158,93 @@ pub fn day_index(date: Option<&str>) -> i64 {
     days_from_civil(y, m, d) - days_from_civil(2026, 1, 1)
 }
 
+/// `day_index(date)` mit Pythons Fehlerfall: `datetime.date.fromisoformat`
+/// wirft bei einem ungueltigen Datum `ValueError` -> hier `None`.
+///
+/// Angenommen werden dieselben Formen wie in CPython 3.11+:
+/// `YYYY-MM-DD`, `YYYYMMDD`, `YYYY-Www`, `YYYYWww`, `YYYY-Www-D`, `YYYYWwwD`.
+pub fn day_index_checked(date: &str) -> Option<i64> {
+    // `date or today_str()` - ein leerer Text ist heute
+    if date.is_empty() {
+        return Some(day_index(None));
+    }
+    let b = date.as_bytes();
+    if !date.is_ascii() || ![7, 8, 10].contains(&b.len()) {
+        return None;
+    }
+    let num = |s: &[u8]| -> Option<i64> {
+        if s.is_empty() || !s.iter().all(|c| c.is_ascii_digit()) {
+            return None;
+        }
+        std::str::from_utf8(s).ok()?.parse().ok()
+    };
+    let year = num(&b[0..4])?;
+    let has_sep = b[4] == b'-';
+    let mut pos = 4 + has_sep as usize;
+    let (y, m, d) = if b.get(pos) == Some(&b'W') {
+        // ISO-Kalenderwoche: YYYY-?Www-?D?
+        pos += 1;
+        let week = num(b.get(pos..pos + 2)?)?;
+        pos += 2;
+        let mut dow = 1;
+        if b.len() > pos {
+            if (b[pos] == b'-') != has_sep {
+                return None;
+            }
+            pos += has_sep as usize;
+            dow = num(b.get(pos..pos + 1)?)?;
+            if pos + 1 != b.len() {
+                return None;
+            }
+        }
+        if !(1..=7).contains(&dow) || !(1..=9999).contains(&year) {
+            return None;
+        }
+        // Woche 53 nur, wenn das Jahr 53 Wochen hat (wie _isoweek_to_gregorian)
+        let jan4 = days_from_civil(year, 1, 4);
+        let wd_jan4 = (jan4 + 3).rem_euclid(7); // Montag = 0
+        if week == 53 {
+            let first_wd = (days_from_civil(year, 1, 1) + 3).rem_euclid(7);
+            let leap = (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+            if !(first_wd == 3 || (first_wd == 2 && leap)) {
+                return None;
+            }
+        } else if !(1..=52).contains(&week) {
+            return None;
+        }
+        let day = jan4 - wd_jan4 + (week - 1) * 7 + (dow - 1);
+        return Some(day - days_from_civil(2026, 1, 1));
+    } else {
+        let month = num(b.get(pos..pos + 2)?)?;
+        pos += 2;
+        if (b.get(pos) == Some(&b'-')) != has_sep {
+            return None;
+        }
+        pos += has_sep as usize;
+        let day = num(b.get(pos..pos + 2)?)?;
+        if pos + 2 != b.len() {
+            return None;
+        }
+        (year, month, day)
+    };
+    if !(1..=9999).contains(&y) || !(1..=12).contains(&m) {
+        return None;
+    }
+    let leap = (y % 4 == 0 && y % 100 != 0) || y % 400 == 0;
+    let dim = [31, if leap { 29 } else { 28 }, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][(m - 1) as usize];
+    if !(1..=dim).contains(&d) {
+        return None;
+    }
+    Some(days_from_civil(y, m, d) - days_from_civil(2026, 1, 1))
+}
+
+/// `date_of(index)` - Datum `YYYY-MM-DD` zu einer Tagesnummer (Umkehrung von
+/// [`day_index`]).
+pub fn date_of(index: i64) -> String {
+    let (y, m, d, _, _, _) = crate::store::civil_from_unix((days_from_civil(2026, 1, 1) + index) * 86_400);
+    format!("{y:04}-{m:02}-{d:02}")
+}
+
 /// `seconds_to_midnight(now)` aus wordle.py: Sekunden bis zum naechsten
 /// lokalen Tageswechsel.
 ///

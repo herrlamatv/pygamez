@@ -543,6 +543,11 @@ impl ConnectFourGame {
 }
 
 impl Game for ConnectFourGame {
+    /// Match-Historie: Dauer zaehlt nicht im Setup (Python-Standard
+    /// `getattr(self, "state", None) != "setup"`).
+    fn match_active(&self) -> bool {
+        !matches!(self.state, State::Setup)
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }

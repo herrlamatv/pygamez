@@ -301,6 +301,11 @@ class SlotsMixin:
         res = L.evaluate(L.window(stops), bet, free)
         lamabank.credit(res["total"], "casino")
         self.pending += res["total"]
+        # Match-Historie: ein Dreh = ein Match (Freispiele kosten nichts).
+        wager = 0 if free else bet * len(L.LINES)
+        net = res["total"] - wager
+        self.log_match(net, 1 if net > 0 else 0 if net < 0 else 2,
+                       {"bet": wager, "win": res["total"]})
         self.s_free_spin = free
         if res["free_spins"]:
             if not self.s_fs_active and not free:

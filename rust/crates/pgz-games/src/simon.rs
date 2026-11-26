@@ -216,6 +216,7 @@ impl SimonGame {
             match k {
                 "1" | "2" | "3" | "4" | "5" => {
                     self.smode = MODES[k.parse::<usize>().unwrap_or(1) - 1];
+                    self.b.mode = self.smode.to_string(); // Python: self.mode = MODES[...]
                     self.save_setting("mode", self.smode.into());
                     self.b.play_sound("click");
                 }
@@ -238,6 +239,7 @@ impl SimonGame {
         } else if ev.kind == Kind::MouseDown {
             if let Some(i) = self.mode_rects.iter().position(|r| r.hit(ev.pos)) {
                 self.smode = MODES[i];
+                self.b.mode = self.smode.to_string();
                 self.save_setting("mode", self.smode.into());
                 self.b.play_sound("click");
                 return;
@@ -523,6 +525,11 @@ impl SimonGame {
 }
 
 impl Game for SimonGame {
+    /// Match-Historie: Dauer zaehlt nicht im Setup (Python-Standard
+    /// `getattr(self, "state", None) != "setup"`).
+    fn match_active(&self) -> bool {
+        !matches!(self.state, State::Setup)
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }
@@ -535,6 +542,8 @@ impl Game for SimonGame {
         self.b.game_over = false;
         let m = self.b.opt_str("simon", "mode", "classic");
         self.smode = MODES.iter().copied().find(|x| *x == m).unwrap_or("classic");
+        // Python ueberschreibt self.mode mit dem Simon-Modus (Match-Historie)
+        self.b.mode = self.smode.to_string();
         let a = self.b.opt_str("simon", "audio", "on");
         self.audio_mode = AUDIO_MODES.iter().copied().find(|x| *x == a).unwrap_or("on");
         let p = self.b.opt_i64("simon", "pads", 4);

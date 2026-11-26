@@ -333,6 +333,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Matches",
+      "keywords": [
+        "matches",
+        "history",
+        "last",
+        "all",
+        "results",
+        "rounds"
+      ],
+      "sections": [
+        {
+          "h": "Last & all matches",
+          "body": [
+            "Every game remembers its matches. In the pre-game screen, the Matches button opens the game's history.",
+            "- Last matches: a curve of the last 30 results (records in gold) and below it the last 10 matches.",
+            "- All matches: every saved match, with a mode filter [M] and newest/best sorting [O].",
+            "At the top you see the totals: matches, wins, best, average and play time."
+          ]
+        },
+        {
+          "h": "What is saved",
+          "body": [
+            "Date and time, mode, points (chip games: profit or loss), win/loss/draw, duration and details such as bet, multiplier, coins, level or opponent.",
+            "- Records are marked in gold. If you leave a round early, it shows as aborted - but only if you already had points or it ran for at least 5 seconds.",
+            "- Chip games count every round separately, Geometry Dash every level visit, Labyrinth every solved level."
+          ]
+        },
+        {
+          "h": "Storage",
+          "body": [
+            "The last 250 matches per game are kept (on pygamez.com 50 by default). Older ones drop out - the totals still keep counting.",
+            "The history lives in matches.pgzlamamatches next to mem.json, separately for each profile."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Achievements, rarity & level",
@@ -1107,6 +1146,14 @@
           ]
         },
         {
+          "h": "Daily archive",
+          "body": [
+            "The daily puzzles of the last 30 days and every day you have already solved are in the daily archive - with best time and stars per day.",
+            "- Below the daily card, the arrows or [Page up]/[Page down] change the day, [K] or Archive opens the calendar, [T] starts the chosen day.",
+            "- Archive puzzles don't change your daily streak."
+          ]
+        },
+        {
           "h": "Tips",
           "body": [
             "- Start with rows, columns and boxes that already hold many digits.",
@@ -1730,6 +1777,14 @@
             "Daily word: one word a day with 6 guesses - the same for everyone in each language and length, on the PC and in the browser. A daily word you have started is saved; afterwards the game shows your result, statistics and the countdown to the next word. Your streak only grows if you play every day.",
             "Dordle: two words at once in 7 guesses - every guess counts for both boards. The keys of the on-screen keyboard are split: left half board 1, right half board 2.",
             "Quordle: four words at once in 9 guesses. The keys are split into quarters and show the colours of all four boards."
+          ]
+        },
+        {
+          "h": "Daily archive",
+          "body": [
+            "The daily words of the last 30 days and every day you have already played can be replayed - per language and word length.",
+            "- In the daily word setup, the arrows or [Page up]/[Page down] change the day, [K] or Archive opens the calendar.",
+            "- Archive words don't count for statistics and streak; started archive words are saved."
           ]
         },
         {
@@ -2691,6 +2746,14 @@
             "- Endless: a new route every run, counts for the high score.",
             "- Daily Route: the same for everyone today (web version included), with its own daily best - does not count for the high score.",
             "In the setup you toggle shadows [H] and the day/night cycle [N]; Left/Right switches between your characters."
+          ]
+        },
+        {
+          "h": "Daily archive",
+          "body": [
+            "The daily tracks of the last 30 days and every day you have already played can be replayed - with a separate best score per day.",
+            "- In the daily track setup, the arrows next to the date or [Page up]/[Page down] change the day; [K] or Archive opens the calendar.",
+            "- A past day uses the same seed as back then - the track is exactly the same."
           ]
         }
       ]

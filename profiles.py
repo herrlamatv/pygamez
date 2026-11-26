@@ -181,8 +181,10 @@ def delete(pid):
     if count() <= 1:
         return False
     import stats
+    import matches
     stats.flush()
     stats.drop_profile(pid)
+    matches.drop_profile(pid)
     return store.delete_profile(pid)
 
 

@@ -333,6 +333,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Mečevi",
+      "keywords": [
+        "mečevi",
+        "povijest",
+        "zadnji",
+        "svi",
+        "rezultati",
+        "runde"
+      ],
+      "sections": [
+        {
+          "h": "Zadnji i svi mečevi",
+          "body": [
+            "Svaka igra pamti svoje mečeve. Na zaslonu prije igre gumb Mečevi otvara povijest igre.",
+            "- Zadnji mečevi: krivulja zadnjih 30 rezultata (rekordi zlatno) i ispod nje zadnjih 10 mečeva.",
+            "- Svi mečevi: svi spremljeni mečevi, s filtrom načina [M] i poretkom najnoviji/najbolji [O].",
+            "Na vrhu su zbrojevi: mečevi, pobjede, najbolji rezultat, prosjek i vrijeme igre."
+          ]
+        },
+        {
+          "h": "Što se sprema",
+          "body": [
+            "Datum i vrijeme, način, bodovi (igre sa žetonima: dobitak ili gubitak), pobjeda/poraz/neriješeno, trajanje i pojedinosti poput uloga, množitelja, novčića, razine ili protivnika.",
+            "- Rekordi su označeni zlatno. Napustiš li rundu prije kraja, prikazuje se kao prekinuta - ali samo ako si već imao bodove ili je trajala barem 5 sekundi.",
+            "- Igre sa žetonima broje svaku rundu zasebno, Geometry Dash svaki posjet razini, Labirint svaku riješenu razinu."
+          ]
+        },
+        {
+          "h": "Spremanje",
+          "body": [
+            "Za svaku igru čuva se zadnjih 250 mečeva (na pygamez.com zadano 50). Stariji ispadaju - zbrojevi ipak broje dalje.",
+            "Povijest je u datoteci matches.pgzlamamatches pokraj mem.json, odvojeno za svaki profil."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Postignuća, rijetkost i razina",
@@ -1107,6 +1146,14 @@
           ]
         },
         {
+          "h": "Dnevna arhiva",
+          "body": [
+            "Dnevne zagonetke zadnjih 30 dana i svaki već riješeni dan nalaze se u dnevnoj arhivi - s najboljim vremenom i zvjezdicama po danu.",
+            "- Ispod dnevne kartice dan mijenjaju strelice ili [PgUp]/[PgDn], [K] ili Arhiva otvara kalendar, [T] pokreće odabrani dan.",
+            "- Arhivske zagonetke ne mijenjaju tvoj dnevni niz."
+          ]
+        },
+        {
           "h": "Savjeti",
           "body": [
             "- Počni s redovima, stupcima i blokovima u kojima već stoji mnogo brojeva.",
@@ -1730,6 +1777,14 @@
             "Riječ dana: jedna riječ dnevno sa 6 pokušaja - ista za sve u svakom jeziku i duljini, na računalu i u pregledniku. Započeta riječ dana se sprema; nakon toga igra pokazuje rezultat, statistiku i odbrojavanje do sljedeće riječi. Niz raste samo ako igraš svaki dan.",
             "Dordle: dvije riječi odjednom u 7 pokušaja - svaki pokušaj vrijedi za obje ploče. Tipke zaslonske tipkovnice su podijeljene: lijeva polovica ploča 1, desna polovica ploča 2.",
             "Quordle: četiri riječi odjednom u 9 pokušaja. Tipke su podijeljene na četvrtine i pokazuju boje sve četiri ploče."
+          ]
+        },
+        {
+          "h": "Dnevna arhiva",
+          "body": [
+            "Dnevne riječi zadnjih 30 dana i svaki dan koji si već igrao možeš ponovno igrati - po jeziku i duljini riječi.",
+            "- U postavkama dnevne riječi dan mijenjaju strelice ili [PgUp]/[PgDn], [K] ili Arhiva otvara kalendar.",
+            "- Arhivske riječi ne broje se u statistiku ni niz; započete arhivske riječi se spremaju."
           ]
         },
         {
@@ -2691,6 +2746,14 @@
             "- Beskonačno: svaka runda nova staza, računa se u rekord.",
             "- Dnevna staza: danas ista za sve (i u web verziji), s vlastitim dnevnim rekordom - ne računa se u rekord.",
             "U postavkama uključuješ ili isključuješ sjene [H] i izmjenu dana i noći [N]; Lijevo/Desno mijenja između tvojih likova."
+          ]
+        },
+        {
+          "h": "Dnevna arhiva",
+          "body": [
+            "Dnevne staze zadnjih 30 dana i svaki dan koji si već igrao možeš ponovno igrati - s vlastitim najboljim rezultatom za svaki dan.",
+            "- U postavkama dnevne staze dan mijenjaju strelice pokraj datuma ili [PgUp]/[PgDn]; [K] ili Arhiva otvara kalendar.",
+            "- Prošli dan koristi isto sjeme kao tada - staza je potpuno ista."
           ]
         }
       ]

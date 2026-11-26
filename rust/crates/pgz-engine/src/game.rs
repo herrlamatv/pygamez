@@ -163,6 +163,16 @@ pub struct GameBase {
     pub hs_record: bool,
     /// `_was_over` - war schon einmal Game Over (Neustart erkennen).
     pub was_over: bool,
+    /// `_match_logged` - das Match dieser Partie steht schon in der Historie.
+    pub match_logged: bool,
+    /// `_match_result` - 1 Sieg, 0 Niederlage (aus report_result/report_duel).
+    pub match_result: Option<i64>,
+    /// `_match_vs` - Gegnername eines Duells.
+    pub match_vs: Option<String>,
+    /// `_match_time` - gesammelte aktive Spielzeit seit dem letzten Eintrag.
+    pub match_time: f64,
+    /// `_match_replace` - naechster Eintrag ersetzt den letzten (Rueckgaengig).
+    pub match_replace: bool,
 }
 
 impl GameBase {
@@ -199,6 +209,11 @@ impl GameBase {
             hs_value: 0,
             hs_record: false,
             was_over: false,
+            match_logged: false,
+            match_result: None,
+            match_vs: None,
+            match_time: 0.0,
+            match_replace: false,
         }
     }
 
@@ -257,6 +272,8 @@ impl GameBase {
             return;
         }
         self.result_reported = true;
+        // Fuer die Match-Historie (die App liest es beim Game Over).
+        self.match_result = Some(if won { 1 } else { 0 });
         pgz_core::stats::record_result(self.key, won);
         pgz_core::achievements::check_stats(false);
     }
@@ -265,12 +282,41 @@ impl GameBase {
     pub fn resume_from_game_over(&mut self) {
         self.game_over = false;
         self.resume_same_game = true;
+        // Match-Historie: das schon gespeicherte Match wird beim naechsten
+        // Eintrag ersetzt (es ist ja dieselbe Partie).
+        if self.match_logged {
+            self.match_logged = false;
+            self.match_replace = true;
+        }
     }
 
     /// `new_round_result()` - Meldungen fuer die naechste Runde freigeben.
     pub fn new_round_result(&mut self) {
         self.result_reported = false;
         self.duel_reported = false;
+        self.match_result = None;
+    }
+
+    /// `log_match(score, result, info, mode, flags)` - ein Match ist zu Ende
+    /// (fuer Spiele mit `match_manual`). Dauer = gesammelte aktive Spielzeit
+    /// seit dem letzten Eintrag. `flags` enthaelt schon `match_flags()` des
+    /// Spiels (Python: `flags | self.match_flags()`; bei allen Spielen mit
+    /// eigenen Matches ist das 0).
+    pub fn log_match(
+        &mut self,
+        score: i64,
+        result: Option<i64>,
+        info: Option<serde_json::Map<String, serde_json::Value>>,
+        mode: Option<&str>,
+        flags: i64,
+    ) {
+        if self.is_menu {
+            return;
+        }
+        let dur = self.match_time as i64;
+        self.match_time = 0.0;
+        let mode = mode.map(String::from).unwrap_or_else(|| self.mode.clone());
+        pgz_core::matches::record(self.key, &mode, score, result, dur, flags, info.as_ref(), None, false);
     }
 
     /// `pname(index)` - Profilname eines Sitzplatzes.
@@ -313,7 +359,10 @@ impl GameBase {
             return;
         }
         self.duel_reported = true;
-        let p1 = self.player_ids[0].clone().unwrap_or_else(pgz_core::profiles::active_id);
+        // Match-Historie: Ergebnis aus Sicht von Spieler 1 + Gegnername.
+        self.match_result = Some(if winner == 0 { 1 } else { 0 });
+        self.match_vs = Some(self.pname(1));
+        let p1 =self.player_ids[0].clone().unwrap_or_else(pgz_core::profiles::active_id);
         let p2 = self.player_ids[1].clone().unwrap_or_else(|| pgz_core::profiles::GUEST.to_string());
         pgz_core::stats::record_duel(self.key, &p2, winner == 0, Some(&p1));
         if p2 != pgz_core::profiles::GUEST {
@@ -386,6 +435,28 @@ impl GameBase {
     }
 }
 
+/// `1 if net > 0 else 0 if net < 0 else 2` - Ergebnis eines Chip-Matches
+/// (Gewinn, Verlust, plus/minus null).
+pub fn chip_result(net: i64) -> Option<i64> {
+    Some(if net > 0 {
+        1
+    } else if net < 0 {
+        0
+    } else {
+        2
+    })
+}
+
+/// Kleines Info-dict fuer die Match-Historie (Reihenfolge wie angegeben,
+/// wie ein Python-dict-Literal).
+pub fn info_map(pairs: Vec<(&str, serde_json::Value)>) -> serde_json::Map<String, serde_json::Value> {
+    let mut m = serde_json::Map::new();
+    for (k, v) in pairs {
+        m.insert(k.to_string(), v);
+    }
+    m
+}
+
 // ---------------------------------------------------------------------------
 //  Das Trait
 // ---------------------------------------------------------------------------
@@ -452,6 +523,29 @@ pub trait Game {
     /// HUD und Scorekarte (der Replay-Chip sitzt darunter).
     fn replay_hud_h(&self) -> i32 {
         40
+    }
+    /// `match_manual` - das Spiel meldet seine Matches selbst
+    /// (`GameBase::log_match`); die App schreibt dann keinen eigenen Eintrag.
+    fn match_manual(&self) -> bool {
+        false
+    }
+    /// `match_active` - laeuft gerade ein Match? Nur dann zaehlt die Dauer.
+    /// Python-Standard: `getattr(self, "state", None) != "setup"` - Spiele
+    /// mit Setup-Zustand ueberschreiben das.
+    fn match_active(&self) -> bool {
+        true
+    }
+    /// `match_score()` - Punktwert des Matches (Standard: `self.score`).
+    fn match_score(&self) -> i64 {
+        self.base().score
+    }
+    /// `match_info()` - Details fuer die Historie (kleines dict) oder `None`.
+    fn match_info(&self) -> Option<serde_json::Map<String, serde_json::Value>> {
+        None
+    }
+    /// `match_flags()` - zusaetzliche Flags (z.B. Tagesmodus).
+    fn match_flags(&self) -> i64 {
+        0
     }
     /// Kennung fuer Musik und Wiedererkennung (`is` in Python).
     fn ident(&self) -> usize {

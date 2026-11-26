@@ -1,14 +1,15 @@
 //! screens
 //! =======
 //! Die Bildschirme, die keine Spiele sind: `menu.py` (Vorspiel, Optionen,
-//! Willkommen, Sprache), `profileview.py`, `progress.py`, `lamawiki.py` und
-//! `replayview.py`.
+//! Willkommen, Sprache), `profileview.py`, `progress.py`, `lamawiki.py`,
+//! `replayview.py` und `matchview.py` (Match-Historie).
 //!
 //! Die Bauhelfer unten geben `None`, solange ein Bildschirm (noch) fehlt -
 //! das Programm bleibt dann einfach, wo es ist.
 
 pub mod charts;
 pub mod lamawiki;
+pub mod matchview;
 pub mod menu;
 pub mod profileview;
 pub mod progress;

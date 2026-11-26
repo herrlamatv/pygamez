@@ -19,7 +19,9 @@ Spielablauf, Kamera, Effekte, HUD sowie Setup- und Figuren-Screen.
 - Ab Reihe 50 wechseln Tag und Nacht; nachts leuchten die Scheinwerfer.
 
 Steuerung: Pfeile/WASD = hüpfen, Leertaste/Enter/Klick = vorwärts.
-mem.json-Section "crossy": {coins, unlocked, selected, daily: {date, best}}.
+mem.json-Section "crossy": {coins, unlocked, selected, daily: {date, best},
+arch: [[tag, bestwert, versuche], ...]} - "daily" ist der heutige Tag (wie
+bisher), "arch" das Tages-Archiv aller gespielten Tage (dailyarchive.py).
 """
 
 import math
@@ -29,6 +31,8 @@ import time
 import pygame
 
 import audio
+import dailyarchive
+import matches
 import seedrand
 import settings as settings_mod
 import store
@@ -69,6 +73,8 @@ class CrossyRoadGame(Game):
         self.shadows = bool(cs.get("shadows", True))
         self.daynight = bool(cs.get("daynight", True))
         self.data = self._load()
+        self.day = dailyarchive.today_index()   # gespielter Tag (Tagesstrecke)
+        self.picker = None                       # offenes Archiv-Fenster
         self.anim = 0.0
         self.state = SETUP
         self.tab = "play"
@@ -101,6 +107,8 @@ class CrossyRoadGame(Game):
         self._make_fonts()
         self._make_voxels()
         self._layout_setup()
+        if self.picker is not None:
+            self.picker.rect = None
         self._night = None
         self._vignette = None
 
@@ -110,7 +118,7 @@ class CrossyRoadGame(Game):
 
     @property
     def wants_escape(self):
-        return self.state == SETUP and self.tab == "chars"
+        return self.state == SETUP and (self.tab == "chars" or self.picker is not None)
 
     # ===================================================== Speicherstand
     def _load(self):
@@ -126,8 +134,23 @@ class CrossyRoadGame(Game):
         best = daily.get("best", 0)
         daily = {"date": str(daily.get("date", ""))[:10],
                  "best": best if isinstance(best, int) and best > 0 else 0}
+        arch = dailyarchive.clean_rows(raw.get("arch"), 3)
+        arch = [r for r in arch if all(isinstance(v, int) and not isinstance(v, bool)
+                                       and v >= 0 for v in r)]
+        # Altbestand: den bisher einzigen Tagesbestwert ins Archiv übernehmen.
+        if daily["best"] > 0:
+            try:
+                idx = seedrand.day_index(daily["date"])
+            except ValueError:
+                idx = -1
+            if idx >= 0:
+                row = dailyarchive.find(arch, idx)
+                if row is None:
+                    dailyarchive.upsert(arch, [idx, daily["best"], 1])
+                elif row[1] < daily["best"]:
+                    row[1] = daily["best"]
         return {"coins": max(0, coins), "unlocked": unlocked, "selected": selected,
-                "daily": daily}
+                "daily": daily, "arch": arch}
 
     def _save(self):
         store.save_section("crossy", {
@@ -135,11 +158,53 @@ class CrossyRoadGame(Game):
             "unlocked": list(self.data["unlocked"]),
             "selected": self.data["selected"],
             "daily": dict(self.data["daily"]),
+            "arch": [list(r) for r in self.data["arch"]],
         })
 
     def _daily_best(self):
-        d = self.data["daily"]
-        return d["best"] if d.get("date") == seedrand.today_str() else 0
+        """Bestwert des gespielten Tags (heute oder Archiv-Tag)."""
+        row = dailyarchive.find(self.data["arch"], self.day)
+        return row[1] if row else 0
+
+    def _is_archive(self):
+        return self.mode == "daily" and self.day != dailyarchive.today_index()
+
+    def _days(self):
+        return dailyarchive.available([r[0] for r in self.data["arch"]])
+
+    def _step_day(self, d):
+        days = self._days()
+        i = days.index(self.day) if self.day in days else len(days) - 1
+        j = max(0, min(len(days) - 1, i + d))
+        if days[j] != self.day:
+            self.day = days[j]
+            self.play_sound("move")
+
+    def _open_picker(self):
+        info = {r[0]: ("played", t("arch.best", n=r[1])) for r in self.data["arch"]}
+        self.picker = dailyarchive.Picker("crossy", self.accent, self.day, info)
+        self.play_sound("click")
+
+    # ----- Match-Historie ----------------------------------------------
+    def match_score(self):
+        return int(getattr(self, "best", 0) or 0)
+
+    def match_info(self):
+        info = {"c": int(getattr(self, "run_coins", 0)), "ch": self.data["selected"]}
+        if self.mode == "daily":
+            info = {"day": self.day, **info}
+        return info
+
+    def match_flags(self):
+        if self.mode != "daily":
+            return 0
+        return matches.F_DAILY | (matches.F_ARCHIVE if self._is_archive() else 0)
+
+    @staticmethod
+    def match_text(key, value):
+        if key == "ch" and value in cw.CHAR_IDS:
+            return t("cr.char_line", name=t("cr.char." + value))
+        return None
 
     def _setup_best(self):
         """Highscore für den Setup-Screen - nur einmal je Besuch von der Platte lesen."""
@@ -162,7 +227,7 @@ class CrossyRoadGame(Game):
     # ===================================================== Runde
     def _new_run(self):
         if self.mode == "daily":
-            seed = seedrand.daily_seed("crossy")
+            seed = seedrand.daily_seed("crossy", seedrand.date_of(self.day))
         else:
             seed = random.getrandbits(32)
         self.world = cw.World(seed)
@@ -201,13 +266,18 @@ class CrossyRoadGame(Game):
     def _finish_run(self):
         """Todes-Animation vorbei: Ergebnis sichern, Game Over zeigen."""
         if self.mode == "daily":
+            row = dailyarchive.find(self.data["arch"], self.day) or [self.day, 0, 0]
+            self.record = self.best > row[1]
+            dailyarchive.upsert(self.data["arch"], [self.day, max(row[1], self.best),
+                                                    row[2] + 1])
             today = seedrand.today_str()
-            d = self.data["daily"]
-            if d.get("date") != today:
-                d["date"], d["best"] = today, 0
-            self.record = self.best > d["best"]
-            if self.record:
-                d["best"] = self.best
+            if seedrand.date_of(self.day) == today:
+                # "daily" bleibt der heutige Tag (wie bisher)
+                d = self.data["daily"]
+                if d.get("date") != today:
+                    d["date"], d["best"] = today, 0
+                if self.best > d["best"]:
+                    d["best"] = self.best
         else:
             self.record = self.best > self.hs
         self._save()
@@ -534,6 +604,8 @@ class CrossyRoadGame(Game):
         gap1 = lab + max(0, (H - 360) // 40)
         gap2 = max(12, H // 30)
         used = card_h + gap1 + bh + gap2 + bh + 6
+        if self.mode == "daily":
+            used += bh + gap2           # Datums-Leiste (Tages-Archiv)
         free = (H - 44) - top - used
         ptop = top + max(0, free // 2)
         self.card_rect = pygame.Rect(cx - bw // 2, ptop, bw, card_h)
@@ -548,6 +620,10 @@ class CrossyRoadGame(Game):
         self.shadow_rects = pair(cx - bw / 2)
         self.night_rects = pair(cx + bw / 2 - grp)
         y += bh + gap2
+        self.day_rects = None
+        if self.mode == "daily":
+            self.day_rects = dailyarchive.day_row_rects(cx - bw // 2, y, bw, bh)
+            y += bh + gap2
         sw = max(190, int(bw * 0.42))
         self.start_rect = pygame.Rect(cx - sw // 2, y, sw, bh + 6)
         # --- Reiter FIGUREN: 5x2-Raster + Detailzeile
@@ -571,6 +647,16 @@ class CrossyRoadGame(Game):
         self._card_vox = None
 
     def _handle_setup(self, event):
+        if self.picker is not None:
+            res = self.picker.handle_event(event, self)
+            if res is not None:
+                if res[0] == "pick":
+                    self.day = res[1]
+                    self.play_sound("select")
+                else:
+                    self.play_sound("click")
+                self.picker = None
+            return
         if event.kind == InputEvent.MOUSEDOWN:
             for i, rc in enumerate(self.tab_rects):
                 if rc.collidepoint(event.pos):
@@ -594,7 +680,24 @@ class CrossyRoadGame(Game):
                 self._toggle("shadows")
             elif k in ("n", "N") and self.key_is_free(k):
                 self._toggle("daynight")
+            elif self.mode == "daily" and k == "Prior":
+                self._step_day(-1)
+            elif self.mode == "daily" and k == "Next":
+                self._step_day(1)
+            elif self.mode == "daily" and k in ("k", "K") and self.key_is_free(k):
+                self._open_picker()
         elif event.kind == InputEvent.MOUSEDOWN:
+            if self.day_rects is not None:
+                r_prev, r_date, r_next, r_arch = self.day_rects
+                if r_prev.collidepoint(event.pos):
+                    self._step_day(-1)
+                    return
+                if r_next.collidepoint(event.pos):
+                    self._step_day(1)
+                    return
+                if r_date.collidepoint(event.pos) or r_arch.collidepoint(event.pos):
+                    self._open_picker()
+                    return
             for flag, rects in (("shadows", self.shadow_rects), ("daynight", self.night_rects)):
                 for i, rc in enumerate(rects):
                     if rc.collidepoint(event.pos):
@@ -1082,7 +1185,12 @@ class CrossyRoadGame(Game):
         y = pad + img.get_height() - 2
         best = self.day_best if self.mode == "daily" else self.hs
         best = max(best, self.best)
-        lab = t("cr.hud_top_daily", n=best) if self.mode == "daily" else t("cr.hud_top", n=best)
+        if self._is_archive():
+            lab = t("cr.hud_top_arch", n=best)
+        elif self.mode == "daily":
+            lab = t("cr.hud_top_daily", n=best)
+        else:
+            lab = t("cr.hud_top", n=best)
         self._shadow_text(s, self._small, lab, (pad, y), (255, 236, 150))
         # Münzen rechts oben
         coins = str(self.data["coins"])
@@ -1100,7 +1208,8 @@ class CrossyRoadGame(Game):
                               (255, 226, 110))
         # Tagesstrecke-Kennzeichen
         if self.mode == "daily":
-            tag = t("cr.daily_tag", date=seedrand.today_str())
+            tag = t("cr.archive_tag" if self._is_archive() else "cr.daily_tag",
+                    date=seedrand.date_of(self.day))
             timg = self._tiny.render(tag, True, (255, 255, 255))
             rc = timg.get_rect(midtop=(W // 2, pad))
             box = rc.inflate(18, 8)
@@ -1215,6 +1324,8 @@ class CrossyRoadGame(Game):
             self._draw_chars(s)
         else:
             self._draw_play_tab(s)
+        if self.picker is not None:
+            self.picker.draw(s)
 
     def _stage(self):
         """Voxel-Maße für die Vorschau-Bühne im Setup (an die Kartenhöhe angepasst)."""
@@ -1267,8 +1378,12 @@ class CrossyRoadGame(Game):
         lines = []
         mode_key = "cr.mode.daily" if self.mode == "daily" else "cr.mode.endless"
         lines.append((self._mid, t(mode_key), self.accent))
-        desc = t("cr.mode_desc.daily", date=seedrand.today_str()) if self.mode == "daily" \
-            else t("cr.mode_desc.endless")
+        if self._is_archive():
+            desc = t("cr.mode_desc.archive", date=seedrand.date_of(self.day))
+        elif self.mode == "daily":
+            desc = t("cr.mode_desc.daily", date=seedrand.date_of(self.day))
+        else:
+            desc = t("cr.mode_desc.endless")
         lines.append((self._tiny, desc, ui.TEXT_DIM))
         if self.mode == "daily":
             lines.append((self._small, t("cr.best_daily", n=self._daily_best()), ui.GOLD))
@@ -1295,11 +1410,17 @@ class CrossyRoadGame(Game):
             s.blit(img, img.get_rect(midbottom=(mid, rects[0].top - 4)))
             for i, rc in enumerate(rects):
                 self._btn(s, rc, t("common.on") if i == 0 else t("common.off"), on == (i == 0))
+        if self.day_rects is not None:
+            days = self._days()
+            dailyarchive.draw_day_row(s, self.day_rects, self.day,
+                                      self.accent, self.day > days[0], self.day < days[-1],
+                                      self._tiny, archived=self._is_archive())
         pygame.draw.rect(s, ui.BTN_SEL, self.start_rect, border_radius=10)
         pygame.draw.rect(s, self.accent, self.start_rect, 2, border_radius=10)
         st = self.font.render(t("common.start"), True, ui.TEXT)
         s.blit(st, st.get_rect(center=self.start_rect.center))
-        hint = self._fit(self._tiny, t("cr.setup_hint"), ui.TEXT_FAINT, W - 20)
+        hint = self._fit(self._tiny, t("cr.setup_hint_daily" if self.mode == "daily"
+                                       else "cr.setup_hint"), ui.TEXT_FAINT, W - 20)
         s.blit(hint, hint.get_rect(center=(cx, H - 30)))
         ctrl = self._fit(self._tiny, t("cr.hint"), ui.mix(self.accent, ui.TEXT, 0.45), W - 20)
         s.blit(ctrl, ctrl.get_rect(center=(cx, H - 12)))

@@ -1161,6 +1161,11 @@ fn brick_da(pat: &str, r: i32, c: i32, rows: i32, cols: i32) -> bool {
 }
 
 impl Game for BreakoutGame {
+    /// Match-Historie: Dauer zaehlt nicht im Setup (Python-Standard
+    /// `getattr(self, "state", None) != "setup"`).
+    fn match_active(&self) -> bool {
+        !matches!(self.state, State::Setup)
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }

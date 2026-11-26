@@ -1386,6 +1386,12 @@ impl LamaCrashGame {
         self.stats.x = self.xs.to_map();
         let (stake, paid) = (l::stake_total(&rnd), l::paid_total(&rnd));
         chipstats::record(&mut self.stats, stake, paid, l::best_cash(&rnd));
+        let net = paid - stake;
+        let mut info = info_map(vec![("bet", stake.into()), ("win", paid.into()), ("cr", crash.into())]);
+        if l::best_cash(&rnd) != 0 {
+            info.insert("x".into(), l::best_cash(&rnd).into());
+        }
+        self.b.log_match(net, chip_result(net), Some(info), None, 0);
         self.hist.push(crash);
         if self.hist.len() > l::HISTORY {
             let cut = self.hist.len() - l::HISTORY;
@@ -3834,6 +3840,10 @@ impl LamaCrashGame {
 }
 
 impl Game for LamaCrashGame {
+    /// Match-Historie: das Spiel meldet seine Matches selbst (`log_match`).
+    fn match_manual(&self) -> bool {
+        true
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }

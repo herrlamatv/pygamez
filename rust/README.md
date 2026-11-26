@@ -2,8 +2,9 @@
 
 Die komplette Spielesammlung PyGameZ – alle **50 Spiele**, das Programm mit
 Seitenleiste, Menü und Vorspiel-Bildschirmen, Profile, Erfolge & Statistik,
-LamaWiki und Replay-Archiv – als natives Rust-Programm auf
-[rustgame](../rustgame), dem pixelgenauen Nachbau von pygame-ce.
+Match-Historie, Tages-Archiv, LamaWiki und Replay-Archiv – als natives
+Rust-Programm auf [rustgame](../rustgame), dem pixelgenauen Nachbau von
+pygame-ce.
 
 Jede Datei ist **Zeile für Zeile aus der Python-Vorlage übertragen**, nicht
 nachempfunden: gleiche Konstanten, gleiche Reihenfolge der Zeichenaufrufe,
@@ -27,8 +28,8 @@ dem PyGameZ-Logo als Symbol, ohne Python. Gebraucht wird Rust ab 1.88 mit
 der MSVC-Werkzeugkette (unter Windows der Standard).
 
 Spielstände teilt sich die Rust-Fassung mit Python (`mem.json`,
-`settings.json`, `stats.pgzlamastats`, `ugc.json`, `replay.json`) – und
-schreibt sie **Byte für Byte so wie Python**, man kann also jederzeit
+`settings.json`, `stats.pgzlamastats`, `matches.pgzlamamatches`, `ugc.json`,
+`replay.json`) – und schreibt sie **Byte für Byte so wie Python**, man kann also jederzeit
 zwischen beiden Fassungen wechseln. Mit `PYGAMEZ_DATA_DIR` lässt sich ein
 anderer Datenordner wählen.
 
@@ -36,10 +37,10 @@ anderer Datenordner wählen.
 
 | Paket | Inhalt |
 |---|---|
-| `crates/pgz-core` | Daten ohne Grafik: Speicher, Profile, Sprachen (14), Einstellungen, Highscores, Erfolge (274), Statistik, Level, Replays, Wortfilter, Lama-Bank, erzeugte Stammdaten (`defs.rs`) |
-| `crates/pgz-engine` | Python-Semantik (`py`: Zufall bitgleich zu CPython, `//`/`%`/`round`/`hypot` wie Python), pygame-Fassade (`pg`), `ui.py` (10 Designs), Audio, Erfolgs-Einblendungen, Dateidialoge, `Game`-Trait |
+| `crates/pgz-core` | Daten ohne Grafik: Speicher, Profile, Sprachen (14), Einstellungen, Highscores, Erfolge (274), Statistik, Match-Historie, Level, Replays, Wortfilter, Lama-Bank, erzeugte Stammdaten (`defs.rs`) |
+| `crates/pgz-engine` | Python-Semantik (`py`: Zufall bitgleich zu CPython, `//`/`%`/`round`/`hypot` wie Python), pygame-Fassade (`pg`), `ui.py` (10 Designs), Audio, Erfolgs-Einblendungen, Dateidialoge, Tages-Archiv (Datums-Leiste, Kalender), `Game`-Trait |
 | `crates/pgz-games` | Die 50 Spiele, je Datei eine Vorlage aus `games/` (plus Hilfsmodule wie `tetris_core`, `chess_engine`, `geodash_core`, `minigolf_edit`) |
-| `crates/pygamez` | Das Programm: Fenster, Seitenleiste, Startbildschirm, Vorspiel/Optionen/Sprache/Willkommen, Profile, Erfolge & Statistik (mit Diagrammen), LamaWiki, Replay-Archiv und -Player |
+| `crates/pygamez` | Das Programm: Fenster, Seitenleiste, Startbildschirm, Vorspiel/Optionen/Sprache/Willkommen, Profile, Erfolge & Statistik (mit Diagrammen), Match-Historie, LamaWiki, Replay-Archiv und -Player |
 
 `crates/pgz-games/src/lib.rs` wird von `tools/gen_games_list.py` geschrieben
 (Reihenfolge wie `games/__init__.py`), `pgz-core/src/defs.rs` von
@@ -56,14 +57,17 @@ Python-Umgebung des Projekts (`.venv\Scripts\python.exe`).
   (`--mode`, `--frames`, `--keys`/`--keys-file`, `--seed`).
   Mit `screen:<name>[:arg]` statt eines Spiels werden Bildschirme verglichen
   (`menu` = Startbildschirm, `profiles`, `pick:<spiel>`, `levelintro`,
-  `progress[:reiter]`, `wiki[:seite]`, `replays`); `--daten <ordner>`
+  `progress[:reiter]`, `wiki[:seite]`, `replays`, `pregame:<spiel>`,
+  `matches:<spiel>[:all]`); `--daten <ordner>`
   kopiert einen Datensatz (etwa aus `testdaten.py`, gern mit einer
   `settings.json` für ein anderes Design) in beide Datenordner.
   Pause-Overlay und Highscore-Banner zeichnet der Prüfstand mit dem echten
   Code aus `main.py` (eine `main.App` ohne Tk).
   Nach dem Bild vergleicht es auch **alle gespeicherten Daten** beider
-  Läufe – `mem.json`, `settings.json`, `ugc.json`, `replay.json`, Statistik
-  und was nach „Downloads“ geteilt wurde (PGN, Bahnen, Level, Replays);
+  Läufe – `mem.json`, `settings.json`, `ugc.json`, `replay.json`, Statistik,
+  Match-Historie (der Prüfstand fährt die Match-Logik von `main._frame` und
+  endet wie `beenden`) und was nach „Downloads“ geteilt wurde (PGN, Bahnen,
+  Level, Replays);
   Zeitstempel der Wanduhr werden dabei nur in den Ziffern maskiert.
   `--nur-bild` schaltet das ab.
 * **`regression.py [--aufloesung WxH] [--sprache xx] [spiel ...|screens]`** –
@@ -72,6 +76,9 @@ Python-Umgebung des Projekts (`.venv\Scripts\python.exe`).
   immer laufen lassen. Mit `--aufloesung` in jeder Stufe der
   Auflösungsliste (480×360 bis 1280×960), mit `--sprache` in jeder der
   14 Sprachen – Python und Rust lesen beides aus dem Datenordner.
+  Läufe, die vom Datum abhängen (gestriges Tages-Sudoku lösen, gestriges
+  Tageswort erraten), bauen ihre Ereignisse zur Laufzeit mit der
+  Python-Referenz.
 * **`bots/bot_<spiel>.py`** – Bots spielen in Python echte Partien
   (Tetris bis Level 12, Schach, Casino, Minigolf mit Editor, Geometry Dash
   mit Vorausschau-KI, Editor und Bibliothek, Lama Mines bis zum Höchstgewinn
@@ -99,8 +106,13 @@ Python-Umgebung des Projekts (`.venv\Scripts\python.exe`).
   Gewinn in einem Zug (`bet_and_pay`), Pleite und Kredit je Spiel, alter
   Spielstand, Migration, Poker-Tischstapel (5 Fälle, Antworten und
   `mem.json` gleich).
+* **`matches_check.py`** – Match-Historie und Tages-Archiv Befehl für Befehl
+  gegen `matches.py`/`dailyarchive.py` (Beispiel `matches_io` in
+  `pgz-engine`): Kappe, Summen, Ersetzen, Bereinigen kaputter Einträge und
+  Dateien, Sicherung `.bak`, Profile, Archiv-Zeilen, Datumstexte, Seeds,
+  `date.fromisoformat` (371 Befehle, Antworten und Datei gleich).
 * `vergleich.py` (und damit `regression.py`), `stats_check.py`,
-  `import_check.py` und `lamabank_check.py` nehmen die `.exe` aus
+  `import_check.py`, `lamabank_check.py` und `matches_check.py` nehmen die `.exe` aus
   `CARGO_TARGET_DIR`, falls gesetzt (eigener Bauordner), sonst aus
   `rust.output/`.
 * **`vollbild_check.py`** – das echte Fenster: Startgröße wie `main.py`,
@@ -125,10 +137,15 @@ Datenordner.
 
 * **50/50 Spiele** pixelgleich, dazu alle Bildschirme der App,
   Startbildschirm (alle 10 Designs), Pause-Overlay und Highscore-Banner.
-* Gesamt-Regression (183 Läufe: alle Spiele in mehreren Modi und alle
+* Match-Historie (`matches.pgzlamamatches`, Matches-Bildschirm mit Kurve,
+  Filter, Sortierung) und Tages-Archiv (Crossy Road, Sudoku, Wordle:
+  Datums-Leiste, Kalender, Archiv-Tage ohne Einfluss auf Serie und
+  Statistik) wie in Python – Bild und Daten.
+* Gesamt-Regression (233 Läufe: alle Spiele in mehreren Modi und alle
   Bildschirme) ohne Abweichung in Bild **und** gespeicherten Daten – in
   allen 14 Sprachen und in jeder Stufe der Auflösungsliste von 480×360 bis
-  1280×960. Dazu gehören Teilen/Export (Schach-PGN, Minigolf-Bahn,
+  1280×960 (die Läufe für Match-Historie und Tages-Archiv in 480×360,
+  640×480 und 1280×960 sowie de/en/fi/pl/fr). Dazu gehören Teilen/Export (Schach-PGN, Minigolf-Bahn,
   Geometry-Dash-Level, Replay) und Import ohne Dialog.
 * Lama Plinko zusätzlich mit eigenen Spielständen (`vergleich.py --daten`):
   Jackpot ×1000 und MEGA-Gewinn (Fairness-Zustand mit gesuchter Nonce

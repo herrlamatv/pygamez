@@ -332,6 +332,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Partidas",
+      "keywords": [
+        "partidas",
+        "historial",
+        "últimas",
+        "todas",
+        "resultados",
+        "rondas"
+      ],
+      "sections": [
+        {
+          "h": "Últimas y todas las partidas",
+          "body": [
+            "Cada juego recuerda sus partidas. En la pantalla previa, el botón Partidas abre el historial del juego.",
+            "- Últimas partidas: una curva de los últimos 30 resultados (récords en oro) y debajo las últimas 10 partidas.",
+            "- Todas las partidas: todas las partidas guardadas, con filtro por modo [M] y orden más recientes/mejores [O].",
+            "Arriba están los totales: partidas, victorias, mejor, media y tiempo de juego."
+          ]
+        },
+        {
+          "h": "Qué se guarda",
+          "body": [
+            "Fecha con minuto exacto, modo, puntos (juegos de fichas: ganancia o pérdida), victoria/derrota/empate, duración y detalles como apuesta, multiplicador, monedas, nivel o rival.",
+            "- Los récords se marcan en oro. Si sales antes de terminar una ronda, aparece como abandonada, pero solo si ya tenías puntos o duró al menos 5 segundos.",
+            "- Los juegos de fichas cuentan cada ronda por separado, Geometry Dash cada visita a un nivel y Laberinto cada nivel resuelto."
+          ]
+        },
+        {
+          "h": "Almacenamiento",
+          "body": [
+            "Se guardan las últimas 250 partidas por juego (en pygamez.com 50 por defecto). Las más antiguas desaparecen; los totales siguen contando.",
+            "El historial está en matches.pgzlamamatches junto a mem.json, por separado para cada perfil."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Logros, rareza y nivel",
@@ -1106,6 +1145,14 @@
           ]
         },
         {
+          "h": "Archivo diario",
+          "body": [
+            "Los sudokus diarios de los últimos 30 días y cada día ya resuelto están en el archivo diario, con mejor tiempo y estrellas por día.",
+            "- Bajo la tarjeta diaria, las flechas o [Re Pág]/[Av Pág] cambian el día, [K] o Archivo abre el calendario, [T] inicia el día elegido.",
+            "- Los sudokus del archivo no cambian tu racha diaria."
+          ]
+        },
+        {
           "h": "Consejos",
           "body": [
             "- Empieza por filas, columnas y bloques que ya tienen muchos números.",
@@ -1729,6 +1776,14 @@
             "Palabra del día: una palabra al día con 6 intentos, la misma para todos en cada idioma y longitud, en el PC y en el navegador. Una palabra del día empezada se guarda; después el juego muestra tu resultado, las estadísticas y la cuenta atrás hasta la siguiente. Tu racha solo crece si juegas cada día.",
             "Dordle: dos palabras a la vez en 7 intentos; cada intento cuenta para ambos tableros. Las teclas del teclado en pantalla están divididas: mitad izquierda tablero 1, mitad derecha tablero 2.",
             "Quordle: cuatro palabras a la vez en 9 intentos. Las teclas se dividen en cuartos y muestran los colores de los cuatro tableros."
+          ]
+        },
+        {
+          "h": "Archivo diario",
+          "body": [
+            "Las palabras diarias de los últimos 30 días y cada día que ya jugaste se pueden volver a jugar, por idioma y longitud.",
+            "- En la preparación de la palabra diaria, las flechas o [Re Pág]/[Av Pág] cambian el día, [K] o Archivo abre el calendario.",
+            "- Las palabras del archivo no cuentan para estadísticas ni racha; las empezadas se guardan."
           ]
         },
         {
@@ -2690,6 +2745,14 @@
             "- Infinito: una ruta nueva en cada partida, cuenta para el récord.",
             "- Ruta del día: igual para todos hoy (también en la versión web), con su propio récord del día; no cuenta para el récord.",
             "En los ajustes activas o desactivas las sombras [H] y el ciclo de día y noche [N]; Izquierda/Derecha cambia entre tus personajes."
+          ]
+        },
+        {
+          "h": "Archivo diario",
+          "body": [
+            "Los recorridos diarios de los últimos 30 días y cada día que ya jugaste se pueden volver a jugar, con un récord propio por día.",
+            "- En la preparación del recorrido diario, las flechas junto a la fecha o [Re Pág]/[Av Pág] cambian el día; [K] o Archivo abre el calendario.",
+            "- Un día pasado usa la misma semilla que entonces: el recorrido es exactamente el mismo."
           ]
         }
       ]

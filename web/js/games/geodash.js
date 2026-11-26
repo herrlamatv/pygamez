@@ -49,6 +49,14 @@
   }
 
   class GeometryDashGame extends PG.Game {
+    /**
+     * Match-Historie: ein Match = ein Level-Besuch (alle Versuche bis zum
+     * Ziel oder bis zum Verlassen), gemeldet über Game.logMatch.
+     */
+    get matchManual() {
+      return true;
+    }
+
     // ===================================================== Aufbau / Reset
     init() {
       this.renderer = new gdraw.Renderer();
@@ -87,7 +95,29 @@
 
     destroy() {
       PG.audio.stopMusic(this);
+      this.logLevelMatch(false);
       this.saveProgress();
+    }
+
+    get matchActive() {
+      return this.run != null && this.cur != null;
+    }
+
+    /** Match-Historie: Level-Besuch abschließen (einmal je Besuch). */
+    logLevelMatch(won) {
+      if ((this._gdLogged == null ? true : this._gdLogged) || this.cur == null
+          || this.curKind === "test" || this.sessionAttempts <= 0) return;
+      this._gdLogged = true;
+      const info = { lv: String(this.cur.name == null ? "" : this.cur.name).slice(0, 40), g: this.sessionAttempts };
+      if (won && this.run != null) {
+        let m = this.run.coins >>> 0, n = 0;
+        while (m) {
+          n += m & 1;
+          m >>>= 1;
+        }
+        info.c = n;
+      }
+      this.logMatch(won ? 100 : this._gdBestPct, won ? 1 : 0, info, this.practice ? "practice" : "normal");
     }
 
     get wantsEscape() {
@@ -166,6 +196,8 @@
       this.sessionAttempts = 0;
       this.sessionJumps = 0;
       this.sessionTime = 0;
+      this._gdLogged = false;
+      this._gdBestPct = 0;
       this.bpm = music.styleBpm(this.cur);
       this.state = PLAY;
       this.newAttempt(false);
@@ -289,6 +321,7 @@
 
     leaveToSelect() {
       PG.audio.stopMusic(this);
+      this.logLevelMatch(false);
       this.saveProgress();
       this.state = SELECT;
       this.cur = null;
@@ -426,6 +459,7 @@
       this.playSound("explode");
       this.rumble(160);
       const pct = core.progress(this.run, this.lv);
+      this._gdBestPct = Math.max(this._gdBestPct || 0, Math.trunc(pct));
       if (this.recordBest(pct)) this.newBest = [pct, this.t];
       if (!this.practice) PG.audio.stopMusic(this);
     }
@@ -458,6 +492,7 @@
         coinCount: this.lv.coinCount, stars: 0, newCoins: 0, practice: this.practice, verified: false,
       };
       const newRecord = this.recordBest(100);
+      this.logLevelMatch(true);
       if (this.curKind === "main" && !this.practice) {
         const lid = this.cur.id;
         const oldMask = this.coins[lid] || 0;

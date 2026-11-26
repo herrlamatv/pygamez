@@ -251,6 +251,8 @@
       } else {
         this.buttons.push([t("pregame.single"), () => app.launchGame(entry, "single")]);
       }
+      // Match-Historie dieses Spiels (Letzte Matches / Alle Matches).
+      this.buttons.push([t("pregame.matches"), () => app.openMatches(entry)]);
       this.buttons.push([t("pregame.lamawiki"), () => app.openWiki(entry.id)]);
       this.buttons.push([t("pregame.back"), () => app.backToMenu()]);
       let bw = 300, bh = 40, gap = 10;
@@ -468,16 +470,18 @@
       this.canvas.focus();
     }
 
-    /** Beendet ein laufendes Spiel (Highscore sichern, aufräumen). */
+    /** Beendet ein laufendes Spiel (Highscore + Match sichern, aufräumen). */
     leaveGame() {
       const g = this.game;
       if (g) {
-        this.saveHighscore(g);
+        this.saveHighscore(g, true);
         try {
           g.destroy();
         } catch (e) {
           console.error(e);
         }
+        // Matches (auch die per logMatch beim Aufräumen gemeldeten) sofort sichern.
+        PG.matches.flush();
       }
       if (document.pointerLockElement) document.exitPointerLock();
       this.releaseKeys();
@@ -505,6 +509,17 @@
       this.canvas.style.cursor = "";
       ui.beginTransition();
       this.markActive();
+    }
+
+    /** Match-Historie eines Spiels (Knopf "Matches" im Vorspiel-Screen). */
+    openMatches(entry) {
+      this.leaveGame();
+      this.entry = entry;
+      this.current = new PG.MatchScreen(this, entry, () => this.openPreGame(entry));
+      this.canvas.style.cursor = "";
+      ui.beginTransition();
+      this.markActive();
+      this.canvas.focus();
     }
 
     /** Öffnet die Profilverwaltung (mehrere Spieler an einem Gerät). */
@@ -570,7 +585,7 @@
       this.canvas.focus();
     }
 
-    saveHighscore(g) {
+    saveHighscore(g, leaving = false) {
       const [hs, record] = PG.highscore.update(g.highscoreKey, g.score);
       g._hsValue = hs;
       g._hsRecord = record;
@@ -580,6 +595,45 @@
       PG.ach.onHighscore(g.highscoreKey, hs);
       PG.ach.checkStats();
       this.refreshScores();
+      this.matchSave(g, record, leaving);
+    }
+
+    /**
+     * Match-Historie (wie main.App._match_speichern): das Match dieses Spiels
+     * genau einmal festhalten. Beim Game Over wird es fertig gespeichert; wer
+     * mitten im Match verlässt, bekommt einen Eintrag "abgebrochen" (nur wenn
+     * schon Punkte da sind oder es mindestens MIN_ABORT_SECONDS lief). Spiele
+     * mit matchManual melden ihre Runden selbst (Game.logMatch).
+     */
+    matchSave(g, record = false, leaving = false) {
+      try {
+        if (g.matchManual || g._matchLogged) return;
+        const M = PG.matches;
+        const over = !!g.gameOver;
+        const score = g.matchScore();
+        const dur = Math.trunc(g._matchTime || 0);
+        let flags = g.matchFlags();
+        if (!over) {
+          if (!leaving || !(score > 0 || dur >= M.MIN_ABORT_SECONDS)) return;
+          flags |= M.F_ABORT;
+        } else if (record) {
+          flags |= M.F_RECORD;
+        }
+        let info = g.matchInfo();
+        const vs = g._matchVs;
+        if (vs) {
+          info = Object.assign({}, info || {});
+          info.vs = String(vs);
+        }
+        M.record(g.highscoreKey, g.mode, score, g._matchResult == null ? null : g._matchResult, dur, flags, info,
+          { replace: !!g._matchReplace });
+        g._matchLogged = true;
+        g._matchReplace = false;
+        g._matchTime = 0;
+        if (leaving) M.flush();
+      } catch (e) {
+        // Die Historie darf das Spiel nie stören.
+      }
     }
 
     showError(err) {
@@ -652,6 +706,8 @@
             cur.update(dt);
             if (g) {
               PG.stats.addPlaytime(g.highscoreKey, dt);
+              // Match-Historie: Dauer nur, solange ein Match läuft.
+              if (g.matchActive) g._matchTime = (g._matchTime || 0) + dt;
               if (PG.stats.sessionTime() >= 3600) PG.ach.onPlaytime(PG.stats.sessionTime());
             }
           }
@@ -687,6 +743,10 @@
           } else if (g._wasOver) {
             g._wasOver = false;
             g._resultReported = false;
+            g._matchLogged = false;
+            g._matchResult = null;
+            g._matchVs = null;
+            g._matchTime = 0;
             PG.stats.gameStarted(g.highscoreKey);
             PG.ach.onGameStarted(g.highscoreKey);
           }
@@ -700,6 +760,7 @@
       // Musik gehört dem aktiven Spiel: pausiert mit ihm, endet mit ihm.
       PG.audio.musicTick(this.current);
       PG.stats.maybeFlush();
+      PG.matches.maybeFlush();
       ui.drawFx(ctx, W, H, dt);
       // Erfolgs-/Level-Einblendung über allem - auch mitten im Spiel.
       PG.ach.drawToasts(ctx, dt);
@@ -968,12 +1029,18 @@
           const g = this.game;
           if (g && !g.paused && !g.gameOver) this.togglePause();
           PG.stats.flush();
+          PG.matches.flush();
         }
       });
       window.addEventListener("beforeunload", () => {
         const g = this.game;
-        if (g) PG.highscore.update(g.highscoreKey, g.score);
+        if (g) {
+          const [, record] = PG.highscore.update(g.highscoreKey, g.score);
+          // Fenster zu = Verlassen (wie main.py _on_close: leaving=True).
+          this.matchSave(g, record, true);
+        }
         PG.stats.flush();
+        PG.matches.flush();
       });
 
       const c = this.canvas;
@@ -1221,6 +1288,10 @@
         else if (this.current instanceof HomeScreen) this.current = new HomeScreen(this);
         else if (this.current instanceof PG.ProgressScreen) this.current = new PG.ProgressScreen(this, () => this.backToMenu(), this.current.tab);
         else if (this.current instanceof PG.ProfileScreen) this.current = new PG.ProfileScreen(this, () => this.backToMenu());
+        else if (this.current instanceof PG.MatchScreen) {
+          const ms = this.current;
+          this.current = new PG.MatchScreen(this, ms.entry, ms.onClose, ms.tab);
+        }
         this.updateProfileChip();
         if (!this.wikiOpen()) this.canvas.focus();
         this.updateStatus(true);

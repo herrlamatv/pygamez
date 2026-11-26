@@ -333,6 +333,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Ottelut",
+      "keywords": [
+        "ottelut",
+        "historia",
+        "viimeisimmät",
+        "kaikki",
+        "tulokset",
+        "kierrokset"
+      ],
+      "sections": [
+        {
+          "h": "Viimeisimmät ja kaikki ottelut",
+          "body": [
+            "Jokainen peli muistaa ottelunsa. Pelin aloitusnäytössä Ottelut-painike avaa pelin historian.",
+            "- Viimeisimmät: käyrä viimeisestä 30 tuloksesta (ennätykset kultaisina) ja sen alla 10 viimeisintä ottelua.",
+            "- Kaikki ottelut: kaikki tallennetut ottelut, tilasuodatin [M] ja järjestys uusimmat/parhaat [O].",
+            "Ylhäällä näkyvät summat: ottelut, voitot, paras, keskiarvo ja peliaika."
+          ]
+        },
+        {
+          "h": "Mitä tallennetaan",
+          "body": [
+            "Päivä ja kellonaika, tila, pisteet (pelimerkkipelit: voitto tai tappio), voitto/tappio/tasapeli, kesto ja yksityiskohdat kuten panos, kerroin, kolikot, taso tai vastustaja.",
+            "- Ennätykset merkitään kultaisella. Jos poistut kierrokselta kesken, se näkyy keskeytettynä - mutta vain jos sinulla oli jo pisteitä tai se kesti vähintään 5 sekuntia.",
+            "- Pelimerkkipelit laskevat jokaisen kierroksen erikseen, Geometry Dash jokaisen tasovierailun, Labyrintti jokaisen ratkaistun tason."
+          ]
+        },
+        {
+          "h": "Tallennus",
+          "body": [
+            "Kustakin pelistä säilytetään viimeiset 250 ottelua (pygamez.comissa oletuksena 50). Vanhemmat poistuvat - summat jatkavat silti laskemista.",
+            "Historia on tiedostossa matches.pgzlamamatches mem.jsonin vieressä, erikseen jokaiselle profiilille."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Saavutukset, harvinaisuus ja taso",
@@ -1107,6 +1146,14 @@
           ]
         },
         {
+          "h": "Päiväarkisto",
+          "body": [
+            "Viimeisen 30 päivän päivän tehtävät ja jokainen jo ratkaistu päivä löytyvät päiväarkistosta - parhaalla ajalla ja tähdillä.",
+            "- Päiväkortin alla nuolet tai [PgUp]/[PgDn] vaihtavat päivää, [K] tai Arkisto avaa kalenterin, [T] aloittaa valitun päivän.",
+            "- Arkistotehtävät eivät muuta päivittäistä putkeasi."
+          ]
+        },
+        {
           "h": "Vinkit",
           "body": [
             "- Aloita riveistä, sarakkeista ja laatikoista, joissa on jo paljon numeroita.",
@@ -1730,6 +1777,14 @@
             "Päivän sana: yksi sana päivässä 6 arvauksella - sama kaikille jokaisella kielellä ja pituudella, tietokoneella ja selaimessa. Aloitettu päivän sana tallennetaan; sen jälkeen peli näyttää tuloksen, tilastot ja laskurin seuraavaan sanaan. Putkesi kasvaa vain, jos pelaat joka päivä.",
             "Dordle: kaksi sanaa kerralla 7 arvauksella - jokainen arvaus koskee molempia ruudukoita. Näppäimistön näppäimet on jaettu: vasen puolisko on ruudukko 1, oikea puolisko ruudukko 2.",
             "Quordle: neljä sanaa kerralla 9 arvauksella. Näppäimet on jaettu neljään osaan ja ne näyttävät kaikkien neljän ruudukon värit."
+          ]
+        },
+        {
+          "h": "Päiväarkisto",
+          "body": [
+            "Viimeisen 30 päivän päivän sanat ja jokaisen jo pelaamasi päivän voi pelata uudelleen - kielittäin ja sanan pituuden mukaan.",
+            "- Päivän sanan asetuksissa nuolet tai [PgUp]/[PgDn] vaihtavat päivää, [K] tai Arkisto avaa kalenterin.",
+            "- Arkistosanat eivät lasketa tilastoihin eivätkä putkeen; aloitetut arkistosanat tallennetaan."
           ]
         },
         {
@@ -2691,6 +2746,14 @@
             "- Loputon: joka kierroksella uusi reitti, lasketaan ennätykseen.",
             "- Päivän reitti: tänään sama kaikille (myös selainversiossa), oma päivän ennätys - ei lasketa ennätykseen.",
             "Asetuksissa kytket varjot [H] ja päivän ja yön vaihtelun [N] päälle tai pois; Vasen/Oikea vaihtaa hahmojesi välillä."
+          ]
+        },
+        {
+          "h": "Päiväarkisto",
+          "body": [
+            "Viimeisen 30 päivän päivän radat ja jokaisen jo pelaamasi päivän voi pelata uudelleen - päiväkohtaisella parhaalla tuloksella.",
+            "- Päivän radan asetuksissa päivämäärän vieressä olevat nuolet tai [PgUp]/[PgDn] vaihtavat päivää; [K] tai Arkisto avaa kalenterin.",
+            "- Mennyt päivä käyttää samaa siementä kuin silloin - rata on täsmälleen sama."
           ]
         }
       ]

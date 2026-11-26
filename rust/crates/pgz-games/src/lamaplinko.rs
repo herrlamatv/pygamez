@@ -862,6 +862,15 @@ impl LamaPlinkoGame {
         let outcome = json!({"rows": rows, "risk": risk, "slot": slot, "m": m100, "bet": bet, "win": win});
         fairness::record(&mut self.fairlog, &entry, &outcome);
         self.stats.record(bet, win, m100);
+        let net = win - bet;
+        let info = info_map(vec![
+            ("bet", bet.into()),
+            ("win", win.into()),
+            ("x", m100.into()),
+            ("rw", rows.into()),
+            ("lv", risk.into()),
+        ]);
+        self.b.log_match(net, chip_result(net), Some(info), None, 0);
         l::add_hit(&mut self.hits, rows, slot);
         self.hist.push(m100);
         if self.hist.len() > l::HISTORY {
@@ -2586,6 +2595,10 @@ impl LamaPlinkoGame {
 }
 
 impl Game for LamaPlinkoGame {
+    /// Match-Historie: das Spiel meldet seine Matches selbst (`log_match`).
+    fn match_manual(&self) -> bool {
+        true
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }

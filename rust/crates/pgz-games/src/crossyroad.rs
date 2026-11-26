@@ -5,11 +5,16 @@
 //! Uebertragen aus `games/crossyroad.py`. Welt und Regeln in
 //! [`crate::crossyroad_world`], Voxel-Grafik in [`crate::crossyroad_draw`].
 //! Hier: Eingabe, Ablauf, Kamera, Effekte, HUD, Setup und Figuren-Shop.
+//!
+//! mem.json-Section "crossy": {coins, unlocked, selected, daily: {date, best},
+//! arch: [[tag, bestwert, versuche], ...]} - "daily" ist der heutige Tag,
+//! "arch" das Tages-Archiv aller gespielten Tage (`pgz_engine::dailyarchive`).
 
 use std::collections::HashSet;
 use std::f64::consts::{PI, TAU};
 
-use pgz_core::{highscore, seedrand, store};
+use pgz_core::{highscore, matches, seedrand, store};
+use pgz_engine::dailyarchive::{self as da, Picker, Wahl};
 use pgz_engine::prelude::*;
 use serde_json::{json, Map, Value};
 
@@ -96,6 +101,8 @@ struct Data {
     selected: String,
     daily_date: String,
     daily_best: i64,
+    /// Tages-Archiv: [tag, bestwert, versuche]
+    arch: Vec<[i64; 3]>,
 }
 
 /// `CrossyRoadGame`
@@ -104,6 +111,12 @@ pub struct CrossyRoadGame {
     shadows: bool,
     daynight: bool,
     data: Data,
+    /// Gespielter Tag (Tagesstrecke, `dailyarchive.today_index()` oder Archiv-Tag).
+    day: i64,
+    /// Offenes Archiv-Fenster.
+    picker: Option<Picker>,
+    /// Datums-Leiste im Setup (nur Tagesmodus).
+    day_rects: Option<[Rect; 4]>,
     anim: f64,
     state: St,
     tab: &'static str,
@@ -178,7 +191,10 @@ impl CrossyRoadGame {
             b,
             shadows: true,
             daynight: true,
-            data: Data { coins: 0, unlocked: vec!["chicken".into()], selected: "chicken".into(), daily_date: String::new(), daily_best: 0 },
+            data: Data { coins: 0, unlocked: vec!["chicken".into()], selected: "chicken".into(), daily_date: String::new(), daily_best: 0, arch: Vec::new() },
+            day: 0,
+            picker: None,
+            day_rects: None,
             anim: 0.0,
             state: St::Setup,
             tab: "play",
@@ -289,13 +305,30 @@ impl CrossyRoadGame {
             Some(Value::Bool(b)) => if *b { "True".into() } else { "False".into() },
             Some(v) => v.to_string(),
         };
-        Data {
-            coins: 0.max(coins),
-            unlocked,
-            selected,
-            daily_date: date.chars().take(10).collect(),
-            daily_best: if best > 0 { best } else { 0 },
+        let daily_date: String = date.chars().take(10).collect();
+        let daily_best = if best > 0 { best } else { 0 };
+        let mut arch: Vec<[i64; 3]> = da::clean_rows(raw.get("arch"), 3)
+            .into_iter()
+            .filter_map(|r| {
+                let v: Vec<i64> = r.iter().filter_map(|x| x.as_i64().filter(|i| *i >= 0)).collect();
+                (v.len() == 3).then(|| [v[0], v[1], v[2]])
+            })
+            .collect();
+        // Altbestand: den bisher einzigen Tagesbestwert ins Archiv uebernehmen.
+        if daily_best > 0 {
+            let idx = seedrand::day_index_checked(&daily_date).unwrap_or(-1);
+            if idx >= 0 {
+                match da::find(&arch, idx) {
+                    None => da::upsert(&mut arch, [idx, daily_best, 1]),
+                    Some(i) => {
+                        if arch[i][1] < daily_best {
+                            arch[i][1] = daily_best;
+                        }
+                    }
+                }
+            }
         }
+        Data { coins: 0.max(coins), unlocked, selected, daily_date, daily_best, arch }
     }
 
     fn save(&self) {
@@ -307,15 +340,42 @@ impl CrossyRoadGame {
         d.insert("date".into(), json!(self.data.daily_date));
         d.insert("best".into(), json!(self.data.daily_best));
         m.insert("daily".into(), Value::Object(d));
+        m.insert("arch".into(), json!(self.data.arch));
         store::save_section("crossy", m);
     }
 
+    /// Bestwert des gespielten Tags (heute oder Archiv-Tag).
     fn daily_best(&self) -> i64 {
-        if self.data.daily_date == seedrand::today_str() {
-            self.data.daily_best
-        } else {
-            0
+        da::find(&self.data.arch, self.day).map(|i| self.data.arch[i][1]).unwrap_or(0)
+    }
+
+    fn is_archive(&self) -> bool {
+        self.b.mode == "daily" && self.day != da::today_index()
+    }
+
+    fn days(&self) -> Vec<i64> {
+        da::available(self.data.arch.iter().map(|r| r[0]), None)
+    }
+
+    fn step_day(&mut self, d: i64) {
+        let days = self.days();
+        let i = days.iter().position(|x| *x == self.day).unwrap_or(days.len() - 1) as i64;
+        let j = 0.max((days.len() as i64 - 1).min(i + d)) as usize;
+        if days[j] != self.day {
+            self.day = days[j];
+            self.b.play_sound("move");
         }
+    }
+
+    fn open_picker(&mut self) {
+        let info = self
+            .data
+            .arch
+            .iter()
+            .map(|r| (r[0], ("played".to_string(), tf("arch.best", &[("n", &r[1].to_string())]))))
+            .collect();
+        self.picker = Some(Picker::new("crossy", self.b.accent, self.day, info));
+        self.b.play_sound("click");
     }
 
     fn setup_best(&mut self) -> i64 {
@@ -336,7 +396,11 @@ impl CrossyRoadGame {
     }
 
     fn new_run(&mut self) {
-        let seed: u64 = if self.b.mode == "daily" { seedrand::daily_seed("crossy", None) as u64 } else { py::with(|r| r.getrandbits(32)) };
+        let seed: u64 = if self.b.mode == "daily" {
+            seedrand::daily_seed("crossy", Some(&seedrand::date_of(self.day))) as u64
+        } else {
+            py::with(|r| r.getrandbits(32))
+        };
         self.world = Some(World::new(seed));
         self.clock = 0.0;
         self.col = cw::START_COL as f64;
@@ -372,14 +436,19 @@ impl CrossyRoadGame {
 
     fn finish_run(&mut self) {
         if self.b.mode == "daily" {
+            let row = da::find(&self.data.arch, self.day).map(|i| self.data.arch[i]).unwrap_or([self.day, 0, 0]);
+            self.record = self.best > row[1];
+            da::upsert(&mut self.data.arch, [self.day, row[1].max(self.best), row[2] + 1]);
             let today = seedrand::today_str();
-            if self.data.daily_date != today {
-                self.data.daily_date = today;
-                self.data.daily_best = 0;
-            }
-            self.record = self.best > self.data.daily_best;
-            if self.record {
-                self.data.daily_best = self.best;
+            if seedrand::date_of(self.day) == today {
+                // "daily" bleibt der heutige Tag (wie bisher)
+                if self.data.daily_date != today {
+                    self.data.daily_date = today;
+                    self.data.daily_best = 0;
+                }
+                if self.best > self.data.daily_best {
+                    self.data.daily_best = self.best;
+                }
             }
         } else {
             self.record = self.best > self.hs;
@@ -720,7 +789,10 @@ impl CrossyRoadGame {
         let lab = 20.max(self.tiny.get_height() + 10);
         let gap1 = lab + 0.max(py::fdiv32(h - 360, 40));
         let gap2 = 12.max(h / 30);
-        let used = card_h + gap1 + bh + gap2 + bh + 6;
+        let mut used = card_h + gap1 + bh + gap2 + bh + 6;
+        if self.b.mode == "daily" {
+            used += bh + gap2; // Datums-Leiste (Tages-Archiv)
+        }
         let free = (h - 44) - top - used;
         let ptop = top + 0.max(py::fdiv32(free, 2));
         self.card_rect = Rect::new(cx - bw / 2, ptop, bw, card_h);
@@ -734,6 +806,11 @@ impl CrossyRoadGame {
         self.shadow_rects = pair(cx as f64 - bw as f64 / 2.0, y);
         self.night_rects = pair(cx as f64 + bw as f64 / 2.0 - grp, y);
         y += bh + gap2;
+        self.day_rects = None;
+        if self.b.mode == "daily" {
+            self.day_rects = Some(da::day_row_rects(cx - bw / 2, y, bw, bh));
+            y += bh + gap2;
+        }
         let sw = 190.max((bw as f64 * 0.42) as i32);
         self.start_rect = Rect::new(cx - sw / 2, y, sw, bh + 6);
         let gw = (w - 36).min(760);
@@ -760,6 +837,18 @@ impl CrossyRoadGame {
     }
 
     fn handle_setup(&mut self, ev: &InputEvent) {
+        if let Some(pk) = self.picker.as_mut() {
+            if let Some(res) = pk.handle_event(ev, Some(&self.b)) {
+                if let Wahl::Pick(day) = res {
+                    self.day = day;
+                    self.b.play_sound("select");
+                } else {
+                    self.b.play_sound("click");
+                }
+                self.picker = None;
+            }
+            return;
+        }
         if ev.kind == Kind_::MouseDown {
             if let Some(i) = self.tab_rects.iter().position(|r| r.hit(ev.pos)) {
                 self.set_tab(TABS[i]);
@@ -786,8 +875,28 @@ impl CrossyRoadGame {
                 self.toggle(true);
             } else if (k == "n" || k == "N") && self.b.key_is_free(k) {
                 self.toggle(false);
+            } else if self.b.mode == "daily" && k == "Prior" {
+                self.step_day(-1);
+            } else if self.b.mode == "daily" && k == "Next" {
+                self.step_day(1);
+            } else if self.b.mode == "daily" && (k == "k" || k == "K") && self.b.key_is_free(k) {
+                self.open_picker();
             }
         } else if ev.kind == Kind_::MouseDown {
+            if let Some([r_prev, r_date, r_next, r_arch]) = self.day_rects {
+                if r_prev.hit(ev.pos) {
+                    self.step_day(-1);
+                    return;
+                }
+                if r_next.hit(ev.pos) {
+                    self.step_day(1);
+                    return;
+                }
+                if r_date.hit(ev.pos) || r_arch.hit(ev.pos) {
+                    self.open_picker();
+                    return;
+                }
+            }
             for (shadow_flag, rects) in [(true, self.shadow_rects.clone()), (false, self.night_rects.clone())] {
                 for (i, rc) in rects.iter().enumerate() {
                     if rc.hit(ev.pos) {
@@ -1372,7 +1481,13 @@ impl CrossyRoadGame {
         s.bl(&img, (pad, pad));
         let y = pad + img.h() - 2;
         let best = if self.b.mode == "daily" { self.day_best } else { self.hs }.max(self.best);
-        let lab = if self.b.mode == "daily" { tf("cr.hud_top_daily", &[("n", &best.to_string())]) } else { tf("cr.hud_top", &[("n", &best.to_string())]) };
+        let lab = if self.is_archive() {
+            tf("cr.hud_top_arch", &[("n", &best.to_string())])
+        } else if self.b.mode == "daily" {
+            tf("cr.hud_top_daily", &[("n", &best.to_string())])
+        } else {
+            tf("cr.hud_top", &[("n", &best.to_string())])
+        };
         Self::shadow_text(s, &self.small, &lab, (pad, y), (255, 236, 150));
         let coins = self.data.coins.to_string();
         let img = self.mid.render(&coins, true, rgb(255, 255, 255));
@@ -1387,7 +1502,8 @@ impl CrossyRoadGame {
             Self::shadow_text(s, &self.small, &plus, (right - pimg.w(), cy + r + 4), (255, 226, 110));
         }
         if self.b.mode == "daily" {
-            let tag = tf("cr.daily_tag", &[("date", &seedrand::today_str())]);
+            let key = if self.is_archive() { "cr.archive_tag" } else { "cr.daily_tag" };
+            let tag = tf(key, &[("date", &seedrand::date_of(self.day))]);
             let timg = self.tiny.render(&tag, true, rgb(255, 255, 255));
             let rc = timg.get_rect().midtop_at((w / 2, pad));
             let bx = rc.inflate(18, 8);
@@ -1521,6 +1637,9 @@ impl CrossyRoadGame {
         } else {
             self.draw_play_tab(s);
         }
+        if let Some(pk) = self.picker.as_mut() {
+            pk.draw(s);
+        }
     }
 
     fn stage(&mut self) {
@@ -1578,7 +1697,13 @@ impl CrossyRoadGame {
         let mut lines: Vec<(Font, String, Color)> = Vec::new();
         let mode_key = if self.b.mode == "daily" { "cr.mode.daily" } else { "cr.mode.endless" };
         lines.push((self.mid.clone(), t(mode_key), self.b.accent));
-        let desc = if self.b.mode == "daily" { tf("cr.mode_desc.daily", &[("date", &seedrand::today_str())]) } else { t("cr.mode_desc.endless") };
+        let desc = if self.is_archive() {
+            tf("cr.mode_desc.archive", &[("date", &seedrand::date_of(self.day))])
+        } else if self.b.mode == "daily" {
+            tf("cr.mode_desc.daily", &[("date", &seedrand::date_of(self.day))])
+        } else {
+            t("cr.mode_desc.endless")
+        };
         lines.push((self.tiny.clone(), desc, p.text_dim));
         if self.b.mode == "daily" {
             lines.push((self.small.clone(), tf("cr.best_daily", &[("n", &self.daily_best().to_string())]), p.gold));
@@ -1607,11 +1732,18 @@ impl CrossyRoadGame {
                 self.btn(s, *rc, &if i == 0 { t("common.on") } else { t("common.off") }, on == (i == 0));
             }
         }
+        if let Some(rects) = self.day_rects {
+            let days = self.days();
+            let (first, last) = (days[0], days[days.len() - 1]);
+            let tiny = self.tiny.clone();
+            da::draw_day_row(s, &rects, self.day, self.b.accent, self.day > first, self.day < last, &tiny, self.is_archive());
+        }
         draw::rect_r(s, p.btn_sel, self.start_rect, 0, 10);
         draw::rect_r(s, self.b.accent, self.start_rect, 2, 10);
         let st = self.b.font.render(&t("common.start"), true, p.text);
         s.blr(&st, st.get_rect().center_at(self.start_rect.center()));
-        let hint = self.fit(&self.tiny, &t("cr.setup_hint"), p.text_faint, w - 20);
+        let hint_key = if self.b.mode == "daily" { "cr.setup_hint_daily" } else { "cr.setup_hint" };
+        let hint = self.fit(&self.tiny, &t(hint_key), p.text_faint, w - 20);
         s.blr(&hint, hint.get_rect().center_at((cx, h - 30)));
         let ctrl = self.fit(&self.tiny, &t("cr.hint"), ui::mix(self.b.accent, p.text, 0.45), w - 20);
         s.blr(&ctrl, ctrl.get_rect().center_at((cx, h - 12)));
@@ -1699,6 +1831,11 @@ impl CrossyRoadGame {
 use pgz_engine::Kind as Kind_;
 
 impl Game for CrossyRoadGame {
+    /// Match-Historie: Dauer zaehlt nicht im Setup (Python-Standard
+    /// `getattr(self, "state", None) != "setup"`).
+    fn match_active(&self) -> bool {
+        !matches!(self.state, St::Setup)
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }
@@ -1715,6 +1852,8 @@ impl Game for CrossyRoadGame {
         self.shadows = self.b.opt_bool("crossy", "shadows", true);
         self.daynight = self.b.opt_bool("crossy", "daynight", true);
         self.data = Self::load();
+        self.day = da::today_index(); // gespielter Tag (Tagesstrecke)
+        self.picker = None; // offenes Archiv-Fenster
         self.anim = 0.0;
         self.state = St::Setup;
         self.tab = "play";
@@ -1735,6 +1874,9 @@ impl Game for CrossyRoadGame {
         self.make_fonts();
         self.make_voxels();
         self.layout_setup();
+        if let Some(pk) = self.picker.as_mut() {
+            pk.rect = None;
+        }
         self.night = None;
         self.vignette = None;
     }
@@ -1750,7 +1892,29 @@ impl Game for CrossyRoadGame {
     }
 
     fn wants_escape(&self) -> bool {
-        self.state == St::Setup && self.tab == "chars"
+        self.state == St::Setup && (self.tab == "chars" || self.picker.is_some())
+    }
+
+    // ----- Match-Historie ----------------------------------------------
+    fn match_score(&self) -> i64 {
+        self.best
+    }
+
+    fn match_info(&self) -> Option<Map<String, Value>> {
+        let mut info = info_map(vec![("c", self.run_coins.into()), ("ch", self.data.selected.clone().into())]);
+        if self.b.mode == "daily" {
+            let mut m = info_map(vec![("day", self.day.into())]);
+            m.append(&mut info);
+            info = m;
+        }
+        Some(info)
+    }
+
+    fn match_flags(&self) -> i64 {
+        if self.b.mode != "daily" {
+            return 0;
+        }
+        matches::F_DAILY | if self.is_archive() { matches::F_ARCHIVE } else { 0 }
     }
 
     fn handle_event(&mut self, ev: &InputEvent) {

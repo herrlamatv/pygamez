@@ -632,6 +632,7 @@ impl LamaCrossingGame {
             self.broken = k;
             self.lost = bet;
             self.save_extra();
+            self.log_cross(bet, 0, k, None);
             if self.world == "road" {
                 // Raser: trifft genau bei der Landung
                 let v = l::traffic(&self.diff).1 * l::RASER_F * self.k;
@@ -697,6 +698,7 @@ impl LamaCrossingGame {
             self.round = None;
             self.broken = b;
             self.save_extra();
+            self.log_cross(self.lost, 0, b, None);
             let title = t(&format!("lcr.hit.{}", self.world));
             self.fall(FallKind::Hit, title, x, y);
             return;
@@ -710,6 +712,7 @@ impl LamaCrossingGame {
             self.win = l::payout(bet, &self.diff, n);
             lamabank::credit(self.win, KEY, true);
             self.pending += self.win;
+            self.log_cross(bet, self.win, n, Some(l::mult(&self.diff, n)));
             self.push_hist(l::mult(&self.diff, n));
             self.round = None;
             self.save_extra();
@@ -727,6 +730,22 @@ impl LamaCrossingGame {
         self.b.play_sound("point");
         let txt = self.fmt(l::mult(&self.diff, b));
         self.popup(x - self.cam, y - self.llama_n as f64 - 10.0 * self.k, txt, Some(pal.green), 0.9);
+    }
+
+    /// `_log_cross(bet, win, lane, mult100)` - Match-Historie: eine
+    /// Ueberquerung (verloren oder ausgezahlt).
+    fn log_cross(&mut self, bet: i64, win: i64, lane: i32, mult100: Option<i64>) {
+        let mut info = info_map(vec![
+            ("bet", bet.into()),
+            ("win", win.into()),
+            ("ln", lane.into()),
+            ("lv", self.diff.clone().into()),
+        ]);
+        if let Some(m) = mult100 {
+            info.insert("x".into(), m.into());
+        }
+        let net = win - bet;
+        self.b.log_match(net, chip_result(net), Some(info), None, 0);
     }
 
     /// Runde verloren: Zufall (break) oder Treffer (hit, platt).
@@ -757,6 +776,7 @@ impl LamaCrossingGame {
         let mult = l::mult(&self.diff, self.step);
         self.win = l::payout(bet, &self.diff, self.step);
         lamabank::credit(self.win, KEY, true);
+        self.log_cross(bet, self.win, self.step, Some(mult));
         self.push_hist(mult);
         self.round = None;
         self.save_extra();
@@ -1487,6 +1507,10 @@ impl LamaCrossingGame {
 }
 
 impl Game for LamaCrossingGame {
+    /// Match-Historie: das Spiel meldet seine Matches selbst (`log_match`).
+    fn match_manual(&self) -> bool {
+        true
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }

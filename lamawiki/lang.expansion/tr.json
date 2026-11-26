@@ -333,6 +333,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Maçlar",
+      "keywords": [
+        "maçlar",
+        "geçmiş",
+        "son",
+        "tümü",
+        "sonuçlar",
+        "turlar"
+      ],
+      "sections": [
+        {
+          "h": "Son ve tüm maçlar",
+          "body": [
+            "Her oyun maçlarını hatırlar. Oyun öncesi ekranda Maçlar düğmesi oyunun geçmişini açar.",
+            "- Son maçlar: son 30 sonucun eğrisi (rekorlar altın renginde) ve altında son 10 maç.",
+            "- Tüm maçlar: kaydedilen tüm maçlar, mod filtresi [M] ve en yeni/en iyi sıralaması [O] ile.",
+            "Üstte toplamlar yer alır: maçlar, galibiyetler, en iyi, ortalama ve oyun süresi."
+          ]
+        },
+        {
+          "h": "Neler kaydedilir",
+          "body": [
+            "Tarih ve saat, mod, puan (çip oyunları: kâr veya zarar), galibiyet/mağlubiyet/beraberlik, süre ve bahis, çarpan, jeton, seviye ya da rakip gibi ayrıntılar.",
+            "- Rekorlar altın renkle işaretlenir. Bir turu erken bırakırsan yarıda bırakıldı olarak görünür - ama yalnızca puanın varsa ya da en az 5 saniye sürdüyse.",
+            "- Çip oyunları her turu ayrı sayar, Geometry Dash her seviye ziyaretini, Labirent her çözülen seviyeyi."
+          ]
+        },
+        {
+          "h": "Depolama",
+          "body": [
+            "Oyun başına son 250 maç saklanır (pygamez.com'da varsayılan 50). Daha eskileri düşer - toplamlar yine de saymaya devam eder.",
+            "Geçmiş, mem.json'un yanındaki matches.pgzlamamatches dosyasında her profil için ayrı tutulur."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Başarımlar, nadirlik ve seviye",
@@ -1107,6 +1146,14 @@
           ]
         },
         {
+          "h": "Günlük arşiv",
+          "body": [
+            "Son 30 günün günlük bulmacaları ve daha önce çözdüğün her gün günlük arşivdedir - her gün için en iyi süre ve yıldızlarla.",
+            "- Günlük kartın altında oklar veya [PgUp]/[PgDn] günü değiştirir, [K] veya Arşiv takvimi açar, [T] seçilen günü başlatır.",
+            "- Arşiv bulmacaları günlük serini değiştirmez."
+          ]
+        },
+        {
           "h": "İpuçları",
           "body": [
             "- Zaten çok rakam içeren satır, sütun ve bloklarla başla.",
@@ -1730,6 +1777,14 @@
             "Günün kelimesi: günde bir kelime, 6 tahmin - her dil ve uzunlukta, bilgisayarda ve tarayıcıda herkes için aynı. Başladığın günün kelimesi kaydedilir; sonrasında oyun sonucunu, istatistikleri ve bir sonraki kelimeye geri sayımı gösterir. Serin yalnızca her gün oynarsan büyür.",
             "Dordle: 7 tahminde aynı anda iki kelime - her tahmin iki tahta için de geçerlidir. Ekran klavyesinin tuşları ikiye bölünür: sol yarı tahta 1, sağ yarı tahta 2.",
             "Quordle: 9 tahminde aynı anda dört kelime. Tuşlar dörde bölünür ve dört tahtanın renklerini gösterir."
+          ]
+        },
+        {
+          "h": "Günlük arşiv",
+          "body": [
+            "Son 30 günün günlük kelimeleri ve daha önce oynadığın her gün yeniden oynanabilir - dile ve kelime uzunluğuna göre.",
+            "- Günlük kelime ayarlarında oklar veya [PgUp]/[PgDn] günü değiştirir, [K] veya Arşiv takvimi açar.",
+            "- Arşiv kelimeleri istatistiğe ve seriye sayılmaz; başlanan arşiv kelimeleri kaydedilir."
           ]
         },
         {
@@ -2691,6 +2746,14 @@
             "- Sonsuz: her turda yeni bir parkur, rekora sayılır.",
             "- Günün parkuru: bugün herkes için aynı (web sürümü dahil), kendi günlük rekoruyla - rekora sayılmaz.",
             "Ayarlarda gölgeleri [H] ve gece-gündüz döngüsünü [N] açıp kapatırsın; Sol/Sağ karakterlerin arasında geçiş yapar."
+          ]
+        },
+        {
+          "h": "Günlük arşiv",
+          "body": [
+            "Son 30 günün günlük parkurları ve daha önce oynadığın her gün yeniden oynanabilir - her gün için ayrı en iyi skorla.",
+            "- Günlük parkur ayarlarında tarihin yanındaki oklar veya [PgUp]/[PgDn] günü değiştirir; [K] veya Arşiv takvimi açar.",
+            "- Geçmiş bir gün o zamanki tohumu kullanır - parkur tıpatıp aynıdır."
           ]
         }
       ]

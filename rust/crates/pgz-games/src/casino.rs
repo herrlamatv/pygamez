@@ -376,6 +376,10 @@ impl CasinoGame {
 }
 
 impl Game for CasinoGame {
+    /// Match-Historie: das Spiel meldet seine Matches selbst (`log_match`).
+    fn match_manual(&self) -> bool {
+        true
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }

@@ -6,12 +6,19 @@
 //! (2 Bretter) und Quordle (4 Bretter); Setup mit Wortlaenge 4-7, hartem
 //! Modus und Farbenblind-Palette; Statistik je Sprache/Laenge/Modus und
 //! "Ergebnis teilen" als Emoji-Raster in die Zwischenablage.
+//!
+//! Tages-Archiv (`pgz_engine::dailyarchive`): die letzten 30 Tage und jeder
+//! schon gespielte Tag lassen sich nachspielen - Section-Feld "arch":
+//! {"de:5": [[tag, antwort, versuche_aneinander, zustand], ...]}, zustand
+//! 1 geloest / 0 verloren / 2 angefangen. Archiv-Tage aendern weder
+//! Statistik noch Serie.
 
 use std::collections::HashMap;
 use std::f64::consts::PI;
 
-use pgz_core::{achievements, highscore, i18n, seedrand, store};
+use pgz_core::{achievements, highscore, i18n, matches, seedrand, store};
 use pgz_engine::clip;
+use pgz_engine::dailyarchive::{self as da, DayRow, Picker, Wahl};
 use pgz_engine::prelude::*;
 use serde_json::{json, Map, Value};
 
@@ -259,12 +266,122 @@ fn stats_key(mode: &str, lang: &str, length: usize) -> String {
 /// `load_data()` - mem.json-Section 'wordle' mit Ergaenzungen.
 fn load_data() -> Map<String, Value> {
     let mut data = store::load_section("wordle");
-    for key in ["stats", "daily", "best"] {
+    for key in ["stats", "daily", "best", "arch"] {
         if !data.get(key).is_some_and(|v| v.is_object()) {
             data.insert(key.into(), Value::Object(Map::new()));
         }
     }
+    migrate_daily(&mut data);
     data
+}
+
+/// Eine Archiv-Zeile: [tag, antwort, versuche_aneinander, zustand].
+#[derive(Clone, Debug, PartialEq)]
+struct ArchRow {
+    day: i64,
+    answer: String,
+    guesses: String,
+    state: i64,
+}
+
+impl DayRow for ArchRow {
+    fn day(&self) -> i64 {
+        self.day
+    }
+}
+
+impl ArchRow {
+    fn to_value(&self) -> Value {
+        json!([self.day, self.answer, self.guesses, self.state])
+    }
+}
+
+/// `str.isalpha()` (nicht leer, nur Buchstaben).
+fn is_alpha(s: &str) -> bool {
+    !s.is_empty() && s.chars().all(char::is_alphabetic)
+}
+
+/// Wortlaenge eines Slots ("de:5" -> 5), `None` wie Pythons IndexError/ValueError.
+fn slot_length(slot: &str) -> Option<usize> {
+    slot.split(':').nth(1)?.trim().parse::<i64>().ok().filter(|l| *l > 0).map(|l| l as usize)
+}
+
+/// `arch_rows(data, slot)` - bereinigte Archiv-Zeilen eines Slots.
+fn arch_rows(data: &Map<String, Value>, slot: &str) -> Vec<ArchRow> {
+    let Some(length) = slot_length(slot) else { return Vec::new() };
+    let mut rows = Vec::new();
+    for row in da::clean_rows(section(data, "arch").and_then(|a| a.get(slot)), 4) {
+        let Some(day) = row[0].as_i64() else { continue };
+        let Value::String(answer) = &row[1] else { continue };
+        if !(answer.chars().count() == length && is_alpha(answer)) {
+            continue;
+        }
+        let Value::String(guesses) = &row[2] else { continue };
+        let gl = guesses.chars().count();
+        if !(gl % length == 0 && gl <= 9 * length && (guesses.is_empty() || is_alpha(guesses))) {
+            continue;
+        }
+        let Some(state) = row[3].as_i64().filter(|st| [0, 1, 2].contains(st)) else { continue };
+        rows.push(ArchRow { day, answer: answer.clone(), guesses: guesses.clone(), state });
+    }
+    rows
+}
+
+fn set_arch_rows(data: &mut Map<String, Value>, slot: &str, rows: &[ArchRow]) {
+    section_mut(data, "arch").insert(slot.to_string(), Value::Array(rows.iter().map(ArchRow::to_value).collect()));
+}
+
+/// `str(value)` wie Python (fuer das Datum eines alten Tagesstands).
+fn py_str(v: Option<&Value>) -> String {
+    match v {
+        None => String::new(),
+        Some(Value::String(s)) => s.clone(),
+        Some(Value::Null) => "None".into(),
+        Some(Value::Bool(b)) => if *b { "True" } else { "False" }.into(),
+        Some(other) => other.to_string(),
+    }
+}
+
+/// `_migrate_daily(data)` - heutige/letzte Tagesstaende ins Archiv uebernehmen
+/// (fehlt dort ein Tag).
+fn migrate_daily(data: &mut Map<String, Value>) {
+    let daily: Vec<(String, Value)> =
+        section(data, "daily").map(|d| d.iter().map(|(k, v)| (k.clone(), v.clone())).collect()).unwrap_or_default();
+    for (slot, prog) in daily {
+        let Value::Object(prog) = prog else { continue };
+        let date: String = py_str(prog.get("date")).chars().take(10).collect();
+        let Some(day) = seedrand::day_index_checked(&date) else { continue };
+        let Some(length) = slot_length(&slot) else { continue };
+        let guesses: Vec<String> = match prog.get("guesses") {
+            Some(Value::Array(a)) => a
+                .iter()
+                .filter_map(|g| g.as_str())
+                .filter(|g| g.chars().count() == length && is_alpha(g))
+                .map(String::from)
+                .collect(),
+            Some(Value::String(st)) => {
+                st.chars().map(|c| c.to_string()).filter(|g| g.chars().count() == length && is_alpha(g)).collect()
+            }
+            Some(Value::Object(o)) => o.keys().filter(|g| g.chars().count() == length && is_alpha(g)).cloned().collect(),
+            _ => Vec::new(),
+        };
+        let answer = match prog.get("answer") {
+            Some(Value::String(a)) if a.chars().count() == length => a.clone(),
+            _ => continue,
+        };
+        if day < 0 {
+            continue;
+        }
+        let mut rows = arch_rows(data, &slot);
+        if da::find(&rows, day).is_some() {
+            continue;
+        }
+        let won = guesses.iter().any(|g| g.to_uppercase() == answer.to_uppercase());
+        let done = prog.get("done").is_some_and(truthy);
+        let state = if won { 1 } else if done { 0 } else { 2 };
+        da::upsert(&mut rows, ArchRow { day, answer, guesses: guesses.concat(), state });
+        set_arch_rows(data, &slot, &rows);
+    }
 }
 
 fn save_data(data: &Map<String, Value>) {
@@ -513,6 +630,12 @@ pub struct WordleGame {
     panel_hidden: bool,
     daily_date: Option<String>,
     daily_view: bool,
+    /// Gewaehlter Tag (Tageswort, `dailyarchive.today_index()` oder Archiv-Tag).
+    arch_day: i64,
+    /// Offenes Archiv-Fenster.
+    picker: Option<Picker>,
+    /// Datums-Leiste im Setup (nur Tageswort).
+    su_day: Option<[Rect; 4]>,
     words: Option<Lists>,
     fit_cache: HashMap<(String, i32, i32, bool), Font>,
     letter_cache: HashMap<(i32, char), Surface>,
@@ -592,6 +715,9 @@ impl WordleGame {
             panel_hidden: false,
             daily_date: None,
             daily_view: false,
+            arch_day: 0,
+            picker: None,
+            su_day: None,
             words: None,
             fit_cache: HashMap::new(),
             letter_cache: HashMap::new(),
@@ -762,7 +888,11 @@ impl WordleGame {
         let row_h = 36.max((58.0 * k) as i32);
         let start_h = 32.max((50.0 * k) as i32);
         let sp = 6.max((12.0 * k) as i32);
-        let total = label_h + 4 + seg_h + sp + row_h + sp + row_h + sp * 2 + start_h;
+        let daily = self.game_mode == "daily";
+        let mut total = label_h + 4 + seg_h + sp + row_h + sp + row_h + sp * 2 + start_h;
+        if daily {
+            total += seg_h + sp; // Datums-Leiste (Tages-Archiv)
+        }
         let mut y = left.y + 0.max(py::fdiv32(left.h - total, 2));
         self.su_label_y = y;
         y += label_h + 4;
@@ -773,7 +903,13 @@ impl WordleGame {
         self.su_hard = Rect::new(left.x, y, col_w, row_h);
         y += row_h + sp;
         self.su_cb = Rect::new(left.x, y, col_w, row_h);
-        y += row_h + sp * 2;
+        y += row_h + sp;
+        self.su_day = None;
+        if daily {
+            self.su_day = Some(da::day_row_rects(left.x, y, col_w, seg_h));
+            y += seg_h + sp;
+        }
+        y += sp;
         self.su_start = Rect::new(left.x, y, col_w, start_h);
         let st_top = top.max(self.su_label_y - 4.max((6.0 * k) as i32));
         self.su_stats_rect = Rect::new(margin + col_w + gap, st_top, col_w, (self.su_start.bottom() - st_top).max((250.0 * k) as i32));
@@ -939,8 +1075,91 @@ impl WordleGame {
         format!("{}:{}", self.lang, self.length)
     }
 
+    /// Laeuft (bzw. ist im Setup gewaehlt) ein vergangenes Tageswort?
+    fn is_archive(&self) -> bool {
+        self.game_mode == "daily" && self.arch_day != da::today_index()
+    }
+
+    fn arch_days(&self) -> Vec<i64> {
+        da::available(arch_rows(&self.data, &self.daily_slot()).iter().map(|r| r.day), None)
+    }
+
+    fn step_day(&mut self, d: i64) {
+        let days = self.arch_days();
+        let i = days.iter().position(|x| *x == self.arch_day).unwrap_or(days.len() - 1) as i64;
+        let j = 0.max((days.len() as i64 - 1).min(i + d)) as usize;
+        if days[j] != self.arch_day {
+            self.arch_day = days[j];
+            self.b.play_sound("move");
+        }
+    }
+
+    fn open_picker(&mut self) {
+        let rows = max_rows("daily");
+        let mut info = std::collections::BTreeMap::new();
+        for r in arch_rows(&self.data, &self.daily_slot()) {
+            let n = r.guesses.chars().count() / self.length;
+            let v = match r.state {
+                1 => ("solved".to_string(), format!("{n}/{rows}")),
+                0 => ("played".to_string(), format!("X/{rows}")),
+                _ => ("started".to_string(), format!("{n}/{rows}")),
+            };
+            info.insert(r.day, v);
+        }
+        self.picker = Some(Picker::new("wordle", self.b.accent, self.arch_day, info));
+        self.b.play_sound("click");
+    }
+
+    /// `_start_arch_day()` - ein vergangenes Tageswort, Antwort und Stand aus dem Archiv.
+    fn start_arch_day(&mut self) {
+        let day = self.arch_day;
+        let date = seedrand::date_of(day);
+        self.daily_date = Some(date.clone());
+        let row = da::find(&arch_rows(&self.data, &self.daily_slot()), day).map(|i| arch_rows(&self.data, &self.daily_slot())[i].clone());
+        let answer = match &row {
+            Some(r) => r.answer.clone(),
+            None => {
+                let words = self.words.clone().unwrap_or_else(|| words_for(&self.lang, self.length));
+                daily_answer(&words.0, &self.lang, self.length, Some(&date))
+            }
+        };
+        self.boards = vec![Board::new(answer.clone())];
+        self.clear_round();
+        self.state = St::Play;
+        let Some(row) = row else { return };
+        let l = self.length;
+        let chars: Vec<char> = row.guesses.chars().collect();
+        let end = chars.len().min(self.rows() * l);
+        let mut i = 0;
+        while i < end {
+            let guess: String = chars[i..(i + l).min(chars.len())].iter().collect::<String>().to_uppercase();
+            self.guesses.push(guess.clone());
+            let res = evaluate(&guess, &answer);
+            self.boards[0].apply(&guess, &res, -99.0);
+            if self.boards[0].solved() {
+                break;
+            }
+            i += l;
+        }
+        if self.boards[0].solved() || self.guesses.len() >= self.rows() {
+            let st = get_stats(&self.data, "daily", &self.lang, self.length);
+            self.daily_view = true;
+            let board = &self.boards[0];
+            self.result = Some(ResultInfo { won: board.solved(), tries: board.solved_at.unwrap_or(0), stats: st, t0: self.anim - PANEL_DELAY, new_best: false });
+            self.state = St::Done;
+        }
+    }
+
     fn start_daily(&mut self) {
         let today = seedrand::today_str();
+        let today_i = seedrand::day_index(Some(&today));
+        if self.arch_day > today_i {
+            self.arch_day = today_i;
+        }
+        if self.is_archive() {
+            self.start_arch_day();
+            return;
+        }
         self.daily_date = Some(today.clone());
         let words = self.words.clone().unwrap_or_else(|| words_for(&self.lang, self.length));
         let answer = daily_answer(&words.0, &self.lang, self.length, Some(&today));
@@ -983,7 +1202,22 @@ impl WordleGame {
         }
     }
 
+    /// `_save_arch(done)` - Stand des Tageswortes ins Archiv.
+    fn save_arch(&mut self, done: bool) {
+        let slot = self.daily_slot();
+        let board = &self.boards[0];
+        let state = if board.solved() { 1 } else if done { 0 } else { 2 };
+        let mut rows = arch_rows(&self.data, &slot);
+        let day = seedrand::day_index(self.daily_date.as_deref());
+        da::upsert(&mut rows, ArchRow { day, answer: board.answer.clone(), guesses: self.guesses.concat(), state });
+        set_arch_rows(&mut self.data, &slot, &rows);
+    }
+
     fn save_daily(&mut self, done: bool) {
+        self.save_arch(done);
+        if self.is_archive() {
+            return; // der heutige Stand bleibt unberuehrt
+        }
         let date = self.daily_date.clone();
         let slot = self.daily_slot();
         let mut m = Map::new();
@@ -1055,7 +1289,7 @@ impl WordleGame {
             return;
         }
         let allowed = self.words.as_ref().is_some_and(|w| w.1.contains(&self.current));
-        if !allowed {
+        if !allowed && !self.boards.iter().any(|b| b.answer == self.current) {
             self.reject(t("wd.not_a_word"));
             return;
         }
@@ -1168,14 +1402,21 @@ impl WordleGame {
             return;
         }
         let day = if mode == "daily" { Some(seedrand::day_index(self.daily_date.as_deref())) } else { None };
-        let st = record_game(&mut self.data, mode, &self.lang, self.length, true, n, day);
+        let st = if self.is_archive() {
+            // Archiv-Tag: Statistik und Serie bleiben, wie sie sind.
+            get_stats(&self.data, mode, &self.lang, self.length)
+        } else {
+            record_game(&mut self.data, mode, &self.lang, self.length, true, n, day)
+        };
         save_data(&self.data);
         self.b.report_result(true);
         if mode == "daily" {
             if n <= 2 {
                 self.b.ach_event("wordle_two", None);
             }
-            self.b.ach_event("wordle_daily7", Some(st.streak));
+            if !self.is_archive() {
+                self.b.ach_event("wordle_daily7", Some(st.streak));
+            }
         } else if mode == "quordle" {
             self.b.ach_event("wordle_quordle", None);
         }
@@ -1187,7 +1428,11 @@ impl WordleGame {
     fn round_lost(&mut self, n: usize) {
         let mode = self.game_mode;
         let day = if mode == "daily" { Some(seedrand::day_index(self.daily_date.as_deref())) } else { None };
-        let st = record_game(&mut self.data, mode, &self.lang, self.length, false, n, day);
+        let st = if self.is_archive() {
+            get_stats(&self.data, mode, &self.lang, self.length)
+        } else {
+            record_game(&mut self.data, mode, &self.lang, self.length, false, n, day)
+        };
         let mut new_best = false;
         if mode == "endless" {
             let key = self.length.to_string();
@@ -1277,7 +1522,9 @@ impl WordleGame {
 
     fn done_primary(&mut self) {
         if self.game_mode == "daily" {
-            if self.daily_date.as_deref() != Some(seedrand::today_str().as_str()) {
+            if self.is_archive() {
+                self.to_setup();
+            } else if self.daily_date.as_deref() != Some(seedrand::today_str().as_str()) {
                 self.b.game_over = false;
                 self.b.new_round_result();
                 self.start();
@@ -1304,6 +1551,47 @@ impl WordleGame {
     }
 
     fn handle_setup(&mut self, ev: &InputEvent) {
+        if let Some(pk) = self.picker.as_mut() {
+            if let Some(res) = pk.handle_event(ev, Some(&self.b)) {
+                self.picker = None;
+                if let Wahl::Pick(day) = res {
+                    self.arch_day = day;
+                    self.b.play_sound("select");
+                } else {
+                    self.b.play_sound("click");
+                }
+            }
+            return;
+        }
+        if let Some([r_prev, r_date, r_next, r_arch]) = self.su_day {
+            if ev.kind == Kind::KeyDown {
+                if ev.key == "Prior" {
+                    self.step_day(-1);
+                    return;
+                }
+                if ev.key == "Next" {
+                    self.step_day(1);
+                    return;
+                }
+                if (ev.key == "k" || ev.key == "K") && self.b.key_is_free(&ev.key) {
+                    self.open_picker();
+                    return;
+                }
+            } else if ev.kind == Kind::MouseDown {
+                if r_prev.hit(ev.pos) {
+                    self.step_day(-1);
+                    return;
+                }
+                if r_next.hit(ev.pos) {
+                    self.step_day(1);
+                    return;
+                }
+                if r_date.hit(ev.pos) || r_arch.hit(ev.pos) {
+                    self.open_picker();
+                    return;
+                }
+            }
+        }
         match ev.kind {
             Kind::KeyDown => {
                 let k = ev.key.as_str();
@@ -1975,7 +2263,9 @@ impl WordleGame {
         self.draw_stats_block(s, block, &stats, highlight, grow);
         y = bottom;
         if mode == "daily" {
-            let text = if self.daily_date.as_deref() != Some(seedrand::today_str().as_str()) {
+            let text = if self.is_archive() {
+                tf("wd.daily.arch", &[("date", &da::long_date(self.arch_day))])
+            } else if self.daily_date.as_deref() != Some(seedrand::today_str().as_str()) {
                 t("wd.daily.new")
             } else {
                 tf("wd.daily.next", &[("t", &format_hms(seconds_to_midnight()))])
@@ -2053,6 +2343,12 @@ impl WordleGame {
         let (hard, cb, f) = (self.hard, self.colorblind, self.setup_focus);
         self.draw_toggle(s, self.su_hard, true, &t("wd.setup.hard"), &t("wd.setup.hard_desc"), hard, f == 1, false);
         self.draw_toggle(s, self.su_cb, false, &t("wd.setup.colorblind"), &t("wd.setup.colorblind_desc"), cb, f == 2, true);
+        if let Some(rects) = self.su_day {
+            let days = self.arch_days();
+            let fnt = self.fit(&da::short_date(self.arch_day), rects[1].w - 10, 10.max((14.0 * k) as i32), true);
+            let (prev, next) = (self.arch_day > days[0], self.arch_day < days[days.len() - 1]);
+            da::draw_day_row(s, &rects, self.arch_day, self.b.accent, prev, next, &fnt, self.is_archive());
+        }
         let start = t("common.start");
         let sf = self.fit(&start, self.su_start.w - 20, 13.max((20.0 * k) as i32), true);
         ui::draw_button_ex(s, self.su_start, &start, &sf, self.setup_focus == 3, None, None, Some(self.b.accent));
@@ -2061,6 +2357,9 @@ impl WordleGame {
         let hint = self.fit_parts(&t("wd.setup.hint"), w - 20, hp);
         let hf = self.fit(&hint, w - 20, hp, false);
         ui::draw_footer_ex(s, w, h, &hint, Some(&hf));
+        if let Some(pk) = self.picker.as_mut() {
+            pk.draw(s);
+        }
     }
 
     fn draw_title_tiles(&mut self, s: &mut Surface) {
@@ -2171,6 +2470,21 @@ impl WordleGame {
             let best = section(&self.data, "best").and_then(|b| py_int(b.get(&self.length.to_string()))).unwrap_or(0);
             return tf("wd.result.best", &[("n", &best.to_string())]);
         }
+        if mode == "daily" && self.is_archive() {
+            let rows = arch_rows(&self.data, &self.daily_slot());
+            let date = da::long_date(self.arch_day);
+            return match da::find(&rows, self.arch_day) {
+                None => tf("wd.daily.arch", &[("date", &date)]),
+                Some(i) => {
+                    let st = match rows[i].state {
+                        1 => "solved",
+                        0 => "played",
+                        _ => "started",
+                    };
+                    tf("wd.daily.arch", &[("date", &date)]) + "  \u{b7}  " + &t(&format!("arch.state.{st}"))
+                }
+            };
+        }
         if mode == "daily" {
             let prog = section(&self.data, "daily").and_then(|d| d.get(&self.daily_slot())).and_then(|v| v.as_object());
             let today = seedrand::today_str();
@@ -2207,6 +2521,11 @@ fn truthy(v: &Value) -> bool {
 }
 
 impl Game for WordleGame {
+    /// Match-Historie: Dauer zaehlt nicht im Setup (Python-Standard
+    /// `getattr(self, "state", None) != "setup"`).
+    fn match_active(&self) -> bool {
+        !matches!(self.state, St::Setup)
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }
@@ -2255,6 +2574,9 @@ impl Game for WordleGame {
         self.panel_hidden = false;
         self.daily_date = None;
         self.daily_view = false;
+        self.arch_day = da::today_index(); // gewaehlter Tag (Tageswort)
+        self.picker = None;
+        self.su_day = None;
         self.fit_cache.clear();
         self.letter_cache.clear();
         self.board_cache.clear();
@@ -2272,6 +2594,47 @@ impl Game for WordleGame {
 
     fn show_highscore_banner(&self) -> bool {
         self.show_banner()
+    }
+
+    fn wants_escape(&self) -> bool {
+        self.state == St::Setup && self.picker.is_some()
+    }
+
+    // ----- Match-Historie ------------------------------------------------
+    /// Endlos: Punkte der Serie; sonst Punkte wie ein Endlos-Wort (oder 0).
+    fn match_score(&self) -> i64 {
+        if self.game_mode == "endless" {
+            return self.points;
+        }
+        match &self.result {
+            Some(r) if r.won => 10 + 0.max(self.rows() as i64 - r.tries as i64) * 10,
+            _ => 0,
+        }
+    }
+
+    fn match_info(&self) -> Option<Map<String, Value>> {
+        let mut info = info_map(vec![("len", self.length.into())]);
+        if self.game_mode == "endless" {
+            info.insert("wd".into(), self.solved_count.into());
+        } else if let Some(r) = &self.result {
+            let g = if r.won { r.tries } else { self.guesses.len() };
+            info.insert("g".into(), g.into());
+        }
+        if self.game_mode == "daily" {
+            if let Some(d) = self.daily_date.as_deref().filter(|d| !d.is_empty()) {
+                let mut m = info_map(vec![("day", seedrand::day_index(Some(d)).into())]);
+                m.append(&mut info);
+                info = m;
+            }
+        }
+        Some(info)
+    }
+
+    fn match_flags(&self) -> i64 {
+        if self.game_mode != "daily" {
+            return 0;
+        }
+        matches::F_DAILY | if self.is_archive() { matches::F_ARCHIVE } else { 0 }
     }
 
     fn handle_event(&mut self, ev: &InputEvent) {

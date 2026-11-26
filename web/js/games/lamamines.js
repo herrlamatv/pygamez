@@ -88,6 +88,11 @@
   const isAction = (key) => key === "space" || key === "Return" || key === "KP_Enter";
 
   class LamaMinesGame extends PG.Game {
+    /** Jede Runde ist ein Match (Game.logMatch). */
+    get matchManual() {
+      return true;
+    }
+
     /** Esc schließt ein offenes Fenster bzw. stoppt den Auto-Modus. */
     get wantsEscape() {
       return (this.window != null) || (this.auto != null);
@@ -591,6 +596,9 @@
       const bet = r.bet;
       const m100 = this.lastMult;
       CS.record(this.stats, bet, paid, m100);
+      const net = paid - bet;
+      this.logMatch(net, net > 0 ? 1 : net < 0 ? 0 : 2,
+        { bet, win: paid, x: m100, mi: r.mines, op: opened.length });
       this.hist = this.hist.concat([m100]).slice(-ML.HISTORY);
       const outcome = { grid: r.grid, mines: r.mines, open: opened.slice(), m: m100, bet };
       F.record(this.fairlog, this._entry(), outcome);

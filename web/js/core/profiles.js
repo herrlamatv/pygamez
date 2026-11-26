@@ -242,6 +242,7 @@
       if (!d.list[pid] || d.order.length <= 1) return false;
       PG.stats.flush();
       PG.stats.dropProfile(pid);
+      if (PG.matches) PG.matches.dropProfile(pid);
       try {
         const ls = window.localStorage;
         const pre = PG.store.prefix + pid + ".";
@@ -266,6 +267,7 @@
       const d = this.load();
       if (!d.list[pid] || d.active === pid) return false;
       PG.stats.flush();
+      if (PG.matches) PG.matches.flush();
       d.active = pid;
       d.list[pid].seen = stamp();
       this.save(d);

@@ -52,6 +52,9 @@ pub enum Cmd {
     Wiki(Option<String>, Option<String>),
     /// `open_replays()`
     Replays,
+    /// `PreGameScreen._open_matches()` - Match-Historie eines Spiels
+    /// (Schliessen fuehrt zurueck zum Vorspiel-Screen).
+    Matches(String),
     /// Zurueck aus der Wiederholung ins geparkte Spiel (`open_replay`, Rueckweg).
     ReturnFromReplay,
     /// `apply_theme(name)`

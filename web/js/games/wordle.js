@@ -10,7 +10,11 @@
  * - Tageswort: ein Wort pro Tag, je Sprache und Länge für alle gleich
  *   (seedrand.js - PC und Browser liefern dasselbe Wort). Angefangene
  *   Tageswörter werden gespeichert; danach gibt es Ergebnis, Statistik und den
- *   Countdown bis morgen. Serie = Tageswörter in Folge.
+ *   Countdown bis morgen. Serie = Tageswörter in Folge. Über das Tages-Archiv
+ *   (dailyarchive.js) lassen sich die letzten 30 Tage und jeder schon gespielte
+ *   Tag nachspielen - Section-Feld "arch": {"de:5": [[tag, antwort,
+ *   versuche_aneinander, zustand], ...]}, zustand 1 gelöst / 0 verloren /
+ *   2 angefangen. Archiv-Tage ändern weder Statistik noch Serie.
  * - Dordle: zwei Wörter gleichzeitig, 7 Versuche - jeder Rateversuch gilt für
  *   beide Bretter.
  * - Quordle: vier Wörter gleichzeitig, 9 Versuche. Die Tasten der
@@ -190,10 +194,61 @@
   function loadData() {
     let data = PG.store.get(STORE_KEY, {});
     if (!data || typeof data !== "object" || Array.isArray(data)) data = {};
-    for (const key of ["stats", "daily", "best"]) {
+    for (const key of ["stats", "daily", "best", "arch"]) {
       if (!data[key] || typeof data[key] !== "object" || Array.isArray(data[key])) data[key] = {};
     }
+    migrateDaily(data);
     return data;
+  }
+
+  /** Python-str.isalpha(): mindestens ein Zeichen, nur Buchstaben. */
+  const isAlpha = (s) => /^\p{L}+$/u.test(s);
+  const strLen = (s) => Array.from(s).length;
+
+  /** Wortlänge eines Slots ("de:5" -> 5) oder null (wie int(slot.split(":")[1])). */
+  function slotLength(slot) {
+    const part = String(slot).split(":")[1];
+    if (part === undefined || !/^\s*[+-]?\d+\s*$/.test(part)) return null;
+    return parseInt(part, 10);
+  }
+
+  /** Bereinigte Archiv-Zeilen eines Slots ("de:5") - [tag, antwort, versuche, zustand]. */
+  function archRows(data, slot) {
+    const length = slotLength(slot);
+    if (length === null) return [];
+    const rows = [];
+    const arch = data.arch && typeof data.arch === "object" ? data.arch : {};
+    for (const row of PG.dailyArchive.cleanRows(arch[slot], 4)) {
+      const [day, answer, guesses, state] = row;
+      if (!(typeof answer === "string" && strLen(answer) === length && isAlpha(answer))) continue;
+      if (!(typeof guesses === "string" && strLen(guesses) % length === 0
+            && strLen(guesses) <= 9 * length && (guesses === "" || isAlpha(guesses)))) continue;
+      if (state !== 0 && state !== 1 && state !== 2) continue;
+      rows.push([day, answer, guesses, state]);
+    }
+    return rows;
+  }
+
+  /** Heutige/letzte Tagesstände ins Archiv übernehmen (fehlt dort ein Tag). */
+  function migrateDaily(data) {
+    const DA = PG.dailyArchive;
+    for (const slot of Object.keys(data.daily)) {
+      const prog = data.daily[slot];
+      if (!prog || typeof prog !== "object" || Array.isArray(prog)) continue;
+      const day = DA.safeDayIndex(String(prog.date === undefined ? "" : prog.date).slice(0, 10));
+      const length = slotLength(slot);
+      if (length === null) continue;
+      const answer = prog.answer;
+      const guesses = (Array.isArray(prog.guesses) ? prog.guesses : []).filter((g) => typeof g === "string"
+        && strLen(g) === length && isAlpha(g));
+      if (day < 0 || !(typeof answer === "string" && strLen(answer) === length)) continue;
+      const rows = archRows(data, slot);
+      if (DA.find(rows, day) !== null) continue;
+      const won = guesses.some((g) => g.toUpperCase() === answer.toUpperCase());
+      const state = won ? 1 : prog.done ? 0 : 2;
+      DA.upsert(rows, [day, answer, guesses.join(""), state]);
+      data.arch[slot] = rows;
+    }
   }
 
   function saveData(data) {
@@ -403,6 +458,9 @@
       this.panelHidden = false;
       this.dailyDate = null;
       this.dailyView = false;
+      this.archDay = PG.dailyArchive.todayIndex(); // gewählter Tag (Tageswort)
+      this.picker = null;
+      this.suDay = null;
       this.doneButtons = [];
       this.donePanel = null;
       this.words = [];
@@ -523,7 +581,9 @@
       const rowH = Math.max(36, Math.floor(58 * k));
       const startH = Math.max(32, Math.floor(50 * k));
       const sp = Math.max(6, Math.floor(12 * k));
-      const total = labelH + 4 + segH + sp + rowH + sp + rowH + sp * 2 + startH;
+      const daily = this.gameMode === "daily";
+      let total = labelH + 4 + segH + sp + rowH + sp + rowH + sp * 2 + startH;
+      if (daily) total += segH + sp; // Datums-Leiste (Tages-Archiv)
       let y = left.y + Math.max(0, Math.floor((left.h - total) / 2));
       this.suLabelY = y;
       y += labelH + 4;
@@ -534,7 +594,13 @@
       this.suHard = new PG.Rect(left.x, y, colW, rowH);
       y += rowH + sp;
       this.suCb = new PG.Rect(left.x, y, colW, rowH);
-      y += rowH + sp * 2;
+      y += rowH + sp;
+      this.suDay = null;
+      if (daily) {
+        this.suDay = PG.dailyArchive.dayRowRects(left.x, y, colW, segH);
+        y += segH + sp;
+      }
+      y += sp;
       this.suStart = new PG.Rect(left.x, y, colW, startH);
       // Rechte Spalte: Statistik, so hoch wie die Einstellungen daneben.
       const stTop = Math.max(top, this.suLabelY - Math.max(4, Math.floor(6 * k)));
@@ -697,9 +763,98 @@
       return this.lang + ":" + this.length;
     }
 
+    get wantsEscape() {
+      return this.state === SETUP && this.picker !== null && this.picker !== undefined;
+    }
+
+    // ----- Match-Historie ------------------------------------------------
+    /** Endlos: Punkte der Serie; sonst Punkte wie ein Endlos-Wort (oder 0). */
+    matchScore() {
+      if (this.gameMode === "endless") return Math.trunc(this.points);
+      const res = this.result || {};
+      if (res.won) return 10 + Math.max(0, this.rows - Math.trunc(res.tries == null ? this.rows : res.tries)) * 10;
+      return 0;
+    }
+
+    matchInfo() {
+      let info = { len: this.length };
+      if (this.gameMode === "endless") info.wd = this.solvedCount;
+      else if (this.result) info.g = this.result.won ? Math.trunc(this.result.tries || 0) : this.guesses.length;
+      if (this.gameMode === "daily" && this.dailyDate) info = Object.assign({ day: PG.seedrand.dayIndex(this.dailyDate) }, info);
+      return info;
+    }
+
+    matchFlags() {
+      if (this.gameMode !== "daily") return 0;
+      return PG.matches.F_DAILY | (this.isArchive() ? PG.matches.F_ARCHIVE : 0);
+    }
+
+    /** Läuft (bzw. ist im Setup gewählt) ein vergangenes Tageswort? */
+    isArchive() {
+      return this.gameMode === "daily" && this.archDay !== PG.dailyArchive.todayIndex();
+    }
+
+    archDays() {
+      return PG.dailyArchive.available(archRows(this.data, this.dailySlot()).map((r) => r[0]));
+    }
+
+    stepDay(d) {
+      const days = this.archDays();
+      const i = days.indexOf(this.archDay) >= 0 ? days.indexOf(this.archDay) : days.length - 1;
+      const j = Math.max(0, Math.min(days.length - 1, i + d));
+      if (days[j] !== this.archDay) {
+        this.archDay = days[j];
+        this.playSound("move");
+      }
+    }
+
+    openPicker() {
+      const rows = MAX_ROWS.daily;
+      const info = {};
+      for (const [day, , guesses, state] of archRows(this.data, this.dailySlot())) {
+        const n = Math.floor(Array.from(guesses).length / this.length);
+        if (state === 1) info[day] = ["solved", n + "/" + rows];
+        else if (state === 0) info[day] = ["played", "X/" + rows];
+        else info[day] = ["started", n + "/" + rows];
+      }
+      this.picker = new PG.dailyArchive.Picker("wordle", this.accent, this.archDay, info);
+      this.playSound("click");
+    }
+
+    /** Ein vergangenes Tageswort - Antwort und Stand aus dem Archiv. */
+    startArchDay() {
+      const day = this.archDay;
+      this.dailyDate = PG.seedrand.dateOf(day);
+      const row = PG.dailyArchive.find(archRows(this.data, this.dailySlot()), day);
+      const answer = row ? row[1] : dailyAnswer(this.words, this.lang, this.length, this.dailyDate);
+      this.boards = [new Board(answer)];
+      this.clearRound();
+      this.state = PLAY;
+      if (row === null) return;
+      const board = this.boards[0];
+      const L = this.length;
+      for (let i = 0; i < Math.min(row[2].length, this.rows * L); i += L) {
+        const guess = row[2].slice(i, i + L).toUpperCase();
+        this.guesses.push(guess);
+        board.apply(guess, evaluate(guess, answer), -99);
+        if (board.solved) break;
+      }
+      if (board.solved || this.guesses.length >= this.rows) {
+        const st = getStats(this.data, "daily", this.lang, this.length);
+        this.dailyView = true;
+        this.result = { won: board.solved, tries: board.solvedAt || 0, stats: st, t0: this.anim - PANEL_DELAY, newBest: false };
+        this.state = DONE;
+      }
+    }
+
     /** Tageswort laden - samt bisherigem Fortschritt von heute. */
     startDaily() {
       const today = PG.seedrand.todayStr();
+      if (this.archDay > PG.seedrand.dayIndex(today)) this.archDay = PG.seedrand.dayIndex(today);
+      if (this.isArchive()) {
+        this.startArchDay();
+        return;
+      }
       this.dailyDate = today;
       const answer = dailyAnswer(this.words, this.lang, this.length, today);
       this.boards = [new Board(answer)];
@@ -725,7 +880,19 @@
       }
     }
 
+    /** Stand des Tageswortes ins Archiv (gelöst / verloren / angefangen). */
+    saveArch(done) {
+      const slot = this.dailySlot();
+      const board = this.boards[0];
+      const state = board.solved ? 1 : done ? 0 : 2;
+      const rows = archRows(this.data, slot);
+      PG.dailyArchive.upsert(rows, [PG.seedrand.dayIndex(this.dailyDate), board.answer, this.guesses.join(""), state]);
+      this.data.arch[slot] = rows;
+    }
+
     saveDaily(done) {
+      this.saveArch(done);
+      if (this.isArchive()) return; // der heutige Stand bleibt unberührt
       this.data.daily[this.dailySlot()] = { date: this.dailyDate, answer: this.boards[0].answer, guesses: this.guesses.slice(), done: !!done };
       // Alte Tage aufräumen (nur heutige Stände behalten).
       for (const slot of Object.keys(this.data.daily)) {
@@ -802,7 +969,7 @@
 
     submit() {
       if (this.current.length !== this.length) return this.reject(t("wd.too_short", { n: this.length }));
-      if (!this.allowed.has(this.current)) return this.reject(t("wd.not_a_word"));
+      if (!this.allowed.has(this.current) && !this.boards.some((b) => this.current === b.answer)) return this.reject(t("wd.not_a_word"));
       if (this.hard) {
         const problem = this.hardCheck(this.current);
         if (problem) return this.reject(problem);
@@ -894,12 +1061,14 @@
         return;
       }
       const day = mode === "daily" ? PG.seedrand.dayIndex(this.dailyDate) : null;
-      const st = recordGame(this.data, mode, this.lang, this.length, true, n, day);
+      // Archiv-Tag: Statistik und Serie bleiben, wie sie sind.
+      const st = this.isArchive() ? getStats(this.data, mode, this.lang, this.length)
+        : recordGame(this.data, mode, this.lang, this.length, true, n, day);
       saveData(this.data);
       this.reportResult(true);
       if (mode === "daily") {
         if (n <= 2) this.achEvent("wordle_two");
-        this.achEvent("wordle_daily7", st.streak);
+        if (!this.isArchive()) this.achEvent("wordle_daily7", st.streak);
       } else if (mode === "quordle") {
         this.achEvent("wordle_quordle");
       }
@@ -911,7 +1080,8 @@
     roundLost(n) {
       const mode = this.gameMode;
       const day = mode === "daily" ? PG.seedrand.dayIndex(this.dailyDate) : null;
-      const st = recordGame(this.data, mode, this.lang, this.length, false, n, day);
+      const st = this.isArchive() ? getStats(this.data, mode, this.lang, this.length)
+        : recordGame(this.data, mode, this.lang, this.length, false, n, day);
       let newBest = false;
       if (mode === "endless") {
         const key = String(this.length);
@@ -987,7 +1157,9 @@
 
     donePrimary() {
       if (this.gameMode === "daily") {
-        if (this.dailyDate !== PG.seedrand.todayStr()) {
+        if (this.isArchive()) {
+          this.toSetup();
+        } else if (this.dailyDate !== PG.seedrand.todayStr()) {
           this.gameOver = false;
           this.newRoundResult();
           this.start(); // neuer Tag, neues Wort
@@ -1018,6 +1190,47 @@
 
     // ----- Setup-Eingabe -------------------------------------------------
     handleSetup(ev) {
+      if (this.picker !== null) {
+        const res = this.picker.handleEvent(ev, this);
+        if (res !== null) {
+          this.picker = null;
+          if (res[0] === "pick") {
+            this.archDay = res[1];
+            this.playSound("select");
+          } else this.playSound("click");
+        }
+        return;
+      }
+      if (this.suDay !== null) {
+        if (ev.kind === "keydown") {
+          if (ev.key === "Prior") {
+            this.stepDay(-1);
+            return;
+          }
+          if (ev.key === "Next") {
+            this.stepDay(1);
+            return;
+          }
+          if ((ev.key === "k" || ev.key === "K") && this.keyIsFree(ev.key)) {
+            this.openPicker();
+            return;
+          }
+        } else if (ev.kind === "mousedown") {
+          const [rPrev, rDate, rNext, rArch] = this.suDay;
+          if (rPrev.collidepoint(ev.pos)) {
+            this.stepDay(-1);
+            return;
+          }
+          if (rNext.collidepoint(ev.pos)) {
+            this.stepDay(1);
+            return;
+          }
+          if (rDate.collidepoint(ev.pos) || rArch.collidepoint(ev.pos)) {
+            this.openPicker();
+            return;
+          }
+        }
+      }
       if (ev.kind === "keydown") {
         const k = ev.key;
         if (k === "Return" || k === "KP_Enter") this.start();
@@ -1567,7 +1780,10 @@
       this.drawStatsBlock(ctx, block, res.stats, highlight, grow);
       y = bottom;
       if (mode === "daily") {
-        const text = this.dailyDate !== PG.seedrand.todayStr() ? t("wd.daily.new") : t("wd.daily.next", { t: formatHms(secondsToMidnight()) });
+        let text;
+        if (this.isArchive()) text = t("wd.daily.arch", { date: PG.dailyArchive.longDate(this.archDay) });
+        else if (this.dailyDate !== PG.seedrand.todayStr()) text = t("wd.daily.new");
+        else text = t("wd.daily.next", { t: formatHms(secondsToMidnight()) });
         this.txt(ctx, text, subPx, ui.GOLD, inner, true, "midtop", panel.centerx, y);
         y += subPx + Math.max(4, Math.floor(8 * k));
       }
@@ -1618,10 +1834,18 @@
       // Schalter
       this.drawToggle(ctx, this.suHard, "hard", t("wd.setup.hard"), t("wd.setup.hard_desc"), this.hard, this.setupFocus === 1);
       this.drawToggle(ctx, this.suCb, "colorblind", t("wd.setup.colorblind"), t("wd.setup.colorblind_desc"), this.colorblind, this.setupFocus === 2, true);
+      if (this.suDay !== null) {
+        const days = this.archDays();
+        const DA = PG.dailyArchive;
+        DA.drawDayRow(ctx, this.suDay, this.archDay, this.accent, this.archDay > days[0], this.archDay < days[days.length - 1],
+          this.fit(DA.shortDate(this.archDay), this.suDay[1].w - 10, Math.max(10, Math.floor(14 * k)), true),
+          this.isArchive());
+      }
       ui.drawButton(ctx, this.suStart, t("common.start"), this.fit(t("common.start"), this.suStart.w - 20, Math.max(13, Math.floor(20 * k)), true), this.setupFocus === 3, { accent: this.accent });
       this.drawSetupStats(ctx);
       const hint = this.fitParts(t("wd.setup.hint"), W - 20, Math.max(10, Math.floor(13 * k)));
       ui.drawFooter(ctx, W, H, hint, this.fit(hint, W - 20, Math.max(10, Math.floor(13 * k))));
+      if (this.picker !== null) this.picker.draw(ctx, W, H);
     }
 
     /** WORDLE als Kachelreihe, die sich beim Öffnen nacheinander umdreht. */
@@ -1722,6 +1946,12 @@
         const best = this.data.best[String(this.length)];
         return t("wd.result.best", { n: Number.isInteger(best) ? best : 0 });
       }
+      if (mode === "daily" && this.isArchive()) {
+        const row = PG.dailyArchive.find(archRows(this.data, this.dailySlot()), this.archDay);
+        const date = PG.dailyArchive.longDate(this.archDay);
+        if (row === null) return t("wd.daily.arch", { date });
+        return t("wd.daily.arch", { date }) + "  ·  " + t("arch.state." + { 1: "solved", 0: "played", 2: "started" }[row[3]]);
+      }
       if (mode === "daily") {
         const prog = this.data.daily[this.dailySlot()];
         if (prog && typeof prog === "object" && prog.date === PG.seedrand.todayStr()) {
@@ -1754,7 +1984,8 @@
   });
 
   // Für Tests (tools/wordle_check.js): reine Logik ohne Zeichnen.
-  PG.wordle = { evaluate, hardProblem, dailyAnswer, shareText, getStats, recordGame, shownStreak, secondsToMidnight, formatHms, MAX_ROWS, BOARDS };
+  PG.wordle = { evaluate, hardProblem, dailyAnswer, shareText, getStats, recordGame, shownStreak, secondsToMidnight, formatHms, MAX_ROWS, BOARDS,
+    loadData, saveData, archRows, migrateDaily };
 
   PG.register(WordleGame, {
     id: "WordleGame",

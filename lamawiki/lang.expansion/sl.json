@@ -333,6 +333,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Tekme",
+      "keywords": [
+        "tekme",
+        "zgodovina",
+        "zadnje",
+        "vse",
+        "rezultati",
+        "krogi"
+      ],
+      "sections": [
+        {
+          "h": "Zadnje in vse tekme",
+          "body": [
+            "Vsaka igra si zapomni svoje tekme. Na zaslonu pred igro gumb Tekme odpre zgodovino igre.",
+            "- Zadnje tekme: krivulja zadnjih 30 rezultatov (rekordi zlato) in pod njo zadnjih 10 tekem.",
+            "- Vse tekme: vse shranjene tekme s filtrom načina [M] in razvrstitvijo najnovejše/najboljše [O].",
+            "Zgoraj so vsote: tekme, zmage, najboljše, povprečje in čas igranja."
+          ]
+        },
+        {
+          "h": "Kaj se shrani",
+          "body": [
+            "Datum in ura, način, točke (igre z žetoni: dobiček ali izguba), zmaga/poraz/neodločeno, trajanje in podrobnosti, kot so vložek, množitelj, kovanci, stopnja ali nasprotnik.",
+            "- Rekordi so označeni zlato. Če krog zapustiš predčasno, se prikaže kot prekinjen - a le, če si že imel točke ali je trajal vsaj 5 sekund.",
+            "- Igre z žetoni štejejo vsak krog posebej, Geometry Dash vsak obisk stopnje, Labirint vsako rešeno stopnjo."
+          ]
+        },
+        {
+          "h": "Shranjevanje",
+          "body": [
+            "Za vsako igro se hrani zadnjih 250 tekem (na pygamez.com privzeto 50). Starejše izpadejo - vsote pa štejejo naprej.",
+            "Zgodovina je v datoteki matches.pgzlamamatches poleg mem.json, ločeno za vsak profil."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Dosežki, redkost in stopnja",
@@ -1107,6 +1146,14 @@
           ]
         },
         {
+          "h": "Dnevni arhiv",
+          "body": [
+            "Dnevne uganke zadnjih 30 dni in vsak že rešen dan so v dnevnem arhivu - z najboljšim časom in zvezdicami za vsak dan.",
+            "- Pod dnevno kartico dan zamenjajo puščice ali [PgUp]/[PgDn], [K] ali Arhiv odpre koledar, [T] zažene izbrani dan.",
+            "- Arhivske uganke ne spremenijo tvojega dnevnega niza."
+          ]
+        },
+        {
           "h": "Nasveti",
           "body": [
             "- Začni z vrsticami, stolpci in bloki, v katerih je že veliko števk.",
@@ -1730,6 +1777,14 @@
             "Beseda dneva: ena beseda na dan s 6 poskusi - za vse enaka v vsakem jeziku in dolžini, na računalniku in v brskalniku. Začeta beseda dneva se shrani; nato igra pokaže rezultat, statistiko in odštevanje do naslednje besede. Niz raste le, če igraš vsak dan.",
             "Dordle: dve besedi hkrati v 7 poskusih - vsak poskus velja za obe mreži. Tipke zaslonske tipkovnice so razdeljene: leva polovica mreža 1, desna polovica mreža 2.",
             "Quordle: štiri besede hkrati v 9 poskusih. Tipke so razdeljene na četrtine in kažejo barve vseh štirih mrež."
+          ]
+        },
+        {
+          "h": "Dnevni arhiv",
+          "body": [
+            "Dnevne besede zadnjih 30 dni in vsak dan, ki si ga že igral, lahko igraš znova - za vsak jezik in dolžino besede.",
+            "- V nastavitvah dnevne besede dan zamenjajo puščice ali [PgUp]/[PgDn], [K] ali Arhiv odpre koledar.",
+            "- Arhivske besede ne štejejo v statistiko in niz; začete arhivske besede se shranijo."
           ]
         },
         {
@@ -2691,6 +2746,14 @@
             "- Neskončno: vsak krog nova proga, šteje za rekord.",
             "- Dnevna proga: danes enaka za vse (tudi v spletni različici), z lastnim dnevnim rekordom - ne šteje za rekord.",
             "V nastavitvah vklopiš ali izklopiš sence [H] in menjavanje dneva in noči [N]; Levo/Desno preklaplja med tvojimi liki."
+          ]
+        },
+        {
+          "h": "Dnevni arhiv",
+          "body": [
+            "Dnevne proge zadnjih 30 dni in vsak dan, ki si ga že igral, lahko igraš znova - z lastnim najboljšim rezultatom za vsak dan.",
+            "- V nastavitvah dnevne proge dan zamenjajo puščice ob datumu ali [PgUp]/[PgDn]; [K] ali Arhiv odpre koledar.",
+            "- Pretekli dan uporablja isto seme kot takrat - proga je povsem enaka."
           ]
         }
       ]

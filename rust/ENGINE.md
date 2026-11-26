@@ -57,6 +57,14 @@ Eintragen: `pub mod pong;` und `pong::INFO` in `all_games()` (Reihenfolge wie
 Optionale Hooks: `on_surface_changed`, `on_exit`, `wants_escape`,
 `wants_right_click`, `capture_mouse`, `show_highscore_banner`.
 
+Match-Historie (`matches.py`): `match_active` (Python-Standard
+`state != "setup"` - jedes Spiel mit Setup-Zustand setzt es um),
+`match_score`, `match_info`, `match_flags`; Spiele, deren Runden ohne Game
+Over enden, setzen `match_manual` und melden jede Runde mit
+`self.b.log_match(score, result, Some(info_map(...)), mode, flags)`
+(`chip_result(net)` = Sieg/Niederlage/Remis). Anzeige-Texte eines
+Info-Werts (`match_text`) stehen in `pgz-games/src/matchtext.rs`.
+
 ## 2. Python → Rust, Zeile für Zeile
 
 | Python | Rust |

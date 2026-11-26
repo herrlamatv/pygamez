@@ -9,7 +9,7 @@
 //! [`App::frame`] in derselben Reihenfolge.
 
 use pgz_core::i18n::{t, tf};
-use pgz_core::{achievements, highscore, stats};
+use pgz_core::{achievements, highscore, matches, stats};
 use pgz_engine::game::{Game, GameBase, GameInfo, InputEvent, Kind};
 use pgz_engine::pg::{self, draw, transform, Color, Rect, RectExt, SurfExt, Surface, BLEND_ADD, BLEND_RGBA_MULT};
 use pgz_engine::shell::{self, AppInfo, Cmd};
@@ -127,7 +127,7 @@ impl App {
     pub fn show_screen(&mut self, screen: Box<dyn Game>) {
         if let Some(old) = self.current.as_mut() {
             if !old.base().is_menu && !old.base().hs_saved {
-                Self::highscore_speichern(old.as_mut());
+                Self::highscore_speichern(old.as_mut(), true);
             }
         }
         self.switch_current(Some(screen), true);
@@ -171,10 +171,12 @@ impl App {
     /// `zum_menue()` (Python: `zum_men\u00fc`)
     pub fn zum_menue(&mut self) {
         if let Some(cur) = self.current.as_mut() {
-            Self::highscore_speichern(cur.as_mut());
+            Self::highscore_speichern(cur.as_mut(), true);
         }
+        // Gesammelte Spielzeit sofort sichern (sonst erst beim naechsten Flush).
         stats::end_session();
         stats::flush();
+        matches::flush();
         self.switch_current(None, true);
         self.sidebar.status = t("app.no_game");
         self.sidebar.punkt = ui::tk_colors().text_dim;
@@ -310,6 +312,13 @@ impl App {
                 Cmd::Replays => {
                     if let Some(s) = screens::replays(self) {
                         self.show_screen(s);
+                    }
+                }
+                Cmd::Matches(key) => {
+                    if let Some(i) = self.game_index(&key) {
+                        let info = self.games[i];
+                        let s = screens::matchview::MatchScreen::new(self.menu_base(), info, Some(key), "recent");
+                        self.show_screen(Box::new(s));
                     }
                 }
                 Cmd::ReturnFromReplay => match self.parked.take() {
@@ -551,7 +560,7 @@ impl App {
 
     // ----- Highscores -------------------------------------------------------
 
-    fn highscore_speichern(game: &mut dyn Game) {
+    fn highscore_speichern(game: &mut dyn Game, leaving: bool) {
         let b = game.base_mut();
         if b.is_menu {
             return;
@@ -565,6 +574,46 @@ impl App {
         stats::score_result(b.key, b.score, rekord);
         achievements::on_highscore(b.key, hs, false);
         achievements::check_stats(false);
+        Self::match_speichern(game, rekord, leaving);
+    }
+
+    /// `_match_speichern(game, rekord, leaving)` - Match-Historie: das Match
+    /// dieses Spiels genau einmal festhalten.
+    ///
+    /// Beim Game Over wird es fertig gespeichert; wer mitten im Match
+    /// verlaesst, bekommt einen Eintrag "abgebrochen" (nur wenn schon Punkte
+    /// da sind oder es mindestens `matches::MIN_ABORT_SECONDS` lief). Spiele
+    /// mit `match_manual` melden ihre Runden selbst (`GameBase::log_match`).
+    fn match_speichern(game: &mut dyn Game, rekord: bool, leaving: bool) {
+        if game.match_manual() || game.base().match_logged {
+            return;
+        }
+        let over = game.base().game_over;
+        let score = game.match_score();
+        let dur = game.base().match_time as i64;
+        let mut flags = game.match_flags();
+        if !over {
+            if !leaving || !(score > 0 || dur >= matches::MIN_ABORT_SECONDS) {
+                return;
+            }
+            flags |= matches::F_ABORT;
+        } else if rekord {
+            flags |= matches::F_RECORD;
+        }
+        let mut info = game.match_info();
+        if let Some(vs) = game.base().match_vs.clone().filter(|v| !v.is_empty()) {
+            let mut m = info.unwrap_or_default();
+            m.insert("vs".into(), serde_json::Value::String(vs));
+            info = Some(m);
+        }
+        let b = game.base_mut();
+        matches::record(b.key, &b.mode, score, b.match_result, dur, flags, info.as_ref(), None, b.match_replace);
+        b.match_logged = true;
+        b.match_replace = false;
+        b.match_time = 0.0;
+        if leaving {
+            matches::flush();
+        }
     }
 
     fn draw_highscore_overlay(&mut self) {
@@ -633,6 +682,7 @@ impl App {
         let paused = self.current.as_ref().map(|g| g.base().paused).unwrap_or(false);
         audio::music_tick(id, paused, &shell::settings());
         stats::maybe_flush();
+        matches::maybe_flush();
         let mut c = self.canvas.clone();
         ui::draw_fx(&mut c, self.game_w, self.game_h, dt);
         achv::push_toasts();
@@ -666,6 +716,10 @@ impl App {
             game.update(dt);
             if !is_menu {
                 stats::add_playtime(game.base().key, dt);
+                // Match-Historie: Dauer nur, solange ein Match laeuft.
+                if game.match_active() {
+                    game.base_mut().match_time += dt;
+                }
                 let st = stats::session_time();
                 if st >= 3600.0 {
                     achievements::on_playtime(st);
@@ -680,7 +734,7 @@ impl App {
         self.update_status();
         let Some(game) = self.current.as_mut() else { return };
         if game.base().game_over && !game.base().hs_saved {
-            Self::highscore_speichern(game.as_mut());
+            Self::highscore_speichern(game.as_mut(), false);
             game.base_mut().hs_saved = true;
             if game.base().hs_record {
                 ui::spawn_confetti(self.game_w as f64, self.game_h as f64, 90);
@@ -698,6 +752,10 @@ impl App {
                 b.was_over = false;
                 b.result_reported = false;
                 b.duel_reported = false;
+                b.match_logged = false;
+                b.match_result = None;
+                b.match_vs = None;
+                b.match_time = 0.0;
                 stats::game_started(b.key);
                 achievements::on_game_started(b.key);
             }
@@ -1067,9 +1125,10 @@ impl App {
         }
         self.closing = true;
         if let Some(cur) = self.current.as_mut() {
-            Self::highscore_speichern(cur.as_mut());
+            Self::highscore_speichern(cur.as_mut(), true);
         }
         self.switch_current(None, true);
+        matches::flush();
         stats::end_session();
         stats::flush();
         pgz_core::shutdown();

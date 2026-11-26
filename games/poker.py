@@ -198,6 +198,7 @@ class PokerGame(Game):
     highscore_key = "poker"
     supports_multiplayer = False
 
+    match_manual = True       # jede Hand ist ein Match (Game.log_match)
     MODES = [("holdem", "poker.mode.holdem"),
              ("draw", "poker.mode.draw"),
              ("video", "poker.mode.video")]
@@ -664,6 +665,11 @@ class PokerGame(Game):
         self.rank_shown = rank_tuple
         self.winner_names = [w.name for w in winners]
         self.dealer = (self.dealer + 1) % max(1, len(self.players))
+        # Match-Historie: eine Hand = ein Match (Einsatz = eigene Chips im Pot).
+        wager = max(0, self.chips - (me.stack - won))
+        net = won - wager
+        self.log_match(net, (1 if net > 0 else 2) if me in winners else 0,
+                       {"bet": wager, "win": won})
         self._sync_chips()
 
     # ----- Video Poker --------------------------------------------------
@@ -693,6 +699,9 @@ class PokerGame(Game):
         mult = self._video_payout(rt)
         self.win_amount = self.video_bet * mult
         lamabank.credit(self.win_amount, "poker")
+        net = self.win_amount - self.video_bet
+        self.log_match(net, 1 if net > 0 else 0 if net < 0 else 2,
+                       {"bet": self.video_bet, "win": self.win_amount})
         self._sync_chips()
         if mult > 0:
             self.msg = t("poker.video_win",

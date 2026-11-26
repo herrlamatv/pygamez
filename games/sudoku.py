@@ -25,6 +25,8 @@ Spielstand (mem.json, Abschnitt "sudoku")
   saves  : {"x:1:12": {...}, "daily:2026-09-16": {...}}  angefangene Rätsel
   last   : {variante: {stufe: level}} Levelcursor der neuen Varianten
   daily  : {date, streak, best, time, stars, count}   Tages-Sudoku
+  arch   : [[tag, sekunden, sterne], ...]  Tages-Archiv (gelöste Tage, tag =
+           seedrand.day_index; siehe dailyarchive.py)
 Angefangene Rätsel werden beim Verlassen, beim Zurück zur Levelwahl und
 gedrosselt während des Spiels gesichert und beim nächsten Start fortgesetzt.
 
@@ -63,6 +65,8 @@ import time
 
 import pygame
 
+import dailyarchive
+import matches
 import seedrand
 import settings as settings_mod
 import store
@@ -163,7 +167,13 @@ class SudokuGame(SudokuDraw, Game):
         self.can_hint = self.mode == "assist"
 
         self.daily = False
-        self.daily_date = seedrand.today_str()
+        # today_date = Bezugstag für Serie/"heute gelöst", daily_date = der
+        # gespielte bzw. im Setup gezeigte Tag (heute oder ein Archiv-Tag).
+        self.today_date = seedrand.today_str()
+        self.arch_day = seedrand.day_index(self.today_date)
+        self.daily_date = self.today_date
+        self.picker = None
+        self.dayrow_rects = None
         self.play_variant = self.variant
         self.play_diff = self.diff
         self.level = 1
@@ -264,11 +274,24 @@ class SudokuGame(SudokuDraw, Game):
         for k in ("streak", "best", "time", "stars", "count"):
             if isinstance(dl.get(k), int) and not isinstance(dl.get(k), bool):
                 self.daily_state[k] = max(0, dl[k])
+        self.arch = [r for r in dailyarchive.clean_rows(data.get("arch"), 3)
+                     if all(isinstance(v, int) and not isinstance(v, bool) and v >= 0
+                            for v in r) and 1 <= r[2] <= 3]
+        # Altbestand: der zuletzt gelöste Tag wandert ins Archiv.
+        if "date" in self.daily_state and "time" in self.daily_state:
+            try:
+                idx = seedrand.day_index(self.daily_state["date"])
+            except ValueError:
+                idx = -1
+            if idx >= 0 and dailyarchive.find(self.arch, idx) is None:
+                dailyarchive.upsert(self.arch, [idx, self.daily_state["time"],
+                                                max(1, min(3, self.daily_state.get("stars", 1)))])
 
     def _save_progress(self):
         data = dict(self._prog_extra)
         data.update(solved=self.solved, best=self.best, saves=self.saves,
-                    last=self.last, daily=self.daily_state)
+                    last=self.last, daily=self.daily_state,
+                    arch=[list(r) for r in self.arch])
         store.save_section("sudoku", data)
 
     def _save_setting(self, key, value):
@@ -329,13 +352,79 @@ class SudokuGame(SudokuDraw, Game):
         if not last:
             return 0
         try:
-            gap = seedrand.day_index(self.daily_date) - seedrand.day_index(last)
+            gap = seedrand.day_index(self.today_date) - seedrand.day_index(last)
         except ValueError:
             return 0
         return self.daily_state.get("streak", 0) if gap in (0, 1) else 0
 
     def daily_done_today(self):
-        return self.daily_state.get("date") == self.daily_date
+        return self.daily_state.get("date") == self.today_date
+
+    # ----- Tages-Archiv ----------------------------------------------------
+    def is_archive(self):
+        """Wird (bzw. wird im Setup) ein vergangener Tag gezeigt/gespielt?"""
+        return self.daily_date != self.today_date
+
+    def arch_row(self, day=None):
+        return dailyarchive.find(self.arch, self.arch_day if day is None else day)
+
+    def _arch_days(self):
+        return dailyarchive.available([r[0] for r in self.arch])
+
+    def _set_arch_day(self, day):
+        self.arch_day = day
+        self.daily_date = seedrand.date_of(day)
+
+    def _step_day(self, d):
+        days = self._arch_days()
+        i = days.index(self.arch_day) if self.arch_day in days else len(days) - 1
+        j = max(0, min(len(days) - 1, i + d))
+        if days[j] != self.arch_day:
+            self._set_arch_day(days[j])
+            self.play_sound("move")
+
+    def _open_picker(self):
+        info = {}
+        for key, save in self.saves.items():
+            if key.startswith("daily:") and isinstance(save, dict):
+                try:
+                    idx = seedrand.day_index(key[6:])
+                except ValueError:
+                    continue
+                p = save.get("p") if isinstance(save.get("p"), int) else 0
+                info[idx] = ("started", "%d %%" % p)
+        for day, secs, stars in self.arch:
+            info[day] = ("solved", "%s %s" % (fmt_time(secs), "*" * stars))
+        self.picker = dailyarchive.Picker("sudoku", self.accent, self.arch_day, info)
+        self.play_sound("click")
+
+    @property
+    def wants_escape(self):
+        return self.picker is not None
+
+    # ----- Match-Historie --------------------------------------------------
+    def match_info(self):
+        info = {}
+        if self.daily:
+            info["day"] = seedrand.day_index(self.daily_date)
+        elif self.state != SETUP:
+            info["vr"] = self.play_variant
+            info["lv"] = int(self.level)
+        if self.won:
+            info["tm"] = int(self.result_time)
+            info["st"] = int(self.result_stars)
+        return info or None
+
+    def match_flags(self):
+        if not self.daily:
+            return 0
+        return matches.F_DAILY | (matches.F_ARCHIVE if self.is_archive() else 0)
+
+    @staticmethod
+    def match_text(key, value):
+        if key == "vr" and value in VARIANTS:
+            return t("sud.variant." + value)
+        return None
 
     # ===================================================== Setup-Screen
     def _build_setup_layout(self):
@@ -381,7 +470,10 @@ class SudokuGame(SudokuDraw, Game):
         dh = self._small.get_height() + 2 * self._tiny.get_height() + 12
         self.daily_rect = pygame.Rect(ix, body_top + pad, iw, dh)
         th = max(22, min(34, H // 22))
-        ty = self.daily_rect.bottom + gap
+        ty = self.daily_rect.bottom + 4
+        # Datums-Leiste des Tages-Archivs direkt unter der Tageskarte
+        self.dayrow_rects = dailyarchive.day_row_rects(ix, ty, iw, th)
+        ty += th + gap
         self.limit_rect = pygame.Rect(ix, ty, iw, th)
         self.input_rect = pygame.Rect(ix, ty + th + 4, iw, th)
         self.colors_rect = pygame.Rect(ix, ty + 2 * (th + 4), iw, th)
@@ -443,6 +535,10 @@ class SudokuGame(SudokuDraw, Game):
         for i, r in enumerate(self.diff_rects):
             if r.collidepoint(pos):
                 return ("diff", i)
+        if self.dayrow_rects is not None:
+            for key, r in zip(("dprev", "ddate", "dnext", "darch"), self.dayrow_rects):
+                if r.collidepoint(pos):
+                    return (key, 0)
         for key, r in (("daily", self.daily_rect), ("limit", self.limit_rect),
                        ("input", self.input_rect), ("colors", self.colors_rect),
                        ("start", self.start_rect)):
@@ -451,9 +547,25 @@ class SudokuGame(SudokuDraw, Game):
         return None
 
     def _handle_setup(self, event):
+        if self.picker is not None:
+            res = self.picker.handle_event(event, self)
+            if res is not None:
+                self.picker = None
+                if res[0] == "pick":
+                    self._set_arch_day(res[1])
+                    self.play_sound("select")
+                else:
+                    self.play_sound("click")
+            return
         if event.kind == InputEvent.KEYDOWN:
             k = event.key
-            if k in ("1", "2", "3", "4"):
+            if k == "Prior":
+                self._step_day(-1)
+            elif k == "Next":
+                self._step_day(1)
+            elif k in ("k", "K") and self.key_is_free(k):
+                self._open_picker()
+            elif k in ("1", "2", "3", "4"):
                 self._select_difficulty(int(k) - 1)
             elif k in ("v", "V") and self.key_is_free(k):
                 step = -1 if k == "V" else 1
@@ -496,6 +608,12 @@ class SudokuGame(SudokuDraw, Game):
                     self._select_difficulty(i)
                 elif kind == "daily":
                     self._start_daily()
+                elif kind == "dprev":
+                    self._step_day(-1)
+                elif kind == "dnext":
+                    self._step_day(1)
+                elif kind in ("ddate", "darch"):
+                    self._open_picker()
                 elif kind == "limit":
                     self._toggle_fail_limit()
                 elif kind == "input":
@@ -536,7 +654,10 @@ class SudokuGame(SudokuDraw, Game):
 
     def _start_daily(self, fresh=False):
         self.daily = True
-        self.daily_date = seedrand.today_str()
+        self.today_date = seedrand.today_str()
+        if self.arch_day > seedrand.day_index(self.today_date):
+            self.arch_day = seedrand.day_index(self.today_date)
+        self.daily_date = seedrand.date_of(self.arch_day)
         self.play_variant = "classic"
         self.play_diff = sudoku_gen.daily_diff(self.daily_date)
         self.level = 0
@@ -558,7 +679,8 @@ class SudokuGame(SudokuDraw, Game):
         self.game_over = False
         self.hover = None
         self.msg = None
-        self.daily_date = seedrand.today_str()
+        self.today_date = seedrand.today_str()
+        self.daily_date = seedrand.date_of(self.arch_day)
         if not self.daily:
             self.variant, self.diff = self.play_variant, self.play_diff
             self.cursor = self.level
@@ -1237,6 +1359,18 @@ class SudokuGame(SudokuDraw, Game):
         self.new_record = False
         self.best_time = secs
         if self.daily:
+            # Tages-Archiv: Bestzeit + Sterne je Tag (auch für heute)
+            old_row = dailyarchive.find(self.arch, self.arch_day)
+            if old_row is None:
+                dailyarchive.upsert(self.arch, [self.arch_day, secs, stars])
+            else:
+                dailyarchive.upsert(self.arch, [self.arch_day, min(old_row[1], secs),
+                                                max(old_row[2], stars)])
+        if self.daily and self.is_archive():
+            # Vergangener Tag: Serie und Tageszähler bleiben unberührt.
+            self.new_record = old_row is not None and secs < old_row[1]
+            self.best_time = dailyarchive.find(self.arch, self.arch_day)[1]
+        elif self.daily:
             st = self.daily_state
             if st.get("date") == self.daily_date:
                 old = st.get("time", secs + 1)

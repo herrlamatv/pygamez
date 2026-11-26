@@ -21,6 +21,7 @@ pub mod highscore;
 pub mod i18n;
 pub mod lamabank;
 pub mod levels;
+pub mod matches;
 pub mod profiles;
 pub mod replay;
 pub mod seedrand;
@@ -43,6 +44,8 @@ pub fn init() {
     stats::register_switch_hook();
     achievements::register_switch_hook();
     lamabank::register_switch_hook();
+    // matches.py: store.on_switch(reset_cache) - Offenes wegschreiben.
+    matches::register_switch_hook();
 }
 
 /// Schreibt alles Offene weg (Statistik-Puffer). Vor dem Beenden aufrufen.

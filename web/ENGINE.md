@@ -43,7 +43,10 @@ web/
   js/core/charts.js     PG.charts: Balken, Linien, Kalender-Heatmap, Ringe, Tooltip
   js/core/progressview.js PG.ProgressScreen: Erfolge & Statistik (fünf Reiter)
   js/core/profileview.js  PG.ProfileScreen + PG.LevelIntroScreen
-  js/core/app.js        Shell: Startbildschirm, Vorspiel-Screen, Loop, Eingabe, Pause, Highscore, Wiki
+  js/core/matches.js    PG.matches: Match-Historie je Profil (PG.store "matches", wie matches.py)
+  js/core/dailyarchive.js PG.dailyArchive: Tages-Archiv (Tage, arch-Zeilen, Datums-Leiste, Picker)
+  js/core/matchview.js  PG.MatchScreen: "Letzte Matches" / "Alle Matches" (Knopf im Vorspiel-Screen)
+  js/core/app.js        Shell: Startbildschirm, Vorspiel-Screen, Loop, Eingabe, Pause, Highscore, Matches, Wiki
   js/manifest.js        Reihenfolge der Spiele + Skriptdateien je Spiel
   js/games/*.js         die Spiele
   js/games/wordle_words/<code>.js
@@ -119,11 +122,31 @@ score, gameOver, paused, font (22px), bigFont (48px bold), accent ([r,g,b]), hig
 | `show_highscore_banner`                   | `get showHighscoreBanner()`                         |
 | `on_exit()`                               | `destroy()`                                         |
 | `on_surface_changed()`                    | entfällt (feste logische Größe)                     |
+| `match_manual = True`                     | `get matchManual() { return true; }`                |
+| `match_active` (Property)                 | `get matchActive()` (Standard: `this.state !== "setup"`) |
+| `match_score()` / `match_info()` / `match_flags()` | `matchScore()` / `matchInfo()` / `matchFlags()` |
+| `log_match(score, result, info, mode=, flags=)` | `logMatch(score, result, info, mode, flags)`  |
+| `@staticmethod match_text(key, value)`    | `static matchText(key, value)`                      |
 
 Die App übernimmt wie `main.py`: **ESC = Pause** (außer `wantsEscape` ist true – dann bekommt
 das Spiel ESC), Highscore sichern beim Übergang zu `gameOver` und beim Verlassen, Highscore-Banner
 unten bei Game Over, Konfetti bei Rekord, Neustart-Erkennung (gameOver → false).
 Das Spiel selbst startet also wie in Python mit Enter/Leertaste neu (`reset()`).
+
+**Match-Historie** (wie `main.App._match_speichern`): `app.matchSave()` schreibt beim Game Over
+genau einen Eintrag (Latch `_matchLogged`, Rekord-Flag), beim Verlassen mitten im Spiel einen
+„abgebrochen“-Eintrag (nur mit Punkten oder ab `PG.matches.MIN_ABORT_SECONDS`). Die Dauer
+(`_matchTime`) läuft nur, solange `matchActive` true ist; die Neustart-Kante setzt sie zurück,
+`resumeFromGameOver()` lässt den nächsten Eintrag den letzten ersetzen. Spiele, deren Runden ohne
+Game Over enden (Chip-Spiele, Geometry Dash, Labyrinth), setzen `matchManual` und rufen selbst
+`this.logMatch(...)`. Einträge: `[zeit, modus, punkte, ergebnis 1/0/2/null, dauer_s, flags, info]`,
+Info-Schlüssel siehe `PG.matches.INFO_KEYS`. In `js/core/matches.js` steht `const CAP = 250;` als
+eigene Zeile - pygamez.com ersetzt genau diese Zeile per Patch.
+
+**Tages-Archiv** (Crossy Road, Sudoku, Wordle): `PG.dailyArchive` liefert die wählbaren Tage,
+die kompakten `arch`-Zeilen (`[tag, ...]`, Tag = `PG.seedrand.dayIndex`, gleiches Format wie
+in der mem.json), die Datums-Leiste (`dayRowRects`/`drawDayRow`) und das Auswahlfenster
+(`new PG.dailyArchive.Picker(...)`, `handleEvent` liefert `["pick", tag]`/`["close", null]`).
 
 **Fokus weg:** Ein verborgener Tab pausiert jedes laufende Spiel. Verliert nur das
 Fenster den Fokus (anderes Programm, der Tab bleibt sichtbar), lässt die App die Tasten
@@ -250,6 +273,7 @@ Sound-Namen: `click select eat bounce point shoot explode hit rotate lock line m
 ```
 node web/tools/replay_check.js                      # Replays: Aufnahme, Wiedergabe, Teilen
 node web/tools/progress_check.js                   # Erfolge, Statistik, Profile, alle fünf Reiter
+node web/tools/matches_check.js                    # Match-Historie + Tages-Archiv (Node, ohne Browser)
 node web/tools/smoke.js Game2048 SnakeGame           # Zufallseingaben, meldet Laufzeitfehler
 node web/tools/smoke.js Game2048 --shot              # zusätzlich Screenshot -> web/tools/shots/<id>-<mode>.png
 node web/tools/smoke.js Game2048 --shot --idle --frames 90    # Startbild ohne Eingaben

@@ -11,6 +11,7 @@
 //! | [`charts`] | `charts.py` (Diagramme: Fortschritt, Chip-Statistik) |
 //! | [`audio`] | `audio.py` |
 //! | [`game`] | `game_base.py` |
+//! | [`dailyarchive`] | `dailyarchive.py` (Tages-Archiv: Datums-Leiste, Kalender) |
 //!
 //! Die Spiele sind Zeile fuer Zeile aus `games/*.py` uebertragen und rufen
 //! nur diese Module - nie rustgame direkt. So bleibt jede Stelle, an der
@@ -22,6 +23,7 @@ pub mod achv;
 pub mod audio;
 pub mod charts;
 pub mod clip;
+pub mod dailyarchive;
 pub mod filepick;
 pub mod game;
 pub mod pg;
@@ -33,7 +35,7 @@ pub use game::{Game, GameBase, GameInfo, InputEvent, Kind};
 
 /// Alles, was ein Spiel braucht, mit einem `use`.
 pub mod prelude {
-    pub use crate::game::{Game, GameBase, GameInfo, InputEvent, Kind};
+    pub use crate::game::{chip_result, info_map, Game, GameBase, GameInfo, InputEvent, Kind};
     pub use crate::pg::{
         self, draw, rect, rgb, rgba, transform, Col, Color, Font, IntoRect, Num, Pt, Rect, RectExt,
         SurfExt, Surface, BLEND_ADD, BLEND_MAX, BLEND_MIN, BLEND_MULT, BLEND_RGBA_ADD, BLEND_RGBA_MAX,

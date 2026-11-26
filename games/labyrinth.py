@@ -45,6 +45,7 @@ SETUP, PLAY, FINISH = "setup", "play", "finish"
 
 
 class LabyrinthGame(Game):
+    match_manual = True       # jedes gelöste Level ist ein Match (Game.log_match)
     name = LocalizedName("3D Maze", de="3D-Labyrinth", fr="Labyrinthe 3D",
                          es="Laberinto 3D", pt="Labirinto 3D")
     highscore_key = "maze"
@@ -323,6 +324,8 @@ class LabyrinthGame(Game):
         self.score += self.level_score
         self._mark_solved(self.level)
         self.state = FINISH
+        self.log_match(self.level_score, 1, {"lv": self.level, "tm": int(self.elapsed),
+                                             "c": self.got})
         if self.elapsed < 30.0:
             self.ach_event("maze_swift")   # Erfolg: Level unter 30 Sekunden
         self.report_result(True)

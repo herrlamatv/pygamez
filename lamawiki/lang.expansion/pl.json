@@ -333,6 +333,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Mecze",
+      "keywords": [
+        "mecze",
+        "historia",
+        "ostatnie",
+        "wszystkie",
+        "wyniki",
+        "rundy"
+      ],
+      "sections": [
+        {
+          "h": "Ostatnie i wszystkie mecze",
+          "body": [
+            "Każda gra zapamiętuje swoje mecze. Na ekranie przed grą przycisk Mecze otwiera historię gry.",
+            "- Ostatnie mecze: wykres 30 ostatnich wyników (rekordy na złoto), a pod nim 10 ostatnich meczów.",
+            "- Wszystkie mecze: wszystkie zapisane mecze, z filtrem trybu [M] i sortowaniem najnowsze/najlepsze [O].",
+            "U góry widać sumy: mecze, wygrane, najlepszy wynik, średnia i czas gry."
+          ]
+        },
+        {
+          "h": "Co jest zapisywane",
+          "body": [
+            "Data i godzina, tryb, punkty (gry na żetony: zysk lub strata), wygrana/przegrana/remis, czas trwania i szczegóły jak stawka, mnożnik, monety, poziom czy przeciwnik.",
+            "- Rekordy są oznaczone na złoto. Jeśli opuścisz rundę przed końcem, widnieje jako przerwana - ale tylko wtedy, gdy miałeś już punkty albo trwała co najmniej 5 sekund.",
+            "- Gry na żetony liczą każdą rundę osobno, Geometry Dash każde podejście do poziomu, Labirynt każdy rozwiązany poziom."
+          ]
+        },
+        {
+          "h": "Zapis",
+          "body": [
+            "Na grę zapisywanych jest 250 ostatnich meczów (na pygamez.com domyślnie 50). Starsze wypadają - sumy liczą się dalej.",
+            "Historia leży w pliku matches.pgzlamamatches obok mem.json, osobno dla każdego profilu."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Osiągnięcia, rzadkość i poziom",
@@ -1107,6 +1146,14 @@
           ]
         },
         {
+          "h": "Archiwum dzienne",
+          "body": [
+            "Sudoku dnia z ostatnich 30 dni i każdy już rozwiązany dzień są w archiwum - z najlepszym czasem i gwiazdkami dla każdego dnia.",
+            "- Pod kartą dnia strzałki lub [PgUp]/[PgDn] zmieniają dzień, [K] lub Archiwum otwiera kalendarz, [T] uruchamia wybrany dzień.",
+            "- Sudoku z archiwum nie zmieniają twojej serii dziennej."
+          ]
+        },
+        {
           "h": "Wskazówki",
           "body": [
             "- Zacznij od wierszy, kolumn i bloków, w których stoi już dużo cyfr.",
@@ -1730,6 +1777,14 @@
             "Słowo dnia: jedno słowo dziennie w 6 próbach - dla wszystkich takie samo w każdym języku i długości, na PC i w przeglądarce. Rozpoczęte słowo dnia jest zapisywane; potem gra pokazuje wynik, statystyki i odliczanie do następnego słowa. Seria rośnie tylko wtedy, gdy grasz codziennie.",
             "Dordle: dwa słowa naraz w 7 próbach - każda próba liczy się dla obu plansz. Klawisze klawiatury ekranowej są podzielone: lewa połowa to plansza 1, prawa to plansza 2.",
             "Quordle: cztery słowa naraz w 9 próbach. Klawisze są podzielone na ćwiartki i pokazują kolory wszystkich czterech plansz."
+          ]
+        },
+        {
+          "h": "Archiwum dzienne",
+          "body": [
+            "Słowa dnia z ostatnich 30 dni i każdy dzień, w który już grałeś, można zagrać ponownie - dla każdego języka i długości słowa.",
+            "- W ustawieniach słowa dnia strzałki lub [PgUp]/[PgDn] zmieniają dzień, [K] lub Archiwum otwiera kalendarz.",
+            "- Słowa z archiwum nie liczą się do statystyk ani serii; rozpoczęte są zapisywane."
           ]
         },
         {
@@ -2691,6 +2746,14 @@
             "- Bez końca: w każdej rundzie nowa trasa, liczy się do rekordu.",
             "- Trasa dnia: dziś taka sama dla wszystkich (także w wersji przeglądarkowej), z własnym rekordem dnia - nie liczy się do rekordu.",
             "W ustawieniach włączasz i wyłączasz cienie [H] oraz zmianę dnia i nocy [N]; Lewo/Prawo przełącza między twoimi postaciami."
+          ]
+        },
+        {
+          "h": "Archiwum dzienne",
+          "body": [
+            "Trasy dnia z ostatnich 30 dni i każdy dzień, w który już grałeś, można zagrać ponownie - z osobnym rekordem dla każdego dnia.",
+            "- W ustawieniach trasy dnia strzałki obok daty lub [PgUp]/[PgDn] zmieniają dzień; [K] lub Archiwum otwiera kalendarz.",
+            "- Miniony dzień używa tego samego ziarna co wtedy - trasa jest dokładnie taka sama."
           ]
         }
       ]

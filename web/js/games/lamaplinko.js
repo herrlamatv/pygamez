@@ -109,6 +109,11 @@
   }
 
   class LamaPlinkoGame extends PG.Game {
+    /** Jede Kugel ist ein Match (Game.logMatch). */
+    get matchManual() {
+      return true;
+    }
+
     // ===================================================== Aufbau / Reset
     reset() {
       if (this.balls && this.balls.length) this._flushFlying();
@@ -490,6 +495,9 @@
       const outcome = { rows, risk, slot, m: m100, bet, win };
       F.record(this.fairlog, entry, outcome);
       CS.record(this.stats, bet, win, m100);
+      const net = win - bet;
+      this.logMatch(net, net > 0 ? 1 : net < 0 ? 0 : 2,
+        { bet, win, x: m100, rw: rows, lv: risk });
       L.addHit(this.stats.x.hits, rows, slot);
       this.hist = this.hist.concat([m100]).slice(-L.HISTORY);
       if (!bank.betAndPay(bet, win, KEY, KEY, this._extra())) return false; // (kann nach der Prüfung oben nicht passieren)
@@ -574,6 +582,12 @@
     }
 
     // ===================================================== Landung
+    /** Anzeige im Matches-Screen: Risiko-Stufe statt interner Kennung. */
+    static matchText(key, value) {
+      if (key === "lv" && ["low", "medium", "high"].includes(value)) return t("lpl.risk." + value);
+      return null;
+    }
+
     _land(b) {
       const slot = b.slot, m100 = b.m, win = b.win;
       this.pending = Math.max(0, this.pending - win);

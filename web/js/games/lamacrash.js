@@ -115,6 +115,11 @@
   }
 
   class LamaCrashGame extends PG.Game {
+    /** Jede Runde ist ein Match (Game.logMatch). */
+    get matchManual() {
+      return true;
+    }
+
     /** Esc schließt ein offenes Fenster bzw. stoppt den Auto-Modus. */
     get wantsEscape() {
       return this.window !== null || this.auto !== null;
@@ -767,6 +772,10 @@
       L.recordX(this.stats.x, rnd, crash, end);
       const stake = L.stakeTotal(rnd), paid = L.paidTotal(rnd);
       CS.record(this.stats, stake, paid, L.bestCash(rnd));
+      const net = paid - stake;
+      const info = { bet: stake, win: paid, cr: crash };
+      if (L.bestCash(rnd)) info.x = L.bestCash(rnd);
+      this.logMatch(net, net > 0 ? 1 : net < 0 ? 0 : 2, info);
       this.hist = this.hist.concat([crash]).slice(-L.HISTORY);
       F.record(this.fairlog, this._entry(rnd), L.outcome(rnd, crash));
       const close = L.closeCall(rnd, crash);

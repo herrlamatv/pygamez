@@ -73,6 +73,7 @@ class BlackjackGame(Game):
     name = "Blackjack"
     highscore_key = "blackjack"
     supports_multiplayer = False
+    match_manual = True       # jede Hand ist ein Match (Game.log_match)
 
     # ===================================================== Aufbau / Reset
     def reset(self):
@@ -362,6 +363,11 @@ class BlackjackGame(Game):
             self.results.append(res)
         lamabank.credit(delta, "blackjack")
         self._sync_chips()
+        # Match-Historie: Ergebnis der Hand(en) = Auszahlung - Einsatz.
+        wager = sum(self.hand_bets)
+        net = delta - wager
+        self.log_match(net, 1 if net > 0 else 0 if net < 0 else 2,
+                       {"bet": wager, "win": delta})
         self.state = PAYOUT
         if any(r == "blackjack" for r in self.results):
             self.play_sound("win")

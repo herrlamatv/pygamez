@@ -333,6 +333,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Zápasy",
+      "keywords": [
+        "zápasy",
+        "historie",
+        "poslední",
+        "všechny",
+        "výsledky",
+        "kola"
+      ],
+      "sections": [
+        {
+          "h": "Poslední a všechny zápasy",
+          "body": [
+            "Každá hra si pamatuje své zápasy. Na obrazovce před hrou otevře tlačítko Zápasy historii hry.",
+            "- Poslední zápasy: křivka posledních 30 výsledků (rekordy zlatě) a pod ní posledních 10 zápasů.",
+            "- Všechny zápasy: všechny uložené zápasy s filtrem režimu [M] a řazením nejnovější/nejlepší [O].",
+            "Nahoře jsou součty: zápasy, výhry, nejlepší výsledek, průměr a herní čas."
+          ]
+        },
+        {
+          "h": "Co se ukládá",
+          "body": [
+            "Datum a čas, režim, body (žetonové hry: zisk nebo ztráta), výhra/prohra/remíza, délka a podrobnosti jako sázka, násobitel, mince, úroveň nebo soupeř.",
+            "- Rekordy jsou označené zlatě. Když kolo opustíš předčasně, objeví se jako přerušené - ale jen pokud už jsi měl body nebo trvalo aspoň 5 sekund.",
+            "- Žetonové hry počítají každé kolo zvlášť, Geometry Dash každou návštěvu úrovně, Labyrint každou vyřešenou úroveň."
+          ]
+        },
+        {
+          "h": "Ukládání",
+          "body": [
+            "U každé hry se uchovává posledních 250 zápasů (na pygamez.com výchozích 50). Starší vypadnou - součty ale počítají dál.",
+            "Historie je v souboru matches.pgzlamamatches vedle mem.json, zvlášť pro každý profil."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Úspěchy, vzácnost a úroveň",
@@ -1107,6 +1146,14 @@
           ]
         },
         {
+          "h": "Denní archiv",
+          "body": [
+            "Denní sudoku z posledních 30 dní a každý už vyřešený den jsou v denním archivu - s nejlepším časem a hvězdami pro každý den.",
+            "- Pod denní kartou mění den šipky nebo [PgUp]/[PgDn], [K] nebo Archiv otevře kalendář, [T] spustí vybraný den.",
+            "- Archivní sudoku nemění tvou denní sérii."
+          ]
+        },
+        {
           "h": "Tipy",
           "body": [
             "- Začni řádky, sloupci a bloky, ve kterých už stojí hodně číslic.",
@@ -1730,6 +1777,14 @@
             "Slovo dne: jedno slovo denně na 6 pokusů - pro všechny stejné v každém jazyce a délce, na PC i v prohlížeči. Rozehrané slovo dne se uloží; potom hra ukáže výsledek, statistiku a odpočet do dalšího slova. Série roste jen tehdy, když hraješ každý den.",
             "Dordle: dvě slova naráz na 7 pokusů - každý pokus platí pro obě mřížky. Klávesy klávesnice na obrazovce jsou rozdělené: levá polovina mřížka 1, pravá polovina mřížka 2.",
             "Quordle: čtyři slova naráz na 9 pokusů. Klávesy jsou rozdělené na čtvrtiny a ukazují barvy všech čtyř mřížek."
+          ]
+        },
+        {
+          "h": "Denní archiv",
+          "body": [
+            "Denní slova z posledních 30 dní a každý den, který jsi už hrál, si můžeš zahrát znovu - pro každý jazyk a délku slova.",
+            "- V nastavení denního slova mění den šipky nebo [PgUp]/[PgDn], [K] nebo Archiv otevře kalendář.",
+            "- Archivní slova se nepočítají do statistik ani série; rozehraná archivní slova se ukládají."
           ]
         },
         {
@@ -2691,6 +2746,14 @@
             "- Nekonečno: každé kolo nová trasa, počítá se do rekordu.",
             "- Denní trasa: dnes pro všechny stejná (i ve webové verzi), s vlastním denním rekordem - do rekordu se nepočítá.",
             "V nastavení zapneš nebo vypneš stíny [H] a střídání dne a noci [N]; Vlevo/Vpravo přepíná mezi tvými postavami."
+          ]
+        },
+        {
+          "h": "Denní archiv",
+          "body": [
+            "Denní tratě z posledních 30 dní a každý den, který jsi už hrál, si můžeš zahrát znovu - s vlastním nejlepším výsledkem pro každý den.",
+            "- V nastavení denní tratě mění den šipky vedle data nebo [PgUp]/[PgDn]; [K] nebo Archiv otevře kalendář.",
+            "- Minulý den používá stejný seed jako tehdy - trať je přesně stejná."
           ]
         }
       ]

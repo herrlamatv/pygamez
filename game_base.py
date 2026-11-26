@@ -127,6 +127,11 @@ class Game:
     # True, solange ein Einsatz im Flug ist - sonst stiege der Ballon weiter,
     # während man in einem anderen Fenster ist.
     pause_on_blur = False
+    # Match-Historie (matches.py): Spiele, deren Runden ohne Game Over enden
+    # (Chip-Spiele, Geometry Dash, Labyrinth), melden jedes Match selbst über
+    # ``log_match()`` und setzen das auf True - main.py schreibt dann beim
+    # Game Over/Verlassen keinen eigenen Eintrag.
+    match_manual = False
 
     def __init__(self, surface, width, height, mode="single", game_settings=None):
         self.surface = surface
@@ -256,6 +261,8 @@ class Game:
         if self.is_menu or getattr(self, "_result_reported", False):
             return
         self._result_reported = True
+        # Für die Match-Historie (main.py liest es beim Game Over).
+        self._match_result = 1 if won else 0
         import stats
         stats.record_result(self.highscore_key, bool(won))
         import achievements
@@ -271,6 +278,11 @@ class Game:
         """
         self.game_over = False
         self._resume_same_game = True
+        # Match-Historie: das schon gespeicherte Match wird beim nächsten
+        # Eintrag ersetzt (es ist ja dieselbe Partie).
+        if getattr(self, "_match_logged", False):
+            self._match_logged = False
+            self._match_replace = True
 
     def new_round_result(self):
         """Gibt report_result() für eine neue Runde derselben Partie wieder frei.
@@ -280,6 +292,59 @@ class Game:
         """
         self._result_reported = False
         self._duel_reported = False
+        self._match_result = None
+
+    # ----- Match-Historie (matches.py) -----------------------------------
+
+    @property
+    def match_active(self):
+        """Läuft gerade ein Match? Nur dann zählt die Match-Dauer mit.
+
+        Standard: alles außer dem spiel-eigenen Setup-Screen (die meisten
+        Spiele haben ``self.state == "setup"``). Spiele mit anderen
+        Menü-Zuständen dürfen das überschreiben.
+        """
+        return getattr(self, "state", None) != "setup"
+
+    def match_score(self):
+        """Punktwert des Matches (Standard: self.score).
+
+        Modi, die nicht in den Highscore zählen, lassen self.score auf 0 -
+        sie liefern hier ihren eigentlichen Rundenwert.
+        """
+        score = getattr(self, "score", 0)
+        return score if isinstance(score, int) and not isinstance(score, bool) \
+            else int(score or 0)
+
+    def match_info(self):
+        """Details des Matches für die Historie (kleines dict) oder None.
+
+        Schlüssel siehe ``matches.INFO_KEYS`` (z.B. {"c": 3, "ch": "fox"}).
+        """
+        return None
+
+    def match_flags(self):
+        """Zusätzliche Flags (z.B. matches.F_DAILY im Tagesmodus)."""
+        return 0
+
+    def log_match(self, score, result=None, info=None, mode=None, flags=0):
+        """Ein Match ist zu Ende - für Spiele mit ``match_manual = True``.
+
+        Dauer = gesammelte aktive Spielzeit seit dem letzten Eintrag.
+        ``result``: 1 Sieg, 0 Niederlage, 2 Remis, None unbekannt.
+        """
+        if self.is_menu:
+            return
+        try:
+            import matches
+            dur = int(getattr(self, "_match_time", 0.0))
+            self._match_time = 0.0
+            matches.record(self.highscore_key,
+                           self.mode if mode is None else mode,
+                           score, result, dur, flags | self.match_flags(), info)
+        except Exception:
+            # Die Historie darf ein Spiel nie stören.
+            pass
 
     # ----- Spielerprofile (Namen im HUD, Duell-Bilanz) -------------------
 
@@ -327,6 +392,12 @@ class Game:
         if getattr(self, "_duel_reported", False):
             return
         self._duel_reported = True
+        # Match-Historie: Ergebnis aus Sicht von Spieler 1 + Gegnername.
+        self._match_result = 1 if winner == 0 else 0
+        try:
+            self._match_vs = self.pname(1)
+        except Exception:
+            self._match_vs = None
         try:
             import profiles
             import stats

@@ -80,6 +80,13 @@
     get captureMouse() { return false; }
     /** Highscore-Banner bei Game Over? Modi ohne Highscore-Wertung liefern false. */
     get showHighscoreBanner() { return true; }
+    /**
+     * Match-Historie (matches.js): Spiele, deren Runden ohne Game Over enden
+     * (Chip-Spiele, Geometry Dash, Labyrinth), melden jedes Match selbst über
+     * logMatch() und liefern hier true - app.js schreibt dann beim Game
+     * Over/Verlassen keinen eigenen Eintrag.
+     */
+    get matchManual() { return false; }
 
     // ----- Hilfsfunktionen -------------------------------------------------
     drawCenterText(ctx, text, font, color, yOffset = 0) {
@@ -114,6 +121,8 @@
     reportResult(won) {
       if (this._resultReported) return;
       this._resultReported = true;
+      // Für die Match-Historie (app.js liest es beim Game Over).
+      this._matchResult = won ? 1 : 0;
       PG.stats.recordResult(this.highscoreKey, !!won);
     }
     /**
@@ -125,9 +134,60 @@
       // (z.B. Rückgängig nach dem letzten Zug bei 2048).
       this.gameOver = false;
       this._resumeSameGame = true;
+      // Match-Historie: das schon gespeicherte Match wird beim nächsten
+      // Eintrag ersetzt (es ist ja dieselbe Partie).
+      if (this._matchLogged) {
+        this._matchLogged = false;
+        this._matchReplace = true;
+      }
     }
     newRoundResult() {
       this._resultReported = false;
+      this._matchResult = null;
+    }
+
+    // ----- Match-Historie (matches.js) ---------------------------------------
+    /**
+     * Läuft gerade ein Match? Nur dann zählt die Match-Dauer mit.
+     * Standard: alles außer dem spiel-eigenen Setup-Screen (die meisten Spiele
+     * haben this.state === "setup"). Spiele mit anderen Menü-Zuständen dürfen
+     * das überschreiben.
+     */
+    get matchActive() {
+      return this.state !== "setup";
+    }
+    /**
+     * Punktwert des Matches (Standard: this.score). Modi, die nicht in den
+     * Highscore zählen, lassen this.score auf 0 - sie liefern hier ihren
+     * eigentlichen Rundenwert.
+     */
+    matchScore() {
+      const score = this.score;
+      return Number.isInteger(score) ? score : Math.trunc(Number(score) || 0);
+    }
+    /** Details des Matches für die Historie (kleines Objekt) oder null (Schlüssel: PG.matches.INFO_KEYS). */
+    matchInfo() {
+      return null;
+    }
+    /** Zusätzliche Flags (z.B. PG.matches.F_DAILY im Tagesmodus). */
+    matchFlags() {
+      return 0;
+    }
+    /**
+     * Ein Match ist zu Ende - für Spiele mit matchManual = true.
+     * Dauer = gesammelte aktive Spielzeit seit dem letzten Eintrag.
+     * result: 1 Sieg, 0 Niederlage, 2 Remis, null unbekannt.
+     */
+    logMatch(score, result = null, info = null, mode = null, flags = 0) {
+      if (this.isMenu) return;
+      try {
+        const dur = Math.trunc(this._matchTime || 0);
+        this._matchTime = 0;
+        PG.matches.record(this.highscoreKey, mode == null ? this.mode : mode,
+          score, result, dur, flags | this.matchFlags(), info);
+      } catch (e) {
+        // Die Historie darf ein Spiel nie stören.
+      }
     }
     /** Erfolgs-Ereignis (z.B. "tile_2048") - wird in der Statistik vermerkt. */
     achEvent(id, value) {

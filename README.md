@@ -1163,7 +1163,7 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   **Weichzeichner** hinter dem Pause-Overlay.
 - Der **Vorspiel-Screen** jedes Spiels erscheint in dessen Akzentfarbe und zeigt
   den bisherigen Rekord als Chip an. Bei vielen Modi und kleiner Auflösung rückt
-  er **kompakt** zusammen: Optionen, Wiki und Zurück stehen dann in einer Reihe,
+  er **kompakt** zusammen: Optionen, Matches, Wiki und Zurück stehen dann in einer Reihe,
   die Schrift passt sich an - nichts läuft mehr aus dem Bild.
 - **Einheitlicher Spiel-Look**: alle 50 Spiele nutzen dieselbe Theme-Palette und
   -Schrift wie das Menü - HUDs, Setup-Screens und Overlays folgen dem in den
@@ -1222,6 +1222,19 @@ Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
   davon ebenfalls - und die Dateien sind **austauschbar**: eine am PC
   aufgenommene Runde läuft im Browser und umgekehrt. Dort liegt das Archiv im
   Browser-Speicher, deshalb passen 5 Aufnahmen je Spiel hinein.
+- **Match-Historie**: jedes der 50 Spiele merkt sich seine Matches. Der Knopf **„Matches"** im
+  Vorspiel-Screen öffnet **Letzte Matches** (Verlaufskurve der letzten 30 Ergebnisse, Rekorde golden,
+  dazu die letzten 10 Matches) und **Alle Matches** (Filter nach Modus **M**, Sortierung neueste/beste
+  **O**). Gespeichert werden Datum, Modus, Punkte bzw. Chip-Gewinn, Sieg/Niederlage/Remis, Dauer und
+  Details wie Einsatz, Multiplikator, Münzen oder Level - je Spiel die letzten **250** Matches (die
+  Summen laufen unbegrenzt weiter) in **`matches.pgzlamamatches`**, getrennt je Profil. Gleich in der
+  Web-Version, der Rust-Fassung und auf pygamez.com.
+- **Tages-Archiv**: Tagesstrecke (Crossy Road), Tagesrätsel (Sudoku) und Tageswort (Wordle) lassen
+  sich für die **letzten 30 Tage** und jeden schon gespielten Tag nachspielen - mit demselben Seed wie
+  damals und eigenem Bestwert bzw. eigener Bestzeit je Tag. Im Setup wechseln die Pfeile neben dem
+  Datum oder **Bild auf/ab** den Tag, **K** öffnet den Kalender. Archiv-Tage ändern keine Serien und
+  keine Tagesstatistik; gespeichert wird kompakt (eine Tageszahl statt eines Datums - ein Jahr
+  Crossy-Archiv sind rund 4 KB).
 
 ### Bedienung
 
@@ -1310,6 +1323,9 @@ progress.py          Erfolge-&-Statistik-Screen (fünf Reiter, scrollbar)
 profileview.py       Profil-Screen, Spieler-2-Auswahl und die Startlevel-Karte
 replay.py            Aufzeichnung, Archiv & Teilen der Wiederholungen (replay.json, .lamapgzreplay)
 replayview.py        Replay-Screen: Archiv-Liste, Wiedergabe, Teilen/Einlesen
+matches.py           Match-Historie je Spiel und Profil (matches.pgzlamamatches): Einträge, Summen, Kappe 250
+matchview.py         Matches-Screen: Letzte Matches (Kurve + letzte 10) und Alle Matches (Filter, Sortierung)
+dailyarchive.py      Tages-Archiv: letzte 30 Tage + gespielte Tage, kompakte Speicherung, Kalender-Fenster
 ugc.py               Eigene Inhalte (Minigolf-Bahnen, Geometry-Dash-Level): Speicher, Prüfung, Export/Import (ugc.json)
 swear.py             Wortfilter für Namen und ids (lang/swear/*.yml, alle 14 Sprachen)
 filepick.py          Datei-Dialoge ("Exportieren als ...", "Importieren") und Downloads-Ordner
@@ -2615,7 +2631,7 @@ packages) and styled like a modern game launcher:
   pause overlay.
 - Each game's **pre-game screen** appears in that game's accent colour and shows
   the previous record as a chip. With many modes at a small resolution it
-  becomes **compact**: Options, Wiki and Back move into one row and the font
+  becomes **compact**: Options, Matches, Wiki and Back move into one row and the font
   adapts - nothing runs off-screen any more.
 - **Unified in-game look**: all 50 games share the menu's theme palette and
   font - HUDs, setup screens and overlays follow the design chosen in the
@@ -2672,6 +2688,19 @@ packages) and styled like a modern game launcher:
   all of this as well - and the files are **interchangeable**: a round recorded
   on the PC plays in the browser and vice versa. There the archive lives in
   browser storage, so it holds 5 recordings per game.
+- **Match history**: every one of the 50 games remembers its matches. The **"Matches"** button in
+  the pre-game screen opens **Last matches** (a curve of the last 30 results, records in gold, plus the
+  last 10 matches) and **All matches** (mode filter **M**, newest/best sorting **O**). Saved are date,
+  mode, points or chip profit, win/loss/draw, duration and details such as bet, multiplier, coins or
+  level - the last **250** matches per game (the totals keep counting) in
+  **`matches.pgzlamamatches`**, separately for each profile. The same in the web version, the Rust
+  build and on pygamez.com.
+- **Daily archive**: the daily track (Crossy Road), daily puzzle (Sudoku) and daily word (Wordle) can
+  be replayed for the **last 30 days** and every day you have already played - with the same seed as
+  back then and a separate best score or best time per day. In the setup, the arrows next to the date
+  or **Page up/down** change the day, **K** opens the calendar. Archive days don't change streaks or
+  daily statistics; storage is compact (one day number instead of a date - a year of Crossy archive is
+  about 4 KB).
 
 ### Controls
 
@@ -2757,6 +2786,9 @@ progress.py          Achievements & statistics screen (five tabs, scrollable)
 profileview.py       Profile screen, player 2 picker and the starting-level card
 replay.py            Recording, archive & sharing of replays (replay.json, .lamapgzreplay)
 replayview.py        Replay screen: archive list, playback, share/import
+matches.py           Match history per game and profile (matches.pgzlamamatches): entries, totals, cap 250
+matchview.py         Matches screen: last matches (curve + last 10) and all matches (filter, sorting)
+dailyarchive.py      Daily archive: last 30 days + played days, compact storage, calendar window
 ugc.py               Custom content (minigolf holes, Geometry Dash levels): storage, checks, export/import (ugc.json)
 swear.py             Word filter for names and ids (lang/swear/*.yml, all 14 languages)
 filepick.py          File dialogs ("Export as ...", "Import") and the Downloads folder

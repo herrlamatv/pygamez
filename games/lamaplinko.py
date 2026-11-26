@@ -108,6 +108,7 @@ def fire_rate(rows):
 
 
 class LamaPlinkoGame(Game):
+    match_manual = True       # jede Kugel ist ein Match (Game.log_match)
     name = "Lama Plinko"
     highscore_key = KEY
     supports_multiplayer = False
@@ -487,6 +488,9 @@ class LamaPlinkoGame(Game):
         outcome = {"rows": rows, "risk": risk, "slot": slot, "m": m100, "bet": bet, "win": win}
         fairness.record(self.fairlog, entry, outcome)
         chipstats.record(self.stats, bet, win, m100)
+        net = win - bet
+        self.log_match(net, 1 if net > 0 else 0 if net < 0 else 2,
+                       {"bet": bet, "win": win, "x": m100, "rw": rows, "lv": risk})
         L.add_hit(self.stats["x"]["hits"], rows, slot)
         self.hist = (self.hist + [m100])[-L.HISTORY:]
         if not lamabank.bet_and_pay(bet, win, KEY, KEY, self._extra()):
@@ -572,6 +576,13 @@ class LamaPlinkoGame(Game):
             self._stop_auto("chip.auto_done")
 
     # ===================================================== Landung
+    @staticmethod
+    def match_text(key, value):
+        """Anzeige im Matches-Screen: Risiko-Stufe statt interner Kennung."""
+        if key == "lv" and value in ("low", "medium", "high"):
+            return t("lpl.risk." + value)
+        return None
+
     def _land(self, b):
         slot, m100, win = b["slot"], b["m"], b["win"]
         self.pending = max(0, self.pending - win)

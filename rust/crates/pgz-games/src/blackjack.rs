@@ -388,6 +388,11 @@ impl BlackjackGame {
         }
         lamabank::credit(delta, "blackjack", true);
         self.sync_chips();
+        // Match-Historie: Ergebnis der Hand(en) = Auszahlung - Einsatz.
+        let wager: i64 = self.hand_bets.iter().sum();
+        let net = delta - wager;
+        let info = info_map(vec![("bet", wager.into()), ("win", delta.into())]);
+        self.b.log_match(net, chip_result(net), Some(info), None, 0);
         self.state = State::Payout;
         let r = &self.results;
         if r.contains(&"blackjack") {
@@ -657,6 +662,10 @@ impl BlackjackGame {
 }
 
 impl Game for BlackjackGame {
+    /// Match-Historie: das Spiel meldet seine Matches selbst (`log_match`).
+    fn match_manual(&self) -> bool {
+        true
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }

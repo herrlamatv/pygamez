@@ -1138,6 +1138,20 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
 - **Partager un replay** : **E** écrit l'enregistrement dans un fichier
   **`.lamapgzreplay`**, **I** le relit - il arrive dans l'onglet du jeu
   correspondant. Un fichier contient exactement un replay.
+- **Historique des parties** : chacun des 50 jeux garde ses parties en mémoire. Le bouton
+  **« Parties »** de l'écran d'avant-jeu ouvre **Dernières parties** (courbe des 30 derniers
+  résultats, records en or, plus les 10 dernières parties) et **Toutes les parties** (filtre par mode
+  **M**, tri récentes/meilleures **O**). Sont enregistrés la date, le mode, les points ou le gain en
+  jetons, victoire/défaite/égalité, la durée et des détails comme la mise, le multiplicateur, les pièces
+  ou le niveau - les **250** dernières parties par jeu (les totaux continuent) dans
+  **`matches.pgzlamamatches`**, séparément par profil. Pareil dans la version web, la version Rust et
+  sur pygamez.com.
+- **Archives du jour** : le parcours du jour (Crossy Road), la grille du jour (Sudoku) et le mot du
+  jour (Wordle) se rejouent pour les **30 derniers jours** et chaque jour déjà joué - avec la même graine
+  qu'à l'époque et un record ou meilleur temps propre à chaque jour. Dans la préparation, les flèches à
+  côté de la date ou **Page préc./suiv.** changent de jour, **K** ouvre le calendrier. Les jours
+  d'archive ne modifient ni les séries ni les statistiques du jour ; le stockage est compact (un numéro
+  de jour au lieu d'une date).
 
 ### Prise en main
 
@@ -1227,6 +1241,9 @@ progress.py          Écran Succès & statistiques (cinq onglets, défilable)
 profileview.py       Écran des profils, choix du joueur 2 et carte du niveau de départ
 replay.py            Enregistrement et archive des rediffusions (replay.json)
 replayview.py        Écran Replay : liste de l'archive et lecture
+matches.py           Historique des parties par jeu et profil (matches.pgzlamamatches) : entrées, totaux, limite 250
+matchview.py         Écran Parties : dernières parties (courbe + 10 dernières) et toutes les parties (filtre, tri)
+dailyarchive.py      Archives du jour : 30 derniers jours + jours joués, stockage compact, fenêtre calendrier
 ugc.py               Contenus personnels (trous de minigolf, niveaux Geometry Dash) : stockage, vérification, export/import (ugc.json)
 swear.py             Filtre de mots pour noms et id (lang/swear/*.yml, les 14 langues)
 filepick.py          Boîtes de dialogue de fichiers ("Exporter sous ...", "Importer")
@@ -2509,6 +2526,18 @@ extra) y pulida con aspecto de lanzador moderno:
 - **Compartir repeticiones**: **E** escribe la grabación como archivo
   **`.lamapgzreplay`**, **I** vuelve a leerlo: aparece en la pestaña del juego
   correspondiente. Cada archivo contiene exactamente una repetición.
+- **Historial de partidas**: cada uno de los 50 juegos recuerda sus partidas. El botón **«Partidas»**
+  de la pantalla previa abre **Últimas partidas** (curva de los últimos 30 resultados, récords en oro,
+  más las últimas 10 partidas) y **Todas las partidas** (filtro por modo **M**, orden más
+  recientes/mejores **O**). Se guardan fecha, modo, puntos o ganancia en fichas, victoria/derrota/empate,
+  duración y detalles como apuesta, multiplicador, monedas o nivel: las últimas **250** partidas por
+  juego (los totales siguen contando) en **`matches.pgzlamamatches`**, por separado para cada perfil.
+  Igual en la versión web, la versión en Rust y en pygamez.com.
+- **Archivo diario**: el recorrido diario (Crossy Road), el sudoku diario y la palabra diaria (Wordle)
+  se pueden volver a jugar de los **últimos 30 días** y de cada día ya jugado, con la misma semilla que
+  entonces y un récord o mejor tiempo propio por día. En la preparación, las flechas junto a la fecha o
+  **Re Pág/Av Pág** cambian el día y **K** abre el calendario. Los días del archivo no cambian rachas ni
+  estadísticas diarias; se guarda de forma compacta (un número de día en vez de una fecha).
 
 ### Manejo
 
@@ -2596,6 +2625,9 @@ progress.py          Pantalla de logros y estadísticas (cinco pestañas, despla
 profileview.py       Pantalla de perfiles, selección del jugador 2 y la tarjeta del nivel inicial
 replay.py            Grabación y archivo de las repeticiones (replay.json)
 replayview.py        Pantalla de repeticiones: lista del archivo y reproducción
+matches.py           Historial de partidas por juego y perfil (matches.pgzlamamatches): entradas, totales, límite 250
+matchview.py         Pantalla de partidas: últimas (curva + últimas 10) y todas (filtro, orden)
+dailyarchive.py      Archivo diario: últimos 30 días + días jugados, guardado compacto, ventana de calendario
 ugc.py               Contenido propio (hoyos de minigolf, niveles de Geometry Dash): almacenamiento, validación, exportar/importar (ugc.json)
 swear.py             Filtro de palabras para nombres e id (lang/swear/*.yml, 14 idiomas)
 filepick.py          Diálogos de archivo ("Exportar como ...", "Importar")
@@ -3862,6 +3894,18 @@ e polida com aspeto de launcher moderno:
 - **Partilhar replays**: **E** escreve a gravação como ficheiro
   **`.lamapgzreplay`**, **I** volta a lê-lo - vai para o separador do jogo certo.
   Cada ficheiro contém exatamente um replay.
+- **Histórico de partidas**: cada um dos 50 jogos lembra-se das suas partidas. O botão **«Partidas»**
+  do ecrã pré-jogo abre **Últimas partidas** (curva dos últimos 30 resultados, recordes a dourado, mais
+  as últimas 10 partidas) e **Todas as partidas** (filtro por modo **M**, ordem mais recentes/melhores
+  **O**). São guardados data, modo, pontos ou ganho em fichas, vitória/derrota/empate, duração e detalhes
+  como aposta, multiplicador, moedas ou nível - as últimas **250** partidas por jogo (os totais
+  continuam a contar) em **`matches.pgzlamamatches`**, separado por perfil. Igual na versão web, na
+  versão em Rust e em pygamez.com.
+- **Arquivo diário**: o percurso diário (Crossy Road), o sudoku diário e a palavra diária (Wordle)
+  podem ser jogados outra vez para os **últimos 30 dias** e cada dia já jogado - com a mesma semente de
+  então e recorde ou melhor tempo próprio por dia. Na preparação, as setas ao lado da data ou
+  **Page Up/Down** mudam o dia e **K** abre o calendário. Os dias do arquivo não alteram séries nem
+  estatísticas diárias; o armazenamento é compacto (um número de dia em vez de uma data).
 
 ### Utilização
 
@@ -3947,6 +3991,9 @@ progress.py          Ecrã de conquistas e estatísticas (cinco separadores, des
 profileview.py       Ecrã de perfis, escolha do jogador 2 e o cartão do nível inicial
 replay.py            Gravação e arquivo das repetições (replay.json)
 replayview.py        Ecrã de replays: lista do arquivo e reprodução
+matches.py           Histórico de partidas por jogo e perfil (matches.pgzlamamatches): entradas, totais, limite 250
+matchview.py         Ecrã de partidas: últimas (curva + últimas 10) e todas (filtro, ordem)
+dailyarchive.py      Arquivo diário: últimos 30 dias + dias jogados, armazenamento compacto, janela de calendário
 ugc.py               Conteúdo próprio (buracos de minigolfe, níveis de Geometry Dash): armazenamento, validação, exportar/importar (ugc.json)
 swear.py             Filtro de palavras para nomes e id (lang/swear/*.yml, 14 idiomas)
 filepick.py          Janelas de ficheiros ("Exportar como ...", "Importar")
@@ -5282,6 +5329,18 @@ pakietów) i dopracowany w stylu nowoczesnego launchera gier:
 - **Udostępnianie powtórek**: **E** zapisuje nagranie jako plik
   **`.lamapgzreplay`**, **I** wczytuje je z powrotem - trafia do zakładki
   właściwej gry. Jeden plik zawiera dokładnie jedną powtórkę.
+- **Historia meczów**: każda z 50 gier zapamiętuje swoje mecze. Przycisk **„Mecze"** na ekranie przed
+  grą otwiera **Ostatnie mecze** (wykres 30 ostatnich wyników, rekordy na złoto, do tego 10 ostatnich
+  meczów) i **Wszystkie mecze** (filtr trybu **M**, sortowanie najnowsze/najlepsze **O**). Zapisywane są
+  data, tryb, punkty lub zysk w żetonach, wygrana/przegrana/remis, czas trwania i szczegóły jak stawka,
+  mnożnik, monety czy poziom - 250 ostatnich meczów na grę (sumy liczą się dalej) w pliku
+  **`matches.pgzlamamatches`**, osobno dla każdego profilu. Tak samo w wersji webowej, wersji Rust i na
+  pygamez.com.
+- **Archiwum dzienne**: trasę dnia (Crossy Road), sudoku dnia i słowo dnia (Wordle) można zagrać
+  ponownie dla **ostatnich 30 dni** i każdego już rozegranego dnia - z tym samym ziarnem co wtedy i
+  osobnym rekordem lub najlepszym czasem dla każdego dnia. W ustawieniach strzałki obok daty lub
+  **PgUp/PgDn** zmieniają dzień, **K** otwiera kalendarz. Dni z archiwum nie zmieniają serii ani
+  statystyk dnia; zapis jest kompaktowy (numer dnia zamiast daty).
 
 ### Obsługa
 
@@ -5366,6 +5425,9 @@ progress.py          Ekran osiągnięć i statystyk (pięć zakładek, przewijan
 profileview.py       Ekran profili, wybór gracza 2 i karta poziomu startowego
 replay.py            Nagrywanie i archiwum powtórek (replay.json)
 replayview.py        Ekran powtórek: lista archiwum i odtwarzanie
+matches.py           Historia meczów na grę i profil (matches.pgzlamamatches): wpisy, sumy, limit 250
+matchview.py         Ekran meczów: ostatnie (wykres + 10 ostatnich) i wszystkie (filtr, sortowanie)
+dailyarchive.py      Archiwum dzienne: ostatnie 30 dni + rozegrane dni, kompaktowy zapis, okno kalendarza
 ugc.py               Własne treści (dołki do minigolfa, poziomy Geometry Dash): przechowywanie, sprawdzanie, eksport/import (ugc.json)
 swear.py             Filtr słów dla nazw i id (lang/swear/*.yml, wszystkie 14 języków)
 filepick.py          Okna plików ("Eksportuj jako ...", "Importuj")
@@ -6700,6 +6762,17 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
 - **Tekrarları paylaşma**: **E** kaydı **`.lamapgzreplay`** dosyası olarak yazar,
   **I** onu geri okur - doğru oyunun sekmesine düşer. Bir dosyada tam olarak bir
   tekrar bulunur.
+- **Maç geçmişi**: 50 oyunun her biri maçlarını hatırlar. Oyun öncesi ekrandaki **"Maçlar"** düğmesi
+  **Son maçlar**ı (son 30 sonucun eğrisi, rekorlar altın renginde, ayrıca son 10 maç) ve **Tüm
+  maçlar**ı (mod filtresi **M**, en yeni/en iyi sıralaması **O**) açar. Tarih, mod, puan veya çip kârı,
+  galibiyet/mağlubiyet/beraberlik, süre ve bahis, çarpan, jeton ya da seviye gibi ayrıntılar
+  kaydedilir - oyun başına son **250** maç (toplamlar saymaya devam eder) her profil için ayrı olarak
+  **`matches.pgzlamamatches`** dosyasında. Web sürümünde, Rust sürümünde ve pygamez.com'da da aynı.
+- **Günlük arşiv**: günlük parkur (Crossy Road), günlük sudoku ve günlük kelime (Wordle) **son 30 gün**
+  ve daha önce oynanan her gün için yeniden oynanabilir - o zamanki tohumla ve her gün için ayrı en iyi
+  skor veya süreyle. Ayarlarda tarihin yanındaki oklar veya **PgUp/PgDn** günü değiştirir, **K** takvimi
+  açar. Arşiv günleri serileri ve günlük istatistikleri değiştirmez; kayıt küçüktür (tarih yerine gün
+  numarası).
 
 ### Kullanım
 
@@ -6782,6 +6855,9 @@ progress.py          Başarımlar ve istatistikler ekranı (beş sekme, kaydır�
 profileview.py       Profil ekranı, 2. oyuncu seçimi ve başlangıç seviyesi kartı
 replay.py            Tekrarların kaydı ve arşivi (replay.json)
 replayview.py        Tekrar ekranı: arşiv listesi ve oynatma
+matches.py           Oyun ve profil başına maç geçmişi (matches.pgzlamamatches): kayıtlar, toplamlar, sınır 250
+matchview.py         Maçlar ekranı: son maçlar (eğri + son 10) ve tüm maçlar (filtre, sıralama)
+dailyarchive.py      Günlük arşiv: son 30 gün + oynanan günler, küçük kayıt, takvim penceresi
 ugc.py               Kendi içerikler (minigolf parkurları, Geometry Dash seviyeleri): depolama, doğrulama, dışa/içe aktarma (ugc.json)
 swear.py             Adlar ve id'ler için kelime filtresi (lang/swear/*.yml, 14 dil)
 filepick.py          Dosya pencereleri ("Farklı dışa aktar ...", "İçe aktar")
@@ -8088,6 +8164,18 @@ og stylet som en moderne spil-launcher:
 - **Del replays**: **E** skriver optagelsen som en **`.lamapgzreplay`**-fil,
   **I** læser den ind igen - den havner i fanen for det rigtige spil. En fil
   indeholder præcis ét replay.
+- **Kamphistorik**: hvert af de 50 spil husker sine kampe. Knappen **„Kampe"** på skærmen før spillet
+  åbner **Seneste kampe** (kurve over de seneste 30 resultater, rekorder i guld, plus de seneste 10
+  kampe) og **Alle kampe** (filter efter tilstand **M**, sortering nyeste/bedste **O**). Der gemmes dato,
+  tilstand, point eller jetongevinst, sejr/nederlag/uafgjort, varighed og detaljer som indsats,
+  multiplikator, mønter eller bane - de seneste **250** kampe pr. spil (summerne tæller videre) i
+  **`matches.pgzlamamatches`**, adskilt pr. profil. Det samme i webversionen, Rust-udgaven og på
+  pygamez.com.
+- **Dagsarkiv**: dagens bane (Crossy Road), dagens sudoku og dagens ord (Wordle) kan spilles igen for
+  de **seneste 30 dage** og hver dag, du allerede har spillet - med samme seed som dengang og egen
+  bedste score eller tid pr. dag. I opsætningen skifter pilene ved datoen eller **PgUp/PgDn** dag, **K**
+  åbner kalenderen. Arkivdage ændrer hverken stimer eller dagsstatistik; lagringen er kompakt (et
+  dagnummer i stedet for en dato).
 
 ### Betjening
 
@@ -8173,6 +8261,9 @@ progress.py          Skærm for præstationer & statistik (fem faner, rulbar)
 profileview.py       Profilskærm, valg af spiller 2 og startniveau-kortet
 replay.py            Optagelse og arkiv over replays (replay.json)
 replayview.py        Replay-skærm: arkivliste og afspilning
+matches.py           Kamphistorik pr. spil og profil (matches.pgzlamamatches): poster, summer, grænse 250
+matchview.py         Kampskærm: seneste kampe (kurve + seneste 10) og alle kampe (filter, sortering)
+dailyarchive.py      Dagsarkiv: seneste 30 dage + spillede dage, kompakt lagring, kalendervindue
 ugc.py               Eget indhold (minigolfbaner, Geometry Dash-baner): lagring, kontrol, eksport/import (ugc.json)
 swear.py             Ordfilter til navne og id'er (lang/swear/*.yml, alle 14 sprog)
 filepick.py          Fildialoger ("Eksportér som ...", "Importér")
@@ -9477,6 +9568,18 @@ pakker) og stylet som en moderne spill-launcher:
 - **Del replays**: **E** skriver opptaket som en **`.lamapgzreplay`**-fil, **I**
   leser den inn igjen - den havner i fanen til riktig spill. Én fil inneholder
   nøyaktig ett replay.
+- **Kamphistorikk**: hvert av de 50 spillene husker kampene sine. Knappen **«Kamper»** på skjermen før
+  spillet åpner **Siste kamper** (kurve over de siste 30 resultatene, rekorder i gull, pluss de siste 10
+  kampene) og **Alle kamper** (filter etter modus **M**, sortering nyeste/beste **O**). Det lagres dato,
+  modus, poeng eller sjetonggevinst, seier/tap/uavgjort, varighet og detaljer som innsats,
+  multiplikator, mynter eller nivå - de siste **250** kampene per spill (summene teller videre) i
+  **`matches.pgzlamamatches`**, separat for hver profil. Det samme i nettversjonen, Rust-utgaven og på
+  pygamez.com.
+- **Dagsarkiv**: dagens løype (Crossy Road), dagens sudoku og dagens ord (Wordle) kan spilles på nytt
+  for de **siste 30 dagene** og hver dag du allerede har spilt - med samme seed som den gang og egen
+  beste poengsum eller tid per dag. I oppsettet bytter pilene ved datoen eller **PgUp/PgDn** dag, **K**
+  åpner kalenderen. Arkivdager endrer verken rekker eller dagsstatistikk; lagringen er kompakt (et
+  dagnummer i stedet for en dato).
 
 ### Betjening
 
@@ -9559,6 +9662,9 @@ progress.py          Skjerm for prestasjoner & statistikk (fem faner, rullbar)
 profileview.py       Profilskjerm, valg av spiller 2 og startnivå-kortet
 replay.py            Opptak og arkiv over replays (replay.json)
 replayview.py        Replay-skjerm: arkivliste og avspilling
+matches.py           Kamphistorikk per spill og profil (matches.pgzlamamatches): oppføringer, summer, grense 250
+matchview.py         Kampskjerm: siste kamper (kurve + siste 10) og alle kamper (filter, sortering)
+dailyarchive.py      Dagsarkiv: siste 30 dager + spilte dager, kompakt lagring, kalendervindu
 ugc.py               Eget innhold (minigolfbaner, Geometry Dash-nivåer): lagring, kontroll, eksport/import (ugc.json)
 swear.py             Ordfilter for navn og id-er (lang/swear/*.yml, alle 14 språk)
 filepick.py          Fildialoger ("Eksporter som ...", "Importer")
@@ -10806,6 +10912,18 @@ modern spel-launcher:
 - **Dela replays**: **E** skriver inspelningen som en **`.lamapgzreplay`**-fil,
   **I** läser in den igen - den hamnar i fliken för rätt spel. En fil innehåller
   exakt en replay.
+- **Matchhistorik**: vart och ett av de 50 spelen minns sina matcher. Knappen **”Matcher”** på skärmen
+  före spelet öppnar **Senaste matcher** (diagram över de senaste 30 resultaten, rekord i guld, plus de
+  senaste 10 matcherna) och **Alla matcher** (filter efter läge **M**, sortering nyaste/bästa **O**).
+  Datum, läge, poäng eller markervinst, vinst/förlust/oavgjort, längd och detaljer som insats,
+  multiplikator, mynt eller nivå sparas - de senaste **250** matcherna per spel (summorna räknas vidare)
+  i **`matches.pgzlamamatches`**, separat för varje profil. Samma sak i webbversionen, Rust-versionen och
+  på pygamez.com.
+- **Dagsarkiv**: dagens bana (Crossy Road), dagens sudoku och dagens ord (Wordle) kan spelas igen för
+  de **senaste 30 dagarna** och varje dag du redan spelat - med samma frö som då och eget bästa
+  resultat eller tid per dag. I inställningen byter pilarna vid datumet eller **PgUp/PgDn** dag, **K**
+  öppnar kalendern. Arkivdagar ändrar varken sviter eller dagsstatistik; lagringen är kompakt (ett
+  dagnummer i stället för ett datum).
 
 ### Användning
 
@@ -10882,6 +11000,9 @@ progress.py          Skärm för prestationer & statistik (fem flikar, rullbar)
 profileview.py       Profilskärm, val av spelare 2 och startnivåkortet
 replay.py            Inspelning och arkiv för replays (replay.json)
 replayview.py        Replay-skärm: arkivlista och uppspelning
+matches.py           Matchhistorik per spel och profil (matches.pgzlamamatches): poster, summor, gräns 250
+matchview.py         Matchskärm: senaste matcher (diagram + senaste 10) och alla matcher (filter, sortering)
+dailyarchive.py      Dagsarkiv: senaste 30 dagarna + spelade dagar, kompakt lagring, kalenderfönster
 ugc.py               Eget innehåll (minigolfbanor, Geometry Dash-nivåer): lagring, kontroll, export/import (ugc.json)
 swear.py             Ordfilter för namn och id (lang/swear/*.yml, alla 14 språk)
 filepick.py          Fildialoger ("Exportera som ...", "Importera")
@@ -12238,6 +12359,18 @@ ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
 - **Uusintojen jakaminen**: **E** kirjoittaa tallenteen
   **`.lamapgzreplay`**-tiedostoksi, **I** lukee sen takaisin - se päätyy oikean
   pelin välilehdelle. Yhdessä tiedostossa on tasan yksi uusinta.
+- **Otteluhistoria**: jokainen 50 pelistä muistaa ottelunsa. Aloitusnäytön **”Ottelut”**-painike avaa
+  **Viimeisimmät** (käyrä viimeisestä 30 tuloksesta, ennätykset kultaisina, sekä 10 viimeisintä
+  ottelua) ja **Kaikki ottelut** (tilasuodatin **M**, järjestys uusimmat/parhaat **O**). Tallennetaan
+  päivä, tila, pisteet tai pelimerkkivoitto, voitto/tappio/tasapeli, kesto ja yksityiskohdat kuten
+  panos, kerroin, kolikot tai taso - viimeiset **250** ottelua pelikohtaisesti (summat jatkavat
+  laskemista) tiedostossa **`matches.pgzlamamatches`**, erikseen jokaiselle profiilille. Sama
+  verkkoversiossa, Rust-versiossa ja pygamez.comissa.
+- **Päiväarkisto**: päivän rata (Crossy Road), päivän sudoku ja päivän sana (Wordle) voi pelata
+  uudelleen **viimeiseltä 30 päivältä** ja jokaiselta jo pelatulta päivältä - samalla siemenellä kuin
+  silloin ja omalla parhaalla tuloksella tai ajalla. Asetuksissa päivämäärän vieressä olevat nuolet tai
+  **PgUp/PgDn** vaihtavat päivää, **K** avaa kalenterin. Arkistopäivät eivät muuta putkia eivätkä
+  päivätilastoja; tallennus on tiivis (päivän numero päivämäärän sijaan).
 
 ### Käyttö
 
@@ -12322,6 +12455,9 @@ progress.py          Saavutukset ja tilastot -näyttö (viisi välilehteä, vier
 profileview.py       Profiilinäyttö, pelaajan 2 valinta ja aloitustasokortti
 replay.py            Uusintojen tallennus ja arkisto (replay.json)
 replayview.py        Uusintanäyttö: arkistolista ja toisto
+matches.py           Otteluhistoria peleittäin ja profiileittain (matches.pgzlamamatches): merkinnät, summat, raja 250
+matchview.py         Ottelunäkymä: viimeisimmät (käyrä + 10 viimeisintä) ja kaikki (suodatin, järjestys)
+dailyarchive.py      Päiväarkisto: viimeiset 30 päivää + pelatut päivät, tiivis tallennus, kalenteri-ikkuna
 ugc.py               Oma sisältö (minigolfradat, Geometry Dash -tasot): tallennus, tarkistus, vienti/tuonti (ugc.json)
 swear.py             Sanasuodatin nimille ja id:ille (lang/swear/*.yml, 14 kieltä)
 filepick.py          Tiedostoikkunat ("Vie nimellä ...", "Tuo")
@@ -13623,6 +13759,18 @@ navíc) a vyladěné do stylu moderního herního spouštěče:
 - **Sdílení záznamů**: **E** zapíše nahrávku jako soubor **`.lamapgzreplay`**,
   **I** ji zase načte - objeví se na kartě správné hry. Jeden soubor obsahuje
   přesně jeden záznam.
+- **Historie zápasů**: každá z 50 her si pamatuje své zápasy. Tlačítko **„Zápasy"** na obrazovce před
+  hrou otevře **Poslední zápasy** (křivka posledních 30 výsledků, rekordy zlatě, k tomu posledních 10
+  zápasů) a **Všechny zápasy** (filtr režimu **M**, řazení nejnovější/nejlepší **O**). Ukládá se datum,
+  režim, body nebo zisk v žetonech, výhra/prohra/remíza, délka a podrobnosti jako sázka, násobitel,
+  mince nebo úroveň - posledních **250** zápasů na hru (součty počítají dál) v souboru
+  **`matches.pgzlamamatches`**, zvlášť pro každý profil. Stejně ve webové verzi, verzi v Rustu i na
+  pygamez.com.
+- **Denní archiv**: denní trať (Crossy Road), denní sudoku a denní slovo (Wordle) si můžeš zahrát
+  znovu za **posledních 30 dní** a každý už odehraný den - se stejným seedem jako tehdy a vlastním
+  nejlepším výsledkem nebo časem pro každý den. V nastavení mění den šipky vedle data nebo **PgUp/PgDn**,
+  **K** otevře kalendář. Archivní dny nemění série ani denní statistiky; ukládání je úsporné (číslo dne
+  místo data).
 
 ### Ovládání
 
@@ -13706,6 +13854,9 @@ progress.py          Obrazovka úspěchů a statistik (pět záložek, posuvná)
 profileview.py       Obrazovka profilů, výběr hráče 2 a karta startovní úrovně
 replay.py            Nahrávání a archiv záznamů (replay.json)
 replayview.py        Obrazovka záznamů: seznam archivu a přehrávání
+matches.py           Historie zápasů podle hry a profilu (matches.pgzlamamatches): záznamy, součty, limit 250
+matchview.py         Obrazovka zápasů: poslední (křivka + posledních 10) a všechny (filtr, řazení)
+dailyarchive.py      Denní archiv: posledních 30 dní + odehrané dny, úsporné ukládání, okno kalendáře
 ugc.py               Vlastní obsah (minigolfové jamky, úrovně Geometry Dash): úložiště, kontrola, export/import (ugc.json)
 swear.py             Filtr slov pro názvy a id (lang/swear/*.yml, všech 14 jazyků)
 filepick.py          Dialogy souborů ("Exportovat jako ...", "Importovat")
@@ -15022,6 +15173,18 @@ oblikovan kot sodoben zaganjalnik iger:
 - **Deljenje posnetkov**: **E** zapiše posnetek kot datoteko
   **`.lamapgzreplay`**, **I** jo spet prebere - pristane v zavihku prave igre. V
   eni datoteki je natanko en posnetek.
+- **Zgodovina tekem**: vsaka od 50 iger si zapomni svoje tekme. Gumb **»Tekme«** na zaslonu pred igro
+  odpre **Zadnje tekme** (krivulja zadnjih 30 rezultatov, rekordi zlato, poleg tega zadnjih 10 tekem) in
+  **Vse tekme** (filter načina **M**, razvrstitev najnovejše/najboljše **O**). Shranijo se datum, način,
+  točke ali dobiček v žetonih, zmaga/poraz/neodločeno, trajanje in podrobnosti, kot so vložek,
+  množitelj, kovanci ali stopnja - zadnjih **250** tekem na igro (vsote štejejo naprej) v datoteki
+  **`matches.pgzlamamatches`**, ločeno za vsak profil. Enako v spletni različici, različici v Rustu in na
+  pygamez.com.
+- **Dnevni arhiv**: dnevno progo (Crossy Road), dnevno uganko (Sudoku) in dnevno besedo (Wordle) lahko
+  igraš znova za **zadnjih 30 dni** in vsak že odigran dan - z istim semenom kot takrat in lastnim
+  najboljšim rezultatom ali časom za vsak dan. V nastavitvah dan zamenjajo puščice ob datumu ali
+  **PgUp/PgDn**, **K** odpre koledar. Arhivski dnevi ne spreminjajo nizov ne dnevne statistike;
+  shranjevanje je zgoščeno (številka dneva namesto datuma).
 
 ### Upravljanje
 
@@ -15105,6 +15268,9 @@ progress.py          Zaslon dosežkov in statistike (pet zavihkov, drsni)
 profileview.py       Zaslon profilov, izbira igralca 2 in kartica začetne stopnje
 replay.py            Snemanje in arhiv posnetkov (replay.json)
 replayview.py        Zaslon posnetkov: seznam arhiva in predvajanje
+matches.py           Zgodovina tekem po igrah in profilih (matches.pgzlamamatches): vnosi, vsote, meja 250
+matchview.py         Zaslon tekem: zadnje tekme (krivulja + zadnjih 10) in vse tekme (filter, razvrstitev)
+dailyarchive.py      Dnevni arhiv: zadnjih 30 dni + odigrani dnevi, zgoščeno shranjevanje, okno koledarja
 ugc.py               Lastna vsebina (minigolf proge, stopnje Geometry Dash): shranjevanje, preverjanje, izvoz/uvoz (ugc.json)
 swear.py             Besedni filter za imena in id (lang/swear/*.yml, vseh 14 jezikov)
 filepick.py          Pogovorna okna za datoteke ("Izvozi kot ...", "Uvozi")
@@ -16426,6 +16592,18 @@ dotjerano poput modernog pokretača igara:
 - **Dijeljenje snimaka**: **E** zapisuje snimku kao datoteku
   **`.lamapgzreplay`**, **I** je ponovno učitava - završi u kartici prave igre.
   Jedna datoteka sadrži točno jednu snimku.
+- **Povijest mečeva**: svaka od 50 igara pamti svoje mečeve. Gumb **„Mečevi"** na zaslonu prije igre
+  otvara **Zadnje mečeve** (krivulja zadnjih 30 rezultata, rekordi zlatno, uz to zadnjih 10 mečeva) i
+  **Sve mečeve** (filtar načina **M**, poredak najnoviji/najbolji **O**). Spremaju se datum, način,
+  bodovi ili dobitak u žetonima, pobjeda/poraz/neriješeno, trajanje i pojedinosti poput uloga,
+  množitelja, novčića ili razine - zadnjih **250** mečeva po igri (zbrojevi broje dalje) u datoteci
+  **`matches.pgzlamamatches`**, odvojeno za svaki profil. Jednako u web verziji, verziji u Rustu i na
+  pygamez.com.
+- **Dnevna arhiva**: dnevnu stazu (Crossy Road), dnevnu zagonetku (Sudoku) i dnevnu riječ (Wordle)
+  možeš ponovno igrati za **zadnjih 30 dana** i svaki već odigrani dan - s istim sjemenom kao tada i
+  vlastitim najboljim rezultatom ili vremenom za svaki dan. U postavkama dan mijenjaju strelice pokraj
+  datuma ili **PgUp/PgDn**, **K** otvara kalendar. Arhivski dani ne mijenjaju nizove ni dnevnu
+  statistiku; spremanje je sažeto (broj dana umjesto datuma).
 
 ### Upravljanje
 
@@ -16508,6 +16686,9 @@ progress.py          Zaslon postignuća i statistike (pet kartica, pomični)
 profileview.py       Zaslon profila, odabir igrača 2 i kartica početne razine
 replay.py            Snimanje i arhiva snimaka (replay.json)
 replayview.py        Zaslon snimaka: popis arhive i reprodukcija
+matches.py           Povijest mečeva po igri i profilu (matches.pgzlamamatches): unosi, zbrojevi, granica 250
+matchview.py         Zaslon mečeva: zadnji mečevi (krivulja + zadnjih 10) i svi mečevi (filtar, poredak)
+dailyarchive.py      Dnevna arhiva: zadnjih 30 dana + odigrani dani, sažeto spremanje, prozor kalendara
 ugc.py               Vlastiti sadržaj (minigolf staze, razine Geometry Dasha): pohrana, provjera, izvoz/uvoz (ugc.json)
 swear.py             Filtar riječi za nazive i id (lang/swear/*.yml, svih 14 jezika)
 filepick.py          Dijalozi datoteka ("Izvezi kao ...", "Uvezi")

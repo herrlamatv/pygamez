@@ -510,9 +510,13 @@ def audit_persistence():
     g._finish_run()
     check(new_game("daily")._daily_best() == 12 and not g.record, "schlechterer Lauf ändert den Tagesbestwert nicht")
     old = dict(store.load_section("crossy"))
-    old["daily"] = {"date": "2000-01-01", "best": 99}
+    old["daily"] = {"date": "2026-01-02", "best": 99}
+    old["arch"] = []
     store.save_section("crossy", old)
-    check(new_game("daily")._daily_best() == 0, "Tagesbestwert von gestern zählt heute nicht")
+    g4 = new_game("daily")
+    check(g4._daily_best() == 0 and g4.data["arch"] == [[1, 99, 1]],
+          "Tagesbestwert von gestern zählt heute nicht (wandert ins Tages-Archiv)",
+          str(g4.data["arch"]))
     # Münzen einer abgebrochenen Runde
     g = start(new_game(), 1)
     g.run_coins = 3
@@ -524,7 +528,8 @@ def audit_persistence():
                                   "selected": "robot", "daily": [1, 2]})
     g = new_game()
     check(g.data == {"coins": 0, "unlocked": ["chicken", "fox"], "selected": "chicken",
-                     "daily": {"date": "", "best": 0}}, "kaputte Section wird bereinigt", str(g.data))
+                     "daily": {"date": "", "best": 0}, "arch": []},
+          "kaputte Section wird bereinigt", str(g.data))
     merged = settings_mod._merge_defaults({"crossy": {"shadows": False, "daynight": False, "x": 1}})
     check(merged["crossy"] == {"shadows": False, "daynight": False},
           "settings: crossy.shadows/daynight überleben das Laden", str(merged.get("crossy")))

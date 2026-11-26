@@ -196,6 +196,11 @@ pub struct GeometryDashGame {
     session_attempts: i64,
     session_jumps: i64,
     session_time: f64,
+    /// `_gd_logged` - Level-Besuch schon in der Match-Historie (vor dem
+    /// ersten Level wie `getattr(self, "_gd_logged", True)`).
+    gd_logged: bool,
+    /// `_gd_best_pct` - bester Fortschritt dieses Besuchs.
+    gd_best_pct: i64,
     bpm: i64,
     acc: f64,
     queue: Vec<(f64, bool, String)>,
@@ -272,6 +277,8 @@ impl GeometryDashGame {
             session_attempts: 0,
             session_jumps: 0,
             session_time: 0.0,
+            gd_logged: true,
+            gd_best_pct: 0,
             bpm: 0,
             acc: 0.0,
             queue: Vec::new(),
@@ -430,6 +437,8 @@ impl GeometryDashGame {
         self.session_attempts = 0;
         self.session_jumps = 0;
         self.session_time = 0.0;
+        self.gd_logged = false;
+        self.gd_best_pct = 0;
         self.state = St::Play;
         self.new_attempt(false);
         self.b.play_sound("select");
@@ -592,8 +601,34 @@ impl GeometryDashGame {
         self.new_attempt(self.practice);
     }
 
+    /// `_log_level_match(won)` - Match-Historie: Level-Besuch abschliessen
+    /// (einmal je Besuch; Test-Spielen aus dem Editor zaehlt nicht).
+    fn log_level_match(&mut self, won: bool) {
+        if self.gd_logged || self.cur_kind == "test" || self.session_attempts <= 0 {
+            return;
+        }
+        let Some(cur) = self.cur.as_ref() else { return };
+        self.gd_logged = true;
+        let name = match cur.get("name") {
+            Some(Value::String(n)) => n.chars().take(40).collect::<String>(),
+            Some(Value::Null) => "None".to_string(),
+            Some(v) => v.to_string().chars().take(40).collect(),
+            None => String::new(),
+        };
+        let mut info = info_map(vec![("lv", name.into()), ("g", self.session_attempts.into())]);
+        if won {
+            if let Some(run) = self.run.as_ref() {
+                info.insert("c".into(), (run.coins.count_ones() as i64).into());
+            }
+        }
+        let score = if won { 100 } else { self.gd_best_pct };
+        let mode = if self.practice { "practice" } else { "normal" };
+        self.b.log_match(score, Some(if won { 1 } else { 0 }), Some(info), Some(mode), 0);
+    }
+
     fn leave_to_select(&mut self) {
         audio::music_stop(Some(self.ident()));
+        self.log_level_match(false);
         self.save_progress();
         self.state = St::Select;
         self.cur = None;
@@ -750,6 +785,7 @@ impl GeometryDashGame {
         self.b.play_sound("explode");
         self.b.rumble(160);
         let pct = core::progress(self.run.as_ref().expect("run"), self.lv.as_ref().expect("lv"));
+        self.gd_best_pct = self.gd_best_pct.max(pct);
         if self.record_best(pct) {
             self.new_best = Some((pct, self.t));
         }
@@ -795,6 +831,7 @@ impl GeometryDashGame {
             ..Info::default()
         };
         let new_record = self.record_best(100);
+        self.log_level_match(true);
         let cur = self.cur.clone().expect("cur");
         if self.cur_kind == "main" && !self.practice {
             let lid = s_of(&cur, "id").to_string();
@@ -1690,6 +1727,10 @@ impl GeometryDashGame {
 }
 
 impl Game for GeometryDashGame {
+    /// Match-Historie: das Spiel meldet seine Matches selbst (`log_match`).
+    fn match_manual(&self) -> bool {
+        true
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }
@@ -1756,7 +1797,13 @@ impl Game for GeometryDashGame {
 
     fn on_exit(&mut self) {
         audio::music_stop(Some(self.ident()));
+        self.log_level_match(false);
         self.save_progress();
+    }
+
+    /// Match-Historie: ein Match = ein Level-Besuch (Dauer nur im Level).
+    fn match_active(&self) -> bool {
+        self.run.is_some() && self.cur.is_some()
     }
 
     fn handle_event(&mut self, ev: &InputEvent) {

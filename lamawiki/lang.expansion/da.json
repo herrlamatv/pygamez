@@ -333,6 +333,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Kampe",
+      "keywords": [
+        "kampe",
+        "historik",
+        "seneste",
+        "alle",
+        "resultater",
+        "runder"
+      ],
+      "sections": [
+        {
+          "h": "Seneste og alle kampe",
+          "body": [
+            "Hvert spil husker sine kampe. På skærmen før spillet åbner knappen Kampe spillets historik.",
+            "- Seneste kampe: en kurve over de seneste 30 resultater (rekorder i guld) og nedenunder de seneste 10 kampe.",
+            "- Alle kampe: alle gemte kampe, med filter efter tilstand [M] og sortering nyeste/bedste [O].",
+            "Øverst står summerne: kampe, sejre, bedste, gennemsnit og spilletid."
+          ]
+        },
+        {
+          "h": "Hvad gemmes",
+          "body": [
+            "Dato og klokkeslæt, tilstand, point (jetonspil: gevinst eller tab), sejr/nederlag/uafgjort, varighed og detaljer som indsats, multiplikator, mønter, bane eller modstander.",
+            "- Rekorder er markeret med guld. Forlader du en runde før tid, står den som afbrudt - men kun hvis du allerede havde point, eller den varede mindst 5 sekunder.",
+            "- Jetonspil tæller hver runde for sig, Geometry Dash hvert banebesøg, Labyrint hver løst bane."
+          ]
+        },
+        {
+          "h": "Lagring",
+          "body": [
+            "De seneste 250 kampe pr. spil gemmes (på pygamez.com som standard 50). Ældre falder ud - summerne tæller stadig videre.",
+            "Historikken ligger i matches.pgzlamamatches ved siden af mem.json, adskilt pr. profil."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Præstationer, sjældenhed og niveau",
@@ -1108,6 +1147,14 @@
           ]
         },
         {
+          "h": "Dagsarkiv",
+          "body": [
+            "Dagens opgaver fra de seneste 30 dage og hver dag, du allerede har løst, ligger i dagsarkivet - med bedste tid og stjerner pr. dag.",
+            "- Under dagskortet skifter pilene eller [PgUp]/[PgDn] dag, [K] eller Arkiv åbner kalenderen, [T] starter den valgte dag.",
+            "- Arkivopgaver ændrer ikke din daglige stime."
+          ]
+        },
+        {
           "h": "Tips",
           "body": [
             "- Start med rækker, kolonner og bokse, hvor der allerede står mange tal.",
@@ -1731,6 +1778,14 @@
             "Dagens ord: ét ord om dagen med 6 forsøg - det samme for alle på hvert sprog og i hver længde, på pc'en og i browseren. Et påbegyndt dagens ord gemmes; bagefter viser spillet resultat, statistik og nedtælling til næste ord. Din stime vokser kun, hvis du spiller hver dag.",
             "Dordle: to ord på én gang på 7 forsøg - hvert gæt gælder for begge plader. Tasterne på skærmtastaturet er delt: venstre halvdel plade 1, højre halvdel plade 2.",
             "Quordle: fire ord på én gang på 9 forsøg. Tasterne er delt i fire og viser farverne for alle fire plader."
+          ]
+        },
+        {
+          "h": "Dagsarkiv",
+          "body": [
+            "Dagens ord fra de seneste 30 dage og hver dag, du allerede har spillet, kan spilles igen - pr. sprog og ordlængde.",
+            "- I opsætningen af dagens ord skifter pilene eller [PgUp]/[PgDn] dag, [K] eller Arkiv åbner kalenderen.",
+            "- Arkivord tæller ikke med i statistik og stime; påbegyndte arkivord gemmes."
           ]
         },
         {
@@ -2692,6 +2747,14 @@
             "- Uendelig: en ny rute hver runde, tæller til highscoren.",
             "- Dagens rute: ens for alle i dag (også i webudgaven), med egen dagsrekord - tæller ikke til highscoren.",
             "I opsætningen slår du skygger [H] og skiftet mellem dag og nat [N] til eller fra; Venstre/Højre skifter mellem dine figurer."
+          ]
+        },
+        {
+          "h": "Dagsarkiv",
+          "body": [
+            "Dagens baner fra de seneste 30 dage og hver dag, du allerede har spillet, kan spilles igen - med egen bedste score pr. dag.",
+            "- I opsætningen af dagens bane skifter pilene ved datoen eller [PgUp]/[PgDn] dag; [K] eller Arkiv åbner kalenderen.",
+            "- En tidligere dag bruger samme seed som dengang - banen er præcis den samme."
           ]
         }
       ]

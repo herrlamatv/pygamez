@@ -83,6 +83,7 @@ GEM_STEPS = (0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24, 26, 28, 31, 33, 36)
 
 
 class LamaMinesGame(Game):
+    match_manual = True       # jede Runde ist ein Match (Game.log_match)
     name = "Lama Mines"
     highscore_key = KEY
     supports_multiplayer = False
@@ -602,6 +603,10 @@ class LamaMinesGame(Game):
         bet = r["bet"]
         m100 = self.last_mult
         chipstats.record(self.stats, bet, paid, m100)
+        net = paid - bet
+        self.log_match(net, 1 if net > 0 else 0 if net < 0 else 2,
+                       {"bet": bet, "win": paid, "x": m100, "mi": r["mines"],
+                        "op": len(opened)})
         self.hist = (self.hist + [m100])[-ML.HISTORY:]
         outcome = {"grid": r["grid"], "mines": r["mines"], "open": list(opened), "m": m100, "bet": bet}
         fairness.record(self.fairlog, self._entry(), outcome)

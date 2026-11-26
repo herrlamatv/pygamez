@@ -332,6 +332,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Partidas",
+      "keywords": [
+        "partidas",
+        "histórico",
+        "últimas",
+        "todas",
+        "resultados",
+        "rondas"
+      ],
+      "sections": [
+        {
+          "h": "Últimas e todas as partidas",
+          "body": [
+            "Cada jogo lembra-se das suas partidas. No ecrã pré-jogo, o botão Partidas abre o histórico do jogo.",
+            "- Últimas partidas: uma curva dos últimos 30 resultados (recordes a dourado) e por baixo as últimas 10 partidas.",
+            "- Todas as partidas: todas as partidas guardadas, com filtro por modo [M] e ordem mais recentes/melhores [O].",
+            "No topo estão os totais: partidas, vitórias, melhor, média e tempo de jogo."
+          ]
+        },
+        {
+          "h": "O que é guardado",
+          "body": [
+            "Data com o minuto exato, modo, pontos (jogos de fichas: ganho ou perda), vitória/derrota/empate, duração e detalhes como aposta, multiplicador, moedas, nível ou adversário.",
+            "- Os recordes ficam a dourado. Se saíres de uma ronda antes do fim, aparece como abandonada - mas só se já tinhas pontos ou se durou pelo menos 5 segundos.",
+            "- Os jogos de fichas contam cada ronda à parte, o Geometry Dash cada visita a um nível e o Labirinto cada nível resolvido."
+          ]
+        },
+        {
+          "h": "Armazenamento",
+          "body": [
+            "Ficam guardadas as últimas 250 partidas por jogo (em pygamez.com 50 por defeito). As mais antigas saem - os totais continuam a contar.",
+            "O histórico está em matches.pgzlamamatches junto ao mem.json, separado por perfil."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Conquistas, raridade e nível",
@@ -1106,6 +1145,14 @@
           ]
         },
         {
+          "h": "Arquivo diário",
+          "body": [
+            "Os sudokus diários dos últimos 30 dias e cada dia já resolvido estão no arquivo diário - com melhor tempo e estrelas por dia.",
+            "- Por baixo do cartão diário, as setas ou [Page Up]/[Page Down] mudam o dia, [K] ou Arquivo abre o calendário, [T] inicia o dia escolhido.",
+            "- Os sudokus do arquivo não alteram a tua série diária."
+          ]
+        },
+        {
           "h": "Dicas",
           "body": [
             "- Começa pelas linhas, colunas e blocos que já têm muitos números.",
@@ -1728,6 +1775,14 @@
             "Palavra do dia: uma palavra por dia com 6 tentativas - igual para todos em cada idioma e comprimento, no PC e no navegador. Uma palavra do dia começada fica guardada; depois o jogo mostra o resultado, as estatísticas e a contagem decrescente até à próxima. A sequência só cresce se jogares todos os dias.",
             "Dordle: duas palavras ao mesmo tempo em 7 tentativas - cada tentativa conta para os dois tabuleiros. As teclas do teclado no ecrã estão divididas: metade esquerda tabuleiro 1, metade direita tabuleiro 2.",
             "Quordle: quatro palavras ao mesmo tempo em 9 tentativas. As teclas estão divididas em quatro e mostram as cores dos quatro tabuleiros."
+          ]
+        },
+        {
+          "h": "Arquivo diário",
+          "body": [
+            "As palavras diárias dos últimos 30 dias e cada dia que já jogaste podem ser jogadas outra vez - por idioma e tamanho da palavra.",
+            "- Na preparação da palavra diária, as setas ou [Page Up]/[Page Down] mudam o dia, [K] ou Arquivo abre o calendário.",
+            "- As palavras do arquivo não contam para estatísticas nem série; as começadas ficam guardadas."
           ]
         },
         {
@@ -2688,6 +2743,14 @@
             "- Infinito: um percurso novo em cada partida, conta para o recorde.",
             "- Percurso do dia: igual para todos hoje (também na versão web), com recorde do dia próprio - não conta para o recorde.",
             "Nos ajustes ligas ou desligas as sombras [H] e a alternância dia/noite [N]; Esquerda/Direita troca entre as tuas personagens."
+          ]
+        },
+        {
+          "h": "Arquivo diário",
+          "body": [
+            "Os percursos diários dos últimos 30 dias e cada dia que já jogaste podem ser jogados outra vez - com recorde próprio por dia.",
+            "- Na preparação do percurso diário, as setas ao lado da data ou [Page Up]/[Page Down] mudam o dia; [K] ou Arquivo abre o calendário.",
+            "- Um dia passado usa a mesma semente de então - o percurso é exatamente o mesmo."
           ]
         }
       ]

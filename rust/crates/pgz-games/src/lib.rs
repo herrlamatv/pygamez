@@ -69,6 +69,7 @@ pub mod lamaplinko_draw;
 pub mod lamaplinko_logic;
 pub mod lamatowerdefense;
 pub mod mastermind;
+pub mod matchtext;
 pub mod maze_gen;
 pub mod memory;
 pub mod minesweeper;

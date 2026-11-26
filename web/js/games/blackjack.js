@@ -62,6 +62,11 @@
   }
 
   class BlackjackGame extends PG.Game {
+    /** Jede Hand ist ein Match (Game.logMatch). */
+    get matchManual() {
+      return true;
+    }
+
     // ===================================================== Aufbau / Reset
     reset() {
       this.gameOver = false;
@@ -338,6 +343,10 @@
       });
       bank.credit(delta, "blackjack");
       this._syncChips();
+      // Match-Historie: Ergebnis der Hand(en) = Auszahlung - Einsatz.
+      const wager = this.handBets.reduce((a, b) => a + b, 0);
+      const net = delta - wager;
+      this.logMatch(net, net > 0 ? 1 : net < 0 ? 0 : 2, { bet: wager, win: delta });
       this.state = PAYOUT;
       if (this.results.some((r) => r === "blackjack")) this.playSound("win");
       else if (this.results.some((r) => r === "win" || r === "dealer_bust")) this.playSound("point");

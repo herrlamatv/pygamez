@@ -992,6 +992,15 @@ impl LamaMinesGame {
         let m100 = self.last_mult;
         let (grid, mines) = (r.grid, r.mines);
         self.stats.record(bet, paid, m100);
+        let net = paid - bet;
+        let info = info_map(vec![
+            ("bet", bet.into()),
+            ("win", paid.into()),
+            ("x", m100.into()),
+            ("mi", mines.into()),
+            ("op", opened.len().into()),
+        ]);
+        self.b.log_match(net, chip_result(net), Some(info), None, 0);
         self.hist.push(m100);
         if self.hist.len() > ml::HISTORY {
             let cut = self.hist.len() - ml::HISTORY;
@@ -3215,6 +3224,10 @@ impl LamaMinesGame {
 }
 
 impl Game for LamaMinesGame {
+    /// Match-Historie: das Spiel meldet seine Matches selbst (`log_match`).
+    fn match_manual(&self) -> bool {
+        true
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }

@@ -120,6 +120,9 @@ def total_coins_mask(mask):
 
 
 class GeometryDashGame(Game):
+    # Match-Historie: ein Match = ein Level-Besuch (alle Versuche bis zum
+    # Ziel oder bis zum Verlassen), gemeldet über Game.log_match.
+    match_manual = True
     name = "Geometry Dash"
     highscore_key = "geodash"
     MODES = [("normal", "gd.mode.normal"), ("practice", "gd.mode.practice")]
@@ -200,7 +203,24 @@ class GeometryDashGame(Game):
 
     def on_exit(self):
         audio.music_stop(self)
+        self._log_level_match(False)
         self._save_progress()
+
+    @property
+    def match_active(self):
+        return self.run is not None and self.cur is not None
+
+    def _log_level_match(self, won):
+        """Match-Historie: Level-Besuch abschließen (einmal je Besuch)."""
+        if (getattr(self, "_gd_logged", True) or self.cur is None
+                or self.cur_kind == "test" or self.session_attempts <= 0):
+            return
+        self._gd_logged = True
+        info = {"lv": str(self.cur.get("name", ""))[:40], "g": self.session_attempts}
+        if won and self.run is not None:
+            info["c"] = bin(self.run.coins).count("1")
+        self.log_match(100 if won else self._gd_best_pct, 1 if won else 0, info,
+                       mode="practice" if self.practice else "normal")
 
     # ===================================================== Fortschritt
     def _load_progress(self):
@@ -278,6 +298,8 @@ class GeometryDashGame(Game):
         self.session_attempts = 0
         self.session_jumps = 0
         self.session_time = 0.0
+        self._gd_logged = False
+        self._gd_best_pct = 0
         self.bpm = music.style_bpm(self.cur)
         self.state = PLAY
         self._new_attempt(first=True)
@@ -424,6 +446,7 @@ class GeometryDashGame(Game):
 
     def _leave_to_select(self):
         audio.music_stop(self)
+        self._log_level_match(False)
         self._save_progress()
         self.state = SELECT
         self.cur = None
@@ -578,6 +601,7 @@ class GeometryDashGame(Game):
         self.play_sound("explode")
         self.rumble(160)
         pct = core.progress(self.run, self.lv)
+        self._gd_best_pct = max(getattr(self, "_gd_best_pct", 0), int(pct))
         if self._record_best(pct):
             self.new_best = (pct, self.t)
         if not self.practice:
@@ -612,6 +636,7 @@ class GeometryDashGame(Game):
                 "coin_count": self.lv.coin_count, "stars": 0, "new_coins": 0,
                 "first": False, "practice": self.practice, "verified": False}
         new_record = self._record_best(100)
+        self._log_level_match(True)
         if self.cur_kind == "main" and not self.practice:
             lid = self.cur["id"]
             old_mask = self.coins.get(lid, 0)

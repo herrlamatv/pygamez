@@ -11,7 +11,7 @@
 //! | Variable | Wirkung |
 //! |---|---|
 //! | `PYGAMEZ_SHOT` | Zieldatei; mit `PYGAMEZ_GAME=all` ein Ordner |
-//! | `PYGAMEZ_SCREEN` | `menu`, `options`, `language`, `welcome`, `pregame:<spiel>` |
+//! | `PYGAMEZ_SCREEN` | `menu`, `options`, `language`, `welcome`, `pregame:<spiel>`, `matches:<spiel>[:all]` |
 //! | `PYGAMEZ_GAME` | Spiel-Schluessel oder `all` |
 //! | `PYGAMEZ_MODE` | Modus des Spiels (Standard `single`) |
 //! | `PYGAMEZ_THEME` / `PYGAMEZ_LANG` | Design / Sprache |
@@ -480,6 +480,15 @@ fn pruefstand() {
                     app.show_screen(Box::new(s));
                 }
                 "pregame" => shell::post(Cmd::PreGame(arg.unwrap_or_default())),
+                "matches" => {
+                    // matches:<spiel>[:reiter] - wie vergleich.py (ohne Rueckweg)
+                    let arg = arg.unwrap_or_default();
+                    let (spiel, reiter) = arg.split_once(':').unwrap_or((arg.as_str(), "recent"));
+                    if let Some(info) = app.games.iter().find(|g| g.key == spiel).copied() {
+                        let s = screens::matchview::MatchScreen::new(app.menu_base(), info, None, reiter);
+                        app.show_screen(Box::new(s));
+                    }
+                }
                 _ => {}
             }
             app.befehle();

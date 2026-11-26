@@ -1990,6 +1990,11 @@ impl MiniGolfGame {
 }
 
 impl Game for MiniGolfGame {
+    /// Match-Historie: Dauer zaehlt nicht im Setup (Python-Standard
+    /// `getattr(self, "state", None) != "setup"`).
+    fn match_active(&self) -> bool {
+        !matches!(self.state, St::Setup)
+    }
     fn replay_begin(&mut self, rep: &Value) -> bool {
         MiniGolfGame::replay_begin(self, rep);
         true

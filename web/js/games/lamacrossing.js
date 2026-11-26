@@ -42,6 +42,11 @@
   const isConfirm = (ev) => ev.kind === "keydown" && (ev.key === "Return" || ev.key === "space" || ev.key === "KP_Enter");
 
   class LamaCrossingGame extends PG.Game {
+    /** Jede Überquerung ist ein Match (Game.logMatch). */
+    get matchManual() {
+      return true;
+    }
+
     // ===================================================== Aufbau / Reset
     reset() {
       this.gameOver = false;
@@ -371,6 +376,7 @@
         this.broken = k;
         this.lost = bet;
         this._saveExtra();
+        this._logCross(bet, 0, k);
         if (this.world === "road") {
           // Raser: trifft genau bei der Landung
           const v = L.TRAFFIC[this.diff][1] * L.RASER_F * this.k;
@@ -416,6 +422,7 @@
         this.round = null;
         this.broken = b;
         this._saveExtra();
+        this._logCross(this.lost, 0, b);
         this._fall("hit", t("lcr.hit." + this.world), x, y);
         return;
       }
@@ -428,6 +435,7 @@
         this.win = L.payout(bet, this.diff, n);
         bank.credit(this.win, KEY);
         this.pending += this.win;
+        this._logCross(bet, this.win, n, L.mult(this.diff, n));
         this.hist = this.hist.concat([L.mult(this.diff, n)]).slice(-L.HISTORY);
         this.round = null;
         this._saveExtra();
@@ -442,6 +450,20 @@
       this.state = WAIT;
       this.playSound("point");
       this._popup(x - this.cam, y - this.llamaN - 10 * this.k, this._fmt(L.mult(this.diff, b)), ui.GREEN, 0.9);
+    }
+
+    /** Match-Historie: eine Überquerung (verloren oder ausgezahlt). */
+    _logCross(bet, win, lane, mult100 = null) {
+      const info = { bet, win, ln: lane, lv: this.diff };
+      if (mult100 !== null) info.x = mult100;
+      const net = win - bet;
+      this.logMatch(net, net > 0 ? 1 : net < 0 ? 0 : 2, info);
+    }
+
+    /** Anzeige im Matches-Screen: Schwierigkeit statt interner Kennung. */
+    static matchText(key, value) {
+      if (key === "lv" && L.DIFFS.includes(value)) return t("lcr.diff." + value);
+      return null;
     }
 
     /** Runde verloren: Zufall (break) oder Treffer (hit, platt). */
@@ -465,6 +487,7 @@
       const mult = L.mult(this.diff, this.step);
       this.win = L.payout(bet, this.diff, this.step);
       bank.credit(this.win, KEY);
+      this._logCross(bet, this.win, this.step, mult);
       this.hist = this.hist.concat([mult]).slice(-L.HISTORY);
       this.round = null;
       this._saveExtra();

@@ -11,7 +11,9 @@
  *
  * Speicher (Abschnitt "sudoku"): solved (klassisch, wie bisher), best
  * {variante: {stufe: {level: [sterne, sekunden]}}}, saves (angefangene
- * Rätsel), last (Levelcursor der neuen Varianten), daily (Serie).
+ * Rätsel), last (Levelcursor der neuen Varianten), daily (Serie), arch
+ * [[tag, sekunden, sterne], ...] (Tages-Archiv: gelöste Tage, tag =
+ * PG.seedrand.dayIndex; siehe dailyarchive.js).
  *
  * Sterne: 1 = gelöst, 2 = fehlerfrei ohne Tipps, 3 = zusätzlich unter Zielzeit.
  *
@@ -30,6 +32,7 @@
 
   const { ui, draw, t } = PG;
   const gen = PG.sudokuGen;
+  const DA = PG.dailyArchive;
   const Rect = PG.Rect;
   const fl = Math.floor;
 
@@ -122,7 +125,13 @@
       this.canHint = this.mode === "assist";
 
       this.daily = false;
-      this.dailyDate = PG.seedrand.todayStr();
+      // todayDate = Bezugstag für Serie/"heute gelöst", dailyDate = der
+      // gespielte bzw. im Setup gezeigte Tag (heute oder ein Archiv-Tag).
+      this.todayDate = PG.seedrand.todayStr();
+      this.archDay = PG.seedrand.dayIndex(this.todayDate);
+      this.dailyDate = this.todayDate;
+      this.picker = null;
+      this.dayrowRects = null;
       this.playVariant = this.variant;
       this.playDiff = this.diff;
       this.level = 1;
@@ -207,11 +216,21 @@
       this.dailyState = {};
       if (typeof dl.date === "string" && dl.date.length === 10) this.dailyState.date = dl.date;
       for (const k of ["streak", "best", "time", "stars", "count"]) if (isInt(dl[k])) this.dailyState[k] = Math.max(0, dl[k]);
+      this.arch = DA.cleanRows(data.arch, 3).filter((r) => r.every((v) => isInt(v) && v >= 0) && r[2] >= 1 && r[2] <= 3);
+      // Altbestand: der zuletzt gelöste Tag wandert ins Archiv.
+      if ("date" in this.dailyState && "time" in this.dailyState) {
+        const idx = DA.safeDayIndex(this.dailyState.date);
+        if (idx >= 0 && DA.find(this.arch, idx) === null) {
+          const st = "stars" in this.dailyState ? this.dailyState.stars : 1;
+          DA.upsert(this.arch, [idx, this.dailyState.time, Math.max(1, Math.min(3, st))]);
+        }
+      }
     }
 
     saveProgress() {
       const data = Object.assign({}, this.progExtra, {
         solved: this.solved, best: this.best, saves: this.saves, last: this.last, daily: this.dailyState,
+        arch: this.arch.map((r) => r.slice()),
       });
       PG.store.set("sudoku", data);
     }
@@ -271,12 +290,86 @@
     dailyStreak() {
       const last = this.dailyState.date;
       if (!last) return 0;
-      const gap = PG.seedrand.dayIndex(this.dailyDate) - PG.seedrand.dayIndex(last);
+      const gap = PG.seedrand.dayIndex(this.todayDate) - PG.seedrand.dayIndex(last);
       return gap === 0 || gap === 1 ? this.dailyState.streak || 0 : 0;
     }
 
     dailyDoneToday() {
-      return this.dailyState.date === this.dailyDate;
+      return this.dailyState.date === this.todayDate;
+    }
+
+    // ----- Tages-Archiv ----------------------------------------------------
+    /** Wird (bzw. wird im Setup) ein vergangener Tag gezeigt/gespielt? */
+    isArchive() {
+      return this.dailyDate !== this.todayDate;
+    }
+
+    archRow(day) {
+      return DA.find(this.arch, day == null ? this.archDay : day);
+    }
+
+    archDays() {
+      return DA.available(this.arch.map((r) => r[0]));
+    }
+
+    setArchDay(day) {
+      this.archDay = day;
+      this.dailyDate = PG.seedrand.dateOf(day);
+    }
+
+    stepDay(d) {
+      const days = this.archDays();
+      const i = days.indexOf(this.archDay) >= 0 ? days.indexOf(this.archDay) : days.length - 1;
+      const j = Math.max(0, Math.min(days.length - 1, i + d));
+      if (days[j] !== this.archDay) {
+        this.setArchDay(days[j]);
+        this.playSound("move");
+      }
+    }
+
+    openPicker() {
+      const info = {};
+      for (const key of Object.keys(this.saves)) {
+        const save = this.saves[key];
+        if (key.startsWith("daily:") && save && typeof save === "object") {
+          const idx = DA.safeDayIndex(key.slice(6));
+          if (idx < 0) continue;
+          const p = isInt(save.p) ? save.p : 0;
+          info[idx] = ["started", p + " %"];
+        }
+      }
+      for (const [day, secs, stars] of this.arch) info[day] = ["solved", fmtTime(secs) + " " + "*".repeat(stars)];
+      this.picker = new DA.Picker("sudoku", this.accent, this.archDay, info);
+      this.playSound("click");
+    }
+
+    get wantsEscape() {
+      return this.picker !== null && this.picker !== undefined;
+    }
+
+    // ----- Match-Historie --------------------------------------------------
+    matchInfo() {
+      const info = {};
+      if (this.daily) info.day = PG.seedrand.dayIndex(this.dailyDate);
+      else if (this.state !== SETUP) {
+        info.vr = this.playVariant;
+        info.lv = Math.trunc(this.level);
+      }
+      if (this.won) {
+        info.tm = Math.trunc(this.resultTime);
+        info.st = Math.trunc(this.resultStars);
+      }
+      return Object.keys(info).length ? info : null;
+    }
+
+    matchFlags() {
+      if (!this.daily) return 0;
+      return PG.matches.F_DAILY | (this.isArchive() ? PG.matches.F_ARCHIVE : 0);
+    }
+
+    static matchText(key, value) {
+      if (key === "vr" && VARIANTS.includes(value)) return t("sud.variant." + value);
+      return null;
     }
 
     // ===================================================== Setup-Screen
@@ -320,7 +413,10 @@
       const dh = this.small.height + 2 * this.tiny.height + 12;
       this.dailyRect = new Rect(ix, bodyTop + pad, iw, dh);
       const th = Math.max(22, Math.min(34, fl(H / 22)));
-      const ty = this.dailyRect.bottom + gap;
+      let ty = this.dailyRect.bottom + 4;
+      // Datums-Leiste des Tages-Archivs direkt unter der Tageskarte
+      this.dayrowRects = DA.dayRowRects(ix, ty, iw, th);
+      ty += th + gap;
       this.limitRect = new Rect(ix, ty, iw, th);
       this.inputRect = new Rect(ix, ty + th + 4, iw, th);
       this.colorsRect = new Rect(ix, ty + 2 * (th + 4), iw, th);
@@ -379,6 +475,10 @@
     setupHit(pos) {
       for (let i = 0; i < 4; i++) if (this.varRects[i].collidepoint(pos)) return ["variant", i];
       for (let i = 0; i < 4; i++) if (this.diffRects[i].collidepoint(pos)) return ["diff", i];
+      if (this.dayrowRects !== null) {
+        const keys = ["dprev", "ddate", "dnext", "darch"];
+        for (let i = 0; i < 4; i++) if (this.dayrowRects[i].collidepoint(pos)) return [keys[i], 0];
+      }
       const items = [["daily", this.dailyRect], ["limit", this.limitRect], ["input", this.inputRect], ["colors", this.colorsRect], ["start", this.startRect]];
       for (const [key, r] of items) if (r && r.collidepoint(pos)) return [key, 0];
       return null;
@@ -389,9 +489,23 @@
     }
 
     handleSetup(ev) {
+      if (this.picker !== null) {
+        const res = this.picker.handleEvent(ev, this);
+        if (res !== null) {
+          this.picker = null;
+          if (res[0] === "pick") {
+            this.setArchDay(res[1]);
+            this.playSound("select");
+          } else this.playSound("click");
+        }
+        return;
+      }
       if (ev.kind === "keydown") {
         const k = ev.key;
-        if (["1", "2", "3", "4"].includes(k)) this.selectDifficulty(Number(k) - 1);
+        if (k === "Prior") this.stepDay(-1);
+        else if (k === "Next") this.stepDay(1);
+        else if ((k === "k" || k === "K") && this.keyIsFree(k)) this.openPicker();
+        else if (["1", "2", "3", "4"].includes(k)) this.selectDifficulty(Number(k) - 1);
         else if ((k === "v" || k === "V") && this.keyIsFree(k)) {
           const step = k === "V" ? -1 : 1;
           this.selectVariant(VARIANTS[PG.mod(VARIANTS.indexOf(this.variant) + step, VARIANTS.length)]);
@@ -425,6 +539,9 @@
           if (kind === "variant") this.selectVariant(VARIANTS[i]);
           else if (kind === "diff") this.selectDifficulty(i);
           else if (kind === "daily") this.startDaily();
+          else if (kind === "dprev") this.stepDay(-1);
+          else if (kind === "dnext") this.stepDay(1);
+          else if (kind === "ddate" || kind === "darch") this.openPicker();
           else if (kind === "limit") this.toggleFailLimit();
           else if (kind === "input") this.toggleInput();
           else if (kind === "colors") this.toggleColors();
@@ -466,7 +583,9 @@
 
     startDaily(fresh = false) {
       this.daily = true;
-      this.dailyDate = PG.seedrand.todayStr();
+      this.todayDate = PG.seedrand.todayStr();
+      if (this.archDay > PG.seedrand.dayIndex(this.todayDate)) this.archDay = PG.seedrand.dayIndex(this.todayDate);
+      this.dailyDate = PG.seedrand.dateOf(this.archDay);
       this.playVariant = "classic";
       this.playDiff = gen.dailyDiff(this.dailyDate);
       this.level = 0;
@@ -489,7 +608,8 @@
       this.gameOver = false;
       this.hover = null;
       this.msg = null;
-      this.dailyDate = PG.seedrand.todayStr();
+      this.todayDate = PG.seedrand.todayStr();
+      this.dailyDate = PG.seedrand.dateOf(this.archDay);
       if (!this.daily) {
         this.variant = this.playVariant;
         this.diff = this.playDiff;
@@ -1097,7 +1217,18 @@
       this.resultTime = secs;
       this.newRecord = false;
       this.bestTime = secs;
+      let oldRow = null;
       if (this.daily) {
+        // Tages-Archiv: Bestzeit + Sterne je Tag (auch für heute)
+        oldRow = DA.find(this.arch, this.archDay);
+        if (oldRow === null) DA.upsert(this.arch, [this.archDay, secs, stars]);
+        else DA.upsert(this.arch, [this.archDay, Math.min(oldRow[1], secs), Math.max(oldRow[2], stars)]);
+      }
+      if (this.daily && this.isArchive()) {
+        // Vergangener Tag: Serie und Tageszähler bleiben unberührt.
+        this.newRecord = oldRow !== null && secs < oldRow[1];
+        this.bestTime = DA.find(this.arch, this.archDay)[1];
+      } else if (this.daily) {
         const st = this.dailyState;
         if (st.date === this.dailyDate) {
           const old = st.time !== undefined ? st.time : secs + 1;
@@ -1256,6 +1387,11 @@
 
       ui.drawPanel(ctx, this.panelRect);
       this.drawDailyCard(ctx);
+      if (this.dayrowRects !== null) {
+        const days = this.archDays();
+        DA.drawDayRow(ctx, this.dayrowRects, this.archDay, this.accent, this.archDay > days[0], this.archDay < days[days.length - 1],
+          this.tiny, this.isArchive());
+      }
       this.drawToggle(ctx, this.limitRect, "limit", t("sud.fail_limit"), null, this.failLimit);
       this.drawToggle(ctx, this.inputRect, "input", t("sud.opt_input"), t("sud.input." + this.inputMode), true);
       this.drawToggle(ctx, this.colorsRect, "colors", t("sud.opt_colors"), null, this.colorsOn);
@@ -1266,6 +1402,7 @@
         ui.drawButton(ctx, this.startRect, label, this.small, this.isHover("start"), { accent: this.accent });
       }
       this.drawFooter(ctx, t("sud.setup_hint"), this.tiny.height + 10);
+      if (this.picker !== null) this.picker.draw(ctx, this.width, this.height);
     }
 
     drawVariantLabel(ctx, r, v, on) {
@@ -1343,7 +1480,8 @@
     drawDailyCard(ctx) {
       const r = this.dailyRect;
       const hov = this.isHover("daily");
-      const done = this.dailyDoneToday();
+      const row = this.archRow();
+      const done = row !== null;
       draw.rect(ctx, ui.mix(ui.PANEL_LIGHT, this.accent, 0.1 + (hov ? 0.1 : 0)), r, 0, 8);
       const glow = hov ? this.accent : ui.mix(ui.BORDER, this.accent, 0.35 + 0.35 * ui.pulse(2.0, 0, 1) * (done ? 0 : 1));
       draw.rect(ctx, glow, r, hov ? 2 : 1, 8);
@@ -1357,12 +1495,12 @@
       const tx = cal.right + 8;
       const tw = r.right - 8 - tx;
       const y1 = r.y + 5;
-      const l1 = this.fitText(ctx, t("sud.daily"), tx, y1, tw - 18, [this.small, this.tiny], ui.TEXT, "topleft");
+      const l1 = this.fitText(ctx, this.isArchive() ? t("sud.daily_arch") : t("sud.daily"), tx, y1, tw - 18, [this.small, this.tiny], ui.TEXT, "topleft");
       const streak = this.dailyStreak() ? t("sud.daily_streak", { n: this.dailyStreak() }) : null;
       const save = this.saves["daily:" + this.dailyDate];
       let head, options;
       if (done) {
-        head = [fmtTime(this.dailyState.time || 0)];
+        head = [fmtTime(row[1])];
         drawCheck(ctx, r.right - 14, y1 + fl(l1.h / 2), 5, ui.GREEN, 2);
         options = [head.concat([streak]), head];
       } else {
@@ -1448,8 +1586,9 @@
 
       let top, bottom;
       if (this.daily) {
-        top = t("sud.daily");
+        top = this.isArchive() ? t("sud.daily_arch") : t("sud.daily");
         bottom = t("sud.wd." + gen.weekday(this.dailyDate)) + "  ·  " + this.diffName(this.playDiff);
+        if (this.isArchive()) bottom = DA.shortDate(this.archDay) + "  ·  " + bottom;
       } else {
         top = t("sud.variant." + this.playVariant);
         bottom = t("sud.level", { n: this.level }) + "  ·  " + this.diffName(this.playDiff);
@@ -1803,7 +1942,8 @@
         head = t("sud.win", { t: fmtTime(this.resultTime) });
         headCol = ui.GREEN;
         lines = [[t("common.points", { score: this.score }), ui.TEXT]];
-        if (this.daily) lines.push([t("sud.daily_solved", { n: this.dailyStreak() }), ui.GOLD]);
+        if (this.daily && this.isArchive()) lines.push([t("sud.arch_solved", { date: DA.longDate(this.archDay) }), ui.GOLD]);
+        else if (this.daily) lines.push([t("sud.daily_solved", { n: this.dailyStreak() }), ui.GOLD]);
         if (this.newRecord) lines.push([t("sud.new_best", { t: fmtTime(this.bestTime) }), ui.GOLD]);
         else lines.push([t("sud.info_best", { t: fmtTime(this.bestTime) }), ui.TEXT_DIM]);
         lines.push([this.daily ? t("sud.next_daily") : t("sud.next"), ui.TEXT_DIM]);

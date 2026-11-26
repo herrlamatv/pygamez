@@ -795,6 +795,11 @@ impl PokerGame {
         }
         self.reveal = true;
         self.dealer = (self.dealer + 1) % 1.max(self.players.len());
+        // Match-Historie: eine Hand = ein Match (Einsatz = eigene Chips im Pot).
+        let wager = 0.max(self.chips - (self.players[0].stack - won));
+        let net = won - wager;
+        let result = if me_wins { Some(if net > 0 { 1 } else { 2 }) } else { Some(0) };
+        self.b.log_match(net, result, Some(info_map(vec![("bet", wager.into()), ("win", won.into())])), None, 0);
         self.sync_chips();
     }
 
@@ -834,6 +839,9 @@ impl PokerGame {
         let mult = video_payout(&rt);
         self.win_amount = self.video_bet * mult;
         lamabank::credit(self.win_amount, "poker", true);
+        let net = self.win_amount - self.video_bet;
+        let info = info_map(vec![("bet", self.video_bet.into()), ("win", self.win_amount.into())]);
+        self.b.log_match(net, chip_result(net), Some(info), None, 0);
         self.sync_chips();
         if mult > 0 {
             self.msg = tf("poker.video_win", &[("hand", &t(&format!("poker.hand.{}", category_key(&rt)))), ("mult", &mult.to_string())]);
@@ -1280,6 +1288,10 @@ fn video_payout(rt: &[i64]) -> i64 {
 }
 
 impl Game for PokerGame {
+    /// Match-Historie: das Spiel meldet seine Matches selbst (`log_match`).
+    fn match_manual(&self) -> bool {
+        true
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }

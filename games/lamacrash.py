@@ -85,6 +85,7 @@ TONE_AT = (200, 300, 500, 1000, 2000, 5000, 10000, 100000, 1000000)
 
 
 class LamaCrashGame(Game):
+    match_manual = True       # jede Runde ist ein Match (Game.log_match)
     name = "Lama Crash"
     highscore_key = KEY
     supports_multiplayer = False
@@ -748,6 +749,11 @@ class LamaCrashGame(Game):
         L.record_x(self.stats["x"], rnd, crash, end)
         stake, paid = L.stake_total(rnd), L.paid_total(rnd)
         chipstats.record(self.stats, stake, paid, L.best_cash(rnd))
+        net = paid - stake
+        info = {"bet": stake, "win": paid, "cr": crash}
+        if L.best_cash(rnd):
+            info["x"] = L.best_cash(rnd)
+        self.log_match(net, 1 if net > 0 else 0 if net < 0 else 2, info)
         self.hist = (self.hist + [crash])[-L.HISTORY:]
         fairness.record(self.fairlog, self._entry(rnd), L.outcome(rnd, crash))
         close = L.close_call(rnd, crash)

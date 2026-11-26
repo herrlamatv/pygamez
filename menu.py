@@ -85,6 +85,9 @@ class PreGameScreen(_Screen):
         import highscore
         self.best = highscore.load_highscores().get(game_cls.highscore_key, 0)
         super().__init__(surface, width, height, app)
+        # Game.__init__ setzt die Akzentfarbe nach dem Klassennamen - der
+        # Vorspiel-Screen erscheint aber in der Farbe des gewählten Spiels.
+        self.accent = ui.game_color(game_cls.__name__)
         self.name = t("pregame.name")
         self._build_buttons()
         self.sel = 0
@@ -106,13 +109,14 @@ class PreGameScreen(_Screen):
                 self.buttons.append((t("pregame.multi"),
                                      lambda: self._start("multi")))
         self.buttons.append((t("pregame.options"), self._open_options))
+        self.buttons.append((t("pregame.matches"), self._open_matches))
         self.buttons.append((t("pregame.lamawiki"), self._open_lamawiki))
         self.buttons.append((t("pregame.back"), self.app.back_to_menu))
 
         self._layout_buttons()
 
-    # Anzahl der Knöpfe unter den Modi (Optionen, Wiki, Zurück).
-    _UTIL = 3
+    # Anzahl der Knöpfe unter den Modi (Optionen, Matches, Wiki, Zurück).
+    _UTIL = 4
 
     def _layout_buttons(self):
         """Rechtecke für Maus/Anzeige berechnen (zentriert unter dem Untertitel).
@@ -141,9 +145,9 @@ class PreGameScreen(_Screen):
                     self.rects.append(pygame.Rect(x, y0 + i * (bh + gap), bw, bh))
                 return
 
-        # Kompakt: etwas breiter, damit die drei Knöpfe der Reihe ihre Texte
+        # Kompakt: etwas breiter, damit die vier Knöpfe der Reihe ihre Texte
         # (z.B. "Optionen / Steuerung") noch lesbar tragen.
-        bw = min(420, self.width - 40)
+        bw = min(480, self.width - 40)
         x = self.width // 2 - bw // 2
         for bh, gap in ((32, 6), (28, 5), (24, 4)):
             total = n_modes * (bh + gap) + bh
@@ -157,6 +161,12 @@ class PreGameScreen(_Screen):
         for j in range(self._UTIL):
             self.rects.append(pygame.Rect(x + j * (cell + gap), row_y, cell, bh))
         self.row_start = n_modes
+        # Vier Knöpfe nebeneinander: passt "Optionen / Steuerung" selbst in
+        # der kleinsten Schrift nicht, steht dort die Kurzform.
+        for j in range(self.row_start, n):
+            label, cb = self.buttons[j]
+            if cb == self._open_options and ui.font(11).size(label)[0] > self.rects[j].w - 8:
+                self.buttons[j] = (t("pregame.options_short"), cb)
 
     def _button_font(self, i):
         """Schrift je Knopf: in der schmalen Reihe so klein wie nötig."""
@@ -193,6 +203,13 @@ class PreGameScreen(_Screen):
         opts = OptionsScreen(self.surface, self.width, self.height, self.app,
                              on_close=self._reopen)
         self.app.show_screen(opts)
+
+    def _open_matches(self):
+        """Match-Historie dieses Spiels (Letzte Matches / Alle Matches)."""
+        from matchview import MatchScreen
+        self.app.show_screen(MatchScreen(self.surface, self.width, self.height,
+                                         self.app, self.game_cls,
+                                         on_close=self._reopen))
 
     def _open_lamawiki(self):
         """Öffnet das LamaWiki direkt auf der Seite dieses Spiels."""

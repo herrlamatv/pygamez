@@ -186,6 +186,11 @@
   }
 
   class PokerGame extends PG.Game {
+    /** Jede Hand ist ein Match (Game.logMatch). */
+    get matchManual() {
+      return true;
+    }
+
     // ===================================================== Aufbau / Reset
     reset() {
       this.gameOver = false;
@@ -642,6 +647,10 @@
       this.rankShown = rankTuple;
       this.winnerNames = winners.map((w) => w.name);
       this.dealer = (this.dealer + 1) % Math.max(1, this.players.length);
+      // Match-Historie: eine Hand = ein Match (Einsatz = eigene Chips im Pot).
+      const wager = Math.max(0, this.chips - (me.stack - humanWin));
+      const net = humanWin - wager;
+      this.logMatch(net, won ? (net > 0 ? 1 : 2) : 0, { bet: wager, win: humanWin });
       this._syncChips();
     }
 
@@ -672,6 +681,8 @@
       const mult = this._videoPayout(rt);
       this.winAmount = this.videoBet * mult;
       bank.credit(this.winAmount, "poker");
+      const net = this.winAmount - this.videoBet;
+      this.logMatch(net, net > 0 ? 1 : net < 0 ? 0 : 2, { bet: this.videoBet, win: this.winAmount });
       this._syncChips();
       if (mult > 0) {
         this.msg = t("poker.video_win", { hand: t("poker.hand." + categoryKey(rt)), mult });

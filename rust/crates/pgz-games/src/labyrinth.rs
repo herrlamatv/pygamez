@@ -326,6 +326,13 @@ impl LabyrinthGame {
         self.b.score += self.level_score;
         self.mark_solved(self.level);
         self.state = State::Finish;
+        // Match-Historie: jedes geloeste Level ist ein Match.
+        let info = info_map(vec![
+            ("lv", self.level.into()),
+            ("tm", (self.elapsed as i64).into()),
+            ("c", self.got.into()),
+        ]);
+        self.b.log_match(self.level_score, Some(1), Some(info), None, 0);
         if self.elapsed < 30.0 {
             self.b.ach_event("maze_swift", None);
         }
@@ -637,6 +644,15 @@ impl LabyrinthGame {
 }
 
 impl Game for LabyrinthGame {
+    /// Match-Historie: das Spiel meldet seine Matches selbst (`log_match`).
+    fn match_manual(&self) -> bool {
+        true
+    }
+    /// Match-Historie: Dauer zaehlt nicht im Setup (Python-Standard
+    /// `getattr(self, "state", None) != "setup"`).
+    fn match_active(&self) -> bool {
+        !matches!(self.state, State::Setup)
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }

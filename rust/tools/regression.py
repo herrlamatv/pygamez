@@ -17,6 +17,9 @@ Eintrag ``{"seed": n, "daten": name}``: anderer Startwert fuer ``random``
 bzw. ein Spielstand aus ``DATENSAETZE`` (wird in beide Datenordner kopiert,
 wie ``vergleich.py --daten``).
 
+Statt fester Tokens darf ein Lauf eine Funktion ``(aufloesung) -> tokens``
+tragen - fuer Ablaeufe, die vom heutigen Datum abhaengen (Tages-Archiv).
+
 Ausgabe: eine Zeile je Lauf, am Ende die Zahl der Abweichungen.
 """
 
@@ -53,7 +56,37 @@ def _lcx_fair(nonce):
     return {"server": "ab" * 16, "client": _LCX_CLIENT, "nonce": nonce}
 
 
+def _tag(i):
+    """Tagesnummer (seedrand.day_index) -> 'YYYY-MM-DD'."""
+    import datetime
+    return (datetime.date(2026, 1, 1) + datetime.timedelta(days=i)).isoformat()
+
+
+def _archiv_mem():
+    """Tages-Archiv mit aelteren Tagen (Leiste im Kalender), Altbestand ("daily")
+    zum Uebernehmen, doppelten/kaputten Zeilen und einem angefangenen Tag."""
+    import datetime
+    t = (datetime.date.today() - datetime.date(2026, 1, 1)).days
+    return {"mem": {"lang": "de"},
+            "crossy": {"coins": 5, "unlocked": ["chicken", "fox"], "selected": "fox",
+                       "daily": {"date": _tag(t - 2), "best": 9},
+                       "arch": [[t - 45, 12, 2], [t - 40, 3, 1], [t - 3, 20, 4], [t - 1, 5, 1],
+                                [t - 3, 1, 1], [True, 1, 1], [-5, 1, 1], ["x"], [t - 7, 2.5, 1]]},
+            "sudoku": {"daily": {"date": _tag(t - 5), "streak": 2, "best": 3, "time": 300, "stars": 2,
+                                 "count": 4},
+                       "arch": [[t - 50, 400, 3], [t - 35, 500, 2], [t - 10, 600, 1], [t - 10, 1, 9],
+                                [t - 4, 75, 3]],
+                       "saves": {"daily:" + _tag(t - 2): {"p": 40}, "daily:kaputt": {"p": 1}}},
+            "wordle": {"daily": {"de:5": {"date": _tag(t - 1), "answer": "TAGEN", "guesses": ["SONNE"],
+                                          "done": False}},
+                       "arch": {"de:5": [[t - 60, "HAUSE", "SONNEHAUSE", 1], [t - 31, "BLUME", "SONNE", 2],
+                                         [t - 2, "STERN", "SONNEBLUMESTERNHAUSETAGENLAMPE", 0],
+                                         [t - 3, "KURZ", "", 1], [t - 4, "LAMPE", "SON", 2]],
+                                "xx": [[1, "A", "", 1]]}}}
+
+
 DATENSAETZE = {
+    "archiv": _archiv_mem,
     # Mondlandung beim Fortsetzen: Platzpunkt x100.000 ("c3"*16 / Nonce 6775),
     # Takt 11400 (x88.770); Einsatz 2 ist schon zur Haelfte bei x50.000 raus
     "lcx_mond": lambda: _lcx_mem(501000, {
@@ -102,6 +135,63 @@ def folge(tokens, abstand):
 
 def wdh(muster, n):
     return " ".join([muster] * n)
+
+
+# ------------------------------------------------- Laeufe, die vom Datum abhaengen
+# Tages-Archiv: das Raetsel bzw. Wort von gestern haengt am heutigen Datum.
+# Solche Laeufe tragen statt fester Tokens eine Funktion (aufloesung) ->
+# Tokens; sie rechnet mit der Python-Referenz in einem leeren Kratzordner.
+def _referenz(aufloesung):
+    os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+    os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
+    os.environ.setdefault("PYGAME_HIDE_SUPPORT_PROMPT", "1")
+    if WURZEL not in sys.path:
+        sys.path.insert(0, WURZEL)
+    import pygame
+    pygame.init()
+    pygame.display.set_mode((1, 1))
+    import store
+    store._DIR = tempfile.mkdtemp(prefix="pgz_regression_ref_")
+    store._PATH = os.path.join(store._DIR, "mem.json")
+    store._LEGACY_HS_PATH = os.path.join(store._DIR, "highscores.json")
+    import i18n
+    i18n.init()
+    i18n.set_language("de", persist=False)
+    import settings as settings_mod
+    gs = json.loads(json.dumps(settings_mod.DEFAULTS))
+    w, h = aufloesung or (640, 480)
+    return pygame, gs, w, h
+
+
+def sudoku_archiv_sieg(aufloesung):
+    """Tages-Sudoku von gestern (Bild auf) im Komfort-Modus loesen."""
+    pygame, gs, w, h = _referenz(aufloesung)
+    from games.sudoku import SudokuGame
+    g = SudokuGame(pygame.Surface((w, h)), w, h, mode="comfort", game_settings=gs)
+    g.play_sound = lambda name: None
+    g._step_day(-1)
+    g._start_daily()
+    g._do_generate()
+    out = ["Prior", "t", "_", "_", "_"]
+    for i in range(g.cells):
+        if not g.locked[i]:
+            x = g.bx + (i % g.N) * g.cell + g.cell // 2
+            y = g.by + (i // g.N) * g.cell + g.cell // 2
+            out += ["@%d:%d" % (x, y), str(g.solution[i])]
+    return " ".join(out + ["_"] * 30)
+
+
+def wordle_archiv_wort(aufloesung):
+    """Tageswort von gestern (Bild auf) erraten - erst daneben, dann richtig."""
+    _referenz(aufloesung)
+    import seedrand
+    from games.wordle import daily_answer
+    from games.wordle_words import words_for
+    gestern = seedrand.date_of(seedrand.day_index() - 1)
+    wort = daily_answer(words_for("de", 5), "de", 5, gestern)
+    falsch = "sonne" if wort.lower() != "sonne" else "blume"
+    return " ".join(["Prior", "Return", "_", "_"] + list(falsch) + ["Return"] + ["_"] * 12
+                    + list(wort.lower()) + ["Return"] + ["_"] * 40 + ["Return", "_", "_", "_"])
 
 
 def spur(tokens):
@@ -161,7 +251,17 @@ LAEUFE = {
                   ("tripeaks", 400, "Return space @150:250 space @320:250", 25)],
     "sudoku": [("comfort", 600, "Return _ _ @100:100 5 @150:150 3 u y n @200:200 4 n h c", 15),
                ("classic", 400, "v v Return _ _ @120:120 7 @160:160 2 @200:200:3", 15),
-               ("assist", 400, "m t _ _ @100:150 9 h h m", 15)],
+               ("assist", 400, "m t _ _ @100:150 9 h h m", 15),
+               # Tages-Archiv: Kalender per Tasten (Bild auf/ab, K, Pfeile, Enter), Tag
+               # von gestern starten; Datums-Leiste per Maus (Pfeile, Archiv-Knopf,
+               # Datum, Klick ausserhalb schliesst); gestriges Tagesraetsel geloest
+               ("comfort", 300, "Prior Prior k Down Left Return t _ _ @100:100 5 @150:150 3", 12),
+               ("comfort", 200, "@322:226 _ @560:226 ~320:240 _ Escape @418:226 _ @5:5 @514:226 _ Escape", 8),
+               ("comfort", 720, sudoku_archiv_sieg, 2),
+               # Archiv-Spielstand: Kalender offen (Leiste aelterer Tage, angefangene/
+               # geloeste Tage), Schritt ueber die Luecke zu aelteren Tagen
+               ("comfort", 60, "k Up ~330:250", 6, {"daten": "archiv"}),
+               ("comfort", 80, "Prior Prior Prior Prior Prior", 6, {"daten": "archiv"})],
     "billiard": [("single", 900, "Return ~400:200 <400:200 _ _ _ _ _ >400:200 " + wdh("~300:250 <300:250 _ _ >300:250", 6), 25),
                  ("multi", 600, "2 v Return ~420:220 <420:220 _ _ >420:220 v", 30)],
     "blockjump": [("normal", 900, "Return +w " + wdh("space ^5:-2 _ ^-3:1", 20) + " v t b -w", 8),
@@ -175,11 +275,31 @@ LAEUFE = {
                                 "@621:17 Down space", 8),
                ("daily", 500, "Right Return t a g e n Return _ _ _ _ _ x x x x x Return", 8),
                ("dordle", 500, "f h Return b l u m e Return _ _ _ _ _ s t e r n Return", 8),
-               ("quordle", 500, "4 Return h a u s Return _ _ _ _ _ @621:17", 8)],
+               ("quordle", 500, "4 Return h a u s Return _ _ _ _ _ @621:17", 8),
+               # Tages-Archiv: gestriges Wort (daneben, dann richtig, Enter -> Setup);
+               # Kalender per Tasten und angefangener Archiv-Tag; Leiste per Maus
+               ("daily", 420, wordle_archiv_wort, 3),
+               ("daily", 300, "Prior Prior k Left Return Return s o n n e Return _ _ _ _ _ b l u m e Return", 8),
+               ("daily", 160, "@38:327 _ @293:327 ~150:250 _ Escape @148:327 _ @5:5 @257:327", 8),
+               # Archiv-Spielstand: Kalender offen; angefangener Archiv-Tag (aus dem
+               # Altbestand uebernommen) fortgesetzt; verlorener Tag zeigt das Ergebnis
+               ("daily", 60, "k Left Left", 6, {"daten": "archiv"}),
+               ("daily", 200, "Prior Return", 6, {"daten": "archiv"}),
+               ("daily", 200, "Prior Prior Return", 6, {"daten": "archiv"})],
     "battleship": [("single", 900, "Return x Return @49:87 _ _ _ _ _ _ @85:123 _ _ _ _ _ _ @193:231 Up space", 20),
                    ("multi", 600, "Return Return x Return Return Return x Return Return @121:159", 25)],
     "crossy": [("endless", 900, "Return _ _ Up _ _ Up _ _ _ Up _ Left _ Up _ Right Up Up", 12),
-               ("daily", 500, "Tab Right Down Return Escape h n Return Up _ Up", 15)],
+               ("daily", 500, "Tab Right Down Return Escape h n Return Up _ Up", 15),
+               # Tages-Archiv: Strecke von gestern bis zum Game Over; Kalender per
+               # Tasten (Pfeile, Pos1/Ende, Enter, Esc); Datums-Leiste per Maus
+               ("daily", 900, "Prior Return _ _ _ _ _ Up _ Up", 15),
+               ("daily", 160, "Prior Prior Next k Left Up Down Right End Home Return Prior k Escape", 6),
+               ("daily", 160, "@140:373 _ @468:373 ~320:240 _ @320:240 _ @270:373 _ @5:5 @398:373", 6),
+               # Archiv-Spielstand: Kalender offen (aeltere Tage, Altbestand); Schritte
+               # ueber die Luecke; offener Kalender am Ende eines Laufs
+               ("daily", 60, "k Left ~200:300", 6, {"daten": "archiv"}),
+               ("daily", 80, "Prior Prior Prior Prior Prior Prior", 6, {"daten": "archiv"}),
+               ("daily", 40, "Prior Prior k Left Up", 6)],
     "snake": [("single", 700, "Return _ _ _ s _ _ d _ _ +space _ _ _ -space w _ a", 15),
               # Rundenende -> P (Replay-Player) -> e (Export nach "Downloads")
               ("single", 1050, "Return _ _ _ s _ _ d _ _ +space _ _ _ -space w _ a " + wdh("_", 20)
@@ -357,6 +477,25 @@ BILDSCHIRME = [
     ("screen:replays", 40, "Left Left Tab Right", 3, False),
     ("screen:menu", 90, "~320:330 _ _ ~150:360 _ _ ~480:300", 4, True),
     ("screen:menu", 60, "~320:330 _ ~150:360", 4, "classic"),
+    # Match-Historie (Testdaten mit matches.pgzlamamatches): Kurve mit Tooltip,
+    # Filter M / Sortierung O / Bildlauf / Mausrad / Chips, Info-Texte je Spiel
+    # (match_text), leere Historie, Vorspiel-Knopf Matches hin und zurueck,
+    # kompakte Viererreihe
+    ("screen:matches:snake", 60, "~300:230 _ ~420:240 _ Down Down Down Next ~100:300 _ ~300:230", 2, True),
+    ("screen:matches:snake:all", 80, "m _ m _ o _ Down Down Next Next End Home %300:300:-1 %300:300:-1 "
+                                     "~550:192 @550:192 ~60:192 @60:192", 2, True),
+    ("screen:matches:crossy:all", 50, "o Down Down Down ~300:300", 3, True),
+    ("screen:matches:blackjack", 40, "Down Down ~300:330", 3, True),
+    ("screen:matches:lamacrossing:all", 40, "Down Next", 3, True),
+    ("screen:matches:sudoku:all", 40, "m m Down", 3, True),
+    ("screen:matches:wordle", 40, "Tab m Down", 3, True),
+    ("screen:matches:chess:all", 40, "Down", 3, True),
+    ("screen:matches:lamaplinko:all", 30, "", 3, True),
+    ("screen:matches:pong", 30, "Tab Tab", 3, True),
+    ("screen:matches:tetris", 30, "Tab", 3, True),
+    ("screen:pregame:snake", 70, "Down Down Down Return _ _ Tab Escape _ Down", 3, True),
+    ("screen:pregame:solitaire", 40, "Down Down Down Down Down Right Right Left", 3, True),
+    ("screen:pregame:sudoku", 30, "Down Down Down Down Down", 3, True),
 ]
 
 
@@ -411,6 +550,8 @@ def main():
         for i, lauf in enumerate(laeufe):
             modus, bilder, tokens, abstand = lauf[:4]
             wahl = lauf[4] if len(lauf) > 4 else {}
+            if callable(tokens):
+                tokens = tokens(aufloesung)
             liste = os.path.join(ordner, "%s_%d.txt" % (spiel, i))
             with open(liste, "w", encoding="utf-8") as f:
                 f.write(",".join(folge(tokens, abstand)))

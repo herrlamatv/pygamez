@@ -426,6 +426,11 @@ impl CasinoGame {
         let res = l::evaluate(&l::window(&stops), bet, free);
         lamabank::credit(res.total, "casino", true);
         self.pending += res.total;
+        // Match-Historie: ein Dreh = ein Match (Freispiele kosten nichts).
+        let wager = if free { 0 } else { bet * l::LINES.len() as i64 };
+        let net = res.total - wager;
+        let info = info_map(vec![("bet", wager.into()), ("win", res.total.into())]);
+        self.b.log_match(net, chip_result(net), Some(info), None, 0);
         self.s.free_spin = free;
         if res.free_spins != 0 {
             if !self.s.fs_active && !free {

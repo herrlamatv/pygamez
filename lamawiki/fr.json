@@ -332,6 +332,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Parties",
+      "keywords": [
+        "parties",
+        "historique",
+        "dernières",
+        "toutes",
+        "résultats",
+        "manches"
+      ],
+      "sections": [
+        {
+          "h": "Dernières & toutes les parties",
+          "body": [
+            "Chaque jeu garde ses parties en mémoire. Dans l'écran d'avant-jeu, le bouton Parties ouvre l'historique du jeu.",
+            "- Dernières parties : une courbe des 30 derniers résultats (records en or) et en dessous les 10 dernières parties.",
+            "- Toutes les parties : toutes les parties enregistrées, avec filtre par mode [M] et tri récentes/meilleures [O].",
+            "En haut figurent les totaux : parties, victoires, record, moyenne et temps de jeu."
+          ]
+        },
+        {
+          "h": "Ce qui est enregistré",
+          "body": [
+            "Date et heure, mode, points (jeux à jetons : gain ou perte), victoire/défaite/égalité, durée et détails comme la mise, le multiplicateur, les pièces, le niveau ou l'adversaire.",
+            "- Les records sont marqués en or. Si tu quittes une manche en cours, elle apparaît comme abandonnée - seulement si tu avais déjà des points ou si elle a duré au moins 5 secondes.",
+            "- Les jeux à jetons comptent chaque manche séparément, Geometry Dash chaque visite de niveau, Labyrinthe chaque niveau résolu."
+          ]
+        },
+        {
+          "h": "Stockage",
+          "body": [
+            "Les 250 dernières parties par jeu sont conservées (sur pygamez.com 50 par défaut). Les plus anciennes disparaissent - les totaux continuent quand même.",
+            "L'historique se trouve dans matches.pgzlamamatches à côté de mem.json, séparément pour chaque profil."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Succès, rareté et niveau",
@@ -1106,6 +1145,14 @@
           ]
         },
         {
+          "h": "Archives du jour",
+          "body": [
+            "Les grilles du jour des 30 derniers jours et chaque jour déjà résolu se trouvent dans les archives - avec meilleur temps et étoiles par jour.",
+            "- Sous la carte du jour, les flèches ou [Page préc.]/[Page suiv.] changent de jour, [K] ou Archives ouvre le calendrier, [T] lance le jour choisi.",
+            "- Les grilles d'archive ne modifient pas ta série quotidienne."
+          ]
+        },
+        {
           "h": "Astuces",
           "body": [
             "- Commence par les lignes, colonnes et blocs qui contiennent déjà beaucoup de chiffres.",
@@ -1729,6 +1776,14 @@
             "Mot du jour : un mot par jour en 6 essais - le même pour tout le monde dans chaque langue et longueur, sur PC comme dans le navigateur. Un mot du jour commencé est sauvegardé ; ensuite le jeu affiche ton résultat, les statistiques et le compte à rebours jusqu'au prochain mot. Ta série ne grandit que si tu joues chaque jour.",
             "Dordle : deux mots à la fois en 7 essais - chaque essai compte pour les deux grilles. Les touches du clavier à l'écran sont partagées : moitié gauche grille 1, moitié droite grille 2.",
             "Quordle : quatre mots à la fois en 9 essais. Les touches sont divisées en quatre et montrent les couleurs des quatre grilles."
+          ]
+        },
+        {
+          "h": "Archives du jour",
+          "body": [
+            "Les mots du jour des 30 derniers jours et chaque jour déjà joué peuvent être rejoués - par langue et longueur de mot.",
+            "- Dans la préparation du mot du jour, les flèches ou [Page préc.]/[Page suiv.] changent de jour, [K] ou Archives ouvre le calendrier.",
+            "- Les mots d'archive ne comptent ni pour les statistiques ni pour la série ; les mots d'archive commencés sont enregistrés."
           ]
         },
         {
@@ -2690,6 +2745,14 @@
             "- Sans fin : un nouveau parcours à chaque partie, compte pour le meilleur score.",
             "- Parcours du jour : le même pour tous aujourd'hui (version web comprise), avec son propre record du jour - ne compte pas pour le meilleur score.",
             "Dans les réglages, tu actives ou désactives les ombres [H] et l'alternance jour/nuit [N] ; Gauche/Droite change de personnage."
+          ]
+        },
+        {
+          "h": "Archives du jour",
+          "body": [
+            "Les parcours du jour des 30 derniers jours et chaque jour déjà joué peuvent être rejoués - avec un record propre à chaque jour.",
+            "- Dans la préparation du parcours du jour, les flèches à côté de la date ou [Page préc.]/[Page suiv.] changent de jour ; [K] ou Archives ouvre le calendrier.",
+            "- Un jour passé utilise la même graine qu'à l'époque - le parcours est exactement le même."
           ]
         }
       ]

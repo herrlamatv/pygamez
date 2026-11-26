@@ -1230,6 +1230,11 @@ fn pin_pin(a: &mut Pin, b: &mut Pin) {
 }
 
 impl Game for BowlingGame {
+    /// Match-Historie: Dauer zaehlt nicht im Setup (Python-Standard
+    /// `getattr(self, "state", None) != "setup"`).
+    fn match_active(&self) -> bool {
+        !matches!(self.state, State::Setup)
+    }
     fn replay_begin(&mut self, rep: &Value) -> bool {
         BowlingGame::replay_begin(self, rep);
         true

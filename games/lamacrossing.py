@@ -59,6 +59,7 @@ FADE_T = 0.25         # Hindernisse auf einer gesperrten Spur blenden aus
 
 
 class LamaCrossingGame(Game):
+    match_manual = True       # jede Überquerung ist ein Match (Game.log_match)
     name = "Lama Crossing"
     highscore_key = KEY
     supports_multiplayer = False
@@ -405,6 +406,7 @@ class LamaCrossingGame(Game):
             self.broken = k
             self.lost = bet
             self._save_extra()
+            self._log_cross(bet, 0, k)
             if self.world == "road":
                 # Raser: trifft genau bei der Landung
                 v = L.TRAFFIC[self.diff][1] * L.RASER_F * self.k
@@ -448,6 +450,7 @@ class LamaCrossingGame(Game):
             self.round = None
             self.broken = b
             self._save_extra()
+            self._log_cross(self.lost, 0, b)
             self._fall("hit", t("lcr.hit." + self.world), x, y)
             return
         self._close_lane(b)
@@ -459,6 +462,7 @@ class LamaCrossingGame(Game):
             self.win = L.payout(bet, self.diff, n)
             lamabank.credit(self.win, KEY)
             self.pending += self.win
+            self._log_cross(bet, self.win, n, L.mult(self.diff, n))
             self.hist = (self.hist + [L.mult(self.diff, n)])[-L.HISTORY:]
             self.round = None
             self._save_extra()
@@ -473,6 +477,21 @@ class LamaCrossingGame(Game):
         self.play_sound("point")
         self._popup(x - self.cam, y - self.llama_n - 10 * self.k,
                     self._fmt(L.mult(self.diff, b)), ui.GREEN, 0.9)
+
+    def _log_cross(self, bet, win, lane, mult100=None):
+        """Match-Historie: eine Überquerung (verloren oder ausgezahlt)."""
+        info = {"bet": bet, "win": win, "ln": lane, "lv": self.diff}
+        if mult100 is not None:
+            info["x"] = mult100
+        net = win - bet
+        self.log_match(net, 1 if net > 0 else 0 if net < 0 else 2, info)
+
+    @staticmethod
+    def match_text(key, value):
+        """Anzeige im Matches-Screen: Schwierigkeit statt interner Kennung."""
+        if key == "lv" and value in L.DIFFS:
+            return t("lcr.diff." + value)
+        return None
 
     def _fall(self, kind, title, x, y):
         """Runde verloren: Zufall (break) oder Treffer (hit, platt)."""
@@ -497,6 +516,7 @@ class LamaCrossingGame(Game):
         mult = L.mult(self.diff, self.step)
         self.win = L.payout(bet, self.diff, self.step)
         lamabank.credit(self.win, KEY)
+        self._log_cross(bet, self.win, self.step, mult)
         self.hist = (self.hist + [mult])[-L.HISTORY:]
         self.round = None
         self._save_extra()

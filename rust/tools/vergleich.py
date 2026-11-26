@@ -261,8 +261,16 @@ def python_lauf(key, mode, seed, frames, keys, data_dir, ziel):
             for _attr in ("time", "_time"):
                 if getattr(_mod, _attr, None) is _echte_zeit:
                     setattr(_mod, _attr, _FesteZeit())
+    # Wie main.App: der aktive Bildschirm (Spiel, Menue-Screen, Replay-Screen).
+    halter = [None]
+
+    def zeigen(screen, exit_old=True):
+        # main.App.show_screen ohne Tk (Vorspiel -> Matches -> zurueck).
+        screen.paused = False
+        halter[0] = screen
+        ui.begin_transition()
     if bildschirm:
-        game = bildschirm_bauen(key, canvas, w, h, settings, ALL_GAMES)
+        game = bildschirm_bauen(key, canvas, w, h, settings, ALL_GAMES, zeigen)
         game.paused = False
     else:
         game = cls(canvas, w, h, mode=mode, game_settings=settings)
@@ -278,19 +286,14 @@ def python_lauf(key, mode, seed, frames, keys, data_dir, ziel):
         attrappe._draw_highscore_overlay(game)
 
     def speichern():
-        hs, rekord = highscore.update_highscore(game.highscore_key, game.score)
-        game._hs_value = hs
-        game._hs_record = rekord
-        if rekord:
-            stats.record_broken(game.highscore_key)
-        stats.score_result(game.highscore_key, game.score, rekord)
-        achievements.on_highscore(game.highscore_key, hs)
-        achievements.check_stats()
+        # Der echte main.App._highscore_speichern (samt Match-Historie,
+        # _match_speichern).
+        attrappe._highscore_speichern(game)
 
     dt = 1.0 / 60.0
     # Wie main._frame: Taste P am Rundenende oeffnet den Replay-Screen; das
     # Spiel bleibt "geparkt" und kehrt beim Schliessen zurueck.
-    halter = [game]
+    halter[0] = game
 
     class _ReplayApp:
         pass
@@ -321,6 +324,9 @@ def python_lauf(key, mode, seed, frames, keys, data_dir, ziel):
             game.update(dt)
             if not bildschirm and not getattr(game, "is_menu", False):
                 stats.add_playtime(game.highscore_key, dt)
+                # Match-Historie: Dauer nur, solange ein Match laeuft.
+                if game.match_active:
+                    game._match_time = getattr(game, "_match_time", 0.0) + dt
         game.draw()
         if game.paused:
             attrappe._draw_pause_overlay()
@@ -340,6 +346,10 @@ def python_lauf(key, mode, seed, frames, keys, data_dir, ziel):
                 game._was_over = False
                 game._result_reported = False
                 game._duel_reported = False
+                game._match_logged = False
+                game._match_result = None
+                game._match_vs = None
+                game._match_time = 0.0
                 stats.game_started(game.highscore_key)
                 achievements.on_game_started(game.highscore_key)
         if (game.game_over and not getattr(game, "is_menu", False)
@@ -351,10 +361,12 @@ def python_lauf(key, mode, seed, frames, keys, data_dir, ziel):
     # Wie main.App.beenden - die Rust-App ruft es am Ende des Pruefstands
     # ebenso (Highscore, on_exit des Spiels, Statistik-Sitzung schliessen und
     # schreiben). Erst nach dem Foto: es geht nur um die gespeicherten Daten.
-    attrappe._highscore_speichern(game)
+    attrappe._highscore_speichern(game, leaving=True)
     hook = getattr(game, "on_exit", None)
     if hook is not None:
         hook()
+    import matches
+    matches.flush()
     stats.end_session()
     stats.flush()
     return canvas
@@ -387,7 +399,7 @@ def app_attrappe(canvas, w, h, settings, ALL_GAMES):
     return m
 
 
-def bildschirm_bauen(key, canvas, w, h, settings, ALL_GAMES):
+def bildschirm_bauen(key, canvas, w, h, settings, ALL_GAMES, zeigen=None):
     """``screen:<name>[:arg]`` - ein Bildschirm statt eines Spiels.
 
     Die App ist eine Attrappe mit genau dem, was die Bildschirme von ihr
@@ -410,6 +422,8 @@ def bildschirm_bauen(key, canvas, w, h, settings, ALL_GAMES):
     app.refresh_profile = lambda: achievements.backfill_silent()
     app.spiel_starten = lambda cls: None
     app.back_to_menu = lambda: None
+    app.launch_game = lambda *a, **k: None
+    app.show_screen = zeigen or (lambda screen, exit_old=True: None)
 
     def zu():
         return None
@@ -457,6 +471,17 @@ def bildschirm_bauen(key, canvas, w, h, settings, ALL_GAMES):
     if name == "replays":
         from replayview import ReplayScreen
         return ReplayScreen(canvas, w, h, app, on_close=zu)
+    if name == "pregame":
+        # Vorspiel-Screen eines Spiels (Knopf Matches -> MatchScreen -> zurueck)
+        from menu import PreGameScreen
+        cls = [c for c in ALL_GAMES if c.highscore_key == arg][0]
+        return PreGameScreen(canvas, w, h, app, cls)
+    if name == "matches":
+        # screen:matches:<spiel>[:reiter] - Match-Historie eines Spiels
+        from matchview import MatchScreen
+        spiel, _, reiter = (arg or "").partition(":")
+        cls = [c for c in ALL_GAMES if c.highscore_key == spiel][0]
+        return MatchScreen(canvas, w, h, app, cls, on_close=zu, tab=reiter or "recent")
     raise SystemExit("unbekannter Bildschirm: " + name)
 
 

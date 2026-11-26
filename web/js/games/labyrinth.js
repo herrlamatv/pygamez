@@ -42,6 +42,11 @@
   const rgb = (r, g, b) => "rgb(" + (r | 0) + "," + (g | 0) + "," + (b | 0) + ")";
 
   class LabyrinthGame extends PG.Game {
+    /** Jedes gelöste Level ist ein Match (Game.logMatch). */
+    get matchManual() {
+      return true;
+    }
+
     // ===================================================== Aufbau / Reset
     reset() {
       this.score = 0;
@@ -311,6 +316,7 @@
       this.score += this.levelScore;
       this.markSolved(this.level);
       this.state = FINISH;
+      this.logMatch(this.levelScore, 1, { lv: this.level, tm: Math.trunc(this.elapsed), c: this.got });
       this.reportResult(true);
       this.playSound("win");
     }

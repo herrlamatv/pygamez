@@ -1394,6 +1394,11 @@ impl PinballGame {
 }
 
 impl Game for PinballGame {
+    /// Match-Historie: Dauer zaehlt nicht im Setup (Python-Standard
+    /// `getattr(self, "state", None) != "setup"`).
+    fn match_active(&self) -> bool {
+        !matches!(self.state, State::Setup)
+    }
     fn replay_begin(&mut self, rep: &Value) -> bool {
         PinballGame::replay_begin(self, rep);
         true

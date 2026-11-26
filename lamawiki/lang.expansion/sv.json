@@ -333,6 +333,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Matcher",
+      "keywords": [
+        "matcher",
+        "historik",
+        "senaste",
+        "alla",
+        "resultat",
+        "rundor"
+      ],
+      "sections": [
+        {
+          "h": "Senaste och alla matcher",
+          "body": [
+            "Varje spel minns sina matcher. På skärmen före spelet öppnar knappen Matcher spelets historik.",
+            "- Senaste matcher: ett diagram över de senaste 30 resultaten (rekord i guld) och under den de senaste 10 matcherna.",
+            "- Alla matcher: alla sparade matcher, med filter efter läge [M] och sortering nyaste/bästa [O].",
+            "Överst står summorna: matcher, vinster, bästa, snitt och speltid."
+          ]
+        },
+        {
+          "h": "Vad som sparas",
+          "body": [
+            "Datum och tid, läge, poäng (markerspel: vinst eller förlust), vinst/förlust/oavgjort, längd och detaljer som insats, multiplikator, mynt, nivå eller motståndare.",
+            "- Rekord markeras med guld. Lämnar du en runda i förtid står den som avbruten - men bara om du redan hade poäng eller den pågick minst 5 sekunder.",
+            "- Markerspel räknar varje runda för sig, Geometry Dash varje nivåbesök, Labyrint varje löst nivå."
+          ]
+        },
+        {
+          "h": "Lagring",
+          "body": [
+            "De senaste 250 matcherna per spel sparas (på pygamez.com 50 som standard). Äldre faller bort - summorna räknas ändå vidare.",
+            "Historiken ligger i matches.pgzlamamatches bredvid mem.json, separat för varje profil."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Prestationer, sällsynthet och nivå",
@@ -1107,6 +1146,14 @@
           ]
         },
         {
+          "h": "Dagsarkiv",
+          "body": [
+            "Dagens pussel från de senaste 30 dagarna och varje dag du redan löst finns i dagsarkivet - med bästa tid och stjärnor per dag.",
+            "- Under dagskortet byter pilarna eller [PgUp]/[PgDn] dag, [K] eller Arkiv öppnar kalendern, [T] startar vald dag.",
+            "- Arkivpussel ändrar inte din dagliga svit."
+          ]
+        },
+        {
           "h": "Tips",
           "body": [
             "- Börja med rader, kolumner och rutor där det redan står många siffror.",
@@ -1730,6 +1777,14 @@
             "Dagens ord: ett ord om dagen med 6 försök - samma för alla på varje språk och i varje längd, på datorn och i webbläsaren. Ett påbörjat dagens ord sparas; efteråt visar spelet resultat, statistik och nedräkning till nästa ord. Din svit växer bara om du spelar varje dag.",
             "Dordle: två ord samtidigt på 7 försök - varje gissning gäller för båda brickorna. Tangenterna på skärmtangentbordet är delade: vänster halva bricka 1, höger halva bricka 2.",
             "Quordle: fyra ord samtidigt på 9 försök. Tangenterna är delade i fyra och visar färgerna för alla fyra brickorna."
+          ]
+        },
+        {
+          "h": "Dagsarkiv",
+          "body": [
+            "Dagens ord från de senaste 30 dagarna och varje dag du redan spelat kan spelas igen - per språk och ordlängd.",
+            "- I inställningen för dagens ord byter pilarna eller [PgUp]/[PgDn] dag, [K] eller Arkiv öppnar kalendern.",
+            "- Arkivord räknas inte i statistik och svit; påbörjade arkivord sparas."
           ]
         },
         {
@@ -2691,6 +2746,14 @@
             "- Oändlig: en ny bana varje runda, räknas till rekordet.",
             "- Dagens bana: samma för alla i dag (även i webbversionen), med eget dagsrekord - räknas inte till rekordet.",
             "I inställningarna slår du på eller av skuggor [H] och växlingen mellan dag och natt [N]; Vänster/Höger byter mellan dina figurer."
+          ]
+        },
+        {
+          "h": "Dagsarkiv",
+          "body": [
+            "Dagens banor från de senaste 30 dagarna och varje dag du redan spelat kan spelas igen - med eget bästa resultat per dag.",
+            "- I inställningen för dagens bana byter pilarna vid datumet eller [PgUp]/[PgDn] dag; [K] eller Arkiv öppnar kalendern.",
+            "- En tidigare dag använder samma frö som då - banan är exakt densamma."
           ]
         }
       ]

@@ -11,7 +11,11 @@ Wordle - errate das gesuchte Wort in wenigen Versuchen. Vier Modi:
 - **Tageswort**: ein Wort pro Tag, je Sprache und Länge für alle gleich
   (``seedrand`` - PC und Browser liefern dasselbe Wort). Angefangene
   Tageswörter werden gespeichert; danach gibt es Ergebnis, Statistik und den
-  Countdown bis morgen. Serie = Tageswörter in Folge.
+  Countdown bis morgen. Serie = Tageswörter in Folge. Über das Tages-Archiv
+  (dailyarchive.py) lassen sich die letzten 30 Tage und jeder schon gespielte
+  Tag nachspielen - Section-Feld "arch": {"de:5": [[tag, antwort,
+  versuche_aneinander, zustand], ...]}, zustand 1 gelöst / 0 verloren /
+  2 angefangen. Archiv-Tage ändern weder Statistik noch Serie.
 - **Dordle**: zwei Wörter gleichzeitig, 7 Versuche - jeder Rateversuch gilt
   für beide Bretter.
 - **Quordle**: vier Wörter gleichzeitig, 9 Versuche. Die Tasten der
@@ -41,7 +45,9 @@ import time
 
 import pygame
 
+import dailyarchive
 import i18n
+import matches
 import seedrand
 import settings as settings_mod
 import store
@@ -202,10 +208,57 @@ def stats_key(mode, lang, length):
 def load_data():
     """mem.json-Section 'wordle' - fehlende/kaputte Teile werden ergänzt."""
     data = store.load_section("wordle")
-    for key in ("stats", "daily", "best"):
+    for key in ("stats", "daily", "best", "arch"):
         if not isinstance(data.get(key), dict):
             data[key] = {}
+    _migrate_daily(data)
     return data
+
+
+def arch_rows(data, slot):
+    """Bereinigte Archiv-Zeilen eines Slots ("de:5") - [tag, antwort, versuche, zustand]."""
+    try:
+        length = int(slot.split(":")[1])
+    except (IndexError, ValueError):
+        return []
+    if length <= 0:
+        return []                        # beschädigter Slot ("de:0")
+    rows = []
+    for row in dailyarchive.clean_rows(data.get("arch", {}).get(slot), 4):
+        day, answer, guesses, state = row
+        if not (isinstance(answer, str) and len(answer) == length and answer.isalpha()):
+            continue
+        if not (isinstance(guesses, str) and len(guesses) % length == 0
+                and len(guesses) <= 9 * length and (guesses == "" or guesses.isalpha())):
+            continue
+        if state not in (0, 1, 2) or isinstance(state, bool):
+            continue
+        rows.append([day, answer, guesses, state])
+    return rows
+
+
+def _migrate_daily(data):
+    """Heutige/letzte Tagesstände ins Archiv übernehmen (fehlt dort ein Tag)."""
+    for slot, prog in list(data["daily"].items()):
+        if not isinstance(prog, dict):
+            continue
+        try:
+            day = seedrand.day_index(str(prog.get("date", ""))[:10])
+            length = int(slot.split(":")[1])
+        except (IndexError, ValueError):
+            continue
+        answer = prog.get("answer")
+        guesses = [g for g in (prog.get("guesses") or []) if isinstance(g, str)
+                   and len(g) == length and g.isalpha()]
+        if day < 0 or not (isinstance(answer, str) and len(answer) == length):
+            continue
+        rows = arch_rows(data, slot)
+        if dailyarchive.find(rows, day) is not None:
+            continue
+        won = any(g.upper() == answer.upper() for g in guesses)
+        state = 1 if won else (0 if prog.get("done") else 2)
+        dailyarchive.upsert(rows, [day, answer, "".join(guesses), state])
+        data["arch"][slot] = rows
 
 
 def save_data(data):
@@ -464,6 +517,9 @@ class WordleGame(Game):
         self.panel_hidden = False
         self.daily_date = None
         self.daily_view = False
+        self.arch_day = dailyarchive.today_index()   # gewählter Tag (Tageswort)
+        self.picker = None
+        self.su_day = None
 
         self._fit_cache = {}
         self._letter_cache = {}
@@ -590,7 +646,10 @@ class WordleGame(Game):
         row_h = max(36, int(58 * k))
         start_h = max(32, int(50 * k))
         sp = max(6, int(12 * k))
+        daily = self.game_mode == "daily"
         total = label_h + 4 + seg_h + sp + row_h + sp + row_h + sp * 2 + start_h
+        if daily:
+            total += seg_h + sp                  # Datums-Leiste (Tages-Archiv)
         y = left.y + max(0, (left.h - total) // 2)
         self.su_label_y = y
         y += label_h + 4
@@ -602,7 +661,12 @@ class WordleGame(Game):
         self.su_hard = pygame.Rect(left.x, y, col_w, row_h)
         y += row_h + sp
         self.su_cb = pygame.Rect(left.x, y, col_w, row_h)
-        y += row_h + sp * 2
+        y += row_h + sp
+        self.su_day = None
+        if daily:
+            self.su_day = dailyarchive.day_row_rects(left.x, y, col_w, seg_h)
+            y += seg_h + sp
+        y += sp
         self.su_start = pygame.Rect(left.x, y, col_w, start_h)
         # Rechte Spalte: Statistik, so hoch wie die Einstellungen daneben.
         st_top = max(top, self.su_label_y - max(4, int(6 * k)))
@@ -746,9 +810,101 @@ class WordleGame(Game):
     def _daily_slot(self):
         return "%s:%d" % (self.lang, self.length)
 
+    @property
+    def wants_escape(self):
+        return self.state == SETUP and self.picker is not None
+
+    # ----- Match-Historie ------------------------------------------------
+    def match_score(self):
+        """Endlos: Punkte der Serie; sonst Punkte wie ein Endlos-Wort (oder 0)."""
+        if self.game_mode == "endless":
+            return int(self.points)
+        res = self.result or {}
+        if res.get("won"):
+            return 10 + max(0, self.rows - int(res.get("tries", self.rows))) * 10
+        return 0
+
+    def match_info(self):
+        info = {"len": self.length}
+        if self.game_mode == "endless":
+            info["wd"] = self.solved_count
+        elif self.result:
+            info["g"] = int(self.result.get("tries", 0)) if self.result.get("won") \
+                else len(self.guesses)
+        if self.game_mode == "daily" and self.daily_date:
+            info = {"day": seedrand.day_index(self.daily_date), **info}
+        return info
+
+    def match_flags(self):
+        if self.game_mode != "daily":
+            return 0
+        return matches.F_DAILY | (matches.F_ARCHIVE if self.is_archive() else 0)
+
+    def is_archive(self):
+        """Läuft (bzw. ist im Setup gewählt) ein vergangenes Tageswort?"""
+        return self.game_mode == "daily" and self.arch_day != dailyarchive.today_index()
+
+    def _arch_days(self):
+        return dailyarchive.available([r[0] for r in arch_rows(self.data, self._daily_slot())])
+
+    def _step_day(self, d):
+        days = self._arch_days()
+        i = days.index(self.arch_day) if self.arch_day in days else len(days) - 1
+        j = max(0, min(len(days) - 1, i + d))
+        if days[j] != self.arch_day:
+            self.arch_day = days[j]
+            self.play_sound("move")
+
+    def _open_picker(self):
+        rows = MAX_ROWS["daily"]
+        info = {}
+        for day, _answer, guesses, state in arch_rows(self.data, self._daily_slot()):
+            n = len(guesses) // self.length
+            if state == 1:
+                info[day] = ("solved", "%d/%d" % (n, rows))
+            elif state == 0:
+                info[day] = ("played", "X/%d" % rows)
+            else:
+                info[day] = ("started", "%d/%d" % (n, rows))
+        self.picker = dailyarchive.Picker("wordle", self.accent, self.arch_day, info)
+        self.play_sound("click")
+
+    def _start_arch_day(self):
+        """Ein vergangenes Tageswort - Antwort und Stand aus dem Archiv."""
+        day = self.arch_day
+        self.daily_date = seedrand.date_of(day)
+        row = dailyarchive.find(arch_rows(self.data, self._daily_slot()), day)
+        answer = row[1] if row else daily_answer(self.words, self.lang, self.length,
+                                                  self.daily_date)
+        self.boards = [Board(answer)]
+        self._clear_round()
+        self.state = PLAY
+        if row is None:
+            return
+        board = self.boards[0]
+        L = self.length
+        for i in range(0, min(len(row[2]), self.rows * L), L):
+            guess = row[2][i:i + L].upper()
+            self.guesses.append(guess)
+            board.apply(guess, evaluate(guess, answer), -99.0)
+            if board.solved:
+                break
+        if board.solved or len(self.guesses) >= self.rows:
+            st = get_stats(self.data, "daily", self.lang, self.length)
+            self.daily_view = True
+            self.result = {"won": board.solved, "tries": board.solved_at or 0,
+                           "stats": st, "t0": self.anim - PANEL_DELAY,
+                           "new_best": False}
+            self.state = DONE
+
     def _start_daily(self):
         """Tageswort laden - samt bisherigem Fortschritt von heute."""
         today = seedrand.today_str()
+        if self.arch_day > seedrand.day_index(today):
+            self.arch_day = seedrand.day_index(today)
+        if self.is_archive():
+            self._start_arch_day()
+            return
         self.daily_date = today
         answer = daily_answer(self.words, self.lang, self.length, today)
         self.boards = [Board(answer)]
@@ -777,7 +933,20 @@ class WordleGame(Game):
                            "new_best": False}
             self.state = DONE
 
+    def _save_arch(self, done):
+        """Stand des Tageswortes ins Archiv (gelöst / verloren / angefangen)."""
+        slot = self._daily_slot()
+        board = self.boards[0]
+        state = 1 if board.solved else (0 if done else 2)
+        rows = arch_rows(self.data, slot)
+        dailyarchive.upsert(rows, [seedrand.day_index(self.daily_date), board.answer,
+                                   "".join(self.guesses), state])
+        self.data["arch"][slot] = rows
+
     def _save_daily(self, done):
+        self._save_arch(done)
+        if self.is_archive():
+            return                       # der heutige Stand bleibt unberührt
         self.data["daily"][self._daily_slot()] = {
             "date": self.daily_date, "answer": self.boards[0].answer,
             "guesses": list(self.guesses), "done": bool(done)}
@@ -853,7 +1022,8 @@ class WordleGame(Game):
         if len(self.current) != self.length:
             self._reject(t("wd.too_short", n=self.length))
             return
-        if self.current not in self.allowed:
+        if self.current not in self.allowed \
+                and not any(self.current == b.answer for b in self.boards):
             self._reject(t("wd.not_a_word"))
             return
         if self.hard:
@@ -952,13 +1122,18 @@ class WordleGame(Game):
             self.play_sound("win")
             return
         day = seedrand.day_index(self.daily_date) if mode == "daily" else None
-        st = record_game(self.data, mode, self.lang, self.length, True, n, day)
+        if self.is_archive():
+            # Archiv-Tag: Statistik und Serie bleiben, wie sie sind.
+            st = get_stats(self.data, mode, self.lang, self.length)
+        else:
+            st = record_game(self.data, mode, self.lang, self.length, True, n, day)
         save_data(self.data)
         self.report_result(True)
         if mode == "daily":
             if n <= 2:
                 self.ach_event("wordle_two")
-            self.ach_event("wordle_daily7", st["streak"])
+            if not self.is_archive():
+                self.ach_event("wordle_daily7", st["streak"])
         elif mode == "quordle":
             self.ach_event("wordle_quordle")
         self._finish_round(True, n, st)
@@ -968,7 +1143,10 @@ class WordleGame(Game):
     def _round_lost(self, n):
         mode = self.game_mode
         day = seedrand.day_index(self.daily_date) if mode == "daily" else None
-        st = record_game(self.data, mode, self.lang, self.length, False, n, day)
+        if self.is_archive():
+            st = get_stats(self.data, mode, self.lang, self.length)
+        else:
+            st = record_game(self.data, mode, self.lang, self.length, False, n, day)
         new_best = False
         if mode == "endless":
             key = str(self.length)
@@ -1048,7 +1226,9 @@ class WordleGame(Game):
 
     def _done_primary(self):
         if self.game_mode == "daily":
-            if self.daily_date != seedrand.today_str():
+            if self.is_archive():
+                self._to_setup()
+            elif self.daily_date != seedrand.today_str():
                 self.game_over = False
                 self.new_round_result()
                 self._start()                 # neuer Tag, neues Wort
@@ -1073,6 +1253,38 @@ class WordleGame(Game):
 
     # ----- Setup-Eingabe -------------------------------------------------
     def _handle_setup(self, event):
+        if self.picker is not None:
+            res = self.picker.handle_event(event, self)
+            if res is not None:
+                self.picker = None
+                if res[0] == "pick":
+                    self.arch_day = res[1]
+                    self.play_sound("select")
+                else:
+                    self.play_sound("click")
+            return
+        if self.su_day is not None:
+            if event.kind == InputEvent.KEYDOWN:
+                if event.key == "Prior":
+                    self._step_day(-1)
+                    return
+                if event.key == "Next":
+                    self._step_day(1)
+                    return
+                if event.key in ("k", "K") and self.key_is_free(event.key):
+                    self._open_picker()
+                    return
+            elif event.kind == InputEvent.MOUSEDOWN:
+                r_prev, r_date, r_next, r_arch = self.su_day
+                if r_prev.collidepoint(event.pos):
+                    self._step_day(-1)
+                    return
+                if r_next.collidepoint(event.pos):
+                    self._step_day(1)
+                    return
+                if r_date.collidepoint(event.pos) or r_arch.collidepoint(event.pos):
+                    self._open_picker()
+                    return
         if event.kind == InputEvent.KEYDOWN:
             k = event.key
             if k in ("Return", "KP_Enter"):
@@ -1674,7 +1886,9 @@ class WordleGame(Game):
         self._draw_stats_block(s, block, res["stats"], highlight, grow)
         y = bottom
         if mode == "daily":
-            if self.daily_date != seedrand.today_str():
+            if self.is_archive():
+                text = t("wd.daily.arch", date=dailyarchive.long_date(self.arch_day))
+            elif self.daily_date != seedrand.today_str():
                 text = t("wd.daily.new")
             else:
                 text = t("wd.daily.next", t=format_hms(seconds_to_midnight()))
@@ -1738,6 +1952,14 @@ class WordleGame(Game):
         self._draw_toggle(s, self.su_cb, "colorblind", t("wd.setup.colorblind"),
                           t("wd.setup.colorblind_desc"), self.colorblind,
                           self.setup_focus == 2, preview=True)
+        if self.su_day is not None:
+            days = self._arch_days()
+            dailyarchive.draw_day_row(s, self.su_day, self.arch_day, self.accent,
+                                      self.arch_day > days[0], self.arch_day < days[-1],
+                                      self._fit(dailyarchive.short_date(self.arch_day),
+                                                self.su_day[1].w - 10,
+                                                max(10, int(14 * k)), True),
+                                      archived=self.is_archive())
         ui.draw_button(s, self.su_start, t("common.start"),
                        self._fit(t("common.start"), self.su_start.w - 20,
                                  max(13, int(20 * k)), True),
@@ -1745,6 +1967,8 @@ class WordleGame(Game):
         self._draw_setup_stats(s)
         hint = self._fit_parts(t("wd.setup.hint"), W - 20, max(10, int(13 * k)))
         ui.draw_footer(s, W, H, hint, self._fit(hint, W - 20, max(10, int(13 * k))))
+        if self.picker is not None:
+            self.picker.draw(s)
 
     def _draw_title_tiles(self, s):
         """WORDLE als Kachelreihe, die sich beim Öffnen nacheinander umdreht."""
@@ -1844,6 +2068,13 @@ class WordleGame(Game):
         if mode == "endless":
             best = self.data["best"].get(str(self.length), 0)
             return t("wd.result.best", n=best if isinstance(best, int) else 0)
+        if mode == "daily" and self.is_archive():
+            row = dailyarchive.find(arch_rows(self.data, self._daily_slot()), self.arch_day)
+            date = dailyarchive.long_date(self.arch_day)
+            if row is None:
+                return t("wd.daily.arch", date=date)
+            return t("wd.daily.arch", date=date) + "  ·  " + t(
+                "arch.state." + {1: "solved", 0: "played", 2: "started"}[row[3]])
         if mode == "daily":
             prog = self.data["daily"].get(self._daily_slot())
             today = seedrand.today_str()

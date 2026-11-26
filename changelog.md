@@ -8,6 +8,59 @@
 
 ## 🇩🇪 Deutsch
 
+### Match-Historie & Tages-Archiv – 2026-11-26
+
+Jedes der 50 Spiele führt jetzt eine **Match-Historie** mit „Letzte Matches“
+und „Alle Matches“, und die drei Tagesmodi bekommen ein **Tages-Archiv**: Die
+Tagesstrecke, das Tagesrätsel und das Tageswort der letzten 30 Tage – und jeder
+Tag, den man schon gespielt hat – lassen sich mit eigenem Bestwert nachspielen.
+Alles in 14 Sprachen, mit neuer LamaWiki-Seite, in beiden READMEs, in der
+Web-Version, in der Rust-Fassung und auf pygamez.com.
+
+#### Neu
+
+**Match-Historie** (alle 50 Spiele)
+- Neuer Knopf **Matches** im Vorspiel-Screen jedes Spiels.
+- **Letzte Matches**: Verlaufskurve der letzten 30 Ergebnisse (Rekorde golden
+  markiert, Tooltip beim Überfahren) und darunter die letzten 10 Matches.
+- **Alle Matches**: alle gespeicherten Matches mit Filter nach Modus (M),
+  Sortierung neueste/beste (O) und Bildlauf; darüber die Summen – Matches,
+  Siege mit Quote, Bestwert, Schnitt und Spielzeit.
+- Je Match: Datum und Uhrzeit, Modus, Punkte (Chip-Spiele: Gewinn bzw.
+  Verlust), Sieg/Niederlage/Remis, Dauer und Details wie Einsatz, Auszahlung,
+  Multiplikator, Münzen, Figur, Level, Versuche oder Gegner. Rekorde sind
+  golden markiert; wer vorzeitig verlässt, bekommt einen Eintrag „abgebrochen“
+  (nur mit Punkten oder ab 5 Sekunden).
+- Chip-Spiele zählen jede Runde einzeln (Hand, Wurf, Dreh, Kugel,
+  Überquerung), Geometry Dash jeden Level-Besuch, Labyrinth jedes gelöste Level.
+- Gespeichert werden je Spiel die letzten **250** Matches in der neuen Datei
+  **`matches.pgzlamamatches`** (kompakt, je Profil getrennt); die Summen laufen
+  unbegrenzt weiter. Auf pygamez.com sind es standardmäßig 50 je Spiel.
+
+**Tages-Archiv** (Crossy Road, Sudoku, Wordle)
+- Nachspielbar sind die **letzten 30 Tage** und jeder Tag, der schon gespielt
+  wurde – mit demselben Seed wie damals, also exakt derselben Strecke, demselben
+  Rätsel bzw. demselben Wort.
+- Neue Datums-Leiste im Setup (◀ Heute · 26.11. ▶ Archiv): Pfeile oder **Bild
+  auf/ab** wechseln den Tag, **K** oder „Archiv“ öffnet den Kalender mit
+  Bestwert, Bestzeit oder Status je Tag; ältere gespielte Tage stehen darunter.
+- Je Tag eigener Bestwert (Crossy Road, mit Versuchen), eigene Bestzeit und
+  Sterne (Sudoku) bzw. eigener Stand (Wordle, auch angefangen).
+- Archiv-Tage ändern keine Tagesserie, keine Wordle-Statistik und keine
+  Serien-Erfolge; „Heute“ bleibt der normale Tagesmodus.
+- Kompakt gespeichert: eine Tageszahl statt eines Datums je Eintrag – ein Jahr
+  Crossy-Archiv sind rund 4 KB, ein Jahr Wordle rund 12 KB.
+
+#### Geändert
+- Vorspiel-Screen: Optionen, Matches, Wiki und Zurück stehen in der kompakten
+  Reihe nebeneinander; zu lange Beschriftungen bekommen eine Kurzform.
+
+#### Behoben
+- Desktop: Der Vorspiel-Screen erscheint wieder in der Akzentfarbe des
+  gewählten Spiels (statt in der Theme-Farbe) – wie im Browser.
+
+---
+
 ### Lama Crash – 2026-11-21
 
 Spiel Nr. 50 ist ein Crash-Spiel mit Lama-Chips: **Lama Crash**. Ein Lama
@@ -1751,6 +1804,57 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Match history & daily archive – 2026-11-26
+
+Every one of the 50 games now keeps a **match history** with "Last matches"
+and "All matches", and the three daily modes get a **daily archive**: the daily
+track, daily puzzle and daily word of the last 30 days – and every day you have
+already played – can be replayed with their own best score. Everything in 14
+languages, with a new LamaWiki page, in both READMEs, in the web version, in
+the Rust build and on pygamez.com.
+
+#### New
+
+**Match history** (all 50 games)
+- New **Matches** button in every game's pre-game screen.
+- **Last matches**: a curve of the last 30 results (records in gold, tooltip on
+  hover) and below it the last 10 matches.
+- **All matches**: every saved match with a mode filter (M), newest/best
+  sorting (O) and scrolling; above it the totals – matches, wins with rate,
+  best, average and play time.
+- Per match: date and time, mode, points (chip games: profit or loss),
+  win/loss/draw, duration and details such as bet, payout, multiplier, coins,
+  character, level, guesses or opponent. Records are marked in gold; leaving
+  early creates an "aborted" entry (only with points or after 5 seconds).
+- Chip games count every round separately (hand, spin, ball, crossing),
+  Geometry Dash every level visit, Labyrinth every solved level.
+- The last **250** matches per game are saved in the new file
+  **`matches.pgzlamamatches`** (compact, separate per profile); the totals keep
+  counting. On pygamez.com it is 50 per game by default.
+
+**Daily archive** (Crossy Road, Sudoku, Wordle)
+- Replayable: the **last 30 days** and every day already played – with the same
+  seed as back then, i.e. exactly the same track, puzzle or word.
+- New date bar in the setup (◀ Today · 26.11. ▶ Archive): the arrows or **Page
+  up/down** change the day, **K** or "Archive" opens the calendar with best
+  score, best time or status per day; older played days are listed below.
+- Separate best score per day (Crossy Road, with tries), best time and stars
+  (Sudoku) or progress (Wordle, also unfinished).
+- Archive days don't change the daily streak, Wordle statistics or streak
+  achievements; "Today" stays the normal daily mode.
+- Stored compactly: one day number instead of a date per entry – a year of
+  Crossy archive is about 4 KB, a year of Wordle about 12 KB.
+
+#### Changed
+- Pre-game screen: Options, Matches, Wiki and Back sit side by side in the
+  compact row; labels that are too long get a short form.
+
+#### Fixed
+- Desktop: the pre-game screen appears in the chosen game's accent colour
+  again (instead of the theme colour) – like in the browser.
+
+---
 
 ### Lama Crash – 2026-11-21
 

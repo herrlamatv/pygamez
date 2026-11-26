@@ -9,7 +9,9 @@
  * Adler, Tag/Nacht, HUD, Setup- und Figuren-Screen.
  *
  * Steuerung: Pfeile/WASD = hüpfen, Leertaste/Enter/Klick = vorwärts.
- * Speicher: PG.store "crossy" = {coins, unlocked, selected, daily: {date, best}}.
+ * Speicher: PG.store "crossy" = {coins, unlocked, selected, daily: {date, best},
+ * arch: [[tag, bestwert, versuche], ...]} - "daily" ist der heutige Tag (wie
+ * bisher), "arch" das Tages-Archiv aller gespielten Tage (dailyarchive.js).
  */
 (function () {
   "use strict";
@@ -17,6 +19,8 @@
   const { ui, draw, t } = PG;
   const W_ = PG.crossyWorld;
   const MODELS = PG.crossyModels;
+  const DA = PG.dailyArchive;
+  const M = PG.matches;
 
   const SETUP = "setup", PLAY = "play";
   const TABS = ["play", "chars"];
@@ -321,6 +325,8 @@
       this.shadows = this.opts.shadows !== false;
       this.daynight = this.opts.daynight !== false;
       this.data = this.load();
+      this.day = DA.todayIndex(); // gespielter Tag (Tagesstrecke)
+      this.picker = null; // offenes Archiv-Fenster
       this.anim = 0.0;
       this.state = SETUP;
       this.tab = "play";
@@ -363,7 +369,7 @@
     }
 
     get wantsEscape() {
-      return this.state === SETUP && this.tab === "chars";
+      return this.state === SETUP && (this.tab === "chars" || this.picker !== null);
     }
 
     // ===================================================== Speicherstand
@@ -376,16 +382,77 @@
       if (!unlocked.includes(selected)) selected = "chicken";
       const d = raw.daily && typeof raw.daily === "object" ? raw.daily : {};
       const best = Number.isInteger(d.best) && d.best > 0 ? d.best : 0;
-      return { coins: Math.max(0, coins), unlocked, selected, daily: { date: String(d.date || "").slice(0, 10), best } };
+      const daily = { date: String(d.date || "").slice(0, 10), best };
+      const arch = DA.cleanRows(raw.arch, 3).filter((r) => r.every((v) => Number.isInteger(v) && v >= 0));
+      // Altbestand: den bisher einzigen Tagesbestwert ins Archiv übernehmen.
+      if (daily.best > 0) {
+        const idx = DA.safeDayIndex(daily.date);
+        if (idx >= 0) {
+          const row = DA.find(arch, idx);
+          if (row === null) DA.upsert(arch, [idx, daily.best, 1]);
+          else if (row[1] < daily.best) row[1] = daily.best;
+        }
+      }
+      return { coins: Math.max(0, coins), unlocked, selected, daily, arch };
     }
 
     save() {
-      PG.store.set("crossy", { coins: this.data.coins, unlocked: this.data.unlocked.slice(), selected: this.data.selected, daily: Object.assign({}, this.data.daily) });
+      PG.store.set("crossy", {
+        coins: this.data.coins, unlocked: this.data.unlocked.slice(), selected: this.data.selected,
+        daily: Object.assign({}, this.data.daily), arch: this.data.arch.map((r) => r.slice()),
+      });
     }
 
+    /** Bestwert des gespielten Tags (heute oder Archiv-Tag). */
     dailyBest() {
-      const d = this.data.daily;
-      return d.date === PG.seedrand.todayStr() ? d.best : 0;
+      const row = DA.find(this.data.arch, this.day);
+      return row ? row[1] : 0;
+    }
+
+    isArchive() {
+      return this.mode === "daily" && this.day !== DA.todayIndex();
+    }
+
+    days() {
+      return DA.available(this.data.arch.map((r) => r[0]));
+    }
+
+    stepDay(d) {
+      const days = this.days();
+      const i = days.indexOf(this.day) >= 0 ? days.indexOf(this.day) : days.length - 1;
+      const j = Math.max(0, Math.min(days.length - 1, i + d));
+      if (days[j] !== this.day) {
+        this.day = days[j];
+        this.playSound("move");
+      }
+    }
+
+    openPicker() {
+      const info = {};
+      for (const r of this.data.arch) info[r[0]] = ["played", t("arch.best", { n: r[1] })];
+      this.picker = new DA.Picker("crossy", this.accent, this.day, info);
+      this.playSound("click");
+    }
+
+    // ----- Match-Historie ----------------------------------------------
+    matchScore() {
+      return Math.trunc(this.best || 0);
+    }
+
+    matchInfo() {
+      let info = { c: Math.trunc(this.runCoins || 0), ch: this.data.selected };
+      if (this.mode === "daily") info = Object.assign({ day: this.day }, info);
+      return info;
+    }
+
+    matchFlags() {
+      if (this.mode !== "daily") return 0;
+      return M.F_DAILY | (this.isArchive() ? M.F_ARCHIVE : 0);
+    }
+
+    static matchText(key, value) {
+      if (key === "ch" && W_.CHAR_IDS.includes(value)) return t("cr.char_line", { name: t("cr.char." + value) });
+      return null;
     }
 
     saveSetting(key, value) {
@@ -399,7 +466,7 @@
 
     // ===================================================== Runde
     newRun() {
-      const seed = this.mode === "daily" ? PG.seedrand.dailySeed("crossy") : Math.floor(Math.random() * 4294967296);
+      const seed = this.mode === "daily" ? PG.seedrand.dailySeed("crossy", PG.seedrand.dateOf(this.day)) : Math.floor(Math.random() * 4294967296);
       this.world = new W_.World(seed);
       this.clock = 0.0;
       this.col = W_.START_COL;
@@ -435,14 +502,19 @@
 
     finishRun() {
       if (this.mode === "daily") {
+        const row = DA.find(this.data.arch, this.day) || [this.day, 0, 0];
+        this.record = this.best > row[1];
+        DA.upsert(this.data.arch, [this.day, Math.max(row[1], this.best), row[2] + 1]);
         const today = PG.seedrand.todayStr();
-        const d = this.data.daily;
-        if (d.date !== today) {
-          d.date = today;
-          d.best = 0;
+        if (PG.seedrand.dateOf(this.day) === today) {
+          // "daily" bleibt der heutige Tag (wie bisher)
+          const d = this.data.daily;
+          if (d.date !== today) {
+            d.date = today;
+            d.best = 0;
+          }
+          if (this.best > d.best) d.best = this.best;
         }
-        this.record = this.best > d.best;
-        if (this.record) d.best = this.best;
       } else {
         this.record = this.best > this.hs;
       }
@@ -771,7 +843,8 @@
       const lab = Math.max(20, this.fTiny.height + 10);
       const gap1 = lab + Math.max(0, Math.floor((H - 360) / 40));
       const gap2 = Math.max(12, Math.floor(H / 30));
-      const used = cardH + gap1 + bh + gap2 + bh + 6;
+      let used = cardH + gap1 + bh + gap2 + bh + 6;
+      if (this.mode === "daily") used += bh + gap2; // Datums-Leiste (Tages-Archiv)
       const free = H - 44 - top - used;
       const ptop = top + Math.max(0, Math.floor(free / 2));
       this.cardRect = new PG.Rect(cx - Math.floor(bw / 2), ptop, bw, cardH);
@@ -785,6 +858,11 @@
       this.shadowRects = pair(cx - bw / 2);
       this.nightRects = pair(cx + bw / 2 - grp);
       y += bh + gap2;
+      this.dayRects = null;
+      if (this.mode === "daily") {
+        this.dayRects = DA.dayRowRects(cx - Math.floor(bw / 2), y, bw, bh);
+        y += bh + gap2;
+      }
       const sw = Math.max(190, Math.floor(bw * 0.42));
       this.startRect = new PG.Rect(cx - Math.floor(sw / 2), y, sw, bh + 6);
       // Figuren-Raster
@@ -805,6 +883,17 @@
     }
 
     handleSetup(ev) {
+      if (this.picker !== null) {
+        const res = this.picker.handleEvent(ev, this);
+        if (res !== null) {
+          if (res[0] === "pick") {
+            this.day = res[1];
+            this.playSound("select");
+          } else this.playSound("click");
+          this.picker = null;
+        }
+        return;
+      }
       if (ev.kind === "mousedown" && ev.pos) {
         for (let i = 0; i < this.tabRects.length; i++) {
           if (this.tabRects[i].collidepoint(ev.pos)) {
@@ -827,7 +916,25 @@
         else if (k === "Right" || this.isAction(k, "right")) this.cycleChar(1);
         else if ((k === "h" || k === "H") && this.keyIsFree(k)) this.toggle("shadows");
         else if ((k === "n" || k === "N") && this.keyIsFree(k)) this.toggle("daynight");
+        else if (this.mode === "daily" && k === "Prior") this.stepDay(-1);
+        else if (this.mode === "daily" && k === "Next") this.stepDay(1);
+        else if (this.mode === "daily" && (k === "k" || k === "K") && this.keyIsFree(k)) this.openPicker();
       } else if (ev.kind === "mousedown" && ev.pos) {
+        if (this.dayRects !== null) {
+          const [rPrev, rDate, rNext, rArch] = this.dayRects;
+          if (rPrev.collidepoint(ev.pos)) {
+            this.stepDay(-1);
+            return;
+          }
+          if (rNext.collidepoint(ev.pos)) {
+            this.stepDay(1);
+            return;
+          }
+          if (rDate.collidepoint(ev.pos) || rArch.collidepoint(ev.pos)) {
+            this.openPicker();
+            return;
+          }
+        }
         for (const [flag, rects] of [["shadows", this.shadowRects], ["daynight", this.nightRects]]) {
           for (let i = 0; i < rects.length; i++) {
             if (rects[i].collidepoint(ev.pos)) {
@@ -1311,7 +1418,10 @@
       const y = pad + this.fNum.height - 2;
       let best = this.mode === "daily" ? this.dayBest : this.hs;
       best = Math.max(best, this.best);
-      const lab = this.mode === "daily" ? t("cr.hud_top_daily", { n: best }) : t("cr.hud_top", { n: best });
+      let lab;
+      if (this.isArchive()) lab = t("cr.hud_top_arch", { n: best });
+      else if (this.mode === "daily") lab = t("cr.hud_top_daily", { n: best });
+      else lab = t("cr.hud_top", { n: best });
       this.shadowText(ctx, this.fSmall, lab, pad, y, [255, 236, 150]);
       // Münzen rechts oben
       const coins = String(this.data.coins);
@@ -1326,7 +1436,7 @@
         this.shadowText(ctx, this.fSmall, plus, right - this.fSmall.width(plus), cy + r + 4, [255, 226, 110]);
       }
       if (this.mode === "daily") {
-        const tag = t("cr.daily_tag", { date: PG.seedrand.todayStr() });
+        const tag = t(this.isArchive() ? "cr.archive_tag" : "cr.daily_tag", { date: PG.seedrand.dateOf(this.day) });
         const tw = this.fTiny.width(tag);
         const box = [W / 2 - tw / 2 - 9, pad - 4, tw + 18, this.fTiny.height + 8];
         draw.rect(ctx, [20, 24, 40, 150], box, 0, box[3] / 2);
@@ -1405,6 +1515,7 @@
       this.tabRects.forEach((rc, i) => this.btn(ctx, rc, t("cr.tab_" + TABS[i]), this.tab === TABS[i]));
       if (this.tab === "chars") this.drawChars(ctx);
       else this.drawPlayTab(ctx);
+      if (this.picker !== null) this.picker.draw(ctx, W, H);
     }
 
     stage() {
@@ -1452,7 +1563,11 @@
       const tx = card.x + card.h + 6;
       const tw = card.right - 14 - tx;
       const lines = [[this.fMid, t(this.mode === "daily" ? "cr.mode.daily" : "cr.mode.endless"), this.accent]];
-      lines.push([this.fTiny, this.mode === "daily" ? t("cr.mode_desc.daily", { date: PG.seedrand.todayStr() }) : t("cr.mode_desc.endless"), ui.TEXT_DIM]);
+      let desc;
+      if (this.isArchive()) desc = t("cr.mode_desc.archive", { date: PG.seedrand.dateOf(this.day) });
+      else if (this.mode === "daily") desc = t("cr.mode_desc.daily", { date: PG.seedrand.dateOf(this.day) });
+      else desc = t("cr.mode_desc.endless");
+      lines.push([this.fTiny, desc, ui.TEXT_DIM]);
       if (this.mode === "daily") lines.push([this.fSmall, t("cr.best_daily", { n: this.dailyBest() }), ui.GOLD]);
       else {
         // Highscore nur einmal je Besuch aus dem Speicher lesen
@@ -1476,10 +1591,15 @@
         this.fitText(ctx, this.fTiny, t(key), mid, rects[0].top - 4, ui.TEXT_DIM, this.optW, "midbottom");
         rects.forEach((rc, i) => this.btn(ctx, rc, i === 0 ? t("common.on") : t("common.off"), on === (i === 0)));
       }
+      if (this.dayRects !== null) {
+        const days = this.days();
+        DA.drawDayRow(ctx, this.dayRects, this.day, this.accent, this.day > days[0], this.day < days[days.length - 1],
+          this.fTiny, this.isArchive());
+      }
       draw.rect(ctx, ui.BTN_SEL, this.startRect, 0, 10);
       draw.rect(ctx, this.accent, this.startRect, 2, 10);
       ui.text(ctx, t("common.start"), this.startRect.centerx, this.startRect.centery, this.font, ui.TEXT, "center");
-      this.fitText(ctx, this.fTiny, t("cr.setup_hint"), cx, H - 30, ui.TEXT_FAINT, W - 20, "center");
+      this.fitText(ctx, this.fTiny, t(this.mode === "daily" ? "cr.setup_hint_daily" : "cr.setup_hint"), cx, H - 30, ui.TEXT_FAINT, W - 20, "center");
       this.fitText(ctx, this.fTiny, t("cr.hint"), cx, H - 12, ui.mix(this.accent, ui.TEXT, 0.45), W - 20, "center");
     }
 

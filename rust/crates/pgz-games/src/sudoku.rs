@@ -12,7 +12,8 @@ use std::collections::{BTreeSet, HashMap, HashSet};
 use std::f64::consts::PI;
 
 use crate::sudoku_gen::{self as gen, Layout, VARIANTS};
-use pgz_core::{seedrand, store};
+use pgz_core::{matches, seedrand, store};
+use pgz_engine::dailyarchive::{self as da, Picker, Wahl};
 use pgz_engine::prelude::*;
 use serde_json::{json, Map, Value};
 
@@ -223,7 +224,16 @@ pub struct SudokuGame {
     can_check: bool,
     can_hint: bool,
     daily: bool,
+    /// Bezugstag fuer Serie/"heute geloest".
+    today_date: String,
+    /// Gewaehlter Tag des Tages-Archivs (Tagesnummer).
+    arch_day: i64,
+    /// Gespielter bzw. im Setup gezeigter Tag (heute oder ein Archiv-Tag).
     daily_date: String,
+    /// Offenes Archiv-Fenster.
+    picker: Option<Picker>,
+    /// Datums-Leiste unter der Tageskarte.
+    dayrow_rects: Option<[Rect; 4]>,
     play_variant: &'static str,
     play_diff: i64,
     level: i64,
@@ -252,6 +262,8 @@ pub struct SudokuGame {
     saves: Map<String, Value>,
     last: HashMap<String, Map<String, Value>>,
     daily_state: Map<String, Value>,
+    /// Tages-Archiv: [tag, sekunden, sterne]
+    arch: Vec<[i64; 3]>,
     cursor: i64,
     // Setup-Layout
     su_title_y: i32,
@@ -346,7 +358,11 @@ impl SudokuGame {
             can_check: false,
             can_hint: false,
             daily: false,
+            today_date: seedrand::today_str(),
+            arch_day: 0,
             daily_date: seedrand::today_str(),
+            picker: None,
+            dayrow_rects: None,
             play_variant: "classic",
             play_diff: 0,
             level: 1,
@@ -373,6 +389,7 @@ impl SudokuGame {
             saves: Map::new(),
             last: HashMap::new(),
             daily_state: Map::new(),
+            arch: Vec::new(),
             cursor: 1,
             su_title_y: 0,
             su_sub_y: 0,
@@ -530,6 +547,24 @@ impl SudokuGame {
                 self.daily_state.insert(k.into(), json!(n.max(0)));
             }
         }
+        self.arch = da::clean_rows(data.get("arch"), 3)
+            .into_iter()
+            .filter_map(|r| {
+                let v: Vec<i64> = r.iter().filter_map(|x| x.as_i64().filter(|i| *i >= 0)).collect();
+                (v.len() == 3 && (1..=3).contains(&v[2])).then(|| [v[0], v[1], v[2]])
+            })
+            .collect();
+        // Altbestand: der zuletzt geloeste Tag wandert ins Archiv.
+        if let (Some(date), Some(time)) = (
+            self.daily_state.get("date").and_then(|v| v.as_str()).map(String::from),
+            self.daily_state.get("time").and_then(|v| v.as_i64()),
+        ) {
+            let idx = seedrand::day_index_checked(&date).unwrap_or(-1);
+            if idx >= 0 && da::find(&self.arch, idx).is_none() {
+                let stars = self.daily_state.get("stars").and_then(|v| v.as_i64()).unwrap_or(1).clamp(1, 3);
+                da::upsert(&mut self.arch, [idx, time, stars]);
+            }
+        }
     }
 
     fn save_progress(&mut self) {
@@ -563,6 +598,7 @@ impl SudokuGame {
         data.insert("saves".into(), Value::Object(self.saves.clone()));
         data.insert("last".into(), Value::Object(last));
         data.insert("daily".into(), Value::Object(self.daily_state.clone()));
+        data.insert("arch".into(), json!(self.arch));
         store::save_section("sudoku", data);
     }
 
@@ -637,7 +673,10 @@ impl SudokuGame {
         if last.is_empty() {
             return 0;
         }
-        let gap = seedrand::day_index(Some(&self.daily_date)) - seedrand::day_index(Some(last));
+        let Some(last_i) = seedrand::day_index_checked(last) else {
+            return 0;
+        };
+        let gap = seedrand::day_index(Some(&self.today_date)) - last_i;
         if gap == 0 || gap == 1 {
             self.daily_state.get("streak").and_then(|v| v.as_i64()).unwrap_or(0)
         } else {
@@ -645,8 +684,54 @@ impl SudokuGame {
         }
     }
 
-    fn daily_done_today(&self) -> bool {
-        self.daily_state.get("date").and_then(|v| v.as_str()) == Some(self.daily_date.as_str())
+    // ----- Tages-Archiv ----------------------------------------------------
+
+    /// Wird (bzw. wird im Setup) ein vergangener Tag gezeigt/gespielt?
+    fn is_archive(&self) -> bool {
+        self.daily_date != self.today_date
+    }
+
+    /// `arch_row()` - Zeile des gewaehlten Tags.
+    fn arch_row(&self) -> Option<[i64; 3]> {
+        da::find(&self.arch, self.arch_day).map(|i| self.arch[i])
+    }
+
+    fn arch_days(&self) -> Vec<i64> {
+        da::available(self.arch.iter().map(|r| r[0]), None)
+    }
+
+    fn set_arch_day(&mut self, day: i64) {
+        self.arch_day = day;
+        self.daily_date = seedrand::date_of(day);
+    }
+
+    fn step_day(&mut self, d: i64) {
+        let days = self.arch_days();
+        let i = days.iter().position(|x| *x == self.arch_day).unwrap_or(days.len() - 1) as i64;
+        let j = 0.max((days.len() as i64 - 1).min(i + d)) as usize;
+        if days[j] != self.arch_day {
+            self.set_arch_day(days[j]);
+            self.b.play_sound("move");
+        }
+    }
+
+    fn open_picker(&mut self) {
+        let mut info = std::collections::BTreeMap::new();
+        for (key, save) in &self.saves {
+            let (Some(rest), Value::Object(save)) = (key.strip_prefix("daily:"), save) else { continue };
+            let Some(idx) = seedrand::day_index_checked(rest) else { continue };
+            let pp = match save.get("p") {
+                Some(Value::Bool(b)) => *b as i64,
+                Some(v) => strict_int(v).unwrap_or(0),
+                None => 0,
+            };
+            info.insert(idx, ("started".to_string(), format!("{pp} %")));
+        }
+        for r in &self.arch {
+            info.insert(r[0], ("solved".to_string(), format!("{} {}", fmt_time(r[1] as f64), "*".repeat(r[2] as usize))));
+        }
+        self.picker = Some(Picker::new("sudoku", self.b.accent, self.arch_day, info));
+        self.b.play_sound("click");
     }
 
     // ===================================================== Setup-Screen
@@ -688,7 +773,10 @@ impl SudokuGame {
         let dh = self.small.get_height() + 2 * self.tiny.get_height() + 12;
         self.daily_rect = Rect::new(ix, body_top + pad, iw, dh);
         let th = 22.max(34.min(h / 22));
-        let ty = self.daily_rect.bottom() + gap;
+        let mut ty = self.daily_rect.bottom() + 4;
+        // Datums-Leiste des Tages-Archivs direkt unter der Tageskarte
+        self.dayrow_rects = Some(da::day_row_rects(ix, ty, iw, th));
+        ty += th + gap;
         self.limit_rect = Rect::new(ix, ty, iw, th);
         self.input_rect = Rect::new(ix, ty + th + 4, iw, th);
         self.colors_rect = Rect::new(ix, ty + 2 * (th + 4), iw, th);
@@ -752,6 +840,13 @@ impl SudokuGame {
         if let Some(i) = self.diff_rects.iter().position(|r| r.hit(pos)) {
             return Some(Hover::Setup("diff", i));
         }
+        if let Some(rects) = self.dayrow_rects {
+            for (key, r) in ["dprev", "ddate", "dnext", "darch"].into_iter().zip(rects) {
+                if r.hit(pos) {
+                    return Some(Hover::Setup(key, 0));
+                }
+            }
+        }
         for (key, r) in [("daily", Some(self.daily_rect)), ("limit", Some(self.limit_rect)), ("input", Some(self.input_rect)), ("colors", Some(self.colors_rect)), ("start", self.start_rect)] {
             if let Some(r) = r {
                 if r.hit(pos) {
@@ -763,9 +858,24 @@ impl SudokuGame {
     }
 
     fn handle_setup(&mut self, ev: &InputEvent) {
+        if let Some(pk) = self.picker.as_mut() {
+            if let Some(res) = pk.handle_event(ev, Some(&self.b)) {
+                self.picker = None;
+                if let Wahl::Pick(day) = res {
+                    self.set_arch_day(day);
+                    self.b.play_sound("select");
+                } else {
+                    self.b.play_sound("click");
+                }
+            }
+            return;
+        }
         if ev.kind == Kind::KeyDown {
             let k = ev.key.as_str();
             match k {
+                "Prior" => self.step_day(-1),
+                "Next" => self.step_day(1),
+                "k" | "K" if self.b.key_is_free(k) => self.open_picker(),
                 "1" | "2" | "3" | "4" => self.select_difficulty(k.parse::<i64>().unwrap_or(1) - 1),
                 "v" | "V" if self.b.key_is_free(k) => {
                     let step: i64 = if k == "V" { -1 } else { 1 };
@@ -809,6 +919,9 @@ impl SudokuGame {
                     "variant" => self.select_variant(VARIANTS[i]),
                     "diff" => self.select_difficulty(i as i64),
                     "daily" => self.start_daily(false),
+                    "dprev" => self.step_day(-1),
+                    "dnext" => self.step_day(1),
+                    "ddate" | "darch" => self.open_picker(),
                     "limit" => self.toggle_fail_limit(),
                     "input" => self.toggle_input(),
                     "colors" => self.toggle_colors(),
@@ -857,7 +970,12 @@ impl SudokuGame {
 
     fn start_daily(&mut self, fresh: bool) {
         self.daily = true;
-        self.daily_date = seedrand::today_str();
+        self.today_date = seedrand::today_str();
+        let today_i = seedrand::day_index(Some(&self.today_date));
+        if self.arch_day > today_i {
+            self.arch_day = today_i;
+        }
+        self.daily_date = seedrand::date_of(self.arch_day);
         self.play_variant = "classic";
         self.play_diff = gen::daily_diff(&self.daily_date);
         self.level = 0;
@@ -884,7 +1002,8 @@ impl SudokuGame {
         self.b.game_over = false;
         self.hover = None;
         self.msg = None;
-        self.daily_date = seedrand::today_str();
+        self.today_date = seedrand::today_str();
+        self.daily_date = seedrand::date_of(self.arch_day);
         if !self.daily {
             self.variant = self.play_variant;
             self.diff = self.play_diff;
@@ -1610,7 +1729,20 @@ impl SudokuGame {
         self.result_time = secs;
         self.new_record = false;
         self.best_time = secs;
+        let mut old_row: Option<[i64; 3]> = None;
         if self.daily {
+            // Tages-Archiv: Bestzeit + Sterne je Tag (auch fuer heute)
+            old_row = self.arch_row();
+            match old_row {
+                None => da::upsert(&mut self.arch, [self.arch_day, secs, stars]),
+                Some(o) => da::upsert(&mut self.arch, [self.arch_day, o[1].min(secs), o[2].max(stars)]),
+            }
+        }
+        if self.daily && self.is_archive() {
+            // Vergangener Tag: Serie und Tageszaehler bleiben unberuehrt.
+            self.new_record = old_row.is_some_and(|o| secs < o[1]);
+            self.best_time = self.arch_row().map(|r| r[1]).unwrap_or(secs);
+        } else if self.daily {
             let same_day = self.daily_state.get("date").and_then(|x| x.as_str()) == Some(self.daily_date.as_str());
             if same_day {
                 let old = self.daily_state.get("time").and_then(|x| x.as_i64()).unwrap_or(secs + 1);
@@ -1729,6 +1861,19 @@ impl SudokuGame {
         draw_star(s, ((rc.right() + 10) as f64, rc.centery() as f64), 5.max(img.h() / 3) as f64, p.gold, true);
         ui::draw_panel(s, self.panel_rect);
         self.draw_daily_card(s);
+        if let Some(rects) = self.dayrow_rects {
+            let days = self.arch_days();
+            da::draw_day_row(
+                s,
+                &rects,
+                self.arch_day,
+                self.b.accent,
+                self.arch_day > days[0],
+                self.arch_day < days[days.len() - 1],
+                &self.tiny,
+                self.is_archive(),
+            );
+        }
         self.draw_toggle(s, self.limit_rect, "limit", &t("sud.fail_limit"), None, self.fail_limit);
         let iv = t(&format!("sud.input.{}", if self.input_digit { "digit" } else { "cell" }));
         self.draw_toggle(s, self.input_rect, "input", &t("sud.opt_input"), Some(&iv), true);
@@ -1856,7 +2001,8 @@ impl SudokuGame {
         let p = ui::pal();
         let r = self.daily_rect;
         let hov = self.hover == Some(Hover::Setup("daily", 0));
-        let done = self.daily_done_today();
+        let row = self.arch_row();
+        let done = row.is_some();
         let base = ui::mix(p.panel_light, self.b.accent, 0.10 + if hov { 0.10 } else { 0.0 });
         draw::rect_r(s, base, r, 0, 8);
         let glow = if hov { self.b.accent } else { ui::mix(p.border, self.b.accent, 0.35 + 0.35 * ui::pulse(2.0, 0.0, 1.0) * (!done as i32 as f64)) };
@@ -1872,7 +2018,7 @@ impl SudokuGame {
         let tw = r.right() - 8 - tx;
         let diff = gen::daily_diff(&self.daily_date);
         let wd = t(&format!("sud.wd.{}", gen::weekday(&self.daily_date)));
-        let line1 = fit(&t("sud.daily"), tw - 18, &[&self.small, &self.tiny], p.text);
+        let line1 = fit(&t(if self.is_archive() { "sud.daily_arch" } else { "sud.daily" }), tw - 18, &[&self.small, &self.tiny], p.text);
         let y1 = r.y + 5;
         s.bl(&line1, (tx, y1));
         let ds = self.daily_streak();
@@ -1880,7 +2026,7 @@ impl SudokuGame {
         let save = self.saves.get(&format!("daily:{}", self.daily_date));
         let mut head: Vec<Option<String>>;
         if done {
-            head = vec![Some(fmt_time(self.daily_state.get("time").and_then(|v| v.as_i64()).unwrap_or(0) as f64))];
+            head = vec![Some(fmt_time(row.map(|r| r[1]).unwrap_or(0) as f64))];
             draw_check(s, (r.right() - 14, y1 + line1.h() / 2), 5.0, p.green, 2);
         } else {
             head = vec![Some(wd), Some(self.diff_name(diff))];
@@ -2005,7 +2151,12 @@ impl SudokuGame {
         s.blr(&clock, crect);
         let side = crect.x - 20;
         let (top, bottom) = if self.daily {
-            (t("sud.daily"), format!("{}  ·  {}", t(&format!("sud.wd.{}", gen::weekday(&self.daily_date))), self.diff_name(self.play_diff)))
+            let top = t(if self.is_archive() { "sud.daily_arch" } else { "sud.daily" });
+            let mut bottom = format!("{}  ·  {}", t(&format!("sud.wd.{}", gen::weekday(&self.daily_date))), self.diff_name(self.play_diff));
+            if self.is_archive() {
+                bottom = format!("{}  ·  {}", da::short_date(self.arch_day), bottom);
+            }
+            (top, bottom)
         } else {
             (t(&format!("sud.variant.{}", self.play_variant)), format!("{}  ·  {}", tf("sud.level", &[("n", &self.level.to_string())]), self.diff_name(self.play_diff)))
         };
@@ -2535,7 +2686,9 @@ impl SudokuGame {
         let (head, lines, star_h) = if self.won {
             let head = fit(&tf("sud.win", &[("t", &fmt_time(self.result_time as f64))]), w - 40, &[&self.huge, &self.title, &self.small], p.green);
             let mut lines = vec![(tf("common.points", &[("score", &self.b.score.to_string())]), p.text)];
-            if self.daily {
+            if self.daily && self.is_archive() {
+                lines.push((tf("sud.arch_solved", &[("date", &da::long_date(self.arch_day))]), p.gold));
+            } else if self.daily {
                 lines.push((tf("sud.daily_solved", &[("n", &self.daily_streak().to_string())]), p.gold));
             }
             if self.new_record {
@@ -2592,6 +2745,11 @@ impl SudokuGame {
 }
 
 impl Game for SudokuGame {
+    /// Match-Historie: Dauer zaehlt nicht im Setup (Python-Standard
+    /// `getattr(self, "state", None) != "setup"`).
+    fn match_active(&self) -> bool {
+        !matches!(self.state, State::Setup)
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }
@@ -2618,7 +2776,13 @@ impl Game for SudokuGame {
         self.can_check = matches!(m.as_str(), "comfort" | "assist");
         self.can_hint = m == "assist";
         self.daily = false;
-        self.daily_date = seedrand::today_str();
+        // today_date = Bezugstag fuer Serie/"heute geloest", daily_date = der
+        // gespielte bzw. im Setup gezeigte Tag (heute oder ein Archiv-Tag).
+        self.today_date = seedrand::today_str();
+        self.arch_day = seedrand::day_index(Some(&self.today_date));
+        self.daily_date = self.today_date.clone();
+        self.picker = None;
+        self.dayrow_rects = None;
         self.play_variant = self.variant;
         self.play_diff = self.diff;
         self.level = 1;
@@ -2654,6 +2818,37 @@ impl Game for SudokuGame {
 
     fn wants_right_click(&self) -> bool {
         true
+    }
+
+    fn wants_escape(&self) -> bool {
+        self.picker.is_some()
+    }
+
+    // ----- Match-Historie --------------------------------------------------
+    fn match_info(&self) -> Option<Map<String, Value>> {
+        let mut info = Map::new();
+        if self.daily {
+            info.insert("day".into(), seedrand::day_index(Some(&self.daily_date)).into());
+        } else if self.state != State::Setup {
+            info.insert("vr".into(), self.play_variant.into());
+            info.insert("lv".into(), self.level.into());
+        }
+        if self.won {
+            info.insert("tm".into(), self.result_time.into());
+            info.insert("st".into(), self.result_stars.into());
+        }
+        if info.is_empty() {
+            None
+        } else {
+            Some(info)
+        }
+    }
+
+    fn match_flags(&self) -> i64 {
+        if !self.daily {
+            return 0;
+        }
+        matches::F_DAILY | if self.is_archive() { matches::F_ARCHIVE } else { 0 }
     }
 
     fn handle_event(&mut self, ev: &InputEvent) {
@@ -2761,7 +2956,12 @@ impl Game for SudokuGame {
         let mut s = self.b.sf();
         ui::draw_background(&mut s, self.b.width, self.b.height);
         match self.state {
-            State::Setup => self.draw_setup(&mut s),
+            State::Setup => {
+                self.draw_setup(&mut s);
+                if let Some(pk) = self.picker.as_mut() {
+                    pk.draw(&mut s);
+                }
+            }
             State::Generating => {
                 let lbl = self.b.font.render(&t("sud.generating"), true, ui::pal().text);
                 s.blr(&lbl, lbl.get_rect().center_at((self.b.width / 2, self.b.height / 2)));

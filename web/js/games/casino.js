@@ -41,6 +41,11 @@
   const toIntOr = (v, d) => (typeof v === "number" && Number.isFinite(v) ? Math.trunc(v) : d);
 
   class CasinoGame extends PG.Game {
+    /** Jeder Wurf/Dreh ist ein Match (Game.logMatch). */
+    get matchManual() {
+      return true;
+    }
+
     // ===================================================== Aufbau / Reset
     reset() {
       this.gameOver = false;
@@ -546,6 +551,9 @@
       this.rWinners = winners;
       bank.credit(payout, "casino");
       this.pending += payout;
+      // Match-Historie: ein Wurf = ein Match.
+      const net = payout - stake;
+      this.logMatch(net, net > 0 ? 1 : net < 0 ? 0 : 2, { bet: stake, win: payout, num: this.rNumber });
       this.rOmega = SPIN_OMEGA;
       const beta0 = PG.rand.uniform(0, TAU);
       this.rPhi0 = beta0 - this.rRot;
@@ -1034,6 +1042,10 @@
       const res = L.evaluate(L.window(stops), bet, free);
       bank.credit(res.total, "casino");
       this.pending += res.total;
+      // Match-Historie: ein Dreh = ein Match (Freispiele kosten nichts).
+      const wager = free ? 0 : bet * L.LINES.length;
+      const net = res.total - wager;
+      this.logMatch(net, net > 0 ? 1 : net < 0 ? 0 : 2, { bet: wager, win: res.total });
       this.sFreeSpin = free;
       if (res.free_spins) {
         if (!this.sFsActive && !free) this.sFreeWon = 0;

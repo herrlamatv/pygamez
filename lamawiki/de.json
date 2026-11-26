@@ -334,6 +334,46 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Matches",
+      "keywords": [
+        "matches",
+        "historie",
+        "verlauf",
+        "letzte",
+        "alle",
+        "ergebnisse",
+        "runden"
+      ],
+      "sections": [
+        {
+          "h": "Letzte & alle Matches",
+          "body": [
+            "Jedes Spiel merkt sich seine Matches. Im Vorspiel-Screen öffnet der Knopf Matches die Historie des Spiels.",
+            "- Letzte Matches: eine Kurve der letzten 30 Ergebnisse (Rekorde golden) und darunter die letzten 10 Matches.",
+            "- Alle Matches: alle gespeicherten Matches, mit Filter nach Modus [M] und Sortierung neueste/beste [O].",
+            "Oben stehen die Summen: Matches, Siege, Bestwert, Durchschnitt und Spielzeit."
+          ]
+        },
+        {
+          "h": "Was gespeichert wird",
+          "body": [
+            "Datum und Uhrzeit, Modus, Punkte (Chip-Spiele: Gewinn oder Verlust), Sieg/Niederlage/Remis, Dauer und Details wie Einsatz, Multiplikator, Münzen, Level oder Gegner.",
+            "- Rekorde sind golden markiert. Verlässt du eine Runde vorzeitig, steht sie als abgebrochen da - aber nur, wenn schon Punkte da waren oder sie mindestens 5 Sekunden lief.",
+            "- Chip-Spiele zählen jede Runde einzeln, Geometry Dash jeden Level-Besuch, Labyrinth jedes gelöste Level."
+          ]
+        },
+        {
+          "h": "Speicher",
+          "body": [
+            "Je Spiel bleiben die letzten 250 Matches gespeichert (auf pygamez.com standardmäßig 50). Ältere fallen heraus - die Summen laufen trotzdem unbegrenzt weiter.",
+            "Die Historie liegt in matches.pgzlamamatches neben mem.json, getrennt je Profil."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Erfolge, Seltenheit & Level",
@@ -1108,6 +1148,14 @@
           ]
         },
         {
+          "h": "Tages-Archiv",
+          "body": [
+            "Die Tagesrätsel der letzten 30 Tage und jeder schon gelöste Tag stehen im Tages-Archiv - mit Bestzeit und Sternen je Tag.",
+            "- Unter der Tageskarte wechseln die Pfeile oder [Bild auf]/[Bild ab] den Tag, [K] oder Archiv öffnet den Kalender, [T] startet den gewählten Tag.",
+            "- Archiv-Rätsel ändern deine Tagesserie nicht."
+          ]
+        },
+        {
           "h": "Tipps",
           "body": [
             "- Starte mit Reihen, Spalten und Blöcken, in denen schon viele Zahlen stehen.",
@@ -1731,6 +1779,14 @@
             "Tageswort: Ein Wort pro Tag mit 6 Versuchen - für jede Sprache und Länge am PC und im Browser für alle gleich. Ein angefangenes Tageswort wird gespeichert; danach zeigt das Spiel Ergebnis, Statistik und den Countdown bis zum nächsten Wort. Die Serie wächst nur, wenn du jeden Tag spielst.",
             "Dordle: Zwei Wörter gleichzeitig in 7 Versuchen - jeder Versuch gilt für beide Bretter. Die Tasten der Bildschirmtastatur sind geteilt: links Brett 1, rechts Brett 2.",
             "Quordle: Vier Wörter gleichzeitig in 9 Versuchen. Die Tasten sind geviertelt und zeigen die Farben aller vier Bretter."
+          ]
+        },
+        {
+          "h": "Tages-Archiv",
+          "body": [
+            "Die Tageswörter der letzten 30 Tage und jeder Tag, den du schon gespielt hast, lassen sich nachspielen - je Sprache und Wortlänge.",
+            "- Im Setup des Tagesworts wechseln die Pfeile oder [Bild auf]/[Bild ab] den Tag, [K] oder Archiv öffnet den Kalender.",
+            "- Archiv-Wörter zählen nicht für Statistik und Serie; angefangene Archiv-Wörter werden gespeichert."
           ]
         },
         {
@@ -2693,6 +2749,14 @@
             "- Endlos: jede Runde eine neue Strecke, zählt für den Highscore.",
             "- Tagesstrecke: heute für alle gleich (auch in der Web-Version), mit eigenem Tagesbestwert - zählt nicht für den Highscore.",
             "Im Setup schaltest du Schatten [H] und den Tag/Nacht-Wechsel [N] um; Links/Rechts wechselt zwischen deinen Figuren."
+          ]
+        },
+        {
+          "h": "Tages-Archiv",
+          "body": [
+            "Die Tagesstrecken der letzten 30 Tage und jeder Tag, den du schon gespielt hast, lassen sich nachspielen - mit eigenem Bestwert je Tag.",
+            "- Im Setup der Tagesstrecke wechseln die Pfeile neben dem Datum oder [Bild auf]/[Bild ab] den Tag; [K] oder Archiv öffnet den Kalender.",
+            "- Ein vergangener Tag nutzt denselben Seed wie damals - die Strecke ist exakt dieselbe."
           ]
         }
       ]

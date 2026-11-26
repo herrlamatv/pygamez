@@ -344,6 +344,10 @@ class RouletteMixin:
         self.r_winners = winners
         lamabank.credit(payout, "casino")
         self.pending += payout
+        # Match-Historie: ein Wurf = ein Match.
+        net = payout - stake
+        self.log_match(net, 1 if net > 0 else 0 if net < 0 else 2,
+                       {"bet": stake, "win": payout, "num": self.r_number})
         # Anwurf: Rotor beschleunigt, Kugel startet gegenläufig
         self.r_omega = SPIN_OMEGA
         beta0 = self.rng.uniform(0, math.tau)

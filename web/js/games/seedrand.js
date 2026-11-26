@@ -94,5 +94,11 @@
     return Math.round((Date.UTC(y, m - 1, d) - Date.UTC(2026, 0, 1)) / 86400000);
   }
 
-  PG.seedrand = { Rand, seedFrom, todayStr, dailySeed, dayIndex };
+  /** Datum "YYYY-MM-DD" zu einer Tagesnummer (Umkehrung von dayIndex, wie date_of() in seedrand.py). */
+  function dateOf(i) {
+    const d = new Date(Date.UTC(2026, 0, 1) + Math.trunc(Number(i) || 0) * 86400000);
+    return String(d.getUTCFullYear()).padStart(4, "0") + "-" + pad2(d.getUTCMonth() + 1) + "-" + pad2(d.getUTCDate());
+  }
+
+  PG.seedrand = { Rand, seedFrom, todayStr, dailySeed, dayIndex, dateOf };
 })();

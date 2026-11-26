@@ -1551,7 +1551,7 @@ class App:
         # Sidebar gewählt): Highscore wie bei "Zurück zum Menü" sichern.
         if (exit_old and old is not None and not getattr(old, "is_menu", False)
                 and not getattr(old, "_hs_saved", False)):
-            self._highscore_speichern(old)
+            self._highscore_speichern(old, leaving=True)
         self._switch_current(screen, exit_old=exit_old)
         # Hover-Zustand des Startbildschirm-Rasters zurücksetzen.
         self._menu_hover = None
@@ -1764,11 +1764,13 @@ class App:
     def zum_menü(self):
         """Beendet das aktuelle Spiel und kehrt zum Startbildschirm zurück."""
         if self.current:
-            self._highscore_speichern(self.current)
+            self._highscore_speichern(self.current, leaving=True)
         # Gesammelte Spielzeit sofort sichern (sonst erst beim nächsten Flush).
         import stats
+        import matches
         stats.end_session()
         stats.flush()
+        matches.flush()
         self._switch_current(None)
         self.status_var.set(t("app.no_game"))
         self._set_state_dot(C_TEXT_DIM)
@@ -1778,7 +1780,7 @@ class App:
 
     # ----- Highscores ---------------------------------------------------
 
-    def _highscore_speichern(self, game):
+    def _highscore_speichern(self, game, leaving=False):
         # Menü-Screens sind keine Spiele -> kein Highscore.
         if game is None or getattr(game, "is_menu", False):
             return
@@ -1796,6 +1798,46 @@ class App:
         stats.score_result(game.highscore_key, game.score, rekord)
         achievements.on_highscore(game.highscore_key, hs)
         achievements.check_stats()
+        self._match_speichern(game, rekord, leaving)
+
+    def _match_speichern(self, game, rekord=False, leaving=False):
+        """Match-Historie: das Match dieses Spiels genau einmal festhalten.
+
+        Beim Game Over wird es fertig gespeichert; wer mitten im Match
+        verlässt, bekommt einen Eintrag "abgebrochen" (nur wenn schon Punkte
+        da sind oder es mindestens matches.MIN_ABORT_SECONDS lief). Spiele
+        mit ``match_manual`` melden ihre Runden selbst (Game.log_match).
+        """
+        if getattr(game, "match_manual", False) or getattr(game, "_match_logged", False):
+            return
+        try:
+            import matches
+            over = bool(game.game_over)
+            score = game.match_score()
+            dur = int(getattr(game, "_match_time", 0.0))
+            flags = game.match_flags()
+            if not over:
+                if not leaving or not (score > 0 or dur >= matches.MIN_ABORT_SECONDS):
+                    return
+                flags |= matches.F_ABORT
+            elif rekord:
+                flags |= matches.F_RECORD
+            info = game.match_info()
+            vs = getattr(game, "_match_vs", None)
+            if vs:
+                info = dict(info or {})
+                info["vs"] = str(vs)
+            matches.record(game.highscore_key, game.mode, score,
+                           getattr(game, "_match_result", None), dur, flags, info,
+                           replace=getattr(game, "_match_replace", False))
+            game._match_logged = True
+            game._match_replace = False
+            game._match_time = 0.0
+            if leaving:
+                matches.flush()
+        except Exception:
+            # Die Historie darf das Spiel nie stören.
+            pass
 
     def _draw_highscore_overlay(self, game):
         """Blendet bei Game Over für JEDES Spiel den Highscore als Banner ein."""
@@ -1919,6 +1961,9 @@ class App:
                 # Statistik: aktive Spielzeit sammeln (nicht in Menü-Screens).
                 if not is_menu_screen:
                     stats.add_playtime(game.highscore_key, dt)
+                    # Match-Historie: Dauer nur, solange ein Match läuft.
+                    if game.match_active:
+                        game._match_time = getattr(game, "_match_time", 0.0) + dt
                     # Marathon-Erfolg: eine Stunde am Stück in einem Spiel.
                     if stats.session_time() >= 3600:
                         achievements.on_playtime(stats.session_time())
@@ -1951,6 +1996,10 @@ class App:
                     game._was_over = False
                     game._result_reported = False
                     game._duel_reported = False
+                    game._match_logged = False
+                    game._match_result = None
+                    game._match_vs = None
+                    game._match_time = 0.0
                     stats.game_started(game.highscore_key)
                     achievements.on_game_started(game.highscore_key)
 
@@ -1966,6 +2015,8 @@ class App:
 
         # Gesammelte Statistik gedrosselt auf die Platte schreiben.
         stats.maybe_flush()
+        import matches
+        matches.maybe_flush()
 
         # Globale Effekte (Partikel/Konfetti + Screen-Übergang) obendrauf.
         self.ui.draw_fx(self.canvas, self.game_w, self.game_h, dt)
@@ -2384,11 +2435,16 @@ class App:
             return
         self._closing = True
         if self.current:
-            self._highscore_speichern(self.current)
+            self._highscore_speichern(self.current, leaving=True)
             try:
                 self._switch_current(None)
             except Exception:
                 pass
+        try:
+            import matches
+            matches.flush()
+        except Exception:
+            pass
         try:
             import stats
             stats.end_session()

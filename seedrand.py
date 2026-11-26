@@ -121,3 +121,9 @@ def day_index(date=None):
     import datetime
     d = datetime.date.fromisoformat(date or today_str())
     return (d - datetime.date(2026, 1, 1)).days
+
+
+def date_of(index):
+    """Datum 'YYYY-MM-DD' zu einer Tagesnummer (Umkehrung von day_index)."""
+    import datetime
+    return (datetime.date(2026, 1, 1) + datetime.timedelta(days=int(index))).isoformat()

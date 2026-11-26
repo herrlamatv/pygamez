@@ -3,8 +3,9 @@
 testdaten.py
 ============
 Baut einen gefuellten Datenordner fuer den Pruefstand (Fortschritt, Profile,
-Replays): drei Profile, freigeschaltete Erfolge, Highscores, Duelle und eine
-Statistik-Datei ueber rund 120 Tage bis heute - fester Zufall, also bei jedem
+Replays, Matches): drei Profile, freigeschaltete Erfolge, Highscores, Duelle, eine
+Statistik-Datei ueber rund 120 Tage bis heute und eine Match-Historie
+(``matches.pgzlamamatches``) - fester Zufall, also bei jedem
 Aufruf gleich (bis auf das heutige Datum, an dem die Tage haengen).
 
     .venv/Scripts/python.exe rust/tools/testdaten.py <zielordner>
@@ -78,6 +79,119 @@ def profil_statistik(r, heute, pid, faktor):
     return games, days, hours, series, events
 
 
+def match_historie(heute):
+    """matches.pgzlamamatches fuer den MatchScreen (eigener Zufall, damit die
+    uebrigen Testdaten gleich bleiben): viele Spiele, alle Info-Schluessel,
+    Ergebnisse, Rekord/Abbruch/Tages-/Archiv-Flags, Summen ueber der Kappe."""
+    r = random.Random(815)
+    t0 = datetime.datetime.combine(heute, datetime.time(20, 0))
+    heute_i = (heute - datetime.date(2026, 1, 1)).days
+
+    def stempel_m(k):
+        return (t0 - datetime.timedelta(minutes=37 * k + r.randint(0, 20))).strftime("%Y-%m-%d %H:%M")
+
+    def spiel(n_list, extra_n, bauen):
+        liste = []
+        for k in range(n_list):
+            liste.append(bauen(k))
+        liste.reverse()                     # aelteste zuerst (wie matches.py)
+        g = {"n": len(liste) + extra_n, "w": 0, "l": 0, "d": 0, "best": None, "sum": 0,
+             "time": 0, "first": "", "list": liste}
+        for e in liste:
+            g["w"] += e[3] == 1
+            g["l"] += e[3] == 0
+            g["d"] += e[3] == 2
+            g["best"] = e[2] if g["best"] is None else max(g["best"], e[2])
+            g["sum"] += e[2]
+            g["time"] += e[4]
+        g["first"] = liste[0][0]
+        g["time"] += 60 * extra_n
+        return g
+
+    def snake(k):
+        multi = k % 5 == 0
+        info = {"vs": "Alpaka"} if multi else None
+        res = (1 if k % 2 else 0) if multi else None
+        flags = (1 if k % 7 == 3 else 0) | (2 if k % 9 == 4 else 0)
+        return [stempel_m(k), "multi" if multi else "single", r.randint(0, 900), res,
+                r.randint(4, 400), flags, info]
+
+    def crossy(k):
+        daily = k % 2 == 0
+        info = {"c": r.randint(0, 9), "ch": r.choice(["chicken", "fox", "robot", "xyz"])}
+        flags = 0
+        if daily:
+            day = heute_i - (k % 4)
+            info = {"day": day, **info}
+            flags = 4 | (8 if day != heute_i else 0)
+        return [stempel_m(k), "daily" if daily else "endless", r.randint(0, 250), None,
+                r.randint(10, 300), flags | (1 if k == 5 else 0), info]
+
+    def blackjack(k):
+        bet = r.choice([10, 20, 50, 1500])
+        win = r.choice([0, bet, 2 * bet, bet * 5 // 2])
+        net = win - bet
+        return [stempel_m(k), "single", net, 1 if net > 0 else 0 if net < 0 else 2,
+                r.randint(5, 60), 0, {"bet": bet, "win": win}]
+
+    def lamacrossing(k):
+        bet = r.choice([10, 100, 1500])
+        lane = r.randint(1, 9)
+        diff = r.choice(["easy", "medium", "hard", "extreme"])
+        win = 0 if k % 3 == 0 else bet * (100 + 37 * lane) // 100
+        info = {"bet": bet, "win": win, "ln": lane, "lv": diff}
+        if win:
+            info["x"] = 100 + 37 * lane
+        net = win - bet
+        return [stempel_m(k), "single", net, 1 if net > 0 else 0 if net < 0 else 2,
+                r.randint(3, 40), 0, info]
+
+    def sudoku(k):
+        if k % 3 == 0:
+            info = {"day": heute_i - k, "tm": r.randint(100, 900), "st": r.randint(1, 3)}
+            flags = 4 | (8 if k else 0)
+            res = 1
+        else:
+            info = {"vr": r.choice(["classic", "x", "killer", "mini"]), "lv": r.randint(1, 100)}
+            flags = 2 if k % 4 == 1 else 0
+            res = None
+        return [stempel_m(k), "comfort", r.randint(0, 3000), res, r.randint(60, 1800), flags, info]
+
+    def wordle(k):
+        mode = ["endless", "daily", "dordle", "quordle"][k % 4]
+        info = {"len": 5}
+        if mode == "endless":
+            info["wd"] = r.randint(0, 9)
+        else:
+            info["g"] = r.randint(2, 9)
+        if mode == "daily":
+            info = {"day": heute_i - k, **info}
+        return [stempel_m(k), mode, r.randint(0, 60), None, r.randint(20, 400),
+                (4 | (8 if k else 0)) if mode == "daily" else 0, info]
+
+    def chess(k):
+        return [stempel_m(k), "multi" if k % 2 else "single", 0, k % 3, r.randint(60, 2400), 0,
+                {"vs": "Vikunja"} if k % 2 else None]
+
+    def lamaplinko(k):
+        bet = 10
+        x = r.choice([20, 50, 110, 300, 1000])
+        win = bet * x // 100
+        net = win - bet
+        return [stempel_m(k), "single", net, 1 if net > 0 else 0 if net < 0 else 2, 1, 0,
+                {"bet": bet, "win": win, "x": x, "rw": r.choice([8, 12, 16]),
+                 "lv": r.choice(["low", "medium", "high"])}]
+
+    p1 = {"snake": spiel(45, 230, snake), "crossy": spiel(28, 0, crossy),
+          "blackjack": spiel(18, 0, blackjack), "lamacrossing": spiel(14, 0, lamacrossing),
+          "sudoku": spiel(12, 0, sudoku), "wordle": spiel(16, 0, wordle), "chess": spiel(9, 0, chess),
+          "lamaplinko": spiel(6, 0, lamaplinko), "pong": spiel(1, 0, chess)}
+    p2 = {"snake": spiel(3, 0, snake)}
+    doc = {"format": "pygamez.matches", "v": 1, "app": "PyGameZ",
+           "updated": t0.strftime("%Y-%m-%d %H:%M"), "profiles": {"p1": p1, "p2": p2}}
+    return json.dumps(doc, ensure_ascii=False, separators=(",", ":"))
+
+
 def main():
     if len(sys.argv) < 2:
         raise SystemExit("Aufruf: testdaten.py <zielordner>")
@@ -133,6 +247,8 @@ def main():
         json.dump(mem, f, indent=2, ensure_ascii=False)
     with open(os.path.join(ziel, "stats.pgzlamastats"), "w", encoding="utf-8") as f:
         json.dump(stat, f, indent=2, ensure_ascii=False)
+    with open(os.path.join(ziel, "matches.pgzlamamatches"), "w", encoding="utf-8") as f:
+        f.write(match_historie(heute))
     print("Testdaten in", ziel)
 
 

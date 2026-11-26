@@ -677,6 +677,11 @@ impl FroggerGame {
 }
 
 impl Game for FroggerGame {
+    /// Match-Historie: Dauer zaehlt nicht im Setup (Python-Standard
+    /// `getattr(self, "state", None) != "setup"`).
+    fn match_active(&self) -> bool {
+        !self.setup
+    }
     fn base(&self) -> &GameBase {
         &self.b
     }

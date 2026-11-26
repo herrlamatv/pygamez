@@ -53,6 +53,7 @@ MODES = ("roulette", "slots")
 class CasinoGame(RouletteMixin, SlotsMixin, Game):
     name = "Casino"
     highscore_key = "casino"
+    match_manual = True       # jeder Wurf/Dreh ist ein Match (Game.log_match)
     supports_multiplayer = False
     wants_right_click = True
 

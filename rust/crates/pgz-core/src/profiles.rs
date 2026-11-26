@@ -203,6 +203,7 @@ pub fn delete(pid: &str) -> bool {
     }
     crate::stats::flush();
     crate::stats::drop_profile(pid);
+    crate::matches::drop_profile(pid);
     store::delete_profile(pid)
 }
 

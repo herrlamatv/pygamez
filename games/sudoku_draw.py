@@ -19,6 +19,8 @@ import math
 
 import pygame
 
+import dailyarchive
+
 import ui
 from i18n import t
 
@@ -161,6 +163,11 @@ class SudokuDraw:
 
         ui.draw_panel(s, self.panel_rect)
         self._draw_daily_card(s)
+        if self.dayrow_rects is not None:
+            days = self._arch_days()
+            dailyarchive.draw_day_row(s, self.dayrow_rects, self.arch_day, self.accent,
+                                      self.arch_day > days[0], self.arch_day < days[-1],
+                                      self._tiny, archived=self.is_archive())
         self._draw_toggle(s, self.limit_rect, "limit", t("sud.fail_limit"), None, self.fail_limit)
         self._draw_toggle(s, self.input_rect, "input", t("sud.opt_input"),
                           t("sud.input." + self.input_mode), True)
@@ -173,6 +180,8 @@ class SudokuDraw:
                            selected=self.hover == ("start", 0), accent=self.accent)
 
         self._draw_footer(s, t("sud.setup_hint"), self._tiny.get_height() + 10)
+        if self.picker is not None:
+            self.picker.draw(s)
 
     def _draw_variant_label(self, s, r, v, on):
         """Beschriftung + kleines Symbol (Gitter, Diagonale, Käfig, 6x6)."""
@@ -257,7 +266,8 @@ class SudokuDraw:
         S = _sd()
         r = self.daily_rect
         hov = self.hover == ("daily", 0)
-        done = self.daily_done_today()
+        row = self.arch_row()
+        done = row is not None
         base = ui.mix(ui.PANEL_LIGHT, self.accent, 0.10 + (0.10 if hov else 0.0))
         pygame.draw.rect(s, base, r, border_radius=8)
         glow = self.accent if hov else ui.mix(ui.BORDER, self.accent, 0.35 + 0.35 * ui.pulse(2.0, 0.0, 1.0) * (not done))
@@ -276,13 +286,14 @@ class SudokuDraw:
         tw = r.right - 8 - tx
         diff = _sd_daily_diff(self.daily_date)
         wd = t("sud.wd.%d" % _weekday(self.daily_date))
-        line1 = self._fit(t("sud.daily"), tw - 18, (self._small, self._tiny), ui.TEXT)
+        line1 = self._fit(t("sud.daily_arch") if self.is_archive() else t("sud.daily"),
+                          tw - 18, (self._small, self._tiny), ui.TEXT)
         y1 = r.y + 5
         s.blit(line1, (tx, y1))
         streak = t("sud.daily_streak", n=self.daily_streak()) if self.daily_streak() else None
         save = self.saves.get("daily:" + self.daily_date)
         if done:
-            head = [S.fmt_time(self.daily_state.get("time", 0))]
+            head = [S.fmt_time(row[1])]
             draw_check(s, (r.right - 14, y1 + line1.get_height() // 2), 5, ui.GREEN, 2)
         else:
             head = [wd, self._diff_name(diff)]
@@ -384,8 +395,10 @@ class SudokuDraw:
         side = crect.left - 20
 
         if self.daily:
-            top = t("sud.daily")
+            top = t("sud.daily_arch") if self.is_archive() else t("sud.daily")
             bottom = t("sud.wd.%d" % _weekday(self.daily_date)) + "  ·  " + self._diff_name(self.play_diff)
+            if self.is_archive():
+                bottom = dailyarchive.short_date(self.arch_day) + "  ·  " + bottom
         else:
             top = t("sud.variant." + self.play_variant)
             bottom = t("sud.level", n=self.level) + "  ·  " + self._diff_name(self.play_diff)
@@ -839,7 +852,10 @@ class SudokuDraw:
             head = self._fit(t("sud.win", t=S.fmt_time(self.result_time)), W - 40,
                              (self._huge, self._title, self._small), ui.GREEN)
             lines = [(t("common.points", score=self.score), ui.TEXT)]
-            if self.daily:
+            if self.daily and self.is_archive():
+                lines.append((t("sud.arch_solved", date=dailyarchive.long_date(self.arch_day)),
+                              ui.GOLD))
+            elif self.daily:
                 lines.append((t("sud.daily_solved", n=self.daily_streak()), ui.GOLD))
             if self.new_record:
                 lines.append((t("sud.new_best", t=S.fmt_time(self.best_time)), ui.GOLD))

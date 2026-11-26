@@ -333,6 +333,45 @@
       ]
     },
     {
+      "id": "matches",
+      "category": "general",
+      "title": "Kamper",
+      "keywords": [
+        "kamper",
+        "historikk",
+        "siste",
+        "alle",
+        "resultater",
+        "runder"
+      ],
+      "sections": [
+        {
+          "h": "Siste og alle kamper",
+          "body": [
+            "Hvert spill husker kampene sine. På skjermen før spillet åpner knappen Kamper spillets historikk.",
+            "- Siste kamper: en kurve over de siste 30 resultatene (rekorder i gull) og under den de siste 10 kampene.",
+            "- Alle kamper: alle lagrede kamper, med filter etter modus [M] og sortering nyeste/beste [O].",
+            "Øverst står summene: kamper, seire, beste, snitt og spilletid."
+          ]
+        },
+        {
+          "h": "Hva som lagres",
+          "body": [
+            "Dato og klokkeslett, modus, poeng (sjetongspill: gevinst eller tap), seier/tap/uavgjort, varighet og detaljer som innsats, multiplikator, mynter, nivå eller motstander.",
+            "- Rekorder er merket med gull. Forlater du en runde før tiden, står den som avbrutt - men bare hvis du allerede hadde poeng eller den varte minst 5 sekunder.",
+            "- Sjetongspill teller hver runde for seg, Geometry Dash hvert nivåbesøk, Labyrint hvert løste nivå."
+          ]
+        },
+        {
+          "h": "Lagring",
+          "body": [
+            "De siste 250 kampene per spill lagres (på pygamez.com 50 som standard). Eldre faller ut - summene teller likevel videre.",
+            "Historikken ligger i matches.pgzlamamatches ved siden av mem.json, separat for hver profil."
+          ]
+        }
+      ]
+    },
+    {
       "id": "achievements",
       "category": "general",
       "title": "Prestasjoner, sjeldenhet og nivå",
@@ -1107,6 +1146,14 @@
           ]
         },
         {
+          "h": "Dagsarkiv",
+          "body": [
+            "Dagens oppgaver fra de siste 30 dagene og hver dag du allerede har løst ligger i dagsarkivet - med beste tid og stjerner per dag.",
+            "- Under dagskortet bytter pilene eller [PgUp]/[PgDn] dag, [K] eller Arkiv åpner kalenderen, [T] starter valgt dag.",
+            "- Arkivoppgaver endrer ikke den daglige rekken din."
+          ]
+        },
+        {
           "h": "Tips",
           "body": [
             "- Start med rader, kolonner og bokser som allerede har mange tall.",
@@ -1730,6 +1777,14 @@
             "Dagens ord: ett ord om dagen med 6 forsøk - likt for alle på hvert språk og i hver lengde, på PC og i nettleseren. Et påbegynt dagens ord lagres; etterpå viser spillet resultat, statistikk og nedtelling til neste ord. Rekken din vokser bare hvis du spiller hver dag.",
             "Dordle: to ord samtidig på 7 forsøk - hver gjetning gjelder for begge brettene. Tastene på skjermtastaturet er delt: venstre halvdel brett 1, høyre halvdel brett 2.",
             "Quordle: fire ord samtidig på 9 forsøk. Tastene er delt i fire og viser fargene for alle fire brettene."
+          ]
+        },
+        {
+          "h": "Dagsarkiv",
+          "body": [
+            "Dagens ord fra de siste 30 dagene og hver dag du allerede har spilt kan spilles på nytt - per språk og ordlengde.",
+            "- I oppsettet for dagens ord bytter pilene eller [PgUp]/[PgDn] dag, [K] eller Arkiv åpner kalenderen.",
+            "- Arkivord teller ikke for statistikk og rekke; påbegynte arkivord lagres."
           ]
         },
         {
@@ -2691,6 +2746,14 @@
             "- Uendelig: en ny rute hver runde, teller for rekorden.",
             "- Dagens rute: lik for alle i dag (også i nettversjonen), med egen dagsrekord - teller ikke for rekorden.",
             "I oppsettet slår du skygger [H] og vekslingen mellom dag og natt [N] av eller på; Venstre/Høyre bytter mellom figurene dine."
+          ]
+        },
+        {
+          "h": "Dagsarkiv",
+          "body": [
+            "Dagens løyper fra de siste 30 dagene og hver dag du allerede har spilt kan spilles på nytt - med egen beste poengsum per dag.",
+            "- I oppsettet for dagens løype bytter pilene ved datoen eller [PgUp]/[PgDn] dag; [K] eller Arkiv åpner kalenderen.",
+            "- En tidligere dag bruker samme seed som den gang - løypa er nøyaktig den samme."
           ]
         }
       ]

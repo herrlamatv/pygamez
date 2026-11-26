@@ -454,6 +454,10 @@ impl CasinoGame {
         self.r.winners = winners;
         lamabank::credit(payout, "casino", true);
         self.pending += payout;
+        // Match-Historie: ein Wurf = ein Match.
+        let net = payout - stake;
+        let info = info_map(vec![("bet", stake.into()), ("win", payout.into()), ("num", number.into())]);
+        self.b.log_match(net, chip_result(net), Some(info), None, 0);
         self.r.omega = SPIN_OMEGA;
         let beta0 = self.rng.uniform(0.0, TAU);
         self.r.phi0 = beta0 - self.r.rot;
