@@ -8,6 +8,35 @@
 
 ## 🇩🇪 Deutsch
 
+### macOS-Start: start.command & neues start.sh – 2026-11-27
+
+PyGameZ lässt sich jetzt auch auf dem **Mac** ohne Vorarbeit starten: Doppelklick
+auf **`start.command`** im Finder genügt. Beim ersten Start richtet das Skript
+die virtuelle Umgebung `.venv` und pygame-ce selbst ein – wie `start.bat` unter
+Windows. Beide READMEs (alle 14 Sprachen) erklären den Weg Schritt für Schritt.
+
+#### Neu
+- **`start.command`**: Startskript für macOS zum Doppelklicken im Finder; bei
+  einem Fehler bleibt das Terminal-Fenster mit der Meldung offen.
+
+#### Geändert
+- **`start.sh`** legt eine fehlende `.venv` selbst an und installiert pygame-ce
+  aus `requirements.txt`; fehlt pygame später, wird es nachinstalliert.
+- `start.sh` sucht ein Python 3.9+ mit Tkinter (Tk 8.6+) – auf dem Mac zuerst
+  das von python.org, dann Homebrew – und überspringt Apples altes
+  `/usr/bin/python3`. Fehlt ein passendes Python, nennt es den
+  Installationsbefehl für macOS bzw. Linux (Debian/Ubuntu, Fedora, Arch).
+- READMEs: Der Homebrew-Hinweis nennt jetzt `python-tk` (ohne fehlt Tkinter),
+  dazu der Gatekeeper-Hinweis „Trotzdem öffnen“.
+- Die Meldung „pygame fehlt“ nennt jetzt auch `start.command` und `start.sh`.
+
+#### Behoben
+- `start.sh` ist im Repository als ausführbar markiert und wird immer mit
+  LF-Zeilenenden ausgecheckt (`.gitattributes`) – vorher gab es auf dem Mac
+  „Permission denied“ bzw. mit CRLF „bad interpreter“.
+
+---
+
 ### Match-Historie & Tages-Archiv – 2026-11-26
 
 Jedes der 50 Spiele führt jetzt eine **Match-Historie** mit „Letzte Matches“
@@ -1804,6 +1833,35 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### macOS launch: start.command & new start.sh – 2026-11-27
+
+PyGameZ now starts on a **Mac** without any preparation: just double-click
+**`start.command`** in Finder. On first launch the script sets up the virtual
+environment `.venv` and pygame-ce by itself – just like `start.bat` on Windows.
+Both READMEs (all 14 languages) explain it step by step.
+
+#### Added
+- **`start.command`**: launch script for macOS to double-click in Finder; on an
+  error the Terminal window stays open with the message.
+
+#### Changed
+- **`start.sh`** creates a missing `.venv` by itself and installs pygame-ce from
+  `requirements.txt`; if pygame goes missing later, it is reinstalled.
+- `start.sh` looks for Python 3.9+ with Tkinter (Tk 8.6+) – on a Mac the
+  python.org one first, then Homebrew – and skips Apple's old
+  `/usr/bin/python3`. If no suitable Python is found, it prints the install
+  command for macOS or Linux (Debian/Ubuntu, Fedora, Arch).
+- READMEs: the Homebrew hint now mentions `python-tk` (without it Tkinter is
+  missing), plus the Gatekeeper hint "Open Anyway".
+- The "pygame missing" message now also mentions `start.command` and `start.sh`.
+
+#### Fixed
+- `start.sh` is now marked executable in the repository and always checked out
+  with LF line endings (`.gitattributes`) – before, a Mac reported "Permission
+  denied", and with CRLF "bad interpreter".
+
+---
 
 ### Match history & daily archive – 2026-11-26
 

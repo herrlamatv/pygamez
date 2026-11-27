@@ -38,15 +38,21 @@ start.bat             :: Spielesammlung starten
 
 **Latest BUILD:** [PyGameZ-latest.exe](https://github.com/herrlamatv/pygamez/raw/refs/heads/master/lastest-build/PyGameZ-latest.exe)<br>Oder Starte die [PyGameZ-2026-26-August.exe](https://github.com/herrlamatv/pygamez/releases/download/26.26.08-05.04/PyGameZ-2026-26-August.exe) (Latest Release)
 
-#### Linux / macOS / Git Bash
+#### macOS
+
+**`start.command`** im Finder doppelklicken. Gebraucht wird nur ein Python 3.9+ mit
+Tkinter, am einfachsten **Python 3.13 von [python.org](https://www.python.org/downloads/macos/)**.
+
+#### Linux / Git Bash
 
 ```bash
-./start.sh            # startet mit .venv, sonst System-python3
+./start.sh            # richtet beim ersten Start .venv + pygame ein, dann Start
 ```
 
-`start.bat` / `start.sh` verwenden automatisch die virtuelle Umgebung `.venv`,
-falls vorhanden, sonst das System-Python. Eine ausführliche Schritt-für-Schritt-
-Anleitung steht ganz unten unter **[Installations-Guide](#installations-guide)**.
+`start.bat` / `start.sh` / `start.command` verwenden automatisch die virtuelle
+Umgebung `.venv`. Fehlt sie, legen sie sie selbst an und installieren pygame-ce aus
+`requirements.txt`. Eine ausführliche Schritt-für-Schritt-Anleitung steht ganz unten
+unter **[Installations-Guide](#installations-guide)**.
 
 ### Die Spiele
 
@@ -1303,6 +1309,7 @@ keine Extra-Dateien nötig), die sich global stummschalten lassen.
 install-python.bat  Windows-Einrichtung: Python 3.13 + .venv + pygame
 start.bat            Startskript (Windows)
 start.sh             Startskript (Linux / macOS / Git Bash)
+start.command        Startskript für macOS (Doppelklick im Finder, ruft start.sh auf)
 pyinstall-dev/
   pyinstall.bat      EXE-Build (Windows): packt alles in eine builds\PyGameZ.exe
 main.py              Tkinter-Oberfläche, Pygame-Einbettung, zentrale Game-Loop
@@ -1468,17 +1475,31 @@ pip install -r requirements.txt
 python main.py
 ```
 
-#### Linux / macOS mit start.sh
+#### macOS mit start.command
+
+1. **Python installieren**, am besten **Python 3.13 von
+   <https://www.python.org/downloads/macos/>** (der Installer bringt Tkinter mit).
+   Mit Homebrew geht auch `brew install python python-tk` (ohne `python-tk` fehlt
+   Tkinter). Apples vorinstalliertes `/usr/bin/python3` reicht nicht (altes Tk 8.5).
+2. Projektordner holen (`git clone` oder ZIP) und **`start.command` doppelklicken**.
+   Beim ersten Start legt das Skript `.venv` an und installiert pygame-ce (etwa eine
+   Minute), danach startet die Sammlung.
+3. Blockiert macOS das Öffnen („nicht verifizierter Entwickler"):
+   **Systemeinstellungen → Datenschutz & Sicherheit → „Trotzdem öffnen"**.
+
+Im Terminal geht dasselbe mit `./start.sh`. Meldet es „Permission denied" (kann nach
+dem Entpacken einer ZIP passieren), hilft `bash start.sh` oder einmalig
+`chmod +x start.sh start.command`.
+
+#### Linux mit start.sh
 
 ```bash
-# Python + venv wie oben (Schritte 2 und 3) einrichten, dann:
-chmod +x start.sh      # einmalig, falls noch nicht ausführbar
-./start.sh
+sudo apt install python3 python3-venv python3-tk   # einmalig (Debian/Ubuntu)
+./start.sh                                         # legt .venv an, installiert pygame, startet
 ```
 
-Unter Linux installiert man Python bei Bedarf über den Paketmanager, z. B.
-`sudo apt install python3 python3-venv python3-pip` (Debian/Ubuntu), unter macOS
-z. B. `brew install python`.
+Fedora: `sudo dnf install python3 python3-tkinter`, Arch: `sudo pacman -S python tk`.
+Findet `start.sh` kein passendes Python, nennt es den passenden Befehl.
 
 #### Andere Python-Version verwenden
 
@@ -1541,15 +1562,21 @@ start.bat             :: launch the game collection
 or run the [PyGameZ-2026-26-August.exe](https://github.com/herrlamatv/pygamez/releases/download/26.26.08-05.04/PyGameZ-2026-26-August.exe) (Latest Release)
 
 
-#### Linux / macOS / Git Bash
+#### macOS
+
+Double-click **`start.command`** in Finder. All you need is Python 3.9+ with
+Tkinter, easiest is **Python 3.13 from [python.org](https://www.python.org/downloads/macos/)**.
+
+#### Linux / Git Bash
 
 ```bash
-./start.sh            # starts with .venv, otherwise system python3
+./start.sh            # sets up .venv + pygame on first launch, then starts
 ```
 
-`start.bat` / `start.sh` automatically use the virtual environment `.venv` if
-present, otherwise the system Python. A detailed step-by-step guide is at the very
-bottom under **[Installation Guide](#installation-guide)**.
+`start.bat` / `start.sh` / `start.command` automatically use the virtual
+environment `.venv`. If it is missing, they create it and install pygame-ce from
+`requirements.txt`. A detailed step-by-step guide is at the very bottom under
+**[Installation Guide](#installation-guide)**.
 
 ### The games
 
@@ -2766,6 +2793,7 @@ generated, no extra files needed) that can be muted globally.
 install-python.bat  Windows setup: Python 3.13 + .venv + pygame
 start.bat            Launch script (Windows)
 start.sh             Launch script (Linux / macOS / Git Bash)
+start.command        Launch script for macOS (double-click in Finder, calls start.sh)
 pyinstall-dev/
   pyinstall.bat      EXE build (Windows): bundles everything into builds\PyGameZ.exe
 main.py              Tkinter UI, Pygame embedding, central game loop
@@ -2927,17 +2955,31 @@ pip install -r requirements.txt
 python main.py
 ```
 
-#### Linux / macOS with start.sh
+#### macOS with start.command
+
+1. **Install Python**, ideally **Python 3.13 from
+   <https://www.python.org/downloads/macos/>** (the installer includes Tkinter).
+   Homebrew works too: `brew install python python-tk` (without `python-tk`,
+   Tkinter is missing). Apple's preinstalled `/usr/bin/python3` is not enough (old Tk 8.5).
+2. Get the project folder (`git clone` or ZIP) and **double-click `start.command`**.
+   On first launch the script creates `.venv` and installs pygame-ce (about a
+   minute), then the collection starts.
+3. If macOS blocks it ("unidentified developer"):
+   **System Settings → Privacy & Security → "Open Anyway"**.
+
+In the terminal, `./start.sh` does the same. If it says "Permission denied" (can
+happen after unpacking a ZIP), use `bash start.sh` or run
+`chmod +x start.sh start.command` once.
+
+#### Linux with start.sh
 
 ```bash
-# Set up Python + venv as above (steps 2 and 3), then:
-chmod +x start.sh      # once, if not yet executable
-./start.sh
+sudo apt install python3 python3-venv python3-tk   # once (Debian/Ubuntu)
+./start.sh                                         # creates .venv, installs pygame, starts
 ```
 
-On Linux, install Python via the package manager if needed, e.g.
-`sudo apt install python3 python3-venv python3-pip` (Debian/Ubuntu); on macOS
-e.g. `brew install python`.
+Fedora: `sudo dnf install python3 python3-tkinter`, Arch: `sudo pacman -S python tk`.
+If `start.sh` can't find a suitable Python, it prints the right command.
 
 #### Using a different Python version
 

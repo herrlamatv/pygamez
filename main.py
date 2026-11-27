@@ -2479,7 +2479,8 @@ def _check_dependencies():
         msg = (
             "Das Modul 'pygame' ist nicht installiert.\n\n"
             "So behebst du das:\n"
-            "  - Unter Windows einfach start.bat ausführen\n"
+            "  - Unter Windows einfach start.bat ausführen, unter macOS\n"
+            "    start.command, unter Linux start.sh\n"
             "    (installiert pygame automatisch), ODER\n"
             "  - im Terminal:  python -m pip install pygame-ce\n\n"
             "In PyCharm: pygame im Interpreter des Projekts installieren."
