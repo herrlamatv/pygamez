@@ -17,6 +17,7 @@ pub mod achievements;
 pub mod chipstats;
 pub mod defs;
 pub mod fairness;
+pub mod favorites;
 pub mod highscore;
 pub mod i18n;
 pub mod lamabank;

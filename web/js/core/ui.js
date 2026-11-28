@@ -345,6 +345,29 @@
   }
   ui.roundPath = roundPath;
 
+  /** Fünfzackiger Stern (Spitze oben) wie ui.draw_star: width 0 = gefüllt, sonst Umriss. */
+  ui.drawStar = function (ctx, center, r, color, width) {
+    ctx.beginPath();
+    for (let i = 0; i < 10; i++) {
+      const rr = i % 2 === 0 ? r : r * 0.46;
+      const a = ((-90 + i * 36) * Math.PI) / 180;
+      const x = center[0] + Math.cos(a) * rr;
+      const y = center[1] + Math.sin(a) * rr;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    if (width) {
+      ctx.lineWidth = width;
+      ctx.lineJoin = "round";
+      ctx.strokeStyle = ui.col(color);
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = ui.col(color);
+      ctx.fill();
+    }
+  };
+
   const draw = (PG.draw = {
     /**
      * rect(ctx, color, rect, width=0, radius=0)

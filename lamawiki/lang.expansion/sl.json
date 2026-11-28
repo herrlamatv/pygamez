@@ -12,7 +12,9 @@
         "pavza",
         "celozaslonsko",
         "stranska vrstica",
-        "več igralcev"
+        "več igralcev",
+        "priljubljene",
+        "zvezdica"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "Stranska vrstica",
           "body": [
-            "Na levi vidiš vse igre z njihovo ikono in svojim najboljšim rezultatom (zvezdica). Tekoča igra ostane označena; v majhnih oknih se seznam pomika s kolescem miške.",
+            "Na levi vidiš vse igre z njihovo ikono in svojim najboljšim rezultatom (pokal). Tekoča igra ostane označena; v majhnih oknih se seznam pomika s kolescem miške.",
+            "Desno v vsaki vrstici je zvezdica: en klik doda igro med priljubljene (zvezdica se obarva zlato), drugi jo spet odstrani - igra se ne zažene. Priljubljene so na začetnem zaslonu spredaj in večje ter se shranijo za vsak profil posebej; če želiš, se lahko pomaknejo tudi čisto na vrh seznama (glej Možnosti).",
             "Kartica stanja spodaj levo prikazuje ime igre, stanje (zeleno = teče, zlato = pavza, rdeče = konec igre), rezultat in trenutno hitrost sličic."
           ]
         },
@@ -64,7 +67,8 @@
         "design",
         "videz",
         "tema",
-        "stalne tipke"
+        "stalne tipke",
+        "priljubljene"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "Zvok vklopiš ali izklopiš in nastaviš glasnost na zaslonu z možnostmi. Vsi učinki nastajajo v živo - zvočnih datotek ni.",
             "Vibriranje zatrese priključeno igralno ploščico (brez nje nima učinka)."
+          ]
+        },
+        {
+          "h": "Seznam iger",
+          "body": [
+            "Priljubljene na vrhu: na zavihku Splošno (skupina Seznam iger) lahko priljubljene igre prikažeš čisto na vrhu seznama iger v stranski vrstici - obe skupini ohranita običajni vrstni red. Privzeto je izklopljeno.",
+            "V spletni različici in na pygamez.com je stikalo Priljubljene na vrhu v kartici Nastavitve na dnu stranske vrstice - v sami igri, ne v nastavitvah računa."
           ]
         },
         {

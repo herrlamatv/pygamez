@@ -12,7 +12,9 @@
         "pausa",
         "ecra inteiro",
         "sidebar",
-        "multijogador"
+        "multijogador",
+        "favoritos",
+        "estrela"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "A barra lateral",
           "body": [
-            "À esquerda vês todos os jogos com o seu ícone e o teu recorde (estrela). O jogo em curso fica marcado a cores; em janelas pequenas a lista desloca-se com a roda do rato.",
+            "À esquerda vês todos os jogos com o seu ícone e o teu recorde (troféu). O jogo em curso fica marcado a cores; em janelas pequenas a lista desloca-se com a roda do rato.",
+            "À direita de cada linha há uma estrela: um clique torna o jogo favorito (a estrela fica dourada), um segundo clique retira-o - o jogo não arranca. Os favoritos aparecem primeiro e maiores no ecrã inicial e são guardados por perfil; se quiseres, também podem subir para o topo da lista (ver Opções).",
             "O cartão de estado em baixo à esquerda mostra o nome do jogo, o estado (verde = a decorrer, dourado = pausa, vermelho = game over), os pontos e a taxa de fotogramas atual."
           ]
         },
@@ -64,7 +67,8 @@
         "design",
         "aparencia",
         "tema",
-        "teclas fixas"
+        "teclas fixas",
+        "favoritos"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "O som sim/não e o volume ajustam-se no ecrã de opções. Todos os efeitos são gerados ao vivo - não há ficheiros de áudio.",
             "A vibração faz vibrar um gamepad ligado (sem gamepad não tem efeito)."
+          ]
+        },
+        {
+          "h": "Lista de jogos",
+          "body": [
+            "Favoritos no topo: no separador Geral (grupo Lista de jogos) podes mostrar os teus favoritos no topo da lista de jogos da barra lateral - os dois grupos mantêm a ordem habitual. Vem desligado.",
+            "Na versão web e em pygamez.com, o interruptor Favoritos no topo está no cartão Definições, em baixo na barra lateral - no próprio jogo, não nas definições da conta."
           ]
         },
         {

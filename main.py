@@ -580,28 +580,35 @@ class GameList:
     """Scrollbare Spieleliste auf einem Canvas.
 
     Jede Zeile: abgerundete Karte mit Akzentstreifen, Mini-Piktogramm,
-    Spielname und Highscore. Hover wird weich animiert, das laufende Spiel
-    bleibt markiert. Bei Platzmangel scrollt die Liste per Mausrad (rechts
-    erscheint ein dezenter Scroll-Indikator).
+    Spielname, Highscore und rechts ein Favoriten-Stern (☆ blass, ★ gold).
+    Ein Klick auf den Stern markiert das Spiel als Favorit (startet es aber
+    nicht), ein Klick irgendwo sonst startet es. Hover wird weich animiert,
+    das laufende Spiel bleibt markiert. Bei Platzmangel scrollt die Liste per
+    Mausrad (rechts erscheint ein dezenter Scroll-Indikator).
     """
 
     ROW_H = 44
     GAP = 4
+    # Trefferbreite des Favoriten-Sterns am rechten Rand der Zeilenkarte
+    STAR_HIT = 30
 
     def __init__(self, parent, app):
         self.app = app
         self.cv = tk.Canvas(parent, bg=C_SIDEBAR, bd=0, highlightthickness=0,
                             yscrollincrement=8)
-        self.classes = []
+        self.all_classes = []    # alle Spiele in normaler Reihenfolge
+        self.classes = []        # angezeigte Reihenfolge (ggf. Favoriten oben)
         self.scores = {}
+        self.favs = []           # highscore_keys der Favoriten (aktives Profil)
         self.rows = []           # je Zeile: Canvas-Item-IDs + Akzentfarbe
         self.active = None       # Klasse des laufenden/ausgewählten Spiels
         self._hover = None
+        self._star_hover = None  # Zeile, deren Stern gerade unter der Maus ist
         self._anim = {}          # Zeilen-Index -> Hover-Wert 0..1
         self._job = None
         self.cv.bind("<Configure>", lambda e: self._layout())
         self.cv.bind("<Motion>", self._on_motion)
-        self.cv.bind("<Leave>", lambda e: self._set_hover(None))
+        self.cv.bind("<Leave>", lambda e: self._on_leave())
         self.cv.bind("<Button-1>", self._on_click)
         self.cv.bind("<MouseWheel>", self._on_wheel)
 
@@ -609,14 +616,31 @@ class GameList:
         self.cv.pack(**kw)
 
     def build(self, classes):
-        self.classes = list(classes)
+        self.all_classes = list(classes)
         self.refresh_scores(relayout=False)
+        self.refresh_favorites(relayout=False)
         self._layout()
 
     def refresh_scores(self, relayout=True):
         """Liest die Highscores neu ein (z.B. nach einer Partie)."""
         import highscore
         self.scores = highscore.load_highscores()
+        if relayout:
+            self._layout()
+
+    def refresh_favorites(self, relayout=True):
+        """Liest die Favoriten (aktives Profil) neu ein und sortiert die
+        Liste nach der Einstellung "Favoriten oben"."""
+        import favorites
+        self.favs = favorites.load()
+        old = self.classes
+        self.classes = favorites.ordered(
+            self.all_classes, self.favs,
+            favorites.top_enabled(self.app.settings))
+        if old != self.classes:
+            # Zeilen sind umgezogen: Hover-Zustände gehören nicht mehr dazu.
+            self._anim = {}
+            self._hover = self._star_hover = None
         if relayout:
             self._layout()
 
@@ -652,14 +676,19 @@ class GameList:
             if hs > 0:
                 cv.create_text(54, cy - 9, text=cls.name, anchor="w",
                                fill=C_TEXT, font=("Segoe UI", 10, "bold"))
+                # Pokal statt Stern - der Stern gehört jetzt den Favoriten.
                 cv.create_text(54, cy + 9, anchor="w", fill=C_TEXT_DIM,
-                               text="★ " + f"{hs:,}".replace(",", " "),
+                               text="🏆 " + f"{hs:,}".replace(",", " "),
                                font=("Segoe UI", 8))
             else:
                 cv.create_text(54, cy, text=cls.name, anchor="w",
                                fill=C_TEXT, font=("Segoe UI", 10, "bold"))
+            fav = cls.highscore_key in self.favs
+            star = cv.create_text(w - 7 - self.STAR_HIT // 2, cy,
+                                  text="★" if fav else "☆",
+                                  font=("Segoe UI Symbol", 12))
             self.rows.append(dict(bg=bg, stripe=stripe, accent=accent,
-                                  y0=y0, y1=y1))
+                                  y0=y0, y1=y1, star=star, fav=fav))
             self._apply_row_colors(i)
         total = len(self.classes) * (self.ROW_H + self.GAP)
         cv.configure(scrollregion=(0, 0, w, total))
@@ -678,6 +707,15 @@ class GameList:
         # Akzentstreifen wächst bei Hover/Aktiv ein Stück.
         m = 8 if active else int(14 - 6 * v)
         self.cv.coords(row["stripe"], 6, row["y0"] + m, 10, row["y1"] - m)
+        # Favoriten-Stern: gold gefüllt (Favorit), sonst blasser Umriss, der
+        # beim Zeilen-Hover etwas heller und direkt darüber gold wird.
+        if row["fav"]:
+            col = _mix_hex(C_GOLD, "#ffffff", 0.25) if self._star_hover == i else C_GOLD
+        elif self._star_hover == i:
+            col = C_GOLD
+        else:
+            col = _mix_hex(C_TEXT_FAINT, C_TEXT_DIM, v)
+        self.cv.itemconfig(row["star"], fill=col)
 
     # ----- Interaktion ------------------------------------------------------
 
@@ -688,8 +726,27 @@ class GameList:
             return i
         return None
 
+    def _star_hit(self, ex):
+        """Liegt x im Stern-Bereich am rechten Rand der Zeilenkarte?"""
+        right = max(120, self.cv.winfo_width()) - 7
+        return right - self.STAR_HIT <= ex <= right
+
     def _on_motion(self, e):
-        self._set_hover(self._index_at(e.y))
+        i = self._index_at(e.y)
+        self._set_star_hover(i if i is not None and self._star_hit(e.x) else None)
+        self._set_hover(i)
+
+    def _on_leave(self):
+        self._set_star_hover(None)
+        self._set_hover(None)
+
+    def _set_star_hover(self, i):
+        if i == self._star_hover:
+            return
+        old, self._star_hover = self._star_hover, i
+        for k in (old, i):
+            if k is not None:
+                self._apply_row_colors(k)
 
     def _set_hover(self, i):
         if i == self._hover:
@@ -719,6 +776,10 @@ class GameList:
     def _on_click(self, e):
         i = self._index_at(e.y)
         if i is None:
+            return
+        if self._star_hit(e.x):
+            # Stern: nur Favorit umschalten, kein Spielstart.
+            self.app.toggle_favorite(self.classes[i])
             return
         self.app._sound_click()
         self._anim[i] = 1.0
@@ -1167,8 +1228,9 @@ class App:
         f_game = tkfont.Font(family="Segoe UI", size=10, weight="bold")
         w_ctrl = max((f_ctrl.measure(b.text)
                       for b in self._ctrl_buttons.values()), default=0) + 60
+        # + Piktogramm links, + Favoriten-Stern rechts (GameList.STAR_HIT)
         w_game = max((f_game.measure(c.name) for c in self._game_classes),
-                     default=0) + 80
+                     default=0) + 80 + GameList.STAR_HIT + 6
         need_w = min(340, max(232, w_ctrl, w_game))
         self._menu_frame.config(width=need_w)
         self._status_label.config(wraplength=max(120, need_w - 70))
@@ -1633,10 +1695,28 @@ class App:
         """Nach Profilwechsel/-änderung: Sidebar, Highscores, Ticker auffrischen."""
         import achievements
         achievements.backfill_silent()
+        # Favoriten gehören zum Profil -> neu einlesen (Liste + Startbildschirm).
+        self.game_list.refresh_favorites(relayout=False)
         self.game_list.refresh_scores()
         self._ticker_key = None
         self._ticker_band = None
         self._update_profile_card()
+
+    def toggle_favorite(self, cls):
+        """Stern in der Spieleliste: Spiel als Favorit markieren/entfernen.
+
+        Gespeichert wird je Profil (favorites.py); Seitenleiste und
+        Startbildschirm lesen die neue Liste sofort.
+        """
+        import favorites
+        self._sound_click()
+        favorites.toggle(cls.highscore_key)
+        self.refresh_favorites()
+
+    def refresh_favorites(self):
+        """Favoriten/Einstellung "Favoriten oben" neu anwenden (auch aus den
+        Optionen heraus)."""
+        self.game_list.refresh_favorites()
 
     def open_replays(self):
         """Öffnet das Replay-Archiv im Spielbereich (Sidebar-Knopf)."""
@@ -2143,14 +2223,21 @@ class App:
         # Der Block Logo + Name bleibt zentriert; nur wenn das Spiele-Raster
         # darunter sonst nicht mehr passt, rückt alles gerade so weit hoch.
         size = min(176, max(96, h // 4))
+        center_y0 = h // 2 - 46
+        avail0 = (h - 72) - (center_y0 + size // 2 + 80)
+        # Platz, wenn das Logo ganz oben sitzt (center_y = size // 2 + 14).
+        avail_top = (h - 72) - (size + 14 + 80)
+        tiles = self._flow_menu_tiles(w, max(30, avail0), avail_top)
+        tiles_h = tiles["total"]
+        if tiles_h > avail_top:
+            # Selbst ganz oben passt das Raster nicht (viele Spiele/Favoriten,
+            # kleines Fenster): Logo so weit verkleinern, wie es fehlt.
+            size = max(self.MENU_LOGO_MIN, size - (tiles_h - avail_top))
+            avail0 = (h - 72) - (center_y0 + size // 2 + 80)
         logo = self._menu_logo(size)
         v1 = ui.fx("style") == "v1"
         if v1:
             logo = None     # UI v1: kein Logo, nur Schrift (Consolas)
-        center_y0 = h // 2 - 46
-        avail0 = (h - 72) - (center_y0 + size // 2 + 80)
-        rows, fnt, pad_x, row_h, gap, tiles_h = \
-            self._flow_menu_tiles(w, max(30, avail0))
         shift = max(0, tiles_h - avail0)
         center_y = max(size // 2 + 14, center_y0 - shift) + bob
         if logo is not None:
@@ -2228,8 +2315,7 @@ class App:
         s.blit(hint, hint.get_rect(center=(cx, base_y + 62)))
 
         # Klickbares Spiele-Raster zwischen Hinweis und Laufband.
-        self._draw_menu_tiles(s, base_y + 80, h - 72,
-                              rows, fnt, pad_x, row_h, gap, tiles_h)
+        self._draw_menu_tiles(s, base_y + 80, h - 72, tiles)
 
         # Highscore-Laufband + Fußzeile mit dezenten Eckdaten.
         self._draw_score_ticker(s, w, h)
@@ -2252,23 +2338,74 @@ class App:
         sy = int(h * 0.20 + 5 * math.sin(ticks * 0.14 + 2.0))
         ui.draw_saturn(s, (sx, sy), max(16, int(m * 0.075)))
 
-    def _flow_menu_tiles(self, w, avail):
+    # Stufen fürs Spiele-Raster, von groß nach klein probiert, bis alles
+    # passt: (Schrift Favoriten, Schrift übrige Spiele, Innenabstand oben+
+    # unten Favoriten/übrige, Abstand zwischen Pillen, Abstand Favoriten ->
+    # übrige, Rand links+rechts). Ohne Favoriten ergeben die ersten vier
+    # Stufen genau die alte Folge 15/13/11; die letzte ("dicht") greift erst,
+    # wenn sonst nichts passt (viele Spiele, kleines Fenster).
+    MENU_TILE_LEVELS = ((19, 15, 16, 12, 8, 14, 60),
+                        (17, 13, 16, 12, 8, 14, 60),
+                        (15, 11, 16, 12, 8, 14, 60),
+                        (13, 11, 16, 12, 8, 14, 60),
+                        (13, 11, 10, 6, 4, 8, 24))
+    MENU_LOGO_MIN = 56      # so klein darf das Logo werden, damit alles passt
+
+    def _menu_fav_classes(self):
+        """Favoriten fürs Startbild in normaler Spiele-Reihenfolge."""
+        favs = self.game_list.favs
+        return [c for c in self._game_classes if c.highscore_key in favs]
+
+    def _flow_menu_tiles(self, w, avail, avail_top):
         """Layout fürs Spiele-Raster: Pillen in zentrierte Zeilen fließen lassen.
 
-        Probiert absteigende Schriftgrößen, bis alle Zeilen in 'avail' Pixel
-        Höhe passen. Gibt (rows, font, pad_x, row_h, gap, total_h) zurück.
+        Zweistufig: oben die Favoriten (größere, fette Schrift, Stern statt
+        Farbpunkt), darunter mit etwas Abstand die übrigen Spiele.
+        'avail' = Platz bei zentriertem Logo, 'avail_top' = Platz, wenn das
+        Logo ganz nach oben rückt. Die normalen Stufen aus MENU_TILE_LEVELS
+        werden gegen 'avail' probiert; passt keine, bleibt es (wie früher) bei
+        der kleinsten und das Logo rückt hoch. Erst wenn auch das nicht
+        reicht, kommt die dichte Stufe. Rückgabe: {"groups": [dict(rows, fnt,
+        pad_x, row_h, fav, star_r)], "gap", "group_gap", "total"}.
         """
+        fav_cls = self._menu_fav_classes()
+        favset = set(fav_cls)
+        rest = [c for c in self._game_classes if c not in favset]
+        levels = self.MENU_TILE_LEVELS
+        for level in levels[:-1]:
+            tiles = self._flow_level(level, w, fav_cls, rest)
+            if tiles["total"] <= avail:
+                return tiles
+        if tiles["total"] <= avail_top:
+            return tiles
+        return self._flow_level(levels[-1], w, fav_cls, rest)
+
+    def _flow_level(self, level, w, fav_cls, rest):
+        """Ordnet Favoriten + übrige Spiele mit einer Stufe aus
+        MENU_TILE_LEVELS in Zeilen an (siehe _flow_menu_tiles)."""
         ui = self.ui
-        max_w = w - 60
-        for fsize in (15, 13, 11):
-            fnt = ui.font(fsize)
-            pad_x = fsize - 4
-            row_h = fnt.get_height() + 12
-            gap = 8
+        fsize_f, fsize, pady_f, pady, gap, group_gap, margin = level
+        max_w = w - margin
+        groups = []
+        for classes, fav in ((fav_cls, True), (rest, False)):
+            if not classes:
+                continue
+            if fav:
+                fnt = ui.font(fsize_f, bold=True)
+                pad_x = fsize_f - 4
+                row_h = fnt.get_height() + pady_f
+                star_r = self._menu_star_r(fsize_f)
+                mark = star_r * 2 + 10                       # + Stern
+            else:
+                fnt = ui.font(fsize)
+                pad_x = fsize - 4
+                row_h = fnt.get_height() + pady
+                star_r = 0
+                mark = 16                                    # + Farbpunkt
             rows = [[]]
             rw = 0
-            for cls in self._game_classes:
-                tw = fnt.size(cls.name)[0] + pad_x * 2 + 16   # + Farbpunkt
+            for cls in classes:
+                tw = fnt.size(cls.name)[0] + pad_x * 2 + mark
                 add = tw + (gap if rows[-1] else 0)
                 if rw + add > max_w and rows[-1]:
                     rows.append([])
@@ -2276,64 +2413,90 @@ class App:
                     add = tw
                 rows[-1].append((cls, tw))
                 rw += add
-            total_h = len(rows) * row_h + (len(rows) - 1) * gap
-            if total_h <= avail:
-                break
-        return rows, fnt, pad_x, row_h, gap, total_h
+            groups.append(dict(rows=rows, fnt=fnt, pad_x=pad_x,
+                               row_h=row_h, fav=fav, star_r=star_r))
+        total_h = sum(len(g["rows"]) * g["row_h"]
+                      + (len(g["rows"]) - 1) * gap for g in groups)
+        total_h += group_gap * max(0, len(groups) - 1)
+        return dict(groups=groups, gap=gap, group_gap=group_gap, total=total_h)
 
-    def _draw_menu_tiles(self, s, top, bottom, rows, fnt, pad_x, row_h, gap,
-                         total_h):
+    @staticmethod
+    def _menu_star_r(fsize):
+        """Radius des Favoriten-Sterns in einer Pille der Schriftgröße fsize."""
+        return max(5, fsize * 2 // 5)
+
+    def _draw_menu_tiles(self, s, top, bottom, tiles):
         """Zeichnet die anklickbaren Spiel-Pillen; Trefferflächen landen in
         self._menu_tiles (ausgewertet von _menu_motion/_menu_click)."""
         ui = self.ui
         w = self.game_w
         avail = max(30, bottom - top)
+        gap = tiles["gap"]
 
         # Oben andocken (max. 36px Luft), nicht in der Fläche schweben.
-        y = top + min(36, max(0, (avail - total_h) // 2))
+        y = top + min(36, max(0, (avail - tiles["total"]) // 2))
         hover = getattr(self, "_menu_hover", None)
         v42 = ui.fx("style") == "v42"
         self._menu_tiles = []
-        for row in rows:
-            row_w = sum(tw for _, tw in row) + gap * (len(row) - 1)
-            x = w // 2 - row_w // 2
-            for cls, tw in row:
-                rect = self.pygame.Rect(x, y, tw, row_h)
-                idx = len(self._menu_tiles)
-                accent = ui.game_color(cls.__name__)
-                if idx == hover:
-                    if not ui.is_modern() and ui.fx("style") != "v1":
-                        glow = self.pygame.Surface((tw + 14, row_h + 14),
-                                                   self.pygame.SRCALPHA)
-                        self.pygame.draw.rect(glow, (*accent, 55),
-                                              glow.get_rect(),
-                                              border_radius=row_h // 2 + 7)
-                        s.blit(glow, (x - 7, y - 7))
-                    self.pygame.draw.rect(s, ui.PANEL_LIGHT, rect,
-                                          border_radius=row_h // 2)
-                    self.pygame.draw.rect(s, accent, rect, 1,
-                                          border_radius=row_h // 2)
-                else:
-                    self.pygame.draw.rect(s, ui.PANEL, rect,
-                                          border_radius=row_h // 2)
-                    self.pygame.draw.rect(s, ui.BORDER, rect, 1,
-                                          border_radius=row_h // 2)
-                if v42:
-                    # UI v4.2: feine Lichtkante oben - die Pillen wirken wie
-                    # die Glas-Panels, ohne dafür Flächen bauen zu müssen.
-                    self.pygame.draw.rect(
-                        s, ui.mix(ui.PANEL, (255, 255, 255), 0.10),
-                        (x + row_h // 2, y, max(2, tw - row_h), 1))
-                # Farbpunkt in der Akzentfarbe des Spiels + Name
-                self.pygame.draw.circle(s, accent,
-                                        (x + pad_x + 4, rect.centery), 4)
-                img = fnt.render(cls.name, True,
-                                 ui.TEXT if idx == hover else ui.TEXT_DIM)
-                s.blit(img, img.get_rect(midleft=(x + pad_x + 14,
-                                                  rect.centery)))
-                self._menu_tiles.append((rect, cls))
-                x += tw + gap
-            y += row_h + gap
+        for gi, grp in enumerate(tiles["groups"]):
+            if gi:
+                y += tiles["group_gap"] - gap
+            fnt, pad_x, row_h, fav = (grp["fnt"], grp["pad_x"], grp["row_h"],
+                                      grp["fav"])
+            for row in grp["rows"]:
+                row_w = sum(tw for _, tw in row) + gap * (len(row) - 1)
+                x = w // 2 - row_w // 2
+                for cls, tw in row:
+                    rect = self.pygame.Rect(x, y, tw, row_h)
+                    idx = len(self._menu_tiles)
+                    accent = ui.game_color(cls.__name__)
+                    if idx == hover:
+                        if not ui.is_modern() and ui.fx("style") != "v1":
+                            glow = self.pygame.Surface((tw + 14, row_h + 14),
+                                                       self.pygame.SRCALPHA)
+                            self.pygame.draw.rect(glow, (*accent, 55),
+                                                  glow.get_rect(),
+                                                  border_radius=row_h // 2 + 7)
+                            s.blit(glow, (x - 7, y - 7))
+                        self.pygame.draw.rect(s, ui.PANEL_LIGHT, rect,
+                                              border_radius=row_h // 2)
+                        self.pygame.draw.rect(s, accent, rect, 1,
+                                              border_radius=row_h // 2)
+                    elif fav:
+                        # Favorit: Hauch Gold in Fläche und Rand.
+                        self.pygame.draw.rect(s, ui.mix(ui.PANEL, ui.GOLD, 0.07),
+                                              rect, border_radius=row_h // 2)
+                        self.pygame.draw.rect(s, ui.mix(ui.BORDER, ui.GOLD, 0.45),
+                                              rect, 1, border_radius=row_h // 2)
+                    else:
+                        self.pygame.draw.rect(s, ui.PANEL, rect,
+                                              border_radius=row_h // 2)
+                        self.pygame.draw.rect(s, ui.BORDER, rect, 1,
+                                              border_radius=row_h // 2)
+                    if v42:
+                        # UI v4.2: feine Lichtkante oben - die Pillen wirken wie
+                        # die Glas-Panels, ohne dafür Flächen bauen zu müssen.
+                        self.pygame.draw.rect(
+                            s, ui.mix(ui.PANEL, (255, 255, 255), 0.10),
+                            (x + row_h // 2, y, max(2, tw - row_h), 1))
+                    if fav:
+                        # Goldener Stern + Name (immer hell)
+                        r = grp["star_r"]
+                        ui.draw_star(s, (x + pad_x + r, rect.centery), r, ui.GOLD)
+                        img = fnt.render(cls.name, True, ui.TEXT)
+                        s.blit(img, img.get_rect(midleft=(x + pad_x + 2 * r + 10,
+                                                          rect.centery)))
+                    else:
+                        # Farbpunkt in der Akzentfarbe des Spiels + Name
+                        self.pygame.draw.circle(s, accent,
+                                                (x + pad_x + 4, rect.centery), 4)
+                        img = fnt.render(cls.name, True,
+                                         ui.TEXT if idx == hover else ui.TEXT_DIM)
+                        s.blit(img, img.get_rect(midleft=(x + pad_x + 14,
+                                                          rect.centery)))
+                    self._menu_tiles.append((rect, cls))
+                    x += tw + gap
+                y += row_h + gap
 
     def _menu_motion(self, pos):
         """Hover-Erkennung für das Spiele-Raster des Startbildschirms."""

@@ -12,7 +12,9 @@
         "pause",
         "vollbild",
         "sidebar",
-        "mehrspieler"
+        "mehrspieler",
+        "favoriten",
+        "stern"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "Die Sidebar",
           "body": [
-            "Links siehst du alle Spiele mit ihrem Symbol und deinem Highscore (Stern). Das laufende Spiel bleibt farbig markiert; bei kleinen Fenstern scrollt die Liste per Mausrad.",
+            "Links siehst du alle Spiele mit ihrem Symbol und deinem Highscore (Pokal). Das laufende Spiel bleibt farbig markiert; bei kleinen Fenstern scrollt die Liste per Mausrad.",
+            "Rechts in jeder Zeile sitzt ein Stern: Ein Klick macht das Spiel zum Favoriten (der Stern wird gold gefüllt), ein zweiter Klick nimmt es wieder heraus - das Spiel startet dabei nicht. Favoriten stehen auf dem Startbildschirm vorne und größer und gelten je Profil; auf Wunsch rücken sie auch in der Liste ganz nach oben (siehe Optionen).",
             "Die Status-Karte unten links zeigt Spielname, Zustand (grün = läuft, gold = Pause, rot = Game Over), Punkte und die aktuelle Bildrate."
           ]
         },
@@ -64,7 +67,8 @@
         "design",
         "erscheinungsbild",
         "theme",
-        "zusatztasten"
+        "zusatztasten",
+        "favoriten"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "Sound an/aus und die Lautstärke stellst du im Options-Screen ein. Alle Effekte werden live erzeugt - es gibt keine Audio-Dateien.",
             "Haptik lässt ein angeschlossenes Gamepad vibrieren (ohne Gamepad wirkungslos)."
+          ]
+        },
+        {
+          "h": "Spieleliste",
+          "body": [
+            "Favoriten oben: Im Reiter Allgemein (Gruppe Spieleliste) lässt du deine Favoriten ganz oben in der Spieleliste der Sidebar anzeigen - beide Gruppen behalten dabei die gewohnte Reihenfolge. Standard ist aus.",
+            "In der Web-Version und auf pygamez.com steht der Schalter Favoriten oben in der Karte Einstellungen unten in der Seitenleiste - also im Spiel selbst, nicht in den Konto-Einstellungen."
           ]
         },
         {

@@ -1083,9 +1083,16 @@ supplémentaires) et soignée façon lanceur de jeux moderne :
 
 - **Barre latérale avec liste de jeux** : chaque ligne a son
   **mini-pictogramme** dans la couleur d'accent du jeu, montre le **meilleur
-  score actuel (★)** et réagit avec des effets de survol animés en douceur. Le
+  score actuel (🏆)** et réagit avec des effets de survol animés en douceur. Le
   jeu en cours reste marqué en couleur ; dans les petites fenêtres la liste
   **défile** à la molette.
+- **Favoris** : à droite de chaque ligne se trouve une **étoile** – un clic fait
+  du jeu un favori (l'étoile se remplit d'or), un second clic le retire, sans
+  lancer le jeu. Les favoris apparaissent **en premier et en plus grand** sur
+  l'écran d'accueil, sont enregistrés **par profil** et, si tu veux, montent
+  **tout en haut** de la liste (Options › Général › Liste des jeux). Pareil dans
+  la version web, la version Rust et sur pygamez.com (qui affiche en plus « Tes
+  favoris » sur sa page d'accueil).
 - **Carte d'état** en bas à gauche avec **LED d'état** (gris = menu, vert = en
   cours, doré = pause, rouge = game over) et **affichage FPS en direct**.
 - **Écran d'accueil** avec lumières aurorales, champ d'étoiles en parallaxe
@@ -1249,6 +1256,7 @@ profileview.py       Écran des profils, choix du joueur 2 et carte du niveau de
 replay.py            Enregistrement et archive des rediffusions (replay.json)
 replayview.py        Écran Replay : liste de l'archive et lecture
 matches.py           Historique des parties par jeu et profil (matches.pgzlamamatches) : entrées, totaux, limite 250
+favorites.py         Favoris par profil (section favorites dans mem.json) : étoile dans la liste des jeux, ordre
 matchview.py         Écran Parties : dernières parties (courbe + 10 dernières) et toutes les parties (filtre, tri)
 dailyarchive.py      Archives du jour : 30 derniers jours + jours joués, stockage compact, fenêtre calendrier
 ugc.py               Contenus personnels (trous de minigolf, niveaux Geometry Dash) : stockage, vérification, export/import (ugc.json)
@@ -2494,9 +2502,16 @@ Toda la interfaz está dibujada a mano (Tkinter puro + Pygame, sin paquetes
 extra) y pulida con aspecto de lanzador moderno:
 
 - **Barra lateral con lista de juegos**: cada fila tiene su **mini-pictograma**
-  en el color de acento del juego, muestra el **récord actual (★)** y reacciona
+  en el color de acento del juego, muestra el **récord actual (🏆)** y reacciona
   con efectos hover suavemente animados. El juego en curso queda marcado en
   color; en ventanas pequeñas la lista **se desplaza** con la rueda.
+- **Favoritos**: a la derecha de cada fila hay una **estrella**: un clic
+  convierte el juego en favorito (la estrella se rellena de dorado) y un segundo
+  clic lo quita, sin iniciar el juego. Los favoritos aparecen **primero y más
+  grandes** en la pantalla de inicio, se guardan **por perfil** y, si quieres,
+  suben **al principio** de la lista (Opciones › General › Lista de juegos).
+  Igual en la versión web, la versión en Rust y en pygamez.com (que además
+  muestra «Tus favoritos» en su página de inicio).
 - **Tarjeta de estado** abajo a la izquierda con **LED de estado** (gris = menú,
   verde = en marcha, dorado = pausa, rojo = game over) e **indicador de FPS en
   vivo**.
@@ -2654,6 +2669,7 @@ profileview.py       Pantalla de perfiles, selección del jugador 2 y la tarjeta
 replay.py            Grabación y archivo de las repeticiones (replay.json)
 replayview.py        Pantalla de repeticiones: lista del archivo y reproducción
 matches.py           Historial de partidas por juego y perfil (matches.pgzlamamatches): entradas, totales, límite 250
+favorites.py         Favoritos por perfil (sección favorites en mem.json): estrella en la lista de juegos, orden
 matchview.py         Pantalla de partidas: últimas (curva + últimas 10) y todas (filtro, orden)
 dailyarchive.py      Archivo diario: últimos 30 días + días jugados, guardado compacto, ventana de calendario
 ugc.py               Contenido propio (hoyos de minigolf, niveles de Geometry Dash): almacenamiento, validación, exportar/importar (ugc.json)
@@ -3884,9 +3900,15 @@ Toda a interface é desenhada de raiz (Tkinter puro + Pygame, sem pacotes extra)
 e polida com aspeto de launcher moderno:
 
 - **Barra lateral com lista de jogos**: cada linha tem o seu **mini-pictograma**
-  na cor de destaque do jogo, mostra o **recorde atual (★)** e reage com efeitos
+  na cor de destaque do jogo, mostra o **recorde atual (🏆)** e reage com efeitos
   hover suavemente animados. O jogo em curso fica marcado a cores; em janelas
   pequenas a lista **desloca-se** com a roda do rato.
+- **Favoritos**: à direita de cada linha há uma **estrela** – um clique torna o
+  jogo favorito (a estrela fica dourada), um segundo clique retira-o, sem
+  iniciar o jogo. Os favoritos aparecem **primeiro e maiores** no ecrã inicial,
+  são guardados **por perfil** e, se quiseres, sobem para o **topo** da lista
+  (Opções › Geral › Lista de jogos). O mesmo na versão web, na versão Rust e em
+  pygamez.com (que mostra ainda «Os teus favoritos» na página inicial).
 - **Cartão de estado** em baixo à esquerda com **LED de estado** (cinzento =
   menu, verde = a decorrer, dourado = pausa, vermelho = game over) e **FPS ao
   vivo**.
@@ -4042,6 +4064,7 @@ profileview.py       Ecrã de perfis, escolha do jogador 2 e o cartão do nível
 replay.py            Gravação e arquivo das repetições (replay.json)
 replayview.py        Ecrã de replays: lista do arquivo e reprodução
 matches.py           Histórico de partidas por jogo e perfil (matches.pgzlamamatches): entradas, totais, limite 250
+favorites.py         Favoritos por perfil (secção favorites em mem.json): estrela na lista de jogos, ordem
 matchview.py         Ecrã de partidas: últimas (curva + últimas 10) e todas (filtro, ordem)
 dailyarchive.py      Arquivo diário: últimos 30 dias + dias jogados, armazenamento compacto, janela de calendário
 ugc.py               Conteúdo próprio (buracos de minigolfe, níveis de Geometry Dash): armazenamento, validação, exportar/importar (ugc.json)
@@ -5342,9 +5365,16 @@ Cały interfejs jest rysowany od zera (czysty Tkinter + Pygame, bez dodatkowych
 pakietów) i dopracowany w stylu nowoczesnego launchera gier:
 
 - **Pasek boczny z listą gier**: każdy wiersz ma własny **mini-piktogram** w
-  kolorze akcentu danej gry, pokazuje aktualny **rekord (★)** i reaguje płynnie
+  kolorze akcentu danej gry, pokazuje aktualny **rekord (🏆)** i reaguje płynnie
   animowanymi efektami najechania. Bieżąca gra pozostaje wyróżniona kolorem; przy
   małych oknach lista **przewija się** kółkiem myszy.
+- **Ulubione**: po prawej stronie każdego wiersza jest **gwiazdka** – jedno
+  kliknięcie dodaje grę do ulubionych (gwiazdka wypełnia się złotem), drugie ją
+  usuwa, bez uruchamiania gry. Ulubione są na ekranie startowym **na początku i
+  większe**, zapisują się **dla każdego profilu** i, jeśli chcesz, trafiają też
+  **na samą górę** listy (Opcje › Ogólne › Lista gier). Tak samo w wersji web, w
+  wersji Rust i na pygamez.com (tam dodatkowo „Twoje ulubione” na stronie
+  głównej).
 - **Karta stanu** w lewym dolnym rogu z **diodą stanu** (szara = menu, zielona = w
   toku, złota = pauza, czerwona = koniec gry) i **licznikiem FPS na żywo**.
 - **Ekran bezczynności** ze światłami zorzy, paralaksowym polem gwiazd ze
@@ -5497,6 +5527,7 @@ profileview.py       Ekran profili, wybór gracza 2 i karta poziomu startowego
 replay.py            Nagrywanie i archiwum powtórek (replay.json)
 replayview.py        Ekran powtórek: lista archiwum i odtwarzanie
 matches.py           Historia meczów na grę i profil (matches.pgzlamamatches): wpisy, sumy, limit 250
+favorites.py         Ulubione na profil (sekcja favorites w mem.json): gwiazdka na liście gier, kolejność
 matchview.py         Ekran meczów: ostatnie (wykres + 10 ostatnich) i wszystkie (filtr, sortowanie)
 dailyarchive.py      Archiwum dzienne: ostatnie 30 dni + rozegrane dni, kompaktowy zapis, okno kalendarza
 ugc.py               Własne treści (dołki do minigolfa, poziomy Geometry Dash): przechowywanie, sprawdzanie, eksport/import (ugc.json)
@@ -6797,7 +6828,7 @@ Tüm arayüz sıfırdan çizilmiştir (saf Tkinter + Pygame, ek paket yok) ve mo
 bir oyun başlatıcısı gibi tasarlanmıştır:
 
 - **Kenar çubuğu oyun listesi**: her satırın oyunun vurgu renginde kendi **mini
-  piktogramı** vardır, güncel **yüksek skoru (★)** gösterir ve yumuşak animasyonlu
+  piktogramı** vardır, güncel **yüksek skoru (🏆)** gösterir ve yumuşak animasyonlu
   hover efektleriyle tepki verir. Çalışan oyun renkli olarak işaretli kalır;
   küçük pencerelerde liste fare tekerleğiyle **kaydırılır**.
 - Sol altta **durum kartı**, bir **durum LED'i** (gri = menü, yeşil = çalışıyor,
@@ -6806,6 +6837,12 @@ bir oyun başlatıcısı gibi tasarlanmıştır:
   kıvılcımlar olan süzülen bir logo, logonun hemen altında **tıklanabilir bir
   oyun ızgarası** (tüm oyunlar kendi vurgu renginde hover efektiyle) ve bir
   **yüksek skor bandı** içeren **bekleme ekranı**.
+- **Favoriler**: her satırın sağında bir **yıldız** var – bir tıklama oyunu
+  favori yapar (yıldız altın rengiyle dolar), ikinci tıklama kaldırır; oyun
+  başlamaz. Favoriler başlangıç ekranında **en önde ve daha büyük** görünür,
+  **profil başına** kaydedilir ve istersen listenin **en üstüne** çıkar
+  (Seçenekler › Genel › Oyun listesi). Web sürümünde, Rust sürümünde ve
+  pygamez.com'da da aynı (orada ana sayfada ayrıca „Favorilerin” bölümü var).
 - **Her yerde efektler**: yumuşak ekran geçişleri, menüde bir seçimi onaylarken
   kıvılcımlar, **yeni bir yüksek skorda konfeti yağmuru** ve duraklatma
   katmanının arkasında gerçek bir **bulanıklık**.
@@ -6949,6 +6986,7 @@ profileview.py       Profil ekranı, 2. oyuncu seçimi ve başlangıç seviyesi 
 replay.py            Tekrarların kaydı ve arşivi (replay.json)
 replayview.py        Tekrar ekranı: arşiv listesi ve oynatma
 matches.py           Oyun ve profil başına maç geçmişi (matches.pgzlamamatches): kayıtlar, toplamlar, sınır 250
+favorites.py         Profil başına favoriler (mem.json içinde favorites bölümü): oyun listesindeki yıldız, sıralama
 matchview.py         Maçlar ekranı: son maçlar (eğri + son 10) ve tüm maçlar (filtre, sıralama)
 dailyarchive.py      Günlük arşiv: son 30 gün + oynanan günler, küçük kayıt, takvim penceresi
 ugc.py               Kendi içerikler (minigolf parkurları, Geometry Dash seviyeleri): depolama, doğrulama, dışa/içe aktarma (ugc.json)
@@ -8221,9 +8259,16 @@ Hele grænsefladen er tegnet fra bunden (ren Tkinter + Pygame, ingen ekstra pakk
 og stylet som en moderne spil-launcher:
 
 - **Sidebjælke med spilliste**: hver række har sit eget **mini-piktogram** i
-  spillets accentfarve, viser den aktuelle **highscore (★)** og reagerer med blødt
+  spillets accentfarve, viser den aktuelle **highscore (🏆)** og reagerer med blødt
   animerede hover-effekter. Det kørende spil forbliver fremhævet; i små vinduer
   **ruller** listen med musehjulet.
+- **Favoritter**: til højre i hver række sidder en **stjerne** – ét klik gør
+  spillet til favorit (stjernen bliver guldfyldt), et klik mere fjerner det igen
+  uden at starte spillet. Favoritter står **forrest og større** på startskærmen,
+  gemmes **pr. profil** og kan, hvis du vil, rykke **helt op øverst** i listen
+  (Indstillinger › Generelt › Spilliste). Det samme i webversionen,
+  Rust-versionen og på pygamez.com (der desuden viser „Dine favoritter” på
+  forsiden).
 - **Statuskort** nederst til venstre med en **tilstands-LED** (grå = menu, grøn =
   kører, guld = pause, rød = game over) og en **live-FPS-visning**.
 - **Startskærm** med aurora-lys, et parallakse-stjernefelt inkl. stjerneskud, et
@@ -8376,6 +8421,7 @@ profileview.py       Profilskærm, valg af spiller 2 og startniveau-kortet
 replay.py            Optagelse og arkiv over replays (replay.json)
 replayview.py        Replay-skærm: arkivliste og afspilning
 matches.py           Kamphistorik pr. spil og profil (matches.pgzlamamatches): poster, summer, grænse 250
+favorites.py         Favoritter pr. profil (sektionen favorites i mem.json): stjerne i spillisten, rækkefølge
 matchview.py         Kampskærm: seneste kampe (kurve + seneste 10) og alle kampe (filter, sortering)
 dailyarchive.py      Dagsarkiv: seneste 30 dage + spillede dage, kompakt lagring, kalendervindue
 ugc.py               Eget indhold (minigolfbaner, Geometry Dash-baner): lagring, kontrol, eksport/import (ugc.json)
@@ -9648,9 +9694,16 @@ Hele grensesnittet er tegnet fra bunnen av (rent Tkinter + Pygame, ingen ekstra
 pakker) og stylet som en moderne spill-launcher:
 
 - **Spilliste i sidefeltet**: hver rad har sitt eget **minipiktogram** i spillets
-  aksentfarge, viser gjeldende **rekord (★)** og reagerer med mykt animerte
+  aksentfarge, viser gjeldende **rekord (🏆)** og reagerer med mykt animerte
   hover-effekter. Spillet som kjører, forblir uthevet; i små vinduer **ruller**
   listen med musehjulet.
+- **Favoritter**: til høyre i hver rad sitter en **stjerne** – ett klikk gjør
+  spillet til favoritt (stjernen fylles med gull), et klikk til fjerner det
+  igjen uten å starte spillet. Favoritter står **først og større** på
+  startskjermen, lagres **per profil** og kan, om du vil, flyttes **helt
+  øverst** i listen (Alternativer › Generelt › Spilliste). Det samme i
+  nettversjonen, Rust-versjonen og på pygamez.com (som i tillegg viser «Dine
+  favoritter» på forsiden).
 - **Statuskort** nederst til venstre med en **status-LED** (grå = meny, grønn =
   kjører, gull = pause, rød = game over) og en **sanntids FPS-visning**.
 - **Startskjerm** med nordlys, et parallakse-stjernefelt med stjerneskudd, en
@@ -9799,6 +9852,7 @@ profileview.py       Profilskjerm, valg av spiller 2 og startnivå-kortet
 replay.py            Opptak og arkiv over replays (replay.json)
 replayview.py        Replay-skjerm: arkivliste og avspilling
 matches.py           Kamphistorikk per spill og profil (matches.pgzlamamatches): oppføringer, summer, grense 250
+favorites.py         Favoritter per profil (seksjonen favorites i mem.json): stjerne i spillisten, rekkefølge
 matchview.py         Kampskjerm: siste kamper (kurve + siste 10) og alle kamper (filter, sortering)
 dailyarchive.py      Dagsarkiv: siste 30 dager + spilte dager, kompakt lagring, kalendervindu
 ugc.py               Eget innhold (minigolfbaner, Geometry Dash-nivåer): lagring, kontroll, eksport/import (ugc.json)
@@ -11020,8 +11074,15 @@ Hela gränssnittet är ritat från grunden (ren Tkinter + Pygame, inga extra pak
 modern spel-launcher:
 
 - **Spellista i sidofältet**: varje rad har sitt eget **minipiktogram** i spelets accentfärg, visar
-  aktuell **topplista (★)** och reagerar med mjukt animerade hover-effekter. Det pågående spelet
+  aktuell **topplista (🏆)** och reagerar med mjukt animerade hover-effekter. Det pågående spelet
   förblir färgmarkerat; i små fönster **scrollar** listan med mushjulet.
+- **Favoriter**: till höger på varje rad sitter en **stjärna** – ett klick gör
+  spelet till favorit (stjärnan fylls med guld), ett klick till tar bort det
+  igen utan att starta spelet. Favoriter visas **först och större** på
+  startskärmen, sparas **per profil** och kan, om du vill, flyttas **högst upp**
+  i listan (Alternativ › Allmänt › Spellista). Samma sak i webbversionen,
+  Rust-versionen och på pygamez.com (som dessutom visar ”Dina favoriter” på
+  startsidan).
 - **Statuskort** längst ner till vänster med en **status-LED** (grå = meny, grön = igång,
   guld = pausat, röd = game over) och en **live-FPS-avläsning**.
 - **Viloskärm** med auroraljus, ett parallaxstjärnfält med stjärnfall, en svävande logotyp med
@@ -11159,6 +11220,7 @@ profileview.py       Profilskärm, val av spelare 2 och startnivåkortet
 replay.py            Inspelning och arkiv för replays (replay.json)
 replayview.py        Replay-skärm: arkivlista och uppspelning
 matches.py           Matchhistorik per spel och profil (matches.pgzlamamatches): poster, summor, gräns 250
+favorites.py         Favoriter per profil (avsnittet favorites i mem.json): stjärna i spellistan, ordning
 matchview.py         Matchskärm: senaste matcher (diagram + senaste 10) och alla matcher (filter, sortering)
 dailyarchive.py      Dagsarkiv: senaste 30 dagarna + spelade dagar, kompakt lagring, kalenderfönster
 ugc.py               Eget innehåll (minigolfbanor, Geometry Dash-nivåer): lagring, kontroll, export/import (ugc.json)
@@ -12480,9 +12542,16 @@ Koko käyttöliittymä on piirretty alusta asti (pelkkä Tkinter + Pygame, ei
 ylimääräisiä paketteja) ja viimeistelty modernin pelilauncherin tyyliin:
 
 - **Sivupalkin peliluettelo**: jokaisella rivillä on oma **minipiktogrammi** pelin
-  korostusvärissä, näyttää nykyisen **ennätyksen (★)** ja reagoi pehmeästi animoiduilla
+  korostusvärissä, näyttää nykyisen **ennätyksen (🏆)** ja reagoi pehmeästi animoiduilla
   hover-tehosteilla. Käynnissä oleva peli pysyy värillä korostettuna; pienissä
   ikkunoissa luettelo **vierii** hiiren rullalla.
+- **Suosikit**: jokaisen rivin oikeassa reunassa on **tähti** – yksi napsautus
+  tekee pelistä suosikin (tähti täyttyy kullalla), toinen poistaa sen
+  käynnistämättä peliä. Suosikit näkyvät aloitusnäytössä **ensimmäisinä ja
+  suurempina**, tallentuvat **profiilikohtaisesti** ja voivat halutessasi nousta
+  listan **kärkeen** (Asetukset › Yleiset › Pelilista). Sama toimii
+  selainversiossa, Rust-versiossa ja pygamez.comissa (jonka etusivulla näkyy
+  lisäksi ”Suosikkisi”).
 - **Tilakortti** vasemmassa alakulmassa **tila-LEDillä** (harmaa = valikko, vihreä =
   käynnissä, kulta = tauko, punainen = game over) ja **reaaliaikaisella FPS-lukemalla**.
 - **Aloitusnäyttö** revontulivaloilla, parallaksitähtikentällä tähdenlentoineen,
@@ -12636,6 +12705,7 @@ profileview.py       Profiilinäyttö, pelaajan 2 valinta ja aloitustasokortti
 replay.py            Uusintojen tallennus ja arkisto (replay.json)
 replayview.py        Uusintanäyttö: arkistolista ja toisto
 matches.py           Otteluhistoria peleittäin ja profiileittain (matches.pgzlamamatches): merkinnät, summat, raja 250
+favorites.py         Suosikit profiileittain (osio favorites tiedostossa mem.json): tähti pelilistassa, järjestys
 matchview.py         Ottelunäkymä: viimeisimmät (käyrä + 10 viimeisintä) ja kaikki (suodatin, järjestys)
 dailyarchive.py      Päiväarkisto: viimeiset 30 päivää + pelatut päivät, tiivis tallennus, kalenteri-ikkuna
 ugc.py               Oma sisältö (minigolfradat, Geometry Dash -tasot): tallennus, tarkistus, vienti/tuonti (ugc.json)
@@ -13905,9 +13975,16 @@ Celé rozhraní je nakreslené od základu (čistý Tkinter + Pygame, žádné b
 navíc) a vyladěné do stylu moderního herního spouštěče:
 
 - **Postranní panel se seznamem her**: každý řádek má vlastní **mini-piktogram**
-  v akcentové barvě hry, ukazuje aktuální **nejlepší skóre (★)** a reaguje jemně
+  v akcentové barvě hry, ukazuje aktuální **nejlepší skóre (🏆)** a reaguje jemně
   animovanými efekty při najetí. Běžící hra zůstává barevně označená; v malých
   oknech se seznam **posouvá** kolečkem myši.
+- **Oblíbené**: vpravo v každém řádku je **hvězdička** – jedno kliknutí přidá
+  hru mezi oblíbené (hvězdička se vybarví zlatě), druhé ji odebere, aniž by se
+  hra spustila. Oblíbené hry jsou na úvodní obrazovce **vpředu a větší**,
+  ukládají se **pro každý profil** a pokud chceš, přesunou se i **úplně nahoru**
+  v seznamu (Možnosti › Obecné › Seznam her). Stejně tak ve webové verzi, ve
+  verzi v Rustu a na pygamez.com (kde je navíc na úvodní stránce „Tvoje
+  oblíbené“).
 - **Stavová karta** vlevo dole se **stavovou LED** (šedá = menu, zelená = běží,
   zlatá = pauza, červená = game over) a **živým ukazatelem FPS**.
 - **Úvodní obrazovka** s polárními světly, parallaxovým hvězdným polem včetně
@@ -14057,6 +14134,7 @@ profileview.py       Obrazovka profilů, výběr hráče 2 a karta startovní ú
 replay.py            Nahrávání a archiv záznamů (replay.json)
 replayview.py        Obrazovka záznamů: seznam archivu a přehrávání
 matches.py           Historie zápasů podle hry a profilu (matches.pgzlamamatches): záznamy, součty, limit 250
+favorites.py         Oblíbené podle profilu (oddíl favorites v mem.json): hvězdička v seznamu her, pořadí
 matchview.py         Obrazovka zápasů: poslední (křivka + posledních 10) a všechny (filtr, řazení)
 dailyarchive.py      Denní archiv: posledních 30 dní + odehrané dny, úsporné ukládání, okno kalendáře
 ugc.py               Vlastní obsah (minigolfové jamky, úrovně Geometry Dash): úložiště, kontrola, export/import (ugc.json)
@@ -15340,9 +15418,16 @@ Ves vmesnik je izrisan iz nič (čisti Tkinter + Pygame, brez dodatnih paketov) 
 oblikovan kot sodoben zaganjalnik iger:
 
 - **Stranska vrstica s seznamom iger**: vsaka vrstica ima svoj **mini piktogram**
-  v poudarni barvi igre, prikazuje trenutni **rekord (★)** in se odziva z gladko
+  v poudarni barvi igre, prikazuje trenutni **rekord (🏆)** in se odziva z gladko
   animiranimi učinki ob prehodu miške. Tekoča igra ostane obarvana; pri majhnih
   oknih se seznam **pomika** s kolescem miške.
+- **Priljubljene**: desno v vsaki vrstici je **zvezdica** – en klik doda igro
+  med priljubljene (zvezdica se obarva zlato), drugi jo odstrani, ne da bi se
+  igra zagnala. Priljubljene so na začetnem zaslonu **spredaj in večje**,
+  shranijo se **za vsak profil** in se po želji pomaknejo tudi **čisto na vrh**
+  seznama (Možnosti › Splošno › Seznam iger). Enako v spletni različici,
+  različici v Rustu in na pygamez.com (kjer je na domači strani še razdelek
+  »Tvoje priljubljene«).
 - **Kartica stanja** spodaj levo z **LED-diodo stanja** (siva = meni, zelena =
   teče, zlata = pavza, rdeča = game over) in **prikazom FPS v živo**.
 - **Zaslon v mirovanju** z aurorami, paralaksnim zvezdnim poljem z utrinki,
@@ -15492,6 +15577,7 @@ profileview.py       Zaslon profilov, izbira igralca 2 in kartica začetne stopn
 replay.py            Snemanje in arhiv posnetkov (replay.json)
 replayview.py        Zaslon posnetkov: seznam arhiva in predvajanje
 matches.py           Zgodovina tekem po igrah in profilih (matches.pgzlamamatches): vnosi, vsote, meja 250
+favorites.py         Priljubljene po profilih (razdelek favorites v mem.json): zvezdica v seznamu iger, vrstni red
 matchview.py         Zaslon tekem: zadnje tekme (krivulja + zadnjih 10) in vse tekme (filter, razvrstitev)
 dailyarchive.py      Dnevni arhiv: zadnjih 30 dni + odigrani dnevi, zgoščeno shranjevanje, okno koledarja
 ugc.py               Lastna vsebina (minigolf proge, stopnje Geometry Dash): shranjevanje, preverjanje, izvoz/uvoz (ugc.json)
@@ -16781,9 +16867,15 @@ Cijelo je sučelje nacrtano od nule (čisti Tkinter + Pygame, bez dodatnih paket
 dotjerano poput modernog pokretača igara:
 
 - **Bočna traka s popisom igara**: svaki redak ima vlastiti **mini-piktogram** u
-  naglasnoj boji igre, prikazuje trenutni **rekord (★)** i reagira glatko
+  naglasnoj boji igre, prikazuje trenutni **rekord (🏆)** i reagira glatko
   animiranim hover efektima. Igra koja je u tijeku ostaje istaknuta bojom; u malim
   prozorima popis se **pomiče** kotačićem miša.
+- **Favoriti**: desno u svakom retku nalazi se **zvjezdica** – jedan klik dodaje
+  igru u favorite (zvjezdica se oboji zlatno), drugi je uklanja, bez pokretanja
+  igre. Favoriti su na početnom zaslonu **naprijed i veći**, spremaju se **po
+  profilu** i, ako želiš, pomiču se i na **sam vrh** popisa (Opcije › Općenito ›
+  Popis igara). Isto u web verziji, Rust verziji i na pygamez.com (gdje je na
+  početnoj stranici još i „Tvoji favoriti“).
 - **Kartica stanja** dolje lijevo s **LED-om stanja** (sivo = izbornik, zeleno = u
   tijeku, zlatno = pauza, crveno = game over) i **prikazom FPS-a uživo**.
 - **Početni zaslon** s aurorama, paralaksnim zvjezdanim poljem sa zvijezdama
@@ -16932,6 +17024,7 @@ profileview.py       Zaslon profila, odabir igrača 2 i kartica početne razine
 replay.py            Snimanje i arhiva snimaka (replay.json)
 replayview.py        Zaslon snimaka: popis arhive i reprodukcija
 matches.py           Povijest mečeva po igri i profilu (matches.pgzlamamatches): unosi, zbrojevi, granica 250
+favorites.py         Favoriti po profilu (odjeljak favorites u mem.json): zvjezdica u popisu igara, redoslijed
 matchview.py         Zaslon mečeva: zadnji mečevi (krivulja + zadnjih 10) i svi mečevi (filtar, poredak)
 dailyarchive.py      Dnevna arhiva: zadnjih 30 dana + odigrani dani, sažeto spremanje, prozor kalendara
 ugc.py               Vlastiti sadržaj (minigolf staze, razine Geometry Dasha): pohrana, provjera, izvoz/uvoz (ugc.json)

@@ -400,6 +400,10 @@ impl OptionsScreen {
         }
 
         if self.tab == "general" {
+            // Linke Spalte: Ton & Feedback, Aufnahme, Spieleliste. Kompakt
+            // ruecken die Zeilen enger zusammen, Aufnahme und Spieleliste
+            // teilen sich dann ein Panel ohne Ueberschrift.
+            let step = if compact { 34 } else { 38 };
             let mut y = 116;
             let mut grp = Vec::new();
             for (kind, label) in [
@@ -408,7 +412,7 @@ impl OptionsScreen {
                 (ItemKind::Toggle { key: "haptik".into(), sect: None, default: false }, t("options.haptik")),
             ] {
                 grp.push(add(&mut items, kind, Rect::new(self.left_x, y, col_w, 30), label));
-                y += 38;
+                y += step;
             }
             panel_for(&items, &mut panels, &grp, Some(t("options.audio")));
             y += if compact { 18 } else { 30 };
@@ -416,13 +420,28 @@ impl OptionsScreen {
             if font.width(&lbl) > col_w - 76 {
                 lbl = t("app.replays");
             }
-            let grp = vec![add(
+            let mut grp = vec![add(
                 &mut items,
                 ItemKind::Toggle { key: "enabled".into(), sect: Some("replay".into()), default: true },
                 Rect::new(self.left_x, y, col_w, 30),
                 lbl,
             )];
-            panel_for(&items, &mut panels, &grp, if compact { None } else { Some(t("options.recording")) });
+            // Spieleliste: Favoriten oben in der Seitenleiste anzeigen.
+            let mut lbl = t("options.fav_top");
+            if font.width(&lbl) > col_w - 76 {
+                lbl = t("app.favorites");
+            }
+            let fav_kind = ItemKind::Toggle { key: "top".into(), sect: Some("favorites".into()), default: false };
+            if compact {
+                y += step;
+                grp.push(add(&mut items, fav_kind, Rect::new(self.left_x, y, col_w, 30), lbl));
+                panel_for(&items, &mut panels, &grp, None);
+            } else {
+                panel_for(&items, &mut panels, &grp, Some(t("options.recording")));
+                y += 38 + 30;
+                let grp = vec![add(&mut items, fav_kind, Rect::new(self.left_x, y, col_w, 30), lbl)];
+                panel_for(&items, &mut panels, &grp, Some(t("options.gamelist")));
+            }
 
             let mut ry = 116;
             let mut grp = Vec::new();
@@ -612,13 +631,17 @@ impl OptionsScreen {
                 }
                 self.b.play_sound("move");
             }
-            ItemKind::Toggle { key, .. } => {
+            ItemKind::Toggle { key, sect, .. } => {
                 let neu = !self.toggle_get(&it);
                 self.toggle_set(&it, neu);
                 if key == "auto_resolution" {
                     shell::post(Cmd::SetAutoResolution(neu));
                 }
                 self.save_and_beep();
+                if sect.as_deref() == Some("favorites") {
+                    // Seitenleiste sofort umsortieren (Favoriten oben / normal).
+                    shell::post(Cmd::RefreshFavorites);
+                }
             }
             ItemKind::Volume => {
                 shell::edit_settings(|s| {

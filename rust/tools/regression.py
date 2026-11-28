@@ -474,9 +474,18 @@ BILDSCHIRME = [
     ("screen:wiki:lamamines", 60, "Next Next Down Up Next", 3, False),
     ("screen:wiki:lamaplinko", 60, "Down Down Next Down", 3, False),
     ("screen:wiki:lamacrash", 60, "Next Down Next Next Up", 3, False),
+    # Optionen-Seite (neuer Abschnitt Spieleliste/Favoriten) und Erste Schritte (Sidebar-Stern)
+    ("screen:wiki:options", 40, "Down Down Next", 3, False),
+    ("screen:wiki:start", 40, "Next Down", 3, False),
     ("screen:replays", 40, "Left Left Tab Right", 3, False),
     ("screen:menu", 90, "~320:330 _ _ ~150:360 _ _ ~480:300", 4, True),
     ("screen:menu", 60, "~320:330 _ ~150:360", 4, "classic"),
+    # Startbildschirm ohne Favoriten (leerer Datenordner) - dichte Stufe bei 50 Spielen;
+    # mit Favoriten (Testdaten: 3 Favoriten) gross und vorne, Hover auf einer Favoriten-Pille
+    ("screen:menu", 40, "~320:240 _ ~200:300", 4, False),
+    ("screen:menu", 40, "~260:228 _ ~330:228", 4, "v41"),
+    # Optionen > Allgemein: "Favoriten oben" umschalten (Daten: settings.json favorites.top)
+    ("screen:options", 40, "Down Down Down Down Return _ Return _ Return", 3, True),
     # Match-Historie (Testdaten mit matches.pgzlamamatches): Kurve mit Tooltip,
     # Filter M / Sortierung O / Bildlauf / Mausrad / Chips, Info-Texte je Spiel
     # (match_text), leere Historie, Vorspiel-Knopf Matches hin und zurueck,

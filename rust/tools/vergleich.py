@@ -377,6 +377,7 @@ def app_attrappe(canvas, w, h, settings, ALL_GAMES):
     Highscore-Banner brauchen. So zeichnet der Pruefstand mit dem ECHTEN
     Code aus main.py statt mit einem Nachbau."""
     import pygame
+    import favorites
     import highscore
     import main as main_mod
 
@@ -391,6 +392,7 @@ def app_attrappe(canvas, w, h, settings, ALL_GAMES):
 
     class _Liste:
         scores = highscore.load_highscores()
+        favs = favorites.load()
 
     class _Embed:
         def configure(self, **_kw):
@@ -424,6 +426,10 @@ def bildschirm_bauen(key, canvas, w, h, settings, ALL_GAMES, zeigen=None):
     app.back_to_menu = lambda: None
     app.launch_game = lambda *a, **k: None
     app.show_screen = zeigen or (lambda screen, exit_old=True: None)
+    # Optionen: Seitenleiste/Auflösung gibt es im Pruefstand nicht.
+    app.refresh_favorites = lambda: None
+    app.set_auto_resolution = lambda on: None
+    app.refresh_language = lambda: None
 
     def zu():
         return None
@@ -471,6 +477,14 @@ def bildschirm_bauen(key, canvas, w, h, settings, ALL_GAMES, zeigen=None):
     if name == "replays":
         from replayview import ReplayScreen
         return ReplayScreen(canvas, w, h, app, on_close=zu)
+    if name == "options":
+        # Optionen (Reiter Allgemein mit "Favoriten oben"), screen:options[:reiter]
+        from menu import OptionsScreen
+        scr = OptionsScreen(canvas, w, h, app, on_close=zu)
+        if arg:
+            scr.tab = arg
+            scr._build_items()
+        return scr
     if name == "pregame":
         # Vorspiel-Screen eines Spiels (Knopf Matches -> MatchScreen -> zurueck)
         from menu import PreGameScreen

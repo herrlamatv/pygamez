@@ -903,6 +903,59 @@ pub fn draw_grad_line(
     surface.bl(&strip, (x, y));
 }
 
+/// Ueberabtastung beim Stern-Zeichnen (`ui._STAR_SS`).
+const STAR_SS: i32 = 4;
+
+/// Cache-Schluessel der Sterne: (Radius, Farbe, Linienbreite).
+type StarKey = (i32, (u8, u8, u8), i32);
+
+/// `ui._star_points(cx, cy, r)` - zehn Eckpunkte, auf ganze Pixel gerundet
+/// (`floor(x + 0.5)` wie in Python).
+fn star_points(cx: f64, cy: f64, r: f64) -> Vec<(i32, i32)> {
+    (0..10)
+        .map(|i| {
+            let rr = if i % 2 == 0 { r } else { r * 0.46 };
+            let a = py::radians((-90 + i * 36) as f64);
+            ((cx + a.cos() * rr + 0.5).floor() as i32, (cy + a.sin() * rr + 0.5).floor() as i32)
+        })
+        .collect()
+}
+
+/// `ui.star_surface(r, color, width=0)` - fuenfzackiger Stern als geglaettete,
+/// transparente Flaeche (Kantenlaenge 2r+2), gecacht.
+pub fn star_surface(r: i32, color: Color, width: i32) -> Surface {
+    thread_local! {
+        static CACHE: RefCell<HashMap<StarKey, Surface>> = RefCell::new(HashMap::new());
+    }
+    let r = r.max(2);
+    let key = (r, (color.r, color.g, color.b), width);
+    if let Some(s) = CACHE.with(|c| c.borrow().get(&key).cloned()) {
+        return s;
+    }
+    let size = 2 * r + 2;
+    let mut big = pg::surface_alpha(size * STAR_SS, size * STAR_SS);
+    // Transparente Pixel in der Sternfarbe -> keine dunklen Kanten.
+    big.fill_c(pg::rgba(color.r, color.g, color.b, 0));
+    let c = (size * STAR_SS) as f64 / 2.0;
+    draw::polygon(&mut big, rgb(color.r, color.g, color.b), &star_points(c, c, (r * STAR_SS) as f64), width * STAR_SS);
+    let surf = transform::smoothscale(&big, size, size);
+    CACHE.with(|c| {
+        let mut c = c.borrow_mut();
+        if c.len() > 64 {
+            c.clear();
+        }
+        c.insert(key, surf.clone());
+    });
+    surf
+}
+
+/// `ui.draw_star(surface, center, r, color, width=0)`
+pub fn draw_star(surface: &mut Surface, center: impl Pt, r: i32, color: Color, width: i32) {
+    let img = star_surface(r, color, width);
+    let rr = img.get_rect().center_at(center);
+    surface.bl(&img, (rr.x, rr.y));
+}
+
 /// `ui.draw_halo(surface, center, size, color=None)`
 pub fn draw_halo(surface: &mut Surface, center: impl Pt, size: impl Num, color: Option<Color>) {
     if !fx().logo_halo {

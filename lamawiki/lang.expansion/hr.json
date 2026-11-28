@@ -12,7 +12,9 @@
         "pauza",
         "cijeli zaslon",
         "bocna traka",
-        "više igrača"
+        "više igrača",
+        "favoriti",
+        "zvjezdica"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "Bočna traka",
           "body": [
-            "Lijevo vidiš sve igre s njihovom ikonom i tvojim najboljim rezultatom (zvjezdica). Igra koja je u tijeku ostaje istaknuta; u malim prozorima popis se pomiče kotačićem miša.",
+            "Lijevo vidiš sve igre s njihovom ikonom i tvojim najboljim rezultatom (pehar). Igra koja je u tijeku ostaje istaknuta; u malim prozorima popis se pomiče kotačićem miša.",
+            "Desno u svakom retku nalazi se zvjezdica: jedan klik dodaje igru u favorite (zvjezdica se oboji zlatno), drugi je uklanja - igra se pritom ne pokreće. Favoriti su na početnom zaslonu naprijed i veći te se spremaju po profilu; ako želiš, mogu se pomaknuti i na sam vrh popisa (vidi Opcije).",
             "Kartica stanja dolje lijevo prikazuje naziv igre, stanje (zeleno = u tijeku, zlatno = pauza, crveno = kraj igre), rezultat i trenutačnu brzinu sličica."
           ]
         },
@@ -64,7 +67,8 @@
         "dizajn",
         "izgled",
         "tema",
-        "fiksne tipke"
+        "fiksne tipke",
+        "favoriti"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "Zvuk uključi/isključi i glasnoću namjesti na zaslonu opcija. Svi se efekti generiraju uživo - nema audiodatoteka.",
             "Vibracija tjera na vibriranje priključeni gamepad (bez njega nema učinka)."
+          ]
+        },
+        {
+          "h": "Popis igara",
+          "body": [
+            "Favoriti na vrhu: na kartici Općenito (grupa Popis igara) možeš prikazati favorite na samom vrhu popisa igara u bočnoj traci - obje grupe zadržavaju uobičajeni redoslijed. Zadano je isključeno.",
+            "U web verziji i na pygamez.com prekidač Favoriti na vrhu nalazi se u kartici Postavke na dnu bočne trake - u samoj igri, ne u postavkama računa."
           ]
         },
         {

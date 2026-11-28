@@ -367,14 +367,19 @@ class OptionsScreen(_Screen):
         compact = H < 420
 
         if self.tab == "general":
-            # Linke Spalte: Ton & Feedback / rechte Spalte: Grafik & Sprache.
+            # Linke Spalte: Ton & Feedback, Aufnahme, Spieleliste /
+            # rechte Spalte: Grafik & Sprache. Kompakt (kleine Auflösung)
+            # rücken die Zeilen enger zusammen, Aufnahme und Spieleliste
+            # teilen sich dann ein Panel ohne Überschrift - sonst stößt die
+            # linke Spalte an den Schließen-Knopf.
+            step = 34 if compact else 38
             y = 116
             grp = []
             for kind, kw in (("toggle", dict(key="sound", label=t("options.sound"))),
                              ("volume", dict(label=t("options.volume"))),
                              ("toggle", dict(key="haptik", label=t("options.haptik")))):
                 grp.append(add(kind, pygame.Rect(self._left_x, y, col_w, 30), **kw))
-                y += 38
+                y += step
             panel_for(grp, t("options.audio"))
             # Replay-Aufzeichnung (eigene kleine Gruppe unter dem Ton-Block).
             y += 18 if compact else 30
@@ -385,7 +390,22 @@ class OptionsScreen(_Screen):
                 lbl = t("app.replays")
             grp = [add("toggle", pygame.Rect(self._left_x, y, col_w, 30),
                        key="enabled", sect="replay", default=True, label=lbl)]
-            panel_for(grp, None if compact else t("options.recording"))
+            # Spieleliste: Favoriten oben in der Seitenleiste anzeigen.
+            lbl = t("options.fav_top")
+            if self.font.size(lbl)[0] > col_w - 76:
+                lbl = t("app.favorites")
+            if compact:
+                y += step
+                grp.append(add("toggle", pygame.Rect(self._left_x, y, col_w, 30),
+                               key="top", sect="favorites", default=False,
+                               label=lbl))
+                panel_for(grp, None)
+            else:
+                panel_for(grp, t("options.recording"))
+                y += 38 + 30
+                panel_for([add("toggle", pygame.Rect(self._left_x, y, col_w, 30),
+                               key="top", sect="favorites", default=False,
+                               label=lbl)], t("options.gamelist"))
 
             ry = 116
             grp = []
@@ -563,6 +583,9 @@ class OptionsScreen(_Screen):
                 # Sofort anwenden (an Fenster anpassen bzw. feste Auflösung zurück).
                 self.app.set_auto_resolution(self.settings["auto_resolution"])
             self._save_and_beep()
+            if it.get("sect") == "favorites":
+                # Seitenleiste sofort umsortieren (Favoriten oben / normal).
+                self.app.refresh_favorites()
         elif it["kind"] == "volume":
             v = self.settings.get("volume", 0.6) + 0.1 * direction
             self.settings["volume"] = max(0.0, min(1.0, round(v, 2)))

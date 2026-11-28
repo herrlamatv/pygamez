@@ -12,7 +12,9 @@
         "pause",
         "fullscreen",
         "sidebar",
-        "multiplayer"
+        "multiplayer",
+        "favorites",
+        "star"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "The sidebar",
           "body": [
-            "On the left you see all games with their icon and your high score (star). The running game stays highlighted; on small windows the list scrolls with the mouse wheel.",
+            "On the left you see all games with their icon and your high score (trophy). The running game stays highlighted; on small windows the list scrolls with the mouse wheel.",
+            "On the right of every row sits a star: one click makes the game a favorite (the star fills gold), a second click removes it - the game does not start. Favorites appear first and larger on the start screen and are saved per profile; if you like, they can also move to the very top of the list (see Options).",
             "The status card at the bottom left shows the game name, state (green = running, gold = paused, red = game over), score and the current frame rate."
           ]
         },
@@ -64,7 +67,8 @@
         "design",
         "appearance",
         "theme",
-        "extra keys"
+        "extra keys",
+        "favorites"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "Toggle sound and set the volume in the options screen. All effects are generated live - there are no audio files.",
             "Haptics vibrates a connected gamepad (does nothing without one)."
+          ]
+        },
+        {
+          "h": "Game list",
+          "body": [
+            "Favorites on top: on the General tab (group Game list) you can show your favorites at the very top of the sidebar's game list - both groups keep their usual order. It is off by default.",
+            "In the web version and on pygamez.com the Favorites on top switch is in the Settings card at the bottom of the sidebar - in the game itself, not in the account settings."
           ]
         },
         {

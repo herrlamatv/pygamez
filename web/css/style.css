@@ -163,6 +163,21 @@ html, body {
 }
 .game-item .gi-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .game-item .gi-hs { color: var(--gold); font-size: 11.5px; font-variant-numeric: tabular-nums; }
+/* Favoriten-Stern: blasser Umriss, beim Zeilen-Hover heller, direkt darüber gold; Favorit = gold gefüllt */
+.game-item .gi-fav {
+  flex: 0 0 22px; width: 22px; height: 22px; margin: -4px -6px -4px -2px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 6px; cursor: pointer;
+}
+.game-item .gi-fav svg {
+  width: 15px; height: 15px; fill: none;
+  stroke: var(--text-faint); stroke-width: 1.7; stroke-linejoin: round;
+  transition: stroke .12s, fill .12s, transform .12s;
+}
+.game-item:hover .gi-fav svg { stroke: var(--text-dim); }
+.game-item .gi-fav:hover svg { stroke: var(--gold); transform: scale(1.12); }
+.game-item .gi-fav.on svg { fill: var(--gold); stroke: var(--gold); }
+.game-item .gi-fav.on:hover svg { fill: color-mix(in srgb, var(--gold) 75%, #fff); }
 .gl-empty { color: var(--text-faint); padding: 10px; font-size: 12px; }
 
 .settings {

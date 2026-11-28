@@ -12,7 +12,9 @@
         "pause",
         "fuldskærm",
         "sidebjælke",
-        "flerspiller"
+        "flerspiller",
+        "favoritter",
+        "stjerne"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "Sidebjælken",
           "body": [
-            "Til venstre ser du alle spil med deres ikon og din highscore (stjerne). Det kørende spil forbliver fremhævet; i små vinduer ruller listen med musehjulet.",
+            "Til venstre ser du alle spil med deres ikon og din highscore (pokal). Det kørende spil forbliver fremhævet; i små vinduer ruller listen med musehjulet.",
+            "Til højre i hver række sidder en stjerne: ét klik gør spillet til favorit (stjernen bliver guldfyldt), et klik mere fjerner det igen - spillet starter ikke. Favoritter står forrest og større på startskærmen og gemmes pr. profil; hvis du vil, kan de også rykke helt op øverst i listen (se Indstillinger).",
             "Statuskortet nederst til venstre viser spillets navn, tilstand (grøn = kører, guld = pause, rød = game over), point og den aktuelle billedhastighed."
           ]
         },
@@ -64,7 +67,8 @@
         "design",
         "udseende",
         "tema",
-        "faste taster"
+        "faste taster",
+        "favoritter"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "Slå lyd til/fra og indstil lydstyrken i indstillingsskærmen. Alle effekter genereres live - der er ingen lydfiler.",
             "Haptik får en tilsluttet gamepad til at vibrere (gør intet uden en)."
+          ]
+        },
+        {
+          "h": "Spilliste",
+          "body": [
+            "Favoritter øverst: På fanen Generelt (gruppen Spilliste) kan du vise dine favoritter helt øverst i sidebjælkens spilliste - begge grupper beholder den vante rækkefølge. Slået fra som standard.",
+            "I webversionen og på pygamez.com sidder kontakten Favoritter øverst i kortet Indstillinger nederst i sidebjælken - i selve spillet, ikke i kontoindstillingerne."
           ]
         },
         {

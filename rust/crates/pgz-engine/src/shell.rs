@@ -69,6 +69,8 @@ pub enum Cmd {
     RefreshLanguage,
     /// `refresh_profile()`
     RefreshProfile,
+    /// `refresh_favorites()` - Seitenleiste nach "Favoriten oben" neu sortieren
+    RefreshFavorites,
     /// `toggle_fullscreen()`
     ToggleFullscreen,
     /// `beenden()`

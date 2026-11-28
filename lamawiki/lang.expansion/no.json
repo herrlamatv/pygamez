@@ -12,7 +12,9 @@
         "pause",
         "fullskjerm",
         "sidepanel",
-        "flerspiller"
+        "flerspiller",
+        "favoritter",
+        "stjerne"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "Sidepanelet",
           "body": [
-            "Til venstre ser du alle spillene med ikonet sitt og rekorden din (stjerne). Det pågående spillet forblir markert; i små vinduer ruller listen med musehjulet.",
+            "Til venstre ser du alle spillene med ikonet sitt og rekorden din (pokal). Det pågående spillet forblir markert; i små vinduer ruller listen med musehjulet.",
+            "Til høyre i hver rad sitter en stjerne: ett klikk gjør spillet til favoritt (stjernen fylles med gull), et klikk til fjerner det igjen - spillet starter ikke. Favoritter står først og større på startskjermen og lagres per profil; om du vil, kan de også flyttes helt øverst i listen (se Alternativer).",
             "Statuskortet nederst til venstre viser spillets navn, tilstand (grønn = pågår, gull = pauset, rød = game over), poeng og den nåværende bildefrekvensen."
           ]
         },
@@ -64,7 +67,8 @@
         "design",
         "utseende",
         "tema",
-        "faste taster"
+        "faste taster",
+        "favoritter"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "Slå lyd av og på og still inn volumet i innstillingsskjermen. Alle effekter genereres live - det finnes ingen lydfiler.",
             "Haptikk får en tilkoblet spillkontroller til å vibrere (gjør ingenting uten en)."
+          ]
+        },
+        {
+          "h": "Spilliste",
+          "body": [
+            "Favoritter øverst: I fanen Generelt (gruppen Spilliste) kan du vise favorittene dine helt øverst i spillisten i sidepanelet - begge gruppene beholder vanlig rekkefølge. Av som standard.",
+            "I nettversjonen og på pygamez.com finner du bryteren Favoritter øverst i kortet Innstillinger nederst i sidepanelet - i selve spillet, ikke i kontoinnstillingene."
           ]
         },
         {

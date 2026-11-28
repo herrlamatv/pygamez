@@ -18,6 +18,47 @@ use pgz_engine::{achv, audio, py, ui};
 use crate::screens;
 use crate::sidebar::{tausender, Aktion, Sidebar};
 
+/// Eine Stufe des Spiele-Rasters (`App.MENU_TILE_LEVELS`): Schrift
+/// Favoriten, Schrift uebrige, Innenabstand Favoriten/uebrige, Abstand
+/// zwischen Pillen, Abstand Favoriten -> uebrige, Rand links+rechts.
+type MenuLevel = (i32, i32, i32, i32, i32, i32, i32);
+
+/// `App.MENU_TILE_LEVELS` - von gross nach klein; ohne Favoriten ergeben die
+/// ersten vier die alte Folge 15/13/11, die letzte ("dicht") greift erst,
+/// wenn sonst nichts passt.
+const MENU_TILE_LEVELS: [MenuLevel; 5] = [
+    (19, 15, 16, 12, 8, 14, 60),
+    (17, 13, 16, 12, 8, 14, 60),
+    (15, 11, 16, 12, 8, 14, 60),
+    (13, 11, 16, 12, 8, 14, 60),
+    (13, 11, 10, 6, 4, 8, 24),
+];
+/// `App.MENU_LOGO_MIN` - so klein darf das Logo werden, damit alles passt.
+const MENU_LOGO_MIN: i32 = 56;
+
+/// `App._menu_star_r(fsize)` - Stern-Radius in einer Favoriten-Pille.
+fn menu_star_r(fsize: i32) -> i32 {
+    5.max(fsize * 2 / 5)
+}
+
+/// Eine Gruppe des Spiele-Rasters (Favoriten oder uebrige Spiele).
+struct MenuGroup {
+    rows: Vec<Vec<(usize, i32)>>,
+    fnt: pg::Font,
+    pad_x: i32,
+    row_h: i32,
+    fav: bool,
+    star_r: i32,
+}
+
+/// Ergebnis von `flow_menu_tiles`.
+struct MenuTiles {
+    groups: Vec<MenuGroup>,
+    gap: i32,
+    group_gap: i32,
+    total: i32,
+}
+
 
 /// Das Programm.
 pub struct App {
@@ -83,6 +124,7 @@ impl App {
             gehaltene: Vec::new(),
         };
         app.sidebar.fit(&app.games);
+        app.refresh_favorites();
         app.info_setzen();
         achievements::backfill_silent();
         if !pgz_core::i18n::has_language() {
@@ -91,6 +133,13 @@ impl App {
             app.maybe_show_level_intro();
         }
         app
+    }
+
+    /// `refresh_favorites()` - Favoriten (aktives Profil) neu lesen und die
+    /// Liste nach der Einstellung "Favoriten oben" sortieren.
+    pub fn refresh_favorites(&mut self) {
+        let top = pgz_core::favorites::top_enabled(&shell::settings());
+        self.sidebar.refresh_favorites(&self.games, top);
     }
 
     fn info_setzen(&self) {
@@ -347,8 +396,11 @@ impl App {
                         self.sidebar.status = t("app.no_game");
                     }
                 }
+                Cmd::RefreshFavorites => self.refresh_favorites(),
                 Cmd::RefreshProfile => {
                     achievements::backfill_silent();
+                    // Favoriten gehoeren zum Profil -> neu einlesen.
+                    self.refresh_favorites();
                     self.sidebar.refresh_scores();
                     self.ticker_key = None;
                     self.ticker_band = None;
@@ -542,6 +594,11 @@ impl App {
         audio::play("click", Some(&shell::settings()));
         match a {
             Aktion::Spiel(i) => self.spiel_starten(i),
+            Aktion::Favorit(i) => {
+                // `toggle_favorite(cls)` - Stern in der Spieleliste
+                pgz_core::favorites::toggle(self.games[i].key);
+                self.refresh_favorites();
+            }
             Aktion::Profil => shell::post(Cmd::Profiles),
             Aktion::Knopf(k) => match k.as_str() {
                 "quit" => self.beenden(),
@@ -901,20 +958,69 @@ impl App {
         s.set_clip(Some(prev));
     }
 
-    fn flow_menu_tiles(&self, w: i32, avail: i32) -> (Vec<Vec<(usize, i32)>>, pg::Font, i32, i32, i32, i32) {
-        let max_w = w - 60;
-        let mut result = None;
-        for fsize in [15, 13, 11] {
-            let fnt = ui::f(fsize);
-            let pad_x = fsize - 4;
-            let row_h = fnt.get_height() + 12;
-            let gap = 8;
+    /// `_menu_fav_classes()` - Favoriten fuers Startbild (Spiele-Reihenfolge)
+    /// und die uebrigen Spiele, je als Index in `self.games`.
+    fn menu_fav_split(&self) -> (Vec<usize>, Vec<usize>) {
+        let favs = &self.sidebar.favs;
+        let (mut fav, mut rest) = (Vec::new(), Vec::new());
+        for (i, g) in self.games.iter().enumerate() {
+            if favs.iter().any(|f| f == g.key) {
+                fav.push(i);
+            } else {
+                rest.push(i);
+            }
+        }
+        (fav, rest)
+    }
+
+    /// `_flow_menu_tiles(w, avail, avail_top)` - zweistufiges Spiele-Raster:
+    /// normale Stufen gegen `avail` (Logo mittig); passt keine, bleibt die
+    /// kleinste (Logo rueckt hoch), erst wenn auch `avail_top` nicht reicht,
+    /// kommt die dichte Stufe.
+    fn flow_menu_tiles(&self, w: i32, avail: i32, avail_top: i32) -> MenuTiles {
+        let (fav, rest) = self.menu_fav_split();
+        let n = MENU_TILE_LEVELS.len();
+        let mut tiles = None;
+        for level in &MENU_TILE_LEVELS[..n - 1] {
+            let t = self.flow_level(level, w, &fav, &rest);
+            if t.total <= avail {
+                return t;
+            }
+            tiles = Some(t);
+        }
+        let t = tiles.expect("mindestens eine Stufe");
+        if t.total <= avail_top {
+            return t;
+        }
+        self.flow_level(&MENU_TILE_LEVELS[n - 1], w, &fav, &rest)
+    }
+
+    /// `_flow_level(level, w, fav_cls, rest)`
+    fn flow_level(&self, level: &MenuLevel, w: i32, fav: &[usize], rest: &[usize]) -> MenuTiles {
+        let &(fsize_f, fsize, pady_f, pady, gap, group_gap, margin) = level;
+        let max_w = w - margin;
+        let mut groups = Vec::new();
+        for (list, is_fav) in [(fav, true), (rest, false)] {
+            if list.is_empty() {
+                continue;
+            }
+            let (fnt, pad_x, row_h, star_r, mark) = if is_fav {
+                let fnt = ui::font(fsize_f, true, false);
+                let star_r = menu_star_r(fsize_f);
+                let row_h = fnt.get_height() + pady_f;
+                (fnt, fsize_f - 4, row_h, star_r, star_r * 2 + 10)
+            } else {
+                let fnt = ui::f(fsize);
+                let row_h = fnt.get_height() + pady;
+                (fnt, fsize - 4, row_h, 0, 16)
+            };
             let mut rows: Vec<Vec<(usize, i32)>> = vec![Vec::new()];
             let mut rw = 0;
-            for (i, g) in self.games.iter().enumerate() {
-                let tw = fnt.width(&g.name()) + pad_x * 2 + 16;
-                let mut add = tw + if rows.last().map(|r| !r.is_empty()).unwrap_or(false) { gap } else { 0 };
-                if rw + add > max_w && rows.last().map(|r| !r.is_empty()).unwrap_or(false) {
+            for &i in list {
+                let tw = fnt.width(&self.games[i].name()) + pad_x * 2 + mark;
+                let voll = rows.last().map(|r| !r.is_empty()).unwrap_or(false);
+                let mut add = tw + if voll { gap } else { 0 };
+                if rw + add > max_w && voll {
                     rows.push(Vec::new());
                     rw = 0;
                     add = tw;
@@ -924,15 +1030,14 @@ impl App {
                 }
                 rw += add;
             }
-            let n = rows.len() as i32;
-            let total_h = n * row_h + (n - 1) * gap;
-            let fertig = total_h <= avail;
-            result = Some((rows, fnt, pad_x, row_h, gap, total_h));
-            if fertig {
-                break;
-            }
+            groups.push(MenuGroup { rows, fnt, pad_x, row_h, fav: is_fav, star_r });
         }
-        result.expect("mindestens eine Schriftgroesse")
+        let mut total: i32 = groups
+            .iter()
+            .map(|g| g.rows.len() as i32 * g.row_h + (g.rows.len() as i32 - 1) * gap)
+            .sum();
+        total += group_gap * 0.max(groups.len() as i32 - 1);
+        MenuTiles { groups, gap, group_gap, total }
     }
 
     fn draw_menu_screen(&mut self) {
@@ -955,12 +1060,20 @@ impl App {
         }
         let amp = fx.menu_bob;
         let bob = if amp != 0 { (amp as f64 * (ticks * 1.3).sin()) as i32 } else { 0 };
-        let size = 176.min(96.max(h / 4));
+        let mut size = 176.min(96.max(h / 4));
+        let center_y0 = h / 2 - 46;
+        let mut avail0 = (h - 72) - (center_y0 + size / 2 + 80);
+        // Platz, wenn das Logo ganz oben sitzt (center_y = size / 2 + 14).
+        let avail_top = (h - 72) - (size + 14 + 80);
+        let tiles = self.flow_menu_tiles(w, 30.max(avail0), avail_top);
+        let tiles_h = tiles.total;
+        if tiles_h > avail_top {
+            // Selbst ganz oben passt das Raster nicht: Logo verkleinern.
+            size = MENU_LOGO_MIN.max(size - (tiles_h - avail_top));
+            avail0 = (h - 72) - (center_y0 + size / 2 + 80);
+        }
         let v1 = fx.style == "v1";
         let logo = if v1 { None } else { self.menu_logo(size) };
-        let center_y0 = h / 2 - 46;
-        let avail0 = (h - 72) - (center_y0 + size / 2 + 80);
-        let (rows, fnt, pad_x, row_h, gap, tiles_h) = self.flow_menu_tiles(w, 30.max(avail0));
         let shift = 0.max(tiles_h - avail0);
         let center_y = (size / 2 + 14).max(center_y0 - shift) + bob;
         let (base_y, line_w);
@@ -1027,62 +1140,69 @@ impl App {
             hint.alpha_set((255.0 * ui::pulse(2.2, 0.45, 1.0)) as i32);
         }
         s.blr(&hint, hint.get_rect().center_at((cx, base_y + 62)));
-        self.draw_menu_tiles(&mut s, base_y + 80, h - 72, &rows, &fnt, pad_x, row_h, gap, tiles_h);
+        self.draw_menu_tiles(&mut s, base_y + 80, h - 72, &tiles);
         self.draw_score_ticker(&mut s, w, h);
         ui::draw_footer(&mut s, w, h, &format!("{} Games   \u{b7}   {}x{} @ {} FPS", self.games.len(), self.game_w, self.game_h, self.fps));
     }
 
-    #[allow(clippy::too_many_arguments)]
-    fn draw_menu_tiles(
-        &mut self,
-        s: &mut Surface,
-        top: i32,
-        bottom: i32,
-        rows: &[Vec<(usize, i32)>],
-        fnt: &pg::Font,
-        pad_x: i32,
-        row_h: i32,
-        gap: i32,
-        total_h: i32,
-    ) {
+    fn draw_menu_tiles(&mut self, s: &mut Surface, top: i32, bottom: i32, tiles: &MenuTiles) {
         let p = ui::pal();
         let w = self.game_w;
         let avail = 30.max(bottom - top);
-        let mut y = top + 36.min(0.max((avail - total_h) / 2));
+        let gap = tiles.gap;
+        let mut y = top + 36.min(0.max((avail - tiles.total) / 2));
         let hover = self.menu_hover;
         let v42 = ui::fx().style == "v42";
         self.menu_tiles.clear();
-        for row in rows {
-            let row_w: i32 = row.iter().map(|(_, tw)| *tw).sum::<i32>() + gap * (row.len() as i32 - 1);
-            let mut x = w / 2 - row_w / 2;
-            for (gi, tw) in row {
-                let rect = Rect::new(x, y, *tw, row_h);
-                let idx = self.menu_tiles.len();
-                let info = self.games[*gi];
-                let accent = ui::game_color(info.class_name);
-                if Some(idx) == hover {
-                    if !ui::is_modern() && ui::fx().style != "v1" {
-                        let mut glow = pg::surface_alpha(tw + 14, row_h + 14);
-                        let gr = glow.get_rect();
-                        draw::rect_r(&mut glow, pg::alpha(accent, 55), gr, 0, row_h / 2 + 7);
-                        s.bl(&glow, (x - 7, y - 7));
-                    }
-                    draw::rect_r(s, p.panel_light, rect, 0, row_h / 2);
-                    draw::rect_r(s, accent, rect, 1, row_h / 2);
-                } else {
-                    draw::rect_r(s, p.panel, rect, 0, row_h / 2);
-                    draw::rect_r(s, p.border, rect, 1, row_h / 2);
-                }
-                if v42 {
-                    draw::rect(s, ui::mix(p.panel, Color::rgb(255, 255, 255), 0.10), (x + row_h / 2, y, 2.max(tw - row_h), 1), 0);
-                }
-                draw::circle(s, accent, (x + pad_x + 4, rect.centery()), 4, 0);
-                let img = fnt.render(&info.name(), true, if Some(idx) == hover { p.text } else { p.text_dim });
-                s.blr(&img, img.get_rect().midleft_at((x + pad_x + 14, rect.centery())));
-                self.menu_tiles.push((rect, *gi));
-                x += tw + gap;
+        for (grp_i, grp) in tiles.groups.iter().enumerate() {
+            if grp_i > 0 {
+                y += tiles.group_gap - gap;
             }
-            y += row_h + gap;
+            let (fnt, pad_x, row_h, fav) = (&grp.fnt, grp.pad_x, grp.row_h, grp.fav);
+            for row in &grp.rows {
+                let row_w: i32 = row.iter().map(|(_, tw)| *tw).sum::<i32>() + gap * (row.len() as i32 - 1);
+                let mut x = w / 2 - row_w / 2;
+                for (gi, tw) in row {
+                    let rect = Rect::new(x, y, *tw, row_h);
+                    let idx = self.menu_tiles.len();
+                    let info = self.games[*gi];
+                    let accent = ui::game_color(info.class_name);
+                    if Some(idx) == hover {
+                        if !ui::is_modern() && ui::fx().style != "v1" {
+                            let mut glow = pg::surface_alpha(tw + 14, row_h + 14);
+                            let gr = glow.get_rect();
+                            draw::rect_r(&mut glow, pg::alpha(accent, 55), gr, 0, row_h / 2 + 7);
+                            s.bl(&glow, (x - 7, y - 7));
+                        }
+                        draw::rect_r(s, p.panel_light, rect, 0, row_h / 2);
+                        draw::rect_r(s, accent, rect, 1, row_h / 2);
+                    } else if fav {
+                        // Favorit: Hauch Gold in Flaeche und Rand.
+                        draw::rect_r(s, ui::mix(p.panel, p.gold, 0.07), rect, 0, row_h / 2);
+                        draw::rect_r(s, ui::mix(p.border, p.gold, 0.45), rect, 1, row_h / 2);
+                    } else {
+                        draw::rect_r(s, p.panel, rect, 0, row_h / 2);
+                        draw::rect_r(s, p.border, rect, 1, row_h / 2);
+                    }
+                    if v42 {
+                        draw::rect(s, ui::mix(p.panel, Color::rgb(255, 255, 255), 0.10), (x + row_h / 2, y, 2.max(tw - row_h), 1), 0);
+                    }
+                    if fav {
+                        // Goldener Stern + Name (immer hell)
+                        let r = grp.star_r;
+                        ui::draw_star(s, (x + pad_x + r, rect.centery()), r, p.gold, 0);
+                        let img = fnt.render(&info.name(), true, p.text);
+                        s.blr(&img, img.get_rect().midleft_at((x + pad_x + 2 * r + 10, rect.centery())));
+                    } else {
+                        draw::circle(s, accent, (x + pad_x + 4, rect.centery()), 4, 0);
+                        let img = fnt.render(&info.name(), true, if Some(idx) == hover { p.text } else { p.text_dim });
+                        s.blr(&img, img.get_rect().midleft_at((x + pad_x + 14, rect.centery())));
+                    }
+                    self.menu_tiles.push((rect, *gi));
+                    x += tw + gap;
+                }
+                y += row_h + gap;
+            }
         }
     }
 

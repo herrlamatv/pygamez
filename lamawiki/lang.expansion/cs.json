@@ -12,7 +12,9 @@
         "pauza",
         "celá obrazovka",
         "postranní panel",
-        "více hráčů"
+        "více hráčů",
+        "oblibene",
+        "hvezdicka"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "Postranní panel",
           "body": [
-            "Vlevo vidíš všechny hry s jejich ikonou a svým nejlepším skóre (hvězdička). Běžící hra zůstane zvýrazněná; v malých oknech se seznam posouvá kolečkem myši.",
+            "Vlevo vidíš všechny hry s jejich ikonou a svým nejlepším skóre (pohár). Běžící hra zůstane zvýrazněná; v malých oknech se seznam posouvá kolečkem myši.",
+            "Vpravo v každém řádku je hvězdička: jedno kliknutí přidá hru mezi oblíbené (hvězdička se vybarví zlatě), druhé ji zase odebere - hra se přitom nespustí. Oblíbené hry jsou na úvodní obrazovce vpředu a větší a ukládají se pro každý profil zvlášť; pokud chceš, mohou se přesunout i úplně nahoru v seznamu (viz Možnosti).",
             "Stavová karta vlevo dole zobrazuje název hry, stav (zelená = běží, zlatá = pozastaveno, červená = konec hry), skóre a aktuální snímkovou frekvenci."
           ]
         },
@@ -64,7 +67,8 @@
         "design",
         "vzhled",
         "motiv",
-        "pevné klávesy"
+        "pevné klávesy",
+        "oblibene"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "Zvuk zapneš či vypneš a hlasitost nastavíš na obrazovce možností. Všechny efekty se generují živě - žádné zvukové soubory neexistují.",
             "Haptika rozvibruje připojený gamepad (bez něj nedělá nic)."
+          ]
+        },
+        {
+          "h": "Seznam her",
+          "body": [
+            "Oblíbené nahoře: na kartě Obecné (skupina Seznam her) můžeš zobrazit oblíbené hry úplně nahoře v seznamu her v postranním panelu - obě skupiny si zachovají obvyklé pořadí. Ve výchozím stavu vypnuto.",
+            "Ve webové verzi a na pygamez.com najdeš přepínač Oblíbené nahoře v kartě Nastavení dole v postranním panelu - přímo ve hře, ne v nastavení účtu."
           ]
         },
         {

@@ -1107,6 +1107,52 @@ def draw_halo(surface, center, size, color=None):
     surface.blit(g, g.get_rect(center=center), special_flags=pygame.BLEND_ADD)
 
 
+# Fertig geglättete Sterne je (Radius, Farbe, Linienbreite).
+_STAR_CACHE = {}
+_STAR_SS = 4            # Überabtastung beim Zeichnen (danach smoothscale)
+
+
+def _star_points(cx, cy, r, inner=0.46):
+    """Zehn Eckpunkte eines fünfzackigen Sterns (Spitze nach oben), auf ganze
+    Pixel gerundet (floor(x + 0.5) - so rechnet die Rust-Fassung genauso)."""
+    pts = []
+    for i in range(10):
+        rr = r if i % 2 == 0 else r * inner
+        a = math.radians(-90 + i * 36)
+        pts.append((int(math.floor(cx + math.cos(a) * rr + 0.5)),
+                    int(math.floor(cy + math.sin(a) * rr + 0.5))))
+    return pts
+
+
+def star_surface(r, color, width=0):
+    """Fünfzackiger Stern mit Radius r als geglättete, transparente Fläche
+    (Kantenlänge 2r+2). width=0 gefüllt, sonst Umriss dieser Stärke."""
+    r = max(2, int(r))
+    color = tuple(color)[:3]
+    key = (r, color, int(width))
+    surf = _STAR_CACHE.get(key)
+    if surf is None:
+        size = 2 * r + 2
+        big = pygame.Surface((size * _STAR_SS, size * _STAR_SS), pygame.SRCALPHA)
+        # Transparente Pixel in der Sternfarbe -> keine dunklen Kanten beim
+        # Herunterrechnen.
+        big.fill((*color, 0))
+        c = size * _STAR_SS / 2
+        pygame.draw.polygon(big, color, _star_points(c, c, r * _STAR_SS),
+                            int(width) * _STAR_SS)
+        surf = pygame.transform.smoothscale(big, (size, size))
+        if len(_STAR_CACHE) > 64:
+            _STAR_CACHE.clear()
+        _STAR_CACHE[key] = surf
+    return surf
+
+
+def draw_star(surface, center, r, color, width=0):
+    """Zeichnet einen (gecachten, geglätteten) Stern mittig auf center."""
+    img = star_surface(r, color, width)
+    surface.blit(img, img.get_rect(center=(int(center[0]), int(center[1]))))
+
+
 # Aurora-Lichter: (Farbe(max. Helligkeit), Größe rel. zu max(w,h),
 #                  Drift-Tempo, Phase, Grundposition x/y rel.)
 _AURORA = (

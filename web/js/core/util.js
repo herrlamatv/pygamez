@@ -459,7 +459,7 @@
   ];
 
   const GLOBAL_DEFAULTS = { theme: "v42", sound: true, volume: 0.6, haptik: false,
-                            replay: { enabled: true } };
+                            replay: { enabled: true }, favorites: { top: false } };
 
   const clone = (o) => JSON.parse(JSON.stringify(o));
 
@@ -477,6 +477,69 @@
     },
   };
   if (!PG.THEME_NAMES.some((t) => t[0] === PG.settings.data.theme)) PG.settings.data.theme = "v42";
+  // Ältere/kaputte Einstellungen: "Favoriten oben" immer als {top: bool}
+  {
+    const fv = PG.settings.data.favorites;
+    PG.settings.data.favorites = { top: !!(fv && typeof fv === "object" && fv.top === true) };
+  }
+
+  // -------------------------------------------------------------- Favoriten
+  // Lieblingsspiele je Profil (wie favorites.py): Speicher "favorites" =
+  // {games: [highscore_key, ...]} in Klick-Reihenfolge. Angezeigt wird immer in
+  // der normalen Spiele-Reihenfolge. "Favoriten oben" in der Seitenleiste ist
+  // eine Einstellung (PG.settings.data.favorites.top).
+  PG.favorites = {
+    MAX: 64,
+    _cache: null,
+    _cacheProfile: null,
+    clean(raw) {
+      const out = [];
+      if (!Array.isArray(raw)) return out;
+      for (const k of raw) {
+        if (typeof k === "string" && k.length > 0 && k.length <= 32 && out.indexOf(k) < 0) out.push(k);
+        if (out.length >= this.MAX) break;
+      }
+      return out;
+    },
+    /** Favoriten (highscore_keys) des aktiven Profils - gecacht je Profil. */
+    list() {
+      if (this._cache === null || this._cacheProfile !== PG.store.profile) {
+        const d = PG.store.get("favorites", {});
+        this._cache = this.clean(d && typeof d === "object" ? d.games : null);
+        this._cacheProfile = PG.store.profile;
+      }
+      return this._cache;
+    },
+    has(key) {
+      return this.list().indexOf(key) >= 0;
+    },
+    /** Schaltet um und speichert; Rückgabe true = jetzt Favorit. */
+    toggle(key) {
+      const favs = this.list().slice();
+      const i = favs.indexOf(key);
+      if (i >= 0) favs.splice(i, 1);
+      else favs.push(key);
+      this._cache = this.clean(favs);
+      PG.store.set("favorites", { games: this._cache });
+      return i < 0;
+    },
+    /** Seitenleiste: mit top=true erst die Favoriten, dann der Rest (je in Spiele-Reihenfolge). */
+    ordered(entries, top) {
+      const favs = this.list();
+      if (!top || !favs.length) return entries.slice();
+      const fav = entries.filter((e) => favs.indexOf(e.meta.key) >= 0);
+      const rest = entries.filter((e) => favs.indexOf(e.meta.key) < 0);
+      return fav.concat(rest);
+    },
+    topEnabled() {
+      const f = PG.settings.data.favorites;
+      return !!(f && f.top);
+    },
+    /** Nach Profilwechsel/Import neu lesen. */
+    reset() {
+      this._cache = null;
+    },
+  };
 
   // -------------------------------------------------------------- Highscores
   PG.highscore = {

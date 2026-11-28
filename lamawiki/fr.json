@@ -12,7 +12,9 @@
         "pause",
         "plein ecran",
         "barre",
-        "multijoueur"
+        "multijoueur",
+        "favoris",
+        "etoile"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "La barre latérale",
           "body": [
-            "À gauche tu vois tous les jeux avec leur icône et ton record (étoile). Le jeu en cours reste surligné ; sur les petites fenêtres la liste défile à la molette.",
+            "À gauche tu vois tous les jeux avec leur icône et ton record (trophée). Le jeu en cours reste surligné ; sur les petites fenêtres la liste défile à la molette.",
+            "À droite de chaque ligne se trouve une étoile : un clic fait du jeu un favori (l'étoile se remplit d'or), un second clic le retire - le jeu ne démarre pas. Les favoris apparaissent en premier et en plus grand sur l'écran d'accueil et sont enregistrés par profil ; si tu veux, ils peuvent aussi monter tout en haut de la liste (voir Options).",
             "La carte d'état en bas à gauche montre le nom du jeu, l'état (vert = en cours, or = pause, rouge = game over), le score et la cadence d'images actuelle."
           ]
         },
@@ -64,7 +67,8 @@
         "design",
         "apparence",
         "theme",
-        "touches fixes"
+        "touches fixes",
+        "favoris"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "Active/désactive le son et règle le volume dans l'écran d'options. Tous les effets sont générés en direct - il n'y a aucun fichier audio.",
             "Les vibrations font vibrer une manette connectée (sans effet sans manette)."
+          ]
+        },
+        {
+          "h": "Liste des jeux",
+          "body": [
+            "Favoris en haut : dans l'onglet Général (groupe Liste des jeux), tu peux afficher tes favoris tout en haut de la liste des jeux de la barre latérale - les deux groupes gardent leur ordre habituel. Désactivé par défaut.",
+            "Dans la version web et sur pygamez.com, l'interrupteur Favoris en haut se trouve dans la carte Paramètres en bas de la barre latérale - dans le jeu lui-même, pas dans les paramètres du compte."
           ]
         },
         {

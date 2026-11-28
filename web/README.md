@@ -15,6 +15,8 @@ Man kann den Ordner `web/` auch 1:1 auf einen Webspace (z. B. GitHub Pages) hoch
 * alle Spiele der Desktop-Version (Snake, Tetris, Schach, Minigolf, Tower Defense, Block Jump, …),
   mit derselben Spiellogik, KI, denselben Leveln und Optionen
 * Startbildschirm, Vorspiel-Screen und Pause wie in der Desktop-Version
+* **Favoriten**: Stern rechts in der Spieleliste (je Profil), im Startbildschirm vorne und größer;
+  „Favoriten oben“ in der Karte Einstellungen stellt sie an den Anfang der Liste
 * Highscores, Einstellungen und Statistik werden im Browser gespeichert (localStorage)
 * 14 Sprachen (identisch zu `lang/`), LamaWiki als Hilfe (identisch zu `lamawiki/`)
 * alle 10 UI-Designs (UI v4.2 Midnight Glass (Standard), UI v4.1, v4.1.1–v4.1.4, UI v4, UI v3 Classic, UI v2, UI v1)

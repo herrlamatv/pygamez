@@ -20,6 +20,8 @@ use crate::icons;
 const ROW_H: i32 = 44;
 /// Abstand der Zeilen (`GameList.GAP`).
 const GAP: i32 = 4;
+/// Trefferbreite des Favoriten-Sterns am rechten Zeilenrand (`GameList.STAR_HIT`).
+const STAR_HIT: i32 = 30;
 
 /// Die Knoepfe unten, von oben nach unten (Python packt sie von unten).
 pub const CTRL: &[(&str, &str)] = &[
@@ -35,8 +37,10 @@ pub const CTRL: &[(&str, &str)] = &[
 /// Was ein Klick in der Leiste ausloest.
 #[derive(Debug, Clone, PartialEq)]
 pub enum Aktion {
-    /// Spiel `index` in der Liste.
+    /// Spiel `index` (in `games`) starten.
     Spiel(usize),
+    /// Stern bei Spiel `index` (in `games`): Favorit umschalten.
+    Favorit(usize),
     /// Steuer-Knopf (`"options"`, `"quit"`, `"back_to_menu"` ...).
     Knopf(String),
     /// Profilkarte.
@@ -68,6 +72,12 @@ pub struct Sidebar {
     knoepfe: Vec<Knopf>,
     zeilen_v: Vec<f64>,
     hover_zeile: Option<usize>,
+    /// Zeile, deren Stern gerade unter der Maus ist (`GameList._star_hover`).
+    stern_hover: Option<usize>,
+    /// Angezeigte Reihenfolge als Index in `games` (Favoriten ggf. oben).
+    ordnung: Vec<usize>,
+    /// highscore_keys der Favoriten (aktives Profil).
+    pub favs: Vec<String>,
     scroll: i32,
     liste: Rect,
     profilkarte: Rect,
@@ -144,6 +154,9 @@ impl Sidebar {
             knoepfe: Vec::new(),
             zeilen_v: Vec::new(),
             hover_zeile: None,
+            stern_hover: None,
+            ordnung: Vec::new(),
+            favs: Vec::new(),
             scroll: 0,
             liste: Rect::new(0, 0, 0, 0),
             profilkarte: Rect::new(0, 0, 0, 0),
@@ -166,13 +179,33 @@ impl Sidebar {
         texte.push(t("app.quit"));
         texte.push(t("app.back_to_menu"));
         let w_ctrl = texte.iter().map(|s| f_ctrl.width(s)).max().unwrap_or(0) + 60;
-        let w_game = games.iter().map(|g| f_game.width(&g.name())).max().unwrap_or(0) + 80;
+        // + Piktogramm links, + Favoriten-Stern rechts (STAR_HIT)
+        let w_game = games.iter().map(|g| f_game.width(&g.name())).max().unwrap_or(0) + 80 + STAR_HIT + 6;
         self.breite = 340.min(232.max(w_ctrl).max(w_game));
     }
 
     /// `refresh_scores()`
     pub fn refresh_scores(&mut self) {
         self.scores = pgz_core::highscore::load();
+    }
+
+    /// `refresh_favorites()` - Favoriten neu lesen, nach "Favoriten oben"
+    /// sortieren. Ziehen Zeilen um, gelten die Hover-Zustaende nicht mehr.
+    pub fn refresh_favorites(&mut self, games: &[GameInfo], top: bool) {
+        self.favs = pgz_core::favorites::load();
+        let keys: Vec<&str> = games.iter().map(|g| g.key).collect();
+        let neu = pgz_core::favorites::ordered(&keys, &self.favs, top);
+        if neu != self.ordnung {
+            self.zeilen_v = vec![0.0; games.len()];
+            self.hover_zeile = None;
+            self.stern_hover = None;
+        }
+        self.ordnung = neu;
+    }
+
+    /// Spiel-Index (in `games`) der angezeigten Zeile `i`.
+    fn spiel_der_zeile(&self, i: usize) -> usize {
+        self.ordnung.get(i).copied().unwrap_or(i)
     }
 
     fn layout(&mut self, h: i32) {
@@ -422,7 +455,9 @@ impl Sidebar {
         let alt_clip = s.get_clip();
         s.set_clip(Some(r));
         let w = r.w;
-        for (i, g) in games.iter().enumerate() {
+        for i in 0..games.len() {
+            let gi = self.spiel_der_zeile(i);
+            let g = &games[gi.min(games.len() - 1)];
             let y0 = r.y + i as i32 * (ROW_H + GAP) - self.scroll;
             let y1 = y0 + ROW_H;
             if y1 < r.y || y0 > r.bottom() {
@@ -430,7 +465,7 @@ impl Sidebar {
             }
             let cy = (y0 + y1) / 2;
             let accent = ui::game_color(g.class_name);
-            let active = self.aktiv == Some(i);
+            let active = self.aktiv == Some(gi);
             let v = self.zeilen_v[i];
             let base = if active { mix(tk.btn, accent, 0.14) } else { tk.btn };
             let hover = mix(tk.btn_hover, accent, 0.10);
@@ -455,12 +490,26 @@ impl Sidebar {
             let name = nf.render(&g.name(), true, tk.text);
             if hs > 0 {
                 s.blr(&name, name.get_rect().midleft_at((x0 + 54, cy - 9)));
-                let txt = format!("\u{2605} {}", tausender(hs));
+                // Pokal statt Stern - der Stern gehoert jetzt den Favoriten.
+                let txt = format!("\u{1f3c6} {}", tausender(hs));
                 let img = f_sym(pt(8)).render(&txt, true, tk.text_dim);
                 s.blr(&img, img.get_rect().midleft_at((x0 + 54, cy + 9)));
             } else {
                 s.blr(&name, name.get_rect().midleft_at((x0 + 54, cy)));
             }
+            // Favoriten-Stern: gold gefuellt (Favorit), sonst blasser Umriss,
+            // beim Zeilen-Hover heller, direkt darueber gold.
+            let fav = self.favs.iter().any(|f| f == g.key);
+            let stern_hover = self.stern_hover == Some(i);
+            let farbe = if fav {
+                if stern_hover { mix(tk.gold, Color::rgb(255, 255, 255), 0.25) } else { tk.gold }
+            } else if stern_hover {
+                tk.gold
+            } else {
+                mix(tk.text_faint, tk.text_dim, v)
+            };
+            let stern = f_sym(pt(12)).render(if fav { "\u{2605}" } else { "\u{2606}" }, true, farbe);
+            s.blr(&stern, stern.get_rect().center_at((x0 + w - 7 - STAR_HIT / 2, cy)));
         }
         // Scroll-Anzeige.
         if total > r.h && r.h > 1 {
@@ -531,12 +580,14 @@ impl Sidebar {
             }
         }
         self.hover_zeile = self.zeile_bei(pos);
+        self.stern_hover = self.hover_zeile.filter(|_| self.stern_bei(pos));
     }
 
     /// Maus hat die Leiste verlassen.
     pub fn verlassen(&mut self) {
         self.maus = (-1, -1);
         self.hover_zeile = None;
+        self.stern_hover = None;
         for k in &mut self.knoepfe {
             k.gedrueckt = false;
         }
@@ -582,13 +633,24 @@ impl Sidebar {
         }
         if let Some(i) = self.zeile_bei(pos) {
             if i < anzahl {
+                let gi = self.spiel_der_zeile(i);
+                if self.stern_bei(pos) {
+                    // Stern: nur Favorit umschalten, kein Spielstart.
+                    return Some(Aktion::Favorit(gi));
+                }
                 if let Some(v) = self.zeilen_v.get_mut(i) {
                     *v = 1.0;
                 }
-                return Some(Aktion::Spiel(i));
+                return Some(Aktion::Spiel(gi));
             }
         }
         None
+    }
+
+    /// `_star_hit(x)` - liegt x im Stern-Bereich am rechten Rand der Zeilenkarte?
+    fn stern_bei(&self, pos: (i32, i32)) -> bool {
+        let right = self.liste.x + self.liste.w - 7;
+        right - STAR_HIT <= pos.0 && pos.0 <= right
     }
 
     /// Maustaste losgelassen - NeoButtons loesen erst hier aus.

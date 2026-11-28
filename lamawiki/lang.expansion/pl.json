@@ -12,7 +12,9 @@
         "pauza",
         "pełny ekran",
         "pasek boczny",
-        "wieloosobowy"
+        "wieloosobowy",
+        "ulubione",
+        "gwiazdka"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "Pasek boczny",
           "body": [
-            "Po lewej widzisz wszystkie gry z ich ikoną i twoim najlepszym wynikiem (gwiazdka). Trwająca gra pozostaje podświetlona; w małych oknach listę przewijasz kółkiem myszy.",
+            "Po lewej widzisz wszystkie gry z ich ikoną i twoim najlepszym wynikiem (puchar). Trwająca gra pozostaje podświetlona; w małych oknach listę przewijasz kółkiem myszy.",
+            "Po prawej stronie każdego wiersza jest gwiazdka: jedno kliknięcie dodaje grę do ulubionych (gwiazdka wypełnia się złotem), drugie ją usuwa - gra się przy tym nie uruchamia. Ulubione są na ekranie startowym na początku i większe, a zapisują się osobno dla każdego profilu; jeśli chcesz, mogą też trafić na samą górę listy (zobacz Opcje).",
             "Karta stanu w lewym dolnym rogu pokazuje nazwę gry, stan (zielony = trwa, złoty = pauza, czerwony = koniec gry), wynik oraz bieżącą liczbę klatek na sekundę."
           ]
         },
@@ -64,7 +67,8 @@
         "design",
         "wyglad",
         "motyw",
-        "stałe klawisze"
+        "stałe klawisze",
+        "ulubione"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "Dźwięk włączasz/wyłączasz i ustawiasz głośność na ekranie opcji. Wszystkie efekty są generowane na żywo - nie ma plików audio.",
             "Wibracje wprawiają w drgania podłączony gamepad (bez niego nic nie robią)."
+          ]
+        },
+        {
+          "h": "Lista gier",
+          "body": [
+            "Ulubione na górze: w zakładce Ogólne (grupa Lista gier) możesz wyświetlać ulubione na samej górze listy gier w pasku bocznym - obie grupy zachowują zwykłą kolejność. Domyślnie wyłączone.",
+            "W wersji web i na pygamez.com przełącznik Ulubione na górze znajduje się w karcie Ustawienia na dole paska bocznego - w samej grze, nie w ustawieniach konta."
           ]
         },
         {

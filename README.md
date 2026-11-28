@@ -1155,15 +1155,23 @@ Die komplette Oberfläche ist selbst gezeichnet (reines Tkinter + Pygame, keine
 Zusatzpakete) und auf einen modernen Launcher-Look getrimmt:
 
 - **Sidebar mit Spieleliste**: jede Zeile hat ein eigenes **Mini-Piktogramm** in
-  der Akzentfarbe des Spiels, zeigt den aktuellen **Highscore (★)** und reagiert
+  der Akzentfarbe des Spiels, zeigt den aktuellen **Highscore (🏆)** und reagiert
   mit weich animierten Hover-Effekten. Das laufende Spiel bleibt farbig markiert;
   bei kleinen Fenstern **scrollt** die Liste per Mausrad.
+- **Favoriten**: rechts in jeder Zeile sitzt ein **Stern** – ein Klick macht das
+  Spiel zum Favoriten (der Stern wird gold gefüllt), ein zweiter nimmt es wieder
+  heraus, ohne das Spiel zu starten. Favoriten stehen im Startbildschirm **vorne
+  und größer**, gelten **je Profil** und rücken auf Wunsch auch **ganz oben** in
+  die Liste (Optionen › Allgemein › Spieleliste). Genauso in der Web-Version, der
+  Rust-Fassung und auf pygamez.com (dort zusätzlich „Deine Favoriten“ auf der
+  Startseite).
 - **Status-Karte** unten links mit **Zustands-LED** (grau = Menü, grün = läuft,
   gold = Pause, rot = Game Over) und **Live-FPS-Anzeige**.
 - **Startbildschirm** mit Aurora-Lichtern, Parallax-Sternenfeld samt
   Sternschnuppen, schwebendem Logo mit Orbit-Funken, einem **klickbaren
   Spiele-Raster** direkt unter dem Logo (alle Spiele mit Hover-Effekt in
-  ihrer Akzentfarbe) und einem **Highscore-Laufband**.
+  ihrer Akzentfarbe, **Favoriten vorne und größer**) und einem
+  **Highscore-Laufband**.
 - **Effekte überall**: weiche Screen-Übergänge beim Wechseln, Funken beim
   Bestätigen im Menü, **Konfetti-Regen bei neuem Highscore** und ein echter
   **Weichzeichner** hinter dem Pause-Overlay.
@@ -1274,7 +1282,9 @@ Tab-Taste):
   (Gamepad-Vibration, nur mit angeschlossenem Controller wirksam) sowie
   **Auto-Auflösung**, **Auflösung**, **FPS** und **Sprache** – jeweils per
   Links/Rechts umschalten. Unter **Aufnahme** steht **Replays aufzeichnen**:
-  aus bedeutet, dass Minigolf und Bowling nichts mitschneiden.
+  aus bedeutet, dass Minigolf und Bowling nichts mitschneiden. Unter
+  **Spieleliste** stellt **Favoriten oben** deine Favoriten an den Anfang der
+  Spieleliste (Web-Version: Karte **Einstellungen** in der Seitenleiste).
 - **Steuerung**: **Vorlagen** (*WASD + Pfeile*, *WASD + IJKL*, *Pfeile + WASD*)
   und **jede einzelne Taste** für Spieler 1 und Spieler 2 frei belegen:
   Zeile wählen, Enter drücken, gewünschte Taste drücken (Esc bricht ab).
@@ -1331,6 +1341,7 @@ profileview.py       Profil-Screen, Spieler-2-Auswahl und die Startlevel-Karte
 replay.py            Aufzeichnung, Archiv & Teilen der Wiederholungen (replay.json, .lamapgzreplay)
 replayview.py        Replay-Screen: Archiv-Liste, Wiedergabe, Teilen/Einlesen
 matches.py           Match-Historie je Spiel und Profil (matches.pgzlamamatches): Einträge, Summen, Kappe 250
+favorites.py         Favoriten je Profil (Abschnitt favorites in mem.json): Stern in der Spieleliste, Reihenfolge
 matchview.py         Matches-Screen: Letzte Matches (Kurve + letzte 10) und Alle Matches (Filter, Sortierung)
 dailyarchive.py      Tages-Archiv: letzte 30 Tage + gespielte Tage, kompakte Speicherung, Kalender-Fenster
 ugc.py               Eigene Inhalte (Minigolf-Bahnen, Geometry-Dash-Level): Speicher, Prüfung, Export/Import (ugc.json)
@@ -2644,15 +2655,22 @@ The whole interface is drawn from scratch (pure Tkinter + Pygame, no extra
 packages) and styled like a modern game launcher:
 
 - **Sidebar game list**: every row has its own **mini pictogram** in the game's
-  accent colour, shows the current **high score (★)** and reacts with smoothly
+  accent colour, shows the current **high score (🏆)** and reacts with smoothly
   animated hover effects. The running game stays highlighted; on small windows
   the list **scrolls** with the mouse wheel.
+- **Favorites**: every row has a **star** on the right – one click makes the
+  game a favorite (the star fills gold), a second click removes it, without
+  starting the game. Favorites appear **first and larger** on the start screen,
+  are stored **per profile** and, if you like, move to the **very top** of the
+  list (Options › General › Game list). The same in the web version, the Rust
+  version and on pygamez.com (which also shows "Your favourites" on its home
+  page).
 - **Status card** at the bottom left with a **state LED** (grey = menu,
   green = running, gold = paused, red = game over) and a **live FPS readout**.
 - **Idle screen** with aurora lights, a parallax star field including shooting
   stars, a floating logo with orbiting sparks, a **clickable game grid** right
-  below the logo (all games with a hover effect in their accent colour) and a
-  **high-score ticker**.
+  below the logo (all games with a hover effect in their accent colour,
+  **favorites first and larger**) and a **high-score ticker**.
 - **Effects everywhere**: soft screen transitions, sparks when confirming a menu
   entry, **confetti rain on a new high score** and a real **blur** behind the
   pause overlay.
@@ -2759,7 +2777,9 @@ from the pre-game screen. It is organized into **three tabs**
   only effective with a connected controller) plus **auto resolution**,
   **resolution**, **FPS** and **language** – each toggled with Left/Right.
   Under **Recording** sits **Record replays**: off means that Minigolf and
-  Bowling capture nothing.
+  Bowling capture nothing. Under **Game list**, **Favorites on top** moves your
+  favorites to the top of the game list (web version: the **Settings** card in
+  the sidebar).
 - **Controls**: **presets** (*WASD + Arrows*, *WASD + IJKL*, *Arrows + WASD*)
   and **rebind every single key** for player 1 and player 2: select a row,
   press Enter, press the desired key (Esc cancels).
@@ -2815,6 +2835,7 @@ profileview.py       Profile screen, player 2 picker and the starting-level card
 replay.py            Recording, archive & sharing of replays (replay.json, .lamapgzreplay)
 replayview.py        Replay screen: archive list, playback, share/import
 matches.py           Match history per game and profile (matches.pgzlamamatches): entries, totals, cap 250
+favorites.py         Favorites per profile (section favorites in mem.json): star in the game list, ordering
 matchview.py         Matches screen: last matches (curve + last 10) and all matches (filter, sorting)
 dailyarchive.py      Daily archive: last 30 days + played days, compact storage, calendar window
 ugc.py               Custom content (minigolf holes, Geometry Dash levels): storage, checks, export/import (ugc.json)

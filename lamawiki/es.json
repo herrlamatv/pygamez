@@ -12,7 +12,9 @@
         "pausa",
         "pantalla completa",
         "sidebar",
-        "multijugador"
+        "multijugador",
+        "favoritos",
+        "estrella"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "La barra lateral",
           "body": [
-            "A la izquierda ves todos los juegos con su icono y tu récord (estrella). El juego en curso queda marcado en color; en ventanas pequeñas la lista se desplaza con la rueda del ratón.",
+            "A la izquierda ves todos los juegos con su icono y tu récord (trofeo). El juego en curso queda marcado en color; en ventanas pequeñas la lista se desplaza con la rueda del ratón.",
+            "A la derecha de cada fila hay una estrella: un clic convierte el juego en favorito (la estrella se rellena de dorado) y un segundo clic lo quita; el juego no se inicia. Los favoritos aparecen primero y más grandes en la pantalla de inicio y se guardan por perfil; si quieres, también pueden subir al principio de la lista (ver Opciones).",
             "La tarjeta de estado abajo a la izquierda muestra el nombre del juego, el estado (verde = en marcha, dorado = pausa, rojo = game over), los puntos y la tasa de fotogramas actual."
           ]
         },
@@ -64,7 +67,8 @@
         "diseno",
         "apariencia",
         "tema",
-        "teclas fijas"
+        "teclas fijas",
+        "favoritos"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "El sonido sí/no y el volumen se ajustan en la pantalla de opciones. Todos los efectos se generan en vivo - no hay archivos de audio.",
             "La vibración hace vibrar un gamepad conectado (sin gamepad no tiene efecto)."
+          ]
+        },
+        {
+          "h": "Lista de juegos",
+          "body": [
+            "Favoritos arriba: en la pestaña General (grupo Lista de juegos) puedes mostrar tus favoritos al principio de la lista de juegos de la barra lateral; ambos grupos mantienen su orden habitual. Viene desactivado.",
+            "En la versión web y en pygamez.com, el interruptor Favoritos arriba está en la tarjeta Ajustes, abajo en la barra lateral: en el propio juego, no en los ajustes de la cuenta."
           ]
         },
         {

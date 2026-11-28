@@ -233,6 +233,10 @@ DEFAULTS = {
     # Minesweeper: Voreinstellung (beginner/advanced/expert), Fragezeichen-
     # Markierung an/aus, Bestzeit in Sekunden je Voreinstellung
     "minesweeper": {"preset": "beginner", "qmarks": False, "best": {}},
+    # Favoriten: top = Lieblingsspiele in der Spieleliste der Seitenleiste
+    # ganz oben anzeigen (die Favoriten selbst liegen je Profil in mem.json,
+    # siehe favorites.py). Umschaltbar unter Optionen > Allgemein.
+    "favorites": {"top": False},
     "controls": DEFAULT_CONTROLS,
 }
 
@@ -300,6 +304,7 @@ SCHEMAS = {
     # Minesweeper: die Bestzeiten ("best") prüft _merge_defaults selbst.
     "minesweeper": {"preset": ("choice", ("beginner", "advanced", "expert")),
                     "qmarks": bool},
+    "favorites": {"top": bool},
 }
 
 _INVALID = object()

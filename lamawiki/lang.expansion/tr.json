@@ -12,7 +12,9 @@
         "duraklat",
         "tam ekran",
         "kenar çubuğu",
-        "çok oyunculu"
+        "çok oyunculu",
+        "favoriler",
+        "yildiz"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "Kenar çubuğu",
           "body": [
-            "Solda tüm oyunları simgeleriyle ve en yüksek skorunla (yıldız) görürsün. Çalışan oyun vurgulanmış kalır; küçük pencerelerde liste fare tekerleğiyle kaydırılır.",
+            "Solda tüm oyunları simgeleriyle ve en yüksek skorunla (kupa) görürsün. Çalışan oyun vurgulanmış kalır; küçük pencerelerde liste fare tekerleğiyle kaydırılır.",
+            "Her satırın sağında bir yıldız var: bir tıklama oyunu favori yapar (yıldız altın rengiyle dolar), ikinci tıklama kaldırır - oyun başlamaz. Favoriler başlangıç ekranında en önde ve daha büyük görünür ve profil başına kaydedilir; istersen listede en üste de çıkabilirler (bkz. Seçenekler).",
             "Sol alttaki durum kartı oyun adını, durumu (yeşil = çalışıyor, altın = duraklatıldı, kırmızı = oyun bitti), skoru ve mevcut kare hızını gösterir."
           ]
         },
@@ -64,7 +67,8 @@
         "tasarim",
         "gorunum",
         "tema",
-        "sabit tuşlar"
+        "sabit tuşlar",
+        "favoriler"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "Sesi aç/kapat ve ses seviyesini seçenekler ekranında ayarla. Tüm efektler canlı olarak üretilir - hiç ses dosyası yoktur.",
             "Titreşim, bağlı bir oyun kolunu titretir (kol yoksa hiçbir şey yapmaz)."
+          ]
+        },
+        {
+          "h": "Oyun listesi",
+          "body": [
+            "Favoriler üstte: Genel sekmesinde (Oyun listesi grubu) favorilerini kenar çubuğundaki oyun listesinin en üstünde gösterebilirsin - iki grup da alışılmış sırasını korur. Varsayılan olarak kapalıdır.",
+            "Web sürümünde ve pygamez.com'da Favoriler üstte anahtarı kenar çubuğunun altındaki Ayarlar kartındadır - hesap ayarlarında değil, oyunun kendisinde."
           ]
         },
         {

@@ -12,7 +12,9 @@
         "paus",
         "helskärm",
         "sidofält",
-        "flerspelarläge"
+        "flerspelarläge",
+        "favoriter",
+        "stjarna"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "Sidofältet",
           "body": [
-            "Till vänster ser du alla spel med sin ikon och ditt rekord (stjärna). Det pågående spelet förblir markerat; i små fönster rullar listan med mushjulet.",
+            "Till vänster ser du alla spel med sin ikon och ditt rekord (pokal). Det pågående spelet förblir markerat; i små fönster rullar listan med mushjulet.",
+            "Till höger på varje rad sitter en stjärna: ett klick gör spelet till favorit (stjärnan fylls med guld), ett klick till tar bort det igen - spelet startar inte. Favoriter visas först och större på startskärmen och sparas per profil; om du vill kan de också flyttas högst upp i listan (se Alternativ).",
             "Statuskortet längst ner till vänster visar spelets namn, tillstånd (grönt = pågår, guld = pausat, rött = game over), poäng och den aktuella bildfrekvensen."
           ]
         },
@@ -64,7 +67,8 @@
         "design",
         "utseende",
         "tema",
-        "fasta tangenter"
+        "fasta tangenter",
+        "favoriter"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "Slå på/av ljud och ställ in volymen på inställningsskärmen. Alla effekter genereras live - det finns inga ljudfiler.",
             "Haptik får en ansluten handkontroll att vibrera (gör inget utan en)."
+          ]
+        },
+        {
+          "h": "Spellista",
+          "body": [
+            "Favoriter överst: På fliken Allmänt (gruppen Spellista) kan du visa dina favoriter högst upp i sidofältets spellista - båda grupperna behåller sin vanliga ordning. Av som standard.",
+            "I webbversionen och på pygamez.com finns reglaget Favoriter överst i kortet Inställningar längst ned i sidofältet - i själva spelet, inte i kontoinställningarna."
           ]
         },
         {

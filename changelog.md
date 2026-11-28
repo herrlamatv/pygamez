@@ -8,6 +8,51 @@
 
 ## 🇩🇪 Deutsch
 
+### Favoriten & Konto-Generatoren – 2026-11-28
+
+In der Spieleliste der Seitenleiste hat jedes Spiel jetzt rechts einen **Stern**:
+Ein Klick macht es zum **Favoriten** (der Stern wird gold gefüllt), ein zweiter
+nimmt es wieder heraus. Favoriten stehen im **Startbildschirm vorne und größer**
+und auf Wunsch auch **ganz oben in der Spieleliste**. In Python, Web, Rust und
+auf pygamez.com, in 14 Sprachen und im LamaWiki. Dazu kann pygamez.com beim
+Konto-Erstellen einen Benutzernamen und ein Passwort vorschlagen.
+
+#### Neu
+- **Favoriten-Stern** rechts in jeder Zeile der Spieleliste (Desktop, Web und
+  pygamez.com – dort auch in der Handy-Schublade, mit großer Tippfläche). Ein
+  Klick auf den Stern startet das Spiel nicht.
+- **Startbildschirm**: Favoriten stehen in einer eigenen Reihe vorne – größere,
+  fette Schrift, goldener Stern statt Farbpunkt, Goldrand. Darunter folgen die
+  übrigen Spiele.
+- **Favoriten oben**: neue Einstellung unter Optionen › Allgemein › Spieleliste
+  (Web und pygamez.com: Karte „Einstellungen“ in der Seitenleiste, also in der
+  Spiel-Oberfläche). Die Favoriten stehen dann ganz oben in der Liste. Standard: aus.
+- Favoriten gelten **je Profil** (mem.json-Abschnitt `favorites`, Web:
+  `pygamez.<profil>.favorites`, pygamez.com: im Konto-Spielstand) und kommen beim
+  Desktop-Import bzw. -Export von pygamez.com mit.
+- **pygamez.com – Startseite**: über den Kategorien steht „Deine Favoriten“ mit
+  größeren Karten (Konto vom Server, Gast aus dem Browser; am Handy als
+  wischbare Reihe).
+- **pygamez.com – Konto erstellen**: Knopf **Namen generieren** (zufällige Namen
+  auf Englisch, Deutsch oder Französisch plus Ziffern, z. B. `SwiftFox42`,
+  `SchlaueEule7`, `LoupMalin305` – immer frei und erlaubt) und Knopf
+  **Passwort generieren** (16 Zeichen, entsteht nur im Browser, füllt beide
+  Felder, mit Kopieren-Knopf). Beides beliebig oft neu.
+
+#### Geändert
+- Seitenleiste (Desktop): Vor dem Highscore steht jetzt ein Pokal 🏆 statt eines
+  Sterns – der Stern gehört den Favoriten.
+- Startbildschirm: Passen die Spiele nicht mehr in den Platz (50 Spiele bei
+  640×480), rücken die Pillen enger zusammen und das Logo wird etwas kleiner.
+- Optionen › Allgemein bei 480×360: Die Zeilen rücken etwas zusammen, damit die
+  neue Gruppe Platz hat.
+
+#### Behoben
+- Startbildschirm bei 640×480: Die letzte Reihe des Spiele-Rasters verschwand
+  hinter Highscore-Laufband und Fußzeile.
+
+---
+
 ### macOS-Start: start.command & neues start.sh – 2026-11-27
 
 PyGameZ lässt sich jetzt auch auf dem **Mac** ohne Vorarbeit starten: Doppelklick
@@ -1833,6 +1878,51 @@ einen einheitlichen Stand gebracht (Optik, Konsistenz, Übersetzungen, Bugfixes)
 <a name="-english"></a>
 
 ## 🇬🇧 English
+
+### Favorites & account generators – 2026-11-28
+
+Every game in the sidebar's game list now has a **star** on the right: one click
+makes it a **favorite** (the star fills gold), a second click removes it.
+Favorites appear **first and larger on the start screen** and, if you like,
+**at the very top of the game list**. In Python, web, Rust and on pygamez.com,
+in 14 languages and in the LamaWiki. On top of that, pygamez.com can now suggest
+a username and a password when you create an account.
+
+#### New
+- **Favorite star** on the right of every row in the game list (desktop, web and
+  pygamez.com – there also in the phone drawer, with a large tap target).
+  Clicking the star does not start the game.
+- **Start screen**: favorites get their own row in front – larger bold text, a
+  gold star instead of the colour dot, a gold border. The other games follow
+  below.
+- **Favorites on top**: new setting under Options › General › Game list (web and
+  pygamez.com: the "Settings" card in the sidebar, i.e. in the game interface).
+  Favorites then sit at the very top of the list. Off by default.
+- Favorites are stored **per profile** (mem.json section `favorites`, web:
+  `pygamez.<profile>.favorites`, pygamez.com: in the account save) and travel
+  along with the desktop import/export of pygamez.com.
+- **pygamez.com – home page**: "Your favourites" with larger cards above the
+  categories (account from the server, guest from the browser; a swipeable row
+  on phones).
+- **pygamez.com – create account**: a **Generate a name** button (random names in
+  English, German or French plus digits, e.g. `SwiftFox42`, `SchlaueEule7`,
+  `LoupMalin305` – always free and allowed) and a **Generate a password** button
+  (16 characters, created only in the browser, fills both fields, with a copy
+  button). Both can be generated again as often as you like.
+
+#### Changed
+- Sidebar (desktop): the high score now shows a trophy 🏆 instead of a star – the
+  star belongs to the favorites.
+- Start screen: when the games no longer fit (50 games at 640×480), the pills
+  move closer together and the logo shrinks a little.
+- Options › General at 480×360: the rows move slightly closer together to make
+  room for the new group.
+
+#### Fixed
+- Start screen at 640×480: the last row of the game grid disappeared behind the
+  high-score ticker and the footer.
+
+---
 
 ### macOS launch: start.command & new start.sh – 2026-11-27
 

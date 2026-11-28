@@ -53,6 +53,26 @@
     return Object.assign({ kind, key: null, char: "", pos: null, button: 1, delta: 0, rel: null, repeat: false }, props);
   }
 
+  // Stufen fürs Spiele-Raster im Startbildschirm (wie main.App.MENU_TILE_LEVELS):
+  // [Schrift Favoriten, Schrift übrige, Innenabstand Favoriten, Innenabstand übrige,
+  //  Abstand zwischen Pillen, Abstand Favoriten -> übrige, Rand links+rechts].
+  // Ohne Favoriten ergeben die ersten vier die alte Folge 15/13/11; die letzte ("dicht")
+  // greift erst, wenn sonst nichts passt.
+  const MENU_TILE_LEVELS = [
+    [19, 15, 16, 12, 8, 14, 60],
+    [17, 13, 16, 12, 8, 14, 60],
+    [15, 11, 16, 12, 8, 14, 60],
+    [13, 11, 16, 12, 8, 14, 60],
+    [13, 11, 10, 6, 4, 8, 24],
+  ];
+  const MENU_LOGO_MIN = 56;
+  /** Radius des Favoriten-Sterns in einer Pille der Schriftgröße fsize. */
+  const menuStarR = (fsize) => Math.max(5, Math.floor((fsize * 2) / 5));
+
+  /** Stern-Symbol (SVG) für die Spieleliste der Seitenleiste. */
+  const STAR_SVG =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.6l2.82 6.1 6.68.74-4.98 4.52 1.37 6.58L12 17.2l-5.89 3.34 1.37-6.58L2.5 9.44l6.68-.74z"/></svg>';
+
   // --------------------------------------------------------------- Screens
   /** Startbildschirm: Logo, klickbares Spiele-Raster, Highscore-Laufband. */
   class HomeScreen {
@@ -66,18 +86,39 @@
       this.name = t("app.menu_title");
     }
     update() {}
-    flow(avail) {
-      const maxW = W - 60;
-      let result = null;
-      for (const fsize of [15, 13, 11]) {
-        const fnt = ui.font(fsize);
-        const padX = fsize - 4;
-        const rowH = fnt.height + 12;
-        const gap = 8;
+    /**
+     * Spiele-Raster wie main.App._flow_menu_tiles: oben die Favoriten (größer, fett,
+     * Stern statt Farbpunkt), darunter die übrigen Spiele. Normale Stufen gegen
+     * "avail" (Logo mittig); passt keine, bleibt die kleinste (Logo rückt hoch), und
+     * erst wenn auch "availTop" (Logo ganz oben) nicht reicht, kommt die dichte Stufe.
+     */
+    flow(avail, availTop) {
+      const favs = PG.favorites.list();
+      const fav = this.app.entries.filter((e) => favs.indexOf(e.meta.key) >= 0);
+      const rest = this.app.entries.filter((e) => favs.indexOf(e.meta.key) < 0);
+      let lay = null;
+      for (let i = 0; i < MENU_TILE_LEVELS.length - 1; i++) {
+        lay = this.flowLevel(MENU_TILE_LEVELS[i], fav, rest);
+        if (lay.total <= avail) return lay;
+      }
+      if (lay.total <= availTop) return lay;
+      return this.flowLevel(MENU_TILE_LEVELS[MENU_TILE_LEVELS.length - 1], fav, rest);
+    }
+    flowLevel(level, fav, rest) {
+      const [fsizeF, fsize, padYF, padY, gap, groupGap, margin] = level;
+      const maxW = W - margin;
+      const groups = [];
+      for (const [list, isFav] of [[fav, true], [rest, false]]) {
+        if (!list.length) continue;
+        const fnt = isFav ? ui.font(fsizeF, true) : ui.font(fsize);
+        const padX = (isFav ? fsizeF : fsize) - 4;
+        const rowH = fnt.height + (isFav ? padYF : padY);
+        const starR = isFav ? menuStarR(fsizeF) : 0;
+        const mark = isFav ? starR * 2 + 10 : 16;
         const rows = [[]];
         let rw = 0;
-        for (const entry of this.app.entries) {
-          const tw = fnt.width(PG.gameName(entry)) + padX * 2 + 16;
+        for (const entry of list) {
+          const tw = fnt.width(PG.gameName(entry)) + padX * 2 + mark;
           let add = tw + (rows[rows.length - 1].length ? gap : 0);
           if (rw + add > maxW && rows[rows.length - 1].length) {
             rows.push([]);
@@ -87,11 +128,11 @@
           rows[rows.length - 1].push([entry, tw]);
           rw += add;
         }
-        const total = rows.length * rowH + (rows.length - 1) * gap;
-        result = { rows, fnt, padX, rowH, gap, total };
-        if (total <= avail) break;
+        groups.push({ rows, fnt, padX, rowH, fav: isFav, starR });
       }
-      return result;
+      let total = groups.reduce((s, g) => s + g.rows.length * g.rowH + (g.rows.length - 1) * gap, 0);
+      total += groupGap * Math.max(0, groups.length - 1);
+      return { groups, gap, groupGap, total };
     }
     draw(ctx) {
       ui.drawBackground(ctx, W, H);
@@ -105,10 +146,17 @@
       }
       const amp = ui.fx("menu_bob");
       const bob = amp ? Math.round(amp * Math.sin(ts * 1.3)) : 0;
-      const size = Math.min(176, Math.max(96, Math.floor(H / 4)));
+      let size = Math.min(176, Math.max(96, Math.floor(H / 4)));
       const centerY0 = H / 2 - 46;
-      const avail0 = H - 72 - (centerY0 + size / 2 + 80);
-      const lay = this.flow(Math.max(30, avail0));
+      let avail0 = H - 72 - (centerY0 + size / 2 + 80);
+      // Platz, wenn das Logo ganz oben sitzt (centerY = size / 2 + 14)
+      const availTop = H - 72 - (size + 14 + 80);
+      const lay = this.flow(Math.max(30, avail0), availTop);
+      if (lay.total > availTop) {
+        // Selbst ganz oben passt das Raster nicht: Logo so weit verkleinern, wie es fehlt.
+        size = Math.max(MENU_LOGO_MIN, size - (lay.total - availTop));
+        avail0 = H - 72 - (centerY0 + size / 2 + 80);
+      }
       const shift = Math.max(0, lay.total - avail0);
       const centerY = Math.max(size / 2 + 14, centerY0 - shift) + bob;
       const logo = this.app.logo;
@@ -159,31 +207,43 @@
       const avail = Math.max(30, bottom - top);
       let y = top + Math.min(36, Math.max(0, (avail - lay.total) / 2));
       this.tiles = [];
-      for (const row of lay.rows) {
-        const rowW = row.reduce((s, r) => s + r[1], 0) + lay.gap * (row.length - 1);
-        let x = W / 2 - rowW / 2;
-        for (const [entry, tw] of row) {
-          const rect = new PG.Rect(Math.round(x), Math.round(y), tw, lay.rowH);
-          const idx = this.tiles.length;
-          const accent = ui.gameColor(entry.id);
-          const rr = lay.rowH / 2;
-          if (idx === this.hover) {
-            if (!modern && !v1) draw.rect(ctx, [...accent, 55], rect.inflate(14, 14), 0, rr + 7);
-            draw.rect(ctx, ui.PANEL_LIGHT, rect, 0, rr);
-            draw.rect(ctx, accent, rect, 1, rr);
-          } else {
-            draw.rect(ctx, ui.PANEL, rect, 0, rr);
-            draw.rect(ctx, ui.BORDER, rect, 1, rr);
+      lay.groups.forEach((grp, gi) => {
+        if (gi) y += lay.groupGap - lay.gap;
+        for (const row of grp.rows) {
+          const rowW = row.reduce((s, r) => s + r[1], 0) + lay.gap * (row.length - 1);
+          let x = W / 2 - rowW / 2;
+          for (const [entry, tw] of row) {
+            const rect = new PG.Rect(Math.round(x), Math.round(y), tw, grp.rowH);
+            const idx = this.tiles.length;
+            const accent = ui.gameColor(entry.id);
+            const rr = grp.rowH / 2;
+            if (idx === this.hover) {
+              if (!modern && !v1) draw.rect(ctx, [...accent, 55], rect.inflate(14, 14), 0, rr + 7);
+              draw.rect(ctx, ui.PANEL_LIGHT, rect, 0, rr);
+              draw.rect(ctx, accent, rect, 1, rr);
+            } else if (grp.fav) {
+              // Favorit: Hauch Gold in Fläche und Rand
+              draw.rect(ctx, ui.mix(ui.PANEL, ui.GOLD, 0.07), rect, 0, rr);
+              draw.rect(ctx, ui.mix(ui.BORDER, ui.GOLD, 0.45), rect, 1, rr);
+            } else {
+              draw.rect(ctx, ui.PANEL, rect, 0, rr);
+              draw.rect(ctx, ui.BORDER, rect, 1, rr);
+            }
+            // v4.2: feine Lichtkante oben auf der Pille
+            if (v42) draw.rect(ctx, [255, 255, 255, idx === this.hover ? 34 : 20], [rect.x + rr, rect.y + 1, rect.w - 2 * rr, 1]);
+            if (grp.fav) {
+              ui.drawStar(ctx, [rect.x + grp.padX + grp.starR, rect.centery], grp.starR, ui.GOLD);
+              ui.text(ctx, PG.gameName(entry), rect.x + grp.padX + 2 * grp.starR + 10, rect.centery, grp.fnt, ui.TEXT, "midleft");
+            } else {
+              draw.circle(ctx, accent, [rect.x + grp.padX + 4, rect.centery], 4);
+              ui.text(ctx, PG.gameName(entry), rect.x + grp.padX + 14, rect.centery, grp.fnt, idx === this.hover ? ui.TEXT : ui.TEXT_DIM, "midleft");
+            }
+            this.tiles.push([rect, entry]);
+            x += tw + lay.gap;
           }
-          // v4.2: feine Lichtkante oben auf der Pille
-          if (v42) draw.rect(ctx, [255, 255, 255, idx === this.hover ? 34 : 20], [rect.x + rr, rect.y + 1, rect.w - 2 * rr, 1]);
-          draw.circle(ctx, accent, [rect.x + lay.padX + 4, rect.centery], 4);
-          ui.text(ctx, PG.gameName(entry), rect.x + lay.padX + 14, rect.centery, lay.fnt, idx === this.hover ? ui.TEXT : ui.TEXT_DIM, "midleft");
-          this.tiles.push([rect, entry]);
-          x += tw + lay.gap;
+          y += grp.rowH + lay.gap;
         }
-        y += lay.rowH + lay.gap;
-      }
+      });
       this.drawTicker(ctx);
       ui.drawFooter(ctx, W, H, `${this.app.entries.length} Games   ·   PyGameZ Web   ·   ${W}x${H}`);
     }
@@ -537,7 +597,9 @@
     /** Nach Profilwechsel/-änderung: Erfolge nachrechnen, Anzeige auffrischen. */
     refreshProfile() {
       PG.ach.backfillSilent();
-      this.refreshScores();
+      // Favoriten gehören zum Profil -> Liste neu aufbauen (enthält die Highscores)
+      PG.favorites.reset();
+      this.buildGameList();
       this.updateProfileChip();
     }
 
@@ -1322,6 +1384,15 @@
         PG.replay.setEnabled(rep.checked);
         PG.audio.play("click");
       };
+      // Favoriten oben in der Spieleliste (Einstellung der Spiel-Oberfläche)
+      const favTop = document.getElementById("set-favtop");
+      favTop.checked = PG.favorites.topEnabled();
+      favTop.onchange = () => {
+        PG.settings.data.favorites = { top: favTop.checked };
+        PG.settings.save();
+        PG.audio.play("click");
+        this.buildGameList();
+      };
       const vol = document.getElementById("set-volume");
       vol.value = Math.round(PG.settings.data.volume * 100);
       vol.oninput = () => {
@@ -1352,14 +1423,16 @@
       const list = document.getElementById("gamelist");
       const q = document.getElementById("search").value.trim().toLowerCase();
       const scores = PG.highscore.all();
+      const keepScroll = list.scrollTop;
       list.textContent = "";
       let n = 0;
-      for (const entry of this.entries) {
+      for (const entry of PG.favorites.ordered(this.entries, PG.favorites.topEnabled())) {
         const name = PG.gameName(entry);
         if (q && !name.toLowerCase().includes(q) && !entry.id.toLowerCase().includes(q)) continue;
         n++;
+        const fav = PG.favorites.has(entry.meta.key);
         const b = document.createElement("button");
-        b.className = "game-item" + (this.entry === entry ? " active" : "");
+        b.className = "game-item" + (this.entry === entry ? " active" : "") + (fav ? " is-fav" : "");
         b.style.setProperty("--gi-color", ui.GAME_COLORS[entry.id] || "#5b8def");
         b.dataset.id = entry.id;
         const dot = document.createElement("span");
@@ -1371,7 +1444,20 @@
         hs.className = "gi-hs";
         const v = Number(scores[entry.meta.key]) || 0;
         hs.textContent = v > 0 ? v.toLocaleString("de-DE") : "";
-        b.append(dot, nm, hs);
+        // Favoriten-Stern: Klick markiert nur (startet kein Spiel, schließt keine Handy-Schublade)
+        const star = document.createElement("span");
+        star.className = "gi-fav" + (fav ? " on" : "");
+        star.setAttribute("role", "button");
+        star.setAttribute("aria-pressed", fav ? "true" : "false");
+        star.title = t(fav ? "app.fav_remove" : "app.fav_add");
+        star.setAttribute("aria-label", star.title);
+        star.innerHTML = STAR_SVG;
+        star.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.toggleFavorite(entry);
+        });
+        b.append(dot, nm, hs, star);
         b.onclick = () => {
           PG.audio.unlock();
           PG.audio.play("click");
@@ -1379,12 +1465,21 @@
         };
         list.appendChild(b);
       }
+      list.scrollTop = keepScroll;
       if (!n) {
         const d = document.createElement("div");
         d.className = "gl-empty";
         d.textContent = t("web.no_results");
         list.appendChild(d);
       }
+    }
+
+    /** Stern in der Spieleliste: Spiel als Favorit markieren/entfernen (je Profil). */
+    toggleFavorite(entry) {
+      PG.audio.unlock();
+      PG.audio.play("click");
+      PG.favorites.toggle(entry.meta.key);
+      this.buildGameList();
     }
 
     refreshScores() {

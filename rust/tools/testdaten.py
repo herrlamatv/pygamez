@@ -239,6 +239,10 @@ def main():
         # Programmstart - den bildet der Python-Pruefstand nicht nach).
         mem["players"][pid] = {"highscores": hs, "achievements": ach,
                                "progress": {"intro_seen": True}}
+        # Favoriten (Stern in der Spieleliste) - je Profil verschieden; das
+        # aktive Profil zeigt sie im Startbildschirm gross und vorne.
+        mem["players"][pid]["favorites"] = {"games": [["tetris", "snake", "lamacrash"],
+                                                      ["chess"], []][i % 3]}
         stat["profiles"][pid] = {"games": games, "days": days, "hours": hours, "series": series,
                                  "events": events, "duel": duel,
                                  "streak": {"cur": 3, "best": 9, "first_day": min(days), "last_day": max(days)},

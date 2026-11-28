@@ -12,7 +12,9 @@
         "tauko",
         "koko näyttö",
         "sivupalkki",
-        "moninpeli"
+        "moninpeli",
+        "suosikit",
+        "tahti"
       ],
       "sections": [
         {
@@ -34,7 +36,8 @@
         {
           "h": "Sivupalkki",
           "body": [
-            "Vasemmalla näet kaikki pelit kuvakkeineen ja ennätyksesi (tähti). Käynnissä oleva peli pysyy korostettuna; pienissä ikkunoissa listaa vieritetään hiiren rullalla.",
+            "Vasemmalla näet kaikki pelit kuvakkeineen ja ennätyksesi (pokaali). Käynnissä oleva peli pysyy korostettuna; pienissä ikkunoissa listaa vieritetään hiiren rullalla.",
+            "Jokaisen rivin oikeassa reunassa on tähti: yksi napsautus tekee pelistä suosikin (tähti täyttyy kullalla), toinen poistaa sen - peli ei käynnisty. Suosikit näkyvät aloitusnäytössä ensimmäisinä ja suurempina, ja ne tallennetaan profiilikohtaisesti; halutessasi ne voivat nousta myös listan kärkeen (katso Asetukset).",
             "Vasemman alakulman tilakortti näyttää pelin nimen, tilan (vihreä = käynnissä, kulta = tauko, punainen = peli ohi), pisteet ja nykyisen kuvataajuuden."
           ]
         },
@@ -64,7 +67,8 @@
         "design",
         "ulkoasu",
         "teema",
-        "kiinteät näppäimet"
+        "kiinteät näppäimet",
+        "suosikit"
       ],
       "sections": [
         {
@@ -72,6 +76,13 @@
           "body": [
             "Ota äänet käyttöön ja säädä äänenvoimakkuus asetusnäytöllä. Kaikki tehosteet luodaan reaaliaikaisesti - äänitiedostoja ei ole.",
             "Värinä tärisyttää liitettyä ohjainta (ilman ohjainta ei tee mitään)."
+          ]
+        },
+        {
+          "h": "Pelilista",
+          "body": [
+            "Suosikit ylimpänä: Yleiset-välilehdellä (ryhmä Pelilista) voit näyttää suosikkisi sivupalkin pelilistan kärjessä - molemmat ryhmät säilyttävät tavallisen järjestyksensä. Oletuksena pois päältä.",
+            "Selainversiossa ja pygamez.comissa kytkin Suosikit ylimpänä on sivupalkin alaosan Asetukset-kortissa - itse pelissä, ei tilin asetuksissa."
           ]
         },
         {
